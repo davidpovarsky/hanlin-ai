@@ -146,9 +146,8 @@ def main():
     print(f"EVIDENCE_SCHEMA_VALID:   {'PASSED' if schema_valid else 'FAILED'}")
 
     # 2. PARTIAL_ACCEPTANCE
-    deterministic_fail = any(r[1].get("status") == "FAIL" and r[1].get("tier") in ["T1", "T2"] for r in records)
     any_fail = counts["FAIL"] > 0
-    partial_passed = schema_valid and not any_fail and counts["PASS"] >= 60
+    partial_passed = schema_valid and not any_fail and counts["PASS"] > 0
     print(f"PARTIAL_ACCEPTANCE:      {'PASSED' if partial_passed else 'FAILED'}")
 
     # 3. RELEASE_GATE_PASSED

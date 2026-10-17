@@ -27,6 +27,10 @@ public actor AuthorizedAttachmentRegistry {
 
     private var records: [String: Record] = [:]
     private let maxRecords = 500
+    private let maxTotalBytes = 50 * 1024 * 1024 // 50 MiB total in-memory budget
+    private let allowedMIMETypes: Set<String> = [
+        "image/jpeg", "image/png", "image/heic", "image/webp", "image/gif"
+    ]
 
     public init() {}
 
@@ -39,17 +43,38 @@ public actor AuthorizedAttachmentRegistry {
         chatID: String,
         requestID: String,
         ttl: TimeInterval = 3600
-    ) -> String {
-        cleanExpired()
-        if records.count >= maxRecords {
-            if let oldest = records.values.min(by: { $0.createdAt < $1.createdAt }) {
-                records.removeValue(forKey: oldest.handle)
-            }
+    ) throws -> String {
+        guard !chatID.isEmpty, chatID != "default_chat" else {
+            throw HanlinHostServiceError.invalidRequest("Registration requires an authentic, non-default chat ID.")
+        }
+        guard !requestID.isEmpty, requestID != "default_request" else {
+            throw HanlinHostServiceError.invalidRequest("Registration requires an authentic, non-default request ID.")
+        }
+        guard !data.isEmpty, data.count <= 20 * 1024 * 1024 else {
+            throw HanlinHostServiceError.invalidRequest("Image attachment exceeds maximum allowed size of 20MB.")
+        }
+        guard allowedMIMETypes.contains(mimeType.lowercased()) else {
+            throw HanlinHostServiceError.invalidRequest("MIME type '\(mimeType)' is not permitted for image attachments.")
+        }
+        guard Self.isValidImageData(data) else {
+            throw HanlinHostServiceError.invalidRequest("Attachment data is corrupted or undecodable as an image.")
+        }
+        guard ttl > 0 && ttl <= 86400 else {
+            throw HanlinHostServiceError.invalidRequest("TTL must be positive and not exceed 24 hours.")
         }
 
-        let randomHex = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
-        let randomSuffix = UUID().uuidString.replacingOccurrences(of: "-", with: "").prefix(8).lowercased()
-        let handle = "att_\(randomHex)\(randomSuffix)"
+        cleanExpired()
+
+        // Enforce total byte budget & count limits by evicting oldest
+        var currentBytes = records.values.reduce(0) { $0 + $1.data.count }
+        while (records.count >= maxRecords || currentBytes + data.count > maxTotalBytes),
+              let oldest = records.values.min(by: { $0.createdAt < $1.createdAt }) {
+            currentBytes -= oldest.data.count
+            records.removeValue(forKey: oldest.handle)
+        }
+
+        let fullUUID = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
+        let handle = "att_\(fullUUID)"
 
         let now = Date()
         let record = Record(
@@ -66,7 +91,7 @@ public actor AuthorizedAttachmentRegistry {
         return handle
     }
 
-    /// Resolves image data strictly scoped to the requesting chat identity.
+    /// Resolves image data strictly scoped to the requesting chat and request turn.
     /// Throws explicit errors on access violation, expiration, or invalid handle format.
     public func resolve(
         handle: String,
@@ -86,6 +111,10 @@ public actor AuthorizedAttachmentRegistry {
             throw HanlinHostServiceError.invalidRequest("Invalid attachment handle: traversal, URLs, and separators are prohibited.")
         }
 
+        guard !chatID.isEmpty, chatID != "default_chat" else {
+            throw HanlinHostServiceError.capabilityNotGranted("Access denied: Attachment resolution requires an authentic chat scope.")
+        }
+
         guard let record = records[handle] else {
             throw HanlinHostServiceError.invalidRequest("Attachment handle '\(handle)' not found or expired.")
         }
@@ -101,6 +130,12 @@ public actor AuthorizedAttachmentRegistry {
 
         guard record.chatID == chatID else {
             throw HanlinHostServiceError.capabilityNotGranted("Access denied: Attachment handle '\(handle)' belongs to another chat session.")
+        }
+
+        if let requestID, !requestID.isEmpty, requestID != "default_request" {
+            guard record.requestID == requestID else {
+                throw HanlinHostServiceError.capabilityNotGranted("Access denied: Attachment handle '\(handle)' belongs to another request turn.")
+            }
         }
 
         guard record.data.count <= 20 * 1024 * 1024 else {

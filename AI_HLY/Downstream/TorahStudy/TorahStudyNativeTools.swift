@@ -21,6 +21,7 @@ actor TorahEvidenceStore {
 
     func store(record: TorahEvidenceRecord) {
         cleanExpired()
+        guard !record.chatID.isEmpty, record.chatID != "default_chat" else { return }
         if evidenceMap.count >= maxEntries {
             if let oldest = evidenceMap.values.min(by: { $0.createdAt < $1.createdAt }) {
                 evidenceMap.removeValue(forKey: oldest.evidenceID)
@@ -29,8 +30,9 @@ actor TorahEvidenceStore {
         evidenceMap[record.evidenceID] = record
     }
 
-    func retrieve(evidenceID: String, chatID: String) -> TorahEvidenceRecord? {
+    func retrieve(evidenceID: String, chatID: String, requestID: String? = nil) -> TorahEvidenceRecord? {
         cleanExpired()
+        guard !chatID.isEmpty, chatID != "default_chat" else { return nil }
         guard let record = evidenceMap[evidenceID] else { return nil }
         guard record.expiresAt > Date() else {
             evidenceMap.removeValue(forKey: evidenceID)
@@ -38,6 +40,9 @@ actor TorahEvidenceStore {
         }
         guard record.chatID == chatID else {
             return nil
+        }
+        if let requestID, let recReqID = record.requestID, !requestID.isEmpty, requestID != "default_request" {
+            guard recReqID == requestID else { return nil }
         }
         return record
     }
@@ -111,7 +116,7 @@ struct TorahOCRExcerptTool: NativeTool {
             let handle = try NativeToolJSON.strictRequiredString(arguments, "attachment_handle")
             let policy = (arguments["policy"] as? String) ?? "prefer_local"
 
-            let evidenceID = "ocr_\(UUID().uuidString.prefix(8))"
+            let evidenceID = "ocr_\(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased())"
             let now = Date()
             let expiresAt = now.addingTimeInterval(3600)
 
@@ -129,17 +134,8 @@ struct TorahOCRExcerptTool: NativeTool {
                 )
             }
 
-            // Resolve real image data strictly via AuthorizedAttachmentRegistry / context
-            let imageData: Data
-            if let resolver = context.attachmentResolver {
-                imageData = try await resolver(handle)
-            } else {
-                imageData = try await AuthorizedAttachmentRegistry.shared.resolve(
-                    handle: handle,
-                    chatID: context.effectiveChatID,
-                    requestID: context.requestID
-                )
-            }
+            // Resolve real image data strictly via context attachment resolver / AuthorizedAttachmentRegistry
+            let imageData = try await context.resolveAttachment(handle: handle)
 
             var regionTuple: (x: Double, y: Double, width: Double, height: Double)? = nil
             if let regionDict = arguments["region"] as? [String: Any],
@@ -173,13 +169,20 @@ struct TorahOCRExcerptTool: NativeTool {
                 )
             }
 
+            guard let validChatID = context.effectiveChatID else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.capabilityNotGranted("Evidence recording requires an authorized chat context."),
+                    title: "Security Violation"
+                )
+            }
+
             let evidenceRecord = TorahEvidenceRecord(
                 evidenceID: evidenceID,
                 rawText: rawText,
                 attachmentHandle: handle,
                 providerID: "apple_vision_local",
-                chatID: context.effectiveChatID,
-                requestID: context.requestID,
+                chatID: validChatID,
+                requestID: context.effectiveRequestID,
                 createdAt: now,
                 expiresAt: expiresAt
             )
@@ -244,7 +247,7 @@ struct TorahIdentifyExcerptTool: NativeTool {
                 properties: [
                     "evidence_id": NativeToolSchema.string(description: "Identifier of previously obtained OCREvidence."),
                     "text": NativeToolSchema.string(description: "Explicit transcribed text to identify if evidence_id is not provided."),
-                    "allow_remote": NativeToolSchema.boolean(description: "Whether to allow remote fallback (e.g. Sefaria) if local offline search does not identify the passage. Defaults to true.")
+                    "allow_remote": NativeToolSchema.boolean(description: "Whether to allow remote fallback (e.g. Sefaria) if local offline search does not identify the passage. Defaults to false.")
                 ]
             )
         )
@@ -259,7 +262,12 @@ struct TorahIdentifyExcerptTool: NativeTool {
 
             var rawText = ""
             if let evID = arguments["evidence_id"] as? String {
-                guard let stored = await TorahEvidenceStore.shared.retrieve(evidenceID: evID, chatID: context.effectiveChatID) else {
+                guard let validChatID = context.effectiveChatID,
+                      let stored = await TorahEvidenceStore.shared.retrieve(
+                          evidenceID: evID,
+                          chatID: validChatID,
+                          requestID: context.effectiveRequestID
+                      ) else {
                     return RuntimeToolSupport.failure(
                         HanlinHostServiceError.invalidRequest("Evidence ID '\(evID)' not found, expired, or belongs to another chat session."),
                         title: "Evidence Not Found"
@@ -297,7 +305,7 @@ struct TorahIdentifyExcerptTool: NativeTool {
                 lines: evidenceLines
             )
 
-            let allowRemote = (arguments["allow_remote"] as? Bool) ?? true
+            let allowRemote = (arguments["allow_remote"] as? Bool) ?? false
             let identification = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: ocrEvidence, allowRemoteFallback: allowRemote)
 
             let statusStr = identification.status.rawValue

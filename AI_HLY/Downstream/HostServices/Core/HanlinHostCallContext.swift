@@ -102,4 +102,28 @@ public struct HanlinHostCallContext: Sendable {
             canPresentUI: canPresentUI
         )
     }
+
+    public static func forSkill(
+        skillID: HanlinSkillID,
+        capabilities: Set<String>,
+        workspaceIdentifier: String,
+        sessionID: HanlinAppSessionID? = nil,
+        runtimeSessionID: HanlinRuntimeSessionID? = nil
+    ) -> HanlinHostCallContext {
+        let appSession = sessionID ?? (try! HanlinAppSessionID(validating: makeSessionID(kind: "app-session")))
+        let runtimeSession = runtimeSessionID ?? (try! HanlinRuntimeSessionID(validating: makeSessionID(kind: "runtime-session")))
+        return HanlinHostCallContext(
+            subject: .provider(try! HanlinProviderInstanceID(validating: "hanlin-skill")),
+            origin: .scriptPackage,
+            appID: nil,
+            installedPackageID: nil,
+            appSessionID: appSession,
+            runtimeSessionID: runtimeSession,
+            effectiveCapabilities: capabilities,
+            storageScope: .agent,
+            runtimeWorkspaceIdentifier: workspaceIdentifier,
+            userGesturePresent: false,
+            canPresentUI: false
+        )
+    }
 }

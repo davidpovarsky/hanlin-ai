@@ -90,7 +90,8 @@ public struct TorahSourceReaderView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
-            if let version = studySource.versionMetadata.versionTitle {
+            let version = studySource.versionMetadata.versionTitle
+            if !version.isEmpty {
                 Text(version)
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -124,21 +125,36 @@ public struct TorahSourceReaderView: View {
         return Text(primary)
     }
 
-    private func linksSection(links: [StudyLink]) -> some View {
+    private func linksSection(links: [TorahLinkedSource]) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(String(localized: "פירושים וקישורים"))
                 .font(.headline)
-            ForEach(links, id: \.targetLocator.persistenceKey) { link in
-                HStack {
-                    Text(link.relationship)
-                        .font(.caption)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(Color.secondary.opacity(0.1))
-                        .cornerRadius(4)
-                    Text(link.targetLocator.workKey)
-                        .font(.subheadline)
+            ForEach(links) { link in
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack {
+                        Text(link.type)
+                            .font(.caption)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.secondary.opacity(0.1))
+                            .cornerRadius(4)
+                        Text(link.sourceTitle)
+                            .font(.subheadline)
+                            .bold()
+                        Spacer()
+                        Text(link.category)
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    if !link.primaryText.isEmpty {
+                        Text(link.primaryText)
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                            .lineLimit(2)
+                            .environment(\.layoutDirection, .rightToLeft)
+                    }
                 }
+                .padding(.vertical, 2)
             }
         }
         .padding(.top, 12)

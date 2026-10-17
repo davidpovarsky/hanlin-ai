@@ -16,14 +16,15 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
         grantedCapabilities: Set<String>,
         sessionID: String = UUID().uuidString.lowercased()
     ) {
-        self.sessionID = sessionID
-        let appSession = try! HanlinAppSessionID(validating: sessionID)
+        let validatedSessionID = (try? HanlinAppSessionID(validating: sessionID))
+            ?? (try! HanlinAppSessionID(validating: UUID().uuidString.lowercased()))
+        self.sessionID = validatedSessionID.rawValue
         self.context = HanlinHostCallContext.forMiniApp(
             appID: appID,
             installedPackageID: installedPackageID,
             origin: .scriptPackage,
             capabilities: grantedCapabilities,
-            sessionID: appSession,
+            sessionID: validatedSessionID,
             canPresentUI: true
         )
         super.init()
@@ -134,7 +135,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             }
 
             let parsedRoot = try Self.parseUntaggedNode(rootDict, depth: 0)
-            let validUntilDate = Self.parseValidUntil(from: jsonObject)
+            let validUntilDate = try Self.parseValidUntil(from: jsonObject)
 
             try await HanlinScriptingPlatform.shared.publishExpoWidget(
                 installedPackageID: installedPackageID,
@@ -278,31 +279,63 @@ private struct FileListRequest: Decodable {
 }
 
 extension ExpoHostServicesAdapter {
-    static func parseValidUntil(from dict: [String: Any]) -> Date? {
-        if let millis = dict["validUntilEpochMilliseconds"] as? Double, millis > 0 {
-            return Date(timeIntervalSince1970: millis / 1000.0)
+    static func parseValidUntil(from dict: [String: Any]) throws -> Date? {
+        if let millisVal = dict["validUntilEpochMilliseconds"] {
+            let millis: Double
+            if let d = millisVal as? Double {
+                millis = d
+            } else if let i = millisVal as? Int64 {
+                millis = Double(i)
+            } else if let i = millisVal as? Int {
+                millis = Double(i)
+            } else if let s = millisVal as? String, let d = Double(s) {
+                millis = d
+            } else {
+                throw HanlinHostServiceError.invalidRequest("Invalid 'validUntilEpochMilliseconds' type: expected number or numeric string")
+            }
+
+            guard !millis.isNaN, !millis.isInfinite, millis > 0 else {
+                throw HanlinHostServiceError.invalidRequest("Invalid 'validUntilEpochMilliseconds': must be a positive finite number")
+            }
+            guard millis <= 4_102_444_800_000 else { // Year 2100 in milliseconds
+                throw HanlinHostServiceError.invalidRequest("Invalid 'validUntilEpochMilliseconds': timestamp exceeds realistic upper bound")
+            }
+
+            let date = Date(timeIntervalSince1970: millis / 1000.0)
+            guard date > Date() else {
+                throw HanlinHostServiceError.invalidRequest("Widget snapshot validUntil timestamp has already expired")
+            }
+            return date
         }
-        if let millisInt = dict["validUntilEpochMilliseconds"] as? Int64, millisInt > 0 {
-            return Date(timeIntervalSince1970: Double(millisInt) / 1000.0)
-        }
-        if let millisInt = dict["validUntilEpochMilliseconds"] as? Int, millisInt > 0 {
-            return Date(timeIntervalSince1970: Double(millisInt) / 1000.0)
-        }
-        if let validUntilStr = dict["validUntil"] as? String, !validUntilStr.isEmpty {
+
+        if let validUntilVal = dict["validUntil"] {
+            guard let validUntilStr = validUntilVal as? String, !validUntilStr.isEmpty else {
+                throw HanlinHostServiceError.invalidRequest("Invalid 'validUntil' format: expected non-empty ISO8601 string")
+            }
+
             let formatterWithFraction = ISO8601DateFormatter()
             formatterWithFraction.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            let date: Date
             if let d = formatterWithFraction.date(from: validUntilStr) {
-                return d
+                date = d
+            } else {
+                let standardFormatter = ISO8601DateFormatter()
+                standardFormatter.formatOptions = [.withInternetDateTime]
+                if let d = standardFormatter.date(from: validUntilStr) {
+                    date = d
+                } else if let dbl = Double(validUntilStr), !dbl.isNaN, !dbl.isInfinite, dbl > 0 {
+                    date = Date(timeIntervalSince1970: dbl > 1_000_000_000_000 ? dbl / 1000.0 : dbl)
+                } else {
+                    throw HanlinHostServiceError.invalidRequest("Malformed 'validUntil' date string: unable to parse as ISO8601 date")
+                }
             }
-            let standardFormatter = ISO8601DateFormatter()
-            standardFormatter.formatOptions = [.withInternetDateTime]
-            if let d = standardFormatter.date(from: validUntilStr) {
-                return d
+
+            guard date > Date() else {
+                throw HanlinHostServiceError.invalidRequest("Widget snapshot validUntil timestamp has already expired")
             }
-            if let dbl = Double(validUntilStr), dbl > 0 {
-                return Date(timeIntervalSince1970: dbl > 1_000_000_000_000 ? dbl / 1000.0 : dbl)
-            }
+            return date
         }
+
         return nil
     }
 
@@ -310,30 +343,38 @@ extension ExpoHostServicesAdapter {
         switch any {
         case is NSNull:
             return .null
-        case let b as Bool:
-            return .bool(b)
-        case let i as Int:
-            return .integer(Int64(i))
-        case let i as Int64:
-            return .integer(i)
         case let n as NSNumber:
+            // CFBoolean must strictly precede numeric integer/double conversion
             if CFGetTypeID(n as CFTypeRef) == CFBooleanGetTypeID() {
                 return .bool(n.boolValue)
             }
             let dbl = n.doubleValue
+            guard !dbl.isNaN, !dbl.isInfinite else {
+                throw HanlinHostServiceError.invalidRequest("NaN and Infinity are not valid Hanlin numeric values")
+            }
             if floor(dbl) == dbl && dbl >= Double(Int64.min) && dbl <= Double(Int64.max) {
                 return .integer(n.int64Value)
             }
             return try HanlinValue.finiteNumber(dbl)
-        case let d as Double:
-            return try HanlinValue.finiteNumber(d)
         case let s as String:
+            guard s.utf8.count <= 1_048_576 else {
+                throw HanlinHostServiceError.invalidRequest("String value exceeds maximum allowed byte limit (1MB)")
+            }
             return .string(s)
         case let arr as [Any]:
+            guard arr.count <= 4_096 else {
+                throw HanlinHostServiceError.invalidRequest("Array value exceeds maximum item count (4096)")
+            }
             return .array(try arr.map { try toHanlinValue($0) })
         case let dict as [String: Any]:
+            guard dict.count <= 1_024 else {
+                throw HanlinHostServiceError.invalidRequest("Object value exceeds maximum member count (1024)")
+            }
             var members: [(key: String, value: HanlinValue)] = []
             for (k, v) in dict {
+                guard k.utf8.count <= 256 else {
+                    throw HanlinHostServiceError.invalidRequest("Object member key exceeds 256 bytes")
+                }
                 members.append((key: k, value: try toHanlinValue(v)))
             }
             return .object(try HanlinObject(uniqueMembers: members))
@@ -342,7 +383,11 @@ extension ExpoHostServicesAdapter {
         }
     }
 
-    static func parseUntaggedNode(_ dict: [String: Any], depth: Int) throws -> HanlinScriptUINode {
+    private static func parseUntaggedNodeInternal(_ dict: [String: Any], depth: Int, nodeCounter: inout Int) throws -> HanlinScriptUINode {
+        nodeCounter += 1
+        guard nodeCounter <= 1_000 else {
+            throw HanlinHostServiceError.invalidRequest("Widget UI hierarchy exceeds maximum allowed node count (1000)")
+        }
         guard depth < 64 else {
             throw HanlinHostServiceError.invalidRequest("Widget UI hierarchy depth exceeds maximum allowed limit (64)")
         }
@@ -355,14 +400,20 @@ extension ExpoHostServicesAdapter {
         let key = dict["key"] as? String
         var properties: [String: HanlinValue] = [:]
         if let propsDict = dict["properties"] as? [String: Any] {
+            guard propsDict.count <= 256 else {
+                throw HanlinHostServiceError.invalidRequest("UI node properties count exceeds maximum limit (256)")
+            }
             for (k, v) in propsDict {
                 properties[k] = try toHanlinValue(v)
             }
         }
         var children: [HanlinScriptUINode] = []
         if let childrenArr = dict["children"] as? [[String: Any]] {
+            guard childrenArr.count <= 256 else {
+                throw HanlinHostServiceError.invalidRequest("UI node children count exceeds maximum limit (256)")
+            }
             for childDict in childrenArr {
-                children.append(try parseUntaggedNode(childDict, depth: depth + 1))
+                children.append(try parseUntaggedNodeInternal(childDict, depth: depth + 1, nodeCounter: &nodeCounter))
             }
         }
         return HanlinScriptUINode(
@@ -371,5 +422,10 @@ extension ExpoHostServicesAdapter {
             properties: properties,
             children: children
         )
+    }
+
+    public static func parseUntaggedNode(_ dict: [String: Any], depth: Int = 0) throws -> HanlinScriptUINode {
+        var counter = 0
+        return try parseUntaggedNodeInternal(dict, depth: depth, nodeCounter: &counter)
     }
 }

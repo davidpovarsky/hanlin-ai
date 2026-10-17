@@ -138,13 +138,17 @@ struct ExecuteSkillResourceTool: NativeTool {
             // Determine runtime kind from file extension
             let ext = resourceURL.pathExtension.lowercased()
             let runtimeKind: RuntimeKind
+            let requiredCapability: String
             switch ext {
             case "py":
                 runtimeKind = .localPython
+                requiredCapability = "runtime.python"
             case "js", "mjs":
                 runtimeKind = .node
+                requiredCapability = "runtime.node"
             case "ts":
                 runtimeKind = .typeScript
+                requiredCapability = "runtime.typescript"
             default:
                 return RuntimeToolSupport.failure(
                     HanlinHostServiceError.invalidRequest("Unsupported script file extension '.\(ext)'. Only .py, .js, and .ts are executable."),
@@ -155,11 +159,12 @@ struct ExecuteSkillResourceTool: NativeTool {
             // Build isolated per-session/per-run workspace with automatic cleanup
             let sessionID = session.id.uuidString
             let runID = context.toolCallID ?? UUID().uuidString
-            let workspaceURL = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin_skill_\(sessionID)_\(runID)_\(skillIDRaw)")
-            try? FileManager.default.createDirectory(at: workspaceURL, withIntermediateDirectories: true)
+            let workspaceID = "skill-\(skillIDRaw)-\(runID)"
+            let workspaceURL = FileManager.default.temporaryDirectory.appendingPathComponent(workspaceID)
+            try FileManager.default.createDirectory(at: workspaceURL, withIntermediateDirectories: true)
             defer { try? FileManager.default.removeItem(at: workspaceURL) }
 
-            // Strictly allowlisted environment — never leak host secrets or cross-skill state
+            // Strictly allowlisted environment — never leak host secrets, PYTHONPATH, or PYTHONHOME
             var scriptEnv: [String: String] = [
                 "CAIRO_GENIZAH_STATE_DIR": workspaceURL.path,
                 "SKILL_RESOURCE_DIR": resourceURL.deletingLastPathComponent().path,
@@ -168,7 +173,8 @@ struct ExecuteSkillResourceTool: NativeTool {
                 "TEMP": workspaceURL.path
             ]
             let processEnv = ProcessInfo.processInfo.environment
-            for key in ["PATH", "PYTHONPATH", "PYTHONHOME", "LANG", "LC_ALL"] {
+            // Allow only minimal safe runtime path/locale vars; strictly avoid host PYTHONPATH/PYTHONHOME injection
+            for key in ["PATH", "LANG", "LC_ALL"] {
                 if let val = processEnv[key] {
                     scriptEnv[key] = val
                 }
@@ -177,12 +183,20 @@ struct ExecuteSkillResourceTool: NativeTool {
             let executionLimits = RuntimeExecutionLimits(timeout: .seconds(timeout))
             let fullArgv = [cleanPath] + argv
 
+            // Pass explicit restricted HanlinHostCallContext with only required capability (never 'all')
+            let skillCallContext = HanlinHostCallContext.forSkill(
+                skillID: skillID,
+                capabilities: [requiredCapability, "files"],
+                workspaceIdentifier: workspaceID
+            )
+
             let result = try await AgentHostServicesAdapter.executeRuntime(
                 runtimeKind,
                 source: scriptContent,
                 arguments: fullArgv,
                 environment: scriptEnv,
-                limits: executionLimits
+                limits: executionLimits,
+                context: skillCallContext
             )
 
             return RuntimeToolSupport.result(

@@ -293,7 +293,7 @@ public struct TorahPhotoStudyCaptureView: View {
                     lines: lines
                 )
 
-                let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence)
+                let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence, allowRemoteFallback: false)
                 await MainActor.run {
                     ocrText = ocrResult.rawText
                     self.lastIdentificationStatus = result.status
@@ -341,7 +341,7 @@ public struct TorahPhotoStudyCaptureView: View {
                 rawText: trimmed,
                 lines: lines
             )
-            let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence)
+            let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence, allowRemoteFallback: false)
             await MainActor.run {
                 self.lastIdentificationStatus = result.status
                 if let top = result.selectedCandidate {

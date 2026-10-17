@@ -10,15 +10,16 @@ enum AgentHostServicesAdapter {
         HanlinHostCallContext.forAgent()
     }
 
-    /// Execute a runtime through the broker with agent permissions.
+    /// Execute a runtime through the broker with agent or explicit restricted permissions.
     static func executeRuntime(
         _ kind: RuntimeKind,
         source: String,
         arguments: [String] = [],
         environment: [String: String] = [:],
-        limits: RuntimeExecutionLimits? = nil
+        limits: RuntimeExecutionLimits? = nil,
+        context: HanlinHostCallContext? = nil
     ) async throws -> RuntimeExecutionResult {
-        let context = makeContext()
+        let context = context ?? makeContext()
         return try await HanlinRuntimeBroker.shared.execute(
             kind: kind,
             source: source,

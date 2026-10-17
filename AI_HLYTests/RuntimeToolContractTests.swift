@@ -331,16 +331,19 @@ struct RuntimeToolContractTests {
     // MARK: - SEC-01 & SEC-02: Skill Resource Read vs Execute Distinction
 
     @Test func skillResourceReadVsExecuteDistinction() {
-        let catalog = NativeToolCatalog.live()
-        let allTools = catalog.allTools()
+        let catalog = NativeToolCatalog.shared
+        catalog.ensureBuiltinsRegistered()
+        let allEntries = catalog.allEntries()
 
-        // read_skill_resource MUST NOT be registered as ExecuteSkillResourceTool
-        let readTools = allTools.filter { $0.name == "read_skill_resource" }
-        #expect(readTools.allSatisfy { !($0 is ExecuteSkillResourceTool) }, "read_skill_resource must NEVER be ExecuteSkillResourceTool")
+        // read_skill_resource is a model meta-tool in assistant bridge and must NEVER be registered as ExecuteSkillResourceTool
+        let readTool = catalog.tool(named: "read_skill_resource", enabledOnly: false)
+        #expect(!(readTool is ExecuteSkillResourceTool), "read_skill_resource must NEVER be ExecuteSkillResourceTool")
 
-        // execute_skill_resource must be uniquely registered
-        let executeTools = allTools.filter { $0.name == "execute_skill_resource" }
-        #expect(executeTools.count <= 1, "execute_skill_resource must be uniquely registered")
+        // execute_skill_resource must be registered exactly once
+        let executeEntries = allEntries.filter { $0.name == "execute_skill_resource" }
+        #expect(executeEntries.count == 1, "execute_skill_resource must be registered exactly once")
+        let executeTool = catalog.tool(named: "execute_skill_resource", enabledOnly: false)
+        #expect(executeTool is ExecuteSkillResourceTool, "execute_skill_resource must resolve to ExecuteSkillResourceTool")
     }
 
     @Test func executeSkillResourceRequiresActiveSessionAndFailsClosed() async {
@@ -354,16 +357,23 @@ struct RuntimeToolContractTests {
             capabilitySession: nil
         )
 
-        let args = "{\"skill_id\": \"unloaded_skill\", \"resource_path\": \"scripts/run.py\"}"
-        let result = await tool.execute(argumentsJSON: args, context: contextWithoutSession)
+        // Valid parameter schema using "relative_path" per specification
+        let validArgs = "{\"skill_id\": \"unloaded_skill\", \"relative_path\": \"scripts/run.py\"}"
+        let result = await tool.execute(argumentsJSON: validArgs, context: contextWithoutSession)
         #expect(result.outcome == .failed)
-        #expect(result.modelText.contains("denied") || result.modelText.contains("not loaded") || result.modelText.contains("Session"))
+        #expect(result.modelText.contains("session") || result.modelText.contains("Session") || result.modelText.contains("denied") || result.modelText.contains("authorized"))
+
+        // Invalid parameter schema using rejected "resource_path" must fail closed on schema validation
+        let invalidArgs = "{\"skill_id\": \"unloaded_skill\", \"resource_path\": \"scripts/run.py\"}"
+        let invalidResult = await tool.execute(argumentsJSON: invalidArgs, context: contextWithoutSession)
+        #expect(invalidResult.outcome == .failed)
     }
 
     // MARK: - TOR-09: Seven Torah Tools Registration Integrity
 
     @Test func sevenTorahToolsAreRegisteredWithValidSchemas() {
-        let catalog = NativeToolCatalog.live()
+        let catalog = NativeToolCatalog.shared
+        catalog.ensureBuiltinsRegistered()
         let expectedTorahTools = [
             "torah_ocr_excerpt",
             "torah_identify_excerpt",
@@ -375,7 +385,7 @@ struct RuntimeToolContractTests {
         ]
 
         for toolName in expectedTorahTools {
-            guard let tool = catalog.tool(named: toolName) else {
+            guard let tool = catalog.tool(named: toolName, enabledOnly: false) else {
                 Issue.record("Expected Torah tool '\(toolName)' to be registered in NativeToolCatalog")
                 continue
             }

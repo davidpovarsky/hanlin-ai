@@ -134,7 +134,7 @@ public final class TorahLibraryCoordinator: @unchecked Sendable {
     /// Does not require internet when the local corpus is installed.
     public func identifyExcerpt(
         evidence: OCREvidence,
-        allowRemoteFallback: Bool = true
+        allowRemoteFallback: Bool = false
     ) async -> IdentificationResult {
         var localEngines: [any TorahLibrarySearchEngine] = []
 

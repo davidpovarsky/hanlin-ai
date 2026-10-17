@@ -615,7 +615,7 @@ final class HanlinAISDKToolAdapter {
             startedAt: executionStart
         )))
 
-        let sessionChatID = session.id.uuidString
+        let sessionChatID = session.chatID ?? session.id.uuidString
         let roundReqID = currentRoundID?.uuidString ?? callID
         let nativeContext = NativeToolExecutionContext(
             localeIdentifier: currentLanguage,

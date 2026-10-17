@@ -47,16 +47,26 @@ struct NativeToolExecutionContext {
         self.attachmentResolver = attachmentResolver
     }
 
-    var effectiveChatID: String { chatID ?? "default_chat" }
-    var effectiveRequestID: String { requestID ?? toolCallID ?? "default_request" }
+    var effectiveChatID: String? {
+        guard let chatID, !chatID.isEmpty, chatID != "default_chat" else { return nil }
+        return chatID
+    }
+
+    var effectiveRequestID: String? {
+        guard let req = requestID ?? toolCallID, !req.isEmpty, req != "default_request" else { return nil }
+        return req
+    }
 
     func resolveAttachment(handle: String) async throws -> Data {
+        guard let validChatID = effectiveChatID else {
+            throw HanlinHostServiceError.capabilityNotGranted("Access denied: Attachment resolution requires an authentic, non-default chat scope.")
+        }
         if let resolver = attachmentResolver {
             return try await resolver(handle)
         }
         return try await AuthorizedAttachmentRegistry.shared.resolve(
             handle: handle,
-            chatID: effectiveChatID,
+            chatID: validChatID,
             requestID: effectiveRequestID
         )
     }
@@ -93,6 +103,10 @@ enum NativeToolSchema {
         var schema: [String: Any] = ["type": "string", "description": description]
         if let enumValues { schema["enum"] = enumValues }
         return schema
+    }
+
+    static func boolean(description: String) -> [String: Any] {
+        ["type": "boolean", "description": description]
     }
 
     static func number(description: String, minimum: Int? = nil, maximum: Int? = nil) -> [String: Any] {

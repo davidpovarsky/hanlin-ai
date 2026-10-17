@@ -4,7 +4,20 @@ import Foundation
 /// and shared iTorah App Group container (`group.com.davidpovarsky.itorah`).
 public final class ZayitLibraryProvider: TorahLibraryProvider, TorahLibrarySearchEngine, @unchecked Sendable {
     public let providerID = "zayit"
-    public let displayName = "Zayit Tantivy Search"
+    public var displayName: String {
+        if isTantivyIndexAvailable && isTantivyExecutableAvailable {
+            return "Zayit Tantivy Search"
+        } else if isTantivyIndexAvailable {
+            return "Zayit (Tantivy Index Present - Otzaria SQLite Fallback)"
+        } else {
+            return "Zayit (Otzaria SQLite Fallback)"
+        }
+    }
+
+    /// Whether the native Tantivy C/Rust search executor binary is linked into the runtime.
+    public var isTantivyExecutableAvailable: Bool {
+        false
+    }
 
     public let searchIndexURL: URL?
     private let otzariaFallback: OtzariaLibraryProvider
@@ -20,9 +33,9 @@ public final class ZayitLibraryProvider: TorahLibraryProvider, TorahLibrarySearc
         return FileManager.default.fileExists(atPath: url.path)
     }
 
-    /// Whether Zayit search is operating under SQLite fallback mode due to uninstalled Tantivy index.
+    /// Whether Zayit search is operating under SQLite fallback mode due to uninstalled or unexecutable Tantivy index.
     public var isUsingFallback: Bool {
-        !isTantivyIndexAvailable && otzariaFallback.isAvailable
+        (!isTantivyIndexAvailable || !isTantivyExecutableAvailable) && otzariaFallback.isAvailable
     }
 
     public var isAvailable: Bool {

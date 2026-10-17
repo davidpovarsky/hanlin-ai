@@ -367,16 +367,33 @@ struct HanlinUnifiedHostServicesTests {
             expiresAt: Date().addingTimeInterval(3600)
         )
 
-        await store.store(evidenceID: "ev_test_123", record: record)
+        // BLOCKER-COMP-01: Call store(record:) with the authoritative signature
+        await store.store(record: record)
 
         // Retrieved by same chat
         let retrieved = await store.retrieve(evidenceID: "ev_test_123", chatID: "chat_alpha")
         #expect(retrieved != nil)
         #expect(retrieved?.rawText == "בראשית ברא אלהים")
+        #expect(retrieved?.evidenceID == "ev_test_123")
 
         // Denied for different chat
         let crossRetrieved = await store.retrieve(evidenceID: "ev_test_123", chatID: "chat_beta")
         #expect(crossRetrieved == nil)
+
+        // Actual expiration enforcement test
+        let expiredRecord = TorahEvidenceRecord(
+            evidenceID: "ev_expired_456",
+            rawText: "פסוק ישן שתוקפו פג",
+            attachmentHandle: "att_002",
+            providerID: "apple_vision_local",
+            chatID: "chat_alpha",
+            requestID: "req_01",
+            createdAt: Date().addingTimeInterval(-100),
+            expiresAt: Date().addingTimeInterval(-10)
+        )
+        await store.store(record: expiredRecord)
+        let expiredResult = await store.retrieve(evidenceID: "ev_expired_456", chatID: "chat_alpha")
+        #expect(expiredResult == nil, "Expired record must be rejected and evicted")
     }
 
     // MARK: - INT-01 & INT-03: Multi-grant Verification & Collision Prevention

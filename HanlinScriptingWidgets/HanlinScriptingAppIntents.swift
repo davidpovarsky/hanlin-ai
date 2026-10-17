@@ -22,8 +22,19 @@ struct HanlinScriptActionEntity: AppEntity {
 
 struct HanlinScriptActionEntityQuery: EntityQuery {
     func entities(for identifiers: [String]) async throws -> [HanlinScriptActionEntity] {
-        try records().filter { entity in
-            identifiers.contains(entity.id) || identifiers.contains(entity.id.components(separatedBy: "::").last ?? "")
+        let all = try records()
+        return all.filter { entity in
+            // Exact fully-qualified scoped ID match (packageID::entrypointID::actionID)
+            if identifiers.contains(entity.id) {
+                return true
+            }
+            // Strict migration fallback: only allow short-ID match if exactly ONE entity across the entire store matches
+            let shortID = entity.id.components(separatedBy: "::").last ?? ""
+            if identifiers.contains(shortID) {
+                let shortMatches = all.filter { ($0.id.components(separatedBy: "::").last ?? "") == shortID }
+                return shortMatches.count == 1
+            }
+            return false
         }
     }
 

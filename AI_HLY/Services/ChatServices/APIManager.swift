@@ -2339,26 +2339,37 @@ class APIManager {
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         
         var updatedMessages = messages
-        let session = capabilitySession ?? AssistantCapabilitySession()
+        let session = capabilitySession ?? AssistantCapabilitySession(chatID: groupID.uuidString)
         let currentRunID = runID ?? session.id
 
-        // Register authentic image attachments for current chat turn
+        // Register authentic image attachments for current chat turn synchronously and collect opaque handles
+        var registeredAttachmentHandles: [String] = []
+        #if canImport(UIKit)
         for msg in messages {
             if let imgs = msg.images {
                 for img in imgs {
-                    #if canImport(UIKit)
                     if let data = img.jpegData(compressionQuality: 0.9) ?? img.pngData() {
-                        Task {
-                            await AuthorizedAttachmentRegistry.shared.register(
-                                data: data,
-                                mimeType: "image/jpeg",
-                                chatID: groupID.uuidString,
-                                requestID: currentRunID.uuidString
-                            )
+                        if let handle = try? await AuthorizedAttachmentRegistry.shared.register(
+                            data: data,
+                            mimeType: "image/jpeg",
+                            chatID: groupID.uuidString,
+                            requestID: currentRunID.uuidString
+                        ) {
+                            registeredAttachmentHandles.append(handle)
                         }
                     }
-                    #endif
                 }
+            }
+        }
+        #endif
+
+        // Provide model-visible opaque attachment handles for tool calls (such as torah_ocr_excerpt)
+        if !registeredAttachmentHandles.isEmpty {
+            let handleNotes = registeredAttachmentHandles.enumerated().map { idx, h in
+                "[Image \(idx + 1) Attachment Handle: \(h)]"
+            }.joined(separator: " ")
+            if let lastIdx = updatedMessages.indices.last(where: { updatedMessages[$0].role == "user" }) {
+                updatedMessages[lastIdx].text += "\n\n" + handleNotes
             }
         }
         

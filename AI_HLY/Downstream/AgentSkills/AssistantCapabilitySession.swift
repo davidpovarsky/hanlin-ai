@@ -9,6 +9,7 @@ import HanlinPlatformContracts
 @MainActor
 public final class AssistantCapabilitySession {
     public let id: UUID
+    public let chatID: String?
     public let resultStore: ToolResultStore
 
     public private(set) var loadedSkillIDs: Set<HanlinSkillID> = []
@@ -20,10 +21,12 @@ public final class AssistantCapabilitySession {
 
     public init(
         id: UUID = UUID(),
+        chatID: String? = nil,
         resultStore: ToolResultStore = ToolResultStore(),
         initialExposedAliases: Set<String> = []
     ) {
         self.id = id
+        self.chatID = chatID
         self.resultStore = resultStore
         self.exposedToolAliases = initialExposedAliases
     }

@@ -1306,21 +1306,29 @@ final class HanlinScriptingPlatform {
                 }
                 guard let actionID = try? HanlinActionID(validating: cleanActionName),
                       let descriptor = try? package.appDescriptor(),
-                      let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),
-                      let requiredCapability = declaredAction.capabilities.first else {
+                      let declaredAction = descriptor.actions.first(where: { $0.id == actionID }) else {
                     Self.logger.error("Invalid NativeScript AppIntent target or action: \(actionName, privacy: .public)")
                     try? extensionStore?.acknowledge(command.id)
                     pendingResumeCommands.removeAll { $0.id == command.id }
                     continue
                 }
 
+                let requiredCapability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share"))
+
                 let grantedCaps = Set(package.grantedCapabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0) })
                 let actionCaps = Set(declaredAction.capabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.rawValue) })
                 let entrypointCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.capabilityID) })
                 let allRequired = actionCaps.union(entrypointCaps)
 
-                guard allRequired.isSubset(of: grantedCaps) || grantedCaps.contains("all") else {
+                guard allRequired.isEmpty || allRequired.isSubset(of: grantedCaps) || grantedCaps.contains("all") else {
                     Self.logger.error("Missing required capabilities for NativeScript action \(actionName, privacy: .public). Required: \(allRequired, privacy: .public), Granted: \(grantedCaps, privacy: .public)")
+                    try? extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
+                    continue
+                }
+
+                guard let effectiveCapability = requiredCapability else {
+                    Self.logger.error("Unable to resolve capability for NativeScript action \(actionName, privacy: .public)")
                     try? extensionStore?.acknowledge(command.id)
                     pendingResumeCommands.removeAll { $0.id == command.id }
                     continue
@@ -1333,7 +1341,7 @@ final class HanlinScriptingPlatform {
                         caller: hostCallerID,
                         target: targetID,
                         action: actionID,
-                        capability: requiredCapability,
+                        capability: effectiveCapability,
                         payload: payloadValue
                     ))
                     try extensionStore?.acknowledge(command.id)
