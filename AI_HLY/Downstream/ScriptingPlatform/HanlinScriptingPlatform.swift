@@ -1315,9 +1315,9 @@ final class HanlinScriptingPlatform {
 
                 let requiredCapability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share"))
 
-                let grantedCaps = Set(package.grantedCapabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0) })
+                let grantedCaps = Set(package.grantedCapabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.rawValue) })
                 let actionCaps = Set(declaredAction.capabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.rawValue) })
-                let entrypointCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.capabilityID) })
+                let entrypointCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.capabilityID.rawValue) })
                 let allRequired = actionCaps.union(entrypointCaps)
 
                 guard allRequired.isEmpty || allRequired.isSubset(of: grantedCaps) || grantedCaps.contains("all") else {

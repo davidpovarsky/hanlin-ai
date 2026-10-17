@@ -115,22 +115,11 @@ public struct TorahPhotoStudyCaptureView: View {
                 let imageRatio = imgWidth / imgHeight
                 let containerRatio = max(0.001, containerSize.width) / max(0.001, containerSize.height)
 
-                let drawWidth: CGFloat
-                let drawHeight: CGFloat
-                let offsetX: CGFloat
-                let offsetY: CGFloat
-
-                if imageRatio > containerRatio {
-                    drawWidth = containerSize.width
-                    drawHeight = containerSize.width / imageRatio
-                    offsetX = 0
-                    offsetY = (containerSize.height - drawHeight) / 2
-                } else {
-                    drawHeight = containerSize.height
-                    drawWidth = containerSize.height * imageRatio
-                    offsetX = (containerSize.width - drawWidth) / 2
-                    offsetY = 0
-                }
+                let isWider = imageRatio > containerRatio
+                let drawWidth: CGFloat = isWider ? containerSize.width : containerSize.height * imageRatio
+                let drawHeight: CGFloat = isWider ? containerSize.width / imageRatio : containerSize.height
+                let offsetX: CGFloat = isWider ? 0 : (containerSize.width - drawWidth) / 2
+                let offsetY: CGFloat = isWider ? (containerSize.height - drawHeight) / 2 : 0
 
                 Rectangle()
                     .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 2, dash: [6, 3]))
