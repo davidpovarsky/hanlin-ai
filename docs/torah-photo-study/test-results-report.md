@@ -1,7 +1,7 @@
 # Torah Photo Study — Acceptance Test Results Report
 
-**Date:** 2026-10-17T23:18:08.107830+00:00
-**Hanlin Implementation SHA:** `d4cb328afd53a4ffb3b0ed891018a1fbdf50ce85`
+**Date:** 2026-10-17T23:53:53.058977+00:00
+**Hanlin Implementation SHA:** `9c1b4a44a98b1d55da374befc4f50f72fe84ede9`
 **Maktabah SHA:** `9df51ca0b74a387cf3d3b73ebf18c8188172c72b`
 **Shared Core SHA:** `b8f71e084bcaa1c60a8e3583034328830aa27fb5`
 
