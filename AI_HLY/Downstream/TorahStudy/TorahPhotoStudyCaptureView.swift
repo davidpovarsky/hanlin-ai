@@ -14,6 +14,7 @@ public struct TorahPhotoStudyCaptureView: View {
     @State private var isProcessing = false
     @State private var ocrText: String = ""
     @State private var identificationStatus: String?
+    @State private var lastIdentificationStatus: IdentificationStatus? = nil
     @State private var identifiedBookTitle: String?
     @State private var identifiedLocator: String?
     @State private var statusMessage: String?
@@ -106,18 +107,41 @@ public struct TorahPhotoStudyCaptureView: View {
                         .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
                 )
 
-            // Crop Region Overlay
+            // Crop Region Overlay accurately mapped against aspect-ratio letterboxed image
             GeometryReader { geo in
+                let containerSize = geo.size
+                let imgWidth = max(1.0, image.size.width)
+                let imgHeight = max(1.0, image.size.height)
+                let imageRatio = imgWidth / imgHeight
+                let containerRatio = max(0.001, containerSize.width) / max(0.001, containerSize.height)
+
+                let drawWidth: CGFloat
+                let drawHeight: CGFloat
+                let offsetX: CGFloat
+                let offsetY: CGFloat
+
+                if imageRatio > containerRatio {
+                    drawWidth = containerSize.width
+                    drawHeight = containerSize.width / imageRatio
+                    offsetX = 0
+                    offsetY = (containerSize.height - drawHeight) / 2
+                } else {
+                    drawHeight = containerSize.height
+                    drawWidth = containerSize.height * imageRatio
+                    offsetX = (containerSize.width - drawWidth) / 2
+                    offsetY = 0
+                }
+
                 Rectangle()
                     .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 2, dash: [6, 3]))
                     .background(Color.accentColor.opacity(0.15))
                     .frame(
-                        width: geo.size.width * cropRect.width,
-                        height: geo.size.height * cropRect.height
+                        width: max(10, drawWidth * cropRect.width),
+                        height: max(10, drawHeight * cropRect.height)
                     )
                     .position(
-                        x: geo.size.width * (cropRect.origin.x + cropRect.width / 2),
-                        y: geo.size.height * (cropRect.origin.y + cropRect.height / 2)
+                        x: offsetX + drawWidth * (cropRect.origin.x + cropRect.width / 2),
+                        y: offsetY + drawHeight * (cropRect.origin.y + cropRect.height / 2)
                     )
             }
         }
@@ -127,16 +151,28 @@ public struct TorahPhotoStudyCaptureView: View {
     private func resultCardView(title: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Image(systemName: "checkmark.seal.fill")
-                    .foregroundColor(.green)
+                if lastIdentificationStatus == .verified {
+                    Image(systemName: "checkmark.seal.fill")
+                        .foregroundColor(.green)
+                } else if lastIdentificationStatus == .ambiguous {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.orange)
+                } else {
+                    Image(systemName: "questionmark.circle.fill")
+                        .foregroundColor(.secondary)
+                }
+
                 Text(title)
                     .font(.headline)
                 Spacer()
-                Text(identificationStatus ?? "מאומת")
+                Text(identificationStatus ?? (lastIdentificationStatus == .verified ? "מאומת" : "זוהה"))
                     .font(.caption)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
-                    .background(Color.green.opacity(0.15))
+                    .background(
+                        (lastIdentificationStatus == .verified ? Color.green : (lastIdentificationStatus == .ambiguous ? Color.orange : Color.secondary))
+                            .opacity(0.15)
+                    )
                     .cornerRadius(6)
             }
 
@@ -260,10 +296,17 @@ public struct TorahPhotoStudyCaptureView: View {
                 let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence)
                 await MainActor.run {
                     ocrText = ocrResult.rawText
+                    self.lastIdentificationStatus = result.status
                     if let top = result.selectedCandidate {
                         identifiedBookTitle = top.workTitle
                         identifiedLocator = top.locator.persistenceKey
-                        identificationStatus = result.status == .verified ? "מאומת" : "זוהה (סבירות נמוכה/חלופית)"
+                        if result.status == .verified {
+                            identificationStatus = "מאומת"
+                        } else if result.status == .ambiguous {
+                            identificationStatus = "זוהה (סבירות נמוכה/חלופית)"
+                        } else {
+                            identificationStatus = "זוהה"
+                        }
                     } else {
                         identificationStatus = "לא נמצא מקור מתאים בספריה"
                     }
@@ -271,6 +314,7 @@ public struct TorahPhotoStudyCaptureView: View {
                 }
             } catch {
                 await MainActor.run {
+                    self.lastIdentificationStatus = nil
                     identificationStatus = "שגיאה בפענוח: \(error.localizedDescription)"
                     isProcessing = false
                 }
@@ -299,10 +343,17 @@ public struct TorahPhotoStudyCaptureView: View {
             )
             let result = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: evidence)
             await MainActor.run {
+                self.lastIdentificationStatus = result.status
                 if let top = result.selectedCandidate {
                     identifiedBookTitle = top.workTitle
                     identifiedLocator = top.locator.persistenceKey
-                    identificationStatus = result.status == .verified ? "מאומת (לאחר תיקון)" : "זוהה (לאחר תיקון)"
+                    if result.status == .verified {
+                        identificationStatus = "מאומת (לאחר תיקון)"
+                    } else if result.status == .ambiguous {
+                        identificationStatus = "זוהה (סבירות נמוכה - לאחר תיקון)"
+                    } else {
+                        identificationStatus = "זוהה (לאחר תיקון)"
+                    }
                 } else {
                     identificationStatus = "לא נמצא מקור מתאים עבור הטקסט המתוקן"
                 }
@@ -315,10 +366,7 @@ public struct TorahPhotoStudyCaptureView: View {
         guard let locStr = identifiedLocator,
               let locator = SourceLocator.parse(persistenceKey: locStr) else { return }
         let link = TorahStudyDeepLink(action: .open, locator: locator, workTitle: identifiedBookTitle, highlightText: ocrText)
-        guard let url = link.url(scheme: "chavrusachat") else { return }
-        #if canImport(UIKit)
-        UIApplication.shared.open(url)
-        #endif
+        TorahStudyNavigationRouter.shared.navigate(to: link)
     }
 
     private func openInMaktabah() {

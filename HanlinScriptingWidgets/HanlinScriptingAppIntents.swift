@@ -22,7 +22,9 @@ struct HanlinScriptActionEntity: AppEntity {
 
 struct HanlinScriptActionEntityQuery: EntityQuery {
     func entities(for identifiers: [String]) async throws -> [HanlinScriptActionEntity] {
-        try records().filter { identifiers.contains($0.id) }
+        try records().filter { entity in
+            identifiers.contains(entity.id) || identifiers.contains(entity.id.components(separatedBy: "::").last ?? "")
+        }
     }
 
     func suggestedEntities() async throws -> [HanlinScriptActionEntity] {
@@ -31,7 +33,13 @@ struct HanlinScriptActionEntityQuery: EntityQuery {
 
     private func records() throws -> [HanlinScriptActionEntity] {
         try HanlinScriptExtensionStore().load()?.intentEntities.map {
-            .init(id: $0.id, displayName: $0.displayName, subtitle: $0.subtitle, identity: $0.identity)
+            let scopedID = "\($0.identity.packageID.rawValue)::\($0.identity.entrypointID)::\($0.id)"
+            return .init(
+                id: scopedID,
+                displayName: $0.displayName,
+                subtitle: $0.subtitle ?? $0.identity.packageID.rawValue,
+                identity: $0.identity
+            )
         } ?? []
     }
 }
@@ -52,9 +60,10 @@ struct HanlinRunScriptActionIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        let rawActionID = action.id.components(separatedBy: "::").last ?? action.id
         let invocation = HanlinScriptIntentInvocation(
             identity: action.identity,
-            entityID: action.id,
+            entityID: rawActionID,
             parameters: .string(input),
             continueInForeground: true
         )

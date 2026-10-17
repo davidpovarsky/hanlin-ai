@@ -826,6 +826,14 @@ final class HanlinScriptingPlatform {
             throw HanlinHostServiceError.invalidRequest("Package is not installed or enabled: \(installedPackageID.rawValue)")
         }
 
+        guard !entrypointID.isEmpty,
+              !entrypointID.contains("/"),
+              !entrypointID.contains("\\"),
+              !entrypointID.contains(".."),
+              !entrypointID.contains("\0") else {
+            throw HanlinHostServiceError.invalidRequest("Invalid entrypoint ID format or traversal attempt: '\(entrypointID)'")
+        }
+
         guard let entrypoint = package.entrypoints.first(where: {
             $0.runtimeProfile == .hanlinExpo && $0.kind == .widget && $0.id == entrypointID
         }) else {
@@ -1014,7 +1022,9 @@ final class HanlinScriptingPlatform {
                             } else {
                                 let storeRoot = try HanlinMiniAppDataStore.applicationSupportRoot()
                                 let dataStore = try HanlinMiniAppDataStore(root: storeRoot)
-                                let targetAppID = package.appID ?? (try? HanlinAppID(validating: package.record.packageID.rawValue))!
+                                guard let targetAppID = package.appID ?? (try? HanlinAppID(validating: package.record.packageID.rawValue)) else {
+                                    continue
+                                }
                                 for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
                                     let path = "widget-exposures/gen_\(package.record.activeGeneration)_\(entrypoint.id)_\(family).json"
                                     if let data = try? await dataStore.read(appID: targetAppID, area: .state, path: path) {
@@ -1286,13 +1296,31 @@ final class HanlinScriptingPlatform {
             }
 
             if entrypoint.runtimeProfile == .hanlinNativeScript {
-                let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
-                    ?? (try! HanlinAppID(validating: identity.packageID.rawValue))
-                guard let actionID = try? HanlinActionID(validating: actionName),
+                let cleanActionName = actionName.components(separatedBy: "::").last ?? actionName
+                guard let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
+                    ?? (try? HanlinAppID(validating: identity.packageID.rawValue)) else {
+                    Self.logger.error("Invalid NativeScript target AppID for package: \(identity.packageID.rawValue, privacy: .public)")
+                    try? extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
+                    continue
+                }
+                guard let actionID = try? HanlinActionID(validating: cleanActionName),
                       let descriptor = try? package.appDescriptor(),
                       let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),
                       let requiredCapability = declaredAction.capabilities.first else {
                     Self.logger.error("Invalid NativeScript AppIntent target or action: \(actionName, privacy: .public)")
+                    try? extensionStore?.acknowledge(command.id)
+                    pendingResumeCommands.removeAll { $0.id == command.id }
+                    continue
+                }
+
+                let grantedCaps = Set(package.grantedCapabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0) })
+                let actionCaps = Set(declaredAction.capabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.rawValue) })
+                let entrypointCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.capabilityID) })
+                let allRequired = actionCaps.union(entrypointCaps)
+
+                guard allRequired.isSubset(of: grantedCaps) || grantedCaps.contains("all") else {
+                    Self.logger.error("Missing required capabilities for NativeScript action \(actionName, privacy: .public). Required: \(allRequired, privacy: .public), Granted: \(grantedCaps, privacy: .public)")
                     try? extensionStore?.acknowledge(command.id)
                     pendingResumeCommands.removeAll { $0.id == command.id }
                     continue

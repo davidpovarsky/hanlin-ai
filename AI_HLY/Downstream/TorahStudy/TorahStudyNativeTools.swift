@@ -8,19 +8,51 @@ struct TorahEvidenceRecord: Codable, Hashable, Sendable {
     let rawText: String
     let attachmentHandle: String?
     let providerID: String
-    let createdAt: String
+    let chatID: String
+    let requestID: String?
+    let createdAt: Date
+    let expiresAt: Date
 }
 
 actor TorahEvidenceStore {
     static let shared = TorahEvidenceStore()
     private var evidenceMap: [String: TorahEvidenceRecord] = [:]
+    private let maxEntries = 500
 
-    func store(evidenceID: String, record: TorahEvidenceRecord) {
-        evidenceMap[evidenceID] = record
+    func store(record: TorahEvidenceRecord) {
+        cleanExpired()
+        if evidenceMap.count >= maxEntries {
+            if let oldest = evidenceMap.values.min(by: { $0.createdAt < $1.createdAt }) {
+                evidenceMap.removeValue(forKey: oldest.evidenceID)
+            }
+        }
+        evidenceMap[record.evidenceID] = record
     }
 
-    func retrieve(evidenceID: String) -> TorahEvidenceRecord? {
-        evidenceMap[evidenceID]
+    func retrieve(evidenceID: String, chatID: String) -> TorahEvidenceRecord? {
+        cleanExpired()
+        guard let record = evidenceMap[evidenceID] else { return nil }
+        guard record.expiresAt > Date() else {
+            evidenceMap.removeValue(forKey: evidenceID)
+            return nil
+        }
+        guard record.chatID == chatID else {
+            return nil
+        }
+        return record
+    }
+
+    func clearChat(chatID: String) {
+        evidenceMap = evidenceMap.filter { $0.value.chatID != chatID }
+    }
+
+    func clearAll() {
+        evidenceMap.removeAll()
+    }
+
+    private func cleanExpired() {
+        let now = Date()
+        evidenceMap = evidenceMap.filter { $0.value.expiresAt > now }
     }
 }
 
@@ -80,11 +112,15 @@ struct TorahOCRExcerptTool: NativeTool {
             let policy = (arguments["policy"] as? String) ?? "prefer_local"
 
             let evidenceID = "ocr_\(UUID().uuidString.prefix(8))"
-            let createdAt = ISO8601DateFormatter().string(from: Date())
+            let now = Date()
+            let expiresAt = now.addingTimeInterval(3600)
 
             // Strictly reject arbitrary paths, traversal, URL schemes, and null bytes
             guard !handle.isEmpty,
                   !handle.hasPrefix("/"),
+                  !handle.contains("/"),
+                  !handle.contains("\\"),
+                  !handle.contains(".."),
                   !handle.contains(":"),
                   !handle.contains("\0") else {
                 return RuntimeToolSupport.failure(
@@ -93,59 +129,17 @@ struct TorahOCRExcerptTool: NativeTool {
                 )
             }
 
-            let cleanHandle = handle.replacingOccurrences(of: "\\", with: "/")
-            let handleComponents = cleanHandle.split(separator: "/")
-            if handleComponents.contains("..") || handleComponents.contains(".") {
-                return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Directory traversal is not permitted."),
-                    title: "Security Violation"
+            // Resolve real image data strictly via AuthorizedAttachmentRegistry / context
+            let imageData: Data
+            if let resolver = context.attachmentResolver {
+                imageData = try await resolver(handle)
+            } else {
+                imageData = try await AuthorizedAttachmentRegistry.shared.resolve(
+                    handle: handle,
+                    chatID: context.effectiveChatID,
+                    requestID: context.requestID
                 )
             }
-
-            // Resolve real image data strictly within sandboxed application attachments directory
-            guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-                return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Application Support directory unavailable."),
-                    title: "Storage Error"
-                )
-            }
-            let attachmentsBase = appSupport.appendingPathComponent("Attachments", isDirectory: true)
-            let candidate = attachmentsBase.appendingPathComponent(cleanHandle)
-            let resolvedCandidate = candidate.standardizedFileURL.resolvingSymlinksInPath()
-            let resolvedBase = attachmentsBase.standardizedFileURL.resolvingSymlinksInPath()
-            let basePathWithSlash = resolvedBase.path.hasSuffix("/") ? resolvedBase.path : resolvedBase.path + "/"
-
-            guard resolvedCandidate.path.hasPrefix(basePathWithSlash) else {
-                return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Attachment handle escapes attachments sandbox: '\(handle)'."),
-                    title: "Security Violation"
-                )
-            }
-
-            let resourceValues = try? candidate.resourceValues(forKeys: [.isSymbolicLinkKey, .fileSizeKey])
-            if resourceValues?.isSymbolicLink == true {
-                return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Symbolic links are not permitted for attachments."),
-                    title: "Security Violation"
-                )
-            }
-
-            guard FileManager.default.fileExists(atPath: candidate.path) else {
-                return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Attachment handle '\(handle)' not found in chat sandbox."),
-                    title: "Attachment Not Found"
-                )
-            }
-
-            let size = resourceValues?.fileSize ?? 0
-            guard size <= 20 * 1024 * 1024 else {
-                return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Attachment exceeds maximum allowed image size of 20MB."),
-                    title: "Attachment Too Large"
-                )
-            }
-
-            let imageData = try Data(contentsOf: candidate)
 
             var regionTuple: (x: Double, y: Double, width: Double, height: Double)? = nil
             if let regionDict = arguments["region"] as? [String: Any],
@@ -184,14 +178,17 @@ struct TorahOCRExcerptTool: NativeTool {
                 rawText: rawText,
                 attachmentHandle: handle,
                 providerID: "apple_vision_local",
-                createdAt: createdAt
+                chatID: context.effectiveChatID,
+                requestID: context.requestID,
+                createdAt: now,
+                expiresAt: expiresAt
             )
 
-            await TorahEvidenceStore.shared.store(evidenceID: evidenceID, record: evidenceRecord)
+            await TorahEvidenceStore.shared.store(record: evidenceRecord)
 
             let modelText = """
             Evidence ID: \(evidenceID)
-            Provider: apple_vision_local (accurate)
+            Provider: apple_vision_local (raw_transcription)
             Raw Transcription:
             \(rawText)
             Lines: \(linesData.count)
@@ -246,7 +243,8 @@ struct TorahIdentifyExcerptTool: NativeTool {
             parameters: NativeToolSchema.object(
                 properties: [
                     "evidence_id": NativeToolSchema.string(description: "Identifier of previously obtained OCREvidence."),
-                    "text": NativeToolSchema.string(description: "Explicit transcribed text to identify if evidence_id is not provided.")
+                    "text": NativeToolSchema.string(description: "Explicit transcribed text to identify if evidence_id is not provided."),
+                    "allow_remote": NativeToolSchema.boolean(description: "Whether to allow remote fallback (e.g. Sefaria) if local offline search does not identify the passage. Defaults to true.")
                 ]
             )
         )
@@ -256,14 +254,14 @@ struct TorahIdentifyExcerptTool: NativeTool {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
-                allowedKeys: ["evidence_id", "text"]
+                allowedKeys: ["evidence_id", "text", "allow_remote"]
             )
 
             var rawText = ""
             if let evID = arguments["evidence_id"] as? String {
-                guard let stored = await TorahEvidenceStore.shared.retrieve(evidenceID: evID) else {
+                guard let stored = await TorahEvidenceStore.shared.retrieve(evidenceID: evID, chatID: context.effectiveChatID) else {
                     return RuntimeToolSupport.failure(
-                        HanlinHostServiceError.invalidRequest("Evidence ID '\(evID)' not found or expired."),
+                        HanlinHostServiceError.invalidRequest("Evidence ID '\(evID)' not found, expired, or belongs to another chat session."),
                         title: "Evidence Not Found"
                     )
                 }
@@ -299,7 +297,8 @@ struct TorahIdentifyExcerptTool: NativeTool {
                 lines: evidenceLines
             )
 
-            let identification = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: ocrEvidence)
+            let allowRemote = (arguments["allow_remote"] as? Bool) ?? true
+            let identification = await TorahLibraryCoordinator.shared.identifyExcerpt(evidence: ocrEvidence, allowRemoteFallback: allowRemote)
 
             let statusStr = identification.status.rawValue
             if let top = identification.selectedCandidate {
@@ -746,6 +745,13 @@ struct TorahOpenSourceTool: NativeTool {
             let target = (arguments["target"] as? String) ?? "hanlin"
             let highlight = arguments["highlight"] as? String
 
+            guard ["hanlin", "maktabah"].contains(target) else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.invalidRequest("Target '\(target)' is unsupported. Allowed targets: 'hanlin', 'maktabah'."),
+                    title: "Invalid Navigation Target"
+                )
+            }
+
             let locator: SourceLocator
             if let parsed = SourceLocator.parse(persistenceKey: locStr) {
                 locator = parsed
@@ -766,8 +772,14 @@ struct TorahOpenSourceTool: NativeTool {
                 highlightText: highlight
             )
 
-            let scheme = target == "maktabah" ? "maktabah" : "hanlin"
-            let deepLinkURLString = link.url(scheme: scheme)?.absoluteString ?? "\(scheme)://study?action=open&locator=\(locStr)"
+            let scheme = target == "maktabah" ? "maktabah" : "chavrusachat"
+            guard let deepLinkURL = link.url(scheme: scheme) else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.invalidRequest("Unable to construct valid deep link for locator '\(locStr)'."),
+                    title: "Navigation URL Error"
+                )
+            }
+            let deepLinkURLString = deepLinkURL.absoluteString
 
             let actionTitle = target == "maktabah" ? "Open in Maktabah" : "Open in Hanlin"
             let block = NativeUIBlock(

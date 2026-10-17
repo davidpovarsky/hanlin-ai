@@ -72,18 +72,26 @@ export const hostServices = {
     validUntil?: string | number | Date
   ): Promise<{ ok: true }> {
     let validUntilISO: string | undefined;
+    let validUntilEpochMilliseconds: number | undefined;
     if (validUntil instanceof Date) {
       validUntilISO = validUntil.toISOString();
+      validUntilEpochMilliseconds = validUntil.getTime();
     } else if (typeof validUntil === 'number') {
       validUntilISO = new Date(validUntil).toISOString();
+      validUntilEpochMilliseconds = validUntil;
     } else if (typeof validUntil === 'string') {
       validUntilISO = validUntil;
+      const parsed = Date.parse(validUntil);
+      if (!Number.isNaN(parsed)) {
+        validUntilEpochMilliseconds = parsed;
+      }
     }
     return invoke('widgets.publish', {
       entrypointID,
       family,
       root,
       validUntil: validUntilISO,
+      validUntilEpochMilliseconds,
     });
   },
 } as const;

@@ -35,7 +35,7 @@ Potential improvements, features, optimizations, or architectural ideas.
   - **FINAL-06 & FINAL-07:** Full collector single-run execution (step 51 skipped in run `38639744717`).
   - **FINAL-08:** Layer D physical Apple Silicon hardware execution (no fake simulator substitution).
   - **FINAL-09..FINAL-12:** Dedicated semantic acceptance tests implemented in `MasterScenarioSemanticAcceptanceTests.swift`, pending execution.
-  - **Conformances:** 77 provider conformance tests remain truthfully `NOT_RUN` in `provider-conformance-summary.json`.
+  - **Conformances:** 77 provider conformance tests in total: run `38894350038` reported 59 PASS, 0 FAIL, 0 EVIDENCE_ERROR, and 18 NOT_RUN (downstream `ProductionProviderConformanceTests` suites, now routed via `plan_affected_validation.py` and `affected-validation-map.json`).
   - **External/Device Dependencies:** 78 `NOT_RUN_DEVICE` physical hardware obligations, 10 `BLOCKED_EXTERNAL` cloud provider obligations, 2 `BLOCKED_DEPENDENCY` (`apple/coreai-models` unpinned), 2 `BLOCKED_INPUT_MODEL_FIXTURE` (redistributable model weights unbundled).
 
 - **Corrective Repairs Completed on Target Branch:**

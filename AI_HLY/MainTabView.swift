@@ -11,6 +11,7 @@ import SwiftData
 struct MainTabView: View {
     
     @Binding var deepLinkTarget: String?
+    @ObservedObject private var torahRouter = TorahStudyNavigationRouter.shared
     @State private var selectedTab: Int = {
         let environment = ProcessInfo.processInfo.environment
         if environment["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return 5 }
@@ -86,6 +87,11 @@ struct MainTabView: View {
         }
         // background修饰符对于TabView不是必需的，但保留以防有特定需要
         .background(Color(.systemBackground))
+        .sheet(isPresented: $torahRouter.isPresentingReader) {
+            if let link = torahRouter.activeDeepLink {
+                TorahSourceReaderView(deepLink: link)
+            }
+        }
     }
 }
 

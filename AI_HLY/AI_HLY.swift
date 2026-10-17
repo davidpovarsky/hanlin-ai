@@ -123,6 +123,7 @@ struct MyApp: App {
                     if url.host == "openVisionView" {
                         deepLinkTarget = "vision"
                     } else if url.host == "study", let link = TorahStudyDeepLink.parse(url: url) {
+                        TorahStudyNavigationRouter.shared.navigate(to: link)
                         NotificationCenter.default.post(
                             name: Notification.Name("TorahStudyDeepLinkNotification"),
                             object: link

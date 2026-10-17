@@ -7,13 +7,37 @@ public enum TorahProviderRole: String, Codable, Sendable {
     case enrichment
 }
 
+/// Provider availability state.
+public enum TorahProviderAvailability: String, Codable, Sendable {
+    case available
+    case unavailable
+    case unknown
+}
+
 /// Provider descriptor with live availability status.
 public struct TorahProviderStatus: Sendable {
     public let providerID: String
     public let displayName: String
     public let role: TorahProviderRole
     public let isAvailable: Bool
+    public let availability: TorahProviderAvailability
     public let provenance: String
+
+    public init(
+        providerID: String,
+        displayName: String,
+        role: TorahProviderRole,
+        isAvailable: Bool,
+        availability: TorahProviderAvailability? = nil,
+        provenance: String
+    ) {
+        self.providerID = providerID
+        self.displayName = displayName
+        self.role = role
+        self.isAvailable = isAvailable
+        self.availability = availability ?? (isAvailable ? .available : .unavailable)
+        self.provenance = provenance
+    }
 }
 
 /// Errors thrown by the unified Torah library coordinator.
@@ -83,21 +107,23 @@ public final class TorahLibraryCoordinator: @unchecked Sendable {
                 displayName: zayitProvider.displayName,
                 role: .local,
                 isAvailable: zayitProvider.isAvailable,
-                provenance: zayitProvider.searchIndexURL?.path ?? "uninstalled"
+                provenance: zayitProvider.isTantivyIndexAvailable ? (zayitProvider.searchIndexURL?.path ?? "installed") : (zayitProvider.isUsingFallback ? "fallback (Otzaria SQLite)" : "uninstalled")
             ),
             TorahProviderStatus(
                 providerID: sefariaProvider.providerID,
                 displayName: sefariaProvider.displayName,
                 role: .remote,
-                isAvailable: true,
-                provenance: "https://www.sefaria.org/api"
+                isAvailable: false,
+                availability: .unknown,
+                provenance: "https://www.sefaria.org/api (unprobed)"
             ),
             TorahProviderStatus(
                 providerID: genizahProvider.providerID,
                 displayName: genizahProvider.displayName,
                 role: .enrichment,
-                isAvailable: true,
-                provenance: "https://api.genizah.org/v1"
+                isAvailable: false,
+                availability: .unknown,
+                provenance: "https://api.genizah.org/v1 (unprobed)"
             )
         ]
     }
@@ -239,14 +265,16 @@ public final class TorahLibraryCoordinator: @unchecked Sendable {
     public func getLinks(locator: SourceLocator, type: String? = nil) async throws -> [TorahLinkedSource] {
         let providerID = locator.providerID.lowercased()
 
-        if providerID == "otzaria" || providerID == "zayit" {
+        if providerID == "otzaria" || providerID == "maktabah" {
             return try await otzariaProvider.getLinks(locator: locator, type: type)
+        } else if providerID == "zayit" {
+            return try await zayitProvider.getLinks(locator: locator, type: type)
         } else if providerID == "sefaria" {
             return try await sefariaProvider.getLinks(locator: locator, type: type)
         } else if providerID == "genizah" {
             return try await genizahProvider.getLinks(locator: locator, type: type)
         }
-        return []
+        throw TorahCoordinatorError.providerNotFound(locator.providerID)
     }
 
     // MARK: - Topics
@@ -256,9 +284,11 @@ public final class TorahLibraryCoordinator: @unchecked Sendable {
 
         if providerID == "sefaria" {
             return try await sefariaProvider.getTopics(locator: locator)
-        } else if providerID == "otzaria" {
+        } else if providerID == "otzaria" || providerID == "maktabah" {
             return try await otzariaProvider.getTopics(locator: locator)
+        } else if providerID == "zayit" {
+            return try await zayitProvider.getTopics(locator: locator)
         }
-        return []
+        throw TorahCoordinatorError.providerNotFound(locator.providerID)
     }
 }

@@ -591,6 +591,7 @@
         "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
         "AI_HLYTests/LegacyToolMigrationTests",
         "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
+        "AI_HLYTests/ProductionProviderConformanceTests",
         "AI_HLYTests/ProductionSystemSkillsTests",
         "AI_HLYTests/RuntimeToolContractTests",
         "AI_HLYTests/ScriptingCanonicalAuthorityTests",

@@ -33,6 +33,13 @@ public struct ITorahCorpusManifest: Codable, Hashable, Sendable {
     }
 }
 
+public enum ITorahStorageMode: String, Codable, Sendable {
+    case sharedAuthorizedGroup = "shared_authorized_group"
+    case privateFallback = "private_fallback"
+    case customOverride = "custom_override"
+    case unavailable = "unavailable"
+}
+
 public enum ITorahSharedStorage: Sendable {
     public static let appGroupIdentifier = "group.com.davidpovarsky.itorah"
     public static let otzariaNamespace = "Otzaria"
@@ -64,7 +71,41 @@ public enum ITorahSharedStorage: Sendable {
         set { overrideBox.root = newValue }
     }
 
-    /// Resolves the canonical shared container root URL, falling back to internal application storage when the shared App Group is unavailable.
+    /// Explicitly reports the current storage resolution mode. Never conflates private fallback with shared app group.
+    public static var currentStorageMode: ITorahStorageMode {
+        if customRootURL != nil {
+            return .customOverride
+        }
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS) || os(visionOS)
+        if FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) != nil {
+            return .sharedAuthorizedGroup
+        }
+        #endif
+        if FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first != nil {
+            return .privateFallback
+        }
+        return .unavailable
+    }
+
+    /// Whether the authentic shared App Group container is active.
+    public static var isSharedAppGroupActive: Bool {
+        currentStorageMode == .sharedAuthorizedGroup
+    }
+
+    /// Resolves the strict App Group shared container, throwing an error if unavailable (without silent fallback).
+    public static func sharedGroupContainerURL() throws -> URL {
+        if let custom = customRootURL {
+            return custom
+        }
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS) || os(visionOS)
+        if let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) {
+            return url
+        }
+        #endif
+        throw ITorahSharedStorageError.appGroupUnavailable(appGroupIdentifier)
+    }
+
+    /// Resolves the active storage container root URL (shared App Group or sandboxed Application Support fallback).
     public static func containerURL() throws -> URL {
         if let custom = customRootURL {
             return custom

@@ -14,11 +14,19 @@ public final class ZayitLibraryProvider: TorahLibraryProvider, TorahLibrarySearc
         self.otzariaFallback = OtzariaLibraryProvider(databaseURL: databaseURL)
     }
 
+    /// Whether the dedicated Tantivy search index is installed on disk.
+    public var isTantivyIndexAvailable: Bool {
+        guard let url = searchIndexURL else { return false }
+        return FileManager.default.fileExists(atPath: url.path)
+    }
+
+    /// Whether Zayit search is operating under SQLite fallback mode due to uninstalled Tantivy index.
+    public var isUsingFallback: Bool {
+        !isTantivyIndexAvailable && otzariaFallback.isAvailable
+    }
+
     public var isAvailable: Bool {
-        if let url = searchIndexURL, FileManager.default.fileExists(atPath: url.path) {
-            return true
-        }
-        return otzariaFallback.isAvailable
+        isTantivyIndexAvailable || otzariaFallback.isAvailable
     }
 
     public static func resolveDefaultSearchIndexURL() -> URL? {

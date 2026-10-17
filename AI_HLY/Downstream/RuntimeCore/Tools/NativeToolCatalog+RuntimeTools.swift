@@ -8,7 +8,6 @@ extension NativeToolCatalog {
         register(GetRuntimeCapabilitiesTool())
         register(ManageRuntimePackagesTool())
         register(ExecuteSkillResourceTool())
-        register(ExecuteSkillResourceTool(name: "read_skill_resource"))
         register(TorahOCRExcerptTool())
         register(TorahIdentifyExcerptTool())
         register(TorahSearchTextTool())

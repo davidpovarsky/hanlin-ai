@@ -117,14 +117,32 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
                   let appID = context.appID else {
                 throw HanlinHostServiceError.invalidRequest("widgets.publish requires authenticated package and app context")
             }
-            let request = try JSONDecoder().decode(WidgetPublishRequest.self, from: payloadData)
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: payloadData) as? [String: Any],
+                  let entrypointID = jsonObject["entrypointID"] as? String,
+                  let family = jsonObject["family"] as? String,
+                  let rootDict = jsonObject["root"] as? [String: Any] else {
+                throw HanlinHostServiceError.invalidRequest("widgets.publish requires valid JSON payload with entrypointID, family, and root node")
+            }
+
+            // Path traversal rejection
+            guard !entrypointID.isEmpty,
+                  !entrypointID.contains("/"),
+                  !entrypointID.contains("\\"),
+                  !entrypointID.contains(".."),
+                  !entrypointID.contains("\0") else {
+                throw HanlinHostServiceError.invalidRequest("Invalid entrypoint ID format: directory traversal prohibited")
+            }
+
+            let parsedRoot = try Self.parseUntaggedNode(rootDict, depth: 0)
+            let validUntilDate = Self.parseValidUntil(from: jsonObject)
+
             try await HanlinScriptingPlatform.shared.publishExpoWidget(
                 installedPackageID: installedPackageID,
                 appID: appID,
-                entrypointID: request.entrypointID,
-                family: request.family,
-                root: request.root,
-                validUntil: request.validUntil
+                entrypointID: entrypointID,
+                family: family,
+                root: parsedRoot,
+                validUntil: validUntilDate
             )
             return "{\"ok\":true}"
 
@@ -259,9 +277,99 @@ private struct FileListRequest: Decodable {
     let area: String
 }
 
-private struct WidgetPublishRequest: Decodable {
-    let entrypointID: String
-    let family: String
-    let root: HanlinScriptUINode
-    let validUntil: Date?
+extension ExpoHostServicesAdapter {
+    static func parseValidUntil(from dict: [String: Any]) -> Date? {
+        if let millis = dict["validUntilEpochMilliseconds"] as? Double, millis > 0 {
+            return Date(timeIntervalSince1970: millis / 1000.0)
+        }
+        if let millisInt = dict["validUntilEpochMilliseconds"] as? Int64, millisInt > 0 {
+            return Date(timeIntervalSince1970: Double(millisInt) / 1000.0)
+        }
+        if let millisInt = dict["validUntilEpochMilliseconds"] as? Int, millisInt > 0 {
+            return Date(timeIntervalSince1970: Double(millisInt) / 1000.0)
+        }
+        if let validUntilStr = dict["validUntil"] as? String, !validUntilStr.isEmpty {
+            let formatterWithFraction = ISO8601DateFormatter()
+            formatterWithFraction.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let d = formatterWithFraction.date(from: validUntilStr) {
+                return d
+            }
+            let standardFormatter = ISO8601DateFormatter()
+            standardFormatter.formatOptions = [.withInternetDateTime]
+            if let d = standardFormatter.date(from: validUntilStr) {
+                return d
+            }
+            if let dbl = Double(validUntilStr), dbl > 0 {
+                return Date(timeIntervalSince1970: dbl > 1_000_000_000_000 ? dbl / 1000.0 : dbl)
+            }
+        }
+        return nil
+    }
+
+    static func toHanlinValue(_ any: Any) throws -> HanlinValue {
+        switch any {
+        case is NSNull:
+            return .null
+        case let b as Bool:
+            return .bool(b)
+        case let i as Int:
+            return .integer(Int64(i))
+        case let i as Int64:
+            return .integer(i)
+        case let n as NSNumber:
+            if CFGetTypeID(n as CFTypeRef) == CFBooleanGetTypeID() {
+                return .bool(n.boolValue)
+            }
+            let dbl = n.doubleValue
+            if floor(dbl) == dbl && dbl >= Double(Int64.min) && dbl <= Double(Int64.max) {
+                return .integer(n.int64Value)
+            }
+            return try HanlinValue.finiteNumber(dbl)
+        case let d as Double:
+            return try HanlinValue.finiteNumber(d)
+        case let s as String:
+            return .string(s)
+        case let arr as [Any]:
+            return .array(try arr.map { try toHanlinValue($0) })
+        case let dict as [String: Any]:
+            var members: [(key: String, value: HanlinValue)] = []
+            for (k, v) in dict {
+                members.append((key: k, value: try toHanlinValue(v)))
+            }
+            return .object(try HanlinObject(uniqueMembers: members))
+        default:
+            throw HanlinHostServiceError.invalidRequest("Unsupported property value type in UI node: \(type(of: any))")
+        }
+    }
+
+    static func parseUntaggedNode(_ dict: [String: Any], depth: Int) throws -> HanlinScriptUINode {
+        guard depth < 64 else {
+            throw HanlinHostServiceError.invalidRequest("Widget UI hierarchy depth exceeds maximum allowed limit (64)")
+        }
+        guard let kindStr = dict["kind"] as? String else {
+            throw HanlinHostServiceError.invalidRequest("Missing 'kind' in UI node")
+        }
+        guard let primitive = HanlinScriptUIPrimitive(rawValue: kindStr) else {
+            throw HanlinHostServiceError.invalidRequest("Unknown or disallowed UI primitive kind: '\(kindStr)'")
+        }
+        let key = dict["key"] as? String
+        var properties: [String: HanlinValue] = [:]
+        if let propsDict = dict["properties"] as? [String: Any] {
+            for (k, v) in propsDict {
+                properties[k] = try toHanlinValue(v)
+            }
+        }
+        var children: [HanlinScriptUINode] = []
+        if let childrenArr = dict["children"] as? [[String: Any]] {
+            for childDict in childrenArr {
+                children.append(try parseUntaggedNode(childDict, depth: depth + 1))
+            }
+        }
+        return HanlinScriptUINode(
+            kind: primitive,
+            key: key,
+            properties: properties,
+            children: children
+        )
+    }
 }

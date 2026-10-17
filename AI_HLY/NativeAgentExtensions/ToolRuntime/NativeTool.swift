@@ -24,11 +24,41 @@ struct NativeToolExecutionContext {
     var localeIdentifier: String
     var modelContext: ModelContext?
     var toolCallID: String?
+    var chatID: String?
+    var requestID: String?
+    var capabilitySession: AssistantCapabilitySession?
+    var attachmentResolver: (@Sendable (String) async throws -> Data)?
 
-    init(localeIdentifier: String, modelContext: ModelContext? = nil, toolCallID: String? = nil) {
+    init(
+        localeIdentifier: String,
+        modelContext: ModelContext? = nil,
+        toolCallID: String? = nil,
+        chatID: String? = nil,
+        requestID: String? = nil,
+        capabilitySession: AssistantCapabilitySession? = nil,
+        attachmentResolver: (@Sendable (String) async throws -> Data)? = nil
+    ) {
         self.localeIdentifier = localeIdentifier
         self.modelContext = modelContext
         self.toolCallID = toolCallID
+        self.chatID = chatID
+        self.requestID = requestID
+        self.capabilitySession = capabilitySession
+        self.attachmentResolver = attachmentResolver
+    }
+
+    var effectiveChatID: String { chatID ?? "default_chat" }
+    var effectiveRequestID: String { requestID ?? toolCallID ?? "default_request" }
+
+    func resolveAttachment(handle: String) async throws -> Data {
+        if let resolver = attachmentResolver {
+            return try await resolver(handle)
+        }
+        return try await AuthorizedAttachmentRegistry.shared.resolve(
+            handle: handle,
+            chatID: effectiveChatID,
+            requestID: effectiveRequestID
+        )
     }
 
     var isHebrew: Bool { localeIdentifier.hasPrefix("he") }

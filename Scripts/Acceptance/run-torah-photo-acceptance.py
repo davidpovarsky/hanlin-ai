@@ -18,9 +18,22 @@ from pathlib import Path
 
 SCHEMA_VERSION = 1
 
-HANLIN_SHA = "e6e222beecbb87be8a98059f143c7b3ddb297bcf"
 MAKTABAH_SHA = "9df51ca0b74a387cf3d3b73ebf18c8188172c72b"
 SHARED_CORE_SHA = "b8f71e084bcaa1c60a8e3583034328830aa27fb5"
+
+def resolve_git_sha(repo_dir: Path, override_sha: str | None = None) -> str:
+    if override_sha:
+        try:
+            res = subprocess.run(["git", "cat-file", "-e", f"{override_sha}^{{commit}}"], cwd=str(repo_dir), check=False)
+            if res.returncode == 0:
+                return override_sha
+        except Exception:
+            pass
+    try:
+        res = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(repo_dir), capture_output=True, text=True, check=True)
+        return res.stdout.strip()
+    except Exception:
+        return "UNKNOWN_SHA"
 
 ALL_TEST_IDS = [
     # BASE
@@ -197,7 +210,10 @@ def iso_now():
     return datetime.now(timezone.utc).isoformat()
 
 
-def make_record(test_id, tier, status, reason, assertions=None, metrics=None, evidence=None, blockers=None, mocks_used=None):
+CURRENT_HANLIN_SHA = "UNKNOWN_SHA"
+
+
+def make_record(test_id, tier, status, reason, assertions=None, metrics=None, evidence=None, blockers=None, mocks_used=None, hanlin_sha=None):
     now = iso_now()
     return {
         "schemaVersion": SCHEMA_VERSION,
@@ -209,7 +225,7 @@ def make_record(test_id, tier, status, reason, assertions=None, metrics=None, ev
         "startedAt": now,
         "finishedAt": now,
         "revisions": {
-            "hanlin": HANLIN_SHA,
+            "hanlin": hanlin_sha or CURRENT_HANLIN_SHA,
             "maktabah": MAKTABAH_SHA,
             "sharedCore": SHARED_CORE_SHA,
         },
@@ -315,10 +331,14 @@ def main():
     parser.add_argument("--suite", help="Filter by suite prefix (e.g. BASE, SKL, MCP, LIB, OCR, MAT, ENR, AGT, UI, SEC, PERF, REG, E2E)")
     parser.add_argument("--output", default="test-results.jsonl", help="Output path for JSONL records")
     parser.add_argument("--report", default="docs/torah-photo-study/test-results-report.md", help="Output markdown report path")
+    parser.add_argument("--implementation-sha", default=None, help="Explicit implementation SHA")
     parser.add_argument("--dry-run", action="store_true", help="Perform dry run without test execution")
     args = parser.parse_args()
 
     repo_dir = Path(__file__).resolve().parent.parent.parent
+
+    global CURRENT_HANLIN_SHA
+    CURRENT_HANLIN_SHA = resolve_git_sha(repo_dir, args.implementation_sha)
 
     # Execute unit tests
     swift_ok, swift_msg, swift_tests = run_swift_tests(repo_dir)
@@ -441,7 +461,7 @@ def main():
     with open(rep_path, "w", encoding="utf-8") as f:
         f.write("# Torah Photo Study — Acceptance Test Results Report\n\n")
         f.write(f"**Date:** {iso_now()}\n")
-        f.write(f"**Hanlin SHA:** `{HANLIN_SHA}`\n")
+        f.write(f"**Hanlin SHA:** `{CURRENT_HANLIN_SHA}`\n")
         f.write(f"**Maktabah SHA:** `{MAKTABAH_SHA}`\n")
         f.write(f"**Shared Core SHA:** `{SHARED_CORE_SHA}`\n\n")
         f.write("## Summary Statistics\n\n")

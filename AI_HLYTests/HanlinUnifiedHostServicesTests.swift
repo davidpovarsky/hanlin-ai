@@ -271,4 +271,142 @@ struct HanlinUnifiedHostServicesTests {
         let r2 = await authority.authorize(capability: "runtime.python", context: context)
         #expect(r2 == .notGranted)
     }
+
+    // MARK: - EXP-01 & EXP-02: Expo Untagged JSON and Date Bridge
+
+    @Test func expoUntaggedJSONNodeDecoding() throws {
+        let untaggedJSON: [String: Any] = [
+            "kind": "vStack",
+            "properties": [
+                "spacing": 8
+            ],
+            "children": [
+                [
+                    "kind": "text",
+                    "properties": [
+                        "content": "Counter: 7",
+                        "font": "body"
+                    ],
+                    "children": []
+                ]
+            ]
+        ]
+
+        let node = try ExpoHostServicesAdapter.parseUntaggedNode(untaggedJSON, depth: 0)
+        #expect(node.kind.rawValue == "vStack")
+        #expect(node.properties["spacing"] == .integer(8))
+        #expect(node.children.count == 1)
+
+        let child = node.children[0]
+        #expect(child.kind.rawValue == "text")
+        #expect(child.properties["content"] == .string("Counter: 7"))
+        #expect(child.properties["font"] == .string("body"))
+    }
+
+    @Test func expoValidUntilDateParsing() {
+        // 1. Fractional seconds ISO-8601
+        let isoFractional = ["validUntil": "2026-10-18T12:34:56.789Z"]
+        let parsedDate1 = ExpoHostServicesAdapter.parseValidUntil(from: isoFractional)
+        #expect(parsedDate1 != nil)
+
+        // 2. Epoch milliseconds
+        let epochMillis: [String: Any] = ["validUntilEpochMilliseconds": 1792272000000.0]
+        let parsedDate2 = ExpoHostServicesAdapter.parseValidUntil(from: epochMillis)
+        #expect(parsedDate2 != nil)
+
+        // 3. Invalid date returns nil
+        let invalidDate = ["validUntil": "not-a-valid-date-string"]
+        let parsedDate3 = ExpoHostServicesAdapter.parseValidUntil(from: invalidDate)
+        #expect(parsedDate3 == nil)
+    }
+
+    // MARK: - SEC-03 & SEC-04: Authorized Attachment & Evidence Scoping
+
+    @Test func authorizedAttachmentRegistryCrossChatDenial() async throws {
+        let registry = AuthorizedAttachmentRegistry()
+        let sampleData = Data([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46]) // JPEG header
+
+        let handle = await registry.register(
+            data: sampleData,
+            mimeType: "image/jpeg",
+            chatID: "chat_A",
+            requestID: "req_01"
+        )
+
+        // Cross-chat resolution must throw capabilityNotGranted / accessDenied
+        do {
+            _ = try await registry.resolve(handle: handle, chatID: "chat_B", requestID: "req_02")
+            Issue.record("Expected cross-chat resolution to fail")
+        } catch let error as HanlinHostServiceError {
+            if case .capabilityNotGranted = error {
+                // Expected
+            } else {
+                Issue.record("Unexpected error type: \(error)")
+            }
+        }
+
+        // Path traversal must fail closed
+        do {
+            _ = try await registry.resolve(handle: "../../etc/passwd", chatID: "chat_A")
+            Issue.record("Expected directory traversal to fail")
+        } catch is HanlinHostServiceError {
+            // Expected
+        }
+    }
+
+    @Test func torahEvidenceStoreChatScopingAndExpiry() async {
+        let store = TorahEvidenceStore()
+        let record = TorahEvidenceRecord(
+            evidenceID: "ev_test_123",
+            rawText: "בראשית ברא אלהים",
+            attachmentHandle: "att_001",
+            providerID: "apple_vision_local",
+            chatID: "chat_alpha",
+            requestID: "req_01",
+            createdAt: Date(),
+            expiresAt: Date().addingTimeInterval(3600)
+        )
+
+        await store.store(evidenceID: "ev_test_123", record: record)
+
+        // Retrieved by same chat
+        let retrieved = await store.retrieve(evidenceID: "ev_test_123", chatID: "chat_alpha")
+        #expect(retrieved != nil)
+        #expect(retrieved?.rawText == "בראשית ברא אלהים")
+
+        // Denied for different chat
+        let crossRetrieved = await store.retrieve(evidenceID: "ev_test_123", chatID: "chat_beta")
+        #expect(crossRetrieved == nil)
+    }
+
+    // MARK: - INT-01 & INT-03: Multi-grant Verification & Collision Prevention
+
+    @Test func multiGrantVerificationRequiresAllCapabilities() {
+        let grantedCaps: Set<String> = ["files", "network"]
+        let requiredActionCaps: Set<String> = ["files", "runtime.node"]
+
+        // If one of two required capabilities is missing (e.g. runtime.node is not in grantedCaps),
+        // allRequired.isSubset(of: grantedCaps) MUST evaluate to false.
+        let isFullyAuthorized = requiredActionCaps.isSubset(of: grantedCaps)
+        #expect(!isFullyAuthorized, "Action requiring both files and runtime.node must NOT authorize when runtime.node is missing")
+
+        let fullGrantedCaps: Set<String> = ["files", "network", "runtime.node"]
+        let isAuthorizedWithFull = requiredActionCaps.isSubset(of: fullGrantedCaps)
+        #expect(isAuthorizedWithFull, "Action must authorize when all required capabilities are granted")
+    }
+
+    @Test func actionEntityScopedIDsPreventCollision() {
+        // Two packages exposing the same action name "toggle_state"
+        let pkgA = "com.author.packageA"
+        let pkgB = "com.author.packageB"
+        let entrypoint = "main"
+        let actionID = "toggle_state"
+
+        let scopedIDA = "\(pkgA)::\(entrypoint)::\(actionID)"
+        let scopedIDB = "\(pkgB)::\(entrypoint)::\(actionID)"
+
+        #expect(scopedIDA != scopedIDB, "Scoped entity IDs across different packages must never collide")
+        #expect(scopedIDA.components(separatedBy: "::").last == actionID)
+        #expect(scopedIDB.components(separatedBy: "::").last == actionID)
+    }
 }

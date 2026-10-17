@@ -174,8 +174,13 @@ final class HanlinAISDKToolAdapter {
             definitions.append(try makeReportProgressDefinition())
         }
 
-        // 6. Canonical tools
+        // 6. Canonical tools (guarantee uniqueness and prevent collision with meta tools)
+        var seenNames = Set(definitions.map(\.name))
         for (alias, rawSchema) in preparedTools.authority.schemasByAlias {
+            guard !seenNames.contains(alias) else {
+                continue
+            }
+            seenNames.insert(alias)
             let profile = preparedTools.presentationProfile(for: alias) ?? ToolPresentationProfileRegistry.resolve(toolName: alias)
             let decoratedSchema = ToolSchemaDecorator.decorate(
                 schema: rawSchema,
@@ -610,9 +615,22 @@ final class HanlinAISDKToolAdapter {
             startedAt: executionStart
         )))
 
+        let sessionChatID = session.id.uuidString
+        let roundReqID = currentRoundID?.uuidString ?? callID
         let nativeContext = NativeToolExecutionContext(
             localeIdentifier: currentLanguage,
-            modelContext: modelContext
+            modelContext: modelContext,
+            toolCallID: callID,
+            chatID: sessionChatID,
+            requestID: roundReqID,
+            capabilitySession: session,
+            attachmentResolver: { handle in
+                try await AuthorizedAttachmentRegistry.shared.resolve(
+                    handle: handle,
+                    chatID: sessionChatID,
+                    requestID: roundReqID
+                )
+            }
         )
 
         let nativeResult = await preparedTools.execute(

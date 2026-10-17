@@ -2341,6 +2341,26 @@ class APIManager {
         var updatedMessages = messages
         let session = capabilitySession ?? AssistantCapabilitySession()
         let currentRunID = runID ?? session.id
+
+        // Register authentic image attachments for current chat turn
+        for msg in messages {
+            if let imgs = msg.images {
+                for img in imgs {
+                    #if canImport(UIKit)
+                    if let data = img.jpegData(compressionQuality: 0.9) ?? img.pngData() {
+                        Task {
+                            await AuthorizedAttachmentRegistry.shared.register(
+                                data: data,
+                                mimeType: "image/jpeg",
+                                chatID: groupID.uuidString,
+                                requestID: currentRunID.uuidString
+                            )
+                        }
+                    }
+                    #endif
+                }
+            }
+        }
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
             
@@ -2563,6 +2583,7 @@ class APIManager {
                         visibleTools.append(LoadSkillTool.schema)
                         visibleTools.append(ToolSearchTool.schema)
                         visibleTools.append(ReadToolResultTool.schema)
+                        visibleTools.append(ReadSkillResourceTool.schema)
                         if let prepared = preparedAssistantTools {
                             let exposed = prepared.schemas(for: session.exposedToolAliases)
                             visibleTools.append(contentsOf: exposed)
@@ -2975,10 +2996,30 @@ class APIManager {
                                                 toolResultFront = resultText
                                                 useFunctionName = functionName
 
-default:
+                                            case ReadSkillResourceTool.toolName:
+                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "读取技能资源..." : "Reading skill resource..."))
+                                                let resultText = await ReadSkillResourceTool.execute(
+                                                    argumentsJSON: functionArguments,
+                                                    session: session
+                                                )
+                                                toolResult = resultText
+                                                toolResultFront = resultText
+                                                useFunctionName = functionName
+
+                                            default:
                                                 let nativeContext = NativeToolExecutionContext(
                                                     localeIdentifier: currentLanguage,
-                                                    modelContext: self.context
+                                                    modelContext: self.context,
+                                                    chatID: groupID.uuidString,
+                                                    requestID: currentRunID.uuidString,
+                                                    capabilitySession: session,
+                                                    attachmentResolver: { handle in
+                                                        try await AuthorizedAttachmentRegistry.shared.resolve(
+                                                            handle: handle,
+                                                            chatID: groupID.uuidString,
+                                                            requestID: currentRunID.uuidString
+                                                        )
+                                                    }
                                                 )
 
                                                 if let nativeResult = await preparedAssistantTools?.execute(

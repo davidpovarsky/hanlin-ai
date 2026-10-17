@@ -878,7 +878,7 @@ jobs:
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: build-logs
       IPA_NAME: AI_Hanlin-iOS26-unsigned.ipa
-      IOS_DEPLOYMENT_TARGET: "26.0"
+      IOS_DEPLOYMENT_TARGET: "27.0"
 
     steps:
       - name: Live Activity · refresh
@@ -2014,7 +2014,7 @@ jobs:
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: simulator-logs
-      IOS_DEPLOYMENT_TARGET: "26.0"
+      IOS_DEPLOYMENT_TARGET: "27.0"
       FAST_VALIDATION_ONLY: ${{ inputs.fast_validation_only }}
       NATIVESCRIPT_POC_ONLY: ${{ inputs.nativescript_poc_only }}
       SIMULATOR_E2E_ONLY: ${{ inputs.simulator_e2e_only }}

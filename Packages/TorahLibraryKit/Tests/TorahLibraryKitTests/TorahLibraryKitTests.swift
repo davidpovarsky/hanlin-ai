@@ -273,4 +273,155 @@ struct TorahLibraryKitTests {
         #expect(section.primaryText.contains("משה קיבל תורה מסיני"))
         #expect((result.selectedCandidate?.scoreComponents.lexicalCoverage ?? 0) >= 0.8)
     }
+
+    // MARK: - TOR-06: Sefaria HTTP and Decoding Error Distinction
+
+    @Test("Sefaria throws typed error on HTTP 500 server failure rather than empty hits")
+    func testSefariaHTTP500Error() async throws {
+        let provider = SefariaLibraryProvider(transport: { url in
+            throw TorahProviderNetworkError.httpError(statusCode: 500, url: url.absoluteString)
+        })
+
+        await #expect(throws: TorahProviderNetworkError.self) {
+            _ = try await provider.search(query: "בראשית", limit: 5)
+        }
+    }
+
+    @Test("Sefaria throws typed error on HTTP 401 and 429 rather than empty hits")
+    func testSefariaHTTP401And429() async throws {
+        let provider = SefariaLibraryProvider(transport: { url in
+            throw TorahProviderNetworkError.httpError(statusCode: 429, url: url.absoluteString)
+        })
+
+        await #expect(throws: TorahProviderNetworkError.self) {
+            _ = try await provider.getSection(locator: SourceLocator(
+                providerID: "sefaria",
+                corpusID: "canonical",
+                workKey: "Genesis 1:1",
+                positionKind: .canonicalRef,
+                positionValue: "Genesis 1:1"
+            ))
+        }
+    }
+
+    @Test("Sefaria throws decodingError on malformed JSON payload")
+    func testSefariaMalformedJSON() async throws {
+        let provider = SefariaLibraryProvider(transport: { _ in
+            Data("not valid json {[[".utf8)
+        })
+
+        await #expect(throws: TorahProviderNetworkError.self) {
+            _ = try await provider.search(query: "בראשית", limit: 5)
+        }
+    }
+
+    @Test("Sefaria returns empty array on legitimate 200 with zero hits")
+    func testSefariaLegitimateEmptyHits() async throws {
+        let provider = SefariaLibraryProvider(transport: { _ in
+            Data("{\"hits\": {\"hits\": []}}".utf8)
+        })
+
+        let hits = try await provider.search(query: "nonexistent_term_xyz", limit: 5)
+        #expect(hits.isEmpty)
+    }
+
+    // MARK: - TOR-08: ITorahSharedStorage Mode Distinction
+
+    @Test("ITorahSharedStorage mode distinction and truthful provenance")
+    func testStorageModeDistinction() throws {
+        let mode = ITorahSharedStorage.currentStorageMode
+        #expect(mode == .privateFallback || mode == .sharedAuthorizedGroup)
+        if !ITorahSharedStorage.isSharedAppGroupActive {
+            #expect(mode == .privateFallback)
+            let url = try ITorahSharedStorage.containerURL()
+            #expect(url.path.contains("ITorahSharedStorage"))
+        }
+    }
+
+    // MARK: - TOR-07: Zayit Provider Fallback and Availability
+
+    @Test("Zayit provider surfaces Tantivy index availability and SQLite fallback honestly")
+    func testZayitFallbackTruthfulness() {
+        let dummyIndexURL = URL(fileURLWithPath: "/nonexistent/tantivy/index")
+        let zayit = ZayitLibraryProvider(searchIndexURL: dummyIndexURL)
+        #expect(!zayit.isTantivyIndexAvailable)
+        
+        let coordinator = TorahLibraryCoordinator(zayitProvider: zayit)
+        let statuses = coordinator.providerStatuses()
+        if let zayitStatus = statuses.first(where: { $0.providerID == "zayit" }) {
+            #expect(zayitStatus.provenance.contains("fallback") || zayitStatus.provenance.contains("uninstalled"))
+        }
+    }
+
+    // MARK: - TOR-09: Coordinator Links, Topics, and Provider Dispatch
+
+    @Test("Coordinator getLinks and getTopics route correctly and fail closed on unknown provider")
+    func testCoordinatorLinksAndTopicsRouting() async throws {
+        let coordinator = TorahLibraryCoordinator()
+        let unknownLocator = SourceLocator(
+            providerID: "unsupported_provider_xyz",
+            corpusID: "test",
+            workKey: "test",
+            positionKind: .canonicalRef,
+            positionValue: "test 1:1"
+        )
+
+        await #expect(throws: TorahCoordinatorError.self) {
+            _ = try await coordinator.getLinks(locator: unknownLocator)
+        }
+
+        await #expect(throws: TorahCoordinatorError.self) {
+            _ = try await coordinator.getTopics(locator: unknownLocator)
+        }
+    }
+
+    // MARK: - TOR-01: Coordinator Local-Only Privacy
+
+    @Test("Coordinator identifyExcerpt with allowRemoteFallback false never contacts Sefaria")
+    func testCoordinatorLocalOnlyPrivacy() async throws {
+        let remoteContacted = AtomicBoolBox(false)
+        let sefaria = SefariaLibraryProvider(transport: { url in
+            remoteContacted.set(true)
+            throw TorahProviderNetworkError.httpError(statusCode: 500, url: url.absoluteString)
+        })
+        let coordinator = TorahLibraryCoordinator(sefariaProvider: sefaria)
+
+        let evidence = OCREvidence(
+            imageHash: "hash_local_only",
+            imageWidth: 800,
+            imageHeight: 600,
+            providerID: "apple_vision_local",
+            modelRevision: "v3",
+            rawText: "מילים כלשהן לבדיקת פרטיות מקומית בלבד",
+            lines: [
+                OCRLine(lineID: "l1", rawText: "מילים כלשהן לבדיקת", boundingBox: .full),
+                OCRLine(lineID: "l2", rawText: "פרטיות מקומית בלבד", boundingBox: .full)
+            ]
+        )
+
+        let result = await coordinator.identifyExcerpt(evidence: evidence, allowRemoteFallback: false)
+        #expect(!remoteContacted.value, "Remote Sefaria provider must NOT be contacted when allowRemoteFallback is false")
+        #expect(result.status == .notFound)
+    }
+}
+
+private final class AtomicBoolBox: @unchecked Sendable {
+    private var _value: Bool
+    private let lock = NSLock()
+
+    init(_ value: Bool = false) {
+        self._value = value
+    }
+
+    func set(_ value: Bool) {
+        lock.lock()
+        defer { lock.unlock() }
+        _value = value
+    }
+
+    var value: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return _value
+    }
 }

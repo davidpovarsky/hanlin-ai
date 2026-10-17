@@ -3,24 +3,50 @@ import Foundation
 import FoundationNetworking
 #endif
 
+/// Explicit network and decoding errors for remote Torah corpus providers.
+public enum TorahProviderNetworkError: LocalizedError, Sendable {
+    case invalidURL(String)
+    case httpError(statusCode: Int, url: String)
+    case decodingError(String)
+    case networkFailure(String)
+
+    public var errorDescription: String? {
+        switch self {
+        case .invalidURL(let u): return "Invalid provider URL: \(u)"
+        case .httpError(let code, let u): return "Provider HTTP error \(code) for \(u)"
+        case .decodingError(let msg): return "Failed to decode provider response: \(msg)"
+        case .networkFailure(let msg): return "Provider network request failed: \(msg)"
+        }
+    }
+}
+
 public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Sendable {
+    public typealias TransportHandler = @Sendable (URL) async throws -> Data
+
     public let providerID = "sefaria"
     public let displayName = "Sefaria"
     private let baseURL: URL
+    private let transport: TransportHandler?
 
-    public init(baseURL: URL = URL(string: "https://www.sefaria.org/api")!) {
+    public init(
+        baseURL: URL = URL(string: "https://www.sefaria.org/api")!,
+        transport: TransportHandler? = nil
+    ) {
         self.baseURL = baseURL
+        self.transport = transport
+    }
+
+    public var isAvailable: Bool {
+        true
     }
 
     public func search(query: String, limit: Int = 10) async throws -> [TorahSearchHit] {
         guard let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: "\(baseURL.absoluteString)/search-wrapper?q=\(encoded)&size=\(limit)") else {
-            return []
+            throw TorahProviderNetworkError.invalidURL("\(baseURL.absoluteString)/search-wrapper")
         }
 
-        guard let data = try? await performRequest(url: url) else {
-            return []
-        }
+        let data = try await performRequest(url: url)
 
         struct SefariaSearchResponse: Decodable {
             struct Hit: Decodable {
@@ -38,8 +64,14 @@ public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Send
             let hits: Hits?
         }
 
-        guard let parsed = try? JSONDecoder().decode(SefariaSearchResponse.self, from: data),
-              let hitsList = parsed.hits?.hits else {
+        let parsed: SefariaSearchResponse
+        do {
+            parsed = try JSONDecoder().decode(SefariaSearchResponse.self, from: data)
+        } catch {
+            throw TorahProviderNetworkError.decodingError("Sefaria search JSON decoding failed: \(error.localizedDescription)")
+        }
+
+        guard let hitsList = parsed.hits?.hits else {
             return []
         }
 
@@ -66,15 +98,13 @@ public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Send
     public func getSection(locator: SourceLocator) async throws -> StudySource? {
         guard let encoded = locator.positionValue.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
               let url = URL(string: "\(baseURL.absoluteString)/texts/\(encoded)?context=1") else {
-            return nil
+            throw TorahProviderNetworkError.invalidURL("\(baseURL.absoluteString)/texts")
         }
 
-        guard let data = try? await performRequest(url: url) else {
-            return nil
-        }
+        let data = try await performRequest(url: url)
 
-        guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            return nil
+        guard let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw TorahProviderNetworkError.decodingError("Sefaria getSection response is not a valid JSON dictionary")
         }
 
         let heRef = obj["heRef"] as? String
@@ -112,15 +142,13 @@ public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Send
     public func getLinks(locator: SourceLocator, type: String? = nil) async throws -> [TorahLinkedSource] {
         guard let encoded = locator.positionValue.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
               let url = URL(string: "\(baseURL.absoluteString)/links/\(encoded)") else {
-            return []
+            throw TorahProviderNetworkError.invalidURL("\(baseURL.absoluteString)/links")
         }
 
-        guard let data = try? await performRequest(url: url) else {
-            return []
-        }
+        let data = try await performRequest(url: url)
 
-        guard let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-            return []
+        guard let array = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+            throw TorahProviderNetworkError.decodingError("Sefaria getLinks response is not a valid JSON array")
         }
 
         return array.compactMap { item in
@@ -158,10 +186,16 @@ public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Send
     }
 
     private func performRequest(url: URL) async throws -> Data {
+        if let customTransport = transport {
+            return try await customTransport(url)
+        }
         #if canImport(Darwin)
         let (data, response) = try await URLSession.shared.data(from: url)
-        guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
-            throw ITorahSharedStorageError.directoryNotFound("HTTP request failed")
+        guard let http = response as? HTTPURLResponse else {
+            throw TorahProviderNetworkError.networkFailure("Invalid response type from \(url)")
+        }
+        guard (200...299).contains(http.statusCode) else {
+            throw TorahProviderNetworkError.httpError(statusCode: http.statusCode, url: url.absoluteString)
         }
         return data
         #else
@@ -169,11 +203,15 @@ public final class SefariaLibraryProvider: TorahLibraryProvider, @unchecked Send
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
                 if let error = error {
-                    continuation.resume(throwing: error)
+                    continuation.resume(throwing: TorahProviderNetworkError.networkFailure(error.localizedDescription))
                     return
                 }
-                guard let http = response as? HTTPURLResponse, http.statusCode == 200, let data = data else {
-                    continuation.resume(throwing: ITorahSharedStorageError.directoryNotFound("HTTP request failed"))
+                guard let http = response as? HTTPURLResponse else {
+                    continuation.resume(throwing: TorahProviderNetworkError.networkFailure("Invalid HTTP response"))
+                    return
+                }
+                guard (200...299).contains(http.statusCode), let data = data else {
+                    continuation.resume(throwing: TorahProviderNetworkError.httpError(statusCode: http.statusCode, url: url.absoluteString))
                     return
                 }
                 continuation.resume(returning: data)
@@ -204,4 +242,3 @@ extension SefariaLibraryProvider: TorahLibrarySearchEngine {
         return sec?.primaryText
     }
 }
-

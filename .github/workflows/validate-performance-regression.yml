@@ -36,7 +36,7 @@ jobs:
       DERIVED_DATA_PATH: build/SimulatorDerivedData
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: performance-logs
-      IOS_DEPLOYMENT_TARGET: "26.0"
+      IOS_DEPLOYMENT_TARGET: "27.0"
       PERF_SCOPE: ${{ inputs.scope || 'all' }}
       PERF_ITERATIONS: ${{ inputs.iterations || '5' }}
 

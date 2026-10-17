@@ -327,4 +327,63 @@ struct RuntimeToolContractTests {
         #expect(Set(parameters["required"] as? [String] ?? []) == expectedRequired)
         #expect(parameters["additionalProperties"] as? Bool == false)
     }
+
+    // MARK: - SEC-01 & SEC-02: Skill Resource Read vs Execute Distinction
+
+    @Test func skillResourceReadVsExecuteDistinction() {
+        let catalog = NativeToolCatalog.live()
+        let allTools = catalog.allTools()
+
+        // read_skill_resource MUST NOT be registered as ExecuteSkillResourceTool
+        let readTools = allTools.filter { $0.name == "read_skill_resource" }
+        #expect(readTools.allSatisfy { !($0 is ExecuteSkillResourceTool) }, "read_skill_resource must NEVER be ExecuteSkillResourceTool")
+
+        // execute_skill_resource must be uniquely registered
+        let executeTools = allTools.filter { $0.name == "execute_skill_resource" }
+        #expect(executeTools.count <= 1, "execute_skill_resource must be uniquely registered")
+    }
+
+    @Test func executeSkillResourceRequiresActiveSessionAndFailsClosed() async {
+        let tool = ExecuteSkillResourceTool()
+        let contextWithoutSession = NativeToolExecutionContext(
+            localeIdentifier: "en_US",
+            modelContext: nil,
+            toolCallID: "call_01",
+            chatID: "chat_01",
+            requestID: "req_01",
+            capabilitySession: nil
+        )
+
+        let args = "{\"skill_id\": \"unloaded_skill\", \"resource_path\": \"scripts/run.py\"}"
+        let result = await tool.execute(argumentsJSON: args, context: contextWithoutSession)
+        #expect(result.outcome == .failed)
+        #expect(result.modelText.contains("denied") || result.modelText.contains("not loaded") || result.modelText.contains("Session"))
+    }
+
+    // MARK: - TOR-09: Seven Torah Tools Registration Integrity
+
+    @Test func sevenTorahToolsAreRegisteredWithValidSchemas() {
+        let catalog = NativeToolCatalog.live()
+        let expectedTorahTools = [
+            "torah_ocr_excerpt",
+            "torah_identify_excerpt",
+            "torah_search_text",
+            "torah_get_section",
+            "torah_get_links",
+            "torah_get_topics",
+            "torah_open_source"
+        ]
+
+        for toolName in expectedTorahTools {
+            guard let tool = catalog.tool(named: toolName) else {
+                Issue.record("Expected Torah tool '\(toolName)' to be registered in NativeToolCatalog")
+                continue
+            }
+            let schema = tool.openAIToolSchema()
+            #expect(schema["type"] as? String == "function")
+            let function = schema["function"] as? [String: Any]
+            #expect(function?["name"] as? String == toolName)
+            #expect(function?["description"] != nil)
+        }
+    }
 }

@@ -61,6 +61,28 @@ struct ExecuteSkillResourceTool: NativeTool {
                 )
             }
 
+            // Require loaded and enabled Skill within the current active session context
+            guard let session = context.capabilitySession else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.invalidRequest("Skill execution requires an active authorized session context."),
+                    title: "Authorization Denied"
+                )
+            }
+
+            guard session.isSkillLoaded(skillID) else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.invalidRequest("Skill '\(skillIDRaw)' is not currently loaded in this session. Call load_skill first."),
+                    title: "Skill Not Loaded"
+                )
+            }
+
+            guard await MainActor.run(body: { SkillStore.shared.isSkillEnabled(id: skillID) }) else {
+                return RuntimeToolSupport.failure(
+                    HanlinHostServiceError.invalidRequest("Skill '\(skillIDRaw)' is currently disabled."),
+                    title: "Skill Disabled"
+                )
+            }
+
             // Path security validation: reject leading slash, empty, null bytes before normalization
             guard !relPath.isEmpty,
                   !relPath.hasPrefix("/"),
@@ -130,14 +152,27 @@ struct ExecuteSkillResourceTool: NativeTool {
                 )
             }
 
-            // Build isolated environment with workspace state
-            let workspaceURL = FileManager.default.temporaryDirectory.appendingPathComponent("skill_\(skillIDRaw)")
+            // Build isolated per-session/per-run workspace with automatic cleanup
+            let sessionID = session.id.uuidString
+            let runID = context.toolCallID ?? UUID().uuidString
+            let workspaceURL = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin_skill_\(sessionID)_\(runID)_\(skillIDRaw)")
             try? FileManager.default.createDirectory(at: workspaceURL, withIntermediateDirectories: true)
+            defer { try? FileManager.default.removeItem(at: workspaceURL) }
 
-            var scriptEnv = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .python])
-            scriptEnv["CAIRO_GENIZAH_STATE_DIR"] = workspaceURL.path
-            scriptEnv["SKILL_RESOURCE_DIR"] = resourceURL.deletingLastPathComponent().path
-            scriptEnv["SKILL_ID"] = skillIDRaw
+            // Strictly allowlisted environment — never leak host secrets or cross-skill state
+            var scriptEnv: [String: String] = [
+                "CAIRO_GENIZAH_STATE_DIR": workspaceURL.path,
+                "SKILL_RESOURCE_DIR": resourceURL.deletingLastPathComponent().path,
+                "SKILL_ID": skillIDRaw,
+                "TMPDIR": workspaceURL.path,
+                "TEMP": workspaceURL.path
+            ]
+            let processEnv = ProcessInfo.processInfo.environment
+            for key in ["PATH", "PYTHONPATH", "PYTHONHOME", "LANG", "LC_ALL"] {
+                if let val = processEnv[key] {
+                    scriptEnv[key] = val
+                }
+            }
 
             let executionLimits = RuntimeExecutionLimits(timeout: .seconds(timeout))
             let fullArgv = [cleanPath] + argv

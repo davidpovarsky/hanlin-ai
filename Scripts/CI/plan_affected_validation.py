@@ -1205,6 +1205,10 @@ class TestDependencyLedger:
         "ProductionProviderConformanceTests": [
             "AI_HLYTests/ProviderConformance/**",
             "AI_HLY/Downstream/HostServices/Capabilities/**",
+            "AI_HLY/Downstream/RuntimeCore/Tools/**",
+            "AI_HLY/Downstream/AgentSkills/**",
+            "AI_HLY/NativeAgentExtensions/**",
+            "AI_HLY/Services/ChatServices/**",
         ],
         "AgentRuntimeConversationAcceptanceTests": [
             "AI_HLY/Downstream/Agent/**",
