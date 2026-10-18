@@ -1657,11 +1657,11 @@ struct MasterScenarioSemanticAcceptanceTests {
         let entries = catalog.allEntries()
         #expect(!entries.isEmpty)
 
-        // Verify discovery of shell tool and read skill resource tool
+        // Verify discovery of shell tool and execute skill resource tool
         let shellTool = entries.first { $0.name == "execute_shell_command" }
         #expect(shellTool != nil, "execute_shell_command tool must be discovered in live catalog")
-        let readTool = entries.first { $0.name == "read_skill_resource" }
-        #expect(readTool != nil, "read_skill_resource tool must be discovered in live catalog")
+        let executeSkillTool = entries.first { $0.name == "execute_skill_resource" }
+        #expect(executeSkillTool != nil, "execute_skill_resource tool must be discovered in live catalog")
 
         // Execute discovered tool through session
         let core = AppRuntimeCore.shared
@@ -1903,7 +1903,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(!tools.isEmpty)
 
         // Ensure every required native tool has a declared executor
-        let requiredToolNames = ["execute_shell_command", "read_skill_resource"]
+        let requiredToolNames = ["execute_shell_command", "execute_skill_resource"]
         for toolName in requiredToolNames {
             let found = tools.first { $0.name == toolName }
             #expect(found != nil, "Required tool '\(toolName)' must be registered in NativeToolCatalog")

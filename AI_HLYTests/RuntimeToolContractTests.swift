@@ -357,16 +357,16 @@ struct RuntimeToolContractTests {
             capabilitySession: nil
         )
 
-        // Valid parameter schema using "relative_path" per specification
+        // Valid parameter schema using "relative_path" per specification: fails on missing authorization
         let validArgs = "{\"skill_id\": \"unloaded_skill\", \"relative_path\": \"scripts/run.py\"}"
         let result = await tool.execute(argumentsJSON: validArgs, context: contextWithoutSession)
-        #expect(result.outcome == .failed)
+        #expect(result.outcome == .rejectedByCapability)
         #expect(result.modelText.contains("session") || result.modelText.contains("Session") || result.modelText.contains("denied") || result.modelText.contains("authorized"))
 
         // Invalid parameter schema using rejected "resource_path" must fail closed on schema validation
         let invalidArgs = "{\"skill_id\": \"unloaded_skill\", \"resource_path\": \"scripts/run.py\"}"
         let invalidResult = await tool.execute(argumentsJSON: invalidArgs, context: contextWithoutSession)
-        #expect(invalidResult.outcome == .failed)
+        #expect(invalidResult.outcome == .invalidArguments)
     }
 
     // MARK: - TOR-09: Seven Torah Tools Registration Integrity

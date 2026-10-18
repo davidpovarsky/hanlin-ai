@@ -64,7 +64,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             // Require loaded and enabled Skill within the current active session context
             guard let session = context.capabilitySession else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Skill execution requires an active authorized session context."),
+                    HanlinHostServiceError.systemAuthorizationDenied("Skill execution requires an active authorized session context."),
                     title: "Authorization Denied"
                 )
             }
