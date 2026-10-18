@@ -114,15 +114,33 @@ export const knownWorkflowRuns = {
     exactTestSelector: 'AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime',
     collectorStepExecuted: false, // Step 51 was SKIPPED in run 38639744717
     collectorStepPassed: false
+  },
+  '38894350038': {
+    runId: '38894350038',
+    headSha: '378978eee9af74725a4056ae4db0bb68db417fb3',
+    workflowName: 'Build iOS 26 Unsigned IPA',
+    conclusion: 'success',
+    selectedJobPassed: true,
+    collectorStepExecuted: false,
+    collectorStepPassed: false
+  },
+  '39093980698': {
+    runId: '39093980698',
+    headSha: 'ccc49fded9b48e0feb0801ac8db012aa323d7499',
+    workflowName: 'Build iOS 26 Unsigned IPA',
+    conclusion: 'success',
+    selectedJobPassed: true,
+    collectorStepExecuted: false,
+    collectorStepPassed: false
   }
 };
 
 // Truthful per-evidence and report provenance
 export const provenanceSHAs = {
-  sourceImplementationSHA: '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
-  testExecutionSHA: '72d18d3e4a9f0bd0eed7c53c291a1ade8bd9c24e',
-  evidenceOriginRunId: '38639744717',
-  evidenceRunSHA: '38639744717',
+  sourceImplementationSHA: '89ff5b4368a25294649f7ea483395d9748eef38d',
+  testExecutionSHA: 'ccc49fded9b48e0feb0801ac8db012aa323d7499',
+  evidenceOriginRunId: '39093980698',
+  evidenceRunSHA: '39093980698',
   reportSHA: gitMeta.commitSha,
   workingTreeFingerprint: gitMeta.commitSha + (gitMeta.isDirty ? '-dirty' : ''),
   contractVersion: '2.2.0-pass4'
@@ -210,7 +228,11 @@ export const evidenceManifest = {
   'simulator-downstream-unit-test-results.json': 'c40508883c8099e7f439289f3df8a3fbfbeaeeb55b57b3e8af0cc10243bc849b',
   'simulator-downstream-unit-tests.log': '5fe338d42c9264cb1cabf1ba8a547078cc3dbe93d8b389ad0f5d0e411a50d83b',
   'simulator-nativescript-production-ui-tests.log': 'f801fd667ff28469394fd910f52bc089a6280a47521e08cabff5a790b23d94ec',
-  'simulator-scripting-acceptance.log': '080deac239275e0d0c3cca7296b6ded5503527e8de7554f383d196207f5e422a'
+  'simulator-scripting-acceptance.log': '080deac239275e0d0c3cca7296b6ded5503527e8de7554f383d196207f5e422a',
+  'run-39093980698-unit-test-results.json': '6a78ad70babde2f09e11d09c00f9b0f5048745ae7f4b774fad72ec6664939380',
+  'run-38894350038-unit-test-results.json': '3b58cc59db527d7a14c64b19ab56000298b641d5cce5c927a3140ecca221a759',
+  'run-38894350038-ui-test-results.json': '849431fa7f67e00e9ef9462b04fefa1fef7d18a84311d99f518257bdb1891410',
+  'run-38894350038-ui-tests.log': 'dc46727664003f931de133bbd641f3881387957b0cc05b03a05284cbd9f554a0'
 };
 
 export function verifyEvidenceArtifacts(manifest, root = repoRoot) {
@@ -232,35 +254,37 @@ verifyEvidenceArtifacts(evidenceManifest);
 // ==========================================
 // 4. Index Authentic XCTest xcresult Nodes
 // ==========================================
-const xcresultPath = path.join(repoRoot, evidenceDir, 'simulator-downstream-unit-test-results.json');
-const xcresultData = JSON.parse(fs.readFileSync(xcresultPath, 'utf8'));
-
-export function indexXcresultTests(data) {
+export function indexXcresultTests(sources) {
+  const sourcesArray = Array.isArray(sources) ? sources : [sources];
   const tests = new Map();
   const nameCounts = new Map();
-  for (const plan of data.testNodes || []) {
-    for (const bundle of plan.children || []) {
-      for (const suite of bundle.children || []) {
-        for (const test of suite.children || []) {
-          nameCounts.set(test.name, (nameCounts.get(test.name) || 0) + 1);
+  for (const data of sourcesArray) {
+    for (const plan of data.testNodes || []) {
+      for (const bundle of plan.children || []) {
+        for (const suite of bundle.children || []) {
+          for (const test of suite.children || []) {
+            nameCounts.set(test.name, (nameCounts.get(test.name) || 0) + 1);
+          }
         }
       }
     }
   }
-  for (const plan of data.testNodes || []) {
-    for (const bundle of plan.children || []) {
-      for (const suite of bundle.children || []) {
-        for (const test of suite.children || []) {
-          tests.set(test.nodeIdentifier, test);
-          if (suite.name && test.name) {
-            tests.set(`${suite.name}/${test.name}`, test);
-          }
-          if (bundle.name && suite.name && test.name) {
-            tests.set(`${bundle.name}/${suite.name}/${test.name}`, test);
-          }
-          // Only map flat name if unique to prevent accidental cross-suite collision
-          if (nameCounts.get(test.name) === 1) {
-            tests.set(test.name, test);
+  for (const data of sourcesArray) {
+    for (const plan of data.testNodes || []) {
+      for (const bundle of plan.children || []) {
+        for (const suite of bundle.children || []) {
+          for (const test of suite.children || []) {
+            tests.set(test.nodeIdentifier, test);
+            if (suite.name && test.name) {
+              tests.set(`${suite.name}/${test.name}`, test);
+            }
+            if (bundle.name && suite.name && test.name) {
+              tests.set(`${bundle.name}/${suite.name}/${test.name}`, test);
+            }
+            // Only map flat name if unique to prevent accidental cross-suite collision
+            if (nameCounts.get(test.name) === 1) {
+              tests.set(test.name, test);
+            }
           }
         }
       }
@@ -269,7 +293,17 @@ export function indexXcresultTests(data) {
   return tests;
 }
 
-const xcresultIndex = indexXcresultTests(xcresultData);
+const xcresultFileNames = [
+  'simulator-downstream-unit-test-results.json',
+  'run-39093980698-unit-test-results.json',
+  'run-38894350038-unit-test-results.json',
+  'run-38894350038-ui-test-results.json'
+];
+const xcresultSources = xcresultFileNames
+  .map(name => path.join(repoRoot, evidenceDir, name))
+  .filter(p => fs.existsSync(p))
+  .map(p => JSON.parse(fs.readFileSync(p, 'utf8')));
+const xcresultIndex = indexXcresultTests(xcresultSources);
 
 const evidenceContentCache = new Map();
 export function getEvidenceContent(artifactName) {

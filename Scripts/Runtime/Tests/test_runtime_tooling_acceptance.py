@@ -131,6 +131,26 @@ class RuntimeToolingAcceptanceRunnerTests(unittest.TestCase):
             self.assertFalse(case_missing["passed"])
             self.assertEqual(case_missing["actualOutcome"], "missing")
 
+    def test_select_best_match_resolves_exact_over_substring_collision(self) -> None:
+        case = acceptance_runner.AcceptanceCase("test.case", "testFoo")
+        matches = [
+            {"nodeIdentifier": "Suite/testFooBar()", "name": "testFooBar", "result": "Passed"},
+            {"nodeIdentifier": "Suite/testFoo()", "name": "testFoo", "result": "Passed"},
+        ]
+        selected = acceptance_runner.select_best_match(matches, case)
+        self.assertIsNotNone(selected)
+        self.assertEqual(selected["nodeIdentifier"], "Suite/testFoo()")
+
+    def test_select_best_match_rejects_ambiguous_matches(self) -> None:
+        case = acceptance_runner.AcceptanceCase("test.case", "testFoo")
+        matches = [
+            {"nodeIdentifier": "Suite/testFooBar()", "name": "testFooBar", "result": "Passed"},
+            {"nodeIdentifier": "Suite/testFooBaz()", "name": "testFooBaz", "result": "Passed"},
+        ]
+        selected = acceptance_runner.select_best_match(matches, case)
+        self.assertIsNone(selected)
+
 
 if __name__ == "__main__":
     unittest.main()
+

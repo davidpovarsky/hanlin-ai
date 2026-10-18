@@ -365,6 +365,35 @@ def run_xcodebuild_phase(
     )
 
 
+def select_best_match(matches: list[dict[str, Any]], expected: AcceptanceCase) -> dict[str, Any] | None:
+    if not matches:
+        return None
+    if len(matches) == 1:
+        return matches[0]
+
+    exact_matches = []
+    target_norm = normalized(expected.selector_fragment)
+    for node in matches:
+        node_id = str(node.get("nodeIdentifier") or node.get("testIdentifier") or "")
+        node_name_val = str(node.get("name") or "")
+        method_part = node_id.split("/")[-1] if "/" in node_id else node_id
+        method_part = method_part.split("(")[0].strip()
+        name_clean = node_name_val.split("(")[0].strip()
+
+        if normalized(method_part) == target_norm or normalized(name_clean) == target_norm:
+            exact_matches.append(node)
+
+    if len(exact_matches) == 1:
+        return exact_matches[0]
+    elif len(exact_matches) > 1:
+        first_id = exact_matches[0].get("nodeIdentifier") or exact_matches[0].get("name")
+        if all((m.get("nodeIdentifier") or m.get("name")) == first_id for m in exact_matches):
+            return exact_matches[0]
+        return None
+
+    return None
+
+
 def evaluate_acceptance(
     output: pathlib.Path,
     groups: tuple[AcceptanceGroup, ...],
@@ -387,7 +416,7 @@ def evaluate_acceptance(
 
             needle = normalized(expected.selector_fragment)
             matches = [node for node in phase_nodes if needle in normalized(node_name(node))]
-            selected = min(matches, key=lambda item: len(node_name(item)), default=None)
+            selected = select_best_match(matches, expected)
             status = node_status(selected) if selected else "missing"
             passed = status in {"passed", "success", "succeeded"}
             crashed = selected is None and phase_crashed
