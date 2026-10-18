@@ -1,4 +1,4 @@
-# AGENTS.md — Shared Development Rules
+﻿# AGENTS.md â€” Shared Development Rules
 
 Read `PROJECT_AGENT_GUIDANCE.md` if it exists. It contains repository-specific architecture, build, upstream, signing, and workflow guidance and must be followed together with this file. The user's current request has highest priority, then repository-specific guidance, then these shared rules.
 
@@ -62,10 +62,32 @@ After it exits, inspect final metadata once and fetch detailed logs/artifacts on
 
 ## Living Project Board
 
-`PROJECT_BOARD.md` is this repository's shared living project board. Before starting substantial work, scan it for relevant context. During normal work, agents should proactively add concise, actionable entries when they discover something with genuine future value, including useful technical discoveries, optimization opportunities, implementation tricks, architectural ideas, possible future improvements, experiments worth running, unresolved issues or questions, and follow-up work that should not be lost—even when the discovery is incidental to the current task.
+`PROJECT_BOARD.md` is this repository's shared living project board. Before starting substantial work, scan it for relevant context. During normal work, agents should proactively add concise, actionable entries when they discover something with genuine future value, including useful technical discoveries, optimization opportunities, implementation tricks, architectural ideas, possible future improvements, experiments worth running, unresolved issues or questions, and follow-up work that should not be lostâ€”even when the discovery is incidental to the current task.
 
 Do not add trivial observations, temporary debugging chatter, information already documented elsewhere, generic suggestions with no project relevance, or every step performed during a task. The board supports memory but is not a source of truth when repository code, documentation, or current state contradicts it. When an item is implemented, mark it complete and optionally record the date and commit/PR, moving it to `Done` when useful; delete or archive obsolete entries when appropriate.
 
 Updating `PROJECT_BOARD.md` as a side effect of another task is allowed and encouraged when a worthwhile discovery is made. Recording an idea is allowed; implementing unrelated ideas is not.
 
 Preserve all existing repository-specific instructions.
+
+
+## Named Team â€” Antigravity + Codex
+
+This repository is configured for active pair programming and autonomous task coordination using the persistent named AI team across Google Antigravity and Codex:
+- **××™×ª×Ÿ (eitan)**: Principal architect (boundaries, contracts, migrations, technical RFCs)
+- **× ×•×¢× (noam)**: Engineering (scoped implementation, focused tests, bug fixes)
+- **×ž×™×” (maya)**: Native UX (screens, interactions, RTL layouts, accessibility)
+- **×¨×•× ×™ (roni)**: Independent QA (acceptance verification, test artifacts, honest status)
+- **×ª×•×ž×¨ (tomer)**: Integration (branches, worktrees, PRs, cross-repo dependencies)
+- **×™×¢×œ (yael)**: Research (API capabilities, official Apple/upstream documentation, schemas)
+- **×“× ×” (dana)**: Security & Privacy (permissions, session isolation, secrets, entitlements)
+
+### Operating Guidance & Policy
+Before starting work, load and follow:
+- `docs/ai-team/TEAM.md` â€” Shared team contract and platform mapping
+- `docs/ai-team/PROJECT_ASSIGNMENTS.md` â€” Repository scope, task assignments, and approval gates
+- `docs/ai-team/ASANA_POLICY.md` â€” Authorized evidence-based task coordination and verified completion policy
+- `.agents/roles/<role>.md` â€” Role-specific scope and handoff rules
+
+Preserve all existing repository policies, frozen components, and explicit owner release gates.
+
