@@ -323,11 +323,11 @@ struct HanlinUnifiedHostServicesTests {
 
     // MARK: - SEC-03 & SEC-04: Authorized Attachment & Evidence Scoping
 
-    @Test func authorizedAttachmentRegistryCrossChatDenial() throws {
+    @Test func authorizedAttachmentRegistryCrossChatDenial() async throws {
         let registry = AuthorizedAttachmentRegistry()
         let sampleData = Data(base64Encoded: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==") ?? Data([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46])
 
-        let handle = try registry.register(
+        let handle = try await registry.register(
             data: sampleData,
             mimeType: "image/png",
             chatID: "chat_A",
@@ -336,7 +336,7 @@ struct HanlinUnifiedHostServicesTests {
 
         // Cross-chat resolution must throw capabilityNotGranted / accessDenied
         do {
-            _ = try registry.resolve(handle: handle, chatID: "chat_B", requestID: "req_02")
+            _ = try await registry.resolve(handle: handle, chatID: "chat_B", requestID: "req_02")
             Issue.record("Expected cross-chat resolution to fail")
         } catch let error as HanlinHostServiceError {
             if case .capabilityNotGranted = error {
@@ -348,7 +348,7 @@ struct HanlinUnifiedHostServicesTests {
 
         // Path traversal must fail closed
         do {
-            _ = try registry.resolve(handle: "../../etc/passwd", chatID: "chat_A")
+            _ = try await registry.resolve(handle: "../../etc/passwd", chatID: "chat_A")
             Issue.record("Expected directory traversal to fail")
         } catch is HanlinHostServiceError {
             // Expected
