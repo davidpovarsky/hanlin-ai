@@ -276,7 +276,11 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importLink.waitForExistence(timeout: 10))
-        importLink.tap()
+        if importLink.isHittable {
+            importLink.tap()
+        } else {
+            importLink.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
 
         // Attempt to import malformed package
         selectArchive("ExpoSwiftUIMalformed")
@@ -423,7 +427,11 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         ensureAppsAddButton(timeout: 15).tap()
         let importLink = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importLink.waitForExistence(timeout: 10), "Import Script Package link was missing")
-        importLink.tap()
+        if importLink.isHittable {
+            importLink.tap()
+        } else {
+            importLink.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
 
         selectArchive(archive)
 

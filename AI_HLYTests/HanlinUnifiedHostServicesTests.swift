@@ -304,13 +304,16 @@ struct HanlinUnifiedHostServicesTests {
     }
 
     @Test func expoValidUntilDateParsing() throws {
-        // 1. Fractional seconds ISO-8601
-        let isoFractional = ["validUntil": "2026-10-18T12:34:56.789Z"]
+        // 1. Fractional seconds ISO-8601 in the future
+        let futureDate = Date().addingTimeInterval(3600)
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let isoFractional = ["validUntil": formatter.string(from: futureDate)]
         let parsedDate1 = try ExpoHostServicesAdapter.parseValidUntil(from: isoFractional)
         #expect(parsedDate1 != nil)
 
-        // 2. Epoch milliseconds
-        let epochMillis: [String: Any] = ["validUntilEpochMilliseconds": 1792272000000.0]
+        // 2. Epoch milliseconds in the future
+        let epochMillis: [String: Any] = ["validUntilEpochMilliseconds": futureDate.timeIntervalSince1970 * 1000.0]
         let parsedDate2 = try ExpoHostServicesAdapter.parseValidUntil(from: epochMillis)
         #expect(parsedDate2 != nil)
 
