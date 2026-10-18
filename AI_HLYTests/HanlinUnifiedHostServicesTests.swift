@@ -303,39 +303,40 @@ struct HanlinUnifiedHostServicesTests {
         #expect(child.properties["font"] == .string("body"))
     }
 
-    @Test func expoValidUntilDateParsing() {
+    @Test func expoValidUntilDateParsing() throws {
         // 1. Fractional seconds ISO-8601
         let isoFractional = ["validUntil": "2026-10-18T12:34:56.789Z"]
-        let parsedDate1 = ExpoHostServicesAdapter.parseValidUntil(from: isoFractional)
+        let parsedDate1 = try ExpoHostServicesAdapter.parseValidUntil(from: isoFractional)
         #expect(parsedDate1 != nil)
 
         // 2. Epoch milliseconds
         let epochMillis: [String: Any] = ["validUntilEpochMilliseconds": 1792272000000.0]
-        let parsedDate2 = ExpoHostServicesAdapter.parseValidUntil(from: epochMillis)
+        let parsedDate2 = try ExpoHostServicesAdapter.parseValidUntil(from: epochMillis)
         #expect(parsedDate2 != nil)
 
-        // 3. Invalid date returns nil
+        // 3. Invalid date throws HanlinHostServiceError
         let invalidDate = ["validUntil": "not-a-valid-date-string"]
-        let parsedDate3 = ExpoHostServicesAdapter.parseValidUntil(from: invalidDate)
-        #expect(parsedDate3 == nil)
+        #expect(throws: HanlinHostServiceError.self) {
+            _ = try ExpoHostServicesAdapter.parseValidUntil(from: invalidDate)
+        }
     }
 
     // MARK: - SEC-03 & SEC-04: Authorized Attachment & Evidence Scoping
 
-    @Test func authorizedAttachmentRegistryCrossChatDenial() async throws {
+    @Test func authorizedAttachmentRegistryCrossChatDenial() throws {
         let registry = AuthorizedAttachmentRegistry()
-        let sampleData = Data([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46]) // JPEG header
+        let sampleData = Data(base64Encoded: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==") ?? Data([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46])
 
-        let handle = await registry.register(
+        let handle = try registry.register(
             data: sampleData,
-            mimeType: "image/jpeg",
+            mimeType: "image/png",
             chatID: "chat_A",
             requestID: "req_01"
         )
 
         // Cross-chat resolution must throw capabilityNotGranted / accessDenied
         do {
-            _ = try await registry.resolve(handle: handle, chatID: "chat_B", requestID: "req_02")
+            _ = try registry.resolve(handle: handle, chatID: "chat_B", requestID: "req_02")
             Issue.record("Expected cross-chat resolution to fail")
         } catch let error as HanlinHostServiceError {
             if case .capabilityNotGranted = error {
@@ -347,7 +348,7 @@ struct HanlinUnifiedHostServicesTests {
 
         // Path traversal must fail closed
         do {
-            _ = try await registry.resolve(handle: "../../etc/passwd", chatID: "chat_A")
+            _ = try registry.resolve(handle: "../../etc/passwd", chatID: "chat_A")
             Issue.record("Expected directory traversal to fail")
         } catch is HanlinHostServiceError {
             // Expected

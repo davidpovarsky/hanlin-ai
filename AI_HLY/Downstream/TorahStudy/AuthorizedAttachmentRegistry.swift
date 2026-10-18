@@ -170,13 +170,16 @@ public actor AuthorizedAttachmentRegistry {
     public static func isValidImageData(_ data: Data) -> Bool {
         guard !data.isEmpty else { return false }
         #if canImport(ImageIO)
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return false
+        if let source = CGImageSourceCreateWithData(data as CFData, nil),
+           CGImageSourceGetCount(source) > 0 {
+            return true
         }
-        return CGImageSourceGetCount(source) > 0
-        #elseif canImport(UIKit)
-        return UIImage(data: data) != nil
-        #else
+        #endif
+        #if canImport(UIKit)
+        if UIImage(data: data) != nil {
+            return true
+        }
+        #endif
         // Fallback magic byte detection for JPEG, PNG, HEIC, GIF, WebP
         if data.starts(with: [0xFF, 0xD8, 0xFF]) { return true } // JPEG
         if data.starts(with: [0x89, 0x50, 0x4E, 0x47]) { return true } // PNG
@@ -187,6 +190,5 @@ public actor AuthorizedAttachmentRegistry {
         if data.count >= 12,
            data.starts(with: [0x52, 0x49, 0x46, 0x46]) { return true } // RIFF/WebP
         return false
-        #endif
     }
 }
