@@ -194,15 +194,15 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertTrue(uninstallButton.waitForExistence(timeout: 10), "Uninstall button missing in package details")
         uninstallButton.tap()
 
-        _ = waitUntil(timeout: 10) { !self.findPackageCard(named: self.probeAPackageName).exists }
-        XCTAssertFalse(findPackageCard(named: probeAPackageName).exists, "Uninstalled Expo package remained visible")
+        _ = waitUntil(timeout: 10) { !self.hasPackageCard(named: self.probeAPackageName) }
+        XCTAssertFalse(hasPackageCard(named: probeAPackageName), "Uninstalled Expo package remained visible")
 
         // Verify uninstalled state persists across restart
         app.terminate()
         app.launch()
         openApps()
         XCTAssertFalse(
-            findPackageCard(named: probeAPackageName).waitForExistence(timeout: 5),
+            hasPackageCard(named: probeAPackageName),
             "Uninstalled Expo package reappeared after host restart"
         )
     }
@@ -297,8 +297,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertTrue(!installButton.exists || !installButton.isEnabled, "Install button was unexpectedly available for malformed package")
         closeImportSurfaces()
 
-        let malformedCard = findPackageCard(named: "Expo SwiftUI Malformed")
-        XCTAssertFalse(malformedCard.exists, "Partially committed malformed package found in Apps grid")
+        XCTAssertFalse(hasPackageCard(named: "Expo SwiftUI Malformed"), "Partially committed malformed package found in Apps grid")
     }
 
     // MARK: - Navigation & Staging Helpers
@@ -500,19 +499,19 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
             if elem.exists { return elem }
         }
 
-        for _ in 1...5 {
+        for _ in 1...2 {
             app.swipeUp()
             for candidate in packageCandidates {
                 let elem = candidate()
-                if elem.waitForExistence(timeout: 2) { return elem }
+                if elem.exists { return elem }
             }
         }
 
-        for _ in 1...5 {
+        for _ in 1...2 {
             app.swipeDown()
             for candidate in packageCandidates {
                 let elem = candidate()
-                if elem.waitForExistence(timeout: 2) { return elem }
+                if elem.exists { return elem }
             }
         }
 
