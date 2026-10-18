@@ -23,7 +23,7 @@ Existing explicit owner gates for PR merges, releases, external publication, sig
 
 ---
 
-## 2. Logical Roles & Comment Attribution
+## 2. Logical Roles, Comment Attribution & Execution Provenance
 
 The 7 permanent roles are logical identities operating under the single authenticated user account:
 - `[איתן | ARCH]` — Principal architect
@@ -34,7 +34,11 @@ The 7 permanent roles are logical identities operating under the single authenti
 - `[יעל | RES]` — Research, APIs, schemas
 - `[דנה | SEC]` — Security, privacy, permissions
 
-All comments and updates must explicitly attribute the acting role in the comment body or task title (e.g. `[נועם | DEV]`). Never claim or imply a comment was made by a separate provisioned human user.
+### חובת האצלה מעשית ואמינות דיווח (Mandatory Delegation & Provenance):
+1. **חובת האצלה אמיתית:** חל איסור מוחלט על הסוכן הראשי לבצע עבודה מהותית בעצמו ולייחס אותה לאחד התפקידים. בכל משימה יש לבצע האצלה בפועל באמצעות `invoke_subagent` לסוכן הייעודי (למשל `noam` לפיתוח, ו-`roni` לבדיקות).
+2. **איסור ייחוס פיקטיבי:** אסור בתכלית האיסור לציין בהערה או בעדכון Asana שפעולה בוצעה ע"י תפקיד מסוים (`[נועם | DEV]`, `[רוני | QA]`) אם לא בוצעה קריאת האצלה אמיתית ומתועדת אליו.
+3. **שקיפות מלאה:** כל עדכון ב-Asana יתעד במדויק מי הופעל, מה ביצע בפועל ומהן הראיות שהופקו.
+4. **דיווח על כשל בהאצלה:** אם הפעלת סוכן נכשלת או אינה נתמכת בסביבה, יש לדווח על כך במפורש ולא להתחזות לתפקיד.
 
 ---
 
@@ -56,10 +60,11 @@ Tasks transition through explicit text-based states:
 
 To mark a task `completed=true`:
 1. **Full Scope Verified**: Every item in the task's acceptance criteria must pass. Partial implementation is not completion.
-2. **Technical Proof**: Record the exact repository, branch, and commit SHA.
-3. **Execution Evidence**: Record named test suites, assertion results, and CI run URLs or local logs.
-4. **Physical Hardware Gate**: Tasks explicitly addressing physical iPad/iPhone behavior must remain open (`BLOCKED_DEVICE`) until verified on physical hardware. A green simulator build or unsigned IPA is never a substitute for hardware acceptance.
-5. **Research Tasks**: A research-only task completes when its documented findings, schema, or RFC is verified and reviewed, without implying the overall software feature is done.
+2. **Mandatory QA Gate**: All substantive development tasks MUST be independently verified by **רוני (roni)** before closure. Release tasks require verification by **תומר (tomer)** and **רוני (roni)** (and **דנה (dana)** for security matters).
+3. **Technical Proof**: Record the exact repository, branch, and commit SHA.
+4. **Execution Evidence**: Record named test suites, assertion results, and CI run URLs or local logs.
+5. **Physical Hardware Gate**: Tasks explicitly addressing physical iPad/iPhone behavior must remain open (`BLOCKED_DEVICE`) until verified on physical hardware. A green simulator build or unsigned IPA is never a substitute for hardware acceptance.
+6. **Research Tasks**: A research-only task completes when its documented findings, schema, or RFC is verified and reviewed, without implying the overall software feature is done.
 
 ---
 
@@ -69,6 +74,7 @@ When handing off work, post a concise coordination comment:
 ```
 [<ActingRole> | <Action> -> <NextRole> | <NextAction>] <STATUS>
 Branch: <branch-name> | Commit: <commit-sha> | PR: <url>
+Subagent Invocation: <Subagent Type and Conversation ID>
 Tests: <test results summary>
 Known Risks: <risks or remaining gaps>
 Next Action: <what next reviewer should verify>
