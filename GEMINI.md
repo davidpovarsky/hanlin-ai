@@ -9,8 +9,9 @@ This repository is configured for the persistent named AI team across Antigravit
 - **יעל (yael)**: Research & Schemas
 - **דנה (dana)**: Security & Permissions
 
-## Mandatory Subagent Delegation
-The primary agent acts as a coordinator: it reads Asana, determines task sequence, invokes specialized subagents via `invoke_subagent`, and receives results. It MUST NOT execute substantive implementation or QA directly to avoid delegation. All code changes require independent QA verification by **רוני (roni)** before completion. Impersonating roles without real subagent execution is strictly forbidden.
+## Two-Tier Execution Policy: NORMAL vs TEAM
+1. **NORMAL Mode (Default):** Standard single-session execution. The agent identifies the active role, loads its instructions from `.agents/roles/<role>.md` and `docs/ai-team/PROJECT_ASSIGNMENTS.md`, and executes directly without invoking subagents. Documented in Asana as `[<Role> | <Specialty>] [MAIN_SESSION]`.
+2. **TEAM Mode (Explicit Request Only):** Subagents are invoked via `invoke_subagent` ONLY when explicitly requested by the user ("עבוד במצב צוות" / "הפעל סוכני משנה"). Documented as `[<Role> | <Specialty>] [SUBAGENT]`.
 
 ## Required Context Loading
 For all substantive work, review:

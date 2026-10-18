@@ -16,16 +16,31 @@
 
 The user is the owner and final approver. Role names are logical attribution labels, not provisioned Asana user accounts.
 
-## 2. חובת האצלה מעשית לצוות הסוכנים (Mandatory Subagent Delegation)
+## 2. מדיניות הפעלה דו-שלבית: זהות מקצועית מול אופן ביצוע (NORMAL מול TEAM)
 
-בכל משימת עבודה מהותית, חלה חובת האצלה תפעולית מחייבת:
-1. **הסוכן הראשי פועל כמתאם בלבד (Orchestrator):** הסוכן הראשי קורא Asana, קובע סדר עבודה, מפעיל סוכני משנה מותאמים, מקבל תוצאות ומנהל מסירות. **חל איסור מוחלט על הסוכן הראשי לבצע בעצמו עבודת פיתוח, ארכיטקטורה או QA מהותית כדי 'לחסוך' האצלה.**
-2. **האצלה מעשית באמצעות `invoke_subagent`:** יש להפעיל סוכנים מותאמים בשמותיהם (`eitan`, `noam`, `maya`, `roni`, `tomer`, `yael`, `dana`) באמצעות `invoke_subagent` (או להגדירם תחילה באמצעות `define_subagent` במידת הצורך).
-3. **בחירה ממוקדת:** אין להפעיל את כל 7 הסוכנים בכל משימה; יש לבחור רק את הסוכנים הנדרשים לפי אופי העבודה.
-4. **שער אימות חובה של רוני:** כל משימת פיתוח מהותית תועבר ל**רוני (roni)** לאימות עצמאי לפני סגירתה. משימות שחרור יכללו את **תומר (tomer)** ו**רוני (roni)**, וכן את **דנה (dana)** כשיש השלכות אבטחה ופרטיות.
-5. **איסור ייחוס פיקטיבי:** חל איסור מוחלט לדווח שפעולה בוצעה על ידי סוכן (כגון `[נועם]` או `[רוני]`) אם לא בוצעה קריאת האצלה אמיתית אליו.
-6. **שקיפות בדיווח כשל:** אם הפעלת סוכן נכשלת או אינה נתמכת, יש לדווח על כך במפורש ולא לטשטש זאת על ידי התחזות לסוכן.
-7. **תיעוד מדויק ב-Asana:** כל עדכון יתעד במדויק מי הופעל, מה ביצע ומה אומת.
+קיימת הפרדה מוחלטת בין **הזהות המקצועית** לבין **אופן הביצוע**:
+- **זהות מקצועית (Logical Agent Identity):** איתן, נועם, מיה, רוני, תומר, יעל ודנה. לכל תפקיד הגדרות, הוראות, אחריות והקשר מקצועי קבוע במסמכי `.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`. הזהויות המקצועיות פעילות תמיד.
+
+### מצב ברירת מחדל: NORMAL (ביצוע ישיר בסשן הראשי)
+1. בכל שיחה חדשה, ברירת המחדל היא שיחה רגילה, **ללא הפעלת סוכני משנה** (`invoke_subagent` אינו מופעל).
+2. כאשר המשתמש מוסר משימה:
+   - הסוכן הראשי מזהה אוטומטית את הפרויקט הפעיל ואת התפקיד המקצועי המתאים ביותר.
+   - טוען את הוראות התפקיד מתוך `.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`.
+   - בודק ב-Asana משימות והחלטות רלוונטיות לפי הצורך.
+   - מבצע בעצמו את העבודה בסשן הראשי, תוך יישום מלא של הוראות התפקיד המקצועי שנבחר.
+   - מתעד ב-Asana תחת הזהות המקצועית: `[<Role> | <Specialty>] [MAIN_SESSION]` (למשל `[מיה | UX] [MAIN_SESSION]`, `[נועם | DEV] [MAIN_SESSION]`).
+3. **איסור הפעלת סוכני משנה:** אין להפעיל `invoke_subagent` במצב NORMAL; מורכבות המשימה כשלעצמה אינה עילה להפעלת סוכן משנה.
+4. מעבר בין תפקידים שונים באותה שיחה מותר לפי שלבי העבודה (תכנון -> פיתוח -> בדיקות), תוך טעינת ההוראות המתאימות ותיעוד התפקיד הנכון.
+
+### מצב TEAM (הפעלת סוכני משנה אמיתיים — רק לפי בקשה מפורשת)
+1. סוכני משנה מופעלים אך ורק כשהמשתמש מבקש זאת בבירור (למשל: "עבוד במצב צוות", "הפעל סוכני משנה", "חלק את העבודה בין הסוכנים", "תן לנועם ולרוני לעבוד במקביל", "הפעל את מיה כסוכנת משנה").
+2. במצב זה:
+   - הסוכן הראשי פועל כמתאם.
+   - בוחר ומפעיל מתוכם באופן ממוקד את הסוכנים הרלוונטיים באמצעות `invoke_subagent` (ו-`define_subagent` במידת הצורך).
+   - כל סוכן משנה טוען את הוראותיו המקצועיות הקיימות.
+   - חלוקת עבודה במקביל או ברצף לפי תלויות.
+   - תוצאות ומסירות מתועדות ב-Asana תחת: `[<Role> | <Specialty>] [SUBAGENT]` בצירוף ראיות להפעלת הסוכן (Conversation ID).
+3. בקשה רגילה כגון "תן לנועם את המשימה" או "זה של מיה" מתייחסת לזהות המקצועית ולשיוך המשימה בלבד, ואינה מהווה בקשה להפעלת סוכן משנה אמיתי.
 
 ## 3. Asana and GitHub Coordination
 
@@ -41,16 +56,17 @@ Each substantive task transition must record:
 - Repository and branch
 - Commit SHA
 - Acting role and next reviewer
-- Real subagent invocation record (conversation ID / execution evidence)
+- Execution Mode: `MAIN_SESSION` or `SUBAGENT` (with Conversation ID if subagent)
 - Scope and excluded changes
 - Concrete verification evidence (tests, CI runs, logs)
 - Blockers or risks
 
 Follow `docs/ai-team/TASK_HANDOFF_TEMPLATE.md` for handoff formatting.
 
-## 5. Verification Standards
+## 5. Verification Standards & QA Gate
 
-- Roni independently verifies every implementation before completion.
+- In **NORMAL mode**, QA verification can be performed directly in the main session and recorded as `[רוני | QA] [MAIN_SESSION]`. It must NOT be claimed as an independent multi-agent verification. If acceptance criteria strictly require independent multi-agent verification not performed, the gate must remain open and report what is pending; do not auto-invoke subagents without user request.
+- In **TEAM mode**, Roni independently verifies every implementation before completion via real subagent invocation (`[רוני | QA] [SUBAGENT]`).
 - Distinguish strictly between: `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, and `BLOCKED`.
 - Simulator or build-only success does NOT satisfy physical hardware requirements.
 - Never report fake or assumed passes.

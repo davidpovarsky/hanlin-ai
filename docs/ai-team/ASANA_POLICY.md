@@ -15,7 +15,7 @@
 
 When carrying out owner-assigned development, research, QA, review, or integration work, Antigravity agents may autonomously create and update relevant Asana tasks and subtasks, label the logical owner and reviewer, add meaningful coordination comments, update progress and blockers, adjust dependencies, and set `completed=true` when — and **ONLY** when — that exact task's defined acceptance conditions have verifiably passed.
 
-Per-task owner confirmation is not required for these routine project-management actions. Record exact evidence (repository, branch, commit SHA, named tests/run IDs, real-device proof when required, and remaining scope).
+Per-task owner confirmation is not required for these routine project-management actions. Record exact evidence (repository, branch, commit SHA, named tests/run IDs, real-device proof when required, remaining scope, and execution mode).
 
 If requirements are not met, leave the task open with `IN_PROGRESS`, `READY_FOR_QA`, or `BLOCKED`, including the next action. **No false completion is permitted.**
 
@@ -23,7 +23,7 @@ Existing explicit owner gates for PR merges, releases, external publication, sig
 
 ---
 
-## 2. Logical Roles, Comment Attribution & Execution Provenance
+## 2. Logical Roles, Comment Attribution & Execution Modes
 
 The 7 permanent roles are logical identities operating under the single authenticated user account:
 - `[איתן | ARCH]` — Principal architect
@@ -34,11 +34,16 @@ The 7 permanent roles are logical identities operating under the single authenti
 - `[יעל | RES]` — Research, APIs, schemas
 - `[דנה | SEC]` — Security, privacy, permissions
 
-### חובת האצלה מעשית ואמינות דיווח (Mandatory Delegation & Provenance):
-1. **חובת האצלה אמיתית:** חל איסור מוחלט על הסוכן הראשי לבצע עבודה מהותית בעצמו ולייחס אותה לאחד התפקידים. בכל משימה יש לבצע האצלה בפועל באמצעות `invoke_subagent` לסוכן הייעודי (למשל `noam` לפיתוח, ו-`roni` לבדיקות).
-2. **איסור ייחוס פיקטיבי:** אסור בתכלית האיסור לציין בהערה או בעדכון Asana שפעולה בוצעה ע"י תפקיד מסוים (`[נועם | DEV]`, `[רוני | QA]`) אם לא בוצעה קריאת האצלה אמיתית ומתועדת אליו.
-3. **שקיפות מלאה:** כל עדכון ב-Asana יתעד במדויק מי הופעל, מה ביצע בפועל ומהן הראיות שהופקו.
-4. **דיווח על כשל בהאצלה:** אם הפעלת סוכן נכשלת או אינה נתמכת בסביבה, יש לדווח על כך במפורש ולא להתחזות לתפקיד.
+### אופן הביצוע (Execution Mode):
+כל עדכון ב-Asana חייב להבחין בבירור בין **הזהות המקצועית** לבין **אופן הביצוע**:
+1. **`[MAIN_SESSION]` (מצב NORMAL — ברירת מחדל):**
+   - המשימה מבוצעת ישירות בסשן הראשי ע"י הסוכן הראשי, תוך טעינת הוראות התפקיד מ-`.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`.
+   - מתועד כפורמט: `[<Role> | <Specialty>] [MAIN_SESSION]` (לדוגמה: `[נועם | DEV] [MAIN_SESSION]`).
+   - אין להפעיל סוכני משנה (`invoke_subagent`).
+2. **`[SUBAGENT]` (מצב TEAM — רק לפי בקשה מפורשת):**
+   - המשימה מואצלת לסוכן משנה אמיתי דרך `invoke_subagent` בעקבות בקשה מפורשת של המשתמש.
+   - מתועד כפורמט: `[<Role> | <Specialty>] [SUBAGENT]` בצירוף מזהה השיחה (Conversation ID).
+3. **איסור ייחוס מטעה:** אין לטעון שסוכן משנה הופעל אם העבודה בוצעה בסשן הראשי.
 
 ---
 
@@ -48,7 +53,7 @@ Tasks transition through explicit text-based states:
 - `BACKLOG`: Scoped and awaiting start.
 - `READY`: Blockers cleared, ready for active implementation.
 - `IN_PROGRESS`: Actively worked on by the assigned role.
-- `READY_FOR_QA`: Implementation committed, ready for independent verification by Roni.
+- `READY_FOR_QA`: Implementation committed, ready for verification by Roni.
 - `VERIFIED`: Verification passed with documented evidence.
 - `BLOCKED`: Blocked by external dependencies, missing hardware, or missing credentials.
 - `AWAITING_OWNER_APPROVAL`: Awaiting explicit owner release/merge decision.
@@ -60,7 +65,9 @@ Tasks transition through explicit text-based states:
 
 To mark a task `completed=true`:
 1. **Full Scope Verified**: Every item in the task's acceptance criteria must pass. Partial implementation is not completion.
-2. **Mandatory QA Gate**: All substantive development tasks MUST be independently verified by **רוני (roni)** before closure. Release tasks require verification by **תומר (tomer)** and **רוני (roni)** (and **דנה (dana)** for security matters).
+2. **QA Verification Gate**:
+   - במצב **NORMAL**, בדיקות מתבצעות ישירות ומתועדות כ-`[רוני | QA] [MAIN_SESSION]`. אם תנאי הקבלה מחייבים אימות עצמאי שלא בוצע ע"י סוכן נפרד, יש להשאיר את השער פתוח (`READY_FOR_QA`) ולדווח מה חסר; אין להפעיל סוכן משנה ללא בקשת המשתמש.
+   - במצב **TEAM**, הבדיקה מבוצעת ומאומתת ע"י סוכן משנה ייעודי (`[רוני | QA] [SUBAGENT]`).
 3. **Technical Proof**: Record the exact repository, branch, and commit SHA.
 4. **Execution Evidence**: Record named test suites, assertion results, and CI run URLs or local logs.
 5. **Physical Hardware Gate**: Tasks explicitly addressing physical iPad/iPhone behavior must remain open (`BLOCKED_DEVICE`) until verified on physical hardware. A green simulator build or unsigned IPA is never a substitute for hardware acceptance.
@@ -73,8 +80,9 @@ To mark a task `completed=true`:
 When handing off work, post a concise coordination comment:
 ```
 [<ActingRole> | <Action> -> <NextRole> | <NextAction>] <STATUS>
+Execution Mode: MAIN_SESSION | SUBAGENT
 Branch: <branch-name> | Commit: <commit-sha> | PR: <url>
-Subagent Invocation: <Subagent Type and Conversation ID>
+Subagent Invocation: <Conversation ID or NONE (MAIN_SESSION)>
 Tests: <test results summary>
 Known Risks: <risks or remaining gaps>
 Next Action: <what next reviewer should verify>
