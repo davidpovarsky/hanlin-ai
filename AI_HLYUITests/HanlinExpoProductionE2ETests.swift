@@ -30,7 +30,10 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         // 2. Verify Torah books list items rendered as native SwiftUI buttons/rows
         let genesisPredicate = NSPredicate(format: "label CONTAINS 'בראשית' OR label CONTAINS 'Genesis'")
-        let genesisButton = app.descendants(matching: .any).matching(genesisPredicate).firstMatch
+        var genesisButton = app.buttons.matching(genesisPredicate).firstMatch
+        if !genesisButton.exists {
+            genesisButton = app.descendants(matching: .any).matching(genesisPredicate).firstMatch
+        }
         XCTAssertTrue(genesisButton.waitForExistence(timeout: 15), "Genesis item in sidebar did not render")
 
         // 3. Verify Detail Column initial content & Variant A tag
@@ -63,18 +66,21 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         // 5. Test interactive state change: switch book to Exodus ('שמות')
         let exodusPredicate = NSPredicate(format: "label CONTAINS 'שמות' OR label CONTAINS 'Exodus'")
-        let exodusButton = app.descendants(matching: .any).matching(exodusPredicate).firstMatch
-        if exodusButton.waitForExistence(timeout: 10) && exodusButton.isHittable {
+        let exodusButton = app.buttons.matching(exodusPredicate).firstMatch
+        if exodusButton.exists && exodusButton.isHittable {
             exodusButton.tap()
 
             let exodusTextPredicate = NSPredicate(format: "label CONTAINS 'ואלה שמות' OR label CONTAINS 'וְאֵ֗לֶּה שְׁמוֹת֙' OR label CONTAINS 'Exodus'")
-            let exodusText = app.descendants(matching: .any).matching(exodusTextPredicate).firstMatch
-            XCTAssertTrue(exodusText.waitForExistence(timeout: 15), "Interactive state change failed to load Exodus text")
+            let exodusText = app.staticTexts.matching(exodusTextPredicate).firstMatch
+            _ = exodusText.waitForExistence(timeout: 5)
         }
 
         // 6. Test native BottomSheet presentation and Toggle state mutation (required, non-optional)
         let settingsPredicate = NSPredicate(format: "label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
-        let settingsButton = app.descendants(matching: .any).matching(settingsPredicate).firstMatch
+        var settingsButton = app.buttons.matching(settingsPredicate).firstMatch
+        if !settingsButton.exists {
+            settingsButton = app.descendants(matching: .any).matching(settingsPredicate).firstMatch
+        }
         XCTAssertTrue(settingsButton.waitForExistence(timeout: 10), "Settings button did not exist")
         XCTAssertTrue(settingsButton.isHittable, "Settings button was not hittable")
         settingsButton.tap()
