@@ -53,12 +53,9 @@ if ($Missing.Count -eq 0) {
     Write-Host "PASS: All $($RequiredFiles.Count) team files exist." -ForegroundColor Green
     exit 0
 } else {
-    Write-Host "WARNING: Missing $($Missing.Count) files:" -ForegroundColor Yellow
+    Write-Host "FAIL: Missing $($Missing.Count) files:" -ForegroundColor Red
     foreach ($m in $Missing) {
         Write-Host "  - $m" -ForegroundColor Red
-    }
-    if ($Apply) {
-        Write-Host "Apply mode requested. Please run the canonical sync script or checkout from configured branch." -ForegroundColor Cyan
     }
     exit 1
 }

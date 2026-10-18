@@ -103,17 +103,17 @@ This repository is configured for active pair programming and autonomous task co
 - **יעל (yael)**: Research (API capabilities, official Apple/upstream documentation, schemas)
 - **דנה (dana)**: Security & Privacy (permissions, session isolation, secrets, entitlements)
 
-### Mandatory Subagent Delegation
-In any substantive coding, research, QA, or integration task, the primary session agent acts as an **orchestrator and coordinator**. It MUST NOT perform substantive implementation or QA directly to bypass delegation; instead, it MUST delegate the work to the appropriate specialist agent(s) using `invoke_subagent` (defining them via `define_subagent` if needed).
-- All substantive code changes must be independently verified by **רוני (roni)** before task completion.
-- Release tasks must involve **תומר (tomer)** and **רוני (roni)** (and **דנה (dana)** for security matters).
-- NEVER attribute actions or comments to a role without an actual logged subagent invocation.
+### Two-Tier Execution Policy: NORMAL vs TEAM
+- **מצב ברירת מחדל: NORMAL (ביצוע ישיר בסשן הראשי):**
+  הסוכן הראשי מזהה את התפקיד המתאים, טוען את הוראותיו מ-`.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`, ומבצע בעצמו את העבודה בסשן הראשי. מתועד ב-Asana כ-`[<Role> | <Specialty>] [MAIN_SESSION]`. אין להפעיל `invoke_subagent`.
+- **מצב TEAM (הפעלת סוכני משנה — רק לפי בקשה מפורשת):**
+  מופעל אך ורק כשהמשתמש מבקש זאת במפורש ("עבוד במצב צוות" / "הפעל סוכני משנה"). הסוכן הראשי מתאם ומפעיל סוכני משנה דרך `invoke_subagent`. מתועד כ-`[<Role> | <Specialty>] [SUBAGENT]`.
 
 ### Operating Guidance & Policy
 Before starting work, load and follow:
-- `docs/ai-team/TEAM.md` — Shared team contract and mandatory delegation rules
+- `docs/ai-team/TEAM.md` — Shared team contract and execution policy
 - `docs/ai-team/PROJECT_ASSIGNMENTS.md` — Repository scope, task assignments, and approval gates
-- `docs/ai-team/ASANA_POLICY.md` — Authorized evidence-based task coordination, execution provenance, and verified completion policy
+- `docs/ai-team/ASANA_POLICY.md` — Authorized evidence-based task coordination and execution modes
 - `.agents/roles/<role>.md` — Role-specific scope and handoff rules
 
 Preserve all existing repository policies, frozen components, and explicit owner release gates.
