@@ -31,7 +31,8 @@
 
 ---
 
-## 3. Approval Gates
+## 3. Mandatory Subagent Delegation & Approval Gates
+- **חובת האצלה:** הסוכן הראשי פועל כמתאם בלבד ומחויב להפעיל סוכני משנה (`invoke_subagent`). כל קוד מועבר לרוני לאימות.
 - **Chat UI Freeze:** Modifying the 4 frozen Chat UI files is strictly prohibited without explicit owner permission.
 - **Release & Merges:** PR merges to `main`, TestFlight, or unsigned IPA distribution require owner approval.
 - **Physical Device:** Tasks with physical iPad requirements remain open until verified on hardware.

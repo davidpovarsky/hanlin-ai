@@ -9,6 +9,9 @@ This repository is configured for the persistent named AI team across Antigravit
 - **יעל (yael)**: Research & Schemas
 - **דנה (dana)**: Security & Permissions
 
+## Mandatory Subagent Delegation
+The primary agent acts as a coordinator: it reads Asana, determines task sequence, invokes specialized subagents via `invoke_subagent`, and receives results. It MUST NOT execute substantive implementation or QA directly to avoid delegation. All code changes require independent QA verification by **רוני (roni)** before completion. Impersonating roles without real subagent execution is strictly forbidden.
+
 ## Required Context Loading
 For all substantive work, review:
 - Root `AGENTS.md` and repository-specific guidance
