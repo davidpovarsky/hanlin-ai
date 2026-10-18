@@ -20,7 +20,10 @@
     "cherry_icon.png",
     "logo_3_0.png",
     "capability-invariants.md",
-    "test-results.jsonl"
+    "test-results.jsonl",
+    ".codex/**",
+    ".agents/**",
+    "Tools/ai-team/**"
   ],
   "components": {
     "ci_router": {
