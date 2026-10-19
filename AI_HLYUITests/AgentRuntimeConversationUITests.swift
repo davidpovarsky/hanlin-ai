@@ -272,8 +272,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     private func openChat(in app: XCUIApplication) {
-        while app.navigationBars["Runtimes & Packages"].exists || app.navigationBars["Settings"].exists || app.navigationBars["设置"].exists {
-            navigateBack(in: app)
+        while app.navigationBars["Runtimes & Packages"].exists {
+            let backButton = app.navigationBars.buttons.element(boundBy: 0)
+            if backButton.waitForExistence(timeout: 2) && backButton.isHittable {
+                backButton.tap()
+            } else {
+                break
+            }
         }
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
 
