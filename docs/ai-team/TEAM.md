@@ -22,21 +22,21 @@ The user is the owner and final approver. Role names are logical attribution lab
 - **זהות מקצועית (Logical Agent Identity):** איתן, נועם, מיה, רוני, תומר, יעל ודנה. לכל תפקיד הגדרות, הוראות, אחריות והקשר מקצועי קבוע במסמכי `.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`. הזהויות המקצועיות פעילות תמיד.
 
 ### מצב ברירת מחדל: NORMAL (ביצוע ישיר בסשן הראשי)
-1. בכל שיחה חדשה, ברירת המחדל היא שיחה רגילה, **ללא הפעלת סוכני משנה** (`invoke_subagent` אינו מופעל).
+1. בכל שיחה חדשה, ברירת המחדל היא שיחה רגילה, **ללא הפעלת סוכני משנה** (אין להפעיל כלי האצלה אמיתי של הפלטפורמה).
 2. כאשר המשתמש מוסר משימה:
    - הסוכן הראשי מזהה אוטומטית את הפרויקט הפעיל ואת התפקיד המקצועי המתאים ביותר.
    - טוען את הוראות התפקיד מתוך `.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`.
    - בודק ב-Asana משימות והחלטות רלוונטיות לפי הצורך.
    - מבצע בעצמו את העבודה בסשן הראשי, תוך יישום מלא של הוראות התפקיד המקצועי שנבחר.
    - מתעד ב-Asana תחת הזהות המקצועית: `[<Role> | <Specialty>] [MAIN_SESSION]` (למשל `[מיה | UX] [MAIN_SESSION]`, `[נועם | DEV] [MAIN_SESSION]`).
-3. **איסור הפעלת סוכני משנה:** אין להפעיל `invoke_subagent` במצב NORMAL; מורכבות המשימה כשלעצמה אינה עילה להפעלת סוכן משנה.
+3. **איסור הפעלת סוכני משנה:** אין להפעיל כלי האצלה אמיתי של הפלטפורמה במצב NORMAL; מורכבות המשימה כשלעצמה אינה עילה להפעלת סוכן משנה.
 4. מעבר בין תפקידים שונים באותה שיחה מותר לפי שלבי העבודה (תכנון -> פיתוח -> בדיקות), תוך טעינת ההוראות המתאימות ותיעוד התפקיד הנכון.
 
 ### מצב TEAM (הפעלת סוכני משנה אמיתיים — רק לפי בקשה מפורשת)
 1. סוכני משנה מופעלים אך ורק כשהמשתמש מבקש זאת בבירור (למשל: "עבוד במצב צוות", "הפעל סוכני משנה", "חלק את העבודה בין הסוכנים", "תן לנועם ולרוני לעבוד במקביל", "הפעל את מיה כסוכנת משנה").
 2. במצב זה:
    - הסוכן הראשי פועל כמתאם.
-   - בוחר ומפעיל מתוכם באופן ממוקד את הסוכנים הרלוונטיים באמצעות `invoke_subagent` (ו-`define_subagent` במידת הצורך).
+   - בוחר ומפעיל מתוכם באופן ממוקד את הסוכנים הרלוונטיים באמצעות כלי ההאצלה המקוריים של הפלטפורמה: כלי שיתוף הפעולה הנתמכים ב-Codex (כגון `spawn_agent`), או `invoke_subagent` / `define_subagent` ב-Antigravity כאשר הם זמינים.
    - כל סוכן משנה טוען את הוראותיו המקצועיות הקיימות.
    - חלוקת עבודה במקביל או ברצף לפי תלויות.
    - תוצאות ומסירות מתועדות ב-Asana תחת: `[<Role> | <Specialty>] [SUBAGENT]` בצירוף ראיות להפעלת הסוכן (Conversation ID).
@@ -74,5 +74,5 @@ Follow `docs/ai-team/TASK_HANDOFF_TEMPLATE.md` for handoff formatting.
 ## 6. Platform Mapping
 
 - **Antigravity:** Loads root `AGENTS.md`, `GEMINI.md`, `.agents/rules/*.md`, `.agents/agents/*.md`, `.agents/roles/*.md`, and `.agents/skills/*/SKILL.md`.
-- **Codex:** Reads root `AGENTS.md`, `.codex/agents/*.toml`, and shared `docs/ai-team/*.md`.
+- **Codex:** Reads root `AGENTS.md`, project-scoped `.codex/agents/*.toml`, and shared `docs/ai-team/*.md`; delegation uses the native collaboration tools exposed by the installed Codex release and never assumes Antigravity's tool names.
 - Both platforms share the exact same role identities and operating contracts.

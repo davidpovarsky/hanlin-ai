@@ -1,4 +1,4 @@
-﻿# AGENTS.md â€” Shared Development Rules
+# AGENTS.md â€” Shared Development Rules
 
 Read `PROJECT_AGENT_GUIDANCE.md` if it exists. It contains repository-specific architecture, build, upstream, signing, and workflow guidance and must be followed together with this file. The user's current request has highest priority, then repository-specific guidance, then these shared rules.
 
@@ -105,9 +105,9 @@ This repository is configured for active pair programming and autonomous task co
 
 ### Two-Tier Execution Policy: NORMAL vs TEAM
 - **מצב ברירת מחדל: NORMAL (ביצוע ישיר בסשן הראשי):**
-  הסוכן הראשי מזהה את התפקיד המתאים, טוען את הוראותיו מ-`.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`, ומבצע בעצמו את העבודה בסשן הראשי. מתועד ב-Asana כ-`[<Role> | <Specialty>] [MAIN_SESSION]`. אין להפעיל `invoke_subagent`.
+  הסוכן הראשי מזהה את התפקיד המתאים, טוען את הוראותיו מ-`.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`, ומבצע בעצמו את העבודה בסשן הראשי. מתועד ב-Asana כ-`[<Role> | <Specialty>] [MAIN_SESSION]`. אין להפעיל סוכן משנה אמיתי דרך כלי שיתוף הפעולה של הפלטפורמה.
 - **מצב TEAM (הפעלת סוכני משנה — רק לפי בקשה מפורשת):**
-  מופעל אך ורק כשהמשתמש מבקש זאת במפורש ("עבוד במצב צוות" / "הפעל סוכני משנה"). הסוכן הראשי מתאם ומפעיל סוכני משנה דרך `invoke_subagent`. מתועד כ-`[<Role> | <Specialty>] [SUBAGENT]`.
+  מופעל אך ורק כשהמשתמש מבקש זאת במפורש ("עבוד במצב צוות" / "הפעל סוכני משנה"). הסוכן הראשי מתאם ומפעיל סוכני משנה דרך כלי ההאצלה המקוריים של הפלטפורמה (`spawn_agent` וכלי שיתוף הפעולה הנתמכים ב-Codex; `invoke_subagent` ב-Antigravity כאשר הוא זמין). מתועד כ-`[<Role> | <Specialty>] [SUBAGENT]`.
 
 ### Operating Guidance & Policy
 Before starting work, load and follow:
