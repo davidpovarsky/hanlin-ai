@@ -180,6 +180,11 @@ struct ListView: View {
                 selectedChatRecord = filteredChatRecords.first
             }
         }
+        .onChange(of: chatRecords.count) { _, newCount in
+            if selectedChatRecord == nil && horizontalSizeClass == .regular && newCount > 0 {
+                selectedChatRecord = filteredChatRecords.first
+            }
+        }
         .sheet(isPresented: $showTranslationSheet) {
             TranslationView()
         }

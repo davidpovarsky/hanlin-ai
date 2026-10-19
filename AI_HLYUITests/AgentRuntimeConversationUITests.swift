@@ -25,20 +25,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         openChat(in: app)
 
         let input = app.textFields["hanlin-chat-input"].firstMatch
-        if !input.waitForExistence(timeout: 5) {
-            let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
-            let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-            if seededChat.waitForExistence(timeout: 15) {
-                seededChat.tap()
-            }
-        }
         XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
-        input.tap()
+        tapElement(input)
         input.typeText("Run the local Python acceptance tool and report the result.")
 
         let send = app.buttons["hanlin-chat-send"].firstMatch
         XCTAssertTrue(send.waitForExistence(timeout: 10), "The real chat send button did not appear.")
-        send.tap()
+        tapElement(send)
 
         let finalAnswer = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
@@ -93,20 +86,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // 2. Open Chat and send prompt (single user turn, no second nudge required)
         openChat(in: app)
         let input = app.textFields["hanlin-chat-input"].firstMatch
-        if !input.waitForExistence(timeout: 5) {
-            let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
-            let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-            if seededChat.waitForExistence(timeout: 15) {
-                seededChat.tap()
-            }
-        }
         XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
-        input.tap()
+        tapElement(input)
         input.typeText("Use Python to calculate 6*7 and tell me the result.")
 
         let send = app.buttons["hanlin-chat-send"].firstMatch
         XCTAssertTrue(send.waitForExistence(timeout: 10))
-        send.tap()
+        tapElement(send)
 
         // 3. Final answer renders in the same user turn without extra user nudge
         let finalAnswer = app.staticTexts.matching(
@@ -138,32 +124,25 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         openChat(in: app)
         let input = app.textFields["hanlin-chat-input"].firstMatch
-        if !input.waitForExistence(timeout: 5) {
-            let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
-            let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-            if seededChat.waitForExistence(timeout: 15) {
-                seededChat.tap()
-            }
-        }
         XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
-        input.tap()
+        tapElement(input)
         input.typeText("START_DELAYED_RUN_A")
 
         let send = app.buttons["hanlin-chat-send"].firstMatch
         XCTAssertTrue(send.waitForExistence(timeout: 10))
-        send.tap()
+        tapElement(send)
 
         // 1. Assert stop button appears while Run A is delayed and tap Stop
         let stopButton = app.buttons["hanlin-chat-stop"].firstMatch
         XCTAssertTrue(stopButton.waitForExistence(timeout: 10), "Stop button did not appear during delayed run A")
-        stopButton.tap()
+        tapElement(stopButton)
 
         // 2. Input becomes available again for Run B
         XCTAssertTrue(input.waitForExistence(timeout: 10), "Input field did not become ready after stopping run A")
-        input.tap()
+        tapElement(input)
         input.typeText("START_RUN_B")
         XCTAssertTrue(send.waitForExistence(timeout: 5))
-        send.tap()
+        tapElement(send)
 
         // 3. Run B finishes cleanly
         let runBAnswer = app.staticTexts.matching(
@@ -284,11 +263,53 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         _ = runtimeCenterNav.waitForExistence(timeout: 10)
     }
 
+    private func tapElement(_ element: XCUIElement) {
+        if element.isHittable {
+            element.tap()
+        } else {
+            element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+    }
+
     private func openChat(in app: XCUIApplication) {
-        while app.navigationBars["Runtimes & Packages"].exists {
+        while app.navigationBars["Runtimes & Packages"].exists || app.navigationBars["Settings"].exists || app.navigationBars["设置"].exists {
             navigateBack(in: app)
         }
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+
+        let input = app.textFields["hanlin-chat-input"].firstMatch
+        if input.waitForExistence(timeout: 3) { return }
+
+        // Expand sidebar on iPad if collapsed
+        let sidebarToggle = app.navigationBars.buttons.matching(
+            NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+        ).firstMatch
+        if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
+            sidebarToggle.tap()
+        }
+
+        let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+        var seededChat = app.buttons.matching(chatPredicate).firstMatch
+        if !seededChat.exists {
+            seededChat = app.staticTexts.matching(chatPredicate).firstMatch
+        }
+        if !seededChat.exists {
+            seededChat = app.cells.matching(chatPredicate).firstMatch
+        }
+        if !seededChat.exists {
+            seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
+        }
+
+        if seededChat.waitForExistence(timeout: 15) {
+            tapElement(seededChat)
+        } else {
+            let anyChat = app.cells.firstMatch
+            if anyChat.waitForExistence(timeout: 3) {
+                tapElement(anyChat)
+            }
+        }
+
+        _ = input.waitForExistence(timeout: 15)
     }
 
     private func toggleSwitch(for kindRaw: String, in app: XCUIApplication) -> XCUIElement {
