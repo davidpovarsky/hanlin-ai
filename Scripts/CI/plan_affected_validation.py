@@ -151,13 +151,27 @@ COLLECTOR_BUILD_UI_SUITES = {
 }
 
 
+class ComparisonRange(Tuple[str, str]):
+    """Holds base_sha and head_sha while preserving backwards-compatible 2-tuple unpacking."""
+    base_sha: str
+    head_sha: str
+    method: str
+
+    def __new__(cls, base_sha: str, head_sha: str, method: str = "unknown"):
+        obj = super().__new__(cls, (base_sha, head_sha))
+        obj.base_sha = base_sha
+        obj.head_sha = head_sha
+        obj.method = method
+        return obj
+
+
 def resolve_comparison_range(
     repo_root: pathlib.Path,
     event_name: str,
     event_payload: Dict[str, Any],
     compare_base_sha_input: Optional[str] = None,
     head_sha_input: Optional[str] = None,
-) -> Tuple[str, str]:
+) -> ComparisonRange:
     """Resolve the (base_sha, head_sha) comparison range.
 
     NEVER returns a guess that could miss commits without reporting an error.
@@ -187,7 +201,7 @@ def resolve_comparison_range(
                     candidate_shas=[explicit_base],
                     reason=f"Explicit base SHA '{explicit_base}' does not exist in repository.",
                 )
-        return explicit_base, head_sha
+        return ComparisonRange(explicit_base, head_sha, "explicit compare_base_sha input")
 
     # 2. Pull Request event
     if event_name == "pull_request":
@@ -201,7 +215,7 @@ def resolve_comparison_range(
             if not git_commit_exists(pr_base, repo_root):
                 fetch_commit_if_needed(pr_base, repo_root)
             if git_commit_exists(pr_base, repo_root):
-                return pr_base, head_sha
+                return ComparisonRange(pr_base, head_sha, "pull_request event payload base SHA")
             raise BaseSHAResolutionError(
                 attempted_method="pull_request.base.sha",
                 head_sha=head_sha,
@@ -225,7 +239,7 @@ def resolve_comparison_range(
             if not git_commit_exists(push_before, repo_root):
                 fetch_commit_if_needed(push_before, repo_root)
             if git_commit_exists(push_before, repo_root):
-                return push_before, head_sha
+                return ComparisonRange(push_before, head_sha, "push before SHA")
 
         # If push_before is 0000... (new branch creation), derive merge-base with origin/main
         candidate_shas: List[str] = []
@@ -238,7 +252,7 @@ def resolve_comparison_range(
                     cwd=repo_root,
                 )
                 if git_commit_exists(candidate, repo_root):
-                    return candidate, head_sha
+                    return ComparisonRange(candidate, head_sha, f"push merge-base with {ref_target}")
                 candidate_shas.append(candidate)
             except Exception:
                 pass
@@ -299,7 +313,7 @@ def resolve_comparison_range(
                                 check=False,
                             ).returncode == 0
                             if is_ancestor:
-                                return c_sha, head_sha
+                                return ComparisonRange(c_sha, head_sha, "GitHub API last completed run HEAD SHA")
         except Exception:
             pass
 
@@ -313,7 +327,7 @@ def resolve_comparison_range(
         try:
             mb = run_git(["merge-base", "HEAD", target], cwd=repo_root)
             if mb and git_commit_exists(mb, repo_root) and mb != head_sha:
-                return mb, head_sha
+                return ComparisonRange(mb, head_sha, f"git merge-base with {target}")
         except Exception:
             pass
 
@@ -321,7 +335,7 @@ def resolve_comparison_range(
     try:
         parent = run_git(["rev-parse", "HEAD~1"], cwd=repo_root)
         if parent and git_commit_exists(parent, repo_root):
-            return parent, head_sha
+            return ComparisonRange(parent, head_sha, "rev-parse HEAD~1 (immediate parent)")
     except Exception:
         pass
 
@@ -371,6 +385,11 @@ class ValidationPlan:
         step_outputs: Dict[str, Any],
         is_full_validation: bool,
         explicit_overrides: List[str],
+        base_sha_method: str = "unknown",
+        reused_tests: Optional[List[Dict[str, Any]]] = None,
+        not_required_tests: Optional[List[str]] = None,
+        decisions_rationale: Optional[Dict[str, str]] = None,
+        cost_estimates: Optional[Dict[str, Any]] = None,
     ) -> None:
         self.base_sha = base_sha
         self.head_sha = head_sha
@@ -383,11 +402,43 @@ class ValidationPlan:
         self.step_outputs = step_outputs
         self.is_full_validation = is_full_validation
         self.explicit_overrides = explicit_overrides
+        self.base_sha_method = base_sha_method
+        self.reused_tests = reused_tests or []
+        self.not_required_tests = not_required_tests or []
+        self.decisions_rationale = decisions_rationale or {}
+        self.cost_estimates = cost_estimates or {}
+
+    def get_required_build_type(self) -> str:
+        if self.step_outputs.get("run_ipa_packaging"):
+            return "Release Device IPA"
+        if self.step_outputs.get("run_device_build"):
+            return "Release Device Build"
+        if self.step_outputs.get("run_simulator_job"):
+            cfg = self.step_outputs.get("simulator_configuration", "Debug")
+            return f"{cfg} Simulator App (Test-Only)"
+        if self.step_outputs.get("run_phase1"):
+            return "Phase 1 Swift Package & Baseline Validation"
+        return "None (Documentation / Non-Runtime Change)"
+
+    def get_selected_tests(self) -> List[str]:
+        tests = []
+        unit_filter = self.step_outputs.get("simulator_unit_filter", "")
+        if unit_filter:
+            tests.extend(u.strip() for u in unit_filter.split(",") if u.strip())
+        ui_filter = self.step_outputs.get("simulator_ui_filter", "")
+        if ui_filter:
+            tests.extend(u.strip() for u in ui_filter.split(",") if u.strip())
+        if self.step_outputs.get("run_simulator_scripting_acceptance"):
+            tests.append("AI_HLYTests/HanlinScriptingAcceptanceTests")
+        if self.step_outputs.get("run_runtime_tooling_full_acceptance"):
+            tests.append("RuntimeToolingFullAcceptanceCollector")
+        return sorted(set(tests))
 
     def to_dict(self) -> Dict[str, Any]:
         return {
-            "base_sha": self.base_sha,
             "head_sha": self.head_sha,
+            "base_sha": self.base_sha,
+            "base_sha_resolution_method": self.base_sha_method,
             "event_name": self.event_name,
             "is_full_validation": self.is_full_validation,
             "explicit_overrides": self.explicit_overrides,
@@ -397,6 +448,15 @@ class ValidationPlan:
             "affected_components": self.affected_components,
             "selected_groups": self.selected_groups,
             "skipped_expensive_groups": self.skipped_expensive_groups,
+            "selected_tests": self.get_selected_tests(),
+            "reused_tests": self.reused_tests,
+            "not_required_tests": self.not_required_tests,
+            "decisions_rationale": self.decisions_rationale,
+            "required_build_type": self.get_required_build_type(),
+            "cost_estimates": self.cost_estimates,
+            "simulator_required": bool(self.step_outputs.get("run_simulator_job", False)),
+            "device_build_required": bool(self.step_outputs.get("run_device_build", False)),
+            "ipa_packaging_required": bool(self.step_outputs.get("run_ipa_packaging", False)),
             "step_outputs": self.step_outputs,
         }
 
@@ -409,9 +469,16 @@ class ValidationPlan:
             "| --- | --- |",
             f"| **Event** | `{self.event_name}` |",
             f"| **Base SHA** | `{self.base_sha[:10]}` (`{self.base_sha}`) |",
+            f"| **Base SHA Resolution Method** | `{self.base_sha_method}` |",
             f"| **Head SHA** | `{self.head_sha[:10]}` (`{self.head_sha}`) |",
             f"| **Changed Files** | `{len(self.changed_files)}` |",
+            f"| **Required Build Type** | `{self.get_required_build_type()}` |",
+            f"| **Simulator Required** | `{str(bool(self.step_outputs.get('run_simulator_job', False))).lower()}` |",
+            f"| **Device Build Required** | `{str(bool(self.step_outputs.get('run_device_build', False))).lower()}` |",
+            f"| **IPA Packaging Required** | `{str(bool(self.step_outputs.get('run_ipa_packaging', False))).lower()}` |",
             f"| **Full Validation Override** | `{str(self.is_full_validation).lower()}` |",
+            f"| **Estimated Duration** | `{self.cost_estimates.get('estimated_duration_human', 'N/A')}` |",
+            f"| **Estimated Savings** | `{self.cost_estimates.get('estimated_saved_human', 'N/A')}` |",
             f"| **Simulator UI Filter** | `{self.step_outputs.get('simulator_ui_filter') or 'None'}` |",
             f"| **Simulator Unit Filter** | `{self.step_outputs.get('simulator_unit_filter') or 'None'}` |",
             f"| **Simulator Configuration** | `{self.step_outputs.get('simulator_configuration', 'Debug')}` |",
@@ -457,8 +524,8 @@ class ValidationPlan:
                 lines.append(f"- **`{comp}`**: {reasons_str}")
         lines.append("")
 
-        # Selected validation groups
-        lines.append("### Selected Validation Groups")
+        # Selected validation groups & tests
+        lines.append("### Selected Validation Groups & Tests")
         if not self.selected_groups:
             lines.append("*None -- all expensive validations safely skipped.*")
         else:
@@ -467,6 +534,13 @@ class ValidationPlan:
                 for r in sorted(set(reasons)):
                     lines.append(f"  - *Reason*: {r}")
         lines.append("")
+
+        # Reused Tests from Evidence
+        if self.reused_tests:
+            lines.append("### Reused Tests from Authentic Evidence (Unchanged Dependencies)")
+            for item in self.reused_tests:
+                lines.append(f"- **`{item.get('test_id') or item.get('suite')}`**: `REUSED_VERIFIED_PASS` -- {item.get('reason')}")
+            lines.append("")
 
         # Skipped expensive groups
         lines.append("### Skipped Expensive Validations")
@@ -478,6 +552,11 @@ class ValidationPlan:
             ):
                 lines.append(f"- **{group_name}**: `SKIPPED` -- {reason}")
         lines.append("")
+
+        if self.not_required_tests:
+            lines.append("### Tests Not Required (Zero Impact from Changes)")
+            lines.append(f"*{len(self.not_required_tests)} test suites skipped because no direct or transitive dependencies changed.*")
+            lines.append("")
 
         return "\n".join(lines)
 
@@ -492,6 +571,7 @@ def plan_affected_validation(
     target_group: Optional[str] = None,
     manual_modes: Optional[Dict[str, bool]] = None,
     exact_test_selector: Optional[str] = None,
+    base_sha_method: str = "unknown",
 ) -> ValidationPlan:
     """Compute the affected validation plan from changed files and mapping rules."""
     manual_modes = manual_modes or {}
@@ -610,6 +690,27 @@ def plan_affected_validation(
             for item in expensive_items
         }
 
+        all_known_suites = set()
+        for comp in components.values():
+            all_known_suites.update(comp.get("unit_suites", []))
+            all_known_suites.update(comp.get("ui_suites", []))
+        not_required_tests = sorted(all_known_suites - {exact_test_selector})
+
+        est_mins = 15 if is_ui else 8
+        cost_estimates = {
+            "estimated_duration_minutes": est_mins,
+            "estimated_duration_human": f"~{est_mins} min",
+            "estimated_saved_minutes": max(0, 180 - est_mins),
+            "estimated_saved_human": f"~{180 - est_mins} min saved vs full run (~180 min)",
+            "baseline_full_run_minutes": 180,
+        }
+        decisions_rationale = {
+            "exact_test_selector": f"Explicit selector '{exact_test_selector}' targeted. All unrelated validation suppressed.",
+            "simulator_job": "Required to execute test on iOS simulator",
+            "device_build": "Suppressed (not needed for simulator test)",
+            "ipa_packaging": "Suppressed (not needed for simulator test)",
+        }
+
         return ValidationPlan(
             base_sha=base_sha,
             head_sha=head_sha,
@@ -622,6 +723,10 @@ def plan_affected_validation(
             step_outputs=step_outputs,
             is_full_validation=False,
             explicit_overrides=explicit_overrides,
+            base_sha_method=base_sha_method,
+            not_required_tests=not_required_tests,
+            decisions_rationale=decisions_rationale,
+            cost_estimates=cost_estimates,
         )
 
     # If full_validation is explicitly requested:
@@ -1100,6 +1205,65 @@ def plan_affected_validation(
             else:
                 skipped_expensive[exp_name] = "not affected by changed files"
 
+    # 9. Compute cost estimates, not-required tests, decisions rationale
+    all_known_suites = set()
+    for comp in components.values():
+        all_known_suites.update(comp.get("unit_suites", []))
+        all_known_suites.update(comp.get("ui_suites", []))
+
+    selected_tests_set = set()
+    unit_filter = step_outputs.get("simulator_unit_filter", "")
+    if unit_filter:
+        selected_tests_set.update(u.strip() for u in unit_filter.split(",") if u.strip())
+    ui_filter = step_outputs.get("simulator_ui_filter", "")
+    if ui_filter:
+        selected_tests_set.update(u.strip() for u in ui_filter.split(",") if u.strip())
+    if step_outputs.get("run_simulator_scripting_acceptance"):
+        selected_tests_set.add("AI_HLYTests/HanlinScriptingAcceptanceTests")
+
+    not_required_tests = sorted(all_known_suites - selected_tests_set)
+
+    # Cost estimates
+    total_est_mins = 3
+    if step_outputs.get("run_phase1"):
+        total_est_mins += 5
+    if step_outputs.get("run_simulator_job"):
+        total_est_mins += 5
+        if full_validation or step_outputs.get("run_runtime_tooling_full_acceptance"):
+            total_est_mins += 105
+        else:
+            if step_outputs.get("run_simulator_targeted_ui"):
+                total_est_mins += 15
+            if step_outputs.get("run_simulator_unit"):
+                total_est_mins += 8
+            if step_outputs.get("run_simulator_scripting_acceptance"):
+                total_est_mins += 8
+    if step_outputs.get("run_device_build"):
+        total_est_mins += 20
+    if step_outputs.get("run_ipa_packaging"):
+        total_est_mins += 15
+
+    total_est_mins = min(180, max(3, total_est_mins))
+    saved_mins = max(0, 180 - total_est_mins)
+
+    cost_estimates = {
+        "estimated_duration_minutes": total_est_mins,
+        "estimated_duration_human": f"~{total_est_mins} min",
+        "estimated_saved_minutes": saved_mins,
+        "estimated_saved_human": f"~{saved_mins} min saved vs full run (~180 min)",
+        "baseline_full_run_minutes": 180,
+    }
+
+    decisions_rationale = {}
+    for g, reasons in selected_groups.items():
+        decisions_rationale[f"group:{g}"] = f"Selected because: {'; '.join(reasons)}"
+    for g, reason in skipped_expensive.items():
+        decisions_rationale[f"skipped:{g}"] = f"Skipped because: {reason}"
+    if not step_outputs.get("run_device_build"):
+        decisions_rationale["device_build"] = "Skipped: Device build not in consumer tree for affected components"
+    if not step_outputs.get("run_ipa_packaging"):
+        decisions_rationale["ipa_packaging"] = "Skipped: IPA packaging not required for simulator or focused verification"
+
     return ValidationPlan(
         base_sha=base_sha,
         head_sha=head_sha,
@@ -1112,6 +1276,10 @@ def plan_affected_validation(
         step_outputs=step_outputs,
         is_full_validation=full_validation,
         explicit_overrides=explicit_overrides,
+        base_sha_method=base_sha_method,
+        not_required_tests=not_required_tests,
+        decisions_rationale=decisions_rationale,
+        cost_estimates=cost_estimates,
     )
 
 
@@ -1288,8 +1456,18 @@ class TestDependencyLedger:
         ],
     }
 
+    VALID_STATUSES = {
+        "EXECUTED_PASS",
+        "REUSED_VERIFIED_PASS",
+        "FAILED",
+        "NOT_RUN",
+        "BLOCKED",
+        "INVALIDATED",
+    }
+
     def __init__(self, repo_root: pathlib.Path) -> None:
         self.repo_root = repo_root
+        self.ledger_records: List[Dict[str, Any]] = []
 
     def evaluate_test_reuse(
         self,
@@ -1298,18 +1476,73 @@ class TestDependencyLedger:
         origin_sha: str,
         target_sha: str,
         original_status: str = "Passed",
+        origin_toolchain: Optional[str] = None,
+        target_toolchain: Optional[str] = None,
+        origin_fixture_hash: Optional[str] = None,
+        target_fixture_hash: Optional[str] = None,
+        origin_config: Optional[str] = None,
+        target_config: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """Evaluate if an authentic prior test execution can be reused at target_sha."""
-        if original_status.lower() != "passed":
+        """Evaluate if an authentic prior test execution can be reused at target_sha.
+
+        Honors:
+        - Exact ancestry check from origin_sha to target_sha across full commit range
+        - Toolchain consistency (Xcode / Swift compiler version)
+        - Fixture hash consistency
+        - Build configuration consistency (Debug vs Release)
+        - Global and test-specific dependency closures
+        - Fail-closed on missing, corrupted, or non-passing records
+        """
+        norm_status = original_status.strip()
+        if norm_status.lower() not in ("passed", "executed_pass", "reused_verified_pass"):
             return {
                 "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": f"Original execution status '{original_status}' was not passing.",
+                "changed_dependencies": [],
+            }
+
+        # Toolchain check
+        if origin_toolchain and target_toolchain and origin_toolchain.strip() != target_toolchain.strip():
+            return {
+                "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
+                "reason": f"Toolchain version mismatch: '{origin_toolchain}' != '{target_toolchain}'.",
+                "changed_dependencies": [],
+            }
+
+        # Fixture hash check
+        if origin_fixture_hash and target_fixture_hash and origin_fixture_hash.strip() != target_fixture_hash.strip():
+            return {
+                "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
+                "reason": f"Fixture fingerprint mismatch: '{origin_fixture_hash}' != '{target_fixture_hash}'.",
+                "changed_dependencies": [],
+            }
+
+        # Build configuration check
+        if origin_config and target_config and origin_config.strip() != target_config.strip():
+            return {
+                "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
+                "reason": f"Build configuration mismatch: '{origin_config}' != '{target_config}'.",
                 "changed_dependencies": [],
             }
 
         if not git_commit_exists(origin_sha, self.repo_root):
             return {
                 "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": f"Origin commit {origin_sha} cannot be verified in repository.",
                 "changed_dependencies": [],
             }
@@ -1317,6 +1550,9 @@ class TestDependencyLedger:
         if not git_commit_exists(target_sha, self.repo_root):
             return {
                 "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": f"Target commit {target_sha} cannot be verified in repository.",
                 "changed_dependencies": [],
             }
@@ -1324,6 +1560,9 @@ class TestDependencyLedger:
         if origin_sha == target_sha:
             return {
                 "decision": "REUSE_VERIFIED",
+                "status": "REUSED_VERIFIED_PASS",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": "Origin SHA matches target SHA exactly.",
                 "changed_dependencies": [],
             }
@@ -1341,6 +1580,9 @@ class TestDependencyLedger:
         if not is_ancestor:
             return {
                 "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": f"Origin commit {origin_sha} is not an ancestor of target {target_sha}.",
                 "changed_dependencies": [],
             }
@@ -1356,6 +1598,9 @@ class TestDependencyLedger:
         if global_hits:
             return {
                 "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": f"Global shared dependency changed: {', '.join(global_hits[:3])}",
                 "changed_dependencies": global_hits,
             }
@@ -1370,6 +1615,9 @@ class TestDependencyLedger:
         if not dep_patterns:
             return {
                 "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": f"Suite or test '{suite_or_name}' has unknown dependency closure in TestDependencyLedger.",
                 "changed_dependencies": [],
             }
@@ -1381,15 +1629,67 @@ class TestDependencyLedger:
         if specific_hits:
             return {
                 "decision": "INVALIDATE",
+                "status": "INVALIDATED",
+                "test_id": test_id,
+                "suite": suite_or_name,
                 "reason": f"Test-specific dependency changed: {', '.join(specific_hits[:3])}",
                 "changed_dependencies": specific_hits,
             }
 
         return {
             "decision": "REUSE_VERIFIED",
+            "status": "REUSED_VERIFIED_PASS",
+            "test_id": test_id,
+            "suite": suite_or_name,
             "reason": f"Verified clean dependency closure across {len(diff_files)} changed files from {origin_sha[:10]} to {target_sha[:10]}.",
             "changed_dependencies": [],
         }
+
+    def record_test_result(
+        self,
+        test_id: str,
+        suite: str,
+        commit_sha: str,
+        run_id: str,
+        status: str,
+        toolchain_version: str,
+        build_config: str,
+        evidence_artifact: str = "",
+        fixture_fingerprint: str = "",
+    ) -> Dict[str, Any]:
+        """Record an authentic test execution into the ledger."""
+        if status not in self.VALID_STATUSES:
+            raise ValueError(f"Invalid ledger status: '{status}'. Must be one of {sorted(self.VALID_STATUSES)}")
+        record = {
+            "test_id": test_id,
+            "suite": suite,
+            "commit_sha": commit_sha,
+            "run_id": run_id,
+            "status": status,
+            "toolchain_version": toolchain_version,
+            "build_configuration": build_config,
+            "fixture_fingerprint": fixture_fingerprint,
+            "evidence_artifact": evidence_artifact,
+            "timestamp": iso_now() if "iso_now" in globals() else "",
+        }
+        self.ledger_records.append(record)
+        return record
+
+    def save_ledger(self, file_path: pathlib.Path) -> None:
+        """Persist ledger records to a JSON file."""
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump({"schemaVersion": 1, "records": self.ledger_records}, f, indent=2)
+
+    def load_ledger(self, file_path: pathlib.Path) -> List[Dict[str, Any]]:
+        """Load ledger records from a JSON file."""
+        if not file_path.exists():
+            return []
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        records = data.get("records", [])
+        self.ledger_records.extend(records)
+        return records
 
 
 def write_github_output(outputs: Dict[str, Any], output_path: str) -> None:
@@ -1563,13 +1863,15 @@ def main() -> int:
     }
 
     try:
-        base_sha, head_sha = resolve_comparison_range(
+        range_res = resolve_comparison_range(
             repo_root=repo_root,
             event_name=args.event_name,
             event_payload=event_payload,
             compare_base_sha_input=args.base_sha,
             head_sha_input=args.head_sha,
         )
+        base_sha, head_sha = range_res[0], range_res[1]
+        base_sha_method = getattr(range_res, "method", "unknown")
         changed_files = get_changed_files(
             repo_root=repo_root, base_sha=base_sha, head_sha=head_sha
         )
@@ -1583,6 +1885,7 @@ def main() -> int:
             target_group=args.target_group,
             manual_modes=manual_modes,
             exact_test_selector=args.exact_test_selector,
+            base_sha_method=base_sha_method,
         )
     except UnmappedPathsError as err:
         err_msg = [

@@ -345,9 +345,7 @@
       "ui_suites": [
         "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
       ],
-      "consumers": [
-        "device_build"
-      ]
+      "consumers": []
     },
     "runtimecore_bundle": {
       "description": "RuntimeCore lock file, bundle build/assemble workflows, and manifest scripts",

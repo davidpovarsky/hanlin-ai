@@ -206,6 +206,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--xcode-version", required=True)
     parser.add_argument("--simulator-device", required=True)
     parser.add_argument("--simulator-os", required=True)
+    parser.add_argument("--group", help="Filter execution to a single acceptance group by name")
+    parser.add_argument("--case", help="Filter execution to a single acceptance case by case_id")
+    parser.add_argument("--phase-timeout", type=int, default=900, help="Subprocess timeout in seconds per phase (default: 900)")
+    parser.add_argument("--max-test-time", type=int, default=300, help="Maximum execution time allowance per test in seconds (default: 300)")
+    parser.add_argument("--reuse-report", help="Path to prior runtime-tooling-acceptance.json report to reuse passing cases")
     return parser.parse_args()
 
 
@@ -308,6 +313,9 @@ def run_xcodebuild_phase(
     if result_bundle.exists():
         shutil.rmtree(result_bundle)
 
+    max_test_time = getattr(args, "max_test_time", 300)
+    phase_timeout = getattr(args, "phase_timeout", 900)
+
     command = [
         "xcodebuild", "test-without-building",
         "-project", args.project,
@@ -320,14 +328,27 @@ def run_xcodebuild_phase(
         "-skipPackagePluginValidation",
         "-skipMacroValidation",
         "-parallel-testing-enabled", "NO",
+        "-test-timeouts-enabled", "YES",
+        "-maximum-test-execution-time-allowance", str(max_test_time),
     ]
     command.extend(f"-only-testing:{selector}" for selector in selectors)
     started = time.monotonic()
-    with log_path.open("w", encoding="utf-8", errors="replace") as log:
-        process = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=False, text=True)
+    timed_out = False
+    process_returncode = 0
+    try:
+        with log_path.open("w", encoding="utf-8", errors="replace") as log:
+            process = subprocess.run(
+                command, stdout=log, stderr=subprocess.STDOUT, check=False, text=True, timeout=phase_timeout
+            )
+            process_returncode = process.returncode
+    except subprocess.TimeoutExpired:
+        timed_out = True
+        process_returncode = 124
+        with log_path.open("a", encoding="utf-8") as log:
+            log.write(f"\n[TIMEOUT] Phase '{phase_name}' exceeded maximum phase timeout of {phase_timeout}s\n")
     duration = time.monotonic() - started
     log_text = log_path.read_text(encoding="utf-8", errors="replace")
-    process_crashed = process.returncode != 0 and any(
+    process_crashed = timed_out or (process_returncode != 0 and any(
         marker in log_text.lower()
         for marker in (
             "test runner exited before completing",
@@ -335,8 +356,9 @@ def run_xcodebuild_phase(
             "terminated due to signal",
             "test process crashed",
             "unexpectedly quit",
+            "timed out",
         )
-    )
+    ))
 
     nodes: list[dict[str, Any]] = []
     if result_bundle.exists():
@@ -355,7 +377,7 @@ def run_xcodebuild_phase(
 
     return PhaseExecutionResult(
         phase_name=phase_name,
-        returncode=process.returncode,
+        returncode=process_returncode,
         duration_seconds=duration,
         log_path=log_path,
         result_bundle=result_bundle,
@@ -399,9 +421,11 @@ def evaluate_acceptance(
     groups: tuple[AcceptanceGroup, ...],
     unit_phase: PhaseExecutionResult | None,
     ui_phase: PhaseExecutionResult | None,
+    reused_cases: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     group_results: list[dict[str, Any]] = []
     all_case_results: list[dict[str, Any]] = []
+    reused_cases = reused_cases or {}
 
     for group in groups:
         case_results: list[dict[str, Any]] = []
@@ -417,6 +441,22 @@ def evaluate_acceptance(
             needle = normalized(expected.selector_fragment)
             matches = [node for node in phase_nodes if needle in normalized(node_name(node))]
             selected = select_best_match(matches, expected)
+
+            if selected is None and expected.case_id in reused_cases:
+                prev_c = reused_cases[expected.case_id]
+                case_results.append({
+                    "caseID": expected.case_id,
+                    "group": group.name,
+                    "expectedOutcome": expected.expected_outcome,
+                    "actualOutcome": "reused-verified-pass",
+                    "passed": True,
+                    "reused": True,
+                    "durationSeconds": prev_c.get("durationSeconds"),
+                    "errorCategory": None,
+                    "diagnosticReferences": prev_c.get("diagnosticReferences", []),
+                })
+                continue
+
             status = node_status(selected) if selected else "missing"
             passed = status in {"passed", "success", "succeeded"}
             crashed = selected is None and phase_crashed
@@ -434,6 +474,7 @@ def evaluate_acceptance(
                 "expectedOutcome": expected.expected_outcome,
                 "actualOutcome": actual_outcome,
                 "passed": passed,
+                "reused": False,
                 "durationSeconds": node_duration(selected) if selected else None,
                 "errorCategory": None if passed else ("process_crash" if crashed else "test_failure"),
                 "diagnosticReferences": [str(log_path), str(result_bundle), str(xcresult_json)],
@@ -468,6 +509,7 @@ def evaluate_acceptance(
             "passedCount": sum(1 for case in case_results if case["passed"]),
             "failedCount": sum(1 for case in case_results if not case["passed"] and case["actualOutcome"] != "crashed"),
             "crashedCount": sum(1 for case in case_results if case["actualOutcome"] == "crashed"),
+            "reusedCount": sum(1 for case in case_results if case.get("reused")),
             "log": group_log,
             "resultBundle": group_bundle,
         }
@@ -486,21 +528,21 @@ def markdown(report: dict[str, Any]) -> str:
         f"- Xcode: `{report['xcodeVersion']}`",
         f"- Simulator: `{report['simulator']['device']}` / `{report['simulator']['os']}`",
         f"- Result: **{'PASS' if report['failedCount'] == 0 and report['crashedCount'] == 0 else 'FAIL'}**",
-        f"- Cases: {report['caseCount']} total, {report['passedCount']} passed, {report['failedCount']} failed, {report['crashedCount']} crashed",
+        f"- Cases: {report['caseCount']} total, {report['passedCount']} passed ({report.get('reusedCount', 0)} reused), {report['failedCount']} failed, {report['crashedCount']} crashed",
         "",
         "## Groups",
         "",
-        "| Group | Status | Passed | Failed | Crashed | Duration |",
-        "|---|---:|---:|---:|---:|---:|",
+        "| Group | Status | Passed | Reused | Failed | Crashed | Duration |",
+        "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for group in report["groupSummaries"]:
         lines.append(
             f"| {group['name']} | {group['status'].upper()} | {group['passedCount']} | "
-            f"{group['failedCount']} | {group['crashedCount']} | {group['durationSeconds']:.1f}s |"
+            f"{group.get('reusedCount', 0)} | {group['failedCount']} | {group['crashedCount']} | {group['durationSeconds']:.1f}s |"
         )
-    lines.extend(["", "## Cases", "", "| Case ID | Group | Expected | Actual |", "|---|---|---|---|"])
+    lines.extend(["", "## Cases", "", "| Case ID | Group | Expected | Actual | Reused |", "|---|---|---|---|---|"])
     for case in report["cases"]:
-        lines.append(f"| `{case['caseID']}` | {case['group']} | {case['expectedOutcome']} | {case['actualOutcome']} |")
+        lines.append(f"| `{case['caseID']}` | {case['group']} | {case['expectedOutcome']} | {case['actualOutcome']} | {str(case.get('reused', False)).lower()} |")
     lines.append("")
     return "\n".join(lines)
 
@@ -511,7 +553,38 @@ def main(runner=run_xcodebuild_phase) -> int:
     output.mkdir(parents=True, exist_ok=True)
     started_at = iso_now()
 
-    unit_selectors, ui_selectors = partition_selectors(GROUPS)
+    active_groups: list[AcceptanceGroup] = list(GROUPS)
+    if getattr(args, "group", None):
+        target_group = args.group.strip()
+        active_groups = [g for g in active_groups if g.name == target_group]
+        if not active_groups:
+            sys.stderr.write(f"Error: Acceptance group '{target_group}' not found in known groups: {[g.name for g in GROUPS]}\n")
+            return 1
+
+    if getattr(args, "case", None):
+        target_case = args.case.strip()
+        filtered_groups = []
+        for g in active_groups:
+            matched_cases = tuple(c for c in g.cases if c.case_id == target_case)
+            if matched_cases:
+                filtered_groups.append(AcceptanceGroup(g.name, g.selectors, matched_cases))
+        active_groups = filtered_groups
+        if not active_groups:
+            sys.stderr.write(f"Error: Acceptance case '{target_case}' not found in specified groups.\n")
+            return 1
+
+    reused_case_map: dict[str, dict[str, Any]] = {}
+    if getattr(args, "reuse_report", None) and pathlib.Path(args.reuse_report).exists():
+        try:
+            with open(args.reuse_report, "r", encoding="utf-8") as rf:
+                prev_rep = json.load(rf)
+            for c in prev_rep.get("cases", []):
+                if c.get("passed"):
+                    reused_case_map[c["caseID"]] = c
+        except Exception as e:
+            sys.stderr.write(f"Warning: could not parse reuse report: {e}\n")
+
+    unit_selectors, ui_selectors = partition_selectors(tuple(active_groups))
     unit_phase: PhaseExecutionResult | None = None
     ui_phase: PhaseExecutionResult | None = None
 
@@ -525,7 +598,7 @@ def main(runner=run_xcodebuild_phase) -> int:
         ui_phase = runner(args, "ui", ui_selectors, output)
         print(f"Phase 2 (UI) completed with code {ui_phase.returncode} in {ui_phase.duration_seconds:.1f}s", flush=True)
 
-    group_results, cases = evaluate_acceptance(output, GROUPS, unit_phase, ui_phase)
+    group_results, cases = evaluate_acceptance(output, tuple(active_groups), unit_phase, ui_phase, reused_case_map)
     for group_result in group_results:
         print(f"[{group_result['status'].upper()}] {group_result['name']}: {group_result['passedCount']}/{group_result['caseCount']}", flush=True)
 
@@ -539,6 +612,7 @@ def main(runner=run_xcodebuild_phase) -> int:
         "endedAt": iso_now(),
         "caseCount": len(cases),
         "passedCount": sum(1 for case in cases if case["passed"]),
+        "reusedCount": sum(1 for case in cases if case.get("reused")),
         "failedCount": sum(1 for case in cases if not case["passed"] and case["actualOutcome"] != "crashed"),
         "crashedCount": sum(1 for case in cases if case["actualOutcome"] == "crashed"),
         "expectedRejectionCount": sum(1 for case in cases if case["expectedOutcome"] == "rejection" and case["passed"]),

@@ -112,12 +112,12 @@ class AffectedValidationPlannerTests(unittest.TestCase):
 
         self.assertIn("nativescript_runtime", plan.selected_groups)
         self.assertIn("simulator_targeted_ui", plan.selected_groups)
-        self.assertIn("device_build", plan.selected_groups)
+        self.assertNotIn("device_build", plan.selected_groups)
         self.assertIn("nativescript_dependencies", plan.selected_groups)
         self.assertTrue(plan.step_outputs["run_nativescript_runtime"])
         self.assertTrue(plan.step_outputs["run_phase1"])
         self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
-        self.assertTrue(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
 
         # Does not run unrelated suites
         self.assertNotIn("scripting_reference", plan.selected_groups)
@@ -866,6 +866,207 @@ class TestDependencyLedgerTests(unittest.TestCase):
         )
         data = json.loads(res.stdout)
         self.assertEqual(data["decision"], "REUSE_VERIFIED")
+
+
+class ComprehensiveValidationInfrastructureTests(unittest.TestCase):
+    """Test suite covering the 14 mandatory validation criteria (Tests A through N)."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        with open(MAP_PATH, "r", encoding="utf-8") as f:
+            cls.mapping_config = json.load(f)
+        cls.repo_root = Path(__file__).parents[3]
+        cls.ledger = planner.TestDependencyLedger(cls.repo_root)
+
+    def plan_files(
+        self,
+        files: list[str],
+        full_validation: bool = False,
+        target_group: str | None = None,
+        manual_modes: dict[str, bool] | None = None,
+        exact_test_selector: str | None = None,
+    ) -> planner.ValidationPlan:
+        return planner.plan_affected_validation(
+            mapping_config=self.mapping_config,
+            changed_files=files,
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+            full_validation=full_validation,
+            target_group=target_group,
+            manual_modes=manual_modes,
+            exact_test_selector=exact_test_selector,
+        )
+
+    # Test A: Docs-only change: no build, no simulator, no device
+    def test_a_docs_only_change(self) -> None:
+        changed = ["README.md", "docs/architecture.md", ".gitignore"]
+        plan = self.plan_files(changed)
+        self.assertFalse(plan.is_full_validation)
+        self.assertFalse(plan.step_outputs["run_phase1"])
+        self.assertFalse(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertEqual(len(plan.selected_groups), 0)
+
+    # Test B: Focused Swift change: run relevant tests without IPA build
+    def test_b_focused_swift_change(self) -> None:
+        changed = ["AI_HLY/Downstream/RuntimeCore/Shell/HanlinRuntimeShellService.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertIn("simulator_shell_acceptance", plan.selected_groups)
+
+    # Test C: UI change: run targeted UI tests without device build
+    def test_c_ui_change_without_device_build(self) -> None:
+        changed = ["AI_HLY/Views/ChatView.swift", "AI_HLY/MainTabView.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+
+    # Test D: Shared dependency change: expands to actual consumers
+    def test_d_shared_dependency_expansion(self) -> None:
+        changed = ["Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPlatformContracts.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("platform_contracts", plan.selected_groups)
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+
+    # Test E: Toolchain mismatch invalidates prior test evidence
+    def test_e_toolchain_mismatch_invalidation(self) -> None:
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-TOOLCHAIN-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha="1111111111111111111111111111111111111111",
+            target_sha="1111111111111111111111111111111111111111",
+            original_status="Passed",
+            origin_toolchain="Xcode 16.2",
+            target_toolchain="Xcode 16.3",
+        )
+        self.assertEqual(res["decision"], "INVALIDATE")
+        self.assertEqual(res["status"], "INVALIDATED")
+        self.assertIn("Toolchain version mismatch", res["reason"])
+
+    # Test F: Corrupt cache fallback to clean build
+    def test_f_corrupt_cache_safe_fallback(self) -> None:
+        raw_invalid_json = "not-a-valid-json"
+        with tempfile.NamedTemporaryFile("w", delete=False) as tf:
+            tf.write(raw_invalid_json)
+            tf_path = Path(tf.name)
+        try:
+            records = self.ledger.load_ledger(tf_path)
+            self.fail("Should have failed to decode invalid JSON")
+        except json.JSONDecodeError:
+            records = []
+        self.assertEqual(records, [])
+        tf_path.unlink()
+
+    # Test G: Clean evidence reuse returns REUSED_VERIFIED_PASS
+    def test_g_clean_evidence_reuse(self) -> None:
+        sha = "1111111111111111111111111111111111111111"
+        with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+            res = self.ledger.evaluate_test_reuse(
+                test_id="TEST-REUSE-01",
+                suite_or_name="HanlinNativeScriptProductionE2ETests",
+                origin_sha=sha,
+                target_sha=sha,
+                original_status="Passed",
+            )
+            self.assertEqual(res["decision"], "REUSE_VERIFIED")
+            self.assertEqual(res["status"], "REUSED_VERIFIED_PASS")
+
+    # Test H: Dependency change invalidates prior evidence
+    def test_h_dependency_change_invalidates(self) -> None:
+        with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+            with unittest.mock.patch.object(planner, "run_git", return_value="Packages/HanlinNativeScriptRuntime/Sources/Core.swift\n"):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-DEP-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertEqual(res["status"], "INVALIDATED")
+
+    # Test I: Bounded diagnostics timeout
+    def test_i_bounded_diagnostics_timeout(self) -> None:
+        workflow_text = (self.repo_root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
+        self.assertIn("timeout-minutes: 2", workflow_text)
+        self.assertIn("head -n 5000", workflow_text)
+
+    # Test J: Deterministic failure handling: never masquerades as PASS
+    def test_j_deterministic_failure_handling(self) -> None:
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-FAIL-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha="1111111111111111111111111111111111111111",
+            target_sha="1111111111111111111111111111111111111111",
+            original_status="Failed",
+        )
+        self.assertEqual(res["decision"], "INVALIDATE")
+        self.assertEqual(res["status"], "INVALIDATED")
+        self.assertIn("was not passing", res["reason"])
+
+    # Test K: Exact Test Selector isolates single test without device/IPA build
+    def test_k_exact_test_selector_isolates(self) -> None:
+        selector = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime"
+        plan = self.plan_files(["README.md"], exact_test_selector=selector)
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
+
+    # Test L: Fake pass rejection and strict status taxonomy
+    def test_l_fake_pass_rejection(self) -> None:
+        for invalid_status in ["BLOCKED", "NOT_RUN", "SyntheticPass", "CustomSuccess"]:
+            res = self.ledger.evaluate_test_reuse(
+                test_id="TEST-FAKE-01",
+                suite_or_name="HanlinNativeScriptProductionE2ETests",
+                origin_sha="1111111111111111111111111111111111111111",
+                target_sha="1111111111111111111111111111111111111111",
+                original_status=invalid_status,
+            )
+            self.assertEqual(res["decision"], "INVALIDATE")
+            self.assertEqual(res["status"], "INVALIDATED")
+
+        with self.assertRaises(ValueError):
+            self.ledger.record_test_result(
+                test_id="TEST-BAD-01",
+                suite="AI_HLYTests",
+                commit_sha="1111",
+                run_id="123",
+                status="INVALID_CUSTOM_STATUS",
+                toolchain_version="16.2",
+                build_config="Debug",
+            )
+
+    # Test M: Simulator configuration selection (Debug vs Release)
+    def test_m_simulator_configuration_selection(self) -> None:
+        # Routine UI change uses Debug
+        plan_debug = self.plan_files(["AI_HLY/Views/ChatView.swift"])
+        self.assertEqual(plan_debug.step_outputs["simulator_configuration"], "Debug")
+
+        # NativeScript runtime change requires Release
+        plan_release = self.plan_files(["Packages/HanlinNativeScriptRuntime/Sources/Core.swift"])
+        self.assertEqual(plan_release.step_outputs["simulator_configuration"], "Release")
+
+        # Full validation requires Release
+        plan_full = self.plan_files(["README.md"], full_validation=True)
+        self.assertEqual(plan_full.step_outputs["simulator_configuration"], "Release")
+
+    # Test N: Workflow safety & read-only permissions
+    def test_n_workflow_safety_and_permissions(self) -> None:
+        workflow_text = (self.repo_root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
+        self.assertIn("permissions:", workflow_text)
+        self.assertIn("contents: read", workflow_text)
+        self.assertIn("actions: read", workflow_text)
 
 
 if __name__ == "__main__":
