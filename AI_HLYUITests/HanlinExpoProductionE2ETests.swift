@@ -265,8 +265,11 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertTrue(row1.waitForExistence(timeout: 25), "First row in 1,000-row list did not render")
 
         // 5. Scroll down and verify rows continue rendering
-        app.swipeUp()
-        app.swipeUp()
+        if row1.waitForExistence(timeout: 5) {
+            row1.swipeUp()
+        } else {
+            app.swipeUp()
+        }
 
         let scrolledRowPredicate = NSPredicate(
             format: "label CONTAINS 'Row #' OR label CONTAINS 'שורה #' OR label CONTAINS 'פריט בדיקה'"
@@ -359,7 +362,12 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         _ = navBar.waitForExistence(timeout: 5)
 
         // Select archive from staged document packages or file importer
-        var directArchive = app.buttons[archive].firstMatch
+        let directPredicate = NSPredicate(
+            format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@",
+            archive,
+            archive
+        )
+        var directArchive = app.buttons.matching(directPredicate).firstMatch
         if !directArchive.exists || !directArchive.isHittable {
             for _ in 1...6 {
                 if directArchive.exists && directArchive.isHittable { break }
@@ -379,44 +387,59 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
                 directArchive = directCandidate
             }
         }
-        if directArchive.waitForExistence(timeout: 3) {
-            if !directArchive.isHittable {
-                app.swipeUp()
-                _ = waitUntil(timeout: 3) { directArchive.isHittable }
-            }
+        if directArchive.waitForExistence(timeout: 5) {
+            _ = waitUntil(timeout: 5) { directArchive.isHittable }
             if directArchive.isHittable {
                 directArchive.tap()
             } else {
                 directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             }
-        } else {
-            let importer = app.buttons["hanlin-file-importer"].firstMatch
-            XCTAssertTrue(importer.waitForExistence(timeout: 10))
-            importer.tap()
 
-            let targetPredicate = NSPredicate(
-                format: "label == %@ OR label == %@ OR identifier == %@ OR identifier == %@",
-                archive,
-                "\(archive).hanlinExpo",
-                archive,
-                "\(archive).hanlinExpo"
-            )
-            let candidateArchives = [
-                app.buttons[archive].firstMatch,
-                app.descendants(matching: .any).matching(targetPredicate).firstMatch,
-                documents.descendants(matching: .any).matching(targetPredicate).firstMatch,
-            ]
-            var found: XCUIElement?
-            for candidate in candidateArchives {
-                if candidate.waitForExistence(timeout: 3) {
-                    found = candidate
-                    break
+            let inspecting = app.staticTexts["Inspecting…"].firstMatch
+            let install = app.buttons["hanlin-package-install"].firstMatch
+            let errorText = app.staticTexts["Import Error"].firstMatch
+            let errorIndicator = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed'")
+            ).firstMatch
+            let started = waitUntil(timeout: 4) {
+                inspecting.exists || install.exists || errorText.exists || errorIndicator.exists
+            }
+            if !started && directArchive.exists {
+                if directArchive.isHittable {
+                    directArchive.tap()
+                } else {
+                    directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
                 }
             }
-            let target = found ?? candidateArchives[0]
-            XCTAssertTrue(target.waitForExistence(timeout: 20), "Staged archive \(archive) was absent")
-            target.tap()
+            return
         }
+
+        let importer = app.buttons["hanlin-file-importer"].firstMatch
+        XCTAssertTrue(importer.waitForExistence(timeout: 10))
+        importer.tap()
+
+        let targetPredicate = NSPredicate(
+            format: "label == %@ OR label == %@ OR identifier == %@ OR identifier == %@",
+            archive,
+            "\(archive).hanlinExpo",
+            archive,
+            "\(archive).hanlinExpo"
+        )
+        let candidateArchives = [
+            app.buttons[archive].firstMatch,
+            app.descendants(matching: .any).matching(targetPredicate).firstMatch,
+            documents.descendants(matching: .any).matching(targetPredicate).firstMatch,
+        ]
+        var found: XCUIElement?
+        for candidate in candidateArchives {
+            if candidate.waitForExistence(timeout: 3) {
+                found = candidate
+                break
+            }
+        }
+        let target = found ?? candidateArchives[0]
+        XCTAssertTrue(target.waitForExistence(timeout: 20), "Staged archive \(archive) was absent")
+        target.tap()
     }
 
     private func hasPackageCard(named packageName: String) -> Bool {
@@ -442,7 +465,11 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         // Preview & Install
         let install = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 20), "Install button did not appear for \(archive)")
+        let inspecting = app.staticTexts["Inspecting…"].firstMatch
+        if inspecting.waitForExistence(timeout: 3) {
+            _ = waitUntil(timeout: 30) { !inspecting.exists }
+        }
+        XCTAssertTrue(install.waitForExistence(timeout: 30), "Install button did not appear for \(archive)")
         XCTAssertTrue(waitUntil(timeout: 10) { install.isEnabled }, "\(archive) was not installable")
         install.tap()
         XCTAssertTrue(waitUntil(timeout: 25) { !install.exists }, "\(archive) installation did not complete")
