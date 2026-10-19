@@ -220,12 +220,14 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         // 1. Ensure Expo SwiftUI SplitView Navigation & Sidebar has loaded
         let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
-        let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
+        let sidebarTitle = app.staticTexts.matching(sidebarTitlePredicate).firstMatch.exists
+            ? app.staticTexts.matching(sidebarTitlePredicate).firstMatch
+            : app.buttons.matching(sidebarTitlePredicate).firstMatch
         XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
 
         // 2. Select the 1,000-row benchmark probe
         let benchmarkPredicate = NSPredicate(format: "label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'מבחן' OR label CONTAINS 'Rows Probe'")
-        var benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
+        var benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
         if !benchmarkButton.waitForExistence(timeout: 5) || !benchmarkButton.isHittable {
             // Expand sidebar if collapsed and probe not directly hittable
             let sidebarToggle = app.navigationBars.buttons.matching(
@@ -234,7 +236,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
             if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
                 sidebarToggle.tap()
             }
-            benchmarkButton = app.descendants(matching: .any).matching(benchmarkPredicate).firstMatch
+            benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
         }
         XCTAssertTrue(benchmarkButton.waitForExistence(timeout: 15), "1,000 rows benchmark item missing")
         if benchmarkButton.isHittable {
@@ -244,8 +246,11 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         }
 
         // 3. Verify header rendered in Detail
-        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS 'רשימת 1000 שורות' OR label CONTAINS 'בדיקת עומס'")
-        var headerLabel = app.descendants(matching: .any).matching(headerPredicate).firstMatch
+        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS 'רשימת 1000 שורות' OR label CONTAINS 'בדיקת עומס' OR identifier CONTAINS '1,000'")
+        var headerLabel = app.navigationBars.matching(headerPredicate).firstMatch
+        if !headerLabel.exists {
+            headerLabel = app.staticTexts.matching(headerPredicate).firstMatch
+        }
         if !headerLabel.waitForExistence(timeout: 5) {
             // If the first tap only dismissed an overlay/drawer scrim, tap the benchmark button again
             if benchmarkButton.isHittable {
@@ -253,7 +258,10 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
             } else {
                 benchmarkButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             }
-            headerLabel = app.descendants(matching: .any).matching(headerPredicate).firstMatch
+            headerLabel = app.navigationBars.matching(headerPredicate).firstMatch
+            if !headerLabel.exists {
+                headerLabel = app.staticTexts.matching(headerPredicate).firstMatch
+            }
         }
         XCTAssertTrue(headerLabel.waitForExistence(timeout: 20), "1,000 rows header failed to render")
 
@@ -261,7 +269,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let row1Predicate = NSPredicate(
             format: "label CONTAINS 'Row #1' OR label CONTAINS 'שורה #1' OR label CONTAINS '#1' OR label CONTAINS 'פריט בדיקה 1'"
         )
-        let row1 = app.descendants(matching: .any).matching(row1Predicate).firstMatch
+        let row1 = app.buttons.matching(row1Predicate).firstMatch
         XCTAssertTrue(row1.waitForExistence(timeout: 25), "First row in 1,000-row list did not render")
 
         // 5. Scroll down and verify rows continue rendering
@@ -274,7 +282,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let scrolledRowPredicate = NSPredicate(
             format: "label CONTAINS 'Row #' OR label CONTAINS 'שורה #' OR label CONTAINS 'פריט בדיקה'"
         )
-        let scrolledRow = app.descendants(matching: .any).matching(scrolledRowPredicate).firstMatch
+        let scrolledRow = app.buttons.matching(scrolledRowPredicate).firstMatch
         XCTAssertTrue(scrolledRow.waitForExistence(timeout: 15), "List failed to render rows after scrolling")
 
         closeExpoApp()
