@@ -168,6 +168,19 @@
       ],
       "consumers": []
     },
+    "automatic_web_search_tests": {
+      "description": "Automatic keyless web search coordinator and evaluator unit tests",
+      "patterns": [
+        "AI_HLYTests/AutomaticWebSearchTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AutomaticWebSearchTests"
+      ],
+      "consumers": []
+    },
     "master_scenario_semantic_acceptance_tests": {
       "description": "Master scenario semantic acceptance tests",
       "patterns": [
