@@ -1972,6 +1972,52 @@
         }
       }
     },
+    "company_AUTOMATIC_KEYLESS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic (Free Web Search)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש אוטומטי (ללא מפתח)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动搜索 (免费)"
+          }
+        }
+      }
+    },
+    "免费 (自动切换)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free (Auto-fallback)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חינם (מעבר אוטומטי)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免费 (自动切换)"
+          }
+        }
+      }
+    },
     "company_LANGSEARCH" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -731,6 +731,7 @@ struct SearchSettingView: View {
     // API 测试相关状态
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
+    @State private var diagnosticResult: AutomaticWebSearchCoordinator.DiagnosticResult? = nil
     // 切换厂商启用状态时的加载与错误提示状态
     @State private var loadingCompany: String? = nil
     @State private var errorMessage: String = ""
@@ -744,6 +745,8 @@ struct SearchSettingView: View {
     // SearchKeysView 排序（按照公司名称拼音排序）
     private var sortedSearchKeys: [SearchKeys] {
         searchKeys.sorted { key1, key2 in
+            if key1.company == "AUTOMATIC_KEYLESS" { return true }
+            if key2.company == "AUTOMATIC_KEYLESS" { return false }
             let pinyin1 = getPinyin(for: getCompanyName(for: key1.company ?? "Unknown"))
             let pinyin2 = getPinyin(for: getCompanyName(for: key2.company ?? "Unknown"))
             return pinyin1 < pinyin2
@@ -805,6 +808,10 @@ struct SearchSettingView: View {
                                 
                                 // 显示各厂商的计费或免费说明
                                 switch key.company?.uppercased() {
+                                case "AUTOMATIC_KEYLESS":
+                                    Text(String(localized: "免费 (自动切换)"))
+                                        .font(.caption)
+                                        .foregroundColor(.green)
                                 case "GOOGLE_SEARCH":
                                     Text(String(localized: "100次免费/日"))
                                         .font(.caption)
@@ -943,33 +950,99 @@ struct SearchSettingView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
-                Section(header: Text(String(localized: "密钥"))) {
-                    SecureField(String(localized: "请输入密钥"), text: Binding(
-                        get: { key.key ?? "" },
-                        set: { key.key = $0 }
-                    ))
-                }
-                // 测试 API 部分
-                Section {
-                    HStack {
-                        Button(String(localized: "测试 API")) {
-                            testAPI(for: key)
+                if key.company == "AUTOMATIC_KEYLESS" {
+                    Section(header: Text(String(localized: "运行模式"))) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(String(localized: "内置三级自动回退策略："))
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                            Text("1. You.com Keyless (~100/day/IP)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("2. Tavily Keyless (Keyless Fallback)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("3. Keenable Public (Public Search)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
-                        .disabled(isTesting)
-                        
-                        Spacer()
-                        
-                        if isTesting {
-                            ProgressView()
-                        } else if let result = testResult {
-                            Text(result ? String(localized: "测试通过") : String(localized: "测试失败"))
-                                .foregroundColor(result ? .green : .red)
+                        .padding(.vertical, 4)
+                    }
+                    
+                    Section(header: Text(String(localized: "服务说明与限制"))) {
+                        Text(String(localized: "无需 API Key。公共端点受网络连通性、服务商速率及配额限制，不承诺无限制可用。"))
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Section(header: Text(String(localized: "诊断测试"))) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Button(String(localized: "测试自动搜索")) {
+                                    testAPI(for: key)
+                                }
+                                .disabled(isTesting)
+                                
+                                Spacer()
+                                
+                                if isTesting {
+                                    ProgressView()
+                                } else if let result = testResult {
+                                    Text(result ? String(localized: "测试通过") : String(localized: "测试失败"))
+                                        .foregroundColor(result ? .green : .red)
+                                        .fontWeight(.semibold)
+                                }
+                            }
+                            
+                            if let diag = diagnosticResult {
+                                Divider()
+                                if diag.success {
+                                    Text(String(format: String(localized: "响应服务商: %@"), diag.providerUsed))
+                                        .font(.caption)
+                                    Text(String(format: String(localized: "耗时: %.2fs"), diag.duration))
+                                        .font(.caption)
+                                    if !diag.topSourceTitle.isEmpty {
+                                        Text(String(format: String(localized: "首选结果: %@"), diag.topSourceTitle))
+                                            .font(.caption)
+                                            .foregroundColor(.hlBluefont)
+                                    }
+                                } else if let err = diag.errorMessage {
+                                    Text(String(format: String(localized: "失败原因: %@"), err))
+                                        .font(.caption)
+                                        .foregroundColor(.red)
+                                }
+                            }
                         }
                     }
-                }
-                Section {
-                    Text(String(localized: "⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎"))
-                        .font(.footnote)
+                } else {
+                    Section(header: Text(String(localized: "密钥"))) {
+                        SecureField(String(localized: "请输入密钥"), text: Binding(
+                            get: { key.key ?? "" },
+                            set: { key.key = $0 }
+                        ))
+                    }
+                    // 测试 API 部分
+                    Section {
+                        HStack {
+                            Button(String(localized: "测试 API")) {
+                                testAPI(for: key)
+                            }
+                            .disabled(isTesting)
+                            
+                            Spacer()
+                            
+                            if isTesting {
+                                ProgressView()
+                            } else if let result = testResult {
+                                Text(result ? String(localized: "测试通过") : String(localized: "测试失败"))
+                                    .foregroundColor(result ? .green : .red)
+                            }
+                        }
+                    }
+                    Section {
+                        Text(String(localized: "⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎"))
+                            .font(.footnote)
+                    }
                 }
             }
             .navigationTitle(String(localized: "编辑密钥"))
@@ -997,8 +1070,17 @@ struct SearchSettingView: View {
     private func testAPI(for key: SearchKeys) {
         isTesting = true
         testResult = nil
+        diagnosticResult = nil
         
         Task {
+            if key.company == "AUTOMATIC_KEYLESS" {
+                let diagnostic = await AutomaticWebSearchCoordinator.shared.runDiagnosticTest()
+                diagnosticResult = diagnostic
+                testResult = diagnostic.success
+                isTesting = false
+                return
+            }
+            
             // 根据 key.company 获取对应的搜索引擎，默认使用 .LANGSEARCH
             let engine = SearchEngine(rawValue: key.company?.uppercased() ?? "") ?? .LANGSEARCH
             let result = await testSearchAPI(
@@ -1018,8 +1100,8 @@ struct SearchSettingView: View {
         
         DispatchQueue.main.async {
             if newValue {
-                // 开启前检查是否已配置 API Key
-                if key.key?.isEmpty ?? true {
+                // 开启前检查是否已配置 API Key（AUTOMATIC_KEYLESS 无需配置 API Key）
+                if key.company != "AUTOMATIC_KEYLESS" && (key.key?.isEmpty ?? true) {
             errorMessage = String(format: String(localized: "%@ 需要配置 API Key 才能启用。"), getCompanyName(for: key.company ?? "Unknown"))
                     showError = true
                     loadingCompany = nil

@@ -489,6 +489,15 @@ func getKeyList() -> [APIKeys] {
 func getSearchKeyList() -> [SearchKeys] {
     let keys: [SearchKeys] = [
         SearchKeys(
+            name: "AUTOMATIC_SEARCH_KEY",
+            company: "AUTOMATIC_KEYLESS",
+            key: "",
+            requestURL: "https://api.you.com/v1/agents/search",
+            price: 0.0,
+            isUsing: true,
+            help: "https://you.com"
+        ),
+        SearchKeys(
             name: "ZHIPUAI_SEARCH_KEY",
             company: "ZHIPUAI",
             key: "",
@@ -952,6 +961,8 @@ func getCompanyIcon(for companyName: String) -> String {
         return "iflow"
     case "N1N":
         return "n1n"
+    case "AUTOMATIC_KEYLESS":
+        return "defaultIcon"
     default:
         return "defaultIcon" // 默认图标名称
     }

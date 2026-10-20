@@ -27,8 +27,9 @@ struct SettingsView: View {
             .filter { $0.company != "LOCAL" }
             .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
         
-        let noSearchKeys = searchKeys
-            .allSatisfy { $0.key?.isEmpty ?? true }
+        let noSearchKeys = !searchKeys.contains {
+            $0.isUsing && ($0.company == "AUTOMATIC_KEYLESS" || !($0.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true))
+        }
 
         // 检测是否缺少优化模型
         let userInfo = userInfos.first

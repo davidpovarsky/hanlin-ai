@@ -313,7 +313,31 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // 5. 保存所有更改
+        // 5. 迁移与默认激活协调：保留用户显式配置的手动提供商，无有效手动提供商时默认激活 AUTOMATIC_KEYLESS
+        let allCurrentKeys = try context.fetch(fetchDescriptor)
+        let hasValidManualProvider = allCurrentKeys.contains { key in
+            guard key.company != "AUTOMATIC_KEYLESS" else { return false }
+            guard key.isUsing else { return false }
+            return !(key.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        }
+        
+        if hasValidManualProvider {
+            for key in allCurrentKeys where key.company == "AUTOMATIC_KEYLESS" {
+                if key.isUsing {
+                    key.isUsing = false
+                }
+            }
+        } else {
+            for key in allCurrentKeys {
+                if key.company == "AUTOMATIC_KEYLESS" {
+                    key.isUsing = true
+                } else {
+                    key.isUsing = false
+                }
+            }
+        }
+        
+        // 6. 保存所有更改
         try context.save()
         print("SearchKeys 同步完成")
     } catch {
