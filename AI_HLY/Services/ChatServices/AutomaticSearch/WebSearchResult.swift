@@ -80,7 +80,7 @@ public struct WebSearchResult: Sendable, Equatable, Hashable, Codable {
     
     /// Converts a collection of typed WebSearchResults into legacy ParsedSearchResult
     /// ensuring all parallel arrays (titles, links, contents, icons) remain strictly synchronized.
-    public static func toParsedSearchResult(_ results: [WebSearchResult], defaultIcon: String = "") -> ParsedSearchResult {
+    static func toParsedSearchResult(_ results: [WebSearchResult], defaultIcon: String = "") -> ParsedSearchResult {
         var titles: [String] = []
         var links: [String] = []
         var contents: [String] = []
