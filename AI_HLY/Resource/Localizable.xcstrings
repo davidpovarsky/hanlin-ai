@@ -2018,6 +2018,29 @@
         }
       }
     },
+    "内置免密钥自动搜索服务，根据网络状况与速率限制自动在 You.com、Tavily 和 Keenable 之间平滑回退，即开即用。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built-in keyless search automatically falls back across You.com, Tavily, and Keenable based on network conditions and rate limits."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שירות חיפוש מובנה ללא מפתח המבצע מעבר אוטומטי בין You.com, Tavily ו-Keenable בהתאם לתנאי הרשת ומגבלות הקצב."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内置免密钥自动搜索服务，根据网络状况与速率限制自动在 You.com、Tavily 和 Keenable 之间平滑回退，即开即用。"
+          }
+        }
+      }
+    },
     "company_LANGSEARCH" : {
       "extractionState" : "manual",
       "localizations" : {

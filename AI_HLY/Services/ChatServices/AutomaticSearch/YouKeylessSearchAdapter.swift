@@ -61,12 +61,12 @@ public struct YouKeylessSearchAdapter: WebSearchProvider {
         }
         
         if httpResponse.statusCode == 429 {
-            var retrySeconds: TimeInterval? = nil
-            if let retryHeader = httpResponse.value(forHTTPHeaderField: "Retry-After"),
-               let seconds = Double(retryHeader) {
-                retrySeconds = seconds
-            }
+            let retrySeconds = HTTPHeaderParser.parseRetryAfter(from: httpResponse)
             throw AutomaticSearchError.rateLimited(retryAfter: retrySeconds)
+        }
+        
+        if httpResponse.statusCode == 401 || httpResponse.statusCode == 403 {
+            throw AutomaticSearchError.providerUnavailable("\(displayName) authorization/policy rejected (HTTP \(httpResponse.statusCode))")
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -83,7 +83,7 @@ public struct YouKeylessSearchAdapter: WebSearchProvider {
     
     // MARK: - Response Parsing
     
-    private func parseYouResponse(data: Data) throws -> [WebSearchResult] {
+    public func parseYouResponse(data: Data) throws -> [WebSearchResult] {
         struct YouResponse: Codable {
             struct ResultsContainer: Codable {
                 let web: [YouWebItem]?
@@ -98,7 +98,6 @@ public struct YouKeylessSearchAdapter: WebSearchProvider {
             let thumbnail_url: String?
             let favicon_url: String?
             
-            // snippets might be a String or [String]
             enum CodingKeys: String, CodingKey {
                 case url, title, description, thumbnail_url, favicon_url, snippets
             }

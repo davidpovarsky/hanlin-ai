@@ -9,7 +9,8 @@ import Foundation
 
 /// Coordinates automatic three-tier web search fallback across keyless providers:
 /// 1. You.com Keyless -> 2. Tavily Keyless -> 3. Keenable Public.
-/// Manages ephemeral circuit breaking, local TTL caching, bounded deadlines, deduplication, and diagnostics.
+/// Enforces strict circuit breaking, cooldowns, structured hard deadlines,
+/// topical relevance validation, canonical query caching, and diagnostic probes.
 public actor AutomaticWebSearchCoordinator {
     
     public static let shared = AutomaticWebSearchCoordinator()
@@ -41,15 +42,15 @@ public actor AutomaticWebSearchCoordinator {
         }
     }
     
-    private struct ProviderHealth: Sendable {
-        var failureCount: Int = 0
-        var cooldownUntil: Date? = nil
-        var lastLatency: TimeInterval? = nil
-        var lastError: String? = nil
+    public struct ProviderHealth: Sendable {
+        public var failureCount: Int = 0
+        public var cooldownUntil: Date? = nil
+        public var lastLatency: TimeInterval? = nil
+        public var lastError: String? = nil
         
-        var isAvailable: Bool {
+        public func isAvailable(at date: Date = Date()) -> Bool {
             if let cooldown = cooldownUntil {
-                return Date() >= cooldown
+                return date >= cooldown
             }
             return true
         }
@@ -60,8 +61,8 @@ public actor AutomaticWebSearchCoordinator {
         let backend: String
         let timestamp: Date
         
-        func isValid(ttl: TimeInterval) -> Bool {
-            return Date().timeIntervalSince(timestamp) < ttl
+        func isValid(ttl: TimeInterval, now: Date) -> Bool {
+            return now.timeIntervalSince(timestamp) < ttl
         }
     }
     
@@ -70,6 +71,7 @@ public actor AutomaticWebSearchCoordinator {
     private let providers: [WebSearchProvider]
     private var healthTable: [String: ProviderHealth] = [:]
     private var queryCache: [String: CacheEntry] = [:]
+    private let clock: @Sendable () -> Date
     
     private let cacheTTL: TimeInterval = 300 // 5 minutes
     private let maxCacheEntries: Int = 50
@@ -79,7 +81,11 @@ public actor AutomaticWebSearchCoordinator {
     
     // MARK: - Initialization
     
-    public init(providers: [WebSearchProvider]? = nil) {
+    public init(
+        providers: [WebSearchProvider]? = nil,
+        clock: @escaping @Sendable () -> Date = { Date() }
+    ) {
+        self.clock = clock
         if let customProviders = providers {
             self.providers = customProviders
         } else {
@@ -96,46 +102,56 @@ public actor AutomaticWebSearchCoordinator {
     
     // MARK: - Public API
     
-    /// Executes automatic search with fallback, caching, deduplication, and bounds.
+    /// Executes automatic search with fallback, caching, deduplication, relevance checks, and hard bounds.
     /// Returns: Tuple of legacy `ParsedSearchResult` and active backend description string.
-    public func search(query: String, count: Int = 5) async throws -> (ParsedSearchResult, String) {
+    public func search(
+        query: String,
+        count: Int = 5,
+        bypassCache: Bool = false
+    ) async throws -> (ParsedSearchResult, String) {
         let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedQuery.isEmpty else {
             throw AutomaticSearchError.invalidQuery
         }
         
-        // Check local cache
-        let cacheKey = "\(trimmedQuery.lowercased())_\(count)"
-        if let entry = queryCache[cacheKey], entry.isValid(ttl: cacheTTL) {
+        let now = clock()
+        let cacheKey = canonicalCacheKey(query: trimmedQuery, count: count)
+        
+        // 1. Check local cache (unless bypassed)
+        if !bypassCache, let entry = queryCache[cacheKey], entry.isValid(ttl: cacheTTL, now: now) {
             let parsed = WebSearchResult.toParsedSearchResult(entry.results)
             return (parsed, "Automatic (\(entry.backend) - cached)")
         }
         
-        // Execute bounded search across providers
-        let (rawResults, backendName) = try await executeWithFallback(query: trimmedQuery, count: count)
+        // 2. Execute bounded search across providers with structured hard deadline race
+        let (rawResults, backendName) = try await executeWithStructuredDeadline(
+            query: trimmedQuery,
+            count: count,
+            deadlineSeconds: overallSearchDeadline
+        )
         
-        // Deduplicate and filter results
+        // 3. Deduplicate and filter results
         let deduplicated = deduplicateResults(rawResults)
         guard !deduplicated.isEmpty else {
             throw AutomaticSearchError.emptyResults
         }
         
-        // Cache successful response
-        updateCache(key: cacheKey, results: deduplicated, backend: backendName)
+        // 4. Update local cache
+        updateCache(key: cacheKey, results: deduplicated, backend: backendName, timestamp: now)
         
         let parsed = WebSearchResult.toParsedSearchResult(deduplicated)
         return (parsed, "Automatic (\(backendName))")
     }
     
-    /// Runs a real diagnostic probe against the coordinator to verify end-to-end connectivity
-    /// and captures honest timing, provider identity, and real top source for the settings UI.
+    /// Runs a real diagnostic probe against the coordinator with cache bypass
+    /// to verify end-to-end live connectivity and capture honest timing and real top source.
     public func runDiagnosticTest() async -> DiagnosticResult {
-        let startTime = Date()
+        let startTime = clock()
         let testQuery = "Search today's news"
         
         do {
-            let (parsed, engineName) = try await search(query: testQuery, count: 3)
-            let duration = Date().timeIntervalSince(startTime)
+            let (parsed, engineName) = try await search(query: testQuery, count: 3, bypassCache: true)
+            let duration = clock().timeIntervalSince(startTime)
             let topTitle = parsed.titles.first ?? "No title"
             let topLink = parsed.links.first ?? "No URL"
             
@@ -148,7 +164,7 @@ public actor AutomaticWebSearchCoordinator {
                 errorMessage: nil
             )
         } catch {
-            let duration = Date().timeIntervalSince(startTime)
+            let duration = clock().timeIntervalSince(startTime)
             return DiagnosticResult(
                 success: false,
                 providerUsed: "None",
@@ -160,85 +176,109 @@ public actor AutomaticWebSearchCoordinator {
         }
     }
     
-    // MARK: - Execution & Fallback
+    /// Inspection API for testing and status
+    public func getProviderHealth(providerID: String) -> ProviderHealth? {
+        return healthTable[providerID]
+    }
     
-    private func executeWithFallback(query: String, count: Int) async throws -> ([WebSearchResult], String) {
-        var failureReasons: [String] = []
-        let deadline = Date().addingTimeInterval(overallSearchDeadline)
-        
-        // Select order of providers: prioritize healthy ones, but if all on cooldown, try all
-        let activeProviders = sortedProvidersByHealth()
-        
-        for provider in activeProviders {
-            let remainingTime = deadline.timeIntervalSince(Date())
-            guard remainingTime > 0.5 else {
-                failureReasons.append("Overall deadline expired before querying \(provider.displayName)")
-                break
+    // MARK: - Structured Concurrency & Hard Deadline
+    
+    private func executeWithStructuredDeadline(
+        query: String,
+        count: Int,
+        deadlineSeconds: TimeInterval
+    ) async throws -> ([WebSearchResult], String) {
+        try await withThrowingTaskGroup(of: ([WebSearchResult], String).self) { group in
+            group.addTask {
+                try await self.executeFallbackLoop(query: query, count: count)
             }
             
-            let requestTimeout = min(perProviderTimeout, remainingTime)
-            let providerStartTime = Date()
+            group.addTask {
+                try await Task.sleep(nanoseconds: UInt64(deadlineSeconds * 1_000_000_000))
+                throw AutomaticSearchError.timeout
+            }
             
+            guard let firstCompleted = try await group.next() else {
+                throw AutomaticSearchError.timeout
+            }
+            group.cancelAll()
+            return firstCompleted
+        }
+    }
+    
+    // MARK: - Fallback Loop & Circuit Breaking
+    
+    private func executeFallbackLoop(query: String, count: Int) async throws -> ([WebSearchResult], String) {
+        var failureReasons: [String] = []
+        let now = clock()
+        
+        // 1. Filter out cooled-down providers strictly
+        let availableProviders = providers.filter {
+            let health = self.healthTable[$0.providerID] ?? ProviderHealth()
+            return health.isAvailable(at: now)
+        }
+        
+        // If all providers are on cooldown, do NOT retry them. Enforce circuit breaker!
+        if availableProviders.isEmpty {
+            let earliestCooldown = providers.compactMap { self.healthTable[$0.providerID]?.cooldownUntil }.min()
+            let waitSeconds = earliestCooldown.map { max(1.0, $0.timeIntervalSince(now)) } ?? defaultCooldownDuration
+            throw AutomaticSearchError.allProvidersOnCooldown(retryAfter: waitSeconds)
+        }
+        
+        for provider in availableProviders {
+            let providerStartTime = clock()
             do {
                 try Task.checkCancellation()
-                let results = try await provider.search(query: query, count: count, timeout: requestTimeout)
-                let latency = Date().timeIntervalSince(providerStartTime)
                 
-                let validResults = results.filter { $0.isValid }
-                if !validResults.isEmpty {
-                    // Mark provider as healthy
-                    recordSuccess(providerID: provider.providerID, latency: latency)
-                    return (validResults, provider.displayName)
-                } else {
-                    let reason = "\(provider.displayName): empty or invalid result set"
+                let results = try await provider.search(query: query, count: count, timeout: self.perProviderTimeout)
+                let latency = clock().timeIntervalSince(providerStartTime)
+                
+                // 2. Validate structural validity
+                let structurallyValid = results.filter { $0.isValid }
+                guard !structurallyValid.isEmpty else {
+                    let reason = "\(provider.displayName): empty or malformed result set"
                     failureReasons.append(reason)
-                    recordFailure(providerID: provider.providerID, error: reason, isRateLimit: false)
+                    recordFailure(providerID: provider.providerID, error: reason, retryAfter: nil, isRateLimit: false)
+                    continue
                 }
+                
+                // 3. Validate topical relevance / intent mismatch
+                let relevantResults = WebSearchRelevanceEvaluator.evaluate(results: structurallyValid, for: query)
+                guard !relevantResults.isEmpty else {
+                    let reason = "\(provider.displayName): results rejected due to topic/intent mismatch"
+                    failureReasons.append(reason)
+                    // Irrelevant results don't mean rate limit, but should trigger next fallback provider
+                    recordFailure(providerID: provider.providerID, error: reason, retryAfter: nil, isRateLimit: false)
+                    continue
+                }
+                
+                // Success: mark provider healthy and return
+                recordSuccess(providerID: provider.providerID, latency: latency)
+                return (relevantResults, provider.displayName)
+                
             } catch is CancellationError {
                 throw AutomaticSearchError.cancelled
             } catch let error as AutomaticSearchError {
                 let reason = "\(provider.displayName): \(error.localizedDescription)"
                 failureReasons.append(reason)
-                let isRateLimit: Bool
+                
                 switch error {
-                case .rateLimited:
-                    isRateLimit = true
+                case .rateLimited(let retryAfter):
+                    recordFailure(providerID: provider.providerID, error: reason, retryAfter: retryAfter, isRateLimit: true)
+                case .providerUnavailable:
+                    // 401/403 or policy block: extended cooldown (1 hour)
+                    recordFailure(providerID: provider.providerID, error: reason, retryAfter: 3600.0, isRateLimit: false)
                 default:
-                    isRateLimit = false
+                    recordFailure(providerID: provider.providerID, error: reason, retryAfter: nil, isRateLimit: false)
                 }
-                recordFailure(providerID: provider.providerID, error: reason, isRateLimit: isRateLimit)
             } catch {
                 let reason = "\(provider.displayName): \(error.localizedDescription)"
                 failureReasons.append(reason)
-                recordFailure(providerID: provider.providerID, error: reason, isRateLimit: false)
+                recordFailure(providerID: provider.providerID, error: reason, retryAfter: nil, isRateLimit: false)
             }
         }
         
         throw AutomaticSearchError.allProvidersFailed(reasons: failureReasons)
-    }
-    
-    // MARK: - Health & Circuit Breaking
-    
-    private func sortedProvidersByHealth() -> [WebSearchProvider] {
-        let now = Date()
-        return providers.sorted { p1, p2 in
-            let h1 = healthTable[p1.providerID] ?? ProviderHealth()
-            let h2 = healthTable[p2.providerID] ?? ProviderHealth()
-            
-            let p1Avail = h1.isAvailable
-            let p2Avail = h2.isAvailable
-            
-            if p1Avail != p2Avail {
-                return p1Avail && !p2Avail
-            }
-            
-            // Both available or both unavailable: keep default order (You -> Tavily -> Keenable)
-            // or if both unavailable, prefer earliest cooldown
-            if !p1Avail && !p2Avail, let c1 = h1.cooldownUntil, let c2 = h2.cooldownUntil {
-                return c1 < c2
-            }
-            return false
-        }
     }
     
     private func recordSuccess(providerID: String, latency: TimeInterval) {
@@ -250,16 +290,20 @@ public actor AutomaticWebSearchCoordinator {
         healthTable[providerID] = health
     }
     
-    private func recordFailure(providerID: String, error: String, isRateLimit: Bool) {
+    private func recordFailure(providerID: String, error: String, retryAfter: TimeInterval?, isRateLimit: Bool) {
         var health = healthTable[providerID] ?? ProviderHealth()
         health.failureCount += 1
         health.lastError = error
         
-        // Cooldown escalation: rate limits immediately cooldown for at least defaultCooldownDuration
-        let multiplier = min(Double(health.failureCount), 5.0)
-        let cooldownDuration = isRateLimit ? defaultCooldownDuration * 2 : defaultCooldownDuration * multiplier
-        health.cooldownUntil = Date().addingTimeInterval(cooldownDuration)
-        
+        let now = clock()
+        let cooldownDuration: TimeInterval
+        if let explicitRetry = retryAfter, explicitRetry > 0 {
+            cooldownDuration = min(max(explicitRetry, 5.0), 3600.0) // Sane bound: 5s to 1h
+        } else {
+            let multiplier = min(Double(health.failureCount), 5.0)
+            cooldownDuration = isRateLimit ? defaultCooldownDuration * 2 : defaultCooldownDuration * multiplier
+        }
+        health.cooldownUntil = now.addingTimeInterval(cooldownDuration)
         healthTable[providerID] = health
     }
     
@@ -279,15 +323,19 @@ public actor AutomaticWebSearchCoordinator {
         return unique
     }
     
-    private func updateCache(key: String, results: [WebSearchResult], backend: String) {
+    private func canonicalCacheKey(query: String, count: Int) -> String {
+        let tokens = query.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty }
+        let canonical = tokens.joined(separator: " ").folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))
+        return "\(canonical)_\(count)"
+    }
+    
+    private func updateCache(key: String, results: [WebSearchResult], backend: String, timestamp: Date) {
         if queryCache.count >= maxCacheEntries {
-            // Evict expired or oldest entries
-            let now = Date()
-            queryCache = queryCache.filter { now.timeIntervalSince($0.value.timestamp) < cacheTTL }
+            queryCache = queryCache.filter { timestamp.timeIntervalSince($0.value.timestamp) < cacheTTL }
             if queryCache.count >= maxCacheEntries, let oldestKey = queryCache.min(by: { $0.value.timestamp < $1.value.timestamp })?.key {
                 queryCache.removeValue(forKey: oldestKey)
             }
         }
-        queryCache[key] = CacheEntry(results: results, backend: backend, timestamp: Date())
+        queryCache[key] = CacheEntry(results: results, backend: backend, timestamp: timestamp)
     }
 }

@@ -64,12 +64,12 @@ public struct TavilyKeylessSearchAdapter: WebSearchProvider {
         }
         
         if httpResponse.statusCode == 429 {
-            var retrySeconds: TimeInterval? = nil
-            if let retryHeader = httpResponse.value(forHTTPHeaderField: "Retry-After"),
-               let seconds = Double(retryHeader) {
-                retrySeconds = seconds
-            }
+            let retrySeconds = HTTPHeaderParser.parseRetryAfter(from: httpResponse)
             throw AutomaticSearchError.rateLimited(retryAfter: retrySeconds)
+        }
+        
+        if httpResponse.statusCode == 401 || httpResponse.statusCode == 403 {
+            throw AutomaticSearchError.providerUnavailable("\(displayName) authorization/policy rejected (HTTP \(httpResponse.statusCode))")
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -86,7 +86,7 @@ public struct TavilyKeylessSearchAdapter: WebSearchProvider {
     
     // MARK: - Response Parsing
     
-    private func parseTavilyResponse(data: Data) throws -> [WebSearchResult] {
+    public func parseTavilyResponse(data: Data) throws -> [WebSearchResult] {
         struct TavilyResponse: Codable {
             struct TavilyItem: Codable {
                 let url: String?

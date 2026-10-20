@@ -1,177 +1,103 @@
-# Search Provider Contracts, Quotas, and Terms
+# Search Provider Contracts, Quotas, and Terms (Hardened)
 
-**Document Version:** 1.0.0  
+**Document Version:** 1.1.0  
 **Verification Date:** 2026-10-21  
-**Status:** Live Diagnostic Verified (Non-Commercial / Experimental Free Tier)  
+**Status:** Live Diagnostic Verified & Hardened (Non-Commercial / Experimental Free Tier)  
 **Authoritative Coordinator:** `AutomaticWebSearchCoordinator`  
 
 ---
 
-## 1. Provider Contract Overview
+## 1. Provider Architecture & Reliability Pipeline
 
-Hanlin AI implements a virtual provider, **`Automatic (Free Web Search)`** (`AUTOMATIC_KEYLESS`), which manages three ordered backends. Each backend communicates via native Swift `URLSession` adapters using typed `Codable` DTOs with strict input validation, timeouts, and error mappings.
+Hanlin AI implements a single virtual provider, **`Automatic (Free Web Search)`** (`AUTOMATIC_KEYLESS`), managing three ordered keyless backends:
 
 ```
-                              [ User Search Query ]
-                                       │
-                                       ▼
-                     ┌──────────────────────────────────┐
-                     │  AutomaticWebSearchCoordinator   │
-                     │  - 10s Overall Bounded Deadline  │
-                     │  - Ephemeral Circuit Breaker     │
-                     │  - 5-Min Local TTL Query Cache   │
-                     │  - Canonical URL Deduplication   │
-                     └─────────────────┬────────────────┘
-                                       │
-             ┌─────────────────────────┼─────────────────────────┐
-             ▼ (Tier 1)                ▼ (Tier 2 Fallback)       ▼ (Tier 3 Fallback)
-    ┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐
-    │     You.com     │       │     Tavily      │       │    Keenable     │
-    │     Keyless     │       │     Keyless     │       │     Public      │
-    └─────────────────┘       └─────────────────┘       └─────────────────┘
+                            [ User Search Query ]
+                                      │
+                                      ▼
+                   ┌──────────────────────────────────────┐
+                   │   AutomaticWebSearchCoordinator      │
+                   │   - 10s Structured Hard Deadline     │
+                   │   - Strict Circuit Breaker Cooldown  │
+                   │   - 5-Min Canonical Token Cache      │
+                   │   - Canonical URL Deduplication      │
+                   └──────────────────┬───────────────────┘
+                                      │
+                                      ▼
+                   ┌──────────────────────────────────────┐
+                   │    WebSearchRelevanceEvaluator       │
+                   │    - Token Relevance Scoring         │
+                   │    - Intent Mismatch Defense         │
+                   │    - Hotel/Card Game Spam Filtering  │
+                   └──────────────────┬───────────────────┘
+                                      │
+             ┌────────────────────────┼────────────────────────┐
+             ▼ (Tier 1)               ▼ (Tier 2 Fallback)      ▼ (Tier 3 Fallback)
+    ┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+    │     You.com     │      │     Tavily      │      │    Keenable     │
+    │     Keyless     │      │     Keyless     │      │     Public      │
+    │ (~100 / day/IP) │      │ (Access-Mode)   │      │ (Research Pro)  │
+    └─────────────────┘      └─────────────────┘      └─────────────────┘
 ```
 
 ---
 
-## 2. Backend Technical Specifications
+## 2. Hardened Reliability & Fallback Mechanics
 
-### 2.1 Tier 1: You.com Keyless Search
+### 2.1 Strict Cooldown Enforcement & Circuit Breaking
+* **Eligibility Filter:** Before querying backends, `executeFallbackLoop` strictly filters providers where `health.isAvailable(at: now)` is `true`. Cooled-down providers are **never** invoked while their cooldown is active.
+* **All-Cooldown Outcome:** If all backends are on cooldown, the coordinator deterministically throws `AutomaticSearchError.allProvidersOnCooldown(retryAfter: waitSeconds)` where `waitSeconds` is the delta until the earliest provider recovers.
+* **Cooldown Durations:**
+  - Standard transient network failure: $60\text{s} \times \min(\text{failureCount}, 5)$.
+  - Rate limit (HTTP 429) without `Retry-After`: $120\text{s}$.
+  - Authorization / Policy rejection (HTTP 401/403): $3600\text{s}$ (1 hour) extended cooldown to prevent endpoint abuse.
 
-- **Endpoint URL:** `https://api.you.com/v1/agents/search`
-- **HTTP Method:** `GET`
-- **Query Parameters:**
-  - `query`: URL percent-encoded search query (supports full UTF-8 Unicode Hebrew & English).
-  - `count`: Integer requested results count (bounded to 1–10, default 5).
-- **Request Headers:**
-  - `Accept: application/json`
-  - `User-Agent: HanlinAI/1.0`
-- **Authentication:** None (Keyless).
-- **Observed Response Schema:**
-  ```json
-  {
-    "results": {
-      "web": [
-        {
-          "url": "https://developer.apple.com/swiftui/",
-          "title": "SwiftUI - Apple Developer",
-          "description": "SwiftUI is an innovative...",
-          "snippets": "SwiftUI uses a declarative syntax...",
-          "thumbnail_url": "https://developer.apple.com/news/images/og/swiftui-og.png",
-          "favicon_url": "https://you.com/favicon?domain=developer.apple.com&size=128"
-        }
-      ]
-    },
-    "metadata": {
-      "latency": 0.218
-    }
-  }
-  ```
-- **Live Verification Metrics (2026-10-21):**
-  - Query: `"SwiftUI"` → HTTP 200, 2 results, 218ms latency.
-  - Query: `"זמני תפילה ירושלים"` → HTTP 200, valid Hebrew Torah/Zmanim sites returned.
-- **Observed Limits & Quotas:** Published free fair-use allowance is approximately **100 searches/day per IP**.
-- **Compliance & Terms Caveat:** Keyless endpoint is provided for developer evaluation and fair use. High-volume, commercial distribution or automated bulk scraping is not permitted. Revalidate commercial terms prior to wide TestFlight/App Store distribution.
+### 2.2 Dual-Format `Retry-After` Header Parsing
+The coordinator uses `HTTPHeaderParser.parseRetryAfter(from: response)` supporting:
+1. **Delta-Seconds (RFC 7231 §7.1.3):** Integer e.g. `"120"`.
+2. **HTTP-Date (RFC 7231 §7.1.1.1):** Formats including RFC 1123 / RFC 2822 (`"Wed, 21 Oct 2026 07:28:00 GMT"`), RFC 850, and ANSI C `asctime()`.
+3. **Safety Bounds:** Values are strictly clamped between $5.0\text{s}$ and $3600.0\text{s}$ to prevent negative delays or unbounded stalls.
+
+### 2.3 Topical Relevance & Intent Mismatch Defense
+`WebSearchRelevanceEvaluator` inspects returned result sets before acceptance:
+* **Token Matching:** Extracts significant alphanumeric tokens ($\ge 2$ characters), excluding English and Hebrew stopwords.
+* **Intent Mismatch Detection:**
+  - **Torah / Zmanim Protection:** Queries containing prayer or Torah terms (`"תפילה"`, `"זמני"`, `"פרשת"`, `"הלכה"`) that return results containing commercial hotel keywords (`"hotel"`, `"booking"`, `"מלון"`) without religious/halachic relevance are **rejected** as intent mismatches.
+  - **Developer Query Protection:** Technical queries (`"SwiftUI"`, `"iOS SDK"`) returning card game bridge results without developer terms are **rejected**.
+* **Fallback Trigger:** If a provider returns structurally valid HTTP 200 responses that fail topical relevance, the coordinator rejects them as `AutomaticSearchError.irrelevantResults` and seamlessly advances to the next provider within the deadline budget.
+
+### 2.4 Structured Hard Deadline Concurrency
+* The search operation is raced against a deadline task inside a `withThrowingTaskGroup`.
+* If the 10-second overall deadline expires before completion, the group cancels the active network task immediately, avoiding orphan background requests.
+* Per-provider request timeouts are bounded to 4.0 seconds.
 
 ---
 
-### 2.2 Tier 2: Tavily Keyless Search
+## 3. Detailed Endpoint Contracts
 
-- **Endpoint URL:** `https://api.tavily.com/search`
-- **HTTP Method:** `POST`
-- **Request Headers:**
-  - `Content-Type: application/json; charset=utf-8`
-  - `x-tavily-access-mode: keyless`
-  - `User-Agent: HanlinAI/1.0`
-- **Request Body:**
-  ```json
-  {
-    "query": "זמני תפילה ירושלים",
-    "max_results": 5
-  }
-  ```
-- **Authentication:** None (`x-tavily-access-mode: keyless` header).
-- **Observed Response Schema:**
-  ```json
-  {
-    "query": "זמני תפילה ירושלים",
-    "results": [
-      {
-        "url": "https://...",
-        "title": "זמני היום בירושלים...",
-        "content": "זמני תפילה וזמנים הלכתיים...",
-        "score": 0.98
-      }
-    ]
-  }
-  ```
-- **Live Verification Metrics (2026-10-21):**
-  - Query: `"SwiftUI"` → HTTP 200, 2 results.
-  - Query: `"זמני תפילה ירושלים"` → HTTP 200, highly relevant Hebrew results.
-- **Observed Limits & Quotas:** Rate-limited on high concurrency; returns HTTP 429 when threshold exceeded. Long-term volume and redistribution terms are not contractually guaranteed.
-- **Compliance & Terms Caveat:** Keyless mode is an unauthenticated fallback mode. Commercial distribution requires an official paid Tavily API key.
+### 3.1 Tier 1: You.com Keyless
+* **Endpoint:** `GET https://api.you.com/v1/agents/search`
+* **Query Params:** `query=<encodedQuery>&count=<1..10>`
+* **Headers:** `Accept: application/json`, `User-Agent: HanlinAI/1.0`
+* **Decoding:** Parses `results.web[]` with `url`, `title`, `description`, `snippets` (flexible decoding supporting `String` or `[String]`), `favicon_url`, `thumbnail_url`.
+* **Observed Quota:** ~100 queries/day per public IP.
+
+### 3.2 Tier 2: Tavily Keyless
+* **Endpoint:** `POST https://api.tavily.com/search`
+* **Headers:** `Content-Type: application/json; charset=utf-8`, `x-tavily-access-mode: keyless`, `User-Agent: HanlinAI/1.0`
+* **Body:** `{"query": "...", "max_results": 5}`
+* **Decoding:** Parses `results[]` with `title`, `url`, `content`, `score`.
+
+### 3.3 Tier 3: Keenable Public
+* **Endpoint:** `POST https://api.keenable.ai/v1/search/public`
+* **Headers:** `Content-Type: application/json; charset=utf-8`, `X-Keenable-Title: HanlinAI-App`, `User-Agent: HanlinAI/1.0`
+* **Body:** `{"query": "...", "max_results": 5}`
+* **Decoding:** Parses `results[]` with `title`, `url`, `snippet`, `description`, `acquired_at`.
 
 ---
 
-### 2.3 Tier 3: Keenable Public Search
+## 4. Production Permissions & Terms Notice
 
-- **Endpoint URL:** `https://api.keenable.ai/v1/search/public`
-- **HTTP Method:** `POST`
-- **Request Headers:**
-  - `Content-Type: application/json; charset=utf-8`
-  - `X-Keenable-Title: HanlinAI-App`
-  - `User-Agent: HanlinAI/1.0`
-- **Request Body:**
-  ```json
-  {
-    "query": "SwiftUI",
-    "max_results": 5
-  }
-  ```
-- **Authentication:** Application title identification (`X-Keenable-Title`).
-- **Observed Response Schema:**
-  ```json
-  {
-    "query": "SwiftUI",
-    "mode": "pro",
-    "results": [
-      {
-        "title": "SwiftUI - Apple Developer",
-        "url": "https://developer.apple.com/swiftui",
-        "snippet": "SwiftUI helps you build great-looking apps...",
-        "description": "",
-        "acquired_at": "2026-09-27T17:10:50Z"
-      }
-    ]
-  }
-  ```
-- **Live Verification Metrics (2026-10-21):**
-  - Query: `"SwiftUI"` → HTTP 200, rich developer documentation snippets returned.
-  - Query: `"זמני תפילה ירושלים"` → HTTP 200, Hebrew titles returned.
-- **Observed Limits & Quotas:** Public research endpoint. Not intended as a high-throughput primary search engine. Bounded by provider IP rate limits.
-
----
-
-## 3. Disallowed and Rejected Scraping Alternatives
-
-Direct scraping of consumer search engines was experimentally evaluated and **strictly rejected** from production architecture for the following definitive technical and security reasons:
-
-| Rejected Provider / Method | Diagnostic Observation | Technical & Policy Barrier |
-| :--- | :--- | :--- |
-| **DuckDuckGo HTML / Lite** | HTTP 202 (CAPTCHA Challenge) | Cloudflare bot protection; blocks automated client requests immediately. |
-| **Brave Search HTML** | HTTP 429 (Too Many Requests) | IP rate limit triggered on initial unauthenticated probes. |
-| **Google Search HTML** | HTTP 200 with consent/interstitial | Returns consent/reCAPTCHA wall; no extractable structured search results. |
-| **Bing HTML / RSS** | High rate of irrelevant ads & spam | Inconsistent result structure, violates App Store guideline 5.1.1 on unconsented scraping. |
-
-> [!IMPORTANT]
-> **No WebKit / HTML Scraping Policy:** All search requests in Hanlin AI use isolated REST API endpoints with structured JSON schemas. No browser scraping, WebKit headless sessions, or CAPTCHA circumvention techniques are employed.
-
----
-
-## 4. Production Readiness & Legal Notice
-
-1. **Experimental vs. Production Status:** The three keyless endpoints are verified functional on 2026-10-21. However, free keyless access does **not** grant unlimited capacity, guaranteed SLA, or indefinite future availability.
-2. **Graceful Degradation:** When keyless quotas are exhausted or endpoints become unavailable, Hanlin AI fails gracefully:
-   - Evaluates Tier 1 → Tier 2 → Tier 3.
-   - If all tiers fail, surfaces an honest, structured error message (`AutomaticSearchError.allProvidersFailed`).
-   - Does **not** hallucinate sources or fabricate citation links.
-3. **User Paid Keys Always Respected:** Users who configure personal API keys for Zhipu, Bocha, Tavily, Exa, Brave, or Perplexity retain complete control, and automatic mode will not override their explicit preference.
+1. **Experimental Verification vs Commercial Authorization:** The three endpoints were verified live on 2026-10-21. However, free keyless access does **not** grant unlimited commercial rights or contractual SLA.
+2. **Carrier NAT Caveat:** Free quotas are enforced per public IP. On cellular networks (CGNAT), multiple mobile devices may share an IP address, meaning individual user quotas may be constrained by carrier peers.
+3. **User Paid Credentials Respected:** Any user-configured API key (Zhipu, Bocha, Tavily, Exa, Brave, Perplexity) remains strictly preserved and takes precedence when active.

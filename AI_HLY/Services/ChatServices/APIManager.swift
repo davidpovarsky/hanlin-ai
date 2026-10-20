@@ -1030,10 +1030,14 @@ class APIManager {
     
     // 激活的搜索引擎
     private func getActiveSearchEngine() -> (engine: SearchEngine, apiKey: String?, requestURL: String)? {
+        guard isSearchEnabled() else { return nil }
         let fetchRequest = FetchDescriptor<SearchKeys>(predicate: #Predicate { $0.isUsing == true })
         do {
             let searchKeys = try context.fetch(fetchRequest)
-            if let activeKey = searchKeys.first,
+            let chosenKey = searchKeys.first(where: { $0.company != "AUTOMATIC_KEYLESS" && !($0.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) })
+                ?? searchKeys.first(where: { $0.company == "AUTOMATIC_KEYLESS" })
+                ?? searchKeys.first
+            if let activeKey = chosenKey,
                let engine = SearchEngine(rawValue: activeKey.company?.uppercased() ?? "Unknown") {
                 return (engine, activeKey.key, activeKey.requestURL) as? (engine: SearchEngine, apiKey: String?, requestURL: String)
             }

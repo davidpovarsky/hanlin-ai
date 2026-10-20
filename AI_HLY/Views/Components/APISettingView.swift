@@ -932,20 +932,34 @@ struct SearchSettingView: View {
                             .frame(width: 50, height: 50)
                             .padding()
 
-                        Text(String(format: String(localized: "设置 %@ API密钥，以开启该搜索引擎"), getCompanyName(for: key.company ?? "Unknown")))
-                            .font(.footnote)
-                            .multilineTextAlignment(.center)
+                        if key.company == "AUTOMATIC_KEYLESS" {
+                            Text(getCompanyName(for: key.company ?? "Unknown"))
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .multilineTextAlignment(.center)
 
-                        if let url = URL(string: key.help) {
-                            Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key.company ?? "Unknown")), destination: url)
+                            Text(String(localized: "内置免密钥自动搜索服务，根据网络状况与速率限制自动在 You.com、Tavily 和 Keenable 之间平滑回退，即开即用。"))
                                 .font(.footnote)
+                                .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
-                                .padding(.bottom)
+                                .padding(.top, 2)
+                                .padding(.bottom, 6)
                         } else {
-                            Text(String(localized: "建议进入其开放平台获取API密钥"))
+                            Text(String(format: String(localized: "设置 %@ API密钥，以开启该搜索引擎"), getCompanyName(for: key.company ?? "Unknown")))
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
-                                .padding(.bottom)
+
+                            if let url = URL(string: key.help) {
+                                Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key.company ?? "Unknown")), destination: url)
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.bottom)
+                            } else {
+                                Text(String(localized: "建议进入其开放平台获取API密钥"))
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.bottom)
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)

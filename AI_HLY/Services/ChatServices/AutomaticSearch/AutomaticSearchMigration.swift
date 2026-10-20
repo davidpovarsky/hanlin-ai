@@ -15,7 +15,7 @@ public enum AutomaticSearchMigration {
     public static let automaticDefaultURL = "https://api.you.com/v1/agents/search"
     
     /// Creates the standard preloaded SearchKeys model for the automatic provider.
-    public static func makeAutomaticSearchKey(isUsing: Bool = true) -> SearchKeys {
+    public static func makeAutomaticSearchKey(isUsing: Bool = false) -> SearchKeys {
         return SearchKeys(
             name: automaticKeyName,
             company: automaticCompany,
@@ -28,44 +28,62 @@ public enum AutomaticSearchMigration {
     }
     
     /// Evaluates current SearchKeys state in the given model context and ensures:
-    /// 1. Fresh install -> AUTOMATIC_KEYLESS is enabled and active by default.
+    /// 1. Fresh / unconfigured install -> AUTOMATIC_KEYLESS is enabled and active by default.
     /// 2. Existing install with a valid explicitly chosen manual provider -> preserved untouched.
-    /// 3. Existing install with no valid or enabled search provider -> migrated to AUTOMATIC_KEYLESS.
+    /// 3. Explicit manual disable (user configured a key but turned it off) -> preserved as inactive.
+    /// 4. Invariant: At most one provider is active at any time.
     @MainActor
     public static func reconcileDefaultProvider(in context: ModelContext) {
         do {
             let descriptor = FetchDescriptor<SearchKeys>()
             let allKeys = try context.fetch(descriptor)
             
-            // Check if user has an explicitly chosen, configured manual provider
-            let hasValidManualProvider = allKeys.contains { key in
-                guard key.company != automaticCompany else { return false }
-                guard key.isUsing else { return false }
-                return !(key.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+            // Deduplicate if multiple automatic keys exist
+            let automaticKeys = allKeys.filter { $0.company == automaticCompany }
+            if automaticKeys.count > 1 {
+                for duplicate in automaticKeys.dropFirst() {
+                    context.delete(duplicate)
+                }
             }
             
-            if hasValidManualProvider {
-                // User has an active manual provider: ensure automatic is inactive so only 1 provider is active
-                for key in allKeys where key.company == automaticCompany {
-                    if key.isUsing {
-                        key.isUsing = false
-                    }
+            let effectiveAutomatic = automaticKeys.first
+            let manualKeys = allKeys.filter { $0.company != automaticCompany }
+            
+            // Check manual providers
+            let activeManual = manualKeys.first { key in
+                key.isUsing && !(key.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+            }
+            
+            let hasConfiguredManualKeys = manualKeys.contains { key in
+                !(key.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+            }
+            
+            if let activeManual = activeManual {
+                // User has an explicitly active configured manual provider -> keep it, ensure automatic is off
+                if let auto = effectiveAutomatic, auto.isUsing {
+                    auto.isUsing = false
+                }
+                // Enforce single active provider
+                for other in manualKeys where other.id != activeManual.id && other.isUsing {
+                    other.isUsing = false
+                }
+            } else if hasConfiguredManualKeys {
+                // User has configured manual keys, but NONE are active: user explicitly turned providers off!
+                // Do NOT force-enable automatic behind the user's back.
+                if let auto = effectiveAutomatic, auto.isUsing {
+                    // If user didn't choose automatic, leave it off
+                    // (Unless automatic was already specifically chosen by the user)
                 }
             } else {
-                // No valid manual active provider: ensure AUTOMATIC_KEYLESS is active
-                var foundAutomatic = false
-                for key in allKeys {
-                    if key.company == automaticCompany {
-                        key.isUsing = true
-                        foundAutomatic = true
-                    } else {
-                        key.isUsing = false
+                // No manual keys are configured at all (Fresh install or clean legacy install).
+                // Ensure AUTOMATIC_KEYLESS is active as the default out-of-the-box provider.
+                if let auto = effectiveAutomatic {
+                    if !auto.isUsing && !allKeys.contains(where: { $0.isUsing }) {
+                        auto.isUsing = true
                     }
-                }
-                
-                if !foundAutomatic {
-                    let autoKey = makeAutomaticSearchKey(isUsing: true)
-                    context.insert(autoKey)
+                } else {
+                    let auto = makeAutomaticSearchKey(isUsing: true)
+                    context.insert(auto)
                 }
             }
             

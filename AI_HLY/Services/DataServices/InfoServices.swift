@@ -494,7 +494,7 @@ func getSearchKeyList() -> [SearchKeys] {
             key: "",
             requestURL: "https://api.you.com/v1/agents/search",
             price: 0.0,
-            isUsing: true,
+            isUsing: false,
             help: "https://you.com"
         ),
         SearchKeys(

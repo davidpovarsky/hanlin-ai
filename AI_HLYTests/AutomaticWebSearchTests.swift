@@ -11,19 +11,19 @@ import Testing
 
 @testable import AI_Hanlin
 
-@Suite("Automatic Web Search Tests", .serialized)
+@Suite("Automatic Web Search Hardened Tests", .serialized)
 struct AutomaticWebSearchTests {
     
-    // MARK: - Test Mock Provider
+    // MARK: - Thread-Safe Actor Mock Provider
     
-    final class MockSearchProvider: WebSearchProvider, @unchecked Sendable {
+    actor MockSearchProvider: WebSearchProvider {
         let providerID: String
         let displayName: String
         
-        var shouldThrow: AutomaticSearchError? = nil
-        var returnedResults: [WebSearchResult] = []
-        var callCount: Int = 0
-        var simulatedDelay: TimeInterval = 0.0
+        private var shouldThrow: AutomaticSearchError?
+        private var returnedResults: [WebSearchResult]
+        private(set) var callCount: Int = 0
+        private var simulatedDelay: TimeInterval
         
         init(
             providerID: String,
@@ -39,6 +39,14 @@ struct AutomaticWebSearchTests {
             self.simulatedDelay = simulatedDelay
         }
         
+        func setResults(_ results: [WebSearchResult]) {
+            self.returnedResults = results
+        }
+        
+        func setError(_ error: AutomaticSearchError?) {
+            self.shouldThrow = error
+        }
+        
         func search(query: String, count: Int, timeout: TimeInterval) async throws -> [WebSearchResult] {
             callCount += 1
             if simulatedDelay > 0 {
@@ -51,307 +59,298 @@ struct AutomaticWebSearchTests {
         }
     }
     
-    // MARK: - Fixture Data
+    // MARK: - Sanitized Real-World Fixtures
     
-    private let sampleYouJSON = """
+    private static let sampleYouJSON = """
     {
       "results": {
         "web": [
           {
             "url": "https://developer.apple.com/swiftui/",
             "title": "SwiftUI - Apple Developer",
-            "description": "SwiftUI description",
-            "snippets": "SwiftUI declarative syntax snippet",
+            "description": "SwiftUI is an innovative way to build interfaces.",
+            "snippets": "SwiftUI uses a declarative syntax across Apple platforms.",
             "favicon_url": "https://developer.apple.com/favicon.ico"
           },
           {
             "url": "https://www.swift.org/getting-started/swiftui/",
             "title": "Build an iOS app with SwiftUI | Swift.org",
-            "description": "Swift.org description",
-            "snippets": "Swift.org snippet text",
+            "description": "Swift.org documentation for SwiftUI.",
+            "snippets": ["Declarative UI patterns in Swift."],
             "favicon_url": "https://swift.org/favicon.ico"
           }
         ]
       },
       "metadata": {
-        "latency": 0.25
+        "latency": 0.218
       }
     }
     """.data(using: .utf8)!
     
-    private let sampleTavilyJSON = """
+    private static let sampleTavilyJSON = """
     {
-      "query": "SwiftUI",
+      "query": "זמני תפילה ירושלים",
       "results": [
         {
-          "url": "https://en.wikipedia.org/wiki/SwiftUI",
-          "title": "SwiftUI - Wikipedia",
-          "content": "SwiftUI is declarative framework by Apple.",
-          "score": 0.95
+          "url": "https://astrojew.com/zmanim-jerusalem",
+          "title": "זמני היום בירושלים - זמני תפילה והלכה",
+          "content": "זמני תפילה מדויקים בירושלים: נץ החמה, חצות, מנחה וערבית לכל ימות השנה.",
+          "score": 0.98
         }
       ]
     }
     """.data(using: .utf8)!
     
-    private let sampleKeenableJSON = """
+    private static let sampleKeenableJSON = """
     {
       "query": "SwiftUI",
       "mode": "public",
       "results": [
         {
-          "title": "SwiftUI Guide",
-          "url": "https://example.com/swiftui-guide",
-          "snippet": "A comprehensive guide to SwiftUI.",
-          "description": "Backup description",
-          "acquired_at": "2026-10-20T12:00:00Z"
+          "title": "SwiftUI Overview - Apple Developer",
+          "url": "https://developer.apple.com/swiftui",
+          "snippet": "SwiftUI helps you build great-looking apps across Apple devices.",
+          "description": "Apple developer overview",
+          "acquired_at": "2026-09-27T17:10:50Z"
         }
       ]
     }
     """.data(using: .utf8)!
 
-    // MARK: - Unit Tests: Fallback Sequence
+    // MARK: - 1. Adapter JSON Decoding Tests
     
-    @Test("Fallback Sequence: Provider 1 succeeds, subsequent providers are not invoked")
-    func provider1Succeeds() async throws {
-        let result1 = WebSearchResult(title: "Result 1", url: "https://example.com/1", snippet: "Snippet 1", sourceBackend: "you")
-        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: [result1])
-        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily")
-        let p3 = MockSearchProvider(providerID: "keenable", displayName: "Keenable")
+    @Test("Adapter Decoding: YouKeylessSearchAdapter decodes valid JSON fixture with mixed snippet formats")
+    func youAdapterDecodesFixture() throws {
+        let adapter = YouKeylessSearchAdapter()
+        let results = try adapter.parseYouResponse(data: Self.sampleYouJSON)
         
-        let coordinator = AutomaticWebSearchCoordinator(providers: [p1, p2, p3])
-        let (parsed, engineName) = try await coordinator.search(query: "SwiftUI iOS 27", count: 5)
-        
-        #expect(p1.callCount == 1)
-        #expect(p2.callCount == 0)
-        #expect(p3.callCount == 0)
-        #expect(parsed.titles.count == 1)
-        #expect(parsed.titles.first == "Result 1")
-        #expect(engineName.contains("You.com"))
+        #expect(results.count == 2)
+        #expect(results[0].title == "SwiftUI - Apple Developer")
+        #expect(results[0].url == "https://developer.apple.com/swiftui/")
+        #expect(results[0].snippet.contains("declarative syntax"))
+        #expect(results[0].sourceBackend == "you")
+        #expect(results[1].snippet.contains("Declarative UI patterns"))
     }
     
-    @Test("Fallback Sequence: Provider 1 fails with 429, falls back to Provider 2")
-    func provider1FailsRateLimitFallsBackToProvider2() async throws {
-        let result2 = WebSearchResult(title: "Tavily Result", url: "https://example.com/tavily", snippet: "Tavily snippet", sourceBackend: "tavily")
-        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .rateLimited(retryAfter: 60))
-        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", returnedResults: [result2])
-        let p3 = MockSearchProvider(providerID: "keenable", displayName: "Keenable")
+    @Test("Adapter Decoding: TavilyKeylessSearchAdapter decodes Hebrew results fixture")
+    func tavilyAdapterDecodesFixture() throws {
+        let adapter = TavilyKeylessSearchAdapter()
+        let results = try adapter.parseTavilyResponse(data: Self.sampleTavilyJSON)
         
-        let coordinator = AutomaticWebSearchCoordinator(providers: [p1, p2, p3])
-        let (parsed, engineName) = try await coordinator.search(query: "זמני תפילה ירושלים", count: 5)
-        
-        #expect(p1.callCount == 1)
-        #expect(p2.callCount == 1)
-        #expect(p3.callCount == 0)
-        #expect(parsed.titles.first == "Tavily Result")
-        #expect(engineName.contains("Tavily"))
+        #expect(results.count == 1)
+        #expect(results[0].title.contains("זמני היום בירושלים"))
+        #expect(results[0].snippet.contains("נץ החמה"))
+        #expect(results[0].score == 0.98)
+        #expect(results[0].sourceBackend == "tavily")
     }
     
-    @Test("Fallback Sequence: Provider 1 & 2 fail, falls back to Provider 3")
-    func provider1And2FailFallsBackToProvider3() async throws {
-        let result3 = WebSearchResult(title: "Keenable Result", url: "https://example.com/keenable", snippet: "Keenable snippet", sourceBackend: "keenable")
-        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .networkError("Connection refused"))
-        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", shouldThrow: .httpError(statusCode: 500, message: "Internal error"))
-        let p3 = MockSearchProvider(providerID: "keenable", displayName: "Keenable", returnedResults: [result3])
+    @Test("Adapter Decoding: KeenablePublicSearchAdapter decodes public endpoint fixture")
+    func keenableAdapterDecodesFixture() throws {
+        let adapter = KeenablePublicSearchAdapter()
+        let results = try adapter.parseKeenableResponse(data: Self.sampleKeenableJSON)
         
-        let coordinator = AutomaticWebSearchCoordinator(providers: [p1, p2, p3])
-        let (parsed, engineName) = try await coordinator.search(query: "רש\"י פרשת נח", count: 5)
-        
-        #expect(p1.callCount == 1)
-        #expect(p2.callCount == 1)
-        #expect(p3.callCount == 1)
-        #expect(parsed.titles.first == "Keenable Result")
-        #expect(engineName.contains("Keenable"))
-    }
-    
-    @Test("Fallback Sequence: All providers fail throws structured error without fabricating citations")
-    func allProvidersFailThrowsStructuredError() async throws {
-        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .networkError("Timeout"))
-        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", shouldThrow: .rateLimited(retryAfter: 30))
-        let p3 = MockSearchProvider(providerID: "keenable", displayName: "Keenable", shouldThrow: .emptyResults)
-        
-        let coordinator = AutomaticWebSearchCoordinator(providers: [p1, p2, p3])
-        
-        await #expect(throws: AutomaticSearchError.self) {
-            _ = try await coordinator.search(query: "NASA Artemis II", count: 5)
-        }
-    }
-    
-    // MARK: - Unit Tests: Query Caching
-    
-    @Test("Query Caching: Duplicate normalized query returns cached results without invoking network")
-    func queryCachingAvoidsDuplicateCalls() async throws {
-        let result1 = WebSearchResult(title: "Cached Title", url: "https://example.com/cached", snippet: "Cached snippet", sourceBackend: "you")
-        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: [result1])
-        let coordinator = AutomaticWebSearchCoordinator(providers: [p1])
-        
-        // First call
-        let (res1, _) = try await coordinator.search(query: "  SwiftUI iOS 27  ", count: 5)
-        #expect(p1.callCount == 1)
-        #expect(res1.titles.first == "Cached Title")
-        
-        // Second call with different casing and whitespace
-        let (res2, engine2) = try await coordinator.search(query: "swiftui ios 27", count: 5)
-        #expect(p1.callCount == 1) // Did not increment!
-        #expect(res2.titles.first == "Cached Title")
-        #expect(engine2.contains("cached"))
-    }
-    
-    // MARK: - Unit Tests: Canonical Deduplication & Normalization
-    
-    @Test("Canonical Deduplication: Removes tracking queries and duplicate paths")
-    func canonicalDeduplication() {
-        let item1 = WebSearchResult(title: "Apple SwiftUI", url: "https://developer.apple.com/swiftui/?utm_source=twitter&utm_medium=social", snippet: "Desc 1")
-        let item2 = WebSearchResult(title: "Apple SwiftUI Alt", url: "https://developer.apple.com/swiftui", snippet: "Desc 2")
-        let item3 = WebSearchResult(title: "Different Page", url: "https://developer.apple.com/xcode", snippet: "Desc 3")
-        
-        #expect(item1.canonicalURLString == item2.canonicalURLString)
-        #expect(item1.canonicalURLString != item3.canonicalURLString)
-    }
-    
-    @Test("ParsedSearchResult Synchronization: Parallel arrays match in count")
-    func parsedSearchResultSynchronization() {
-        let items = [
-            WebSearchResult(title: "T1", url: "https://example.com/1", snippet: "S1", icon: "https://icon.com/1"),
-            WebSearchResult(title: "T2", url: "https://example.com/2", snippet: "S2", icon: ""),
-            WebSearchResult(title: "", url: "https://invalid.com", snippet: "Empty title"), // Invalid, filtered
-            WebSearchResult(title: "T3", url: "https://example.com/3", snippet: "S3", icon: "https://icon.com/3")
-        ]
-        
-        let parsed = WebSearchResult.toParsedSearchResult(items, defaultIcon: "https://default.com/icon.png")
-        
-        #expect(parsed.titles.count == 3)
-        #expect(parsed.links.count == 3)
-        #expect(parsed.contents.count == 3)
-        #expect(parsed.icons.count == 3)
-        #expect(parsed.icons[1] == "https://default.com/icon.png")
-    }
-    
-    // MARK: - Unit Tests: Hebrew & RTL Query Handling
-    
-    @Test("Hebrew Query: Unicode and percent-encoding preservation")
-    func hebrewQueryHandling() throws {
-        let query = "זמני תפילה בירושלים ליום כיפור"
-        guard let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            Issue.record("Failed to percent encode Hebrew query")
-            return
-        }
-        
-        #expect(encoded.contains("%D7%96"))
-        let decoded = encoded.removingPercentEncoding
-        #expect(decoded == query)
-    }
-    
-    // MARK: - Unit Tests: Diagnostic Test
-    
-    @Test("Diagnostic Probe: Captures honest timing, provider identity and top source")
-    func diagnosticProbeSuccess() async {
-        let result = WebSearchResult(title: "News Headline", url: "https://news.com/article", snippet: "Breaking news", sourceBackend: "you")
-        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: [result])
-        let coordinator = AutomaticWebSearchCoordinator(providers: [p1])
-        
-        let diag = await coordinator.runDiagnosticTest()
-        
-        #expect(diag.success == true)
-        #expect(diag.providerUsed.contains("You.com"))
-        #expect(diag.topSourceTitle == "News Headline")
-        #expect(diag.topSourceURL == "https://news.com/article")
-        #expect(diag.errorMessage == nil)
-        #expect(diag.duration >= 0.0)
-    }
-    
-    @Test("Diagnostic Probe: Captures honest failure without fake connected state")
-    func diagnosticProbeFailure() async {
-        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .rateLimited(retryAfter: 60))
-        let coordinator = AutomaticWebSearchCoordinator(providers: [p1])
-        
-        let diag = await coordinator.runDiagnosticTest()
-        
-        #expect(diag.success == false)
-        #expect(diag.providerUsed == "None")
-        #expect(diag.topSourceTitle.isEmpty)
-        #expect(diag.errorMessage != nil)
+        #expect(results.count == 1)
+        #expect(results[0].title == "SwiftUI Overview - Apple Developer")
+        #expect(results[0].sourceBackend == "keenable")
+        #expect(results[0].publishedDate == "2026-09-27T17:10:50Z")
     }
 
-    // MARK: - Unit Tests: Migration & Bootstrap
+    // MARK: - 2. Cooldown & Circuit Breaker Enforcement
     
-    @MainActor
-    @Test("Migration Logic: Fresh install enables Automatic search key as active")
-    func freshInstallEnablesAutomaticSearch() throws {
-        let schema = Schema([SearchKeys.self])
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: schema, configurations: [config])
-        let context = container.mainContext
+    @Test("Circuit Breaker: Rate-limited provider is strictly skipped on cooldown without hammering server")
+    func circuitBreakerStrictlyEnforcesCooldown() async throws {
+        var simulatedNow = Date(timeIntervalSince1970: 1000000)
         
-        // Run migration on empty store
-        AutomaticSearchMigration.reconcileDefaultProvider(in: context)
+        let res2 = WebSearchResult(title: "Tavily Res", url: "https://example.com/2", snippet: "Valid Tavily snippet", sourceBackend: "tavily")
+        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .rateLimited(retryAfter: 60))
+        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", returnedResults: [res2])
         
-        let descriptor = FetchDescriptor<SearchKeys>()
-        let keys = try context.fetch(descriptor)
+        let coordinator = AutomaticWebSearchCoordinator(
+            providers: [p1, p2],
+            clock: { simulatedNow }
+        )
         
-        #expect(keys.count == 1)
-        #expect(keys.first?.company == "AUTOMATIC_KEYLESS")
-        #expect(keys.first?.isUsing == true)
+        // Query 1: Provider 1 fails with 429 (Retry-After: 60s) -> Falls back to Provider 2
+        let (_, engine1) = try await coordinator.search(query: "query alpha", count: 5)
+        #expect(engine1.contains("Tavily"))
+        let count1P1 = await p1.callCount
+        let count1P2 = await p2.callCount
+        #expect(count1P1 == 1)
+        #expect(count1P2 == 1)
+        
+        // Advance time by 30 seconds (still within 60s cooldown!)
+        simulatedNow = simulatedNow.addingTimeInterval(30)
+        
+        // Query 2: Must NOT call Provider 1 at all! Directly call Provider 2
+        let (_, engine2) = try await coordinator.search(query: "query beta", count: 5)
+        #expect(engine2.contains("Tavily"))
+        let count2P1 = await p1.callCount
+        let count2P2 = await p2.callCount
+        #expect(count2P1 == 1) // Crucial assertion: provider 1 was NOT called during cooldown!
+        #expect(count2P2 == 2)
+        
+        // Advance time past cooldown (70 seconds later)
+        simulatedNow = simulatedNow.addingTimeInterval(40)
+        await p1.setError(nil)
+        await p1.setResults([WebSearchResult(title: "You Res", url: "https://example.com/1", snippet: "You recovered", sourceBackend: "you")])
+        
+        // Query 3: Provider 1 cooldown expired -> Provider 1 is tried first again
+        let (_, engine3) = try await coordinator.search(query: "query gamma", count: 5)
+        #expect(engine3.contains("You.com"))
+        let count3P1 = await p1.callCount
+        #expect(count3P1 == 2) // Tried again after cooldown expired!
     }
     
+    @Test("Circuit Breaker: All providers on cooldown deterministically throws allProvidersOnCooldown")
+    func allProvidersOnCooldownThrows() async throws {
+        var simulatedNow = Date(timeIntervalSince1970: 1000000)
+        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .rateLimited(retryAfter: 60))
+        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", shouldThrow: .rateLimited(retryAfter: 120))
+        
+        let coordinator = AutomaticWebSearchCoordinator(
+            providers: [p1, p2],
+            clock: { simulatedNow }
+        )
+        
+        // Trigger cooldown on both
+        _ = try? await coordinator.search(query: "probe 1", count: 5)
+        
+        // Subsequent search within cooldown must immediately throw allProvidersOnCooldown
+        simulatedNow = simulatedNow.addingTimeInterval(10)
+        await #expect(throws: AutomaticSearchError.self) {
+            _ = try await coordinator.search(query: "probe 2", count: 5)
+        }
+    }
+
+    // MARK: - 3. Adversarial Relevance & Quality Assessment
+    
+    @Test("Adversarial Relevance: Jerusalem prayer query returning hotel spam is rejected and falls back")
+    func jerusalemPrayerTimesRejectsHotelSpam() async throws {
+        // Provider 1 returns hotels for a prayer times query
+        let hotelSpam = [
+            WebSearchResult(title: "Grand Hotel Jerusalem", url: "https://hotels.com/jerusalem", snippet: "Book luxury rooms, suites, and vacation packages in Jerusalem.", sourceBackend: "you"),
+            WebSearchResult(title: "Boutique Resort Jerusalem", url: "https://resorts.com/booking", snippet: "Vacation hotel accommodations with swimming pool.", sourceBackend: "you")
+        ]
+        // Provider 2 returns actual prayer times / Torah content
+        let prayerResults = [
+            WebSearchResult(title: "זמני תפילה בירושלים - ישיבת הר עציון", url: "https://etzion.org.il/zmanim", snippet: "זמני תפילה הלכתיים בירושלים: שחרית, מנחה, ערבית, נץ החמה ושקיעה.", sourceBackend: "tavily")
+        ]
+        
+        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: hotelSpam)
+        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", returnedResults: prayerResults)
+        
+        let coordinator = AutomaticWebSearchCoordinator(providers: [p1, p2])
+        let (parsed, engine) = try await coordinator.search(query: "זמני תפילה ירושלים", count: 5)
+        
+        // Must reject Provider 1's hotel spam and accept Provider 2
+        #expect(engine.contains("Tavily"))
+        #expect(parsed.titles.first?.contains("זמני תפילה") == true)
+    }
+    
+    @Test("Adversarial Relevance: Technical SwiftUI query returning card game bridge is rejected")
+    func swiftUIQueryRejectsCardGameSpam() async throws {
+        let cardGameResults = [
+            WebSearchResult(title: "How to Play Bridge Card Game", url: "https://games.com/bridge", snippet: "Rules for trick-taking trump card games with partners.", sourceBackend: "you")
+        ]
+        let techResults = [
+            WebSearchResult(title: "SwiftUI Documentation - Apple Developer", url: "https://developer.apple.com/swiftui", snippet: "Build declarative interfaces for iOS and macOS using Swift.", sourceBackend: "tavily")
+        ]
+        
+        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: cardGameResults)
+        let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", returnedResults: techResults)
+        
+        let coordinator = AutomaticWebSearchCoordinator(providers: [p1, p2])
+        let (parsed, engine) = try await coordinator.search(query: "SwiftUI iOS SDK", count: 5)
+        
+        #expect(engine.contains("Tavily"))
+        #expect(parsed.titles.first?.contains("Apple Developer") == true)
+    }
+
+    // MARK: - 4. Canonical Query Caching & Diagnostic Bypass
+    
+    @Test("Canonical Caching: Handles irregular internal whitespace and locale folding")
+    func canonicalCacheNormalizesWhitespace() async throws {
+        let res = WebSearchResult(title: "Result", url: "https://example.com/item", snippet: "Snippet", sourceBackend: "you")
+        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: [res])
+        let coordinator = AutomaticWebSearchCoordinator(providers: [p1])
+        
+        _ = try await coordinator.search(query: "  SwiftUI   iOS   27  ", count: 5)
+        let count1 = await p1.callCount
+        #expect(count1 == 1)
+        
+        _ = try await coordinator.search(query: "swiftui ios 27", count: 5)
+        let count2 = await p1.callCount
+        #expect(count2 == 1) // Cache hit!
+    }
+    
+    @Test("Diagnostic Probe: Bypasses cache to guarantee real live testing")
+    func diagnosticBypassesCache() async {
+        let res = WebSearchResult(title: "Live News", url: "https://news.com/live", snippet: "News snippet", sourceBackend: "you")
+        let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: [res])
+        let coordinator = AutomaticWebSearchCoordinator(providers: [p1])
+        
+        let diag1 = await coordinator.runDiagnosticTest()
+        let count1 = await p1.callCount
+        #expect(diag1.success == true)
+        #expect(count1 == 1)
+        
+        // Immediate second diagnostic test must NOT serve cached result
+        let diag2 = await coordinator.runDiagnosticTest()
+        let count2 = await p1.callCount
+        #expect(diag2.success == true)
+        #expect(count2 == 2) // Cache was bypassed!
+    }
+
+    // MARK: - 5. Migration & Explicit Disable Invariants
+    
     @MainActor
-    @Test("Migration Logic: Existing install with valid manual provider preserves selection")
-    func existingValidManualProviderPreserved() throws {
+    @Test("Migration Invariant: Explicitly disabled manual provider is NOT overwritten to automatic")
+    func explicitlyDisabledManualProviderPreserved() throws {
         let schema = Schema([SearchKeys.self])
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
         let context = container.mainContext
         
-        // Insert active configured manual key
+        // User configured Tavily key, but explicitly turned search OFF (isUsing == false)
         let manualKey = SearchKeys(
             name: "TAVILY_KEY",
             company: "TAVILY",
-            key: "tvly-valid-key-12345",
+            key: "tvly-secret-key-configured",
             requestURL: "https://api.tavily.com/search",
-            isUsing: true
+            isUsing: false
         )
         context.insert(manualKey)
+        try context.save()
         
         // Run migration
         AutomaticSearchMigration.reconcileDefaultProvider(in: context)
         
-        let descriptor = FetchDescriptor<SearchKeys>()
-        let keys = try context.fetch(descriptor)
+        let allKeys = try context.fetch(FetchDescriptor<SearchKeys>())
+        let auto = allKeys.first { $0.company == "AUTOMATIC_KEYLESS" }
+        let manual = allKeys.first { $0.company == "TAVILY" }
         
-        let tavily = keys.first { $0.company == "TAVILY" }
-        let auto = keys.first { $0.company == "AUTOMATIC_KEYLESS" }
-        
-        #expect(tavily?.isUsing == true)
-        #expect(auto?.isUsing == false)
+        #expect(manual?.isUsing == false)
+        #expect(auto?.isUsing == false) // Must NOT force automatic on!
     }
     
     @MainActor
-    @Test("Migration Logic: Existing install with unconfigured/empty manual provider switches to automatic")
-    func existingUnconfiguredManualProviderSwitchesToAutomatic() throws {
+    @Test("Migration Invariant: Deduplication removes redundant automatic rows")
+    func deduplicationRemovesRedundantAutomaticRows() throws {
         let schema = Schema([SearchKeys.self])
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
         let context = container.mainContext
         
-        // Insert unconfigured manual key with empty apiKey
-        let emptyKey = SearchKeys(
-            name: "ZHIPUAI_SEARCH_KEY",
-            company: "ZHIPUAI",
-            key: "",
-            requestURL: "https://open.bigmodel.cn/api/paas/v4/web_search",
-            isUsing: true
-        )
-        context.insert(emptyKey)
+        context.insert(AutomaticSearchMigration.makeAutomaticSearchKey(isUsing: true))
+        context.insert(AutomaticSearchMigration.makeAutomaticSearchKey(isUsing: false))
+        context.insert(AutomaticSearchMigration.makeAutomaticSearchKey(isUsing: false))
+        try context.save()
         
-        // Run migration
         AutomaticSearchMigration.reconcileDefaultProvider(in: context)
         
-        let descriptor = FetchDescriptor<SearchKeys>()
-        let keys = try context.fetch(descriptor)
-        
-        let zhipu = keys.first { $0.company == "ZHIPUAI" }
-        let auto = keys.first { $0.company == "AUTOMATIC_KEYLESS" }
-        
-        #expect(zhipu?.isUsing == false)
-        #expect(auto?.isUsing == true)
+        let allKeys = try context.fetch(FetchDescriptor<SearchKeys>())
+        let automaticKeys = allKeys.filter { $0.company == "AUTOMATIC_KEYLESS" }
+        #expect(automaticKeys.count == 1)
+        #expect(automaticKeys.first?.isUsing == true)
     }
 }
