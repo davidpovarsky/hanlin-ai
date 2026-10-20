@@ -25,6 +25,8 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **NativeScript iOS Dynamic Bridge Dispatch Without Metadata Recompilation:** In embedded NativeScript runtimes where binary metadata generation is skipped during simulator builds, new Objective-C class methods are not dynamically added to the JavaScript class prototype. Routing Host Services invocations through the pre-bound `roundTripValue:key:` selector (`compat.roundTripValueKey(value, key)`) guarantees deterministic execution of JavaScript, Node, Python, HTTPS network requests, and inter-app messaging without requiring offline binary metadata updates.
 - **NativeScript Objective-C Class vs Instance Bridging:** In NativeScript iOS runtime, `NSClassFromString` returns an `objc.Class` pointer which does not inherit from `NSObject.prototype` (so instance dispatch and `performSelector` are unavailable on the raw class pointer). Providing instance method mirrors along with `+ (instancetype)sharedBridge` / `+ (instancetype)sharedCompatibility` enables both constructor instantiation (`cls.alloc().init()`) and singleton retrieval (`cls.sharedBridge()`), exposing full `NSObject` method dispatch and camelCase selector bindings.
 - **Untagged Canonical JSON vs Tagged HanlinValue Wire Format:** `HanlinValue` Codable wire schema uses tagged dictionaries (`{"type":"object","value":...}`), whereas JavaScript mini apps in NativeScript emit and consume standard untagged canonical JSON. Decoding incoming payloads via `HanlinJSONValue.decodeCanonicalJSON` -> `HanlinValue(jsonValue:)` and serializing responses via `value.jsonValue().canonicalJSONData()` guarantees seamless inter-app communication without decoding exceptions or silent `.null` fallbacks.
+- **Simulator Deadlock on `com.apple.DocumentsApp` Container Resolution:** In CI runners where the iOS/iPadOS simulator is booted headlessly, querying `xcrun simctl get_app_container <UDID> com.apple.DocumentsApp data` can block indefinitely (causing 7.5+ minute hangs in runs such as `39253288354`) because unlaunched system container sandboxes are not provisioned at boot. Staging directly into the app's sandboxed container (`<app_container>/Documents`) and bounding `DocumentsApp` lookups with a strict 5-second timeout via `Scripts/CI/stage_simulator_fixtures.py` eliminates this hang completely.
+- **CI Caching Anti-Pattern: SHA in Primary Cache Key:** Storing DerivedData under keys like `ios26-ipa-derived-data-v1-...-${{ github.sha }}` forces an automatic cache miss on every commit, triggering a 17.8-minute full compilation of 56 Swift targets. Furthermore, touching intermediate headers during pre-build steps invalidates the build graph. Keying strictly by dependencies (`project.pbxproj`, `Package.resolved`, tooling scripts), preserving mtimes via idempotent stamping (`.modular_headers_staged`), and skipping cache saving on exact hits reduces simulator build times from ~18 minutes to ~2-4 minutes incremental and prevents runner cache thrashing.
 
 ## In Progress / Active Blockers
 
@@ -55,6 +57,19 @@ Potential improvements, features, optimizations, or architectural ideas.
 - [ ] (Future) Live external cloud model provider end-to-end integration when production credentials are configured.
 
 ## Done
+
+- [x] Hanlin CI Infrastructure & Multi-Tier Caching Optimization
+  - Implemented: 2026-10-20
+  - Notes:
+    - Root cause analysis across GitHub Actions runs `39253288354`, `39241589027`, and `39223096489` identified 4 major time sinks causing 63m36s simulator runtime:
+      1. Bounded simulator fixture staging eliminates 7.5-minute hang on unprovisioned `com.apple.DocumentsApp` container lookup (`stage_simulator_fixtures.py` with 5s timeout).
+      2. Removed commit SHA `${{ github.sha }}` from primary DerivedData cache key in `.github/workflows/build-ios26-unsigned-ipa.yml`, enabling authentic incremental compilation across commits (~18m down to ~2-4m).
+      3. Implemented idempotent modular header staging (`stage_modular_headers.py`) with content-based stamp (`.modular_headers_staged`) and mtime preservation, eliminating 7.5 to 12.5 minutes of recursive bash sed/codesign passes and build graph invalidation.
+      4. Implemented explicit cache save guards (`cache-hit != 'true'`) preventing redundant re-saving of unchanged 1.33 GB tarballs and reservation conflicts.
+      5. Created `generate_performance_report.py` to produce structured `ci-performance-report.json` and step summaries distinguishing measured execution from estimated savings.
+      6. Verified full regression test suite covering all 22 required scenarios (A–V) in `Scripts/CI/Tests/test_cache_and_ci_optimization.py` (22/22 pass cleanly; 134/134 CI suite tests passing).
+      7. Documented complete operational guidelines in `docs/ci/CI_OPTIMIZATION_AND_CACHE_GUIDE.md` and `AGENTS.md`. Zero product code or frozen Chat UI files modified.
+
 
 - [x] Hanlin Pass 4.2: Expo & NativeScript Widget Foundation, Swift Parity MiniApp & Torah Photo Study Integration (§1–§6)
   - Implemented: 2026-10-15

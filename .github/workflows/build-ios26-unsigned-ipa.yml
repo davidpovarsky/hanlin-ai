@@ -178,7 +178,15 @@ jobs:
             args+=(--exact-test-selector "${{ inputs.exact_test_selector }}")
           fi
 
-          python3 Scripts/CI/plan_affected_validation.py "${args[@]}"
+          python3 Scripts/CI/plan_affected_validation.py "${args[@]}" --json-output "$GITHUB_WORKSPACE/ci-validation-plan.json"
+
+      - name: Upload validation plan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-validation-plan
+          path: ci-validation-plan.json
+          if-no-files-found: warn
+          retention-days: 14
 
   validate-hanlin-platform-phase1:
     needs: plan-affected-validation
@@ -295,9 +303,9 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: Packages/HanlinPlatform/.build
-          key: phase1-spm-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-${{ github.sha }}
+          key: phase1-spm-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}
           restore-keys: |
-            phase1-spm-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
+            phase1-spm-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
       - name: Restore Phase 1 simulator compiler cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
@@ -308,9 +316,9 @@ jobs:
             build/Phase1SimulatorDerivedData/Build
             build/Phase1SimulatorDerivedData/ModuleCache.noindex
             build/Phase1SimulatorDerivedData/SDKStatCaches.noindex
-          key: phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-${{ github.sha }}
+          key: phase1-derived-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}
           restore-keys: |
-            phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
+            phase1-derived-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.phase1-toolchain.outputs.simulator-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
       - name: Restore Phase 1 device compiler cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
@@ -321,9 +329,9 @@ jobs:
             build/Phase1DeviceDerivedData/Build
             build/Phase1DeviceDerivedData/ModuleCache.noindex
             build/Phase1DeviceDerivedData/SDKStatCaches.noindex
-          key: phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.phase1-toolchain.outputs.iphoneos-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-${{ github.sha }}
+          key: phase1-derived-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.phase1-toolchain.outputs.iphoneos-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}
           restore-keys: |
-            phase1-derived-v1-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.phase1-toolchain.outputs.iphoneos-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
+            phase1-derived-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.phase1-toolchain.outputs.iphoneos-sdk }}-debug-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}-
 
       - name: Report Phase 1 cache mode
         run: |
@@ -459,7 +467,7 @@ jobs:
             2>&1 | tee "$LOG_DIR/05-swift-test.log"
 
       - name: Save successful Phase 1 SwiftPM build cache
-        if: ${{ success() && !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
+        if: ${{ success() && !inputs.force_clean_build && steps.phase1-spm-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         uses: actions/cache/save@v6
         with:
           path: Packages/HanlinPlatform/.build
@@ -519,7 +527,7 @@ jobs:
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/07-ios-simulator-duration-seconds.txt"
 
       - name: Save successful Phase 1 simulator compiler cache
-        if: ${{ success() && !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
+        if: ${{ success() && !inputs.force_clean_build && steps.phase1-simulator-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         uses: actions/cache/save@v6
         with:
           path: |
@@ -578,7 +586,7 @@ jobs:
           done 2>&1 | tee "$LOG_DIR/08-nativescript-package.log"
 
       - name: Save successful Phase 1 device compiler cache
-        if: ${{ success() && !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
+        if: ${{ success() && !inputs.force_clean_build && steps.phase1-device-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         uses: actions/cache/save@v6
         with:
           path: |
@@ -782,9 +790,9 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: build/SourcePackages
-          key: ios-sourcepackages-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
+          key: ios-sourcepackages-v3-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
           restore-keys: |
-            ios-sourcepackages-v2-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-
+            ios-sourcepackages-v3-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-
 
       - name: Restore compatible incremental Xcode compiler state
         if: ${{ !inputs.force_clean_build }}
@@ -796,9 +804,9 @@ jobs:
             build/DerivedData/ModuleCache.noindex
             build/DerivedData/SDKStatCaches.noindex
             build/DerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ios-derived-v5-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}-${{ github.sha }}
+          key: ios-derived-v7-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json', 'Scripts/CI/stage_modular_headers.py') }}-${{ hashFiles('AI_HLY/**/*.swift') }}
           restore-keys: |
-            ios-derived-v5-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}-
+            ios-derived-v7-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-iphoneos-${{ steps.app-toolchain.outputs.iphoneos-sdk }}-${{ env.CONFIGURATION }}-
 
       - name: Report application build cache mode
         run: |
@@ -1031,6 +1039,7 @@ jobs:
           } 2>&1 | tee "$LOG_DIR/06-resolve-packages.log"
 
       - name: Save validated cloned Swift package dependencies
+        if: ${{ success() && steps.app-sourcepackages-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@v6
         with:
           path: build/SourcePackages
@@ -1039,79 +1048,11 @@ jobs:
       - name: Stage modular headers into device Swift Package checkouts
         run: |
           set -euxo pipefail
-          for slice in ios-arm64 ios-arm64_x86_64-simulator; do
-            dest="Packages/HanlinExpoRuntime/Artifacts/React.xcframework/$slice/React.framework/Headers"
-            src_rn="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/$slice/Headers"
-            if [ -d "$dest" ] && [ -d "$src_rn" ]; then
-              cp -R "$src_rn"/* "$dest/" || true
-            fi
-            if [ -d "$dest" ] && [ -d "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" ]; then
-              cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/* "$dest/" || true
-            fi
-          done
-          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
-            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
-              if [ -d "$checkout" ]; then
-                mkdir -p "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks "$checkout/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Artifacts/" || true
-                for slice in ios-arm64 ios-arm64_x86_64-simulator; do
-                  for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
-                    ck_dest="$base/React.xcframework/$slice/React.framework/Headers"
-                    src_rn="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/$slice/Headers"
-                    if [ -d "$ck_dest" ] && [ -d "$src_rn" ]; then
-                      cp -R "$src_rn"/* "$ck_dest/" || true
-                    fi
-                    if [ -d "$ck_dest" ] && [ -d "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" ]; then
-                      cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/* "$ck_dest/" || true
-                    fi
-                  done
-                done
-              fi
-            done
-          fi
-
-          # Crucial: Delete any stray module.modulemap copied into Headers folders to prevent module redefinition errors
-          find Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
-          find Packages/HanlinExpoRuntime/Artifacts/React.xcframework -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
-          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
-            find "$CLONED_PACKAGES_PATH/checkouts" -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
-          fi
-
-          resign_xcframework() {
-            local xcf="$1"
-            if [ -d "$xcf" ]; then
-              echo "Re-signing $xcf..."
-              find "$xcf" -name "._*" -delete 2>/dev/null || true
-              find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
-              find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
-              codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
-              codesign --verify -vvvv "$xcf" 2>&1 || true
-            fi
-          }
-
-          for xcf in Packages/HanlinExpoRuntime/Artifacts/*.xcframework; do
-            if [ -d "$xcf" ]; then
-              resign_xcframework "$xcf"
-            fi
-          done
-          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
-            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
-              if [ -d "$checkout" ]; then
-                for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
-                  if [ -d "$base" ]; then
-                    for xcf in "$base"/*.xcframework; do
-                      if [ -d "$xcf" ]; then
-                        resign_xcframework "$xcf"
-                      fi
-                    done
-                  fi
-                done
-              fi
-            done
-          fi
+          python3 Scripts/CI/stage_modular_headers.py \
+            --source-packages-path "$CLONED_PACKAGES_PATH" \
+            --expo-artifacts-path "Packages/HanlinExpoRuntime/Artifacts" \
+            --derived-data-path "$DERIVED_DATA_PATH" \
+            --configuration "$CONFIGURATION"
 
       - name: Restore unchanged Xcode build input metadata
         run: |
@@ -1407,7 +1348,7 @@ jobs:
           shasum -a 256 "$IPA_NAME" | tee "$LOG_DIR/09-ipa-sha256.txt"
 
       - name: Save successful incremental Xcode compiler state
-        if: ${{ success() }}
+        if: ${{ success() && !inputs.force_clean_build && steps.app-deriveddata-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@v6
         with:
           path: |
@@ -1637,9 +1578,9 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: build/SourcePackages
-          key: ios-sourcepackages-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
+          key: ios-sourcepackages-v3-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
           restore-keys: |
-            ios-sourcepackages-v2-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-
+            ios-sourcepackages-v3-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-
 
       - name: Restore compatible simulator compiler state
         if: ${{ !inputs.force_clean_build }}
@@ -1651,9 +1592,9 @@ jobs:
             build/SimulatorDerivedData/ModuleCache.noindex
             build/SimulatorDerivedData/SDKStatCaches.noindex
             build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ios-derived-v5-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}-${{ github.sha }}
+          key: ios-derived-v7-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json', 'Scripts/CI/stage_modular_headers.py') }}-${{ hashFiles('AI_HLY/**/*.swift') }}
           restore-keys: |
-            ios-derived-v5-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}-
+            ios-derived-v7-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-iphonesimulator-${{ steps.simulator-toolchain.outputs.simulator-sdk }}-${{ env.CONFIGURATION }}-
 
       - name: Report simulator cache mode
         run: |
@@ -1746,6 +1687,7 @@ jobs:
             2>&1 | tee "$LOG_DIR/05-resolve-packages.log"
 
       - name: Save validated simulator Swift package dependencies
+        if: ${{ success() && steps.simulator-sourcepackages-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@v6
         with:
           path: build/SourcePackages
@@ -1780,100 +1722,12 @@ jobs:
       - name: Stage modular headers into simulator Swift Package checkouts
         run: |
           set -euxo pipefail
-          for slice in ios-arm64 ios-arm64_x86_64-simulator; do
-            dest="Packages/HanlinExpoRuntime/Artifacts/React.xcframework/$slice/React.framework/Headers"
-            src_rn="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/$slice/Headers"
-            if [ -d "$dest" ] && [ -d "$src_rn" ]; then
-              cp -R "$src_rn"/* "$dest/" || true
-            fi
-            if [ -d "$dest" ] && [ -d "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" ]; then
-              cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/* "$dest/" || true
-            fi
-          done
-          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
-            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
-              if [ -d "$checkout" ]; then
-                mkdir -p "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks "$checkout/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders "$checkout/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework "$checkout/Packages/HanlinExpoRuntime/Artifacts/" || true
-                cp -R Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework "$checkout/Artifacts/" || true
-                for slice in ios-arm64 ios-arm64_x86_64-simulator; do
-                  for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
-                    ck_dest="$base/React.xcframework/$slice/React.framework/Headers"
-                    src_rn="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/$slice/Headers"
-                    if [ -d "$ck_dest" ] && [ -d "$src_rn" ]; then
-                      cp -R "$src_rn"/* "$ck_dest/" || true
-                    fi
-                    if [ -d "$ck_dest" ] && [ -d "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" ]; then
-                      cp -R Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/* "$ck_dest/" || true
-                    fi
-                  done
-                done
-              fi
-            done
-          fi
-
-          # Crucial: Delete any stray module.modulemap copied into Headers folders to prevent module redefinition errors
-          find Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
-          find Packages/HanlinExpoRuntime/Artifacts/React.xcframework -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
-          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
-            find "$CLONED_PACKAGES_PATH/checkouts" -name "module.modulemap" -path "*/Headers/*" -delete 2>/dev/null || true
-          fi
-
-          # Sanitize React-umbrella.h, ExpoModulesCore_umbrella.h, ExpoModulesCore.h, RawProps.h across artifacts and checkouts
-          for base_scan in Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH/checkouts"; do
-            if [ -d "$base_scan" ]; then
-              find "$base_scan" -name "React-umbrella.h" -exec sed -i '' '/RCTInspectorNetworkHelper\.h/d' {} + 2>/dev/null || true
-              find "$base_scan" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
-              find "$base_scan" -name "ExpoModulesCore.h" -exec sed -i '' '/SwiftUIViewProps\.h/d' {} + 2>/dev/null || true
-              find "$base_scan" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|@class RCTHost;|g; s|#import <React/RCTHost\.h>|@class RCTHost;|g' {} + 2>/dev/null || true
-              find "$base_scan" -name "RawProps.h" -exec sed -i '' '/JSIDynamic\.h/d; s|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
-              find "$base_scan" -name "ExpoFabricViewObjC.h" -exec sed -i '' '/RCTViewComponentView\.h/d; s/ExpoFabricViewObjC : RCTViewComponentView/ExpoFabricViewObjC : UIView/g' {} + 2>/dev/null || true
-              find "$base_scan" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
-              find "$base_scan" -name "RCTInspectorNetworkHelper.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"jsinspector-modern/\1"|g' {} + 2>/dev/null || true
-              find "$base_scan" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
-              find "$base_scan" -path "*/folly/json/dynamic.h" | while read -r jdyn; do
-                ddyn="$(dirname "$(dirname "$jdyn")")/dynamic.h"
-                printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#elif __has_include("folly/json/dynamic.h")\n#include "folly/json/dynamic.h"\n#elif __has_include("json/dynamic.h")\n#include "json/dynamic.h"\n#endif\n' > "$ddyn" 2>/dev/null || true
-              done
-            fi
-          done
-          node Scripts/Expo/patch-hash-combine.mjs Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH/checkouts"
-
-          resign_xcframework() {
-            local xcf="$1"
-            if [ -d "$xcf" ]; then
-              echo "Re-signing $xcf..."
-              find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
-              find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
-              codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
-              codesign --verify -vvvv "$xcf" 2>&1 || true
-            fi
-          }
-
-          for xcf in Packages/HanlinExpoRuntime/Artifacts/*.xcframework; do
-            if [ -d "$xcf" ]; then
-              resign_xcframework "$xcf"
-            fi
-          done
-          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
-            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
-              if [ -d "$checkout" ]; then
-                for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
-                  if [ -d "$base" ]; then
-                    for xcf in "$base"/*.xcframework; do
-                      if [ -d "$xcf" ]; then
-                        resign_xcframework "$xcf"
-                      fi
-                    done
-                  fi
-                done
-              fi
-            done
-          fi
+          python3 Scripts/CI/stage_modular_headers.py \
+            --source-packages-path "$CLONED_PACKAGES_PATH" \
+            --expo-artifacts-path "Packages/HanlinExpoRuntime/Artifacts" \
+            --derived-data-path "$DERIVED_DATA_PATH" \
+            --configuration "$CONFIGURATION"
+          node Scripts/Expo/patch-hash-combine.mjs "$DERIVED_DATA_PATH" Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH" || true
 
       - name: Build full arm64 simulator app
         run: |
@@ -1927,111 +1781,6 @@ jobs:
                 testing_scope_flags+=("-only-testing:${SIMULATOR_UI_FILTER:-AI_HLYUITests}")
               fi
             fi
-          fi
-
-          dst_hdrs=()
-          for cfg in "Debug" "Release" "$CONFIGURATION"; do
-            dst_hdrs+=(
-              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/React.framework/Headers"
-              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/react.framework/Headers"
-              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/PackageFrameworks/React.framework/Headers"
-              "$DERIVED_DATA_PATH/Build/Products/${cfg}-iphonesimulator/PackageFrameworks/react.framework/Headers"
-            )
-          done
-          for d in "${dst_hdrs[@]}"; do
-            mkdir -p "$d"
-          done
-          rn_all_headers="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers"
-          rn_dependencies="Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
-          react_xcf="Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator/React.framework/Headers"
-          react_modular="Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
-          for dst_hdr in "${dst_hdrs[@]}"; do
-            if [ -d "$rn_all_headers" ]; then
-              cp -R "$rn_all_headers/"* "$dst_hdr/" || true
-            fi
-            if [ -d "$react_xcf" ]; then
-              cp -R "$react_xcf/"* "$dst_hdr/" || true
-            fi
-            if [ -d "$rn_dependencies" ]; then
-              cp -R "$rn_dependencies/"* "$dst_hdr/" || true
-            fi
-            if [ -d "$react_modular" ]; then
-              cp -R "$react_modular/"* "$dst_hdr/" || true
-            fi
-            mkdir -p "$dst_hdr/folly" "$dst_hdr/folly/json"
-            for base_folly in "$rn_dependencies/folly" "$react_modular/folly" "$rn_all_headers/folly"; do
-              if [ -f "$base_folly/json/dynamic.h" ]; then
-                cp -f "$base_folly/json/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
-                cp -f "$base_folly/json/dynamic.h" "$dst_hdr/folly/json/dynamic.h" || true
-                break
-              elif [ -f "$base_folly/dynamic.h" ]; then
-                cp -f "$base_folly/dynamic.h" "$dst_hdr/folly/dynamic.h" || true
-                break
-              fi
-            done
-            if [ -f "$rn_all_headers/jsi/JSIDynamic.h" ]; then
-              mkdir -p "$dst_hdr/jsi"
-              cp -f "$rn_all_headers/jsi/JSIDynamic.h" "$dst_hdr/jsi/" || true
-            fi
-            rn_react_source="Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/react"
-            if [ -d "$rn_react_source" ]; then
-              cp -R "$rn_react_source/"* "$dst_hdr/" || true
-              cp -R "$rn_react_source" "$dst_hdr/" || true
-            fi
-            rm -f "$dst_hdr/module.modulemap" 2>/dev/null || true
-            find "$dst_hdr" -name "React-umbrella.h" -exec sed -i '' '/RCTInspectorNetworkHelper\.h/d' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|@class RCTHost;|g; s|#import <React/RCTHost\.h>|@class RCTHost;|g' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "RCTInspectorNetworkHelper.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"jsinspector-modern/\1"|g' {} + 2>/dev/null || true
-            find "$dst_hdr" -path "*/jsinspector-modern/*" -name "*.h" -exec sed -i '' 's|<jsinspector-modern/\([^>]*\)>|"\1"|g' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "ExpoFabricViewObjC.h" -exec sed -i '' '/RCTViewComponentView\.h/d; s/ExpoFabricViewObjC : RCTViewComponentView/ExpoFabricViewObjC : UIView/g' {} + 2>/dev/null || true
-            find "$dst_hdr" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
-          done
-          find "$DERIVED_DATA_PATH" -name "ExpoModulesCore_umbrella.h" -exec sed -i '' '/ExpoViewComponentDescriptor\.h/d;/ExpoViewEventEmitter\.h/d;/ExpoViewProps\.h/d;/ExpoViewShadowNode\.h/d;/ExpoViewState\.h/d;/SwiftUIViewProps\.h/d;/TestingSyncJSCallInvoker\.h/d' {} + 2>/dev/null || true
-          find "$DERIVED_DATA_PATH" -name "ExpoModulesCore.h" -exec sed -i '' '/SwiftUIViewProps\.h/d' {} + 2>/dev/null || true
-          find "$DERIVED_DATA_PATH" -name "EXHostWrapper.h" -exec sed -i '' 's|#import <ReactCommon/RCTHost\.h>|@class RCTHost;|g; s|#import <React/RCTHost\.h>|@class RCTHost;|g' {} + 2>/dev/null || true
-          find "$DERIVED_DATA_PATH" -name "RawProps.h" -exec sed -i '' '/JSIDynamic\.h/d; s|#include <folly/dynamic\.h>|#if __has_include(<folly/dynamic.h>)\'$'\n''#include <folly/dynamic.h>\'$'\n''#elif __has_include(<folly/json/dynamic.h>)\'$'\n''#include <folly/json/dynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
-          find "$DERIVED_DATA_PATH" -name "ExpoFabricViewObjC.h" -exec sed -i '' '/RCTViewComponentView\.h/d; s/ExpoFabricViewObjC : RCTViewComponentView/ExpoFabricViewObjC : UIView/g' {} + 2>/dev/null || true
-          find "$DERIVED_DATA_PATH" -name "*.h" -exec sed -i '' 's|#include <jsi/JSIDynamic\.h>|#if __has_include(<jsi/JSIDynamic.h>)\'$'\n''#include <jsi/JSIDynamic.h>\'$'\n''#endif|g' {} + 2>/dev/null || true
-          find "$DERIVED_DATA_PATH" -path "*/react.framework/Headers" -type d | while read -r rf; do
-            mkdir -p "$rf/folly" "$rf/folly/json"
-            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/json/dynamic.h" 2>/dev/null || true
-            printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#elif __has_include("folly/json/dynamic.h")\n#include "folly/json/dynamic.h"\n#elif __has_include("json/dynamic.h")\n#include "json/dynamic.h"\n#endif\n' > "$rf/folly/dynamic.h" 2>/dev/null || true
-          done
-          find "$DERIVED_DATA_PATH" -path "*/React.framework/Headers" -type d | while read -r rf; do
-            mkdir -p "$rf/folly" "$rf/folly/json"
-            cp -f "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers/folly/dynamic.h" "$rf/folly/json/dynamic.h" 2>/dev/null || true
-            printf '#pragma once\n#if __has_include(<folly/json/dynamic.h>)\n#include <folly/json/dynamic.h>\n#elif __has_include("folly/json/dynamic.h")\n#include "folly/json/dynamic.h"\n#elif __has_include("json/dynamic.h")\n#include "json/dynamic.h"\n#endif\n' > "$rf/folly/dynamic.h" 2>/dev/null || true
-          done
-          node Scripts/Expo/patch-hash-combine.mjs "$DERIVED_DATA_PATH" Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH"
-
-          # Re-sign all xcframeworks so builtin-process-xcframework signature verification succeeds
-          for xcf in Packages/HanlinExpoRuntime/Artifacts/*.xcframework; do
-            if [ -d "$xcf" ]; then
-              find "$xcf" -name "._*" -delete 2>/dev/null || true
-              find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
-              find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
-              codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
-            fi
-          done
-          if [ -d "$CLONED_PACKAGES_PATH/checkouts" ]; then
-            for checkout in "$CLONED_PACKAGES_PATH/checkouts"/*; do
-              if [ -d "$checkout" ]; then
-                for base in "$checkout/Packages/HanlinExpoRuntime/Artifacts" "$checkout/Artifacts"; do
-                  if [ -d "$base" ]; then
-                    for xcf in "$base"/*.xcframework; do
-                      if [ -d "$xcf" ]; then
-                        find "$xcf" -name "._*" -delete 2>/dev/null || true
-                        find "$xcf" -name "_CodeSignature" -exec rm -rf {} + 2>/dev/null || true
-                        find "$xcf" -name "*.framework" -type d -exec codesign --force --sign - --timestamp=none {} + 2>/dev/null || true
-                        codesign --force --sign - --timestamp=none "$xcf" 2>/dev/null || true
-                      fi
-                    done
-                  fi
-                done
-              fi
-            done
           fi
 
           started_at="$(date +%s)"
@@ -2144,7 +1893,7 @@ jobs:
           echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
 
       - name: Save successful simulator compiler state
-        if: ${{ success() && !inputs.force_clean_build }}
+        if: ${{ success() && !inputs.force_clean_build && steps.simulator-deriveddata-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@v6
         with:
           path: |
@@ -2243,51 +1992,12 @@ jobs:
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
           if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
-            FILES_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" com.apple.DocumentsApp data)"
-            test -n "$FILES_CONTAINER"
-            mkdir -p "$FILES_CONTAINER/Documents"
-            cp build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/HanlinNativeScriptUnsupported.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/sefaria-reader-core.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/core-unbundled.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/uikit-tabbar-bridge.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/core-fixture-a-tabview.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/core-fixture-b-frame.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/core-fixture-c-tabview-frame.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-            cp build/NativeScriptE2E/hanlin-script-parity.hanlinNativeScript "$FILES_CONTAINER/Documents/"
-
-            xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
-            APP_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
-            if [ -n "$APP_CONTAINER" ]; then
-              mkdir -p "$APP_CONTAINER/Documents"
-              cp build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/HanlinNativeScriptUnsupported.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/sefaria-reader-core.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/core-unbundled.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/uikit-tabbar-bridge.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/core-fixture-a-tabview.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/core-fixture-b-frame.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/core-fixture-c-tabview-frame.hanlinNativeScript "$APP_CONTAINER/Documents/"
-              cp build/NativeScriptE2E/hanlin-script-parity.hanlinNativeScript "$APP_CONTAINER/Documents/"
-            fi
-            {
-              echo "files_container=$FILES_CONTAINER"
-              echo "app_container=$APP_CONTAINER"
-              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptSwiftUI.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptCore.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptUnsupported.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/HanlinNativeScriptMalformed.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/sefaria-reader-core.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/core-unbundled.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/uikit-tabbar-bridge.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/core-fixture-a-tabview.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/core-fixture-b-frame.hanlinNativeScript"
-              shasum -a 256 "$FILES_CONTAINER/Documents/core-fixture-c-tabview-frame.hanlinNativeScript"
-            } | tee "$LOG_DIR/08-nativescript-files-staging.log"
+            python3 Scripts/CI/stage_simulator_fixtures.py \
+              --simulator-udid "$SIMULATOR_UDID" \
+              --bundle-id "$BUNDLE_ID" \
+              --app-path "$APP_PATH" \
+              --fixtures-dir "build/NativeScriptE2E" \
+              --log-dir "$LOG_DIR"
           else
             printf '%s\n' "NativeScript fixture staging skipped (NativeScript not affected)." > "$LOG_DIR/08-nativescript-files-staging-skipped.txt"
           fi
@@ -2977,6 +2687,38 @@ jobs:
           path: provider-conformance-summary.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Download validation plan
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: ci-validation-plan
+          path: logs/ci-validation-plan
+
+      - name: Generate CI performance report
+        if: always()
+        run: |
+          set -uo pipefail
+          python3 Scripts/CI/generate_performance_report.py \
+            --log-dir logs/phase1-validation-logs \
+            --log-dir logs/simulator-smoke-logs \
+            --validation-plan logs/ci-validation-plan/ci-validation-plan.json \
+            --run-id "${{ github.run_id }}" \
+            --commit-sha "${{ github.sha }}" \
+            --base-sha "${{ needs.plan-affected-validation.outputs.base_sha }}" \
+            --event-name "${{ github.event_name }}" \
+            --output-json ci-performance-report.json \
+            --step-summary "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Upload CI performance report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-performance-report
+          path: ci-performance-report.json
+          if-no-files-found: warn
+          retention-days: 30
+
 
   upload-chavrusachat-to-testflight:
     if: ${{ inputs.testflight_upload }}
