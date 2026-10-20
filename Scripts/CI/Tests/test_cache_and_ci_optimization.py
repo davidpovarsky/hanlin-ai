@@ -503,5 +503,86 @@ class CICacheAndOptimizationTests(unittest.TestCase):
         self.assertEqual(comparison["step_deltas"]["simulator/08-fixtures"]["saved_seconds"], 449)
 
 
+
+    def test_performance_report_nested_artifact_discovery(self):
+        """Regression 8: Performance report recursively discovers nested logs from actions/download-artifact."""
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            phase1_dir = root / "logs" / "phase1-validation-logs"
+            phase1_dir.mkdir(parents=True)
+            (phase1_dir / "00-cache-mode.log").write_text(
+                "force_clean_build=false\nSwiftPM=miss\nSimulatorDerivedData=miss\nDeviceDerivedData=miss\n",
+                encoding="utf-8",
+            )
+
+            sim_dir = root / "logs" / "simulator-smoke-logs" / "simulator-logs"
+            sim_dir.mkdir(parents=True)
+            (sim_dir / "01-cache-mode.log").write_text(
+                "force_clean_build=false\nSourcePackages=exact-hit\nDerivedData=miss\nbuild_mode=cold\nSourcePackages_save=skip_exact_hit\nDerivedData_save=saved\n",
+                encoding="utf-8",
+            )
+            (sim_dir / "05-stage-modular-headers-duration-seconds.txt").write_text("12\n", encoding="utf-8")
+            (sim_dir / "06-app-compilation-duration-seconds.txt").write_text("1074\n", encoding="utf-8")
+            (sim_dir / "08-simulator-staging-duration-seconds.txt").write_text("25\n", encoding="utf-8")
+            (sim_dir / "alive-duration-seconds.txt").write_text("1\n", encoding="utf-8")
+            (sim_dir / "08-downstream-unit-tests-skipped.txt").write_text("Skipped by router\n", encoding="utf-8")
+
+            out_json = root / "report.json"
+            summary_md = root / "summary.md"
+
+            rep = generate_performance_report.generate_report(
+                log_dirs=[root / "logs" / "phase1-validation-logs", root / "logs" / "simulator-smoke-logs"],
+                run_id="39413795039",
+                output_json_path=out_json,
+                step_summary_path=summary_md,
+            )
+
+            self.assertTrue(rep["is_complete"])
+            self.assertEqual(rep["report_status"], "COMPLETE")
+            self.assertEqual(rep["component_cache_summary"]["SourcePackages"]["restore"], "exact-hit")
+            self.assertEqual(rep["component_cache_summary"]["SourcePackages"]["save"], "skip_exact_hit")
+            self.assertEqual(rep["component_cache_summary"]["DerivedData"]["restore"], "miss")
+            self.assertEqual(rep["component_cache_summary"]["DerivedData"]["save"], "saved")
+            self.assertEqual(rep["core_timings"]["build"]["duration_seconds"], 1074)
+            self.assertEqual(rep["core_timings"]["headers"]["duration_seconds"], 12)
+            self.assertEqual(rep["core_timings"]["simulator"]["duration_seconds"], 26)  # 25 + 1
+            self.assertEqual(rep["core_timings"]["tests"]["status"], "SKIPPED")
+            self.assertEqual(rep["total_active_seconds"], 1112)
+            self.assertIn("simulator/08-downstream-unit-tests", rep["skipped_steps"])
+            self.assertIn("SourcePackages (SwiftPM)", summary_md.read_text(encoding="utf-8"))
+
+    def test_performance_report_distinguish_not_measured_zero_and_skipped(self):
+        """Regression 9: Differentiate between measured 0s, SKIPPED, and NOT_MEASURED phases."""
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            log_dir = root / "logs"
+            log_dir.mkdir()
+            (log_dir / "01-cache-mode.log").write_text("SourcePackages=exact-hit\nDerivedData=exact-hit\n", encoding="utf-8")
+            (log_dir / "05-fast-step-duration-seconds.txt").write_text("0\n", encoding="utf-8")
+            (log_dir / "08-unit-tests-skipped.txt").write_text("Suppressed by selector\n", encoding="utf-8")
+
+            rep = generate_performance_report.generate_report(log_dirs=[log_dir])
+            self.assertEqual(rep["step_statuses"].get("logs/05-fast-step"), "MEASURED")
+            self.assertEqual(rep["step_durations_seconds"].get("logs/05-fast-step"), 0)
+            self.assertEqual(rep["step_statuses"].get("logs/08-unit-tests"), "SKIPPED")
+            self.assertEqual(rep["core_timings"]["restore"]["status"], "NOT_MEASURED")
+            self.assertEqual(rep["core_timings"]["save"]["status"], "NOT_MEASURED")
+
+    def test_performance_report_incomplete_detection_and_require_complete_flag(self):
+        """Regression 10: Incomplete reports are clearly flagged and --require-complete exits with 1."""
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            empty_dir = root / "empty_logs"
+            empty_dir.mkdir()
+
+            rep = generate_performance_report.generate_report(log_dirs=[empty_dir])
+            self.assertFalse(rep["is_complete"])
+            self.assertEqual(rep["report_status"], "INCOMPLETE_MEASUREMENTS")
+
+            import unittest.mock
+            with unittest.mock.patch("sys.argv", ["prog", "--log-dir", str(empty_dir), "--require-complete"]):
+                code = generate_performance_report.main()
+                self.assertEqual(code, 1)
+
 if __name__ == "__main__":
     unittest.main()

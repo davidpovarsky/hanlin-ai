@@ -1048,11 +1048,13 @@ jobs:
       - name: Stage modular headers into device Swift Package checkouts
         run: |
           set -euxo pipefail
+          started_at="$(date +%s)"
           python3 Scripts/CI/stage_modular_headers.py \
             --source-packages-path "$CLONED_PACKAGES_PATH" \
             --expo-artifacts-path "Packages/HanlinExpoRuntime/Artifacts" \
             --derived-data-path "$DERIVED_DATA_PATH" \
             --configuration "$CONFIGURATION"
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/05-stage-modular-headers-duration-seconds.txt"
 
       - name: Restore unchanged Xcode build input metadata
         run: |
@@ -1693,6 +1695,18 @@ jobs:
           path: build/SourcePackages
           key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
 
+      - name: Record simulator SourcePackages save status
+        if: always()
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.simulator-sourcepackages-cache.outputs.cache-hit }}" = "true" ]; then
+            echo "SourcePackages_save=skip_exact_hit" >> "$LOG_DIR/01-cache-mode.log"
+          elif [ "${{ job.status }}" = "success" ]; then
+            echo "SourcePackages_save=saved" >> "$LOG_DIR/01-cache-mode.log"
+          else
+            echo "SourcePackages_save=skip_failed_job" >> "$LOG_DIR/01-cache-mode.log"
+          fi
+
       - name: Restore unchanged simulator build input metadata
         run: |
           set -euxo pipefail
@@ -1722,12 +1736,14 @@ jobs:
       - name: Stage modular headers into simulator Swift Package checkouts
         run: |
           set -euxo pipefail
+          started_at="$(date +%s)"
           python3 Scripts/CI/stage_modular_headers.py \
             --source-packages-path "$CLONED_PACKAGES_PATH" \
             --expo-artifacts-path "Packages/HanlinExpoRuntime/Artifacts" \
             --derived-data-path "$DERIVED_DATA_PATH" \
             --configuration "$CONFIGURATION"
           node Scripts/Expo/patch-hash-combine.mjs "$DERIVED_DATA_PATH" Packages/HanlinExpoRuntime/Artifacts "$CLONED_PACKAGES_PATH" || true
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/05-stage-modular-headers-duration-seconds.txt"
 
       - name: Build full arm64 simulator app
         run: |
@@ -1903,6 +1919,20 @@ jobs:
             build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
           key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
 
+      - name: Record simulator DerivedData save status
+        if: always()
+        run: |
+          set -euo pipefail
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            echo "DerivedData_save=skip_forced_clean" >> "$LOG_DIR/01-cache-mode.log"
+          elif [ "${{ steps.simulator-deriveddata-cache.outputs.cache-hit }}" = "true" ]; then
+            echo "DerivedData_save=skip_exact_hit" >> "$LOG_DIR/01-cache-mode.log"
+          elif [ "${{ job.status }}" = "success" ]; then
+            echo "DerivedData_save=saved" >> "$LOG_DIR/01-cache-mode.log"
+          else
+            echo "DerivedData_save=skip_failed_job" >> "$LOG_DIR/01-cache-mode.log"
+          fi
+
       - name: Locate and scan simulator app
         run: |
           set -euxo pipefail
@@ -1955,6 +1985,7 @@ jobs:
       - name: Boot iPad Simulator and stage fixtures
         run: |
           set -euxo pipefail
+          started_at="$(date +%s)"
           APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
           BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist")"
           APP_EXECUTABLE="$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$APP_PATH/Info.plist")"
@@ -2011,6 +2042,7 @@ jobs:
           else
             printf '%s\n' "ScriptUI fixture staging skipped (ScriptUI not affected)." > "$LOG_DIR/08-scriptui-files-staging-skipped.txt"
           fi
+          echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-simulator-staging-duration-seconds.txt"
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -2698,7 +2730,7 @@ jobs:
       - name: Generate CI performance report
         if: always()
         run: |
-          set -uo pipefail
+          set -euo pipefail
           python3 Scripts/CI/generate_performance_report.py \
             --log-dir logs/phase1-validation-logs \
             --log-dir logs/simulator-smoke-logs \
@@ -2708,7 +2740,7 @@ jobs:
             --base-sha "${{ needs.plan-affected-validation.outputs.base_sha }}" \
             --event-name "${{ github.event_name }}" \
             --output-json ci-performance-report.json \
-            --step-summary "$GITHUB_STEP_SUMMARY" || true
+            --step-summary "$GITHUB_STEP_SUMMARY"
 
       - name: Upload CI performance report artifact
         if: always()

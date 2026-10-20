@@ -7,6 +7,9 @@ Clearly distinguishes between:
 - Authentic test execution vs reused test evidence (REUSED_VERIFIED_PASS)
 - Exact cache hits vs compatible restores vs cold misses
 - Saved cache vs skipped saves (SAVE_SKIPPED vs SAVE_CREATED)
+- Distinct cache tracking for SourcePackages (SwiftPM) vs DerivedData (Xcode)
+- True 0s duration vs SKIPPED vs NOT_MEASURED phases
+- Recursive collection from nested artifact structures (e.g. actions/download-artifact layouts)
 - Side-by-side Cold vs Warm run comparisons (when baseline/comparison reports are provided)
 - Estimated time saved (strictly labeled as ESTIMATED)
 """
@@ -18,15 +21,27 @@ import datetime
 import json
 import os
 from pathlib import Path
+import re
 import sys
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+METADATA_KEYS: Set[str] = {
+    "force_clean_build",
+    "build_mode",
+    "selected_xcode",
+    "selected_xcode_build",
+    "runner_arch",
+    "iphonesimulator_sdk",
+    "iphoneos_sdk",
+}
 
 
 def parse_duration_file(path: Path) -> Optional[int]:
     """Read an integer duration in seconds from a text file."""
     if path.is_file():
         try:
-            return int(path.read_text(encoding="utf-8").strip())
+            val = path.read_text(encoding="utf-8").strip()
+            return int(val)
         except (ValueError, OSError):
             pass
     return None
@@ -44,6 +59,21 @@ def read_cache_mode_log(log_path: Path) -> Dict[str, str]:
         except OSError:
             pass
     return result
+
+
+def determine_scope(file_path: Path, root_dir: Path) -> str:
+    """Determine a human-readable, collision-resistant scope from path components."""
+    rel = file_path.relative_to(root_dir)
+    parts_lower = [p.lower() for p in rel.parts]
+    root_lower = root_dir.name.lower()
+
+    if any("phase1" in p for p in parts_lower) or "phase1" in root_lower:
+        return "phase1"
+    if any("simulator" in p for p in parts_lower) or "simulator" in root_lower:
+        return "simulator"
+    if any("device" in p or "build-logs" in p for p in parts_lower) or "build-logs" in root_lower:
+        return "device"
+    return root_dir.name
 
 
 def compare_cold_and_warm(cold_report: Dict[str, Any], warm_report: Dict[str, Any]) -> Dict[str, Any]:
@@ -96,37 +126,115 @@ def generate_report(
         except Exception:
             pass
 
-    # Aggregate durations and cache states from all provided log dirs
+    # Recursive collection from all log directories
     durations: Dict[str, int] = {}
+    step_statuses: Dict[str, str] = {}
     cache_states: Dict[str, str] = {}
     save_states: Dict[str, str] = {}
+    skipped_steps: Dict[str, str] = {}
+    raw_metadata: Dict[str, str] = {}
+
+    # Separate component cache dictionaries
+    component_cache: Dict[str, Dict[str, str]] = {
+        "SourcePackages": {"restore": "NOT_MEASURED", "save": "NOT_MEASURED"},
+        "DerivedData": {"restore": "NOT_MEASURED", "save": "NOT_MEASURED"},
+    }
+
+    seen_duration_files: Set[Path] = set()
+    seen_cache_logs: Set[Path] = set()
 
     for ldir in log_dirs:
         if not ldir.is_dir():
             continue
-        # Check cache-mode logs
-        for cml in ldir.glob("*cache-mode.log"):
-            cm_dict = read_cache_mode_log(cml)
-            for k, v in cm_dict.items():
-                if "save" in k.lower():
-                    save_states[f"{ldir.name}/{k}"] = v
-                else:
-                    cache_states[f"{ldir.name}/{k}"] = v
 
-        # Check duration text files
-        for df in ldir.glob("*-duration-seconds.txt"):
+        # 1. Recursive scan for cache-mode logs
+        for cml in sorted(ldir.rglob("*cache-mode.log")):
+            if cml in seen_cache_logs:
+                continue
+            seen_cache_logs.add(cml)
+            scope = determine_scope(cml, ldir)
+            cm_dict = read_cache_mode_log(cml)
+
+            for k, v in cm_dict.items():
+                k_clean = k.strip()
+                v_clean = v.strip()
+
+                if k_clean.lower() in METADATA_KEYS:
+                    raw_metadata[f"{scope}/{k_clean}"] = v_clean
+                    continue
+
+                full_key = f"{scope}/{k_clean}"
+                if "save" in k_clean.lower():
+                    save_states[full_key] = v_clean
+                    if "sourcepackages" in k_clean.lower() or "swiftpm" in k_clean.lower():
+                        component_cache["SourcePackages"]["save"] = v_clean
+                    elif "derived" in k_clean.lower():
+                        component_cache["DerivedData"]["save"] = v_clean
+                else:
+                    cache_states[full_key] = v_clean
+                    if "sourcepackages" in k_clean.lower() or "swiftpm" in k_clean.lower():
+                        component_cache["SourcePackages"]["restore"] = v_clean
+                    elif "derived" in k_clean.lower():
+                        component_cache["DerivedData"]["restore"] = v_clean
+
+        # 2. Recursive scan for duration text files
+        for df in sorted(ldir.rglob("*-duration-seconds.txt")):
+            if df in seen_duration_files:
+                continue
+            seen_duration_files.add(df)
+            scope = determine_scope(df, ldir)
             dur = parse_duration_file(df)
             if dur is not None:
                 step_key = df.stem.replace("-duration-seconds", "")
-                durations[f"{ldir.name}/{step_key}"] = dur
+                full_key = f"{scope}/{step_key}"
+                durations[full_key] = dur
+                step_statuses[full_key] = "MEASURED"
 
-    # Check test results
-    executed_tests = []
+        # 3. Recursive scan for skipped text files
+        for sf in sorted(ldir.rglob("*-skipped.txt")):
+            scope = determine_scope(sf, ldir)
+            step_key = sf.stem.replace("-skipped", "")
+            full_key = f"{scope}/{step_key}"
+            try:
+                reason = sf.read_text(encoding="utf-8").strip()
+            except OSError:
+                reason = "Skipped"
+            skipped_steps[full_key] = reason
+            if full_key not in step_statuses:
+                step_statuses[full_key] = "SKIPPED"
+
+    # Deduce authentic save states if not explicitly present in legacy logs
+    force_clean = any(v.lower() == "true" for k, v in raw_metadata.items() if "force_clean_build" in k.lower())
+    if component_cache["SourcePackages"]["save"] == "NOT_MEASURED":
+        sp_restore = component_cache["SourcePackages"]["restore"]
+        if sp_restore in ("exact-hit", "exact_hit", "true"):
+            component_cache["SourcePackages"]["save"] = "skip_exact_hit"
+            save_states["simulator/SourcePackages_save"] = "skip_exact_hit"
+        elif sp_restore != "NOT_MEASURED":
+            component_cache["SourcePackages"]["save"] = "saved"
+            save_states["simulator/SourcePackages_save"] = "saved"
+
+    if component_cache["DerivedData"]["save"] == "NOT_MEASURED":
+        dd_restore = component_cache["DerivedData"]["restore"]
+        if force_clean:
+            component_cache["DerivedData"]["save"] = "skip_forced_clean"
+            save_states["simulator/DerivedData_save"] = "skip_forced_clean"
+        elif dd_restore in ("exact-hit", "exact_hit", "true"):
+            component_cache["DerivedData"]["save"] = "skip_exact_hit"
+            save_states["simulator/DerivedData_save"] = "skip_exact_hit"
+        elif dd_restore != "NOT_MEASURED":
+            component_cache["DerivedData"]["save"] = "saved"
+            save_states["simulator/DerivedData_save"] = "saved"
+
+    # Collect test results
+    executed_tests: List[Any] = []
     reused_tests = plan_data.get("reused_tests", [])
     skipped_validations = plan_data.get("skipped_expensive_groups", {})
 
     for ldir in log_dirs:
-        for res_file in ldir.glob("*-results.json"):
+        if not ldir.is_dir():
+            continue
+        for res_file in sorted(ldir.rglob("*-results.json")):
             try:
                 data = json.loads(res_file.read_text(encoding="utf-8"))
                 if isinstance(data, list):
@@ -139,14 +247,68 @@ def generate_report(
     total_measured_time = sum(durations.values())
     baseline_full_mins = plan_data.get("cost_estimates", {}).get("baseline_full_run_minutes", 180)
     estimated_duration_mins = plan_data.get("cost_estimates", {}).get("estimated_duration_minutes", 15)
-    estimated_saved_mins = plan_data.get("cost_estimates", {}).get("estimated_saved_minutes", baseline_full_mins - estimated_duration_mins)
+    estimated_saved_mins = plan_data.get("cost_estimates", {}).get(
+        "estimated_saved_minutes", baseline_full_mins - estimated_duration_mins
+    )
 
-    # Classify overall cache efficiency
+    # Classify overall cache efficiency (strictly excluding metadata)
     exact_hits = sum(1 for v in cache_states.values() if v.lower() in ("exact-hit", "exact_hit", "true"))
     fallback_hits = sum(1 for v in cache_states.values() if v.lower() in ("fallback-hit", "compatible_restore"))
-    misses = sum(1 for v in cache_states.values() if v.lower() in ("miss", "false"))
+    misses = sum(1 for v in cache_states.values() if v.lower() in ("miss", "cold", "false"))
     saves_skipped = sum(1 for v in save_states.values() if "skip" in v.lower())
-    saves_created = sum(1 for v in save_states.values() if "create" in v.lower() or "saved" in v.lower())
+    saves_created = sum(1 for v in save_states.values() if "saved" in v.lower() or "created" in v.lower())
+
+    # Build core phase timing map
+    # Categorize into Build, Headers, Restore, Save, Simulator, Tests
+    build_seconds: Optional[int] = None
+    headers_seconds: Optional[int] = None
+    simulator_seconds: Optional[int] = None
+    tests_seconds: Optional[int] = None
+
+    for k, v in durations.items():
+        k_lower = k.lower()
+        if "compilation" in k_lower or "xcodebuild" in k_lower or "app-compilation" in k_lower:
+            build_seconds = v if build_seconds is None else build_seconds + v
+        elif "stage-modular-headers" in k_lower or "headers" in k_lower:
+            headers_seconds = v if headers_seconds is None else headers_seconds + v
+        elif "simulator-staging" in k_lower or "alive" in k_lower:
+            simulator_seconds = v if simulator_seconds is None else simulator_seconds + v
+        elif "tests" in k_lower or "acceptance" in k_lower:
+            tests_seconds = v if tests_seconds is None else tests_seconds + v
+
+    core_timings = {
+        "build": {
+            "status": "MEASURED" if build_seconds is not None else ("SKIPPED" if "simulator/06-app-compilation" in skipped_steps else "NOT_MEASURED"),
+            "duration_seconds": build_seconds if build_seconds is not None else 0,
+        },
+        "headers": {
+            "status": "MEASURED" if headers_seconds is not None else ("SKIPPED" if "simulator/05-stage-modular-headers" in skipped_steps else "NOT_MEASURED"),
+            "duration_seconds": headers_seconds if headers_seconds is not None else 0,
+        },
+        "restore": {
+            "status": "NOT_MEASURED",  # GitHub Actions actions/cache does not output duration text files
+            "duration_seconds": 0,
+            "states": {k: v for k, v in cache_states.items()},
+        },
+        "save": {
+            "status": "NOT_MEASURED",
+            "duration_seconds": 0,
+            "states": {k: v for k, v in save_states.items()},
+        },
+        "simulator": {
+            "status": "MEASURED" if simulator_seconds is not None else ("SKIPPED" if any("simulator" in k for k in skipped_steps) else "NOT_MEASURED"),
+            "duration_seconds": simulator_seconds if simulator_seconds is not None else 0,
+        },
+        "tests": {
+            "status": "MEASURED" if tests_seconds is not None else ("SKIPPED" if any("test" in k or "acceptance" in k for k in skipped_steps) else "NOT_MEASURED"),
+            "duration_seconds": tests_seconds if tests_seconds is not None else 0,
+        },
+    }
+
+    # Determine report completeness
+    # A report is complete if at least one meaningful duration or cache state was captured
+    is_complete = bool(durations or cache_states)
+    report_status = "COMPLETE" if is_complete else "INCOMPLETE_MEASUREMENTS"
 
     report: Dict[str, Any] = {
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -156,6 +318,10 @@ def generate_report(
         "event_name": event_name or plan_data.get("event_name", os.environ.get("GITHUB_EVENT_NAME", "unknown")),
         "is_full_validation": plan_data.get("is_full_validation", False),
         "required_build_type": plan_data.get("required_build_type", "Unknown"),
+        "report_status": report_status,
+        "is_complete": is_complete,
+        "component_cache_summary": component_cache,
+        "core_timings": core_timings,
         "cache_metrics": {
             "exact_hits": exact_hits,
             "fallback_compatible_restores": fallback_hits,
@@ -164,8 +330,11 @@ def generate_report(
             "saves_created": saves_created,
             "states": cache_states,
             "save_states": save_states,
+            "metadata": raw_metadata,
         },
         "step_durations_seconds": durations,
+        "step_statuses": step_statuses,
+        "skipped_steps": skipped_steps,
         "total_active_seconds": total_measured_time,
         "test_metrics": {
             "reused_verified_count": len(reused_tests),
@@ -179,7 +348,7 @@ def generate_report(
             "estimated_saved_minutes": estimated_saved_mins,
             "estimated_duration_minutes": estimated_duration_mins,
             "baseline_full_run_minutes": baseline_full_mins,
-            "actual_measured_time_human": f"{total_measured_time // 60}m {total_measured_time % 60}s ({total_measured_time}s)" if total_measured_time > 0 else "N/A",
+            "actual_measured_time_human": f"{total_measured_time // 60}m {total_measured_time % 60}s ({total_measured_time}s)" if total_measured_time > 0 else ("0s" if is_complete else "N/A"),
             "notes": "Estimated savings compare against a full cold baseline unless an authenticated comparison report is provided.",
         },
     }
@@ -202,22 +371,56 @@ def generate_report(
     lines: List[str] = [
         "## CI Performance & Caching Summary",
         "",
+    ]
+
+    if not is_complete:
+        lines.extend([
+            "> [!WARNING]",
+            "> **Incomplete Measurements**: No active step durations or cache modes were discovered in the provided log directories.",
+            "",
+        ])
+
+    lines.extend([
         "| Metric | Value |",
         "| --- | --- |",
         f"| **Run ID** | `{report['run_id']}` |",
         f"| **Commit** | `{report['commit_sha'][:10]}` |",
         f"| **Base Commit** | `{report['comparison_base'][:10]}` |",
         f"| **Build Type** | `{report['required_build_type']}` |",
+        f"| **Report Status** | `{report_status}` |",
         f"| **Exact Cache Hits** | `{exact_hits}` |",
         f"| **Compatible Restores** | `{fallback_hits}` |",
         f"| **Cache Misses** | `{misses}` |",
         f"| **Cache Saves Skipped** | `{saves_skipped}` |",
+        f"| **Cache Saves Created** | `{saves_created}` |",
         f"| **Reused Tests (Verified Pass)** | `{len(reused_tests)}` |",
         f"| **Executed Tests** | `{len(executed_tests)}` |",
         f"| **Total Active Measured Time** | `{report['time_savings']['actual_measured_time_human']}` |",
         f"| **Estimated Time Saved** | `~{estimated_saved_mins} min vs full CI (~{baseline_full_mins} min)` |",
         "",
-    ]
+        "### Component Cache Summary",
+        "| Component | Restore State | Save State |",
+        "| --- | --- | --- |",
+        f"| **SourcePackages (SwiftPM)** | `{component_cache['SourcePackages']['restore']}` | `{component_cache['SourcePackages']['save']}` |",
+        f"| **DerivedData (Xcode)** | `{component_cache['DerivedData']['restore']}` | `{component_cache['DerivedData']['save']}` |",
+        "",
+        "### Core Phase Timings",
+        "| Phase | Status | Duration |",
+        "| --- | --- | --- |",
+    ])
+
+    for phase_name in ("build", "headers", "simulator", "tests", "restore", "save"):
+        p_info = core_timings[phase_name]
+        p_status = p_info["status"]
+        if p_status == "MEASURED":
+            sec = p_info["duration_seconds"]
+            dur_str = f"{sec // 60}m {sec % 60:02d}s ({sec}s)"
+        elif p_status == "SKIPPED":
+            dur_str = "SKIPPED"
+        else:
+            dur_str = "NOT_MEASURED"
+        lines.append(f"| **{phase_name.capitalize()}** | `{p_status}` | {dur_str} |")
+    lines.append("")
 
     if comparison_data:
         c_tot = comparison_data["cold_total_seconds"]
@@ -242,11 +445,19 @@ def generate_report(
 
     if durations:
         lines.append("### Measured Step Durations")
-        lines.append("| Step | Duration |")
-        lines.append("| --- | --- |")
+        lines.append("| Step | Duration | Status |")
+        lines.append("| --- | --- | --- |")
         for step, dur in sorted(durations.items()):
             m, s = divmod(dur, 60)
-            lines.append(f"| `{step}` | {m}m {s:02d}s ({dur}s) |")
+            lines.append(f"| `{step}` | {m}m {s:02d}s ({dur}s) | `MEASURED` |")
+        lines.append("")
+
+    if skipped_steps:
+        lines.append("### Skipped Pipeline Steps")
+        lines.append("| Step | Reason |")
+        lines.append("| --- | --- |")
+        for step, reason in sorted(skipped_steps.items()):
+            lines.append(f"| `{step}` | {reason} |")
         lines.append("")
 
     if reused_tests:
@@ -276,6 +487,7 @@ def main() -> int:
     parser.add_argument("--cold-report", help="Path to prior cold ci-performance-report.json for comparison")
     parser.add_argument("--output-json", default="ci-performance-report.json")
     parser.add_argument("--step-summary", help="Path to GITHUB_STEP_SUMMARY")
+    parser.add_argument("--require-complete", action="store_true", help="Fail if no step timings were measured")
 
     args = parser.parse_args()
     log_dirs = [Path(d) for d in args.log_dir]
@@ -284,7 +496,7 @@ def main() -> int:
     out_json = Path(args.output_json) if args.output_json else None
     step_sum = Path(args.step_summary) if args.step_summary else None
 
-    generate_report(
+    rep = generate_report(
         log_dirs=log_dirs,
         validation_plan_path=val_plan,
         run_id=args.run_id,
@@ -295,6 +507,9 @@ def main() -> int:
         output_json_path=out_json,
         step_summary_path=step_sum,
     )
+    if args.require_complete and not rep.get("is_complete", False):
+        print("[generate_performance_report] Error: Required measurements were incomplete.", file=sys.stderr)
+        return 1
     return 0
 
 
