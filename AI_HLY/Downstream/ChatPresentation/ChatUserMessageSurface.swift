@@ -114,24 +114,17 @@ struct ChatUserMessageSurface: View {
     }
   }
 
-  // MARK: - Text Bubble
+  // MARK: - Text Bubble (Restored Classic Hanlin 478cdd2c Style)
 
   private var userTextBubble: some View {
     Text(text)
       .font(.body)
-      .foregroundStyle(Color.primary)
+      .foregroundStyle(temporaryRecord ? Color(.systemBackground) : Color.white)
       .padding(.horizontal, 14)
       .padding(.vertical, 10)
       .background(bubbleBackground)
       .clipShape(
-        RoundedRectangle(
-          cornerRadius: ChatHostPresentationPolicy.userBubbleCornerRadius, style: .continuous)
-      )
-      .overlay(
-        RoundedRectangle(
-          cornerRadius: ChatHostPresentationPolicy.userBubbleCornerRadius, style: .continuous
-        )
-        .stroke(Color.primary.opacity(0.06), lineWidth: 0.5)
+        CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5)
       )
       .frame(
         maxWidth: resolvedMaxWidth,
@@ -171,9 +164,9 @@ struct ChatUserMessageSurface: View {
   private var bubbleBackground: some View {
     Group {
       if temporaryRecord {
-        Color(uiColor: .tertiarySystemFill)
+        Color.primary
       } else {
-        Color(uiColor: .secondarySystemFill)
+        Color.hlBlue
       }
     }
   }

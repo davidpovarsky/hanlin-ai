@@ -212,12 +212,12 @@ struct ChatView: View {
     }
     
     private func dynamicBottomPadding() -> CGFloat {
-        var baseHeight: CGFloat = 216 // 默认最小间距
-        if !selectedURLs.isEmpty { baseHeight += 36 }
-        if !selectedImages.isEmpty { baseHeight += 86 }
-        if !selectedDocumentURLs.isEmpty { baseHeight += 36 }
-        if showPhotoSourceOptions { baseHeight += 146 }
-        if !selectedPrompts.isEmpty { baseHeight += 66 }
+        var baseHeight: CGFloat = 130 // 默认最小间距（针对 SwiftChat Liquid Glass Composer 优化）
+        if !selectedURLs.isEmpty { baseHeight += 32 }
+        if !selectedImages.isEmpty { baseHeight += 44 }
+        if !selectedDocumentURLs.isEmpty { baseHeight += 32 }
+        if showPhotoSourceOptions { baseHeight += 110 }
+        if !selectedPrompts.isEmpty { baseHeight += 44 }
         return baseHeight
     }
     
@@ -238,7 +238,7 @@ struct ChatView: View {
                     startPoint: .top,
                     endPoint: .center
                 )
-                .frame(height: 160)
+                .frame(height: 120)
                 .zIndex(0)
                 
                 ChatViewBottom(

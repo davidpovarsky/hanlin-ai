@@ -43,6 +43,7 @@ struct ChatAssistantActionsView: View {
           .contentShape(Rectangle())
       }
       .buttonStyle(.plain)
+      .sensoryFeedback(.success, trigger: isCopied)
       .accessibilityLabel(isCopied ? String(localized: "已复制") : String(localized: "复制内容"))
 
       // Select Text

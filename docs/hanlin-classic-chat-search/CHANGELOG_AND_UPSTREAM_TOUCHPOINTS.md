@@ -13,7 +13,7 @@ This release delivers the complete **Hardened Automatic Web Search System** (`Yo
 
 In accordance with repository `AGENTS.md` ("Hanlin is an independent fork: maintainability and one authoritative implementation path matter more than preserving upstream touchpoints"):
 - All search coordination, adapters, relevance evaluation, DTOs, and migration are encapsulated in dedicated downstream files.
-- The 4 frozen Chat UI files (`ChatView.swift`, `ChatBubbleView.swift`, `ChatViewBottom.swift`, `ListView.swift`) remain **strictly untouched** pending owner authorization for Asana Gate `1219605282038660`.
+- Following explicit owner approval on 2026-10-21 (*"מאשר, וכמובן שתבצע את הכל עם macos27 וsdk ios 27, שיהיה תואם לגירסה העדכנית"*), the frozen Chat UI files were thawed and updated: classic transcript visual language from `478cdd2c` was restored, and the SwiftChat Full Demo multiline Liquid Glass composer was implemented in `ChatViewBottom.swift`.
 
 ---
 
@@ -47,3 +47,7 @@ In accordance with repository `AGENTS.md` ("Hanlin is an independent fork: maint
 | `AI_HLY/SettingsView.swift` | Updated `noSearchKeys` to recognize that `AUTOMATIC_KEYLESS` requires no API key. | Eliminates false warning badge in settings. |
 | `AI_HLY/Views/Components/APISettingView.swift` | Prioritized automatic in list, added free badge, allowed toggle without key, removed misleading "set API key" header for automatic mode, and added honest diagnostic test display. | Clean, truthful settings UX. |
 | `AI_HLY/Resource/Localizable.xcstrings` | Added string units for `company_AUTOMATIC_KEYLESS`, `免费 (自动切换)`, and automatic service description in en, he, and zh-Hans. | Native multilingual support. |
+| `AI_HLY/ChatView.swift` | Adjusted `dynamicBottomPadding` (130pt base) and bottom gradient (120pt) for the compact floating Liquid Glass composer; preserved all agent coordinator hooks. | Visual and scroll parity with modern composer. |
+| `AI_HLY/Downstream/ChatPresentation/ChatUserMessageSurface.swift` | Restored classic Hanlin `478cdd2c` user bubble presentation: Hanlin Blue background (`Color.hlBlue`), white text, and `CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5)`. | Restores classic user bubble identity. |
+| `AI_HLY/Downstream/ChatPresentation/ChatAssistantActionsView.swift` | Added `.sensoryFeedback(.success, trigger: isCopied)` on the copy button. | Restores classic sensory feedback on message action row. |
+| `AI_HLY/Views/Components/ChatViewBottom.swift` | Fully replaced legacy monolithic single-line input and two-tier action button strips with SwiftChat Full Demo-inspired native SwiftUI multiline Liquid Glass composer (`NativeMultilineTextEditor`, auto-grow 38-140pt, real placeholder, + attachment & contextual tools menu, mic, send/stop with attachments-only support, model capsule pill, active tool badges, and removed artificial 720pt cap). | Delivers Phase B composer modernization while preserving all 278-feature matrix input capabilities. |

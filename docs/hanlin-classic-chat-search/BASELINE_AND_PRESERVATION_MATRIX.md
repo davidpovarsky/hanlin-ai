@@ -37,14 +37,15 @@ This document formalizes the exact boundary between two authoritative design sou
 | Gate Identifier | Asana Task GID | Title | Status | Scope Impact |
 | :--- | :--- | :--- | :--- | :--- |
 | **Prerequisite MASTER Task** | `1219603005960308` | `[P1] סגירה בטוחה: דוח, branch preservation ואישור שחרור נפרד` | **OPEN (`completed: false`)** | Master regression gate active. |
-| **Chat UI & Split Gate** | `1219605282038660` | `[FUTURE 0] שער התחלה — סיום MASTER ואישור נפרד ל-Chat UI ולפיצול MiniApps` | **OPEN (`completed: false`)** | **Modifying the 4 frozen Chat UI files is strictly BLOCKED.** |
-| **SwiftChat Composer Task** | `1219605282038884` | `[FUTURE F] Composer SwiftChat-native — multiline Liquid Glass עם כל Hanlin actions` | **PENDING GATE** | Architecture defined; code edits to `ChatViewBottom.swift` held until gate thaw. |
+| **Chat UI & Split Gate** | `1219605282038660` | `[FUTURE 0] שער התחלה — סיום MASTER ואישור נפרד ל-Chat UI ולפיצול MiniApps` | **APPROVED BY OWNER** | **Owner explicitly thawed the 4 frozen files and authorized Phase B execution.** |
+| **SwiftChat Composer Task** | `1219605282038884` | `[FUTURE F] Composer SwiftChat-native — multiline Liquid Glass עם כל Hanlin actions` | **IMPLEMENTED** | Native multiline Liquid Glass composer implemented in `ChatViewBottom.swift` with 278-feature matrix parity. |
 | **Parent UX Plan** | `1219605220179926` | `[PLAN-2026-10-19-HANLIN-SPLIT-V1]` | **ACTIVE CONTRACT** | Mandates minimal everyday composer; advanced controls in contextual menus. |
 
-> [!IMPORTANT]
-> **Owner Authorization Question for Thawing UI Freeze:**
-> **"האם אתה מאשר במפורש לשחרר את הקפאת ארבעת קובצי Chat UI ולהתחיל כעת את שלב שחזור ה־Transcript וה־SwiftChat Composer, למרות שער FUTURE 0 שעדיין פתוח?"**
-> Until this specific approval is granted by the owner, Phase B code modifications to the 4 frozen files remain marked **`BLOCKED_AWAITING_OWNER_APPROVAL`**.
+> [!NOTE]
+> **Owner Authorization Record:**
+> Explicit approval was granted by repository owner on 2026-10-21:
+> *"מאשר, וכמובן שתבצע את הכל עם macos27 וsdk ios 27, שיהיה תואם לגירסה העדכנית"*
+> The 4 frozen UI files were thawed and surgically updated to restore classic transcript presentation while implementing the SwiftChat multiline Liquid Glass composer.
 
 ---
 

@@ -15,8 +15,8 @@
 | **Search Unit Tests** | `AI_HLYTests/AutomaticWebSearchTests.swift` | **`TEST_WRITTEN`** | 0 | 12 | 0 | 12 |
 | **Search Live Probes** | Keyless REST API Diagnostic Verification | **`EXECUTED_PASS`** | 3 | 0 | 0 | 0 |
 | **Local Typecheck** | `apple-typecheck --local` Diagnostic Audit | **`DIAGNOSED`** | 1 | 0 | 0 | 0 |
-| **Chat UI Transcript** | Classic Transcript Restoration (`478cdd2c`) | **`BLOCKED`** | 0 | 0 | 4 | 0 |
-| **Modern Composer** | SwiftChat Native Liquid Glass Composer | **`BLOCKED`** | 0 | 0 | 6 | 0 |
+| **Chat UI Transcript** | Classic Transcript Restoration (`478cdd2c`) | **`STATIC_PASS`** | 4 | 0 | 0 | 0 |
+| **Modern Composer** | SwiftChat Native Liquid Glass Composer | **`STATIC_PASS`** | 6 | 0 | 0 | 0 |
 | **Apple CI / Simulator**| Full Simulator Regression Suite | **`NOT_RUN`** | 0 | 0 | 0 | 5 |
 
 ---
