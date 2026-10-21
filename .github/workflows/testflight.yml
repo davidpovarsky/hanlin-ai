@@ -341,6 +341,10 @@ jobs:
           # signature, not only the embedded iOS framework's signature.
           # Re-sign every locally built Expo XCFramework after all slice changes.
           for xcframework in "$expo_root"/*.xcframework; do
+            if [ ! -e "$xcframework" ]; then
+              echo "::warning::Skipping dangling XCFramework link: $xcframework"
+              continue
+            fi
             test -f "$xcframework/Info.plist"
             echo "::group::Sign XCFramework container: $(basename "$xcframework")"
             rm -rf "$xcframework/_CodeSignature"
