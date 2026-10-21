@@ -337,6 +337,22 @@ jobs:
             /usr/bin/codesign --verify --strict --verbose=2 "$framework"
             echo "::endgroup::"
           done
+          # Xcode 27's builtin-collectSignature reads the XCFramework bundle's
+          # signature, not only the embedded iOS framework's signature.
+          # Re-sign every locally built Expo XCFramework after all slice changes.
+          for xcframework in "$expo_root"/*.xcframework; do
+            test -f "$xcframework/Info.plist"
+            echo "::group::Sign XCFramework container: $(basename "$xcframework")"
+            rm -rf "$xcframework/_CodeSignature"
+            /usr/bin/codesign --force --sign - --timestamp=none "$xcframework"
+            /usr/bin/codesign --verify --strict --verbose=2 "$xcframework"
+            /usr/bin/codesign -dv --verbose=2 "$xcframework" 2>&1
+            echo "::endgroup::"
+          done
+          # Signatures must survive package resolution and before archive.
+          /usr/bin/codesign --verify --strict --verbose=2 "$expo_root/ExpoModulesJSI.xcframework"
+          # End of XCFramework normalization
+          : "ready"
 
       - name: Verify signing settings for every distributed target
         shell: bash
