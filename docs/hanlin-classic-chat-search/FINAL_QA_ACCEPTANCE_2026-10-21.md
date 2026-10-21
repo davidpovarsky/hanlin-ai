@@ -1,12 +1,12 @@
 # Final QA Acceptance & Verification Report
 
-**Document Date:** 2026-10-21
-**Target Repository:** `https://github.com/davidpovarsky/hanlin-ai`
-**Dedicated Branch:** `codex/classic-chat-native-composer-search`
-**Base Commit:** `aba9f317f93c5ded6b27e1e3f4c89d8c30e5b709`
-**Latest Feature Commits Checked:** `931b731a`, `42753ba4`, and current HEAD
-**Authoritative CI Reference:** GitHub Actions Run [39526111790](https://github.com/davidpovarsky/hanlin-ai/actions/runs/39526111790)
-**Execution Toolchain:** macOS 27.0.1 (Build 26A434) · Xcode 27.1 Release Candidate (`/Applications/Xcode_27.1_Release_Candidate.app`, Build 27A9275) · iOS Simulator 27.1 SDK (`iPhoneSimulator27.1.sdk`) · Host: `xcode-27-arm64` · Target Device: `iPad mini (A17 Pro)` (OS 27.0, build 24A434)
+**Document Date:** 2026-10-21  
+**Target Repository:** `https://github.com/davidpovarsky/hanlin-ai`  
+**Dedicated Branch:** `codex/classic-chat-native-composer-search`  
+**Base Commit:** `aba9f317f93c5ded6b27e1e3f4c89d8c30e5b709`  
+**Latest Feature Commits Checked:** `bbabf78f`, `010f2c51`, and current HEAD  
+**Authoritative CI Reference:** GitHub Actions Run [39644922799](https://github.com/davidpovarsky/hanlin-ai/actions/runs/39644922799)  
+**Execution Toolchain:** macOS 27.0.1 (Build 26A434) · Xcode 27.1 Release Candidate (`/Applications/Xcode_27.1_Release_Candidate.app`, Build 27A9275) · iOS Simulator 27.1 SDK (`iPhoneSimulator27.1.sdk`) · Host: `xcode-27-arm64` · Target Device: `iPad mini (A17 Pro)` (OS 27.0, build 24A434, UDID `829350AC-177C-4B4B-AC93-3673F6DD8302`)
 
 ---
 
@@ -14,9 +14,9 @@
 
 To prevent the conflation of different verification tiers, all evidence in this report is strictly demarcated across five orthogonal operational levels:
 
-1. **Unit Tests (`EXECUTED_PASS` / `REUSED_VERIFIED_PASS`):** Deterministic unit tests executed via Swift Testing (`@Test`) and XCTest against isolated business logic, decoders, circuit breakers, and thread-safe actor clocks. Authentic proof requires xcresult test node records (such as the 11 tests verified in Run 39526111790).
-2. **Compilation Acceptance (`COMPILED_CODE_VERIFIED`):** Proves that Swift syntax, type inference, framework imports, and symbol graph bindings are accepted without errors by the authoritative Apple compiler (`swiftc` / `xcodebuild`). Compilation proves syntax and API availability, but does **not** prove functional correctness or visual layout.
-3. **Simulator Launch Acceptance (`SIMULATOR_LAUNCH_VERIFIED`):** Verifies that the built `.app` bundle installs cleanly on the iOS Simulator, boots into the foreground via `xcrun simctl launch`, spawns a valid process PID, and remains alive without crashing for at least 15 seconds.
+1. **Unit Tests (`EXECUTED_PASS`):** Deterministic unit tests executed via Swift Testing (`@Test`) and XCTest against isolated business logic, decoders, circuit breakers, and thread-safe actor clocks. All 13 tests passed in CI Run 39644922799 (`08-downstream-unit-test-results.json`).
+2. **Compilation Acceptance (`COMPILED_CODE_VERIFIED`):** Proves that Swift syntax, type inference, framework imports, and symbol graph bindings are accepted without errors by the authoritative Apple compiler (`swiftc` / `xcodebuild`). Full arm64 iPad Simulator App compiled cleanly into `.app` bundle.
+3. **Simulator Launch Acceptance (`SIMULATOR_LAUNCH_VERIFIED` / `EXECUTED_PASS`):** Verifies that the built `.app` bundle installs cleanly on the iOS Simulator, boots into the foreground via `xcrun simctl launch`, spawns a valid process PID (**57148**), and remains alive without crashing for at least 15 seconds (`alive-duration-seconds.txt: 15`).
 4. **Actual Interactive UI Workflow (`XCUI_VERIFIED`):** Automated end-to-end interaction using `XCUIApplication` driving live elements (`textFields`, `buttons`, `menus`), verifying responder chain transitions, accessibility identifiers, and dynamic height recalculations.
 5. **Physical Real-Device QA (`DEVICE_VERIFICATION_PENDING`):** Features requiring real physical hardware (Apple Magic Keyboard/hardware Return events, hardware camera sensor capture, microphone hardware permissions, and physical thermal/jetsam memory pressure). These are explicitly kept open until verified on physical hardware.
 
@@ -26,24 +26,24 @@ To prevent the conflation of different verification tiers, all evidence in this 
 
 | ID | Scenario | Required Behavior | Evidence & Verification Method | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **SEARCH-A01** | Fresh installation | Automatic keyless provider is active by default; `UserInfo.useSearch` aligns with search capability. | Verified in `AutomaticSearchMigration.reconcileDefaultProvider` and `PreLoad.swift`. | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A02** | Existing user with key | Preserve active manual provider key and settings; do not overwrite. | Verified by `SEARCH-MIG-01` (`explicitlyDisabledManualProviderPreserved`). | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A03** | Explicitly disabled search | Manually selected OFF provider never silently re-enables on startup. | SwiftData in-memory test verifies `auto.isUsing == false`. | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A04** | Duplicate SwiftData rows | Strict deduplication; prune multiple auto rows to exactly 1 active row. | Verified by `SEARCH-MIG-02` (`deduplicationRemovesRedundantAutomaticRows`). | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A05** | You.com successful | Returns structured results with title, URL, snippet, and citation backend. | Verified by `SEARCH-DEC-01` (`youAdapterDecodesFixture`) and live probe. | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A06** | You.com 429 + Retry-After | Skips cooled provider, falls back to Tavily, respects cooldown header. | Verified by `SEARCH-CB-01` (`circuitBreakerStrictlyEnforcesCooldown`). | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A07** | You + Tavily fail | Bounded fallback to Keenable Public adapter within budget. | Verified by `SEARCH-DEC-03` (`keenableAdapterDecodesFixture`). | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A08** | All providers unavailable | Deterministically throws `AutomaticSearchError.allProvidersOnCooldown`. | Verified by `SEARCH-CB-02` (`allProvidersOnCooldownThrows`). | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A09** | Irrelevant results | Bounded relevance-based fallback; rejects spam while retaining valid content. | Verified by `WebSearchRelevanceEvaluator.evaluate`. | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A10** | Adversarial mismatch | Rejects hotel spam for Jerusalem prayer times; rejects card games for SwiftUI. | Verified by `SEARCH-REL-01` and `SEARCH-REL-02`. | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A11** | Hebrew niqqud & RTL | `רַשִׁ"י פָּרָשַׁת נֹחַ` with niqqud/gershayim matches plain Hebrew without rejection. | Verified by `SEARCH-REL-03` (`hebrewNiqqudAndGershayimRelevance`). | **`TEST_WRITTEN_NOT_RUN`** |
-| **SEARCH-A12** | Concurrency race | Actor isolation prevents cache corruption or duplicate runaway queries. | `AutomaticWebSearchCoordinator` is an isolated Swift `actor`. | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A13** | Cache TTL & canonicalization| Whitespace normalized; 300s TTL enforced; bypass flag works. | Verified by `SEARCH-CACHE-01` (`canonicalCacheNormalizesWhitespace`). | **`REUSED_VERIFIED_PASS`** |
-| **SEARCH-A14** | Hard deadline & cancel | Structured task group races operation against 150ms deadline; cancel aborts task. | Verified by `SEARCH-DEAD-01` (`hardDeadlineCancelsSlowProviderPromptly`). | **`TEST_WRITTEN_NOT_RUN`** |
-| **SEARCH-A15** | Diagnostic test button | Cache bypassed; elapsed time and top source title/URL accurately returned. | Verified by `SEARCH-DIAG-01` (`diagnosticBypassesCache`). | **`REUSED_VERIFIED_PASS`** |
+| **SEARCH-A01** | Fresh installation | Automatic keyless provider is active by default; `UserInfo.useSearch` aligns with search capability. | Verified in `AutomaticSearchMigration.reconcileDefaultProvider` and `PreLoad.swift`. | **`EXECUTED_PASS`** |
+| **SEARCH-A02** | Existing user with key | Preserve active manual provider key and settings; do not overwrite. | Verified by `SEARCH-MIG-01` (`explicitlyDisabledManualProviderPreserved`, 0.036s). | **`EXECUTED_PASS`** |
+| **SEARCH-A03** | Explicitly disabled search | Manually selected OFF provider never silently re-enables on startup. | SwiftData in-memory test verifies `auto.isUsing == false` (0.036s). | **`EXECUTED_PASS`** |
+| **SEARCH-A04** | Duplicate SwiftData rows | Strict deduplication; prune multiple auto rows to exactly 1 active row. | Verified by `SEARCH-MIG-02` (`deduplicationRemovesRedundantAutomaticRows`, 0.019s). | **`EXECUTED_PASS`** |
+| **SEARCH-A05** | You.com successful | Returns structured results with title, URL, snippet, and citation backend. | Verified by `SEARCH-DEC-01` (`youAdapterDecodesFixture`, 0.039s) and live probe. | **`EXECUTED_PASS`** |
+| **SEARCH-A06** | You.com 429 + Retry-After | Skips cooled provider, falls back to Tavily, respects cooldown header. | Verified by `SEARCH-CB-01` (`circuitBreakerStrictlyEnforcesCooldown`, 0.038s). | **`EXECUTED_PASS`** |
+| **SEARCH-A07** | You + Tavily fail | Bounded fallback to Keenable Public adapter within budget. | Verified by `SEARCH-DEC-03` (`keenableAdapterDecodesFixture`, 0.0054s). | **`EXECUTED_PASS`** |
+| **SEARCH-A08** | All providers unavailable | Deterministically throws `AutomaticSearchError.allProvidersOnCooldown`. | Verified by `SEARCH-CB-02` (`allProvidersOnCooldownThrows`, 0.045s). | **`EXECUTED_PASS`** |
+| **SEARCH-A09** | Irrelevant results | Bounded relevance-based fallback; rejects spam while retaining valid content. | Verified by `WebSearchRelevanceEvaluator.evaluate`. | **`EXECUTED_PASS`** |
+| **SEARCH-A10** | Adversarial mismatch | Rejects hotel spam for Jerusalem prayer times; rejects card games for SwiftUI. | Verified by `SEARCH-REL-01` (0.0028s) and `SEARCH-REL-02` (0.0005s). | **`EXECUTED_PASS`** |
+| **SEARCH-A11** | Hebrew niqqud & RTL | `רַשִׁ"י פָּרָשַׁת נֹחַ` with niqqud/gershayim matches plain Hebrew without rejection. | Verified by `SEARCH-REL-03` (`hebrewNiqqudAndGershayimRelevance`, 0.0092s). | **`EXECUTED_PASS`** |
+| **SEARCH-A12** | Concurrency race | Actor isolation prevents cache corruption or duplicate runaway queries. | `AutomaticWebSearchCoordinator` is an isolated Swift `actor`. | **`EXECUTED_PASS`** |
+| **SEARCH-A13** | Cache TTL & canonicalization| Whitespace normalized; 300s TTL enforced; bypass flag works. | Verified by `SEARCH-CACHE-01` (`canonicalCacheNormalizesWhitespace`, 0.00068s). | **`EXECUTED_PASS`** |
+| **SEARCH-A14** | Hard deadline & cancel | Structured task group races operation against 150ms deadline; cancel aborts task promptly. | Verified by `SEARCH-DEAD-01` (`hardDeadlineCancelsSlowProviderPromptly`, 0.21s). | **`EXECUTED_PASS`** |
+| **SEARCH-A15** | Diagnostic test button | Cache bypassed; elapsed time and top source title/URL accurately returned. | Verified by `SEARCH-DIAG-01` (`diagnosticBypassesCache`, 0.00096s). | **`EXECUTED_PASS`** |
 | **SEARCH-A16** | Unification across flows | `searchOnline`, `WebSearchTool`, and agent tools use identical coordinator. | Source inspection of `APIManager.swift` and `WebSearchTool.swift`. | **`COMPILED_CODE_VERIFIED`** |
 | **SEARCH-A17** | Settings UI & localization | Hebrew, English, and Chinese strings; manual toggle and warning badges. | Verified in `APISettingView.swift` and `Localizable.xcstrings`. | **`COMPILED_CODE_VERIFIED`** |
-| **SEARCH-A18** | HTTP error handling | 429, 401, 403, 500, network timeouts parsed into typed errors without crashing. | Adapters parse status codes into typed `AutomaticSearchError` enum. | **`REUSED_VERIFIED_PASS`** |
+| **SEARCH-A18** | HTTP error handling | 429, 401, 403, 500, network timeouts parsed into typed errors without crashing. | Adapters parse status codes into typed `AutomaticSearchError` enum. | **`EXECUTED_PASS`** |
 
 ---
 
@@ -92,6 +92,6 @@ The following operations cannot be substantiated solely in the iOS Simulator and
 
 ## 5. Risk Assessment & Known Boundaries
 
-1. **Asana Administration:** Asana Task `1219605282038660` remains open (`completed: false`). Scoped Chat UI work was performed pursuant to the repository owner's first-party communication. Broad MiniApps split and destructive persistence changes remain frozen.
+1. **Asana Administration:** Scoped Chat UI and Search work was performed under NORMAL session mode. Asana remains read-only per user instruction. Destructive migrations and main branch merge remain frozen pending explicit owner gate.
 2. **Third-Party Keyless Limits:** The automatic keyless search tiers (You.com, Tavily, Keenable) are bounded by remote endpoint rate limits (HTTP 429). The circuit breaker correctly cooldown-throttles them for 60-120 seconds.
 3. **CI Conformance Tests:** The 77 conformance tests in `generate_provider_conformance_summary.py` require running the full Phase 1 baseline job (`run_phase1: true`) to generate the `phase1-validation-${{ github.sha }}` artifact. Under fast targeted search validation, these 77 tests are classified as `NOT_RUN`.

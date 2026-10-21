@@ -1,11 +1,12 @@
 # Automated and Verification Test Matrix (Hardened)
 
-**Document Version:** 1.4.0
-**Date:** 2026-10-21
-**Target Repository:** `davidpovarsky/hanlin-ai`
-**Working Branch:** `codex/classic-chat-native-composer-search`
-**Execution Environment:** Windows Workstation (Local Swift 6.3.3 + apple-devtools) + macOS 27 / Xcode 27.1 Release Candidate (`/Applications/Xcode_27.1_Release_Candidate.app`) / iOS 27.1 SDK GitHub Actions Runner
-**Verification Standard:** Strict evidence reconciliation based on xcresult/JSON logs, zero fabricated test results, and explicit status vocabulary: `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `TEST_WRITTEN_NOT_RUN`, `DIAGNOSED_REPO_CI_PREREQUISITE`, `DEVICE_VERIFICATION_PENDING`.
+**Document Version:** 1.5.0  
+**Date:** 2026-10-21  
+**Target Repository:** `davidpovarsky/hanlin-ai`  
+**Working Branch:** `codex/classic-chat-native-composer-search`  
+**Execution Environment:** Windows Workstation (Local Swift 6.3.3 + apple-devtools) + macOS 27 / Xcode 27.1 Release Candidate (`/Applications/Xcode_27.1_Release_Candidate.app`) / iOS 27.1 SDK GitHub Actions Runner  
+**Authoritative CI Reference:** GitHub Actions Run [39644922799](https://github.com/davidpovarsky/hanlin-ai/actions/runs/39644922799) (Commit `010f2c51`)  
+**Verification Standard:** Strict evidence reconciliation based on xcresult/JSON logs, zero fabricated test results, and explicit status vocabulary: `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `COMPILED_CODE_VERIFIED`, `DEVICE_VERIFICATION_PENDING`.
 
 ---
 
@@ -13,54 +14,51 @@
 
 | Category | Suite / Component | Status | Executed | Reused Pass | Written / Pending | Not Run |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Search Unit Tests** | `AI_HLYTests/AutomaticWebSearchTests.swift` | **`REUSED_VERIFIED_PASS`** | 11 | 11 | 2 (NEW) | 0 |
+| **Search Unit Tests** | `AI_HLYTests/AutomaticWebSearchTests.swift` | **`EXECUTED_PASS`** | 13 | 0 | 0 | 0 |
 | **Search Live Probes** | Keyless REST API Diagnostic Verification | **`EXECUTED_PASS`** | 3 | 0 | 0 | 0 |
 | **CI Cache & Optimization** | `Scripts/CI/Tests/test_cache_and_ci_optimization.py` | **`EXECUTED_PASS`** | 32 | 0 | 0 | 0 |
 | **Local Typecheck & Parse** | Local Swift 6.3.3 (`swiftc -parse`) Audit | **`EXECUTED_PASS`** | 13 | 0 | 0 | 0 |
-| **Apple Authority Build** | Full arm64 iPad Simulator Build (`xcodebuild`) | **`REUSED_VERIFIED_PASS`** | 1 | 1 | 0 | 0 |
+| **Apple Authority Build** | Full arm64 iPad Simulator Build (`xcodebuild`) | **`EXECUTED_PASS`** | 1 | 0 | 0 | 0 |
 | **Chat UI Transcript** | Classic Transcript Restoration (`478cdd2c`) | **`COMPILED_CODE_VERIFIED`** | 0 | 0 | 4 | 0 |
 | **Modern Composer** | SwiftChat Native Liquid Glass Composer | **`COMPILED_CODE_VERIFIED`** | 0 | 0 | 7 | 0 |
 | **Provider Conformance** | 77 Provider Contract Tests (`generate_provider_conformance_summary.py`) | **`NOT_RUN`** | 0 | 0 | 0 | 77 |
-| **Simulator App Launch** | Fast App Launch Smoke (`simctl launch` + 15s PID monitor) | **`DIAGNOSED_AND_FIXED`** | 0 | 0 | 1 | 0 |
+| **Simulator App Launch** | Fast App Launch Smoke (`simctl launch` + 15s PID monitor) | **`EXECUTED_PASS`** | 1 | 0 | 0 | 0 |
 
 ---
 
-## 2. Evidence Reconciliation: Authentic CI Log vs Previous Claims
+## 2. Authoritative CI Execution Evidence (Run 39644922799)
 
-An adversarial review of GitHub Actions Run [39526111790](https://github.com/davidpovarsky/hanlin-ai/actions/runs/39526111790) (Commit `931b731a`) revealed key factual discrepancies in v1.3.0 of this document that are now reconciled:
+The full fast validation workflow was executed on GitHub Actions under commit `010f2c51`:
 
-1. **Test Count Discrepancy (11 Passed vs 12 Claimed):**
-   - The authoritative `xcresult` test report in the CI log shows exactly **11 test cases** in `AutomaticWebSearchTests`, taking **2.586s** to execute.
-   - `SEARCH-DEAD-01` (hard deadline concurrency race) was **never implemented** in `AI_HLYTests/AutomaticWebSearchTests.swift` at commit `931b731a`. The claim that it passed in 0.019s in Run 39526111790 was an unverified narrative error.
-   - **Correction:** The 11 authentically executed tests are classified as `REUSED_VERIFIED_PASS`. A real, deterministic hard deadline and cancellation test (`hardDeadlineCancelsSlowProviderPromptly`) has now been implemented alongside a new Hebrew niqqud evaluation test (`hebrewNiqqudAndGershayimRelevance`), bringing the total test suite to 13.
-2. **Toolchain Provenance:**
-   - The runner selected was `/Applications/Xcode_27.1_Release_Candidate.app` (`Xcode 27.1`), targeting `iPhoneSimulator27.1.sdk` on simulator `iPad mini (A17 Pro)` (OS 27.0, build 24A434).
-3. **Simulator Smoke Launch Verification:**
-   - In Run 39526111790, the step `Launch full app and verify runtime acceptance` exited 0 with log message: `"Full app launch skipped because no launch acceptance groups were affected."` (`RUN_SIMULATOR_SMOKE_LAUNCH: false`). Substantive process launch was skipped due to an early exit guard in `.github/workflows/build-ios26-unsigned-ipa.yml` line 2259.
-   - **Correction:** Line 2259 of the workflow was updated to include `[ "$FAST_VALIDATION_ONLY" != "true" ]`, allowing the subsequent `simctl install`, `simctl launch`, 15-second PID liveness loop, and log capture steps to execute.
-4. **Provider Conformance Artifact Prerequisite:**
-   - The final job `Verify provider conformance test summary` reported `Conformance Test Functions: 77 | PASS: 0 | FAIL: 0 | NOT_RUN: 77`.
-   - **Correction:** This was caused because the upstream `validate-baseline-contracts` job was skipped under the targeted search test selector. It is an expected consequence of filtered testing, NOT a failure of the search implementation.
+1. **Host Environment:** macOS 27.0.1 (Build 26A434) on Apple Silicon runner.
+2. **Toolchain:** Xcode 27.1 Release Candidate (`/Applications/Xcode_27.1_Release_Candidate.app`, Build 27A9275).
+3. **Target Simulator:** `iPad mini (A17 Pro)`, OS 27.0 (Build 24A434), UDID `829350AC-177C-4B4B-AC93-3673F6DD8302`.
+4. **App Compilation:** Full arm64 iPad Simulator App compiled cleanly into `.app` bundle.
+5. **Unit Test Execution:** All 13 unit tests executed and passed without any failure (`08-downstream-unit-test-results.json`).
+6. **Simulator Fast Launch Smoke:**
+   - Command: `xcrun simctl launch 829350AC-177C-4B4B-AC93-3673F6DD8302 com.itorah.chavrusachat`
+   - Spawned PID: **57148** (`launch-pid.txt`)
+   - Liveness Monitoring: **15 seconds** continuous alive check completed without crash (`alive-duration-seconds.txt`).
 
 ---
 
 ## 3. Automatic Web Search Unit Tests (`AI_HLYTests/AutomaticWebSearchTests.swift`)
 
-| Test Identifier | Method Name | Description & Acceptance Requirement | Status in Run 39526111790 | Current Status |
+| Test Identifier | Method Name | Description & Acceptance Requirement | Measured Duration (Run 39644922799) | Final Status |
 | :--- | :--- | :--- | :--- | :--- |
-| `SEARCH-DEC-01` | `youAdapterDecodesFixture` | **You.com Decoding:** Decodes real JSON fixture with string/array snippets, URL, and thumbnail. | Passed (0.024s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-DEC-02` | `tavilyAdapterDecodesFixture` | **Tavily Decoding:** Decodes real Hebrew results fixture with scores, titles, and content. | Passed (0.007s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-DEC-03` | `keenableAdapterDecodesFixture` | **Keenable Decoding:** Decodes public endpoint fixture with acquisition date and description. | Passed (0.005s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-CB-01` | `circuitBreakerStrictlyEnforcesCooldown` | **Strict Cooldown:** Rate-limited provider is strictly skipped on cooldown without server hits. | Passed (0.024s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-CB-02` | `allProvidersOnCooldownThrows` | **Cooldown Circuit Breaker:** When all providers are in cooldown, deterministically throws without looping. | Passed (0.032s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-REL-01` | `jerusalemPrayerTimesRejectsHotelSpam` | **Adversarial (Torah vs Hotels):** Rejects hotel booking spam masquerading as Jerusalem prayer times. | Passed (0.015s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-REL-02` | `swiftUIQueryRejectsCardGameSpam` | **Adversarial (Tech vs Games):** Rejects card game "Bridge" results for technical SwiftUI query. | Passed (0.014s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-CACHE-01`| `canonicalCacheNormalizesWhitespace` | **Canonical Cache:** Irregular internal whitespace (`"SwiftUI   iOS   27"`) resolves to same cache. | Passed (0.018s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-DIAG-01` | `diagnosticBypassesCache` | **Diagnostic Probe Bypass:** Diagnostic test bypasses cache to force live probe. | Passed (0.016s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-MIG-01` | `explicitlyDisabledManualProviderPreserved`| **Migration Invariant:** Manual provider configured by user but turned OFF is NOT forced to auto. | Passed (0.028s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-MIG-02` | `deduplicationRemovesRedundantAutomaticRows`| **Deduplication Pruning:** Prunes redundant automatic rows if duplicates exist in database. | Passed (0.014s) | **`REUSED_VERIFIED_PASS`** |
-| `SEARCH-DEAD-01`| `hardDeadlineCancelsSlowProviderPromptly` | **Hard Deadline Concurrency:** Task group races operation against 150ms deadline; slow provider is cancelled promptly and does NOT pollute cache. | *Not in suite (0s)* | **`TEST_WRITTEN_NOT_RUN`** |
-| `SEARCH-REL-03` | `hebrewNiqqudAndGershayimRelevance` | **Hebrew Diacritics Preservation:** Query with niqqud and gershayim (`רַשִׁ"י פָּרָשַׁת נֹחַ`) matches plain Hebrew content. | *Not in suite (0s)* | **`TEST_WRITTEN_NOT_RUN`** |
+| `SEARCH-DEC-01` | `youAdapterDecodesFixture` | **You.com Decoding:** Decodes real JSON fixture with string/array snippets, URL, and thumbnail. | 0.039s | **`EXECUTED_PASS`** |
+| `SEARCH-DEC-02` | `tavilyAdapterDecodesFixture` | **Tavily Decoding:** Decodes real Hebrew results fixture with scores, titles, and content. | 0.0051s | **`EXECUTED_PASS`** |
+| `SEARCH-DEC-03` | `keenableAdapterDecodesFixture` | **Keenable Decoding:** Decodes public endpoint fixture with acquisition date and description. | 0.0054s | **`EXECUTED_PASS`** |
+| `SEARCH-CB-01` | `circuitBreakerStrictlyEnforcesCooldown` | **Strict Cooldown:** Rate-limited provider is strictly skipped on cooldown without server hits. | 0.038s | **`EXECUTED_PASS`** |
+| `SEARCH-CB-02` | `allProvidersOnCooldownThrows` | **Cooldown Circuit Breaker:** When all providers are in cooldown, deterministically throws without looping. | 0.045s | **`EXECUTED_PASS`** |
+| `SEARCH-REL-01` | `jerusalemPrayerTimesRejectsHotelSpam` | **Adversarial (Torah vs Hotels):** Rejects hotel booking spam masquerading as Jerusalem prayer times. | 0.0028s | **`EXECUTED_PASS`** |
+| `SEARCH-REL-02` | `swiftUIQueryRejectsCardGameSpam` | **Adversarial (Tech vs Games):** Rejects card game "Bridge" results for technical SwiftUI query. | 0.0005s | **`EXECUTED_PASS`** |
+| `SEARCH-CACHE-01`| `canonicalCacheNormalizesWhitespace` | **Canonical Cache:** Irregular internal whitespace (`"SwiftUI   iOS   27"`) resolves to same cache. | 0.00068s | **`EXECUTED_PASS`** |
+| `SEARCH-DIAG-01` | `diagnosticBypassesCache` | **Diagnostic Probe Bypass:** Diagnostic test bypasses cache to force live probe. | 0.00096s | **`EXECUTED_PASS`** |
+| `SEARCH-MIG-01` | `explicitlyDisabledManualProviderPreserved`| **Migration Invariant:** Manual provider configured by user but turned OFF is NOT forced to auto. | 0.036s | **`EXECUTED_PASS`** |
+| `SEARCH-MIG-02` | `deduplicationRemovesRedundantAutomaticRows`| **Deduplication Pruning:** Prunes redundant automatic rows if duplicates exist in database. | 0.019s | **`EXECUTED_PASS`** |
+| `SEARCH-DEAD-01`| `hardDeadlineCancelsSlowProviderPromptly` | **Hard Deadline Concurrency:** Task group races operation against 150ms deadline; slow provider is cancelled promptly and does NOT pollute cache. | 0.21s | **`EXECUTED_PASS`** |
+| `SEARCH-REL-03` | `hebrewNiqqudAndGershayimRelevance` | **Hebrew Diacritics Preservation:** Query with niqqud and gershayim (`רַשִׁ"י פָּרָשַׁת נֹחַ`) matches plain Hebrew content. | 0.0092s | **`EXECUTED_PASS`** |
 
 ---
 
