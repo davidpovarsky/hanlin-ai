@@ -177,7 +177,7 @@ struct AutomaticWebSearchTests {
     func circuitBreakerStrictlyEnforcesCooldown() async throws {
         let testClock = TestClock(Date(timeIntervalSince1970: 1000000))
         
-        let res2 = WebSearchResult(title: "Tavily Res", url: "https://example.com/2", snippet: "Valid Tavily snippet", sourceBackend: "tavily")
+        let res2 = WebSearchResult(title: "Tavily Res for query alpha beta", url: "https://example.com/2", snippet: "Valid Tavily snippet for query alpha beta", sourceBackend: "tavily")
         let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .rateLimited(retryAfter: 60))
         let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", returnedResults: [res2])
         
@@ -208,7 +208,7 @@ struct AutomaticWebSearchTests {
         // Advance time past cooldown (70 seconds later)
         testClock.advance(by: 40)
         await p1.setError(nil)
-        await p1.setResults([WebSearchResult(title: "You Res", url: "https://example.com/1", snippet: "You recovered", sourceBackend: "you")])
+        await p1.setResults([WebSearchResult(title: "You Res for query gamma", url: "https://example.com/1", snippet: "You recovered for query gamma", sourceBackend: "you")])
         
         // Query 3: Provider 1 cooldown expired -> Provider 1 is tried first again
         let (_, engine3) = try await coordinator.search(query: "query gamma", count: 5)
@@ -286,7 +286,7 @@ struct AutomaticWebSearchTests {
     
     @Test("Canonical Caching: Handles irregular internal whitespace and locale folding")
     func canonicalCacheNormalizesWhitespace() async throws {
-        let res = WebSearchResult(title: "Result", url: "https://example.com/item", snippet: "Snippet", sourceBackend: "you")
+        let res = WebSearchResult(title: "SwiftUI iOS 27 Reference", url: "https://example.com/item", snippet: "Official guide for SwiftUI iOS 27 development", sourceBackend: "you")
         let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", returnedResults: [res])
         let coordinator = AutomaticWebSearchCoordinator(providers: [p1])
         

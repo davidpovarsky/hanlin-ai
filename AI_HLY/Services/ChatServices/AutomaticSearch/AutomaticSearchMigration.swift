@@ -39,6 +39,7 @@ enum AutomaticSearchMigration {
             
             // Deduplicate if multiple automatic keys exist
             let automaticKeys = allKeys.filter { $0.company == automaticCompany }
+            let anyAutomaticUsing = automaticKeys.contains { $0.isUsing }
             if automaticKeys.count > 1 {
                 for duplicate in automaticKeys.dropFirst() {
                     context.delete(duplicate)
@@ -46,6 +47,9 @@ enum AutomaticSearchMigration {
             }
             
             let effectiveAutomatic = automaticKeys.first
+            if anyAutomaticUsing {
+                effectiveAutomatic?.isUsing = true
+            }
             let manualKeys = allKeys.filter { $0.company != automaticCompany }
             
             // Check manual providers
@@ -69,9 +73,13 @@ enum AutomaticSearchMigration {
             } else if hasConfiguredManualKeys {
                 // User has configured manual keys, but NONE are active: user explicitly turned providers off!
                 // Do NOT force-enable automatic behind the user's back.
-                if let auto = effectiveAutomatic, auto.isUsing {
-                    // If user didn't choose automatic, leave it off
-                    // (Unless automatic was already specifically chosen by the user)
+                if let auto = effectiveAutomatic {
+                    if auto.isUsing {
+                        auto.isUsing = false
+                    }
+                } else {
+                    let auto = makeAutomaticSearchKey(isUsing: false)
+                    context.insert(auto)
                 }
             } else {
                 // No manual keys are configured at all (Fresh install or clean legacy install).
