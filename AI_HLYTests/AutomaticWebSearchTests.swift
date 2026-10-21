@@ -323,7 +323,7 @@ struct AutomaticWebSearchTests {
     @Test("Migration Invariant: Explicitly disabled manual provider is NOT overwritten to automatic")
     func explicitlyDisabledManualProviderPreserved() throws {
         let schema = Schema([SearchKeys.self])
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         let container = try ModelContainer(for: schema, configurations: [config])
         let context = container.mainContext
 
@@ -353,7 +353,7 @@ struct AutomaticWebSearchTests {
     @Test("Migration Invariant: Deduplication removes redundant automatic rows")
     func deduplicationRemovesRedundantAutomaticRows() throws {
         let schema = Schema([SearchKeys.self])
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         let container = try ModelContainer(for: schema, configurations: [config])
         let context = container.mainContext
 
