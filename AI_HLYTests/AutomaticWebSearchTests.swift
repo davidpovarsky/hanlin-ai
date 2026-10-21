@@ -16,6 +16,22 @@ struct AutomaticWebSearchTests {
     
     // MARK: - Thread-Safe Actor Mock Provider
     
+    // MARK: - Thread-Safe Test Clock
+    final class TestClock: @unchecked Sendable {
+        private let lock = NSLock()
+        private var _current: Date
+        init(_ date: Date) { self._current = date }
+        var current: Date {
+            get { lock.lock(); defer { lock.unlock() }; return _current }
+            set { lock.lock(); defer { lock.unlock() }; _current = newValue }
+        }
+        func advance(by seconds: TimeInterval) {
+            lock.lock()
+            defer { lock.unlock() }
+            _current = _current.addingTimeInterval(seconds)
+        }
+    }
+
     actor MockSearchProvider: WebSearchProvider {
         let providerID: String
         let displayName: String
@@ -159,7 +175,7 @@ struct AutomaticWebSearchTests {
     
     @Test("Circuit Breaker: Rate-limited provider is strictly skipped on cooldown without hammering server")
     func circuitBreakerStrictlyEnforcesCooldown() async throws {
-        var simulatedNow = Date(timeIntervalSince1970: 1000000)
+        let testClock = TestClock(Date(timeIntervalSince1970: 1000000))
         
         let res2 = WebSearchResult(title: "Tavily Res", url: "https://example.com/2", snippet: "Valid Tavily snippet", sourceBackend: "tavily")
         let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .rateLimited(retryAfter: 60))
@@ -167,7 +183,7 @@ struct AutomaticWebSearchTests {
         
         let coordinator = AutomaticWebSearchCoordinator(
             providers: [p1, p2],
-            clock: { simulatedNow }
+            clock: { testClock.current }
         )
         
         // Query 1: Provider 1 fails with 429 (Retry-After: 60s) -> Falls back to Provider 2
@@ -179,7 +195,7 @@ struct AutomaticWebSearchTests {
         #expect(count1P2 == 1)
         
         // Advance time by 30 seconds (still within 60s cooldown!)
-        simulatedNow = simulatedNow.addingTimeInterval(30)
+        testClock.advance(by: 30)
         
         // Query 2: Must NOT call Provider 1 at all! Directly call Provider 2
         let (_, engine2) = try await coordinator.search(query: "query beta", count: 5)
@@ -190,7 +206,7 @@ struct AutomaticWebSearchTests {
         #expect(count2P2 == 2)
         
         // Advance time past cooldown (70 seconds later)
-        simulatedNow = simulatedNow.addingTimeInterval(40)
+        testClock.advance(by: 40)
         await p1.setError(nil)
         await p1.setResults([WebSearchResult(title: "You Res", url: "https://example.com/1", snippet: "You recovered", sourceBackend: "you")])
         
@@ -203,20 +219,20 @@ struct AutomaticWebSearchTests {
     
     @Test("Circuit Breaker: All providers on cooldown deterministically throws allProvidersOnCooldown")
     func allProvidersOnCooldownThrows() async throws {
-        var simulatedNow = Date(timeIntervalSince1970: 1000000)
+        let testClock = TestClock(Date(timeIntervalSince1970: 1000000))
         let p1 = MockSearchProvider(providerID: "you", displayName: "You.com", shouldThrow: .rateLimited(retryAfter: 60))
         let p2 = MockSearchProvider(providerID: "tavily", displayName: "Tavily", shouldThrow: .rateLimited(retryAfter: 120))
         
         let coordinator = AutomaticWebSearchCoordinator(
             providers: [p1, p2],
-            clock: { simulatedNow }
+            clock: { testClock.current }
         )
         
         // Trigger cooldown on both
         _ = try? await coordinator.search(query: "probe 1", count: 5)
         
         // Subsequent search within cooldown must immediately throw allProvidersOnCooldown
-        simulatedNow = simulatedNow.addingTimeInterval(10)
+        testClock.advance(by: 10)
         await #expect(throws: AutomaticSearchError.self) {
             _ = try await coordinator.search(query: "probe 2", count: 5)
         }

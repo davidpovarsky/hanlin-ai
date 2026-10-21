@@ -54,11 +54,12 @@ class CICacheAndOptimizationTests(unittest.TestCase):
     # A. Exact Cache Hit — שחזור מלא ודילוג על בנייה כפולה
     def test_scenario_a_exact_cache_hit_skips_rebuild(self):
         """Scenario A: Matching dependencies yield REUSE_VERIFIED and skip rebuilding."""
+        head_sha = planner.run_git(["rev-parse", "HEAD"], cwd=self.repo_root)
         res = self.ledger.evaluate_test_reuse(
             test_id="testCoreFixtureATabViewOnly",
             suite_or_name="HanlinNativeScriptProductionE2ETests",
-            origin_sha="12c6d86",
-            target_sha="12c6d86",
+            origin_sha=head_sha,
+            target_sha=head_sha,
             original_status="Passed",
         )
         self.assertEqual(res["decision"], "REUSE_VERIFIED")
