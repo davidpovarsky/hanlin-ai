@@ -2256,7 +2256,7 @@ jobs:
             exit 0
           fi
 
-          if [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_MCP_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_SMOKE_LAUNCH" != "true" ] && [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" != "true" ] && [ "$RUN_FULL_VALIDATION" != "true" ]; then
+          if [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$RUN_SIMULATOR_SHELL_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_MCP_ACCEPTANCE" != "true" ] && [ "$RUN_SIMULATOR_SMOKE_LAUNCH" != "true" ] && [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" != "true" ] && [ "$RUN_FULL_VALIDATION" != "true" ]; then
             printf '%s\n' "targeted-tests-only" > "$LOG_DIR/validation-profile.txt"
             printf '%s\n' "1" > "$LOG_DIR/alive-duration-seconds.txt"
             printf '%s\n' "Full app launch skipped because no launch acceptance groups were affected." > "$LOG_DIR/08-app-launch-skipped.txt"

@@ -39,6 +39,8 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         textView.onPasteImage = onPasteImage
         textView.onPasteFile = onPasteFile
         textView.onSendMessage = onSendMessage
+        textView.accessibilityIdentifier = "hanlin-chat-input"
+        textView.isAccessibilityElement = true
 
         if text.isEmpty {
             textView.text = placeholderText
@@ -123,13 +125,6 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         }
 
         func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-            if text == "\n" && ProcessInfo.processInfo.isiOSAppOnMac {
-                let current = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !current.isEmpty {
-                    parent.onSendMessage?()
-                    return false
-                }
-            }
             return true
         }
     }
@@ -139,6 +134,36 @@ final class MultilineInnerTextView: UITextView {
     var onPasteImage: ((UIImage) -> Void)?
     var onPasteFile: ((URL) -> Void)?
     var onSendMessage: (() -> Void)?
+
+    override var keyCommands: [UIKeyCommand]? {
+        let returnCommand = UIKeyCommand(
+            input: "\r",
+            modifierFlags: [],
+            action: #selector(handleHardwareReturn)
+        )
+        returnCommand.wantsPriorityOverSystemBehavior = true
+
+        let shiftReturnCommand = UIKeyCommand(
+            input: "\r",
+            modifierFlags: .shift,
+            action: #selector(handleHardwareShiftReturn)
+        )
+        shiftReturnCommand.wantsPriorityOverSystemBehavior = true
+
+        return [returnCommand, shiftReturnCommand]
+    }
+
+    @objc private func handleHardwareReturn() {
+        guard markedTextRange == nil else { return }
+        let currentText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !currentText.isEmpty {
+            onSendMessage?()
+        }
+    }
+
+    @objc private func handleHardwareShiftReturn() {
+        insertText("\n")
+    }
 
     override func paste(_ sender: Any?) {
         let pasteboard = UIPasteboard.general
@@ -500,6 +525,7 @@ struct ChatViewBottom: View {
                         onSendMessage: { handleSend() },
                         onMentionTriggered: { updateModelSuggestions() }
                     )
+                    .accessibilityIdentifier("hanlin-chat-input")
                     .frame(height: textEditorHeight)
                     .focused(isInputActive)
                     .onChange(of: message) {
@@ -531,15 +557,20 @@ struct ChatViewBottom: View {
                     .padding(.horizontal, 8)
                     .padding(.bottom, 6)
             }
-            .background(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(.regularMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 24, style: .continuous)
-                            .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
-                    )
-                    .shadow(color: Color.black.opacity(0.06), radius: 8, y: 2)
-            )
+            .background {
+                if #available(iOS 26, *) {
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                } else {
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(.regularMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                        )
+                        .shadow(color: Color.black.opacity(0.06), radius: 8, y: 2)
+                }
+            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 4)
@@ -723,6 +754,7 @@ struct ChatViewBottom: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(String(localized: "停止生成"))
+                .accessibilityIdentifier("hanlin-chat-stop")
             } else {
                 Button(action: handleSend) {
                     Image(systemName: "arrow.up.circle.fill")
@@ -732,6 +764,7 @@ struct ChatViewBottom: View {
                 .buttonStyle(.plain)
                 .disabled(!canSend)
                 .accessibilityLabel(String(localized: "发送消息"))
+                .accessibilityIdentifier("hanlin-chat-send")
             }
         }
     }
