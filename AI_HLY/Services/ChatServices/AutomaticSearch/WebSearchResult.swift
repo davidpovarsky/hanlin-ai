@@ -68,7 +68,8 @@ public struct WebSearchResult: Sendable, Equatable, Hashable, Codable {
     /// Checks basic structural validity of the search result.
     public var isValid: Bool {
         guard !title.isEmpty, !snippet.isEmpty, !url.isEmpty else { return false }
-        guard let parsedURL = URL(string: url),
+        let candidateURL = URL(string: url) ?? URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
+        guard let parsedURL = candidateURL,
               let scheme = parsedURL.scheme?.lowercased(),
               scheme == "http" || scheme == "https",
               let host = parsedURL.host,
