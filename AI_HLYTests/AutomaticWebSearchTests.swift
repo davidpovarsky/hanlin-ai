@@ -449,6 +449,6 @@ struct AutomaticWebSearchTests {
         let (parsed, engine) = try await coordinator.search(query: queryWithNiqqud, count: 5)
         #expect(engine.contains("Tavily"))
         #expect(parsed.titles.first?.contains("רש\"י") == true)
-        #expect(parsed.snippets.first?.contains("פרשת נח") == true)
+        #expect(parsed.contents.first?.contains("פרשת נח") == true)
     }
 }
