@@ -9,13 +9,13 @@ import Foundation
 import SwiftData
 
 /// Manages database bootstrap, migration, and default provider selection for Automatic Web Search.
-public enum AutomaticSearchMigration {
-    public static let automaticKeyName = "AUTOMATIC_SEARCH_KEY"
-    public static let automaticCompany = "AUTOMATIC_KEYLESS"
-    public static let automaticDefaultURL = "https://api.you.com/v1/agents/search"
+enum AutomaticSearchMigration {
+    static let automaticKeyName = "AUTOMATIC_SEARCH_KEY"
+    static let automaticCompany = "AUTOMATIC_KEYLESS"
+    static let automaticDefaultURL = "https://api.you.com/v1/agents/search"
     
     /// Creates the standard preloaded SearchKeys model for the automatic provider.
-    public static func makeAutomaticSearchKey(isUsing: Bool = false) -> SearchKeys {
+    static func makeAutomaticSearchKey(isUsing: Bool = false) -> SearchKeys {
         return SearchKeys(
             name: automaticKeyName,
             company: automaticCompany,
@@ -32,8 +32,7 @@ public enum AutomaticSearchMigration {
     /// 2. Existing install with a valid explicitly chosen manual provider -> preserved untouched.
     /// 3. Explicit manual disable (user configured a key but turned it off) -> preserved as inactive.
     /// 4. Invariant: At most one provider is active at any time.
-    @MainActor
-    public static func reconcileDefaultProvider(in context: ModelContext) {
+    static func reconcileDefaultProvider(in context: ModelContext) {
         do {
             let descriptor = FetchDescriptor<SearchKeys>()
             let allKeys = try context.fetch(descriptor)

@@ -98,7 +98,7 @@ public struct TavilyKeylessSearchAdapter: WebSearchProvider {
         }
         
         do {
-            let parsed = try JSONDecoder().decode(TavilyResponse.self, data: data)
+            let parsed = try JSONDecoder().decode(TavilyResponse.self, from: data)
             let items = parsed.results ?? []
             return items.compactMap { item in
                 guard let url = item.url, !url.isEmpty,

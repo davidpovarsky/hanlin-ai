@@ -123,7 +123,7 @@ public struct YouKeylessSearchAdapter: WebSearchProvider {
         }
         
         do {
-            let parsed = try JSONDecoder().decode(YouResponse.self, data: data)
+            let parsed = try JSONDecoder().decode(YouResponse.self, from: data)
             let items = parsed.results?.web ?? []
             return items.compactMap { item in
                 guard let url = item.url, !url.isEmpty,

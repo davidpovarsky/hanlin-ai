@@ -930,7 +930,7 @@ struct ChatViewBottom: View {
                         Image(systemName: "text.bubble.fill")
                             .font(.system(size: 12))
                             .foregroundColor(.purple)
-                        Text(selectedPrompts[idx].title ?? "Prompt")
+                        Text(selectedPrompts[idx].name ?? "Prompt")
                             .font(.caption2)
                             .lineLimit(1)
                         Button {
