@@ -11,21 +11,21 @@ import Foundation
 /// 1. You.com Keyless -> 2. Tavily Keyless -> 3. Keenable Public.
 /// Enforces strict circuit breaking, cooldowns, structured hard deadlines,
 /// topical relevance validation, canonical query caching, and diagnostic probes.
-public actor AutomaticWebSearchCoordinator {
+actor AutomaticWebSearchCoordinator {
     
-    public static let shared = AutomaticWebSearchCoordinator()
+    static let shared = AutomaticWebSearchCoordinator()
     
     // MARK: - Types
     
-    public struct DiagnosticResult: Sendable {
-        public let success: Bool
-        public let providerUsed: String
-        public let duration: TimeInterval
-        public let topSourceTitle: String
-        public let topSourceURL: String
-        public let errorMessage: String?
+    struct DiagnosticResult: Sendable {
+        let success: Bool
+        let providerUsed: String
+        let duration: TimeInterval
+        let topSourceTitle: String
+        let topSourceURL: String
+        let errorMessage: String?
         
-        public init(
+        init(
             success: Bool,
             providerUsed: String,
             duration: TimeInterval,
@@ -42,13 +42,13 @@ public actor AutomaticWebSearchCoordinator {
         }
     }
     
-    public struct ProviderHealth: Sendable {
-        public var failureCount: Int = 0
-        public var cooldownUntil: Date? = nil
-        public var lastLatency: TimeInterval? = nil
-        public var lastError: String? = nil
+    struct ProviderHealth: Sendable {
+        var failureCount: Int = 0
+        var cooldownUntil: Date? = nil
+        var lastLatency: TimeInterval? = nil
+        var lastError: String? = nil
         
-        public func isAvailable(at date: Date = Date()) -> Bool {
+        func isAvailable(at date: Date = Date()) -> Bool {
             if let cooldown = cooldownUntil {
                 return date >= cooldown
             }
@@ -81,7 +81,7 @@ public actor AutomaticWebSearchCoordinator {
     
     // MARK: - Initialization
     
-    public init(
+    init(
         providers: [WebSearchProvider]? = nil,
         clock: @escaping @Sendable () -> Date = { Date() }
     ) {
@@ -104,7 +104,7 @@ public actor AutomaticWebSearchCoordinator {
     
     /// Executes automatic search with fallback, caching, deduplication, relevance checks, and hard bounds.
     /// Returns: Tuple of legacy `ParsedSearchResult` and active backend description string.
-    public func search(
+    func search(
         query: String,
         count: Int = 5,
         bypassCache: Bool = false
@@ -145,7 +145,7 @@ public actor AutomaticWebSearchCoordinator {
     
     /// Runs a real diagnostic probe against the coordinator with cache bypass
     /// to verify end-to-end live connectivity and capture honest timing and real top source.
-    public func runDiagnosticTest() async -> DiagnosticResult {
+    func runDiagnosticTest() async -> DiagnosticResult {
         let startTime = clock()
         let testQuery = "Search today's news"
         
@@ -177,7 +177,7 @@ public actor AutomaticWebSearchCoordinator {
     }
     
     /// Inspection API for testing and status
-    public func getProviderHealth(providerID: String) -> ProviderHealth? {
+    func getProviderHealth(providerID: String) -> ProviderHealth? {
         return healthTable[providerID]
     }
     

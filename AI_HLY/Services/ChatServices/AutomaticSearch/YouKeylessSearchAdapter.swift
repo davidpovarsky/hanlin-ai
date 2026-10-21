@@ -84,14 +84,14 @@ public struct YouKeylessSearchAdapter: WebSearchProvider {
     // MARK: - Response Parsing
     
     public func parseYouResponse(data: Data) throws -> [WebSearchResult] {
-        struct YouResponse: Codable {
-            struct ResultsContainer: Codable {
+        struct YouResponse: Decodable {
+            struct ResultsContainer: Decodable {
                 let web: [YouWebItem]?
             }
             let results: ResultsContainer?
         }
         
-        struct YouWebItem: Codable {
+        struct YouWebItem: Decodable {
             let url: String?
             let title: String?
             let description: String?
