@@ -317,6 +317,27 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Validate and normalize local Expo XCFramework signatures
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          expo_root="Packages/HanlinExpoRuntime/Artifacts"
+          test -d "$expo_root"
+          for name in ExpoModulesJSI React ReactNativeDependencies; do
+            xcframework="$expo_root/$name.xcframework"
+            test -f "$xcframework/Info.plist"
+            framework="$xcframework/ios-arm64/$name.framework"
+            test -d "$framework"
+            test -f "$framework/$name"
+            echo "::group::Inspect and re-sign $name (iOS device slice)"
+            file "$framework/$name"
+            /usr/bin/codesign --verify --verbose=2 "$framework" || true
+            rm -rf "$framework/_CodeSignature"
+            /usr/bin/codesign --force --sign - --timestamp=none "$framework"
+            /usr/bin/codesign --verify --strict --verbose=2 "$framework"
+            echo "::endgroup::"
+          done
+
       - name: Verify signing settings for every distributed target
         shell: bash
         run: |
