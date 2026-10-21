@@ -38,7 +38,7 @@ env:
 
 jobs:
   build-sign-and-upload:
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 120
 
     steps:
@@ -64,17 +64,18 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - name: Select newest stable Xcode 26
+      - name: Select Xcode 27 and verify iOS 27 SDK
         shell: bash
         run: |
           set -euo pipefail
-          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
-            | grep -E '/Xcode_26([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | sort -V | tail -1)"
           test -n "$selected_xcode"
           sudo xcode-select -s "$selected_xcode/Contents/Developer"
           sw_vers
           xcodebuild -version
-          xcrun --sdk iphoneos --show-sdk-version
+          sdk_version="$(xcrun --sdk iphoneos --show-sdk-version)"
+          echo "iOS SDK: $sdk_version"
+          case "$sdk_version" in 27.*) ;; *) echo "ERROR: iOS 27 SDK is required"; exit 1;; esac
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
