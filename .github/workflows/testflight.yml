@@ -68,7 +68,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | sort -V | tail -1)"
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
           test -n "$selected_xcode"
           sudo xcode-select -s "$selected_xcode/Contents/Developer"
           sw_vers
