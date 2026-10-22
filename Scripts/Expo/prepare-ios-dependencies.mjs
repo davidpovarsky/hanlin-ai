@@ -1,8 +1,9 @@
 import { createHash } from 'node:crypto';
-import { access, chmod, cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { access, chmod, cp, lstat, mkdir, readFile, readdir, readlink, rm, stat, writeFile } from 'node:fs/promises';
 import { createWriteStream, existsSync } from 'node:fs';
-import { basename, resolve } from 'node:path';
+import { basename, dirname, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import https from 'node:https';
 import http from 'node:http';
 
@@ -13,6 +14,286 @@ const lockPath = resolve(scriptRoot, 'dependency-lock.json');
 
 const readJSON = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+
+export async function findBrokenSymlinks(dir) {
+  const broken = [];
+  if (!existsSync(dir)) return broken;
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const ent of entries) {
+    const full = resolve(dir, ent.name);
+    const lst = await lstat(full);
+    if (lst.isSymbolicLink()) {
+      const linkTarget = await readlink(full);
+      const resolvedTarget = resolve(dirname(full), linkTarget);
+      if (!existsSync(resolvedTarget)) {
+        broken.push({ path: full, target: linkTarget, resolvedTarget });
+      }
+    } else if (lst.isDirectory()) {
+      broken.push(...(await findBrokenSymlinks(full)));
+    }
+  }
+  return broken;
+}
+
+const AVAILABLE_LIBRARIES_REGEX =
+  /(<key>AvailableLibraries<\/key>\s*<array>)((?:\s*<dict>(?:(?!<dict>)[\s\S])*?<\/dict>\s*)+)(<\/array>)/;
+
+export function parseXCFrameworkInfoPlist(plistXml) {
+  const arrayMatch = plistXml.match(AVAILABLE_LIBRARIES_REGEX);
+  if (!arrayMatch) {
+    throw new Error('Invalid XCFramework Info.plist: missing AvailableLibraries array');
+  }
+  const arrayBody = arrayMatch[2];
+  const libraries = [];
+  for (const dm of arrayBody.matchAll(/<dict>((?:(?!<dict>)[\s\S])*?)<\/dict>/g)) {
+    const rawDict = dm[0];
+    const body = dm[1];
+    const getString = (key) => {
+      const m = body.match(new RegExp(`<key>${key}<\\/key>\\s*<string>([^<]+)<\\/string>`));
+      return m ? m[1].trim() : null;
+    };
+    const archMatch = body.match(/<key>SupportedArchitectures<\/key>\s*<array>([\s\S]*?)<\/array>/);
+    const archs = archMatch
+      ? [...archMatch[1].matchAll(/<string>([^<]+)<\/string>/g)].map((x) => x[1].trim())
+      : [];
+    libraries.push({
+      rawDict,
+      LibraryIdentifier: getString('LibraryIdentifier'),
+      LibraryPath: getString('LibraryPath'),
+      BinaryPath: getString('BinaryPath'),
+      HeadersPath: getString('HeadersPath'),
+      DebugSymbolsPath: getString('DebugSymbolsPath'),
+      BitcodeSymbolMapsPath: getString('BitcodeSymbolMapsPath'),
+      SupportedPlatform: getString('SupportedPlatform'),
+      SupportedPlatformVariant: getString('SupportedPlatformVariant'),
+      SupportedArchitectures: archs,
+    });
+  }
+  const pkgTypeMatch = plistXml.match(/<key>CFBundlePackageType<\/key>\s*<string>([^<]+)<\/string>/);
+  return {
+    CFBundlePackageType: pkgTypeMatch ? pkgTypeMatch[1].trim() : null,
+    AvailableLibraries: libraries,
+  };
+}
+
+export async function cleanBundleMetadataAndSignatures(dir) {
+  if (!existsSync(dir)) return;
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const ent of entries) {
+    const fullPath = resolve(dir, ent.name);
+    const lst = await lstat(fullPath);
+    if (lst.isDirectory()) {
+      if (ent.name === '_CodeSignature' || ent.name === '__MACOSX') {
+        await rm(fullPath, { recursive: true, force: true });
+      } else {
+        await cleanBundleMetadataAndSignatures(fullPath);
+      }
+    } else if (
+      ent.name === '.build-hash' ||
+      ent.name === '.DS_Store' ||
+      ent.name.startsWith('._')
+    ) {
+      await rm(fullPath, { force: true });
+    }
+  }
+}
+
+export async function pruneNonIOSSlicesFromXCFramework(xcfPath) {
+  const infoPlistPath = resolve(xcfPath, 'Info.plist');
+  if (!existsSync(infoPlistPath)) {
+    throw new Error(`Missing Info.plist in ${xcfPath}`);
+  }
+  const plistXml = await readFile(infoPlistPath, 'utf8');
+  const parsed = parseXCFrameworkInfoPlist(plistXml);
+  const keptLibraries = parsed.AvailableLibraries.filter(
+    (lib) =>
+      lib.SupportedPlatform === 'ios' &&
+      (!lib.SupportedPlatformVariant || lib.SupportedPlatformVariant === 'simulator')
+  );
+  if (keptLibraries.length === 0) {
+    throw new Error(`No iOS slices found in ${infoPlistPath}`);
+  }
+
+  const keptIds = new Set(keptLibraries.map((lib) => lib.LibraryIdentifier));
+  const newArrayBody = '\n' + keptLibraries.map((lib) => `\t\t${lib.rawDict.trim()}`).join('\n') + '\n\t';
+  const updatedXml = plistXml.replace(AVAILABLE_LIBRARIES_REGEX, `$1${newArrayBody}$3`);
+  if (updatedXml !== plistXml) {
+    await writeFile(infoPlistPath, updatedXml, 'utf8');
+  }
+
+  const entries = await readdir(xcfPath, { withFileTypes: true });
+  for (const ent of entries) {
+    if (!ent.isDirectory()) continue;
+    if (ent.name === 'Headers' || ent.name === '_CodeSignature') continue;
+    if (!keptIds.has(ent.name)) {
+      await rm(resolve(xcfPath, ent.name), { recursive: true, force: true });
+    }
+  }
+
+  for (const lib of keptLibraries) {
+    const sliceDir = resolve(xcfPath, lib.LibraryIdentifier);
+    if (!existsSync(sliceDir)) continue;
+    if (!lib.DebugSymbolsPath) {
+      const dsymsDir = resolve(sliceDir, 'dSYMs');
+      if (existsSync(dsymsDir)) {
+        await rm(dsymsDir, { recursive: true, force: true });
+      }
+    }
+    if (!lib.BitcodeSymbolMapsPath) {
+      const bcDir = resolve(sliceDir, 'BCSymbolMaps');
+      if (existsSync(bcDir)) {
+        await rm(bcDir, { recursive: true, force: true });
+      }
+    }
+  }
+
+  return keptLibraries;
+}
+
+export async function validateXCFrameworkStructure(
+  xcfPath,
+  {
+    checkDarwinTools = process.platform === 'darwin',
+    requireFrameworkInfoPlist = process.platform === 'darwin',
+  } = {}
+) {
+  if (!existsSync(xcfPath)) {
+    throw new Error(`XCFramework does not exist: ${xcfPath}`);
+  }
+  const brokenSymlinks = await findBrokenSymlinks(xcfPath);
+  if (brokenSymlinks.length > 0) {
+    const details = brokenSymlinks.map((b) => `${b.path} -> ${b.target}`).join('; ');
+    throw new Error(`Broken symlinks detected in ${basename(xcfPath)}: ${details}`);
+  }
+
+  const infoPlistPath = resolve(xcfPath, 'Info.plist');
+  if (!existsSync(infoPlistPath)) {
+    throw new Error(`Missing top-level Info.plist in ${basename(xcfPath)}`);
+  }
+
+  if (checkDarwinTools) {
+    execSync(`/usr/bin/plutil -lint "${infoPlistPath}"`, { stdio: 'pipe' });
+  }
+
+  const plistXml = await readFile(infoPlistPath, 'utf8');
+  const parsed = parseXCFrameworkInfoPlist(plistXml);
+  if (parsed.CFBundlePackageType !== 'XFWK') {
+    throw new Error(
+      `Invalid CFBundlePackageType in ${infoPlistPath}: expected XFWK, got ${parsed.CFBundlePackageType}`
+    );
+  }
+
+  const sliceIds = new Set(parsed.AvailableLibraries.map((l) => l.LibraryIdentifier));
+  if (!sliceIds.has('ios-arm64') || !sliceIds.has('ios-arm64_x86_64-simulator')) {
+    throw new Error(
+      `${basename(xcfPath)} must contain both ios-arm64 and ios-arm64_x86_64-simulator slices (found: ${[
+        ...sliceIds,
+      ].join(', ')})`
+    );
+  }
+
+  for (const lib of parsed.AvailableLibraries) {
+    if (
+      lib.SupportedPlatform !== 'ios' ||
+      (lib.SupportedPlatformVariant && lib.SupportedPlatformVariant !== 'simulator')
+    ) {
+      throw new Error(
+        `Non-iOS slice ${lib.LibraryIdentifier} still present in ${basename(xcfPath)} Info.plist`
+      );
+    }
+
+    const sliceDir = resolve(xcfPath, lib.LibraryIdentifier);
+    if (!existsSync(sliceDir)) {
+      throw new Error(`Missing slice directory ${sliceDir}`);
+    }
+    const libraryPath = resolve(sliceDir, lib.LibraryPath);
+    if (!existsSync(libraryPath)) {
+      throw new Error(`Missing LibraryPath ${libraryPath}`);
+    }
+    const binaryRelPath = lib.BinaryPath || lib.LibraryPath;
+    const binaryPath = resolve(sliceDir, binaryRelPath);
+    if (!existsSync(binaryPath)) {
+      throw new Error(`Missing BinaryPath ${binaryPath}`);
+    }
+    const binStat = await stat(binaryPath);
+    if (!binStat.isFile() || binStat.size === 0) {
+      throw new Error(`Invalid or empty binary at ${binaryPath}`);
+    }
+
+    if (lib.LibraryPath.endsWith('.framework')) {
+      const fwInfoPlist = resolve(libraryPath, 'Info.plist');
+      const mustHaveFwPlist =
+        requireFrameworkInfoPlist || basename(xcfPath) !== 'ExpoModulesJSI.xcframework';
+      if (mustHaveFwPlist && !existsSync(fwInfoPlist)) {
+        throw new Error(`Missing framework Info.plist at ${fwInfoPlist}`);
+      }
+      if (existsSync(fwInfoPlist)) {
+        const fwBuf = await readFile(fwInfoPlist);
+        if (!fwBuf.includes(Buffer.from('FMWK'))) {
+          throw new Error(`Framework Info.plist at ${fwInfoPlist} is missing CFBundlePackageType=FMWK`);
+        }
+        if (!fwBuf.includes(Buffer.from('MinimumOSVersion'))) {
+          throw new Error(`Framework Info.plist at ${fwInfoPlist} is missing MinimumOSVersion`);
+        }
+        if (checkDarwinTools) {
+          execSync(`/usr/bin/plutil -lint "${fwInfoPlist}"`, { stdio: 'pipe' });
+        }
+      }
+    }
+
+    if (checkDarwinTools) {
+      const lipoOut = execSync(`/usr/bin/lipo -archs "${binaryPath}"`, { encoding: 'utf8' }).trim();
+      const actualArchs = new Set(lipoOut.split(/\s+/).filter(Boolean));
+      for (const expectedArch of lib.SupportedArchitectures) {
+        if (!actualArchs.has(expectedArch)) {
+          throw new Error(
+            `Architecture mismatch for ${binaryPath}: expected ${expectedArch}, got ${lipoOut}`
+          );
+        }
+      }
+    }
+  }
+
+  return parsed;
+}
+
+export async function signAndVerifyXCFramework(
+  xcfPath,
+  {
+    checkDarwinTools = process.platform === 'darwin',
+    requireFrameworkInfoPlist = process.platform === 'darwin',
+  } = {}
+) {
+  await cleanBundleMetadataAndSignatures(xcfPath);
+  await pruneNonIOSSlicesFromXCFramework(xcfPath);
+  const parsed = await validateXCFrameworkStructure(xcfPath, {
+    checkDarwinTools,
+    requireFrameworkInfoPlist,
+  });
+
+  if (checkDarwinTools) {
+    for (const lib of parsed.AvailableLibraries) {
+      if (lib.LibraryPath.endsWith('.framework')) {
+        const fwPath = resolve(xcfPath, lib.LibraryIdentifier, lib.LibraryPath);
+        execSync(`/usr/bin/codesign --force --sign - --timestamp=none "${fwPath}"`, {
+          stdio: 'pipe',
+        });
+        execSync(`/usr/bin/codesign --verify --strict --verbose=2 "${fwPath}"`, {
+          stdio: 'pipe',
+        });
+      }
+    }
+    execSync(`/usr/bin/codesign --force --sign - --timestamp=none "${xcfPath}"`, {
+      stdio: 'pipe',
+    });
+    execSync(`/usr/bin/codesign --verify --strict --verbose=2 "${xcfPath}"`, {
+      stdio: 'pipe',
+    });
+    execSync(`/usr/bin/codesign -vvvv "${xcfPath}"`, {
+      stdio: 'pipe',
+    });
+  }
+}
 
 async function downloadFile(url, destPath) {
   return new Promise((res, rej) => {
@@ -49,8 +330,23 @@ async function prepare() {
     for (const item of lock.artifacts) {
       const targetDir = resolve(repositoryRoot, item.target);
       if (existsSync(targetDir)) {
-        console.log(`[HanlinExpo] ${item.name} already staged at ${item.target}`);
-        continue;
+        try {
+          await cleanBundleMetadataAndSignatures(targetDir);
+          await pruneNonIOSSlicesFromXCFramework(targetDir);
+          const broken = await findBrokenSymlinks(targetDir);
+          if (broken.length === 0) {
+            console.log(`[HanlinExpo] ${item.name} already staged and valid at ${item.target}`);
+            continue;
+          }
+          console.warn(
+            `[HanlinExpo] ${item.name} at ${item.target} has ${broken.length} broken symlink(s); re-extracting...`
+          );
+        } catch (validationErr) {
+          console.warn(
+            `[HanlinExpo] ${item.name} at ${item.target} failed pre-check (${validationErr.message}); re-extracting...`
+          );
+        }
+        await rm(targetDir, { recursive: true, force: true });
       }
       console.log(`[HanlinExpo] Fetching ${item.name}...`);
       const downloadURL = item.tarball || item.url;
@@ -68,7 +364,6 @@ async function prepare() {
       }
 
       if (item.source === 'npm') {
-        const subTarball = resolve(tempDir, basename(item.subpath));
         execSync(`tar -zxf "${downloadedPath}" -C "${tempDir}" "${item.subpath}"`);
         const extractedSub = resolve(tempDir, item.subpath);
         execSync(`tar -zxf "${extractedSub}" -C "${artifactsRoot}"`);
@@ -77,8 +372,10 @@ async function prepare() {
         await mkdir(unpackDir, { recursive: true });
         execSync(`tar -zxf "${downloadedPath}" -C "${unpackDir}"`);
         const sourcePath = resolve(unpackDir, item.subpath);
-        await cp(sourcePath, targetDir, { recursive: true });
+        await cp(sourcePath, targetDir, { recursive: true, verbatimSymlinks: true });
       }
+      await cleanBundleMetadataAndSignatures(targetDir);
+      await pruneNonIOSSlicesFromXCFramework(targetDir);
       console.log(`[HanlinExpo] Staged ${item.name} -> ${item.target}`);
     }
     console.log('[HanlinExpo] All dependencies staged successfully.');
@@ -317,8 +614,8 @@ async function prepare() {
         await cp(reactFwDir, reactCapFwDir, { recursive: true });
       }
 
-      // Also enrich React.xcframework itself with all headers from ReactNativeHeaders across all slices
-      const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64', 'ios-arm64_x86_64-maccatalyst'];
+      // Also enrich React.xcframework itself with all headers from ReactNativeHeaders across all iOS slices
+      const allSlices = ['ios-arm64_x86_64-simulator', 'ios-arm64'];
       for (const s of allSlices) {
         const targetHeaders = resolve(artifactsRoot, 'React.xcframework', s, 'React.framework', 'Headers');
         const sliceRnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', s, 'Headers');
@@ -725,61 +1022,6 @@ template <typename CharTransformT = fnv1a_identity>
         await sanitizeHeaders(resolve(artifactsRoot, 'ExpoModulesCore.xcframework'));
       }
 
-      // Remove stale code signatures and re-sign ad-hoc if on darwin/codesign is available
-      const removeCodeSig = async (dir) => {
-        if (!existsSync(dir)) return;
-        const entries = await readdir(dir, { withFileTypes: true });
-        for (const ent of entries) {
-          const fullPath = resolve(dir, ent.name);
-          if (ent.isDirectory()) {
-            if (ent.name === '_CodeSignature') {
-              await rm(fullPath, { recursive: true, force: true });
-            } else {
-              await removeCodeSig(fullPath);
-            }
-          }
-        }
-      };
-
-      const resignXcf = async (xcfPath) => {
-        if (!existsSync(xcfPath)) return;
-        await removeCodeSig(xcfPath);
-        if (process.platform === 'darwin') {
-          try {
-            const fws = [];
-            const findFrameworks = async (p) => {
-              if (!existsSync(p)) return;
-              const entries = await readdir(p, { withFileTypes: true });
-              for (const ent of entries) {
-                const sub = resolve(p, ent.name);
-                if (ent.isDirectory()) {
-                  if (ent.name.endsWith('.framework')) {
-                    fws.push(sub);
-                  } else {
-                    await findFrameworks(sub);
-                  }
-                }
-              }
-            };
-            await findFrameworks(xcfPath);
-            for (const fw of fws) {
-              execSync(`codesign --force --sign - --timestamp=none "${fw}"`, { stdio: 'ignore' });
-            }
-            execSync(`codesign --force --sign - --timestamp=none "${xcfPath}"`, { stdio: 'ignore' });
-            console.log(`[HanlinExpo] Re-signed ${basename(xcfPath)} ad-hoc.`);
-          } catch (signErr) {
-            console.warn(`[HanlinExpo] Warning: ad-hoc codesign failed for ${basename(xcfPath)}:`, signErr.message);
-          }
-        }
-      };
-
-      const xcfEntries = await readdir(artifactsRoot, { withFileTypes: true });
-      for (const ent of xcfEntries) {
-        if (ent.isDirectory() && ent.name.endsWith('.xcframework')) {
-          await resignXcf(resolve(artifactsRoot, ent.name));
-        }
-      }
-
       count++;
       console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');
 
@@ -798,8 +1040,6 @@ template <typename CharTransformT = fnv1a_identity>
           }
         }
       }
-
-
 
       console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
 
@@ -912,10 +1152,13 @@ template <typename CharTransformT = fnv1a_identity>
         });
 
         const builtXCFramework = resolve(expoModulesJSIRoot, 'apple', 'Products', 'ExpoModulesJSI.xcframework');
-        if (existsSync(builtXCFramework)) {
-          await cp(builtXCFramework, resolve(artifactsRoot, 'ExpoModulesJSI.xcframework'), { recursive: true });
-          console.log('[HanlinExpo] ExpoModulesJSI.xcframework built and staged successfully.');
+        if (!existsSync(builtXCFramework)) {
+          throw new Error(`[HanlinExpo] Expected built ExpoModulesJSI.xcframework at ${builtXCFramework}`);
         }
+        const targetJsiXcf = resolve(artifactsRoot, 'ExpoModulesJSI.xcframework');
+        await rm(targetJsiXcf, { recursive: true, force: true });
+        await cp(builtXCFramework, targetJsiXcf, { recursive: true, verbatimSymlinks: true });
+        console.log('[HanlinExpo] ExpoModulesJSI.xcframework built and staged successfully.');
       }
     }
 
@@ -938,40 +1181,28 @@ template <typename CharTransformT = fnv1a_identity>
     }
     await cleanSwiftInterfaces(artifactsRoot);
 
-    if (process.platform === 'darwin') {
-      const artifactEntries = await readdir(artifactsRoot, { withFileTypes: true });
-      for (const entry of artifactEntries) {
-        if (entry.isDirectory() && entry.name.endsWith('.xcframework') && entry.name.startsWith('Expo')) {
-          const fwPath = resolve(artifactsRoot, entry.name);
-          try {
-            let innerFws = [];
-            try {
-              const findOutput = execSync(`find "${fwPath}" -type d -name "*.framework"`, { encoding: 'utf8' });
-              innerFws = findOutput.trim().split('\n').filter(Boolean);
-            } catch (_) {}
-
-            for (const inner of innerFws) {
-              try { execSync(`codesign --remove-signature "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
-              try { execSync(`codesign --force --deep --sign - "${inner}"`, { stdio: 'ignore' }); } catch (_) {}
-            }
-
-            console.log(`[HanlinExpo] Ad-hoc re-signed ${entry.name}`);
-          } catch (e) {
-            console.log(`[HanlinExpo] Re-signing notice for ${entry.name}: ${e.message}`);
-          }
-        }
-      }
+    for (const item of lock.artifacts) {
+      const xcfPath = resolve(repositoryRoot, item.target);
+      await signAndVerifyXCFramework(xcfPath);
+      console.log(
+        `[HanlinExpo] Normalized${process.platform === 'darwin' ? ', signed,' : ''} and verified ${basename(xcfPath)}`
+      );
     }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 }
 
-prepare()
-  .then(() => {
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.error('[HanlinExpo] Preparation failed:', err);
-    process.exit(1);
-  });
+const isMainModule =
+  process.argv[1] && resolve(fileURLToPath(import.meta.url)) === resolve(process.argv[1]);
+
+if (isMainModule) {
+  prepare()
+    .then(() => {
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error('[HanlinExpo] Preparation failed:', err);
+      process.exit(1);
+    });
+}

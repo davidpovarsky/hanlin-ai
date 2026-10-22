@@ -317,47 +317,6 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - name: Validate and normalize local Expo XCFramework signatures
-        shell: bash
-        run: |
-          set -Eeuo pipefail
-          expo_root="Packages/HanlinExpoRuntime/Artifacts"
-          test -d "$expo_root"
-          for name in ExpoModulesJSI React ReactNativeDependencies; do
-            xcframework="$expo_root/$name.xcframework"
-            test -f "$xcframework/Info.plist"
-            framework="$xcframework/ios-arm64/$name.framework"
-            test -d "$framework"
-            test -f "$framework/$name"
-            echo "::group::Inspect and re-sign $name (iOS device slice)"
-            file "$framework/$name"
-            /usr/bin/codesign --verify --verbose=2 "$framework" || true
-            rm -rf "$framework/_CodeSignature"
-            /usr/bin/codesign --force --sign - --timestamp=none "$framework"
-            /usr/bin/codesign --verify --strict --verbose=2 "$framework"
-            echo "::endgroup::"
-          done
-          # Xcode 27's builtin-collectSignature reads the XCFramework bundle's
-          # signature, not only the embedded iOS framework's signature.
-          # Re-sign every locally built Expo XCFramework after all slice changes.
-          for xcframework in "$expo_root"/*.xcframework; do
-            if [ ! -e "$xcframework" ]; then
-              echo "::warning::Skipping dangling XCFramework link: $xcframework"
-              continue
-            fi
-            test -f "$xcframework/Info.plist"
-            echo "::group::Sign XCFramework container: $(basename "$xcframework")"
-            rm -rf "$xcframework/_CodeSignature"
-            /usr/bin/codesign --force --sign - --timestamp=none "$xcframework"
-            /usr/bin/codesign --verify --strict --verbose=2 "$xcframework"
-            /usr/bin/codesign -dv --verbose=2 "$xcframework" 2>&1
-            echo "::endgroup::"
-          done
-          # Signatures must survive package resolution and before archive.
-          /usr/bin/codesign --verify --strict --verbose=2 "$expo_root/ExpoModulesJSI.xcframework"
-          # End of XCFramework normalization
-          : "ready"
-
       - name: Verify signing settings for every distributed target
         shell: bash
         run: |
