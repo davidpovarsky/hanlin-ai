@@ -805,7 +805,7 @@ async function prepare() {
           } else if (ent.isFile() && ent.name === 'RCTAppSetupUtils.h') {
             let content = await readFile(full, 'utf8');
             if (content.includes('#ifdef __cplusplus')) {
-              content = content.replace(/#ifdef __cplusplus[\s\S]*?#endif[ \t]*(?:\/\/[^\r\n]*)?\r?\n?/gm, '');
+              content = content.replace(/#ifdef __cplusplus[\s\S]*?#endif \/\/ __cplusplus\r?\n?/m, '');
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized RCTAppSetupUtils.h for C++ interop module scan: ${full}`);
             }
