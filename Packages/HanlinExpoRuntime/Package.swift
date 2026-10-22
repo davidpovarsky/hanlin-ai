@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let packageRoot = Context.packageDirectory
+
 let package = Package(
     name: "HanlinExpoRuntime",
     platforms: [.iOS("27.0")],
@@ -33,14 +35,24 @@ let package = Package(
                     "-Xcc", "-std=gnu++20",
                     "-Xcc", "-Wno-quoted-include-in-framework-header",
                     "-Xcc", "-Wno-non-modular-include-in-framework-module",
+                    "-Xcc", "-F\(packageRoot)/Artifacts/ModularFrameworks",
+                    "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
                     "-Xcc", "-FArtifacts/ModularFrameworks",
                     "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                    "-Xcc", "-I\(packageRoot)/Artifacts/ReactModularHeaders",
+                    "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
                     "-Xcc", "-IArtifacts/ReactModularHeaders",
                     "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                    "-Xcc", "-I\(packageRoot)/Artifacts/ModularFrameworks/react.framework/Headers",
+                    "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
                     "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers",
                     "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                    "-Xcc", "-I\(packageRoot)/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                    "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
                     "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
                     "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                    "-Xcc", "-I\(packageRoot)/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                    "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
                     "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
                     "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
                 ])

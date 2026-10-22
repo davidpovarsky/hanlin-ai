@@ -802,6 +802,22 @@ async function prepare() {
               await writeFile(full, content, 'utf8');
               console.log(`[HanlinExpo] Sanitized EXHostWrapper.h: ${full}`);
             }
+          } else if (ent.isFile() && ent.name === 'RCTAppSetupUtils.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('#ifdef __cplusplus')) {
+              content = content.replace(/#ifdef __cplusplus[\s\S]*?#endif[ \t]*(?:\/\/[^\r\n]*)?\r?\n?/gm, '');
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized RCTAppSetupUtils.h for C++ interop module scan: ${full}`);
+            }
+          } else if (ent.isFile() && ent.name === 'RCTReactNativeFactory.h') {
+            let content = await readFile(full, 'utf8');
+            if (content.includes('defined(__cplusplus)') || content.includes('#ifdef __cplusplus')) {
+              content = content
+                .replace(/#if[ \t]+defined\(__cplusplus\)[\s\S]*?#endif[ \t]*(?:\/\/[^\r\n]*)?\r?\n?/gm, '')
+                .replace(/#ifdef __cplusplus[\s\S]*?#endif[ \t]*(?:\/\/[^\r\n]*)?\r?\n?/gm, '');
+              await writeFile(full, content, 'utf8');
+              console.log(`[HanlinExpo] Sanitized RCTReactNativeFactory.h for C++ interop module scan: ${full}`);
+            }
           } else if (ent.isFile() && ent.name === 'TraceEvent.h') {
             let content = await readFile(full, 'utf8');
             if (content.includes('"tracing/TracingCategory.h"') && !content.includes('__has_include("tracing/TracingCategory.h")')) {
@@ -1187,6 +1203,29 @@ template <typename CharTransformT = fnv1a_identity>
       console.log(
         `[HanlinExpo] Normalized${process.platform === 'darwin' ? ', signed,' : ''} and verified ${basename(xcfPath)}`
       );
+    }
+
+    const configXcconfigPath = resolve(repositoryRoot, 'Config.xcconfig');
+    if (existsSync(configXcconfigPath)) {
+      const existingConfig = await readFile(configXcconfigPath, 'utf8');
+      if (!existingConfig.includes('ModularFrameworks')) {
+        const repoRootPosix = repositoryRoot.replace(/\\/g, '/');
+        const expoXcconfigBlock = [
+          '',
+          'SWIFT_ENABLE_EXPLICIT_MODULES = NO',
+          'SWIFT_OBJC_INTEROP_MODE = objcxx',
+          `FRAMEWORK_SEARCH_PATHS = "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "${repoRootPosix}/Artifacts/ModularFrameworks" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "$(SRCROOT)/Artifacts/ModularFrameworks" $(inherited)`,
+          `HEADER_SEARCH_PATHS = "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "${repoRootPosix}/Artifacts/ReactModularHeaders" "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" $(inherited) "$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"`,
+          'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES',
+          'CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO',
+          'WARNING_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module',
+          'OTHER_CFLAGS = $(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module',
+          `OTHER_SWIFT_FLAGS = -Xcc -F"${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" -Xcc -F"${repoRootPosix}/Artifacts/ModularFrameworks" -Xcc -I"${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" -Xcc -I"${repoRootPosix}/Artifacts/ReactModularHeaders" -Xcc -I"${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" -Xcc -I"${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" -Xcc -F"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" -Xcc -F"$(SRCROOT)/Artifacts/ModularFrameworks" $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I"$(BUILT_PRODUCTS_DIR)/React.framework/Headers" -Xcc -I"$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers"`,
+          '',
+        ].join('\n');
+        await writeFile(configXcconfigPath, existingConfig + expoXcconfigBlock, 'utf8');
+        console.log('[HanlinExpo] Enriched Config.xcconfig with ModularFrameworks search paths and interop flags.');
+      }
     }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
