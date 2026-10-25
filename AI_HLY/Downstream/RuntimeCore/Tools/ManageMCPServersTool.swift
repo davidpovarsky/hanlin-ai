@@ -434,12 +434,19 @@ struct ManageMCPServersTool: NativeTool {
             selectedIDs = Set(provider.servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id))
         }
 
+        let anyServerInstalled = !provider.servers.isEmpty
+        let anyServerEnabled = provider.servers.contains(where: \.isGloballyEnabled)
+        let anySelectedForChat = !selectedIDs.isEmpty
+        let anyWorkerRunning = provider.runtimeSnapshot.activeWorkerCount > 0
+
         var lines: [String] = [
             "### MCP Runtime & Server Status",
-            "- MCP Feature Globally Enabled: \(provider.configuration.isEnabled)",
+            "- MCP Feature Globally Enabled (`global_mcp_enabled`): \(provider.configuration.isEnabled)",
             "- Node Host State: \(provider.runtimeSnapshot.state.rawValue)",
-            "- Active Worker Count: \(provider.runtimeSnapshot.activeWorkerCount)",
-            "- Installed Servers Count: \(provider.servers.count)"
+            "- Active Worker Count (`worker_running`): \(anyWorkerRunning) (\(provider.runtimeSnapshot.activeWorkerCount))",
+            "- Installed Servers Count (`server_installed`): \(anyServerInstalled) (\(provider.servers.count))",
+            "- Enabled Servers (`server_enabled`): \(anyServerEnabled)",
+            "- Selected for Current Chat (`selected_for_current_chat`): \(anySelectedForChat) (\(selectedIDs.count))"
         ]
         if let lastError = provider.lastError, !lastError.isEmpty {
             lines.append("- Last Error: \(lastError)")
@@ -451,12 +458,13 @@ struct ManageMCPServersTool: NativeTool {
             for server in provider.servers {
                 let status = provider.statuses[server.id]
                 let runtimeState = status?.state.rawValue ?? "stopped"
+                let isWorkerRunning = status?.state == .running
                 let toolCount = status?.toolCount ?? 0
                 let isSelected = selectedIDs.contains(server.id)
                 lines.append("""
                 - **\(server.displayName)** (slug: `\(server.slug)`, id: `\(server.id.uuidString)`)
                   - Package: `\(server.packageName)@\(server.resolvedVersion)`
-                  - Installed: true | Globally Enabled: \(server.isGloballyEnabled) | Selected for Chat: \(isSelected) | Runtime State: `\(runtimeState)` | Cached Tools: \(toolCount)
+                  - `server_installed`: true | `server_enabled`: \(server.isGloballyEnabled) | `selected_for_current_chat`: \(isSelected) | `worker_running`: \(isWorkerRunning) (`\(runtimeState)`) | Cached Tools: \(toolCount)
                 """)
             }
         }
