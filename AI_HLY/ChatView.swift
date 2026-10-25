@@ -1642,8 +1642,7 @@ struct ChatView: View {
                             || assistantMessage.nativeUIBlocks.isEmpty == false
                             || assistantMessage.showCanvas == true
                             || agentCoordinator.run.transcriptItems.contains(where: {
-                                if case .toolResultCard = $0.kind { return true }
-                                return false
+                                $0.kind == .userVisibleToolResult
                             })
                         if textContent.isEmpty && reasoningContent.isEmpty && !hasRichContent {
                             agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
