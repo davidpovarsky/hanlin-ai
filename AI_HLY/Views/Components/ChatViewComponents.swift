@@ -570,13 +570,11 @@ struct ChatBubbleView: View {
         }
     }
 
-    private var embeddedToolResultPayloads: [AgentEmbeddedResultPayload] {
+    private var embeddedToolResultItems: [AgentTranscriptItem] {
         guard showsAgentActivitySummary, let items = agentRun?.transcriptItems else { return [] }
-        return items.compactMap { item in
-            if case .toolResultCard(let payload) = item.kind {
-                return payload
-            }
-            return nil
+        return items.filter { item in
+            item.kind == .userVisibleToolResult
+                && (item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil)
         }
     }
 
@@ -590,7 +588,7 @@ struct ChatBubbleView: View {
             || locations?.isEmpty == false
             || routes?.isEmpty == false
             || !nativeUIBlocks.isEmpty
-            || !embeddedToolResultPayloads.isEmpty
+            || !embeddedToolResultItems.isEmpty
             || audioAssets?.isEmpty == false
     }
 
@@ -616,10 +614,10 @@ struct ChatBubbleView: View {
                 }
 
                 // 结构化内嵌工具结果卡片
-                if !embeddedToolResultPayloads.isEmpty {
-                    ForEach(Array(embeddedToolResultPayloads.enumerated()), id: \.offset) { _, payload in
-                        ChatEmbeddedResultHost(
-                            payload: payload,
+                if !embeddedToolResultItems.isEmpty {
+                    ForEach(embeddedToolResultItems) { item in
+                        AgentTranscriptToolResultView(
+                            item: item,
                             temporaryRecord: temporaryRecord,
                             onLaunchRequest: launchNativeApp
                         )
