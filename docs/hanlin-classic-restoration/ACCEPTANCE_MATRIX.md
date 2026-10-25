@@ -2,6 +2,7 @@
 
 - **Baseline Commit:** `478cdd2c23ae2b1a52044cff52ce720830128ea2`
 - **Target Branch:** `fix/classic-source-first-agent-acceptance-20261025`
+- **Verified Commit & CI Run:** Commit `d1f6233b` — GitHub Actions Run `40245401685` (`Build iOS 26 Unsigned IPA` / `AI_HLYTests/ClassicChatRestorationTests`: **7/7 Passed** on iPad Simulator / Xcode 26) + Local CI Python Regression Suite (**147/147 Passed**).
 - **Status Legend:**
   - `EXECUTED_PASS`: Freshly compiled and executed in unit/integration/CI test suite with passing assertions.
   - `REUSED_VERIFIED_PASS`: Verified passing on unchanged dependencies/contracts.
