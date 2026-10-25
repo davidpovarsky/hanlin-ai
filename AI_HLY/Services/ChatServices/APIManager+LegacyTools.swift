@@ -33,8 +33,8 @@ extension APIManager {
 
         let previousSearchResourcesCount = self.searchResources?.count ?? 0
         let previousLocationsCount = self.locationsInfo?.count ?? 0
-        let previousRoutesCount = self.routeInfo?.count ?? 0
-        let previousEventsCount = self.eventsInfo?.count ?? 0
+        let previousRoutesCount = self.storeRouteInfo?.count ?? 0
+        let previousEventsCount = self.events?.count ?? 0
         let previousHTML = self.htmlContent
         let previousHealthCount = self.healthCard?.count ?? 0
         let previousCodeCount = self.codeBlock?.count ?? 0
@@ -1017,8 +1017,8 @@ extension APIManager {
         }
 
         let addedLocations = (self.locationsInfo?.count ?? 0) > previousLocationsCount
-        let addedRoutes = (self.routeInfo?.count ?? 0) > previousRoutesCount
-        let addedEvents = (self.eventsInfo?.count ?? 0) > previousEventsCount
+        let addedRoutes = (self.storeRouteInfo?.count ?? 0) > previousRoutesCount
+        let addedEvents = (self.events?.count ?? 0) > previousEventsCount
         let addedHTML = (self.htmlContent?.isEmpty == false) && (self.htmlContent != previousHTML)
         let addedHealth = (self.healthCard?.count ?? 0) > previousHealthCount
         let addedCode = (self.codeBlock?.count ?? 0) > previousCodeCount
@@ -1039,8 +1039,8 @@ extension APIManager {
         if hasLegacyPayload {
             continuation?.yield(StreamData(
                 locations_info: addedLocations ? self.locationsInfo : nil,
-                route_info: addedRoutes ? self.routeInfo : nil,
-                events: addedEvents ? self.eventsInfo : nil,
+                route_info: addedRoutes ? self.storeRouteInfo : nil,
+                events: addedEvents ? self.events : nil,
                 htmlContent: addedHTML ? self.htmlContent : nil,
                 health_info: addedHealth ? self.healthCard : nil,
                 code_info: addedCode ? self.codeBlock : nil,

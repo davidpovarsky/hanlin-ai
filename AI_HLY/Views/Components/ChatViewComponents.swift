@@ -508,7 +508,7 @@ struct ChatBubbleView: View {
     private func assistantMessageView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             assistantHeader()
-            if let agentRun, showsAgentActivitySummary, !agentRun.activities.isEmpty {
+            if let agentRun, showsAgentActivitySummary, !agentRun.steps.isEmpty {
                 AgentActivitySummaryView(run: agentRun) {
                     legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
                 }
