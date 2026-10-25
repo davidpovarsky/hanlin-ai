@@ -106,22 +106,21 @@ struct ManageMCPServersTool: NativeTool {
                 }
                 let spec = try MCPPackageSpec(specStr)
                 let preview = try await provider.preview(spec: spec)
-                let binsText = preview.binEntries.isEmpty
+                let entryPointsText = preview.entryPoints.isEmpty
                     ? "none"
-                    : preview.binEntries.map { "\($0.name) -> \($0.relativePath)" }.joined(separator: ", ")
+                    : preview.entryPoints.joined(separator: ", ")
                 let output = """
-                ### MCP Package Preview: \(preview.packageName)@\(preview.resolvedVersion)
-                - Display Name: \(preview.displayName)
-                - Description: \(preview.packageDescription ?? "N/A")
-                - Compatible: \(preview.compatibility.status.rawValue)
-                - Selected Entry Point: \(preview.selectedEntryPoint ?? "none")
-                - Bin Entries: \(binsText)
+                ### MCP Package Preview: \(preview.packageName)@\(preview.version)
+                - Description: \(preview.summary ?? "N/A")
+                - Node Requirement: \(preview.nodeRequirement ?? "any")
+                - Compatibility Verdict: \(preview.compatibility.verdict.rawValue)
+                - Entry Points: \(entryPointsText)
                 - Dependencies Count: \(preview.dependencyCount)
                 """
                 return makeSuccess(
                     route: "mcp.preview",
                     modelText: output,
-                    userText: "\(preview.packageName)@\(preview.resolvedVersion)",
+                    userText: "\(preview.packageName)@\(preview.version)",
                     argumentKeys: Array(arguments.keys)
                 )
 
@@ -158,7 +157,7 @@ struct ManageMCPServersTool: NativeTool {
                         await refreshSessionMCPCatalog(session: session, provider: provider, chatUUID: chatUUID)
                     }
                     let statusState = provider.statuses[installed.id]?.state.rawValue ?? "unknown"
-                    let toolNames = tools.map(\.name).joined(separator: ", ")
+                    let toolNames = tools.map(\.originalName).joined(separator: ", ")
                     let output = """
                     ### MCP Server Installed & Activated
                     - ID: \(installed.id.uuidString)
@@ -284,7 +283,7 @@ struct ManageMCPServersTool: NativeTool {
                 let output = """
                 ### MCP Server \(action.capitalized): \(target.displayName) (\(target.slug))
                 - Runtime State: \(state)
-                - Discovered Tools (\(tools.count)): \(tools.map(\.name).joined(separator: ", "))\(errorNote)
+                - Discovered Tools (\(tools.count)): \(tools.map(\.originalName).joined(separator: ", "))\(errorNote)
                 """
                 return makeSuccess(
                     route: "mcp.\(action)",
@@ -311,8 +310,8 @@ struct ManageMCPServersTool: NativeTool {
                     "- Tool Count: \(tools.count)"
                 ]
                 for tool in tools {
-                    let desc = tool.description?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "No description"
-                    lines.append("  - `mcp__\(target.slug)__\(tool.name)` (raw: `\(tool.name)`): \(desc)")
+                    let desc = (tool.summary ?? tool.title)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "No description"
+                    lines.append("  - `\(tool.exposedName)` (raw: `\(tool.originalName)`): \(desc)")
                 }
                 return makeSuccess(
                     route: "mcp.list_tools",
@@ -470,6 +469,6 @@ struct ManageMCPServersTool: NativeTool {
         chatUUID: UUID?
     ) async {
         let scope = await provider.requestScope(chatID: chatUUID, temporary: false)
-        _ = await provider.controller.catalogEntries(scope: scope)
+        _ = await MCPToolBridge.resolveDescriptors(scope: scope)
     }
 }
