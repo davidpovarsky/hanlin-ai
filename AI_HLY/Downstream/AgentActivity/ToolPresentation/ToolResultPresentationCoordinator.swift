@@ -3,6 +3,7 @@ import Foundation
 enum ToolResultSuppressionReason: String, Codable, Hashable, Sendable {
   case notRequested
   case toolDoesNotSupportResultUI
+  case noUserFacingCardPayload
   case emptyResult
   case duplicate
   case invalidRequest
@@ -17,6 +18,7 @@ enum ToolResultPresentationCoordinator {
     call: AgentToolCall,
     profile: ToolPresentationProfile,
     hasPayload: Bool,
+    hasModelText: Bool = false,
     isDuplicate: Bool = false,
     isError: Bool = false
   ) -> ToolResultPresentationDecision {
@@ -31,18 +33,20 @@ enum ToolResultPresentationCoordinator {
 
     if isDuplicate {
       decision = suppressed(.duplicate)
-    } else if !hasPayload {
+    } else if !hasPayload && !hasModelText {
       decision = suppressed(.emptyResult)
+    } else if call.hadInvalidResultPresentation {
+      decision = suppressed(.invalidRequest)
+    } else if displayPolicy == .never || !supportsCard {
+      decision = suppressed(.toolDoesNotSupportResultUI)
+    } else if !hasPayload && hasModelText {
+      decision = suppressed(.noUserFacingCardPayload)
     } else if isError {
       decision = ToolResultPresentationDecision(
         shouldPresent: true,
         rendererKind: rendererKind ?? .modernNative,
         suppressionReason: nil
       )
-    } else if call.hadInvalidResultPresentation {
-      decision = suppressed(.invalidRequest)
-    } else if displayPolicy == .never || !supportsCard {
-      decision = suppressed(.toolDoesNotSupportResultUI)
     } else if displayPolicy == .modelControlled && call.resultPresentationRequest != .card {
       decision = suppressed(.notRequested)
     } else {

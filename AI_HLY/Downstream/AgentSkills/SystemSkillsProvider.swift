@@ -152,27 +152,55 @@ public enum SystemSkillsProvider {
             if let skillID = try? HanlinSkillID(validating: "code"),
                let desc = try? HanlinSkillDescriptor(
                    id: skillID,
-                   title: "Code Execution",
-                   summary: "Execute Python scripts, calculations, JavaScript/TypeScript, and render interactive web views.",
+                   title: "Code Execution & Runtime Tools",
+                   summary: "Execute Python scripts, calculations, JavaScript/TypeScript, terminal shell commands, inspect runtime capabilities, manage Python/Node packages, and render interactive web views.",
                    instructions: .inline("""
-                   Code and computation workflow:
+                   Code, scripting, and runtime workflow:
+                   - Call `get_runtime_capabilities` to inspect Python, Node, TypeScript, JSC, Shell, and MCP runtime states.
                    - Call `execute_local_python_code` for data analysis, math, file processing, and computations. Local Python starts automatically when needed.
                    - Call `quick_calculate` for simple single-expression math.
                    - Call `execute_javascript_code` or `execute_typescript_code` for JS/TS scripts.
                    - Call `execute_shell_command` for terminal commands when permitted.
+                   - Call `manage_runtime_packages` to list, preview, install, probe, or uninstall Python (PyPI) and Node (npm) packages.
+                   - Call `execute_skill_resource` to run bundled skill scripts.
                    - Call `create_web_view` to render HTML/JavaScript previews.
                    """),
-                   keywords: ["code", "python", "script", "compute", "execute", "math", "javascript", "typescript", "html"],
+                   keywords: ["code", "python", "script", "compute", "execute", "math", "javascript", "typescript", "shell", "terminal", "packages", "npm", "pip", "runtime", "html"],
                    preferredToolIDs: [
                        "execute_local_python_code",
+                       "get_runtime_capabilities",
                        "quick_calculate",
                        "execute_javascript_code",
                        "execute_typescript_code",
                        "execute_shell_command",
+                       "manage_runtime_packages",
+                       "execute_skill_resource",
                        "create_web_view"
                    ]
                ) {
                 descriptors.append(desc)
+            }
+
+            if let mcpSkillID = try? HanlinSkillID(validating: "mcp_servers"),
+               let mcpDesc = try? HanlinSkillDescriptor(
+                   id: mcpSkillID,
+                   title: "MCP Server Management & Tools",
+                   summary: "Inspect, preview, install, enable, select for chat, start, stop, restart, list tools, and uninstall local Model Context Protocol (MCP) servers.",
+                   instructions: .inline("""
+                   MCP server lifecycle and tool execution workflow:
+                   - Never claim that MCP installation or inspection is unavailable without checking `manage_mcp_servers`.
+                   - Call `manage_mcp_servers(action: "status")` or `manage_mcp_servers(action: "list")` to inspect whether MCP is globally enabled, which servers are installed, whether they are selected for the current chat, and whether their worker is running.
+                   - Call `manage_mcp_servers(action: "preview", package_spec: "<npm-spec>")` or `manage_mcp_servers(action: "install", package_spec: "<npm-spec>")` to preview or install an npm MCP server on device.
+                   - Call `manage_mcp_servers(action: "enable", server: "<slug>")`, `select_for_chat`, `start`, or `list_tools` to activate a server and discover its exposed `mcp__<slug>__<tool>` tools.
+                   """),
+                   keywords: ["mcp", "server", "modelcontextprotocol", "install", "tools", "plugin", "npm"],
+                   preferredToolIDs: [
+                       "manage_mcp_servers",
+                       "list_tools",
+                       "get_runtime_capabilities"
+                   ]
+               ) {
+                descriptors.append(mcpDesc)
             }
         }
 

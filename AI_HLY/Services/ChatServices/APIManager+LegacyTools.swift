@@ -31,6 +31,17 @@ extension APIManager {
         var executionEmbeddedPayload: HanlinEmbeddedResultPayload? = nil
         let toolCallID = context.toolCallID ?? name
 
+        let previousSearchResourcesCount = self.searchResources?.count ?? 0
+        let previousLocationsCount = self.locationsInfo?.count ?? 0
+        let previousRoutesCount = self.routeInfo?.count ?? 0
+        let previousEventsCount = self.eventsInfo?.count ?? 0
+        let previousHTML = self.htmlContent
+        let previousHealthCount = self.healthCard?.count ?? 0
+        let previousCodeCount = self.codeBlock?.count ?? 0
+        let previousKnowledgeCount = self.knowledgeCard?.count ?? 0
+        let previousCanvasTitle = self.canvasInfo?.title
+        let previousCanvasContent = self.canvasInfo?.content
+
         switch functionName {
                                             case "save_memory":
                                                 // 记忆函数
@@ -991,12 +1002,61 @@ extension APIManager {
             toolResultFront = toolResult
         }
 
+        let currentResources = self.searchResources ?? []
+        if currentResources.count > previousSearchResourcesCount {
+            let addedResources = Array(currentResources.dropFirst(previousSearchResourcesCount))
+            executionEvidenceItems = LegacyResourcesEvidenceAdapter.items(
+                from: addedResources,
+                providerName: self.searchEngine,
+                wasReturnedToModel: true
+            )
+            continuation?.yield(StreamData(
+                resources: self.searchResources,
+                searchEngine: self.searchEngine
+            ))
+        }
+
+        let addedLocations = (self.locationsInfo?.count ?? 0) > previousLocationsCount
+        let addedRoutes = (self.routeInfo?.count ?? 0) > previousRoutesCount
+        let addedEvents = (self.eventsInfo?.count ?? 0) > previousEventsCount
+        let addedHTML = (self.htmlContent?.isEmpty == false) && (self.htmlContent != previousHTML)
+        let addedHealth = (self.healthCard?.count ?? 0) > previousHealthCount
+        let addedCode = (self.codeBlock?.count ?? 0) > previousCodeCount
+        let addedKnowledge = (self.knowledgeCard?.count ?? 0) > previousKnowledgeCount
+        let addedCanvas = self.canvasInfo != nil && (
+            self.canvasInfo?.title != previousCanvasTitle
+            || self.canvasInfo?.content != previousCanvasContent
+        )
+        let hasLegacyPayload = addedLocations
+            || addedRoutes
+            || addedEvents
+            || addedHTML
+            || addedHealth
+            || addedCode
+            || addedKnowledge
+            || addedCanvas
+
+        if hasLegacyPayload {
+            continuation?.yield(StreamData(
+                locations_info: addedLocations ? self.locationsInfo : nil,
+                route_info: addedRoutes ? self.routeInfo : nil,
+                events: addedEvents ? self.eventsInfo : nil,
+                htmlContent: addedHTML ? self.htmlContent : nil,
+                health_info: addedHealth ? self.healthCard : nil,
+                code_info: addedCode ? self.codeBlock : nil,
+                knowledge_card: addedKnowledge ? self.knowledgeCard : nil,
+                canvas_info: addedCanvas ? self.canvasInfo : nil
+            ))
+        }
+
         return NativeToolResult(
             modelText: toolResult,
             userText: toolResultFront,
             outcome: executionOutcome,
             diagnostics: executionDiagnostics,
-            embeddedPayload: executionEmbeddedPayload
+            embeddedPayload: executionEmbeddedPayload,
+            evidenceItems: executionEvidenceItems,
+            hasLegacyPresentationPayload: hasLegacyPayload
         )
     }
 }

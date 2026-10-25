@@ -62,7 +62,7 @@ struct ListToolsTool: NativeTool {
             var miniAppTools: [NativeToolCatalogEntry] = []
 
             for entry in allEntries {
-                if entry.categories.contains("discovery") || entry.name == "load_skill" || entry.name == "tool_search" || entry.name == "read_tool_result" || entry.name == "read_skill_resource" || entry.name == "list_tools" || entry.name == "get_runtime_capabilities" || entry.name == "manage_runtime_packages" {
+                if entry.categories.contains("discovery") || entry.name == "load_skill" || entry.name == "tool_search" || entry.name == "read_tool_result" || entry.name == "read_skill_resource" || entry.name == "list_tools" || entry.name == "get_runtime_capabilities" || entry.name == "manage_runtime_packages" || entry.name == "manage_mcp_servers" {
                     metaTools.append(entry)
                 } else if entry.sourceAppID != nil {
                     miniAppTools.append(entry)

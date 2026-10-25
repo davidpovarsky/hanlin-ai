@@ -600,6 +600,7 @@
         "AI_HLYTests/CanonicalShadowCoordinatorTests",
         "AI_HLYTests/CanonicalToolAuthorityTests",
         "AI_HLYTests/ChatCanonicalPresentationSurvivalTests",
+        "AI_HLYTests/ClassicChatRestorationTests",
         "AI_HLYTests/EmbeddedResultResolverTests",
         "AI_HLYTests/FoundationJSONShadowAdapterTests",
         "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
@@ -805,6 +806,19 @@
       ],
       "unit_suites": [
         "AI_HLYTests/EmbeddedResultResolverTests"
+      ],
+      "consumers": []
+    },
+    "classic_chat_restoration_unit_tests": {
+      "description": "Classic source-first chat restoration and agent capability repair unit tests",
+      "patterns": [
+        "AI_HLYTests/ClassicChatRestorationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ClassicChatRestorationTests"
       ],
       "consumers": []
     },

@@ -23,8 +23,12 @@ struct AgentTranscriptActivityRow: View {
     }()
 
     let queries = activity?.queries ?? []
-    let reasoningDetails = isReasoning ? (activity?.outputPreview ?? activity?.narrativeText) : nil
-    let outputPreview = reasoningDetails ?? activity?.outputPreview
+    let reasoningDetails: String? = {
+      guard isReasoning else { return nil }
+      let raw = activity?.outputPreview ?? activity?.narrativeText
+      return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(raw)
+    }()
+    let outputPreview = isReasoning ? reasoningDetails : activity?.outputPreview
 
     ChatExecutionTimelineItemView(
       familyID: family,

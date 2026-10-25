@@ -98,6 +98,7 @@ struct ChatView: View {
     @State private var ifScroll = false                     // 控制滚动相关状态
     @State private var autoFollowController = ChatAutoFollowController()
     @State private var pendingAutoFollowTask: Task<Void, Never>?
+    @State private var measuredComposerHeight: CGFloat = 0
 
     // 提示词管理相关
     @State private var selectedPrompts: [PromptRepo] = []   // 选中的提示词
@@ -211,14 +212,35 @@ struct ChatView: View {
         }
     }
     
-    private func dynamicBottomPadding() -> CGFloat {
-        var baseHeight: CGFloat = 130 // 默认最小间距（针对 SwiftChat Liquid Glass Composer 优化）
-        if !selectedURLs.isEmpty { baseHeight += 32 }
-        if !selectedImages.isEmpty { baseHeight += 44 }
-        if !selectedDocumentURLs.isEmpty { baseHeight += 32 }
+    static func calculateDynamicBottomPadding(
+        measuredComposerHeight: CGFloat,
+        hasURLs: Bool,
+        hasImages: Bool,
+        hasDocuments: Bool,
+        showPhotoSourceOptions: Bool,
+        hasPrompts: Bool
+    ) -> CGFloat {
+        if measuredComposerHeight > 40 {
+            return max(96, min(measuredComposerHeight + 20, 420))
+        }
+        var baseHeight: CGFloat = 116
+        if hasURLs { baseHeight += 32 }
+        if hasImages { baseHeight += 44 }
+        if hasDocuments { baseHeight += 32 }
         if showPhotoSourceOptions { baseHeight += 110 }
-        if !selectedPrompts.isEmpty { baseHeight += 44 }
+        if hasPrompts { baseHeight += 44 }
         return baseHeight
+    }
+
+    private func dynamicBottomPadding() -> CGFloat {
+        Self.calculateDynamicBottomPadding(
+            measuredComposerHeight: measuredComposerHeight,
+            hasURLs: !selectedURLs.isEmpty,
+            hasImages: !selectedImages.isEmpty,
+            hasDocuments: !selectedDocumentURLs.isEmpty,
+            showPhotoSourceOptions: showPhotoSourceOptions,
+            hasPrompts: !selectedPrompts.isEmpty
+        )
     }
     
     var body: some View {
@@ -239,6 +261,7 @@ struct ChatView: View {
                     endPoint: .center
                 )
                 .frame(height: 120)
+                .allowsHitTesting(false)
                 .zIndex(0)
                 
                 ChatViewBottom(
@@ -288,6 +311,10 @@ struct ChatView: View {
                     imageReversePrompt: $imageReversePrompt,
                     isInputActive: $isInputActive
                 )
+            }
+            .onPreferenceChange(ComposerHeightPreferenceKey.self) { newHeight in
+                guard newHeight > 0, abs(measuredComposerHeight - newHeight) > 1 else { return }
+                measuredComposerHeight = newHeight
             }
         }
         .toolbar(horizontalSizeClass == .compact ? .hidden : .visible, for: .tabBar)
@@ -377,7 +404,7 @@ struct ChatView: View {
                             isEditingTitle = false
                         })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: UIScreen.main.bounds.width * 0.3) // 限制输入框宽度
+                        .frame(minWidth: 120, maxWidth: 220) // 限制输入框宽度
                         .multilineTextAlignment(.center)
                         .opacity(isEditingTitle ? 1 : 0) // 仅编辑模式可见
                     }
@@ -875,30 +902,18 @@ struct ChatView: View {
             ?? groupMessages.compactMap(\.agentRun).first
         let activityRun = storedActivityRun
             ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
-        let hasModernTranscript = storedActivityRun?.hasModernTranscript == true
-        let isAgentTranscriptOwner = hasModernTranscript && splitMarker
-        let hasLegacyResultContent = !msg.imageArray.isEmpty
-            || msg.codeBlockData?.isEmpty == false
-            || msg.knowledgeCard?.isEmpty == false
-            || msg.htmlContent?.isEmpty == false
-            || msg.events?.isEmpty == false
-            || msg.healthData?.isEmpty == false
-            || msg.locationsInfo?.isEmpty == false
-            || msg.routeInfos?.isEmpty == false
-            || msg.audioAssets?.isEmpty == false
-            || msg.showCanvas == true
-        if hasModernTranscript && !isAgentTranscriptOwner && !hasLegacyResultContent {
-            return AnyView(EmptyView())
-        }
-        let bubbleText = isAgentTranscriptOwner
-            ? AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? []) ?? ""
-            : (msg.text ?? "")
+        let rawMsgText = (msg.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let fallbackFinalAnswer = splitMarker
+            ? (AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? [])?
+                .trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+            : ""
+        let bubbleText = !rawMsgText.isEmpty ? rawMsgText : fallbackFinalAnswer
 
         // 1. 构造基础气泡
         let bubble = ChatBubbleView(
             temporaryRecord: TemporaryRecord,
             id: msg.id,
-            text: bubbleText.trimmingCharacters(in: .whitespacesAndNewlines),
+            text: bubbleText,
             saveTranlatedText: msg.translatedText,
             images: msg.imageArray,
             imagesText: msg.images_text,
@@ -922,8 +937,8 @@ struct ChatView: View {
             nativeUIBlocks: msg.nativeUIBlocks,
             agentRun: activityRun,
             showsAgentActivitySummary: splitMarker,
-            isAgentTranscriptOwner: isAgentTranscriptOwner,
-            isRenderedByAgentTranscript: hasModernTranscript,
+            isAgentTranscriptOwner: false,
+            isRenderedByAgentTranscript: false,
             searchEngine: msg.searchEngine,
             audioAssets: msg.audioAssets,
             isVoiceExpanded: audioExpandedBinding,
@@ -1604,11 +1619,33 @@ struct ChatView: View {
                     isResponding = false
                     respondIndex = 0
                     
-                    // 最终判断：仅当助手消息既没有文本又没有图片时，视为请求异常
+                    // 最终判断：仅当助手消息既没有文本又没有图片或富卡片结果时，视为请求异常
                     if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
-                        let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                        var textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                        if textContent.isEmpty,
+                           let recoveredAnswer = AgentTranscriptValidation.finalAnswer(in: agentCoordinator.run.transcriptItems)?
+                               .trimmingCharacters(in: .whitespacesAndNewlines),
+                           !recoveredAnswer.isEmpty {
+                            textContent = recoveredAnswer
+                            assistantMessage.text = recoveredAnswer
+                        }
                         let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
+                        let hasRichContent = !assistantMessage.imageArray.isEmpty
+                            || assistantMessage.codeBlockData?.isEmpty == false
+                            || assistantMessage.knowledgeCard?.isEmpty == false
+                            || assistantMessage.htmlContent?.isEmpty == false
+                            || assistantMessage.events?.isEmpty == false
+                            || assistantMessage.healthData?.isEmpty == false
+                            || assistantMessage.locationsInfo?.isEmpty == false
+                            || assistantMessage.routeInfos?.isEmpty == false
+                            || assistantMessage.audioAssets?.isEmpty == false
+                            || assistantMessage.nativeUIBlocks.isEmpty == false
+                            || assistantMessage.showCanvas == true
+                            || agentCoordinator.run.transcriptItems.contains(where: {
+                                if case .toolResultCard = $0.kind { return true }
+                                return false
+                            })
+                        if textContent.isEmpty && reasoningContent.isEmpty && !hasRichContent {
                             agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
                             Task { await apiManager?.completeAgentDiagnostics(status: "failed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
@@ -1780,20 +1817,27 @@ struct ChatView: View {
         var groupStart = tempIndex
         while groupStart > 0 {
             guard let previous = chatTemps[safe: groupStart - 1] else { break }
-            if previous.role == "assistant" && previous.groupID == targetGroupID {
+            if (previous.role == "assistant" || previous.role == "error") && previous.groupID == targetGroupID {
+                groupStart -= 1
+            } else if previous.role == "search" {
                 groupStart -= 1
             } else {
                 break
             }
         }
 
-        // Preserve the previous run and build the retry request from the history
-        // that preceded it. The new response receives a new group and run ID.
-        retryMessagesOverride = Array(chatTemps.prefix(groupStart))
+        // Remove the retried assistant/error group and any trailing system/error/search
+        // bubbles from this turn so retry cleanly replaces the turn in-place.
+        let removedMessages = Array(chatTemps.suffix(from: groupStart))
+        for removed in removedMessages {
+            context.delete(removed)
+        }
+        chatTemps.removeSubrange(groupStart..<chatTemps.count)
+        try? context.save()
+
+        retryMessagesOverride = nil
         isRetry = true
         handleMessageSending(ifObservingMode: isObserving)
-        isRetry = false
-        retryMessagesOverride = nil
     }
     
     private func selectModel(at index: Int) {

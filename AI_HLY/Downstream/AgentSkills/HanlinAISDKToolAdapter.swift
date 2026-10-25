@@ -713,10 +713,17 @@ final class HanlinAISDKToolAdapter {
             )
         }
 
+        let hasPayload = !effectiveUIBlocks.isEmpty
+            || embeddedPayload != nil
+            || result.hasLegacyPresentationPayload
+            || !result.evidenceItems.isEmpty
+        let hasModelText = !modelText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+
         let presentationDecision = ToolResultPresentationCoordinator.decide(
             call: parsedCall,
             profile: parsedCall.presentationProfile,
-            hasPayload: !effectiveUIBlocks.isEmpty || embeddedPayload != nil,
+            hasPayload: hasPayload,
+            hasModelText: hasModelText,
             isError: !isSuccess
         )
 
@@ -727,9 +734,10 @@ final class HanlinAISDKToolAdapter {
                     modelText: modelText,
                     userText: userText,
                     richResultBlocks: effectiveUIBlocks,
-                    evidenceItems: [],
-                    hasLegacyPresentationPayload: presentationDecision.shouldPresent
-                        && presentationDecision.rendererKind == .legacyExisting,
+                    evidenceItems: result.evidenceItems,
+                    hasLegacyPresentationPayload: result.hasLegacyPresentationPayload
+                        || (presentationDecision.shouldPresent
+                            && presentationDecision.rendererKind == .legacyExisting),
                     isError: !isSuccess,
                     semanticOutcome: result.outcome,
                     duration: executionDuration,

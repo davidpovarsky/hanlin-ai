@@ -3696,23 +3696,37 @@ class APIManager {
                     // 发请求
                     let (data, response) = try await URLSession.shared.data(for: request)
                     guard let httpResponse = response as? HTTPURLResponse else {
-                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "响应格式错误"])
+                        let invalidMsg = currentLanguagePrefix ? "图像生成响应格式错误" : "Invalid image generation response format"
+                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: invalidMsg])
                     }
                     guard httpResponse.statusCode == 200 else {
-                        throw NSError(domain: "ImageGen", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "图像生成请求失败"])
+                        let failureMessage = Self.buildImageGenerationFailureMessage(
+                            statusCode: httpResponse.statusCode,
+                            responseData: data,
+                            modelName: baseName,
+                            company: company,
+                            isChinese: currentLanguagePrefix
+                        )
+                        throw NSError(
+                            domain: "ImageGen",
+                            code: httpResponse.statusCode,
+                            userInfo: [NSLocalizedDescriptionKey: failureMessage]
+                        )
                     }
                     
                     let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
                     
-                    // 提取图片 URL
+                    // 提取图片 URL 或 Base64 数据
                     var imageURLString: String?
+                    var directImageData: Data?
                     
                     switch company {
                     case "QWEN":
                         // 异步返回，需要轮询 task_id（可以保留原先的轮询代码逻辑）
                         let output = json?["output"] as? [String: Any]
                         guard let taskId = output?["task_id"] as? String else {
-                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "未获取到任务 ID"])
+                            let msg = currentLanguagePrefix ? "未获取到图像生成任务 ID" : "Failed to obtain image generation task ID"
+                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                         }
                         
                         continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "排队生成图像" : "Waiting in line"))
@@ -3735,23 +3749,26 @@ class APIManager {
                                     break
                                 }
                             } else if taskStatus == "FAILED" {
-                                throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "任务失败"])
+                                let msg = currentLanguagePrefix ? "图像生成任务执行失败" : "Image generation task failed"
+                                throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                             }
                             
                             attempts -= 1
                         }
                         
-                    case "SILICONCLOUD", "HANLIN_OPEN", "MODELSCOPE":
-                        if let images = json?["images"] as? [[String: Any]],
-                           let urlStr = images.first?["url"] as? String {
-                            imageURLString = urlStr
-                        }
-                        
                     default:
-                        if let dataArr = json?["data"] as? [[String: Any]],
-                           let urlStr = dataArr.first?["url"] as? String {
-                            imageURLString = urlStr
-                        }
+                        let extracted = Self.extractGeneratedImagePayload(from: json, company: company)
+                        imageURLString = extracted.urlString
+                        directImageData = extracted.imageData
+                    }
+                    
+                    if let directImageData, let image = UIImage(data: directImageData) {
+                        var final = StreamData()
+                        final.image_content = [image]
+                        final.image_text = optimizedPrompt
+                        continuation.yield(final)
+                        continuation.finish()
+                        return
                     }
                     
                     // 下载图片并返回
@@ -3765,15 +3782,125 @@ class APIManager {
                             continuation.finish()
                             return
                         } else {
-                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "图片数据解码失败"])
+                            let msg = currentLanguagePrefix ? "图片数据解码失败" : "Failed to decode generated image data"
+                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                         }
                     } else {
-                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "未获取到图像 URL"])
+                        let msg = currentLanguagePrefix
+                            ? "未获取到图像结果（模型 \(baseName) 未返回有效的 url 或 b64_json）"
+                            : "No image returned (model \(baseName) did not return a valid url or b64_json)"
+                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                     }
                 } catch {
                     continuation.finish(throwing: error)
                 }
             }
+        }
+    }
+
+    enum ModelExecutionRoute: Equatable {
+        case localText
+        case remoteText
+        case remoteImageGeneration
+    }
+
+    nonisolated static func resolveModelExecutionRoute(
+        company: String?,
+        modelName: String?,
+        supportsTextGen: Bool,
+        supportsImageGen: Bool,
+        prefersImageGeneration: Bool = false
+    ) -> ModelExecutionRoute {
+        if company?.uppercased() == "LOCAL" {
+            return .localText
+        }
+        if supportsImageGen && (!supportsTextGen || prefersImageGeneration) {
+            return .remoteImageGeneration
+        }
+        if supportsTextGen {
+            return .remoteText
+        }
+        let baseName = restoreBaseModelName(from: modelName ?? "")
+        if ModelRefreshService.isKnownImageOnlyModelID(baseName) {
+            return .remoteImageGeneration
+        }
+        return .remoteText
+    }
+
+    nonisolated static func extractGeneratedImagePayload(
+        from json: [String: Any]?,
+        company: String
+    ) -> (urlString: String?, imageData: Data?) {
+        guard let json else { return (nil, nil) }
+        let items: [[String: Any]]
+        switch company.uppercased() {
+        case "SILICONCLOUD", "HANLIN_OPEN", "MODELSCOPE":
+            items = (json["images"] as? [[String: Any]]) ?? (json["data"] as? [[String: Any]]) ?? []
+        default:
+            items = (json["data"] as? [[String: Any]]) ?? (json["images"] as? [[String: Any]]) ?? []
+        }
+        guard let first = items.first else { return (nil, nil) }
+        if let b64 = (first["b64_json"] as? String) ?? (first["base64"] as? String),
+           !b64.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            let cleaned: String
+            if let commaIndex = b64.firstIndex(of: ","), b64.hasPrefix("data:image") {
+                cleaned = String(b64[b64.index(after: commaIndex)...])
+            } else {
+                cleaned = b64
+            }
+            if let decoded = Data(base64Encoded: cleaned, options: .ignoreUnknownCharacters) {
+                return (nil, decoded)
+            }
+        }
+        if let urlStr = first["url"] as? String, !urlStr.isEmpty {
+            if urlStr.hasPrefix("data:image"),
+               let commaIndex = urlStr.firstIndex(of: ",") {
+                let b64Part = String(urlStr[urlStr.index(after: commaIndex)...])
+                if let decoded = Data(base64Encoded: b64Part, options: .ignoreUnknownCharacters) {
+                    return (nil, decoded)
+                }
+            }
+            return (urlStr, nil)
+        }
+        return (nil, nil)
+    }
+
+    nonisolated static func buildImageGenerationFailureMessage(
+        statusCode: Int,
+        responseData: Data,
+        modelName: String,
+        company: String,
+        isChinese: Bool
+    ) -> String {
+        var detail = ""
+        if let json = try? JSONSerialization.jsonObject(with: responseData) as? [String: Any] {
+            if let errorDict = json["error"] as? [String: Any],
+               let msg = (errorDict["message"] as? String) ?? (errorDict["code"] as? String) {
+                detail = msg
+            } else if let msg = (json["message"] as? String) ?? (json["detail"] as? String) ?? (json["error"] as? String) {
+                detail = msg
+            }
+        }
+        if detail.isEmpty, let rawText = String(data: responseData, encoding: .utf8) {
+            detail = rawText
+                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        // Redact any accidental bearer/key tokens and bound length
+        detail = detail.replacingOccurrences(
+            of: "(?i)(bearer\\s+[a-z0-9._\\-]+|sk-[a-z0-9._\\-]{8,})",
+            with: "[REDACTED]",
+            options: .regularExpression
+        )
+        if detail.count > 220 {
+            detail = String(detail.prefix(220)) + "…"
+        }
+        if isChinese {
+            let suffix = detail.isEmpty ? "" : "：\(detail)"
+            return "图像生成请求失败（HTTP \(statusCode)，模型 \(modelName)）\(suffix)"
+        } else {
+            let suffix = detail.isEmpty ? "" : ": \(detail)"
+            return "Image generation request failed (HTTP \(statusCode), model \(modelName))\(suffix)"
         }
     }
     
@@ -3828,7 +3955,14 @@ class APIManager {
         await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
         
         let company = modelInfo.company?.uppercased()
-        if company == "LOCAL" {
+        let executionRoute = Self.resolveModelExecutionRoute(
+            company: company,
+            modelName: modelInfo.name ?? modelName,
+            supportsTextGen: modelInfo.supportsTextGen,
+            supportsImageGen: modelInfo.supportsImageGen
+        )
+        switch executionRoute {
+        case .localText:
             return try await processLocalModel(messages: messages,
                                                modelInfo: modelInfo,
                                                currentLanguage: currentLanguage,
@@ -3839,39 +3973,41 @@ class APIManager {
                                                systemMessage: systemMessage,
                                                isObservation: isObservation
             )
-        } else {
-            if modelInfo.supportsTextGen {
-                return try await processRemoteModel(messages: messages,
-                                                    modelInfo: modelInfo,
-                                                    groupID: groupID,
-                                                    runID: runID,
-                                                    currentLanguage: currentLanguage,
-                                                    ifSearch: ifSearch,
-                                                    ifKnowledge: ifKnowledge,
-                                                    ifToolUse: ifToolUse,
-                                                    assistantToolScope: assistantToolScope,
-                                                    ifThink: ifThink,
-                                                    ifAudio: ifAudio,
-                                                    ifPlanning: ifPlanning,
-                                                    thinkingLength: thinkingLength,
-                                                    planningMessage: "",
-                                                    isObservation: isObservation,
-                                                    temperature: temperature,
-                                                    topP: topP,
-                                                    maxTokens: maxTokens,
-                                                    canvasData: canvasData,
-                                                    selectedURLs: selectedURLs,
-                                                    selectedPromptsContent: selectedPromptsContent,
-                                                    systemMessage: systemMessage
-                )
-            } else {
-                return try await processImageGenModel(messages: messages,
-                                                      modelInfo: modelInfo,
-                                                      currentLanguage: currentLanguage,
-                                                      selectedImageSize: selectedImageSize,
-                                                      imageReversePrompt: imageReversePrompt
-                )
+        case .remoteText:
+            if !modelInfo.supportsTextGen {
+                modelInfo.supportsTextGen = true
+                try? context.save()
             }
+            return try await processRemoteModel(messages: messages,
+                                                modelInfo: modelInfo,
+                                                groupID: groupID,
+                                                runID: runID,
+                                                currentLanguage: currentLanguage,
+                                                ifSearch: ifSearch,
+                                                ifKnowledge: ifKnowledge,
+                                                ifToolUse: ifToolUse,
+                                                assistantToolScope: assistantToolScope,
+                                                ifThink: ifThink,
+                                                ifAudio: ifAudio,
+                                                ifPlanning: ifPlanning,
+                                                thinkingLength: thinkingLength,
+                                                planningMessage: "",
+                                                isObservation: isObservation,
+                                                temperature: temperature,
+                                                topP: topP,
+                                                maxTokens: maxTokens,
+                                                canvasData: canvasData,
+                                                selectedURLs: selectedURLs,
+                                                selectedPromptsContent: selectedPromptsContent,
+                                                systemMessage: systemMessage
+            )
+        case .remoteImageGeneration:
+            return try await processImageGenModel(messages: messages,
+                                                  modelInfo: modelInfo,
+                                                  currentLanguage: currentLanguage,
+                                                  selectedImageSize: selectedImageSize,
+                                                  imageReversePrompt: imageReversePrompt
+            )
         }
     }
 
@@ -3926,20 +4062,20 @@ class APIManager {
         let chatEngine = self.chatEngineFactory()
         let fetch = await chatEngine.makeAISDKFetch(
             onRequest: { [weak self] request in
-                let (recorder, roundID) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?) in
-                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID)
+                let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
+                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
                 }
-                if let recorder, let roundID {
+                if isActive, let recorder, let roundID {
                     let body = request.httpBody ?? Data()
                     let headers = request.allHTTPHeaderFields ?? [:]
                     await recorder.recordModelRequest(roundID: roundID, requestData: body, httpHeaders: headers)
                 }
             },
             onResponse: { [weak self] request, response in
-                let (recorder, roundID) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?) in
-                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID)
+                let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
+                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
                 }
-                if let recorder, let roundID {
+                if isActive, let recorder, let roundID {
                     let reqID = response.allHeaderFields["x-request-id"] as? String
                     await recorder.responseStarted(roundID: roundID, httpStatus: response.statusCode, providerRequestID: reqID)
                 }

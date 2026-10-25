@@ -50,6 +50,8 @@ struct NativeToolResult {
     var outcome: NativeToolExecutionOutcome
     var diagnostics: NativeToolExecutionDiagnostics
     var embeddedPayload: HanlinEmbeddedResultPayload?
+    var evidenceItems: [AgentEvidenceItem] = []
+    var hasLegacyPresentationPayload: Bool = false
     var isStoreEligible: Bool = false
     var fullResultPayload: String? = nil
     var fullResultMIMEType: String? = nil
@@ -66,6 +68,8 @@ struct NativeToolResult {
         outcome: NativeToolExecutionOutcome? = nil,
         diagnostics: NativeToolExecutionDiagnostics = .init(),
         embeddedPayload: HanlinEmbeddedResultPayload? = nil,
+        evidenceItems: [AgentEvidenceItem] = [],
+        hasLegacyPresentationPayload: Bool = false,
         isStoreEligible: Bool = false,
         fullResultPayload: String? = nil,
         fullResultMIMEType: String? = nil,
@@ -80,6 +84,8 @@ struct NativeToolResult {
         self.diagnostics.userResultByteCount = userText?.utf8.count ?? 0
         self.diagnostics.uiBlockTypes = uiBlocks.map { String(describing: $0.type) }
         self.embeddedPayload = embeddedPayload
+        self.evidenceItems = evidenceItems
+        self.hasLegacyPresentationPayload = hasLegacyPresentationPayload
         self.isStoreEligible = isStoreEligible
         self.fullResultPayload = fullResultPayload
         self.fullResultMIMEType = fullResultMIMEType

@@ -8,11 +8,11 @@ struct AgentInlineProcessItemView: View {
     var body: some View {
         switch item.kind {
         case .assistantText, .reasoning, .progress:
-            if let text = nonempty(item.text) {
+            if let text = sanitizedProcessText {
                 Text(text)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .lineLimit(item.kind == .progress ? 3 : 8)
+                    .lineLimit(3)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .textSelection(.enabled)
@@ -98,6 +98,11 @@ struct AgentInlineProcessItemView: View {
             return "\(base), \(detail)"
         }
         return base
+    }
+
+    private var sanitizedProcessText: String? {
+        guard let raw = nonempty(item.text) else { return nil }
+        return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(raw)
     }
 
     private func nonempty(_ value: String?) -> String? {

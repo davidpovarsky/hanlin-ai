@@ -397,7 +397,34 @@ class ModelRefreshService {
             update(.voiceGen, .failure, isZh ? "文本生成不可用，已跳过" : "Text generation unavailable, skipped")
         }
 
+        // Preserve text generation support when a probe fails transiently on a non-image model
+        if !capabilities.supportsTextGen && !capabilities.supportsImageGen && !isKnownImageOnlyModelID(baseName) {
+            capabilities.supportsTextGen = true
+        }
+
         return ModelCapabilityProbeSummary(capabilities: capabilities)
+    }
+
+    static func isKnownImageOnlyModelID(_ modelId: String) -> Bool {
+        let lower = restoreBaseModelName(from: modelId).lowercased()
+        let imageOnlyPrefixesOrTokens = [
+            "dall-e",
+            "gpt-image",
+            "imagen",
+            "flux",
+            "stable-diffusion",
+            "sdxl",
+            "wanx",
+            "cogview",
+            "kolors",
+            "midjourney",
+            "ideogram",
+            "recraft",
+            "seedream",
+            "hunyuan-dit",
+            "playground-v2"
+        ]
+        return imageOnlyPrefixesOrTokens.contains { lower.contains($0) }
     }
 
     private static func fetchAPIConfig(company: String, context: ModelContext) throws -> (apiKey: String, requestURL: String) {

@@ -201,9 +201,20 @@ enum ProgressSummarySanitizer {
 
     static func sanitizeProviderReasoningSummary(_ value: String?) -> String? {
         guard let sanitized = sanitize(value), sanitized.count <= 160 else { return nil }
+        guard !looksLikeRawChainOfThought(sanitized) else { return nil }
         let sentenceSeparators = sanitized.filter { ".!?。！？".contains($0) }
         guard sentenceSeparators.count <= 2 else { return nil }
         return sanitized
+    }
+
+    static func looksLikeRawChainOfThought(_ value: String) -> Bool {
+        let patterns = [
+            "(?i)^\\s*(thinking\\s*process|thought\\s*process|internal\\s*reasoning|chain\\s*of\\s*thought)\\s*:?",
+            "(?i)(understand\\s+the\\s+user'?s\\s+request|analyze\\s+the\\s+user'?s\\s+request|let'?s\\s+think\\s+step\\s+by\\s+step)",
+            "(?i)^\\s*\\d+\\.\\s*(understand|analyze|identify|determine|formulate|draft|check\\s+constraints)\\b",
+            "(?i)<\\/?think[^>]*>"
+        ]
+        return patterns.contains { value.range(of: $0, options: .regularExpression) != nil }
     }
 
     private static func looksLikeRawJSON(_ value: String) -> Bool {

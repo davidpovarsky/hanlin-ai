@@ -395,10 +395,14 @@ struct ListView: View {
                 }
                 .buttonStyle(.plain)
                 .listRowBackground(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(selectedChatRecord?.id == record.id ? Color.accentColor.opacity(0.12) : Color.clear)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
+                    ZStack {
+                        backgroundView(for: record)
+                        if selectedChatRecord?.id == record.id {
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .fill(Color.accentColor.opacity(0.12))
+                                .padding(3)
+                        }
+                    }
                 )
             } else {
                 NavigationLink(destination: {
@@ -481,19 +485,9 @@ struct ListView: View {
     // 使用 filteredChatRecords 计算属性替代原来的缓存数据
     @ViewBuilder
     private var chatRecordsSection: some View {
-        if !pinnedChatRecords.isEmpty {
-            Section(header: Text(String(localized: "置顶")).font(.caption.weight(.medium)).foregroundStyle(.secondary)) {
-                ForEach(pinnedChatRecords, id: \.id) { record in
-                    chatRecordRow(for: record)
-                }
-            }
-        }
-
-        if !recentChatRecords.isEmpty {
-            Section(header: Text(String(localized: "最近")).font(.caption.weight(.medium)).foregroundStyle(.secondary)) {
-                ForEach(recentChatRecords, id: \.id) { record in
-                    chatRecordRow(for: record)
-                }
+        Section(header: Text(String(localized: "对话")).font(.caption)) {
+            ForEach(filteredChatRecords, id: \.id) { record in
+                chatRecordRow(for: record)
             }
         }
     }

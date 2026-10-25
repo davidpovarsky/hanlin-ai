@@ -87,15 +87,15 @@ struct AgentActivityInspectorView: View {
     @ViewBuilder
     private func inspectorTranscriptItem(_ item: AgentTranscriptItem, isLast: Bool) -> some View {
         let selected = selectedActivityID == selectionID(for: item)
-        if item.kind == .assistantText || item.kind == .progress {
-            if let text = item.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+        if item.kind == .assistantText || item.kind == .progress || item.kind == .reasoning {
+            if let text = ProgressSummarySanitizer.sanitizeProviderReasoningSummary(item.text) {
                 AgentTranscriptTextView(text: text, usesMathRenderer: false)
                     .padding(10)
                     .background(highlight(selected), in: RoundedRectangle(cornerRadius: 12))
             }
         } else if let activity = AgentTranscriptPresentation.activity(for: item, in: timeline) {
             AgentInspectorActivityView(activity: activity, isSelected: selected, isLast: isLast)
-        } else if let text = item.text, !text.isEmpty {
+        } else if let text = ProgressSummarySanitizer.sanitizeProviderReasoningSummary(item.text) {
             Text(text)
                 .font(.subheadline)
                 .textSelection(.enabled)

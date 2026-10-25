@@ -440,20 +440,65 @@ struct ChatBubbleView: View {
     @State private var animateIn = false
     @ViewBuilder
     private func userMessageView() -> some View {
-        ChatUserMessageSurface(
-            text: text,
-            images: images,
-            uploadDocument: uploadDocument,
-            documentText: documentText,
-            prompts: prompts,
-            temporaryRecord: temporaryRecord,
-            onSaveKnowledge: { content in
-                createAndSaveKnowledgeRecord(with: content)
-            },
-            onDelete: {
-                showDeleteConfirmation = true
+        HStack {
+            Spacer()
+            VStack(alignment: .trailing, spacing: 6) {
+                
+                if let images = images, !images.isEmpty {
+                    chatBubbleImage()
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                }
+                
+                if let document = uploadDocument, !document.isEmpty {
+                    chatBubbleDocument(for: document)
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .trailing)
+                }
+                
+                if let prompts = prompts, !prompts.isEmpty {
+                    chatBubblePrompt()
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                }
+                
+                if !text.isEmpty {
+                    HStack {
+                        Text(text)
+                    }
+                    .padding(10)
+                    .background(temporaryRecord ? .primary : Color(.hlBlue))
+                    .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
+                    .contextMenu {
+                        Button(action: {
+                            UIPasteboard.general.string = markdownToPlainText(text)
+                        }) {
+                            Label(String(localized: "复制内容"), systemImage: "square.on.square")
+                        }
+                        Button(action: {
+                            isTextSelectionSheetPresented = true
+                        }) {
+                            Label(String(localized: "选择文本"), systemImage: "text.redaction")
+                        }
+                        Button(action: {
+                            createAndSaveKnowledgeRecord(with: text)
+                        }) {
+                            Label(String(localized: "存为知识"), systemImage: "backpack")
+                        }
+                        Button(action: {
+                            showDeleteConfirmation = true
+                        }) {
+                            Label(String(localized: "删除消息"), systemImage: "trash")
+                        }
+                    }
+                    .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
+                    .sheet(isPresented: $isTextSelectionSheetPresented) {
+                        TextSelectionView(text: text)
+                    }
+                }
             }
-        )
+        }
     }
     
     @State private var textOffset: CGFloat = 0
@@ -462,45 +507,15 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func assistantMessageView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            if isRenderedByAgentTranscript {
-                if isAgentTranscriptOwner, let agentRun {
-                    assistantHeader()
-                    AgentRunTranscriptView(
-                        run: agentRun,
-                        isResponding: isResponding,
-                        temporaryRecord: temporaryRecord,
-                        usesMathRenderer: mathMode,
-                        rendersFinalAnswer: false,
-                        onLaunchRequest: launchNativeApp
-                    )
+            assistantHeader()
+            if let agentRun, showsAgentActivitySummary, !agentRun.activities.isEmpty {
+                AgentActivitySummaryView(run: agentRun) {
+                    legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
                 }
-                assistantImageSection()
-                assistantLegacyResultSection()
-                if isAgentTranscriptOwner,
-                   let agentRun,
-                   agentRun.status != .running,
-                   agentRun.status != .pending {
-                    if !text.isEmpty {
-                        messageContent()
-                    }
-                    AgentEvidenceSummaryView(items: evidenceItemsForDisplay) {
-                        isEvidencePresented = true
-                    }
-                }
-                if isAgentTranscriptOwner && isLastAssistantGroup && !isResponding {
-                    actionButtons()
-                }
-            } else {
-                assistantHeader()
-                if let agentRun, showsAgentActivitySummary {
-                    AgentActivitySummaryView(run: agentRun) {
-                        legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
-                    }
-                }
-                assistantImageSection()
-                assistantTextSection()
-                assistantFooter()
             }
+            assistantImageSection()
+            assistantTextSection()
+            assistantFooter()
         }
         .transition(.move(edge: .leading).combined(with: .opacity))
         .animation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
@@ -555,10 +570,34 @@ struct ChatBubbleView: View {
         }
     }
 
+    private var embeddedToolResultPayloads: [AgentEmbeddedResultPayload] {
+        guard showsAgentActivitySummary, let items = agentRun?.transcriptItems else { return [] }
+        return items.compactMap { item in
+            if case .toolResultCard(let payload) = item.kind {
+                return payload
+            }
+            return nil
+        }
+    }
+
+    private var hasAssistantRichCards: Bool {
+        (showCanvas && canvas?.content.isEmpty == false)
+            || codeBlocks?.isEmpty == false
+            || knowledgeCard?.isEmpty == false
+            || htmlContent?.isEmpty == false
+            || events?.isEmpty == false
+            || healthCards?.isEmpty == false
+            || locations?.isEmpty == false
+            || routes?.isEmpty == false
+            || !nativeUIBlocks.isEmpty
+            || !embeddedToolResultPayloads.isEmpty
+            || audioAssets?.isEmpty == false
+    }
+
     // MARK: 文本 & 各类工具输出
     @ViewBuilder
     private func assistantTextSection() -> some View {
-        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || !nativeUIBlocks.isEmpty
+        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || hasAssistantRichCards
             || !evidenceItemsForDisplay.isEmpty {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
@@ -570,9 +609,21 @@ struct ChatBubbleView: View {
                 messageContent()
                     .transition(.move(edge: .top).combined(with: .opacity))
 
-                if !isResponding {
+                if !isResponding && (resources?.isEmpty != false) && !evidenceItemsForDisplay.isEmpty {
                     AgentEvidenceSummaryView(items: evidenceItemsForDisplay) {
                         isEvidencePresented = true
+                    }
+                }
+
+                // 结构化内嵌工具结果卡片
+                if !embeddedToolResultPayloads.isEmpty {
+                    ForEach(Array(embeddedToolResultPayloads.enumerated()), id: \.offset) { _, payload in
+                        ChatEmbeddedResultHost(
+                            payload: payload,
+                            temporaryRecord: temporaryRecord,
+                            onLaunchRequest: launchNativeApp
+                        )
+                        .transition(.move(edge: .top).combined(with: .opacity))
                     }
                 }
                 
@@ -629,51 +680,10 @@ struct ChatBubbleView: View {
         }
     }
 
-    @ViewBuilder
-    private func assistantLegacyResultSection() -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            if allowsLegacyResultPresentation {
-                if showCanvas, canvas?.content.isEmpty == false {
-                    canvasBubble(for: canvas)
-                }
-                if let codes = codeBlocks, !codes.isEmpty {
-                    codeBubble(for: codes)
-                }
-                if let cards = knowledgeCard, !cards.isEmpty {
-                    knowledgeCardBubble(for: cards)
-                }
-                if let htmls = htmlContent, !htmls.isEmpty {
-                    htmlWebBubble(for: htmls)
-                }
-                if let evs = events, !evs.isEmpty {
-                    eventsBubble(for: evs)
-                }
-                if let hcs = healthCards {
-                    nutritionCards(
-                        for: Binding<[HealthData]>(get: { hcs }, set: { _ in })
-                    )
-                }
-                if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
-                    mapBubble(for: locations ?? [], routes: routes ?? [])
-                }
-            }
-            if !isAgentTranscriptOwner || text.isEmpty {
-                audioView()
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    private var allowsLegacyResultPresentation: Bool {
-        guard let agentRun, agentRun.schemaVersion >= 3 else { return true }
-        return agentRun.transcriptItems.contains {
-            $0.kind == .userVisibleToolResult && $0.resultRendererKind == .legacyExisting
-        }
-    }
-
     private var evidenceItemsForDisplay: [AgentEvidenceItem] {
-        if isRenderedByAgentTranscript {
-            return AgentEvidenceAccumulator(items: agentRun?.evidenceItems ?? []).items
+        let runItems = agentRun?.evidenceItems ?? []
+        if !runItems.isEmpty {
+            return AgentEvidenceAccumulator(items: runItems).items
         }
         return AgentEvidenceAccumulator(items: LegacyResourcesEvidenceAdapter.items(
             from: resources ?? [],
@@ -685,10 +695,8 @@ struct ChatBubbleView: View {
     // MARK: 底部 Loading / 结束状态
     @ViewBuilder
     private func assistantFooter() -> some View {
-        if agentRun == nil && (
-            (!operationalState.isEmpty && isLastAssistant)
-            || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil)
-        ) {
+        if (!operationalState.isEmpty && isLastAssistant)
+            || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil && !hasAssistantRichCards) {
             loadingSection()
         }
         else if isResponding && isLastAssistant {
@@ -1563,152 +1571,290 @@ struct ChatBubbleView: View {
     
     @ViewBuilder
     private func actionButtons() -> some View {
-        ChatAssistantActionsView(
-            text: text,
-            isSpeaking: tts.isSpeaking,
-            isAskingSpeech: tts.isAsking,
-            isTranslating: isTranslating,
-            isTranslated: translated,
-            mathMode: mathMode,
-            onCopy: copyToClipboard,
-            onSelectText: { isTextSelectionSheetPresented = true },
-            onToggleSpeech: {
+        HStack(spacing: 8) {
+            // 复制按钮
+            Button(action: copyToClipboard) {
+                Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
+                    .font(.system(size: size_15, weight: .medium))
+                    .foregroundColor(isCopy ? Color.hlGreen : .secondary)
+                    .frame(width: size_24, height: size_24)
+                    .clipShape(Circle())
+                    .scaleEffect(isCopy ? 1.2 : 1.0)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .sensoryFeedback(.success, trigger: isSuccess)
+            
+            if isCopy {
+                Text(String(localized: "已复制"))
+                    .font(.system(size: size_12, weight: .medium))
+                    .foregroundColor(.hlGreen)
+                    .transition(.opacity.combined(with: .move(edge: .leading)))
+            }
+            
+            // 选择文本
+            Button(action: {
+                isTextSelectionSheetPresented = true
+            }) {
+                Image(systemName: "text.redaction")
+                    .font(.system(size: size_15, weight: .medium))
+                    .frame(width: size_24, height: size_24)
+                    .foregroundColor(.secondary)
+                    .clipShape(Circle())
+            }
+            .buttonStyle(PlainButtonStyle())
+            .sheet(isPresented: $isTextSelectionSheetPresented) {
+                TextSelectionView(text: text)
+            }
+            
+            // 语音朗读
+            Button(action: {
                 tts.setContextIfNeeded(modelContext)
                 tts.updateSelectedModel()
                 tts.setMessageId(id)
                 tts.toggleSpeech(text: text)
-            },
-            onTranslate: translateText,
-            onToggleMath: {
+            }) {
+                if tts.isAsking {
+                    ProgressView()
+                        .scaledToFit()
+                        .padding(2)
+                        .frame(width: size_24, height: size_24)
+                        .foregroundColor(.secondary)
+                        .clipShape(Circle())
+                        .tint(.hlBluefont)
+                } else {
+                    Image(systemName: tts.isSpeaking ? "pause.circle" : "waveform")
+                        .font(.system(size: size_16, weight: .medium))
+                        .frame(width: size_24, height: size_24)
+                        .foregroundColor(tts.isSpeaking ? Color(.systemRed) : .secondary)
+                        .clipShape(Circle())
+                        .scaleEffect(tts.isSpeaking ? 1.2 : 1.0)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: tts.isSpeaking)
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+            
+            if tts.isAsking {
+                Text(String(localized: "正在请求"))
+                    .font(.system(size: size_12, weight: .medium))
+                    .foregroundColor(.hlBluefont)
+                    .transition(.opacity.combined(with: .move(edge: .leading)))
+            }
+            
+            // 翻译按钮
+            Button(action: translateText) {
+                if isTranslating {
+                    ProgressView()
+                        .scaledToFit()
+                        .padding(2)
+                        .frame(width: size_24, height: size_24)
+                        .foregroundColor(.secondary)
+                        .clipShape(Circle())
+                        .tint(.hlBluefont)
+                } else if translated {
+                    ZStack(alignment: .center) {
+                        Image("translate")
+                            .resizable()
+                            .renderingMode(.template)
+                            .scaledToFit()
+                            .padding(2)
+                            .frame(width: size_20, height: size_20)
+                            .foregroundColor(.secondary)
+                            .clipShape(Circle())
+                        
+                        Image(systemName: "line.diagonal")
+                            .font(.system(size: size_20))
+                            .frame(width: size_24, height: size_24)
+                            .foregroundColor(.hlRed)
+                            .rotationEffect(.degrees(90))
+                            .background(
+                                Circle()
+                                    .fill(Color(.systemBackground).opacity(0.5))
+                                    .frame(width: size_24, height: size_24)
+                            )
+                    }
+                } else {
+                    Image("translate")
+                        .resizable()
+                        .renderingMode(.template)
+                        .scaledToFit()
+                        .padding(2)
+                        .frame(width: size_24, height: size_24)
+                        .foregroundColor(.secondary)
+                        .clipShape(Circle())
+                }
+            }
+            .disabled(isTranslating)
+            .buttonStyle(PlainButtonStyle())
+            .alert(String(localized: "翻译操作失败"), isPresented: $showErrorAlert) {
+                Button(String(localized: "确定"), role: .cancel) {}
+            } message: {
+                Text(errorMessage)
+            }
+            
+            if isTranslating {
+                Text(String(localized: "正在翻译"))
+                    .font(.system(size: size_12, weight: .medium))
+                    .foregroundColor(.hlBluefont)
+                    .transition(.opacity.combined(with: .move(edge: .leading)))
+            }
+            
+            // 科学模式
+            Button(action: {
                 mathMode.toggle()
                 showMathModeReminder = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     showMathModeReminder = false
                 }
-            },
-            onSaveKnowledge: {
-                createAndSaveKnowledgeRecord(with: text)
-            },
-            onRetry: onRetry,
-            onDelete: {
-                onDelete?()
+            }) {
+                Image(systemName: mathMode ? "note.text" : "x.squareroot")
+                    .font(.system(size: size_16, weight: .medium))
+                    .frame(width: size_24, height: size_24)
+                    .foregroundColor(showMathModeReminder ? .hlBluefont : .secondary)
+                    .clipShape(Circle())
             }
-        )
-        .sheet(isPresented: $isTextSelectionSheetPresented) {
-            TextSelectionView(text: text)
-        }
-        .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
-            if let record = recordToWrite {
-                NavigationStack {
-                    KnowledgeWritingView(knowledgeRecord: record, fromSheet: true)
+            
+            if showMathModeReminder {
+                Text(mathMode ? String(localized: "科学模式") : String(localized: "文本模式"))
+                    .font(.system(size: size_12, weight: .medium))
+                    .foregroundColor(.hlBluefont)
+                    .transition(.opacity.combined(with: .move(edge: .leading)))
+            }
+            
+            // 背包按钮
+            Button(action: {
+                createAndSaveKnowledgeRecord(with: text)
+            }) {
+                Image(systemName: "backpack")
+                    .font(.system(size: size_14, weight: .medium))
+                    .frame(width: size_24, height: size_24)
+                    .foregroundColor(.secondary)
+                    .clipShape(Circle())
+            }
+            .buttonStyle(PlainButtonStyle())
+            .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
+                if let record = recordToWrite {
+                    NavigationStack {
+                        KnowledgeWritingView(knowledgeRecord: record, fromSheet: true)
+                    }
                 }
             }
+            
+            // 重新请求
+            if let retryAction = onRetry {
+                Button(action: retryAction) {
+                    Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
+                        .font(.system(size: size_15, weight: .medium))
+                        .frame(width: size_24, height: size_24)
+                        .foregroundColor(.secondary)
+                        .clipShape(Circle())
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
         }
-        .alert(String(localized: "翻译操作失败"), isPresented: $showErrorAlert) {
-            Button(String(localized: "确定"), role: .cancel) {}
-        } message: {
-            Text(errorMessage)
-        }
+        .padding(.leading, 5)
+        .animation(
+            .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
+            value: [showMathModeReminder, isTranslating, isCopy, tts.isAsking]
+        )
     }
 
     // MARK: - AI 助手消息内容
     @ViewBuilder
     private func messageContent() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            if agentRun == nil {
-                reasoningView()
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-            }
+            reasoningView()
+                .transition(.opacity.combined(with: .move(edge: .top)))
             
-            Group {
-                if mathMode {
-                    LaTeX(text)
-                } else {
-                    Markdown(text)
-                }
-            }
-            .contextMenu {
-                // 复制
-                Button(action: {
-                    UIPasteboard.general.string = markdownToPlainText(text)
-                }) {
-                    Label(String(localized: "复制内容"), systemImage: "square.on.square")
-                }
-                
-                // 选中文本
-                Button(action: {
-                    isTextSelectionSheetPresented = true
-                }) {
-                    Label(String(localized: "选择文本"), systemImage: "text.redaction")
-                }
-                
-                // 生成语音
-                Button(action: {
-                    tts.setContextIfNeeded(modelContext)
-                    tts.updateSelectedModel()
-                    tts.setMessageId(id)
-                    tts.toggleSpeech(text: text)
-                }) {
-                    if tts.isAsking {
-                        Label(String(localized: "正在请求"), systemImage: "progress.indicator")
+            if !text.isEmpty {
+                Group {
+                    if mathMode {
+                        LaTeX(text)
                     } else {
-                        Label(String(localized: "生成语音"), systemImage: "waveform")
+                        Markdown(text)
                     }
                 }
-                
-                // 翻译/删除译文/翻译中…
-                Button(action: translateText) {
-                    if isTranslating {
-                        Label(String(localized: "正在翻译"), systemImage: "progress.indicator")
-                    } else if translated {
-                        Label(String(localized: "删除译文"), systemImage: "trash")
-                    } else {
-                        HStack {
-                            Image("translate")
-                                .renderingMode(.template)
-                                .font(.system(size: size_14, weight: .medium))
-                                .frame(width: size_24, height: size_24)
-                                .foregroundColor(.secondary)
-                                .clipShape(Circle())
-                            Text(String(localized: "翻译内容"))
+                .contextMenu {
+                    // 复制
+                    Button(action: {
+                        UIPasteboard.general.string = markdownToPlainText(text)
+                    }) {
+                        Label(String(localized: "复制内容"), systemImage: "square.on.square")
+                    }
+                    
+                    // 选中文本
+                    Button(action: {
+                        isTextSelectionSheetPresented = true
+                    }) {
+                        Label(String(localized: "选择文本"), systemImage: "text.redaction")
+                    }
+                    
+                    // 生成语音
+                    Button(action: {
+                        tts.setContextIfNeeded(modelContext)
+                        tts.updateSelectedModel()
+                        tts.setMessageId(id)
+                        tts.toggleSpeech(text: text)
+                    }) {
+                        if tts.isAsking {
+                            Label(String(localized: "正在请求"), systemImage: "progress.indicator")
+                        } else {
+                            Label(String(localized: "生成语音"), systemImage: "waveform")
                         }
                     }
-                }
-                
-                // 科学模式
-                Button(action: {
-                    mathMode.toggle()
-                    showMathModeReminder = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        showMathModeReminder = false
+                    
+                    // 翻译/删除译文/翻译中…
+                    Button(action: translateText) {
+                        if isTranslating {
+                            Label(String(localized: "正在翻译"), systemImage: "progress.indicator")
+                        } else if translated {
+                            Label(String(localized: "删除译文"), systemImage: "trash")
+                        } else {
+                            HStack {
+                                Image("translate")
+                                    .renderingMode(.template)
+                                    .font(.system(size: size_14, weight: .medium))
+                                    .frame(width: size_24, height: size_24)
+                                    .foregroundColor(.secondary)
+                                    .clipShape(Circle())
+                                Text(String(localized: "翻译内容"))
+                            }
+                        }
                     }
-                }) {
-                    if mathMode {
-                        Label(String(localized: "文本模式"), systemImage: "note.text")
-                    } else {
-                        Label(String(localized: "科学模式"), systemImage: "x.squareroot")
+                    
+                    // 科学模式
+                    Button(action: {
+                        mathMode.toggle()
+                        showMathModeReminder = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            showMathModeReminder = false
+                        }
+                    }) {
+                        if mathMode {
+                            Label(String(localized: "文本模式"), systemImage: "note.text")
+                        } else {
+                            Label(String(localized: "科学模式"), systemImage: "x.squareroot")
+                        }
                     }
-                }
-                
-                // 存为知识
-                Button(action: {
-                    createAndSaveKnowledgeRecord(with: text)
-                }) {
-                    Label(String(localized: "存为知识"), systemImage: "backpack")
-                }
-                
-                // 删除消息
-                Button(action: {
-                    showDeleteConfirmation = true
-                }) {
-                    Label(String(localized: "删除消息"), systemImage: "trash")
+                    
+                    // 存为知识
+                    Button(action: {
+                        createAndSaveKnowledgeRecord(with: text)
+                    }) {
+                        Label(String(localized: "存为知识"), systemImage: "backpack")
+                    }
+                    
+                    // 删除消息
+                    Button(action: {
+                        showDeleteConfirmation = true
+                    }) {
+                        Label(String(localized: "删除消息"), systemImage: "trash")
+                    }
                 }
             }
             
-            if agentRun == nil {
-                toolContentView()
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-            }
+            toolContentView()
+                .transition(.opacity.combined(with: .move(edge: .top)))
             
             audioView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
@@ -1716,10 +1862,8 @@ struct ChatBubbleView: View {
             translateView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
             
-            if evidenceItemsForDisplay.isEmpty {
-                resourcesView()
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-            }
+            resourcesView()
+                .transition(.opacity.combined(with: .move(edge: .top)))
 
         }
         .padding(.bottom, 6)
@@ -1854,12 +1998,12 @@ struct ChatBubbleView: View {
     }
     
     private var displayReasoningLines: [String] {
-        // 拆分 & 过滤
+        // 拆分 & 过滤（清洗掉模型原始英文内部提示，如 "Thinking Process:"）
         let raw = reasoning
             .split(whereSeparator: {
                 [".", "\n", "。"].contains(String($0))
             })
-            .map(String.init)
+            .compactMap { ProgressSummarySanitizer.sanitizeProviderReasoningSummary(String($0)) }
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         
         // 取最后 3 条
@@ -2521,11 +2665,11 @@ private struct CodeBlockRow: View {
     @State private var isFeedBack: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Label(String(localized: "程序运行结果"), systemImage: "apple.terminal")
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(Color.secondary)
+                    .font(.subheadline)
+                    .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
                 Spacer()
                 Button(action: {
                     isFeedBack.toggle()
@@ -2536,10 +2680,9 @@ private struct CodeBlockRow: View {
                         Text(String(localized: "查看源码"))
                     }
                     .font(.caption)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(Color(uiColor: .tertiarySystemFill))
-                    .foregroundStyle(Color.primary)
+                    .padding(6)
+                    .background(temporaryRecord ? Color.primary : Color.hlBlue)
+                    .foregroundColor(.white)
                     .clipShape(Capsule())
                 }
                 .sensoryFeedback(.impact, trigger: isFeedBack)
@@ -2552,19 +2695,17 @@ private struct CodeBlockRow: View {
                 .font(.caption.monospaced())
                 .foregroundColor(codeBlock.hasError ? .red : .primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, 2)
+                .padding(.vertical, 4)
                 .environment(\.layoutDirection, .leftToRight)
         }
-        .padding(12)
+        .padding(10)
+        .cornerRadius(20)
         .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(Color(uiColor: .secondarySystemGroupedBackground))
+            BlurView(style: .systemThinMaterial)
+                .cornerRadius(20)
+                .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
         )
-        .overlay(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
-        )
-        .frame(maxWidth: 720, alignment: .leading)
+        .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
     }
 }
 

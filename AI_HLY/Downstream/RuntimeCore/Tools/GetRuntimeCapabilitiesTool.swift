@@ -31,8 +31,8 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
             parameters: NativeToolSchema.object(
                 properties: [
                     "runtime": NativeToolSchema.string(
-                        description: RuntimeL10n.string("Optional runtime filter ('python', 'node', 'typescript', 'jsc', 'shell', or 'all'). Default is 'all'."),
-                        enumValues: ["python", "node", "typescript", "jsc", "shell", "all"]
+                        description: RuntimeL10n.string("Optional runtime filter ('python', 'node', 'typescript', 'jsc', 'shell', 'mcp', or 'all'). Default is 'all'."),
+                        enumValues: ["python", "node", "typescript", "jsc", "shell", "mcp", "all"]
                     )
                 ],
                 required: []
@@ -107,6 +107,22 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
                 - Network: HTTPS curl supported when `allow_network` is true or for `--version`
                 """
                 sections.append(shellSection)
+            }
+
+            // 5. MCP (Model Context Protocol) Runtime
+            if requestedRuntime == "all" || requestedRuntime == "mcp" || requestedRuntime == "node" {
+                let mcpProvider = MCPRuntimeProvider.shared
+                await mcpProvider.loadIfNeeded(startHost: false)
+                let installedNames = mcpProvider.servers.map { "\($0.slug) (\($0.packageName)@\($0.resolvedVersion))" }.joined(separator: ", ")
+                let mcpSection = """
+                ### MCP (Model Context Protocol) Host Runtime
+                - Feature Globally Enabled: \(mcpProvider.configuration.isEnabled)
+                - Host State: \(mcpProvider.runtimeSnapshot.state.rawValue)
+                - Active Worker Count: \(mcpProvider.runtimeSnapshot.activeWorkerCount)
+                - Installed MCP Servers (\(mcpProvider.servers.count)): \(installedNames.isEmpty ? "None" : installedNames)
+                - Management Tool: `manage_mcp_servers` (supports `status`, `list`, `preview`, `install`, `enable`, `disable`, `select_for_chat`, `start`, `stop`, `restart`, `list_tools`, `uninstall`)
+                """
+                sections.append(mcpSection)
             }
 
             let report = sections.joined(separator: "\n\n")

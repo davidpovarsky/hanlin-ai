@@ -12,6 +12,13 @@ import SwiftData
 import UniformTypeIdentifiers
 import UIKit
 
+struct ComposerHeightPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
 // MARK: - Native Multiline Text Editor with Real Placeholder and Paste Support
 
 struct NativeMultilineTextEditor: UIViewRepresentable {
@@ -370,6 +377,11 @@ struct ChatViewBottom: View {
                 composerContainer
             }
         }
+        .background(
+            GeometryReader { proxy in
+                Color.clear.preference(key: ComposerHeightPreferenceKey.self, value: proxy.size.height)
+            }
+        )
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 withAnimation {
@@ -507,56 +519,52 @@ struct ChatViewBottom: View {
                 attachmentTray
             }
 
-            // Main Liquid Glass Input Capsule
-            VStack(spacing: 4) {
-                HStack(alignment: .bottom, spacing: 8) {
-                    // + Menu (Attachments & Contextual Advanced Tools)
-                    plusAttachmentMenu
+            // External Accessory Bar: Model Selector + Compact Capability Summary
+            composerAccessoryBar
+                .padding(.horizontal, 4)
 
-                    // Multiline Auto-Growing Input
-                    NativeMultilineTextEditor(
-                        text: $message,
-                        textHeight: $textEditorHeight,
-                        placeholderText: String(localized: "Message"),
-                        minHeight: 38,
-                        maxHeight: 140,
-                        onPasteImage: { img in selectedImages.append(img) },
-                        onPasteFile: { url in selectedDocumentURLs.append(url) },
-                        onSendMessage: { handleSend() },
-                        onMentionTriggered: { updateModelSuggestions() }
-                    )
-                    .accessibilityIdentifier("hanlin-chat-input")
-                    .frame(height: textEditorHeight)
-                    .focused(isInputActive)
-                    .onChange(of: message) {
-                        handleMessageChange()
-                    }
+            // Main Liquid Glass Input Capsule (uncluttered input row only)
+            HStack(alignment: .bottom, spacing: 8) {
+                // + Menu (Attachments & Contextual Advanced Tools)
+                plusAttachmentMenu
 
-                    // Voice Input
-                    Button(action: {
-                        isFeedBack.toggle()
-                        voiceExpanded = true
-                    }) {
-                        Image(systemName: "mic.fill")
-                            .font(.system(size: 16))
-                            .foregroundColor(Color.secondary)
-                            .frame(width: 32, height: 32)
-                    }
-                    .buttonStyle(.plain)
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
-
-                    // Send / Stop Button
-                    sendOrStopButton
+                // Multiline Auto-Growing Input
+                NativeMultilineTextEditor(
+                    text: $message,
+                    textHeight: $textEditorHeight,
+                    placeholderText: String(localized: "Message"),
+                    minHeight: 38,
+                    maxHeight: 140,
+                    onPasteImage: { img in selectedImages.append(img) },
+                    onPasteFile: { url in selectedDocumentURLs.append(url) },
+                    onSendMessage: { handleSend() },
+                    onMentionTriggered: { updateModelSuggestions() }
+                )
+                .accessibilityIdentifier("hanlin-chat-input")
+                .frame(height: textEditorHeight)
+                .focused(isInputActive)
+                .onChange(of: message) {
+                    handleMessageChange()
                 }
-                .padding(.horizontal, 8)
-                .padding(.top, 6)
-                .padding(.bottom, 2)
 
-                // Bottom Status Row: Model Selector Pill + Active Tool Badges
-                bottomStatusRow
-                    .padding(.horizontal, 8)
-                    .padding(.bottom, 6)
+                // Voice Input
+                Button(action: {
+                    isFeedBack.toggle()
+                    voiceExpanded = true
+                }) {
+                    Image(systemName: "mic.fill")
+                        .font(.system(size: 16))
+                        .foregroundColor(Color.secondary)
+                        .frame(width: 32, height: 32)
+                }
+                .buttonStyle(.plain)
+                .sensoryFeedback(.impact, trigger: isFeedBack)
+
+                // Send / Stop Button
+                sendOrStopButton
             }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
             .background {
                 if #available(iOS 26, *) {
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -769,36 +777,91 @@ struct ChatViewBottom: View {
         }
     }
 
-    // MARK: - Bottom Status Row: Model Selector Pill + Active Capability Indicators
+    // MARK: - External Composer Accessory Bar: Model Selector + Compact Capability Summary
 
-    private var bottomStatusRow: some View {
+    private var activeCapabilityItems: [(id: String, name: String, icon: String, color: Color)] {
+        var items: [(id: String, name: String, icon: String, color: Color)] = []
+        if ifSearch {
+            items.append(("search", String(localized: "搜索"), "globe", .hlAzure))
+        }
+        if ifThink {
+            items.append(("think", String(localized: "思考"), "brain", .hlPurple))
+        }
+        if ifKnowledge {
+            items.append(("knowledge", String(localized: "知识库"), "backpack", .hlBluefont))
+        }
+        if ifToolUse {
+            items.append(("tools", String(localized: "工具"), "hammer", .hlBrown))
+        }
+        if ifPlanning {
+            items.append(("planning", String(localized: "规划"), "list.bullet.clipboard", .hlIndigo))
+        }
+        if ifAudio {
+            items.append(("audio", String(localized: "语音"), "speaker.wave.2", .hlPink))
+        }
+        return items
+    }
+
+    private var composerAccessoryBar: some View {
         HStack(spacing: 8) {
             modelSelectorCapsule
+                .layoutPriority(1)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
-                    if ifSearch {
-                        ActiveCapabilityBadge(name: String(localized: "搜索"), color: .hlAzure, onRemove: { ifSearch = false })
+            Spacer(minLength: 6)
+
+            if !activeCapabilityItems.isEmpty {
+                Menu {
+                    ForEach(activeCapabilityItems, id: \.id) { item in
+                        Button {
+                            isFeedBack.toggle()
+                            switch item.id {
+                            case "search": ifSearch = false
+                            case "think": ifThink = false
+                            case "knowledge": ifKnowledge = false
+                            case "tools": ifToolUse = false
+                            case "planning": ifPlanning = false
+                            case "audio": ifAudio = false
+                            default: break
+                            }
+                        } label: {
+                            Label(
+                                "\(item.name) (\(String(localized: "点击关闭")))",
+                                systemImage: item.icon
+                            )
+                        }
                     }
-                    if ifThink {
-                        ActiveCapabilityBadge(name: String(localized: "思考"), color: .hlPurple, onRemove: { ifThink = false })
+                } label: {
+                    HStack(spacing: 4) {
+                        ForEach(activeCapabilityItems.prefix(4), id: \.id) { item in
+                            Image(systemName: item.icon)
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundColor(item.color)
+                        }
+                        if activeCapabilityItems.count == 1, let first = activeCapabilityItems.first {
+                            Text(first.name)
+                                .font(.caption2.weight(.medium))
+                                .foregroundColor(first.color)
+                                .lineLimit(1)
+                        } else {
+                            Text("\(activeCapabilityItems.count)")
+                                .font(.caption2.monospacedDigit().weight(.semibold))
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    if ifKnowledge {
-                        ActiveCapabilityBadge(name: String(localized: "知识库"), color: .hlBluefont, onRemove: { ifKnowledge = false })
-                    }
-                    if ifToolUse {
-                        ActiveCapabilityBadge(name: String(localized: "工具"), color: .hlBrown, onRemove: { ifToolUse = false })
-                    }
-                    if ifPlanning {
-                        ActiveCapabilityBadge(name: String(localized: "规划"), color: .hlIndigo, onRemove: { ifPlanning = false })
-                    }
-                    if ifAudio {
-                        ActiveCapabilityBadge(name: String(localized: "语音"), color: .hlPink, onRemove: { ifAudio = false })
-                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 5)
+                    .background(
+                        Capsule()
+                            .fill(.ultraThinMaterial)
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                            )
+                    )
                 }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("hanlin-active-capabilities-pill")
             }
-
-            Spacer()
 
             if respondIndex > 0 && message.isEmpty && !isResponding {
                 Button(action: onSendObserve) {
@@ -806,8 +869,15 @@ struct ChatViewBottom: View {
                         .font(.caption2.weight(.medium))
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(Capsule().fill(Color.secondary.opacity(0.1)))
+                        .padding(.vertical, 5)
+                        .background(
+                            Capsule()
+                                .fill(.ultraThinMaterial)
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                                )
+                        )
                 }
                 .buttonStyle(.plain)
             }
@@ -851,7 +921,7 @@ struct ChatViewBottom: View {
                 Label(String(localized: "选择与添加模型..."), systemImage: "square.stack.3d.up")
             }
         } label: {
-            HStack(spacing: 4) {
+            HStack(spacing: 5) {
                 if let model = currentModel {
                     if model.identity == "model" {
                         Image(getCompanyIcon(for: model.company ?? "Unknown"))
@@ -863,21 +933,30 @@ struct ChatViewBottom: View {
                             .font(.system(size: 11))
                     }
                     Text(model.displayName ?? model.name ?? "Model")
-                        .font(.caption2.weight(.medium))
+                        .font(.caption.weight(.medium))
                         .lineLimit(1)
+                        .truncationMode(.middle)
                 } else {
                     Text(String(localized: "选择模型"))
-                        .font(.caption2.weight(.medium))
+                        .font(.caption.weight(.medium))
                 }
                 Image(systemName: "chevron.up.chevron.down")
-                    .font(.system(size: 8))
+                    .font(.system(size: 9, weight: .semibold))
             }
-            .foregroundColor(.secondary)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(Capsule().fill(Color.secondary.opacity(0.1)))
+            .foregroundColor(.primary.opacity(0.85))
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(
+                Capsule()
+                    .fill(.ultraThinMaterial)
+                    .overlay(
+                        Capsule()
+                            .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+                    )
+            )
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("hanlin-model-selector")
     }
 
     // MARK: - Attachment Previews Strip

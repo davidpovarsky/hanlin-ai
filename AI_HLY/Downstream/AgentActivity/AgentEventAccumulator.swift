@@ -30,6 +30,11 @@ struct AgentEventAccumulator {
   }
 
   mutating func apply(_ event: AgentEvent) {
+    if case .runStarted = event {
+      // Allow initial runStarted while status is .running
+    } else if run.status != .running && run.status != .pending {
+      return
+    }
     defer {
       run.transcriptItems = transcript.items
       run.evidenceItems = evidence.items

@@ -444,9 +444,12 @@ actor AgentDiagnosticsRecorder {
         trace("ModelRoundCompleted", roundID: roundID, fields: fields)
     }
 
+    var isComplete: Bool {
+        session.isComplete
+    }
+
     func complete(status: String, error: String? = nil) async {
         guard !session.isComplete else {
-            trace("LateMutationAttemptedAfterTerminal", fields: ["operation": "complete", "attemptedStatus": status])
             return
         }
         let normalizedStatus: String

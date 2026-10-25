@@ -7,6 +7,7 @@ extension NativeToolCatalog {
         register(ListToolsTool())
         register(GetRuntimeCapabilitiesTool())
         register(ManageRuntimePackagesTool())
+        register(ManageMCPServersTool())
         register(ExecuteSkillResourceTool())
         register(TorahOCRExcerptTool())
         register(TorahIdentifyExcerptTool())
