@@ -23,6 +23,7 @@ struct ListView: View {
     @State private var editingTitle: String = "title"
     
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @State private var columnVisibility: NavigationSplitViewVisibility = .doubleColumn
     @State private var selectedChatRecord: ChatRecords?
     @State private var navigationPath: [ChatRecords] = []
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
@@ -125,7 +126,7 @@ struct ListView: View {
     var body: some View {
         Group {
             if horizontalSizeClass == .regular {
-                NavigationSplitView {
+                NavigationSplitView(columnVisibility: $columnVisibility) {
                     content
                         .navigationTitle("ChavrusaChat")
                         .toolbar {
@@ -153,6 +154,7 @@ struct ListView: View {
                         )
                     }
                 }
+                .navigationSplitViewStyle(.balanced)
             } else {
                 NavigationStack(path: $navigationPath) {
                     content
@@ -640,6 +642,7 @@ struct ListView: View {
             timestamp: Date(),
             record: newChat
         )
+        newChat.messages = [welcomeMessage]
         
         do {
             modelContext.insert(newChat)
@@ -647,8 +650,12 @@ struct ListView: View {
             try modelContext.save()
             
             DispatchQueue.main.async {
-                navigationPath.append(newChat) // 触发跳转
-                selectedChatRecord = newChat
+                if horizontalSizeClass == .regular {
+                    selectedChatRecord = newChat
+                } else {
+                    navigationPath.append(newChat) // 触发跳转
+                    selectedChatRecord = newChat
+                }
             }
             
         } catch {

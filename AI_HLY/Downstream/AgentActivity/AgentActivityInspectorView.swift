@@ -45,6 +45,8 @@ struct AgentActivityInspectorView: View {
                     }
                     .padding()
                 }
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("hanlin-agent-activity-inspector")
                 .task(id: selectedActivityID) {
                     guard let selectedActivityID else { return }
                     await Task.yield()

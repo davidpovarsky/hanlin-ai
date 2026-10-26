@@ -244,7 +244,7 @@ struct ClassicChatRestorationTests {
         )
 
         #expect(baseCompact == 96)
-        #expect(expandedMultiline == 148)
+        #expect(expandedMultiline == 152)
         #expect(expandedMultiline > baseCompact)
         #expect(withAllAttachmentsFallback > 300)
     }

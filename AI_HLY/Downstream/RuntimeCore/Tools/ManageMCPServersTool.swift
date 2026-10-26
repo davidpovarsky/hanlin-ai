@@ -192,11 +192,12 @@ struct ManageMCPServersTool: NativeTool {
                     \(heading)
                     - ID: \(installed.id.uuidString)
                     - Slug: \(installed.slug)
-                    - Package (`package_installed`): true (\(installed.packageName)@\(installed.resolvedVersion))
-                    - Globally Enabled (`server_enabled`): \(installed.isGloballyEnabled)
-                    - Selected for Current Chat (`selected_for_current_chat`): \(selectedForCurrentChatText)
-                    - Effective for New Chats (`effective_for_new_chats`): \(effectiveForNewChats)
-                    - Worker Running (`worker_running`): \(workerRunning) (`\(statusState.rawValue)`)
+                    - global_mcp_enabled: \(provider.configuration.isEnabled)
+                    - server_installed: true (\(installed.packageName)@\(installed.resolvedVersion))
+                    - server_enabled: \(installed.isGloballyEnabled)
+                    - selected_for_current_chat: \(selectedForCurrentChatText)
+                    - effective_for_new_chats: \(effectiveForNewChats)
+                    - worker_running: \(workerRunning) (`\(statusState.rawValue)`)
                     - Discovered Tools (\(tools.count)): \(toolNames.isEmpty ? "none" : toolNames)\(startupErrorLine)
                     """
                     return makeSuccess(
@@ -268,7 +269,8 @@ struct ManageMCPServersTool: NativeTool {
                         session: session,
                         provider: provider,
                         chatUUID: chatUUID,
-                        temporary: isTemporary
+                        temporary: isTemporary,
+                        allowAutoStart: targetEnable
                     )
                 }
                 let summary = await buildStatusSummary(
@@ -308,7 +310,8 @@ struct ManageMCPServersTool: NativeTool {
                         session: session,
                         provider: provider,
                         chatUUID: chatUUID,
-                        temporary: isTemporary
+                        temporary: isTemporary,
+                        allowAutoStart: targetEnable
                     )
                 }
                 let summary = await buildStatusSummary(
@@ -346,7 +349,8 @@ struct ManageMCPServersTool: NativeTool {
                         session: session,
                         provider: provider,
                         chatUUID: chatUUID,
-                        temporary: isTemporary
+                        temporary: isTemporary,
+                        allowAutoStart: action != "stop"
                     )
                 }
                 let state = provider.statuses[target.id]?.state.rawValue ?? "stopped"
@@ -355,7 +359,7 @@ struct ManageMCPServersTool: NativeTool {
                 let output = """
                 ### MCP Server \(action.capitalized): \(target.displayName) (\(target.slug))
                 - Runtime State: \(state)
-                - Worker Running (`worker_running`): \(workerRunning)
+                - worker_running: \(workerRunning)
                 - Discovered Tools (\(tools.count)): \(tools.map(\.exposedName).joined(separator: ", "))\(errorNote)
                 """
                 return makeSuccess(
@@ -378,7 +382,8 @@ struct ManageMCPServersTool: NativeTool {
                         session: session,
                         provider: provider,
                         chatUUID: chatUUID,
-                        temporary: isTemporary
+                        temporary: isTemporary,
+                        allowAutoStart: targetEnable
                     )
                 }
                 var lines: [String] = [
@@ -444,12 +449,14 @@ struct ManageMCPServersTool: NativeTool {
                         session: session,
                         provider: provider,
                         chatUUID: chatUUID,
-                        temporary: isTemporary
+                        temporary: isTemporary,
+                        allowAutoStart: false
                     )
                 }
+                let remainingInstalled = !provider.servers.isEmpty
                 return makeSuccess(
                     route: "mcp.uninstall",
-                    modelText: "Uninstalled MCP server '\(removedName)' (`\(removedSlug)`). Remaining installed servers: \(provider.servers.count).",
+                    modelText: "Uninstalled MCP server '\(removedName)' (`\(removedSlug)`). server_installed: \(remainingInstalled). Remaining installed servers: \(provider.servers.count).",
                     userText: "Uninstalled MCP server '\(removedName)'.",
                     argumentKeys: Array(arguments.keys)
                 )
@@ -565,13 +572,13 @@ struct ManageMCPServersTool: NativeTool {
 
         var lines: [String] = [
             "### MCP Runtime & Server Status",
-            "- MCP Feature Globally Enabled (`global_mcp_enabled`): \(provider.configuration.isEnabled)",
+            "- global_mcp_enabled: \(provider.configuration.isEnabled)",
             "- Node Host State: \(provider.runtimeSnapshot.state.rawValue)",
-            "- Active Worker Count (`worker_running`): \(anyWorkerRunning) (\(provider.runtimeSnapshot.activeWorkerCount))",
-            "- Installed Servers Count (`server_installed`): \(anyServerInstalled) (\(provider.servers.count))",
-            "- Enabled Servers (`server_enabled`): \(anyServerEnabled)",
-            "- Selected for Current Chat (`selected_for_current_chat`): \(selectedForCurrentChatSummary)",
-            "- Effective for New Chats (`effective_for_new_chats`): \(!effectiveNewChatIDs.isEmpty) (\(effectiveNewChatIDs.count))"
+            "- worker_running: \(anyWorkerRunning) (\(provider.runtimeSnapshot.activeWorkerCount))",
+            "- server_installed: \(anyServerInstalled) (\(provider.servers.count))",
+            "- server_enabled: \(anyServerEnabled)",
+            "- selected_for_current_chat: \(selectedForCurrentChatSummary)",
+            "- effective_for_new_chats: \(!effectiveNewChatIDs.isEmpty) (\(effectiveNewChatIDs.count))"
         ]
         if let lastError = provider.lastError, !lastError.isEmpty {
             lines.append("- Last Error: \(lastError)")
@@ -592,7 +599,7 @@ struct ManageMCPServersTool: NativeTool {
                 lines.append("""
                 - **\(server.displayName)** (slug: `\(server.slug)`, id: `\(server.id.uuidString)`)
                   - Package: `\(server.packageName)@\(server.resolvedVersion)`
-                  - `server_installed`: true | `server_enabled`: \(server.isGloballyEnabled) | `selected_for_current_chat`: \(isSelectedText) | `effective_for_new_chats`: \(isEffectiveForNewChats) | `worker_running`: \(isWorkerRunning) (`\(runtimeState)`) | Cached Tools: \(toolCount)
+                  - server_installed: true | server_enabled: \(server.isGloballyEnabled) | selected_for_current_chat: \(isSelectedText) | effective_for_new_chats: \(isEffectiveForNewChats) | worker_running: \(isWorkerRunning) (`\(runtimeState)`) | Cached Tools: \(toolCount)
                 """)
             }
         }
@@ -603,9 +610,17 @@ struct ManageMCPServersTool: NativeTool {
         session: AssistantCapabilitySession,
         provider: MCPRuntimeProvider,
         chatUUID: UUID?,
-        temporary: Bool
+        temporary: Bool,
+        allowAutoStart: Bool = true
     ) async {
-        let scope = await provider.requestScope(chatID: chatUUID, temporary: temporary)
+        var scope = await provider.requestScope(chatID: chatUUID, temporary: temporary)
+        if !allowAutoStart {
+            let runningIDs = Set(provider.servers.filter { provider.statuses[$0.id]?.state == .running }.map(\.id))
+            scope = MCPRequestScope(
+                mcpGloballyEnabled: scope.mcpGloballyEnabled,
+                mcpServerIDs: scope.mcpServerIDs.intersection(runningIDs)
+            )
+        }
         let descriptors = await MCPToolBridge.resolveDescriptors(scope: scope)
         session.syncMCPTools(activeMCPAliases: descriptors.map(\.exposedName))
         await session.refreshDynamicTools()

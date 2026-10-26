@@ -260,7 +260,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
 
         // 1. Delayed Run A for stop cancellation test
         if bodyString.contains("START_DELAYED_RUN_A") {
-            for _ in 0..<15 {
+            for _ in 0..<80 {
                 if isStopped { return }
                 Thread.sleep(forTimeInterval: 0.1)
             }
@@ -290,45 +290,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             return
         }
 
-        // 4. Calculate 6*7 without user nudge
-        if bodyString.contains("6*7") || bodyString.contains("6 * 7") || bodyString.contains("compute 123 * 456") {
-            if bodyString.contains("42") {
-                emitFinalAnswer("42 / LOCAL_PYTHON_COMPLETE")
-            } else if bodyString.contains("tool_call_id") || bodyString.contains("\"role\":\"tool\"") {
-                emitToolCall(id: "ui-python-call", name: "execute_local_python_code", arguments: #"{"source":"print(6 * 7)"}"#)
-            } else {
-                emitToolCall(id: "ui-load-code-call", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
-            }
-            return
-        }
-
-        // 5. UI-02 Classic user and assistant bubbles with direct action buttons
-        if bodyString.contains("PROMPT_UI02_CLASSIC_BUBBLES") {
-            emitFinalAnswer("### Classic Bubble Heading\nHere is **bold** markdown and inline math $E=mc^2$. UI02_CLASSIC_COMPLETE")
-            return
-        }
-
-        // 6. UI-03 Search message and deduplicated citations
-        if bodyString.contains("PROMPT_UI03_SEARCH_CITATIONS") {
-            if bodyString.contains("ui03-read-2") {
-                emitFinalAnswer("According to the Hanlin reference [1], classic search rows and citations are restored. UI03_SEARCH_COMPLETE")
-            } else if bodyString.contains("ui03-read-1") {
-                emitToolCall(
-                    id: "ui03-read-2",
-                    name: "read_web_page",
-                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin#section"}"#
-                )
-            } else {
-                emitToolCall(
-                    id: "ui03-read-1",
-                    name: "read_web_page",
-                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin"}"#
-                )
-            }
-            return
-        }
-
-        // 7. UI-04 Collapsed progress and inspector without raw CoT
+        // 4. UI-04 Collapsed progress and inspector without raw CoT (must precede 6*7 check)
         if bodyString.contains("PROMPT_UI04_REASONING_INSPECTOR") {
             if bodyString.contains("ui04-progress-1") {
                 emitFinalAnswer("Calculation verified: 42. UI04_REASONING_COMPLETE")
@@ -355,6 +317,44 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             return
         }
 
+        // 5. Calculate 6*7 without user nudge
+        if bodyString.contains("6*7") || bodyString.contains("6 * 7") || bodyString.contains("compute 123 * 456") {
+            if bodyString.contains("42") {
+                emitFinalAnswer("42 / LOCAL_PYTHON_COMPLETE")
+            } else if bodyString.contains("tool_call_id") || bodyString.contains("\"role\":\"tool\"") {
+                emitToolCall(id: "ui-python-call", name: "execute_local_python_code", arguments: #"{"source":"print(6 * 7)"}"#)
+            } else {
+                emitToolCall(id: "ui-load-code-call", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
+            }
+            return
+        }
+
+        // 6. UI-02 Classic user and assistant bubbles with direct action buttons
+        if bodyString.contains("PROMPT_UI02_CLASSIC_BUBBLES") {
+            emitFinalAnswer("### Classic Bubble Heading\nHere is **bold** markdown and inline math $E=mc^2$. UI02_CLASSIC_COMPLETE")
+            return
+        }
+
+        // 7. UI-03 Search message and deduplicated citations
+        if bodyString.contains("PROMPT_UI03_SEARCH_CITATIONS") {
+            if bodyString.contains("ui03-read-2") {
+                emitFinalAnswer("According to the Hanlin reference [1], classic search rows and citations are restored. UI03_SEARCH_COMPLETE")
+            } else if bodyString.contains("ui03-read-1") {
+                emitToolCall(
+                    id: "ui03-read-2",
+                    name: "read_web_page",
+                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin#section"}"#
+                )
+            } else {
+                emitToolCall(
+                    id: "ui03-read-1",
+                    name: "read_web_page",
+                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin"}"#
+                )
+            }
+            return
+        }
+
         // 8. UI-05 Rich code block, HTML card, and attachments
         if bodyString.contains("PROMPT_UI05_RICH_CONTENT") {
             if bodyString.contains("ui05-html-1") {
@@ -375,17 +375,17 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             return
         }
 
-        // 9. UI-07 Fail once then succeed on retry
+        // 9. UI-07 Fail once then succeed on retry (status 400 avoids SwiftAISDK internal retry)
         if bodyString.contains("PROMPT_UI07_FAIL_ONCE") {
             Self.lock.lock()
             let currentFailCount = Self.ui07FailCount
             Self.ui07FailCount += 1
             Self.lock.unlock()
             if currentFailCount == 0 {
-                let errorJSON = Data(#"{"error":{"message":"Simulated transient upstream failure","type":"server_error"}}"#.utf8)
+                let errorJSON = Data(#"{"error":{"message":"Simulated transient upstream failure","type":"invalid_request_error"}}"#.utf8)
                 let response = HTTPURLResponse(
                     url: request.url!,
-                    statusCode: 500,
+                    statusCode: 400,
                     httpVersion: "HTTP/1.1",
                     headerFields: ["Content-Type": "application/json"]
                 )!

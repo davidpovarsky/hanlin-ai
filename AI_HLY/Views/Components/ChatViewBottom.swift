@@ -787,9 +787,9 @@ struct ChatViewBottom: View {
                 .foregroundColor(TemporaryRecord ? .primary : Color.hlBluefont)
                 .frame(width: 32, height: 32)
                 .background(Circle().fill(Color.secondary.opacity(0.12)))
+                .accessibilityIdentifier("hanlin-composer-plus-menu")
         }
         .buttonStyle(.plain)
-        .accessibilityIdentifier("hanlin-composer-plus-menu")
     }
 
     // MARK: - Send / Stop Button
@@ -906,7 +906,7 @@ struct ChatViewBottom: View {
                 .accessibilityIdentifier("hanlin-active-capabilities-pill")
             }
 
-            if respondIndex > 0 && message.isEmpty && !isResponding {
+            if (respondIndex > 0 && message.isEmpty && !isResponding) || (!isResponding && !message.isEmpty) {
                 Button(action: onSendObserve) {
                     Text(String(localized: "继续生成"))
                         .font(.caption2.weight(.medium))
@@ -928,6 +928,7 @@ struct ChatViewBottom: View {
                 .accessibilityIdentifier("hanlin-continue-generation-pill")
             }
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-accessory-bar")
     }
 
@@ -1004,7 +1005,8 @@ struct ChatViewBottom: View {
             )
         }
         .buttonStyle(.plain)
-        .accessibilityIdentifier("hanlin-model-selector")
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-model-selector-capsule")
     }
 
     // MARK: - Attachment Previews Strip
@@ -1036,6 +1038,7 @@ struct ChatViewBottom: View {
                     }
                     .padding(4)
                     .background(Capsule().fill(Color.secondary.opacity(0.12)))
+                    .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("hanlin-composer-image-attachment")
                 }
 
@@ -1062,6 +1065,7 @@ struct ChatViewBottom: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(Capsule().fill(Color.secondary.opacity(0.12)))
+                    .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("hanlin-composer-document-attachment")
                 }
 

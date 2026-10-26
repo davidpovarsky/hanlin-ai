@@ -45,11 +45,14 @@ struct ListToolsTool: NativeTool {
         do {
             let arguments = try? NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
-                allowedKeys: ["offset", "limit", "include_disabled"]
+                allowedKeys: ["offset", "limit", "include_disabled", "category"]
             )
             let offset = (try? NativeToolJSON.strictOptionalInt(arguments ?? [:], "offset")) ?? 0
-            let limit = min(max((try? NativeToolJSON.strictOptionalInt(arguments ?? [:], "limit")) ?? 20, 1), 100)
+            let limit = min(max((try? NativeToolJSON.strictOptionalInt(arguments ?? [:], "limit")) ?? 50, 1), 100)
             let includeDisabled = (try? NativeToolJSON.strictOptionalBool(arguments ?? [:], "include_disabled")) ?? true
+            let categoryFilter = (try? NativeToolJSON.strictOptionalString(arguments ?? [:], "category"))?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .lowercased()
 
             NativeToolCatalog.shared.ensureBuiltinsRegistered()
             var allEntries = NativeToolCatalog.shared.allEntries()
@@ -105,6 +108,10 @@ struct ListToolsTool: NativeTool {
             let filteredEntries = allEntries.filter { entry in
                 if !includeDisabled && !entry.categories.contains("mcp") && !NativeToolCatalog.shared.isEffectivelyEnabled(entry) {
                     return false
+                }
+                if let categoryFilter, !categoryFilter.isEmpty {
+                    let matchesCategory = entry.categories.contains { $0.lowercased() == categoryFilter }
+                    if !matchesCategory { return false }
                 }
                 return true
             }

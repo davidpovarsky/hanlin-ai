@@ -2108,9 +2108,7 @@ enum ChatTurnStateOperations {
         var groupStart = tempIndex
         while groupStart > 0 {
             guard let previous = chatTemps[safe: groupStart - 1] else { break }
-            if (previous.role == "assistant" || previous.role == "error") && previous.groupID == targetGroupID {
-                groupStart -= 1
-            } else if previous.role == "search" || previous.role == "information" {
+            if previous.role != "user" {
                 groupStart -= 1
             } else {
                 break

@@ -434,6 +434,7 @@ struct ChatBubbleView: View {
                 .cornerRadius(20)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .leading)
+                .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("hanlin-search-bubble")
                 .contextMenu {
                     Button(action: {
@@ -462,12 +463,14 @@ struct ChatBubbleView: View {
                 if let images = images, !images.isEmpty {
                     chatBubbleImage()
                         .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
+                        .accessibilityElement(children: .contain)
                         .accessibilityIdentifier("hanlin-user-image-attachment")
                 }
                 
                 if let document = uploadDocument, !document.isEmpty {
                     chatBubbleDocument(for: document)
                         .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .trailing)
+                        .accessibilityElement(children: .contain)
                         .accessibilityIdentifier("hanlin-user-document-attachment")
                 }
                 
@@ -524,19 +527,29 @@ struct ChatBubbleView: View {
     @State private var textOffset: CGFloat = 0
     
     // MARK: - AI 助手消息
+    @State private var isAgentProcessExpanded: Bool = false
+
     @ViewBuilder
     private func assistantMessageView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             assistantHeader()
             if let agentRun, showsAgentActivitySummary, !agentRun.steps.isEmpty {
-                AgentActivitySummaryView(run: agentRun) {
+                let timeline = AgentActivityComposer.compose(agentRun)
+                AgentActivitySummaryView(run: agentRun, isExpanded: isAgentProcessExpanded) {
+                    isAgentProcessExpanded.toggle()
                     legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
+                }
+                if isAgentProcessExpanded {
+                    AgentInlineProcessView(run: agentRun, timeline: timeline) { selectedID in
+                        legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: selectedID)
+                    }
                 }
             }
             assistantImageSection()
             assistantTextSection()
             assistantFooter()
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-assistant-bubble")
         .transition(.move(edge: .leading).combined(with: .opacity))
         .animation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
@@ -632,6 +645,8 @@ struct ChatBubbleView: View {
                     AgentEvidenceSummaryView(items: evidenceItemsForDisplay) {
                         isEvidencePresented = true
                     }
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier("hanlin-reference-materials")
                 }
 
                 // 结构化内嵌工具结果卡片
@@ -1011,6 +1026,7 @@ struct ChatBubbleView: View {
                         .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
                 .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
+                .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("hanlin-html-web-bubble")
             
             HStack(spacing: 6) {
@@ -1783,6 +1799,7 @@ struct ChatBubbleView: View {
                 .accessibilityIdentifier("hanlin-action-retry")
             }
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-action-buttons-row")
         .padding(.leading, 5)
         .animation(
@@ -2264,6 +2281,7 @@ struct ChatBubbleView: View {
                     .padding(.bottom, 5)
                 }
             }
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-reference-materials")
         }
     }
@@ -2399,6 +2417,7 @@ struct ChatBubbleView: View {
                 .stroke(Color.hlOrange.opacity(0.3), lineWidth: 1)
         )
         .cornerRadius(20)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-error-bubble")
     }
 
@@ -2749,6 +2768,7 @@ struct CodeBlockRow: View {
                 .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
         )
         .frame(maxWidth: effectiveWidth * 0.95, alignment: .leading)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-code-block-row")
     }
 }
@@ -2769,6 +2789,7 @@ struct WebView: UIViewRepresentable {
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
         
         let webView = WKWebView(frame: .zero, configuration: config)
+        webView.accessibilityIdentifier = "hanlin-html-web-bubble"
         webView.navigationDelegate = context.coordinator
         webView.scrollView.isScrollEnabled = true
         webView.allowsBackForwardNavigationGestures = true

@@ -772,11 +772,50 @@ final class HanlinAISDKToolAdapter {
             ))
         }
 
-        callbacks.onStreamData?(StreamData(
+        let rawArgs = (try? JSONSerialization.jsonObject(with: Data(argumentsJSON.utf8))) as? [String: Any]
+        var streamData = StreamData(
             toolContent: userText,
             toolName: alias,
             operationalDescription: userText
-        ))
+        )
+
+        if alias == "read_web_page" || alias == "web_search" {
+            let urlArg = (rawArgs?["url"] as? String) ?? ""
+            let queryArg = (rawArgs?["query"] as? String) ?? ""
+            streamData.search_text = userText.isEmpty ? modelText : userText
+            streamData.searchEngine = "Web"
+            var mappedResources: [Resource] = result.evidenceItems.compactMap { item in
+                guard let link = item.url, !link.isEmpty else { return nil }
+                return Resource(icon: link, title: item.title, link: link)
+            }
+            if mappedResources.isEmpty, !urlArg.isEmpty {
+                mappedResources.append(Resource(icon: urlArg, title: urlArg, link: urlArg))
+            } else if mappedResources.isEmpty, !queryArg.isEmpty {
+                mappedResources.append(Resource(icon: "", title: queryArg, link: "https://search.local/\(queryArg)"))
+            }
+            if !mappedResources.isEmpty {
+                streamData.resources = mappedResources
+            }
+        } else if alias == "execute_python_code" || alias == "execute_local_python_code" || alias == "execute_javascript_code" {
+            let codeSource = (rawArgs?["code"] as? String) ?? (rawArgs?["source"] as? String) ?? ""
+            let codeType = alias.contains("javascript") ? "javascript" : "python"
+            streamData.code_info = [
+                CodeBlock(
+                    codeType: codeType,
+                    code: codeSource,
+                    output: userText.isEmpty ? modelText : userText,
+                    isRunning: false,
+                    hasError: !isSuccess,
+                    isExpanded: true
+                )
+            ]
+        } else if alias == "create_web_view" {
+            if let htmlCode = (rawArgs?["code"] as? String) ?? (rawArgs?["html"] as? String), !htmlCode.isEmpty {
+                streamData.htmlContent = htmlCode
+            }
+        }
+
+        callbacks.onStreamData?(streamData)
 
         if let recorder = diagnosticsRecorder, let roundID = await resolveRoundID() {
             await recorder.completeToolCall(
