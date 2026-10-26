@@ -70,6 +70,7 @@ struct AgentActivityInspectorView: View {
                     } label: {
                         Label(String(localized: "Close"), systemImage: "xmark")
                     }
+                    .accessibilityIdentifier("hanlin-inspector-close")
                 }
             }
         }
@@ -180,7 +181,8 @@ private struct AgentInspectorActivityView: View {
             if let input = activity.inputPreview {
                 detailText(input, monospaced: activity.kind == .code)
             }
-            if let output = activity.outputPreview {
+            if let output = activity.outputPreview,
+               (activity.kind != .reasoning || !ProgressSummarySanitizer.looksLikeRawChainOfThought(output)) {
                 detailText(output, monospaced: activity.kind == .code)
             }
             if let error = activity.errorDescription {

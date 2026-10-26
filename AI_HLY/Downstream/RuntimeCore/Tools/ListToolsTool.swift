@@ -52,7 +52,31 @@ struct ListToolsTool: NativeTool {
             let includeDisabled = (try? NativeToolJSON.strictOptionalBool(arguments ?? [:], "include_disabled")) ?? true
 
             NativeToolCatalog.shared.ensureBuiltinsRegistered()
-            let allEntries = NativeToolCatalog.shared.allEntries()
+            var allEntries = NativeToolCatalog.shared.allEntries()
+
+            let provider = MCPRuntimeProvider.shared
+            await provider.loadIfNeeded(startHost: false)
+            let chatUUID = context.effectiveChatID.flatMap(UUID.init(uuidString:))
+            let scope = await provider.requestScope(chatID: chatUUID, temporary: context.isTemporaryChat)
+            let mcpDescriptors = await MCPToolBridge.resolveDescriptors(scope: scope)
+            for descriptor in mcpDescriptors where !allEntries.contains(where: { $0.name == descriptor.exposedName }) {
+                allEntries.append(
+                    NativeToolCatalogEntry(
+                        name: descriptor.exposedName,
+                        title: descriptor.originalName,
+                        summary: descriptor.description,
+                        categories: ["mcp"],
+                        keywords: ["mcp", descriptor.serverSlug, descriptor.originalName],
+                        examples: [],
+                        systemImage: "server.rack",
+                        sourceAppID: "mcp.\(descriptor.serverSlug)",
+                        sourceAppTitle: "MCP (\(descriptor.serverDisplayName))"
+                    )
+                )
+            }
+            if let session = context.capabilitySession, !mcpDescriptors.isEmpty {
+                session.exposeTools(aliases: mcpDescriptors.map(\.exposedName))
+            }
 
             var metaTools: [NativeToolCatalogEntry] = []
             var nativeTools: [NativeToolCatalogEntry] = []
@@ -64,12 +88,12 @@ struct ListToolsTool: NativeTool {
             for entry in allEntries {
                 if entry.categories.contains("discovery") || entry.name == "load_skill" || entry.name == "tool_search" || entry.name == "read_tool_result" || entry.name == "read_skill_resource" || entry.name == "list_tools" || entry.name == "get_runtime_capabilities" || entry.name == "manage_runtime_packages" || entry.name == "manage_mcp_servers" {
                     metaTools.append(entry)
+                } else if entry.categories.contains("mcp") {
+                    mcpTools.append(entry)
                 } else if entry.sourceAppID != nil {
                     miniAppTools.append(entry)
                 } else if entry.categories.contains("scripting") {
                     scriptTools.append(entry)
-                } else if entry.categories.contains("mcp") {
-                    mcpTools.append(entry)
                 } else if entry.categories.contains("legacy") {
                     legacyTools.append(entry)
                 } else {
@@ -78,7 +102,7 @@ struct ListToolsTool: NativeTool {
             }
 
             let filteredEntries = allEntries.filter { entry in
-                if !includeDisabled && !NativeToolCatalog.shared.isEffectivelyEnabled(entry) {
+                if !includeDisabled && !entry.categories.contains("mcp") && !NativeToolCatalog.shared.isEffectivelyEnabled(entry) {
                     return false
                 }
                 return true
@@ -97,10 +121,10 @@ struct ListToolsTool: NativeTool {
             response += "- Scripting tools: \(scriptTools.count)\n"
             response += "- MCP tools: \(mcpTools.count)\n"
             response += "- Legacy tools: \(legacyTools.count)\n\n"
-            response += "### Tools (showing \(start + 1)-\(end) of \(totalCount)):\n"
+            response += "### Tools (showing \(totalCount == 0 ? 0 : start + 1)-\(end) of \(totalCount)):\n"
 
             for entry in page {
-                let enabled = NativeToolCatalog.shared.isEffectivelyEnabled(entry)
+                let enabled = entry.categories.contains("mcp") || NativeToolCatalog.shared.isEffectivelyEnabled(entry)
                 let status = enabled ? "enabled" : "disabled"
                 let source = entry.sourceAppTitle ?? entry.sourceAppID ?? "Built-in"
                 response += "- `\(entry.name)` [\(status)] — \(entry.title): \(entry.summary) (source: \(source))\n"

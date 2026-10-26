@@ -8,7 +8,7 @@ struct ManageMCPServersTool: NativeTool {
         .init(
             name: name,
             title: RuntimeL10n.string("Manage MCP Servers"),
-            summary: RuntimeL10n.string("Inspect, preview, install, enable, select for chat, start, stop, restart, list tools, and uninstall local MCP servers."),
+            summary: RuntimeL10n.string("Inspect, preview, install, enable, select for chat, start, stop, restart, list tools, invoke tools, and uninstall local MCP servers."),
             categories: ["runtime", "mcp", "system", "packages"],
             keywords: ["mcp", "server", "install", "tools", "modelcontextprotocol", "npm", "שרת", "התקנה"],
             examples: [
@@ -22,7 +22,7 @@ struct ManageMCPServersTool: NativeTool {
                 image: "server.rack",
                 running: "Managing MCP servers...",
                 completed: "MCP server operation complete",
-                arguments: ["action", "package_spec", "server"]
+                arguments: ["action", "package_spec", "server", "tool_name"]
             )
         )
     }
@@ -30,7 +30,7 @@ struct ManageMCPServersTool: NativeTool {
     func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(
             name: name,
-            description: RuntimeL10n.string("Inspect and manage local Model Context Protocol (MCP) servers on device. Supports checking runtime status, listing installed servers, previewing npm MCP packages, installing, enabling/disabling globally, selecting/deselecting for the active chat, starting/stopping/restarting server workers, listing exposed MCP tools, and uninstalling servers."),
+            description: RuntimeL10n.string("Inspect and manage local Model Context Protocol (MCP) servers on device. Supports checking runtime status, listing installed servers, previewing npm MCP packages, installing, enabling/disabling globally, selecting/deselecting for the active chat, starting/stopping/restarting server workers, listing exposed MCP tools, calling an MCP tool, and uninstalling servers."),
             parameters: NativeToolSchema.object(
                 properties: [
                     "action": NativeToolSchema.string(
@@ -48,6 +48,7 @@ struct ManageMCPServersTool: NativeTool {
                             "stop",
                             "restart",
                             "list_tools",
+                            "call_tool",
                             "uninstall"
                         ]
                     ),
@@ -55,10 +56,16 @@ struct ManageMCPServersTool: NativeTool {
                         description: RuntimeL10n.string("NPM package specification (e.g. '@modelcontextprotocol/server-memory' or 'pkg@1.0.0'), required for 'preview' and 'install'.")
                     ),
                     "server": NativeToolSchema.string(
-                        description: RuntimeL10n.string("Server identifier (UUID, slug, display name, or package name) for server-specific actions ('enable', 'disable', 'select_for_chat', 'deselect_for_chat', 'start', 'stop', 'restart', 'list_tools', 'uninstall').")
+                        description: RuntimeL10n.string("Server identifier (UUID, slug, display name, or package name) for server-specific actions ('enable', 'disable', 'select_for_chat', 'deselect_for_chat', 'start', 'stop', 'restart', 'list_tools', 'call_tool', 'uninstall').")
                     ),
                     "entry_point": NativeToolSchema.string(
                         description: RuntimeL10n.string("Optional entry point override when installing an MCP package.")
+                    ),
+                    "tool_name": NativeToolSchema.string(
+                        description: RuntimeL10n.string("Tool name (raw or exposed alias) to invoke when action is 'call_tool'.")
+                    ),
+                    "tool_arguments": NativeToolSchema.string(
+                        description: RuntimeL10n.string("JSON object string of arguments for 'call_tool' (default: '{}').")
                     )
                 ],
                 required: ["action"]
@@ -70,7 +77,7 @@ struct ManageMCPServersTool: NativeTool {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
-                allowedKeys: ["action", "package_spec", "server", "entry_point"]
+                allowedKeys: ["action", "package_spec", "server", "entry_point", "tool_name", "tool_arguments"]
             )
             let action = try NativeToolJSON.strictRequiredString(arguments, "action")
                 .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -81,14 +88,23 @@ struct ManageMCPServersTool: NativeTool {
                 .trimmingCharacters(in: .whitespacesAndNewlines)
             let entryPointOverride = try NativeToolJSON.strictOptionalString(arguments, "entry_point")?
                 .trimmingCharacters(in: .whitespacesAndNewlines)
+            let toolNameQuery = try NativeToolJSON.strictOptionalString(arguments, "tool_name")?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let toolArgumentsJSON = try NativeToolJSON.strictOptionalString(arguments, "tool_arguments")?
+                .trimmingCharacters(in: .whitespacesAndNewlines) ?? "{}"
 
             let provider = MCPRuntimeProvider.shared
             await provider.loadIfNeeded(startHost: false)
-            let chatUUID = context.chatID.flatMap(UUID.init(uuidString:))
+            let chatUUID = context.effectiveChatID.flatMap(UUID.init(uuidString:))
+            let isTemporary = context.isTemporaryChat
 
             switch action {
             case "status", "list":
-                let summary = await buildStatusSummary(provider: provider, chatUUID: chatUUID)
+                let summary = await buildStatusSummary(
+                    provider: provider,
+                    chatUUID: chatUUID,
+                    temporary: isTemporary
+                )
                 return makeSuccess(
                     route: "mcp.\(action)",
                     modelText: summary,
@@ -147,31 +163,48 @@ struct ManageMCPServersTool: NativeTool {
                         )
                     }
                     if let chatUUID {
-                        var currentSelection = await provider.selection(chatID: chatUUID, temporary: false)
+                        var currentSelection = await provider.selection(chatID: chatUUID, temporary: isTemporary)
                         currentSelection.insert(installed.id)
-                        await provider.setSelection(currentSelection, chatID: chatUUID, temporary: false)
+                        await provider.setSelection(currentSelection, chatID: chatUUID, temporary: isTemporary)
                     }
                     await provider.start(installed)
                     let tools = await provider.tools(for: installed)
                     if let session = context.capabilitySession {
-                        await refreshSessionMCPCatalog(session: session, provider: provider, chatUUID: chatUUID)
+                        await refreshSessionMCPCatalog(
+                            session: session,
+                            provider: provider,
+                            chatUUID: chatUUID,
+                            temporary: isTemporary
+                        )
                     }
-                    let statusState = provider.statuses[installed.id]?.state.rawValue ?? "unknown"
-                    let toolNames = tools.map(\.originalName).joined(separator: ", ")
+                    let statusState = provider.statuses[installed.id]?.state ?? .stopped
+                    let workerRunning = (statusState == .running)
+                    let selectedForCurrentChatText = chatUUID != nil ? "true" : "false (no active chat context)"
+                    let effectiveForNewChats = installed.isGloballyEnabled && installed.isEnabledForNewChats
+                    let toolNames = tools.map { "\($0.exposedName) (raw: \($0.originalName))" }.joined(separator: ", ")
+                    let heading = workerRunning
+                        ? "### MCP Server Installed & Activated"
+                        : "### MCP Server Installed (Worker Not Running)"
+                    let startupErrorLine = (!workerRunning && provider.lastError?.isEmpty == false)
+                        ? "\n- Startup Error: \(provider.lastError!)"
+                        : ""
                     let output = """
-                    ### MCP Server Installed & Activated
+                    \(heading)
                     - ID: \(installed.id.uuidString)
                     - Slug: \(installed.slug)
-                    - Package: \(installed.packageName)@\(installed.resolvedVersion)
-                    - Globally Enabled: \(installed.isGloballyEnabled)
-                    - Selected for Current Chat: true
-                    - Runtime State: \(statusState)
-                    - Discovered Tools (\(tools.count)): \(toolNames.isEmpty ? "none" : toolNames)
+                    - Package (`package_installed`): true (\(installed.packageName)@\(installed.resolvedVersion))
+                    - Globally Enabled (`server_enabled`): \(installed.isGloballyEnabled)
+                    - Selected for Current Chat (`selected_for_current_chat`): \(selectedForCurrentChatText)
+                    - Effective for New Chats (`effective_for_new_chats`): \(effectiveForNewChats)
+                    - Worker Running (`worker_running`): \(workerRunning) (`\(statusState.rawValue)`)
+                    - Discovered Tools (\(tools.count)): \(toolNames.isEmpty ? "none" : toolNames)\(startupErrorLine)
                     """
                     return makeSuccess(
                         route: "mcp.install",
                         modelText: output,
-                        userText: "Installed MCP server \(installed.displayName) (\(tools.count) tools).",
+                        userText: workerRunning
+                            ? "Installed MCP server \(installed.displayName) (\(tools.count) tools)."
+                            : "Installed MCP server \(installed.displayName) (worker state: \(statusState.rawValue)).",
                         argumentKeys: Array(arguments.keys)
                     )
 
@@ -195,7 +228,19 @@ struct ManageMCPServersTool: NativeTool {
                 let targetEnable = (action == "enable")
                 if serverQuery == nil || serverQuery?.isEmpty == true || serverQuery?.lowercased() == "global" {
                     await provider.setEnabled(targetEnable)
-                    let summary = await buildStatusSummary(provider: provider, chatUUID: chatUUID)
+                    if let session = context.capabilitySession {
+                        await refreshSessionMCPCatalog(
+                            session: session,
+                            provider: provider,
+                            chatUUID: chatUUID,
+                            temporary: isTemporary
+                        )
+                    }
+                    let summary = await buildStatusSummary(
+                        provider: provider,
+                        chatUUID: chatUUID,
+                        temporary: isTemporary
+                    )
                     return makeSuccess(
                         route: "mcp.\(action)",
                         modelText: "MCP global feature set to \(targetEnable).\n\n\(summary)",
@@ -219,9 +264,18 @@ struct ManageMCPServersTool: NativeTool {
                     await provider.stop(target)
                 }
                 if let session = context.capabilitySession {
-                    await refreshSessionMCPCatalog(session: session, provider: provider, chatUUID: chatUUID)
+                    await refreshSessionMCPCatalog(
+                        session: session,
+                        provider: provider,
+                        chatUUID: chatUUID,
+                        temporary: isTemporary
+                    )
                 }
-                let summary = await buildStatusSummary(provider: provider, chatUUID: chatUUID)
+                let summary = await buildStatusSummary(
+                    provider: provider,
+                    chatUUID: chatUUID,
+                    temporary: isTemporary
+                )
                 return makeSuccess(
                     route: "mcp.\(action)",
                     modelText: "Server '\(target.slug)' isGloballyEnabled=\(targetEnable).\n\n\(summary)",
@@ -235,13 +289,13 @@ struct ManageMCPServersTool: NativeTool {
                 }
                 let select = (action == "select_for_chat")
                 if let chatUUID {
-                    var selectedIDs = await provider.selection(chatID: chatUUID, temporary: false)
+                    var selectedIDs = await provider.selection(chatID: chatUUID, temporary: isTemporary)
                     if select {
                         selectedIDs.insert(target.id)
                     } else {
                         selectedIDs.remove(target.id)
                     }
-                    await provider.setSelection(selectedIDs, chatID: chatUUID, temporary: false)
+                    await provider.setSelection(selectedIDs, chatID: chatUUID, temporary: isTemporary)
                 }
                 if select {
                     if !provider.configuration.isEnabled {
@@ -250,12 +304,24 @@ struct ManageMCPServersTool: NativeTool {
                     await provider.start(target)
                 }
                 if let session = context.capabilitySession {
-                    await refreshSessionMCPCatalog(session: session, provider: provider, chatUUID: chatUUID)
+                    await refreshSessionMCPCatalog(
+                        session: session,
+                        provider: provider,
+                        chatUUID: chatUUID,
+                        temporary: isTemporary
+                    )
                 }
-                let summary = await buildStatusSummary(provider: provider, chatUUID: chatUUID)
+                let summary = await buildStatusSummary(
+                    provider: provider,
+                    chatUUID: chatUUID,
+                    temporary: isTemporary
+                )
+                let chatSelectionNote = chatUUID != nil
+                    ? "Server '\(target.slug)' selected_for_current_chat=\(select)."
+                    : "No active chat context (`chatID` is nil); per-chat selection was not modified."
                 return makeSuccess(
                     route: "mcp.\(action)",
-                    modelText: "Server '\(target.slug)' selected_for_chat=\(select).\n\n\(summary)",
+                    modelText: "\(chatSelectionNote)\n\n\(summary)",
                     userText: "Updated chat selection for MCP server '\(target.displayName)'.",
                     argumentKeys: Array(arguments.keys)
                 )
@@ -276,14 +342,21 @@ struct ManageMCPServersTool: NativeTool {
                 }
                 let tools = (action == "stop") ? [] : await provider.tools(for: target)
                 if let session = context.capabilitySession {
-                    await refreshSessionMCPCatalog(session: session, provider: provider, chatUUID: chatUUID)
+                    await refreshSessionMCPCatalog(
+                        session: session,
+                        provider: provider,
+                        chatUUID: chatUUID,
+                        temporary: isTemporary
+                    )
                 }
                 let state = provider.statuses[target.id]?.state.rawValue ?? "stopped"
+                let workerRunning = provider.statuses[target.id]?.state == .running
                 let errorNote = provider.lastError.map { "\n- Error: \($0)" } ?? ""
                 let output = """
                 ### MCP Server \(action.capitalized): \(target.displayName) (\(target.slug))
                 - Runtime State: \(state)
-                - Discovered Tools (\(tools.count)): \(tools.map(\.originalName).joined(separator: ", "))\(errorNote)
+                - Worker Running (`worker_running`): \(workerRunning)
+                - Discovered Tools (\(tools.count)): \(tools.map(\.exposedName).joined(separator: ", "))\(errorNote)
                 """
                 return makeSuccess(
                     route: "mcp.\(action)",
@@ -301,7 +374,12 @@ struct ManageMCPServersTool: NativeTool {
                 }
                 let tools = await provider.tools(for: target)
                 if let session = context.capabilitySession {
-                    await refreshSessionMCPCatalog(session: session, provider: provider, chatUUID: chatUUID)
+                    await refreshSessionMCPCatalog(
+                        session: session,
+                        provider: provider,
+                        chatUUID: chatUUID,
+                        temporary: isTemporary
+                    )
                 }
                 var lines: [String] = [
                     "### Tools for MCP Server '\(target.displayName)' (`\(target.slug)`)",
@@ -320,6 +398,51 @@ struct ManageMCPServersTool: NativeTool {
                     argumentKeys: Array(arguments.keys)
                 )
 
+            case "call_tool":
+                guard let target = resolveServer(query: serverQuery, in: provider.servers) else {
+                    return serverNotFoundFailure(query: serverQuery, route: "mcp.call_tool", servers: provider.servers)
+                }
+                guard let rawQuery = toolNameQuery, !rawQuery.isEmpty else {
+                    return makeFailure(
+                        route: "mcp.call_tool",
+                        outcome: .invalidArguments,
+                        message: "Missing required parameter 'tool_name' for action 'call_tool'."
+                    )
+                }
+                let tools = await provider.tools(for: target)
+                let resolvedOriginalName: String
+                if let match = tools.first(where: {
+                    $0.originalName.caseInsensitiveCompare(rawQuery) == .orderedSame
+                        || $0.exposedName.caseInsensitiveCompare(rawQuery) == .orderedSame
+                }) {
+                    resolvedOriginalName = match.originalName
+                } else {
+                    resolvedOriginalName = rawQuery
+                }
+                let exposedAlias = MCPToolNameCodec.exposedName(
+                    serverSlug: target.slug,
+                    toolName: resolvedOriginalName
+                )
+                let descriptor = MCPToolBridge.RuntimeToolDescriptor(
+                    serverID: target.id,
+                    serverSlug: target.slug,
+                    serverDisplayName: target.displayName,
+                    originalName: resolvedOriginalName,
+                    exposedName: exposedAlias,
+                    description: resolvedOriginalName,
+                    inputSchema: ["type": "object"]
+                )
+                let callResult = await MCPToolBridge.execute(
+                    descriptor: descriptor,
+                    argumentsJSON: toolArgumentsJSON
+                )
+                return makeSuccess(
+                    route: "mcp.call_tool.\(target.slug).\(resolvedOriginalName)",
+                    modelText: callResult.modelText,
+                    userText: callResult.userSummary,
+                    argumentKeys: Array(arguments.keys)
+                )
+
             case "uninstall":
                 guard let target = resolveServer(query: serverQuery, in: provider.servers) else {
                     return serverNotFoundFailure(query: serverQuery, route: "mcp.uninstall", servers: provider.servers)
@@ -328,7 +451,12 @@ struct ManageMCPServersTool: NativeTool {
                 let removedSlug = target.slug
                 await provider.uninstall(target)
                 if let session = context.capabilitySession {
-                    await refreshSessionMCPCatalog(session: session, provider: provider, chatUUID: chatUUID)
+                    await refreshSessionMCPCatalog(
+                        session: session,
+                        provider: provider,
+                        chatUUID: chatUUID,
+                        temporary: isTemporary
+                    )
                 }
                 return makeSuccess(
                     route: "mcp.uninstall",
@@ -425,19 +553,26 @@ struct ManageMCPServersTool: NativeTool {
 
     private func buildStatusSummary(
         provider: MCPRuntimeProvider,
-        chatUUID: UUID?
+        chatUUID: UUID?,
+        temporary: Bool
     ) async -> String {
         let selectedIDs: Set<UUID>
         if let chatUUID {
-            selectedIDs = await provider.selection(chatID: chatUUID, temporary: false)
+            selectedIDs = await provider.selection(chatID: chatUUID, temporary: temporary)
         } else {
-            selectedIDs = Set(provider.servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id))
+            selectedIDs = []
         }
+        let effectiveNewChatIDs = Set(
+            provider.servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id)
+        )
 
         let anyServerInstalled = !provider.servers.isEmpty
         let anyServerEnabled = provider.servers.contains(where: \.isGloballyEnabled)
         let anySelectedForChat = !selectedIDs.isEmpty
         let anyWorkerRunning = provider.runtimeSnapshot.activeWorkerCount > 0
+        let selectedForCurrentChatSummary = chatUUID != nil
+            ? "\(anySelectedForChat) (\(selectedIDs.count))"
+            : "false (no active chat context)"
 
         var lines: [String] = [
             "### MCP Runtime & Server Status",
@@ -446,7 +581,8 @@ struct ManageMCPServersTool: NativeTool {
             "- Active Worker Count (`worker_running`): \(anyWorkerRunning) (\(provider.runtimeSnapshot.activeWorkerCount))",
             "- Installed Servers Count (`server_installed`): \(anyServerInstalled) (\(provider.servers.count))",
             "- Enabled Servers (`server_enabled`): \(anyServerEnabled)",
-            "- Selected for Current Chat (`selected_for_current_chat`): \(anySelectedForChat) (\(selectedIDs.count))"
+            "- Selected for Current Chat (`selected_for_current_chat`): \(selectedForCurrentChatSummary)",
+            "- Effective for New Chats (`effective_for_new_chats`): \(!effectiveNewChatIDs.isEmpty) (\(effectiveNewChatIDs.count))"
         ]
         if let lastError = provider.lastError, !lastError.isEmpty {
             lines.append("- Last Error: \(lastError)")
@@ -460,11 +596,14 @@ struct ManageMCPServersTool: NativeTool {
                 let runtimeState = status?.state.rawValue ?? "stopped"
                 let isWorkerRunning = status?.state == .running
                 let toolCount = status?.toolCount ?? 0
-                let isSelected = selectedIDs.contains(server.id)
+                let isSelectedText = chatUUID != nil
+                    ? "\(selectedIDs.contains(server.id))"
+                    : "false (no active chat context)"
+                let isEffectiveForNewChats = server.isGloballyEnabled && server.isEnabledForNewChats
                 lines.append("""
                 - **\(server.displayName)** (slug: `\(server.slug)`, id: `\(server.id.uuidString)`)
                   - Package: `\(server.packageName)@\(server.resolvedVersion)`
-                  - `server_installed`: true | `server_enabled`: \(server.isGloballyEnabled) | `selected_for_current_chat`: \(isSelected) | `worker_running`: \(isWorkerRunning) (`\(runtimeState)`) | Cached Tools: \(toolCount)
+                  - `server_installed`: true | `server_enabled`: \(server.isGloballyEnabled) | `selected_for_current_chat`: \(isSelectedText) | `effective_for_new_chats`: \(isEffectiveForNewChats) | `worker_running`: \(isWorkerRunning) (`\(runtimeState)`) | Cached Tools: \(toolCount)
                 """)
             }
         }
@@ -474,9 +613,12 @@ struct ManageMCPServersTool: NativeTool {
     private func refreshSessionMCPCatalog(
         session: AssistantCapabilitySession,
         provider: MCPRuntimeProvider,
-        chatUUID: UUID?
+        chatUUID: UUID?,
+        temporary: Bool
     ) async {
-        let scope = await provider.requestScope(chatID: chatUUID, temporary: false)
-        _ = await MCPToolBridge.resolveDescriptors(scope: scope)
+        let scope = await provider.requestScope(chatID: chatUUID, temporary: temporary)
+        let descriptors = await MCPToolBridge.resolveDescriptors(scope: scope)
+        session.syncMCPTools(activeMCPAliases: descriptors.map(\.exposedName))
+        await session.refreshDynamicTools()
     }
 }

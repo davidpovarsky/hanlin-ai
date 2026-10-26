@@ -29,7 +29,7 @@ final class HanlinAISDKToolAdapter {
     }
 
     let session: AssistantCapabilitySession
-    let preparedTools: AssistantToolBridge.PreparedTools
+    var preparedTools: AssistantToolBridge.PreparedTools
     let catalog: HanlinSkillCatalog
     let modelContext: ModelContext?
     let currentLanguage: String
@@ -91,6 +91,26 @@ final class HanlinAISDKToolAdapter {
         self.reportProgressController = reportProgressController
         self.diagnosticsRecorder = diagnosticsRecorder
         self.currentRoundID = currentRoundID
+        if !preparedTools.mcpAliases.isEmpty {
+            session.exposeTools(aliases: preparedTools.mcpAliases)
+        }
+        if session.onRefreshCatalog == nil {
+            session.onRefreshCatalog = { [weak self] in
+                await self?.refreshPreparedTools()
+            }
+        }
+    }
+
+    func refreshPreparedTools() async {
+        let chatUUID = session.chatID.flatMap(UUID.init(uuidString:))
+        let scope = await MCPRuntimeProvider.shared.requestScope(
+            chatID: chatUUID,
+            temporary: session.isTemporaryChat
+        )
+        if let refreshed = try? await preparedTools.refreshingMCPTools(scope: scope) {
+            self.preparedTools = refreshed
+            session.syncMCPTools(activeMCPAliases: refreshed.mcpAliases)
+        }
     }
 
     /// Evaluates currently active tool aliases for model exposure in the next step.
@@ -622,6 +642,7 @@ final class HanlinAISDKToolAdapter {
             modelContext: modelContext,
             toolCallID: callID,
             chatID: sessionChatID,
+            isTemporaryChat: session.isTemporaryChat,
             requestID: roundReqID,
             capabilitySession: session,
             attachmentResolver: { handle in

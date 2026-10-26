@@ -58,7 +58,7 @@ struct ListView: View {
     }
 
     // 修改计算属性，让置顶的记录始终显示在上方
-    private var filteredChatRecords: [ChatRecords] {
+    static func filterAndSortChatRecords(_ chatRecords: [ChatRecords], searchText: String) -> [ChatRecords] {
         if searchText.isEmpty {
             let pinnedRecords = chatRecords.filter { $0.isPinned }
                 .sorted { $0.lastEdited > $1.lastEdited }
@@ -86,6 +86,10 @@ struct ListView: View {
                 .sorted { $0.lastEdited > $1.lastEdited }
             return pinnedRecords + unpinnedRecords
         }
+    }
+
+    private var filteredChatRecords: [ChatRecords] {
+        Self.filterAndSortChatRecords(chatRecords, searchText: searchText)
     }
 
     private var pinnedChatRecords: [ChatRecords] {
@@ -131,6 +135,7 @@ struct ListView: View {
                                 } label: {
                                     Image(systemName: "plus.bubble")
                                 }
+                                .accessibilityIdentifier("hanlin-new-chat-button")
                             }
                             ToolbarItem(placement: .navigationBarLeading) {
                                 guideButton
@@ -162,6 +167,7 @@ struct ListView: View {
                                 } label: {
                                     Image(systemName: "plus.bubble")
                                 }
+                                .accessibilityIdentifier("hanlin-new-chat-button")
                             }
                             ToolbarItem(placement: .navigationBarLeading) {
                                 guideButton
@@ -420,6 +426,7 @@ struct ListView: View {
         .padding(.horizontal)
         .padding(.vertical, 3)
         .listRowInsets(EdgeInsets())
+        .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")
         .contextMenu {
             Button {
                 // 编辑图标操作

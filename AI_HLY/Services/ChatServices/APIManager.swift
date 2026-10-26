@@ -2343,7 +2343,11 @@ class APIManager {
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         
         var updatedMessages = messages
-        let session = capabilitySession ?? AssistantCapabilitySession(chatID: groupID.uuidString)
+        let stableChatID = assistantToolScope.chatID?.uuidString ?? groupID.uuidString
+        let session = capabilitySession ?? AssistantCapabilitySession(
+            chatID: stableChatID,
+            isTemporaryChat: assistantToolScope.isTemporaryChat
+        )
         let currentRunID = runID ?? session.id
 
         // Register authentic image attachments for current chat turn synchronously and collect opaque handles
@@ -2356,7 +2360,7 @@ class APIManager {
                         if let handle = try? await AuthorizedAttachmentRegistry.shared.register(
                             data: data,
                             mimeType: "image/jpeg",
-                            chatID: groupID.uuidString,
+                            chatID: stableChatID,
                             requestID: currentRunID.uuidString
                         ) {
                             registeredAttachmentHandles.append(handle)
@@ -3025,13 +3029,14 @@ class APIManager {
                                                 let nativeContext = NativeToolExecutionContext(
                                                     localeIdentifier: currentLanguage,
                                                     modelContext: self.context,
-                                                    chatID: groupID.uuidString,
+                                                    chatID: stableChatID,
                                                     requestID: currentRunID.uuidString,
+                                                    isTemporaryChat: session.isTemporaryChat,
                                                     capabilitySession: session,
                                                     attachmentResolver: { handle in
                                                         try await AuthorizedAttachmentRegistry.shared.resolve(
                                                             handle: handle,
-                                                            chatID: groupID.uuidString,
+                                                            chatID: stableChatID,
                                                             requestID: currentRunID.uuidString
                                                         )
                                                     }
@@ -4087,6 +4092,10 @@ class APIManager {
             messages: sdkMessages,
             baseSystemPrompt: baseSystemPrompt,
             tools: toolDefinitions,
+            dynamicTools: { [weak toolAdapter] in
+                guard let toolAdapter else { return toolDefinitions }
+                return (try? toolAdapter.allToolDefinitions()) ?? toolDefinitions
+            },
             prepareStep: { stepNumber in
                 await toolAdapter.prepareStep(stepNumber: stepNumber)
             }

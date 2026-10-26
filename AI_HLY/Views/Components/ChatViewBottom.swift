@@ -349,11 +349,28 @@ struct ChatViewBottom: View {
     @ScaledMetric(relativeTo: .body) var size_80: CGFloat = 80
     let buttonHeight: CGFloat = 36
 
+    static func shouldEnableSend(
+        message: String,
+        selectedImagesCount: Int,
+        selectedDocumentsCount: Int,
+        selectedPromptsCount: Int,
+        isResponding: Bool = false
+    ) -> Bool {
+        guard !isResponding else { return false }
+        return !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            || selectedImagesCount > 0
+            || selectedDocumentsCount > 0
+            || selectedPromptsCount > 0
+    }
+
     private var canSend: Bool {
-        !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            || !selectedImages.isEmpty
-            || !selectedDocumentURLs.isEmpty
-            || !selectedPrompts.isEmpty
+        Self.shouldEnableSend(
+            message: message,
+            selectedImagesCount: selectedImages.count,
+            selectedDocumentsCount: selectedDocumentURLs.count,
+            selectedPromptsCount: selectedPrompts.count,
+            isResponding: false
+        )
     }
 
     private var hasAttachments: Bool {
@@ -651,6 +668,30 @@ struct ChatViewBottom: View {
                     Label(String(localized: "文件文档"), systemImage: "doc")
                 }
                 .disabled(selectedDocumentURLs.count >= 5)
+                #if targetEnvironment(simulator)
+                if AgentRuntimeUIAcceptanceProvider.isEnabled {
+                    Button {
+                        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 48, height: 48))
+                        let img = renderer.image { ctx in
+                            UIColor.systemTeal.setFill()
+                            ctx.fill(CGRect(x: 0, y: 0, width: 48, height: 48))
+                        }
+                        selectedImages.append(img)
+                    } label: {
+                        Label("Attach Sample Image", systemImage: "photo.badge.plus")
+                    }
+                    .accessibilityIdentifier("hanlin-attach-sample-image")
+
+                    Button {
+                        let tmpDoc = FileManager.default.temporaryDirectory.appendingPathComponent("AcceptanceSample.txt")
+                        try? Data("Acceptance Sample Document Content".utf8).write(to: tmpDoc, options: .atomic)
+                        selectedDocumentURLs.append(tmpDoc)
+                    } label: {
+                        Label("Attach Sample Document", systemImage: "doc.badge.plus")
+                    }
+                    .accessibilityIdentifier("hanlin-attach-sample-document")
+                }
+                #endif
             }
 
             Section(String(localized: "智能工具 (Contextual Tools)")) {
@@ -748,6 +789,7 @@ struct ChatViewBottom: View {
                 .background(Circle().fill(Color.secondary.opacity(0.12)))
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("hanlin-composer-plus-menu")
     }
 
     // MARK: - Send / Stop Button
@@ -805,9 +847,9 @@ struct ChatViewBottom: View {
     private var composerAccessoryBar: some View {
         HStack(spacing: 8) {
             modelSelectorCapsule
-                .layoutPriority(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-            Spacer(minLength: 6)
+            Spacer(minLength: 4)
 
             if !activeCapabilityItems.isEmpty {
                 Menu {
@@ -860,6 +902,7 @@ struct ChatViewBottom: View {
                     )
                 }
                 .buttonStyle(.plain)
+                .fixedSize(horizontal: true, vertical: false)
                 .accessibilityIdentifier("hanlin-active-capabilities-pill")
             }
 
@@ -868,6 +911,7 @@ struct ChatViewBottom: View {
                     Text(String(localized: "继续生成"))
                         .font(.caption2.weight(.medium))
                         .foregroundColor(.secondary)
+                        .lineLimit(1)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 5)
                         .background(
@@ -880,8 +924,11 @@ struct ChatViewBottom: View {
                         )
                 }
                 .buttonStyle(.plain)
+                .fixedSize(horizontal: true, vertical: false)
+                .accessibilityIdentifier("hanlin-continue-generation-pill")
             }
         }
+        .accessibilityIdentifier("hanlin-composer-accessory-bar")
     }
 
     // MARK: - Model Selector Capsule
@@ -935,6 +982,7 @@ struct ChatViewBottom: View {
                     Text(model.displayName ?? model.name ?? "Model")
                         .font(.caption.weight(.medium))
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                         .truncationMode(.middle)
                 } else {
                     Text(String(localized: "选择模型"))
@@ -984,9 +1032,11 @@ struct ChatViewBottom: View {
                                 .foregroundColor(.secondary)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("hanlin-remove-image-attachment")
                     }
                     .padding(4)
                     .background(Capsule().fill(Color.secondary.opacity(0.12)))
+                    .accessibilityIdentifier("hanlin-composer-image-attachment")
                 }
 
                 // Documents
@@ -1007,10 +1057,12 @@ struct ChatViewBottom: View {
                                 .foregroundColor(.secondary)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("hanlin-remove-document-attachment")
                     }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(Capsule().fill(Color.secondary.opacity(0.12)))
+                    .accessibilityIdentifier("hanlin-composer-document-attachment")
                 }
 
                 // URLs
@@ -1136,11 +1188,14 @@ struct ChatViewBottom: View {
     // MARK: - Handlers
 
     private func handleSend() {
-        guard canSend else { return }
+        guard canSend && !isResponding else { return }
         onSendUser()
     }
 
     private func handleMessageChange() {
+        if !TemporaryRecord {
+            chatRecord.input = message
+        }
         debounceWorkItem?.cancel()
         debounceWorkItem = DispatchWorkItem {
             updateModelSuggestions()

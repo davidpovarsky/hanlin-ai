@@ -2,6 +2,7 @@ import Foundation
 import HanlinChatCore
 import HanlinMiniAppCore
 import HanlinPlatformContracts
+import SWCompression
 import SwiftData
 import SwiftUI
 import ZIPFoundation
@@ -28,6 +29,73 @@ enum AgentRuntimeUIAcceptanceProvider {
 #endif
     }
 
+    static func sampleMCPArchiveURL() -> URL {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin-echo-mcp-acceptance.tgz")
+        if FileManager.default.fileExists(atPath: url.path) {
+            return url
+        }
+        let packageJSON = """
+        {
+          "name": "hanlin-echo-mcp",
+          "version": "1.0.0",
+          "type": "module",
+          "main": "server.mjs"
+        }
+        """
+        let serverMJS = """
+        import { createInterface } from 'node:readline';
+        createInterface({ input: process.stdin }).on('line', line => {
+          if (!line.trim()) return;
+          const req = JSON.parse(line);
+          if (req.method === 'initialize') {
+            respond(req.id, {
+              protocolVersion: req.params?.protocolVersion ?? '2025-03-26',
+              capabilities: { tools: {} },
+              serverInfo: { name: 'hanlin-echo-mcp', version: '1.0.0' }
+            });
+          } else if (req.method === 'tools/list') {
+            respond(req.id, {
+              tools: [{
+                name: 'echo_ping',
+                description: 'Echoes a message back for acceptance testing.',
+                inputSchema: {
+                  type: 'object',
+                  properties: { message: { type: 'string' } },
+                  required: ['message']
+                }
+              }]
+            });
+          } else if (req.method === 'tools/call') {
+            const msg = req.params?.arguments?.message ?? 'pong';
+            respond(req.id, {
+              content: [{ type: 'text', text: `ECHO_PONG_OK:${msg}` }],
+              isError: false
+            });
+          }
+        });
+        function respond(id, result) {
+          if (id === undefined || id === null) return;
+          process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, result }) + '\\n');
+        }
+        """
+        var entries: [TarEntry] = []
+        let pkgData = Data(packageJSON.utf8)
+        var pkgInfo = TarEntryInfo(name: "package/package.json", type: .regular)
+        pkgInfo.permissions = Permissions(rawValue: 0o644)
+        entries.append(TarEntry(info: pkgInfo, data: pkgData))
+
+        let srvData = Data(serverMJS.utf8)
+        var srvInfo = TarEntryInfo(name: "package/server.mjs", type: .regular)
+        srvInfo.permissions = Permissions(rawValue: 0o755)
+        entries.append(TarEntry(info: srvInfo, data: srvData))
+
+        let tarData = TarContainer.create(from: entries)
+        if let tgzData = try? GzipArchive.archive(data: tarData) {
+            try? tgzData.write(to: url, options: .atomic)
+        }
+        return url
+    }
+
     @MainActor
     static func configureIfRequested(context: ModelContext) {
         guard isEnabled else { return }
@@ -41,12 +109,22 @@ enum AgentRuntimeUIAcceptanceProvider {
             for key in try context.fetch(FetchDescriptor<APIKeys>()) {
                 context.delete(key)
             }
+            for info in try context.fetch(FetchDescriptor<UserInfo>()) {
+                context.delete(info)
+            }
+            context.insert(UserInfo(
+                optimizationTextModel: modelName,
+                optimizationVisualModel: modelName
+            ))
             context.insert(AllModels(
                 name: modelName,
                 displayName: "Agent Acceptance",
                 position: 0,
                 company: "ACCEPTANCE",
                 supportsTextGen: true,
+                supportsMultimodal: true,
+                supportsReasoning: true,
+                supportReasoningChange: true,
                 supportsToolUse: true
             ))
             context.insert(APIKeys(
@@ -144,16 +222,20 @@ enum AgentRuntimeUIAcceptanceProvider {
 final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     private nonisolated(unsafe) static var responseIndex = 0
+    private nonisolated(unsafe) static var ui07FailCount = 0
     private var isStopped = false
 
     static func reset() {
         lock.lock()
         responseIndex = 0
+        ui07FailCount = 0
         lock.unlock()
     }
 
     override class func canInit(with request: URLRequest) -> Bool {
-        AgentRuntimeUIAcceptanceProvider.isEnabled && (request.url?.host == "agent.acceptance" || request.url?.host == "skills.acceptance")
+        guard AgentRuntimeUIAcceptanceProvider.isEnabled,
+              let host = request.url?.host else { return false }
+        return host == "agent.acceptance" || host == "skills.acceptance" || host == "emkc.org"
     }
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
@@ -161,6 +243,15 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
     override func startLoading() {
         if request.url?.host == "skills.acceptance" {
             handleSkillsDownload()
+            return
+        }
+        if request.url?.host == "emkc.org" {
+            handlePistonExecute()
+            return
+        }
+        if request.url?.host == "agent.acceptance",
+           request.url?.path.hasPrefix("/wiki/") == true {
+            handleWikiPage()
             return
         }
 
@@ -207,6 +298,138 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 emitToolCall(id: "ui-python-call", name: "execute_local_python_code", arguments: #"{"source":"print(6 * 7)"}"#)
             } else {
                 emitToolCall(id: "ui-load-code-call", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
+            }
+            return
+        }
+
+        // 5. UI-02 Classic user and assistant bubbles with direct action buttons
+        if bodyString.contains("PROMPT_UI02_CLASSIC_BUBBLES") {
+            emitFinalAnswer("### Classic Bubble Heading\nHere is **bold** markdown and inline math $E=mc^2$. UI02_CLASSIC_COMPLETE")
+            return
+        }
+
+        // 6. UI-03 Search message and deduplicated citations
+        if bodyString.contains("PROMPT_UI03_SEARCH_CITATIONS") {
+            if bodyString.contains("ui03-read-2") {
+                emitFinalAnswer("According to the Hanlin reference [1], classic search rows and citations are restored. UI03_SEARCH_COMPLETE")
+            } else if bodyString.contains("ui03-read-1") {
+                emitToolCall(
+                    id: "ui03-read-2",
+                    name: "read_web_page",
+                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin#section"}"#
+                )
+            } else {
+                emitToolCall(
+                    id: "ui03-read-1",
+                    name: "read_web_page",
+                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin"}"#
+                )
+            }
+            return
+        }
+
+        // 7. UI-04 Collapsed progress and inspector without raw CoT
+        if bodyString.contains("PROMPT_UI04_REASONING_INSPECTOR") {
+            if bodyString.contains("ui04-progress-1") {
+                emitFinalAnswer("Calculation verified: 42. UI04_REASONING_COMPLETE")
+            } else {
+                let payload: [String: Any] = [
+                    "choices": [[
+                        "delta": [
+                            "reasoning_content": "<think>Step 1: Let me think privately about internal CoT</think>",
+                            "tool_calls": [[
+                                "index": 0,
+                                "id": "ui04-progress-1",
+                                "type": "function",
+                                "function": [
+                                    "name": "execute_local_python_code",
+                                    "arguments": #"{"source":"print(6 * 7)","progress_summary":"<think>Let me think</think>"}"#
+                                ]
+                            ]]
+                        ],
+                        "finish_reason": "tool_calls"
+                    ]]
+                ]
+                emitPayload(payload)
+            }
+            return
+        }
+
+        // 8. UI-05 Rich code block, HTML card, and attachments
+        if bodyString.contains("PROMPT_UI05_RICH_CONTENT") {
+            if bodyString.contains("ui05-html-1") {
+                emitFinalAnswer("Rich content and attachments verified. UI05_RICH_COMPLETE")
+            } else if bodyString.contains("ui05-code-1") {
+                emitToolCall(
+                    id: "ui05-html-1",
+                    name: "create_web_view",
+                    arguments: #"{"code":"<h1>UI05 Interactive Card</h1><p>Rendered HTML surface</p>"}"#
+                )
+            } else {
+                emitToolCall(
+                    id: "ui05-code-1",
+                    name: "execute_python_code",
+                    arguments: #"{"code":"print('Code output: 42')"}"#
+                )
+            }
+            return
+        }
+
+        // 9. UI-07 Fail once then succeed on retry
+        if bodyString.contains("PROMPT_UI07_FAIL_ONCE") {
+            Self.lock.lock()
+            let currentFailCount = Self.ui07FailCount
+            Self.ui07FailCount += 1
+            Self.lock.unlock()
+            if currentFailCount == 0 {
+                let errorJSON = Data(#"{"error":{"message":"Simulated transient upstream failure","type":"server_error"}}"#.utf8)
+                let response = HTTPURLResponse(
+                    url: request.url!,
+                    statusCode: 500,
+                    httpVersion: "HTTP/1.1",
+                    headerFields: ["Content-Type": "application/json"]
+                )!
+                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+                client?.urlProtocol(self, didLoad: errorJSON)
+                client?.urlProtocolDidFinishLoading(self)
+            } else {
+                emitFinalAnswer("UI07_RETRY_RECOVERY_COMPLETE")
+            }
+            return
+        }
+
+        // 10. UI-08 Conversational MCP lifecycle Turn 1 & Turn 2
+        if bodyString.contains("PROMPT_UI08_MCP_TURN_2") {
+            if bodyString.contains("ui08-mcp-call-2") {
+                emitFinalAnswer("UI08_MCP_TURN_2_COMPLETE: ECHO_PONG_OK:turn2")
+            } else {
+                emitToolCall(
+                    id: "ui08-mcp-call-2",
+                    name: "mcp__hanlin_echo_mcp__echo_ping",
+                    arguments: #"{"message":"turn2"}"#
+                )
+            }
+            return
+        }
+
+        if bodyString.contains("PROMPT_UI08_MCP_TURN_1") {
+            if bodyString.contains("ui08-mcp-call-1") {
+                emitFinalAnswer("UI08_MCP_TURN_1_COMPLETE: ECHO_PONG_OK:turn1")
+            } else if bodyString.contains("ui08-mcp-install") {
+                emitToolCall(
+                    id: "ui08-mcp-call-1",
+                    name: "mcp__hanlin_echo_mcp__echo_ping",
+                    arguments: #"{"message":"turn1"}"#
+                )
+            } else {
+                let archivePath = AgentRuntimeUIAcceptanceProvider.sampleMCPArchiveURL().path
+                    .replacingOccurrences(of: "\\", with: "\\\\")
+                    .replacingOccurrences(of: "\"", with: "\\\"")
+                emitToolCall(
+                    id: "ui08-mcp-install",
+                    name: "manage_mcp_servers",
+                    arguments: "{\"action\":\"install\",\"package_spec\":\"\(archivePath)\",\"entry_point\":\"server.mjs\"}"
+                )
             }
             return
         }
@@ -370,6 +593,41 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             statusCode: 200,
             httpVersion: "HTTP/1.1",
             headerFields: ["Content-Type": "text/event-stream", "x-request-id": "ui-acceptance"]
+        )!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: body)
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    private func handlePistonExecute() {
+        let body = Data(#"{"run":{"stdout":"Code output: 42\n","stderr":""}}"#.utf8)
+        let response = HTTPURLResponse(
+            url: request.url!,
+            statusCode: 200,
+            httpVersion: "HTTP/1.1",
+            headerFields: ["Content-Type": "application/json"]
+        )!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: body)
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    private func handleWikiPage() {
+        let html = """
+        <!doctype html>
+        <html>
+        <head><title>Hanlin Reference Source</title></head>
+        <body>
+        <article>Hanlin is an iOS and iPadOS native AI client supporting classic chat bubbles, web search citations, and MCP tools. Detailed citation paragraph for extraction with more than one hundred characters of content so SwiftSoup extracts the article tag cleanly.</article>
+        </body>
+        </html>
+        """
+        let body = Data(html.utf8)
+        let response = HTTPURLResponse(
+            url: request.url!,
+            statusCode: 200,
+            httpVersion: "HTTP/1.1",
+            headerFields: ["Content-Type": "text/html; charset=utf-8"]
         )!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: body)

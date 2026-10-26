@@ -19,7 +19,11 @@ struct AgentTranscriptActivityRow: View {
       if isReasoning {
         return String(localized: "Thinking")
       }
-      return activity?.narrativeText ?? activity?.title ?? item.text ?? String(localized: "Thinking")
+      let raw = activity?.narrativeText ?? activity?.title ?? item.text ?? String(localized: "Thinking")
+      if ProgressSummarySanitizer.looksLikeRawChainOfThought(raw) {
+        return String(localized: "Thinking")
+      }
+      return ProgressSummarySanitizer.sanitize(raw) ?? String(localized: "Thinking")
     }()
 
     let queries = activity?.queries ?? []

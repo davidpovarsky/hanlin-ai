@@ -1,6 +1,23 @@
 import Foundation
 
 enum LegacyResourcesEvidenceAdapter {
+    static func deduplicatedResources(_ resources: [Resource]) -> [Resource] {
+        var seenKeys = Set<String>()
+        var result: [Resource] = []
+        result.reserveCapacity(resources.count)
+        for resource in resources {
+            let urlKey = AgentEvidenceDeduplicator.normalizedURL(resource.link)
+            let titleKey = resource.title
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .lowercased()
+            let key = urlKey ?? (titleKey.isEmpty ? resource.id.uuidString : "title:\(titleKey)")
+            if seenKeys.insert(key).inserted {
+                result.append(resource)
+            }
+        }
+        return result
+    }
+
     static func items(
         from resources: [Resource],
         providerName: String?,
@@ -9,7 +26,7 @@ enum LegacyResourcesEvidenceAdapter {
         sequence: Int? = nil,
         wasReturnedToModel: Bool = true
     ) -> [AgentEvidenceItem] {
-        resources.compactMap { resource in
+        deduplicatedResources(resources).compactMap { resource in
             let title = resolvedTitle(resource.title, url: resource.link)
             guard !title.isEmpty else { return nil }
             let kind = AgentEvidenceExtractor.kind(forURL: resource.link, fallback: .webPage)

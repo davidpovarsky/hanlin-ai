@@ -385,7 +385,14 @@ final class MCPRuntimeProvider {
     }
 
     func requestScope(chatID: UUID?, temporary: Bool = false) async -> AssistantToolRequestScope {
-        guard persistentLoadState == .loaded else { return .nativeOnly }
+        guard persistentLoadState == .loaded else {
+            return AssistantToolRequestScope(
+                chatID: chatID,
+                mcpServerIDs: [],
+                mcpGloballyEnabled: false,
+                isTemporaryChat: temporary
+            )
+        }
         let ids: Set<UUID>
         if let chatID {
             ids = await selection(chatID: chatID, temporary: temporary)
@@ -395,7 +402,8 @@ final class MCPRuntimeProvider {
         return AssistantToolRequestScope(
             chatID: chatID,
             mcpServerIDs: ids,
-            mcpGloballyEnabled: configuration.isEnabled
+            mcpGloballyEnabled: configuration.isEnabled,
+            isTemporaryChat: temporary
         )
     }
 

@@ -214,13 +214,41 @@ enum AssistantToolBridge {
   struct PreparedTools {
     let authority: HanlinCanonicalToolAuthority
     let executors: Executors
+    let legacySources: [HanlinCanonicalToolAuthority.LegacySource]
 
     init(
       authority: HanlinCanonicalToolAuthority,
-      executors: Executors = .live
+      executors: Executors = .live,
+      legacySources: [HanlinCanonicalToolAuthority.LegacySource] = []
     ) {
       self.authority = authority
       self.executors = executors
+      self.legacySources = legacySources
+    }
+
+    var mcpAliases: [String] {
+      authority.schemasByAlias.keys.filter { $0.hasPrefix("mcp__") }.sorted()
+    }
+
+    func refreshingMCPTools(
+      scope: AssistantToolRequestScope,
+      scriptingRegistry: HanlinScriptingProviderRegistry = .shared
+    ) async throws -> PreparedTools {
+      let nativeSources = try NativeToolBridge.canonicalSourcesForRequest()
+      let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
+      let scriptSources = try HanlinScriptCanonicalAdapter.project(
+        await scriptingRegistry.snapshots()
+      )
+      return PreparedTools(
+        authority: try HanlinCanonicalToolAuthority.build(
+          nativeSources: nativeSources,
+          mcpTools: mcpTools,
+          scriptSources: scriptSources,
+          legacySources: legacySources
+        ),
+        executors: executors,
+        legacySources: legacySources
+      )
     }
 
     var schemas: [[String: Any]] {
@@ -416,7 +444,8 @@ enum AssistantToolBridge {
           scriptSources: scriptSources,
           legacySources: legacySources
         ),
-        executors: executors
+        executors: executors,
+        legacySources: legacySources
       )
     } catch {
       NativeToolTraceLogger.shared.log(

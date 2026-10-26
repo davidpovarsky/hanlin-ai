@@ -1256,6 +1256,8 @@ struct ChatView: View {
         chatTemps.append(assistantPlaceholder)
         var assistantMessage = assistantPlaceholder  // 保存引用，避免反复查找
         let groupBeginMessage = assistantPlaceholder
+        var searchMessage: ChatMessages? = nil
+        var isSearch = false
         let agentCoordinator = AgentRunCoordinator(
             groupID: thisGroupID,
             providerID: modelTemp[selectedModelIndex].company,
@@ -1367,13 +1369,15 @@ struct ChatView: View {
                         
                         // 搜索资源信息
                         if let resources = data.resources {
-                            assistantMessage.resources = resources
+                            let combined = (assistantMessage.resources ?? []) + resources
+                            assistantMessage.resources = LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
                             updated = true
                         }
                         
                         // 搜索引擎信息
                         if let searchEngine = data.searchEngine {
                             assistantMessage.searchEngine = searchEngine
+                            searchMessage?.searchEngine = searchEngine
                             updated = true
                         }
                         
@@ -1409,7 +1413,16 @@ struct ChatView: View {
                         }
                         
                         // 搜索返回文本
-                        if data.search_text?.isEmpty == false {
+                        if let newSearchText = data.search_text, !newSearchText.isEmpty {
+                            searchMessage = ChatTurnStateOperations.upsertSearchMessage(
+                                existing: searchMessage,
+                                text: newSearchText,
+                                searchEngine: data.searchEngine ?? assistantMessage.searchEngine,
+                                assistantMessage: assistantMessage,
+                                record: chatRecord,
+                                in: &chatTemps
+                            )
+                            isSearch = true
                             updated = true
                         }
                         
@@ -1670,6 +1683,9 @@ struct ChatView: View {
                                 assistantMessage.text = textContent
                                 assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
                                 
+                                if isSearch, let searchMessage {
+                                    context.insert(searchMessage)
+                                }
                                 context.insert(assistantMessage)
                                 
                                 if let outputText = assistantMessage.text?
@@ -1811,32 +1827,16 @@ struct ChatView: View {
     
     // 重新请求
     private func retryRequest(for message: ChatMessages) {
-        guard let tempIndex = chatTemps.lastIndex(where: { $0.id == message.id }) else { return }
-        let targetGroupID = message.groupID
-        var groupStart = tempIndex
-        while groupStart > 0 {
-            guard let previous = chatTemps[safe: groupStart - 1] else { break }
-            if (previous.role == "assistant" || previous.role == "error") && previous.groupID == targetGroupID {
-                groupStart -= 1
-            } else if previous.role == "search" {
-                groupStart -= 1
-            } else {
-                break
-            }
-        }
-
-        // Remove the retried assistant/error group and any trailing system/error/search
-        // bubbles from this turn so retry cleanly replaces the turn in-place.
-        let removedMessages = Array(chatTemps.suffix(from: groupStart))
-        for removed in removedMessages {
-            context.delete(removed)
-        }
-        chatTemps.removeSubrange(groupStart..<chatTemps.count)
-        try? context.save()
+        guard ChatTurnStateOperations.cleanupTurnForRetry(
+            targetMessage: message,
+            chatTemps: &chatTemps,
+            context: context
+        ) else { return }
 
         retryMessagesOverride = nil
         isRetry = true
         handleMessageSending(ifObservingMode: isObserving)
+        isRetry = false
     }
     
     private func selectModel(at index: Int) {
@@ -2050,4 +2050,81 @@ struct ChatView: View {
 
 extension Notification.Name {
     static let scrollToModelIndex = Notification.Name("scrollToModelIndex")
+}
+
+@MainActor
+enum ChatTurnStateOperations {
+    @discardableResult
+    static func upsertSearchMessage(
+        existing: ChatMessages?,
+        text: String,
+        searchEngine: String?,
+        assistantMessage: ChatMessages,
+        record: ChatRecords,
+        in chatTemps: inout [ChatMessages]
+    ) -> ChatMessages {
+        if let existing {
+            existing.text = text
+            if let searchEngine, !searchEngine.isEmpty {
+                existing.searchEngine = searchEngine
+            }
+            if !chatTemps.contains(where: { $0.id == existing.id }) {
+                if let assistantIndex = chatTemps.firstIndex(where: { $0.id == assistantMessage.id }) {
+                    chatTemps.insert(existing, at: assistantIndex)
+                } else {
+                    chatTemps.append(existing)
+                }
+            }
+            return existing
+        }
+
+        let searchMsg = ChatMessages(
+            role: "search",
+            text: text,
+            searchEngine: searchEngine,
+            modelName: "system",
+            modelDisplayName: "system",
+            timestamp: Date(),
+            record: record
+        )
+        if let assistantIndex = chatTemps.firstIndex(where: { $0.id == assistantMessage.id }) {
+            chatTemps.insert(searchMsg, at: assistantIndex)
+        } else {
+            chatTemps.append(searchMsg)
+        }
+        return searchMsg
+    }
+
+    @discardableResult
+    static func cleanupTurnForRetry(
+        targetMessage: ChatMessages,
+        chatTemps: inout [ChatMessages],
+        context: ModelContext? = nil
+    ) -> Bool {
+        guard let tempIndex = chatTemps.lastIndex(where: { $0.id == targetMessage.id }) else {
+            return false
+        }
+        let targetGroupID = targetMessage.groupID
+        var groupStart = tempIndex
+        while groupStart > 0 {
+            guard let previous = chatTemps[safe: groupStart - 1] else { break }
+            if (previous.role == "assistant" || previous.role == "error") && previous.groupID == targetGroupID {
+                groupStart -= 1
+            } else if previous.role == "search" || previous.role == "information" {
+                groupStart -= 1
+            } else {
+                break
+            }
+        }
+
+        let removedMessages = Array(chatTemps.suffix(from: groupStart))
+        if let context {
+            for removed in removedMessages {
+                context.delete(removed)
+            }
+            try? context.save()
+        }
+        chatTemps.removeSubrange(groupStart..<chatTemps.count)
+        return true
+    }
 }

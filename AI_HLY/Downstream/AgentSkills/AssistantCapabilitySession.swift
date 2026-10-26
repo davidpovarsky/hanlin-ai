@@ -10,7 +10,9 @@ import HanlinPlatformContracts
 public final class AssistantCapabilitySession {
     public let id: UUID
     public let chatID: String?
+    public let isTemporaryChat: Bool
     public let resultStore: ToolResultStore
+    public var onRefreshCatalog: (@MainActor () async -> Void)?
 
     public private(set) var loadedSkillIDs: Set<HanlinSkillID> = []
     public private(set) var loadedInstructionTexts: [String] = []
@@ -22,11 +24,13 @@ public final class AssistantCapabilitySession {
     public init(
         id: UUID = UUID(),
         chatID: String? = nil,
+        isTemporaryChat: Bool = false,
         resultStore: ToolResultStore = ToolResultStore(),
         initialExposedAliases: Set<String> = []
     ) {
         self.id = id
         self.chatID = chatID
+        self.isTemporaryChat = isTemporaryChat
         self.resultStore = resultStore
         self.exposedToolAliases = initialExposedAliases
     }
@@ -55,6 +59,20 @@ public final class AssistantCapabilitySession {
                 discoveredToolAliases.append(alias)
             }
         }
+    }
+
+    /// Synchronize exposed MCP tool aliases (`mcp__*`) with the currently active MCP catalog.
+    public func syncMCPTools(activeMCPAliases: [String]) {
+        let activeSet = Set(activeMCPAliases)
+        exposedToolAliases = exposedToolAliases.filter { alias in
+            !alias.hasPrefix("mcp__") || activeSet.contains(alias)
+        }
+        exposeTools(aliases: activeMCPAliases)
+    }
+
+    /// Refresh dynamic tool catalog (e.g. after installing/starting/stopping/selecting an MCP server).
+    public func refreshDynamicTools() async {
+        await onRefreshCatalog?()
     }
 
     /// Check if a skill is already loaded.

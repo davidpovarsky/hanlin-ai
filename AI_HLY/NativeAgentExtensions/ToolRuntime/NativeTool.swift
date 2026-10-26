@@ -25,6 +25,7 @@ struct NativeToolExecutionContext {
     var modelContext: ModelContext?
     var toolCallID: String?
     var chatID: String?
+    var isTemporaryChat: Bool
     var requestID: String?
     var capabilitySession: AssistantCapabilitySession?
     var attachmentResolver: (@Sendable (String) async throws -> Data)?
@@ -34,6 +35,7 @@ struct NativeToolExecutionContext {
         modelContext: ModelContext? = nil,
         toolCallID: String? = nil,
         chatID: String? = nil,
+        isTemporaryChat: Bool = false,
         requestID: String? = nil,
         capabilitySession: AssistantCapabilitySession? = nil,
         attachmentResolver: (@Sendable (String) async throws -> Data)? = nil
@@ -42,6 +44,7 @@ struct NativeToolExecutionContext {
         self.modelContext = modelContext
         self.toolCallID = toolCallID
         self.chatID = chatID
+        self.isTemporaryChat = isTemporaryChat
         self.requestID = requestID
         self.capabilitySession = capabilitySession
         self.attachmentResolver = attachmentResolver

@@ -258,9 +258,23 @@ struct ChatBubbleView: View {
         self.onDelete = onDelete
     }
     
+    @State private var containerWidth: CGFloat = 0
+
+    private var effectiveContainerWidth: CGFloat {
+        containerWidth > 0 ? containerWidth : UIScreen.main.bounds.width
+    }
+
     var body: some View {
         VStack(alignment: messageAlignment) {
             contentView()
+        }
+        .frame(maxWidth: .infinity, alignment: role == "information" ? .center : (role == "user" ? .trailing : .leading))
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.width
+        } action: { newWidth in
+            if newWidth > 0 {
+                containerWidth = newWidth
+            }
         }
         // 添加确认弹窗
         .alert(String(localized: "确认删除？"), isPresented: $showDeleteConfirmation) {
@@ -419,7 +433,8 @@ struct ChatBubbleView: View {
                 .foregroundColor(.primary)
                 .cornerRadius(20)
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .leading)
+                .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .leading)
+                .accessibilityIdentifier("hanlin-search-bubble")
                 .contextMenu {
                     Button(action: {
                         isTextSelectionSheetPresented = true
@@ -446,17 +461,19 @@ struct ChatBubbleView: View {
                 
                 if let images = images, !images.isEmpty {
                     chatBubbleImage()
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                        .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
+                        .accessibilityIdentifier("hanlin-user-image-attachment")
                 }
                 
                 if let document = uploadDocument, !document.isEmpty {
                     chatBubbleDocument(for: document)
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .trailing)
+                        .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .trailing)
+                        .accessibilityIdentifier("hanlin-user-document-attachment")
                 }
                 
                 if let prompts = prompts, !prompts.isEmpty {
                     chatBubblePrompt()
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                        .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
                 }
                 
                 if !text.isEmpty {
@@ -490,7 +507,10 @@ struct ChatBubbleView: View {
                     }
                     .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
                     .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                    .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel(text)
+                    .accessibilityIdentifier("hanlin-user-bubble")
                     .transition(.move(edge: .trailing).combined(with: .opacity))
                     .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
                     .sheet(isPresented: $isTextSelectionSheetPresented) {
@@ -517,6 +537,7 @@ struct ChatBubbleView: View {
             assistantTextSection()
             assistantFooter()
         }
+        .accessibilityIdentifier("hanlin-assistant-bubble")
         .transition(.move(edge: .leading).combined(with: .opacity))
         .animation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
                    value: isResponding)
@@ -562,7 +583,7 @@ struct ChatBubbleView: View {
     private func assistantImageSection() -> some View {
         if let images = images, !images.isEmpty {
             chatAssistantBubbleImage()
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.75,
+                .frame(maxWidth: effectiveContainerWidth * 0.75,
                        alignment: .leading)
                 .transition(.move(edge: .top).combined(with: .opacity))
                 .animation(.spring(response: 0.5, dampingFraction: 0.8),
@@ -818,7 +839,11 @@ struct ChatBubbleView: View {
     private func codeBubble(for codes: [CodeBlock]) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             ForEach(codes) { codeBlock in
-                CodeBlockRow(codeBlock: codeBlock, temporaryRecord: temporaryRecord) {
+                CodeBlockRow(
+                    codeBlock: codeBlock,
+                    temporaryRecord: temporaryRecord,
+                    containerWidth: effectiveContainerWidth
+                ) {
                     selectedCodeBlock = codeBlock
                     triggerPythonCopyFeedback.toggle()
                 }
@@ -961,7 +986,7 @@ struct ChatBubbleView: View {
                         .cornerRadius(20)
                         .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+                .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
             }
         }
     }
@@ -985,7 +1010,8 @@ struct ChatBubbleView: View {
                         .cornerRadius(20)
                         .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+                .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
+                .accessibilityIdentifier("hanlin-html-web-bubble")
             
             HStack(spacing: 6) {
                 // 查看代码按钮
@@ -1260,7 +1286,7 @@ struct ChatBubbleView: View {
                     )
                 }
             }
-            .frame(maxWidth: UIScreen.main.bounds.width * 0.9,
+            .frame(maxWidth: effectiveContainerWidth * 0.9,
                    alignment: .leading)
         }
     }
@@ -1369,7 +1395,7 @@ struct ChatBubbleView: View {
                     )
                 }
             }
-            .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+            .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
         }
     }
 
@@ -1402,7 +1428,7 @@ struct ChatBubbleView: View {
                     .cornerRadius(20)
                     .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
             )
-            .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+            .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
             
             // 按钮区域保持原样
             HStack(spacing: 6) {
@@ -1581,6 +1607,7 @@ struct ChatBubbleView: View {
                     .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-copy")
             .sensoryFeedback(.success, trigger: isSuccess)
             
             if isCopy {
@@ -1601,6 +1628,7 @@ struct ChatBubbleView: View {
                     .clipShape(Circle())
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-select")
             .sheet(isPresented: $isTextSelectionSheetPresented) {
                 TextSelectionView(text: text)
             }
@@ -1631,6 +1659,7 @@ struct ChatBubbleView: View {
                 }
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-tts")
             
             if tts.isAsking {
                 Text(String(localized: "正在请求"))
@@ -1684,6 +1713,7 @@ struct ChatBubbleView: View {
             }
             .disabled(isTranslating)
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-translate")
             .alert(String(localized: "翻译操作失败"), isPresented: $showErrorAlert) {
                 Button(String(localized: "确定"), role: .cancel) {}
             } message: {
@@ -1711,6 +1741,7 @@ struct ChatBubbleView: View {
                     .foregroundColor(showMathModeReminder ? .hlBluefont : .secondary)
                     .clipShape(Circle())
             }
+            .accessibilityIdentifier("hanlin-action-math")
             
             if showMathModeReminder {
                 Text(mathMode ? String(localized: "科学模式") : String(localized: "文本模式"))
@@ -1730,6 +1761,7 @@ struct ChatBubbleView: View {
                     .clipShape(Circle())
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-knowledge")
             .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
                 if let record = recordToWrite {
                     NavigationStack {
@@ -1748,8 +1780,10 @@ struct ChatBubbleView: View {
                         .clipShape(Circle())
                 }
                 .buttonStyle(PlainButtonStyle())
+                .accessibilityIdentifier("hanlin-action-retry")
             }
         }
+        .accessibilityIdentifier("hanlin-action-buttons-row")
         .padding(.leading, 5)
         .animation(
             .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
@@ -2208,19 +2242,20 @@ struct ChatBubbleView: View {
     // MARK: - 参考资料区域
     @ViewBuilder
     private func resourcesView() -> some View {
-        if let resources = resources, !resources.isEmpty {
+        let deduplicatedResources = LegacyResourcesEvidenceAdapter.deduplicatedResources(resources ?? [])
+        if !deduplicatedResources.isEmpty {
             VStack(alignment: .leading) {
                 
                 ToggleButton(
                     title: String(localized: "reference_materials"),
-                    timeText: String(resources.count),
+                    timeText: String(deduplicatedResources.count),
                     isExpanded: $isResourcesExpanded
                 )
 
                 if isResourcesExpanded {
                     VStack(alignment: .leading) {
-                        ForEach(resources.indices, id: \.self) { index in
-                            resourceItemView(resource: resources[index], index: index)
+                        ForEach(deduplicatedResources.indices, id: \.self) { index in
+                            resourceItemView(resource: deduplicatedResources[index], index: index)
                         }
                     }
                     .padding(.horizontal, 6)
@@ -2229,6 +2264,7 @@ struct ChatBubbleView: View {
                     .padding(.bottom, 5)
                 }
             }
+            .accessibilityIdentifier("hanlin-reference-materials")
         }
     }
 
@@ -2321,6 +2357,7 @@ struct ChatBubbleView: View {
             .foregroundColor(.secondary)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
+            .accessibilityIdentifier("hanlin-info-bubble")
     }
     
     // MARK: - 错误型消息
@@ -2350,6 +2387,7 @@ struct ChatBubbleView: View {
                         .foregroundColor(.white)
                         .cornerRadius(20)
                 }
+                .accessibilityIdentifier("hanlin-error-retry-button")
                 .sensoryFeedback(.impact, trigger: isFeedBack)
             }
         }
@@ -2361,6 +2399,7 @@ struct ChatBubbleView: View {
                 .stroke(Color.hlOrange.opacity(0.3), lineWidth: 1)
         )
         .cornerRadius(20)
+        .accessibilityIdentifier("hanlin-error-bubble")
     }
 
     // MARK: - 折叠按钮组件
@@ -2656,11 +2695,16 @@ struct ChatBubbleView: View {
 }
 
 // MARK: - 代码块
-private struct CodeBlockRow: View {
+struct CodeBlockRow: View {
     let codeBlock: CodeBlock
     let temporaryRecord: Bool
+    var containerWidth: CGFloat = 0
     let onShowSource: () -> Void
     @State private var isFeedBack: Bool = false
+
+    private var effectiveWidth: CGFloat {
+        containerWidth > 0 ? containerWidth : UIScreen.main.bounds.width
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -2683,6 +2727,7 @@ private struct CodeBlockRow: View {
                     .foregroundColor(.white)
                     .clipShape(Capsule())
                 }
+                .accessibilityIdentifier("hanlin-code-view-source")
                 .sensoryFeedback(.impact, trigger: isFeedBack)
             }
             
@@ -2703,7 +2748,8 @@ private struct CodeBlockRow: View {
                 .cornerRadius(20)
                 .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
         )
-        .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+        .frame(maxWidth: effectiveWidth * 0.95, alignment: .leading)
+        .accessibilityIdentifier("hanlin-code-block-row")
     }
 }
 

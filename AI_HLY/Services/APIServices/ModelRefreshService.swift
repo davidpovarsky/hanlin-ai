@@ -17,7 +17,7 @@ struct APIModelResponse: Codable {
     let owned_by: String?
 }
 
-struct ModelCapabilities {
+struct ModelCapabilities: Equatable {
     var supportsTextGen: Bool
     var supportsMultimodal: Bool
     var supportsReasoning: Bool
@@ -97,7 +97,7 @@ enum ModelCapabilityProbeFailure: Error {
     case failed(step: ModelCapabilityProbeStep, message: String)
 }
 
-enum ModelCapabilityProbeResult {
+enum ModelCapabilityProbeResult: Equatable {
     case success
     case failure(String)
 }
@@ -297,6 +297,18 @@ class ModelRefreshService {
         
         let config = try fetchAPIConfig(company: company, context: context)
         let baseName = restoreBaseModelName(from: modelId)
+        let existingModel = fetchExistingModel(modelId: modelId, baseName: baseName, company: company, context: context)
+        let existingCapabilities = existingModel.map {
+            ModelCapabilities(
+                supportsTextGen: $0.supportsTextGen,
+                supportsMultimodal: $0.supportsMultimodal,
+                supportsReasoning: $0.supportsReasoning,
+                supportReasoningChange: $0.supportReasoningChange,
+                supportsImageGen: $0.supportsImageGen,
+                supportsVoiceGen: $0.supportsVoiceGen,
+                supportsToolUse: $0.supportsToolUse
+            )
+        }
         var capabilities = ModelCapabilities(
             supportsTextGen: false,
             supportsMultimodal: false,
@@ -397,12 +409,59 @@ class ModelRefreshService {
             update(.voiceGen, .failure, isZh ? "文本生成不可用，已跳过" : "Text generation unavailable, skipped")
         }
 
-        // Preserve text generation support when a probe fails transiently on a non-image model
-        if !capabilities.supportsTextGen && !capabilities.supportsImageGen && !isKnownImageOnlyModelID(baseName) {
-            capabilities.supportsTextGen = true
-        }
+        // Preserve text generation support and previously verified capabilities when a probe fails transiently on a non-image model
+        capabilities = resolveCapabilitiesAfterProbe(
+            probed: capabilities,
+            existing: existingCapabilities,
+            baseName: baseName,
+            textProbeSucceeded: textResult == .success
+        )
 
         return ModelCapabilityProbeSummary(capabilities: capabilities)
+    }
+
+    static func resolveCapabilitiesAfterProbe(
+        probed: ModelCapabilities,
+        existing: ModelCapabilities?,
+        baseName: String,
+        textProbeSucceeded: Bool
+    ) -> ModelCapabilities {
+        var resolved = probed
+        if !textProbeSucceeded, let existing {
+            resolved.supportsTextGen = existing.supportsTextGen || (!resolved.supportsImageGen && !isKnownImageOnlyModelID(baseName))
+            resolved.supportsMultimodal = resolved.supportsMultimodal || existing.supportsMultimodal
+            resolved.supportsReasoning = resolved.supportsReasoning || existing.supportsReasoning
+            resolved.supportReasoningChange = resolved.supportReasoningChange || existing.supportReasoningChange
+            resolved.supportsImageGen = resolved.supportsImageGen || existing.supportsImageGen
+            resolved.supportsVoiceGen = resolved.supportsVoiceGen || existing.supportsVoiceGen
+            resolved.supportsToolUse = resolved.supportsToolUse || existing.supportsToolUse
+            return resolved
+        }
+        if !resolved.supportsTextGen && !resolved.supportsImageGen && !isKnownImageOnlyModelID(baseName) {
+            resolved.supportsTextGen = true
+        }
+        return resolved
+    }
+
+    private static func fetchExistingModel(
+        modelId: String,
+        baseName: String,
+        company: String,
+        context: ModelContext
+    ) -> AllModels? {
+        let candidateNames: Set<String> = [
+            modelId,
+            "\(baseName)_repeat_\(company)",
+            baseName
+        ]
+        guard let allModels = try? context.fetch(FetchDescriptor<AllModels>()) else {
+            return nil
+        }
+        return allModels.first { model in
+            guard let name = model.name else { return false }
+            let sameCompany = (model.company?.uppercased() ?? "") == company.uppercased()
+            return sameCompany && (candidateNames.contains(name) || restoreBaseModelName(from: name) == baseName)
+        }
     }
 
     static func isKnownImageOnlyModelID(_ modelId: String) -> Bool {

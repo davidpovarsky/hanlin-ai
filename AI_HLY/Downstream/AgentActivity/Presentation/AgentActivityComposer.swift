@@ -86,9 +86,15 @@ enum AgentActivityComposer {
     let title: String
     switch kind {
     case .narrative:
-      title = steps.compactMap(\.userFacingSummary).first ?? first.title
+      let rawNarrative = steps.compactMap(\.userFacingSummary).first ?? first.title
+      title = ProgressSummarySanitizer.sanitize(rawNarrative) ?? String(localized: "Working")
     case .reasoning:
-      title = first.title
+      let rawReasoning = first.title
+      if ProgressSummarySanitizer.looksLikeRawChainOfThought(rawReasoning) {
+        title = String(localized: "Thinking")
+      } else {
+        title = ProgressSummarySanitizer.sanitize(rawReasoning) ?? String(localized: "Thinking")
+      }
     default:
       title = AgentActivityTitleBuilder.title(
         for: steps, kind: kind, queries: queries, status: status)

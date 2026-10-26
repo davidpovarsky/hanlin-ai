@@ -11,9 +11,18 @@ struct MCPPackageSpec: Codable, Hashable, Sendable {
 
     init(_ rawValue: String) throws {
         let value = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
-        if let url = URL(string: value), let scheme = url.scheme?.lowercased(),
-           ["https", "http"].contains(scheme), url.pathExtension.lowercased() == "tgz" {
-            source = .remoteArchive(url)
+        if let url = URL(string: value), let scheme = url.scheme?.lowercased() {
+            if scheme == "file", url.pathExtension.lowercased() == "tgz" {
+                source = .localArchive(url)
+                return
+            }
+            if ["https", "http"].contains(scheme), url.pathExtension.lowercased() == "tgz" {
+                source = .remoteArchive(url)
+                return
+            }
+        }
+        if value.hasPrefix("/") && value.lowercased().hasSuffix(".tgz") {
+            source = .localArchive(URL(fileURLWithPath: value))
             return
         }
 

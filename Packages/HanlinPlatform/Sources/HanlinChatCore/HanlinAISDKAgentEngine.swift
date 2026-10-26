@@ -68,6 +68,7 @@ public actor HanlinAISDKAgentEngine {
         baseSystemPrompt: String?,
         tools definitions: [HanlinAISDKToolDefinition],
         maxSteps: Int? = nil,
+        dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         prepareStep: @escaping @MainActor @Sendable () -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -75,6 +76,7 @@ public actor HanlinAISDKAgentEngine {
             baseSystemPrompt: baseSystemPrompt,
             tools: definitions,
             maxSteps: maxSteps,
+            dynamicTools: dynamicTools,
             prepareStep: { (_: Int) in prepareStep() }
         )
     }
@@ -84,6 +86,7 @@ public actor HanlinAISDKAgentEngine {
         baseSystemPrompt: String?,
         tools definitions: [HanlinAISDKToolDefinition],
         maxSteps: Int? = nil,
+        dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         prepareStep: @escaping @MainActor @Sendable () async -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -91,6 +94,7 @@ public actor HanlinAISDKAgentEngine {
             baseSystemPrompt: baseSystemPrompt,
             tools: definitions,
             maxSteps: maxSteps,
+            dynamicTools: dynamicTools,
             prepareStep: { (_: Int) async in await prepareStep() }
         )
     }
@@ -100,13 +104,14 @@ public actor HanlinAISDKAgentEngine {
         baseSystemPrompt: String?,
         tools definitions: [HanlinAISDKToolDefinition],
         maxSteps: Int? = nil,
+        dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         let modelMessages = try Self.modelMessages(from: messages)
         guard !modelMessages.isEmpty else {
             throw HanlinAISDKError.invalidConversation("At least one user or assistant message is required.")
         }
-        let tools = try Self.makeTools(definitions)
+        let initialTools = try Self.makeTools(definitions)
         let settings = CallSettings(
             maxOutputTokens: configuration.maxTokens,
             temperature: configuration.temperature == HanlinChatGenerationDefaults.temperature
@@ -116,113 +121,162 @@ public actor HanlinAISDKAgentEngine {
         )
 
         let limit = maxSteps ?? 40
-        let stopConditions: [StopCondition] = (limit > 0) ? [stepCountIs(limit)] : []
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
             let task = Task {
                 do {
                     continuation.yield(.runStarted)
-                    let result: DefaultStreamTextResult<JSONValue, JSONValue> = try streamText(
-                        model: resolvedProvider.model,
-                        system: baseSystemPrompt,
-                        messages: modelMessages,
-                        tools: tools,
-                        providerOptions: resolvedProvider.providerOptions,
-                        prepareStep: { options in
-                            let preparation = await prepareStep(options.stepNumber)
-                            continuation.yield(.stepStarted(index: options.stepNumber, preparation: preparation))
-                            return PrepareStepResult(
-                                activeTools: preparation.activeToolAliases,
-                                system: Self.systemPrompt(
-                                    base: baseSystemPrompt,
-                                    loadedInstructions: preparation.loadedSkillInstructions
+                    var currentMessages = modelMessages
+                    var currentDefinitions = definitions
+                    var currentTools = initialTools
+                    var stepOffset = 0
+
+                    while true {
+                        let remainingSteps = max(limit - stepOffset, 1)
+                        let currentNames = Set(currentDefinitions.map(\.name))
+                        var stopConditions: [StopCondition] = (limit > 0) ? [stepCountIs(remainingSteps)] : []
+                        if let dynamicTools {
+                            stopConditions.append { _ in
+                                let latest = await dynamicTools()
+                                return Set(latest.map(\.name)) != currentNames
+                            }
+                        }
+
+                        let offsetSnapshot = stepOffset
+                        let result: DefaultStreamTextResult<JSONValue, JSONValue> = try streamText(
+                            model: resolvedProvider.model,
+                            system: baseSystemPrompt,
+                            messages: currentMessages,
+                            tools: currentTools,
+                            providerOptions: resolvedProvider.providerOptions,
+                            prepareStep: { options in
+                                let globalStep = offsetSnapshot + options.stepNumber
+                                let preparation = await prepareStep(globalStep)
+                                continuation.yield(.stepStarted(index: globalStep, preparation: preparation))
+                                return PrepareStepResult(
+                                    activeTools: preparation.activeToolAliases,
+                                    system: Self.systemPrompt(
+                                        base: baseSystemPrompt,
+                                        loadedInstructions: preparation.loadedSkillInstructions
+                                    )
                                 )
-                            )
-                        },
-                        stopWhen: stopConditions,
-                        settings: settings
-                    )
+                            },
+                            stopWhen: stopConditions,
+                            settings: settings
+                        )
 
-                    stopper.setStopper {
-                        result.stop()
-                    }
+                        stopper.setStopper {
+                            result.stop()
+                        }
 
-                    var stepIndex = -1
-                    var meaningfulEventCount = 0
-                    for try await part in result.fullStream {
-                        try Task.checkCancellation()
-                        switch part {
-                        case .start:
-                            break
-                        case .startStep:
-                            stepIndex += 1
-                            meaningfulEventCount = 0
-                        case .textDelta(_, let text, _):
-                            if !text.isEmpty {
+                        var localStepIndex = -1
+                        var meaningfulEventCount = 0
+                        var shouldReloadToolsAndContinue = false
+
+                        for try await part in result.fullStream {
+                            try Task.checkCancellation()
+                            switch part {
+                            case .start:
+                                break
+                            case .startStep:
+                                localStepIndex += 1
+                                meaningfulEventCount = 0
+                            case .textDelta(_, let text, _):
+                                if !text.isEmpty {
+                                    meaningfulEventCount += 1
+                                    continuation.yield(.textDelta(text))
+                                }
+                            case .reasoningDelta(_, let text, _):
+                                if !text.isEmpty {
+                                    meaningfulEventCount += 1
+                                    continuation.yield(.reasoningDelta(text))
+                                }
+                            case .toolInputStart(let id, let name, _, _, _, _):
                                 meaningfulEventCount += 1
-                                continuation.yield(.textDelta(text))
-                            }
-                        case .reasoningDelta(_, let text, _):
-                            if !text.isEmpty {
+                                continuation.yield(.toolCallArgumentsStarted(id: id, name: name))
+                            case .toolInputDelta(let id, let delta, _):
                                 meaningfulEventCount += 1
-                                continuation.yield(.reasoningDelta(text))
+                                continuation.yield(.toolCallArgumentsDelta(id: id, delta: delta))
+                            case .toolCall(let call):
+                                meaningfulEventCount += 1
+                                continuation.yield(.toolCall(Self.toolCall(from: call)))
+                            case .toolResult(let result):
+                                meaningfulEventCount += 1
+                                let projected = Self.toolResult(from: result)
+                                continuation.yield(.toolResult(
+                                    callID: result.toolCallId,
+                                    name: result.toolName,
+                                    modelText: projected.modelText,
+                                    resultReference: projected.resultReference,
+                                    isError: projected.isError
+                                ))
+                            case .finishStep(_, let usage, let reason, let rawReason, _):
+                                let globalStep = offsetSnapshot + max(localStepIndex, 0)
+                                continuation.yield(.stepFinished(
+                                    index: globalStep,
+                                    finishReason: rawReason ?? reason.rawValue,
+                                    usage: Self.usage(from: usage),
+                                    meaningfulEventCount: meaningfulEventCount
+                                ))
+                            case .finish(let reason, let rawReason, let usage):
+                                let nextOffset = offsetSnapshot + max(localStepIndex + 1, 1)
+                                if reason == .toolCalls,
+                                   nextOffset < limit,
+                                   let dynamicTools {
+                                    let latestDefinitions = await dynamicTools()
+                                    if Set(latestDefinitions.map(\.name)) != currentNames {
+                                        let completedSteps = try await result.steps
+                                        for step in completedSteps {
+                                            for msg in step.response.messages {
+                                                switch msg {
+                                                case .assistant(let assistantMsg):
+                                                    currentMessages.append(.assistant(assistantMsg))
+                                                case .tool(let toolMsg):
+                                                    currentMessages.append(.tool(toolMsg))
+                                                }
+                                            }
+                                        }
+                                        currentDefinitions = latestDefinitions
+                                        currentTools = try Self.makeTools(latestDefinitions)
+                                        stepOffset = nextOffset
+                                        shouldReloadToolsAndContinue = true
+                                        break
+                                    }
+                                }
+                                continuation.yield(.finished(
+                                    reason: rawReason ?? reason.rawValue,
+                                    usage: Self.usage(from: usage)
+                                ))
+                                continuation.finish()
+                                return
+                            case .abort:
+                                continuation.yield(.cancelled)
+                                continuation.finish()
+                                return
+                            case .error(let error):
+                                throw error
+                            case .toolError(let error):
+                                meaningfulEventCount += 1
+                                continuation.yield(.toolResult(
+                                    callID: error.toolCallId,
+                                    name: error.toolName,
+                                    modelText: AISDKProvider.getErrorMessage(error.error),
+                                    resultReference: nil,
+                                    isError: true
+                                ))
+                            case .textStart, .textEnd, .reasoningStart, .reasoningEnd,
+                                 .toolInputEnd, .toolOutputDenied, .toolApprovalRequest,
+                                 .source, .custom, .file, .reasoningFile, .raw:
+                                break
                             }
-                        case .toolInputStart(let id, let name, _, _, _, _):
-                            meaningfulEventCount += 1
-                            continuation.yield(.toolCallArgumentsStarted(id: id, name: name))
-                        case .toolInputDelta(let id, let delta, _):
-                            meaningfulEventCount += 1
-                            continuation.yield(.toolCallArgumentsDelta(id: id, delta: delta))
-                        case .toolCall(let call):
-                            meaningfulEventCount += 1
-                            continuation.yield(.toolCall(Self.toolCall(from: call)))
-                        case .toolResult(let result):
-                            meaningfulEventCount += 1
-                            let projected = Self.toolResult(from: result)
-                            continuation.yield(.toolResult(
-                                callID: result.toolCallId,
-                                name: result.toolName,
-                                modelText: projected.modelText,
-                                resultReference: projected.resultReference,
-                                isError: projected.isError
-                            ))
-                        case .finishStep(_, let usage, let reason, let rawReason, _):
-                            continuation.yield(.stepFinished(
-                                index: max(stepIndex, 0),
-                                finishReason: rawReason ?? reason.rawValue,
-                                usage: Self.usage(from: usage),
-                                meaningfulEventCount: meaningfulEventCount
-                            ))
-                        case .finish(let reason, let rawReason, let usage):
-                            continuation.yield(.finished(
-                                reason: rawReason ?? reason.rawValue,
-                                usage: Self.usage(from: usage)
-                            ))
+                        }
+
+                        if !shouldReloadToolsAndContinue {
                             continuation.finish()
                             return
-                        case .abort:
-                            continuation.yield(.cancelled)
-                            continuation.finish()
-                            return
-                        case .error(let error):
-                            throw error
-                        case .toolError(let error):
-                            meaningfulEventCount += 1
-                            continuation.yield(.toolResult(
-                                callID: error.toolCallId,
-                                name: error.toolName,
-                                modelText: AISDKProvider.getErrorMessage(error.error),
-                                resultReference: nil,
-                                isError: true
-                            ))
-                        case .textStart, .textEnd, .reasoningStart, .reasoningEnd,
-                             .toolInputEnd, .toolOutputDenied, .toolApprovalRequest,
-                             .source, .custom, .file, .reasoningFile, .raw:
-                            break
                         }
                     }
-                    continuation.finish()
                 } catch is CancellationError {
                     continuation.yield(.cancelled)
                     continuation.finish(throwing: HanlinChatError.cancelled)
