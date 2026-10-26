@@ -4,7 +4,7 @@
 **Execution Timestamp:** 2026-10-27T01:30:00+02:00  
 **Target Branch:** `codex/expo-nativescript-jsi-hybrid-20261027`  
 **Base SHA:** `0c0e6ab61607f19aa52f01bad1d0d1e4f7dfcf78` (Build `84001`, Run `40331983790`)  
-**Head SHA:** `codex/expo-nativescript-jsi-hybrid-20261027` (HEAD)  
+**Head SHA:** `663812f2c810475b574936a29d8fd06d2afaccf5`  
 
 ---
 
