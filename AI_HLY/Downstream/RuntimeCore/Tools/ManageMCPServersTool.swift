@@ -311,7 +311,7 @@ struct ManageMCPServersTool: NativeTool {
                         provider: provider,
                         chatUUID: chatUUID,
                         temporary: isTemporary,
-                        allowAutoStart: targetEnable
+                        allowAutoStart: select
                     )
                 }
                 let summary = await buildStatusSummary(
@@ -383,7 +383,7 @@ struct ManageMCPServersTool: NativeTool {
                         provider: provider,
                         chatUUID: chatUUID,
                         temporary: isTemporary,
-                        allowAutoStart: targetEnable
+                        allowAutoStart: true
                     )
                 }
                 var lines: [String] = [
@@ -616,9 +616,11 @@ struct ManageMCPServersTool: NativeTool {
         var scope = await provider.requestScope(chatID: chatUUID, temporary: temporary)
         if !allowAutoStart {
             let runningIDs = Set(provider.servers.filter { provider.statuses[$0.id]?.state == .running }.map(\.id))
-            scope = MCPRequestScope(
+            scope = AssistantToolRequestScope(
+                chatID: scope.chatID,
+                mcpServerIDs: scope.mcpServerIDs.intersection(runningIDs),
                 mcpGloballyEnabled: scope.mcpGloballyEnabled,
-                mcpServerIDs: scope.mcpServerIDs.intersection(runningIDs)
+                isTemporaryChat: scope.isTemporaryChat
             )
         }
         let descriptors = await MCPToolBridge.resolveDescriptors(scope: scope)
