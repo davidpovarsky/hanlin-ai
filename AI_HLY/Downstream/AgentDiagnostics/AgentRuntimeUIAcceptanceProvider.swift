@@ -259,7 +259,13 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let bodyData = Self.extractBodyData(from: request)
         let bodyString = String(decoding: bodyData, as: UTF8.self)
 
-        // 1. Delayed Run A for stop cancellation test
+        // 1. Run B immediately completes (must precede START_DELAYED_RUN_A since Run A remains in conversation history)
+        if bodyString.contains("START_RUN_B") {
+            emitFinalAnswer("RUN_B_COMPLETE")
+            return
+        }
+
+        // 2. Delayed Run A for stop cancellation test
         if bodyString.contains("START_DELAYED_RUN_A") {
             let response = HTTPURLResponse(
                 url: request.url!,
@@ -287,12 +293,6 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                     self.client?.urlProtocolDidFinishLoading(self)
                 }
             }
-            return
-        }
-
-        // 2. Run B immediately completes
-        if bodyString.contains("START_RUN_B") {
-            emitFinalAnswer("RUN_B_COMPLETE")
             return
         }
 

@@ -2394,7 +2394,6 @@ struct ChatBubbleView: View {
             
             if let retryAction = onRetry {
                 Button(action: {
-                    isFeedBack.toggle()
                     retryAction()
                 }) {
                     Text(String(localized: "重新请求"))
@@ -2406,7 +2405,6 @@ struct ChatBubbleView: View {
                         .cornerRadius(20)
                 }
                 .accessibilityIdentifier("hanlin-error-retry-button")
-                .sensoryFeedback(.impact, trigger: isFeedBack)
             }
         }
         .frame(maxWidth: .infinity)

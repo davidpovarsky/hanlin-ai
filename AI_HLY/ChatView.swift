@@ -1313,7 +1313,7 @@ struct ChatView: View {
                 for try await data in stream {
                     let agentEvents = eventAdapter.events(from: data)
                     await MainActor.run {
-                        if isCancelled { return }
+                        guard !isCancelled, activeAgentCoordinator === agentCoordinator else { return }
 
                         agentCoordinator.consume(agentEvents)
                         activeAgentRun = agentCoordinator.run
@@ -1627,6 +1627,7 @@ struct ChatView: View {
                 let completionEvents = eventAdapter.completionEvents()
                 // 流结束后的处理必须在主线程执行
                 await MainActor.run {
+                    guard activeAgentCoordinator === agentCoordinator else { return }
                     agentCoordinator.consume(completionEvents)
                     isObserving = false
                     isResponding = false
@@ -1741,6 +1742,7 @@ struct ChatView: View {
             } catch {
                 // 响应异常处理
                 await MainActor.run {
+                    guard activeAgentCoordinator === agentCoordinator else { return }
                     agentCoordinator.fail(error)
                     Task { await apiManager?.completeAgentDiagnostics(status: "failed", error: error) }
                     groupBeginMessage.agentRun = agentCoordinator.run
