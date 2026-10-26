@@ -396,14 +396,18 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(retryButton.waitForExistence(timeout: 10), "Retry button inside error bubble did not appear")
         tapElement(retryButton)
 
-        let recoveredAnswer = app.staticTexts.matching(
+        let recoveredAnswers = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS 'UI07_RETRY_RECOVERY_COMPLETE'")
-        ).firstMatch
-        XCTAssertTrue(recoveredAnswer.waitForExistence(timeout: 30), "Retry did not recover with UI07_RETRY_RECOVERY_COMPLETE")
+        )
+        XCTAssertTrue(recoveredAnswers.firstMatch.waitForExistence(timeout: 30), "Retry did not recover with UI07_RETRY_RECOVERY_COMPLETE")
 
         XCTAssertFalse(errorBubble.exists, "Stale error bubble must be removed on retry")
-        let assistantBubbles = app.descendants(matching: .any).matching(identifier: "hanlin-assistant-bubble")
-        XCTAssertEqual(assistantBubbles.count, 1, "Retry must produce exactly 1 assistant bubble without duplicates")
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-assistant-bubble"].firstMatch.exists, "Assistant bubble must exist after retry")
+        XCTAssertEqual(recoveredAnswers.count, 1, "Retry must produce exactly 1 assistant bubble without duplicates")
+        let userPrompts = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'PROMPT_UI07_FAIL_ONCE'")
+        )
+        XCTAssertEqual(userPrompts.count, 1, "Retry must not duplicate the user prompt bubble")
 
         attachScreenshot("UI-07_StopAndRetryRecoveryWithoutDuplicateBubbles", in: app)
     }
