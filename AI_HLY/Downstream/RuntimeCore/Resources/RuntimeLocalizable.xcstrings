@@ -1,6 +1,248 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Action to perform on MCP servers.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Action to perform on MCP servers."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פעולה לביצוע על שרתי MCP."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要对 MCP 服务器执行的操作。"
+          }
+        }
+      }
+    },
+    "Inspect and manage local Model Context Protocol (MCP) servers on device. Supports checking runtime status, listing installed servers, previewing npm MCP packages, installing, enabling/disabling globally, selecting/deselecting for the active chat, starting/stopping/restarting server workers, listing exposed MCP tools, calling an MCP tool, and uninstalling servers.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspect and manage local Model Context Protocol (MCP) servers on device. Supports checking runtime status, listing installed servers, previewing npm MCP packages, installing, enabling/disabling globally, selecting/deselecting for the active chat, starting/stopping/restarting server workers, listing exposed MCP tools, calling an MCP tool, and uninstalling servers."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקה וניהול של שרתי Model Context Protocol (MCP) מקומיים במכשיר. תומך בבדיקת מצב סביבת הריצה, הצגת שרתים מותקנים, תצוגה מקדימה של חבילות npm של MCP, התקנה, הפעלה/השבתה גלובלית, בחירה/ביטול בחירה עבור השיחה הפעילה, הפעלה/עצירה/הפעלה מחדש של שרתים, הצגת כלי MCP חשופים, קריאה לכלי MCP והסרת התקנה של שרתים."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在设备上检查和管理本地模型上下文协议 (MCP) 服务器。支持检查运行时状态、列出已安装服务器、预览 npm MCP 包、安装、全局启用/禁用、为当前对话选择/取消选择、启动/停止/重启服务器工作进程、列出公开的 MCP 工具、调用 MCP 工具以及卸载服务器。"
+          }
+        }
+      }
+    },
+    "Inspect, preview, install, enable, select for chat, start, stop, restart, list tools, invoke tools, and uninstall local MCP servers.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspect, preview, install, enable, select for chat, start, stop, restart, list tools, invoke tools, and uninstall local MCP servers."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקה, תצוגה מקדימה, התקנה, הפעלה, בחירה לשיחה, הפעלה, עצירה, אתחול, הצגת כלים, הרצת כלים והסרה של שרתי MCP מקומיים."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "检查、预览、安装、启用、为对话选择、启动、停止、重启、列出工具、调用工具以及卸载本地 MCP 服务器。"
+          }
+        }
+      }
+    },
+    "Inspected MCP runtime and server status.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspected MCP runtime and server status."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נבדק מצב סביבת הריצה ושרתי ה-MCP."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已检查 MCP 运行时和服务器状态。"
+          }
+        }
+      }
+    },
+    "JSON object string of arguments for 'call_tool' (default: '{}').": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JSON object string of arguments for 'call_tool' (default: '{}')."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחרוזת אובייקט JSON של ארגומנטים עבור 'call_tool' (ברירת מחדל: '{}')."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "'call_tool' 的参数 JSON 对象字符串（默认：'{}'）。"
+          }
+        }
+      }
+    },
+    "Manage MCP Servers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage MCP Servers"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ניהול שרתי MCP"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "管理 MCP 服务器"
+          }
+        }
+      }
+    },
+    "NPM package specification (e.g. '@modelcontextprotocol/server-memory' or 'pkg@1.0.0'), required for 'preview' and 'install'.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NPM package specification (e.g. '@modelcontextprotocol/server-memory' or 'pkg@1.0.0'), required for 'preview' and 'install'."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפרט חבילת NPM (למשל '@modelcontextprotocol/server-memory' או 'pkg@1.0.0'), נדרש עבור 'preview' ו-'install'."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NPM 包规范（例如 '@modelcontextprotocol/server-memory' 或 'pkg@1.0.0'），'preview' 和 'install' 操作必填。"
+          }
+        }
+      }
+    },
+    "Optional entry point override when installing an MCP package.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional entry point override when installing an MCP package."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דריסת נקודת כניסה אופציונלית בעת התקנת חבילת MCP."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安装 MCP 包时的可选入口点覆盖。"
+          }
+        }
+      }
+    },
+    "Optional runtime filter ('python', 'node', 'typescript', 'jsc', 'shell', 'mcp', or 'all'). Default is 'all'.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional runtime filter ('python', 'node', 'typescript', 'jsc', 'shell', 'mcp', or 'all'). Default is 'all'."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מסנן סביבת ריצה אופציונלי ('python', 'node', 'typescript', 'jsc', 'shell', 'mcp' או 'all'). ברירת המחדל היא 'all'."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可选运行时筛选器（'python'、'node'、'typescript'、'jsc'、'shell'、'mcp' 或 'all'）。默认为 'all'。"
+          }
+        }
+      }
+    },
+    "Server identifier (UUID, slug, display name, or package name) for server-specific actions ('enable', 'disable', 'select_for_chat', 'deselect_for_chat', 'start', 'stop', 'restart', 'list_tools', 'call_tool', 'uninstall').": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server identifier (UUID, slug, display name, or package name) for server-specific actions ('enable', 'disable', 'select_for_chat', 'deselect_for_chat', 'start', 'stop', 'restart', 'list_tools', 'call_tool', 'uninstall')."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מזהה שרת (UUID, מזהה קצר, שם תצוגה או שם חבילה) עבור פעולות ייעודיות לשרת ('enable', 'disable', 'select_for_chat', 'deselect_for_chat', 'start', 'stop', 'restart', 'list_tools', 'call_tool', 'uninstall')."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用于特定服务器操作（'enable'、'disable'、'select_for_chat'、'deselect_for_chat'、'start'、'stop'、'restart'、'list_tools'、'call_tool'、'uninstall'）的服务器标识符（UUID、简称、显示名称或包名）。"
+          }
+        }
+      }
+    },
+    "Tool name (raw or exposed alias) to invoke when action is 'call_tool'.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tool name (raw or exposed alias) to invoke when action is 'call_tool'."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם הכלי (שם מקורי או כינוי חשוף) להפעלה כאשר הפעולה היא 'call_tool'."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当操作为 'call_tool' 时要调用的工具名称（原始名称或公开别名）。"
+          }
+        }
+      }
+    },
     "Execute Skill Resource": {
       "localizations": {
         "en": {
