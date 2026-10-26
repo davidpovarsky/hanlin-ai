@@ -1,11 +1,12 @@
 # 278-Feature Impact, Scope Reconciliation & Evidence Ledger
 
-**Document Version:** 1.0.0
-**Date:** 2026-10-21
-**Target Repository:** `davidpovarsky/hanlin-ai`
-**Branch:** `codex/classic-chat-native-composer-search`
+**Document Version:** 2.0.0
+**Date:** 2026-10-26
+**Target Repository:** `https://github.com/davidpovarsky/hanlin-ai`
+**Branch:** `fix/classic-source-first-agent-acceptance-20261025`
+**Validated Commit SHA:** `f62290e0c54a81b94166594ea204f6484856cd40` (Unit Suite SHA: `b323eec082b4cfe794b3aeb7641d96502d4924b6` / `2620d01814e74e6602562a3c6b10af9c04f2bc00`)
 **Primary Source:** `docs/product/Hanlin_Feature_Decision_Matrix_2026-10-11.md` (Updated 2026-10-19)
-**Standard:** Truthful classification across all 278 capabilities. Zero fictitious passes. Clear demarcation between directly affected components, transitively preserved features, deferred future product split work, and device-only validations.
+**Standard:** Truthful classification across all 278 capabilities. Zero fictitious passes. `PRESERVED_UNTOUCHED` and `COMPILED_CODE_VERIFIED` are never claimed as behavioral `EXECUTED_PASS` or `SIMULATOR_XCUI_PASS`. Directly restored and tested capabilities are cross-referenced to `docs/hanlin-classic-restoration/ACCEPTANCE_MATRIX.md` (Unit Run `40316311859`: `176/176 PASS`; Simulator XCUI Run `40322217987`: `11/11 PASS`).
 
 ---
 
@@ -13,20 +14,20 @@
 
 | Classification Status | Count | Description |
 | :--- | :--- | :--- |
-| **`REUSED_VERIFIED_PASS`** | 17 | Automatic keyless web search, circuits, relevance, and caching (Authenticated via Run 39526111790 + hard deadline tests). |
-| **`COMPILED_CODE_VERIFIED`** | 41 | Modern SwiftChat Liquid Glass multiline composer and Classic transcript UI (Verified by Xcode 27 / iOS 27 SDK compiler & parse). |
-| **`DEVICE_VERIFICATION_PENDING`** | 20 | Hardware microphone, camera capture, and external keyboard Return/Shift+Return requiring physical iPad validation. |
-| **`DEFERRED_FUTURE_SPLIT`** | 18 | MiniApps app separation, 2-tab root restructuring, and separate bundle delivery (Blocked by Asana Gate 1219605282038660). |
-| **`PRESERVED_UNTOUCHED`** | 182 | Existing models, Canvas, agents, session isolation, and system settings preserved with downstream contracts intact. |
+| **`REUSED_VERIFIED_PASS` / `EXECUTED_PASS` / `SIMULATOR_XCUI_PASS`** | 17 (+ 35 directly verified in `ClassicChatRestorationTests` & `AgentRuntimeConversationUITests`) | Automatic web search, classic `role == "search"` row upsert, citation deduplication, classic `ChatBubbleView` user/assistant bubbles, 7 direct action buttons, unified `ListView`, CoT sanitization, model routing, stop/retry recovery, and 2-turn conversational MCP lifecycle (`Runs 40307800961, 40316311859, 40322217987`). |
+| **`COMPILED_CODE_VERIFIED`** | 41 | Approved SwiftChat Liquid Glass multiline composer (`ChatViewBottom.swift`) with external `composerAccessoryBar` and classic `ChatBubbleView` (`ChatViewComponents.swift`) compiled under `Xcode 27.2 (27B48)` (`-sdk iphonesimulator27.2`); subset (`UI-01..UI-08`) additionally verified via Simulator XCUI in Run `40322217987`. |
+| **`DEVICE_VERIFICATION_PENDING`** | 20 | Hardware microphone, camera capture, physical haptics, and external Smart Keyboard Return/Shift+Return requiring physical iPad validation (`DEVICE_PENDING`). |
+| **`DEFERRED_FUTURE_SPLIT`** | 18 | MiniApps app separation, 2-tab root restructuring, and separate bundle delivery (Blocked by Asana Gate `1219605282038660`). |
+| **`PRESERVED_UNTOUCHED`** | 182 | Existing models, Canvas, agents, session isolation, and system settings preserved untouched in source (compilation verified; not claimed as 182 independent behavioral test passes). |
 | **TOTAL** | **278** | **Full 278-item ledger reconciled with zero fabricated metrics.** |
 
 ---
 
-## 2. Reconciling Historical Classic UI (18.10) with Product Decision (19.10)
+## 2. Reconciling Historical Classic UI (2026-10-08 `478cdd2c`) with Product Decision (2026-10-19)
 
-1. **Future App Split vs Scoped Chat UI Work:** The 2026-10-19 product decision (`PLAN-2026-10-19-HANLIN-SPLIT-V1`) establishes a long-term goal of splitting Hanlin AI into two dedicated applications (Hanlin AI and Hanlin MiniApps). **However, this execution prompt does NOT authorize creating the app split or modifying Bundle IDs.** That work remains strictly deferred under Asana Gate `1219605282038660`.
-2. **Transcript Preservation:** The Classic Hanlin visual language (`Color.hlBlue`, 20/20/20/5 asymmetric corners, sensory feedback) is restored surgically in `ChatUserMessageSurface.swift` and `ChatAssistantActionsView.swift`, while preserving modern downstream agent execution steps in `AgentRunTranscriptView`.
-3. **Composer Parity:** The composer in `ChatViewBottom.swift` retains all 278-matrix input capabilities (drafts, `@model`, attachments-only, camera/photos/files, voice, parameters) inside a minimal, modern SwiftChat-inspired Liquid Glass capsule.
+1. **Future App Split vs Scoped Chat UI Work:** The 2026-10-19 product decision (`PLAN-2026-10-19-HANLIN-SPLIT-V1`) establishes a long-term goal of splitting Hanlin AI into two dedicated applications (Hanlin AI and Hanlin MiniApps). **However, this P0 order does NOT authorize creating the app split or modifying Bundle IDs.** That work remains strictly deferred under Asana Gate `1219605282038660`.
+2. **Source-First Classic Transcript Authority (`478cdd2c23ae2b1a52044cff52ce720830128ea2`):** `ChatView.swift`, `ChatBubbleView` in `ChatViewComponents.swift`, `ListView.swift`, and `ChatandFile.swift` are restored directly from `478cdd2c` as the authoritative chat surface (`Color.hlBlue`, `CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5)`, 7 directly visible assistant action buttons, classic `role == "search"` rows, and classic `BlurView` `CodeBlockRow`), while `AgentActivitySummaryView`, `AgentInlineProcessView`, and `AgentEvidenceSummaryView` operate strictly as subordinate adapters inside `ChatBubbleView`.
+3. **Approved Composer Exception (`ChatViewBottom.swift`):** The composer retains the native SwiftChat-inspired multiline Liquid Glass input capsule (`+`, `NativeMultilineTextEditor`, `mic`, `send/stop`) with the model selector (`hanlin-model-selector`) and active capabilities pill (`hanlin-active-capabilities-pill`) moved out of the primary input capsule into an external `composerAccessoryBar` (`UI-06` verified in Run `40322217987`).
 
 ---
 
