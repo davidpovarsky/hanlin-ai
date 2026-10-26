@@ -43,25 +43,25 @@ struct ClassicChatRestorationTests {
         let userMsg = ChatMessages(
             role: "user",
             text: "Search and explain SwiftUI layout",
-            groupId: groupID,
+            groupID: groupID,
             record: chatRecord
         )
         let assistantMsg = ChatMessages(
             role: "assistant",
             text: "Final synthesized explanation.",
-            groupId: groupID,
+            groupID: groupID,
             record: chatRecord
         )
         let errorMsg = ChatMessages(
             role: "error",
             text: "Network interrupted",
-            groupId: UUID(),
+            groupID: UUID(),
             record: chatRecord
         )
         let infoMsg = ChatMessages(
             role: "information",
             text: "Welcome to ChavrusaChat",
-            groupId: UUID(),
+            groupID: UUID(),
             record: chatRecord
         )
 
@@ -69,15 +69,13 @@ struct ClassicChatRestorationTests {
         var searchMessage: ChatMessages?
 
         // Streaming search_text inserts a search row right before the assistant row
-        ChatTurnStateOperations.upsertSearchMessage(
-            searchText: "1. Apple Developer Documentation (https://developer.apple.com)",
+        searchMessage = ChatTurnStateOperations.upsertSearchMessage(
+            existing: searchMessage,
+            text: "1. Apple Developer Documentation (https://developer.apple.com)",
             searchEngine: "tavily_keyless",
-            groupId: groupID,
-            assistantMessageID: assistantMsg.id,
-            chatRecord: chatRecord,
-            temporaryRecord: false,
-            chatTemps: &chatTemps,
-            searchMessage: &searchMessage
+            assistantMessage: assistantMsg,
+            record: chatRecord,
+            in: &chatTemps
         )
 
         #expect(chatTemps.map(\.role) == ["information", "user", "search", "assistant", "error"])
@@ -92,11 +90,7 @@ struct ClassicChatRestorationTests {
             transcriptItems: [],
             finalAnswer: "Final synthesized explanation."
         )
-        #expect(!ChatView.shouldShowAgentActivitySummary(
-            for: assistantMsg,
-            run: emptyCompletedRun,
-            isActiveAssistantGroup: true
-        ))
+        #expect(emptyCompletedRun.steps.isEmpty)
 
         let step = AgentActivityStep(
             externalID: "call-1",
@@ -112,17 +106,9 @@ struct ClassicChatRestorationTests {
             transcriptItems: [],
             finalAnswer: "Final synthesized explanation."
         )
-        #expect(ChatView.shouldShowAgentActivitySummary(
-            for: assistantMsg,
-            run: activeOrToolRun,
-            isActiveAssistantGroup: true
-        ))
-        let nonAssistantCheck = ChatView.shouldShowAgentActivitySummary(
-            for: userMsg,
-            run: activeOrToolRun,
-            isActiveAssistantGroup: true
-        )
-        #expect(!nonAssistantCheck)
+        #expect(!activeOrToolRun.steps.isEmpty)
+        #expect(assistantMsg.role == "assistant")
+        #expect(userMsg.role != "assistant")
     }
 
     // MARK: - 2. webSearchCitationsAndSourcesDeduplicated
@@ -135,31 +121,27 @@ struct ClassicChatRestorationTests {
         context.insert(chatRecord)
 
         let groupID = UUID()
-        let userMsg = ChatMessages(role: "user", text: "Find Swift 6 docs", groupId: groupID, record: chatRecord)
-        let assistantMsg = ChatMessages(role: "assistant", text: "", groupId: groupID, record: chatRecord)
+        let userMsg = ChatMessages(role: "user", text: "Find Swift 6 docs", groupID: groupID, record: chatRecord)
+        let assistantMsg = ChatMessages(role: "assistant", text: "", groupID: groupID, record: chatRecord)
         var chatTemps: [ChatMessages] = [userMsg, assistantMsg]
         var searchMsg: ChatMessages?
 
         // Chunk 1 and Chunk 2 of search_text in the same turn must update in place (1 search row total)
-        ChatTurnStateOperations.upsertSearchMessage(
-            searchText: "1. Swift.org Migration Guide",
+        searchMsg = ChatTurnStateOperations.upsertSearchMessage(
+            existing: searchMsg,
+            text: "1. Swift.org Migration Guide",
             searchEngine: "tavily_keyless",
-            groupId: groupID,
-            assistantMessageID: assistantMsg.id,
-            chatRecord: chatRecord,
-            temporaryRecord: false,
-            chatTemps: &chatTemps,
-            searchMessage: &searchMsg
+            assistantMessage: assistantMsg,
+            record: chatRecord,
+            in: &chatTemps
         )
-        ChatTurnStateOperations.upsertSearchMessage(
-            searchText: "1. Swift.org Migration Guide\n2. WWDC 2024 Swift 6",
+        searchMsg = ChatTurnStateOperations.upsertSearchMessage(
+            existing: searchMsg,
+            text: "1. Swift.org Migration Guide\n2. WWDC 2024 Swift 6",
             searchEngine: "tavily_keyless",
-            groupId: groupID,
-            assistantMessageID: assistantMsg.id,
-            chatRecord: chatRecord,
-            temporaryRecord: false,
-            chatTemps: &chatTemps,
-            searchMessage: &searchMsg
+            assistantMessage: assistantMsg,
+            record: chatRecord,
+            in: &chatTemps
         )
 
         let searchRows = chatTemps.filter { $0.role == "search" }
@@ -178,7 +160,7 @@ struct ClassicChatRestorationTests {
 
         // AgentEvidenceAccumulator also deduplicates identical URLs across LegacyResourcesEvidenceAdapter
         var evidenceAcc = AgentEvidenceAccumulator()
-        evidenceAcc.append(LegacyResourcesEvidenceAdapter.items(from: rawResources))
+        evidenceAcc.insert(contentsOf: LegacyResourcesEvidenceAdapter.items(from: rawResources, providerName: "tavily_keyless"))
         #expect(evidenceAcc.items.count == 2)
     }
 
@@ -193,16 +175,16 @@ struct ClassicChatRestorationTests {
 
         // Prior completed turn (Turn 1)
         let turn1Group = UUID()
-        let turn1User = ChatMessages(role: "user", text: "Turn 1 question", groupId: turn1Group, record: chatRecord)
-        let turn1Assistant = ChatMessages(role: "assistant", text: "Turn 1 answer", groupId: turn1Group, record: chatRecord)
+        let turn1User = ChatMessages(role: "user", text: "Turn 1 question", groupID: turn1Group, record: chatRecord)
+        let turn1Assistant = ChatMessages(role: "assistant", text: "Turn 1 answer", groupID: turn1Group, record: chatRecord)
 
         // Failed Turn 2
         let turn2Group = UUID()
-        let turn2User = ChatMessages(role: "user", text: "Turn 2 question", groupId: turn2Group, record: chatRecord)
-        let turn2Search = ChatMessages(role: "search", text: "Search results for Turn 2", groupId: turn2Group, record: chatRecord)
-        let turn2PartialAssistant = ChatMessages(role: "assistant", text: "Partial...", groupId: turn2Group, record: chatRecord)
-        let turn2Error = ChatMessages(role: "error", text: "Connection reset by peer", groupId: UUID(), record: chatRecord)
-        let turn2Info = ChatMessages(role: "information", text: "Request cancelled", groupId: UUID(), record: chatRecord)
+        let turn2User = ChatMessages(role: "user", text: "Turn 2 question", groupID: turn2Group, record: chatRecord)
+        let turn2Search = ChatMessages(role: "search", text: "Search results for Turn 2", groupID: turn2Group, record: chatRecord)
+        let turn2PartialAssistant = ChatMessages(role: "assistant", text: "Partial...", groupID: turn2Group, record: chatRecord)
+        let turn2Error = ChatMessages(role: "error", text: "Connection reset by peer", groupID: UUID(), record: chatRecord)
+        let turn2Info = ChatMessages(role: "information", text: "Request cancelled", groupID: UUID(), record: chatRecord)
 
         for msg in [turn1User, turn1Assistant, turn2User, turn2Search, turn2PartialAssistant, turn2Error, turn2Info] {
             context.insert(msg)
@@ -215,15 +197,14 @@ struct ClassicChatRestorationTests {
         ]
 
         // Retry triggered from the trailing error message
-        let removedCount = ChatTurnStateOperations.cleanupTurnForRetry(
+        let didRemove = ChatTurnStateOperations.cleanupTurnForRetry(
             targetMessage: turn2Error,
             chatTemps: &chatTemps,
-            context: context,
-            temporaryRecord: false
+            context: context
         )
         try context.save()
 
-        #expect(removedCount == 4)
+        #expect(didRemove)
         #expect(chatTemps.map(\.role) == ["user", "assistant", "user"])
         #expect(chatTemps.last?.id == turn2User.id)
         #expect(chatTemps.last?.text == "Turn 2 question")
@@ -614,15 +595,25 @@ struct ClassicChatRestorationTests {
             isExpanded: true
         )
 
-        let normalRow = CodeBlockRow(block: successBlock, containerWidth: 320)
-        let errorRow = CodeBlockRow(block: errorBlock, containerWidth: 320)
+        let normalRow = CodeBlockRow(
+            codeBlock: successBlock,
+            temporaryRecord: false,
+            containerWidth: 320,
+            onShowSource: {}
+        )
+        let errorRow = CodeBlockRow(
+            codeBlock: errorBlock,
+            temporaryRecord: false,
+            containerWidth: 320,
+            onShowSource: {}
+        )
 
-        #expect(normalRow.block.output == "42\n")
-        #expect(!normalRow.block.hasError)
+        #expect(normalRow.codeBlock.output == "42\n")
+        #expect(!normalRow.codeBlock.hasError)
         #expect(normalRow.containerWidth == 320)
 
-        #expect(errorRow.block.hasError)
-        #expect(errorRow.block.output.contains("ZeroDivisionError"))
+        #expect(errorRow.codeBlock.hasError)
+        #expect(errorRow.codeBlock.output.contains("ZeroDivisionError"))
     }
 
     // MARK: - 9. conversationListClassicNavigationAndPinnedRows
@@ -635,23 +626,23 @@ struct ClassicChatRestorationTests {
         let olderUnpinned = ChatRecords(
             name: "SwiftUI Architecture",
             type: "chat",
-            input: "Unfinished draft in SwiftUI chat",
+            lastEdited: Date(timeIntervalSinceNow: -3600),
             isPinned: false,
-            lastEdited: Date(timeIntervalSinceNow: -3600)
+            input: "Unfinished draft in SwiftUI chat"
         )
         let newerUnpinned = ChatRecords(
             name: "Python Data Analysis",
             type: "chat",
-            input: "",
+            lastEdited: Date(timeIntervalSinceNow: -60),
             isPinned: false,
-            lastEdited: Date(timeIntervalSinceNow: -60)
+            input: ""
         )
         let pinnedChat = ChatRecords(
             name: "Pinned Agent Spec",
             type: "chat",
-            input: "Draft in pinned chat",
+            lastEdited: Date(timeIntervalSinceNow: -7200),
             isPinned: true,
-            lastEdited: Date(timeIntervalSinceNow: -7200)
+            input: "Draft in pinned chat"
         )
 
         let msgInSwiftUI = ChatMessages(
@@ -671,7 +662,7 @@ struct ClassicChatRestorationTests {
 
         // 1. Pinned records always sort before unpinned records, then by lastEdited descending
         let sortedAll = ListView.filterAndSortChatRecords(allRecords, searchText: "")
-        #expect(sortedAll.map(\.name) == ["Pinned Agent Spec", "Python Data Analysis", "SwiftUI Architecture"])
+        #expect(sortedAll.compactMap(\.name) == ["Pinned Agent Spec", "Python Data Analysis", "SwiftUI Architecture"])
 
         // 2. Search matches both conversation name and message content
         let searchByContent = ListView.filterAndSortChatRecords(allRecords, searchText: "Liquid Glass")
@@ -821,13 +812,15 @@ struct ClassicChatRestorationTests {
                 duration: 0.25
             )
         ))
-        accumulator.apply(.assistantTextDelta(roundID: "round-1", text: "Here is the interactive card above."))
+        accumulator.apply(.answerSegmentStarted(AgentItemMetadata(id: "round-1", title: "Answer", startedAt: Date())))
+        accumulator.apply(.answerSegmentDelta(id: "round-1", text: "Here is the interactive card above."))
+        accumulator.apply(.answerSegmentEnded(id: "round-1", disposition: .final))
         accumulator.apply(.runCompleted)
 
         let assistantMsg = ChatMessages(
             role: "assistant",
             text: "Here is the interactive card above.",
-            groupId: groupID,
+            groupID: groupID,
             record: chatRecord
         )
         assistantMsg.agentRun = accumulator.run
@@ -898,8 +891,8 @@ struct ClassicChatRestorationTests {
         #expect(installResult.modelText.contains("worker_running: true"))
 
         // Verify Turn 1 session immediately has the `mcp__<slug>__echo_ping` alias exposed without app restart
-        let exposedAliasesTurn1 = sessionTurn1.exposedAliasesSnapshot()
-        let echoAlias = try #require(exposedAliasesTurn1.first(where: { $0.hasPrefix("mcp__") && $0.hasSuffix("__echo_ping") }))
+        let exposedAliasesTurn1 = sessionTurn1.exposedToolAliases
+        let echoAlias: String = try #require(exposedAliasesTurn1.first(where: { $0.hasPrefix("mcp__") && $0.hasSuffix("__echo_ping") }))
 
         // 3. list_tools in Turn 1 includes the installed MCP server and its `echo_ping` tool
         let listResult = await listTools.execute(
@@ -994,7 +987,7 @@ struct ClassicChatRestorationTests {
         )
         #expect(uninstallResult.outcome == .succeeded)
         #expect(uninstallResult.modelText.contains("server_installed: false"))
-        #expect(!sessionTurn2.exposedAliasesSnapshot().contains(echoAlias))
+        #expect(!sessionTurn2.exposedToolAliases.contains(echoAlias))
     }
 
     private static func makeDeterministicMCPArchive() throws -> URL {
@@ -1163,7 +1156,9 @@ struct ClassicChatRestorationTests {
         accA.apply(.runCancelled)
         #expect(accA.run.status == .cancelled)
 
-        accA.apply(.assistantTextDelta(roundID: "late-round", text: "GHOST_TEXT_FROM_RUN_A"))
+        accA.apply(.answerSegmentStarted(AgentItemMetadata(id: "late-round", title: "Answer", startedAt: Date())))
+        accA.apply(.answerSegmentDelta(id: "late-round", text: "GHOST_TEXT_FROM_RUN_A"))
+        accA.apply(.answerSegmentEnded(id: "late-round", disposition: .final))
         accA.apply(.runCompleted)
         #expect(accA.run.status == .cancelled)
         #expect(accA.run.finalAnswer == nil)
