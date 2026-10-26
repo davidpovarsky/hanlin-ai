@@ -3030,8 +3030,8 @@ class APIManager {
                                                     localeIdentifier: currentLanguage,
                                                     modelContext: self.context,
                                                     chatID: stableChatID,
-                                                    requestID: currentRunID.uuidString,
                                                     isTemporaryChat: session.isTemporaryChat,
+                                                    requestID: currentRunID.uuidString,
                                                     capabilitySession: session,
                                                     attachmentResolver: { handle in
                                                         try await AuthorizedAttachmentRegistry.shared.resolve(

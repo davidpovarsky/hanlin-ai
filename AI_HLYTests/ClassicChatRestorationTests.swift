@@ -411,9 +411,9 @@ struct ClassicChatRestorationTests {
             text: "42",
             nativeUIBlocks: [
                 NativeUIBlock(
-                    kind: .codeOutput,
+                    type: .card,
                     title: "Python Output",
-                    bodyText: "42"
+                    body: "42"
                 )
             ],
             visibilityAfterCompletion: .remainInChat
@@ -813,8 +813,10 @@ struct ClassicChatRestorationTests {
                 modelText: "Created web view",
                 userText: "Interactive Result",
                 richResultBlocks: [
-                    NativeUIBlock(kind: .status, title: "Interactive Web Card", bodyText: "Rendered HTML")
+                    NativeUIBlock(type: .card, title: "Interactive Web Card", body: "Rendered HTML")
                 ],
+                hasLegacyPresentationPayload: false,
+                isError: false,
                 semanticOutcome: .succeeded,
                 duration: 0.25
             )
@@ -870,8 +872,8 @@ struct ClassicChatRestorationTests {
         let turn1Context = NativeToolExecutionContext(
             localeIdentifier: "en_US",
             chatID: chatUUID.uuidString,
-            requestID: UUID().uuidString,
             isTemporaryChat: false,
+            requestID: UUID().uuidString,
             capabilitySession: sessionTurn1
         )
 
@@ -960,8 +962,8 @@ struct ClassicChatRestorationTests {
         let turn2Context = NativeToolExecutionContext(
             localeIdentifier: "en_US",
             chatID: chatUUID.uuidString,
-            requestID: UUID().uuidString,
             isTemporaryChat: false,
+            requestID: UUID().uuidString,
             capabilitySession: sessionTurn2
         )
         let directExecTurn2 = try #require(await preparedTurn2.execute(
@@ -1119,6 +1121,7 @@ struct ClassicChatRestorationTests {
 
     @Test("15. AgentRunLifecycleCoordinator and AgentEventAccumulator isolate cancelled runs and reject late ghost events on retry")
     func lifecycleCancelRetryLateEventsAcrossRuns() async throws {
+        UserDefaults.standard.set(AgentDiagnosticsLevel.metadataOnly.rawValue, forKey: AgentDiagnosticsConfiguration.levelKey)
         let coordinator = AgentRunLifecycleCoordinator.shared
         let runAID = UUID()
         let recorderA = try #require(await AgentDiagnosticsRecorder.start(

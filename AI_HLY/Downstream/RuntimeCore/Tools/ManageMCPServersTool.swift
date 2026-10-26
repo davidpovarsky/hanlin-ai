@@ -419,27 +419,16 @@ struct ManageMCPServersTool: NativeTool {
                 } else {
                     resolvedOriginalName = rawQuery
                 }
-                let exposedAlias = MCPToolNameCodec.exposedName(
-                    serverSlug: target.slug,
-                    toolName: resolvedOriginalName
-                )
-                let descriptor = MCPToolBridge.RuntimeToolDescriptor(
-                    serverID: target.id,
-                    serverSlug: target.slug,
-                    serverDisplayName: target.displayName,
-                    originalName: resolvedOriginalName,
-                    exposedName: exposedAlias,
-                    description: resolvedOriginalName,
-                    inputSchema: ["type": "object"]
-                )
                 let callResult = await MCPToolBridge.execute(
-                    descriptor: descriptor,
+                    serverID: target.id,
+                    toolName: resolvedOriginalName,
+                    resultTitle: "\(target.displayName) · \(resolvedOriginalName)",
                     argumentsJSON: toolArgumentsJSON
                 )
                 return makeSuccess(
                     route: "mcp.call_tool.\(target.slug).\(resolvedOriginalName)",
                     modelText: callResult.modelText,
-                    userText: callResult.userSummary,
+                    userText: callResult.userText ?? callResult.modelText,
                     argumentKeys: Array(arguments.keys)
                 )
 

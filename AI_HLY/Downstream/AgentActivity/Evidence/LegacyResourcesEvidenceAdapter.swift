@@ -10,7 +10,7 @@ enum LegacyResourcesEvidenceAdapter {
             let titleKey = resource.title
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .lowercased()
-            let key = urlKey ?? (titleKey.isEmpty ? resource.id.uuidString : "title:\(titleKey)")
+            let key = urlKey ?? (titleKey.isEmpty ? "\(resource.title)|\(resource.link)" : "title:\(titleKey)")
             if seenKeys.insert(key).inserted {
                 result.append(resource)
             }

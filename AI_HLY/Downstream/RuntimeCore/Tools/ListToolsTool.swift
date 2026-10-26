@@ -64,13 +64,14 @@ struct ListToolsTool: NativeTool {
                     NativeToolCatalogEntry(
                         name: descriptor.exposedName,
                         title: descriptor.originalName,
-                        summary: descriptor.description,
+                        summary: (descriptor.summary ?? descriptor.title)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? descriptor.originalName,
                         categories: ["mcp"],
                         keywords: ["mcp", descriptor.serverSlug, descriptor.originalName],
                         examples: [],
                         systemImage: "server.rack",
                         sourceAppID: "mcp.\(descriptor.serverSlug)",
-                        sourceAppTitle: "MCP (\(descriptor.serverDisplayName))"
+                        sourceAppTitle: "MCP (\(descriptor.serverDisplayName))",
+                        presentationProfile: MCPToolBridge.presentationProfile(descriptor: descriptor)
                     )
                 )
             }
