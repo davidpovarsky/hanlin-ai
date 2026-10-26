@@ -513,11 +513,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
 
         func findCandidate() -> Bool {
-            for candidate in candidates {
-                if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
-                    candidate.tap()
-                    return true
-                }
+            let primary = app.buttons[identifier].firstMatch
+            if primary.waitForExistence(timeout: 2) && primary.isHittable {
+                primary.tap()
+                return true
+            }
+            for candidate in candidates where candidate.exists && candidate.isHittable {
+                candidate.tap()
+                return true
             }
             return false
         }

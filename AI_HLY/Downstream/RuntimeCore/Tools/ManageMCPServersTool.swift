@@ -625,6 +625,8 @@ struct ManageMCPServersTool: NativeTool {
         }
         let descriptors = await MCPToolBridge.resolveDescriptors(scope: scope)
         session.syncMCPTools(activeMCPAliases: descriptors.map(\.exposedName))
-        await session.refreshDynamicTools()
+        if allowAutoStart {
+            await session.refreshDynamicTools()
+        }
     }
 }

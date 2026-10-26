@@ -132,6 +132,7 @@ enum AgentRuntimeUIAcceptanceProvider {
                 company: "ACCEPTANCE",
                 key: "acceptance-only",
                 requestURL: "https://agent.acceptance/v1/chat/completions",
+                isHidden: false,
                 apiType: .openAI
             ))
             context.insert(ChatRecords(
@@ -260,12 +261,32 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
 
         // 1. Delayed Run A for stop cancellation test
         if bodyString.contains("START_DELAYED_RUN_A") {
-            for _ in 0..<80 {
-                if isStopped { return }
-                Thread.sleep(forTimeInterval: 0.1)
+            let response = HTTPURLResponse(
+                url: request.url!,
+                statusCode: 200,
+                httpVersion: "HTTP/1.1",
+                headerFields: ["Content-Type": "text/event-stream"]
+            )!
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            DispatchQueue.global().async { [weak self] in
+                for _ in 0..<80 {
+                    guard let self, !self.isStopped else { return }
+                    Thread.sleep(forTimeInterval: 0.1)
+                }
+                guard let self, !self.isStopped else { return }
+                let payload: [String: Any] = [
+                    "choices": [[
+                        "delta": ["content": "RUN_A_LATE_GHOST"],
+                        "finish_reason": "stop"
+                    ]]
+                ]
+                if let data = try? JSONSerialization.data(withJSONObject: payload),
+                   let json = String(data: data, encoding: .utf8) {
+                    let sse = "data: \(json)\n\ndata: [DONE]\n\n"
+                    self.client?.urlProtocol(self, didLoad: Data(sse.utf8))
+                    self.client?.urlProtocolDidFinishLoading(self)
+                }
             }
-            if isStopped { return }
-            emitFinalAnswer("RUN_A_LATE_GHOST")
             return
         }
 
@@ -368,8 +389,8 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             } else {
                 emitToolCall(
                     id: "ui05-code-1",
-                    name: "execute_python_code",
-                    arguments: #"{"code":"print('Code output: 42')"}"#
+                    name: "execute_local_python_code",
+                    arguments: #"{"source":"print('Code output: 42')"}"#
                 )
             }
             return

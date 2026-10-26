@@ -147,6 +147,7 @@ struct SkillStoreAndImportTests {
 
         let baseID = try HanlinSkillID(validating: "code")
         let baseSkill = try #require(catalog.resolve(id: baseID))
+        let originalTitle = baseSkill.title.preferredValue()
 
         let customInstructions = "Custom specialized code instructions for override test."
         try store.createOrUpdateOverride(
@@ -167,7 +168,7 @@ struct SkillStoreAndImportTests {
         #expect(!store.hasOverride(for: baseID))
 
         let restored = try #require(catalog.resolve(id: baseID))
-        #expect(restored.title.preferredValue() == "Code Execution")
+        #expect(restored.title.preferredValue() == originalTitle)
     }
 
     @Test("SkillStore safeResourceURL rejects path traversal, drive prefixes, and escape attempts")

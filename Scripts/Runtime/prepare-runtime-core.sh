@@ -102,6 +102,13 @@ ditto "${PAYLOAD_ROOT}/NodeMobile.xcframework" "${node_vendor}/NodeMobile.xcfram
 ditto "${PAYLOAD_ROOT}/Python.xcframework" "${python_vendor}/Python.xcframework"
 cp "${PAYLOAD_ROOT}/Python-VERSIONS" "${python_vendor}/Python-VERSIONS"
 cp "${PAYLOAD_ROOT}/RuntimeHostResources.zip" "${host_resource}"
+(
+  cd "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host"
+  zip -X -q "${host_resource}" ./*.mjs
+)
+if [[ -d "${REPOSITORY_ROOT}/build/SimulatorDerivedData" ]]; then
+  find "${REPOSITORY_ROOT}/build/SimulatorDerivedData" -name "RuntimeHostResources.zip" -path "*/AI_Hanlin.app/*" -delete || true
+fi
 node "${SCRIPT_DIR}/generate-runtime-manifest.mjs" "${LOCK_FILE}" "${manifest_resource}"
 
 # CPython's installer derives extension-framework identifiers from the host app

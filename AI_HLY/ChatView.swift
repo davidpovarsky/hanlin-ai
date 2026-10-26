@@ -1827,11 +1827,21 @@ struct ChatView: View {
     
     // 重新请求
     private func retryRequest(for message: ChatMessages) {
+        let previousMessages = chatTemps
         guard ChatTurnStateOperations.cleanupTurnForRetry(
             targetMessage: message,
             chatTemps: &chatTemps,
-            context: context
+            context: nil
         ) else { return }
+        let remainingIDs = Set(chatTemps.map(\.id))
+        let removedMessages = previousMessages.filter { !remainingIDs.contains($0.id) }
+        let ctx = context
+        DispatchQueue.main.async {
+            for removed in removedMessages {
+                ctx.delete(removed)
+            }
+            try? ctx.save()
+        }
 
         retryMessagesOverride = nil
         isRetry = true
