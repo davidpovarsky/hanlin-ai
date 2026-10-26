@@ -149,7 +149,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(send)
 
         // 3. Run B finishes cleanly
-        let runBAnswer = app.staticTexts.matching(
+        let assistantBubbles = app.otherElements.matching(identifier: "hanlin-assistant-bubble")
+        let runBAnswer = assistantBubbles.descendants(matching: .staticText).matching(
             NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(runBAnswer.waitForExistence(timeout: 30), "Run B did not complete with RUN_B_COMPLETE")
@@ -157,13 +158,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // 4. Wait beyond deterministic Run A delay interval (~1.5s)
         Thread.sleep(forTimeInterval: 2.0)
 
-        // 5. Assert RUN_A_LATE_GHOST does not exist, RUN_B_COMPLETE exists exactly once, no stale Stop, no stuck Thinking
+        // 5. Assert RUN_A_LATE_GHOST does not exist, RUN_B_COMPLETE exists exactly once in chat bubbles, no stale Stop, no stuck Thinking
         let runAGhost = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS 'RUN_A_LATE_GHOST'")
         ).firstMatch
         XCTAssertFalse(runAGhost.exists, "Run A late ghost answer RUN_A_LATE_GHOST must not appear after being cancelled")
 
-        let runBMatches = app.staticTexts.matching(
+        let runBMatches = assistantBubbles.descendants(matching: .staticText).matching(
             NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
         )
         XCTAssertEqual(runBMatches.count, 1, "RUN_B_COMPLETE must exist exactly once")
@@ -396,13 +397,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(retryButton.waitForExistence(timeout: 10), "Retry button inside error bubble did not appear")
         tapElement(retryButton)
 
-        let recoveredAnswers = app.staticTexts.matching(
+        let assistantBubbles = app.otherElements.matching(identifier: "hanlin-assistant-bubble")
+        let recoveredAnswers = assistantBubbles.descendants(matching: .staticText).matching(
             NSPredicate(format: "label CONTAINS 'UI07_RETRY_RECOVERY_COMPLETE'")
         )
         XCTAssertTrue(recoveredAnswers.firstMatch.waitForExistence(timeout: 30), "Retry did not recover with UI07_RETRY_RECOVERY_COMPLETE")
 
         XCTAssertFalse(errorBubble.exists, "Stale error bubble must be removed on retry")
-        XCTAssertTrue(app.descendants(matching: .any)["hanlin-assistant-bubble"].firstMatch.exists, "Assistant bubble must exist after retry")
+        XCTAssertEqual(assistantBubbles.count, 1, "Assistant bubble must exist exactly once after retry")
         XCTAssertEqual(recoveredAnswers.count, 1, "Retry must produce exactly 1 assistant bubble without duplicates")
         let userPrompts = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS 'PROMPT_UI07_FAIL_ONCE'")
