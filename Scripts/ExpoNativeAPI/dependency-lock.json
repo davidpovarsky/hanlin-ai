@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "nativeApi": {
+    "package": "@nativescript/react-native",
+    "version": "9.1.2",
+    "distIntegrity": "sha512-sqgsqg++6etbihWzLeIeSi7OxlmAsEegxz4yHerqCbYBuxyrVnTrtK4vDNnTYbNM+q6u2b0hwDNhX0aOEKTeTw==",
+    "tarballUrl": "https://registry.npmjs.org/@nativescript/react-native/-/react-native-9.1.2.tgz",
+    "sha256": "906f2106215426e6211c27f37fe2e874b9d91d174efbabb1d8b512fcdb2d4798",
+    "codegen": {
+      "name": "NativeScriptNativeApiSpec",
+      "type": "all",
+      "jsSrcsDir": "src",
+      "schemaDigest": "3da4813f9bc64360b35b12fdb1720b1e47b3cdb9563a43ebd56ba3cfd22e16d1"
+    },
+    "metadata": {
+      "iosArm64": "metadata/metadata.ios.arm64.nsmd",
+      "iosSimArm64": "metadata/metadata.ios-sim.arm64.nsmd",
+      "iosSimX86_64": "metadata/metadata.ios-sim.x86_64.nsmd"
+    },
+    "vendoredFrameworks": [
+      {
+        "name": "Libffi",
+        "path": "ios/vendor/Libffi.xcframework"
+      }
+    ]
+  },
+  "worklets": {
+    "package": "react-native-worklets",
+    "version": "0.13.1",
+    "distIntegrity": "sha512-sX55Vx89/Y9uJmvAbAGoHXBZvCWXtYPGWPJ9Z9yl0h76mP9A10ULlSrixzGqBFLXeQMBpIpyJEhWpzXP7GG6YA==",
+    "tarballUrl": "https://registry.npmjs.org/react-native-worklets/-/react-native-worklets-0.13.1.tgz",
+    "sha256": "9d7a0e35344d454a8c661e01b6846252f4b016ef813a178a84768aa1197c5f9c",
+    "targetPlatform": "iOS 15.0+",
+    "codegen": {
+      "name": "rnworklets",
+      "type": "modules",
+      "jsSrcsDir": "src/specs"
+    }
+  },
+  "runtimeClosure": {
+    "reactNativeVersion": "0.88.0",
+    "reactVersion": "19.3.0",
+    "expoSdkVersion": "58.0.0",
+    "hermesVersion": "260318099.0.4"
+  }
+}

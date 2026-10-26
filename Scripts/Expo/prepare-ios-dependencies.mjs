@@ -3,7 +3,7 @@ import { access, chmod, cp, lstat, mkdir, readFile, readdir, readlink, rm, stat,
 import { createWriteStream, existsSync } from 'node:fs';
 import { basename, dirname, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import https from 'node:https';
 import http from 'node:http';
 
@@ -329,24 +329,40 @@ async function prepare() {
   try {
     for (const item of lock.artifacts) {
       const targetDir = resolve(repositoryRoot, item.target);
+      const manifestPath = resolve(targetDir, '.artifact-manifest.json');
       if (existsSync(targetDir)) {
+        let manifestValid = false;
         try {
-          await cleanBundleMetadataAndSignatures(targetDir);
-          await pruneNonIOSSlicesFromXCFramework(targetDir);
-          const broken = await findBrokenSymlinks(targetDir);
-          if (broken.length === 0) {
-            console.log(`[HanlinExpo] ${item.name} already staged and valid at ${item.target}`);
-            continue;
+          if (existsSync(manifestPath)) {
+            const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+            if (manifest.sha256 === item.sha256 && manifest.name === item.name) {
+              manifestValid = true;
+            }
           }
-          console.warn(
-            `[HanlinExpo] ${item.name} at ${item.target} has ${broken.length} broken symlink(s); re-extracting...`
-          );
-        } catch (validationErr) {
-          console.warn(
-            `[HanlinExpo] ${item.name} at ${item.target} failed pre-check (${validationErr.message}); re-extracting...`
-          );
+        } catch (_) {}
+
+        if (!manifestValid) {
+          console.warn(`[HanlinExpo] ${item.name} at ${item.target} missing or mismatched provenance manifest (expected SHA ${item.sha256}); re-extracting...`);
+          await rm(targetDir, { recursive: true, force: true });
+        } else {
+          try {
+            await cleanBundleMetadataAndSignatures(targetDir);
+            await pruneNonIOSSlicesFromXCFramework(targetDir);
+            const broken = await findBrokenSymlinks(targetDir);
+            if (broken.length === 0) {
+              console.log(`[HanlinExpo] ${item.name} already staged and verified at ${item.target}`);
+              continue;
+            }
+            console.warn(
+              `[HanlinExpo] ${item.name} at ${item.target} has ${broken.length} broken symlink(s); re-extracting...`
+            );
+          } catch (validationErr) {
+            console.warn(
+              `[HanlinExpo] ${item.name} at ${item.target} failed pre-check (${validationErr.message}); re-extracting...`
+            );
+          }
+          await rm(targetDir, { recursive: true, force: true });
         }
-        await rm(targetDir, { recursive: true, force: true });
       }
       console.log(`[HanlinExpo] Fetching ${item.name}...`);
       const downloadURL = item.tarball || item.url;
@@ -376,6 +392,11 @@ async function prepare() {
       }
       await cleanBundleMetadataAndSignatures(targetDir);
       await pruneNonIOSSlicesFromXCFramework(targetDir);
+      await writeFile(
+        manifestPath,
+        JSON.stringify({ name: item.name, version: item.version, sha256: item.sha256, stagedAt: new Date().toISOString() }, null, 2),
+        'utf8'
+      );
       console.log(`[HanlinExpo] Staged ${item.name} -> ${item.target}`);
     }
     console.log('[HanlinExpo] All dependencies staged successfully.');
@@ -1237,7 +1258,14 @@ const isMainModule =
 
 if (isMainModule) {
   prepare()
-    .then(() => {
+    .then(async () => {
+      const nativeApiPrep = resolve(repositoryRoot, 'Scripts', 'ExpoNativeAPI', 'prepare-ios-dependencies.mjs');
+      if (existsSync(nativeApiPrep)) {
+        const { default: prepNativeApi } = await import(pathToFileURL(nativeApiPrep).href);
+        if (typeof prepNativeApi === 'function') {
+          await prepNativeApi();
+        }
+      }
       process.exit(0);
     })
     .catch((err) => {

@@ -28,6 +28,8 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **Simulator Deadlock on `com.apple.DocumentsApp` Container Resolution:** In CI runners where the iOS/iPadOS simulator is booted headlessly, querying `xcrun simctl get_app_container <UDID> com.apple.DocumentsApp data` can block indefinitely (causing 7.5+ minute hangs in runs such as `39253288354`) because unlaunched system container sandboxes are not provisioned at boot. Staging directly into the app's sandboxed container (`<app_container>/Documents`) and bounding `DocumentsApp` lookups with a strict 5-second timeout via `Scripts/CI/stage_simulator_fixtures.py` eliminates this hang completely.
 - **CI Caching Anti-Pattern: SHA in Primary Cache Key:** Storing DerivedData under keys like `ios26-ipa-derived-data-v1-...-${{ github.sha }}` forces an automatic cache miss on every commit, triggering a 17.8-minute full compilation of 56 Swift targets. Furthermore, touching intermediate headers during pre-build steps invalidates the build graph. Keying strictly by dependencies (`project.pbxproj`, `Package.resolved`, tooling scripts), preserving mtimes via idempotent stamping (`.modular_headers_staged`), and skipping cache saving on exact hits reduces simulator build times from ~18 minutes to ~2-4 minutes incremental and prevents runner cache thrashing.
 
+- **Expo + NativeScript JSI Hybrid Embedding:** Embedding `@nativescript/react-native@9.1.2` and `react-native-worklets@0.13.1` inside `hanlinExpo` (Hermes VM + Apple SwiftUI via `@expo/ui`) is achieved cleanly without colliding with `hanlinNativeScript` (V8 standalone). To avoid Metro's "More than one plugin attempted to override parsing" conflict between `babel-preset-expo` and React Native's Flow parser, the hybrid probe uses `@react-native/babel-preset` with `@nativescript/react-native/babel-plugin` and `['react-native-worklets/plugin', { strictGlobal: true }]`. Defense-in-depth is maintained by injecting `HanlinExpoNativeAPIGate.isNativeAPIAuthorizedForCurrentSession` directly into `NativeScriptNativeApiModule.mm` before JSI binding or worklet execution.
+
 ## In Progress / Active Blockers
 
 - **Open MASTER Acceptance Gates (Full PASS 4.1 Remains Open):**
@@ -57,6 +59,18 @@ Potential improvements, features, optimizations, or architectural ideas.
 - [ ] (Future) Live external cloud model provider end-to-end integration when production credentials are configured.
 
 ## Done
+
+- [x] Hanlin Expo + NativeScript Native API JSI Hybrid Integration (Contract 1.0.0)
+  - Implemented: 2026-10-27
+  - Branch: `codex/expo-nativescript-jsi-hybrid-20261027`
+  - Notes:
+    - Pinned dependencies: `@nativescript/react-native@9.1.2`, `react-native-worklets@0.13.1`, `react-native@0.88.0`, `react@19.3.0`, `expo@58.0.0`.
+    - SwiftPM package: `Packages/HanlinExpoNativeAPI` with `Libffi.xcframework` and `metadata-arm64.nsmd`.
+    - TypeScript facade: `@hanlin/expo-native-api` (`Packages/HanlinExpoNativeAPIJS`).
+    - Gating & Security: Native gate `HanlinExpoNativeAPIGate` + `HanlinScriptAnalyzer` (`ios-native-api`) + dynamic session revocation.
+    - Test Probes: Built deterministic bundles `ExpoNativeAPIProbeA.hanlinExpo`, `ExpoNativeAPIProbeB.hanlinExpo`, `ExpoNativeAPIProbeMissingGrant.hanlinExpo`, `ExpoNativeAPIProbeIncompatible.hanlinExpo`, `ExpoNativeAPIMalformed.hanlinExpo`.
+    - Verification: Static tests (7/7 pass), TypeScript typecheck (0 errors), probe bundling (clean), E2E test suite `HanlinExpoNativeAPIIntegrationUITests.swift` added.
+    - Zero changes to 4 frozen chat UI files; zero Asana tasks touched; no automatic CI triggers added.
 
 - [x] Hanlin CI Infrastructure & Multi-Tier Caching Optimization
   - Implemented: 2026-10-20

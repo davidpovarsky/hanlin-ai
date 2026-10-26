@@ -287,3 +287,21 @@ Run `build-probe.mjs` to produce standalone `.hanlinExpo` packages using Metro:
 node Scripts/Expo/build-probe.mjs
 ```
 The resulting `.hanlinExpo` archive can be directly imported via the **Add Apps** sheet or staged into the test simulator environment.
+
+
+---
+
+## 8. Embedded Native API Hybrid Extension (`ios-native-api`)
+
+Starting in contract version `1.0.0`, Hanlin Expo MiniApps can optionally declare the `ios-native-api` capability to access NativeScript's Native API JSI, TurboModules, and Fabric components without replacing or affecting the Hermes JavaScript runtime.
+
+### 8.1 Capability & Dependency Contract
+- **Manifest Declaration**: MiniApps requiring native API access must specify `"ios-native-api"` in `script.json.capabilities`.
+- **TypeScript Facade**: `@hanlin/expo-native-api` (re-exporting upstream `@nativescript/react-native@9.1.2`).
+- **Worklets Engine**: `react-native-worklets@0.13.1` enabling high-performance UI thread execution via `runOnUI`.
+- **UI Composition**: Native UIKit views defined with `defineUIKitView` or view controllers with `defineUIViewController` can be embedded into the native SwiftUI view tree using `<RNHostView matchContents={true}>` from `@hanlin/expo-ui`.
+
+### 8.2 Security & Isolation Boundary
+1. **Static Analysis**: `HanlinScriptAnalyzer` enforces pinned dependencies and rejects MiniApps importing `@nativescript/react-native` without declared `ios-native-api` grant.
+2. **Native Gate**: `HanlinExpoNativeAPIGate` validates session authorization at native C++ entry points (`install`, `installWorkletRuntime`, `NativeScriptCreateUIKitHost`).
+3. **Dynamic Revocation**: Revoking `ios-native-api` immediately terminates the active `HanlinExpoSession` and cleans up Hermes and Fabric resources.

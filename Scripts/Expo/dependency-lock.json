@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "expo": {
-    "sdkVersion": "58.0.0-preview.3",
+    "sdkVersion": "58.0.0",
     "uiVersion": "58.0.3",
     "brownfieldVersion": "58.0.3",
     "modulesCoreVersion": "58.0.3",
-    "reactNativeVersion": "0.88.0-rc.0",
-    "reactVersion": "19.2.3",
-    "hermesVersion": "260318099.0.2"
+    "reactNativeVersion": "0.88.0",
+    "reactVersion": "19.3.0",
+    "hermesVersion": "260318099.0.4"
   },
   "artifacts": [
     {
@@ -63,32 +63,32 @@
     {
       "name": "React",
       "source": "maven",
-      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0-rc.0/react-native-artifacts-0.88.0-rc.0-reactnative-core-release.tar.gz",
-      "sha256": "d3d60e297954c860ec6b740c98384fb22982c1c88cb4d386c2320b0d44584abd",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0/react-native-artifacts-0.88.0-reactnative-core-release.tar.gz",
+      "sha256": "4f3d22afd5d74809178b737d3ed987cc747ea63336a758cdf20064c47ef67203",
       "subpath": "React.xcframework",
       "target": "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
     },
     {
       "name": "ReactNativeDependencies",
       "source": "maven",
-      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0-rc.0/react-native-artifacts-0.88.0-rc.0-reactnative-dependencies-release.tar.gz",
-      "sha256": "5e001e52459fa4f20dd30639b6e0b8be129f7d1a42d291c5eaeca78a83443e42",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0/react-native-artifacts-0.88.0-reactnative-dependencies-release.tar.gz",
+      "sha256": "309b2fcea39fb4cdeb434144e735bc4065ac0dd8720e4f35ffee55fb3be54093",
       "subpath": "packages/react-native/third-party/ReactNativeDependencies.xcframework",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework"
     },
     {
       "name": "hermesvm",
       "source": "maven",
-      "url": "https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/260318099.0.2/hermes-ios-260318099.0.2-hermes-ios-release.tar.gz",
-      "sha256": "1179456e2f1022850b0f486845faf68c2e4138b998804503e08a7a8e1f8b100d",
+      "url": "https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/260318099.0.4/hermes-ios-260318099.0.4-hermes-ios-release.tar.gz",
+      "sha256": "b0db43628abc20b5eccb7ed1161801f418830f47b1ac1b5946cf532a886841f6",
       "subpath": "destroot/Library/Frameworks/universal/hermesvm.xcframework",
       "target": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework"
     },
     {
       "name": "ReactNativeHeaders",
       "source": "maven",
-      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0-rc.0/react-native-artifacts-0.88.0-rc.0-reactnative-headers-release.tar.gz",
-      "sha256": "7c099a63c639488824080a0dab8ab2085c22aa1b2ceec8f166f5711e370b74dd",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0/react-native-artifacts-0.88.0-reactnative-headers-release.tar.gz",
+      "sha256": "7d896249102e6f10faa76218caf4bd2b8d739d1b6e3d032181ac498b34884165",
       "subpath": "ReactNativeHeaders.xcframework",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
     }

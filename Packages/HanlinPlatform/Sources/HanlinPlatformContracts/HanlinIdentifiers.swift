@@ -173,6 +173,7 @@ public struct HanlinSkillID: HanlinStringIdentifier {
 
 public struct HanlinCapabilityID: HanlinStringIdentifier {
     public static let identifierKind = "capability"
+    public static let iosNativeAPI = HanlinCapabilityID(unchecked: "ios-native-api")
     public let rawValue: String
     public init(validating rawValue: String) throws {
         try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)

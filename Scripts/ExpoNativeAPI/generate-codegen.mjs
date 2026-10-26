@@ -1,0 +1,95 @@
+import { createHash } from 'node:crypto';
+import { existsSync } from 'node:fs';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+
+const scriptRoot = resolve(import.meta.dirname);
+const repoRoot = resolve(scriptRoot, '..', '..');
+const nodeModules = resolve(repoRoot, 'Scripts', 'Expo', 'node_modules');
+const lockPath = resolve(scriptRoot, 'dependency-lock.json');
+
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+
+export async function generateCodegen(options = {}) {
+  const targetDir = options.outputDir || resolve(repoRoot, 'Packages', 'HanlinExpoNativeAPI', 'Sources', 'HanlinExpoNativeAPI', 'generated');
+  console.log(`[HanlinExpoNativeAPI] Generating React Native Codegen specs into: ${targetDir}`);
+
+  const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+
+  const combineCli = resolve(nodeModules, '@react-native', 'codegen', 'lib', 'cli', 'combine', 'combine-js-to-schema-cli.js');
+  const generateCli = resolve(nodeModules, '@react-native', 'codegen', 'lib', 'cli', 'generators', 'generate-all.js');
+
+  if (!existsSync(combineCli) || !existsSync(generateCli)) {
+    throw new Error(`[HanlinExpoNativeAPI] @react-native/codegen CLI tools not found in ${nodeModules}`);
+  }
+
+  const scratchDir = resolve(scriptRoot, '.scratch', 'codegen');
+  await rm(scratchDir, { recursive: true, force: true });
+  await mkdir(scratchDir, { recursive: true });
+
+  // 1. NativeScriptNativeApiSpec
+  const nsSrc = resolve(nodeModules, '@nativescript', 'react-native', 'src');
+  const nsFiles = [
+    resolve(nsSrc, 'NativeScriptNativeApi.ts'),
+    resolve(nsSrc, 'NativeScriptUIViewNativeComponent.ts')
+  ];
+  for (const f of nsFiles) {
+    if (!existsSync(f)) throw new Error(`[HanlinExpoNativeAPI] Missing spec file: ${f}`);
+  }
+
+  const nsSchemaPath = resolve(scratchDir, 'ns-schema.json');
+  execFileSync(process.execPath, [combineCli, nsSchemaPath, ...nsFiles], { stdio: 'inherit' });
+
+  const nsSchemaBytes = await readFile(nsSchemaPath);
+  const nsSchemaDigest = sha256(nsSchemaBytes);
+  console.log(`[HanlinExpoNativeAPI] NativeScript codegen schema SHA256: ${nsSchemaDigest}`);
+
+  if (lock.nativeApi.codegen.schemaDigest && lock.nativeApi.codegen.schemaDigest !== nsSchemaDigest) {
+    throw new Error(`[HanlinExpoNativeAPI] Schema digest mismatch for NativeScriptNativeApiSpec: expected ${lock.nativeApi.codegen.schemaDigest}, got ${nsSchemaDigest}`);
+  }
+
+  const nsOutDir = resolve(targetDir, 'NativeScriptNativeApiSpec');
+  await rm(nsOutDir, { recursive: true, force: true });
+  await mkdir(nsOutDir, { recursive: true });
+
+  execFileSync(process.execPath, [
+    generateCli,
+    nsSchemaPath,
+    'NativeScriptNativeApiSpec',
+    nsOutDir,
+    'org.nativescript.nativeapi',
+    'true'
+  ], { stdio: 'inherit' });
+
+  // 2. rnworklets
+  const wlSpec = resolve(nodeModules, 'react-native-worklets', 'src', 'specs', 'NativeWorkletsModule.ts');
+  if (existsSync(wlSpec)) {
+    const wlSchemaPath = resolve(scratchDir, 'wl-schema.json');
+    execFileSync(process.execPath, [combineCli, wlSchemaPath, wlSpec], { stdio: 'inherit' });
+
+    const wlOutDir = resolve(targetDir, 'rnworklets');
+    await rm(wlOutDir, { recursive: true, force: true });
+    await mkdir(wlOutDir, { recursive: true });
+
+    execFileSync(process.execPath, [
+      generateCli,
+      wlSchemaPath,
+      'rnworklets',
+      wlOutDir,
+      'com.swmansion.worklets',
+      'true'
+    ], { stdio: 'inherit' });
+  }
+
+  console.log('[HanlinExpoNativeAPI] Codegen artifacts generated successfully.');
+}
+
+const isMain = process.argv[1] && resolve(fileURLToPath(import.meta.url)) === resolve(process.argv[1]);
+if (isMain) {
+  generateCodegen().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

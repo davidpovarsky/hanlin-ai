@@ -13,7 +13,9 @@ let package = Package(
             targets: ["HanlinExpoRuntime"]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        .package(name: "HanlinExpoNativeAPI", path: "../HanlinExpoNativeAPI")
+    ],
     targets: [
         .target(
             name: "HanlinExpoRuntime",
@@ -26,7 +28,8 @@ let package = Package(
                 "ExpoModulesCore",
                 "ExpoModulesWorklets",
                 "ExpoUI",
-                "ExpoBrownfield"
+                "ExpoBrownfield",
+                .product(name: "HanlinExpoNativeAPI", package: "HanlinExpoNativeAPI")
             ],
             path: "Sources/HanlinExpoRuntime",
             swiftSettings: [
@@ -35,6 +38,7 @@ let package = Package(
                     "-Xcc", "-std=gnu++20",
                     "-Xcc", "-Wno-quoted-include-in-framework-header",
                     "-Xcc", "-Wno-non-modular-include-in-framework-module",
+                    "-Xcc", "-I\(packageRoot)/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/bridge",
                     "-Xcc", "-F\(packageRoot)/Artifacts/ModularFrameworks",
                     "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
                     "-Xcc", "-FArtifacts/ModularFrameworks",

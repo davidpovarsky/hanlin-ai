@@ -1,0 +1,43 @@
+#pragma once
+
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+
+namespace worklets {
+
+class SynchronizableAccess {
+ public:
+  /**
+   * Allows you to imperatively lock the synchronizable to perform a
+   * transaction.
+   */
+  void lock();
+
+  /**
+   * Unlocks the synchronizable after an imperative lock when the transaction is
+   * complete.
+   */
+  void unlock();
+
+ protected:
+  void getBlockingBefore();
+  void getBlockingAfter();
+
+  void setDirtyBefore();
+  void setDirtyAfter();
+
+  void setBlockingBefore();
+  void setBlockingAfter();
+
+ private:
+  int blockingReaders_{0};
+  int dirtyWriters_{0};
+  bool blockingWriter_{false};
+  bool imperativelyLocked_{false};
+  std::thread::id imperativeOwner_{};
+  std::mutex accessLock_;
+  std::condition_variable queue_;
+};
+
+} // namespace worklets

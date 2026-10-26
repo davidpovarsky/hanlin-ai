@@ -180,6 +180,7 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
+          swift package --package-path Packages/HanlinExpoNativeAPI resolve
           swift package --package-path Packages/HanlinExpoRuntime resolve
 
       - name: Live Activity · refresh
@@ -348,6 +349,10 @@ jobs:
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoDynamicPackageSwitching \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoLifecycleAndUninstall \
+            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMountAndInteraction \
+            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDynamicVariantSwitching \
+            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIIncompatibleVersionRejection \
+            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMalformedPackageRejection \
             -resultBundlePath "build/ExpoE2EResults.xcresult" \
             2>&1 | tee "$LOG_DIR/07-expo-e2e-tests.log"
 

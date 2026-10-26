@@ -4,7 +4,9 @@ const path = require('path');
 const config = {
   watchFolders: [
     path.resolve(__dirname, '../../Fixtures/ExpoSwiftUIProbe'),
+    path.resolve(__dirname, '../../Fixtures/ExpoNativeAPIProbe'),
     path.resolve(__dirname, '../../Packages/HanlinExpoUI'),
+    path.resolve(__dirname, '../../Packages/HanlinExpoNativeAPIJS'),
   ],
   resolver: {
     nodeModulesPaths: [

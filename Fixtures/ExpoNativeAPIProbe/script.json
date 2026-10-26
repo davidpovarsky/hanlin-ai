@@ -1,0 +1,9 @@
+{
+  "name": "Hanlin Expo Native API Probe A",
+  "version": "1.0.0",
+  "description": "SwiftUI plus directly driven UIKit in one dynamic Expo MiniApp",
+  "entry": "bundle.js",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-expo",
+  "capabilities": ["ios-native-api"]
+}

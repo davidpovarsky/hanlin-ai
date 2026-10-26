@@ -146,16 +146,20 @@ public struct HanlinScriptAnalyzer: Sendable {
             Self.validatePreparedExpoApplication(
                 files: files,
                 entrypoints: entrypoints,
+                declaredCapabilities: package.manifest.declaredCapabilities,
                 findings: &findings
             )
         }
 
         var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
         for declaredCapability in package.manifest.declaredCapabilities {
+            let purpose = declaredCapability.rawValue == "ios-native-api"
+                ? "Broad native Objective-C/UIKit and JSI access."
+                : "Declared in package manifest."
             capabilities[declaredCapability] = .init(
                 capabilityID: declaredCapability,
                 required: true,
-                purpose: "Declared in package manifest."
+                purpose: purpose
             )
         }
         for symbol in importedSymbols.sorted() {
@@ -376,6 +380,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     private static func validatePreparedExpoApplication(
         files: [String: Data],
         entrypoints: [HanlinPackageEntrypointDescriptor],
+        declaredCapabilities: [HanlinCapabilityID] = [],
         findings: inout [HanlinCompatibilityFinding]
     ) {
         let appEntrypoints = entrypoints.filter { $0.kind == .app }
@@ -459,6 +464,49 @@ public struct HanlinScriptAnalyzer: Sendable {
                     ))
                     continue
                 }
+                if name == "@nativescript/react-native" {
+                    if version != "9.1.2" {
+                        findings.append(.init(
+                            state: .unsupported,
+                            severity: .error,
+                            sourcePath: packageJSONPath,
+                            message: "This Hanlin build supports @nativescript/react-native 9.1.2, but the package requires \(version)."
+                        ))
+                    } else if !declaredCapabilities.contains(where: { $0.rawValue == "ios-native-api" }) {
+                        findings.append(.init(
+                            state: .unsupported,
+                            severity: .error,
+                            sourcePath: packageJSONPath,
+                            message: "Expo package declaring '@nativescript/react-native' must declare 'ios-native-api' in capabilities."
+                        ))
+                    } else {
+                        findings.append(.init(
+                            state: .supported,
+                            severity: .information,
+                            sourcePath: packageJSONPath,
+                            message: "Expo plugin @nativescript/react-native 9.1.2 has embedded native JSI & Fabric support."
+                        ))
+                    }
+                    continue
+                }
+                if name == "react-native-worklets" {
+                    if version != "0.13.1" {
+                        findings.append(.init(
+                            state: .unsupported,
+                            severity: .error,
+                            sourcePath: packageJSONPath,
+                            message: "This Hanlin build supports react-native-worklets 0.13.1, but the package requires \(version)."
+                        ))
+                    } else {
+                        findings.append(.init(
+                            state: .supported,
+                            severity: .information,
+                            sourcePath: packageJSONPath,
+                            message: "Expo plugin react-native-worklets 0.13.1 is supported as a build-embedded runtime dependency."
+                        ))
+                    }
+                    continue
+                }
                 let supported = switch name {
                 case "@expo/ui": isExpoVersionCompatible(version)
                 case "@hanlin/expo-ui": isVersion(version, atMost: expoUIBridgeVersion)
@@ -480,6 +528,14 @@ public struct HanlinScriptAnalyzer: Sendable {
                     ))
                 }
             }
+        }
+        if let deps = packageJSON["dependencies"] as? [String: Any], deps["@nativescript/react-native"] != nil, !declaredCapabilities.contains(where: { $0.rawValue == "ios-native-api" }) {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                sourcePath: packageJSONPath,
+                message: "Expo package declaring '@nativescript/react-native' must declare 'ios-native-api' in capabilities."
+            ))
         }
         var declaredUIVersion: String?
         if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@expo/ui"] as? String {

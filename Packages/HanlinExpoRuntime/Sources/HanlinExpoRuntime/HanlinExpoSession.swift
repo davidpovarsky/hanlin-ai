@@ -2,6 +2,7 @@ import Foundation
 import ExpoBrownfield
 import ExpoModulesCore
 import ExpoUI
+import HanlinExpoNativeAPI
 import ObjectiveC
 import React
 import React_RCTAppDelegate
@@ -40,6 +41,9 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         self.targetBundleURL = bundleURL
         self.appContext = appContext
         super.init()
+        if let provider = HanlinExpoNativeAPIManager.dependencyProvider() as? (any RCTDependencyProvider) {
+            self.dependencyProvider = provider
+        }
         Self.registerRuntimeCallbackIfNeeded()
     }
 
@@ -53,6 +57,10 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
 
     nonisolated override func createJSRuntimeFactory() -> JSRuntimeFactoryRef {
         return hanlin_create_hermes_factory()
+    }
+
+    nonisolated override func thirdPartyFabricComponents() -> [String: AnyClass]? {
+        return HanlinExpoNativeAPIManager.thirdPartyFabricComponents()
     }
 
     nonisolated fileprivate func handleHostDidInitializeRuntime(_ runtime: UnsafeMutableRawPointer) {
@@ -88,6 +96,8 @@ public final class HanlinExpoSession {
     public let applicationRoot: URL
     public let containerController: UIViewController
     public let bundleURL: URL
+    public let packageID: String
+    public let isNativeAPIGranted: Bool
 
     private var reactNativeFactory: RCTReactNativeFactory?
     private var factoryDelegate: HanlinExpoReactNativeFactoryDelegate?
@@ -121,7 +131,12 @@ public final class HanlinExpoSession {
         NSLog("%@", "HANLIN_EXPO_APP_DEFINES_LOADED")
     }
 
-    public init(applicationRoot: URL, sessionID: String = UUID().uuidString.lowercased()) throws {
+    public init(
+        applicationRoot: URL,
+        sessionID: String = UUID().uuidString.lowercased(),
+        packageID: String = "unknown",
+        isNativeAPIGranted: Bool = false
+    ) throws {
         Self.ensureAppDefinesLoaded()
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
@@ -163,6 +178,8 @@ public final class HanlinExpoSession {
         self.sessionID = sessionID
         self.applicationRoot = root
         self.bundleURL = resolvedBundleURL
+        self.packageID = packageID
+        self.isNativeAPIGranted = isNativeAPIGranted
         self.containerController = UIViewController()
         self.containerController.view.backgroundColor = .systemBackground
     }
@@ -173,6 +190,13 @@ public final class HanlinExpoSession {
         do {
             Self.ensureAppDefinesLoaded()
             HanlinExpoModifierRegistry.registerCustomModifiers()
+
+            // Bind native authorization context before React / Hermes evaluation
+            HanlinExpoNativeAPIManager.registerSession(
+                sessionID: sessionID,
+                packageID: packageID,
+                isGranted: isNativeAPIGranted
+            )
 
             let modulesProvider = HanlinExpoModulesProvider()
             let appContext = AppContext()
@@ -222,6 +246,8 @@ public final class HanlinExpoSession {
 
     public func shutdown() {
         NSLog("%@", "HANLIN_EXPO_SHUTDOWN_BEGIN")
+        HanlinExpoNativeAPIManager.revokeSession(sessionID: sessionID)
+
         guard isActive || reactNativeFactory != nil || appContext != nil else {
             HanlinExpoModifierRegistry.unregisterCustomModifiers()
             return

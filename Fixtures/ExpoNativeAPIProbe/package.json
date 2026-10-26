@@ -1,0 +1,30 @@
+{
+  "name": "hanlin-expo-nativeapi-probe",
+  "version": "1.0.0",
+  "private": true,
+  "main": "bundle.js",
+  "hanlinRuntime": "hanlin-expo",
+  "hanlinExpo": {
+    "runtimeVersion": "58.0.0",
+    "bridgeVersion": "3.0.0",
+    "plugins": {
+      "@expo/ui": "58.0.3",
+      "@hanlin/expo-ui": "3.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "react-native-worklets": "0.13.1"
+    },
+    "nativeApi": {
+      "contractVersion": "1.0.0"
+    }
+  },
+  "dependencies": {
+    "@expo/ui": "58.0.3",
+    "@hanlin/expo-native-api": "1.0.0",
+    "@hanlin/expo-ui": "3.0.0",
+    "@nativescript/react-native": "9.1.2",
+    "expo": "58.0.0",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "react-native-worklets": "0.13.1"
+  }
+}

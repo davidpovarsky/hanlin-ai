@@ -403,6 +403,10 @@ final class HanlinScriptingPlatform {
             try await store.setCapabilityGranted(granted, capability: capability, for: id)
             installedPackages = try await store.snapshots()
             try await refreshExtensionSnapshot()
+            if !granted, capability.rawValue == "ios-native-api", activeApplicationID == id {
+                NSLog("[HanlinScriptingPlatform] Capability 'ios-native-api' revoked for active package %@; terminating session immediately.", id.rawValue)
+                dismissActiveApplication()
+            }
         } catch {
             activity = .failed(Self.safeMessage(error))
         }
@@ -504,9 +508,12 @@ final class HanlinScriptingPlatform {
                     sessionID: sessionID
                 )
                 HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
+                let isNativeAPIGranted = package.grantedCapabilities.contains(where: { $0.rawValue == "ios-native-api" })
                 let session = try HanlinExpoSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
-                    sessionID: sessionID
+                    sessionID: sessionID,
+                    packageID: id.rawValue,
+                    isNativeAPIGranted: isNativeAPIGranted
                 )
                 expoSession = session
                 try session.start()
