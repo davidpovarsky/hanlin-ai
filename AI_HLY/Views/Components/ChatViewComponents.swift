@@ -69,7 +69,6 @@ struct LoadingGradientText: View {
 // MARK: - 组件化对话气泡
 struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.openWindow) private var openWindow
     let temporaryRecord: Bool
     let id: UUID
     let text: String               // 回复内容
@@ -93,11 +92,6 @@ struct ChatBubbleView: View {
     let healthCards: [HealthData]? // 健康卡片
     let codeBlocks: [CodeBlock]?   // 代码块
     let knowledgeCard: [KnowledgeCard]? // 知识卡片
-    let nativeUIBlocks: [NativeUIBlock]
-    let agentRun: AgentRun?
-    let showsAgentActivitySummary: Bool
-    let isAgentTranscriptOwner: Bool
-    let isRenderedByAgentTranscript: Bool
     let searchEngine: String?
     let audioAssets: [AudioAsset]?
     @Binding var isVoiceExpanded: Bool // 语音消息折叠
@@ -142,10 +136,6 @@ struct ChatBubbleView: View {
     // 保存知识相关
     @State private var isKnowledgeWritingSheetPresented: Bool = false
     @State private var recordToWrite: KnowledgeRecords? = nil
-    @State private var nativeAppFullScreenRequest: NativeAppLaunchRequest?
-    @State private var nativeAppSheetRequest: NativeAppLaunchRequest?
-    @State private var legacyInspectorSelection: AgentActivityInspectorSelection?
-    @State private var isEvidencePresented = false
     
     @ScaledMetric(relativeTo: .body) var size_5: CGFloat = 5
     @ScaledMetric(relativeTo: .body) var size_7: CGFloat = 7
@@ -161,153 +151,20 @@ struct ChatBubbleView: View {
     @ScaledMetric(relativeTo: .body) var size_38: CGFloat = 38
     @ScaledMetric(relativeTo: .body) var size_40: CGFloat = 40
     @ScaledMetric(relativeTo: .body) var size_80: CGFloat = 80
-
-    init(
-        temporaryRecord: Bool,
-        id: UUID,
-        text: String,
-        saveTranlatedText: String?,
-        images: [UIImage]?,
-        imagesText: String?,
-        reasoning: String,
-        reasoningTime: String?,
-        isReasoningExpanded: Binding<Bool>,
-        toolContent: String,
-        toolName: String,
-        isToolContentExpanded: Binding<Bool>,
-        uploadDocument: [URL]?,
-        documentText: String?,
-        resources: [Resource]?,
-        prompts: [PromptCard]?,
-        locations: [Location]?,
-        routes: [RouteInfo]?,
-        events: [EventItem]?,
-        htmlContent: String?,
-        healthCards: [HealthData]?,
-        codeBlocks: [CodeBlock]?,
-        knowledgeCard: [KnowledgeCard]?,
-        nativeUIBlocks: [NativeUIBlock] = [],
-        agentRun: AgentRun? = nil,
-        showsAgentActivitySummary: Bool = false,
-        isAgentTranscriptOwner: Bool = false,
-        isRenderedByAgentTranscript: Bool = false,
-        searchEngine: String?,
-        audioAssets: [AudioAsset]?,
-        isVoiceExpanded: Binding<Bool>,
-        showCanvas: Bool,
-        canvas: CanvasData?,
-        role: String,
-        model: String,
-        modelCompany: String,
-        modelIdentity: String,
-        modelIcon: String,
-        isLastAssistant: Bool,
-        isLastAssistantGroup: Bool,
-        splitMarker: Bool,
-        isResponding: Bool,
-        operationalState: String,
-        operationalDescription: String,
-        onRetry: (() -> Void)?,
-        onDelete: (() -> Void)?
-    ) {
-        self.temporaryRecord = temporaryRecord
-        self.id = id
-        self.text = text
-        self.saveTranlatedText = saveTranlatedText
-        self.images = images
-        self.imagesText = imagesText
-        self.reasoning = reasoning
-        self.reasoningTime = reasoningTime
-        self._isReasoningExpanded = isReasoningExpanded
-        self.toolContent = toolContent
-        self.toolName = toolName
-        self._isToolContentExpanded = isToolContentExpanded
-        self.uploadDocument = uploadDocument
-        self.documentText = documentText
-        self.resources = resources
-        self.prompts = prompts
-        self.locations = locations
-        self.routes = routes
-        self.events = events
-        self.htmlContent = htmlContent
-        self.healthCards = healthCards
-        self.codeBlocks = codeBlocks
-        self.knowledgeCard = knowledgeCard
-        self.nativeUIBlocks = nativeUIBlocks
-        self.agentRun = agentRun
-        self.showsAgentActivitySummary = showsAgentActivitySummary
-        self.isAgentTranscriptOwner = isAgentTranscriptOwner
-        self.isRenderedByAgentTranscript = isRenderedByAgentTranscript
-        self.searchEngine = searchEngine
-        self.audioAssets = audioAssets
-        self._isVoiceExpanded = isVoiceExpanded
-        self.showCanvas = showCanvas
-        self.canvas = canvas
-        self.role = role
-        self.model = model
-        self.modelCompany = modelCompany
-        self.modelIdentity = modelIdentity
-        self.modelIcon = modelIcon
-        self.isLastAssistant = isLastAssistant
-        self.isLastAssistantGroup = isLastAssistantGroup
-        self.splitMarker = splitMarker
-        self.isResponding = isResponding
-        self.operationalState = operationalState
-        self.operationalDescription = operationalDescription
-        self.onRetry = onRetry
-        self.onDelete = onDelete
-    }
     
-    @State private var containerWidth: CGFloat = 0
-
-    private var effectiveContainerWidth: CGFloat {
-        containerWidth > 0 ? containerWidth : UIScreen.main.bounds.width
-    }
-
     var body: some View {
         VStack(alignment: messageAlignment) {
             contentView()
         }
-        .frame(maxWidth: .infinity, alignment: role == "information" ? .center : (role == "user" ? .trailing : .leading))
-        .onGeometryChange(for: CGFloat.self) { proxy in
-            proxy.size.width
-        } action: { newWidth in
-            if newWidth > 0 {
-                containerWidth = newWidth
-            }
-        }
         // 添加确认弹窗
-        .alert(String(localized: "确认删除？"), isPresented: $showDeleteConfirmation) {
-            Button(String(localized: "删除"), role: .destructive) {
+        .alert("确认删除？", isPresented: $showDeleteConfirmation) {
+            Button("删除", role: .destructive) {
                 onDelete?()
             }
-            Button(String(localized: "取消"), role: .cancel) { }
+            Button("取消", role: .cancel) { }
         } message: {
-            Text(String(localized: "确定要删除吗？删除后不可恢复！"))
+            Text("确定要删除吗？删除后不可恢复！")
                 .multilineTextAlignment(.leading)
-        }
-        .sheet(item: $nativeAppSheetRequest) { request in
-            NativeAppSessionContainerView(request: request)
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(item: $legacyInspectorSelection) { selection in
-            if let agentRun {
-                AgentActivityInspectorView(
-                    run: agentRun,
-                    selectedActivityID: selection.selectedActivityID
-                )
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-            }
-        }
-        .sheet(isPresented: $isEvidencePresented) {
-            AgentEvidenceSheet(items: evidenceItemsForDisplay)
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        }
-        .fullScreenCover(item: $nativeAppFullScreenRequest) { request in
-            NativeAppSessionContainerView(request: request)
         }
         .padding(.vertical, 2)
         .onAppear {
@@ -315,25 +172,6 @@ struct ChatBubbleView: View {
             translated = !translatedText.isEmpty
         }
         .tint(temporaryRecord ? .primary : nil)
-    }
-
-    private func launchNativeApp(_ request: NativeAppLaunchRequest) {
-        NativeToolTraceLogger.shared.log(
-            "native_ui_app_route_requested",
-            [
-                "appID": request.appID,
-                "presentationStyle": request.presentationStyle.rawValue,
-                "hasInitialRoute": request.initialRoute != nil
-            ]
-        )
-        switch request.presentationStyle {
-        case .fullScreen:
-            nativeAppFullScreenRequest = request
-        case .largeSheet:
-            nativeAppSheetRequest = request
-        case .newWindow:
-            openWindow(value: request)
-        }
     }
 
     private var messageAlignment: HorizontalAlignment {
@@ -396,7 +234,7 @@ struct ChatBubbleView: View {
             VStack(alignment: .leading) {
                 
                 HStack {
-                    Text(String(localized: "资料内容"))
+                    Text("资料内容")
                         .padding(.leading, 5)
                     
                     // 查看文本
@@ -433,19 +271,17 @@ struct ChatBubbleView: View {
                 .foregroundColor(.primary)
                 .cornerRadius(20)
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .leading)
-                .accessibilityElement(children: .contain)
-                .accessibilityIdentifier("hanlin-search-bubble")
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .leading)
                 .contextMenu {
                     Button(action: {
                         isTextSelectionSheetPresented = true
                     }) {
-                        Label(String(localized: "查看资料"), systemImage: "book")
+                        Label("查看资料", systemImage: "book")
                     }
                     Button(action: {
                         showDeleteConfirmation = true
                     }) {
-                        Label(String(localized: "删除资料"), systemImage: "trash")
+                        Label("删除资料", systemImage: "trash")
                     }
                 }
             }
@@ -462,63 +298,54 @@ struct ChatBubbleView: View {
                 
                 if let images = images, !images.isEmpty {
                     chatBubbleImage()
-                        .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
-                        .accessibilityElement(children: .contain)
-                        .accessibilityIdentifier("hanlin-user-image-attachment")
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
                 }
                 
                 if let document = uploadDocument, !document.isEmpty {
                     chatBubbleDocument(for: document)
-                        .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .trailing)
-                        .accessibilityElement(children: .contain)
-                        .accessibilityIdentifier("hanlin-user-document-attachment")
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .trailing)
                 }
                 
                 if let prompts = prompts, !prompts.isEmpty {
                     chatBubblePrompt()
-                        .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
                 }
                 
-                if !text.isEmpty {
-                    HStack {
-                        Text(text)
+                HStack {
+                    Text(text)
+                }
+                .padding(10)
+                .background(temporaryRecord ? .primary : Color(.hlBlue))
+                .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
+                .contextMenu {
+                    Button(action: {
+                        UIPasteboard.general.string = markdownToPlainText(text)
+                    }) {
+                        Label("复制内容", systemImage: "square.on.square")
                     }
-                    .padding(10)
-                    .background(temporaryRecord ? .primary : Color(.hlBlue))
-                    .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
-                    .contextMenu {
-                        Button(action: {
-                            UIPasteboard.general.string = markdownToPlainText(text)
-                        }) {
-                            Label(String(localized: "复制内容"), systemImage: "square.on.square")
-                        }
-                        Button(action: {
-                            isTextSelectionSheetPresented = true
-                        }) {
-                            Label(String(localized: "选择文本"), systemImage: "text.redaction")
-                        }
-                        Button(action: {
-                            createAndSaveKnowledgeRecord(with: text)
-                        }) {
-                            Label(String(localized: "存为知识"), systemImage: "backpack")
-                        }
-                        Button(action: {
-                            showDeleteConfirmation = true
-                        }) {
-                            Label(String(localized: "删除消息"), systemImage: "trash")
-                        }
+                    Button(action: {
+                        isTextSelectionSheetPresented = true
+                    }) {
+                        Label("选择文本", systemImage: "text.redaction")
                     }
-                    .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
-                    .accessibilityElement(children: .combine)
-                    .accessibilityLabel(text)
-                    .accessibilityIdentifier("hanlin-user-bubble")
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
-                    .sheet(isPresented: $isTextSelectionSheetPresented) {
-                        TextSelectionView(text: text)
+                    Button(action: {
+                        createAndSaveKnowledgeRecord(with: text)
+                    }) {
+                        Label("存为知识", systemImage: "backpack")
                     }
+                    Button(action: {
+                        showDeleteConfirmation = true
+                    }) {
+                        Label("删除消息", systemImage: "trash")
+                    }
+                }
+                .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                .transition(.move(edge: .trailing).combined(with: .opacity))
+                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
+                .sheet(isPresented: $isTextSelectionSheetPresented) {
+                    TextSelectionView(text: text)
                 }
             }
         }
@@ -527,30 +354,14 @@ struct ChatBubbleView: View {
     @State private var textOffset: CGFloat = 0
     
     // MARK: - AI 助手消息
-    @State private var isAgentProcessExpanded: Bool = false
-
     @ViewBuilder
     private func assistantMessageView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             assistantHeader()
-            if let agentRun, showsAgentActivitySummary, !agentRun.steps.isEmpty {
-                let timeline = AgentActivityComposer.compose(agentRun)
-                AgentActivitySummaryView(run: agentRun, isExpanded: isAgentProcessExpanded) {
-                    isAgentProcessExpanded.toggle()
-                    legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
-                }
-                if isAgentProcessExpanded {
-                    AgentInlineProcessView(run: agentRun, timeline: timeline) { selectedID in
-                        legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: selectedID)
-                    }
-                }
-            }
             assistantImageSection()
             assistantTextSection()
             assistantFooter()
         }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-assistant-bubble")
         .transition(.move(edge: .leading).combined(with: .opacity))
         .animation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
                    value: isResponding)
@@ -596,7 +407,7 @@ struct ChatBubbleView: View {
     private func assistantImageSection() -> some View {
         if let images = images, !images.isEmpty {
             chatAssistantBubbleImage()
-                .frame(maxWidth: effectiveContainerWidth * 0.75,
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.75,
                        alignment: .leading)
                 .transition(.move(edge: .top).combined(with: .opacity))
                 .animation(.spring(response: 0.5, dampingFraction: 0.8),
@@ -604,33 +415,10 @@ struct ChatBubbleView: View {
         }
     }
 
-    private var embeddedToolResultItems: [AgentTranscriptItem] {
-        guard showsAgentActivitySummary, let items = agentRun?.transcriptItems else { return [] }
-        return items.filter { item in
-            item.kind == .userVisibleToolResult
-                && (item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil)
-        }
-    }
-
-    private var hasAssistantRichCards: Bool {
-        (showCanvas && canvas?.content.isEmpty == false)
-            || codeBlocks?.isEmpty == false
-            || knowledgeCard?.isEmpty == false
-            || htmlContent?.isEmpty == false
-            || events?.isEmpty == false
-            || healthCards?.isEmpty == false
-            || locations?.isEmpty == false
-            || routes?.isEmpty == false
-            || !nativeUIBlocks.isEmpty
-            || !embeddedToolResultItems.isEmpty
-            || audioAssets?.isEmpty == false
-    }
-
     // MARK: 文本 & 各类工具输出
     @ViewBuilder
     private func assistantTextSection() -> some View {
-        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty || hasAssistantRichCards
-            || !evidenceItemsForDisplay.isEmpty {
+        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
@@ -640,26 +428,6 @@ struct ChatBubbleView: View {
                 // 文字主体
                 messageContent()
                     .transition(.move(edge: .top).combined(with: .opacity))
-
-                if !isResponding && (resources?.isEmpty != false) && !evidenceItemsForDisplay.isEmpty {
-                    AgentEvidenceSummaryView(items: evidenceItemsForDisplay) {
-                        isEvidencePresented = true
-                    }
-                    .accessibilityElement(children: .contain)
-                    .accessibilityIdentifier("hanlin-reference-materials")
-                }
-
-                // 结构化内嵌工具结果卡片
-                if !embeddedToolResultItems.isEmpty {
-                    ForEach(embeddedToolResultItems) { item in
-                        AgentTranscriptToolResultView(
-                            item: item,
-                            temporaryRecord: temporaryRecord,
-                            onLaunchRequest: launchNativeApp
-                        )
-                        .transition(.move(edge: .top).combined(with: .opacity))
-                    }
-                }
                 
                 // 代码块
                 if let codes = codeBlocks, !codes.isEmpty {
@@ -696,15 +464,6 @@ struct ChatBubbleView: View {
                     mapBubble(for: locations ?? [], routes: routes ?? [])
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
-                // Native UI
-                if !nativeUIBlocks.isEmpty {
-                    NativeUIToolResultContainer(
-                        blocks: nativeUIBlocks,
-                        temporaryRecord: temporaryRecord,
-                        onLaunchRequest: launchNativeApp
-                    )
-                        .transition(.move(edge: .top).combined(with: .opacity))
-                }
                 // 底部按钮
                 if isLastAssistant && !isResponding {
                     actionButtons()
@@ -714,23 +473,11 @@ struct ChatBubbleView: View {
         }
     }
 
-    private var evidenceItemsForDisplay: [AgentEvidenceItem] {
-        let runItems = agentRun?.evidenceItems ?? []
-        if !runItems.isEmpty {
-            return AgentEvidenceAccumulator(items: runItems).items
-        }
-        return AgentEvidenceAccumulator(items: LegacyResourcesEvidenceAdapter.items(
-            from: resources ?? [],
-            providerName: searchEngine,
-            wasReturnedToModel: true
-        )).items
-    }
-
     // MARK: 底部 Loading / 结束状态
     @ViewBuilder
     private func assistantFooter() -> some View {
         if (!operationalState.isEmpty && isLastAssistant)
-            || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil && !hasAssistantRichCards) {
+            || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil) {
             loadingSection()
         }
         else if isResponding && isLastAssistant {
@@ -831,7 +578,7 @@ struct ChatBubbleView: View {
                         .lineLimit(1)
                         .truncationMode(.tail)
                     
-                    Text(String(localized: "点击右下角“画布”按钮以查看和编辑内容"))
+                    Text("点击右下角“画布”按钮以查看和编辑内容")
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }
@@ -854,11 +601,7 @@ struct ChatBubbleView: View {
     private func codeBubble(for codes: [CodeBlock]) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             ForEach(codes) { codeBlock in
-                CodeBlockRow(
-                    codeBlock: codeBlock,
-                    temporaryRecord: temporaryRecord,
-                    containerWidth: effectiveContainerWidth
-                ) {
+                CodeBlockRow(codeBlock: codeBlock, temporaryRecord: temporaryRecord) {
                     selectedCodeBlock = codeBlock
                     triggerPythonCopyFeedback.toggle()
                 }
@@ -882,7 +625,7 @@ struct ChatBubbleView: View {
                                     Image(systemName: codeIsCopied ? "checkmark.circle" : "square.on.square")
                                         .font(.caption)
                                         .foregroundColor(codeIsCopied ? .hlGreen : (temporaryRecord ? .primary : .hlBluefont))
-                                    Text(codeIsCopied ? String(localized: "已复制") : String(localized: "全部复制"))
+                                    Text(codeIsCopied ? "已复制" : "全部复制")
                                         .font(.caption)
                                         .foregroundColor(codeIsCopied ? .hlGreen : (temporaryRecord ? .primary : .hlBluefont))
                                 }
@@ -894,7 +637,7 @@ struct ChatBubbleView: View {
                             .sensoryFeedback(.success, trigger: triggerPythonCopyFeedback)
                         }
                         ToolbarItem(placement: .principal) {
-                            Text(String(localized: "程序源码")).font(.headline)
+                            Text("程序源码").font(.headline)
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
@@ -962,7 +705,7 @@ struct ChatBubbleView: View {
                                 // 已写入状态
                                 HStack(spacing: 4) {
                                     Image(systemName: "checkmark.circle.fill")
-                                    Text(String(localized: "已经存入背包"))
+                                    Text("已经存入背包")
                                 }
                                 .font(.caption)
                                 .padding(6)
@@ -973,7 +716,7 @@ struct ChatBubbleView: View {
                                 // 未写入状态
                                 HStack(spacing: 4) {
                                     Image(systemName: "backpack")
-                                    Text(String(localized: "存入知识背包"))
+                                    Text("存入知识背包")
                                 }
                                 .font(.caption)
                                 .padding(6)
@@ -1001,7 +744,7 @@ struct ChatBubbleView: View {
                         .cornerRadius(20)
                         .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
-                .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
             }
         }
     }
@@ -1025,9 +768,7 @@ struct ChatBubbleView: View {
                         .cornerRadius(20)
                         .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
-                .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
-                .accessibilityElement(children: .contain)
-                .accessibilityIdentifier("hanlin-html-web-bubble")
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
             
             HStack(spacing: 6) {
                 // 查看代码按钮
@@ -1094,7 +835,7 @@ struct ChatBubbleView: View {
                                 Image(systemName: htmlIsCopied ? "checkmark.circle" : "square.on.square")
                                     .font(.caption)
                                     .foregroundColor(htmlIsCopied ? .hlGreen : temporaryRecord ? .primary : .hlBluefont)
-                                Text(htmlIsCopied ? String(localized: "已复制") : String(localized: "全部复制"))
+                                Text(htmlIsCopied ? "已复制" : "全部复制")
                                     .font(.caption)
                                     .foregroundColor(htmlIsCopied ? .hlGreen : temporaryRecord ? .primary : .hlBluefont)
                             }
@@ -1157,7 +898,7 @@ struct ChatBubbleView: View {
                                     Image(systemName: htmlIsCopied ? "checkmark.circle" : "square.on.square")
                                         .font(.caption)
                                         .foregroundColor(htmlIsCopied ? .hlGreen : temporaryRecord ? .primary : .hlBluefont)
-                                    Text(htmlIsCopied ? String(localized: "已复制") : String(localized: "复制代码"))
+                                    Text(htmlIsCopied ? "已复制" : "复制代码")
                                         .font(.caption)
                                         .foregroundColor(htmlIsCopied ? .hlGreen : temporaryRecord ? .primary : .hlBluefont)
                                 }
@@ -1205,7 +946,7 @@ struct ChatBubbleView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "bubbles.and.sparkles")
                                 .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
-                            Text(String(localized: "营养卡片"))
+                            Text("营养卡片")
                                 .font(.headline.bold())
                             Spacer()
                         }
@@ -1270,7 +1011,7 @@ struct ChatBubbleView: View {
                                     // 已写入状态
                                     HStack(spacing: 4) {
                                         Image(systemName: "checkmark.circle.fill")
-                                        Text(String(localized: "已经写入健康"))
+                                        Text("已经写入健康")
                                     }
                                     .font(.caption)
                                     .padding(6)
@@ -1281,7 +1022,7 @@ struct ChatBubbleView: View {
                                     // 未写入状态
                                     HStack(spacing: 4) {
                                         Image(systemName: "pencil.and.list.clipboard")
-                                        Text(String(localized: "写入健康应用"))
+                                        Text("写入健康应用")
                                     }
                                     .font(.caption)
                                     .padding(6)
@@ -1302,7 +1043,7 @@ struct ChatBubbleView: View {
                     )
                 }
             }
-            .frame(maxWidth: effectiveContainerWidth * 0.9,
+            .frame(maxWidth: UIScreen.main.bounds.width * 0.9,
                    alignment: .leading)
         }
     }
@@ -1411,7 +1152,7 @@ struct ChatBubbleView: View {
                     )
                 }
             }
-            .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
+            .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
         }
     }
 
@@ -1444,7 +1185,7 @@ struct ChatBubbleView: View {
                     .cornerRadius(20)
                     .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
             )
-            .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
+            .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
             
             // 按钮区域保持原样
             HStack(spacing: 6) {
@@ -1623,11 +1364,10 @@ struct ChatBubbleView: View {
                     .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
             }
             .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-copy")
             .sensoryFeedback(.success, trigger: isSuccess)
             
             if isCopy {
-                Text(String(localized: "已复制"))
+                Text("已复制")
                     .font(.system(size: size_12, weight: .medium))
                     .foregroundColor(.hlGreen)
                     .transition(.opacity.combined(with: .move(edge: .leading)))
@@ -1644,7 +1384,6 @@ struct ChatBubbleView: View {
                     .clipShape(Circle())
             }
             .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-select")
             .sheet(isPresented: $isTextSelectionSheetPresented) {
                 TextSelectionView(text: text)
             }
@@ -1675,10 +1414,9 @@ struct ChatBubbleView: View {
                 }
             }
             .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-tts")
             
             if tts.isAsking {
-                Text(String(localized: "正在请求"))
+                Text("正在请求")
                     .font(.system(size: size_12, weight: .medium))
                     .foregroundColor(.hlBluefont)
                     .transition(.opacity.combined(with: .move(edge: .leading)))
@@ -1729,15 +1467,14 @@ struct ChatBubbleView: View {
             }
             .disabled(isTranslating)
             .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-translate")
-            .alert(String(localized: "翻译操作失败"), isPresented: $showErrorAlert) {
-                Button(String(localized: "确定"), role: .cancel) {}
+            .alert("翻译操作失败", isPresented: $showErrorAlert) {
+                Button("确定", role: .cancel) {}
             } message: {
                 Text(errorMessage)
             }
             
             if isTranslating {
-                Text(String(localized: "正在翻译"))
+                Text("正在翻译")
                     .font(.system(size: size_12, weight: .medium))
                     .foregroundColor(.hlBluefont)
                     .transition(.opacity.combined(with: .move(edge: .leading)))
@@ -1757,10 +1494,9 @@ struct ChatBubbleView: View {
                     .foregroundColor(showMathModeReminder ? .hlBluefont : .secondary)
                     .clipShape(Circle())
             }
-            .accessibilityIdentifier("hanlin-action-math")
             
             if showMathModeReminder {
-                Text(mathMode ? String(localized: "科学模式") : String(localized: "文本模式"))
+                Text(mathMode ? "科学模式" : "文本模式")
                     .font(.system(size: size_12, weight: .medium))
                     .foregroundColor(.hlBluefont)
                     .transition(.opacity.combined(with: .move(edge: .leading)))
@@ -1777,7 +1513,6 @@ struct ChatBubbleView: View {
                     .clipShape(Circle())
             }
             .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-knowledge")
             .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
                 if let record = recordToWrite {
                     NavigationStack {
@@ -1796,11 +1531,8 @@ struct ChatBubbleView: View {
                         .clipShape(Circle())
                 }
                 .buttonStyle(PlainButtonStyle())
-                .accessibilityIdentifier("hanlin-action-retry")
             }
         }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-action-buttons-row")
         .padding(.leading, 5)
         .animation(
             .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
@@ -1815,90 +1547,88 @@ struct ChatBubbleView: View {
             reasoningView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
             
-            if !text.isEmpty {
-                Group {
-                    if mathMode {
-                        LaTeX(text)
+            Group {
+                if mathMode {
+                    LaTeX(text)
+                } else {
+                    Markdown(text)
+                }
+            }
+            .contextMenu {
+                // 复制
+                Button(action: {
+                    UIPasteboard.general.string = markdownToPlainText(text)
+                }) {
+                    Label("复制内容", systemImage: "square.on.square")
+                }
+                
+                // 选中文本
+                Button(action: {
+                    isTextSelectionSheetPresented = true
+                }) {
+                    Label("选择文本", systemImage: "text.redaction")
+                }
+                
+                // 生成语音
+                Button(action: {
+                    tts.setContextIfNeeded(modelContext)
+                    tts.updateSelectedModel()
+                    tts.setMessageId(id)
+                    tts.toggleSpeech(text: text)
+                }) {
+                    if tts.isAsking {
+                        Label("正在请求", systemImage: "progress.indicator")
                     } else {
-                        Markdown(text)
+                        Label("生成语音", systemImage: "waveform")
                     }
                 }
-                .contextMenu {
-                    // 复制
-                    Button(action: {
-                        UIPasteboard.general.string = markdownToPlainText(text)
-                    }) {
-                        Label(String(localized: "复制内容"), systemImage: "square.on.square")
-                    }
-                    
-                    // 选中文本
-                    Button(action: {
-                        isTextSelectionSheetPresented = true
-                    }) {
-                        Label(String(localized: "选择文本"), systemImage: "text.redaction")
-                    }
-                    
-                    // 生成语音
-                    Button(action: {
-                        tts.setContextIfNeeded(modelContext)
-                        tts.updateSelectedModel()
-                        tts.setMessageId(id)
-                        tts.toggleSpeech(text: text)
-                    }) {
-                        if tts.isAsking {
-                            Label(String(localized: "正在请求"), systemImage: "progress.indicator")
-                        } else {
-                            Label(String(localized: "生成语音"), systemImage: "waveform")
+                
+                // 翻译/删除译文/翻译中…
+                Button(action: translateText) {
+                    if isTranslating {
+                        Label("正在翻译", systemImage: "progress.indicator")
+                    } else if translated {
+                        Label("删除译文", systemImage: "trash")
+                    } else {
+                        HStack {
+                            Image("translate")
+                                .renderingMode(.template)
+                                .font(.system(size: size_14, weight: .medium))
+                                .frame(width: size_24, height: size_24)
+                                .foregroundColor(.secondary)
+                                .clipShape(Circle())
+                            Text("翻译内容")
                         }
                     }
-                    
-                    // 翻译/删除译文/翻译中…
-                    Button(action: translateText) {
-                        if isTranslating {
-                            Label(String(localized: "正在翻译"), systemImage: "progress.indicator")
-                        } else if translated {
-                            Label(String(localized: "删除译文"), systemImage: "trash")
-                        } else {
-                            HStack {
-                                Image("translate")
-                                    .renderingMode(.template)
-                                    .font(.system(size: size_14, weight: .medium))
-                                    .frame(width: size_24, height: size_24)
-                                    .foregroundColor(.secondary)
-                                    .clipShape(Circle())
-                                Text(String(localized: "翻译内容"))
-                            }
-                        }
+                }
+                
+                // 科学模式
+                Button(action: {
+                    mathMode.toggle()
+                    showMathModeReminder = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        showMathModeReminder = false
                     }
-                    
-                    // 科学模式
-                    Button(action: {
-                        mathMode.toggle()
-                        showMathModeReminder = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            showMathModeReminder = false
-                        }
-                    }) {
-                        if mathMode {
-                            Label(String(localized: "文本模式"), systemImage: "note.text")
-                        } else {
-                            Label(String(localized: "科学模式"), systemImage: "x.squareroot")
-                        }
+                }) {
+                    if mathMode {
+                        Label("文本模式", systemImage: "note.text")
+                    } else {
+                        Label("科学模式", systemImage: "x.squareroot")
                     }
-                    
-                    // 存为知识
-                    Button(action: {
-                        createAndSaveKnowledgeRecord(with: text)
-                    }) {
-                        Label(String(localized: "存为知识"), systemImage: "backpack")
-                    }
-                    
-                    // 删除消息
-                    Button(action: {
-                        showDeleteConfirmation = true
-                    }) {
-                        Label(String(localized: "删除消息"), systemImage: "trash")
-                    }
+                }
+                
+                // 存为知识
+                Button(action: {
+                    createAndSaveKnowledgeRecord(with: text)
+                }) {
+                    Label("存为知识", systemImage: "backpack")
+                }
+                
+                // 删除消息
+                Button(action: {
+                    showDeleteConfirmation = true
+                }) {
+                    Label("删除消息", systemImage: "trash")
                 }
             }
             
@@ -2047,12 +1777,12 @@ struct ChatBubbleView: View {
     }
     
     private var displayReasoningLines: [String] {
-        // 拆分 & 过滤（清洗掉模型原始英文内部提示，如 "Thinking Process:"）
+        // 拆分 & 过滤
         let raw = reasoning
             .split(whereSeparator: {
                 [".", "\n", "。"].contains(String($0))
             })
-            .compactMap { ProgressSummarySanitizer.sanitizeProviderReasoningSummary(String($0)) }
+            .map(String.init)
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         
         // 取最后 3 条
@@ -2196,13 +1926,13 @@ struct ChatBubbleView: View {
                         Button(action: {
                             UIPasteboard.general.string = translatedText
                         }) {
-                            Label(String(localized: "复制内容"), systemImage: "square.on.square")
+                            Label("复制内容", systemImage: "square.on.square")
                         }
                         // 选择文本
                         Button(action: {
                             translatedTextSelectionSheetPresented = true
                         }) {
-                            Label(String(localized: "选择文本"), systemImage: "text.redaction")
+                            Label("选择文本", systemImage: "text.redaction")
                         }
                         // 删除译文
                         Button(action: translateText) {
@@ -2227,7 +1957,7 @@ struct ChatBubbleView: View {
                                         .foregroundColor(.secondary)
                                         .clipShape(Circle())
                                 }
-                                Text(translated ? String(localized: "删除译文") : (isTranslating ? String(localized: "翻译中...") : String(localized: "翻译内容")))
+                                Text(translated ? "删除译文" : (isTranslating ? "翻译中..." : "翻译内容"))
                             }
                         }
                         // 科学模式
@@ -2239,16 +1969,16 @@ struct ChatBubbleView: View {
                             }
                         }) {
                             if mathMode {
-                                Label(String(localized: "文本模式"), systemImage: "note.text")
+                                Label("文本模式", systemImage: "note.text")
                             } else {
-                                Label(String(localized: "科学模式"), systemImage: "x.squareroot")
+                                Label("科学模式", systemImage: "x.squareroot")
                             }
                         }
                         // 存为知识
                         Button(action: {
                             createAndSaveKnowledgeRecord(with: translatedText)
                         }) {
-                            Label(String(localized: "存为知识"), systemImage: "backpack")
+                            Label("存为知识", systemImage: "backpack")
                         }
                     }
                 }
@@ -2259,20 +1989,19 @@ struct ChatBubbleView: View {
     // MARK: - 参考资料区域
     @ViewBuilder
     private func resourcesView() -> some View {
-        let deduplicatedResources = LegacyResourcesEvidenceAdapter.deduplicatedResources(resources ?? [])
-        if !deduplicatedResources.isEmpty {
+        if let resources = resources, !resources.isEmpty {
             VStack(alignment: .leading) {
                 
                 ToggleButton(
                     title: String(localized: "reference_materials"),
-                    timeText: String(deduplicatedResources.count),
+                    timeText: String(resources.count),
                     isExpanded: $isResourcesExpanded
                 )
 
                 if isResourcesExpanded {
                     VStack(alignment: .leading) {
-                        ForEach(deduplicatedResources.indices, id: \.self) { index in
-                            resourceItemView(resource: deduplicatedResources[index], index: index)
+                        ForEach(resources.indices, id: \.self) { index in
+                            resourceItemView(resource: resources[index], index: index)
                         }
                     }
                     .padding(.horizontal, 6)
@@ -2281,8 +2010,6 @@ struct ChatBubbleView: View {
                     .padding(.bottom, 5)
                 }
             }
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("hanlin-reference-materials")
         }
     }
 
@@ -2375,18 +2102,12 @@ struct ChatBubbleView: View {
             .foregroundColor(.secondary)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
-            .accessibilityIdentifier("hanlin-info-bubble")
     }
     
     // MARK: - 错误型消息
     @ViewBuilder
     private func errorMessageView() -> some View {
         VStack(alignment: .leading) {
-            if let agentRun, showsAgentActivitySummary {
-                AgentActivitySummaryView(run: agentRun) {
-                    legacyInspectorSelection = AgentActivityInspectorSelection(selectedActivityID: nil)
-                }
-            }
             Text(text)
                 .font(.caption)
                 .foregroundColor(.hlOrange)
@@ -2394,9 +2115,10 @@ struct ChatBubbleView: View {
             
             if let retryAction = onRetry {
                 Button(action: {
+                    isFeedBack.toggle()
                     retryAction()
                 }) {
-                    Text(String(localized: "重新请求"))
+                    Text("重新请求")
                         .font(.caption)
                         .frame(maxWidth: .infinity)
                         .padding(6)
@@ -2404,7 +2126,7 @@ struct ChatBubbleView: View {
                         .foregroundColor(.white)
                         .cornerRadius(20)
                 }
-                .accessibilityIdentifier("hanlin-error-retry-button")
+                .sensoryFeedback(.impact, trigger: isFeedBack)
             }
         }
         .frame(maxWidth: .infinity)
@@ -2415,8 +2137,6 @@ struct ChatBubbleView: View {
                 .stroke(Color.hlOrange.opacity(0.3), lineWidth: 1)
         )
         .cornerRadius(20)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-error-bubble")
     }
 
     // MARK: - 折叠按钮组件
@@ -2477,13 +2197,13 @@ struct ChatBubbleView: View {
                                         // 复制图片
                                         UIPasteboard.general.image = images[index]
                                     }) {
-                                        Label(String(localized: "复制图片"), systemImage: "square.on.square")
+                                        Label("复制图片", systemImage: "square.on.square")
                                     }
                                     Button(action: {
                                         // 保存图片到相册
                                         UIImageWriteToSavedPhotosAlbum(images[index], nil, nil, nil)
                                     }) {
-                                        Label(String(localized: "保存图片"), systemImage: "square.and.arrow.down")
+                                        Label("保存图片", systemImage: "square.and.arrow.down")
                                     }
                                 }
                                 .onTapGesture {
@@ -2528,13 +2248,13 @@ struct ChatBubbleView: View {
                                         // 复制图片
                                         UIPasteboard.general.image = images[index]
                                     }) {
-                                        Label(String(localized: "复制图片"), systemImage: "square.on.square")
+                                        Label("复制图片", systemImage: "square.on.square")
                                     }
                                     Button(action: {
                                         // 保存图片到相册
                                         UIImageWriteToSavedPhotosAlbum(images[index], nil, nil, nil)
                                     }) {
-                                        Label(String(localized: "保存图片"), systemImage: "square.and.arrow.down")
+                                        Label("保存图片", systemImage: "square.and.arrow.down")
                                     }
                                 }
                                 .onTapGesture {
@@ -2651,7 +2371,7 @@ struct ChatBubbleView: View {
                     Button(action: {
                         showDocumentContent = true
                     }) {
-                        Label(String(localized: "文件文本"), systemImage: "text.document")
+                        Label("文件文本", systemImage: "text.document")
                     }
                 }
                 .cornerRadius(14)
@@ -2712,21 +2432,16 @@ struct ChatBubbleView: View {
 }
 
 // MARK: - 代码块
-struct CodeBlockRow: View {
+private struct CodeBlockRow: View {
     let codeBlock: CodeBlock
     let temporaryRecord: Bool
-    var containerWidth: CGFloat = 0
     let onShowSource: () -> Void
     @State private var isFeedBack: Bool = false
-
-    private var effectiveWidth: CGFloat {
-        containerWidth > 0 ? containerWidth : UIScreen.main.bounds.width
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Label(String(localized: "程序运行结果"), systemImage: "apple.terminal")
+                Label("程序运行结果", systemImage: "apple.terminal")
                     .font(.subheadline)
                     .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
                 Spacer()
@@ -2736,7 +2451,7 @@ struct CodeBlockRow: View {
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: "doc.plaintext")
-                        Text(String(localized: "查看源码"))
+                        Text("查看源码")
                     }
                     .font(.caption)
                     .padding(6)
@@ -2744,7 +2459,6 @@ struct CodeBlockRow: View {
                     .foregroundColor(.white)
                     .clipShape(Capsule())
                 }
-                .accessibilityIdentifier("hanlin-code-view-source")
                 .sensoryFeedback(.impact, trigger: isFeedBack)
             }
             
@@ -2756,7 +2470,6 @@ struct CodeBlockRow: View {
                 .foregroundColor(codeBlock.hasError ? .red : .primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 4)
-                .environment(\.layoutDirection, .leftToRight)
         }
         .padding(10)
         .cornerRadius(20)
@@ -2765,9 +2478,7 @@ struct CodeBlockRow: View {
                 .cornerRadius(20)
                 .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
         )
-        .frame(maxWidth: effectiveWidth * 0.95, alignment: .leading)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-code-block-row")
+        .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
     }
 }
 
@@ -2787,7 +2498,6 @@ struct WebView: UIViewRepresentable {
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
         
         let webView = WKWebView(frame: .zero, configuration: config)
-        webView.accessibilityIdentifier = "hanlin-html-web-bubble"
         webView.navigationDelegate = context.coordinator
         webView.scrollView.isScrollEnabled = true
         webView.allowsBackForwardNavigationGestures = true
@@ -2901,12 +2611,12 @@ struct ResourceLinkAlertView: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            Text(String(localized: "⚠️ 这是一个外部链接"))
+            Text("⚠️ 这是一个外部链接")
                 .font(.title3)
                 .bold()
                 .multilineTextAlignment(.center)
             
-            Text(String(localized: "链接包含未知信息\n打开链接将离开AI翰林院"))
+            Text("链接包含未知信息\n打开链接将离开AI翰林院")
                 .multilineTextAlignment(.center)
             
             Text(url.absoluteString)
@@ -2924,7 +2634,7 @@ struct ResourceLinkAlertView: View {
                     isSuccess.toggle()
                     dismiss()
                 }) {
-                    Text(String(localized: "复制链接"))
+                    Text("复制链接")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.gray.opacity(0.1))
@@ -2938,7 +2648,7 @@ struct ResourceLinkAlertView: View {
                     UIApplication.shared.open(url)
                     dismiss()
                 }) {
-                    Text(String(localized: "打开链接"))
+                    Text("打开链接")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(.hlBluefont)
@@ -3153,7 +2863,7 @@ struct FileContentViewer: View {
                         .padding()
                         .textSelection(.enabled)
                 }
-                .navigationTitle(String(localized: "文件文本"))
+                .navigationTitle("文件文本")
                 .navigationBarTitleDisplayMode(.inline)
             }
             
@@ -3199,8 +2909,8 @@ struct FileContentViewer: View {
                 }
             }
         }
-        .alert(String(localized: "保存失败"), isPresented: $showErrorAlert) {
-            Button(String(localized: "确定"), role: .cancel) {}
+        .alert("保存失败", isPresented: $showErrorAlert) {
+            Button("确定", role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -3325,9 +3035,17 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        let highlighted = makeHighlighted(code)
-        coordinator.lastAttributed = highlighted
-        uiView.attributedText = highlighted
+        // 异步高亮，避免阻塞主线程
+        DispatchQueue.global(qos: .userInitiated).async {
+            let highlighted = makeHighlighted(code)
+            coordinator.lastAttributed = highlighted
+            DispatchQueue.main.async {
+                // 确保无新更新后再赋值
+                if coordinator.lastCode == code {
+                    uiView.attributedText = highlighted
+                }
+            }
+        }
     }
 }
 
@@ -3464,9 +3182,15 @@ struct PythonCodeSelectionTextView: UIViewRepresentable {
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        let highlighted = highlightPythonCode(code)
-        coordinator.lastAttributed = highlighted
-        uiView.attributedText = highlighted
+        DispatchQueue.global(qos: .userInitiated).async {
+            let highlighted = highlightPythonCode(code)
+            coordinator.lastAttributed = highlighted
+            DispatchQueue.main.async {
+                if coordinator.lastCode == code {
+                    uiView.attributedText = highlighted
+                }
+            }
+        }
     }
 }
 
@@ -3599,8 +3323,8 @@ struct TextSelectionView: View {
                 }
             }
         }
-        .alert(String(localized: "保存失败"), isPresented: $showErrorAlert) {
-            Button(String(localized: "确定"), role: .cancel) { }
+        .alert("保存失败", isPresented: $showErrorAlert) {
+            Button("确定", role: .cancel) { }
         } message: {
             Text(errorMessage)
         }
@@ -3750,8 +3474,8 @@ struct AICanvasView: View {
                     ToolbarItemGroup(placement: .navigationBarLeading) { toolbarLeading() }
                     ToolbarItemGroup(placement: .navigationBarTrailing) { toolbarTrailing() }
                 }
-                .alert(String(localized: "确认删除画布内容？"), isPresented: $showDeleteAlert) {
-                    Button(String(localized: "删除"), role: .destructive) {
+                .alert("确认删除画布内容？", isPresented: $showDeleteAlert) {
+                    Button("删除", role: .destructive) {
                         Task {
                             await MainActor.run {
                                 canvas.history = []
@@ -3763,9 +3487,9 @@ struct AICanvasView: View {
                             dismiss()
                         }
                     }
-                    Button(String(localized: "取消"), role: .cancel) { }
+                    Button("取消", role: .cancel) { }
                 } message: {
-                    Text(String(localized: "此操作会清空当前画布内容，无法撤销。"))
+                    Text("此操作会清空当前画布内容，无法撤销。")
                 }
         }
         .overlay(bottomOverlay(), alignment: .bottomTrailing)
@@ -3780,8 +3504,8 @@ struct AICanvasView: View {
             WebView(htmlContent: canvas.content)
                 .ignoresSafeArea()
         }
-        .alert(String(localized: "保存失败"), isPresented: $showErrorAlert) {
-            Button(String(localized: "确定"), role: .cancel) {}
+        .alert("保存失败", isPresented: $showErrorAlert) {
+            Button("确定", role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -3885,19 +3609,19 @@ struct AICanvasView: View {
                 isImpact.toggle()
                 canvas.type = "text"
             } label: {
-                Label(String(localized: "纯文本"), systemImage: canvas.type == "text" ? "checkmark.circle" : "circle")
+                Label("纯文本", systemImage: canvas.type == "text" ? "checkmark.circle" : "circle")
             }
             Button {
                 isImpact.toggle()
                 canvas.type = "python"
             } label: {
-                Label(String(localized: "Python代码"), systemImage: canvas.type == "python" ? "checkmark.circle" : "circle")
+                Label("Python代码", systemImage: canvas.type == "python" ? "checkmark.circle" : "circle")
             }
             Button {
                 isImpact.toggle()
                 canvas.type = "html"
             } label: {
-                Label(String(localized: "HTML代码"), systemImage: canvas.type == "html" ? "checkmark.circle" : "circle")
+                Label("HTML代码", systemImage: canvas.type == "html" ? "checkmark.circle" : "circle")
             }
         } label: {
             Image(systemName: canvas.type == "text" ? "text.alignleft" : canvas.type == "python" ? "apple.terminal" : canvas.type == "html" ? "text.and.command.macwindow" : "pencil.and.outline")
@@ -3989,7 +3713,7 @@ struct AICanvasView: View {
                 
                 Divider()
                 
-                TextField(String(localized: "对选中内容提出修改意见…"), text: $selectedTextRevision)
+                TextField("对选中内容提出修改意见…", text: $selectedTextRevision)
                     .font(.footnote)
                     .frame(width: 180, height: buttonSize)
                     .disableAutocorrection(true)
@@ -4763,7 +4487,7 @@ struct BottomSheetView: View {
                 tokenCounter()
             }
             if showPhotoSourceOptions {
-                Text(String(localized: "选择OCR的图片来源"))
+                Text("选择OCR的图片来源")
                     .font(.caption.bold())
                     .foregroundColor(.hlBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -4895,9 +4619,9 @@ struct BottomSheetView: View {
                 .frame(width: size_30, height: size_30)
                 .foregroundColor(Color(.systemGray))
         }
-        .alert(String(localized: "确认清空所有文本？"), isPresented: $showAlert) {
-            Button(String(localized: "取消"), role: .cancel) { }
-            Button(String(localized: "清空"), role: .destructive) { message = "" }
+        .alert("确认清空所有文本？", isPresented: $showAlert) {
+            Button("取消", role: .cancel) { }
+            Button("清空", role: .destructive) { message = "" }
         }
     }
 
@@ -5028,7 +4752,7 @@ struct BottomSheetView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showCameraPicker)
-                    Text(String(localized: "拍摄照片"))
+                    Text("拍摄照片")
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
@@ -5058,7 +4782,7 @@ struct BottomSheetView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showImagePicker)
-                    Text(String(localized: "相册选择"))
+                    Text("相册选择")
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
@@ -5101,9 +4825,9 @@ struct TemperaturePicker: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text(String(localized: "采样温度参数调节 (temperature)"))
+            Text("采样温度参数调节 (temperature)")
                 .font(.headline)
-            Text(String(localized: "说明：采样温度参数影响模型的创造性和稳定性：温度越高，生成内容更有创意但易出错；温度越低，回答更保守稳定。默认为不设置。"))
+            Text("说明：采样温度参数影响模型的创造性和稳定性：温度越高，生成内容更有创意但易出错；温度越低，回答更保守稳定。默认为不设置。")
                 .font(.caption)
                 .multilineTextAlignment(.leading)
 
@@ -5111,7 +4835,7 @@ struct TemperaturePicker: View {
                 Text("")
             } currentValueLabel: {
                 if values[selectedIndex] == -999 {
-                    Text(String(localized: "不设置"))
+                    Text("不设置")
                 } else {
                     Text(String(format: "%.2f", values[selectedIndex]))
                 }
@@ -5123,9 +4847,9 @@ struct TemperaturePicker: View {
 
             Stepper {
                 HStack {
-                    Text(String(localized: "当前："))
+                    Text("当前：")
                     if values[selectedIndex] == -999 {
-                        Text(String(localized: "不设置")).foregroundColor(.secondary)
+                        Text("不设置").foregroundColor(.secondary)
                     } else {
                         Text(String(format: "%.2f", values[selectedIndex]))
                     }
@@ -5169,9 +4893,9 @@ struct TopPPicker: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text(String(localized: "累积概率参数调节 (top_p)"))
+            Text("累积概率参数调节 (top_p)")
                 .font(.headline)
-            Text(String(localized: "说明：累积概率控制选择的词汇范围，较低时限制了生成的多样性，较高时生成的文本更加开放和多样。默认为不设置。"))
+            Text("说明：累积概率控制选择的词汇范围，较低时限制了生成的多样性，较高时生成的文本更加开放和多样。默认为不设置。")
                 .font(.caption)
                 .multilineTextAlignment(.leading)
 
@@ -5179,7 +4903,7 @@ struct TopPPicker: View {
                 Text("")
             } currentValueLabel: {
                 if values[selectedIndex] == -999 {
-                    Text(String(localized: "不设置"))
+                    Text("不设置")
                 } else {
                     Text(String(format: "%.2f", values[selectedIndex]))
                 }
@@ -5191,9 +4915,9 @@ struct TopPPicker: View {
 
             Stepper {
                 HStack {
-                    Text(String(localized: "当前："))
+                    Text("当前：")
                     if values[selectedIndex] == -999 {
-                        Text(String(localized: "不设置")).foregroundColor(.secondary)
+                        Text("不设置").foregroundColor(.secondary)
                     } else {
                         Text(String(format: "%.2f", values[selectedIndex]))
                     }
@@ -5234,9 +4958,9 @@ struct MaxTokensPicker: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text(String(localized: "最大回复长度调节 (max_tokens)"))
+            Text("最大回复长度调节 (max_tokens)")
                 .font(.headline)
-            Text(String(localized: "说明：用于控制模型生成的回复中最多包含多少个词元（tokens）。通过设置 max_tokens，可以限制生成文本的长度，确保其符合预期的长度要求。默认为不设置。"))
+            Text("说明：用于控制模型生成的回复中最多包含多少个词元（tokens）。通过设置 max_tokens，可以限制生成文本的长度，确保其符合预期的长度要求。默认为不设置。")
                 .font(.caption)
                 .multilineTextAlignment(.leading)
 
@@ -5244,7 +4968,7 @@ struct MaxTokensPicker: View {
                 Text("")
             } currentValueLabel: {
                 if values[selectedIndex] == -999 {
-                    Text(String(localized: "不设置"))
+                    Text("不设置")
                 } else {
                     Text("\(values[selectedIndex])")
                 }
@@ -5256,9 +4980,9 @@ struct MaxTokensPicker: View {
 
             Stepper {
                 HStack {
-                    Text(String(localized: "当前："))
+                    Text("当前：")
                     if values[selectedIndex] == -999 {
-                        Text(String(localized: "不设置")).foregroundColor(.secondary)
+                        Text("不设置").foregroundColor(.secondary)
                     } else {
                         Text("\(values[selectedIndex])")
                     }
@@ -5301,7 +5025,7 @@ struct MaxMessagesNumPicker: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text(String(localized: "消息数量上限"))
+            Text("消息数量上限")
                 .font(.headline)
 
             Text("""
@@ -5315,7 +5039,7 @@ struct MaxMessagesNumPicker: View {
                 Text("")
             } currentValueLabel: {
                 if values[selectedIndex] == -999 {
-                    Text(String(localized: "不设置"))
+                    Text("不设置")
                 } else {
                     Text("\(values[selectedIndex])")
                 }
@@ -5328,9 +5052,9 @@ struct MaxMessagesNumPicker: View {
             // 用 Stepper 进行离散选择
             Stepper {
                 HStack {
-                    Text(String(localized: "当前："))
+                    Text("当前：")
                     if values[selectedIndex] == -999 {
-                        Text(String(localized: "不设置"))
+                        Text("不设置")
                             .foregroundColor(.secondary)
                     } else {
                         Text("\(values[selectedIndex])")
@@ -5428,10 +5152,10 @@ struct SystemMessageSettingsView: View {
         NavigationStack {
             Form {
                 // 系统提示词设置
-                Section(header: Text(String(localized: "选择系统提示词"))) {
-                    Picker(String(localized: "提示词设置"), selection: $useSystemMessage) {
-                        Text(String(localized: "默认系统消息")).tag(true)
-                        Text(String(localized: "自定义系统消息")).tag(false)
+                Section(header: Text("选择系统提示词")) {
+                    Picker("提示词设置", selection: $useSystemMessage) {
+                        Text("默认系统消息").tag(true)
+                        Text("自定义系统消息").tag(false)
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .listRowBackground(Color.clear)
@@ -5439,12 +5163,12 @@ struct SystemMessageSettingsView: View {
                 
                 // 如果不使用默认系统消息，则展示编辑区域
                 if !useSystemMessage {
-                    Section(header: Text(String(localized: "编辑 System 角色消息"))) {
+                    Section(header: Text("编辑 System 角色消息")) {
                         TextEditor(text: $systemMessage)
                             .frame(height: 300)
                         
                         HStack(spacing: 8) {
-                            Text(String(localized: "输入工具"))
+                            Text("输入工具")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                             
@@ -5480,29 +5204,29 @@ struct SystemMessageSettingsView: View {
                     }
                 } else {
                     // 使用默认系统消息时的提示
-                    Section(header: Text(String(localized: "使用默认提示词"))) {
-                        Text(String(localized: "推荐使用默认系统消息，AI翰林院专为群聊对话模式优化。"))
+                    Section(header: Text("使用默认提示词")) {
+                        Text("推荐使用默认系统消息，AI翰林院专为群聊对话模式优化。")
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
                 
                 // 说明文字
-                Section(header: Text(String(localized: "说明"))) {
-                    Text(String(localized: "这里设定的 System 角色的消息在大模型中起着至关重要的作用，通常用于设定对话的上下文、风格、身份与行为边界，是构建高质量对话系统的关键机制之一。"))
+                Section(header: Text("说明")) {
+                    Text("这里设定的 System 角色的消息在大模型中起着至关重要的作用，通常用于设定对话的上下文、风格、身份与行为边界，是构建高质量对话系统的关键机制之一。")
                 }
             }
-            .navigationTitle(String(localized: "系统消息设置"))
+            .navigationTitle("系统消息设置")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // 取消按钮：点击后关闭视图
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "取消")) {
+                    Button("取消") {
                         dismiss()
                     }
                 }
                 // 保存按钮：此处可添加额外逻辑保存数据，示例中仅关闭视图
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "保存")) {
+                    Button("保存") {
                         // 若需要保存数据，可在此处调用相关方法
                         dismiss()
                     }

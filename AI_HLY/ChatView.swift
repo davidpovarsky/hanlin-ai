@@ -23,9 +23,8 @@ struct ChatView: View {
     @FocusState private var isInputActive: Bool            // 输入框是否聚焦
     @State private var isObserving = false                 // 是否处于观察模式
     @State private var isRetry = false                     // 是否为重试请求
-    @State private var retryMessagesOverride: [ChatMessages]?
 
-    @State private var chatTitle = String(localized: "新群聊")                 // 群聊标题
+    @State private var chatTitle = "新群聊"                 // 群聊标题
     @State private var isEditingTitle = false              // 是否正在编辑群聊标题
     @State private var newChatTitle = ""                   // 编辑群聊标题时的临时变量
 
@@ -84,9 +83,6 @@ struct ChatView: View {
     @State private var operationalState: String = ""        // 操作状态文本
     @State private var operationalDescription: String = ""  // 操作描述文本
     @State private var apiManager: APIManager?
-    @State private var activeAgentCoordinator: AgentRunCoordinator?
-    @State private var activeAgentRun: AgentRun?
-    @State private var activeAgentMessage: ChatMessages?
 
     // URL解析与多选操作相关
     @State private var selectedURLs: [String] = []          // 解析出的 URL 列表
@@ -96,9 +92,6 @@ struct ChatView: View {
     @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
     @State private var ifScroll = false                     // 控制滚动相关状态
-    @State private var autoFollowController = ChatAutoFollowController()
-    @State private var pendingAutoFollowTask: Task<Void, Never>?
-    @State private var measuredComposerHeight: CGFloat = 0
 
     // 提示词管理相关
     @State private var selectedPrompts: [PromptRepo] = []   // 选中的提示词
@@ -127,8 +120,6 @@ struct ChatView: View {
     
     @Environment(\.modelContext) private var context: ModelContext
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-
     
     @State private var chatTemps: [ChatMessages] = []
     @State private var modelTemp: [AllModels] = []
@@ -163,7 +154,7 @@ struct ChatView: View {
         
         // 对聊天记录和模型数据排序
         let sortedMessages = messages.sorted { $0.timestamp < $1.timestamp }
-        let firstVisibleModelIndex = HanlinDefaultChatPolicy.defaultModelIndex(in: modelTemp) ?? 0
+        let firstVisibleModelIndex = modelTemp.firstIndex(where: { !$0.isHidden }) ?? 0
         
         // 根据匹配消息决定加载数量
         let targetCount: Int
@@ -212,35 +203,14 @@ struct ChatView: View {
         }
     }
     
-    static func calculateDynamicBottomPadding(
-        measuredComposerHeight: CGFloat,
-        hasURLs: Bool,
-        hasImages: Bool,
-        hasDocuments: Bool,
-        showPhotoSourceOptions: Bool,
-        hasPrompts: Bool
-    ) -> CGFloat {
-        if measuredComposerHeight > 40 {
-            return max(96, min(measuredComposerHeight + 20, 420))
-        }
-        var baseHeight: CGFloat = 116
-        if hasURLs { baseHeight += 32 }
-        if hasImages { baseHeight += 44 }
-        if hasDocuments { baseHeight += 32 }
-        if showPhotoSourceOptions { baseHeight += 110 }
-        if hasPrompts { baseHeight += 44 }
-        return baseHeight
-    }
-
     private func dynamicBottomPadding() -> CGFloat {
-        Self.calculateDynamicBottomPadding(
-            measuredComposerHeight: measuredComposerHeight,
-            hasURLs: !selectedURLs.isEmpty,
-            hasImages: !selectedImages.isEmpty,
-            hasDocuments: !selectedDocumentURLs.isEmpty,
-            showPhotoSourceOptions: showPhotoSourceOptions,
-            hasPrompts: !selectedPrompts.isEmpty
-        )
+        var baseHeight: CGFloat = 216 // 默认最小间距
+        if !selectedURLs.isEmpty { baseHeight += 36 }
+        if !selectedImages.isEmpty { baseHeight += 86 }
+        if !selectedDocumentURLs.isEmpty { baseHeight += 36 }
+        if showPhotoSourceOptions { baseHeight += 146 }
+        if !selectedPrompts.isEmpty { baseHeight += 66 }
+        return baseHeight
     }
     
     var body: some View {
@@ -260,8 +230,7 @@ struct ChatView: View {
                     startPoint: .top,
                     endPoint: .center
                 )
-                .frame(height: 120)
-                .allowsHitTesting(false)
+                .frame(height: 160)
                 .zIndex(0)
                 
                 ChatViewBottom(
@@ -312,23 +281,15 @@ struct ChatView: View {
                     isInputActive: $isInputActive
                 )
             }
-            .onPreferenceChange(ComposerHeightPreferenceKey.self) { newHeight in
-                guard newHeight > 0, abs(measuredComposerHeight - newHeight) > 1 else { return }
-                measuredComposerHeight = newHeight
-            }
         }
-        .toolbar(horizontalSizeClass == .compact ? .hidden : .visible, for: .tabBar)
+        .toolbar(.hidden, for: .tabBar)
         .background(Color(.systemBackground))
         .onAppear {
             handleOnAppear()
-            if horizontalSizeClass == .compact {
-                NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
-            }
+            NotificationCenter.default.post(name: .hideTabBar, object: true) // 隐藏 TabBar
         }
         .onDisappear {
-            if horizontalSizeClass == .compact {
-                NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
-            }
+            NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
             openHistory()
             if TemporaryRecord {
                 context.delete(chatRecord)
@@ -345,7 +306,7 @@ struct ChatView: View {
             ToolbarItem(placement: .principal) {
                 if TemporaryRecord {
                     HStack {
-                        Text(String(localized: " 临 时 对 话 模 式 "))
+                        Text(" 临 时 对 话 模 式 ")
                             .font(.caption)
                             .padding(6)
                     }
@@ -371,7 +332,7 @@ struct ChatView: View {
                             }
                         
                         // 编辑模式
-                        TextField(String(localized: "请输入群聊名称"), text: $newChatTitle, onCommit: {
+                        TextField("请输入群聊名称", text: $newChatTitle, onCommit: {
                             if !newChatTitle.isEmpty {
                                 if chatTitle != newChatTitle {
                                     chatTitle = newChatTitle
@@ -379,7 +340,7 @@ struct ChatView: View {
                                     
                                     let text: String
                                     if currentLanguage.hasPrefix("zh") {
-                                        text = String(format: String(localized: "群聊名称被修改为“%@”"), chatTitle)
+                                        text = "群聊名称被修改为“\(chatTitle)”"
                                     } else {
                                         text = "Group chat name has been changed to \"\(chatTitle)\""
                                     }
@@ -404,7 +365,7 @@ struct ChatView: View {
                             isEditingTitle = false
                         })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(minWidth: 120, maxWidth: 220) // 限制输入框宽度
+                        .frame(width: UIScreen.main.bounds.width * 0.3) // 限制输入框宽度
                         .multilineTextAlignment(.center)
                         .opacity(isEditingTitle ? 1 : 0) // 仅编辑模式可见
                     }
@@ -437,14 +398,14 @@ struct ChatView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     // ------ 调整参数 ------
-                    Menu(String(localized: "调整模型参数"), systemImage: "slider.horizontal.3"){
+                    Menu("调整模型参数", systemImage: "slider.horizontal.3"){
                         Button(action: {
                             showTopPSlider = false
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider = false
                             showTemperatureSlider.toggle()
                         }) {
-                            Label(String(localized: "调整采样温度"), systemImage: "thermometer.variable")
+                            Label("调整采样温度", systemImage: "thermometer.variable")
                         }
                         
                         Button(action: {
@@ -453,7 +414,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showTopPSlider.toggle()
                         }) {
-                            Label(String(localized: "调整累积概率"), systemImage: "percent")
+                            Label("调整累积概率", systemImage: "percent")
                         }
                         
                         Button(action: {
@@ -462,7 +423,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showMaxTokensSlider.toggle()
                         }) {
-                            Label(String(localized: "最大回复长度"), systemImage: "textformat.characters.arrow.left.and.right")
+                            Label("最大回复长度", systemImage: "textformat.characters.arrow.left.and.right")
                         }
                         
                         Button(action: {
@@ -471,39 +432,39 @@ struct ChatView: View {
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider.toggle()
                         }) {
-                            Label(String(localized: "消息数量上限"), systemImage: "arrow.up.and.down.text.horizontal")
+                            Label("消息数量上限", systemImage: "arrow.up.and.down.text.horizontal")
                         }
                     }
                     
                     // ------ 聊天记录管理 ------
-                    Menu(String(localized: "聊天记录管理"), systemImage: "bubble.left.and.bubble.right"){
+                    Menu("聊天记录管理", systemImage: "bubble.left.and.bubble.right"){
                         Button(action: {
                             showSystemMessageSheet = true
                         }) {
-                            Label(String(localized: "设置系统消息"), systemImage: "paintbrush.pointed")
+                            Label("设置系统消息", systemImage: "paintbrush.pointed")
                         }
                         Button(action: {
                             isMultiSelectMode.toggle()
                         }) {
-                            Label(isMultiSelectMode ? String(localized: "退出编辑模式") : String(localized: "编辑聊天记录"), systemImage: "checkmark.circle")
+                            Label(isMultiSelectMode ? "退出编辑模式" : "编辑聊天记录", systemImage: "checkmark.circle")
                         }
                         
                         Button(action: {
                             showingExportOptions = true
                         }) {
-                            Label(String(localized: "导出聊天记录"), systemImage: "square.and.arrow.up")
+                            Label("导出聊天记录", systemImage: "square.and.arrow.up")
                         }
                         
                         Button(action: {
                             showImportExplanationAlert = true
                         }) {
-                            Label(String(localized: "导入聊天记录"), systemImage: "square.and.arrow.down")
+                            Label("导入聊天记录", systemImage: "square.and.arrow.down")
                         }
                         
                         Button(action: {
                             showClearChatConfirmation = true
                         }) {
-                            Label(String(localized: "清空聊天记录"), systemImage: "eraser.line.dashed")
+                            Label("清空聊天记录", systemImage: "eraser.line.dashed")
                         }
                     }
                 } label: {
@@ -514,8 +475,8 @@ struct ChatView: View {
                 }
             }
         }
-        .confirmationDialog(String(localized: "选择导出格式"), isPresented: $showingExportOptions, titleVisibility: .visible) {
-            Button(String(localized: "纯文本 (.txt)")) {
+        .confirmationDialog("选择导出格式", isPresented: $showingExportOptions, titleVisibility: .visible) {
+            Button("纯文本 (.txt)") {
                 exportUTType = UTType.plainText
                 let exportText = generateExportText(for: .txt)
                 let fileName = "ChatExport.txt"
@@ -528,7 +489,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button(String(localized: "JSON文件 (.json)（文本）")) {
+            Button("JSON文件 (.json)（文本）") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: false)
                 let fileName = "ChatExport_text.json"
@@ -541,7 +502,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button(String(localized: "JSON文件 (.json)（多模态）")) {
+            Button("JSON文件 (.json)（多模态）") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: true)
                 let fileName = "ChatExport_multimodal.json"
@@ -554,7 +515,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button(String(localized: "取消"), role: .cancel) { }
+            Button("取消", role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
             // 分享结束后清除临时文件 URL
@@ -579,7 +540,7 @@ struct ChatView: View {
             case .success(let urls):
                 if let url = urls.first {
                     guard url.startAccessingSecurityScopedResource() else {
-                        importError = String(localized: "无法访问所选文件的权限。")
+                        importError = "无法访问所选文件的权限。"
                         isShowingImportErrorAlert = true
                         return
                     }
@@ -594,7 +555,7 @@ struct ChatView: View {
                         else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
                             importSimpleMessages(simpleMessages: simpleMessages)
                         } else {
-                            importError = String(localized: "文件格式错误，请检查文件是否为导出时的正确格式。")
+                            importError = "文件格式错误，请检查文件是否为导出时的正确格式。"
                             isShowingImportErrorAlert = true
                         }
                     } catch {
@@ -608,26 +569,26 @@ struct ChatView: View {
             }
         }
         .alert(isPresented: $isShowingImportErrorAlert) {
-            Alert(title: Text(String(localized: "导入错误")),
-                  message: Text(importError ?? String(localized: "未知错误")),
-                  dismissButton: .default(Text(String(localized: "确定"))))
+            Alert(title: Text("导入错误"),
+                  message: Text(importError ?? "未知错误"),
+                  dismissButton: .default(Text("确定")))
         }
-        .alert(String(localized: "确认清空聊天记录"), isPresented: $showClearChatConfirmation) {
-            Button(String(localized: "删除"), role: .destructive) {
+        .alert("确认清空聊天记录", isPresented: $showClearChatConfirmation) {
+            Button("删除", role: .destructive) {
                 newConversation()
             }
-            Button(String(localized: "取消"), role: .cancel) { }
+            Button("取消", role: .cancel) { }
         } message: {
-            Text(String(localized: "是否要删除所有聊天记录？删除后不可恢复。"))
+            Text("是否要删除所有聊天记录？删除后不可恢复。")
                 .multilineTextAlignment(.leading)
         }
-        .alert(String(localized: "导入聊天记录说明"), isPresented: $showImportExplanationAlert) {
-            Button(String(localized: "继续")) {
+        .alert("导入聊天记录说明", isPresented: $showImportExplanationAlert) {
+            Button("继续") {
                 isShowingImportPicker = true
             }
-            Button(String(localized: "取消"), role: .cancel) { }
+            Button("取消", role: .cancel) { }
         } message: {
-            Text(String(localized: "请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。"))
+            Text("请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。")
                     .multilineTextAlignment(.leading)
         }
         .tint(TemporaryRecord ? .primary : nil)
@@ -705,21 +666,16 @@ struct ChatView: View {
                 loadMoreMessages()
             }
             .onChange(of: scrollTriggerState) {
-                scheduleAutoFollow(using: scrollViewProxy, animated: true)
+                if !showScrollToBottomButton {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        scrollToLastMessage(using: scrollViewProxy)
+                    }
+                }
             }
-            .onChange(of: activeAgentRun?.scrollFingerprint) { previous, current in
-                guard let current else { return }
-                scheduleAutoFollow(
-                    using: scrollViewProxy,
-                    animated: current.isStructuralChange(comparedTo: previous)
-                )
-            }
-            .onChange(of: needScrollToBottomButton) {
-                autoFollowController.resumeFollowing()
-                scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
-            }
-            .onChange(of: ifScroll) {
-                scheduleAutoFollow(using: scrollViewProxy, animated: true)
+            .onChange(of: [needScrollToBottomButton, ifScroll]) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    scrollToLastMessage(using: scrollViewProxy)
+                }
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -753,61 +709,20 @@ struct ChatView: View {
                 }
             )
             .onScrollGeometryChange(for: Bool.self) { geometry in
-                let visibleBottom = geometry.contentOffset.y
-                    + geometry.containerSize.height
-                    - geometry.contentInsets.bottom
-                return geometry.contentSize.height - visibleBottom <= 96
+                let isScrolledToBottom = geometry.contentOffset.y + geometry.containerSize.height > geometry.contentSize.height - geometry.contentInsets.bottom - geometry.containerSize.height/2
+                return isScrolledToBottom
             } action: { wasScrolledToBottom, isScrolledToBottom in
-                autoFollowController.updateNearBottom(isScrolledToBottom)
-                withAnimation(.easeOut(duration: 0.16)) {
+                withAnimation {
                     showScrollToBottomButton = !isScrolledToBottom
                 }
-            }
-            .onScrollPhaseChange { _, newPhase in
-                switch newPhase {
-                case .tracking, .interacting, .decelerating:
-                    autoFollowController.userInteractionBegan()
-                case .idle:
-                    autoFollowController.userInteractionEnded()
-                case .animating:
-                    break
-                @unknown default:
-                    break
-                }
-            }
-            .onDisappear {
-                pendingAutoFollowTask?.cancel()
-                pendingAutoFollowTask = nil
             }
     }
     
     // 聊天时滚动到最底层
-    private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy, animated: Bool) {
-        if animated {
-            withAnimation(.easeOut(duration: 0.18)) {
-                scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
-            }
-        } else {
+    private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy) {
+        // 使用带弹性的 Spring 动画，让滚动更柔和
+        withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.5)) {
             scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
-        }
-    }
-
-    private func scheduleAutoFollow(
-        using scrollViewProxy: ScrollViewProxy,
-        animated: Bool,
-        force: Bool = false
-    ) {
-        guard force || autoFollowController.shouldRequestScrollForVisualUpdate() else { return }
-        pendingAutoFollowTask?.cancel()
-        pendingAutoFollowTask = Task { @MainActor in
-            do {
-                try await Task.sleep(for: .milliseconds(80))
-            } catch {
-                return
-            }
-            guard !Task.isCancelled,
-                  force || autoFollowController.mode == .following else { return }
-            scrollToLastMessage(using: scrollViewProxy, animated: animated)
         }
     }
 
@@ -885,35 +800,11 @@ struct ChatView: View {
             return idx == (first + last) / 2
         }()
         
-        let groupMessages = groupIDs.compactMap { groupID in
-            chatTemps.first(where: { $0.id == groupID })
-        }
-        let precedingSearchMessages: [ChatMessages] = {
-            guard let firstGroupIndex = groupIndices.first, firstGroupIndex > 0 else { return [] }
-            var messages: [ChatMessages] = []
-            var index = firstGroupIndex - 1
-            while index >= 0, let candidate = chatTemps[safe: index], candidate.role == "search" {
-                messages.insert(candidate, at: 0)
-                index -= 1
-            }
-            return messages
-        }()
-        let storedActivityRun = (activeAgentRun?.groupID == msg.groupID ? activeAgentRun : nil)
-            ?? groupMessages.compactMap(\.agentRun).first
-        let activityRun = storedActivityRun
-            ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
-        let rawMsgText = (msg.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        let fallbackFinalAnswer = splitMarker
-            ? (AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? [])?
-                .trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
-            : ""
-        let bubbleText = !rawMsgText.isEmpty ? rawMsgText : fallbackFinalAnswer
-
         // 1. 构造基础气泡
         let bubble = ChatBubbleView(
             temporaryRecord: TemporaryRecord,
             id: msg.id,
-            text: bubbleText,
+            text: msg.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
             saveTranlatedText: msg.translatedText,
             images: msg.imageArray,
             imagesText: msg.images_text,
@@ -934,11 +825,6 @@ struct ChatView: View {
             healthCards: msg.healthData,
             codeBlocks: msg.codeBlockData,
             knowledgeCard: msg.knowledgeCard,
-            nativeUIBlocks: msg.nativeUIBlocks,
-            agentRun: activityRun,
-            showsAgentActivitySummary: splitMarker,
-            isAgentTranscriptOwner: false,
-            isRenderedByAgentTranscript: false,
             searchEngine: msg.searchEngine,
             audioAssets: msg.audioAssets,
             isVoiceExpanded: audioExpandedBinding,
@@ -1084,7 +970,7 @@ struct ChatView: View {
         // 适配清空聊天记录的提示
         let clearChatText: String
         if currentLanguage.hasPrefix("zh") {
-            clearChatText = String(localized: "一切都是崭新的✨")
+            clearChatText = "一切都是崭新的✨"
         } else {
             clearChatText = "Everything is brand new ✨"
         }
@@ -1094,7 +980,7 @@ struct ChatView: View {
             role: "information",
             text: clearChatText,
             reasoning: "",
-            modelDisplayName: String(localized: "系统"),
+            modelDisplayName: "系统",
             timestamp: Date(),
             record: chatRecord
         )
@@ -1130,7 +1016,7 @@ struct ChatView: View {
     /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3
     private func autoGenerateTitleIfNeeded() {
         // 检查是否为新群聊
-        guard ["新群聊", "New Group Chat", String(localized: "新群聊")].contains(chatRecord.name ?? "") else { return }
+        guard chatRecord.name == "新群聊" else { return }
         
         // 统计用户消息数量
         let userMessages = chatTemps.filter { $0.role == "user" }
@@ -1169,6 +1055,7 @@ struct ChatView: View {
         
         isFeedBack.toggle()
         var userMessage: ChatMessages?
+        var isSearch: Bool = false
         showPhotoSourceOptions = false
         operationalState = ""
         operationalDescription = ""
@@ -1189,7 +1076,7 @@ struct ChatView: View {
                     record: chatRecord
                 )
                 if !selectedPrompts.isEmpty {
-        let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? String(localized: "无名称"), content: $0.content ?? String(localized: "无内容")) }
+                    let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无内容") }
                     userMessage?.promptUse = promptCards
                 }
                 // 写入用户发送的信息
@@ -1215,16 +1102,13 @@ struct ChatView: View {
         isObserving = ifObservingMode
         isResponding = true
         respondIndex = ifObservingMode ? 2 : 1
-        pendingAutoFollowTask?.cancel()
-        autoFollowController.beginRun()
         
         // 传输数据准备
         var maxMessage = maxMessagesNum
         if maxMessage < 0 {
             maxMessage = 999
         }
-        let requestHistory = retryMessagesOverride ?? chatTemps
-        let messagesToSend = requestHistory.suffix(maxMessage).map { chat in
+        let messagesToSend = chatTemps.suffix(maxMessage).map { chat in
             RequestMessage(
                 role: chat.role ?? "system",
                 text: chat.text ?? "",
@@ -1256,17 +1140,6 @@ struct ChatView: View {
         chatTemps.append(assistantPlaceholder)
         var assistantMessage = assistantPlaceholder  // 保存引用，避免反复查找
         let groupBeginMessage = assistantPlaceholder
-        var searchMessage: ChatMessages? = nil
-        var isSearch = false
-        let agentCoordinator = AgentRunCoordinator(
-            groupID: thisGroupID,
-            providerID: modelTemp[selectedModelIndex].company,
-            modelID: modelTemp[selectedModelIndex].name
-        )
-        groupBeginMessage.agentRun = agentCoordinator.run
-        activeAgentCoordinator = agentCoordinator
-        activeAgentRun = agentCoordinator.run
-        activeAgentMessage = groupBeginMessage
         
         // 进行API请求
         self.apiManager = APIManager(context: context)
@@ -1279,20 +1152,13 @@ struct ChatView: View {
         
         Task {
             do {
-                var eventAdapter = HanlinStreamEventAdapter(runID: agentCoordinator.runID)
-                let assistantToolScope = await MCPRuntimeProvider.shared.requestScope(
-                    chatID: chatRecord.id,
-                    temporary: TemporaryRecord
-                )
                 let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await apiManager!.sendStreamRequest(
                     messages: messagesToSend,
                     modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
                     groupID: thisGroupID,
-                    runID: agentCoordinator.runID,
                     ifSearch: modelTemp[selectedModelIndex].supportsSearch && ifSearch,
                     ifKnowledge: modelTemp[selectedModelIndex].supportsSearch && ifKnowledge,
                     ifToolUse: modelTemp[selectedModelIndex].supportsToolUse && ifToolUse,
-                    assistantToolScope: assistantToolScope,
                     ifThink: modelTemp[selectedModelIndex].supportsReasoning && ifThink,
                     ifAudio: modelTemp[selectedModelIndex].supportsVoiceGen && ifAudio,
                     ifPlanning: !modelTemp[selectedModelIndex].supportsReasoning && ifPlanning,
@@ -1311,12 +1177,8 @@ struct ChatView: View {
                 
                 // 接受流式数据
                 for try await data in stream {
-                    let agentEvents = eventAdapter.events(from: data)
                     await MainActor.run {
-                        guard !isCancelled, activeAgentCoordinator === agentCoordinator else { return }
-
-                        agentCoordinator.consume(agentEvents)
-                        activeAgentRun = agentCoordinator.run
+                        if isCancelled { return }
                         
                         var updated = false
                         
@@ -1369,15 +1231,13 @@ struct ChatView: View {
                         
                         // 搜索资源信息
                         if let resources = data.resources {
-                            let combined = (assistantMessage.resources ?? []) + resources
-                            assistantMessage.resources = LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
+                            assistantMessage.resources = resources
                             updated = true
                         }
                         
                         // 搜索引擎信息
                         if let searchEngine = data.searchEngine {
                             assistantMessage.searchEngine = searchEngine
-                            searchMessage?.searchEngine = searchEngine
                             updated = true
                         }
                         
@@ -1413,15 +1273,22 @@ struct ChatView: View {
                         }
                         
                         // 搜索返回文本
-                        if let newSearchText = data.search_text, !newSearchText.isEmpty {
-                            searchMessage = ChatTurnStateOperations.upsertSearchMessage(
-                                existing: searchMessage,
+                        if let searchText = data.search_text, !searchText.isEmpty {
+                            let newSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+                            let searchMessage = ChatMessages(
+                                role: "search",
                                 text: newSearchText,
-                                searchEngine: data.searchEngine ?? assistantMessage.searchEngine,
-                                assistantMessage: assistantMessage,
-                                record: chatRecord,
-                                in: &chatTemps
+                                searchEngine: data.searchEngine,
+                                modelName: "system",
+                                modelDisplayName: "system",
+                                timestamp: Date(),
+                                record: chatRecord
                             )
+                            if let assistantIndex = chatTemps.lastIndex(where: { $0.role == "assistant" }) {
+                                chatTemps.insert(searchMessage, at: assistantIndex)
+                            } else {
+                                chatTemps.append(searchMessage)
+                            }
                             isSearch = true
                             updated = true
                         }
@@ -1528,6 +1395,8 @@ struct ChatView: View {
                         if updated {
                             let currentTime = Date()
                             if currentTime.timeIntervalSince(lastUpdateTime) > refreshInterval {
+                                assistantMessage.id = UUID()
+                                assistantMessage.timestamp = currentTime
 //                                if outPutFeedBackEnabled { isOutPut.toggle() }
                                 lastUpdateTime = currentTime
                             }
@@ -1540,18 +1409,18 @@ struct ChatView: View {
                                 let text: String
                                 if currentLanguage.hasPrefix("zh") {
                                     if totalSeconds < 60 {
-            text = String(format: String(localized: "已思考%.1f秒"), totalSeconds)
+                                        text = String(format: "已思考%.1f秒", totalSeconds)
                                     } else if totalSeconds < 3600 {
                                         let minutes = Int(totalSeconds) / 60
                                         let seconds = totalSeconds - Double(minutes * 60)
-            text = String(format: String(localized: "已思考%d分钟%.1f秒"), minutes, seconds)
+                                        text = String(format: "已思考%d分钟%.1f秒", minutes, seconds)
                                     } else {
                                         // 支持小时
                                         let hours = Int(totalSeconds) / 3600
                                         let remainder = Int(totalSeconds) % 3600
                                         let minutes = remainder / 60
                                         let seconds = Double(remainder % 60)
-            text = String(format: String(localized: "已思考%d小时%d分钟%.1f秒"), hours, minutes, seconds)
+                                        text = String(format: "已思考%d小时%d分钟%.1f秒", hours, minutes, seconds)
                                     }
                                 } else {
                                     if totalSeconds < 60 {
@@ -1599,9 +1468,9 @@ struct ChatView: View {
                         if let error = data.errorInfo, !error.isEmpty {
                             var errorMessage = ""
                             if error == "length" {
-                errorMessage = String(localized: "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。")
+                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
                             } else if error == "sensitive" {
-                errorMessage = String(localized: "⚠️ 包含敏感内容！")
+                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
                             } else {
                                 errorMessage = error
                             }
@@ -1624,56 +1493,24 @@ struct ChatView: View {
                     }
                 }
                 
-                let completionEvents = eventAdapter.completionEvents()
                 // 流结束后的处理必须在主线程执行
                 await MainActor.run {
-                    guard activeAgentCoordinator === agentCoordinator else { return }
-                    agentCoordinator.consume(completionEvents)
                     isObserving = false
                     isResponding = false
                     respondIndex = 0
                     
-                    // 最终判断：仅当助手消息既没有文本又没有图片或富卡片结果时，视为请求异常
+                    // 最终判断：仅当助手消息既没有文本又没有图片时，视为请求异常
                     if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
-                        var textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        if textContent.isEmpty,
-                           let recoveredAnswer = AgentTranscriptValidation.finalAnswer(in: agentCoordinator.run.transcriptItems)?
-                               .trimmingCharacters(in: .whitespacesAndNewlines),
-                           !recoveredAnswer.isEmpty {
-                            textContent = recoveredAnswer
-                            assistantMessage.text = recoveredAnswer
-                        }
+                        let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                         let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        let hasRichContent = !assistantMessage.imageArray.isEmpty
-                            || assistantMessage.codeBlockData?.isEmpty == false
-                            || assistantMessage.knowledgeCard?.isEmpty == false
-                            || assistantMessage.htmlContent?.isEmpty == false
-                            || assistantMessage.events?.isEmpty == false
-                            || assistantMessage.healthData?.isEmpty == false
-                            || assistantMessage.locationsInfo?.isEmpty == false
-                            || assistantMessage.routeInfos?.isEmpty == false
-                            || assistantMessage.audioAssets?.isEmpty == false
-                            || assistantMessage.nativeUIBlocks.isEmpty == false
-                            || assistantMessage.showCanvas == true
-                            || agentCoordinator.run.transcriptItems.contains(where: {
-                                $0.kind == .userVisibleToolResult
-                            })
-                        if textContent.isEmpty && reasoningContent.isEmpty && !hasRichContent {
-                            agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
-                            Task { await apiManager?.completeAgentDiagnostics(status: "failed") }
-                            groupBeginMessage.agentRun = agentCoordinator.run
+                        if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
                             operationalState = ""
                             operationalDescription = ""
-            assistantMessage.text = String(localized: "⚠️ 生成内容为空，请重新尝试！")
+                            assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
                             assistantMessage.role = "error"
                             assistantMessage.modelName = "system"
                             assistantMessage.modelDisplayName = "system"
-                            context.insert(groupBeginMessage)
-                            try? context.save()
                         } else {
-                            agentCoordinator.complete()
-                            Task { await apiManager?.completeAgentDiagnostics(status: "completed") }
-                            groupBeginMessage.agentRun = agentCoordinator.run
                             
                             // 一切正常，进行数据库保存操作
                             do {
@@ -1684,9 +1521,12 @@ struct ChatView: View {
                                 assistantMessage.text = textContent
                                 assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
                                 
-                                if isSearch, let searchMessage {
+                                // 写入搜索消息（如果存在）
+                                if let searchMessage = chatTemps.last(where: { $0.role == "search" }), isSearch {
+                                    searchMessage.record = chatRecord
                                     context.insert(searchMessage)
                                 }
+                                
                                 context.insert(assistantMessage)
                                 
                                 if let outputText = assistantMessage.text?
@@ -1716,7 +1556,7 @@ struct ChatView: View {
                             } catch {
                                 let syncErrorText: String
                                 if currentLanguage.hasPrefix("zh") {
-                syncErrorText = String(format: String(localized: "⚠️ 数据同步失败: %@，本轮问答不会被同步。"), error.localizedDescription)
+                                    syncErrorText = "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
                                 } else {
                                     syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
                                 }
@@ -1733,32 +1573,18 @@ struct ChatView: View {
                             }
                         }
                     }
-                    activeAgentRun = agentCoordinator.run
-                    autoFollowController.runEnded()
-                    activeAgentCoordinator = nil
-                    activeAgentMessage = nil
                 }
                 
             } catch {
                 // 响应异常处理
                 await MainActor.run {
-                    guard activeAgentCoordinator === agentCoordinator else { return }
-                    agentCoordinator.fail(error)
-                    Task { await apiManager?.completeAgentDiagnostics(status: "failed", error: error) }
-                    groupBeginMessage.agentRun = agentCoordinator.run
-                    context.insert(groupBeginMessage)
-                    try? context.save()
-                    activeAgentRun = agentCoordinator.run
-                    autoFollowController.runEnded()
-                    activeAgentCoordinator = nil
-                    activeAgentMessage = nil
                     if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }),
                        index < chatTemps.count {
                         operationalState = ""
                         operationalDescription = ""
                         let responseErrorText: String
                         if currentLanguage.hasPrefix("zh") {
-                responseErrorText = String(format: String(localized: "⚠️ 响应错误：%@"), error.localizedDescription)
+                            responseErrorText = "⚠️ 响应错误：\(error.localizedDescription)"
                         } else {
                             responseErrorText = "⚠️ Response error: \(error.localizedDescription)"
                         }
@@ -1780,19 +1606,6 @@ struct ChatView: View {
         isCancelled = true
         
         apiManager?.cancelCurrentRequest()
-        Task { await apiManager?.completeAgentDiagnostics(status: "cancelled") }
-        activeAgentCoordinator?.cancel()
-        if let coordinator = activeAgentCoordinator {
-            activeAgentRun = coordinator.run
-            activeAgentMessage?.agentRun = coordinator.run
-            if let activeAgentMessage { context.insert(activeAgentMessage) }
-            try? context.save()
-        }
-        activeAgentCoordinator = nil
-        autoFollowController.runEnded()
-        pendingAutoFollowTask?.cancel()
-        pendingAutoFollowTask = nil
-        activeAgentMessage = nil
         
         isObserving = false
         isResponding = false
@@ -1802,7 +1615,7 @@ struct ChatView: View {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let responseInterruptedText: String
         if currentLanguage.hasPrefix("zh") {
-            responseInterruptedText = String(localized: "🛑 响应已打断")
+            responseInterruptedText = "🛑 响应已打断"
         } else {
             responseInterruptedText = "🛑 Response interrupted"
         }
@@ -1829,23 +1642,54 @@ struct ChatView: View {
     
     // 重新请求
     private func retryRequest(for message: ChatMessages) {
-        let previousMessages = chatTemps
-        guard ChatTurnStateOperations.cleanupTurnForRetry(
-            targetMessage: message,
-            chatTemps: &chatTemps,
-            context: nil
-        ) else { return }
-        let remainingIDs = Set(chatTemps.map(\.id))
-        let removedMessages = previousMessages.filter { !remainingIDs.contains($0.id) }
-        let ctx = context
-        DispatchQueue.main.async {
-            for removed in removedMessages {
-                ctx.delete(removed)
+        // 1. 获取 record.messages 和 chatTemps 中的索引
+        guard let recordMsgs = chatRecord.messages,
+              let startIndex = recordMsgs.lastIndex(where: { $0.id == message.id }),
+              let tempIndex  = chatTemps.lastIndex(where:     { $0.id == message.id })
+        else { return }
+
+        let targetGroupID = message.groupID
+
+        // 2. 向前回溯，寻找连续的 assistant 同组消息的起点
+        var deleteStartIndex = startIndex
+        var backIdx = startIndex - 1
+        while backIdx >= 0 {
+            let prev = recordMsgs[backIdx]
+            if prev.role == "assistant" && prev.groupID == targetGroupID {
+                deleteStartIndex = backIdx
+                backIdx -= 1
+            } else {
+                break
             }
-            try? ctx.save()
         }
 
-        retryMessagesOverride = nil
+        // 3. 删除 record 中从 deleteStartIndex 到末尾的所有消息
+        for idx in deleteStartIndex..<recordMsgs.count {
+            context.delete(recordMsgs[idx])
+        }
+        do {
+            try context.save()
+        } catch {
+            print("删除消息失败: \(error)")
+            return
+        }
+
+        // 4. 在 chatTemps 数组中，同样向前回溯再删除
+        var tempDeleteStart = tempIndex
+        var tempBack = tempIndex - 1
+        while tempBack >= 0 {
+            guard let prevTemp = chatTemps[safe: tempBack] else { break }
+            if prevTemp.role == "assistant" && prevTemp.groupID == targetGroupID {
+                tempDeleteStart = tempBack
+                tempBack -= 1
+            } else {
+                break
+            }
+        }
+        // 从 tempDeleteStart 到末尾一起移除
+        chatTemps.removeSubrange(tempDeleteStart...)
+
+        // 5. 标记重试并重新发送
         isRetry = true
         handleMessageSending(ifObservingMode: isObserving)
         isRetry = false
@@ -2062,79 +1906,4 @@ struct ChatView: View {
 
 extension Notification.Name {
     static let scrollToModelIndex = Notification.Name("scrollToModelIndex")
-}
-
-@MainActor
-enum ChatTurnStateOperations {
-    @discardableResult
-    static func upsertSearchMessage(
-        existing: ChatMessages?,
-        text: String,
-        searchEngine: String?,
-        assistantMessage: ChatMessages,
-        record: ChatRecords,
-        in chatTemps: inout [ChatMessages]
-    ) -> ChatMessages {
-        if let existing {
-            existing.text = text
-            if let searchEngine, !searchEngine.isEmpty {
-                existing.searchEngine = searchEngine
-            }
-            if !chatTemps.contains(where: { $0.id == existing.id }) {
-                if let assistantIndex = chatTemps.firstIndex(where: { $0.id == assistantMessage.id }) {
-                    chatTemps.insert(existing, at: assistantIndex)
-                } else {
-                    chatTemps.append(existing)
-                }
-            }
-            return existing
-        }
-
-        let searchMsg = ChatMessages(
-            role: "search",
-            text: text,
-            searchEngine: searchEngine,
-            modelName: "system",
-            modelDisplayName: "system",
-            timestamp: Date(),
-            record: record
-        )
-        if let assistantIndex = chatTemps.firstIndex(where: { $0.id == assistantMessage.id }) {
-            chatTemps.insert(searchMsg, at: assistantIndex)
-        } else {
-            chatTemps.append(searchMsg)
-        }
-        return searchMsg
-    }
-
-    @discardableResult
-    static func cleanupTurnForRetry(
-        targetMessage: ChatMessages,
-        chatTemps: inout [ChatMessages],
-        context: ModelContext? = nil
-    ) -> Bool {
-        guard let tempIndex = chatTemps.lastIndex(where: { $0.id == targetMessage.id }) else {
-            return false
-        }
-        let targetGroupID = targetMessage.groupID
-        var groupStart = tempIndex
-        while groupStart > 0 {
-            guard let previous = chatTemps[safe: groupStart - 1] else { break }
-            if previous.role != "user" {
-                groupStart -= 1
-            } else {
-                break
-            }
-        }
-
-        let removedMessages = Array(chatTemps.suffix(from: groupStart))
-        if let context {
-            for removed in removedMessages {
-                context.delete(removed)
-            }
-            try? context.save()
-        }
-        chatTemps.removeSubrange(groupStart..<chatTemps.count)
-        return true
-    }
 }
