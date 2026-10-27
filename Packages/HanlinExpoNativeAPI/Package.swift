@@ -10,6 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "HanlinExpoNativeAPI",
+            type: .static,
             targets: ["HanlinExpoNativeAPI", "HanlinExpoNativeAPICore", "HanlinExpoWorklets"]
         )
     ],
