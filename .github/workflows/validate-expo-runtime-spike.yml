@@ -449,6 +449,27 @@ jobs:
             -resultBundlePath "build/ExpoE2EResults.xcresult" \
             2>&1 | tee "$LOG_DIR/07-expo-e2e-tests.log"
 
+      - name: Diagnostic logs and crash reports
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt" 2>/dev/null || true)"
+          echo "=== DIAGNOSTIC REPORTS / CRASH REPORTS ==="
+          find ~/Library/Logs/DiagnosticReports -type f | while read -r f; do
+            echo "--- $f ---"
+            cat "$f"
+          done
+          if [ -n "$SIMULATOR_UDID" ]; then
+            echo "=== SIMULATOR APP LOGS (LAST 100 LINES) ==="
+            xcrun simctl spawn "$SIMULATOR_UDID" log show \
+              --style compact \
+              --last 15m \
+              --predicate 'process == "AI_Hanlin"' \
+              > "$LOG_DIR/08-ai-hanlin-simulator.log" 2>&1 || true
+            tail -n 100 "$LOG_DIR/08-ai-hanlin-simulator.log" || true
+          fi
+
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
