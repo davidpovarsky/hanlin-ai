@@ -1229,13 +1229,14 @@ template <typename CharTransformT = fnv1a_identity>
     }
 
     const configXcconfigPath = resolve(repositoryRoot, 'Config.xcconfig');
-    let existingConfig = existsSync(configXcconfigPath) ? await readFile(configXcconfigPath, 'utf8') : '';
-    if (!existingConfig.includes('ModularFrameworks')) {
-      const repoRootPosix = repositoryRoot.replace(/\\/g, '/');
-      const expoXcconfigBlock = [
-        '',
-        'SWIFT_ENABLE_EXPLICIT_MODULES = NO',
-        'SWIFT_OBJC_INTEROP_MODE = objcxx',
+    if (existsSync(configXcconfigPath)) {
+      const existingConfig = await readFile(configXcconfigPath, 'utf8');
+      if (!existingConfig.includes('ModularFrameworks')) {
+        const repoRootPosix = repositoryRoot.replace(/\\/g, '/');
+        const expoXcconfigBlock = [
+          '',
+          'SWIFT_ENABLE_EXPLICIT_MODULES = NO',
+          'SWIFT_OBJC_INTEROP_MODE = objcxx',
           `FRAMEWORK_SEARCH_PATHS = "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "${repoRootPosix}/Artifacts/ModularFrameworks" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "$(SRCROOT)/Artifacts/ModularFrameworks" $(inherited)`,
           `HEADER_SEARCH_PATHS = "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "${repoRootPosix}/Artifacts/ReactModularHeaders" "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" $(inherited) "$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"`,
           'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES',
@@ -1248,6 +1249,7 @@ template <typename CharTransformT = fnv1a_identity>
         await writeFile(configXcconfigPath, existingConfig + expoXcconfigBlock, 'utf8');
         console.log('[HanlinExpo] Enriched Config.xcconfig with ModularFrameworks search paths and interop flags.');
       }
+    }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
