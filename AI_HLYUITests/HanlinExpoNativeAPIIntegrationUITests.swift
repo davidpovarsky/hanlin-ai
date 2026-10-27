@@ -219,64 +219,97 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
 
     // MARK: - Navigation & Staging Helpers
 
+    private var appsAddButtonCandidates: [XCUIElement] {
+        [
+            app.navigationBars["Apps"].buttons["hanlin-apps-add"].firstMatch,
+            app.navigationBars.buttons["hanlin-apps-add"].firstMatch,
+            app.navigationBars["Apps"].buttons["Add App"].firstMatch,
+            app.navigationBars.buttons["Add App"].firstMatch,
+            app.buttons["hanlin-apps-add"].firstMatch,
+            app.buttons["Add App"].firstMatch,
+            app.toolbars.buttons["hanlin-apps-add"].firstMatch,
+            app.toolbars.buttons["Add App"].firstMatch,
+            app.descendants(matching: .button).matching(identifier: "hanlin-apps-add").firstMatch,
+            app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
+        ]
+    }
+
     private var appsAddButton: XCUIElement {
-        let direct = app.buttons["hanlin-apps-add"].firstMatch
-        if direct.exists { return direct }
-        let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
-        if navDirect.exists { return navDirect }
-        let toolbarDirect = app.toolbars.buttons["hanlin-apps-add"].firstMatch
-        if toolbarDirect.exists { return toolbarDirect }
-        let byButton = app.descendants(matching: .button).matching(identifier: "hanlin-apps-add").firstMatch
-        if byButton.exists { return byButton }
-        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
-        if byId.exists { return byId }
-        let byLabel = app.buttons["Add App"].firstMatch
-        if byLabel.exists { return byLabel }
-        let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
-        if navByLabel.exists { return navByLabel }
-        let toolbarByLabel = app.toolbars.buttons["Add App"].firstMatch
-        if toolbarByLabel.exists { return toolbarByLabel }
-        return direct
+        for candidate in appsAddButtonCandidates {
+            if candidate.exists { return candidate }
+        }
+        return app.buttons["hanlin-apps-add"].firstMatch
     }
 
     @discardableResult
-    private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
-        if appsAddButton.waitForExistence(timeout: timeout) {
-            return appsAddButton
+    private func ensureAppsAddButton(timeout: TimeInterval = 15) -> XCUIElement {
+        let candidates = appsAddButtonCandidates
+
+        let start = Date()
+        while Date().timeIntervalSince(start) < timeout {
+            for candidate in candidates {
+                if candidate.exists {
+                    return candidate
+                }
+            }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
         }
-        print("=== DEBUG UI HIERARCHY DUMP (hanlin-apps-add NOT FOUND) ===")
-        print(app.debugDescription)
-        XCTAssertTrue(appsAddButton.waitForExistence(timeout: 2), "hanlin-apps-add button did not exist")
-        return appsAddButton
+
+        _ = selectAppsTab()
+
+        let retryStart = Date()
+        while Date().timeIntervalSince(retryStart) < timeout {
+            for candidate in candidates {
+                if candidate.exists {
+                    return candidate
+                }
+            }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        }
+
+        print("=== DEBUG WINDOW HIERARCHY DUMP (hanlin-apps-add NOT FOUND) ===")
+        let window = app.windows.firstMatch
+        if window.exists {
+            print(window.debugDescription)
+        } else {
+            print("No window found! Elements in app:")
+            for (idx, elem) in app.descendants(matching: .any).allElementsBoundByIndex.prefix(60).enumerated() {
+                print("[\(idx)] type=\(elem.elementType.rawValue) id='\(elem.identifier)' label='\(elem.label)'")
+            }
+        }
+        XCTFail("hanlin-apps-add button did not exist")
+        return candidates[0]
     }
 
     @discardableResult
     private func selectAppsTab() -> Bool {
         closeAddSheetIfNeeded()
-        if appsAddButton.waitForExistence(timeout: 2) { return true }
+        for candidate in appsAddButtonCandidates {
+            if candidate.exists { return true }
+        }
+
         let candidates: [XCUIElement] = [
             app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
             app.buttons["hanlin-apps-tab"].firstMatch,
             app.tabs["hanlin-apps-tab"].firstMatch,
             app.tabBars.buttons["Apps"].firstMatch,
             app.buttons["Apps"].firstMatch,
-            app.tabs["Apps"].firstMatch
+            app.tabs["Apps"].firstMatch,
+            app.navigationBars.buttons["Apps"].firstMatch
         ]
 
-        // 1. Try directly on current tab page
         for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+            if candidate.exists && candidate.isHittable {
                 candidate.tap()
                 return true
             }
         }
 
-        // 2. If tab bar is paged (e.g. iPad mini floating tab bar with Next Page / Previous Page)
         let nextPage = app.buttons["Next Page"].firstMatch
-        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+        if nextPage.exists && nextPage.isHittable {
             nextPage.tap()
             for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
                     candidate.tap()
                     return true
                 }
@@ -284,31 +317,31 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         }
 
         let prevPage = app.buttons["Previous Page"].firstMatch
-        if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
+        if prevPage.exists && prevPage.isHittable {
             prevPage.tap()
             for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
                     candidate.tap()
                     return true
                 }
             }
         }
 
-        // 3. Fallback to broad hierarchy predicate
         let fallback = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label CONTAINS 'Apps'")
         ).firstMatch
-        if fallback.waitForExistence(timeout: 5) && fallback.isHittable {
+        if fallback.exists && fallback.isHittable {
             fallback.tap()
             return true
         }
+
         return false
     }
 
     private func closeAddSheetIfNeeded() {
         guard app.navigationBars["Add Apps"].exists || app.buttons["hanlin-apps-add-done"].exists else { return }
         let addDone = app.buttons["hanlin-apps-add-done"].firstMatch
-        if addDone.waitForExistence(timeout: 2) && addDone.isHittable {
+        if addDone.exists && addDone.isHittable {
             addDone.tap()
             _ = waitUntil(timeout: 2) { !addDone.exists }
         } else {
@@ -318,7 +351,7 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
                 app.buttons["Done"].firstMatch,
             ]
             for done in doneButtons {
-                if done.waitForExistence(timeout: 1) && done.isHittable {
+                if done.exists && done.isHittable {
                     done.tap()
                     _ = waitUntil(timeout: 2) { !done.exists }
                     break
@@ -328,9 +361,7 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
     }
 
     private func openApps() {
-        if appsAddButton.waitForExistence(timeout: 5) { return }
-        _ = selectAppsTab()
-        _ = ensureAppsAddButton(timeout: 20)
+        _ = ensureAppsAddButton(timeout: 10)
     }
 
     private func selectArchive(_ archive: String) {
