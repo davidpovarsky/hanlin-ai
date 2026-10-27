@@ -12,6 +12,7 @@ import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import HanlinNativeScriptRuntime
 import HanlinExpoRuntime
+import HanlinExpoNativeAPI
 import HanlinMiniAppCore
 import Observation
 import OSLog
