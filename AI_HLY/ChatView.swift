@@ -1767,7 +1767,17 @@ struct ChatView: View {
         if let coordinator = activeAgentCoordinator {
             activeAgentRun = coordinator.run
             activeAgentMessage?.agentRun = coordinator.run
-            if let activeAgentMessage { context.insert(activeAgentMessage) }
+            if let activeAgentMessage {
+                let hasText = !(activeAgentMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+                let hasReasoning = !(activeAgentMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+                let hasTool = !(activeAgentMessage.toolContent?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+                let hasImages = !activeAgentMessage.imageArray.isEmpty
+                if !hasText && !hasReasoning && !hasTool && !hasImages {
+                    chatTemps.removeAll(where: { $0 === activeAgentMessage })
+                } else {
+                    context.insert(activeAgentMessage)
+                }
+            }
             try? context.save()
         }
         activeAgentCoordinator = nil

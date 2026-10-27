@@ -15,9 +15,6 @@ public enum HanlinSkillIndex {
             let title = skill.title.preferredValue()
             let summary = skill.summary.preferredValue()
             var line = "- \(title) (`\(id)`): \(summary)"
-            if !skill.preferredToolIDs.isEmpty {
-                line += " [Tools: \(skill.preferredToolIDs.joined(separator: ", "))]"
-            }
             if !skill.triggerHints.isEmpty {
                 line += " [Triggers: \(skill.triggerHints.joined(separator: ", "))]"
             }

@@ -15,7 +15,7 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     func openAIToolSchema() -> [String: Any] {
-        let supportedPrograms = ShellRuntimeService.capabilities.map(\.name) + ["pwd"]
+        let supportedPrograms = ShellRuntimeService.capabilities.map(\.name)
         let baseDescription = RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl accepts HTTPS only and requires allow_network=true except for curl --version.")
         return NativeToolSchema.function(name: name, description: baseDescription + " Approved programs: \(supportedPrograms.joined(separator: ", ")).", parameters: NativeToolSchema.object(properties: [
             "program": NativeToolSchema.string(description: RuntimeL10n.string("Approved program name."), enumValues: supportedPrograms),

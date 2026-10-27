@@ -40,17 +40,20 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "The deterministic provider's final answer was not rendered.")
 
-        let activitySummary = app.buttons["hanlin-agent-activity-summary"].firstMatch
-        XCTAssertTrue(activitySummary.waitForExistence(timeout: 10), "The completed agent activity summary was not rendered.")
-        activitySummary.tap()
+        let toolToggle = app.descendants(matching: .any)["hanlin-tool-content-toggle"].firstMatch
+        XCTAssertTrue(toolToggle.waitForExistence(timeout: 10), "The completed tool content toggle was not rendered.")
+        tapElement(toolToggle)
+
+        let expandedToolText = app.descendants(matching: .any)["hanlin-tool-content-expanded-text"].firstMatch
+        XCTAssertTrue(expandedToolText.waitForExistence(timeout: 10), "Expanded tool content text did not appear.")
 
         let failedActivity = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier == 'hanlin-agent-tool-failed' OR label CONTAINS[c] 'invalid'")
+            NSPredicate(format: "identifier == 'hanlin-tool-content-expanded-text' OR label CONTAINS[c] 'invalid' OR label CONTAINS[c] 'unexpected' OR label CONTAINS[c] '⚠️'")
         ).firstMatch
         XCTAssertTrue(failedActivity.waitForExistence(timeout: 10), "The intentional tool failure was not presented truthfully in the real chat UI.")
 
-        let toolActivity = app.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS[c] 'Local Python' OR label CONTAINS[c] 'ui-tool-ok'")
+        let toolActivity = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS[c] 'Local Python' OR label CONTAINS[c] 'execute_local_python_code' OR label CONTAINS[c] 'ui-tool-ok'")
         ).firstMatch
         XCTAssertTrue(toolActivity.waitForExistence(timeout: 45), "Tool activity/result was not rendered in the real chat UI.")
 
@@ -171,7 +174,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         XCTAssertFalse(stopButton.exists, "Stop button should not remain active after run completion")
 
-        let stuckProcessing = app.staticTexts.matching(
+        let stuckProcessing = assistantBubbles.descendants(matching: .staticText).matching(
             NSPredicate(format: "label == 'Thinking' OR label == 'Thinking…' OR label == 'Processing'")
         ).firstMatch
         XCTAssertFalse(stuckProcessing.exists, "Chat should not be stuck in Thinking or Processing state")
