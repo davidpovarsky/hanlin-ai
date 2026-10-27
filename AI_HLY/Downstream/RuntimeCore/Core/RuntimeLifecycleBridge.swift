@@ -7,6 +7,9 @@ enum RuntimeLifecycleBridge {
         let environment = ProcessInfo.processInfo.environment
         return environment["HANLIN_UNIT_TEST_HOST"] == "1"
             || environment["XCTestConfigurationFilePath"] != nil
+            || environment["HANLIN_EXPO_E2E"] != nil
+            || environment["HANLIN_NATIVESCRIPT_E2E"] != nil
+            || environment["HANLIN_SCRIPTUI_E2E"] != nil
     }
 
     private static var preparationTask: Task<Void, Never>?

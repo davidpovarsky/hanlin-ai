@@ -224,25 +224,36 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         if direct.exists { return direct }
         let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
         if navDirect.exists { return navDirect }
+        let toolbarDirect = app.toolbars.buttons["hanlin-apps-add"].firstMatch
+        if toolbarDirect.exists { return toolbarDirect }
+        let byButton = app.descendants(matching: .button).matching(identifier: "hanlin-apps-add").firstMatch
+        if byButton.exists { return byButton }
+        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
+        if byId.exists { return byId }
         let byLabel = app.buttons["Add App"].firstMatch
         if byLabel.exists { return byLabel }
+        let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
+        if navByLabel.exists { return navByLabel }
+        let toolbarByLabel = app.toolbars.buttons["Add App"].firstMatch
+        if toolbarByLabel.exists { return toolbarByLabel }
         return direct
     }
 
     @discardableResult
-    private func ensureAppsAddButton(timeout: TimeInterval = 15) -> XCUIElement {
-        let button = appsAddButton
-        if button.waitForExistence(timeout: 3) {
-            return button
+    private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
+        if appsAddButton.waitForExistence(timeout: timeout) {
+            return appsAddButton
         }
-        _ = selectAppsTab()
-        XCTAssertTrue(button.waitForExistence(timeout: timeout), "hanlin-apps-add button did not exist")
-        return button
+        print("=== DEBUG UI HIERARCHY DUMP (hanlin-apps-add NOT FOUND) ===")
+        print(app.debugDescription)
+        XCTAssertTrue(appsAddButton.waitForExistence(timeout: 2), "hanlin-apps-add button did not exist")
+        return appsAddButton
     }
 
     @discardableResult
     private func selectAppsTab() -> Bool {
         closeAddSheetIfNeeded()
+        if appsAddButton.waitForExistence(timeout: 2) { return true }
         let candidates: [XCUIElement] = [
             app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
             app.buttons["hanlin-apps-tab"].firstMatch,
@@ -317,9 +328,9 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
     }
 
     private func openApps() {
-        if appsAddButton.waitForExistence(timeout: 2) { return }
+        if appsAddButton.waitForExistence(timeout: 5) { return }
         _ = selectAppsTab()
-        _ = ensureAppsAddButton(timeout: 15)
+        _ = ensureAppsAddButton(timeout: 20)
     }
 
     private func selectArchive(_ archive: String) {

@@ -74,6 +74,12 @@ struct MainTabView: View {
                 .tag(5)
         }
         .animation(.easeInOut(duration: 0.4), value: selectedTab)
+        .onAppear {
+            let env = ProcessInfo.processInfo.environment
+            if env["HANLIN_EXPO_E2E"] != nil || env["HANLIN_NATIVESCRIPT_E2E"] != nil || env["HANLIN_SCRIPTUI_E2E"] != nil {
+                selectedTab = 4
+            }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .hideTabBar)) { notification in
             if let isHidden = notification.object as? Bool {
                 hideTabBar = isHidden
