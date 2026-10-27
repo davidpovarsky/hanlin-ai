@@ -28,12 +28,7 @@ let package = Package(
         ),
         .target(
             name: "HanlinExpoWorklets",
-            dependencies: [
-                "ReactNativeHeaders",
-                "React",
-                "ReactNativeDependencies",
-                "hermesvm"
-            ],
+            dependencies: [],
             path: "Sources/HanlinExpoWorklets",
             publicHeadersPath: "include",
             cxxSettings: [
@@ -68,11 +63,7 @@ let package = Package(
             name: "HanlinExpoNativeAPICore",
             dependencies: [
                 "HanlinExpoWorklets",
-                "Libffi",
-                "ReactNativeHeaders",
-                "React",
-                "ReactNativeDependencies",
-                "hermesvm"
+                "Libffi"
             ],
             path: "Sources/HanlinExpoNativeAPICore",
             publicHeadersPath: "include",
@@ -116,11 +107,7 @@ let package = Package(
                 .linkedFramework("QuartzCore")
             ]
         ),
-        .binaryTarget(name: "Libffi", path: "Artifacts/Libffi.xcframework"),
-        .binaryTarget(name: "ReactNativeHeaders", path: "../HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"),
-        .binaryTarget(name: "React", path: "../HanlinExpoRuntime/Artifacts/React.xcframework"),
-        .binaryTarget(name: "ReactNativeDependencies", path: "../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework"),
-        .binaryTarget(name: "hermesvm", path: "../HanlinExpoRuntime/Artifacts/hermesvm.xcframework")
+        .binaryTarget(name: "Libffi", path: "Artifacts/Libffi.xcframework")
     ],
     swiftLanguageModes: [.v6]
 )
