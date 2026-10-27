@@ -338,7 +338,7 @@ jobs:
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
           # Bounded fixture staging for app container and optional DocumentsApp (Files)
-          python3 - <<'PY'
+          python3 - "$SIMULATOR_UDID" "$BUNDLE_ID" <<'PY'
           import subprocess
           import sys
           import shutil
@@ -385,7 +385,7 @@ jobs:
                   print("Files app container unprovisioned at boot (skipping optional staging)")
           except subprocess.TimeoutExpired:
               print("Files container lookup timed out after 5s (skipping optional staging)")
-          PY "$SIMULATOR_UDID" "$BUNDLE_ID"
+          PY
 
           echo "sim-udid=$SIMULATOR_UDID" >> "$GITHUB_OUTPUT"
 
