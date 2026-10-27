@@ -224,14 +224,13 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         if direct.exists { return direct }
         let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
         if navDirect.exists { return navDirect }
-        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
+        let byId = app.buttons.matching(identifier: "hanlin-apps-add").firstMatch
         if byId.exists { return byId }
         let byLabel = app.buttons["Add App"].firstMatch
         if byLabel.exists { return byLabel }
         let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
         if navByLabel.exists { return navByLabel }
-        let predicate = NSPredicate(format: "identifier == 'hanlin-apps-add' OR label == 'hanlin-apps-add' OR label == 'Add App' OR label == 'Add' OR label CONTAINS 'Add App'")
-        return app.descendants(matching: .any).matching(predicate).firstMatch
+        return direct
     }
 
     @discardableResult
@@ -247,12 +246,12 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
     @discardableResult
     private func selectAppsTab() -> Bool {
         closeAddSheetIfNeeded()
-        var candidates: [XCUIElement] = [
-            app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
+        let candidates: [XCUIElement] = [
             app.buttons["hanlin-apps-tab"].firstMatch,
+            app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
             app.tabs["hanlin-apps-tab"].firstMatch,
-            app.tabBars.buttons["Apps"].firstMatch,
             app.buttons["Apps"].firstMatch,
+            app.tabBars.buttons["Apps"].firstMatch,
             app.tabs["Apps"].firstMatch
         ]
 
@@ -263,44 +262,8 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
             }
         }
 
-        let nextPageCandidates = [
-            app.buttons["Next Page"].firstMatch,
-            app.tabBars.buttons["Next Page"].firstMatch,
-            app.descendants(matching: .button).matching(NSPredicate(format: "label CONTAINS 'Next Page' OR identifier == 'Next Page'")).firstMatch
-        ]
-        for nextPage in nextPageCandidates {
-            if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
-                nextPage.tap()
-                for candidate in candidates {
-                    if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
-                        candidate.tap()
-                        return true
-                    }
-                }
-                break
-            }
-        }
-
-        let prevPageCandidates = [
-            app.buttons["Previous Page"].firstMatch,
-            app.tabBars.buttons["Previous Page"].firstMatch,
-            app.descendants(matching: .button).matching(NSPredicate(format: "label CONTAINS 'Previous Page' OR identifier == 'Previous Page'")).firstMatch
-        ]
-        for prevPage in prevPageCandidates {
-            if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
-                prevPage.tap()
-                for candidate in candidates {
-                    if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
-                        candidate.tap()
-                        return true
-                    }
-                }
-                break
-            }
-        }
-
-        let fallback = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps' OR label CONTAINS 'Apps'")
+        let fallback = app.buttons.matching(
+            NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
         ).firstMatch
         if fallback.waitForExistence(timeout: 5) && fallback.isHittable {
             fallback.tap()

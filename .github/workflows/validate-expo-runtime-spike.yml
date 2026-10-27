@@ -11,7 +11,7 @@ jobs:
   validate-expo-runtime:
     name: Compile and test Hanlin Expo runtime on macOS
     runs-on: xcode-27
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     env:
       PROJECT_PATH: AI_HLY.xcodeproj

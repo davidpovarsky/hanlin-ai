@@ -39,7 +39,11 @@ class AppDataManager: ObservableObject {
     
     init() {
         do {
-            let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil || NSClassFromString("XCTestCase") != nil
+            let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+                || NSClassFromString("XCTestCase") != nil
+                || ProcessInfo.processInfo.environment["HANLIN_EXPO_E2E"] != nil
+                || ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_E2E"] != nil
+                || ProcessInfo.processInfo.environment["HANLIN_SCRIPTUI_E2E"] != nil
             let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: isTesting ? .none : .automatic)
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
