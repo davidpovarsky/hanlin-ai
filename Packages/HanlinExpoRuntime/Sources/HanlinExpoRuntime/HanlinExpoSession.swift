@@ -67,10 +67,7 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         NSLog("%@", "HANLIN_EXPO_SET_RUNTIME_DONE")
         let moduleNames = appContext.getModuleNames()
         NSLog("%@", "HANLIN_EXPO_REGISTERED_MODULES=\(moduleNames.joined(separator: ", "))")
-        let sid = self.sessionID
-        Task { @MainActor in
-            HanlinExpoNativeAPIManager.bindRuntime(runtime, forSessionID: sid)
-        }
+        HanlinExpoNativeAPIManager.bindRuntime(runtime, forSessionID: self.sessionID)
     }
 }
 
