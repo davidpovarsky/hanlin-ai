@@ -68,10 +68,10 @@ public final class HanlinExpoNativeAPIManager {
     }
 
     public static func dependencyProvider() -> AnyObject {
-        return HanlinExpoDependencyProvider.sharedProvider()
+        return HanlinExpoDependencyProvider.shared()
     }
 
     public static func thirdPartyFabricComponents() -> [String: AnyClass] {
-        return HanlinExpoDependencyProvider.sharedProvider().thirdPartyFabricComponents()
+        return HanlinExpoDependencyProvider.shared().thirdPartyFabricComponents()
     }
 }
