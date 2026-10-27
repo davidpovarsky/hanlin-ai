@@ -43,6 +43,13 @@ public enum LoadSkillTool {
         }
 
         guard let descriptor = catalog.resolve(rawID: args.skill_id) else {
+            if let available = availableAliases, available.contains(args.skill_id) {
+                session.exposeTools(aliases: [args.skill_id])
+                return "Error: '\(args.skill_id)' is a callable tool name, not a skill_id. It is now exposed and ready to call directly as `\(args.skill_id)`."
+            }
+            if let matchingSkill = catalog.allSkills().first(where: { $0.preferredToolIDs.contains(args.skill_id) }) {
+                return "Error: '\(args.skill_id)' is a tool name belonging to skill '\(matchingSkill.id.rawValue)'. Call `load_skill(skill_id: \"\(matchingSkill.id.rawValue)\")` or call `\(args.skill_id)` directly."
+            }
             let available = catalog.allSkills().map { $0.id.rawValue }.joined(separator: ", ")
             return "Error: Skill '\(args.skill_id)' not found. Available skills: [\(available)]."
         }

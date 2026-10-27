@@ -30,7 +30,7 @@ enum ExportFormat: String, CaseIterable, Identifiable {
 // MARK: - 文件文档结构
 struct ChatExportDocument: FileDocument {
     // 声明可读写 plainText 和 json
-    static var readableContentTypes: [UTType] = [.plainText, .json]
+    static let readableContentTypes: [UTType] = [.plainText, .json]
     
     var text: String
 

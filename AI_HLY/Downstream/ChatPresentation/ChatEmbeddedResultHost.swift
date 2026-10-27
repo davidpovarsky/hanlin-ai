@@ -214,11 +214,12 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
           }
         } label: {
           Image(systemName: action.systemImage ?? "arrow.up.right.square")
-            .font(.caption2.weight(.semibold))
-            .foregroundStyle(.primary)
-            .frame(width: 28, height: 28)
-            .background(.ultraThinMaterial, in: Circle())
-            .shadow(color: Color.black.opacity(0.12), radius: 2, x: 0, y: 1)
+            .font(.system(size: 16, weight: .medium))
+            .foregroundColor(.hlBluefont)
+            .padding(8)
+            .background(BlurView(style: .systemUltraThinMaterial))
+            .clipShape(Circle())
+            .shadow(color: .hlBlue, radius: 1)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(action.title)
@@ -231,11 +232,12 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
           handleExpansion(expansion)
         } label: {
           Image(systemName: iconName(for: expansion.mode))
-            .font(.caption2.weight(.semibold))
-            .foregroundStyle(.primary)
-            .frame(width: 28, height: 28)
-            .background(.ultraThinMaterial, in: Circle())
-            .shadow(color: Color.black.opacity(0.12), radius: 2, x: 0, y: 1)
+            .font(.system(size: 16, weight: .medium))
+            .foregroundColor(.hlBluefont)
+            .padding(8)
+            .background(BlurView(style: .systemUltraThinMaterial))
+            .clipShape(Circle())
+            .shadow(color: .hlBlue, radius: 1)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel(for: expansion.mode))
@@ -310,17 +312,11 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
       maxHeight: ChatHostPresentationPolicy.maxEmbeddedResultHeight(isRegularWidth: isRegularWidth),
       alignment: .topLeading
     )
+    .cornerRadius(20)
     .background(
-      RoundedRectangle(
-        cornerRadius: ChatHostPresentationPolicy.resultContainerCornerRadius, style: .continuous
-      )
-      .fill(Color(uiColor: .secondarySystemGroupedBackground))
-    )
-    .overlay(
-      RoundedRectangle(
-        cornerRadius: ChatHostPresentationPolicy.resultContainerCornerRadius, style: .continuous
-      )
-      .stroke(Color.primary.opacity(0.08), lineWidth: 0.5)
+      BlurView(style: .systemThinMaterial)
+        .cornerRadius(20)
+        .shadow(color: .hlBlue, radius: 1)
     )
   }
 

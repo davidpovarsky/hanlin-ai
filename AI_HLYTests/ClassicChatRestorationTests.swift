@@ -1165,4 +1165,244 @@ struct ClassicChatRestorationTests {
 
         coordinator.finishRun(runID: runBID)
     }
+
+    // MARK: - 16. multimodalFormattedMessagesToSDKConversion
+
+    @Test("16. APIManager.convertFormattedMessagesToSDKMessages preserves base64 imageData, remote imageURL, text, and system/developer roles without empty-string destruction")
+    func multimodalFormattedMessagesToSDKConversion() throws {
+        let base64PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+        let formattedMessages: [[String: Any]] = [
+            [
+                "role": "developer",
+                "content": "Developer system instructions"
+            ],
+            [
+                "role": "user",
+                "content": [
+                    ["type": "text", "text": "Inspect the attached diagram and remote photo."],
+                    ["type": "image_url", "image_url": ["url": "data:image/png;base64,\(base64PNG)"]],
+                    ["type": "image_url", "image_url": ["url": "https://example.com/architecture.png"]]
+                ]
+            ],
+            [
+                "role": "assistant",
+                "content": "I see both images."
+            ]
+        ]
+
+        let converted = APIManager.convertFormattedMessagesToSDKMessages(formattedMessages)
+        #expect(converted.baseSystemPrompt == "Developer system instructions")
+        #expect(converted.messages.count == 2)
+
+        let userMsg = converted.messages[0]
+        #expect(userMsg.role == .user)
+        #expect(userMsg.parts.count == 3)
+
+        var foundText = false
+        var foundImageData = false
+        var foundImageURL = false
+        for part in userMsg.parts {
+            switch part {
+            case .text(let t):
+                #expect(t == "Inspect the attached diagram and remote photo.")
+                foundText = true
+            case .imageData(let data, let mimeType):
+                #expect(!data.isEmpty)
+                #expect(mimeType == "image/png")
+                foundImageData = true
+            case .imageURL(let url):
+                #expect(url.absoluteString == "https://example.com/architecture.png")
+                foundImageURL = true
+            default:
+                break
+            }
+        }
+        #expect(foundText && foundImageData && foundImageURL)
+    }
+
+    // MARK: - 17. classicChatAgentProjectionSourceFileAndValidResources
+
+    @MainActor
+    @Test("17. ClassicChatAgentProjection maps provider-native .source and .file and rejects fabricated search.local URLs")
+    func classicChatAgentProjectionSourceFileAndValidResources() throws {
+        var messages: [ChatMessages] = []
+        let groupID = UUID()
+        let assistantMessage = ChatMessages(
+            role: "assistant",
+            text: "",
+            reasoning: "",
+            showCanvas: false,
+            model: "gpt-4o",
+            modelDisplayName: "GPT-4o",
+            modelCompany: "OPENAI",
+            timestamp: Date(),
+            messageGroupID: groupID
+        )
+        messages.append(assistantMessage)
+
+        ClassicChatAgentProjection.appendProviderSource(
+            id: "s1",
+            url: "https://developer.apple.com/swift",
+            title: "Swift Official",
+            assistantMessage: assistantMessage,
+            messages: &messages,
+            messageGroupID: groupID,
+            searchEngine: "Perplexity",
+            timestamp: Date()
+        )
+        ClassicChatAgentProjection.appendProviderSource(
+            id: "s2",
+            url: "https://search.local/query?q=fake",
+            title: "Fake Local Search",
+            assistantMessage: assistantMessage,
+            messages: &messages,
+            messageGroupID: groupID,
+            searchEngine: "Perplexity",
+            timestamp: Date()
+        )
+
+        #expect(assistantMessage.resources?.count == 1)
+        #expect(assistantMessage.resources?.first?.link == "https://developer.apple.com/swift")
+        #expect(messages.first(where: { $0.role == "search" })?.resources?.count == 1)
+
+        // Provider-native image file
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 4, height: 4))
+        let img = renderer.image { ctx in
+            UIColor.systemBlue.setFill()
+            ctx.fill(CGRect(x: 0, y: 0, width: 4, height: 4))
+        }
+        let pngData = try #require(img.pngData())
+        ClassicChatAgentProjection.appendProviderFile(
+            mediaType: "image/png",
+            data: pngData,
+            assistantMessage: assistantMessage
+        )
+        #expect(assistantMessage.images?.count == 1)
+    }
+
+    // MARK: - 18. build84001SkillVsToolNameDisambiguation
+
+    @Test("18. Build 84001 defect 7A: calling web_research as a tool or load_skill(skill_id: search_online) returns explicit Skill ID vs tool name guidance")
+    func build84001SkillVsToolNameDisambiguation() async throws {
+        // 1. LoadSkillTool called with tool name "search_online"
+        let loadSkillTool = LoadSkillTool()
+        let context = ToolExecutionContext(
+            conversationID: UUID(),
+            messageGroupID: UUID(),
+            userText: "Search the web",
+            modelName: "glm-5.1",
+            modelCompany: "ZHIPUAI",
+            isToolCapable: true
+        )
+        let loadOutput = try await loadSkillTool.execute(
+            argumentsJSON: #"{"skill_id":"search_online"}"#,
+            context: context
+        )
+        #expect(loadOutput.summary.contains("callable tool name, not a skill_id"))
+        #expect(loadOutput.activatedToolAliases.contains("search_online"))
+
+        // 2. LoadSkillTool called with skill_id "web_research" activates search_online and read_web_page
+        let webResearchOutput = try await loadSkillTool.execute(
+            argumentsJSON: #"{"skill_id":"web_research"}"#,
+            context: context
+        )
+        #expect(webResearchOutput.outcome == .succeeded)
+        #expect(webResearchOutput.activatedToolAliases.contains("search_online"))
+        #expect(webResearchOutput.activatedToolAliases.contains("read_web_page"))
+    }
+
+    // MARK: - 19. build84001MCPValidationAndIncompatiblePackageGuard
+
+    @Test("19. Build 84001 defect 7B: ManageMCPServersTool rejects known nonexistent or native-addon MCP packages and supports action/parameter aliases")
+    func build84001MCPValidationAndIncompatiblePackageGuard() async throws {
+        let tool = ManageMCPServersTool()
+        let context = ToolExecutionContext(
+            conversationID: UUID(),
+            messageGroupID: UUID(),
+            userText: "Install MCP server",
+            modelName: "glm-5.1",
+            modelCompany: "ZHIPUAI",
+            isToolCapable: true
+        )
+
+        // Hallucinated package transit-allinone-mcp
+        let transitOut = try await tool.execute(
+            argumentsJSON: #"{"action":"install_package","package":"transit-allinone-mcp"}"#,
+            context: context
+        )
+        #expect(transitOut.outcome == .failed)
+        #expect(transitOut.summary.contains("Known unavailable/incompatible MCP package"))
+
+        // Native addon / Python MCP package @modelcontextprotocol/server-sqlite
+        let sqliteOut = try await tool.execute(
+            argumentsJSON: #"{"action":"install","package_spec":"@modelcontextprotocol/server-sqlite"}"#,
+            context: context
+        )
+        #expect(sqliteOut.outcome == .failed)
+        #expect(sqliteOut.summary.contains("Known unavailable/incompatible MCP package"))
+    }
+
+    // MARK: - 20. build84001UnicodePropertyRegexSanitizerInServerWorker
+
+    @Test("20. Build 84001 defect 7B: server-worker.mjs includes ICU-less Node regex compatibility shim for \\P{ASCII} and \\p{ASCII}")
+    func build84001UnicodePropertyRegexSanitizerInServerWorker() throws {
+        let repoRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let workerURL = repoRoot.appendingPathComponent("AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs")
+        let workerSource = try String(contentsOf: workerURL, encoding: .utf8)
+
+        #expect(workerSource.contains("function sanitizeUnicodePropertyRegexes(source)"))
+        #expect(workerSource.contains(#"\\x00-\\x7F"#))
+        #expect(workerSource.contains("installRegExpUnicodeShim()"))
+    }
+
+    // MARK: - 21. build84001ShellPwdAndNodeCommonJSInference
+
+    @Test("21. Build 84001 defect 7C: execute_shell_command supports pwd builtin and NodeRuntimeService infers CommonJS for require() snippets")
+    func build84001ShellPwdAndNodeCommonJSInference() async throws {
+        // 1. CommonJS vs ESM module inference
+        let cjsCode = "const fs = require('fs');\nconsole.log(Object.keys(fs).length);"
+        let esmCode = "import fs from 'node:fs';\nconsole.log(fs);"
+        let plainCode = "console.log(1 + 2);"
+
+        #expect(NodeRuntimeService.inferModuleKind(for: cjsCode) == "cjs")
+        #expect(NodeRuntimeService.inferModuleKind(for: esmCode) == "esm")
+        #expect(NodeRuntimeService.inferModuleKind(for: plainCode) == "cjs")
+
+        // 2. ShellRuntimeService pwd builtin
+        let pwdResult = try await ShellRuntimeService.shared.execute(
+            tokens: ["pwd"],
+            workingDirectory: nil
+        )
+        #expect(pwdResult.exitCode == 0)
+        #expect(!pwdResult.stdout.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+    }
+
+    // MARK: - 22. build84001SchemaOverheadTokenBudget
+
+    @Test("22. Build 84001 defect 7D: AssistantToolExposurePlanner enforces bounded schema byte budget")
+    func build84001SchemaOverheadTokenBudget() throws {
+        #expect(AssistantToolExposurePlanner.defaultSchemaByteBudget == 24_000)
+
+        var oversizedSizes: [String: Int] = [:]
+        var names: [String] = []
+        for idx in 0..<20 {
+            let name = "heavy_tool_\(idx)"
+            names.append(name)
+            oversizedSizes[name] = 4_000
+        }
+
+        let plan = AssistantToolExposurePlanner.plan(
+            userText: "Run tools",
+            candidateToolNames: names,
+            coreToolNames: ["load_skill", "search_online"],
+            sessionActivatedToolNames: names,
+            schemaByteSizes: oversizedSizes,
+            byteBudget: AssistantToolExposurePlanner.defaultSchemaByteBudget
+        )
+
+        #expect(plan.estimatedSchemaBytes <= AssistantToolExposurePlanner.defaultSchemaByteBudget)
+        #expect(!plan.deferredForBudgetToolNames.isEmpty)
+    }
 }

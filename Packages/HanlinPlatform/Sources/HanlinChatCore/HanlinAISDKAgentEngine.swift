@@ -120,7 +120,7 @@ public actor HanlinAISDKAgentEngine {
             maxRetries: 2
         )
 
-        let limit = maxSteps ?? 40
+        let limit = max(maxSteps ?? 40, 1)
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
@@ -135,7 +135,7 @@ public actor HanlinAISDKAgentEngine {
                     while true {
                         let remainingSteps = max(limit - stepOffset, 1)
                         let currentNames = Set(currentDefinitions.map(\.name))
-                        var stopConditions: [StopCondition] = (limit > 0) ? [stepCountIs(remainingSteps)] : []
+                        var stopConditions: [StopCondition] = [stepCountIs(remainingSteps)]
                         if let dynamicTools {
                             stopConditions.append { _ in
                                 let latest = await dynamicTools()
@@ -265,9 +265,36 @@ public actor HanlinAISDKAgentEngine {
                                     resultReference: nil,
                                     isError: true
                                 ))
+                            case .source(let source):
+                                if case .url(let id, let url, let title, _) = source {
+                                    meaningfulEventCount += 1
+                                    continuation.yield(.source(id: id, url: url, title: title))
+                                }
+                            case .file(let file):
+                                if let data = Data(base64Encoded: file.base64) {
+                                    meaningfulEventCount += 1
+                                    continuation.yield(.file(mediaType: file.mediaType, data: data))
+                                }
+                            case .reasoningFile(let file, _):
+                                if let data = Data(base64Encoded: file.base64) {
+                                    meaningfulEventCount += 1
+                                    continuation.yield(.file(mediaType: file.mediaType, data: data))
+                                }
+                            case .toolApprovalRequest(let request):
+                                meaningfulEventCount += 1
+                                continuation.yield(.toolApprovalRequest(
+                                    approvalID: request.approvalId,
+                                    toolCallID: request.toolCall.toolCallId,
+                                    toolName: request.toolCall.toolName
+                                ))
+                            case .toolOutputDenied(let denied):
+                                meaningfulEventCount += 1
+                                continuation.yield(.toolOutputDenied(
+                                    toolCallID: denied.toolCallId,
+                                    toolName: denied.toolName
+                                ))
                             case .textStart, .textEnd, .reasoningStart, .reasoningEnd,
-                                 .toolInputEnd, .toolOutputDenied, .toolApprovalRequest,
-                                 .source, .custom, .file, .reasoningFile, .raw:
+                                 .toolInputEnd, .custom, .raw:
                                 break
                             }
                         }

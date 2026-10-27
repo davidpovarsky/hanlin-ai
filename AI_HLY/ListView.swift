@@ -3,6 +3,7 @@ import SwiftData
 
 struct ListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query private var chatRecords: [ChatRecords]
     @Query private var allModels: [AllModels]
     @Query private var apiKeys: [APIKeys]
@@ -23,6 +24,7 @@ struct ListView: View {
     @State private var editingTitle: String = "title"
     
     @State private var navigationPath: [ChatRecords] = []
+    @State private var selectedChatRecord: ChatRecords? = nil
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
     
     @State private var showSafariGuide: Bool = false
@@ -49,156 +51,213 @@ struct ListView: View {
             .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
     }
 
-    // 检测是否缺少优化模型
-    private var noOptimizationModel: Bool {
+    // 检测是否缺少文本优化模型（视觉优化模型为可选项，不阻断普通文本会话）
+    private var noTextOptimizationModel: Bool {
         let userInfo = userInfos.first
-        return (userInfo?.optimizationTextModel.isEmpty ?? true) ||
-               (userInfo?.optimizationVisualModel.isEmpty ?? true)
+        return (userInfo?.optimizationTextModel.isEmpty ?? true)
     }
 
-    // 修改计算属性，让置顶的记录始终显示在上方
-    private var filteredChatRecords: [ChatRecords] {
+    static func filterAndSortChatRecords(_ records: [ChatRecords], searchText: String) -> [ChatRecords] {
+        let baseRecords: [ChatRecords]
         if searchText.isEmpty {
-            let pinnedRecords = chatRecords.filter { $0.isPinned }
-                .sorted { $0.lastEdited > $1.lastEdited }
-            let unpinnedRecords = chatRecords.filter { !$0.isPinned }
-                .sorted { $0.lastEdited > $1.lastEdited }
-            return pinnedRecords + unpinnedRecords
+            baseRecords = records
         } else {
             let lowercasedSearchText = searchText.lowercased()
             let pinyinSearchText = searchText.toPinyin().lowercased()
-            let filtered = chatRecords.filter { record in
+            baseRecords = records.filter { record in
                 let recordName = record.name ?? ""
                 let lowercasedRecordName = recordName.lowercased()
                 let matchName = lowercasedRecordName.contains(lowercasedSearchText)
                 let matchNamePinyin = recordName.toPinyin().lowercased().contains(pinyinSearchText)
-                // 检测聊天消息中是否包含搜索词
                 let matchMessages = record.messages?.contains { message in
                     message.text?.lowercased().contains(lowercasedSearchText) ?? false
                 } ?? false
                 return matchName || matchNamePinyin || matchMessages
             }
-            // 对筛选后的记录根据是否置顶分组，并排序
-            let pinnedRecords = filtered.filter { $0.isPinned }
-                .sorted { $0.lastEdited > $1.lastEdited }
-            let unpinnedRecords = filtered.filter { !$0.isPinned }
-                .sorted { $0.lastEdited > $1.lastEdited }
-            return pinnedRecords + unpinnedRecords
         }
+        let pinnedRecords = baseRecords.filter { $0.isPinned }
+            .sorted { $0.lastEdited > $1.lastEdited }
+        let unpinnedRecords = baseRecords.filter { !$0.isPinned }
+            .sorted { $0.lastEdited > $1.lastEdited }
+        return pinnedRecords + unpinnedRecords
+    }
+
+    // 修改计算属性，让置顶的记录始终显示在上方
+    private var filteredChatRecords: [ChatRecords] {
+        Self.filterAndSortChatRecords(chatRecords, searchText: searchText)
     }
     
     var body: some View {
-        NavigationStack(path: $navigationPath) {
-            content
-                .navigationTitle("Hylic.AI")
-                .safeAreaInset(edge: .bottom) {
-                    Color.clear.frame(height: 75)
+        Group {
+            if horizontalSizeClass == .regular {
+                NavigationSplitView {
+                    sidebarContent
+                        .navigationTitle("Hylic.AI")
+                        .safeAreaInset(edge: .bottom) {
+                            Color.clear.frame(height: 75)
+                        }
+                        .toolbar {
+                            commonToolbar
+                        }
+                } detail: {
+                    if let selected = selectedChatRecord {
+                        let snippetPair = matchedSnippets[selected.id ?? UUID()]
+                        let messageID = snippetPair?.1
+                        NavigationStack {
+                            ChatViewWrapper(chatRecord: selected, matchedMessageID: messageID)
+                        }
+                        .id(selected.id)
+                    } else {
+                        ContentUnavailableView("请选择一个对话", systemImage: "bubble.left.and.bubble.right")
+                    }
+                }
+            } else {
+                NavigationStack(path: $navigationPath) {
+                    content
+                        .navigationTitle("Hylic.AI")
+                        .safeAreaInset(edge: .bottom) {
+                            Color.clear.frame(height: 75)
+                        }
+                        .toolbar {
+                            commonToolbar
+                        }
+                }
+            }
+        }
+        .onAppear {
+            handleOnAppear()
+            searchText = ""
+            if horizontalSizeClass == .regular && selectedChatRecord == nil {
+                selectedChatRecord = filteredChatRecords.first
+            }
+        }
+        .sheet(isPresented: $showTranslationSheet) {
+            TranslationView()
+        }
+        .sheet(isPresented: $showPolishSheet) {
+            PolishView()
+        }
+        .sheet(isPresented: $showSummarySheet) {
+            SummaryView()
+        }
+        .sheet(isPresented: $showIconSheet) {
+            IconAndColorPicker(
+                selectedIcon: $editingIcon,
+                selectedColor: $editingColor,
+                title: $editingTitle
+            )
+            .onDisappear {
+                // 当编辑面板关闭时，将编辑好的 icon/color 回写到对应 record
+                guard let editingRecord = editingRecord else { return }
+                editingRecord.icon = editingIcon
+                editingRecord.color = editingColor.name
+                editingRecord.name = editingTitle
+                do {
+                    try modelContext.save()
+                    // 切换 forceRefresh 强制刷新列表
+                    forceRefresh.toggle()
+                } catch {
+                    print("Error saving icon or color: \(error.localizedDescription)")
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $showSafariGuide) {
+            SafariView(url: URL(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
+                .background(BlurView(style: .systemThinMaterial))
+                .edgesIgnoringSafeArea(.all)
+        }
+        .alert("无法新建对话", isPresented: $showValidationAlert) {
+            Button("前往设置") {
+                showSettingSheet = true
+            }
+            Button("取消", role: .cancel) { }
+        } message: {
+            Text(validationAlertMessage)
+        }
+        .sheet(isPresented: $showSettingSheet) {
+            NavigationStack {
+                Group {
+                    switch validationSettingType {
+                    case .apiKeys:
+                        APIKeysView()
+                    case .optimization:
+                        SelectOptimizationModelView()
+                    case .embedding:
+                        SelectEmbeddingModelView()
+                    case .none:
+                        EmptyView()
+                    }
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            addNewChat()
-                        } label: {
-                            Image(systemName: "plus.bubble")
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        if loadHistoryMessages {
-                            HStack {
-                                ProgressView().font(.caption)
-                                Text("正在加载...").font(.caption)
-                            }
-                        } else {
-                            HStack {
-                                Button(action: {
-                                    showSafariGuide = true
-                                }) {
-                                    Label {
-                                        Text("软件指南")
-                                            .font(.caption)
-                                    } icon: {
-                                        Image(systemName: "text.rectangle.page")
-                                    }
-                                }
-                            }
+                        Button("完成") {
+                            showSettingSheet = false
                         }
                     }
                 }
-                .onAppear {
-                    handleOnAppear()
-                    searchText = ""
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    private var commonToolbar: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button {
+                addNewChat()
+            } label: {
+                Image(systemName: "plus.bubble")
+            }
+            .accessibilityIdentifier("hanlin-new-chat-button")
+        }
+        ToolbarItem(placement: .navigationBarLeading) {
+            if loadHistoryMessages {
+                HStack {
+                    ProgressView().font(.caption)
+                    Text("正在加载...").font(.caption)
                 }
-                .sheet(isPresented: $showTranslationSheet) {
-                    TranslationView()
-                }
-                .sheet(isPresented: $showPolishSheet) {
-                    PolishView()
-                }
-                .sheet(isPresented: $showSummarySheet) {
-                    SummaryView()
-                }
-                .sheet(isPresented: $showIconSheet) {
-                    IconAndColorPicker(
-                        selectedIcon: $editingIcon,
-                        selectedColor: $editingColor,
-                        title: $editingTitle
-                    )
-                    .onDisappear {
-                        // 当编辑面板关闭时，将编辑好的 icon/color 回写到对应 record
-                        guard let editingRecord = editingRecord else { return }
-                        editingRecord.icon = editingIcon
-                        editingRecord.color = editingColor.name
-                        editingRecord.name = editingTitle
-                        do {
-                            try modelContext.save()
-                            // 切换 forceRefresh 强制刷新列表
-                            forceRefresh.toggle()
-                        } catch {
-                            print("Error saving icon or color: \(error.localizedDescription)")
+            } else {
+                HStack {
+                    Button(action: {
+                        showSafariGuide = true
+                    }) {
+                        Label {
+                            Text("软件指南")
+                                .font(.caption)
+                        } icon: {
+                            Image(systemName: "text.rectangle.page")
                         }
                     }
                 }
-                .fullScreenCover(isPresented: $showSafariGuide) {
-                    SafariView(url: URL(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
-                        .background(BlurView(style: .systemThinMaterial))
-                        .edgesIgnoringSafeArea(.all)
-                }
-                .alert("无法新建对话", isPresented: $showValidationAlert) {
-                    Button("前往设置") {
-                        showSettingSheet = true
-                    }
-                    Button("取消", role: .cancel) { }
-                } message: {
-                    Text(validationAlertMessage)
-                }
-                .sheet(isPresented: $showSettingSheet) {
-                    NavigationStack {
-                        Group {
-                            switch validationSettingType {
-                            case .apiKeys:
-                                APIKeysView()
-                            case .optimization:
-                                SelectOptimizationModelView()
-                            case .embedding:
-                                SelectEmbeddingModelView()
-                            case .none:
-                                EmptyView()
-                            }
-                        }
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button("完成") {
-                                    showSettingSheet = false
-                                }
-                            }
-                        }
-                    }
-                }
+            }
         }
     }
     
     // MARK: - Main Content
     @State private var searchTask: Task<Void, Never>? = nil
+    
+    @ViewBuilder
+    private var sidebarContent: some View {
+        List(selection: $selectedChatRecord) {
+            topButtonsSection
+            chatRecordsSection
+        }
+        .listStyle(.plain)
+        .searchable(text: $searchText, prompt: "搜索聊天与消息内容")
+        .onChange(of: searchText) {
+            searchTask?.cancel()
+            searchTask = Task {
+                do {
+                    try await Task.sleep(nanoseconds: 300_000_000)
+                    if !Task.isCancelled {
+                        searchRecords()
+                    }
+                } catch {}
+            }
+        }
+        .refreshable {
+            handleOnAppear()
+        }
+    }
     
     @ViewBuilder
     private var content: some View {
@@ -396,6 +455,8 @@ struct ListView: View {
         }
         // 利用 forceRefresh 作为 id 变化触发视图刷新
         .id((record.id?.uuidString ?? "") + String(forceRefresh))
+        .tag(record)
+        .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")
     }
     
     // 使用 filteredChatRecords 计算属性替代原来的缓存数据
@@ -523,9 +584,9 @@ struct ListView: View {
             return
         }
 
-        // 验证是否选择了优化模型
-        if noOptimizationModel {
-            validationAlertMessage = "暂未设置优化模型，请前往“设置-模型-优化模型”设置文本优化模型和视觉优化模型。"
+        // 验证是否选择了文本优化模型
+        if noTextOptimizationModel {
+            validationAlertMessage = "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。"
             validationSettingType = .optimization
             showValidationAlert = true
             return
@@ -557,7 +618,11 @@ struct ListView: View {
             try modelContext.save()
             
             DispatchQueue.main.async {
-                navigationPath.append(newChat) // 触发跳转
+                if horizontalSizeClass == .regular {
+                    selectedChatRecord = newChat
+                } else {
+                    navigationPath.append(newChat) // 触发跳转
+                }
             }
             
         } catch {

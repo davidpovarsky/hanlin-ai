@@ -69,6 +69,7 @@ struct LoadingGradientText: View {
 // MARK: - 组件化对话气泡
 struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.openWindow) private var openWindow
     let temporaryRecord: Bool
     let id: UUID
     let text: String               // 回复内容
@@ -92,6 +93,11 @@ struct ChatBubbleView: View {
     let healthCards: [HealthData]? // 健康卡片
     let codeBlocks: [CodeBlock]?   // 代码块
     let knowledgeCard: [KnowledgeCard]? // 知识卡片
+    var nativeUIBlocks: [NativeUIBlock] = []
+    var agentRun: AgentRun? = nil
+    var showsAgentActivitySummary: Bool = false
+    var isAgentTranscriptOwner: Bool = false
+    var isRenderedByAgentTranscript: Bool = false
     let searchEngine: String?
     let audioAssets: [AudioAsset]?
     @Binding var isVoiceExpanded: Bool // 语音消息折叠
@@ -136,6 +142,8 @@ struct ChatBubbleView: View {
     // 保存知识相关
     @State private var isKnowledgeWritingSheetPresented: Bool = false
     @State private var recordToWrite: KnowledgeRecords? = nil
+    @State private var nativeAppFullScreenRequest: NativeAppLaunchRequest?
+    @State private var nativeAppSheetRequest: NativeAppLaunchRequest?
     
     @ScaledMetric(relativeTo: .body) var size_5: CGFloat = 5
     @ScaledMetric(relativeTo: .body) var size_7: CGFloat = 7
@@ -151,10 +159,120 @@ struct ChatBubbleView: View {
     @ScaledMetric(relativeTo: .body) var size_38: CGFloat = 38
     @ScaledMetric(relativeTo: .body) var size_40: CGFloat = 40
     @ScaledMetric(relativeTo: .body) var size_80: CGFloat = 80
+
+    init(
+        temporaryRecord: Bool,
+        id: UUID,
+        text: String,
+        saveTranlatedText: String?,
+        images: [UIImage]?,
+        imagesText: String?,
+        reasoning: String,
+        reasoningTime: String?,
+        isReasoningExpanded: Binding<Bool>,
+        toolContent: String,
+        toolName: String,
+        isToolContentExpanded: Binding<Bool>,
+        uploadDocument: [URL]?,
+        documentText: String?,
+        resources: [Resource]?,
+        prompts: [PromptCard]?,
+        locations: [Location]?,
+        routes: [RouteInfo]?,
+        events: [EventItem]?,
+        htmlContent: String?,
+        healthCards: [HealthData]?,
+        codeBlocks: [CodeBlock]?,
+        knowledgeCard: [KnowledgeCard]?,
+        nativeUIBlocks: [NativeUIBlock] = [],
+        agentRun: AgentRun? = nil,
+        showsAgentActivitySummary: Bool = false,
+        isAgentTranscriptOwner: Bool = false,
+        isRenderedByAgentTranscript: Bool = false,
+        searchEngine: String?,
+        audioAssets: [AudioAsset]?,
+        isVoiceExpanded: Binding<Bool>,
+        showCanvas: Bool,
+        canvas: CanvasData?,
+        role: String,
+        model: String,
+        modelCompany: String,
+        modelIdentity: String,
+        modelIcon: String,
+        isLastAssistant: Bool,
+        isLastAssistantGroup: Bool,
+        splitMarker: Bool,
+        isResponding: Bool,
+        operationalState: String,
+        operationalDescription: String,
+        onRetry: (() -> Void)?,
+        onDelete: (() -> Void)?
+    ) {
+        self.temporaryRecord = temporaryRecord
+        self.id = id
+        self.text = text
+        self.saveTranlatedText = saveTranlatedText
+        self.images = images
+        self.imagesText = imagesText
+        self.reasoning = reasoning
+        self.reasoningTime = reasoningTime
+        self._isReasoningExpanded = isReasoningExpanded
+        self.toolContent = toolContent
+        self.toolName = toolName
+        self._isToolContentExpanded = isToolContentExpanded
+        self.uploadDocument = uploadDocument
+        self.documentText = documentText
+        self.resources = resources
+        self.prompts = prompts
+        self.locations = locations
+        self.routes = routes
+        self.events = events
+        self.htmlContent = htmlContent
+        self.healthCards = healthCards
+        self.codeBlocks = codeBlocks
+        self.knowledgeCard = knowledgeCard
+        self.nativeUIBlocks = nativeUIBlocks
+        self.agentRun = agentRun
+        self.showsAgentActivitySummary = showsAgentActivitySummary
+        self.isAgentTranscriptOwner = isAgentTranscriptOwner
+        self.isRenderedByAgentTranscript = isRenderedByAgentTranscript
+        self.searchEngine = searchEngine
+        self.audioAssets = audioAssets
+        self._isVoiceExpanded = isVoiceExpanded
+        self.showCanvas = showCanvas
+        self.canvas = canvas
+        self.role = role
+        self.model = model
+        self.modelCompany = modelCompany
+        self.modelIdentity = modelIdentity
+        self.modelIcon = modelIcon
+        self.isLastAssistant = isLastAssistant
+        self.isLastAssistantGroup = isLastAssistantGroup
+        self.splitMarker = splitMarker
+        self.isResponding = isResponding
+        self.operationalState = operationalState
+        self.operationalDescription = operationalDescription
+        self.onRetry = onRetry
+        self.onDelete = onDelete
+    }
+
+    @State private var containerWidth: CGFloat = 0
+
+    private var effectiveContainerWidth: CGFloat {
+        containerWidth > 0 ? containerWidth : UIScreen.main.bounds.width
+    }
     
     var body: some View {
         VStack(alignment: messageAlignment) {
             contentView()
+        }
+        .frame(maxWidth: .infinity, alignment: role == "information" ? .center : (role == "user" ? .trailing : .leading))
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.width
+        } action: { newWidth in
+            if newWidth > 0 {
+                containerWidth = newWidth
+            }
         }
         // 添加确认弹窗
         .alert("确认删除？", isPresented: $showDeleteConfirmation) {
@@ -166,12 +284,39 @@ struct ChatBubbleView: View {
             Text("确定要删除吗？删除后不可恢复！")
                 .multilineTextAlignment(.leading)
         }
+        .sheet(item: $nativeAppSheetRequest) { request in
+            NativeAppSessionContainerView(request: request)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+        .fullScreenCover(item: $nativeAppFullScreenRequest) { request in
+            NativeAppSessionContainerView(request: request)
+        }
         .padding(.vertical, 2)
         .onAppear {
             translatedText = saveTranlatedText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             translated = !translatedText.isEmpty
         }
         .tint(temporaryRecord ? .primary : nil)
+    }
+
+    private func launchNativeApp(_ request: NativeAppLaunchRequest) {
+        NativeToolTraceLogger.shared.log(
+            "native_ui_app_route_requested",
+            [
+                "appID": request.appID,
+                "presentationStyle": request.presentationStyle.rawValue,
+                "hasInitialRoute": request.initialRoute != nil
+            ]
+        )
+        switch request.presentationStyle {
+        case .fullScreen:
+            nativeAppFullScreenRequest = request
+        case .largeSheet:
+            nativeAppSheetRequest = request
+        case .newWindow:
+            openWindow(value: request)
+        }
     }
 
     private var messageAlignment: HorizontalAlignment {
@@ -271,7 +416,9 @@ struct ChatBubbleView: View {
                 .foregroundColor(.primary)
                 .cornerRadius(20)
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .leading)
+                .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .leading)
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("hanlin-search-bubble")
                 .contextMenu {
                     Button(action: {
                         isTextSelectionSheetPresented = true
@@ -298,54 +445,63 @@ struct ChatBubbleView: View {
                 
                 if let images = images, !images.isEmpty {
                     chatBubbleImage()
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                        .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("hanlin-user-image-attachment")
                 }
                 
                 if let document = uploadDocument, !document.isEmpty {
                     chatBubbleDocument(for: document)
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .trailing)
+                        .frame(maxWidth: effectiveContainerWidth * 0.5, alignment: .trailing)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("hanlin-user-document-attachment")
                 }
                 
                 if let prompts = prompts, !prompts.isEmpty {
                     chatBubblePrompt()
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
+                        .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
                 }
                 
-                HStack {
-                    Text(text)
-                }
-                .padding(10)
-                .background(temporaryRecord ? .primary : Color(.hlBlue))
-                .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
-                .contextMenu {
-                    Button(action: {
-                        UIPasteboard.general.string = markdownToPlainText(text)
-                    }) {
-                        Label("复制内容", systemImage: "square.on.square")
+                if !text.isEmpty {
+                    HStack {
+                        Text(text)
                     }
-                    Button(action: {
-                        isTextSelectionSheetPresented = true
-                    }) {
-                        Label("选择文本", systemImage: "text.redaction")
+                    .padding(10)
+                    .background(temporaryRecord ? .primary : Color(.hlBlue))
+                    .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
+                    .contextMenu {
+                        Button(action: {
+                            UIPasteboard.general.string = markdownToPlainText(text)
+                        }) {
+                            Label("复制内容", systemImage: "square.on.square")
+                        }
+                        Button(action: {
+                            isTextSelectionSheetPresented = true
+                        }) {
+                            Label("选择文本", systemImage: "text.redaction")
+                        }
+                        Button(action: {
+                            createAndSaveKnowledgeRecord(with: text)
+                        }) {
+                            Label("存为知识", systemImage: "backpack")
+                        }
+                        Button(action: {
+                            showDeleteConfirmation = true
+                        }) {
+                            Label("删除消息", systemImage: "trash")
+                        }
                     }
-                    Button(action: {
-                        createAndSaveKnowledgeRecord(with: text)
-                    }) {
-                        Label("存为知识", systemImage: "backpack")
+                    .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel(text)
+                    .accessibilityIdentifier("hanlin-user-bubble")
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
+                    .sheet(isPresented: $isTextSelectionSheetPresented) {
+                        TextSelectionView(text: text)
                     }
-                    Button(action: {
-                        showDeleteConfirmation = true
-                    }) {
-                        Label("删除消息", systemImage: "trash")
-                    }
-                }
-                .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
-                .transition(.move(edge: .trailing).combined(with: .opacity))
-                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
-                .sheet(isPresented: $isTextSelectionSheetPresented) {
-                    TextSelectionView(text: text)
                 }
             }
         }
@@ -362,6 +518,8 @@ struct ChatBubbleView: View {
             assistantTextSection()
             assistantFooter()
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-assistant-bubble")
         .transition(.move(edge: .leading).combined(with: .opacity))
         .animation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
                    value: isResponding)
@@ -407,7 +565,7 @@ struct ChatBubbleView: View {
     private func assistantImageSection() -> some View {
         if let images = images, !images.isEmpty {
             chatAssistantBubbleImage()
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.75,
+                .frame(maxWidth: effectiveContainerWidth * 0.75,
                        alignment: .leading)
                 .transition(.move(edge: .top).combined(with: .opacity))
                 .animation(.spring(response: 0.5, dampingFraction: 0.8),
@@ -415,10 +573,33 @@ struct ChatBubbleView: View {
         }
     }
 
+    private var embeddedInteractiveItems: [AgentTranscriptItem] {
+        guard let items = agentRun?.transcriptItems else { return [] }
+        return items.filter { item in
+            item.kind == .userVisibleToolResult
+                && (item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil)
+        }
+    }
+
+    private var hasAssistantRichCards: Bool {
+        (showCanvas && canvas?.content.isEmpty == false)
+            || codeBlocks?.isEmpty == false
+            || knowledgeCard?.isEmpty == false
+            || htmlContent?.isEmpty == false
+            || events?.isEmpty == false
+            || healthCards?.isEmpty == false
+            || locations?.isEmpty == false
+            || routes?.isEmpty == false
+            || !nativeUIBlocks.isEmpty
+            || !embeddedInteractiveItems.isEmpty
+            || audioAssets?.isEmpty == false
+            || !resolvedResourcesForDisplay.isEmpty
+    }
+
     // MARK: 文本 & 各类工具输出
     @ViewBuilder
     private func assistantTextSection() -> some View {
-        if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty {
+        if !text.isEmpty || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty || hasAssistantRichCards {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
@@ -464,6 +645,26 @@ struct ChatBubbleView: View {
                     mapBubble(for: locations ?? [], routes: routes ?? [])
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
+                // 新型交互式小程序 / NativeScript / 脚本界面内嵌宿主
+                if !embeddedInteractiveItems.isEmpty {
+                    ForEach(embeddedInteractiveItems) { item in
+                        AgentTranscriptToolResultView(
+                            item: item,
+                            temporaryRecord: temporaryRecord,
+                            onLaunchRequest: launchNativeApp
+                        )
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                    }
+                }
+                if !nativeUIBlocks.isEmpty {
+                    NativeUIToolResultContainer(
+                        blocks: nativeUIBlocks,
+                        temporaryRecord: temporaryRecord,
+                        containerWidth: effectiveContainerWidth,
+                        onLaunchRequest: launchNativeApp
+                    )
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                }
                 // 底部按钮
                 if isLastAssistant && !isResponding {
                     actionButtons()
@@ -477,7 +678,7 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func assistantFooter() -> some View {
         if (!operationalState.isEmpty && isLastAssistant)
-            || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil) {
+            || (text.isEmpty && sanitizedReasoningDisplay.isEmpty && resolvedToolContentForDisplay.isEmpty && images == nil && !hasAssistantRichCards) {
             loadingSection()
         }
         else if isResponding && isLastAssistant {
@@ -601,7 +802,11 @@ struct ChatBubbleView: View {
     private func codeBubble(for codes: [CodeBlock]) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             ForEach(codes) { codeBlock in
-                CodeBlockRow(codeBlock: codeBlock, temporaryRecord: temporaryRecord) {
+                CodeBlockRow(
+                    codeBlock: codeBlock,
+                    temporaryRecord: temporaryRecord,
+                    containerWidth: effectiveContainerWidth
+                ) {
                     selectedCodeBlock = codeBlock
                     triggerPythonCopyFeedback.toggle()
                 }
@@ -744,7 +949,7 @@ struct ChatBubbleView: View {
                         .cornerRadius(20)
                         .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+                .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
             }
         }
     }
@@ -768,7 +973,9 @@ struct ChatBubbleView: View {
                         .cornerRadius(20)
                         .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+                .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("hanlin-html-web-bubble")
             
             HStack(spacing: 6) {
                 // 查看代码按钮
@@ -1043,7 +1250,7 @@ struct ChatBubbleView: View {
                     )
                 }
             }
-            .frame(maxWidth: UIScreen.main.bounds.width * 0.9,
+            .frame(maxWidth: effectiveContainerWidth * 0.9,
                    alignment: .leading)
         }
     }
@@ -1152,7 +1359,7 @@ struct ChatBubbleView: View {
                     )
                 }
             }
-            .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+            .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
         }
     }
 
@@ -1185,7 +1392,7 @@ struct ChatBubbleView: View {
                     .cornerRadius(20)
                     .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
             )
-            .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+            .frame(maxWidth: effectiveContainerWidth * 0.95, alignment: .leading)
             
             // 按钮区域保持原样
             HStack(spacing: 6) {
@@ -1364,6 +1571,7 @@ struct ChatBubbleView: View {
                     .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-copy")
             .sensoryFeedback(.success, trigger: isSuccess)
             
             if isCopy {
@@ -1384,6 +1592,7 @@ struct ChatBubbleView: View {
                     .clipShape(Circle())
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-select")
             .sheet(isPresented: $isTextSelectionSheetPresented) {
                 TextSelectionView(text: text)
             }
@@ -1414,6 +1623,7 @@ struct ChatBubbleView: View {
                 }
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-tts")
             
             if tts.isAsking {
                 Text("正在请求")
@@ -1467,6 +1677,7 @@ struct ChatBubbleView: View {
             }
             .disabled(isTranslating)
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-translate")
             .alert("翻译操作失败", isPresented: $showErrorAlert) {
                 Button("确定", role: .cancel) {}
             } message: {
@@ -1494,6 +1705,7 @@ struct ChatBubbleView: View {
                     .foregroundColor(showMathModeReminder ? .hlBluefont : .secondary)
                     .clipShape(Circle())
             }
+            .accessibilityIdentifier("hanlin-action-math")
             
             if showMathModeReminder {
                 Text(mathMode ? "科学模式" : "文本模式")
@@ -1513,6 +1725,7 @@ struct ChatBubbleView: View {
                     .clipShape(Circle())
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier("hanlin-action-knowledge")
             .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
                 if let record = recordToWrite {
                     NavigationStack {
@@ -1531,8 +1744,11 @@ struct ChatBubbleView: View {
                         .clipShape(Circle())
                 }
                 .buttonStyle(PlainButtonStyle())
+                .accessibilityIdentifier("hanlin-action-retry")
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-action-buttons-row")
         .padding(.leading, 5)
         .animation(
             .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
@@ -1547,88 +1763,90 @@ struct ChatBubbleView: View {
             reasoningView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
             
-            Group {
-                if mathMode {
-                    LaTeX(text)
-                } else {
-                    Markdown(text)
-                }
-            }
-            .contextMenu {
-                // 复制
-                Button(action: {
-                    UIPasteboard.general.string = markdownToPlainText(text)
-                }) {
-                    Label("复制内容", systemImage: "square.on.square")
-                }
-                
-                // 选中文本
-                Button(action: {
-                    isTextSelectionSheetPresented = true
-                }) {
-                    Label("选择文本", systemImage: "text.redaction")
-                }
-                
-                // 生成语音
-                Button(action: {
-                    tts.setContextIfNeeded(modelContext)
-                    tts.updateSelectedModel()
-                    tts.setMessageId(id)
-                    tts.toggleSpeech(text: text)
-                }) {
-                    if tts.isAsking {
-                        Label("正在请求", systemImage: "progress.indicator")
+            if !text.isEmpty {
+                Group {
+                    if mathMode {
+                        LaTeX(text)
                     } else {
-                        Label("生成语音", systemImage: "waveform")
+                        Markdown(text)
                     }
                 }
-                
-                // 翻译/删除译文/翻译中…
-                Button(action: translateText) {
-                    if isTranslating {
-                        Label("正在翻译", systemImage: "progress.indicator")
-                    } else if translated {
-                        Label("删除译文", systemImage: "trash")
-                    } else {
-                        HStack {
-                            Image("translate")
-                                .renderingMode(.template)
-                                .font(.system(size: size_14, weight: .medium))
-                                .frame(width: size_24, height: size_24)
-                                .foregroundColor(.secondary)
-                                .clipShape(Circle())
-                            Text("翻译内容")
+                .contextMenu {
+                    // 复制
+                    Button(action: {
+                        UIPasteboard.general.string = markdownToPlainText(text)
+                    }) {
+                        Label("复制内容", systemImage: "square.on.square")
+                    }
+                    
+                    // 选中文本
+                    Button(action: {
+                        isTextSelectionSheetPresented = true
+                    }) {
+                        Label("选择文本", systemImage: "text.redaction")
+                    }
+                    
+                    // 生成语音
+                    Button(action: {
+                        tts.setContextIfNeeded(modelContext)
+                        tts.updateSelectedModel()
+                        tts.setMessageId(id)
+                        tts.toggleSpeech(text: text)
+                    }) {
+                        if tts.isAsking {
+                            Label("正在请求", systemImage: "progress.indicator")
+                        } else {
+                            Label("生成语音", systemImage: "waveform")
                         }
                     }
-                }
-                
-                // 科学模式
-                Button(action: {
-                    mathMode.toggle()
-                    showMathModeReminder = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        showMathModeReminder = false
+                    
+                    // 翻译/删除译文/翻译中…
+                    Button(action: translateText) {
+                        if isTranslating {
+                            Label("正在翻译", systemImage: "progress.indicator")
+                        } else if translated {
+                            Label("删除译文", systemImage: "trash")
+                        } else {
+                            HStack {
+                                Image("translate")
+                                    .renderingMode(.template)
+                                    .font(.system(size: size_14, weight: .medium))
+                                    .frame(width: size_24, height: size_24)
+                                    .foregroundColor(.secondary)
+                                    .clipShape(Circle())
+                                Text("翻译内容")
+                            }
+                        }
                     }
-                }) {
-                    if mathMode {
-                        Label("文本模式", systemImage: "note.text")
-                    } else {
-                        Label("科学模式", systemImage: "x.squareroot")
+                    
+                    // 科学模式
+                    Button(action: {
+                        mathMode.toggle()
+                        showMathModeReminder = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            showMathModeReminder = false
+                        }
+                    }) {
+                        if mathMode {
+                            Label("文本模式", systemImage: "note.text")
+                        } else {
+                            Label("科学模式", systemImage: "x.squareroot")
+                        }
                     }
-                }
-                
-                // 存为知识
-                Button(action: {
-                    createAndSaveKnowledgeRecord(with: text)
-                }) {
-                    Label("存为知识", systemImage: "backpack")
-                }
-                
-                // 删除消息
-                Button(action: {
-                    showDeleteConfirmation = true
-                }) {
-                    Label("删除消息", systemImage: "trash")
+                    
+                    // 存为知识
+                    Button(action: {
+                        createAndSaveKnowledgeRecord(with: text)
+                    }) {
+                        Label("存为知识", systemImage: "backpack")
+                    }
+                    
+                    // 删除消息
+                    Button(action: {
+                        showDeleteConfirmation = true
+                    }) {
+                        Label("删除消息", systemImage: "trash")
+                    }
                 }
             }
             
@@ -1776,28 +1994,93 @@ struct ChatBubbleView: View {
         }
     }
     
-    private var displayReasoningLines: [String] {
-        // 拆分 & 过滤
-        let raw = reasoning
+    private var sanitizedReasoningLines: [String] {
+        reasoning
             .split(whereSeparator: {
                 [".", "\n", "。"].contains(String($0))
             })
-            .map(String.init)
+            .compactMap { ProgressSummarySanitizer.sanitizeProviderReasoningSummary(String($0)) }
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-        
-        // 取最后 3 条
+    }
+
+    private var sanitizedReasoningDisplay: String {
+        let lines = reasoning
+            .components(separatedBy: .newlines)
+            .compactMap { line -> String? in
+                let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !trimmed.isEmpty else { return nil }
+                return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(trimmed)
+            }
+        return lines.joined(separator: "\n")
+    }
+
+    private var displayReasoningLines: [String] {
+        let raw = sanitizedReasoningLines
         let last3 = Array(raw.suffix(3))
-        // 如果不为空且不足 3 条，就在前面补空
         if !last3.isEmpty && last3.count < 3 {
             return Array(repeating: " ", count: 3 - last3.count) + last3
         }
         return last3
     }
 
+    private var resolvedToolContentForDisplay: String {
+        let trimmed = toolContent.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty {
+            return toolContent
+        }
+        guard let steps = agentRun?.steps else { return "" }
+        let toolSteps = steps.filter { $0.kind == .toolCall }
+        guard !toolSteps.isEmpty else { return "" }
+        return toolSteps.map { step in
+            let title = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            if let summary = step.summary?.trimmingCharacters(in: .whitespacesAndNewlines), !summary.isEmpty {
+                return "\(title)\n\(summary)"
+            }
+            return title
+        }.joined(separator: "\n\n")
+    }
+
+    private var resolvedToolNameForDisplay: String {
+        let trimmed = toolName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty {
+            return trimmed
+        }
+        guard let steps = agentRun?.steps else { return "" }
+        let toolSteps = steps.filter { $0.kind == .toolCall }
+        return toolSteps.last?.title ?? ""
+    }
+
+    private var resolvedResourcesForDisplay: [Resource] {
+        var combined: [Resource] = resources ?? []
+        if let evidenceItems = agentRun?.evidenceItems, !evidenceItems.isEmpty {
+            for item in evidenceItems {
+                guard let urlString = item.url?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !urlString.isEmpty,
+                      let url = URL(string: urlString),
+                      let scheme = url.scheme?.lowercased(),
+                      (scheme == "http" || scheme == "https"),
+                      url.host?.lowercased() != "search.local" else {
+                    continue
+                }
+                let host = url.host ?? ""
+                let iconURL = host.isEmpty ? "" : "https://www.google.com/s2/favicons?sz=64&domain=\(host)"
+                combined.append(
+                    Resource(
+                        title: item.title.isEmpty ? urlString : item.title,
+                        icon: iconURL,
+                        link: urlString
+                    )
+                )
+            }
+        }
+        return LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
+    }
+
     // MARK: - 推理过程区域
     @ViewBuilder
     private func reasoningView() -> some View {
-        if !reasoning.isEmpty {
+        let displayReasoning = sanitizedReasoningDisplay
+        if !displayReasoning.isEmpty {
             VStack(alignment: .leading) {
                 
                 ToggleButton(
@@ -1805,15 +2088,17 @@ struct ChatBubbleView: View {
                     timeText: reasoningTime ?? "",
                     isExpanded: $isReasoningExpanded
                 )
+                .accessibilityIdentifier("hanlin-reasoning-toggle")
                 
                 if isReasoningExpanded {
-                    Text(reasoning)
+                    Text(displayReasoning)
                         .font(.footnote)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
                         .transition(.opacity.combined(with: .scale))
                         .textSelection(.enabled)
                         .padding(.bottom, 5)
+                        .accessibilityIdentifier("hanlin-reasoning-expanded-text")
                 } else {
                     if isResponding && isLastAssistantGroup {
                         VStack(alignment: .leading, spacing: 2) {
@@ -1851,25 +2136,30 @@ struct ChatBubbleView: View {
     // MARK: - 工具使用区域
     @ViewBuilder
     private func toolContentView() -> some View {
-        if !toolContent.isEmpty {
+        let effectiveToolContent = resolvedToolContentForDisplay
+        if !effectiveToolContent.isEmpty {
             VStack(alignment: .leading) {
                 
                 ToggleButton(
                     title: String(localized: "tooluse_content"),
-                    timeText: toolName,
+                    timeText: resolvedToolNameForDisplay,
                     isExpanded: $isToolContentExpanded
                 )
+                .accessibilityIdentifier("hanlin-tool-content-toggle")
                 
                 if isToolContentExpanded {
-                    Text(toolContent)
+                    Text(effectiveToolContent)
                         .font(.footnote)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
                         .transition(.opacity.combined(with: .scale))
                         .textSelection(.enabled)
                         .padding(.bottom, 5)
+                        .accessibilityIdentifier("hanlin-tool-content-expanded-text")
                 }
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-tool-content")
         }
     }
     
@@ -1989,19 +2279,20 @@ struct ChatBubbleView: View {
     // MARK: - 参考资料区域
     @ViewBuilder
     private func resourcesView() -> some View {
-        if let resources = resources, !resources.isEmpty {
+        let deduplicatedResources = resolvedResourcesForDisplay
+        if !deduplicatedResources.isEmpty {
             VStack(alignment: .leading) {
                 
                 ToggleButton(
                     title: String(localized: "reference_materials"),
-                    timeText: String(resources.count),
+                    timeText: String(deduplicatedResources.count),
                     isExpanded: $isResourcesExpanded
                 )
 
                 if isResourcesExpanded {
                     VStack(alignment: .leading) {
-                        ForEach(resources.indices, id: \.self) { index in
-                            resourceItemView(resource: resources[index], index: index)
+                        ForEach(deduplicatedResources.indices, id: \.self) { index in
+                            resourceItemView(resource: deduplicatedResources[index], index: index)
                         }
                     }
                     .padding(.horizontal, 6)
@@ -2010,6 +2301,8 @@ struct ChatBubbleView: View {
                     .padding(.bottom, 5)
                 }
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-reference-materials")
         }
     }
 
@@ -2102,6 +2395,7 @@ struct ChatBubbleView: View {
             .foregroundColor(.secondary)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
+            .accessibilityIdentifier("hanlin-info-bubble")
     }
     
     // MARK: - 错误型消息
@@ -2115,7 +2409,6 @@ struct ChatBubbleView: View {
             
             if let retryAction = onRetry {
                 Button(action: {
-                    isFeedBack.toggle()
                     retryAction()
                 }) {
                     Text("重新请求")
@@ -2126,7 +2419,7 @@ struct ChatBubbleView: View {
                         .foregroundColor(.white)
                         .cornerRadius(20)
                 }
-                .sensoryFeedback(.impact, trigger: isFeedBack)
+                .accessibilityIdentifier("hanlin-error-retry-button")
             }
         }
         .frame(maxWidth: .infinity)
@@ -2137,6 +2430,8 @@ struct ChatBubbleView: View {
                 .stroke(Color.hlOrange.opacity(0.3), lineWidth: 1)
         )
         .cornerRadius(20)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-error-bubble")
     }
 
     // MARK: - 折叠按钮组件
@@ -2432,11 +2727,16 @@ struct ChatBubbleView: View {
 }
 
 // MARK: - 代码块
-private struct CodeBlockRow: View {
+struct CodeBlockRow: View {
     let codeBlock: CodeBlock
     let temporaryRecord: Bool
+    var containerWidth: CGFloat = 0
     let onShowSource: () -> Void
     @State private var isFeedBack: Bool = false
+
+    private var effectiveWidth: CGFloat {
+        containerWidth > 0 ? containerWidth : UIScreen.main.bounds.width
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -2459,6 +2759,7 @@ private struct CodeBlockRow: View {
                     .foregroundColor(.white)
                     .clipShape(Capsule())
                 }
+                .accessibilityIdentifier("hanlin-code-view-source")
                 .sensoryFeedback(.impact, trigger: isFeedBack)
             }
             
@@ -2470,6 +2771,7 @@ private struct CodeBlockRow: View {
                 .foregroundColor(codeBlock.hasError ? .red : .primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 4)
+                .environment(\.layoutDirection, .leftToRight)
         }
         .padding(10)
         .cornerRadius(20)
@@ -2478,7 +2780,9 @@ private struct CodeBlockRow: View {
                 .cornerRadius(20)
                 .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
         )
-        .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
+        .frame(maxWidth: effectiveWidth * 0.95, alignment: .leading)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-code-block-row")
     }
 }
 
@@ -2498,6 +2802,7 @@ struct WebView: UIViewRepresentable {
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
         
         let webView = WKWebView(frame: .zero, configuration: config)
+        webView.accessibilityIdentifier = "hanlin-html-web-bubble"
         webView.navigationDelegate = context.coordinator
         webView.scrollView.isScrollEnabled = true
         webView.allowsBackForwardNavigationGestures = true
@@ -3035,17 +3340,9 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        // 异步高亮，避免阻塞主线程
-        DispatchQueue.global(qos: .userInitiated).async {
-            let highlighted = makeHighlighted(code)
-            coordinator.lastAttributed = highlighted
-            DispatchQueue.main.async {
-                // 确保无新更新后再赋值
-                if coordinator.lastCode == code {
-                    uiView.attributedText = highlighted
-                }
-            }
-        }
+        let highlighted = makeHighlighted(code)
+        coordinator.lastAttributed = highlighted
+        uiView.attributedText = highlighted
     }
 }
 
@@ -3182,15 +3479,9 @@ struct PythonCodeSelectionTextView: UIViewRepresentable {
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            let highlighted = highlightPythonCode(code)
-            coordinator.lastAttributed = highlighted
-            DispatchQueue.main.async {
-                if coordinator.lastCode == code {
-                    uiView.attributedText = highlighted
-                }
-            }
-        }
+        let highlighted = highlightPythonCode(code)
+        coordinator.lastAttributed = highlighted
+        uiView.attributedText = highlighted
     }
 }
 

@@ -275,6 +275,19 @@ struct ChatViewBottom: View {
     @State private var selectedViewImage: UIImage?
     @State private var isImageViewerPresented: Bool = false
     @State private var isSelect = false
+    @State private var textEditorHeight: CGFloat = 38
+
+    static func shouldEnableSend(
+        message: String,
+        selectedImagesCount: Int,
+        selectedDocumentsCount: Int,
+        selectedPromptsCount: Int,
+        isResponding: Bool = false
+    ) -> Bool {
+        guard !isResponding else { return false }
+        let hasText = !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        return hasText || selectedImagesCount > 0 || selectedDocumentsCount > 0 || selectedPromptsCount > 0
+    }
 
     @ScaledMetric(relativeTo: .body) var size_16: CGFloat = 16
     @ScaledMetric(relativeTo: .body) var size_20: CGFloat = 20
@@ -371,6 +384,11 @@ struct ChatViewBottom: View {
         .onChange(of: isMultiSelectMode) {
             isViewLoaded = !isMultiSelectMode
         }
+        .background(
+            GeometryReader { proxy in
+                Color.clear.preference(key: ComposerHeightPreferenceKey.self, value: proxy.size.height)
+            }
+        )
     }
 
     /// 底部动画触发状态集合
@@ -581,8 +599,11 @@ struct ChatViewBottom: View {
                                         .background(.background)
                                         .clipShape(Circle())
                                 }
+                                .accessibilityIdentifier("hanlin-remove-image-attachment")
                                 .sensoryFeedback(.impact, trigger: isFeedBack)
                             }
+                            .accessibilityElement(children: .contain)
+                            .accessibilityIdentifier("hanlin-composer-image-attachment")
                             .transition(.opacity.combined(with: .move(edge: .bottom)))
                         }
                         ZStack(alignment: .center) {
@@ -659,11 +680,14 @@ struct ChatViewBottom: View {
                                     Image(systemName: "xmark.circle.fill")
                                         .foregroundColor(Color(.hlRed))
                                 }
+                                .accessibilityIdentifier("hanlin-remove-document-attachment")
                                 .sensoryFeedback(.impact, trigger: isFeedBack)
                             }
                             .padding(6)
                             .background(.background.opacity(0.6))
                             .cornerRadius(20)
+                            .accessibilityElement(children: .contain)
+                            .accessibilityIdentifier("hanlin-composer-document-attachment")
                         }
                     }
                 }
@@ -913,9 +937,13 @@ struct ChatViewBottom: View {
     private var inputFieldSection: some View {
         HStack {
             VStack {
-                HStack {
-                    InputTextField(
+                HStack(alignment: .bottom) {
+                    NativeMultilineTextEditor(
                         text: $message,
+                        textHeight: $textEditorHeight,
+                        placeholderText: String(localized: "Message"),
+                        minHeight: 38,
+                        maxHeight: 140,
                         onPasteImage: { pastedImage in
                             selectedImages.append(pastedImage)
                         },
@@ -923,16 +951,24 @@ struct ChatViewBottom: View {
                             selectedDocumentURLs.append(pastedFile)
                         },
                         onSendMessage: {
-                            onSendUser()
+                            if Self.shouldEnableSend(
+                                message: message,
+                                selectedImagesCount: selectedImages.count,
+                                selectedDocumentsCount: selectedDocumentURLs.count,
+                                selectedPromptsCount: selectedPrompts.count,
+                                isResponding: isResponding
+                            ) {
+                                onSendUser()
+                            }
+                        },
+                        onMentionTriggered: {
+                            updateModelSuggestions()
                         }
                     )
                     .padding(.leading, 12)
-                    .frame(height: size_44)
+                    .frame(height: max(size_44, textEditorHeight))
                     .focused(isInputActive)
-                    .submitLabel(.send)
-                    .onSubmit {
-                        onSendUser()
-                    }
+                    .accessibilityIdentifier("hanlin-chat-input")
                     .onChange(of: message) {
                         debounceWorkItem?.cancel()
                         debounceWorkItem = DispatchWorkItem {
@@ -1076,6 +1112,7 @@ struct ChatViewBottom: View {
                                     }) {
                                         modelButton(for: model, isSelected: index == selectedModelIndex)
                                     }
+                                    .accessibilityIdentifier(index == selectedModelIndex ? "hanlin-model-selector-capsule" : "hanlin-model-selector-option-\(index)")
                                     .sensoryFeedback(.selection, trigger: isSelect)
                                 }
                             }
@@ -1440,6 +1477,50 @@ struct ChatViewBottom: View {
                         .ignoresSafeArea()
                 }
             }
+
+            #if targetEnvironment(simulator)
+            if AgentRuntimeUIAcceptanceProvider.isEnabled {
+                HStack(spacing: 6) {
+                    Button(action: {
+                        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 64))
+                        let sampleImage = renderer.image { ctx in
+                            UIColor.systemBlue.setFill()
+                            ctx.fill(CGRect(x: 0, y: 0, width: 64, height: 64))
+                        }
+                        selectedImages.append(sampleImage)
+                        showPhotoSourceOptions = false
+                    }) {
+                        Label("Sample Image", systemImage: "photo.badge.plus")
+                            .font(.caption.bold())
+                            .padding(8)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.hlBlue.opacity(0.1))
+                            .cornerRadius(12)
+                    }
+                    .accessibilityIdentifier("hanlin-attach-sample-image")
+
+                    Button(action: {
+                        let tmpURL = FileManager.default.temporaryDirectory
+                            .appendingPathComponent("sample-attachment.txt")
+                        try? "Sample attachment document content for UI acceptance.".write(
+                            to: tmpURL,
+                            atomically: true,
+                            encoding: .utf8
+                        )
+                        selectedDocumentURLs.append(tmpURL)
+                        showPhotoSourceOptions = false
+                    }) {
+                        Label("Sample Document", systemImage: "doc.badge.plus")
+                            .font(.caption.bold())
+                            .padding(8)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.hlBlue.opacity(0.1))
+                            .cornerRadius(12)
+                    }
+                    .accessibilityIdentifier("hanlin-attach-sample-document")
+                }
+            }
+            #endif
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.horizontal, 12)
@@ -1675,6 +1756,7 @@ struct ActionButtonsView: View {
                             )
                     }
                 }
+                .accessibilityIdentifier("hanlin-model-selector-capsule")
                 .sensoryFeedback(.selection, trigger: isFeedBack)
                 .sheet(isPresented: $showModelMenuSheet) {
                     ModelMenuSheetView(
@@ -1712,6 +1794,7 @@ struct ActionButtonsView: View {
                         .rotationEffect(.degrees(isSourceOptionsVisible ? 45 : 0))
                         .animation(.spring(response: 0.5), value: isSourceOptionsVisible)
                 }
+                .accessibilityIdentifier("hanlin-composer-plus-menu")
                 .disabled(isResponding || selectedImages.count > 4)
                 .sensoryFeedback(.impact, trigger: isFeedBack)
                 .onChange(of: showPhotoSourceOptions) {
@@ -1759,6 +1842,7 @@ struct ActionButtonsView: View {
                             }
                         }
                         .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .accessibilityIdentifier("hanlin-tool-use-toggle")
                         .background(bgColorTool)
                         .cornerRadius(20)
                         .overlay(
@@ -2010,6 +2094,7 @@ struct ActionButtonsView: View {
                     if model?.supportsVoiceGen == true {
                         Button {
                             isFeedBack.toggle()
+                            ifAudio.toggle()
                             audioTrigger.toggle()
                         } label: {
                             HStack {
@@ -2125,6 +2210,7 @@ struct ActionButtonsView: View {
                             .foregroundColor(.hlRed)
                             .symbolEffect(.breathe, isActive: true)
                     }
+                    .accessibilityIdentifier("hanlin-chat-stop")
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isResponding)
                 } else if !selectedImages.isEmpty
                             || !selectedDocumentURLs.isEmpty
@@ -2136,8 +2222,17 @@ struct ActionButtonsView: View {
                             .frame(width: size32, height: size32)
                             .foregroundColor(sendButtonColor)
                     }
+                    .accessibilityIdentifier("hanlin-chat-send")
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: message)
-                    .disabled(message.isEmpty)
+                    .disabled(
+                        !ChatViewBottom.shouldEnableSend(
+                            message: message,
+                            selectedImagesCount: selectedImages.count,
+                            selectedDocumentsCount: selectedDocumentURLs.count,
+                            selectedPromptsCount: selectedPrompts.count,
+                            isResponding: isResponding
+                        )
+                    )
                 } else {                     // 观察
                     Button(action: onSendObserve) {
                         Image(systemName: "eye.circle.fill")
@@ -2145,6 +2240,7 @@ struct ActionButtonsView: View {
                             .frame(width: size32, height: size32)
                             .foregroundColor(observeButtonColor)
                     }
+                    .accessibilityIdentifier("hanlin-chat-observe")
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: message)
                     .sensoryFeedback(.impact, trigger: isFeedBack)
                     .disabled(

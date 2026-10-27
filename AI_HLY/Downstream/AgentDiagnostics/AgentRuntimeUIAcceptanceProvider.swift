@@ -319,7 +319,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 let payload: [String: Any] = [
                     "choices": [[
                         "delta": [
-                            "reasoning_content": "<think>Step 1: Let me think privately about internal CoT</think>",
+                            "reasoning_content": "<think>Step 1: Let me think privately about internal CoT</think>\nVerifying arithmetic expression 6 * 7",
                             "tool_calls": [[
                                 "index": 0,
                                 "id": "ui04-progress-1",

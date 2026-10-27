@@ -100,6 +100,7 @@ public enum SystemSkillsProvider {
                    summary: "Search the web, read online web pages, search arXiv academic papers, and inspect remote documents.",
                    instructions: .inline("""
                    Web discovery and research workflow:
+                   - IMPORTANT: `web_research` is a skill_id for `load_skill`, NOT a callable tool name. Never call `web_research` as a tool.
                    - Call `search_online` to find authoritative web results.
                    - Call `read_web_page` to extract full text content from promising URLs.
                    - Call `search_arxiv_papers` for scholarly preprints.

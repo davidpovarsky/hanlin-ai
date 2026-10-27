@@ -1043,6 +1043,150 @@ struct HanlinAISDKAgentEngineTests {
 
         #expect(didCatchError)
     }
+
+    // MARK: - 14. Non-Positive maxSteps Clamped to >= 1
+
+    @Test("maxSteps <= 0 is clamped to >= 1 so streamText still executes at least one step")
+    func testNonPositiveMaxStepsClampedToAtLeastOne() async throws {
+        let model = MockLanguageModelV3(
+            doStream: .singleValue(
+                LanguageModelV3StreamResult(
+                    stream: makeStream(from: [
+                        .streamStart(warnings: []),
+                        .textStart(id: "t1", providerMetadata: nil),
+                        .textDelta(id: "t1", delta: "Clamped step output", providerMetadata: nil),
+                        .textEnd(id: "t1", providerMetadata: nil),
+                        .finish(finishReason: .stop, usage: defaultUsage, providerMetadata: nil)
+                    ])
+                )
+            )
+        )
+
+        let engine = HanlinAISDKAgentEngine(model: model, maxSteps: 0)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Test zero maxSteps")],
+            baseSystemPrompt: nil,
+            tools: [],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var collectedText = ""
+        for try await event in stream {
+            if case .textDelta(let delta) = event {
+                collectedText += delta
+            }
+        }
+        #expect(collectedText == "Clamped step output")
+        #expect(model.doStreamCalls.count == 1)
+    }
+
+    // MARK: - 15. Provider-Native Source and File Stream Events
+
+    @Test("Engine maps provider-native source and file stream parts to HanlinAISDKStreamEvent")
+    func testSourceAndFileStreamEventMapping() async throws {
+        let sampleSource = LanguageModelV3Source.url(
+            id: "src-1",
+            url: "https://developer.apple.com/documentation/swiftui",
+            title: "SwiftUI Documentation",
+            providerMetadata: nil
+        )
+        let sampleFile = LanguageModelV3File(
+            mediaType: "image/png",
+            data: .base64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=")
+        )
+        let model = MockLanguageModelV3(
+            doStream: .singleValue(
+                LanguageModelV3StreamResult(
+                    stream: makeStream(from: [
+                        .streamStart(warnings: []),
+                        .source(sampleSource),
+                        .file(sampleFile),
+                        .textStart(id: "t1", providerMetadata: nil),
+                        .textDelta(id: "t1", delta: "Done", providerMetadata: nil),
+                        .textEnd(id: "t1", providerMetadata: nil),
+                        .finish(finishReason: .stop, usage: defaultUsage, providerMetadata: nil)
+                    ])
+                )
+            )
+        )
+
+        let engine = HanlinAISDKAgentEngine(model: model)
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Generate with source and file")],
+            baseSystemPrompt: nil,
+            tools: [],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var capturedSources: [(id: String, url: String, title: String?)] = []
+        var capturedFiles: [(mediaType: String, dataCount: Int)] = []
+        for try await event in stream {
+            switch event {
+            case .source(let id, let url, let title):
+                capturedSources.append((id: id, url: url, title: title))
+            case .file(let mediaType, let data):
+                capturedFiles.append((mediaType: mediaType, dataCount: data.count))
+            default:
+                break
+            }
+        }
+
+        #expect(capturedSources.count == 1)
+        #expect(capturedSources.first?.url == "https://developer.apple.com/documentation/swiftui")
+        #expect(capturedSources.first?.title == "SwiftUI Documentation")
+        #expect(capturedFiles.count == 1)
+        #expect(capturedFiles.first?.mediaType == "image/png")
+        #expect((capturedFiles.first?.dataCount ?? 0) > 0)
+    }
+
+    // MARK: - 16. Multimodal User Parts Preserved in SDK Prompt
+
+    @Test("Multimodal user message with text, imageData, imageURL, and fileData preserves all parts in V3 prompt")
+    func testMultimodalUserMessagePartsPreserved() async throws {
+        let model = MockLanguageModelV3(
+            doStream: .singleValue(
+                LanguageModelV3StreamResult(
+                    stream: makeStream(from: [
+                        .streamStart(warnings: []),
+                        .textStart(id: "t1", providerMetadata: nil),
+                        .textDelta(id: "t1", delta: "Inspected attachments", providerMetadata: nil),
+                        .textEnd(id: "t1", providerMetadata: nil),
+                        .finish(finishReason: .stop, usage: defaultUsage, providerMetadata: nil)
+                    ])
+                )
+            )
+        )
+
+        let imageBytes = Data([0x89, 0x50, 0x4E, 0x47])
+        let pdfBytes = Data("%PDF-1.7".utf8)
+        let multimodalMessage = HanlinAISDKMessage(
+            role: .user,
+            parts: [
+                .text("Describe the image and PDF"),
+                .imageData(imageBytes, mimeType: "image/png"),
+                .imageURL(URL(string: "https://example.com/diagram.jpg")!),
+                .fileData(pdfBytes, mimeType: "application/pdf", filename: "spec.pdf")
+            ]
+        )
+
+        let engine = HanlinAISDKAgentEngine(model: model)
+        let stream = try await engine.stream(
+            messages: [multimodalMessage],
+            baseSystemPrompt: "System prompt",
+            tools: [],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        for try await _ in stream {}
+
+        #expect(model.doStreamCalls.count == 1)
+        let prompt = model.doStreamCalls[0].prompt
+        let userContent = prompt.compactMap { msg -> [LanguageModelV3UserMessagePart]? in
+            if case .user(let content, _) = msg { return content }
+            return nil
+        }.first
+        #expect(userContent?.count == 4)
+    }
 }
 
 // MARK: - Thread-safe Helpers for Testing

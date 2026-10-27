@@ -270,20 +270,25 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI04 reasoning final answer did not render")
 
-        let summaryPill = app.buttons["hanlin-agent-activity-summary"].firstMatch
-        XCTAssertTrue(summaryPill.waitForExistence(timeout: 10), "Collapsed agent activity summary pill did not render")
-        XCTAssertFalse(summaryPill.label.contains("<think>"), "Collapsed summary pill must never expose <think> tags")
-        XCTAssertFalse(summaryPill.label.localizedCaseInsensitiveContains("Let me think"), "Collapsed summary pill must never expose raw CoT")
+        let reasoningToggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
+        let toolToggle = app.descendants(matching: .any)["hanlin-tool-content-toggle"].firstMatch
+        XCTAssertTrue(
+            reasoningToggle.waitForExistence(timeout: 10) || toolToggle.waitForExistence(timeout: 10),
+            "Original foldable reasoningView() or toolContentView() toggle did not render"
+        )
 
-        // Open the inspector sheet and verify raw CoT is never displayed
-        tapElement(summaryPill)
-        let inspector = app.descendants(matching: .any)["hanlin-agent-activity-inspector"].firstMatch
-        XCTAssertTrue(inspector.waitForExistence(timeout: 10), "Agent activity inspector sheet did not open")
+        if reasoningToggle.exists {
+            XCTAssertFalse(reasoningToggle.label.contains("<think>"), "Reasoning toggle must never expose <think> tags")
+            tapElement(reasoningToggle)
+        }
+        if toolToggle.exists {
+            tapElement(toolToggle)
+        }
 
         let rawCoTText = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS[c] 'Let me think privately' OR label CONTAINS '<think>'")
         ).firstMatch
-        XCTAssertFalse(rawCoTText.exists, "Inspector must never display raw chain-of-thought monologue")
+        XCTAssertFalse(rawCoTText.exists, "Expanded original reasoning/tool sections must never display raw chain-of-thought monologue")
 
         attachScreenshot("UI-04_CollapsedProgressAndInspectorWithoutRawCoT", in: app)
     }
@@ -360,21 +365,21 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(removeDoc.waitForExistence(timeout: 5))
         tapElement(removeDoc)
 
-        // 2. Verify multiline input and non-overlapping accessory bar controls
+        // 2. Verify multiline input and non-overlapping original ChatViewBottom controls
         let input = chatInputElement(in: app)
         tapElement(input)
         input.typeText("Line 1 of multiline composer test\nLine 2 of multiline composer test\nLine 3 of multiline composer test")
 
         let modelCapsule = app.descendants(matching: .any)["hanlin-model-selector-capsule"].firstMatch
-        let continuePill = app.descendants(matching: .any)["hanlin-continue-generation-pill"].firstMatch
-        XCTAssertTrue(modelCapsule.waitForExistence(timeout: 5), "Model selector capsule must exist in accessory bar")
-        XCTAssertTrue(continuePill.waitForExistence(timeout: 5), "Continue generation pill must exist in accessory bar")
+        let sendButton = app.buttons["hanlin-chat-send"].firstMatch
+        XCTAssertTrue(modelCapsule.waitForExistence(timeout: 5), "Model selector capsule must exist in original ChatViewBottom")
+        XCTAssertTrue(sendButton.waitForExistence(timeout: 5), "Send button must exist in original ActionButtonsView")
         XCTAssertFalse(
-            modelCapsule.frame.intersects(continuePill.frame),
-            "Model selector capsule (\(modelCapsule.frame)) and continue pill (\(continuePill.frame)) must never overlap"
+            modelCapsule.frame.intersects(sendButton.frame),
+            "Model selector capsule (\(modelCapsule.frame)) and send button (\(sendButton.frame)) must never overlap"
         )
 
-        // 3. Open model selector menu/sheet
+        // 3. Select/tap model selector in original ChatViewBottom
         tapElement(modelCapsule)
         let modelCandidate = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'Agent Acceptance'")

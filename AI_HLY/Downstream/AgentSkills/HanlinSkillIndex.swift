@@ -8,13 +8,16 @@ public enum HanlinSkillIndex {
     public static func formattedIndex(skills: [HanlinSkillDescriptor]) -> String {
         guard !skills.isEmpty else { return "" }
         var lines: [String] = [
-            "Available Skills (call load_skill(skill_id) to activate instructions and tools):"
+            "Available Skills (call load_skill(skill_id: \"...\") to activate instructions and tools; skill_id values are NOT callable tool names):"
         ]
         for skill in skills {
             let id = skill.id.rawValue
             let title = skill.title.preferredValue()
             let summary = skill.summary.preferredValue()
             var line = "- \(title) (`\(id)`): \(summary)"
+            if !skill.preferredToolIDs.isEmpty {
+                line += " [Tools: \(skill.preferredToolIDs.joined(separator: ", "))]"
+            }
             if !skill.triggerHints.isEmpty {
                 line += " [Triggers: \(skill.triggerHints.joined(separator: ", "))]"
             }

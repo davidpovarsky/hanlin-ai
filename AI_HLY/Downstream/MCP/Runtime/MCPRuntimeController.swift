@@ -739,8 +739,19 @@ actor MCPRuntimeController {
             fields: diagnostics.logFields
         )
         do {
-            let paths = try pathResolver.resolve(descriptor)
-            let migrated = pathResolver.migratedDescriptor(descriptor, paths: paths)
+            var workingDescriptor = descriptor
+            if workingDescriptor.packageName.lowercased().contains("server-filesystem"),
+               workingDescriptor.arguments.isEmpty {
+                let defaultAllowedDir = RuntimeFileLayout.default.clients.path
+                try? FileManager.default.createDirectory(
+                    atPath: defaultAllowedDir,
+                    withIntermediateDirectories: true
+                )
+                workingDescriptor.arguments = [defaultAllowedDir]
+                _ = try? await registry.upsert(workingDescriptor)
+            }
+            let paths = try pathResolver.resolve(workingDescriptor)
+            let migrated = pathResolver.migratedDescriptor(workingDescriptor, paths: paths)
             if paths.requiredMigration {
                 do {
                     _ = try await registry.upsert(migrated)

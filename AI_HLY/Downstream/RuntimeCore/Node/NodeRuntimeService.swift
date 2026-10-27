@@ -171,8 +171,9 @@ actor NodeRuntimeService {
         return snapshotValue
     }
 
-    func executeJavaScript(_ request: RuntimeExecutionRequest, moduleKind: String = "esm") async throws -> RuntimeExecutionResult {
+    func executeJavaScript(_ request: RuntimeExecutionRequest, moduleKind: String? = nil) async throws -> RuntimeExecutionResult {
         let workspace = try fileLayout.validatedWorkspace(request.workspace)
+        let resolvedModuleKind = moduleKind ?? Self.inferModuleKind(for: request.source)
         let host = try await ensureRunning()
         snapshotValue.state = .executing
         snapshotValue.activeExecutionCount += 1
@@ -188,7 +189,7 @@ actor NodeRuntimeService {
             "arguments": request.arguments,
             "workspace": workspace.path,
             "environment": request.environment,
-            "moduleKind": moduleKind,
+            "moduleKind": resolvedModuleKind,
             "timeoutMilliseconds": milliseconds,
             "maximumOutputBytes": request.limits.maximumOutputBytes
         ])
@@ -415,5 +416,18 @@ actor NodeRuntimeService {
             throw RuntimeCoreError.runtimeFailure("Could not create a runtime launch token.")
         }
         return Data(bytes).base64EncodedString()
+    }
+
+    nonisolated static func inferModuleKind(for source: String) -> String {
+        let usesESM = source.range(
+            of: #"(?m)^\s*(import\s+[\w\{\*\'\"]|export\s+(default|const|let|var|function|class|\{))"#,
+            options: .regularExpression
+        ) != nil
+        if usesESM { return "esm" }
+        let usesCommonJS = source.range(
+            of: #"\b(require\s*\(|module\.exports\b|exports\.[A-Za-z_$])"#,
+            options: .regularExpression
+        ) != nil
+        return usesCommonJS ? "commonjs" : "esm"
     }
 }

@@ -55,6 +55,7 @@ enum MCPToolBridge {
             return NativeToolResult(
                 modelText: "MCP tool failed: \(error.localizedDescription)",
                 userText: error.localizedDescription,
+                outcome: .failed,
                 uiBlocks: [.init(
                     type: .error,
                     title: MCPL10n.string("MCP tool failed"),
@@ -113,6 +114,7 @@ enum MCPToolBridge {
         return NativeToolResult(
             modelText: modelText.isEmpty ? "MCP tool returned no content." : String(modelText.prefix(8 * 1_024 * 1_024)),
             userText: modelText.isEmpty ? MCPL10n.string("No content returned") : modelText,
+            outcome: output.isError ? .failed : .succeeded,
             uiBlocks: blocks
         )
     }

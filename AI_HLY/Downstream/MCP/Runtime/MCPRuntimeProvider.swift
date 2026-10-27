@@ -190,10 +190,23 @@ final class MCPRuntimeProvider {
         if let existing { await controller.stop(serverID: existing.id) }
         var installation: MCPPackageInstallation?
         do {
+            let defaultArgs: [String]
+            if spec.rawValue.lowercased().contains("server-filesystem"),
+               (existing?.arguments.isEmpty ?? true) {
+                let allowedDir = RuntimeFileLayout.default.clients.path
+                try? FileManager.default.createDirectory(
+                    atPath: allowedDir,
+                    withIntermediateDirectories: true
+                )
+                defaultArgs = [allowedDir]
+            } else {
+                defaultArgs = existing?.arguments ?? []
+            }
             var installed = try await installService.install(
                 spec,
                 serverID: existing?.id ?? UUID(),
-                entryPointOverride: entryPointOverride
+                entryPointOverride: entryPointOverride,
+                arguments: defaultArgs
             ) { progress in
                 await MainActor.run {
                     self.activeInstallOperationID = progress.operationID

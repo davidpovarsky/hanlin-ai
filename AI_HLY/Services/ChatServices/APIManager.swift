@@ -2636,6 +2636,7 @@ class APIManager {
 
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
                        let prepared = preparedAssistantTools {
+                        await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
                         try await self.processSDKAgentEngine(
                             runID: currentRunID,
                             formattedMessages: finalFormattedMessages,
@@ -2649,6 +2650,8 @@ class APIManager {
                         )
                         return
                     }
+
+                    await self.agentDiagnosticsRecorder?.setAgentEngineKind("plain_text")
 
                     var request = try HanlinChatRequestBuilder.buildRequest(
                         formattedMessages: finalFormattedMessages,
@@ -2887,453 +2890,7 @@ class APIManager {
                             
                             if let finishReason = choices.first?["finish_reason"] as? String {
                                 diagnosticsFinishReason = finishReason
-                                if finishReason == "tool_calls" {
-                                    var toolResult = ""
-                                    var toolResultFront = ""
-                                    var useFunctionName = ""
-                                    var toolResultsForModel: [(name: String, result: String)] = []
-                                    for toolCall in accumulatedToolCalls {
-                                        if let toolCallID = toolCall["id"] as? String,
-                                           let functionDict = toolCall["function"] as? [String: Any],
-                                           let functionName = functionDict["name"] as? String,
-                                           let functionArguments = functionDict["arguments"] as? String {
-                                            let nativeProfile = preparedAssistantTools?
-                                                .presentationProfile(for: functionName)
-                                            var parsedCall = AgentToolCall.parse(
-                                                id: toolCallID,
-                                                name: functionName,
-                                                argumentsJSON: functionArguments,
-                                                presentationProfile: nativeProfile
-                                            )
-                                            if parsedCall.progressSummary == nil,
-                                               let providerSummary = ProgressSummarySanitizer.sanitizeProviderReasoningSummary(self.toolMessageReasoning) {
-                                                parsedCall.progressSummary = providerSummary
-                                                parsedCall.progressSummarySource = .providerReasoningSummary
-                                            }
-
-                                            if functionName == ToolSchemaDecorator.reportProgressName {
-                                                if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
-                                                    await recorder.recordToolCall(roundID: diagnosticsRoundID, call: parsedCall)
-                                                }
-                                                useFunctionName = functionName
-                                                toolResult = "Progress update delivered."
-                                                toolResultFront = ""
-                                                toolResultsForModel.append((functionName, toolResult))
-                                                let candidate = ToolProgressSummary.reportProgressMessage(from: functionArguments)
-                                                if let message = self.reportProgressController.accept(
-                                                    candidate,
-                                                    latestToolSummary: self.latestToolProgressSummary
-                                                ) {
-                                                    continuation.yield(StreamData(agentEvents: [
-                                                        .progressMessage(AgentProgressMessage(
-                                                            id: "progress:\(toolCallID)",
-                                                            message: message,
-                                                            source: .model,
-                                                            timestamp: Date()
-                                                        ))
-                                                    ]))
-                                                }
-                                                if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
-                                                    await recorder.completeToolCall(
-                                                        roundID: diagnosticsRoundID,
-                                                        callID: toolCallID,
-                                                        resultForModel: toolResult,
-                                                        resultForUser: nil,
-                                                        duration: 0
-                                                    )
-                                                }
-                                                continue
-                                            }
-
-                                            if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
-                                                await recorder.recordToolCall(roundID: diagnosticsRoundID, call: parsedCall)
-                                            }
-
-                                            let functionArguments = parsedCall.sanitizedArgumentsJSON
-                                            self.latestToolProgressSummary = parsedCall.progressSummary
-                                            let executionID = "\(toolCallID):execution"
-                                            let executionStart = Date()
-                                            var executionUIBlocks: [NativeUIBlock] = []
-                                            var executionEvidenceItems: [AgentEvidenceItem] = []
-                                            var executionReturnedError = false
-                                            var executionOutcome: NativeToolExecutionOutcome = .succeeded
-                                            var executionDiagnostics = NativeToolExecutionDiagnostics()
-                                            var executionEmbeddedPayload: HanlinEmbeddedResultPayload? = nil
-                                            let previousSearchResources = self.searchResources
-                                            let previousLocationsInfo = self.locationsInfo
-                                            let previousRouteInfo = self.storeRouteInfo
-                                            let previousEvents = self.events
-                                            let previousHTMLContent = self.htmlContent
-                                            let previousHealthCard = self.healthCard
-                                            let previousCodeBlock = self.codeBlock
-                                            let previousKnowledgeCard = self.knowledgeCard
-                                            let previousCanvasInfo = self.canvasInfo
-                                            continuation.yield(StreamData(agentEvents: [
-                                                .toolCallStarted(parsedCall),
-                                                .toolCallCompleted(parsedCall),
-                                                .toolExecutionStarted(AgentToolExecution(
-                                                    id: executionID,
-                                                    callID: toolCallID,
-                                                    name: functionName,
-                                                    startedAt: executionStart
-                                                ))
-                                            ]))
-                                            
-                                            // 根据具体函数名称调用对应的本地函数
-                                            switch functionName {
-                                            case LoadSkillTool.toolName:
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "加载技能..." : "Loading skill..."))
-                                                let resultText = await LoadSkillTool.execute(
-                                                    argumentsJSON: functionArguments,
-                                                    session: session,
-                                                    schemaSizes: preparedAssistantTools?.schemaSizes() ?? [:]
-                                                )
-                                                toolResult = resultText
-                                                toolResultFront = resultText
-                                                useFunctionName = functionName
-
-                                            case ToolSearchTool.toolName:
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "搜索工具..." : "Searching tools..."))
-                                                let resultText = ToolSearchTool.execute(
-                                                    argumentsJSON: functionArguments,
-                                                    session: session,
-                                                    searchProvider: { q, l in
-                                                        preparedAssistantTools?.search(query: q, limit: l) ?? []
-                                                    }
-                                                )
-                                                toolResult = resultText
-                                                toolResultFront = resultText
-                                                useFunctionName = functionName
-
-                                            case ReadToolResultTool.toolName:
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "读取结果..." : "Reading tool result..."))
-                                                let resultText = ReadToolResultTool.execute(
-                                                    argumentsJSON: functionArguments,
-                                                    session: session
-                                                )
-                                                toolResult = resultText
-                                                toolResultFront = resultText
-                                                useFunctionName = functionName
-
-                                            case ReadSkillResourceTool.toolName:
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "读取技能资源..." : "Reading skill resource..."))
-                                                let resultText = await ReadSkillResourceTool.execute(
-                                                    argumentsJSON: functionArguments,
-                                                    session: session
-                                                )
-                                                toolResult = resultText
-                                                toolResultFront = resultText
-                                                useFunctionName = functionName
-
-                                            default:
-                                                let nativeContext = NativeToolExecutionContext(
-                                                    localeIdentifier: currentLanguage,
-                                                    modelContext: self.context,
-                                                    chatID: stableChatID,
-                                                    isTemporaryChat: session.isTemporaryChat,
-                                                    requestID: currentRunID.uuidString,
-                                                    capabilitySession: session,
-                                                    attachmentResolver: { handle in
-                                                        try await AuthorizedAttachmentRegistry.shared.resolve(
-                                                            handle: handle,
-                                                            chatID: stableChatID,
-                                                            requestID: currentRunID.uuidString
-                                                        )
-                                                    }
-                                                )
-
-                                                if let nativeResult = await preparedAssistantTools?.execute(
-                                                    alias: functionName,
-                                                    argumentsJSON: functionArguments,
-                                                    context: nativeContext
-                                                ) {
-                                                    useFunctionName = functionName
-                                                    toolResult = nativeResult.modelText
-                                                    toolResultFront = nativeResult.userText ?? nativeResult.modelText
-
-                                                    executionUIBlocks = nativeResult.uiBlocks
-                                                    executionOutcome = nativeResult.outcome
-                                                    executionDiagnostics = nativeResult.diagnostics
-                                                    executionReturnedError = !nativeResult.outcome.isSuccess
-                                                    executionEmbeddedPayload = nativeResult.embeddedPayload
-
-                                                    // Gate H: Large tool result reference seam
-                                                    let shouldStore = nativeResult.fullResultPayload != nil
-                                                        || (nativeResult.isStoreEligible && nativeResult.modelText.utf8.count > 1024)
-                                                    if shouldStore {
-                                                        let payloadToStore = nativeResult.fullResultPayload ?? nativeResult.modelText
-                                                        let mimeType = nativeResult.fullResultMIMEType ?? "text/plain"
-                                                        if let ref = session.resultStore.store(payloadToStore, mimeType: mimeType) {
-                                                            if let currentPayload = executionEmbeddedPayload {
-                                                                executionEmbeddedPayload = HanlinEmbeddedResultPayload(
-                                                                    payload: currentPayload.payload,
-                                                                    resultReference: ref,
-                                                                    title: currentPayload.title,
-                                                                    metadata: currentPayload.metadata,
-                                                                    ownerID: currentPayload.ownerID,
-                                                                    actions: currentPayload.actions
-                                                                )
-                                                            }
-                                                            toolResult = """
-                                                            [Large result stored behind reference: \(ref) (\(payloadToStore.utf8.count) bytes)]
-                                                            Summary: \(String(nativeResult.modelText.prefix(200)))
-                                                            To inspect or paginate this result, call `read_tool_result(reference: "\(ref)", offset: 0, limit: 4096)`.
-                                                            """
-                                                        } else {
-                                                            // Storing rejected (e.g. entry exceeds store hard capacity).
-                                                            // Truthful fallback: preserve usable model result directly, never set empty reference or lose data.
-                                                            if toolResult.isEmpty, let full = nativeResult.fullResultPayload {
-                                                                toolResult = full
-                                                            }
-                                                            NativeToolTraceLogger.shared.log(
-                                                                "tool_result_store_rejected_oversized",
-                                                                [
-                                                                    "toolName": functionName,
-                                                                    "bytes": String(payloadToStore.utf8.count),
-                                                                    "maxBytes": String(session.resultStore.maxTotalBytes)
-                                                                ]
-                                                            )
-                                                        }
-                                                    }
-
-                                                    break
-                                                }
-
-                                                toolResult = "Unknown"
-                                                executionOutcome = .invalidArguments
-                                                executionDiagnostics.failureCategory = NativeToolExecutionOutcome.invalidArguments.rawValue
-                                                useFunctionName = functionName
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"))
-                                                toolResultFront = currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"
-                                            }
-                                            let previousResourceCount = previousSearchResources?.count ?? 0
-                                            let currentResources = self.searchResources ?? []
-                                            if currentResources.count > previousResourceCount {
-                                                executionEvidenceItems += LegacyResourcesEvidenceAdapter.items(
-                                                    from: Array(currentResources.dropFirst(previousResourceCount)),
-                                                    providerName: self.searchEngine,
-                                                    toolName: functionName,
-                                                    toolCallID: toolCallID,
-                                                    wasReturnedToModel: true
-                                                )
-                                            }
-                                            let legacyPayloadAvailable: Bool = {
-                                                switch functionName {
-                                                case "search_online", "search_arxiv_papers", "read_web_page", "search_knowledge_bag":
-                                                    return (self.searchResources?.count ?? 0) > (previousSearchResources?.count ?? 0)
-                                                case "query_location", "get_current_location", "search_nearby_locations":
-                                                    return (self.locationsInfo?.count ?? 0) > (previousLocationsInfo?.count ?? 0)
-                                                case "get_route":
-                                                    return (self.storeRouteInfo?.count ?? 0) > (previousRouteInfo?.count ?? 0)
-                                                case "write_system_event":
-                                                    return (self.events?.count ?? 0) > (previousEvents?.count ?? 0)
-                                                case "create_web_view":
-                                                    return self.htmlContent?.isEmpty == false && self.htmlContent != previousHTMLContent
-                                                case "make_nutrition_data":
-                                                    return (self.healthCard?.count ?? 0) > (previousHealthCard?.count ?? 0)
-                                                case "execute_remote_python_code", "execute_python_code":
-                                                    return (self.codeBlock?.count ?? 0) > (previousCodeBlock?.count ?? 0)
-                                                case "create_knowledge_document":
-                                                    return (self.knowledgeCard?.count ?? 0) > (previousKnowledgeCard?.count ?? 0)
-                                                case "create_canvas", "edit_canvas":
-                                                    return self.canvasInfo != nil
-                                                default:
-                                                    return false
-                                                }
-                                            }()
-                                            let presentationDecision = ToolResultPresentationCoordinator.decide(
-                                                call: parsedCall,
-                                                profile: parsedCall.presentationProfile,
-                                                hasPayload: !executionUIBlocks.isEmpty || legacyPayloadAvailable || executionEmbeddedPayload != nil
-                                            )
-                                            if parsedCall.presentationProfile.result?.rendererKind == .legacyExisting,
-                                               !presentationDecision.shouldPresent {
-                                                self.searchResources = previousSearchResources
-                                                self.locationsInfo = previousLocationsInfo
-                                                self.storeRouteInfo = previousRouteInfo
-                                                self.events = previousEvents
-                                                self.htmlContent = previousHTMLContent
-                                                self.healthCard = previousHealthCard
-                                                self.codeBlock = previousCodeBlock
-                                                self.knowledgeCard = previousKnowledgeCard
-                                                self.canvasInfo = previousCanvasInfo
-                                            }
-
-                                            let executionDuration = Date().timeIntervalSince(executionStart)
-                                            if toolResult == "Unknown" {
-                                                continuation.yield(StreamData(agentEvents: [
-                                                    .toolExecutionFailed(
-                                                        id: executionID,
-                                                        error: AgentSafeError(message: toolResultFront)
-                                                    )
-                                                ]))
-                                            } else {
-                                                continuation.yield(StreamData(agentEvents: [
-                                                    .toolExecutionCompleted(
-                                                        id: executionID,
-                                                        result: AgentToolResult(
-                                                            modelText: toolResult,
-                                                            userText: toolResultFront,
-                                                            richResultBlocks: executionUIBlocks,
-                                                            evidenceItems: executionEvidenceItems,
-                                                            hasLegacyPresentationPayload: presentationDecision.shouldPresent
-                                                                && presentationDecision.rendererKind == .legacyExisting
-                                                                && legacyPayloadAvailable,
-                                                            isError: executionReturnedError,
-                                                            semanticOutcome: executionOutcome,
-                                                            duration: executionDuration,
-                                                            embeddedResultPayload: executionEmbeddedPayload
-                                                        )
-                                                    )
-                                                ]))
-                                            }
-                                            if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
-                                                await recorder.completeToolCall(
-                                                    roundID: diagnosticsRoundID,
-                                                    callID: toolCallID,
-                                                    resultForModel: toolResult,
-                                                    resultForUser: toolResultFront,
-                                                    duration: executionDuration,
-                                                    outcome: executionOutcome,
-                                                    diagnostics: executionDiagnostics,
-                                                    error: executionOutcome.isSuccess ? nil : toolResultFront,
-                                                    presentationDecision: presentationDecision
-                                                )
-                                            }
-                                            toolResultsForModel.append((functionName, toolResult))
-                                            continuation.yield(StreamData(
-                                                toolContent: "\(toolResultFront)",
-                                                toolName: "\(functionName)",
-                                                operationalDescription: "\(toolResultFront)")
-                                            )
-                                        }
-                                    }
-
-                                    if !toolResultsForModel.isEmpty {
-                                        useFunctionName = toolResultsForModel.map(\.name).joined(separator: ", ")
-                                        if toolResultsForModel.count == 1 {
-                                            toolResult = toolResultsForModel[0].result
-                                        } else {
-                                            toolResult = toolResultsForModel.map { "[\($0.name)]\n\($0.result)" }.joined(separator: "\n\n")
-                                        }
-                                    }
-                                    
-                                    try await Task.sleep(nanoseconds: 300_000_000)
-                                    
-                                    var newFormattedMessages = finalFormattedMessages
-                                    
-                                    let reasoningContent = toolMessageReasoning?.isEmpty == false ? "<think>\(toolMessageReasoning!)</think>\n" : ""
-                                    let textContent = toolMessage?.isEmpty == false ? "\(toolMessage!)\n" : ""
-
-                                    if !reasoningContent.isEmpty || !textContent.isEmpty {
-                                        newFormattedMessages.append([
-                                            "role": "assistant",
-                                            "content": """
-                                            \(reasoningContent)\(textContent)\n
-                                            """
-                                        ])
-                                    }
-                                    
-                                    var toolRole = "user"
-                                    if modelInfo.company == "ZHIPUAI" {
-                                        toolRole = "tool"
-                                    }
-                                    
-                                    if toolResult.isEmpty {
-                                        newFormattedMessages.append([
-                                            "role": toolRole,
-                                            "content": currentLanguagePrefix ?
-                                                "已调用工具「\(useFunctionName)」，但未获得任何有效结果。请基于该结果继续前文内容，你需要保持语义和段落的连贯性，不要重复之前已经说过的内容，并合理处理结果缺失的情况。" :
-                                                "You have called the tool \"\(useFunctionName)\". However, no valid results were obtained. Please continue with the previous content based on this result, ensuring that you maintain semantic and paragraph coherence, avoid repeating what has already been said, and appropriately address the situation of missing results."
-                                        ])
-                                    } else if toolResult == "Unknown" {
-                                        newFormattedMessages.append([
-                                            "role": toolRole,
-                                            "content": currentLanguagePrefix ?
-                                                "注意：工具「\(useFunctionName)」不存在，请不要使用该工具，也不要尝试再次调用它。" :
-                                                "Note: The tool \"\(useFunctionName)\" does not exist. Please do not use or attempt to call this tool again."
-                                        ])
-                                    } else {
-                                        newFormattedMessages.append([
-                                            "role": toolRole,
-                                            "content": currentLanguagePrefix ?
-                                                "已使用工具「\(useFunctionName)」，并获得了如下结果：\n\(toolResult)\n\n请基于该结果继续前文内容，你需要保持语义和段落的连贯性，不要重复之前已经说过的内容。" :
-                                                "The tool \"\(useFunctionName)\" has been used and the following result has been obtained: \n\(toolResult)\n\nPlease continue with the previous content based on this result, you need to keep the semantics and consistency of the paragraph, don't repeat what has already been said before, and don't call the tool \"\(useFunctionName)\" again for the same You need to maintain semantic and paragraph coherence in the preceding text."
-                                        ])
-
-                                    }
-                                    
-                                    continuation.yield(StreamData(content: "\n\n"))
-                                    if modelInfo.supportsReasoning && ifThink {continuation.yield(StreamData(reasoning: "\n\n"))}
-                                    
-                                    continuation.yield(
-                                        StreamData(
-                                            locations_info: self.locationsInfo,
-                                            route_info: self.storeRouteInfo,
-                                            events: self.events,
-                                            htmlContent: self.htmlContent,
-                                            health_info: self.healthCard,
-                                            code_info: self.codeBlock,
-                                            knowledge_card: self.knowledgeCard,
-                                            splitMarkers: splitMarkerGroup(
-                                                groupID: groupID, modelName: modelInfo.name ?? "Unknown", modelDisplayName: modelInfo.displayName ?? "Unknown"
-                                            ),
-                                            canvas_info: self.canvasInfo,
-                                        )
-                                    )
-                                    
-                                    self.locationsInfo = nil
-                                    self.storeRouteInfo = nil
-                                    self.events = nil
-                                    self.htmlContent = nil
-                                    self.healthCard = nil
-                                    self.codeBlock = nil
-                                    self.knowledgeCard = nil
-                                    self.canvasInfo = nil
-                                    
-                                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
-                                        await recorder.finishRound(
-                                            roundID: diagnosticsRoundID,
-                                            finishReason: diagnosticsFinishReason,
-                                            usage: diagnosticsUsage
-                                        )
-                                        diagnosticsRoundFinished = true
-                                    }
-
-                                    // 递归处理
-                                    let recursiveStream = try await self.processRemoteModel(messages: messages,
-                                                                                            formattedMessages: newFormattedMessages,
-                                                                                            modelInfo: modelInfo,
-                                                                                            groupID: groupID,
-                                                                                            runID: currentRunID,
-                                                                                            currentLanguage: currentLanguage,
-                                                                                            ifSearch: ifSearch,
-                                                                                            ifKnowledge: ifKnowledge,
-                                                                                            ifToolUse: ifToolUse,
-                                                                                            assistantToolScope: assistantToolScope,
-                                                                                            ifThink: ifThink,
-                                                                                            ifAudio: ifAudio,
-                                                                                            ifPlanning: ifPlanning,
-                                                                                            thinkingLength: thinkingLength,
-                                                                                            planningMessage: planningMessage,
-                                                                                            isObservation: isObservation,
-                                                                                            temperature: temperature,
-                                                                                            topP: topP,
-                                                                                            maxTokens: maxTokens,
-                                                                                            canvasData: canvasData,
-                                                                                            selectedURLs: selectedURLs,
-                                                                                            selectedPromptsContent: selectedPromptsContent,
-                                                                                            systemMessage: systemMessage,
-                                                                                            depth: depth + 1,
-                                                                                            capabilitySession: session)
-                                    for try await recursiveData in recursiveStream {
-                                        continuation.yield(recursiveData)
-                                    }
-                                    
-                                    // 结束递归
-                                    break
-                                    
-                                } else {
+                                if finishReason != "tool_calls" {
                                     responseData.content = ""
                                     responseData.resources = self.searchResources
                                     responseData.searchEngine = self.searchEngine
@@ -3968,6 +3525,7 @@ class APIManager {
         )
         switch executionRoute {
         case .localText:
+            await agentDiagnosticsRecorder?.setAgentEngineKind("local")
             return try await processLocalModel(messages: messages,
                                                modelInfo: modelInfo,
                                                currentLanguage: currentLanguage,
@@ -4007,6 +3565,7 @@ class APIManager {
                                                 systemMessage: systemMessage
             )
         case .remoteImageGeneration:
+            await agentDiagnosticsRecorder?.setAgentEngineKind("image")
             return try await processImageGenModel(messages: messages,
                                                   modelInfo: modelInfo,
                                                   currentLanguage: currentLanguage,
@@ -4017,6 +3576,88 @@ class APIManager {
     }
 
     // MARK: - SDK Agent Engine
+    static func convertFormattedMessagesToSDKMessages(
+        _ formattedMessages: [[String: Any]]
+    ) -> (baseSystemPrompt: String?, messages: [HanlinAISDKMessage]) {
+        var systemParts: [String] = []
+        var sdkMessages: [HanlinAISDKMessage] = []
+
+        for msg in formattedMessages {
+            let role = (msg["role"] as? String ?? "").lowercased()
+            let parts = extractMessageParts(from: msg["content"])
+
+            if role == "system" || role == "developer" {
+                let text = parts.compactMap { part -> String? in
+                    if case .text(let value) = part { return value }
+                    return nil
+                }.joined(separator: "\n")
+                if !text.isEmpty && !systemParts.contains(text) {
+                    systemParts.append(text)
+                }
+            } else if role == "assistant" {
+                let text = parts.compactMap { part -> String? in
+                    if case .text(let value) = part { return value }
+                    return nil
+                }.joined(separator: "\n")
+                sdkMessages.append(HanlinAISDKMessage(role: .assistant, text: text))
+            } else {
+                guard !parts.isEmpty else { continue }
+                sdkMessages.append(HanlinAISDKMessage(role: .user, parts: parts))
+            }
+        }
+
+        if sdkMessages.isEmpty {
+            sdkMessages.append(HanlinAISDKMessage(role: .user, text: ""))
+        }
+
+        let baseSystemPrompt = systemParts.isEmpty ? nil : systemParts.joined(separator: "\n\n")
+        return (baseSystemPrompt, sdkMessages)
+    }
+
+    private static func extractMessageParts(from rawContent: Any?) -> [HanlinAISDKMessagePart] {
+        if let stringContent = rawContent as? String {
+            return [.text(stringContent)]
+        }
+
+        guard let arrayContent = rawContent as? [[String: Any]] else {
+            return []
+        }
+
+        var parts: [HanlinAISDKMessagePart] = []
+        for item in arrayContent {
+            let itemType = (item["type"] as? String ?? "").lowercased()
+            if itemType == "text", let text = item["text"] as? String {
+                parts.append(.text(text))
+            } else if itemType == "image_url" {
+                let urlString: String?
+                if let dict = item["image_url"] as? [String: Any] {
+                    urlString = dict["url"] as? String
+                } else {
+                    urlString = item["image_url"] as? String
+                }
+                guard let rawURL = urlString?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !rawURL.isEmpty else { continue }
+
+                if rawURL.lowercased().hasPrefix("data:") {
+                    // Format: data:image/jpeg;base64,<payload>
+                    let withoutPrefix = String(rawURL.dropFirst("data:".count))
+                    let segments = withoutPrefix.components(separatedBy: ";base64,")
+                    if segments.count == 2,
+                       let data = Data(base64Encoded: segments[1], options: .ignoreUnknownCharacters) {
+                        let mediaType = segments[0].isEmpty ? "image/jpeg" : segments[0]
+                        parts.append(.imageData(data, mediaType: mediaType))
+                    }
+                } else if rawURL.lowercased().hasPrefix("http://") || rawURL.lowercased().hasPrefix("https://"),
+                          let url = URL(string: rawURL) {
+                    parts.append(.imageURL(url, mediaType: nil))
+                } else if let data = Data(base64Encoded: rawURL, options: .ignoreUnknownCharacters) {
+                    parts.append(.imageData(data, mediaType: "image/jpeg"))
+                }
+            }
+        }
+        return parts
+    }
+
     private func processSDKAgentEngine(
         runID: UUID,
         formattedMessages: [[String: Any]],
@@ -4028,23 +3669,9 @@ class APIManager {
         currentLanguagePrefix: Bool,
         continuation: AsyncThrowingStream<StreamData, Error>.Continuation
     ) async throws {
-        var systemParts: [String] = []
-        var sdkMessages: [HanlinAISDKMessage] = []
-
-        for msg in formattedMessages {
-            let role = msg["role"] as? String ?? ""
-            let content = msg["content"] as? String ?? ""
-            if role == "system" || role == "developer" {
-                if !content.isEmpty && !systemParts.contains(content) {
-                    systemParts.append(content)
-                }
-            } else if role == "assistant" {
-                sdkMessages.append(HanlinAISDKMessage(role: .assistant, text: content))
-            } else {
-                sdkMessages.append(HanlinAISDKMessage(role: .user, text: content))
-            }
-        }
-        let baseSystemPrompt = systemParts.isEmpty ? nil : systemParts.joined(separator: "\n\n")
+        let converted = Self.convertFormattedMessagesToSDKMessages(formattedMessages)
+        let baseSystemPrompt = converted.baseSystemPrompt
+        let sdkMessages = converted.messages
 
         let toolAdapter = HanlinAISDKToolAdapter(
             session: session,
@@ -4144,6 +3771,39 @@ class APIManager {
                 }
                 continuation.yield(StreamData(reasoning: text))
 
+            case .source(_, let url, let title):
+                if let parsedURL = URL(string: url),
+                   let scheme = parsedURL.scheme?.lowercased(),
+                   (scheme == "http" || scheme == "https"),
+                   parsedURL.host()?.lowercased() != "search.local" {
+                    let resource = Resource(icon: url, title: title ?? url, link: url)
+                    continuation.yield(StreamData(resources: [resource]))
+                }
+
+            case .file(let mediaType, let data):
+                #if canImport(UIKit)
+                if mediaType.lowercased().hasPrefix("image/"), let img = UIImage(data: data) {
+                    continuation.yield(StreamData(image_content: [img]))
+                }
+                #endif
+
+            case .toolApprovalRequest(_, _, let toolName):
+                continuation.yield(StreamData(
+                    toolContent: currentLanguagePrefix ? "请求执行工具：\(toolName)" : "Requesting approval for tool: \(toolName)",
+                    toolName: toolName
+                ))
+
+            case .toolOutputDenied(let toolCallID, let toolName):
+                let executionID = "\(toolCallID):execution"
+                let deniedText = currentLanguagePrefix ? "工具执行被拒绝：\(toolName)" : "Tool execution denied: \(toolName)"
+                continuation.yield(StreamData(
+                    toolContent: deniedText,
+                    toolName: toolName,
+                    agentEvents: [
+                        .toolExecutionFailed(id: executionID, error: AgentSafeError(message: deniedText))
+                    ]
+                ))
+
             case .toolCallArgumentsStarted(let id, let name):
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在使用工具" : "Using Tools"))
 
@@ -4163,8 +3823,13 @@ class APIManager {
                         argumentsJSON: "{}",
                         presentationProfile: profile
                     )
-                    let errorText = currentLanguage.hasPrefix("zh") ? "工具不存在" : "Tool does not exist"
-                    let finalErrorText = modelText.isEmpty ? errorText : modelText
+                    let fallbackErrorText = HanlinAISDKToolAdapter.buildUnknownToolErrorMessage(
+                        alias: name,
+                        catalog: .shared,
+                        preparedTools: toolAdapter.preparedTools,
+                        currentLanguage: currentLanguage
+                    )
+                    let finalErrorText = modelText.isEmpty ? fallbackErrorText : modelText
                     let executionID = "\(callID):execution"
 
                     continuation.yield(StreamData(agentEvents: [
@@ -4192,7 +3857,7 @@ class APIManager {
                         await self.agentDiagnosticsRecorder?.completeToolCall(
                             roundID: stepID,
                             callID: callID,
-                            resultForModel: "Unknown",
+                            resultForModel: finalErrorText,
                             resultForUser: finalErrorText,
                             duration: 0,
                             outcome: .invalidArguments,

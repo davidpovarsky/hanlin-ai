@@ -42,6 +42,34 @@ final class HanlinAISDKToolAdapter {
     var currentRoundID: UUID?
     var currentStepIndex: Int = 0
     var completedCallIDs: Set<String> = []
+    var maxActiveStepSchemaBytes: Int = 28_000
+
+    static func buildUnknownToolErrorMessage(
+        alias: String,
+        catalog: HanlinSkillCatalog,
+        preparedTools: AssistantToolBridge.PreparedTools,
+        currentLanguage: String
+    ) -> String {
+        let isZh = currentLanguage.hasPrefix("zh")
+        if let skill = catalog.resolve(rawID: alias) {
+            let toolsList = skill.preferredToolIDs.joined(separator: ", ")
+            if isZh {
+                return "Error: '\(alias)' 是技能 ID (skill_id)，不是可直接调用的工具名称。请先调用 load_skill(skill_id: \"\(skill.id.rawValue)\") 激活该技能，或直接调用其关联工具：\(toolsList)。"
+            } else {
+                return "Error: '\(alias)' is a skill_id, not a callable tool name. Call load_skill(skill_id: \"\(skill.id.rawValue)\") to activate it, or call one of its tools directly: \(toolsList)."
+            }
+        }
+        let matches = preparedTools.search(query: alias, limit: 5).map(\.alias)
+        if !matches.isEmpty {
+            let suggestion = matches.joined(separator: ", ")
+            return isZh
+                ? "Error: 工具 '\(alias)' 不存在。您是否想调用：\(suggestion)？也可使用 tool_search 搜索可用工具。"
+                : "Error: Tool '\(alias)' does not exist. Did you mean: \(suggestion)? You can also call tool_search to discover available tools."
+        }
+        return isZh
+            ? "Error: 工具 '\(alias)' 不存在。请使用 tool_search 搜索可用工具，或使用 load_skill 加载技能。"
+            : "Error: Tool '\(alias)' does not exist. Use tool_search to discover callable tools or load_skill to activate a skill."
+    }
 
     func resolveRoundID() async -> UUID? {
         if let currentRoundID { return currentRoundID }
@@ -113,7 +141,8 @@ final class HanlinAISDKToolAdapter {
         }
     }
 
-    /// Evaluates currently active tool aliases for model exposure in the next step.
+    /// Evaluates currently active tool aliases for model exposure in the next step,
+    /// enforcing a per-step active schema byte budget so prompt token overhead stays bounded.
     func currentActiveToolAliases() -> [String] {
         var aliases: [String] = [
             LoadSkillTool.toolName,
@@ -124,10 +153,48 @@ final class HanlinAISDKToolAdapter {
         if supportsReportProgress {
             aliases.append(ToolSchemaDecorator.reportProgressName)
         }
-        for alias in session.exposedToolAliases {
-            if preparedTools.authority.schemasByAlias[alias] != nil && !aliases.contains(alias) {
-                aliases.append(alias)
+
+        let sizes = preparedTools.schemaSizes()
+        var currentBytes = aliases.reduce(0) { $0 + (sizes[$1] ?? 350) }
+
+        // Priority order for exposed tools:
+        // 1. Active MCP server tools (mcp__*)
+        // 2. Most recently discovered tools via tool_search (reversed)
+        // 3. Active skill preferred tool hints
+        // 4. Any remaining exposed tools
+        var prioritizedCandidates: [String] = []
+        for alias in preparedTools.mcpAliases where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
             }
+        }
+        for alias in session.discoveredToolAliases.reversed() where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.activeSkillToolHints where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.exposedToolAliases {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+
+        for alias in prioritizedCandidates {
+            guard preparedTools.authority.schemasByAlias[alias] != nil,
+                  !aliases.contains(alias) else {
+                continue
+            }
+            let toolBytes = sizes[alias] ?? 400
+            if currentBytes + toolBytes > maxActiveStepSchemaBytes && aliases.count > 6 {
+                continue
+            }
+            aliases.append(alias)
+            currentBytes += toolBytes
         }
         return aliases
     }
@@ -660,10 +727,19 @@ final class HanlinAISDKToolAdapter {
             context: nativeContext
         )
 
+        if alias == "manage_mcp_servers" || alias == "list_tools" {
+            await self.refreshPreparedTools()
+        }
+
         let executionDuration = Date().timeIntervalSince(executionStart)
 
         guard let result = nativeResult else {
-            let errorText = currentLanguage.hasPrefix("zh") ? "工具不存在" : "Tool does not exist"
+            let errorText = Self.buildUnknownToolErrorMessage(
+                alias: alias,
+                catalog: self.catalog,
+                preparedTools: self.preparedTools,
+                currentLanguage: self.currentLanguage
+            )
             callbacks.onAgentEvent?(.toolExecutionFailed(
                 id: executionID,
                 error: AgentSafeError(message: errorText)
@@ -779,19 +855,50 @@ final class HanlinAISDKToolAdapter {
             operationalDescription: userText
         )
 
-        if alias == "read_web_page" || alias == "web_search" {
-            let urlArg = (rawArgs?["url"] as? String) ?? ""
-            let queryArg = (rawArgs?["query"] as? String) ?? ""
+        if alias == "search_online"
+            || alias == "read_web_page"
+            || alias == "web_search"
+            || alias == "search_arxiv_papers"
+            || alias == "search_knowledge_bag"
+            || alias == "extract_remote_file_content" {
+            let urlArg = (rawArgs?["url"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let queryArg = (rawArgs?["query"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             streamData.search_text = userText.isEmpty ? modelText : userText
-            streamData.searchEngine = "Web"
+            if !queryArg.isEmpty {
+                streamData.searchQueries = [queryArg]
+            } else if !urlArg.isEmpty {
+                streamData.searchQueries = [urlArg]
+            }
+            if streamData.searchEngine == nil || streamData.searchEngine?.isEmpty == true {
+                switch alias {
+                case "search_arxiv_papers":
+                    streamData.searchEngine = "ARXIV"
+                case "search_knowledge_bag":
+                    streamData.searchEngine = "HANLINBAG"
+                case "read_web_page", "extract_remote_file_content":
+                    streamData.searchEngine = "HANLINWEB"
+                default:
+                    streamData.searchEngine = result.evidenceItems.first?.providerName ?? "Web"
+                }
+            }
             var mappedResources: [Resource] = result.evidenceItems.compactMap { item in
-                guard let link = item.url, !link.isEmpty else { return nil }
+                guard let link = item.url?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !link.isEmpty,
+                      let parsed = URL(string: link),
+                      let scheme = parsed.scheme?.lowercased(),
+                      (scheme == "http" || scheme == "https"),
+                      parsed.host()?.lowercased() != "search.local" else {
+                    return nil
+                }
                 return Resource(icon: link, title: item.title, link: link)
             }
-            if mappedResources.isEmpty, !urlArg.isEmpty {
+            if mappedResources.isEmpty,
+               !urlArg.isEmpty,
+               let parsed = URL(string: urlArg),
+               let scheme = parsed.scheme?.lowercased(),
+               (scheme == "http" || scheme == "https"),
+               parsed.host()?.lowercased() != "search.local" {
                 mappedResources.append(Resource(icon: urlArg, title: urlArg, link: urlArg))
-            } else if mappedResources.isEmpty, !queryArg.isEmpty {
-                mappedResources.append(Resource(icon: "", title: queryArg, link: "https://search.local/\(queryArg)"))
             }
             if !mappedResources.isEmpty {
                 streamData.resources = mappedResources
