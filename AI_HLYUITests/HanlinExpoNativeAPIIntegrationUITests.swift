@@ -13,7 +13,6 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_EXPO_E2E"] = "1"
         app.launch()
-        _ = app.wait(for: .runningForeground, timeout: 20)
     }
 
     override func tearDownWithError() throws {
@@ -220,39 +219,33 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
 
     // MARK: - Navigation & Staging Helpers
 
-    private var appsAddButtonCandidates: [XCUIElement] {
-        [
-            app.buttons["hanlin-apps-add"].firstMatch,
-            app.navigationBars.buttons["hanlin-apps-add"].firstMatch,
-            app.navigationBars["Apps"].buttons["hanlin-apps-add"].firstMatch,
-            app.buttons["Add App"].firstMatch,
-            app.navigationBars.buttons["Add App"].firstMatch,
-            app.navigationBars["Apps"].buttons["Add App"].firstMatch,
-            app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
-        ]
-    }
-
     private var appsAddButton: XCUIElement {
-        for candidate in appsAddButtonCandidates {
-            if candidate.exists { return candidate }
-        }
-        return app.buttons["hanlin-apps-add"].firstMatch
+        let direct = app.buttons["hanlin-apps-add"].firstMatch
+        if direct.exists { return direct }
+        let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
+        if navDirect.exists { return navDirect }
+        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
+        if byId.exists { return byId }
+        let byLabel = app.buttons["Add App"].firstMatch
+        if byLabel.exists { return byLabel }
+        let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
+        if navByLabel.exists { return navByLabel }
+        return direct
     }
 
     @discardableResult
     private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
         let deadline = Date().addingTimeInterval(timeout)
         while Date() < deadline {
-            for candidate in appsAddButtonCandidates {
-                if candidate.exists {
-                    return candidate
-                }
+            let btn = appsAddButton
+            if btn.exists {
+                return btn
             }
             RunLoop.current.run(until: Date().addingTimeInterval(0.25))
         }
-        let direct = app.buttons["hanlin-apps-add"].firstMatch
-        XCTAssertTrue(direct.waitForExistence(timeout: 1), "hanlin-apps-add button did not exist")
-        return direct
+        let fallback = appsAddButton
+        XCTAssertTrue(fallback.waitForExistence(timeout: 2), "hanlin-apps-add button did not exist")
+        return fallback
     }
 
     private func closeAddSheetIfNeeded() {
@@ -277,68 +270,61 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         }
     }
 
-    private func openApps() {
-        app.activate()
-        for candidate in appsAddButtonCandidates {
-            if candidate.exists { return }
-        }
-
-        let candidates = [
-            app.buttons["hanlin-apps-tab"].firstMatch,
-            app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
-            app.tabs["hanlin-apps-tab"].firstMatch,
-            app.buttons["Apps"].firstMatch,
-            app.tabBars.buttons["Apps"].firstMatch,
-            app.tabs["Apps"].firstMatch
+    @discardableResult
+    private func selectTab(identifier: String, labels: [String] = []) -> Bool {
+        var candidates: [XCUIElement] = [
+            app.tabBars.buttons[identifier].firstMatch,
+            app.buttons[identifier].firstMatch,
+            app.tabs[identifier].firstMatch
         ]
+        for label in labels {
+            candidates.append(app.tabBars.buttons[label].firstMatch)
+            candidates.append(app.buttons[label].firstMatch)
+            candidates.append(app.tabs[label].firstMatch)
+        }
 
-        var tapped = false
-        for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) {
+        func findCandidate() -> Bool {
+            let primary = app.buttons[identifier].firstMatch
+            if primary.waitForExistence(timeout: 2) && primary.isHittable {
+                primary.tap()
+                return true
+            }
+            for candidate in candidates where candidate.exists && candidate.isHittable {
                 candidate.tap()
-                tapped = true
-                break
+                return true
             }
+            return false
         }
 
-        if !tapped {
-            let nextPage = app.buttons["Next Page"].firstMatch
-            if nextPage.waitForExistence(timeout: 2) {
-                nextPage.tap()
-                for candidate in candidates {
-                    if candidate.waitForExistence(timeout: 2) {
-                        candidate.tap()
-                        tapped = true
-                        break
-                    }
-                }
-            }
+        if findCandidate() { return true }
+
+        let prevPage = app.buttons["Previous Page"].firstMatch
+        if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
+            prevPage.tap()
+            if findCandidate() { return true }
         }
 
-        if !tapped {
-            let prevPage = app.buttons["Previous Page"].firstMatch
-            if prevPage.waitForExistence(timeout: 2) {
-                prevPage.tap()
-                for candidate in candidates {
-                    if candidate.waitForExistence(timeout: 2) {
-                        candidate.tap()
-                        tapped = true
-                        break
-                    }
-                }
-            }
+        let nextPage = app.buttons["Next Page"].firstMatch
+        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+            nextPage.tap()
+            if findCandidate() { return true }
         }
 
-        if !tapped {
-            let fallback = app.descendants(matching: .any).matching(
-                NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
-            ).firstMatch
-            if fallback.waitForExistence(timeout: 5) {
-                fallback.tap()
-                tapped = true
-            }
+        let labelClauses = labels.map { "label CONTAINS '\($0)'" }
+        let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
+        let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
+        if fallback.waitForExistence(timeout: 3) && fallback.isHittable {
+            fallback.tap()
+            return true
         }
 
+        return false
+    }
+
+    private func openApps() {
+        closeAddSheetIfNeeded()
+        if appsAddButton.waitForExistence(timeout: 3) { return }
+        _ = selectTab(identifier: "hanlin-apps-tab", labels: ["Apps"])
         ensureAppsAddButton(timeout: 20)
     }
 
