@@ -1,0 +1,4 @@
+module HanlinExpoNativeAPICore {
+    umbrella header "HanlinExpoNativeAPICore.h"
+    export *
+}

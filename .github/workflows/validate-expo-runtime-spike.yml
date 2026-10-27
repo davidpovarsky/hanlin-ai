@@ -176,6 +176,24 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Prepare HanlinExpoNativeAPI iOS dependencies and artifacts
+        shell: bash
+        run: |
+          set -euxo pipefail
+          node Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs 2>&1 | tee "$LOG_DIR/03-prepare-nativeapi-dependencies.log"
+          node Scripts/ExpoNativeAPI/verify-artifacts.mjs 2>&1 | tee "$LOG_DIR/03-verify-nativeapi-artifacts.log"
+          node Scripts/ExpoNativeAPI/verify-nsmd.mjs 2>&1 | tee "$LOG_DIR/03-verify-nsmd.log"
+          node Scripts/ExpoNativeAPI/preflight.mjs 2>&1 | tee "$LOG_DIR/03-nativeapi-preflight.log"
+          node --test Scripts/ExpoNativeAPI/Tests/*.test.mjs 2>&1 | tee "$LOG_DIR/03-nativeapi-static-tests.log"
+
+      - name: Live Activity · refresh
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
       - name: Verify HanlinExpoRuntime package resolution
         shell: bash
         run: |
@@ -307,19 +325,55 @@ jobs:
 
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
-          APP_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
-          if [ -n "$APP_CONTAINER" ]; then
-            mkdir -p "$APP_CONTAINER/Documents"
-            cp AI_HLYUITests/Fixtures/*.hanlinExpo "$APP_CONTAINER/Documents/"
-            ls -la "$APP_CONTAINER/Documents"
-          fi
+          # Bounded fixture staging for app container and optional DocumentsApp (Files)
+          python3 - <<'PY'
+          import subprocess
+          import sys
+          import shutil
+          import glob
+          from pathlib import Path
 
-          FILES_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" com.apple.DocumentsApp data 2>/dev/null || true)"
-          if [ -n "$FILES_CONTAINER" ]; then
-            mkdir -p "$FILES_CONTAINER/Documents"
-            cp AI_HLYUITests/Fixtures/*.hanlinExpo "$FILES_CONTAINER/Documents/"
-            ls -la "$FILES_CONTAINER/Documents"
-          fi
+          sim_udid = sys.argv[1]
+          bundle_id = sys.argv[2]
+          fixtures = glob.glob("AI_HLYUITests/Fixtures/*.hanlinExpo")
+          if not fixtures:
+              raise SystemExit("Fatal: No .hanlinExpo fixtures found in AI_HLYUITests/Fixtures")
+
+          # 1. Mandatory app data container
+          app_res = subprocess.run(
+              ["xcrun", "simctl", "get_app_container", sim_udid, bundle_id, "data"],
+              capture_output=True,
+              text=True,
+              timeout=20,
+          )
+          if app_res.returncode != 0 or not app_res.stdout.strip():
+              raise SystemExit(f"Fatal: Could not resolve app container: {app_res.stderr.strip()}")
+
+          app_docs = Path(app_res.stdout.strip()) / "Documents"
+          app_docs.mkdir(parents=True, exist_ok=True)
+          for f in fixtures:
+              shutil.copy2(f, app_docs / Path(f).name)
+          print(f"Staged {len(fixtures)} fixtures into {app_docs}")
+
+          # 2. Optional DocumentsApp (Files app) container with strict 5s timeout
+          try:
+              files_res = subprocess.run(
+                  ["xcrun", "simctl", "get_app_container", sim_udid, "com.apple.DocumentsApp", "data"],
+                  capture_output=True,
+                  text=True,
+                  timeout=5,
+              )
+              if files_res.returncode == 0 and files_res.stdout.strip():
+                  files_docs = Path(files_res.stdout.strip()) / "Documents"
+                  files_docs.mkdir(parents=True, exist_ok=True)
+                  for f in fixtures:
+                      shutil.copy2(f, files_docs / Path(f).name)
+                  print(f"Staged {len(fixtures)} fixtures into Files container {files_docs}")
+              else:
+                  print("Files app container unprovisioned at boot (skipping optional staging)")
+          except subprocess.TimeoutExpired:
+              print("Files container lookup timed out after 5s (skipping optional staging)")
+          PY "$SIMULATOR_UDID" "$BUNDLE_ID"
 
           echo "sim-udid=$SIMULATOR_UDID" >> "$GITHUB_OUTPUT"
 
@@ -353,6 +407,9 @@ jobs:
             -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDynamicVariantSwitching \
             -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIIncompatibleVersionRejection \
             -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMalformedPackageRejection \
+            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDeniedPersistedGrant \
+            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRevokeWhileMounted \
+            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRepeatedLifecycle \
             -resultBundlePath "build/ExpoE2EResults.xcresult" \
             2>&1 | tee "$LOG_DIR/07-expo-e2e-tests.log"
 

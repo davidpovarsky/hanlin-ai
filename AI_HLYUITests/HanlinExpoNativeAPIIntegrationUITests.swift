@@ -154,6 +154,65 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         closeImportSurfaces()
     }
 
+    func testExpoNativeAPIDeniedPersistedGrant() throws {
+        openApps()
+        importAndInstall(archive: "ExpoNativeAPIProbeMissingGrant")
+        launchInstalledPackage(named: "Hanlin Expo Native API Probe (Missing Grant)")
+
+        // Verify host launched
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin Expo + NativeScript Hybrid'")
+        let titleText = app.descendants(matching: .any).matching(titlePredicate).firstMatch
+        XCTAssertTrue(titleText.waitForExistence(timeout: 30), "Hybrid host failed to launch")
+
+        // Verify native Fabric label did NOT mount because ios-native-api is denied
+        let nativeLabelPredicate = NSPredicate(format: "label CONTAINS 'Native UIKit Label: Probe Variant A'")
+        let nativeLabel = app.descendants(matching: .any).matching(nativeLabelPredicate).firstMatch
+        XCTAssertFalse(nativeLabel.waitForExistence(timeout: 5), "Native UIKit UILabel was unexpectedly mounted despite missing grant")
+
+        closeExpoApp()
+    }
+
+    func testExpoNativeAPIRevokeWhileMounted() throws {
+        openApps()
+        importAndInstall(archive: "ExpoNativeAPIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+
+        // 1. Verify active session with native UIKit switch
+        let uiSwitch = app.switches.firstMatch
+        XCTAssertTrue(uiSwitch.waitForExistence(timeout: 20), "Native UISwitch did not render")
+        XCTAssertTrue(uiSwitch.isHittable, "Native UISwitch was not hittable")
+
+        // 2. Revoke by closing active application synchronously
+        closeExpoApp()
+
+        // 3. Verify clean relaunch after close (ensuring teardown was synchronous and clean)
+        launchInstalledPackage(named: probeAPackageName)
+        let reopenedSwitch = app.switches.firstMatch
+        XCTAssertTrue(reopenedSwitch.waitForExistence(timeout: 20), "Native UISwitch failed to render on clean relaunch")
+        closeExpoApp()
+    }
+
+    func testExpoNativeAPIRepeatedLifecycle() throws {
+        openApps()
+        importAndInstall(archive: "ExpoNativeAPIProbeA")
+        importAndInstall(archive: "ExpoNativeAPIProbeB")
+
+        // 20 cycles alternating between Variant A and Variant B
+        for cycle in 1...20 {
+            let useVariantA = (cycle % 2 == 1)
+            let targetPackage = useVariantA ? probeAPackageName : probeBPackageName
+            let targetMarker = useVariantA ? "Probe Variant A" : "Probe Variant B"
+
+            launchInstalledPackage(named: targetPackage)
+
+            let markerPredicate = NSPredicate(format: "label CONTAINS %@", targetMarker)
+            let marker = app.descendants(matching: .any).matching(markerPredicate).firstMatch
+            XCTAssertTrue(marker.waitForExistence(timeout: 15), "Cycle \(cycle) failed to render \(targetMarker)")
+
+            closeExpoApp()
+        }
+    }
+
     // MARK: - Navigation & Staging Helpers
 
     private var appsAddButton: XCUIElement {

@@ -21,6 +21,7 @@ private func hostDidInitRuntimeCallback(selfObj: AnyObject, _cmd: Selector, host
 private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeFactoryDelegate, @unchecked Sendable {
     private let targetBundleURL: URL
     nonisolated(unsafe) private let appContext: AppContext
+    private let sessionID: String
     private static var didRegisterRuntimeCallback = false
 
     private static func registerRuntimeCallbackIfNeeded() {
@@ -37,9 +38,10 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         }
     }
 
-    init(bundleURL: URL, appContext: AppContext) {
+    init(bundleURL: URL, appContext: AppContext, sessionID: String) {
         self.targetBundleURL = bundleURL
         self.appContext = appContext
+        self.sessionID = sessionID
         super.init()
         if let provider = HanlinExpoNativeAPIManager.dependencyProvider() as? (any RCTDependencyProvider) {
             self.dependencyProvider = provider
@@ -69,6 +71,10 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         NSLog("%@", "HANLIN_EXPO_SET_RUNTIME_DONE")
         let moduleNames = appContext.getModuleNames()
         NSLog("%@", "HANLIN_EXPO_REGISTERED_MODULES=\(moduleNames.joined(separator: ", "))")
+        let sid = self.sessionID
+        Task { @MainActor in
+            HanlinExpoNativeAPIManager.bindRuntime(runtime, forSessionID: sid)
+        }
     }
 }
 
@@ -210,7 +216,11 @@ public final class HanlinExpoSession {
             self.appContext = appContext
 
             let bundle = bundleURL
-            let delegate = HanlinExpoReactNativeFactoryDelegate(bundleURL: bundle, appContext: appContext)
+            let delegate = HanlinExpoReactNativeFactoryDelegate(
+                bundleURL: bundle,
+                appContext: appContext,
+                sessionID: sessionID
+            )
             self.factoryDelegate = delegate
 
             let factory = RCTReactNativeFactory(delegate: delegate)

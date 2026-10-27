@@ -398,15 +398,16 @@ final class HanlinScriptingPlatform {
         for id: HanlinInstalledPackageID
     ) async {
         guard let store else { return }
+        if !granted, capability.rawValue == "ios-native-api", activeApplicationID == id {
+            NSLog("[HanlinScriptingPlatform] Capability 'ios-native-api' revoked for active package %@; terminating session immediately before persistence.", id.rawValue)
+            HanlinExpoNativeAPIManager.revokeActiveSession()
+            dismissActiveApplication()
+        }
         do {
             await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
             try await store.setCapabilityGranted(granted, capability: capability, for: id)
             installedPackages = try await store.snapshots()
             try await refreshExtensionSnapshot()
-            if !granted, capability.rawValue == "ios-native-api", activeApplicationID == id {
-                NSLog("[HanlinScriptingPlatform] Capability 'ios-native-api' revoked for active package %@; terminating session immediately.", id.rawValue)
-                dismissActiveApplication()
-            }
         } catch {
             activity = .failed(Self.safeMessage(error))
         }
@@ -644,6 +645,7 @@ final class HanlinScriptingPlatform {
             NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
         }
         expoSession?.shutdown()
+        HanlinExpoNativeAPIManager.revokeActiveSession()
         if let session = expoSession {
             HanlinExpoHostServicesBridge.unregister(sessionID: session.sessionID)
         }

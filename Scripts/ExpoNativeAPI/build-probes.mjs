@@ -1,8 +1,9 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { execSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repoRoot = resolve(scriptRoot, '..', '..');
@@ -15,8 +16,26 @@ const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 async function createZip(sourceDir, targetZip) {
   await rm(targetZip, { force: true });
   const pythonBin = process.platform === 'win32' ? 'python' : 'python3';
-  const pyCmd = `${pythonBin} -c "import zipfile, os, sys; zf = zipfile.ZipFile(sys.argv[1], 'w', zipfile.ZIP_DEFLATED); [zf.write(os.path.join(r, f), os.path.relpath(os.path.join(r, f), sys.argv[2]).replace('\\\\\\\\', '/')) for r, d, files in os.walk(sys.argv[2]) for f in files]; zf.close()" "${targetZip}" "${sourceDir}"`;
-  execSync(pyCmd);
+  const pyCode = `
+import zipfile, os, sys
+target_zip = sys.argv[1]
+source_dir = sys.argv[2]
+entries = []
+for root, dirs, files in os.walk(source_dir):
+    for f in files:
+        full = os.path.join(root, f)
+        rel = os.path.relpath(full, source_dir).replace('\\\\', '/')
+        entries.append((rel, full))
+entries.sort(key=lambda x: x[0])
+with zipfile.ZipFile(target_zip, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
+    for rel, full in entries:
+        zinfo = zipfile.ZipInfo(rel)
+        zinfo.date_time = (2026, 1, 1, 0, 0, 0)
+        zinfo.external_attr = 0o644 << 16
+        with open(full, 'rb') as fp:
+            zf.writestr(zinfo, fp.read())
+`;
+  execFileSync(pythonBin, ['-c', pyCode, targetZip, sourceDir], { stdio: 'inherit' });
 }
 
 async function bundleWithMetro(entryFile, outputFile) {
@@ -132,7 +151,7 @@ export async function buildProbes() {
   console.log('[HanlinExpoNativeAPI] All test probe packages created and staged successfully.');
 }
 
-const isMain = process.argv[1] && resolve(import.meta.filename || '') === resolve(process.argv[1]);
+const isMain = process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
 if (isMain) {
   buildProbes().catch((err) => {
     console.error(err);

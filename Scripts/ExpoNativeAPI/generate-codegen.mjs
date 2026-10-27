@@ -13,8 +13,12 @@ const lockPath = resolve(scriptRoot, 'dependency-lock.json');
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 export async function generateCodegen(options = {}) {
-  const targetDir = options.outputDir || resolve(repoRoot, 'Packages', 'HanlinExpoNativeAPI', 'Sources', 'HanlinExpoNativeAPI', 'generated');
-  console.log(`[HanlinExpoNativeAPI] Generating React Native Codegen specs into: ${targetDir}`);
+  const defaultBaseDir = resolve(repoRoot, 'Packages', 'HanlinExpoNativeAPI', 'Sources');
+  const nsTargetDir = options.nsOutputDir || resolve(defaultBaseDir, 'HanlinExpoNativeAPICore', 'generated');
+  const wlTargetDir = options.wlOutputDir || resolve(defaultBaseDir, 'HanlinExpoWorklets', 'generated');
+
+  console.log(`[HanlinExpoNativeAPI] Generating NativeScriptNativeApiSpec into: ${nsTargetDir}`);
+  console.log(`[HanlinExpoNativeAPI] Generating rnworklets into: ${wlTargetDir}`);
 
   const lock = JSON.parse(await readFile(lockPath, 'utf8'));
 
@@ -50,7 +54,7 @@ export async function generateCodegen(options = {}) {
     throw new Error(`[HanlinExpoNativeAPI] Schema digest mismatch for NativeScriptNativeApiSpec: expected ${lock.nativeApi.codegen.schemaDigest}, got ${nsSchemaDigest}`);
   }
 
-  const nsOutDir = resolve(targetDir, 'NativeScriptNativeApiSpec');
+  const nsOutDir = resolve(nsTargetDir, 'NativeScriptNativeApiSpec');
   await rm(nsOutDir, { recursive: true, force: true });
   await mkdir(nsOutDir, { recursive: true });
 
@@ -63,13 +67,17 @@ export async function generateCodegen(options = {}) {
     'true'
   ], { stdio: 'inherit' });
 
+  // Exclude non-iOS files (Java/JNI) from iOS build closure
+  await rm(resolve(nsOutDir, 'java'), { recursive: true, force: true });
+  await rm(resolve(nsOutDir, 'jni'), { recursive: true, force: true });
+
   // 2. rnworklets
   const wlSpec = resolve(nodeModules, 'react-native-worklets', 'src', 'specs', 'NativeWorkletsModule.ts');
   if (existsSync(wlSpec)) {
     const wlSchemaPath = resolve(scratchDir, 'wl-schema.json');
     execFileSync(process.execPath, [combineCli, wlSchemaPath, wlSpec], { stdio: 'inherit' });
 
-    const wlOutDir = resolve(targetDir, 'rnworklets');
+    const wlOutDir = resolve(wlTargetDir, 'rnworklets');
     await rm(wlOutDir, { recursive: true, force: true });
     await mkdir(wlOutDir, { recursive: true });
 
@@ -81,9 +89,13 @@ export async function generateCodegen(options = {}) {
       'com.swmansion.worklets',
       'true'
     ], { stdio: 'inherit' });
+
+    // Exclude non-iOS files (Java/JNI) from iOS build closure
+    await rm(resolve(wlOutDir, 'java'), { recursive: true, force: true });
+    await rm(resolve(wlOutDir, 'jni'), { recursive: true, force: true });
   }
 
-  console.log('[HanlinExpoNativeAPI] Codegen artifacts generated successfully.');
+  console.log('[HanlinExpoNativeAPI] Codegen artifacts generated successfully (iOS-only targets).');
 }
 
 const isMain = process.argv[1] && resolve(fileURLToPath(import.meta.url)) === resolve(process.argv[1]);

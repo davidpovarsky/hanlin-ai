@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "HanlinExpoNativeAPI",
-            targets: ["HanlinExpoNativeAPI"]
+            targets: ["HanlinExpoNativeAPI", "HanlinExpoNativeAPICore", "HanlinExpoWorklets"]
         )
     ],
     dependencies: [],
@@ -18,45 +18,96 @@ let package = Package(
         .target(
             name: "HanlinExpoNativeAPI",
             dependencies: [
+                "HanlinExpoNativeAPICore",
+                "HanlinExpoWorklets"
+            ],
+            path: "Sources/HanlinExpoNativeAPI",
+            resources: [
+                .process("Resources/metadata")
+            ]
+        ),
+        .target(
+            name: "HanlinExpoWorklets",
+            dependencies: [
+                "ReactNativeHeaders",
+                "React",
+                "ReactNativeDependencies",
+                "hermesvm"
+            ],
+            path: "Sources/HanlinExpoWorklets",
+            publicHeadersPath: "include",
+            cxxSettings: [
+                .unsafeFlags([
+                    "-std=gnu++20",
+                    "-fobjc-arc",
+                    "-DFOLLY_NO_CONFIG",
+                    "-DFOLLY_MOBILE=1",
+                    "-DFOLLY_USE_LIBCPP=1",
+                    "-DWORKLETS_VERSION=\"0.13.1\"",
+                    "-Wno-quoted-include-in-framework-header",
+                    "-Wno-non-modular-include-in-framework-module",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/include",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/Common/cpp",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/apple",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/generated",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/generated/rnworklets",
+                    "-F\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+                ])
+            ],
+            linkerSettings: [
+                .linkedFramework("UIKit"),
+                .linkedFramework("Foundation"),
+                .linkedFramework("QuartzCore")
+            ]
+        ),
+        .target(
+            name: "HanlinExpoNativeAPICore",
+            dependencies: [
+                "HanlinExpoWorklets",
                 "Libffi",
                 "ReactNativeHeaders",
                 "React",
                 "ReactNativeDependencies",
                 "hermesvm"
             ],
-            path: "Sources/HanlinExpoNativeAPI",
-            resources: [
-                .process("Artifacts/metadata")
-            ],
-            swiftSettings: [
-                .interoperabilityMode(.Cxx),
+            path: "Sources/HanlinExpoNativeAPICore",
+            publicHeadersPath: "include",
+            cxxSettings: [
                 .unsafeFlags([
-                    "-Xcc", "-std=gnu++20",
-                    "-Xcc", "-DFOLLY_NO_CONFIG",
-                    "-Xcc", "-DFOLLY_MOBILE=1",
-                    "-Xcc", "-DFOLLY_USE_LIBCPP=1",
-                    "-Xcc", "-DTARGET_ENGINE_HERMES=1",
-                    "-Xcc", "-DNS_GSD_BACKEND_HERMES=1",
-                    "-Xcc", "-DNATIVESCRIPT_REACT_NATIVE=1",
-                    "-Xcc", "-Wno-quoted-include-in-framework-header",
-                    "-Xcc", "-Wno-non-modular-include-in-framework-module",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/bridge",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/nativescript",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/nativescript/native-api",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/nativescript/native-api/metadata/include",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/nativescript/ios/vendor/libffi/include",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/worklets/Common/cpp",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/worklets/apple",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/generated",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/generated/NativeScriptNativeApiSpec",
-                    "-Xcc", "-I\(packageRoot)/Sources/HanlinExpoNativeAPI/generated/rnworklets",
-                    "-Xcc", "-F\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
-                    "-Xcc", "-FArtifacts/ModularFrameworks",
-                    "-Xcc", "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
-                    "-Xcc", "-IArtifacts/ReactModularHeaders",
-                    "-Xcc", "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
-                    "-Xcc", "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
-                    "-Xcc", "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+                    "-std=gnu++20",
+                    "-fno-objc-arc",
+                    "-DFOLLY_NO_CONFIG",
+                    "-DFOLLY_MOBILE=1",
+                    "-DFOLLY_USE_LIBCPP=1",
+                    "-DFOLLY_CFG_NO_COROUTINES=1",
+                    "-DTARGET_ENGINE_HERMES=1",
+                    "-DNS_GSD_BACKEND_HERMES=1",
+                    "-DNATIVESCRIPT_REACT_NATIVE=1",
+                    "-Wno-quoted-include-in-framework-header",
+                    "-Wno-non-modular-include-in-framework-module",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/include",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/bridge",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/nativescript",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/nativescript/ios",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/nativescript/native-api",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/nativescript/native-api/metadata/include",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/nativescript/ios/vendor/libffi/include",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/generated",
+                    "-I\(packageRoot)/Sources/HanlinExpoNativeAPICore/generated/NativeScriptNativeApiSpec",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/include",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/Common/cpp",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/apple",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/generated",
+                    "-I\(packageRoot)/Sources/HanlinExpoWorklets/generated/rnworklets",
+                    "-F\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
                 ])
             ],
             linkerSettings: [
