@@ -13,5 +13,18 @@
 
 
 namespace facebook::react {
+class NativeScriptUIViewEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
 
+  struct OnHostReady {
+      std::string hostReadyId;
+    std::string hostId;
+    std::string nativeViewHandle;
+    std::string childrenViewHandle;
+    std::string controllerHandle;
+    bool hasChildren;
+    };
+  void onHostReady(OnHostReady value) const;
+};
 } // namespace facebook::react

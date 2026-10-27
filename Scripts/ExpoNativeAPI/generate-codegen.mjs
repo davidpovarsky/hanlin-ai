@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -70,6 +70,27 @@ export async function generateCodegen(options = {}) {
   // Exclude non-iOS files (Java/JNI) from iOS build closure
   await rm(resolve(nsOutDir, 'java'), { recursive: true, force: true });
   await rm(resolve(nsOutDir, 'jni'), { recursive: true, force: true });
+  // Exclude unit test files (gtest)
+  await rm(resolve(nsOutDir, 'Tests.cpp'), { force: true });
+
+  // Stage Fabric component headers to include/react/renderer/components/NativeScriptNativeApiSpec
+  const fabricIncludeDir = resolve(defaultBaseDir, 'HanlinExpoNativeAPICore', 'include', 'react', 'renderer', 'components', 'NativeScriptNativeApiSpec');
+  await rm(fabricIncludeDir, { recursive: true, force: true });
+  await mkdir(fabricIncludeDir, { recursive: true });
+  const fabricHeaders = [
+    'ComponentDescriptors.h',
+    'EventEmitters.h',
+    'Props.h',
+    'RCTComponentViewHelpers.h',
+    'ShadowNodes.h',
+    'States.h'
+  ];
+  for (const h of fabricHeaders) {
+    const srcH = resolve(nsOutDir, h);
+    if (existsSync(srcH)) {
+      await copyFile(srcH, resolve(fabricIncludeDir, h));
+    }
+  }
 
   // 2. rnworklets
   const wlSpec = resolve(nodeModules, 'react-native-worklets', 'src', 'specs', 'NativeWorkletsModule.ts');
@@ -93,6 +114,26 @@ export async function generateCodegen(options = {}) {
     // Exclude non-iOS files (Java/JNI) from iOS build closure
     await rm(resolve(wlOutDir, 'java'), { recursive: true, force: true });
     await rm(resolve(wlOutDir, 'jni'), { recursive: true, force: true });
+    // Exclude unit test files (gtest)
+    await rm(resolve(wlOutDir, 'Tests.cpp'), { force: true });
+
+    // rnworklets is module-only (no Fabric components); remove dummy component files that generate missing header references
+    const dummyComponentFiles = [
+      'ComponentDescriptors.cpp',
+      'ComponentDescriptors.h',
+      'EventEmitters.cpp',
+      'EventEmitters.h',
+      'Props.cpp',
+      'Props.h',
+      'RCTComponentViewHelpers.h',
+      'ShadowNodes.cpp',
+      'ShadowNodes.h',
+      'States.cpp',
+      'States.h'
+    ];
+    for (const f of dummyComponentFiles) {
+      await rm(resolve(wlOutDir, f), { force: true });
+    }
   }
 
   console.log('[HanlinExpoNativeAPI] Codegen artifacts generated successfully (iOS-only targets).');

@@ -15,6 +15,6 @@
 
 namespace facebook::react {
 
-
+using NativeScriptUIViewState = StateData;
 
 } // namespace facebook::react

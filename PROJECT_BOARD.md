@@ -29,6 +29,9 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **CI Caching Anti-Pattern: SHA in Primary Cache Key:** Storing DerivedData under keys like `ios26-ipa-derived-data-v1-...-${{ github.sha }}` forces an automatic cache miss on every commit, triggering a 17.8-minute full compilation of 56 Swift targets. Furthermore, touching intermediate headers during pre-build steps invalidates the build graph. Keying strictly by dependencies (`project.pbxproj`, `Package.resolved`, tooling scripts), preserving mtimes via idempotent stamping (`.modular_headers_staged`), and skipping cache saving on exact hits reduces simulator build times from ~18 minutes to ~2-4 minutes incremental and prevents runner cache thrashing.
 
 - **Expo + NativeScript JSI Hybrid Embedding:** Embedding `@nativescript/react-native@9.1.2` and `react-native-worklets@0.13.1` inside `hanlinExpo` (Hermes VM + Apple SwiftUI via `@expo/ui`) is achieved cleanly without colliding with `hanlinNativeScript` (V8 standalone). To avoid Metro's "More than one plugin attempted to override parsing" conflict between `babel-preset-expo` and React Native's Flow parser, the hybrid probe uses `@react-native/babel-preset` with `@nativescript/react-native/babel-plugin` and `['react-native-worklets/plugin', { strictGlobal: true }]`. Defense-in-depth is maintained by injecting `HanlinExpoNativeAPIGate.isNativeAPIAuthorizedForCurrentSession` directly into `NativeScriptNativeApiModule.mm` before JSI binding or worklet execution.
+- **SwiftPM Multi-Target & Binary Target De-duplication in Xcode Workspaces:** In multi-package SwiftPM setups where an app links multiple local packages (e.g., `HanlinExpoRuntime` and `HanlinExpoNativeAPI`), declaring the same `.binaryTarget` names (such as `React`, `ReactNativeHeaders`, `ReactNativeDependencies`, `hermesvm`) across multiple packages triggers an `xcodebuild -resolvePackageDependencies` fatal failure (exit code 74: `multiple similar targets 'React' appear in package 'hanlinexponativeapi' and 'hanlinexporuntime'`). Ensuring binary targets are declared only in their primary owning package (`HanlinExpoRuntime`) and consumed downstream via framework linking and C++ header search paths (`-I`) completely resolves the target namespace collision while preserving clean modular builds.
+- **Mach-O Universal FAT Binary in Simulator Framework Slices:** Multi-architecture static libraries targeting iOS Simulator (`ios-arm64_x86_64-simulator/libffi.a`) use the universal Mach-O fat binary header (`0xcafebabe`), whereas single-architecture device slices (`ios-arm64/libffi.a`) use the BSD `ar` archive header (`!<arch>\n`). Native artifact assertion suites must accommodate both binary headers across platform slices.
+- **Immediate Revocation Before Asynchronous Store Persistence:** In native script bridges offering raw Objective-C / JSI access, deferring session teardown until after an asynchronous persistence point (e.g. `await store.setCapabilityGranted(...)`) creates a race condition where untrusted JavaScript may execute native calls during store I/O. Calling `HanlinExpoNativeAPIManager.revokeActiveSession()` and `dismissActiveApplication()` synchronously before the first `await` suspension point eliminates this window completely.
 
 ## In Progress / Active Blockers
 
@@ -60,17 +63,19 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Done
 
-- [x] Hanlin Expo + NativeScript Native API JSI Hybrid Integration (Contract 1.0.0)
+- [x] Hanlin Expo + NativeScript Native API JSI Hybrid Integration (Pass 2 Native Repair & Verification)
   - Implemented: 2026-10-27
   - Branch: `codex/expo-nativescript-jsi-hybrid-20261027`
   - Notes:
-    - Pinned dependencies: `@nativescript/react-native@9.1.2`, `react-native-worklets@0.13.1`, `react-native@0.88.0`, `react@19.3.0`, `expo@58.0.0`.
-    - SwiftPM package: `Packages/HanlinExpoNativeAPI` with `Libffi.xcframework` and `metadata-arm64.nsmd`.
-    - TypeScript facade: `@hanlin/expo-native-api` (`Packages/HanlinExpoNativeAPIJS`).
-    - Gating & Security: Native gate `HanlinExpoNativeAPIGate` + `HanlinScriptAnalyzer` (`ios-native-api`) + dynamic session revocation.
-    - Test Probes: Built deterministic bundles `ExpoNativeAPIProbeA.hanlinExpo`, `ExpoNativeAPIProbeB.hanlinExpo`, `ExpoNativeAPIProbeMissingGrant.hanlinExpo`, `ExpoNativeAPIProbeIncompatible.hanlinExpo`, `ExpoNativeAPIMalformed.hanlinExpo`.
-    - Verification: Static tests (7/7 pass), TypeScript typecheck (0 errors), probe bundling (clean), E2E test suite `HanlinExpoNativeAPIIntegrationUITests.swift` added.
-    - Zero changes to 4 frozen chat UI files; zero Asana tasks touched; no automatic CI triggers added.
+    - Pinned dependencies: `@nativescript/react-native@9.1.2` (`906f2106...`), `react-native-worklets@0.13.1` (`9d7a0e35...`), `react-native@0.88.0`, `react@19.3.0`, `expo@58.0.0`.
+    - SwiftPM multi-target architecture: `Packages/HanlinExpoNativeAPI` split into `HanlinExpoNativeAPI` (Swift orchestration + `Bundle.module` resources), `HanlinExpoNativeAPICore` (ObjC++/Clang MRC `-fno-objc-arc`), and `HanlinExpoWorklets` (ObjC++/Clang ARC `-fobjc-arc`).
+    - Vendored `Libffi.xcframework` (arm64 device + universal fat Mach-O simulator slice) linked via SwiftPM; React/Hermes binary target declarations de-duplicated to prevent exit code 74.
+    - Surgically corrected C++ patch in `prepare-ios-dependencies.mjs` ensuring exactly one `installWorkletRuntime` signature, no duplicate parameters, and denial gates across `install`, `installWorkletRuntime`, `NativeScriptCreateUIKitHost`, and `NativeScriptRunUIKitHostLifecycle`.
+    - Gating & Security: Runtime-scoped `HanlinExpoNativeAPIGate` + `HanlinScriptAnalyzer` (`ios-native-api`) + synchronous session revocation in `HanlinScriptingPlatform.swift` before async store persistence.
+    - Test Probes: Built deterministic archives `ExpoNativeAPIProbeA.hanlinExpo`, `ExpoNativeAPIProbeB.hanlinExpo`, `ExpoNativeAPIProbeMissingGrant.hanlinExpo`, `ExpoNativeAPIProbeIncompatible.hanlinExpo`, `ExpoNativeAPIMalformed.hanlinExpo` with static timestamps.
+    - Verification: Static tests (12/12 pass with TAP exit code 0), TypeScript typecheck (0 errors), probe bundling (clean), focused `HanlinScriptAnalyzerTests` (pass), native XCUITest suite `HanlinExpoNativeAPIIntegrationUITests.swift` (7 test cases).
+    - Authentic Xcode 27 verification: GitHub Actions Run 40427498687 on `xcode-27`.
+    - Zero changes to 4 frozen chat UI files; zero Asana tasks touched (strictly READ-ONLY); no automatic CI triggers added. Physical device status: `DEVICE_NOT_VERIFIED`.
 
 - [x] Hanlin CI Infrastructure & Multi-Tier Caching Optimization
   - Implemented: 2026-10-20
