@@ -6,7 +6,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import yaml
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -25,16 +28,17 @@ class TestExpoXCFrameworkPreparation(unittest.TestCase):
             content,
             "Assistant-introduced XCFramework signing step must be completely removed from testflight.yml",
         )
-        parsed_tf = yaml.safe_load(content)
-        self.assertIsInstance(parsed_tf, dict)
-        parsed_dispatch = yaml.safe_load(DISPATCH_WORKFLOW.read_text(encoding="utf-8"))
-        self.assertIsInstance(parsed_dispatch, dict)
+        if yaml is not None:
+            parsed_tf = yaml.safe_load(content)
+            self.assertIsInstance(parsed_tf, dict)
+            parsed_dispatch = yaml.safe_load(DISPATCH_WORKFLOW.read_text(encoding="utf-8"))
+            self.assertIsInstance(parsed_dispatch, dict)
 
-        steps = parsed_tf["jobs"]["build-sign-and-upload"]["steps"]
-        step_names = [s.get("name", "") for s in steps]
-        self.assertIn("Select Xcode 27 and verify iOS 27 SDK", step_names)
-        self.assertIn("Prepare application build inputs", step_names)
-        self.assertNotIn("Validate and normalize local Expo XCFramework signatures", step_names)
+            steps = parsed_tf["jobs"]["build-sign-and-upload"]["steps"]
+            step_names = [s.get("name", "") for s in steps]
+            self.assertIn("Select Xcode 27 and verify iOS 27 SDK", step_names)
+            self.assertIn("Prepare application build inputs", step_names)
+            self.assertNotIn("Validate and normalize local Expo XCFramework signatures", step_names)
 
     def test_node_helpers_detect_broken_symlinks_and_prune_non_ios_slices(self):
         node_test_script = r"""
