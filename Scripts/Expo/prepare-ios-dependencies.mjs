@@ -1211,9 +1211,10 @@ template <typename CharTransformT = fnv1a_identity>
           let cleaned = content.replace(/^extension\s+__ObjC[\s\S]*?^}[^\S\r\n]*\r?\n?/gm, '');
           cleaned = cleaned.replaceAll('(ExpoModulesCore.FunctionCallResult) ->', '(borrowing ExpoModulesCore.FunctionCallResult) ->');
           cleaned = cleaned.replaceAll('(FunctionCallResult) ->', '(borrowing FunctionCallResult) ->');
+          cleaned = cleaned.replace(/:\s+((?:ExpoModulesJSI\.)?JavaScriptValue\b)/g, ': borrowing $1');
           if (cleaned !== content) {
             await writeFile(fullPath, cleaned, 'utf8');
-            console.log(`[HanlinExpo] Stripped unresolved __ObjC extension and added ownership to noncopyable Result in ${entry.name}`);
+            console.log(`[HanlinExpo] Stripped unresolved __ObjC extension and added ownership to noncopyable Result/Value in ${entry.name}`);
           }
         }
       }
