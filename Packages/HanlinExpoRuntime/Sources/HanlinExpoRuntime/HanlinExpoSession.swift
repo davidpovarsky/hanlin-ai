@@ -61,10 +61,6 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         return hanlin_create_hermes_factory()
     }
 
-    nonisolated override func thirdPartyFabricComponents() -> [String: AnyClass]? {
-        return HanlinExpoNativeAPIManager.thirdPartyFabricComponents()
-    }
-
     nonisolated fileprivate func handleHostDidInitializeRuntime(_ runtime: UnsafeMutableRawPointer) {
         NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
         appContext.setRuntime(runtime, scheduler: nil, dispatch: nil)
