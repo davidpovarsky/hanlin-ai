@@ -197,7 +197,6 @@ export async function prepareExpoNativeAPI() {
   await mkdir(coreIncludeDir, { recursive: true });
   await cp(resolve(bridgeDstDir, 'HanlinExpoNativeAPIGate.h'), resolve(coreIncludeDir, 'HanlinExpoNativeAPIGate.h'));
   await cp(resolve(bridgeDstDir, 'HanlinExpoDependencyProvider.h'), resolve(coreIncludeDir, 'HanlinExpoDependencyProvider.h'));
-  await cp(resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptNativeApiModule.h'), resolve(coreIncludeDir, 'NativeScriptNativeApiModule.h'));
   await cp(resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptUIKitHost.h'), resolve(coreIncludeDir, 'NativeScriptUIKitHost.h'));
   await cp(resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptUIView.h'), resolve(coreIncludeDir, 'NativeScriptUIView.h'));
 
@@ -206,7 +205,6 @@ export async function prepareExpoNativeAPI() {
 #import <Foundation/Foundation.h>
 #import "HanlinExpoNativeAPIGate.h"
 #import "HanlinExpoDependencyProvider.h"
-#import "NativeScriptNativeApiModule.h"
 #import "NativeScriptUIKitHost.h"
 #import "NativeScriptUIView.h"
 `, 'utf8');
