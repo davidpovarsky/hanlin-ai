@@ -151,6 +151,8 @@ jobs:
 
           HANLIN_API_KEY =
           HANLIN_OPEN_API_KEY =
+          SWIFT_ENABLE_EXPLICIT_MODULES = NO
+          SWIFT_OBJC_INTEROP_MODE = objcxx
           EOF
 
       - name: Live Activity · refresh
@@ -276,6 +278,7 @@ jobs:
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=YES \
+            SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             | tee "$LOG_DIR/05-build-for-testing.log"
 
       - name: Live Activity · refresh

@@ -1207,11 +1207,13 @@ template <typename CharTransformT = fnv1a_identity>
         if (entry.isDirectory()) {
           await cleanSwiftInterfaces(fullPath);
         } else if (entry.name.endsWith('.swiftinterface')) {
-          const content = await readFile(fullPath, 'utf8');
-          const cleaned = content.replace(/^extension\s+__ObjC[\s\S]*?^}[^\S\r\n]*\r?\n?/gm, '');
+          let content = await readFile(fullPath, 'utf8');
+          let cleaned = content.replace(/^extension\s+__ObjC[\s\S]*?^}[^\S\r\n]*\r?\n?/gm, '');
+          cleaned = cleaned.replaceAll('(ExpoModulesCore.FunctionCallResult) ->', '(borrowing ExpoModulesCore.FunctionCallResult) ->');
+          cleaned = cleaned.replaceAll('(FunctionCallResult) ->', '(borrowing FunctionCallResult) ->');
           if (cleaned !== content) {
             await writeFile(fullPath, cleaned, 'utf8');
-            console.log(`[HanlinExpo] Stripped unresolved __ObjC extension from ${entry.name}`);
+            console.log(`[HanlinExpo] Stripped unresolved __ObjC extension and added ownership to noncopyable Result in ${entry.name}`);
           }
         }
       }
@@ -1227,14 +1229,13 @@ template <typename CharTransformT = fnv1a_identity>
     }
 
     const configXcconfigPath = resolve(repositoryRoot, 'Config.xcconfig');
-    if (existsSync(configXcconfigPath)) {
-      const existingConfig = await readFile(configXcconfigPath, 'utf8');
-      if (!existingConfig.includes('ModularFrameworks')) {
-        const repoRootPosix = repositoryRoot.replace(/\\/g, '/');
-        const expoXcconfigBlock = [
-          '',
-          'SWIFT_ENABLE_EXPLICIT_MODULES = NO',
-          'SWIFT_OBJC_INTEROP_MODE = objcxx',
+    let existingConfig = existsSync(configXcconfigPath) ? await readFile(configXcconfigPath, 'utf8') : '';
+    if (!existingConfig.includes('ModularFrameworks')) {
+      const repoRootPosix = repositoryRoot.replace(/\\/g, '/');
+      const expoXcconfigBlock = [
+        '',
+        'SWIFT_ENABLE_EXPLICIT_MODULES = NO',
+        'SWIFT_OBJC_INTEROP_MODE = objcxx',
           `FRAMEWORK_SEARCH_PATHS = "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "${repoRootPosix}/Artifacts/ModularFrameworks" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks" "$(SRCROOT)/Artifacts/ModularFrameworks" $(inherited)`,
           `HEADER_SEARCH_PATHS = "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "${repoRootPosix}/Artifacts/ReactModularHeaders" "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers" "${repoRootPosix}/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react" "$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders" "$(SRCROOT)/Artifacts/ReactModularHeaders" $(inherited) "$(BUILT_PRODUCTS_DIR)/React.framework/Headers" "$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers" "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers"`,
           'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES',
