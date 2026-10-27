@@ -175,6 +175,9 @@ export async function prepareExpoNativeAPI() {
   await mkdir(nativeApiDst, { recursive: true });
   await cp(resolve(nsPkgDir, 'native-api', 'ffi', 'objc'), resolve(nativeApiDst, 'ffi', 'objc'), { recursive: true });
   await cp(resolve(nsPkgDir, 'native-api', 'metadata'), resolve(nativeApiDst, 'metadata'), { recursive: true });
+  await cp(resolve(nsPkgDir, 'native-api', 'jsi', 'hermes'), resolve(nativeApiDst, 'jsi', 'hermes'), { recursive: true });
+  await cp(resolve(nsPkgDir, 'native-api', 'jsi', 'shared'), resolve(nativeApiDst, 'jsi', 'shared'), { recursive: true });
+  await rm(resolve(nativeApiDst, 'jsi', 'shared', 'Tasks.cpp'), { force: true });
 
   // Stage bridge sources
   const bridgeSrcDir = resolve(scriptRoot, '..', '..', 'Packages', 'HanlinExpoNativeAPI', 'bridge-source');
