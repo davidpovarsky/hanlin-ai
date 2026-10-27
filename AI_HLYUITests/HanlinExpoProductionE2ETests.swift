@@ -1,622 +1,705 @@
-import XCTest
-
-@MainActor
-final class HanlinExpoProductionE2ETests: XCTestCase {
-    private let app = XCUIApplication()
-    private let documents = XCUIApplication(bundleIdentifier: "com.apple.DocumentsApp")
-    private let probeAPackageName = "Expo SwiftUI Probe A"
-    private let probeBPackageName = "Expo SwiftUI Probe B"
-
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
-        app.launchEnvironment["HANLIN_EXPO_E2E"] = "1"
-        app.launch()
-    }
-
-    // MARK: - Test Cases
-
-    func testProductionExpoSwiftUIProbeEndToEnd() throws {
-        openApps()
-        importAndInstall(archive: "ExpoSwiftUIProbeA")
-
-        launchInstalledPackage(named: probeAPackageName)
-
-        // 1. Verify Apple SwiftUI SplitView Navigation & Sidebar rendered via Expo UI
-        let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
-        let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
-        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
-
-        // 2. Verify Torah books list items rendered as native SwiftUI buttons/rows
-        let genesisPredicate = NSPredicate(format: "label CONTAINS 'בראשית' OR label CONTAINS 'Genesis'")
-        var genesisButton = app.buttons.matching(genesisPredicate).firstMatch
-        if !genesisButton.exists {
-            genesisButton = app.descendants(matching: .any).matching(genesisPredicate).firstMatch
-        }
-        XCTAssertTrue(genesisButton.waitForExistence(timeout: 15), "Genesis item in sidebar did not render")
-
-        // 3. Verify Detail Column initial content & Variant A tag
-        let variantAPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic A' OR label CONTAINS 'Variant A'")
-        let variantALabel = app.descendants(matching: .any).matching(variantAPredicate).firstMatch
-        XCTAssertTrue(variantALabel.waitForExistence(timeout: 15), "Dynamic Variant A indicator did not render")
-
-        let genesisTextPredicate = NSPredicate(format: "label CONTAINS 'בראשית ברא' OR label CONTAINS 'בְּרֵאשִׁ֖ית' OR label CONTAINS 'Genesis'")
-        let genesisText = app.descendants(matching: .any).matching(genesisTextPredicate).firstMatch
-        XCTAssertTrue(genesisText.waitForExistence(timeout: 15), "Torah source text did not render in detail column")
-
-        // 4. Verify native Expo UI Toolbar with SF Symbol button and test React state mutation
-        let toolbarButtonPredicate = NSPredicate(format: "identifier == 'ToolbarProbeButton' OR label == 'Toolbar Probe' OR label CONTAINS 'Toolbar Probe'")
-        let toolbarButton = app.descendants(matching: .any).matching(toolbarButtonPredicate).firstMatch
-        XCTAssertTrue(toolbarButton.waitForExistence(timeout: 15), "Native Toolbar button 'Toolbar Probe' did not render")
-        XCTAssertTrue(toolbarButton.isHittable, "Native Toolbar button 'Toolbar Probe' is not hittable")
-
-        let initialToolbarCountPredicate = NSPredicate(format: "label CONTAINS 'Toolbar action count: 0'")
-        let initialToolbarCount = app.descendants(matching: .any).matching(initialToolbarCountPredicate).firstMatch
-        XCTAssertTrue(initialToolbarCount.waitForExistence(timeout: 10), "Initial 'Toolbar action count: 0' marker was missing")
-
-        toolbarButton.tap()
-
-        let updatedToolbarCountPredicate = NSPredicate(format: "label CONTAINS 'Toolbar action count: 1'")
-        let updatedToolbarCount = app.descendants(matching: .any).matching(updatedToolbarCountPredicate).firstMatch
-        if !updatedToolbarCount.waitForExistence(timeout: 2) {
-            toolbarButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        }
-        XCTAssertTrue(updatedToolbarCount.waitForExistence(timeout: 10), "Toolbar action count failed to increment to 1 after tap")
-
-        // 5. Test interactive state change: switch book to Exodus ('שמות')
-        let exodusPredicate = NSPredicate(format: "label CONTAINS 'שמות' OR label CONTAINS 'Exodus'")
-        let exodusButton = app.buttons.matching(exodusPredicate).firstMatch
-        if exodusButton.exists && exodusButton.isHittable {
-            exodusButton.tap()
-
-            let exodusTextPredicate = NSPredicate(format: "label CONTAINS 'ואלה שמות' OR label CONTAINS 'וְאֵ֗לֶּה שְׁמוֹת֙' OR label CONTAINS 'Exodus'")
-            let exodusText = app.staticTexts.matching(exodusTextPredicate).firstMatch
-            _ = exodusText.waitForExistence(timeout: 5)
-        }
-
-        // 6. Test native BottomSheet presentation and Toggle state mutation (required, non-optional)
-        let settingsPredicate = NSPredicate(format: "label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
-        var settingsButton = app.buttons.matching(settingsPredicate).firstMatch
-        if !settingsButton.exists {
-            settingsButton = app.descendants(matching: .any).matching(settingsPredicate).firstMatch
-        }
-        XCTAssertTrue(settingsButton.waitForExistence(timeout: 10), "Settings button did not exist")
-        XCTAssertTrue(settingsButton.isHittable, "Settings button was not hittable")
-        settingsButton.tap()
-
-        let sheetTitlePredicate = NSPredicate(format: "label CONTAINS 'הגדרות קריאה' OR label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
-        let sheetTitle = app.descendants(matching: .any).matching(sheetTitlePredicate).firstMatch
-        XCTAssertTrue(sheetTitle.waitForExistence(timeout: 10), "Expo UI native BottomSheet failed to present")
-
-        let initialNikkudPredicate = NSPredicate(format: "identifier == 'NikkudStateMarker' OR label CONTAINS 'Nikkud: ON'")
-        let initialNikkud = app.descendants(matching: .any).matching(initialNikkudPredicate).firstMatch
-        XCTAssertTrue(initialNikkud.waitForExistence(timeout: 10), "Initial 'Nikkud: ON' marker did not render in BottomSheet")
-
-        let togglePredicate = NSPredicate(format: "identifier == 'NikkudToggle' OR label CONTAINS 'הצג ניקוד וטעמים' OR label CONTAINS 'ניקוד' OR identifier == 'Toggle'")
-        var toggle = app.switches.matching(togglePredicate).firstMatch
-        if !toggle.exists {
-            toggle = app.descendants(matching: .any).matching(togglePredicate).firstMatch
-        }
-        XCTAssertTrue(toggle.waitForExistence(timeout: 10), "Nikkud toggle was missing in BottomSheet")
-        XCTAssertTrue(toggle.isHittable, "Nikkud toggle was not hittable")
-
-        let updatedNikkudPredicate = NSPredicate(format: "label CONTAINS 'Nikkud: OFF'")
-        let updatedNikkud = app.descendants(matching: .any).matching(updatedNikkudPredicate).firstMatch
-
-        // In SwiftUI, a full-width Toggle row places the switch knob at the trailing edge (in LTR, dx ≈ 0.9)
-        // or leading edge (in RTL, dx ≈ 0.1). Standard center-tap (0.5, 0.5) hits the empty spacer between
-        // label and switch knob. Tap trailing knob first, then leading knob, then default tap.
-        toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
-        if !updatedNikkud.waitForExistence(timeout: 2) {
-            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.5)).tap()
-        }
-        if !updatedNikkud.waitForExistence(timeout: 2) {
-            toggle.tap()
-        }
-
-        XCTAssertTrue(updatedNikkud.waitForExistence(timeout: 10), "Nikkud state marker failed to switch to 'Nikkud: OFF'")
-
-        let closeSheetPredicate = NSPredicate(format: "identifier == 'CloseSettingsSheetButton' OR label CONTAINS 'סגור הגדרות' OR label == 'סגור'")
-        var closeSheetButton = app.buttons.matching(closeSheetPredicate).firstMatch
-        if !closeSheetButton.exists {
-            closeSheetButton = app.descendants(matching: .any).matching(closeSheetPredicate).firstMatch
-        }
-        XCTAssertTrue(closeSheetButton.waitForExistence(timeout: 5), "Close sheet button was missing")
-        XCTAssertTrue(closeSheetButton.isHittable, "Close sheet button was not hittable")
-        closeSheetButton.tap()
-
-        // 7. Close MiniApp and verify clean host return
-        closeExpoApp()
-
-        // 8. Verify clean relaunch without session leakage
-        launchInstalledPackage(named: probeAPackageName)
-        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI MiniApp failed to relaunch cleanly")
-        closeExpoApp()
-    }
-
-    func testProductionExpoDynamicPackageSwitching() throws {
-        openApps()
-
-        // Import and install both Variant A and Variant B dynamically
-        importAndInstall(archive: "ExpoSwiftUIProbeA")
-        importAndInstall(archive: "ExpoSwiftUIProbeB")
-
-        // 1. Launch Variant A
-        launchInstalledPackage(named: probeAPackageName)
-        let variantAPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic A'")
-        XCTAssertTrue(
-            app.descendants(matching: .any).matching(variantAPredicate).firstMatch.waitForExistence(timeout: 30),
-            "Variant A did not render active indicator"
-        )
-        closeExpoApp()
-
-        // 2. Launch Variant B without host rebuild — proves dynamic package switching
-        launchInstalledPackage(named: probeBPackageName)
-        let variantBPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic B'")
-        XCTAssertTrue(
-            app.descendants(matching: .any).matching(variantBPredicate).firstMatch.waitForExistence(timeout: 30),
-            "Variant B did not render dynamically switched active indicator"
-        )
-        closeExpoApp()
-
-        // 3. Return to Variant A — proves isolated dynamic session switching without contamination
-        launchInstalledPackage(named: probeAPackageName)
-        XCTAssertTrue(
-            app.descendants(matching: .any).matching(variantAPredicate).firstMatch.waitForExistence(timeout: 30),
-            "Variant A failed to restore cleanly after running Variant B"
-        )
-        XCTAssertFalse(
-            app.descendants(matching: .any).matching(variantBPredicate).firstMatch.exists,
-            "Contamination from Variant B detected in Variant A session"
-        )
-        closeExpoApp()
-
-        // 4. Persistence across app termination
-        app.terminate()
-        app.launch()
-        openApps()
-
-        let cardA = findPackageCard(named: probeAPackageName)
-        let cardB = findPackageCard(named: probeBPackageName)
-        XCTAssertTrue(cardA.waitForExistence(timeout: 20), "Package A missing after host restart")
-        XCTAssertTrue(cardB.waitForExistence(timeout: 20), "Package B missing after host restart")
-
-        launchInstalledPackage(named: probeBPackageName)
-        XCTAssertTrue(
-            app.descendants(matching: .any).matching(variantBPredicate).firstMatch.waitForExistence(timeout: 30),
-            "Variant B failed to launch after host restart"
-        )
-        closeExpoApp()
-    }
-
-    func testProductionExpoLifecycleAndUninstall() throws {
-        openApps()
-        importAndInstall(archive: "ExpoSwiftUIProbeA")
-
-        // Open package details and uninstall
-        openPackageDetails(named: probeAPackageName)
-        let uninstallButton = app.buttons["Uninstall"].firstMatch
-        XCTAssertTrue(uninstallButton.waitForExistence(timeout: 10), "Uninstall button missing in package details")
-        uninstallButton.tap()
-
-        _ = waitUntil(timeout: 10) { !self.hasPackageCard(named: self.probeAPackageName) }
-        XCTAssertFalse(hasPackageCard(named: probeAPackageName), "Uninstalled Expo package remained visible")
-
-        // Verify uninstalled state persists across restart
-        app.terminate()
-        app.launch()
-        openApps()
-        XCTAssertFalse(
-            hasPackageCard(named: probeAPackageName),
-            "Uninstalled Expo package reappeared after host restart"
-        )
-    }
-
-    func testProductionExpo1000RowsProbe() throws {
-        openApps()
-        importAndInstall(archive: "ExpoSwiftUIProbeA")
-        launchInstalledPackage(named: probeAPackageName)
-
-        // 1. Ensure Expo SwiftUI SplitView Navigation & Sidebar has loaded
-        let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
-        let sidebarTitle = app.staticTexts.matching(sidebarTitlePredicate).firstMatch.exists
-            ? app.staticTexts.matching(sidebarTitlePredicate).firstMatch
-            : app.buttons.matching(sidebarTitlePredicate).firstMatch
-        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
-
-        // 2. Select the 1,000-row benchmark probe
-        let benchmarkPredicate = NSPredicate(format: "label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'מבחן' OR label CONTAINS 'Rows Probe'")
-        var benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
-        if !benchmarkButton.waitForExistence(timeout: 5) || !benchmarkButton.isHittable {
-            // Expand sidebar if collapsed and probe not directly hittable
-            let sidebarToggle = app.navigationBars.buttons.matching(
-                NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
-            ).firstMatch
-            if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
-                sidebarToggle.tap()
-            }
-            benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
-        }
-        XCTAssertTrue(benchmarkButton.waitForExistence(timeout: 15), "1,000 rows benchmark item missing")
-        if benchmarkButton.isHittable {
-            benchmarkButton.tap()
-        } else {
-            benchmarkButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        }
-
-        // 3. Verify header rendered in Detail
-        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS 'רשימת 1000 שורות' OR label CONTAINS 'בדיקת עומס' OR identifier CONTAINS '1,000'")
-        var headerLabel = app.navigationBars.matching(headerPredicate).firstMatch
-        if !headerLabel.exists {
-            headerLabel = app.staticTexts.matching(headerPredicate).firstMatch
-        }
-        if !headerLabel.waitForExistence(timeout: 5) {
-            // If the first tap only dismissed an overlay/drawer scrim, tap the benchmark button again
-            if benchmarkButton.isHittable {
-                benchmarkButton.tap()
-            } else {
-                benchmarkButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-            }
-            headerLabel = app.navigationBars.matching(headerPredicate).firstMatch
-            if !headerLabel.exists {
-                headerLabel = app.staticTexts.matching(headerPredicate).firstMatch
-            }
-        }
-        XCTAssertTrue(headerLabel.waitForExistence(timeout: 20), "1,000 rows header failed to render")
-
-        // 4. Verify initial rows exist and list can be scrolled
-        let row1Predicate = NSPredicate(
-            format: "label CONTAINS 'Row #1' OR label CONTAINS 'שורה #1' OR label CONTAINS '#1' OR label CONTAINS 'פריט בדיקה 1'"
-        )
-        let row1 = app.buttons.matching(row1Predicate).firstMatch
-        XCTAssertTrue(row1.waitForExistence(timeout: 25), "First row in 1,000-row list did not render")
-
-        // 5. Scroll down and verify rows continue rendering
-        if row1.waitForExistence(timeout: 5) {
-            row1.swipeUp()
-        } else {
-            app.swipeUp()
-        }
-
-        let scrolledRowPredicate = NSPredicate(
-            format: "label CONTAINS 'Row #' OR label CONTAINS 'שורה #' OR label CONTAINS 'פריט בדיקה'"
-        )
-        let scrolledRow = app.buttons.matching(scrolledRowPredicate).firstMatch
-        XCTAssertTrue(scrolledRow.waitForExistence(timeout: 15), "List failed to render rows after scrolling")
-
-        closeExpoApp()
-    }
-
-    func testProductionExpoMalformedPackageRejection() throws {
-        openApps()
-        ensureAppsAddButton(timeout: 15).tap()
-        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
-        XCTAssertTrue(importLink.waitForExistence(timeout: 10))
-        if importLink.isHittable {
-            importLink.tap()
-        } else {
-            importLink.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        }
-
-        // Attempt to import malformed package
-        selectArchive("ExpoSwiftUIMalformed")
-
-        let errorIndicator = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'missing' OR label CONTAINS 'entrypoint' OR label CONTAINS 'Compatibility' OR label CONTAINS 'malformed'")
-        ).firstMatch
-        if !errorIndicator.waitForExistence(timeout: 5) {
-            app.swipeUp()
-        }
-        XCTAssertTrue(errorIndicator.waitForExistence(timeout: 20), "Malformed package import error was not displayed")
-
-        let installButton = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(!installButton.exists || !installButton.isEnabled, "Install button was unexpectedly available for malformed package")
-        closeImportSurfaces()
-
-        XCTAssertFalse(hasPackageCard(named: "Expo SwiftUI Malformed"), "Partially committed malformed package found in Apps grid")
-    }
-
-    // MARK: - Navigation & Staging Helpers
-
-    private var appsAddButton: XCUIElement {
-        let direct = app.buttons["hanlin-apps-add"].firstMatch
-        if direct.exists { return direct }
-        let navByValue = app.navigationBars["Apps"].buttons["hanlin-apps-add"].firstMatch
-        if navByValue.exists { return navByValue }
-        let navByLabel = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
-        if navByLabel.exists { return navByLabel }
-        return direct
-    }
-
-    @discardableResult
-    private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
-        XCTAssertTrue(appsAddButton.waitForExistence(timeout: timeout), "hanlin-apps-add button did not exist")
-        return appsAddButton
-    }
-
-    private func openApps() {
-        if appsAddButton.waitForExistence(timeout: 5) { return }
-
-        let candidates = [
-            app.buttons["hanlin-apps-tab"].firstMatch,
-            app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
-            app.tabs["hanlin-apps-tab"].firstMatch,
-            app.buttons["Apps"].firstMatch,
-            app.tabBars.buttons["Apps"].firstMatch,
-            app.tabs["Apps"].firstMatch
-        ]
-        var tapped = false
-        for candidate in candidates {
-            if candidate.waitForExistence(timeout: 3) {
-                candidate.tap()
-                tapped = true
-                break
-            }
-        }
-        if !tapped {
-            let fallback = app.descendants(matching: .any).matching(
-                NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
-            ).firstMatch
-            if fallback.waitForExistence(timeout: 10) {
-                fallback.tap()
-            }
-        }
-        ensureAppsAddButton(timeout: 20)
-    }
-
-    private func selectArchive(_ archive: String) {
-        let navBar = app.navigationBars["Script Package"].firstMatch
-        _ = navBar.waitForExistence(timeout: 5)
-
-        // Select archive from staged document packages or file importer
-        let directPredicate = NSPredicate(
-            format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@",
-            archive,
-            archive
-        )
-        var directArchive = app.buttons.matching(directPredicate).firstMatch
-        if !directArchive.exists || !directArchive.isHittable {
-            for _ in 1...6 {
-                if directArchive.exists && directArchive.isHittable { break }
-                app.swipeUp()
-                if directArchive.waitForExistence(timeout: 2) && directArchive.isHittable { break }
-            }
-        }
-        if !directArchive.exists {
-            for _ in 1...6 {
-                app.swipeDown()
-                if directArchive.waitForExistence(timeout: 2) && directArchive.isHittable { break }
-            }
-        }
-        if !directArchive.exists {
-            let directCandidate = app.descendants(matching: .any).matching(identifier: archive).firstMatch
-            if directCandidate.waitForExistence(timeout: 2) {
-                directArchive = directCandidate
-            }
-        }
-        if directArchive.waitForExistence(timeout: 5) {
-            _ = waitUntil(timeout: 5) { directArchive.isHittable }
-            if directArchive.isHittable {
-                directArchive.tap()
-            } else {
-                directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-            }
-
-            let inspecting = app.staticTexts["Inspecting…"].firstMatch
-            let install = app.buttons["hanlin-package-install"].firstMatch
-            let errorText = app.staticTexts["Import Error"].firstMatch
-            let errorIndicator = app.descendants(matching: .any).matching(
-                NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed'")
-            ).firstMatch
-            let started = waitUntil(timeout: 4) {
-                inspecting.exists || install.exists || errorText.exists || errorIndicator.exists
-            }
-            if !started && directArchive.exists {
-                if directArchive.isHittable {
-                    directArchive.tap()
-                } else {
-                    directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-                }
-            }
-            return
-        }
-
-        let importer = app.buttons["hanlin-file-importer"].firstMatch
-        XCTAssertTrue(importer.waitForExistence(timeout: 10))
-        importer.tap()
-
-        let targetPredicate = NSPredicate(
-            format: "label == %@ OR label == %@ OR identifier == %@ OR identifier == %@",
-            archive,
-            "\(archive).hanlinExpo",
-            archive,
-            "\(archive).hanlinExpo"
-        )
-        let candidateArchives = [
-            app.buttons[archive].firstMatch,
-            app.descendants(matching: .any).matching(targetPredicate).firstMatch,
-            documents.descendants(matching: .any).matching(targetPredicate).firstMatch,
-        ]
-        var found: XCUIElement?
-        for candidate in candidateArchives {
-            if candidate.waitForExistence(timeout: 3) {
-                found = candidate
-                break
-            }
-        }
-        let target = found ?? candidateArchives[0]
-        XCTAssertTrue(target.waitForExistence(timeout: 20), "Staged archive \(archive) was absent")
-        target.tap()
-    }
-
-    private func hasPackageCard(named packageName: String) -> Bool {
-        let cardPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", packageName, packageName)
-        return app.buttons.matching(cardPredicate).firstMatch.exists ||
-               app.descendants(matching: .any).matching(cardPredicate).firstMatch.exists
-    }
-
-    private func importAndInstall(archive: String) {
-        let displayName = archive == "ExpoSwiftUIProbeA" ? probeAPackageName : (archive == "ExpoSwiftUIProbeB" ? probeBPackageName : archive)
-        if hasPackageCard(named: displayName) || hasPackageCard(named: archive) { return }
-
-        ensureAppsAddButton(timeout: 15).tap()
-        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
-        XCTAssertTrue(importLink.waitForExistence(timeout: 10), "Import Script Package link was missing")
-        if importLink.isHittable {
-            importLink.tap()
-        } else {
-            importLink.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        }
-
-        selectArchive(archive)
-
-        // Preview & Install
-        let install = app.buttons["hanlin-package-install"].firstMatch
-        let inspecting = app.staticTexts["Inspecting…"].firstMatch
-        if inspecting.waitForExistence(timeout: 3) {
-            _ = waitUntil(timeout: 30) { !inspecting.exists }
-        }
-        XCTAssertTrue(install.waitForExistence(timeout: 30), "Install button did not appear for \(archive)")
-        XCTAssertTrue(waitUntil(timeout: 10) { install.isEnabled }, "\(archive) was not installable")
-        install.tap()
-        XCTAssertTrue(waitUntil(timeout: 25) { !install.exists }, "\(archive) installation did not complete")
-        closeImportSurfaces()
-    }
-
-    private func closeImportSurfaces() {
-        for _ in 1...6 {
-            let doneButtons = [
-                app.navigationBars["Script Package"].buttons["Done"].firstMatch,
-                app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
-                app.navigationBars.buttons["Done"].firstMatch,
-                app.buttons["Done"].firstMatch,
-            ]
-            var tappedDone = false
-            for done in doneButtons {
-                if done.waitForExistence(timeout: 2) && done.isHittable {
-                    done.tap()
-                    tappedDone = true
-                    _ = waitUntil(timeout: 2) { !done.exists }
-                    break
-                }
-            }
-            if !tappedDone {
-                if !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists && appsAddButton.exists {
-                    break
-                }
-                let backButtons = [
-                    app.navigationBars["Script Package"].buttons.element(boundBy: 0),
-                    app.navigationBars.buttons.element(boundBy: 0),
-                ]
-                for back in backButtons {
-                    if back.waitForExistence(timeout: 1) && back.isHittable {
-                        back.tap()
-                        tappedDone = true
-                        _ = waitUntil(timeout: 2) { !back.exists }
-                        break
-                    }
-                }
-                if !tappedDone { break }
-            }
-        }
-        _ = waitUntil(timeout: 5) {
-            !self.app.navigationBars["Script Package"].exists &&
-            !self.app.navigationBars["Add Apps"].exists &&
-            !self.app.buttons["hanlin-package-install"].exists
-        }
-        ensureAppsAddButton(timeout: 10)
-    }
-
-    private func findPackageCard(named packageName: String) -> XCUIElement {
-        let cardPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", packageName, packageName)
-        let packageCandidates: [() -> XCUIElement] = [
-            { self.app.buttons.matching(cardPredicate).firstMatch },
-            { self.app.descendants(matching: .any).matching(cardPredicate).firstMatch }
-        ]
-
-        for candidate in packageCandidates {
-            let elem = candidate()
-            if elem.exists { return elem }
-        }
-
-        for _ in 1...2 {
-            app.swipeUp()
-            for candidate in packageCandidates {
-                let elem = candidate()
-                if elem.exists { return elem }
-            }
-        }
-
-        for _ in 1...2 {
-            app.swipeDown()
-            for candidate in packageCandidates {
-                let elem = candidate()
-                if elem.exists { return elem }
-            }
-        }
-
-        return app.buttons.matching(cardPredicate).firstMatch
-    }
-
-    private func launchInstalledPackage(named packageName: String) {
-        let package = findPackageCard(named: packageName)
-        XCTAssertTrue(package.waitForExistence(timeout: 20), "Installed package \(packageName) was unavailable")
-
-        let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
-
-        for attempt in 1...3 {
-            if closeButton.exists { return }
-            if !package.isHittable {
-                app.swipeDown()
-                _ = waitUntil(timeout: 2) { package.isHittable }
-            }
-            if !package.isHittable {
-                app.swipeUp()
-                _ = waitUntil(timeout: 2) { package.isHittable }
-            }
-            if package.isHittable {
-                package.tap()
-            } else {
-                package.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-            }
-            if waitUntil(timeout: attempt == 1 ? 15 : 8, condition: { closeButton.exists }) {
-                return
-            }
-            if app.alerts["Script App Error"].exists {
-                let errorLabels = app.alerts["Script App Error"].staticTexts.allElementsBoundByIndex.map(\.label).filter { !$0.isEmpty }
-                XCTFail("Script App Error alert appeared when launching \(packageName): " + errorLabels.joined(separator: " | "))
-                return
-            }
-        }
-    }
-
-    private func closeExpoApp() {
-        let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
-        if closeButton.waitForExistence(timeout: 10) {
-            closeButton.tap()
-        }
-        _ = waitUntil(timeout: 5) { !closeButton.exists }
-        ensureAppsAddButton(timeout: 15)
-    }
-
-    private func openPackageDetails(named packageName: String) {
-        let card = findPackageCard(named: packageName)
-        XCTAssertTrue(card.waitForExistence(timeout: 15))
-        card.press(forDuration: 1.5)
-        let detailsPredicate = NSPredicate(format: "label CONTAINS 'Package Information' OR label CONTAINS 'Package Details'")
-        let detailsButton = app.descendants(matching: .any).matching(detailsPredicate).firstMatch
-        if detailsButton.waitForExistence(timeout: 5) {
-            detailsButton.tap()
-        }
-    }
-
-    private func waitUntil(timeout: TimeInterval, condition: () -> Bool) -> Bool {
-        let start = Date()
-        while Date().timeIntervalSince(start) < timeout {
-            if condition() { return true }
-            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
-        }
-        return condition()
-    }
-}
+import XCTest
+
+@MainActor
+final class HanlinExpoProductionE2ETests: XCTestCase {
+    private let app = XCUIApplication()
+    private let documents = XCUIApplication(bundleIdentifier: "com.apple.DocumentsApp")
+    private let probeAPackageName = "Expo SwiftUI Probe A"
+    private let probeBPackageName = "Expo SwiftUI Probe B"
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_EXPO_E2E"] = "1"
+        app.launch()
+    }
+
+    override func tearDownWithError() throws {
+        app.terminate()
+    }
+
+    // MARK: - Test Cases
+
+    func testProductionExpoSwiftUIProbeEndToEnd() throws {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+
+        launchInstalledPackage(named: probeAPackageName)
+
+        // 1. Verify Apple SwiftUI SplitView Navigation & Sidebar rendered via Expo UI
+        let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
+        let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
+        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
+
+        // 2. Verify Torah books list items rendered as native SwiftUI buttons/rows
+        let genesisPredicate = NSPredicate(format: "label CONTAINS 'בראשית' OR label CONTAINS 'Genesis'")
+        var genesisButton = app.buttons.matching(genesisPredicate).firstMatch
+        if !genesisButton.exists {
+            genesisButton = app.descendants(matching: .any).matching(genesisPredicate).firstMatch
+        }
+        XCTAssertTrue(genesisButton.waitForExistence(timeout: 15), "Genesis item in sidebar did not render")
+
+        // 3. Verify Detail Column initial content & Variant A tag
+        let variantAPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic A' OR label CONTAINS 'Variant A'")
+        let variantALabel = app.descendants(matching: .any).matching(variantAPredicate).firstMatch
+        XCTAssertTrue(variantALabel.waitForExistence(timeout: 15), "Dynamic Variant A indicator did not render")
+
+        let genesisTextPredicate = NSPredicate(format: "label CONTAINS 'בראשית ברא' OR label CONTAINS 'בְּרֵאשִׁ֖ית' OR label CONTAINS 'Genesis'")
+        let genesisText = app.descendants(matching: .any).matching(genesisTextPredicate).firstMatch
+        XCTAssertTrue(genesisText.waitForExistence(timeout: 15), "Torah source text did not render in detail column")
+
+        // 4. Verify native Expo UI Toolbar with SF Symbol button and test React state mutation
+        let toolbarButtonPredicate = NSPredicate(format: "identifier == 'ToolbarProbeButton' OR label == 'Toolbar Probe' OR label CONTAINS 'Toolbar Probe'")
+        let toolbarButton = app.descendants(matching: .any).matching(toolbarButtonPredicate).firstMatch
+        XCTAssertTrue(toolbarButton.waitForExistence(timeout: 15), "Native Toolbar button 'Toolbar Probe' did not render")
+        XCTAssertTrue(toolbarButton.isHittable, "Native Toolbar button 'Toolbar Probe' is not hittable")
+
+        let initialToolbarCountPredicate = NSPredicate(format: "label CONTAINS 'Toolbar action count: 0'")
+        let initialToolbarCount = app.descendants(matching: .any).matching(initialToolbarCountPredicate).firstMatch
+        XCTAssertTrue(initialToolbarCount.waitForExistence(timeout: 10), "Initial 'Toolbar action count: 0' marker was missing")
+
+        toolbarButton.tap()
+
+        let updatedToolbarCountPredicate = NSPredicate(format: "label CONTAINS 'Toolbar action count: 1'")
+        let updatedToolbarCount = app.descendants(matching: .any).matching(updatedToolbarCountPredicate).firstMatch
+        if !updatedToolbarCount.waitForExistence(timeout: 2) {
+            toolbarButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+        XCTAssertTrue(updatedToolbarCount.waitForExistence(timeout: 10), "Toolbar action count failed to increment to 1 after tap")
+
+        // 5. Test interactive state change: switch book to Exodus ('שמות')
+        let exodusPredicate = NSPredicate(format: "label CONTAINS 'שמות' OR label CONTAINS 'Exodus'")
+        let exodusButton = app.buttons.matching(exodusPredicate).firstMatch
+        if exodusButton.exists && exodusButton.isHittable {
+            exodusButton.tap()
+
+            let exodusTextPredicate = NSPredicate(format: "label CONTAINS 'ואלה שמות' OR label CONTAINS 'וְאֵ֗לֶּה שְׁמוֹת֙' OR label CONTAINS 'Exodus'")
+            let exodusText = app.staticTexts.matching(exodusTextPredicate).firstMatch
+            _ = exodusText.waitForExistence(timeout: 5)
+        }
+
+        // 6. Test native BottomSheet presentation and Toggle state mutation (required, non-optional)
+        let settingsPredicate = NSPredicate(format: "label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
+        var settingsButton = app.buttons.matching(settingsPredicate).firstMatch
+        if !settingsButton.exists {
+            settingsButton = app.descendants(matching: .any).matching(settingsPredicate).firstMatch
+        }
+        XCTAssertTrue(settingsButton.waitForExistence(timeout: 10), "Settings button did not exist")
+        XCTAssertTrue(settingsButton.isHittable, "Settings button was not hittable")
+        settingsButton.tap()
+
+        let sheetTitlePredicate = NSPredicate(format: "label CONTAINS 'הגדרות קריאה' OR label CONTAINS 'הגדרות' OR label CONTAINS 'Settings'")
+        let sheetTitle = app.descendants(matching: .any).matching(sheetTitlePredicate).firstMatch
+        XCTAssertTrue(sheetTitle.waitForExistence(timeout: 10), "Expo UI native BottomSheet failed to present")
+
+        let initialNikkudPredicate = NSPredicate(format: "identifier == 'NikkudStateMarker' OR label CONTAINS 'Nikkud: ON'")
+        let initialNikkud = app.descendants(matching: .any).matching(initialNikkudPredicate).firstMatch
+        XCTAssertTrue(initialNikkud.waitForExistence(timeout: 10), "Initial 'Nikkud: ON' marker did not render in BottomSheet")
+
+        let togglePredicate = NSPredicate(format: "identifier == 'NikkudToggle' OR label CONTAINS 'הצג ניקוד וטעמים' OR label CONTAINS 'ניקוד' OR identifier == 'Toggle'")
+        var toggle = app.switches.matching(togglePredicate).firstMatch
+        if !toggle.exists {
+            toggle = app.descendants(matching: .any).matching(togglePredicate).firstMatch
+        }
+        XCTAssertTrue(toggle.waitForExistence(timeout: 10), "Nikkud toggle was missing in BottomSheet")
+        XCTAssertTrue(toggle.isHittable, "Nikkud toggle was not hittable")
+
+        let updatedNikkudPredicate = NSPredicate(format: "label CONTAINS 'Nikkud: OFF'")
+        let updatedNikkud = app.descendants(matching: .any).matching(updatedNikkudPredicate).firstMatch
+
+        // In SwiftUI, a full-width Toggle row places the switch knob at the trailing edge (in LTR, dx ≈ 0.9)
+        // or leading edge (in RTL, dx ≈ 0.1). Standard center-tap (0.5, 0.5) hits the empty spacer between
+        // label and switch knob. Tap trailing knob first, then leading knob, then default tap.
+        toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        if !updatedNikkud.waitForExistence(timeout: 2) {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.5)).tap()
+        }
+        if !updatedNikkud.waitForExistence(timeout: 2) {
+            toggle.tap()
+        }
+
+        XCTAssertTrue(updatedNikkud.waitForExistence(timeout: 10), "Nikkud state marker failed to switch to 'Nikkud: OFF'")
+
+        let closeSheetPredicate = NSPredicate(format: "identifier == 'CloseSettingsSheetButton' OR label CONTAINS 'סגור הגדרות' OR label == 'סגור'")
+        var closeSheetButton = app.buttons.matching(closeSheetPredicate).firstMatch
+        if !closeSheetButton.exists {
+            closeSheetButton = app.descendants(matching: .any).matching(closeSheetPredicate).firstMatch
+        }
+        XCTAssertTrue(closeSheetButton.waitForExistence(timeout: 5), "Close sheet button was missing")
+        XCTAssertTrue(closeSheetButton.isHittable, "Close sheet button was not hittable")
+        closeSheetButton.tap()
+
+        // 7. Close MiniApp and verify clean host return
+        closeExpoApp()
+
+        // 8. Verify clean relaunch without session leakage
+        launchInstalledPackage(named: probeAPackageName)
+        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI MiniApp failed to relaunch cleanly")
+        closeExpoApp()
+    }
+
+    func testProductionExpoDynamicPackageSwitching() throws {
+        openApps()
+
+        // Import and install both Variant A and Variant B dynamically
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        importAndInstall(archive: "ExpoSwiftUIProbeB")
+
+        // 1. Launch Variant A
+        launchInstalledPackage(named: probeAPackageName)
+        let variantAPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic A'")
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(variantAPredicate).firstMatch.waitForExistence(timeout: 30),
+            "Variant A did not render active indicator"
+        )
+        closeExpoApp()
+
+        // 2. Launch Variant B without host rebuild — proves dynamic package switching
+        launchInstalledPackage(named: probeBPackageName)
+        let variantBPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic B'")
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(variantBPredicate).firstMatch.waitForExistence(timeout: 30),
+            "Variant B did not render dynamically switched active indicator"
+        )
+        closeExpoApp()
+
+        // 3. Return to Variant A — proves isolated dynamic session switching without contamination
+        launchInstalledPackage(named: probeAPackageName)
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(variantAPredicate).firstMatch.waitForExistence(timeout: 30),
+            "Variant A failed to restore cleanly after running Variant B"
+        )
+        XCTAssertFalse(
+            app.descendants(matching: .any).matching(variantBPredicate).firstMatch.exists,
+            "Contamination from Variant B detected in Variant A session"
+        )
+        closeExpoApp()
+
+        // 4. Persistence across app termination
+        app.terminate()
+        app.launch()
+        openApps()
+
+        let cardA = findPackageCard(named: probeAPackageName)
+        let cardB = findPackageCard(named: probeBPackageName)
+        XCTAssertTrue(cardA.waitForExistence(timeout: 20), "Package A missing after host restart")
+        XCTAssertTrue(cardB.waitForExistence(timeout: 20), "Package B missing after host restart")
+
+        launchInstalledPackage(named: probeBPackageName)
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(variantBPredicate).firstMatch.waitForExistence(timeout: 30),
+            "Variant B failed to launch after host restart"
+        )
+        closeExpoApp()
+    }
+
+    func testProductionExpoLifecycleAndUninstall() throws {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+
+        // Open package details and uninstall
+        openPackageDetails(named: probeAPackageName)
+        let uninstallButton = app.buttons["Uninstall"].firstMatch
+        XCTAssertTrue(uninstallButton.waitForExistence(timeout: 10), "Uninstall button missing in package details")
+        uninstallButton.tap()
+
+        _ = waitUntil(timeout: 10) { !self.hasPackageCard(named: self.probeAPackageName) }
+        XCTAssertFalse(hasPackageCard(named: probeAPackageName), "Uninstalled Expo package remained visible")
+
+        // Verify uninstalled state persists across restart
+        app.terminate()
+        app.launch()
+        openApps()
+        XCTAssertFalse(
+            hasPackageCard(named: probeAPackageName),
+            "Uninstalled Expo package reappeared after host restart"
+        )
+    }
+
+    func testProductionExpo1000RowsProbe() throws {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+
+        // 1. Ensure Expo SwiftUI SplitView Navigation & Sidebar has loaded
+        let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
+        let sidebarTitle = app.staticTexts.matching(sidebarTitlePredicate).firstMatch.exists
+            ? app.staticTexts.matching(sidebarTitlePredicate).firstMatch
+            : app.buttons.matching(sidebarTitlePredicate).firstMatch
+        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
+
+        // 2. Select the 1,000-row benchmark probe
+        let benchmarkPredicate = NSPredicate(format: "label CONTAINS '1,000' OR label CONTAINS '1000' OR label CONTAINS 'מבחן' OR label CONTAINS 'Rows Probe'")
+        var benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
+        if !benchmarkButton.waitForExistence(timeout: 5) || !benchmarkButton.isHittable {
+            // Expand sidebar if collapsed and probe not directly hittable
+            let sidebarToggle = app.navigationBars.buttons.matching(
+                NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+            ).firstMatch
+            if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
+                sidebarToggle.tap()
+            }
+            benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
+        }
+        XCTAssertTrue(benchmarkButton.waitForExistence(timeout: 15), "1,000 rows benchmark item missing")
+        if benchmarkButton.isHittable {
+            benchmarkButton.tap()
+        } else {
+            benchmarkButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+
+        // 3. Verify header rendered in Detail
+        let headerPredicate = NSPredicate(format: "label CONTAINS 'רשימת 1,000 שורות' OR label CONTAINS 'רשימת 1000 שורות' OR label CONTAINS 'בדיקת עומס' OR identifier CONTAINS '1,000'")
+        var headerLabel = app.navigationBars.matching(headerPredicate).firstMatch
+        if !headerLabel.exists {
+            headerLabel = app.staticTexts.matching(headerPredicate).firstMatch
+        }
+        if !headerLabel.waitForExistence(timeout: 5) {
+            // If the first tap only dismissed an overlay/drawer scrim, tap the benchmark button again
+            if benchmarkButton.isHittable {
+                benchmarkButton.tap()
+            } else {
+                benchmarkButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+            headerLabel = app.navigationBars.matching(headerPredicate).firstMatch
+            if !headerLabel.exists {
+                headerLabel = app.staticTexts.matching(headerPredicate).firstMatch
+            }
+        }
+        XCTAssertTrue(headerLabel.waitForExistence(timeout: 20), "1,000 rows header failed to render")
+
+        // 4. Verify initial rows exist and list can be scrolled
+        let row1Predicate = NSPredicate(
+            format: "label CONTAINS 'Row #1' OR label CONTAINS 'שורה #1' OR label CONTAINS '#1' OR label CONTAINS 'פריט בדיקה 1'"
+        )
+        let row1 = app.buttons.matching(row1Predicate).firstMatch
+        XCTAssertTrue(row1.waitForExistence(timeout: 25), "First row in 1,000-row list did not render")
+
+        // 5. Scroll down and verify rows continue rendering
+        if row1.waitForExistence(timeout: 5) {
+            row1.swipeUp()
+        } else {
+            app.swipeUp()
+        }
+
+        let scrolledRowPredicate = NSPredicate(
+            format: "label CONTAINS 'Row #' OR label CONTAINS 'שורה #' OR label CONTAINS 'פריט בדיקה'"
+        )
+        let scrolledRow = app.buttons.matching(scrolledRowPredicate).firstMatch
+        XCTAssertTrue(scrolledRow.waitForExistence(timeout: 15), "List failed to render rows after scrolling")
+
+        closeExpoApp()
+    }
+
+    func testProductionExpoMalformedPackageRejection() throws {
+        openApps()
+        ensureAppsAddButton(timeout: 15).tap()
+        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
+        XCTAssertTrue(importLink.waitForExistence(timeout: 10))
+        if importLink.isHittable {
+            importLink.tap()
+        } else {
+            importLink.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+
+        // Attempt to import malformed package
+        selectArchive("ExpoSwiftUIMalformed")
+
+        let errorIndicator = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'missing' OR label CONTAINS 'entrypoint' OR label CONTAINS 'Compatibility' OR label CONTAINS 'malformed'")
+        ).firstMatch
+        if !errorIndicator.waitForExistence(timeout: 5) {
+            app.swipeUp()
+        }
+        XCTAssertTrue(errorIndicator.waitForExistence(timeout: 20), "Malformed package import error was not displayed")
+
+        let installButton = app.buttons["hanlin-package-install"].firstMatch
+        XCTAssertTrue(!installButton.exists || !installButton.isEnabled, "Install button was unexpectedly available for malformed package")
+        closeImportSurfaces()
+
+        XCTAssertFalse(hasPackageCard(named: "Expo SwiftUI Malformed"), "Partially committed malformed package found in Apps grid")
+    }
+
+    // MARK: - Navigation & Staging Helpers
+
+    private var appsAddButton: XCUIElement {
+        let direct = app.buttons["hanlin-apps-add"].firstMatch
+        if direct.exists { return direct }
+        let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
+        if navDirect.exists { return navDirect }
+        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
+        if byId.exists { return byId }
+        let byLabel = app.buttons["Add App"].firstMatch
+        if byLabel.exists { return byLabel }
+        let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
+        if navByLabel.exists { return navByLabel }
+        let predicate = NSPredicate(format: "identifier == 'hanlin-apps-add' OR label == 'hanlin-apps-add' OR label == 'Add App' OR label == 'Add' OR label CONTAINS 'Add App'")
+        return app.descendants(matching: .any).matching(predicate).firstMatch
+    }
+
+    @discardableResult
+    private func ensureAppsAddButton(timeout: TimeInterval = 20) -> XCUIElement {
+        if appsAddButton.waitForExistence(timeout: 3) {
+            return appsAddButton
+        }
+        _ = selectAppsTab()
+        XCTAssertTrue(appsAddButton.waitForExistence(timeout: timeout), "hanlin-apps-add button did not exist")
+        return appsAddButton
+    }
+
+    @discardableResult
+    private func selectAppsTab() -> Bool {
+        closeAddSheetIfNeeded()
+        var candidates: [XCUIElement] = [
+            app.tabBars.buttons["hanlin-apps-tab"].firstMatch,
+            app.buttons["hanlin-apps-tab"].firstMatch,
+            app.tabs["hanlin-apps-tab"].firstMatch,
+            app.tabBars.buttons["Apps"].firstMatch,
+            app.buttons["Apps"].firstMatch,
+            app.tabs["Apps"].firstMatch
+        ]
+
+        for candidate in candidates {
+            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+                candidate.tap()
+                return true
+            }
+        }
+
+        let nextPageCandidates = [
+            app.buttons["Next Page"].firstMatch,
+            app.tabBars.buttons["Next Page"].firstMatch,
+            app.descendants(matching: .button).matching(NSPredicate(format: "label CONTAINS 'Next Page' OR identifier == 'Next Page'")).firstMatch
+        ]
+        for nextPage in nextPageCandidates {
+            if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+                nextPage.tap()
+                for candidate in candidates {
+                    if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                        candidate.tap()
+                        return true
+                    }
+                }
+                break
+            }
+        }
+
+        let prevPageCandidates = [
+            app.buttons["Previous Page"].firstMatch,
+            app.tabBars.buttons["Previous Page"].firstMatch,
+            app.descendants(matching: .button).matching(NSPredicate(format: "label CONTAINS 'Previous Page' OR identifier == 'Previous Page'")).firstMatch
+        ]
+        for prevPage in prevPageCandidates {
+            if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
+                prevPage.tap()
+                for candidate in candidates {
+                    if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                        candidate.tap()
+                        return true
+                    }
+                }
+                break
+            }
+        }
+
+        let fallback = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps' OR label CONTAINS 'Apps'")
+        ).firstMatch
+        if fallback.waitForExistence(timeout: 5) && fallback.isHittable {
+            fallback.tap()
+            return true
+        }
+        return false
+    }
+
+    private func closeAddSheetIfNeeded() {
+        for _ in 1...3 {
+            guard app.navigationBars["Add Apps"].exists || app.buttons["hanlin-apps-add-done"].exists else { return }
+            let addDone = app.buttons["hanlin-apps-add-done"].firstMatch
+            if addDone.waitForExistence(timeout: 2) && addDone.isHittable {
+                addDone.tap()
+                _ = waitUntil(timeout: 2) { !addDone.exists }
+            } else {
+                let doneButtons = [
+                    app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
+                    app.navigationBars.buttons["Done"].firstMatch,
+                    app.buttons["Done"].firstMatch,
+                ]
+                for done in doneButtons {
+                    if done.waitForExistence(timeout: 1) && done.isHittable {
+                        done.tap()
+                        _ = waitUntil(timeout: 2) { !done.exists }
+                        break
+                    }
+                }
+            }
+            if waitUntil(timeout: 2, condition: { !app.navigationBars["Add Apps"].exists }) {
+                return
+            }
+        }
+    }
+
+    private func openApps() {
+        closeAddSheetIfNeeded()
+        if appsAddButton.waitForExistence(timeout: 3) { return }
+        _ = selectAppsTab()
+        ensureAppsAddButton(timeout: 20)
+    }
+
+    private func selectArchive(_ archive: String) {
+        let navBar = app.navigationBars["Script Package"].firstMatch
+        _ = navBar.waitForExistence(timeout: 5)
+
+        // Select archive from staged document packages or file importer
+        let directPredicate = NSPredicate(
+            format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@",
+            archive,
+            archive
+        )
+        var directArchive = app.buttons.matching(directPredicate).firstMatch
+        if !directArchive.exists || !directArchive.isHittable {
+            for _ in 1...6 {
+                if directArchive.exists && directArchive.isHittable { break }
+                app.swipeUp()
+                if directArchive.waitForExistence(timeout: 2) && directArchive.isHittable { break }
+            }
+        }
+        if !directArchive.exists {
+            for _ in 1...6 {
+                app.swipeDown()
+                if directArchive.waitForExistence(timeout: 2) && directArchive.isHittable { break }
+            }
+        }
+        if !directArchive.exists {
+            let directCandidate = app.descendants(matching: .any).matching(identifier: archive).firstMatch
+            if directCandidate.waitForExistence(timeout: 2) {
+                directArchive = directCandidate
+            }
+        }
+        if directArchive.waitForExistence(timeout: 5) {
+            _ = waitUntil(timeout: 5) { directArchive.isHittable }
+            if directArchive.isHittable {
+                directArchive.tap()
+            } else {
+                directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+
+            let inspecting = app.staticTexts["Inspecting…"].firstMatch
+            let install = app.buttons["hanlin-package-install"].firstMatch
+            let errorText = app.staticTexts["Import Error"].firstMatch
+            let errorIndicator = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed'")
+            ).firstMatch
+            let started = waitUntil(timeout: 4) {
+                inspecting.exists || install.exists || errorText.exists || errorIndicator.exists
+            }
+            if !started && directArchive.exists {
+                if directArchive.isHittable {
+                    directArchive.tap()
+                } else {
+                    directArchive.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                }
+            }
+            return
+        }
+
+        let importer = app.buttons["hanlin-file-importer"].firstMatch
+        XCTAssertTrue(importer.waitForExistence(timeout: 10))
+        importer.tap()
+
+        let targetPredicate = NSPredicate(
+            format: "label == %@ OR label == %@ OR identifier == %@ OR identifier == %@",
+            archive,
+            "\(archive).hanlinExpo",
+            archive,
+            "\(archive).hanlinExpo"
+        )
+        let candidateArchives = [
+            app.buttons[archive].firstMatch,
+            app.descendants(matching: .any).matching(targetPredicate).firstMatch,
+            documents.descendants(matching: .any).matching(targetPredicate).firstMatch,
+        ]
+        var found: XCUIElement?
+        for candidate in candidateArchives {
+            if candidate.waitForExistence(timeout: 3) {
+                found = candidate
+                break
+            }
+        }
+        let target = found ?? candidateArchives[0]
+        XCTAssertTrue(target.waitForExistence(timeout: 20), "Staged archive \(archive) was absent")
+        target.tap()
+    }
+
+    private func hasPackageCard(named packageName: String) -> Bool {
+        let cardPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", packageName, packageName)
+        return app.buttons.matching(cardPredicate).firstMatch.exists ||
+               app.descendants(matching: .any).matching(cardPredicate).firstMatch.exists
+    }
+
+    private func importAndInstall(archive: String) {
+        let displayName = archive == "ExpoSwiftUIProbeA" ? probeAPackageName : (archive == "ExpoSwiftUIProbeB" ? probeBPackageName : archive)
+        if hasPackageCard(named: displayName) || hasPackageCard(named: archive) { return }
+
+        ensureAppsAddButton(timeout: 15).tap()
+        let importLink = app.buttons["hanlin-import-script-package"].firstMatch
+        XCTAssertTrue(importLink.waitForExistence(timeout: 10), "Import Script Package link was missing")
+        if importLink.isHittable {
+            importLink.tap()
+        } else {
+            importLink.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+
+        selectArchive(archive)
+
+        // Preview & Install
+        let install = app.buttons["hanlin-package-install"].firstMatch
+        let inspecting = app.staticTexts["Inspecting…"].firstMatch
+        if inspecting.waitForExistence(timeout: 3) {
+            _ = waitUntil(timeout: 30) { !inspecting.exists }
+        }
+        XCTAssertTrue(install.waitForExistence(timeout: 30), "Install button did not appear for \(archive)")
+        XCTAssertTrue(waitUntil(timeout: 10) { install.isEnabled }, "\(archive) was not installable")
+        install.tap()
+        XCTAssertTrue(waitUntil(timeout: 25) { !install.exists }, "\(archive) installation did not complete")
+        closeImportSurfaces()
+    }
+
+    private func closeImportSurfaces() {
+        for _ in 1...6 {
+            let doneButtons = [
+                app.buttons["hanlin-apps-add-done"].firstMatch,
+                app.navigationBars["Script Package"].buttons["Done"].firstMatch,
+                app.navigationBars["Add Apps"].buttons["Done"].firstMatch,
+                app.navigationBars.buttons["Done"].firstMatch,
+                app.buttons["Done"].firstMatch,
+            ]
+            var tappedDone = false
+            for done in doneButtons {
+                if done.waitForExistence(timeout: 2) && done.isHittable {
+                    done.tap()
+                    tappedDone = true
+                    _ = waitUntil(timeout: 2) { !done.exists }
+                    break
+                }
+            }
+            if !tappedDone {
+                if !app.navigationBars["Script Package"].exists && !app.navigationBars["Add Apps"].exists && appsAddButton.exists {
+                    break
+                }
+                let backButtons = [
+                    app.navigationBars["Script Package"].buttons.element(boundBy: 0),
+                    app.navigationBars.buttons.element(boundBy: 0),
+                ]
+                for back in backButtons {
+                    if back.waitForExistence(timeout: 1) && back.isHittable {
+                        back.tap()
+                        tappedDone = true
+                        _ = waitUntil(timeout: 2) { !back.exists }
+                        break
+                    }
+                }
+                if !tappedDone { break }
+            }
+        }
+        _ = waitUntil(timeout: 5) {
+            !self.app.navigationBars["Script Package"].exists &&
+            !self.app.navigationBars["Add Apps"].exists &&
+            !self.app.buttons["hanlin-package-install"].exists
+        }
+        ensureAppsAddButton(timeout: 10)
+    }
+
+    private func findPackageCard(named packageName: String) -> XCUIElement {
+        let cardPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", packageName, packageName)
+        let packageCandidates: [() -> XCUIElement] = [
+            { self.app.buttons.matching(cardPredicate).firstMatch },
+            { self.app.descendants(matching: .any).matching(cardPredicate).firstMatch }
+        ]
+
+        for candidate in packageCandidates {
+            let elem = candidate()
+            if elem.exists { return elem }
+        }
+
+        for _ in 1...2 {
+            app.swipeUp()
+            for candidate in packageCandidates {
+                let elem = candidate()
+                if elem.exists { return elem }
+            }
+        }
+
+        for _ in 1...2 {
+            app.swipeDown()
+            for candidate in packageCandidates {
+                let elem = candidate()
+                if elem.exists { return elem }
+            }
+        }
+
+        return app.buttons.matching(cardPredicate).firstMatch
+    }
+
+    private func launchInstalledPackage(named packageName: String) {
+        let package = findPackageCard(named: packageName)
+        XCTAssertTrue(package.waitForExistence(timeout: 20), "Installed package \(packageName) was unavailable")
+
+        let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
+
+        for attempt in 1...3 {
+            if closeButton.exists { return }
+            if !package.isHittable {
+                app.swipeDown()
+                _ = waitUntil(timeout: 2) { package.isHittable }
+            }
+            if !package.isHittable {
+                app.swipeUp()
+                _ = waitUntil(timeout: 2) { package.isHittable }
+            }
+            if package.isHittable {
+                package.tap()
+            } else {
+                package.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+            if waitUntil(timeout: attempt == 1 ? 15 : 8, condition: { closeButton.exists }) {
+                return
+            }
+            if app.alerts["Script App Error"].exists {
+                let errorLabels = app.alerts["Script App Error"].staticTexts.allElementsBoundByIndex.map(\.label).filter { !$0.isEmpty }
+                XCTFail("Script App Error alert appeared when launching \(packageName): " + errorLabels.joined(separator: " | "))
+                return
+            }
+        }
+    }
+
+    private func closeExpoApp() {
+        let closeButton = app.buttons["hanlin-script-app-close"].firstMatch
+        if closeButton.waitForExistence(timeout: 10) {
+            closeButton.tap()
+        }
+        _ = waitUntil(timeout: 5) { !closeButton.exists }
+        ensureAppsAddButton(timeout: 15)
+    }
+
+    private func openPackageDetails(named packageName: String) {
+        let card = findPackageCard(named: packageName)
+        XCTAssertTrue(card.waitForExistence(timeout: 15))
+        card.press(forDuration: 1.5)
+        let detailsPredicate = NSPredicate(format: "label CONTAINS 'Package Information' OR label CONTAINS 'Package Details'")
+        let detailsButton = app.descendants(matching: .any).matching(detailsPredicate).firstMatch
+        if detailsButton.waitForExistence(timeout: 5) {
+            detailsButton.tap()
+        }
+    }
+
+    private func waitUntil(timeout: TimeInterval, condition: () -> Bool) -> Bool {
+        let start = Date()
+        while Date().timeIntervalSince(start) < timeout {
+            if condition() { return true }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
+        return condition()
+    }
+}

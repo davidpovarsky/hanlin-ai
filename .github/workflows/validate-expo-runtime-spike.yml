@@ -338,7 +338,7 @@ jobs:
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
           # Warm launch to provision data container
-          xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
+          SIMCTL_CHILD_HANLIN_EXPO_E2E=1 xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
           sleep 3
           xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
 
