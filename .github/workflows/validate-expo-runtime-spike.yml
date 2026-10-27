@@ -320,10 +320,12 @@ jobs:
                   continue
               for device in devices:
                   if device.get("isAvailable") and "iPad" in device.get("name", ""):
-                      candidates.append((runtime, device["name"], device["udid"]))
+                      is_mini = 1 if "mini" in device.get("name", "") else 0
+                      candidates.append((is_mini, runtime, device["name"], device["udid"]))
           if not candidates:
               raise SystemExit("No available iOS 27 iPad simulator was found")
-          runtime, name, udid = sorted(candidates, reverse=True)[0]
+          candidates.sort(reverse=True)
+          _, runtime, name, udid = candidates[0]
           print(f"{udid}\t{name}\t{runtime}")
           PY
           )"
@@ -337,10 +339,9 @@ jobs:
 
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
-          # Warm launch to provision data container
-          SIMCTL_CHILD_HANLIN_EXPO_E2E=1 xcrun simctl launch "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
-          sleep 3
-          xcrun simctl terminate "$SIMULATOR_UDID" "$BUNDLE_ID" 2>/dev/null || true
+          # Ensure simulator is unlocked
+          xcrun simctl launch "$SIMULATOR_UDID" com.apple.springboard 2>/dev/null || true
+          xcrun simctl io "$SIMULATOR_UDID" send-key 0x24 2>/dev/null || true
 
           # Bounded fixture staging for app container and optional DocumentsApp (Files)
           python3 - "$SIMULATOR_UDID" "$BUNDLE_ID" <<'PY'
@@ -359,13 +360,13 @@ jobs:
               sys.exit(0)
 
           def find_container_dir(sim_id, target_bundle_id):
-              # Try simctl first with 5s timeout
+              # Try simctl first with 10s timeout
               try:
                   res = subprocess.run(
                       ["xcrun", "simctl", "get_app_container", sim_id, target_bundle_id, "data"],
                       capture_output=True,
                       text=True,
-                      timeout=5,
+                      timeout=10,
                   )
                   if res.returncode == 0 and res.stdout.strip():
                       p = Path(res.stdout.strip())
