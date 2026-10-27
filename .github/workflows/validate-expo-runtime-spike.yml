@@ -228,14 +228,26 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          xcodebuild \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME_NAME" \
-            -resolvePackageDependencies \
-            -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-            -skipPackagePluginValidation \
-            -skipMacroValidation \
-            2>&1 | tee "$LOG_DIR/04-resolve-packages.log"
+          for attempt in 1 2 3; do
+            echo "Attempt $attempt: resolving package dependencies..."
+            if xcodebuild \
+              -project "$PROJECT_PATH" \
+              -scheme "$SCHEME_NAME" \
+              -resolvePackageDependencies \
+              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
+              -skipPackagePluginValidation \
+              -skipMacroValidation \
+              2>&1 | tee "$LOG_DIR/04-resolve-packages.log"; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "Failed to resolve package dependencies after 3 attempts."
+              exit 74
+            fi
+            echo "Retrying after cleaning SPM repository cache..."
+            rm -rf ~/Library/Caches/org.swift.swiftpm/repositories/* || true
+            sleep 5
+          done
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
