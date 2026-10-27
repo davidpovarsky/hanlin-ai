@@ -47,31 +47,31 @@ public final class HanlinExpoNativeAPIManager {
         HanlinExpoNativeAPIGate.registerActiveSessionContext(context)
     }
 
-    public static func bindRuntime(_ runtimePointer: UnsafeMutableRawPointer?, forSessionID sessionID: String) {
+    nonisolated public static func bindRuntime(_ runtimePointer: UnsafeMutableRawPointer?, forSessionID sessionID: String) {
         HanlinExpoNativeAPIGate.bindRuntime(runtimePointer, forSessionID: sessionID)
     }
 
-    public static func revokeSession(sessionID: String) {
+    nonisolated public static func revokeSession(sessionID: String) {
         HanlinExpoNativeAPIGate.revokeSession(sessionID)
     }
 
-    public static func revokeActiveSession() {
+    nonisolated public static func revokeActiveSession() {
         HanlinExpoNativeAPIGate.revokeActiveSession()
     }
 
-    public static func isAuthorized() -> Bool {
+    nonisolated public static func isAuthorized() -> Bool {
         return HanlinExpoNativeAPIGate.isNativeAPIAuthorizedForCurrentSession()
     }
 
-    public static func isAuthorized(forRuntime runtimePointer: UnsafeMutableRawPointer?) -> Bool {
+    nonisolated public static func isAuthorized(forRuntime runtimePointer: UnsafeMutableRawPointer?) -> Bool {
         return HanlinExpoNativeAPIGate.isNativeAPIAuthorized(forRuntime: runtimePointer)
     }
 
-    public static func dependencyProvider() -> AnyObject {
+    nonisolated public static func dependencyProvider() -> AnyObject {
         return HanlinExpoDependencyProvider.shared()
     }
 
-    public static func thirdPartyFabricComponents() -> [String: AnyClass] {
+    nonisolated public static func thirdPartyFabricComponents() -> [String: AnyClass] {
         return HanlinExpoDependencyProvider.shared().thirdPartyFabricComponents()
     }
 }
