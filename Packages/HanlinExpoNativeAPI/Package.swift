@@ -10,7 +10,6 @@ let package = Package(
     products: [
         .library(
             name: "HanlinExpoNativeAPI",
-            type: .static,
             targets: ["HanlinExpoNativeAPI", "HanlinExpoNativeAPICore", "HanlinExpoWorklets"]
         )
     ],
@@ -25,6 +24,13 @@ let package = Package(
             path: "Sources/HanlinExpoNativeAPI",
             resources: [
                 .process("Resources/metadata")
+            ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-F\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                    "-Xlinker", "-undefined",
+                    "-Xlinker", "dynamic_lookup"
+                ])
             ]
         ),
         .target(
@@ -57,7 +63,12 @@ let package = Package(
             linkerSettings: [
                 .linkedFramework("UIKit"),
                 .linkedFramework("Foundation"),
-                .linkedFramework("QuartzCore")
+                .linkedFramework("QuartzCore"),
+                .unsafeFlags([
+                    "-F\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                    "-Xlinker", "-undefined",
+                    "-Xlinker", "dynamic_lookup"
+                ])
             ]
         ),
         .target(
@@ -112,7 +123,12 @@ let package = Package(
             linkerSettings: [
                 .linkedFramework("UIKit"),
                 .linkedFramework("Foundation"),
-                .linkedFramework("QuartzCore")
+                .linkedFramework("QuartzCore"),
+                .unsafeFlags([
+                    "-F\(packageRoot)/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                    "-Xlinker", "-undefined",
+                    "-Xlinker", "dynamic_lookup"
+                ])
             ]
         ),
         .binaryTarget(name: "Libffi", path: "Artifacts/Libffi.xcframework")
