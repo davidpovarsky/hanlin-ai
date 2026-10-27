@@ -1189,6 +1189,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(CONFIGURATION_BUILD_DIR)",
+					"\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";
@@ -1486,6 +1487,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(CONFIGURATION_BUILD_DIR)",
+					"\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI-HLY-Info.plist";

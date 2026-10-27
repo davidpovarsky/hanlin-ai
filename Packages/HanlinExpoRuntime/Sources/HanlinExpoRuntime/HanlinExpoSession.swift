@@ -5,7 +5,7 @@ import ExpoUI
 import HanlinExpoNativeAPI
 import ObjectiveC
 import React
-import React_RCTAppDelegate
+@_implementationOnly import React_RCTAppDelegate
 import UIKit
 
 @_silgen_name("jsrt_create_hermes_factory")
