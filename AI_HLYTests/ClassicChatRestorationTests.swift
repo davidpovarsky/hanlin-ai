@@ -1358,7 +1358,7 @@ struct ClassicChatRestorationTests {
 
         // 2. ShellRuntimeService pwd builtin
         let shellService = ShellRuntimeService()
-        let workspace = try shellService.fileLayout.workspace(client: .tools, identifier: "pwd_test")
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "pwd_test")
         let pwdResult = try await shellService.execute(
             tokens: ["pwd"],
             workspace: workspace,

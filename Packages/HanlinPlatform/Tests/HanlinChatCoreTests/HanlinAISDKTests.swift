@@ -13,7 +13,11 @@ import Testing
 private final class MockLanguageModelV3: LanguageModelV3, @unchecked Sendable {
     let provider: String = "mock-provider"
     let modelId: String = "mock-model"
-    let supportedUrls: [String: [NSRegularExpression]] = [:]
+    var supportedUrls: [String: [NSRegularExpression]] {
+        get async throws {
+            ["*": [try NSRegularExpression(pattern: ".*")]]
+        }
+    }
 
     var streamGenerator: @Sendable (Int) -> AsyncThrowingStream<LanguageModelV3StreamPart, Error>
     private var _callCount: Int = 0
