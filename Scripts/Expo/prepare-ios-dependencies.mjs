@@ -1248,7 +1248,6 @@ template <typename CharTransformT = fnv1a_identity>
         await writeFile(configXcconfigPath, existingConfig + expoXcconfigBlock, 'utf8');
         console.log('[HanlinExpo] Enriched Config.xcconfig with ModularFrameworks search paths and interop flags.');
       }
-    }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
