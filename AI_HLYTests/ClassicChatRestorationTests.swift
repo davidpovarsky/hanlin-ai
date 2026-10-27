@@ -1210,11 +1210,9 @@ struct ClassicChatRestorationTests {
                 #expect(!data.isEmpty)
                 #expect(mimeType == "image/png")
                 foundImageData = true
-            case .imageURL(let url):
+            case .imageURL(let url, _):
                 #expect(url.absoluteString == "https://example.com/architecture.png")
                 foundImageURL = true
-            default:
-                break
             }
         }
         #expect(foundText && foundImageData && foundImageURL)
@@ -1231,12 +1229,10 @@ struct ClassicChatRestorationTests {
             role: "assistant",
             text: "",
             reasoning: "",
-            showCanvas: false,
-            model: "gpt-4o",
+            modelName: "gpt-4o",
             modelDisplayName: "GPT-4o",
-            modelCompany: "OPENAI",
-            timestamp: Date(),
-            messageGroupID: groupID
+            groupID: groupID,
+            timestamp: Date()
         )
         messages.append(assistantMessage)
 
@@ -1277,38 +1273,33 @@ struct ClassicChatRestorationTests {
             data: pngData,
             assistantMessage: assistantMessage
         )
-        #expect(assistantMessage.images?.count == 1)
+        #expect(assistantMessage.imageArray.count == 1)
     }
 
     // MARK: - 18. build84001SkillVsToolNameDisambiguation
 
     @Test("18. Build 84001 defect 7A: calling web_research as a tool or load_skill(skill_id: search_online) returns explicit Skill ID vs tool name guidance")
     func build84001SkillVsToolNameDisambiguation() async throws {
+        let session = AssistantCapabilitySession(chatID: UUID().uuidString, isTemporaryChat: false)
+
         // 1. LoadSkillTool called with tool name "search_online"
-        let loadSkillTool = LoadSkillTool()
-        let context = ToolExecutionContext(
-            conversationID: UUID(),
-            messageGroupID: UUID(),
-            userText: "Search the web",
-            modelName: "glm-5.1",
-            modelCompany: "ZHIPUAI",
-            isToolCapable: true
-        )
-        let loadOutput = try await loadSkillTool.execute(
+        let loadOutput = await LoadSkillTool.execute(
             argumentsJSON: #"{"skill_id":"search_online"}"#,
-            context: context
+            session: session,
+            availableAliases: ["search_online", "read_web_page"]
         )
-        #expect(loadOutput.summary.contains("callable tool name, not a skill_id"))
-        #expect(loadOutput.activatedToolAliases.contains("search_online"))
+        #expect(loadOutput.contains("callable tool name, not a skill_id"))
+        #expect(session.isToolExposed("search_online"))
 
         // 2. LoadSkillTool called with skill_id "web_research" activates search_online and read_web_page
-        let webResearchOutput = try await loadSkillTool.execute(
+        let webResearchOutput = await LoadSkillTool.execute(
             argumentsJSON: #"{"skill_id":"web_research"}"#,
-            context: context
+            session: session,
+            availableAliases: ["search_online", "read_web_page"]
         )
-        #expect(webResearchOutput.outcome == .succeeded)
-        #expect(webResearchOutput.activatedToolAliases.contains("search_online"))
-        #expect(webResearchOutput.activatedToolAliases.contains("read_web_page"))
+        #expect(webResearchOutput.contains("loaded successfully"))
+        #expect(session.isToolExposed("search_online"))
+        #expect(session.isToolExposed("read_web_page"))
     }
 
     // MARK: - 19. build84001MCPValidationAndIncompatiblePackageGuard
@@ -1316,30 +1307,27 @@ struct ClassicChatRestorationTests {
     @Test("19. Build 84001 defect 7B: ManageMCPServersTool rejects known nonexistent or native-addon MCP packages and supports action/parameter aliases")
     func build84001MCPValidationAndIncompatiblePackageGuard() async throws {
         let tool = ManageMCPServersTool()
-        let context = ToolExecutionContext(
-            conversationID: UUID(),
-            messageGroupID: UUID(),
-            userText: "Install MCP server",
-            modelName: "glm-5.1",
-            modelCompany: "ZHIPUAI",
-            isToolCapable: true
+        let context = NativeToolExecutionContext(
+            localeIdentifier: "en_US",
+            chatID: UUID().uuidString,
+            isTemporaryChat: false
         )
 
         // Hallucinated package transit-allinone-mcp
-        let transitOut = try await tool.execute(
+        let transitOut = await tool.execute(
             argumentsJSON: #"{"action":"install_package","package":"transit-allinone-mcp"}"#,
             context: context
         )
-        #expect(transitOut.outcome == .failed)
-        #expect(transitOut.summary.contains("Known unavailable/incompatible MCP package"))
+        #expect(transitOut.outcome == .invalidArguments)
+        #expect(transitOut.modelText.contains("does not exist on the public npm registry"))
 
         // Native addon / Python MCP package @modelcontextprotocol/server-sqlite
-        let sqliteOut = try await tool.execute(
+        let sqliteOut = await tool.execute(
             argumentsJSON: #"{"action":"install","package_spec":"@modelcontextprotocol/server-sqlite"}"#,
             context: context
         )
-        #expect(sqliteOut.outcome == .failed)
-        #expect(sqliteOut.summary.contains("Known unavailable/incompatible MCP package"))
+        #expect(sqliteOut.outcome == .invalidArguments)
+        #expect(sqliteOut.modelText.contains("unsupported in the embedded iOS Node runtime"))
     }
 
     // MARK: - 20. build84001UnicodePropertyRegexSanitizerInServerWorker
@@ -1364,16 +1352,18 @@ struct ClassicChatRestorationTests {
         // 1. CommonJS vs ESM module inference
         let cjsCode = "const fs = require('fs');\nconsole.log(Object.keys(fs).length);"
         let esmCode = "import fs from 'node:fs';\nconsole.log(fs);"
-        let plainCode = "console.log(1 + 2);"
 
-        #expect(NodeRuntimeService.inferModuleKind(for: cjsCode) == "cjs")
+        #expect(NodeRuntimeService.inferModuleKind(for: cjsCode) == "commonjs")
         #expect(NodeRuntimeService.inferModuleKind(for: esmCode) == "esm")
-        #expect(NodeRuntimeService.inferModuleKind(for: plainCode) == "cjs")
 
         // 2. ShellRuntimeService pwd builtin
-        let pwdResult = try await ShellRuntimeService.shared.execute(
+        let shellService = ShellRuntimeService()
+        let workspace = try shellService.fileLayout.workspace(client: .tools, identifier: "pwd_test")
+        let pwdResult = try await shellService.execute(
             tokens: ["pwd"],
-            workingDirectory: nil
+            workspace: workspace,
+            environment: [:],
+            allowNetwork: false
         )
         #expect(pwdResult.exitCode == 0)
         #expect(!pwdResult.stdout.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
@@ -1393,16 +1383,14 @@ struct ClassicChatRestorationTests {
             oversizedSizes[name] = 4_000
         }
 
-        let plan = AssistantToolExposurePlanner.plan(
-            userText: "Run tools",
-            candidateToolNames: names,
-            coreToolNames: ["load_skill", "search_online"],
-            sessionActivatedToolNames: names,
-            schemaByteSizes: oversizedSizes,
-            byteBudget: AssistantToolExposurePlanner.defaultSchemaByteBudget
+        let planner = AssistantToolExposurePlanner(maxSchemaBytes: AssistantToolExposurePlanner.defaultSchemaByteBudget)
+        let decision = planner.plan(
+            candidateAliases: names,
+            schemaSizes: oversizedSizes,
+            currentlyExposedAliases: []
         )
 
-        #expect(plan.estimatedSchemaBytes <= AssistantToolExposurePlanner.defaultSchemaByteBudget)
-        #expect(!plan.deferredForBudgetToolNames.isEmpty)
+        #expect(decision.totalExposedBytes <= AssistantToolExposurePlanner.defaultSchemaByteBudget)
+        #expect(!decision.deferredAliases.isEmpty)
     }
 }

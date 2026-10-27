@@ -107,21 +107,65 @@ struct ClassicChatAgentProjection {
             }
         }
 
-        // 5. Native UI blocks
-        if let blocks = data.nativeUIBlocks, !blocks.isEmpty {
-            var current = assistantMessage.nativeUIBlocks
-            for block in blocks where !current.contains(block) {
-                current.append(block)
-            }
-            assistantMessage.nativeUIBlocks = current
-            updated = true
-        }
-
-        // 6. Synchronize AgentRun snapshot onto assistantMessage
+        // 5. Synchronize AgentRun snapshot onto assistantMessage
         assistantMessage.agentRun = agentRun
         Self.syncAgentRunProjection(agentRun, into: assistantMessage, seenToolContentBlocks: &seenToolContentBlocks)
 
         return updated
+    }
+
+    /// Appends a provider-native `.source` event onto `assistantMessage.resources` and the group's `"search"` message if valid HTTP(S).
+    static func appendProviderSource(
+        id: String,
+        url: String,
+        title: String?,
+        assistantMessage: ChatMessages,
+        messages: inout [ChatMessages],
+        messageGroupID: UUID,
+        searchEngine: String = "Web",
+        timestamp: Date = Date()
+    ) {
+        let trimmed = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty,
+              let parsed = URL(string: trimmed),
+              let scheme = parsed.scheme?.lowercased(),
+              scheme == "http" || scheme == "https",
+              parsed.host()?.lowercased() != "search.local" else {
+            return
+        }
+        let resource = Resource(icon: trimmed, title: title ?? trimmed, link: trimmed)
+        let combined = (assistantMessage.resources ?? []) + [resource]
+        assistantMessage.resources = LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
+
+        if let searchIdx = messages.firstIndex(where: { $0.groupID == messageGroupID && $0.role == "search" }) {
+            let searchCombined = (messages[searchIdx].resources ?? []) + [resource]
+            messages[searchIdx].resources = LegacyResourcesEvidenceAdapter.deduplicatedResources(searchCombined)
+        } else {
+            let searchMsg = ChatMessages(
+                role: "search",
+                text: title ?? trimmed,
+                resources: [resource],
+                searchEngine: searchEngine,
+                groupID: messageGroupID,
+                timestamp: timestamp
+            )
+            messages.insert(searchMsg, at: 0)
+        }
+    }
+
+    /// Appends a provider-native `.file` event onto `assistantMessage.imageArray` when the mediaType is an image.
+    static func appendProviderFile(
+        mediaType: String,
+        data: Data,
+        assistantMessage: ChatMessages
+    ) {
+        #if canImport(UIKit)
+        if mediaType.lowercased().hasPrefix("image/"), let image = UIImage(data: data) {
+            var current = assistantMessage.imageArray
+            current.append(image)
+            assistantMessage.imageArray = current
+        }
+        #endif
     }
 
     /// Synchronizes completed or in-progress `AgentRun` state into original `ChatMessages` fields.
@@ -193,7 +237,7 @@ struct ClassicChatAgentProjection {
                   url.host()?.lowercased() != "search.local" else {
                 return nil
             }
-            return Resource(title: item.title, link: urlString)
+            return Resource(icon: urlString, title: item.title, link: urlString)
         }
         if !evidenceResources.isEmpty {
             let combined = (assistantMessage.resources ?? []) + evidenceResources
@@ -223,5 +267,3 @@ struct ClassicChatAgentProjection {
         )
     }
 }
-
-typealias ChatTurnStateOperations = ClassicChatAgentProjection

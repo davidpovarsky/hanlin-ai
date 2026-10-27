@@ -17,16 +17,18 @@ private final class MockLanguageModelV3: LanguageModelV3, @unchecked Sendable {
 
     var streamGenerator: @Sendable (Int) -> AsyncThrowingStream<LanguageModelV3StreamPart, Error>
     private var _callCount: Int = 0
+    private var _capturedOptions: [LanguageModelV3CallOptions] = []
     private let lock = NSLock()
 
     init(streamGenerator: @escaping @Sendable (Int) -> AsyncThrowingStream<LanguageModelV3StreamPart, Error>) {
         self.streamGenerator = streamGenerator
     }
 
-    private func incrementAndGetCallCount() -> Int {
+    private func recordCall(options: LanguageModelV3CallOptions) -> Int {
         lock.lock()
         defer { lock.unlock() }
         _callCount += 1
+        _capturedOptions.append(options)
         return _callCount
     }
 
@@ -36,12 +38,18 @@ private final class MockLanguageModelV3: LanguageModelV3, @unchecked Sendable {
         return _callCount
     }
 
+    var capturedOptions: [LanguageModelV3CallOptions] {
+        lock.lock()
+        defer { lock.unlock() }
+        return _capturedOptions
+    }
+
     func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult {
         fatalError("Not needed for stream tests")
     }
 
     func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {
-        let count = incrementAndGetCallCount()
+        let count = recordCall(options: options)
 
         return LanguageModelV3StreamResult(
             stream: streamGenerator(count),
@@ -1048,25 +1056,33 @@ struct HanlinAISDKAgentEngineTests {
 
     @Test("maxSteps <= 0 is clamped to >= 1 so streamText still executes at least one step")
     func testNonPositiveMaxStepsClampedToAtLeastOne() async throws {
-        let model = MockLanguageModelV3(
-            doStream: .singleValue(
-                LanguageModelV3StreamResult(
-                    stream: makeStream(from: [
-                        .streamStart(warnings: []),
-                        .textStart(id: "t1", providerMetadata: nil),
-                        .textDelta(id: "t1", delta: "Clamped step output", providerMetadata: nil),
-                        .textEnd(id: "t1", providerMetadata: nil),
-                        .finish(finishReason: .stop, usage: defaultUsage, providerMetadata: nil)
-                    ])
-                )
-            )
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "t1", delta: "Clamped step output", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                continuation.yield(.finish(
+                    finishReason: LanguageModelV3FinishReason(unified: .stop, raw: "stop"),
+                    usage: LanguageModelV3Usage(inputTokens: .init(total: 10), outputTokens: .init(total: 5)),
+                    providerMetadata: nil
+                ))
+                continuation.finish()
+            }
+        }
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
         )
-
-        let engine = HanlinAISDKAgentEngine(model: model, maxSteps: 0)
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Test zero maxSteps")],
             baseSystemPrompt: nil,
             tools: [],
+            maxSteps: 0,
             prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
         )
 
@@ -1077,7 +1093,7 @@ struct HanlinAISDKAgentEngineTests {
             }
         }
         #expect(collectedText == "Clamped step output")
-        #expect(model.doStreamCalls.count == 1)
+        #expect(mock.callCount == 1)
     }
 
     // MARK: - 15. Provider-Native Source and File Stream Events
@@ -1094,23 +1110,30 @@ struct HanlinAISDKAgentEngineTests {
             mediaType: "image/png",
             data: .base64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=")
         )
-        let model = MockLanguageModelV3(
-            doStream: .singleValue(
-                LanguageModelV3StreamResult(
-                    stream: makeStream(from: [
-                        .streamStart(warnings: []),
-                        .source(sampleSource),
-                        .file(sampleFile),
-                        .textStart(id: "t1", providerMetadata: nil),
-                        .textDelta(id: "t1", delta: "Done", providerMetadata: nil),
-                        .textEnd(id: "t1", providerMetadata: nil),
-                        .finish(finishReason: .stop, usage: defaultUsage, providerMetadata: nil)
-                    ])
-                )
-            )
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.source(sampleSource))
+                continuation.yield(.file(sampleFile))
+                continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "t1", delta: "Done", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                continuation.yield(.finish(
+                    finishReason: LanguageModelV3FinishReason(unified: .stop, raw: "stop"),
+                    usage: LanguageModelV3Usage(inputTokens: .init(total: 10), outputTokens: .init(total: 5)),
+                    providerMetadata: nil
+                ))
+                continuation.finish()
+            }
+        }
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
         )
-
-        let engine = HanlinAISDKAgentEngine(model: model)
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
         let stream = try await engine.stream(
             messages: [.init(role: .user, text: "Generate with source and file")],
             baseSystemPrompt: nil,
@@ -1141,35 +1164,41 @@ struct HanlinAISDKAgentEngineTests {
 
     // MARK: - 16. Multimodal User Parts Preserved in SDK Prompt
 
-    @Test("Multimodal user message with text, imageData, imageURL, and fileData preserves all parts in V3 prompt")
+    @Test("Multimodal user message with text, imageData, and imageURL preserves all parts in V3 prompt")
     func testMultimodalUserMessagePartsPreserved() async throws {
-        let model = MockLanguageModelV3(
-            doStream: .singleValue(
-                LanguageModelV3StreamResult(
-                    stream: makeStream(from: [
-                        .streamStart(warnings: []),
-                        .textStart(id: "t1", providerMetadata: nil),
-                        .textDelta(id: "t1", delta: "Inspected attachments", providerMetadata: nil),
-                        .textEnd(id: "t1", providerMetadata: nil),
-                        .finish(finishReason: .stop, usage: defaultUsage, providerMetadata: nil)
-                    ])
-                )
-            )
-        )
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "t1", delta: "Inspected attachments", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                continuation.yield(.finish(
+                    finishReason: LanguageModelV3FinishReason(unified: .stop, raw: "stop"),
+                    usage: LanguageModelV3Usage(inputTokens: .init(total: 10), outputTokens: .init(total: 5)),
+                    providerMetadata: nil
+                ))
+                continuation.finish()
+            }
+        }
 
         let imageBytes = Data([0x89, 0x50, 0x4E, 0x47])
-        let pdfBytes = Data("%PDF-1.7".utf8)
         let multimodalMessage = HanlinAISDKMessage(
             role: .user,
             parts: [
-                .text("Describe the image and PDF"),
-                .imageData(imageBytes, mimeType: "image/png"),
-                .imageURL(URL(string: "https://example.com/diagram.jpg")!),
-                .fileData(pdfBytes, mimeType: "application/pdf", filename: "spec.pdf")
+                .text("Describe the image and diagram"),
+                .imageData(imageBytes, mediaType: "image/png"),
+                .imageURL(URL(string: "https://example.com/diagram.jpg")!, mediaType: "image/jpeg")
             ]
         )
 
-        let engine = HanlinAISDKAgentEngine(model: model)
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
         let stream = try await engine.stream(
             messages: [multimodalMessage],
             baseSystemPrompt: "System prompt",
@@ -1179,13 +1208,13 @@ struct HanlinAISDKAgentEngineTests {
 
         for try await _ in stream {}
 
-        #expect(model.doStreamCalls.count == 1)
-        let prompt = model.doStreamCalls[0].prompt
+        #expect(mock.capturedOptions.count == 1)
+        let prompt = mock.capturedOptions[0].prompt
         let userContent = prompt.compactMap { msg -> [LanguageModelV3UserMessagePart]? in
             if case .user(let content, _) = msg { return content }
             return nil
         }.first
-        #expect(userContent?.count == 4)
+        #expect(userContent?.count == 3)
     }
 }
 

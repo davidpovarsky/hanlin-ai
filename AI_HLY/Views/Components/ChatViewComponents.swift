@@ -162,6 +162,7 @@ struct ChatBubbleView: View {
 
     init(
         temporaryRecord: Bool,
+        containerWidth: CGFloat = 0,
         id: UUID,
         text: String,
         saveTranlatedText: String?,
@@ -209,6 +210,7 @@ struct ChatBubbleView: View {
         onDelete: (() -> Void)?
     ) {
         self.temporaryRecord = temporaryRecord
+        self._containerWidth = State(initialValue: containerWidth)
         self.id = id
         self.text = text
         self.saveTranlatedText = saveTranlatedText
@@ -2033,7 +2035,7 @@ struct ChatBubbleView: View {
         guard !toolSteps.isEmpty else { return "" }
         return toolSteps.map { step in
             let title = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
-            if let summary = step.summary?.trimmingCharacters(in: .whitespacesAndNewlines), !summary.isEmpty {
+            if let summary = (step.userFacingSummary ?? step.subtitle)?.trimmingCharacters(in: .whitespacesAndNewlines), !summary.isEmpty {
                 return "\(title)\n\(summary)"
             }
             return title
@@ -2066,8 +2068,8 @@ struct ChatBubbleView: View {
                 let iconURL = host.isEmpty ? "" : "https://www.google.com/s2/favicons?sz=64&domain=\(host)"
                 combined.append(
                     Resource(
-                        title: item.title.isEmpty ? urlString : item.title,
                         icon: iconURL,
+                        title: item.title.isEmpty ? urlString : item.title,
                         link: urlString
                     )
                 )

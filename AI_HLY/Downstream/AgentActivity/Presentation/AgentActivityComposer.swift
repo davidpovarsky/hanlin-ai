@@ -253,3 +253,13 @@ enum AgentActivityComposer {
     }
   }
 }
+
+enum AgentActivityDurationFormatter {
+  static func string(_ interval: TimeInterval) -> String {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = interval < 60 ? [.second] : [.minute, .second]
+    formatter.unitsStyle = .abbreviated
+    formatter.maximumUnitCount = 2
+    return formatter.string(from: max(0, interval)) ?? "0s"
+  }
+}

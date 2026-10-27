@@ -191,8 +191,13 @@ final class MCPRuntimeProvider {
         var installation: MCPPackageInstallation?
         do {
             let defaultArgs: [String]
-            if spec.rawValue.lowercased().contains("server-filesystem"),
-               (existing?.arguments.isEmpty ?? true) {
+            let isServerFilesystem: Bool = {
+                if case .npm(let pkgName, _) = spec.source {
+                    return pkgName.lowercased().contains("server-filesystem")
+                }
+                return false
+            }()
+            if isServerFilesystem, (existing?.arguments.isEmpty ?? true) {
                 let allowedDir = RuntimeFileLayout.default.clients.path
                 try? FileManager.default.createDirectory(
                     atPath: allowedDir,

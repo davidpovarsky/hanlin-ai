@@ -878,7 +878,7 @@ final class HanlinAISDKToolAdapter {
                 case "read_web_page", "extract_remote_file_content":
                     streamData.searchEngine = "HANLINWEB"
                 default:
-                    streamData.searchEngine = result.evidenceItems.first?.providerName ?? "Web"
+                    streamData.searchEngine = result.evidenceItems.first?.sourceName ?? "Web"
                 }
             }
             var mappedResources: [Resource] = result.evidenceItems.compactMap { item in
