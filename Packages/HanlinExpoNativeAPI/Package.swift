@@ -66,6 +66,10 @@ let package = Package(
                 "Libffi"
             ],
             path: "Sources/HanlinExpoNativeAPICore",
+            exclude: [
+                "nativescript/native-api/ffi/objc/shared",
+                "nativescript/native-api/ffi/objc/hermes/NativeApiJsiGsd.mm"
+            ],
             publicHeadersPath: "include",
             cxxSettings: [
                 .unsafeFlags([
