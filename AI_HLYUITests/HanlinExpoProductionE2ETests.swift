@@ -13,6 +13,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_EXPO_E2E"] = "1"
         app.launch()
+        activateAppToForeground()
     }
 
     override func tearDownWithError() throws {
@@ -425,7 +426,25 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         return false
     }
 
+    private func activateAppToForeground() {
+        if app.wait(for: .runningForeground, timeout: 5) { return }
+        app.activate()
+        if app.wait(for: .runningForeground, timeout: 5) { return }
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let candidates = [
+            springboard.icons["ChavrusaChat"],
+            springboard.buttons["ChavrusaChat"],
+            springboard.otherElements["ChavrusaChat"]
+        ]
+        for candidate in candidates where candidate.waitForExistence(timeout: 2) && candidate.isHittable {
+            candidate.tap()
+            break
+        }
+        _ = app.wait(for: .runningForeground, timeout: 10)
+    }
+
     private func openApps() {
+        activateAppToForeground()
         closeAddSheetIfNeeded()
         if appsAddButton.waitForExistence(timeout: 3) { return }
         _ = selectTab(identifier: "hanlin-apps-tab", labels: ["Apps"])

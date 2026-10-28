@@ -329,6 +329,12 @@ jobs:
           xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
           xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/06-bootstatus.log"
 
+          # Disable Stage Manager / Chamois windowing so apps launch full-screen in automation
+          xcrun simctl spawn "$SIMULATOR_UDID" defaults write -g SBChamoisWindowingEnabled -bool false 2>/dev/null || true
+          xcrun simctl spawn "$SIMULATOR_UDID" defaults write com.apple.springboard SBChamoisWindowingEnabled -bool false 2>/dev/null || true
+          xcrun simctl spawn "$SIMULATOR_UDID" killall -HUP SpringBoard 2>/dev/null || true
+          sleep 2
+
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
           # Bounded fixture staging for app container and optional DocumentsApp (Files)
