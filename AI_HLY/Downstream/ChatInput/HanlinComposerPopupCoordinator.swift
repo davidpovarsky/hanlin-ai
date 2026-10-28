@@ -175,7 +175,7 @@ final class HanlinComposerPopupCoordinator {
             return
         }
         isGeneralAnimatingExpand = true
-        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
+        withAnimation(.easeInOut(duration: 0.24)) {
             generalFrameExpanded = true
         } completion: {
             self.isGeneralAnimatingExpand = false
@@ -222,7 +222,7 @@ final class HanlinComposerPopupCoordinator {
             return
         }
         isToolsAnimatingExpand = true
-        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
+        withAnimation(.easeInOut(duration: 0.24)) {
             toolsFrameExpanded = true
         } completion: {
             self.isToolsAnimatingExpand = false
@@ -269,7 +269,7 @@ final class HanlinComposerPopupCoordinator {
             return
         }
         isModelAnimatingExpand = true
-        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
+        withAnimation(.easeInOut(duration: 0.24)) {
             modelFrameExpanded = true
         } completion: {
             self.isModelAnimatingExpand = false

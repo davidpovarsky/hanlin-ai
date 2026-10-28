@@ -72,16 +72,18 @@ struct HanlinModelPickerPopover: View {
         NavigationStack(path: $coordinator.modelNavigationPath) {
             compactRootPage
                 .navigationDestination(for: ComposerModelSubroute.self) { route in
-                    switch route {
-                    case .allModels:
-                        allModelsDestinationPage
-                            .navigationTransition(.zoom(sourceID: "hanlin-model-picker-all-models-row", in: zoomNamespace))
-                            .onAppear {
-                                coordinator.modelDestinationDisappeared = false
-                            }
-                            .onDisappear {
-                                coordinator.markModelDestinationDisappeared(reduceMotion: reduceMotion)
-                            }
+                    Group {
+                        switch route {
+                        case .allModels:
+                            allModelsDestinationPage
+                                .navigationTransition(.zoom(sourceID: "hanlin-model-picker-all-models-row", in: zoomNamespace))
+                        }
+                    }
+                    .onAppear {
+                        coordinator.modelDestinationDisappeared = false
+                    }
+                    .onDisappear {
+                        coordinator.markModelDestinationDisappeared(reduceMotion: reduceMotion)
                     }
                 }
         }
