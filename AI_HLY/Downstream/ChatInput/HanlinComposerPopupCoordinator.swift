@@ -167,20 +167,16 @@ final class HanlinComposerPopupCoordinator {
     // MARK: - V3.3 Two-Phase Expand & Shrink (General Popup)
 
     func pushGeneralSubroute(_ route: ComposerGeneralSubroute, reduceMotion: Bool = false) {
-        guard !isGeneralAnimatingExpand, generalNavigationPath.isEmpty else { return }
+        guard generalNavigationPath.isEmpty else { return }
         generalDestinationDisappeared = false
         if reduceMotion {
             generalFrameExpanded = true
             generalNavigationPath.append(route)
             return
         }
-        isGeneralAnimatingExpand = true
         withAnimation(.easeInOut(duration: 0.24)) {
             generalFrameExpanded = true
-        } completion: {
-            self.isGeneralAnimatingExpand = false
-            guard self.activePopup == .general, self.generalFrameExpanded else { return }
-            self.generalNavigationPath.append(route)
+            generalNavigationPath.append(route)
         }
     }
 
@@ -214,20 +210,16 @@ final class HanlinComposerPopupCoordinator {
     // MARK: - V3.3 Two-Phase Expand & Shrink (Tools Popup)
 
     func pushToolsSubroute(_ route: ComposerToolsSubroute, reduceMotion: Bool = false) {
-        guard !isToolsAnimatingExpand, toolsNavigationPath.isEmpty else { return }
+        guard toolsNavigationPath.isEmpty else { return }
         toolsDestinationDisappeared = false
         if reduceMotion {
             toolsFrameExpanded = true
             toolsNavigationPath.append(route)
             return
         }
-        isToolsAnimatingExpand = true
         withAnimation(.easeInOut(duration: 0.24)) {
             toolsFrameExpanded = true
-        } completion: {
-            self.isToolsAnimatingExpand = false
-            guard self.activePopup == .tools, self.toolsFrameExpanded else { return }
-            self.toolsNavigationPath.append(route)
+            toolsNavigationPath.append(route)
         }
     }
 
@@ -261,20 +253,16 @@ final class HanlinComposerPopupCoordinator {
     // MARK: - V3.3 Two-Phase Expand & Shrink (Model Picker Popup)
 
     func pushModelSubroute(_ route: ComposerModelSubroute = .allModels, reduceMotion: Bool = false) {
-        guard !isModelAnimatingExpand, modelNavigationPath.isEmpty else { return }
+        guard modelNavigationPath.isEmpty else { return }
         modelDestinationDisappeared = false
         if reduceMotion {
             modelFrameExpanded = true
             modelNavigationPath.append(route)
             return
         }
-        isModelAnimatingExpand = true
         withAnimation(.easeInOut(duration: 0.24)) {
             modelFrameExpanded = true
-        } completion: {
-            self.isModelAnimatingExpand = false
-            guard self.activePopup == .model, self.modelFrameExpanded else { return }
-            self.modelNavigationPath.append(route)
+            modelNavigationPath.append(route)
         }
     }
 

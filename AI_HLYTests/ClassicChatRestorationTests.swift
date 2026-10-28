@@ -1758,7 +1758,15 @@ struct ClassicChatRestorationTests {
         #expect(entries[3].status == .failed)
         #expect(entries[3].errorDescription == "Permission denied by user policy")
 
-        var projection = ClassicChatAgentProjection(runID: runID)
+        let streamingRunID = UUID()
+        let streamingRun = AgentRun(
+            id: streamingRunID,
+            groupID: groupID,
+            status: .running,
+            steps: [],
+            transcriptItems: []
+        )
+        var projection = ClassicChatAgentProjection(runID: streamingRunID)
         let dummyMsg = ChatMessages(role: "assistant", text: "", groupID: groupID, timestamp: Date())
         var opState = ""
         var opDesc = ""
@@ -1767,7 +1775,7 @@ struct ClassicChatRestorationTests {
         chunk1.toolContent = "po"
         _ = projection.applyStreamChunk(
             chunk1,
-            agentRun: run,
+            agentRun: streamingRun,
             to: dummyMsg,
             operationalState: &opState,
             operationalDescription: &opDesc
@@ -1781,7 +1789,7 @@ struct ClassicChatRestorationTests {
         chunk2.toolContent = "pong"
         _ = projection.applyStreamChunk(
             chunk2,
-            agentRun: run,
+            agentRun: streamingRun,
             to: dummyMsg,
             operationalState: &opState,
             operationalDescription: &opDesc
