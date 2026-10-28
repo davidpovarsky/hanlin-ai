@@ -1660,10 +1660,12 @@ struct ClassicChatRestorationTests {
         #expect(projected[0].sequence < projected[1].sequence)
 
         var syncList: [ClassicProjectedToolCallEntry] = []
-        syncList = ClassicChatAgentProjection.syncStructuredToolEntries(
-            existingEntries: syncList,
+        var seenKeys: Set<String> = []
+        ClassicChatAgentProjection.syncStructuredToolEntries(
             from: originalRun,
-            isResponding: false
+            runID: originalRun.id,
+            orderedToolEntries: &syncList,
+            seenToolCallKeys: &seenKeys
         )
         #expect(syncList.count == 2)
         #expect(syncList[0].callID == "call_a")
@@ -1756,28 +1758,23 @@ struct ClassicChatRestorationTests {
         #expect(entries[3].status == .failed)
         #expect(entries[3].errorDescription == "Permission denied by user policy")
 
-        var syncList: [ClassicProjectedToolCallEntry] = []
-        let partialChunk1 = ClassicChatAgentProjection.applyStreamChunk(
-            callID: "call_echo",
-            toolName: "mcp__echo__ping",
-            info: "po",
-            existingEntries: syncList,
-            runID: runID
-        )
-        #expect(partialChunk1.count == 1)
-        #expect(partialChunk1[0].callID == "call_echo")
-        #expect(partialChunk1[0].output == "po")
+        var projection = ClassicChatAgentProjection(runID: runID)
+        let dummyMsg = ChatMessages(role: "assistant", text: "", groupID: groupID, timestamp: Date())
+        var chunk1 = StreamData()
+        chunk1.toolName = "mcp__echo__ping"
+        chunk1.toolContent = "po"
+        _ = projection.applyStreamChunk(chunk1, into: dummyMsg)
+        #expect(projection.orderedToolEntries.count == 1)
+        #expect(projection.orderedToolEntries[0].toolName == "mcp__echo__ping")
+        #expect(projection.orderedToolEntries[0].output == "po")
 
-        let partialChunk2 = ClassicChatAgentProjection.applyStreamChunk(
-            callID: "call_echo",
-            toolName: "mcp__echo__ping",
-            info: "pong",
-            existingEntries: partialChunk1,
-            runID: runID
-        )
-        #expect(partialChunk2.count == 1)
-        #expect(partialChunk2[0].callID == "call_echo")
-        #expect(partialChunk2[0].output == "pong")
+        var chunk2 = StreamData()
+        chunk2.toolName = "mcp__echo__ping"
+        chunk2.toolContent = "pong"
+        _ = projection.applyStreamChunk(chunk2, into: dummyMsg)
+        #expect(projection.orderedToolEntries.count == 2)
+        #expect(projection.orderedToolEntries[1].toolName == "mcp__echo__ping")
+        #expect(projection.orderedToolEntries[1].output == "pong")
     }
 
     // MARK: - 29. domainToolLegitimateInstructionsHeadingPreserved

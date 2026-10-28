@@ -326,6 +326,11 @@ struct ClassicChatAgentProjection {
         syncEvidenceResources(from: agentRun, into: assistantMessage)
     }
 
+    /// Sanitizes tool output for user-facing display. Only strips `### Instructions` for meta skill/discovery tools.
+    static func sanitizeUserFacingToolOutput(_ raw: String, isMetaSkillOrDiscoveryTool: Bool = false) -> String {
+        ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(raw, isMetaSkillOrDiscoveryTool: isMetaSkillOrDiscoveryTool)
+    }
+
     /// Convenience projection to derive view-oriented structured tool items from an `AgentRun`.
     static func projectToolEntries(from agentRun: AgentRun?) -> [ClassicProjectedToolCallEntry] {
         guard let agentRun else { return [] }
