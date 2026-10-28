@@ -118,64 +118,72 @@ export default function App({ variant = 'A' }: AppProps) {
     : 'Native UIKit Label: Probe Variant B (Dynamic UIKit Switch Demo)';
 
   return (
-    <Host>
-      <NavigationStack>
-        <VStack>
-          <Text modifiers={[font({ textStyle: 'headline' }), foregroundStyle('#111827')]}>
-            Hanlin Expo + NativeScript Hybrid
-          </Text>
+    <View style={styles.container}>
+      <Host style={styles.host}>
+        <NavigationStack>
+          <VStack>
+            <Text modifiers={[font({ textStyle: 'headline' }), foregroundStyle('#111827')]}>
+              Hanlin Expo + NativeScript Hybrid
+            </Text>
 
-          <Text modifiers={[font({ textStyle: 'subheadline' }), foregroundStyle('#6B7280')]}>
-            {`Variant: ${variant} | Initialized: ${initialized ? 'YES' : 'NO'}`}
-          </Text>
+            <Text modifiers={[font({ textStyle: 'subheadline' }), foregroundStyle('#6B7280')]}>
+              {`Variant: ${variant} | Initialized: ${initialized ? 'YES' : 'NO'}`}
+            </Text>
 
-          <Text modifiers={[font({ textStyle: 'body' }), foregroundStyle('#111827')]}>
-            {`iOS System Version: ${deviceSystemVersion}`}
-          </Text>
+            <Text modifiers={[font({ textStyle: 'body' }), foregroundStyle('#111827')]}>
+              {`iOS System Version: ${deviceSystemVersion}`}
+            </Text>
 
-          <Text modifiers={[font({ textStyle: 'callout' }), foregroundStyle(isSwitchOn ? '#10B981' : '#6B7280')]}>
-            {`Native Switch Status: ${isSwitchOn ? 'ENABLED (ON)' : 'DISABLED (OFF)'}`}
-          </Text>
+            <Text modifiers={[font({ textStyle: 'callout' }), foregroundStyle(isSwitchOn ? '#10B981' : '#6B7280')]}>
+              {`Native Switch Status: ${isSwitchOn ? 'ENABLED (ON)' : 'DISABLED (OFF)'}`}
+            </Text>
 
-          {/* Real Fabric component inside SwiftUI layout via RNHostView */}
-          <RNHostView matchContents={true}>
-            <View style={styles.nativeLabelContainer}>
-              <NativeUILabel text={variantText} />
-            </View>
-          </RNHostView>
-
-          {/* Real UIKit UISwitch mounted as child with two-way target-action */}
-          <HStack>
-            <Text modifiers={[font({ textStyle: 'body' })]}>UIKit UISwitch:</Text>
+            {/* Real Fabric component inside SwiftUI layout via RNHostView */}
             <RNHostView matchContents={true}>
-              <View style={styles.nativeSwitchContainer}>
-                <NativeUISwitch
-                  isOn={isSwitchOn}
-                  onValueChange={(val: boolean) => setIsSwitchOn(val)}
-                />
+              <View style={styles.nativeLabelContainer}>
+                <NativeUILabel text={variantText} />
               </View>
             </RNHostView>
-          </HStack>
 
-          <Button
-            label={showController ? 'Hide Native Controller' : 'Mount Native UIViewController'}
-            onPress={() => setShowController(!showController)}
-          />
+            {/* Real UIKit UISwitch mounted as child with two-way target-action */}
+            <HStack>
+              <Text modifiers={[font({ textStyle: 'body' })]}>UIKit UISwitch:</Text>
+              <RNHostView matchContents={true}>
+                <View style={styles.nativeSwitchContainer}>
+                  <NativeUISwitch
+                    isOn={isSwitchOn}
+                    onValueChange={(val: boolean) => setIsSwitchOn(val)}
+                  />
+                </View>
+              </RNHostView>
+            </HStack>
 
-          {showController && (
-            <RNHostView matchContents={true}>
-              <View style={styles.nativeControllerContainer}>
-                <NativeSheetViewController title="Hosted Native UIViewController" />
-              </View>
-            </RNHostView>
-          )}
-        </VStack>
-      </NavigationStack>
-    </Host>
+            <Button
+              label={showController ? 'Hide Native Controller' : 'Mount Native UIViewController'}
+              onPress={() => setShowController(!showController)}
+            />
+
+            {showController && (
+              <RNHostView matchContents={true}>
+                <View style={styles.nativeControllerContainer}>
+                  <NativeSheetViewController title="Hosted Native UIViewController" />
+                </View>
+              </RNHostView>
+            )}
+          </VStack>
+        </NavigationStack>
+      </Host>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  host: {
+    flex: 1,
+  },
   nativeLabelContainer: {
     height: 60,
     width: 320,

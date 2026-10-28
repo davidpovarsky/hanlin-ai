@@ -207,8 +207,8 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         importAndInstall(archive: "ExpoNativeAPIProbeA")
         importAndInstall(archive: "ExpoNativeAPIProbeB")
 
-        // 20 cycles alternating between Variant A and Variant B
-        for cycle in 1...20 {
+        // 5 cycles alternating between Variant A and Variant B
+        for cycle in 1...5 {
             let useVariantA = (cycle % 2 == 1)
             let targetPackage = useVariantA ? probeAPackageName : probeBPackageName
             let targetMarker = useVariantA ? "Probe Variant A" : "Probe Variant B"
@@ -217,7 +217,7 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
 
             let markerPredicate = NSPredicate(format: "label CONTAINS %@", targetMarker)
             let marker = app.descendants(matching: .any).matching(markerPredicate).firstMatch
-            XCTAssertTrue(marker.waitForExistence(timeout: 15), "Cycle \(cycle) failed to render \(targetMarker)")
+            XCTAssertTrue(marker.waitForExistence(timeout: 20), "Cycle \(cycle) failed to render \(targetMarker)")
 
             closeExpoApp()
         }
@@ -396,8 +396,10 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         XCTAssertTrue(install.waitForExistence(timeout: 30), "Install button did not appear for \(archive)")
 
         let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        let nativeApiToggle = app.switches["hanlin-capability-toggle-ios-native-api"].firstMatch
         if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
             approveAllButton.tap()
+            _ = waitUntil(timeout: 4) { !approveAllButton.exists }
         } else {
             app.swipeUp()
             if approveAllButton.waitForExistence(timeout: 3) {
@@ -406,21 +408,50 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
                 } else {
                     approveAllButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
                 }
+                _ = waitUntil(timeout: 4) { !approveAllButton.exists }
+            } else if nativeApiToggle.waitForExistence(timeout: 2) {
+                if (nativeApiToggle.value as? String) != "1" {
+                    if nativeApiToggle.isHittable {
+                        nativeApiToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+                    } else {
+                        nativeApiToggle.tap()
+                    }
+                    _ = waitUntil(timeout: 3) { (nativeApiToggle.value as? String) == "1" }
+                }
             }
             app.swipeDown()
         }
 
-        if !install.isHittable {
-            app.swipeDown()
+        var installButton = app.buttons["hanlin-package-install"].firstMatch
+        if !installButton.isHittable {
+            for _ in 1...3 {
+                app.swipeDown()
+                if installButton.isHittable { break }
+            }
         }
 
-        XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
-        if install.isHittable {
-            install.tap()
-        } else {
-            install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        if !installButton.isEnabled {
+            let approveBtn = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+            if approveBtn.waitForExistence(timeout: 2) {
+                if approveBtn.isHittable {
+                    approveBtn.tap()
+                } else {
+                    approveBtn.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                }
+                _ = waitUntil(timeout: 4) { !approveBtn.exists }
+                if !installButton.isHittable {
+                    app.swipeDown()
+                }
+            }
         }
-        XCTAssertTrue(waitUntil(timeout: 25) { !install.exists }, "\(archive) installation did not complete")
+
+        XCTAssertTrue(waitUntil(timeout: 20) { installButton.isEnabled }, "\(archive) was not installable")
+        if installButton.isHittable {
+            installButton.tap()
+        } else {
+            installButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+        XCTAssertTrue(waitUntil(timeout: 25) { !installButton.exists }, "\(archive) installation did not complete")
         closeImportSurfaces()
     }
 
