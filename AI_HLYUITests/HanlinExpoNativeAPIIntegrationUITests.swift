@@ -248,21 +248,31 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
             app.tabBars.buttons["Apps"].firstMatch,
             app.tabs["Apps"].firstMatch
         ]
-        var tapped = false
         for candidate in candidates {
-            if candidate.waitForExistence(timeout: 3) {
+            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
                 candidate.tap()
-                tapped = true
+                if appsAddButton.waitForExistence(timeout: 5) { return }
                 break
             }
         }
-        if !tapped {
-            let fallback = app.descendants(matching: .any).matching(
-                NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
-            ).firstMatch
-            if fallback.waitForExistence(timeout: 10) {
-                fallback.tap()
+
+        let nextPage = app.buttons["Next Page"].firstMatch
+        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
+            nextPage.tap()
+            for candidate in candidates {
+                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
+                    candidate.tap()
+                    if appsAddButton.waitForExistence(timeout: 5) { return }
+                    break
+                }
             }
+        }
+
+        let fallback = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier == 'hanlin-apps-tab' OR label == 'Apps'")
+        ).firstMatch
+        if fallback.waitForExistence(timeout: 5) && fallback.isHittable {
+            fallback.tap()
         }
         ensureAppsAddButton(timeout: 20)
     }

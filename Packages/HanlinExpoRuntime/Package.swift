@@ -36,6 +36,8 @@ let package = Package(
                 .interoperabilityMode(.Cxx),
                 .unsafeFlags([
                     "-Xcc", "-std=gnu++20",
+                    "-Xcc", "-DREACT_NATIVE_PRODUCTION=1",
+                    "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0",
                     "-Xcc", "-Wno-quoted-include-in-framework-header",
                     "-Xcc", "-Wno-non-modular-include-in-framework-module",
                     "-Xcc", "-I\(packageRoot)/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
