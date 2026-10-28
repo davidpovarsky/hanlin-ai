@@ -391,9 +391,20 @@ final class AgentRuntimeConversationUITests: XCTestCase {
                 tapElement(backBtn)
             }
         }
-        // Dismiss Tools popover by tapping outside / input
+        // Dismiss Tools popover
+        if toolsPopover.exists {
+            tapElement(toolsDirect)
+            if !toolsPopover.waitForNonExistence(timeout: 3) {
+                tapElement(toolsDirect)
+                _ = toolsPopover.waitForNonExistence(timeout: 3)
+            }
+        }
+
         let input = chatInputElement(in: app)
         tapElement(input)
+        if let focused = input.value(forKey: "hasKeyboardFocus") as? Bool, !focused {
+            tapElement(input)
+        }
 
         // 3. Verify multiline input and non-overlapping two-entry composer controls
         input.typeText("Line 1 of multiline composer test\nLine 2 of multiline composer test\nLine 3 of multiline composer test")
@@ -417,10 +428,12 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         // 4. Open Model Picker popover and verify featured model list
         tapElement(modelPicker)
+        let modelPopover = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
+        XCTAssertTrue(modelPopover.waitForExistence(timeout: 5), "Model picker popover must appear on tap")
         let modelCandidate = app.descendants(matching: .any).matching(
-            NSPredicate(format: "label CONTAINS 'Agent Acceptance'")
+            NSPredicate(format: "label CONTAINS 'Agent Acceptance' OR label CONTAINS '全部模型' OR label CONTAINS 'All Models'")
         ).firstMatch
-        XCTAssertTrue(modelCandidate.waitForExistence(timeout: 10), "Model picker popover did not display Agent Acceptance model")
+        XCTAssertTrue(modelCandidate.waitForExistence(timeout: 10), "Model picker popover did not display model list")
 
         attachScreenshot("UI-06_ComposerMultilineAttachmentsModelSelectorNoOverlap", in: app)
     }

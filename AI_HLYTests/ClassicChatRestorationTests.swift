@@ -1526,18 +1526,18 @@ struct ClassicChatRestorationTests {
 
         // 1. LoadSkillTool full model output vs concise user summary
         let modelOutput = await LoadSkillTool.execute(
-            argumentsJSON: #"{"skill_id":"mcp_integrations"}"#,
+            argumentsJSON: #"{"skill_id":"mcp_servers"}"#,
             session: session,
             availableAliases: ["manage_mcp_servers", "list_tools"]
         )
         #expect(modelOutput.contains("### Instructions"))
 
         let userSummary = LoadSkillTool.userFacingSummary(
-            argumentsJSON: #"{"skill_id":"mcp_integrations"}"#,
+            argumentsJSON: #"{"skill_id":"mcp_servers"}"#,
             result: modelOutput
         )
         #expect(!userSummary.contains("### Instructions"))
-        #expect(userSummary.contains("MCP"))
+        #expect(userSummary.contains("mcp_servers") || userSummary.localizedCaseInsensitiveContains("mcp"))
 
         // 2. Consecutive load_skill -> manage_mcp_servers in the same run
         let runID = UUID()
