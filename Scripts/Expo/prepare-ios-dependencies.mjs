@@ -792,6 +792,16 @@ async function prepare() {
               await writeFile(full, filtered, 'utf8');
               console.log(`[HanlinExpo] Sanitized ExpoModulesCore.h: ${full}`);
             }
+          } else if (ent.isFile() && ent.name === 'ExpoViewShadowNode.h') {
+            let content = await readFile(full, 'utf8');
+            let patched = content
+              .replaceAll('dynamic_cast<const react::LayoutableShadowNode *>', 'static_cast<const react::LayoutableShadowNode *>')
+              .replaceAll('dynamic_cast<const ExpoViewProps *>', 'static_cast<const ExpoViewProps *>')
+              .replaceAll('dynamic_cast<const react::ViewProps *>', 'static_cast<const react::ViewProps *>');
+            if (patched !== content) {
+              await writeFile(full, patched, 'utf8');
+              console.log(`[HanlinExpo] Sanitized ExpoViewShadowNode.h: ${full}`);
+            }
           } else if (ent.isFile() && ent.name === 'RawProps.h') {
             let content = await readFile(full, 'utf8');
             let changed = false;

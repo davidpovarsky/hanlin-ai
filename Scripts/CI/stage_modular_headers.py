@@ -111,6 +111,11 @@ def patch_header_content(content: str, filename: str) -> str:
             )
         modified = filtered
 
+    if filename == "ExpoViewShadowNode.h":
+        modified = modified.replace("dynamic_cast<const react::LayoutableShadowNode *>", "static_cast<const react::LayoutableShadowNode *>")
+        modified = modified.replace("dynamic_cast<const ExpoViewProps *>", "static_cast<const ExpoViewProps *>")
+        modified = modified.replace("dynamic_cast<const react::ViewProps *>", "static_cast<const react::ViewProps *>")
+
     if filename == "EXHostWrapper.h":
         modified = modified.replace("#import <ReactCommon/RCTHost.h>", "@class RCTHost;")
         modified = modified.replace("#import <React/RCTHost.h>", "@class RCTHost;")
