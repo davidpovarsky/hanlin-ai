@@ -322,11 +322,17 @@ final class HanlinAISDKToolAdapter {
                 )
                 let duration = Date().timeIntervalSince(executionStart)
                 let isError = result.hasPrefix("Error:")
+                let userSummary = LoadSkillTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    catalog: self.catalog,
+                    language: self.currentLanguage
+                )
                 self.callbacks.onAgentEvent?(.toolExecutionCompleted(
                     id: executionID,
                     result: AgentToolResult(
                         modelText: result,
-                        userText: result,
+                        userText: userSummary,
                         richResultBlocks: [],
                         evidenceItems: [],
                         hasLegacyPresentationPayload: false,
@@ -337,16 +343,16 @@ final class HanlinAISDKToolAdapter {
                     )
                 ))
                 self.callbacks.onStreamData?(StreamData(
-                    toolContent: result,
+                    toolContent: userSummary,
                     toolName: LoadSkillTool.toolName,
-                    operationalDescription: result
+                    operationalDescription: userSummary
                 ))
                 if let recorder = self.diagnosticsRecorder, let roundID {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
                         resultForModel: result,
-                        resultForUser: result,
+                        resultForUser: userSummary,
                         duration: duration,
                         outcome: isError ? .invalidArguments : .succeeded,
                         error: isError ? result : nil
@@ -397,11 +403,16 @@ final class HanlinAISDKToolAdapter {
                 )
                 let duration = Date().timeIntervalSince(executionStart)
                 let isError = result.hasPrefix("Error:")
+                let userSummary = ReadSkillResourceTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    language: self.currentLanguage
+                )
                 self.callbacks.onAgentEvent?(.toolExecutionCompleted(
                     id: executionID,
                     result: AgentToolResult(
                         modelText: result,
-                        userText: result,
+                        userText: userSummary,
                         richResultBlocks: [],
                         evidenceItems: [],
                         hasLegacyPresentationPayload: false,
@@ -412,16 +423,16 @@ final class HanlinAISDKToolAdapter {
                     )
                 ))
                 self.callbacks.onStreamData?(StreamData(
-                    toolContent: result,
+                    toolContent: userSummary,
                     toolName: ReadSkillResourceTool.toolName,
-                    operationalDescription: result
+                    operationalDescription: userSummary
                 ))
                 if let recorder = self.diagnosticsRecorder, let roundID {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
                         resultForModel: result,
-                        resultForUser: result,
+                        resultForUser: userSummary,
                         duration: duration,
                         outcome: isError ? .invalidArguments : .succeeded,
                         error: isError ? result : nil
@@ -475,11 +486,16 @@ final class HanlinAISDKToolAdapter {
                 )
                 let duration = Date().timeIntervalSince(executionStart)
                 let isError = result.hasPrefix("Error:")
+                let userSummary = ToolSearchTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    language: self.currentLanguage
+                )
                 self.callbacks.onAgentEvent?(.toolExecutionCompleted(
                     id: executionID,
                     result: AgentToolResult(
                         modelText: result,
-                        userText: result,
+                        userText: userSummary,
                         richResultBlocks: [],
                         evidenceItems: [],
                         hasLegacyPresentationPayload: false,
@@ -490,16 +506,16 @@ final class HanlinAISDKToolAdapter {
                     )
                 ))
                 self.callbacks.onStreamData?(StreamData(
-                    toolContent: result,
+                    toolContent: userSummary,
                     toolName: ToolSearchTool.toolName,
-                    operationalDescription: result
+                    operationalDescription: userSummary
                 ))
                 if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
                         resultForModel: result,
-                        resultForUser: result,
+                        resultForUser: userSummary,
                         duration: duration,
                         outcome: isError ? .invalidArguments : .succeeded,
                         error: isError ? result : nil
@@ -549,11 +565,16 @@ final class HanlinAISDKToolAdapter {
                 )
                 let duration = Date().timeIntervalSince(executionStart)
                 let isError = result.hasPrefix("Error:")
+                let userSummary = ReadToolResultTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    language: self.currentLanguage
+                )
                 self.callbacks.onAgentEvent?(.toolExecutionCompleted(
                     id: executionID,
                     result: AgentToolResult(
                         modelText: result,
-                        userText: result,
+                        userText: userSummary,
                         richResultBlocks: [],
                         evidenceItems: [],
                         hasLegacyPresentationPayload: false,
@@ -564,16 +585,16 @@ final class HanlinAISDKToolAdapter {
                     )
                 ))
                 self.callbacks.onStreamData?(StreamData(
-                    toolContent: result,
+                    toolContent: userSummary,
                     toolName: ReadToolResultTool.toolName,
-                    operationalDescription: result
+                    operationalDescription: userSummary
                 ))
                 if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
                     await recorder.completeToolCall(
                         roundID: roundID,
                         callID: callID,
                         resultForModel: result,
-                        resultForUser: result,
+                        resultForUser: userSummary,
                         duration: duration,
                         outcome: isError ? .invalidArguments : .succeeded,
                         error: isError ? result : nil

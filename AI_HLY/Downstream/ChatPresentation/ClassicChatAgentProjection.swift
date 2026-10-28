@@ -8,6 +8,71 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#endif
+
+/// Represents one discrete, chronologically ordered tool invocation and its user-facing output
+/// within a single `AgentRun`, preventing output conflation or mislabeling across tools.
+struct ClassicProjectedToolCallEntry: Equatable, Sendable, Identifiable {
+    let id: String
+    let runID: UUID
+    let callID: String
+    let toolName: String
+    var summary: String?
+    var output: String
+    var isMetaSkillOrDiscoveryTool: Bool
+
+    static let metaToolNames: Set<String> = [
+        "load_skill",
+        "read_skill_resource",
+        "tool_search",
+        "read_tool_result",
+        "report_progress"
+    ]
+
+    static func isMetaTool(_ name: String) -> Bool {
+        let normalized = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        return metaToolNames.contains(normalized)
+    }
+
+    /// Formats a single entry for `ChatBubbleView.toolContentView()`, always keeping its own tool label
+    /// when multiple tools execute in the same run.
+    func formattedBlock(includeHeader: Bool) -> String {
+        let cleanName = toolName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanOutput = Self.sanitizeUserFacingToolOutput(output)
+        let cleanSummary = summary?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        var lines: [String] = []
+        if includeHeader, !cleanName.isEmpty {
+            lines.append("[\(cleanName)]")
+        }
+        if !cleanSummary.isEmpty,
+           cleanSummary != cleanName,
+           cleanSummary != cleanOutput,
+           !ProgressSummarySanitizer.looksLikeRawChainOfThought(cleanSummary) {
+            lines.append(cleanSummary)
+        }
+        if !cleanOutput.isEmpty {
+            lines.append(cleanOutput)
+        }
+        return lines.joined(separator: "\n")
+    }
+
+    /// Strips any accidental raw `### Instructions` skill body from user-facing tool output.
+    static func sanitizeUserFacingToolOutput(_ raw: String) -> String {
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return "" }
+        if let range = trimmed.range(of: "### Instructions") {
+            let prefix = String(trimmed[..<range.lowerBound]).trimmingCharacters(in: .whitespacesAndNewlines)
+            if !prefix.isEmpty {
+                return prefix
+            }
+            return "Skill loaded."
+        }
+        return trimmed
+    }
+}
 
 @MainActor
 struct ClassicChatAgentProjection {
@@ -15,6 +80,8 @@ struct ClassicChatAgentProjection {
     private var seenToolCallKeys: Set<String> = []
     private var seenToolResultKeys: Set<String> = []
     private var seenToolContentBlocks: Set<String> = []
+    private(set) var orderedToolEntries: [ClassicProjectedToolCallEntry] = []
+    private var streamChunkSequence: Int = 0
 
     init(runID: UUID) {
         self.runID = runID
@@ -58,15 +125,16 @@ struct ClassicChatAgentProjection {
     ) -> Bool {
         var updated = false
 
-        // 1. Operational status (sanitized so raw CoT never leaks into loadingSection)
+        // 1. Operational status (sanitized so raw CoT and raw SKILL.md instructions never leak into loadingSection)
         if let state = data.operationalState {
             operationalState = state
         }
         if let desc = data.operationalDescription {
-            if ProgressSummarySanitizer.looksLikeRawChainOfThought(desc) {
+            let cleanDesc = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(desc)
+            if ProgressSummarySanitizer.looksLikeRawChainOfThought(cleanDesc) {
                 operationalDescription = ""
             } else {
-                operationalDescription = desc
+                operationalDescription = cleanDesc
             }
         }
 
@@ -79,21 +147,33 @@ struct ClassicChatAgentProjection {
             }
         }
 
-        // 3. Tool call / output -> original ChatMessages.toolContent & toolName
+        // 3. Per-call Tool output -> tracked deterministically by (runID, callID, toolName)
+        let incomingToolName = (data.toolName ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         if let toolInfo = data.toolContent, !toolInfo.isEmpty {
-            let normalizedBlock = toolInfo.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !normalizedBlock.isEmpty, seenToolContentBlocks.insert(normalizedBlock).inserted {
-                let current = assistantMessage.toolContent ?? ""
-                if current.isEmpty {
-                    assistantMessage.toolContent = toolInfo
-                } else if !current.contains(normalizedBlock) {
-                    assistantMessage.toolContent = current + "\n" + toolInfo
+            let sanitizedInfo = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(toolInfo)
+            if !sanitizedInfo.isEmpty {
+                streamChunkSequence += 1
+                let effectiveName = incomingToolName.isEmpty
+                    ? (assistantMessage.toolName ?? "tool")
+                    : incomingToolName
+                let dedupSignature = "\(effectiveName)::\(sanitizedInfo)"
+                if seenToolContentBlocks.insert(dedupSignature).inserted {
+                    let callID = "stream-\(streamChunkSequence)-\(effectiveName)"
+                    let entry = ClassicProjectedToolCallEntry(
+                        id: "\(runID.uuidString):\(callID)",
+                        runID: runID,
+                        callID: callID,
+                        toolName: effectiveName,
+                        summary: nil,
+                        output: sanitizedInfo,
+                        isMetaSkillOrDiscoveryTool: ClassicProjectedToolCallEntry.isMetaTool(effectiveName)
+                    )
+                    orderedToolEntries.append(entry)
+                    updated = true
                 }
-                updated = true
             }
-        }
-        if let toolName = data.toolName, !toolName.isEmpty {
-            assistantMessage.toolName = toolName
+        } else if !incomingToolName.isEmpty, orderedToolEntries.isEmpty {
+            assistantMessage.toolName = incomingToolName
             updated = true
         }
 
@@ -107,9 +187,20 @@ struct ClassicChatAgentProjection {
             }
         }
 
-        // 5. Synchronize AgentRun snapshot onto assistantMessage
+        // 5. Synchronize AgentRun snapshot onto assistantMessage using per-call attribution
         assistantMessage.agentRun = agentRun
-        Self.syncAgentRunProjection(agentRun, into: assistantMessage, seenToolContentBlocks: &seenToolContentBlocks)
+        Self.syncStructuredToolEntries(
+            from: agentRun,
+            runID: runID,
+            orderedToolEntries: &orderedToolEntries,
+            seenToolContentBlocks: &seenToolContentBlocks
+        )
+        Self.applyFormattedToolProjection(
+            entries: orderedToolEntries,
+            fallbackToolName: incomingToolName,
+            to: assistantMessage
+        )
+        Self.syncEvidenceResources(from: agentRun, into: assistantMessage)
 
         return updated
     }
@@ -174,7 +265,30 @@ struct ClassicChatAgentProjection {
         into assistantMessage: ChatMessages,
         seenToolContentBlocks: inout Set<String>
     ) {
-        // Project tool steps into toolContent / toolName when not already populated
+        var entries: [ClassicProjectedToolCallEntry] = []
+        syncStructuredToolEntries(
+            from: agentRun,
+            runID: agentRun.id,
+            orderedToolEntries: &entries,
+            seenToolContentBlocks: &seenToolContentBlocks
+        )
+        if !entries.isEmpty {
+            applyFormattedToolProjection(
+                entries: entries,
+                fallbackToolName: assistantMessage.toolName ?? "",
+                to: assistantMessage
+            )
+        }
+        syncEvidenceResources(from: agentRun, into: assistantMessage)
+    }
+
+    /// Builds deterministic per-call entries from `AgentRun.steps` and `AgentRun.transcriptItems` without conflating tool names.
+    static func syncStructuredToolEntries(
+        from agentRun: AgentRun,
+        runID: UUID,
+        orderedToolEntries: inout [ClassicProjectedToolCallEntry],
+        seenToolContentBlocks: inout Set<String>
+    ) {
         let toolSteps = agentRun.steps.filter { step in
             switch step.kind {
             case .toolCall, .toolExecution, .codeExecution, .documentRead, .sourceRead, .map, .calendar, .health, .nativeApp:
@@ -184,50 +298,132 @@ struct ClassicChatAgentProjection {
             }
         }
 
-        if assistantMessage.toolName?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty != false,
-           let lastToolStep = toolSteps.last {
-            assistantMessage.toolName = lastToolStep.title
+        // Map callID -> canonical toolName from transcriptItems when available
+        var toolNameByCallID: [String: String] = [:]
+        for item in agentRun.transcriptItems {
+            if let callID = item.callID, let tName = item.toolName, !tName.isEmpty {
+                toolNameByCallID[callID] = tName
+            }
         }
 
-        var synthesizedLines: [String] = []
         for step in toolSteps {
-            let stepKey = step.externalID ?? step.id.uuidString
-            guard !seenToolContentBlocks.contains(stepKey) else { continue }
-            var parts: [String] = []
-            let title = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !title.isEmpty {
-                parts.append("[\(title)]")
+            guard step.status == .completed || step.status == .failed else { continue }
+            let rawCallID = (step.externalID ?? step.id.uuidString)
+                .replacingOccurrences(of: ":execution", with: "")
+                .replacingOccurrences(of: ":call", with: "")
+            let stepTitle = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            let canonicalToolName = toolNameByCallID[rawCallID]
+                ?? (stepTitle.isEmpty ? "tool" : stepTitle)
+
+            let rawOutput: String = {
+                if let out = step.output?.trimmingCharacters(in: .whitespacesAndNewlines), !out.isEmpty {
+                    return out
+                }
+                if let err = step.errorDescription?.trimmingCharacters(in: .whitespacesAndNewlines), !err.isEmpty {
+                    return "⚠️ \(err)"
+                }
+                return ""
+            }()
+            let sanitizedOutput = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(rawOutput)
+            let summary = step.userFacingSummary?.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            guard !sanitizedOutput.isEmpty || (summary?.isEmpty == false) else { continue }
+
+            let effectiveOutput = sanitizedOutput.isEmpty ? (summary ?? "") : sanitizedOutput
+            let dedupSignature = "\(canonicalToolName)::\(effectiveOutput)"
+            let callKey = "\(runID.uuidString):step:\(rawCallID)"
+
+            if let existingIdx = orderedToolEntries.firstIndex(where: {
+                $0.callID == rawCallID || ($0.toolName == canonicalToolName && $0.output == effectiveOutput)
+            }) {
+                if orderedToolEntries[existingIdx].summary == nil, let summary, !summary.isEmpty {
+                    orderedToolEntries[existingIdx].summary = summary
+                }
+                seenToolContentBlocks.insert(callKey)
+                continue
             }
-            if let summary = step.userFacingSummary?.trimmingCharacters(in: .whitespacesAndNewlines),
-               !summary.isEmpty,
-               summary != title,
-               !ProgressSummarySanitizer.looksLikeRawChainOfThought(summary) {
-                parts.append(summary)
+
+            guard seenToolContentBlocks.insert(callKey).inserted,
+                  seenToolContentBlocks.insert(dedupSignature).inserted else {
+                continue
             }
-            if let output = step.output?.trimmingCharacters(in: .whitespacesAndNewlines),
-               !output.isEmpty {
-                parts.append(output)
-            } else if let error = step.errorDescription?.trimmingCharacters(in: .whitespacesAndNewlines),
-                      !error.isEmpty {
-                parts.append("⚠️ \(error)")
+
+            orderedToolEntries.append(
+                ClassicProjectedToolCallEntry(
+                    id: callKey,
+                    runID: runID,
+                    callID: rawCallID,
+                    toolName: canonicalToolName,
+                    summary: summary,
+                    output: effectiveOutput,
+                    isMetaSkillOrDiscoveryTool: ClassicProjectedToolCallEntry.isMetaTool(canonicalToolName)
+                )
+            )
+        }
+    }
+
+    /// Formats `orderedToolEntries` into `assistantMessage.toolContent` and `assistantMessage.toolName`
+    /// so that:
+    /// 1. When real domain/MCP tools executed alongside meta skill/discovery tools (`load_skill`, `tool_search`, etc.),
+    ///    each entry retains its own explicit `[toolName]` header, and `assistantMessage.toolName` names the primary
+    ///    domain tool(s) rather than misattributing `load_skill` output to `manage_mcp_servers`.
+    /// 2. Full `### Instructions` markdown never appears in `assistantMessage.toolContent`.
+    static func applyFormattedToolProjection(
+        entries: [ClassicProjectedToolCallEntry],
+        fallbackToolName: String,
+        to assistantMessage: ChatMessages
+    ) {
+        guard !entries.isEmpty else {
+            if (assistantMessage.toolName ?? "").isEmpty && !fallbackToolName.isEmpty {
+                assistantMessage.toolName = fallbackToolName
             }
-            if !parts.isEmpty, (step.status == .completed || step.status == .failed) {
-                seenToolContentBlocks.insert(stepKey)
-                synthesizedLines.append(parts.joined(separator: "\n"))
-            }
+            return
         }
 
-        if !synthesizedLines.isEmpty {
-            let current = assistantMessage.toolContent?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-            let addition = synthesizedLines.joined(separator: "\n\n")
-            if current.isEmpty {
-                assistantMessage.toolContent = addition
-            } else if !current.contains(addition) {
-                assistantMessage.toolContent = current + "\n\n" + addition
-            }
-        }
+        let domainEntries = entries.filter { !$0.isMetaSkillOrDiscoveryTool }
+        let distinctToolNames = Self.orderedDistinctToolNames(in: entries)
+        let includePerCallHeaders = distinctToolNames.count > 1
 
-        // Project valid HTTP(S) evidence items into ChatMessages.resources
+        // Render each call with its own explicit `[toolName]` header whenever more than one tool ran,
+        // so `load_skill` summary and `manage_mcp_servers` output are never conflated under one label.
+        let blocks = entries.compactMap { entry -> String? in
+            let text = entry.formattedBlock(includeHeader: includePerCallHeaders)
+            return text.isEmpty ? nil : text
+        }
+        assistantMessage.toolContent = blocks.joined(separator: "\n\n")
+
+        // Compute truthful header badge for `ToggleButton(title: "tooluse_content", timeText: toolName)`
+        let domainToolNames = Self.orderedDistinctToolNames(in: domainEntries)
+        if domainToolNames.count == 1, let singleDomain = domainToolNames.first {
+            if distinctToolNames.count > 1 {
+                assistantMessage.toolName = "\(singleDomain) (+\(distinctToolNames.count - 1))"
+            } else {
+                assistantMessage.toolName = singleDomain
+            }
+        } else if domainToolNames.count > 1, let lastDomain = domainToolNames.last {
+            assistantMessage.toolName = "\(lastDomain) (+\(domainToolNames.count - 1))"
+        } else if distinctToolNames.count == 1, let onlyTool = distinctToolNames.first {
+            assistantMessage.toolName = onlyTool
+        } else if let lastTool = distinctToolNames.last {
+            assistantMessage.toolName = "\(lastTool) (+\(distinctToolNames.count - 1))"
+        }
+    }
+
+    private static func orderedDistinctToolNames(in entries: [ClassicProjectedToolCallEntry]) -> [String] {
+        var seen: Set<String> = []
+        var result: [String] = []
+        for entry in entries {
+            let name = entry.toolName.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !name.isEmpty, seen.insert(name).inserted else { continue }
+            result.append(name)
+        }
+        return result
+    }
+
+    static func syncEvidenceResources(
+        from agentRun: AgentRun,
+        into assistantMessage: ChatMessages
+    ) {
         let evidenceResources: [Resource] = agentRun.evidenceItems.compactMap { item in
             guard let urlString = item.url?.trimmingCharacters(in: .whitespacesAndNewlines),
                   !urlString.isEmpty,

@@ -2028,17 +2028,37 @@ struct ChatBubbleView: View {
     private var resolvedToolContentForDisplay: String {
         let trimmed = toolContent.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmed.isEmpty {
-            return toolContent
+            return ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(toolContent)
         }
         guard let steps = agentRun?.steps else { return "" }
-        let toolSteps = steps.filter { $0.kind == .toolCall }
-        guard !toolSteps.isEmpty else { return "" }
-        return toolSteps.map { step in
-            let title = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
-            if let summary = (step.userFacingSummary ?? step.subtitle)?.trimmingCharacters(in: .whitespacesAndNewlines), !summary.isEmpty {
-                return "\(title)\n\(summary)"
+        let toolSteps = steps.filter {
+            switch $0.kind {
+            case .toolCall, .toolExecution, .codeExecution, .documentRead, .sourceRead, .map, .calendar, .health, .nativeApp:
+                return true
+            default:
+                return false
             }
-            return title
+        }
+        guard !toolSteps.isEmpty else { return "" }
+        let includeHeader = toolSteps.count > 1
+        return toolSteps.compactMap { step in
+            let title = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            let summary = (step.userFacingSummary ?? step.subtitle)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let rawOut = step.output?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let cleanOut = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(rawOut)
+            var lines: [String] = []
+            if includeHeader, !title.isEmpty {
+                lines.append("[\(title)]")
+            } else if !includeHeader, !title.isEmpty, cleanOut.isEmpty, summary.isEmpty {
+                lines.append(title)
+            }
+            if !summary.isEmpty, summary != title, summary != cleanOut {
+                lines.append(summary)
+            }
+            if !cleanOut.isEmpty {
+                lines.append(cleanOut)
+            }
+            return lines.isEmpty ? nil : lines.joined(separator: "\n")
         }.joined(separator: "\n\n")
     }
 

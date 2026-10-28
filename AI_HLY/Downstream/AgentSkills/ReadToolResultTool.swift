@@ -63,4 +63,20 @@ public enum ReadToolResultTool {
         }
         return header
     }
+
+    public static func userFacingSummary(
+        argumentsJSON: String,
+        result: String,
+        language: String = "zh"
+    ) -> String {
+        let isZh = language.hasPrefix("zh")
+        if result.hasPrefix("Error:") {
+            return result
+        }
+        let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !firstLine.isEmpty {
+            return firstLine.replacingOccurrences(of: ":", with: "")
+        }
+        return isZh ? "已读取工具结果片段" : "Read tool result slice"
+    }
 }

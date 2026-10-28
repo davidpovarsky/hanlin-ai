@@ -1393,4 +1393,219 @@ struct ClassicChatRestorationTests {
         #expect(decision.totalExposedBytes <= AssistantToolExposurePlanner.defaultSchemaByteBudget)
         #expect(!decision.deferredAliases.isEmpty)
     }
+
+    // MARK: - 23. hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom
+
+    @MainActor
+    @Test("23. HanlinComposerPopupCoordinator enforces mutual exclusion across .general, .tools, and .model and V3.3 two-phase expand/shrink state machine")
+    func hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom() throws {
+        let coordinator = HanlinComposerPopupCoordinator()
+        #expect(coordinator.activePopup == nil)
+
+        // 1. Open General `+` popup
+        coordinator.open(.general, isInputCurrentlyFocused: true)
+        #expect(coordinator.activePopup == .general)
+        #expect(coordinator.shouldRestoreFocusAfterDismiss == true)
+        #expect(coordinator.isGeneralExpanded == false)
+
+        // Stage 1: Expand General popup to subpage (.parameters)
+        coordinator.navigateToGeneralSubpage(.parameters)
+        #expect(coordinator.isGeneralExpanded == true)
+        #expect(coordinator.generalNavigationPath == [.parameters])
+        #expect(coordinator.generalDestinationDisappeared == false)
+
+        // Cancelled swipe-back protection: path is non-empty or destination hasn't disappeared -> stays expanded
+        coordinator.syncGeneralShrinkState()
+        #expect(coordinator.isGeneralExpanded == true)
+
+        // Stage 2: Pop back AND destination disappears -> shrinks back to root size
+        coordinator.popGeneralToRoot()
+        coordinator.markGeneralDestinationDisappeared()
+        #expect(coordinator.generalNavigationPath.isEmpty)
+        #expect(coordinator.isGeneralExpanded == false)
+
+        // 2. Direct 1-tap Tools shortcut switches atomically from .general to .tools
+        coordinator.presentDirectTools(isInputCurrentlyFocused: false)
+        #expect(coordinator.activePopup == .tools)
+        #expect(coordinator.toolsNavigationPath.isEmpty)
+        #expect(coordinator.isToolsExpanded == false)
+
+        // Stage 1 & 2 on Tools popup (.mcpServers)
+        coordinator.navigateToToolsSubpage(.mcpServers)
+        #expect(coordinator.isToolsExpanded == true)
+        #expect(coordinator.toolsNavigationPath == [.mcpServers])
+        coordinator.popToolsToRoot()
+        coordinator.markToolsDestinationDisappeared()
+        #expect(coordinator.isToolsExpanded == false)
+
+        // 3. Model picker switches atomically from .tools to .model and expands to All Models
+        coordinator.open(.model, isInputCurrentlyFocused: false)
+        #expect(coordinator.activePopup == .model)
+        #expect(coordinator.isModelExpanded == false)
+        coordinator.navigateToModelSubpage(.allModels)
+        #expect(coordinator.isModelExpanded == true)
+        #expect(coordinator.modelNavigationPath == [.allModels])
+        coordinator.popModelToRoot()
+        coordinator.markModelDestinationDisappeared()
+        #expect(coordinator.isModelExpanded == false)
+
+        // 4. Close all resets all state
+        coordinator.closeAll()
+        #expect(coordinator.activePopup == nil)
+    }
+
+    // MARK: - 24. hanlinComposerActionBridgeCapabilityAndActiveChips
+
+    @Test("24. HanlinComposerActionBridge derives truthful capability snapshot, active mode chips, and tools shortcut count")
+    func hanlinComposerActionBridgeCapabilityAndActiveChips() throws {
+        let model = AllModels(
+            name: "gpt-4o",
+            displayName: "GPT-4o",
+            identity: "model",
+            position: 0,
+            company: "OPENAI",
+            price: 2,
+            isHidden: false,
+            supportsSearch: true,
+            supportsReasoning: true,
+            supportReasoningChange: true,
+            supportsVoiceGen: true,
+            supportsImageGen: true,
+            supportsMultimodal: true,
+            supportsTextGen: true,
+            supportsToolUse: true
+        )
+
+        let snapshot = HanlinComposerActionBridge.capabilitySnapshot(for: model)
+        #expect(snapshot.hasModel)
+        #expect(snapshot.supportsSearch)
+        #expect(snapshot.supportsReasoning)
+        #expect(snapshot.supportReasoningChange)
+        #expect(snapshot.supportsThinkingLengthMenu)
+        #expect(snapshot.supportsVoiceGen)
+        #expect(snapshot.supportsImageGen)
+        #expect(snapshot.supportsImageAspectRatioSelection)
+        #expect(snapshot.supportsToolUse)
+        #expect(!snapshot.isLocalModel)
+
+        let chips = HanlinComposerActionBridge.activeModeChips(
+            capability: snapshot,
+            ifSearch: true,
+            ifKnowledge: true,
+            ifThink: true,
+            thinkingLength: 3,
+            ifPlanning: false,
+            ifAudio: true,
+            ifToolUse: true,
+            activeMCPServerCount: 2,
+            selectedImageSize: "landscape"
+        )
+        let kinds = chips.map(\.kind)
+        #expect(kinds.contains(.search))
+        #expect(kinds.contains(.knowledge))
+        #expect(kinds.contains(.thinking))
+        #expect(kinds.contains(.audio))
+        #expect(kinds.contains(.tools))
+        #expect(kinds.contains(.mcp))
+        #expect(kinds.contains(.imageGen))
+
+        let shortcutCount = HanlinComposerActionBridge.activeToolsShortcutCount(
+            capability: snapshot,
+            ifToolUse: true,
+            activeMCPServerCount: 2
+        )
+        #expect(shortcutCount == 3)
+    }
+
+    // MARK: - 25. build84701P0ToolContentSeparationAndPerCallProjection
+
+    @MainActor
+    @Test("25. Build 84701 P0 fix: load_skill keeps ### Instructions in modelText only, and ClassicChatAgentProjection separates per-call tool outputs without mislabeling load_skill under manage_mcp_servers")
+    func build84701P0ToolContentSeparationAndPerCallProjection() async throws {
+        let session = AssistantCapabilitySession(chatID: UUID().uuidString, isTemporaryChat: false)
+
+        // 1. LoadSkillTool full model output vs concise user summary
+        let modelOutput = await LoadSkillTool.execute(
+            argumentsJSON: #"{"skill_id":"mcp_integrations"}"#,
+            session: session,
+            availableAliases: ["manage_mcp_servers", "list_tools"]
+        )
+        #expect(modelOutput.contains("### Instructions"))
+
+        let userSummary = LoadSkillTool.userFacingSummary(
+            argumentsJSON: #"{"skill_id":"mcp_integrations"}"#,
+            modelResult: modelOutput
+        )
+        #expect(!userSummary.contains("### Instructions"))
+        #expect(userSummary.contains("MCP"))
+
+        // 2. Consecutive load_skill -> manage_mcp_servers in the same run
+        let runID = UUID()
+        let groupID = UUID()
+        let assistantMessage = ChatMessages(
+            role: "assistant",
+            text: "",
+            reasoning: "",
+            modelName: "gpt-4o",
+            modelDisplayName: "GPT-4o",
+            groupID: groupID,
+            timestamp: Date()
+        )
+
+        let call1 = AgentToolCall.parse(
+            id: "call_skill_1",
+            name: "load_skill",
+            argumentsJSON: #"{"skill_id":"mcp_integrations"}"#
+        )
+        let call2 = AgentToolCall.parse(
+            id: "call_mcp_2",
+            name: "manage_mcp_servers",
+            argumentsJSON: #"{"action":"status"}"#
+        )
+
+        ClassicChatAgentProjection.applyEvent(
+            .toolCallStarted(call1),
+            to: assistantMessage,
+            runID: runID,
+            modelDisplayName: "GPT-4o"
+        )
+        ClassicChatAgentProjection.appendCompletedToolOutput(
+            userSummary,
+            toolName: "load_skill",
+            callID: "call_skill_1",
+            runID: runID,
+            to: assistantMessage
+        )
+
+        ClassicChatAgentProjection.applyEvent(
+            .toolCallStarted(call2),
+            to: assistantMessage,
+            runID: runID,
+            modelDisplayName: "GPT-4o"
+        )
+        ClassicChatAgentProjection.appendCompletedToolOutput(
+            "MCP Server Status: 1 installed, 1 running.",
+            toolName: "manage_mcp_servers",
+            callID: "call_mcp_2",
+            runID: runID,
+            to: assistantMessage
+        )
+
+        #expect(assistantMessage.toolName == "manage_mcp_servers (+1)")
+        #expect(assistantMessage.toolContent.contains("[load_skill]"))
+        #expect(assistantMessage.toolContent.contains("[manage_mcp_servers]"))
+        #expect(!assistantMessage.toolContent.contains("### Instructions"))
+    }
+
+    // MARK: - 26. nativeMultilineTextEditorEffectiveMeasurementWidth
+
+    @MainActor
+    @Test("26. NativeMultilineTextEditor.effectiveMeasurementWidth uses actual view bounds on narrow split-screen widths before fallback")
+    func nativeMultilineTextEditorEffectiveMeasurementWidth() {
+        let narrowTextView = UITextView(frame: CGRect(x: 0, y: 0, width: 168, height: 38))
+        #expect(NativeMultilineTextEditor.effectiveMeasurementWidth(for: narrowTextView) == 168)
+
+        let unlaidOutTextView = UITextView(frame: .zero)
+        #expect(NativeMultilineTextEditor.effectiveMeasurementWidth(for: unlaidOutTextView, fallbackWidth: 240) == 240)
+    }
 }

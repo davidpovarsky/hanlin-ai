@@ -1,0 +1,287 @@
+//
+//  HanlinComposerPopupCoordinator.swift
+//  AI_HLY
+//
+//  Single shared popup coordinator for the two-entry native composer.
+//  Guarantees mutual exclusion across General (+), Direct Tools, and Model Picker
+//  popups, and implements the InteriorOrganizerV3_3 two-phase expand/shrink
+//  animation state machine.
+//
+
+import Foundation
+import Observation
+import SwiftUI
+
+enum ComposerPopup: String, Identifiable, Hashable, Sendable {
+    case general
+    case tools
+    case model
+
+    var id: String { rawValue }
+}
+
+enum ComposerGeneralSubroute: String, Hashable, Sendable {
+    case prompts
+    case parameters
+    case imageSize
+}
+
+enum ComposerToolsSubroute: String, Hashable, Sendable {
+    case toolsCatalog
+    case skillsCenter
+    case mcpServers
+    case runtimeCenter
+}
+
+enum ComposerModelSubroute: String, Hashable, Sendable {
+    case allModels
+}
+
+@MainActor
+@Observable
+final class HanlinComposerPopupCoordinator {
+    /// Currently presented popup (`nil` when all popups are closed).
+    /// Setting this guarantees that at most one popup is ever presented.
+    var activePopup: ComposerPopup?
+
+    /// Internal navigation stacks for each popup.
+    var generalNavigationPath: [ComposerGeneralSubroute] = []
+    var toolsNavigationPath: [ComposerToolsSubroute] = []
+    var modelNavigationPath: [ComposerModelSubroute] = []
+
+    /// InteriorOrganizerV3_3 two-phase size state per popup:
+    /// Stage 1: `frameExpanded` becomes `true` BEFORE pushing destination onto `NavigationPath`.
+    /// Stage 2: `frameExpanded` returns to `false` ONLY when BOTH `navigationPath.isEmpty`
+    /// AND `destinationHasDisappeared` are `true` (protecting against cancelled interactive swipe-back).
+    var generalFrameExpanded: Bool = false
+    var generalDestinationDisappeared: Bool = true
+    var isGeneralAnimatingExpand: Bool = false
+
+    var toolsFrameExpanded: Bool = false
+    var toolsDestinationDisappeared: Bool = true
+    var isToolsAnimatingExpand: Bool = false
+
+    var modelFrameExpanded: Bool = false
+    var modelDestinationDisappeared: Bool = true
+    var isModelAnimatingExpand: Bool = false
+
+    /// Tracks whether the text input was focused before a popup opened so focus can be restored cleanly.
+    var wasInputFocusedBeforePopup: Bool = false
+
+    init() {}
+
+    // MARK: - Mutual Exclusion Entrypoints
+
+    func open(_ popup: ComposerPopup, isInputCurrentlyFocused: Bool = false) {
+        if activePopup == popup {
+            closeAll()
+            return
+        }
+        if activePopup == nil {
+            wasInputFocusedBeforePopup = isInputCurrentlyFocused
+        }
+        resetSubroutesAndExpansion()
+        activePopup = popup
+    }
+
+    func presentDirectTools(isInputCurrentlyFocused: Bool = false) {
+        if activePopup == .tools {
+            closeAll()
+            return
+        }
+        if activePopup == nil {
+            wasInputFocusedBeforePopup = isInputCurrentlyFocused
+        }
+        resetSubroutesAndExpansion()
+        activePopup = .tools
+    }
+
+    func switchFromGeneralToTools() {
+        resetSubroutesAndExpansion()
+        activePopup = .tools
+    }
+
+    func close(_ popup: ComposerPopup) {
+        guard activePopup == popup else { return }
+        closeAll()
+    }
+
+    func closeAll() {
+        activePopup = nil
+        resetSubroutesAndExpansion()
+    }
+
+    func binding(for popup: ComposerPopup) -> Binding<Bool> {
+        Binding(
+            get: { self.activePopup == popup },
+            set: { isPresented in
+                if isPresented {
+                    if self.activePopup != popup {
+                        self.resetSubroutesAndExpansion()
+                        self.activePopup = popup
+                    }
+                } else if self.activePopup == popup {
+                    self.closeAll()
+                }
+            }
+        )
+    }
+
+    private func resetSubroutesAndExpansion() {
+        generalNavigationPath.removeAll()
+        generalFrameExpanded = false
+        generalDestinationDisappeared = true
+        isGeneralAnimatingExpand = false
+
+        toolsNavigationPath.removeAll()
+        toolsFrameExpanded = false
+        toolsDestinationDisappeared = true
+        isToolsAnimatingExpand = false
+
+        modelNavigationPath.removeAll()
+        modelFrameExpanded = false
+        modelDestinationDisappeared = true
+        isModelAnimatingExpand = false
+    }
+
+    // MARK: - V3.3 Two-Phase Expand & Shrink (General Popup)
+
+    func pushGeneralSubroute(_ route: ComposerGeneralSubroute, reduceMotion: Bool = false) {
+        guard !isGeneralAnimatingExpand, generalNavigationPath.isEmpty else { return }
+        generalDestinationDisappeared = false
+        if reduceMotion {
+            generalFrameExpanded = true
+            generalNavigationPath.append(route)
+            return
+        }
+        isGeneralAnimatingExpand = true
+        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
+            generalFrameExpanded = true
+        } completion: {
+            self.isGeneralAnimatingExpand = false
+            guard self.generalFrameExpanded else { return }
+            self.generalNavigationPath.append(route)
+        }
+    }
+
+    func handleGeneralNavPathChange(reduceMotion: Bool = false) {
+        if generalNavigationPath.isEmpty {
+            shrinkGeneralIfReady(reduceMotion: reduceMotion)
+        } else {
+            generalDestinationDisappeared = false
+            if !generalFrameExpanded {
+                generalFrameExpanded = true
+            }
+        }
+    }
+
+    func markGeneralDestinationDisappeared(reduceMotion: Bool = false) {
+        generalDestinationDisappeared = true
+        shrinkGeneralIfReady(reduceMotion: reduceMotion)
+    }
+
+    private func shrinkGeneralIfReady(reduceMotion: Bool) {
+        guard generalNavigationPath.isEmpty, generalDestinationDisappeared, generalFrameExpanded else { return }
+        if reduceMotion {
+            generalFrameExpanded = false
+        } else {
+            withAnimation(.easeInOut(duration: 0.24)) {
+                generalFrameExpanded = false
+            }
+        }
+    }
+
+    // MARK: - V3.3 Two-Phase Expand & Shrink (Tools Popup)
+
+    func pushToolsSubroute(_ route: ComposerToolsSubroute, reduceMotion: Bool = false) {
+        guard !isToolsAnimatingExpand, toolsNavigationPath.isEmpty else { return }
+        toolsDestinationDisappeared = false
+        if reduceMotion {
+            toolsFrameExpanded = true
+            toolsNavigationPath.append(route)
+            return
+        }
+        isToolsAnimatingExpand = true
+        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
+            toolsFrameExpanded = true
+        } completion: {
+            self.isToolsAnimatingExpand = false
+            guard self.toolsFrameExpanded else { return }
+            self.toolsNavigationPath.append(route)
+        }
+    }
+
+    func handleToolsNavPathChange(reduceMotion: Bool = false) {
+        if toolsNavigationPath.isEmpty {
+            shrinkToolsIfReady(reduceMotion: reduceMotion)
+        } else {
+            toolsDestinationDisappeared = false
+            if !toolsFrameExpanded {
+                toolsFrameExpanded = true
+            }
+        }
+    }
+
+    func markToolsDestinationDisappeared(reduceMotion: Bool = false) {
+        toolsDestinationDisappeared = true
+        shrinkToolsIfReady(reduceMotion: reduceMotion)
+    }
+
+    private func shrinkToolsIfReady(reduceMotion: Bool) {
+        guard toolsNavigationPath.isEmpty, toolsDestinationDisappeared, toolsFrameExpanded else { return }
+        if reduceMotion {
+            toolsFrameExpanded = false
+        } else {
+            withAnimation(.easeInOut(duration: 0.24)) {
+                toolsFrameExpanded = false
+            }
+        }
+    }
+
+    // MARK: - V3.3 Two-Phase Expand & Shrink (Model Picker Popup)
+
+    func pushModelSubroute(_ route: ComposerModelSubroute = .allModels, reduceMotion: Bool = false) {
+        guard !isModelAnimatingExpand, modelNavigationPath.isEmpty else { return }
+        modelDestinationDisappeared = false
+        if reduceMotion {
+            modelFrameExpanded = true
+            modelNavigationPath.append(route)
+            return
+        }
+        isModelAnimatingExpand = true
+        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
+            modelFrameExpanded = true
+        } completion: {
+            self.isModelAnimatingExpand = false
+            guard self.modelFrameExpanded else { return }
+            self.modelNavigationPath.append(route)
+        }
+    }
+
+    func handleModelNavPathChange(reduceMotion: Bool = false) {
+        if modelNavigationPath.isEmpty {
+            shrinkModelIfReady(reduceMotion: reduceMotion)
+        } else {
+            modelDestinationDisappeared = false
+            if !modelFrameExpanded {
+                modelFrameExpanded = true
+            }
+        }
+    }
+
+    func markModelDestinationDisappeared(reduceMotion: Bool = false) {
+        modelDestinationDisappeared = true
+        shrinkModelIfReady(reduceMotion: reduceMotion)
+    }
+
+    private func shrinkModelIfReady(reduceMotion: Bool) {
+        guard modelNavigationPath.isEmpty, modelDestinationDisappeared, modelFrameExpanded else { return }
+        if reduceMotion {
+            modelFrameExpanded = false
+        } else {
+            withAnimation(.easeInOut(duration: 0.24)) {
+                modelFrameExpanded = false
+            }
+        }
+    }
+}

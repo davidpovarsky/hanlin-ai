@@ -45,6 +45,18 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         fittingHeight > maxHeight
     }
 
+    static func effectiveMeasurementWidth(for textView: UITextView, fallbackWidth: CGFloat = 240) -> CGFloat {
+        let boundsWidth = textView.bounds.width
+        if boundsWidth > 20 {
+            return boundsWidth
+        }
+        let frameWidth = textView.frame.width
+        if frameWidth > 20 {
+            return frameWidth
+        }
+        return fallbackWidth
+    }
+
     func makeUIView(context: Context) -> MultilineInnerTextView {
         let textView = MultilineInnerTextView()
         textView.delegate = context.coordinator
@@ -93,8 +105,9 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
             uiView.text = text
         }
 
+        let targetWidth = Self.effectiveMeasurementWidth(for: uiView)
         let fittingSize = uiView.sizeThatFits(
-            CGSize(width: max(uiView.frame.width, 240), height: .greatestFiniteMagnitude)
+            CGSize(width: targetWidth, height: .greatestFiniteMagnitude)
         )
         let clampedHeight = Self.calculatedHeight(
             fittingHeight: fittingSize.height,
@@ -147,8 +160,9 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
                 if textView.text.hasSuffix("@") {
                     parent.onMentionTriggered?()
                 }
+                let targetWidth = NativeMultilineTextEditor.effectiveMeasurementWidth(for: textView)
                 let fittingSize = textView.sizeThatFits(
-                    CGSize(width: max(textView.frame.width, 240), height: .greatestFiniteMagnitude)
+                    CGSize(width: targetWidth, height: .greatestFiniteMagnitude)
                 )
                 let clampedHeight = NativeMultilineTextEditor.calculatedHeight(
                     fittingHeight: fittingSize.height,

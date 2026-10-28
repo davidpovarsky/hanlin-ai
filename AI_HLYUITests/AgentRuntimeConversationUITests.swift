@@ -300,21 +300,21 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let app = launchAcceptanceApp()
         openChat(in: app)
 
-        // Attach sample image and sample document via composer plus menu
-        let plusMenu = app.descendants(matching: .any)["hanlin-composer-plus-menu"].firstMatch
-        XCTAssertTrue(plusMenu.waitForExistence(timeout: 10), "Composer plus menu did not appear")
-        tapElement(plusMenu)
+        // Attach sample image and sample document via composer general `+` menu
+        let generalMenu = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        XCTAssertTrue(generalMenu.waitForExistence(timeout: 10), "Composer general `+` menu did not appear")
+        tapElement(generalMenu)
 
         let attachImage = app.buttons.matching(
-            NSPredicate(format: "identifier == 'hanlin-attach-sample-image' OR label CONTAINS 'Attach Sample Image'")
+            NSPredicate(format: "identifier == 'hanlin-attach-sample-image' OR label CONTAINS 'Sample Image'")
         ).firstMatch
         XCTAssertTrue(attachImage.waitForExistence(timeout: 5), "Attach Sample Image button did not appear")
         tapElement(attachImage)
         XCTAssertTrue(app.descendants(matching: .any)["hanlin-composer-image-attachment"].firstMatch.waitForExistence(timeout: 5))
 
-        tapElement(plusMenu)
+        tapElement(generalMenu)
         let attachDoc = app.buttons.matching(
-            NSPredicate(format: "identifier == 'hanlin-attach-sample-document' OR label CONTAINS 'Attach Sample Document'")
+            NSPredicate(format: "identifier == 'hanlin-attach-sample-document' OR label CONTAINS 'Sample Document'")
         ).firstMatch
         XCTAssertTrue(attachDoc.waitForExistence(timeout: 5), "Attach Sample Document button did not appear")
         tapElement(attachDoc)
@@ -340,12 +340,12 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let app = launchAcceptanceApp()
         openChat(in: app)
 
-        // 1. Attach and remove image and document in composer
-        let plusMenu = app.descendants(matching: .any)["hanlin-composer-plus-menu"].firstMatch
-        XCTAssertTrue(plusMenu.waitForExistence(timeout: 10))
-        tapElement(plusMenu)
+        // 1. Attach and remove image and document via General `+` popover
+        let generalMenu = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        XCTAssertTrue(generalMenu.waitForExistence(timeout: 10), "General `+` button must exist in composer")
+        tapElement(generalMenu)
         let attachImgBtn = app.buttons.matching(
-            NSPredicate(format: "identifier == 'hanlin-attach-sample-image' OR label CONTAINS 'Attach Sample Image'")
+            NSPredicate(format: "identifier == 'hanlin-attach-sample-image' OR label CONTAINS 'Sample Image'")
         ).firstMatch
         XCTAssertTrue(attachImgBtn.waitForExistence(timeout: 5))
         tapElement(attachImgBtn)
@@ -356,9 +356,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(removeImage.waitForExistence(timeout: 5))
         tapElement(removeImage)
 
-        tapElement(plusMenu)
+        tapElement(generalMenu)
         let attachDocBtn = app.buttons.matching(
-            NSPredicate(format: "identifier == 'hanlin-attach-sample-document' OR label CONTAINS 'Attach Sample Document'")
+            NSPredicate(format: "identifier == 'hanlin-attach-sample-document' OR label CONTAINS 'Sample Document'")
         ).firstMatch
         XCTAssertTrue(attachDocBtn.waitForExistence(timeout: 5))
         tapElement(attachDocBtn)
@@ -368,26 +368,59 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(removeDoc.waitForExistence(timeout: 5))
         tapElement(removeDoc)
 
-        // 2. Verify multiline input and non-overlapping original ChatViewBottom controls
-        let input = chatInputElement(in: app)
-        tapElement(input)
-        input.typeText("Line 1 of multiline composer test\nLine 2 of multiline composer test\nLine 3 of multiline composer test")
+        // 2. Direct 1-Tap Tools / Skills / MCP button opens Tools popover directly without General `+`
+        let toolsDirect = app.descendants(matching: .any)["hanlin-composer-tools-direct"].firstMatch
+        XCTAssertTrue(toolsDirect.waitForExistence(timeout: 5), "Direct Tools/Skills/MCP button must exist in composer")
+        tapElement(toolsDirect)
 
-        let modelCapsule = app.descendants(matching: .any)["hanlin-model-selector-capsule"].firstMatch
-        let sendButton = app.buttons["hanlin-chat-send"].firstMatch
-        XCTAssertTrue(modelCapsule.waitForExistence(timeout: 5), "Model selector capsule must exist in original ChatViewBottom")
-        XCTAssertTrue(sendButton.waitForExistence(timeout: 5), "Send button must exist in original ActionButtonsView")
+        let toolsPopover = app.descendants(matching: .any)["hanlin-composer-tools-popover"].firstMatch
+        XCTAssertTrue(toolsPopover.waitForExistence(timeout: 5), "Direct Tools button must open Tools root popover in 1 tap")
         XCTAssertFalse(
-            modelCapsule.frame.intersects(sendButton.frame),
-            "Model selector capsule (\(modelCapsule.frame)) and send button (\(sendButton.frame)) must never overlap"
+            app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch.exists,
+            "General popover must not be open when Tools popover is open"
         )
 
-        // 3. Select/tap model selector in original ChatViewBottom
-        tapElement(modelCapsule)
+        // Navigate into Native Tools subpage inside Tools popover and back
+        let nativeToolsRow = app.buttons["hanlin-tools-open-native-tools"].firstMatch
+        if nativeToolsRow.waitForExistence(timeout: 5) {
+            tapElement(nativeToolsRow)
+            let nativeToolsPage = app.descendants(matching: .any)["hanlin-tools-native-tools-page"].firstMatch
+            XCTAssertTrue(nativeToolsPage.waitForExistence(timeout: 5), "Native Tools subpage did not appear")
+            let backBtn = app.buttons["hanlin-tools-subpage-back"].firstMatch
+            if backBtn.waitForExistence(timeout: 3) {
+                tapElement(backBtn)
+            }
+        }
+        // Dismiss Tools popover by tapping outside / input
+        let input = chatInputElement(in: app)
+        tapElement(input)
+
+        // 3. Verify multiline input and non-overlapping two-entry composer controls
+        input.typeText("Line 1 of multiline composer test\nLine 2 of multiline composer test\nLine 3 of multiline composer test")
+
+        let modelPicker = app.descendants(matching: .any)["hanlin-composer-model-picker"].firstMatch
+        let sendButton = app.buttons["hanlin-chat-send"].firstMatch
+        XCTAssertTrue(modelPicker.waitForExistence(timeout: 5), "Compact model picker capsule must exist in composer")
+        XCTAssertTrue(sendButton.waitForExistence(timeout: 5), "Send button must exist in composer")
+        XCTAssertFalse(
+            generalMenu.frame.intersects(toolsDirect.frame),
+            "General `+` button and Direct Tools button must never overlap"
+        )
+        XCTAssertFalse(
+            toolsDirect.frame.intersects(modelPicker.frame),
+            "Direct Tools button and Model Picker capsule must never overlap"
+        )
+        XCTAssertFalse(
+            modelPicker.frame.intersects(sendButton.frame),
+            "Model picker capsule (\(modelPicker.frame)) and send button (\(sendButton.frame)) must never overlap"
+        )
+
+        // 4. Open Model Picker popover and verify featured model list
+        tapElement(modelPicker)
         let modelCandidate = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'Agent Acceptance'")
         ).firstMatch
-        XCTAssertTrue(modelCandidate.waitForExistence(timeout: 10), "Model selector did not display Agent Acceptance model")
+        XCTAssertTrue(modelCandidate.waitForExistence(timeout: 10), "Model picker popover did not display Agent Acceptance model")
 
         attachScreenshot("UI-06_ComposerMultilineAttachmentsModelSelectorNoOverlap", in: app)
     }

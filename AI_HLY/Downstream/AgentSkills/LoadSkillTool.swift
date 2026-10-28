@@ -132,4 +132,39 @@ public enum LoadSkillTool {
 
         return response.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+
+    @MainActor
+    public static func userFacingSummary(
+        argumentsJSON: String,
+        result: String,
+        catalog: HanlinSkillCatalog = .shared,
+        language: String = "zh"
+    ) -> String {
+        let isZh = language.hasPrefix("zh")
+        if result.hasPrefix("Error:") {
+            return result
+        }
+        if let data = argumentsJSON.data(using: .utf8),
+           let args = try? JSONDecoder().decode(Arguments.self, from: data) {
+            if let descriptor = catalog.resolve(rawID: args.skill_id) {
+                let title = descriptor.title.preferredValue()
+                let exposedCount = descriptor.preferredToolIDs.count
+                if isZh {
+                    return exposedCount > 0
+                        ? "已加载技能「\(title)」(\(descriptor.id.rawValue))，关联 \(exposedCount) 个工具"
+                        : "已加载技能「\(title)」(\(descriptor.id.rawValue))"
+                } else {
+                    return exposedCount > 0
+                        ? "Loaded skill '\(title)' (\(descriptor.id.rawValue)) with \(exposedCount) preferred tool(s)"
+                        : "Loaded skill '\(title)' (\(descriptor.id.rawValue))"
+                }
+            }
+            return isZh ? "已加载技能 \(args.skill_id)" : "Loaded skill '\(args.skill_id)'"
+        }
+        let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !firstLine.isEmpty && !firstLine.contains("### Instructions") {
+            return firstLine
+        }
+        return isZh ? "已加载技能" : "Skill loaded"
+    }
 }

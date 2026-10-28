@@ -80,6 +80,39 @@ public enum ToolSearchTool {
         return response.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
+    public static func userFacingSummary(
+        argumentsJSON: String,
+        result: String,
+        language: String = "zh"
+    ) -> String {
+        let isZh = language.hasPrefix("zh")
+        if result.hasPrefix("Error:") || result.hasPrefix("No ") {
+            return result
+        }
+        let aliasLines = result
+            .components(separatedBy: .newlines)
+            .filter { $0.trimmingCharacters(in: .whitespaces).hasPrefix("- `") }
+        let aliases = aliasLines.compactMap { line -> String? in
+            guard let firstTick = line.firstIndex(of: "`"),
+                  let rest = line[line.index(after: firstTick)...].firstIndex(of: "`") else {
+                return nil
+            }
+            return String(line[line.index(after: firstTick)..<rest])
+        }
+        if let data = argumentsJSON.data(using: .utf8),
+           let args = try? JSONDecoder().decode(Arguments.self, from: data) {
+            let query = args.query.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !aliases.isEmpty {
+                let preview = aliases.prefix(4).joined(separator: ", ")
+                return isZh
+                    ? "搜索「\(query)」匹配到 \(aliases.count) 个工具：\(preview)"
+                    : "Found \(aliases.count) tool(s) for '\(query)': \(preview)"
+            }
+        }
+        let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return firstLine.isEmpty ? (isZh ? "已完成工具搜索" : "Completed tool search") : firstLine
+    }
+
     @MainActor
     public static func execute(
         argumentsJSON: String,

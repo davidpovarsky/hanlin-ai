@@ -128,6 +128,30 @@ public enum ReadSkillResourceTool {
         return result
     }
 
+    @MainActor
+    public static func userFacingSummary(
+        argumentsJSON: String,
+        result: String,
+        language: String = "zh"
+    ) -> String {
+        let isZh = language.hasPrefix("zh")
+        if result.hasPrefix("Error:") {
+            return result
+        }
+        if let data = argumentsJSON.data(using: .utf8),
+           let args = try? JSONDecoder().decode(Arguments.self, from: data) {
+            let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            if firstLine.hasPrefix("Resource ") {
+                return firstLine.replacingOccurrences(of: ":", with: "")
+            }
+            return isZh
+                ? "已读取技能「\(args.skill_id)」资源 \(args.relative_path)"
+                : "Read resource '\(args.relative_path)' from skill '\(args.skill_id)'"
+        }
+        let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return firstLine.isEmpty ? (isZh ? "已读取技能资源" : "Read skill resource") : firstLine
+    }
+
     private static func isBinaryFile(path: String) -> Bool {
         let ext = (path as NSString).pathExtension.lowercased()
         let textExtensions: Set<String> = [
