@@ -1760,10 +1760,18 @@ struct ClassicChatRestorationTests {
 
         var projection = ClassicChatAgentProjection(runID: runID)
         let dummyMsg = ChatMessages(role: "assistant", text: "", groupID: groupID, timestamp: Date())
+        var opState = ""
+        var opDesc = ""
         var chunk1 = StreamData()
         chunk1.toolName = "mcp__echo__ping"
         chunk1.toolContent = "po"
-        _ = projection.applyStreamChunk(chunk1, into: dummyMsg)
+        _ = projection.applyStreamChunk(
+            chunk1,
+            agentRun: run,
+            to: dummyMsg,
+            operationalState: &opState,
+            operationalDescription: &opDesc
+        )
         #expect(projection.orderedToolEntries.count == 1)
         #expect(projection.orderedToolEntries[0].toolName == "mcp__echo__ping")
         #expect(projection.orderedToolEntries[0].output == "po")
@@ -1771,7 +1779,13 @@ struct ClassicChatRestorationTests {
         var chunk2 = StreamData()
         chunk2.toolName = "mcp__echo__ping"
         chunk2.toolContent = "pong"
-        _ = projection.applyStreamChunk(chunk2, into: dummyMsg)
+        _ = projection.applyStreamChunk(
+            chunk2,
+            agentRun: run,
+            to: dummyMsg,
+            operationalState: &opState,
+            operationalDescription: &opDesc
+        )
         #expect(projection.orderedToolEntries.count == 2)
         #expect(projection.orderedToolEntries[1].toolName == "mcp__echo__ping")
         #expect(projection.orderedToolEntries[1].output == "pong")
