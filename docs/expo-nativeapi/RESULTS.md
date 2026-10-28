@@ -1,11 +1,11 @@
 # Acceptance Results: Hanlin Expo + NativeScript Native API Hybrid Integration
 
 **Execution Mode:** ONE PRIMARY AGENT, NORMAL MODE (no subagents, direct session)  
-**Execution Timestamp:** 2026-10-27T02:40:00+02:00  
+**Execution Timestamp:** 2026-10-28T18:15:00+02:00  
 **Target Branch:** `codex/expo-nativescript-jsi-hybrid-20261027`  
 **Base Reference SHA:** `0c0e6ab61607f19aa52f01bad1d0d1e4f7dfcf78` (Build `84001`, Run `40331983790` — PRE-INTEGRATION reference only)  
-**Verified Source Implementation SHA:** `182f1021aece1ca22eeaef7f82ba6debbeb57084`  
-**CI Verification Run:** GitHub Actions Run [`40427498687`](https://github.com/davidpovarsky/hanlin-ai/actions/runs/40427498687) on `xcode-27`  
+**Verified Source Implementation SHA:** `78df6f2868ff185207c72dbbf61e3895eb487a53`  
+**CI Verification Run:** GitHub Actions Run [`40718390537`](https://github.com/davidpovarsky/hanlin-ai/actions/runs/40718390537) on `xcode-27` (10/10 PASS)  
 
 ---
 
@@ -144,3 +144,7 @@ Deterministic `.hanlinExpo` archives generated with static timestamps `(2026, 1,
 | **P1-16** | P1 | Missing negative and lifecycle test coverage | Added `testExpoNativeAPIDeniedPersistedGrant`, `testExpoNativeAPIRevokeWhileMounted`, `testExpoNativeAPIRepeatedLifecycle` | `HanlinExpoNativeAPIIntegrationUITests.swift` (UI-05, UI-06, UI-07) | **RESOLVED** |
 | **P1-17** | P1 | Non-deterministic ZIP creation using OS walk and local timestamps | Implemented deterministic archiving with static timestamps and sorted entries | `build-probes.mjs`, `bundle-resolution.test.mjs` | **RESOLVED** |
 | **P1-18** | P1 | Fabricated/inferred hashes in touchpoints doc | Recomputed exact hashes from base and current files; documented exact npm provenance | `UPSTREAM_TOUCHPOINTS.md`, `RESULTS.md` | **RESOLVED** |
+| **P0-19** | P0 | Precompiled `ExpoModulesCore` binary crashed in `dynamic_cast` at `0xfffffffffffffff0` during `matchContents={true}` layout | Removed `matchContents={true}` to exit `sizesToContent()` early and sized hosted native views explicitly | CI Run `40718390537`, `UI-01`, `UI-06`, `UI-07` | **RESOLVED** |
+| **P0-20** | P0 | Negative grant probe lacked `@nativescript/react-native` plugin mapping causing TurboModule abort trap | Configured complete plugin manifest in `pkgMissingGrant` and guarded native controls with `{initialized && ...}` | CI Run `40718390537`, `UI-05` | **RESOLVED** |
+| **P0-21** | P0 | UI test capability approval scrolling issue caused `No matches found` on Install button | Aligned with proven NativeScript pattern with bounded `app.swipeUp()` and return `app.swipeDown()` | CI Run `40718390537`, `UI-01` to `UI-07` | **RESOLVED** |
+| **P0-22** | P0 | ESM import hoisting in Metro bundles executed `require('./index')` before setting `globalThis.__VARIANT__` | Defined explicit component roots in `variant-a.ts` and `variant-b.ts` | CI Run `40718390537`, `UI-02`, `UI-07` | **RESOLVED** |
