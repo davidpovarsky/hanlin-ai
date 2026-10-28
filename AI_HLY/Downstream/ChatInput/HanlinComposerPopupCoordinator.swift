@@ -68,9 +68,29 @@ final class HanlinComposerPopupCoordinator {
     /// Tracks whether the text input was focused before a popup opened so focus can be restored cleanly.
     var wasInputFocusedBeforePopup: Bool = false
 
+    var shouldRestoreFocusAfterDismiss: Bool {
+        wasInputFocusedBeforePopup
+    }
+
+    var isGeneralExpanded: Bool {
+        generalFrameExpanded
+    }
+
+    var isToolsExpanded: Bool {
+        toolsFrameExpanded
+    }
+
+    var isModelExpanded: Bool {
+        modelFrameExpanded
+    }
+
     init() {}
 
     // MARK: - Mutual Exclusion Entrypoints
+
+    func toggle(_ popup: ComposerPopup, isInputCurrentlyFocused: Bool = false) {
+        open(popup, isInputCurrentlyFocused: isInputCurrentlyFocused)
+    }
 
     func open(_ popup: ComposerPopup, isInputCurrentlyFocused: Bool = false) {
         if activePopup == popup {
@@ -283,5 +303,58 @@ final class HanlinComposerPopupCoordinator {
                 modelFrameExpanded = false
             }
         }
+    }
+
+    // MARK: - Deterministic Synchronous Helpers for Tests & Direct State Transitions
+
+    func navigateToGeneralSubpage(_ route: ComposerGeneralSubroute) {
+        generalDestinationDisappeared = false
+        generalFrameExpanded = true
+        if !generalNavigationPath.contains(route) {
+            generalNavigationPath.append(route)
+        }
+    }
+
+    func popGeneralToRoot() {
+        generalNavigationPath.removeAll()
+        syncGeneralShrinkState()
+    }
+
+    func syncGeneralShrinkState() {
+        shrinkGeneralIfReady(reduceMotion: true)
+    }
+
+    func navigateToToolsSubpage(_ route: ComposerToolsSubroute) {
+        toolsDestinationDisappeared = false
+        toolsFrameExpanded = true
+        if !toolsNavigationPath.contains(route) {
+            toolsNavigationPath.append(route)
+        }
+    }
+
+    func popToolsToRoot() {
+        toolsNavigationPath.removeAll()
+        syncToolsShrinkState()
+    }
+
+    func syncToolsShrinkState() {
+        shrinkToolsIfReady(reduceMotion: true)
+    }
+
+    func navigateToModelSubpage(_ route: ComposerModelSubroute = .allModels) {
+        modelDestinationDisappeared = false
+        modelFrameExpanded = true
+        if !modelNavigationPath.contains(route) {
+            modelNavigationPath.append(route)
+        }
+    }
+
+    func popModelToRoot() {
+        modelNavigationPath.removeAll()
+        syncModelShrinkState()
+    }
+
+    func syncModelShrinkState() {
+        shrinkModelIfReady(reduceMotion: true)
     }
 }

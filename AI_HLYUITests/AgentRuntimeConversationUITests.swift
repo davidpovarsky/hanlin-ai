@@ -381,10 +381,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         )
 
         // Navigate into Native Tools subpage inside Tools popover and back
-        let nativeToolsRow = app.buttons["hanlin-tools-open-native-tools"].firstMatch
+        let nativeToolsRow = app.buttons["hanlin-tools-open-catalog"].firstMatch
         if nativeToolsRow.waitForExistence(timeout: 5) {
             tapElement(nativeToolsRow)
-            let nativeToolsPage = app.descendants(matching: .any)["hanlin-tools-native-tools-page"].firstMatch
+            let nativeToolsPage = app.descendants(matching: .any)["hanlin-tools-catalog-page"].firstMatch
             XCTAssertTrue(nativeToolsPage.waitForExistence(timeout: 5), "Native Tools subpage did not appear")
             let backBtn = app.buttons["hanlin-tools-subpage-back"].firstMatch
             if backBtn.waitForExistence(timeout: 3) {

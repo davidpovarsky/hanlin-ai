@@ -404,8 +404,12 @@ struct ChatViewBottom: View {
             isSourceOptionsVisible = isGeneral
         }
         .task(id: chatRecord.id) {
+            guard let chatID = chatRecord.id else {
+                selectedMCPCountForChat = 0
+                return
+            }
             let selection = await MCPRuntimeProvider.shared.selection(
-                chatID: chatRecord.id,
+                chatID: chatID,
                 temporary: TemporaryRecord
             )
             selectedMCPCountForChat = selection.count
@@ -642,7 +646,7 @@ struct ChatViewBottom: View {
                                         .opacity(0.75)
                                 }
                             }
-                            .foregroundStyle(TemporaryRecord ? .primary : .hlBluefont)
+                            .foregroundStyle(TemporaryRecord ? Color.primary : Color.hlBluefont)
                             .padding(.horizontal, 9)
                             .padding(.vertical, 4)
                             .background(
@@ -1133,10 +1137,16 @@ struct ChatViewBottom: View {
                 HanlinComposerGeneralActionsView(
                     coordinator: popupCoordinator,
                     capability: currentModelSnapshot,
-                    TemporaryRecord: TemporaryRecord,
+                    temporaryRecord: TemporaryRecord,
                     isResponding: isResponding,
-                    selectedImagesCount: selectedImages.count,
-                    selectedDocumentsCount: selectedDocumentURLs.count,
+                    canObserve: canObserveCurrentChat,
+                    selectedImages: $selectedImages,
+                    selectedDocumentURLs: $selectedDocumentURLs,
+                    selectedPrompts: $selectedPrompts,
+                    availablePrompts: filteredPromptTemps,
+                    onOpenCamera: { showCameraPicker = true },
+                    onOpenPhotoLibrary: { showImagePicker = true },
+                    onOpenDocumentPicker: { showDocumentPicker = true },
                     ifSearch: $ifSearch,
                     ifKnowledge: $ifKnowledge,
                     ifThink: $ifThink,
@@ -1145,34 +1155,24 @@ struct ChatViewBottom: View {
                     ifAudio: $ifAudio,
                     selectedImageSize: $selectedImageSize,
                     imageReversePrompt: $imageReversePrompt,
+                    checkSearchAvailability: { checkSearchAvailability() },
+                    checkEmbeddingAvailability: { checkEmbeddingAvailability() },
+                    showSearchAlert: $showSearchAlert,
+                    showKnowledgeAlert: $showKnowledgeAlert,
+                    onOpenEmbeddingSettings: { showEmbeddingSettingSheet = true },
                     temperature: $temperature,
                     topP: $topP,
                     maxTokens: $maxTokens,
                     maxMessagesNum: $maxMessagesNum,
-                    availablePrompts: filteredPromptTemps,
-                    selectedPrompts: $selectedPrompts,
-                    canObserve: canObserveCurrentChat,
-                    onSelectCamera: { showCameraPicker = true },
-                    onSelectPhotos: { showImagePicker = true },
-                    onSelectDocument: { showDocumentPicker = true },
-                    onAttachSampleImage: { attachSampleImageForAcceptance() },
-                    onAttachSampleDocument: { attachSampleDocumentForAcceptance() },
-                    onCheckSearchAvailability: { checkSearchAvailability() },
-                    onShowSearchAlert: { showSearchAlert = true },
-                    onCheckKnowledgeAvailability: { checkEmbeddingAvailability() },
-                    onShowKnowledgeAlert: { showKnowledgeAlert = true },
-                    onOpenLongTextEditor: { inputExpanded = true },
-                    onTriggerObserve: { onSendObserve() },
-                    onSwitchToToolsPopup: {
-                        popupCoordinator.presentDirectTools(isInputCurrentlyFocused: isInputActive.wrappedValue)
-                    },
-                    onSaveParameterChanges: {
+                    onSaveParameters: {
                         chatRecord.temperature = temperature
                         chatRecord.topP = topP
                         chatRecord.maxTokens = maxTokens
                         chatRecord.maxMessagesNum = maxMessagesNum
                         try? context.save()
-                    }
+                    },
+                    onExpandEditor: { inputExpanded = true },
+                    onSendObserve: { onSendObserve() }
                 )
                 .presentationCompactAdaptation(.popover)
             }
@@ -1226,12 +1226,11 @@ struct ChatViewBottom: View {
             ) {
                 HanlinComposerToolsRootView(
                     coordinator: popupCoordinator,
+                    chatID: chatRecord.id ?? UUID(),
+                    temporaryRecord: TemporaryRecord,
                     capability: currentModelSnapshot,
-                    TemporaryRecord: TemporaryRecord,
-                    isResponding: isResponding,
-                    chatID: chatRecord.id,
                     ifToolUse: $ifToolUse,
-                    onMCPSelectionCountChanged: { count in
+                    onMCPSelectionChanged: { count in
                         selectedMCPCountForChat = count
                     }
                 )
@@ -1261,7 +1260,7 @@ struct ChatViewBottom: View {
                         isSelect.toggle()
                         onSelectModel(index)
                     },
-                    TemporaryRecord: TemporaryRecord,
+                    temporaryRecord: TemporaryRecord,
                     ifToolUse: ifToolUse,
                     ifThink: ifThink,
                     ifAudio: ifAudio

@@ -70,6 +70,22 @@ struct HanlinComposerActionBridge {
             self.supportsVoiceGen = model?.supportsVoiceGen ?? false
             self.supportsToolUse = model?.supportsToolUse ?? false
         }
+
+        var hasModel: Bool {
+            !modelName.isEmpty
+        }
+
+        var isLocalModel: Bool {
+            isLocal
+        }
+
+        var supportsThinkingLengthMenu: Bool {
+            ["OPENAI", "GOOGLE", "XAI", "QWEN", "MODELSCOPE", "SILICONCLOUD"].contains(company.uppercased())
+        }
+
+        var supportsImageAspectRatioSelection: Bool {
+            supportsImageGen && ["QWEN", "ZHIPUAI", "OPENAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD"].contains(company.uppercased())
+        }
     }
 
     static func capabilitySnapshot(for model: AllModels?) -> ModelCapabilitySnapshot {
@@ -219,5 +235,17 @@ struct HanlinComposerActionBridge {
         }
         count += max(0, selectedMCPCount)
         return count
+    }
+
+    static func activeToolsShortcutCount(
+        capability: ModelCapabilitySnapshot,
+        ifToolUse: Bool,
+        activeMCPServerCount: Int
+    ) -> Int {
+        activeToolsShortcutCount(
+            capability: capability,
+            ifToolUse: ifToolUse,
+            selectedMCPCount: activeMCPServerCount
+        )
     }
 }
