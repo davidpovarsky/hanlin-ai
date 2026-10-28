@@ -4,7 +4,7 @@
 **Repository**: `davidpovarsky/hanlin-ai`  
 **Branch**: `fix/classic-source-first-agent-acceptance-20261025`  
 **Base Code SHA**: `6318093d7dc2bb0936766d27608c350def307f13`  
-**Current Code SHA**: `836a0ea78f729b5d2524d7756f1ca0b0dae8bb8e`  
+**Current Code SHA**: `ff341f2510842e47854f3b60dc7da14ec9833772`  
 **Worktree**: `C:\Users\DAVID\Code\hanlin-classic-source-first-20261027` (Isolated worktree)  
 **Untouched Workspace**: `C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results` (Verified 100% clean)
 
