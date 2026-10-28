@@ -139,31 +139,37 @@ export default function App({ variant = 'A' }: AppProps) {
             </Text>
 
             {/* Real Fabric component inside SwiftUI layout via RNHostView */}
-            <RNHostView matchContents={true}>
-              <View style={styles.nativeLabelContainer}>
-                <NativeUILabel text={variantText} />
-              </View>
-            </RNHostView>
-
-            {/* Real UIKit UISwitch mounted as child with two-way target-action */}
-            <HStack>
-              <Text modifiers={[font({ textStyle: 'body' })]}>UIKit UISwitch:</Text>
+            {initialized && (
               <RNHostView matchContents={true}>
-                <View style={styles.nativeSwitchContainer}>
-                  <NativeUISwitch
-                    isOn={isSwitchOn}
-                    onValueChange={(val: boolean) => setIsSwitchOn(val)}
-                  />
+                <View style={styles.nativeLabelContainer}>
+                  <NativeUILabel text={variantText} />
                 </View>
               </RNHostView>
-            </HStack>
+            )}
 
-            <Button
-              label={showController ? 'Hide Native Controller' : 'Mount Native UIViewController'}
-              onPress={() => setShowController(!showController)}
-            />
+            {/* Real UIKit UISwitch mounted as child with two-way target-action */}
+            {initialized && (
+              <HStack>
+                <Text modifiers={[font({ textStyle: 'body' })]}>UIKit UISwitch:</Text>
+                <RNHostView matchContents={true}>
+                  <View style={styles.nativeSwitchContainer}>
+                    <NativeUISwitch
+                      isOn={isSwitchOn}
+                      onValueChange={(val: boolean) => setIsSwitchOn(val)}
+                    />
+                  </View>
+                </RNHostView>
+              </HStack>
+            )}
 
-            {showController && (
+            {initialized && (
+              <Button
+                label={showController ? 'Hide Native Controller' : 'Mount Native UIViewController'}
+                onPress={() => setShowController(!showController)}
+              />
+            )}
+
+            {initialized && showController && (
               <RNHostView matchContents={true}>
                 <View style={styles.nativeControllerContainer}>
                   <NativeSheetViewController title="Hosted Native UIViewController" />
