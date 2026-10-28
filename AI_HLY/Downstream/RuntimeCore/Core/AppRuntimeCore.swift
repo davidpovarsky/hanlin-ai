@@ -44,7 +44,7 @@ actor AppRuntimeCore {
         let pythonSnapshot = await python.snapshot()
         let javaScriptCoreSnapshot = await javaScriptCore.snapshot()
         let shellSnapshot = await shell.snapshot()
-        let tsState: RuntimeOperationalState = RuntimeAvailabilityStore.shared.isAvailable(.typeScript) ? nodeSnapshot.state : .stopped
+        let tsState: RuntimeOperationalState = nodeSnapshot.state
         let tsSnapshot = RuntimeSnapshot(
             kind: .typeScript,
             state: tsState,
@@ -90,10 +90,8 @@ actor AppRuntimeCore {
     func stop(_ kind: RuntimeKind) async throws -> RuntimeSnapshot {
         switch kind {
         case .node:
-            let s = await node.stop()
-            RuntimeAvailabilityStore.shared.setAvailable(false, for: .node)
-            RuntimeAvailabilityStore.shared.setAvailable(false, for: .typeScript)
-            return s
+            // A running embedded Node cannot be unloaded. Preserve its availability.
+            return await node.stop()
         case .typeScript:
             RuntimeAvailabilityStore.shared.setAvailable(false, for: .typeScript)
             let s = await node.snapshot()

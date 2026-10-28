@@ -102,8 +102,8 @@ struct SettingsView: View {
                         Label(MCPL10n.string("MCP Servers"), systemImage: "server.rack")
                     }
                     .accessibilityIdentifier("hanlin-mcp-servers-link")
-                    NavigationLink(destination: RuntimeCenterView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label(RuntimeL10n.string("Runtimes & Packages"), systemImage: "shippingbox.and.arrow.backward")
+                    NavigationLink(destination: RuntimePackagesView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        Label(RuntimeL10n.string("Packages & Tools"), systemImage: "shippingbox.and.arrow.backward")
                     }
                     .accessibilityIdentifier("hanlin-runtimes-packages-link")
                     NavigationLink(destination: SkillCenterView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
@@ -151,6 +151,15 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text(String(localized: "Developer / Diagnostics"))) {
+                    NavigationLink {
+                        RuntimeCenterView()
+                            .onAppear { isPushed = true }
+                            .onDisappear { isPushed = false }
+                            .toolbar(.hidden, for: .tabBar)
+                    } label: {
+                        Label(RuntimeL10n.string("Runtime diagnostics"), systemImage: "waveform.path.ecg")
+                    }
+                    .accessibilityIdentifier("hanlin-runtime-diagnostics-link")
                     NavigationLink {
                         AgentDiagnosticsView()
                             .onAppear { isPushed = true }

@@ -94,7 +94,7 @@ final class HanlinRuntimeCommandAcceptanceUITests: XCTestCase {
     // MARK: - Helpers
 
     private func openSettings() {
-        let runtimeLink = app.buttons["hanlin-runtimes-packages-link"].firstMatch
+        let runtimeLink = app.buttons["hanlin-runtime-diagnostics-link"].firstMatch
         if runtimeLink.exists { return }
         let settingsTab = app.tabBars.buttons["hanlin-settings-tab"].firstMatch
         if settingsTab.waitForExistence(timeout: 3) && settingsTab.isHittable {
@@ -114,9 +114,9 @@ final class HanlinRuntimeCommandAcceptanceUITests: XCTestCase {
     }
 
     private func openRuntimeCenter() {
-        let runtimeLink = app.buttons["hanlin-runtimes-packages-link"].firstMatch
-        if !runtimeLink.exists { app.swipeUp() }
-        XCTAssertTrue(runtimeLink.waitForExistence(timeout: 10), "Runtime Center link missing in Settings")
+        let runtimeLink = app.buttons["hanlin-runtime-diagnostics-link"].firstMatch
+        for _ in 0..<8 where !runtimeLink.isHittable { app.swipeUp() }
+        XCTAssertTrue(runtimeLink.waitForExistence(timeout: 10), "Runtime diagnostics link missing in Settings")
         runtimeLink.tap()
     }
 

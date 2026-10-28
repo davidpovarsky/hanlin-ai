@@ -9,8 +9,8 @@ final class RuntimeAvailabilityStore: @unchecked Sendable {
     private var activeRuntimes: Set<RuntimeKind> = []
     
     private init() {
-        // Fresh app process: all runtimes visually OFF/stopped.
-        // Process lifecycle is never persisted across launches via UserDefaults.
+        // Legacy process-local observation only. This is not a user permission
+        // gate, and execution must initialize an authorized runtime on demand.
         activeRuntimes = []
     }
     
@@ -59,11 +59,6 @@ final class RuntimeAvailabilityStore: @unchecked Sendable {
         }
     }
     
-    // TypeScript depends on Node - report dependency
-    func dependencyWarning(for kind: RuntimeKind) -> String? {
-        if kind == .typeScript && !isAvailable(.node) {
-            return "TypeScript execution requires Node.js, which is currently stopped. Starting TypeScript will activate Node."
-        }
-        return nil
-    }
+    // Availability flags remain for legacy observers; runtime authorization
+    // is handled separately by HanlinHostCapabilityAuthority.
 }

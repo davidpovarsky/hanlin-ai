@@ -93,11 +93,18 @@ actor NodeRuntimeService {
     }
 
     private let fileLayout: RuntimeFileLayout
+    private struct LaunchContext: Sendable {
+        let readyURL: URL
+        let token: String
+    }
+
     private var connection: RuntimeHostConnection?
+    private var launchContext: LaunchContext?
     private var snapshotValue = RuntimeSnapshot.stopped(.node)
     private var launchAttempted = false
     private var nativeLaunchSucceeded = false
     private var launchTask: Task<RuntimeHostConnection, Error>?
+    private var verificationTask: Task<RuntimeHostConnection, Error>?
 
     init(fileLayout: RuntimeFileLayout = .default) {
         self.fileLayout = fileLayout
@@ -107,24 +114,30 @@ actor NodeRuntimeService {
 
     func ensureRunning(debug: Bool = false) async throws -> RuntimeHostConnection {
         if let connection {
-            return try await verifyExistingConnection(connection)
-        }
-        if let launchTask {
-            return try await launchTask.value
-        }
-        guard !launchAttempted else {
-            if nativeLaunchSucceeded {
-                snapshotValue.state = .appRestartRequired
-                snapshotValue.healthCategory = NodeHostHealthFailure.unreachable.rawValue
-                snapshotValue.lastErrorCode = "node_process_unreachable"
-                throw RuntimeCoreError.appRestartRequired(.node)
+            if let verificationTask { return try await verificationTask.value }
+            let task = Task { [weak self] () throws -> RuntimeHostConnection in
+                guard let self else { throw CancellationError() }
+                return try await self.verifyExistingConnection(connection)
             }
-            throw RuntimeCoreError.runtimeUnavailable(.node)
+            verificationTask = task
+            return try await task.value
         }
-        launchAttempted = true
+        if let launchTask { return try await launchTask.value }
+
+        if nativeLaunchSucceeded && NodeRuntimeBridge.didExit {
+            markNodeExited()
+            throw RuntimeCoreError.appRestartRequired(.node)
+        }
+
         snapshotValue.state = .preparing
+        let previouslyLaunched = launchAttempted
+        let context = launchContext
         let task = Task { [weak self] () throws -> RuntimeHostConnection in
             guard let self else { throw CancellationError() }
+            if previouslyLaunched {
+                guard let context else { throw RuntimeCoreError.runtimeUnavailable(.node) }
+                return try await self.reconnectLaunchedHost(context: context)
+            }
             return try await self.launchHost(debug: debug)
         }
         launchTask = task
@@ -135,8 +148,13 @@ actor NodeRuntimeService {
             snapshotValue.lastDiagnostic = "Node host startup observation was cancelled; the shared launch continues."
             throw CancellationError()
         } catch {
-            snapshotValue.state = .failed
-            snapshotValue.lastErrorCode = String(describing: error)
+            if snapshotValue.state != .appRestartRequired {
+                snapshotValue.state = .failed
+                if !launchAttempted {
+                    snapshotValue.lastErrorCode = "node_setup_failed"
+                    snapshotValue.lastDiagnostic = error.localizedDescription
+                }
+            }
             throw error
         }
     }
@@ -149,25 +167,14 @@ actor NodeRuntimeService {
 
     func healthCheckIfLaunched() async throws -> RuntimeSnapshot {
         guard launchAttempted else { return snapshotValue }
-        if let launchTask {
-            _ = try await launchTask.value
-            return snapshotValue
-        }
-        guard let connection else { return snapshotValue }
-        _ = try await verifyExistingConnection(connection)
+        _ = try await ensureRunning()
         return snapshotValue
     }
 
     func stop() -> RuntimeSnapshot {
-        connection = nil
-        if nativeLaunchSucceeded {
-            snapshotValue.state = .appRestartRequired
-            snapshotValue.healthCategory = NodeHostHealthFailure.unreachable.rawValue
-            snapshotValue.lastErrorCode = "app_restart_required"
-            snapshotValue.lastDiagnostic = "Embedded Node cannot be unloaded without restarting the application."
-        } else {
-            snapshotValue.state = .stopped
-        }
+        // nodejs-mobile is process-lifetime. Do not discard a live connection
+        // or report Node as stopped: there is no supported unload operation.
+        snapshotValue.lastDiagnostic = "Embedded Node remains active for the app process lifetime."
         return snapshotValue
     }
 
@@ -178,7 +185,9 @@ actor NodeRuntimeService {
         snapshotValue.activeExecutionCount += 1
         defer {
             snapshotValue.activeExecutionCount = max(0, snapshotValue.activeExecutionCount - 1)
-            snapshotValue.state = .ready
+            if snapshotValue.activeExecutionCount == 0 && snapshotValue.state == .executing {
+                snapshotValue.state = .ready
+            }
         }
         let milliseconds = request.limits.timeout.components.seconds * 1_000
             + Int64(request.limits.timeout.components.attoseconds / 1_000_000_000_000_000)
@@ -256,72 +265,116 @@ actor NodeRuntimeService {
         defer { launchTask = nil }
         try fileLayout.prepareIfNeeded()
         let hostURL = try prepareHostRuntime()
-        let readyURL = fileLayout.nodeRuntime.appending(path: "ready-\(UUID().uuidString).json")
-        let token = try makeToken()
+        let context = LaunchContext(
+            readyURL: fileLayout.nodeRuntime.appending(path: "ready-\(UUID().uuidString).json"),
+            token: try makeToken()
+        )
         let arguments = [
             "node",
             hostURL.appending(path: "host.mjs").path,
             fileLayout.root.path,
-            readyURL.path,
-            token,
+            context.readyURL.path,
+            context.token,
             fileLayout.logs.appending(path: "node-runtime.log").path,
             debug ? "1" : "0"
         ]
         try NodeRuntimeBridge.start(arguments: arguments)
+        launchAttempted = true
         nativeLaunchSucceeded = true
-        let deadline = ContinuousClock.now.advanced(by: .seconds(20))
+        launchContext = context
+        return try await waitForHostReady(context: context, timeout: .seconds(20))
+    }
+
+    private func reconnectLaunchedHost(context: LaunchContext) async throws -> RuntimeHostConnection {
+        defer { launchTask = nil }
+        return try await waitForHostReady(context: context, timeout: .seconds(6))
+    }
+
+    private func waitForHostReady(
+        context: LaunchContext,
+        timeout: Duration
+    ) async throws -> RuntimeHostConnection {
+        let deadline = ContinuousClock.now.advanced(by: timeout)
+        var lastFailure: Error?
+
         while ContinuousClock.now < deadline {
-            if FileManager.default.fileExists(atPath: readyURL.path) {
-                let ready = try JSONDecoder().decode(
-                    RuntimeHostReadyFile.self,
-                    from: Data(contentsOf: readyURL)
-                )
-                try? FileManager.default.removeItem(at: readyURL)
-                guard ready.nodeVersion == Self.expectedNodeVersion,
-                      ready.protocolVersion == Self.hostProtocolVersion else {
-                    throw RuntimeCoreError.runtimeFailure(
-                        "Expected Node \(Self.expectedNodeVersion) and host protocol \(Self.hostProtocolVersion), received Node \(ready.nodeVersion) and protocol \(ready.protocolVersion)."
-                    )
-                }
-                guard ready.modulePolicyHooksAvailable else {
-                    throw RuntimeCoreError.runtimeFailure(
-                        "Embedded Node \(ready.nodeVersion) does not provide module.registerHooks; MCP package code will not run unguarded."
-                    )
-                }
-                guard let url = URL(string: "http://127.0.0.1:\(ready.port)") else {
-                    throw RuntimeCoreError.runtimeFailure(
-                        "The runtime host produced an invalid loopback address."
-                    )
-                }
-                let host = RuntimeHostConnection(baseURL: url, token: token)
-                _ = try await host.data(path: "/health", timeout: 3)
-                connection = host
-                snapshotValue.state = .ready
-                snapshotValue.version = ready.nodeVersion
-                snapshotValue.source = "heylogin/nodejs-mobile"
-                snapshotValue.lastHealthCheck = .now
-                snapshotValue.lastErrorCode = nil
-                snapshotValue.healthCategory = nil
-                snapshotValue.lastDiagnostic = "Embedded Node host launched once and passed its health check."
-                return host
+            try Task.checkCancellation()
+            if NodeRuntimeBridge.didExit {
+                markNodeExited()
+                throw RuntimeCoreError.appRestartRequired(.node)
             }
-            try await Task.sleep(for: .milliseconds(100))
+
+            if FileManager.default.fileExists(atPath: context.readyURL.path) {
+                do {
+                    let ready = try JSONDecoder().decode(
+                        RuntimeHostReadyFile.self,
+                        from: Data(contentsOf: context.readyURL)
+                    )
+                    guard ready.nodeVersion == Self.expectedNodeVersion,
+                          ready.protocolVersion == Self.hostProtocolVersion else {
+                        throw RuntimeCoreError.runtimeFailure(
+                            "Expected Node \(Self.expectedNodeVersion) and protocol \(Self.hostProtocolVersion), received Node \(ready.nodeVersion) and protocol \(ready.protocolVersion)."
+                        )
+                    }
+                    guard ready.modulePolicyHooksAvailable else {
+                        throw RuntimeCoreError.runtimeFailure(
+                            "Embedded Node \(ready.nodeVersion) lacks required module policy hooks."
+                        )
+                    }
+                    guard let url = URL(string: "http://127.0.0.1:\(ready.port)") else {
+                        throw RuntimeCoreError.runtimeFailure("Node published an invalid loopback address.")
+                    }
+                    let host = RuntimeHostConnection(baseURL: url, token: context.token)
+                    _ = try await host.data(path: "/health", timeout: 3)
+                    try? FileManager.default.removeItem(at: context.readyURL)
+                    connection = host
+                    snapshotValue.state = .ready
+                    snapshotValue.version = ready.nodeVersion
+                    snapshotValue.source = "heylogin/nodejs-mobile"
+                    snapshotValue.lastHealthCheck = .now
+                    snapshotValue.lastErrorCode = nil
+                    snapshotValue.healthCategory = nil
+                    snapshotValue.lastDiagnostic = "Embedded Node host connected and passed its health check."
+                    return host
+                } catch is CancellationError {
+                    throw CancellationError()
+                } catch {
+                    lastFailure = error
+                }
+            }
+            try await Task.sleep(for: .milliseconds(200))
         }
+
+        if NodeRuntimeBridge.didExit {
+            markNodeExited()
+            throw RuntimeCoreError.appRestartRequired(.node)
+        }
+        snapshotValue.state = .failed
+        snapshotValue.healthCategory = NodeHostHealthFailure.transient.rawValue
+        snapshotValue.lastErrorCode = "node_host_not_ready"
+        snapshotValue.lastDiagnostic = "Node was launched but its local host is not yet reachable; reconnection remains possible."
+        throw lastFailure ?? RuntimeCoreError.runtimeFailure("Embedded Node host did not become ready before the bounded deadline.")
+    }
+
+    private func markNodeExited() {
+        connection = nil
+        snapshotValue.state = .appRestartRequired
         snapshotValue.healthCategory = NodeHostHealthFailure.unreachable.rawValue
-        snapshotValue.lastDiagnostic = "The launched Node host did not publish readiness before the bounded deadline."
-        throw RuntimeCoreError.runtimeFailure("Embedded Node startup timed out.")
+        snapshotValue.lastErrorCode = "node_process_exited"
+        snapshotValue.lastDiagnostic = "The embedded Node thread returned; nodejs-mobile cannot start a second instance in this process."
     }
 
     private func verifyExistingConnection(
         _ existing: RuntimeHostConnection
     ) async throws -> RuntimeHostConnection {
+        defer { verificationTask = nil }
         var lastFailure: Error?
         var category = NodeHostHealthFailure.transient
         for attempt in 1...3 {
             do {
                 _ = try await existing.data(path: "/health", timeout: 3)
                 connection = existing
-                snapshotValue.state = .ready
+                snapshotValue.state = snapshotValue.activeExecutionCount > 0 ? .executing : .ready
                 snapshotValue.lastHealthCheck = .now
                 snapshotValue.lastErrorCode = nil
                 snapshotValue.healthCategory = nil
@@ -350,14 +403,18 @@ actor NodeRuntimeService {
             }
         }
 
-        connection = nil
-        snapshotValue.state = nativeLaunchSucceeded ? .appRestartRequired : .failed
-        snapshotValue.healthCategory = category.rawValue
-        snapshotValue.lastErrorCode = "node_process_unreachable"
-        snapshotValue.lastDiagnostic = "The already-launched Node host remained unreachable after bounded verification."
-        if nativeLaunchSucceeded {
+        if NodeRuntimeBridge.didExit {
+            markNodeExited()
             throw RuntimeCoreError.appRestartRequired(.node)
         }
+        // Keep the original authenticated endpoint: a suspended or overloaded
+        // host may respond on the next foreground activation. Never start a
+        // second nodejs-mobile instance just because an HTTP probe timed out.
+        connection = existing
+        snapshotValue.state = .failed
+        snapshotValue.healthCategory = category.rawValue
+        snapshotValue.lastErrorCode = "node_health_unreachable"
+        snapshotValue.lastDiagnostic = "The Node thread is still present, but its host did not answer. The next use will retry the connection."
         throw lastFailure ?? RuntimeCoreError.runtimeUnavailable(.node)
     }
 
