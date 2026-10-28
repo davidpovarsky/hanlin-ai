@@ -1869,6 +1869,10 @@ struct ClassicChatRestorationTests {
         #expect(readHe.contains("תוצאת") || readHe.contains("c123"))
         #expect(readEn.contains("result") || readEn.contains("c123"))
         #expect(readZh.contains("结果") || readZh.contains("c123"))
+
+        let readRefArgs = #"{"reference":"ref_abc"}"#
+        let readRefHe = ReadToolResultTool.userFacingSummary(argumentsJSON: readRefArgs, result: "", language: "he")
+        #expect(readRefHe.contains("תוצאת") || readRefHe.contains("קטע") || readRefHe.contains("ref_abc"))
     }
 
     // MARK: - 31. legacyToolContentOnlyChatFallback

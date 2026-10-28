@@ -4,7 +4,7 @@
 **Repository**: `davidpovarsky/hanlin-ai`  
 **Branch**: `fix/classic-source-first-agent-acceptance-20261025`  
 **Base Code SHA**: `6318093d7dc2bb0936766d27608c350def307f13`  
-**Current Code SHA**: `1484cc97321e1d0339d1b091fcf3b2bc736a6cf4` (code fix: `e30cdc12941f74b38009d4f36a55676f3b56a598`)  
+**Current Code SHA**: `acf77c9d3010cfb1dcb5d80e1b7ee3997796f526`  
 **Worktree**: `C:\Users\DAVID\Code\hanlin-classic-source-first-20261027` (Isolated worktree)  
 **Untouched Workspace**: `C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results` (Verified 100% clean)
 
@@ -36,7 +36,8 @@
 ### Fixes Implemented
 - **Dynamic Sizing**: Added `responsiveSize(target:horizontalMargin:verticalMargin:)` to `HanlinComposerPopupCoordinator`, calculating bounds dynamically from `UIWindow`/`UIScreen` minus safe area insets.
 - **Dynamic Clamping**: Clamped `currentSize` in `HanlinComposerGeneralActionsView`, `HanlinComposerToolsRootView`, and `HanlinModelPickerPopover` using responsive available geometry.
-- **Coordinator Race Guards & Reliable Subroute Push**: Added `guard self.activePopup == popup, self.frameExpanded else { return }` in `pushGeneralSubroute`, `pushToolsSubroute`, and `pushModelSubroute` completion closures to prevent appending to inactive navigation paths. Removed `.removed` completion criteria from property-animating transactions to ensure SwiftUI completion handlers execute promptly on all simulator/device runs.
+- **Root Page Scroll Container**: Wrapped `compactRootPage` in `HanlinModelPickerPopover` within `ScrollView(.vertical, showsIndicators: false)` to prevent `allModelsButton` from being clipped or pushed into the window border / safe-area margin, ensuring reliable hit testing.
+- **Coordinator Race Guards & Reliable Subroute Push**: Added `guard !navigationPath.contains(route)` in `pushGeneralSubroute`, `pushToolsSubroute`, and `pushModelSubroute` to prevent duplicate pushes while avoiding deadlocks. Synchronously append to navigation paths inside `withAnimation` to trigger immediate SwiftUI `NavigationStack` transitions.
 - **Preserved Design Language**: Preserved 2-phase matched transitions, original blue glass aesthetic, and reduce motion fallbacks.
 
 ---

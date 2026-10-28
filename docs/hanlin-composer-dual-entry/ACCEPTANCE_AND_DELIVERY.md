@@ -4,7 +4,7 @@
 **Repository**: `davidpovarsky/hanlin-ai`  
 **Branch**: `fix/classic-source-first-agent-acceptance-20261025`  
 **Base Code SHA**: `6318093d7dc2bb0936766d27608c350def307f13`  
-**Code SHA under test**: `1484cc97321e1d0339d1b091fcf3b2bc736a6cf4` (code fix: `e30cdc12941f74b38009d4f36a55676f3b56a598`)  
+**Code SHA under test**: `acf77c9d3010cfb1dcb5d80e1b7ee3997796f526`  
 **CI Run**: `https://github.com/davidpovarsky/hanlin-ai/actions/runs/40749826755`  
 **Testing Environment**:
 - **Simulators**: iPad mini (A17 Pro), iOS 27.0 (UDID `D964FD22-3755-4972-8B2A-EE51929C1018`)

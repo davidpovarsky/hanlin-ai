@@ -167,7 +167,7 @@ final class HanlinComposerPopupCoordinator {
     // MARK: - V3.3 Two-Phase Expand & Shrink (General Popup)
 
     func pushGeneralSubroute(_ route: ComposerGeneralSubroute, reduceMotion: Bool = false) {
-        guard generalNavigationPath.isEmpty else { return }
+        guard !generalNavigationPath.contains(route) else { return }
         generalDestinationDisappeared = false
         if reduceMotion {
             generalFrameExpanded = true
@@ -210,7 +210,7 @@ final class HanlinComposerPopupCoordinator {
     // MARK: - V3.3 Two-Phase Expand & Shrink (Tools Popup)
 
     func pushToolsSubroute(_ route: ComposerToolsSubroute, reduceMotion: Bool = false) {
-        guard toolsNavigationPath.isEmpty else { return }
+        guard !toolsNavigationPath.contains(route) else { return }
         toolsDestinationDisappeared = false
         if reduceMotion {
             toolsFrameExpanded = true
@@ -253,7 +253,7 @@ final class HanlinComposerPopupCoordinator {
     // MARK: - V3.3 Two-Phase Expand & Shrink (Model Picker Popup)
 
     func pushModelSubroute(_ route: ComposerModelSubroute = .allModels, reduceMotion: Bool = false) {
-        guard modelNavigationPath.isEmpty else { return }
+        guard !modelNavigationPath.contains(route) else { return }
         modelDestinationDisappeared = false
         if reduceMotion {
             modelFrameExpanded = true

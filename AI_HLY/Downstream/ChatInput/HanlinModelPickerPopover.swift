@@ -106,35 +106,35 @@ struct HanlinModelPickerPopover: View {
     // MARK: - Stage 1: Compact Root Page
 
     private var compactRootPage: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                Label(String(localized: "Select Model"), systemImage: "cpu")
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(accentColor)
-                Spacer()
-                if models.indices.contains(selectedModelIndex),
-                   let current = models[safe: selectedModelIndex] {
-                    Text(current.company ?? "")
-                        .font(.caption2.weight(.medium))
-                        .foregroundStyle(.secondary)
-                        .padding(.horizontal, 7)
-                        .padding(.vertical, 3)
-                        .background(accentColor.opacity(0.1), in: Capsule())
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    Label(String(localized: "Select Model"), systemImage: "cpu")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(accentColor)
+                    Spacer()
+                    if models.indices.contains(selectedModelIndex),
+                       let current = models[safe: selectedModelIndex] {
+                        Text(current.company ?? "")
+                            .font(.caption2.weight(.medium))
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 7)
+                            .padding(.vertical, 3)
+                            .background(accentColor.opacity(0.1), in: Capsule())
+                    }
                 }
-            }
-            .padding(.horizontal, 14)
-            .padding(.top, 12)
-            .padding(.bottom, 8)
+                .padding(.horizontal, 14)
+                .padding(.top, 12)
+                .padding(.bottom, 8)
 
-            if visibleIndices.isEmpty {
-                ContentUnavailableView(
-                    String(localized: "No models available"),
-                    systemImage: "sparkles",
-                    description: Text(String(localized: "Please configure models in Settings"))
-                )
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                ScrollView(.vertical, showsIndicators: false) {
+                if visibleIndices.isEmpty {
+                    ContentUnavailableView(
+                        String(localized: "No models available"),
+                        systemImage: "sparkles",
+                        description: Text(String(localized: "Please configure models in Settings"))
+                    )
+                    .padding(.vertical, 24)
+                } else {
                     VStack(spacing: 4) {
                         ForEach(compactFeaturedIndices, id: \.self) { index in
                             if let model = models[safe: index] {
@@ -144,41 +144,41 @@ struct HanlinModelPickerPopover: View {
                     }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
-                }
 
-                Divider()
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 4)
+                    Divider()
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 4)
 
-                Button {
-                    coordinator.pushModelSubroute(.allModels, reduceMotion: reduceMotion)
-                } label: {
-                    HStack(spacing: 10) {
-                        Image(systemName: "square.grid.2x2")
-                            .font(.subheadline.weight(.medium))
-                            .foregroundStyle(accentColor)
-                            .frame(width: 24, height: 24)
-                            .background(accentColor.opacity(0.12), in: Circle())
+                    Button {
+                        coordinator.pushModelSubroute(.allModels, reduceMotion: reduceMotion)
+                    } label: {
+                        HStack(spacing: 10) {
+                            Image(systemName: "square.grid.2x2")
+                                .font(.subheadline.weight(.medium))
+                                .foregroundStyle(accentColor)
+                                .frame(width: 24, height: 24)
+                                .background(accentColor.opacity(0.12), in: Circle())
 
-                        Text(String(format: String(localized: "All Models (%lld)"), visibleIndices.count))
-                            .font(.subheadline.weight(.medium))
-                            .foregroundStyle(.primary)
+                            Text(String(format: String(localized: "All Models (%lld)"), visibleIndices.count))
+                                .font(.subheadline.weight(.medium))
+                                .foregroundStyle(.primary)
 
-                        Spacer(minLength: 4)
+                            Spacer(minLength: 4)
 
-                        Image(systemName: "chevron.forward")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
+                            Image(systemName: "chevron.forward")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 9)
+                        .contentShape(.rect(cornerRadius: 12))
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 9)
-                    .contentShape(.rect(cornerRadius: 12))
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, 6)
+                    .padding(.bottom, 8)
+                    .matchedTransitionSource(id: "hanlin-model-picker-all-models-row", in: zoomNamespace)
+                    .accessibilityIdentifier("hanlin-model-picker-all-models-button")
                 }
-                .buttonStyle(.plain)
-                .padding(.horizontal, 6)
-                .padding(.bottom, 8)
-                .matchedTransitionSource(id: "hanlin-model-picker-all-models-row", in: zoomNamespace)
-                .accessibilityIdentifier("hanlin-model-picker-all-models-button")
             }
         }
         .toolbar(.hidden, for: .navigationBar)

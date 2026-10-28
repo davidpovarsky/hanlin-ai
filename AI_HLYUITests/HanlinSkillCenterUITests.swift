@@ -589,7 +589,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
     private func tapElement(_ element: XCUIElement) {
         if element.isHittable {
             element.tap()
-        } else {
+        } else if element.exists {
             element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         }
     }
