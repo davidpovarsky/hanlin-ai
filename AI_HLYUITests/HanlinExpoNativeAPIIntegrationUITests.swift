@@ -49,6 +49,9 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
 
         let uiSwitch = app.switches.firstMatch
         XCTAssertTrue(uiSwitch.waitForExistence(timeout: 10), "Native UISwitch did not render")
+        if !uiSwitch.isHittable {
+            app.swipeUp()
+        }
         XCTAssertTrue(uiSwitch.isHittable, "Native UISwitch was not hittable")
         uiSwitch.tap()
 
@@ -190,6 +193,9 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         // 1. Verify active session with native UIKit switch
         let uiSwitch = app.switches.firstMatch
         XCTAssertTrue(uiSwitch.waitForExistence(timeout: 20), "Native UISwitch did not render")
+        if !uiSwitch.isHittable {
+            app.swipeUp()
+        }
         XCTAssertTrue(uiSwitch.isHittable, "Native UISwitch was not hittable")
 
         // 2. Revoke by closing active application synchronously
@@ -369,8 +375,14 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
 
     private func hasPackageCard(named packageName: String) -> Bool {
         let cardPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", packageName, packageName)
-        return app.buttons.matching(cardPredicate).firstMatch.exists ||
-               app.descendants(matching: .any).matching(cardPredicate).firstMatch.exists
+        if app.buttons.matching(cardPredicate).firstMatch.exists ||
+           app.descendants(matching: .any).matching(cardPredicate).firstMatch.exists {
+            return true
+        }
+        let prefixed = "Hanlin " + packageName
+        let prefixPredicate = NSPredicate(format: "label CONTAINS[c] %@ OR identifier CONTAINS[c] %@", prefixed, prefixed)
+        return app.buttons.matching(prefixPredicate).firstMatch.exists ||
+               app.descendants(matching: .any).matching(prefixPredicate).firstMatch.exists
     }
 
     private func importAndInstall(archive: String) {
@@ -395,21 +407,23 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         }
         XCTAssertTrue(install.waitForExistence(timeout: 30), "Install button did not appear for \(archive)")
 
-        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        let installButton = app.buttons["hanlin-package-install"].firstMatch
         let nativeApiToggle = app.switches["hanlin-capability-toggle-ios-native-api"].firstMatch
-        if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
-            approveAllButton.tap()
-            _ = waitUntil(timeout: 4) { !approveAllButton.exists }
-        } else {
-            app.swipeUp()
-            if approveAllButton.waitForExistence(timeout: 3) {
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+
+        for _ in 1...5 {
+            if installButton.isEnabled { break }
+
+            if approveAllButton.waitForExistence(timeout: 2) {
                 if approveAllButton.isHittable {
                     approveAllButton.tap()
                 } else {
                     approveAllButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
                 }
-                _ = waitUntil(timeout: 4) { !approveAllButton.exists }
-            } else if nativeApiToggle.waitForExistence(timeout: 2) {
+                if waitUntil(timeout: 3, condition: { installButton.isEnabled }) { break }
+            }
+
+            if nativeApiToggle.waitForExistence(timeout: 2) {
                 if (nativeApiToggle.value as? String) != "1" {
                     if nativeApiToggle.isHittable {
                         nativeApiToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
@@ -418,31 +432,15 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
                     }
                     _ = waitUntil(timeout: 3) { (nativeApiToggle.value as? String) == "1" }
                 }
+                if waitUntil(timeout: 3, condition: { installButton.isEnabled }) { break }
             }
+
+            app.swipeUp()
+        }
+
+        for _ in 1...3 {
+            if installButton.isHittable { break }
             app.swipeDown()
-        }
-
-        var installButton = app.buttons["hanlin-package-install"].firstMatch
-        if !installButton.isHittable {
-            for _ in 1...3 {
-                app.swipeDown()
-                if installButton.isHittable { break }
-            }
-        }
-
-        if !installButton.isEnabled {
-            let approveBtn = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-            if approveBtn.waitForExistence(timeout: 2) {
-                if approveBtn.isHittable {
-                    approveBtn.tap()
-                } else {
-                    approveBtn.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-                }
-                _ = waitUntil(timeout: 4) { !approveBtn.exists }
-                if !installButton.isHittable {
-                    app.swipeDown()
-                }
-            }
         }
 
         XCTAssertTrue(waitUntil(timeout: 20) { installButton.isEnabled }, "\(archive) was not installable")

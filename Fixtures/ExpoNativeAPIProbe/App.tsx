@@ -38,11 +38,14 @@ const NativeUILabel = defineUIKitView<UILabelProps, UILabel>({
     label.textColor = UIColor.labelColor;
     label.textAlignment = NSTextAlignment.Center;
     label.numberOfLines = 0;
+    label.isAccessibilityElement = true;
+    label.accessibilityLabel = context.props.text;
     return label;
   },
   update(view, props) {
     'worklet';
     view.text = props.text;
+    view.accessibilityLabel = props.text;
   }
 });
 
@@ -57,6 +60,8 @@ const NativeUISwitch = defineUIKitView<UISwitchProps, UISwitch>({
     'worklet';
     const toggle = UISwitch.alloc().init();
     toggle.on = context.props.isOn;
+    toggle.isAccessibilityElement = true;
+    toggle.accessibilityLabel = 'Native Switch';
     context.targetAction(toggle, UIControlEvents.ValueChanged, () => {
       'worklet';
       context.emit('onValueChange', toggle.on);
@@ -77,6 +82,8 @@ const NativeSheetViewController = defineUIViewController<{ title: string }, UIVi
     vc.view.backgroundColor = UIColor.systemGroupedBackgroundColor;
     const label = UILabel.alloc().init();
     label.text = context.props.title;
+    label.isAccessibilityElement = true;
+    label.accessibilityLabel = context.props.title;
     label.textAlignment = NSTextAlignment.Center;
     label.frame = CGRectMake(20, 20, 260, 40);
     vc.view.addSubview(label);
@@ -140,9 +147,9 @@ export default function App({ variant = 'A' }: AppProps) {
 
             {/* Real Fabric component inside SwiftUI layout via RNHostView */}
             {initialized && (
-              <RNHostView matchContents={true}>
+              <RNHostView>
                 <View style={styles.nativeLabelContainer}>
-                  <NativeUILabel text={variantText} />
+                  <NativeUILabel style={styles.nativeLabel} text={variantText} />
                 </View>
               </RNHostView>
             )}
@@ -151,9 +158,10 @@ export default function App({ variant = 'A' }: AppProps) {
             {initialized && (
               <HStack>
                 <Text modifiers={[font({ textStyle: 'body' })]}>UIKit UISwitch:</Text>
-                <RNHostView matchContents={true}>
+                <RNHostView>
                   <View style={styles.nativeSwitchContainer}>
                     <NativeUISwitch
+                      style={styles.nativeSwitch}
                       isOn={isSwitchOn}
                       onValueChange={(val: boolean) => setIsSwitchOn(val)}
                     />
@@ -170,9 +178,9 @@ export default function App({ variant = 'A' }: AppProps) {
             )}
 
             {initialized && showController && (
-              <RNHostView matchContents={true}>
+              <RNHostView>
                 <View style={styles.nativeControllerContainer}>
-                  <NativeSheetViewController title="Hosted Native UIViewController" />
+                  <NativeSheetViewController style={styles.nativeController} title="Hosted Native UIViewController" />
                 </View>
               </RNHostView>
             )}
@@ -197,11 +205,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 8,
   },
+  nativeLabel: {
+    width: 320,
+    height: 60,
+  },
   nativeSwitchContainer: {
     width: 60,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  nativeSwitch: {
+    width: 51,
+    height: 31,
   },
   nativeControllerContainer: {
     width: 300,
@@ -209,5 +225,9 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 8,
     overflow: 'hidden',
+  },
+  nativeController: {
+    width: 300,
+    height: 100,
   },
 });
