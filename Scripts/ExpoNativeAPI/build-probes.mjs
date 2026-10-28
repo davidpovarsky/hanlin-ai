@@ -95,20 +95,6 @@ export async function buildProbes() {
 
   const pkgMissingGrant = {
     ...packageJSON,
-    hanlinExpo: {
-      ...packageJSON.hanlinExpo,
-      plugins: {
-        "@expo/ui": "58.0.3",
-        "@hanlin/expo-ui": "3.0.0"
-      }
-    },
-    dependencies: {
-      "@expo/ui": "58.0.3",
-      "@hanlin/expo-ui": "3.0.0",
-      "expo": "58.0.0",
-      "react": "19.3.0",
-      "react-native": "0.88.0"
-    }
   };
 
   const scriptMissingGrant = {

@@ -127,7 +127,7 @@ export default function App({ variant = 'A' }: AppProps) {
             </Text>
 
             <Text modifiers={[font({ textStyle: 'subheadline' }), foregroundStyle('#6B7280')]}>
-              {`Variant: ${variant} | Initialized: ${initialized ? 'YES' : 'NO'}`}
+              {`Probe Variant ${variant} | Initialized: ${initialized ? 'YES' : 'NO'}`}
             </Text>
 
             <Text modifiers={[font({ textStyle: 'body' }), foregroundStyle('#111827')]}>
@@ -139,7 +139,7 @@ export default function App({ variant = 'A' }: AppProps) {
             </Text>
 
             {/* Real Fabric component inside SwiftUI layout via RNHostView */}
-            <RNHostView style={styles.nativeLabelContainer}>
+            <RNHostView matchContents={true}>
               <View style={styles.nativeLabelContainer}>
                 <NativeUILabel text={variantText} />
               </View>
@@ -148,7 +148,7 @@ export default function App({ variant = 'A' }: AppProps) {
             {/* Real UIKit UISwitch mounted as child with two-way target-action */}
             <HStack>
               <Text modifiers={[font({ textStyle: 'body' })]}>UIKit UISwitch:</Text>
-              <RNHostView style={styles.nativeSwitchContainer}>
+              <RNHostView matchContents={true}>
                 <View style={styles.nativeSwitchContainer}>
                   <NativeUISwitch
                     isOn={isSwitchOn}
@@ -164,7 +164,7 @@ export default function App({ variant = 'A' }: AppProps) {
             />
 
             {showController && (
-              <RNHostView style={styles.nativeControllerContainer}>
+              <RNHostView matchContents={true}>
                 <View style={styles.nativeControllerContainer}>
                   <NativeSheetViewController title="Hosted Native UIViewController" />
                 </View>
