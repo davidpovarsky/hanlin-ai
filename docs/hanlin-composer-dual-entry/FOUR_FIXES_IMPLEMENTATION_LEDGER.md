@@ -4,7 +4,7 @@
 **Repository**: `davidpovarsky/hanlin-ai`  
 **Branch**: `fix/classic-source-first-agent-acceptance-20261025`  
 **Base Code SHA**: `6318093d7dc2bb0936766d27608c350def307f13`  
-**Current Code SHA**: `ff341f2510842e47854f3b60dc7da14ec9833772`  
+**Current Code SHA**: `e30cdc12941f74b38009d4f36a55676f3b56a598`  
 **Worktree**: `C:\Users\DAVID\Code\hanlin-classic-source-first-20261027` (Isolated worktree)  
 **Untouched Workspace**: `C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results` (Verified 100% clean)
 
@@ -36,7 +36,7 @@
 ### Fixes Implemented
 - **Dynamic Sizing**: Added `responsiveSize(target:horizontalMargin:verticalMargin:)` to `HanlinComposerPopupCoordinator`, calculating bounds dynamically from `UIWindow`/`UIScreen` minus safe area insets.
 - **Dynamic Clamping**: Clamped `currentSize` in `HanlinComposerGeneralActionsView`, `HanlinComposerToolsRootView`, and `HanlinModelPickerPopover` using responsive available geometry.
-- **Coordinator Race Guards**: Added `guard self.activePopup == popup, self.frameExpanded else { return }` in `pushGeneralSubroute`, `pushToolsSubroute`, and `pushModelSubroute` completion closures to prevent appending to inactive navigation paths.
+- **Coordinator Race Guards & Reliable Subroute Push**: Added `guard self.activePopup == popup, self.frameExpanded else { return }` in `pushGeneralSubroute`, `pushToolsSubroute`, and `pushModelSubroute` completion closures to prevent appending to inactive navigation paths. Removed `.removed` completion criteria from property-animating transactions to ensure SwiftUI completion handlers execute promptly on all simulator/device runs.
 - **Preserved Design Language**: Preserved 2-phase matched transitions, original blue glass aesthetic, and reduce motion fallbacks.
 
 ---
