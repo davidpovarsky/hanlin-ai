@@ -93,12 +93,30 @@ export async function buildProbes() {
   await mkdir(dirMissingGrant, { recursive: true });
   await cp(bundleA, resolve(dirMissingGrant, 'bundle.js'));
 
+  const pkgMissingGrant = {
+    ...packageJSON,
+    hanlinExpo: {
+      ...packageJSON.hanlinExpo,
+      plugins: {
+        "@expo/ui": "58.0.3",
+        "@hanlin/expo-ui": "3.0.0"
+      }
+    },
+    dependencies: {
+      "@expo/ui": "58.0.3",
+      "@hanlin/expo-ui": "3.0.0",
+      "expo": "58.0.0",
+      "react": "19.3.0",
+      "react-native": "0.88.0"
+    }
+  };
+
   const scriptMissingGrant = {
     ...scriptJSON,
     name: 'Hanlin Expo Native API Probe (Missing Grant)',
     capabilities: [] // Explicitly missing ios-native-api!
   };
-  await writeFile(resolve(dirMissingGrant, 'package.json'), JSON.stringify(packageJSON, null, 2), 'utf8');
+  await writeFile(resolve(dirMissingGrant, 'package.json'), JSON.stringify(pkgMissingGrant, null, 2), 'utf8');
   await writeFile(resolve(dirMissingGrant, 'script.json'), JSON.stringify(scriptMissingGrant, null, 2), 'utf8');
 
   const zipMissingGrant = resolve(probeSrcRoot, 'ExpoNativeAPIProbeMissingGrant.hanlinExpo');

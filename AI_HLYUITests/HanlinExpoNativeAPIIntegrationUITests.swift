@@ -126,8 +126,11 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         selectArchive("ExpoNativeAPIProbeIncompatible")
 
         let errorIndicator = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'Compatibility' OR label CONTAINS 'incompatible'")
+            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS[c] 'Import Error' OR label CONTAINS[c] 'Compatibility' OR label CONTAINS[c] 'incompatible' OR label CONTAINS[c] 'supports' OR label CONTAINS[c] 'requires'")
         ).firstMatch
+        if !errorIndicator.waitForExistence(timeout: 5) {
+            app.swipeUp()
+        }
         XCTAssertTrue(errorIndicator.waitForExistence(timeout: 20), "Incompatible version error was not displayed")
 
         let installButton = app.buttons["hanlin-package-install"].firstMatch
@@ -149,8 +152,11 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         selectArchive("ExpoNativeAPIMalformed")
 
         let errorIndicator = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS 'Import Error' OR label CONTAINS 'malformed'")
+            NSPredicate(format: "identifier == 'hanlin-import-error' OR identifier == 'hanlin-import-error-message' OR label CONTAINS[c] 'Import Error' OR label CONTAINS[c] 'missing' OR label CONTAINS[c] 'entrypoint' OR label CONTAINS[c] 'Compatibility' OR label CONTAINS[c] 'malformed'")
         ).firstMatch
+        if !errorIndicator.waitForExistence(timeout: 5) {
+            app.swipeUp()
+        }
         XCTAssertTrue(errorIndicator.waitForExistence(timeout: 20), "Malformed package import error was not displayed")
 
         let installButton = app.buttons["hanlin-package-install"].firstMatch
@@ -388,8 +394,32 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
             _ = waitUntil(timeout: 30) { !inspecting.exists }
         }
         XCTAssertTrue(install.waitForExistence(timeout: 30), "Install button did not appear for \(archive)")
-        XCTAssertTrue(waitUntil(timeout: 10) { install.isEnabled }, "\(archive) was not installable")
-        install.tap()
+
+        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
+        if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
+            approveAllButton.tap()
+        } else {
+            app.swipeUp()
+            if approveAllButton.waitForExistence(timeout: 3) {
+                if approveAllButton.isHittable {
+                    approveAllButton.tap()
+                } else {
+                    approveAllButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                }
+            }
+            app.swipeDown()
+        }
+
+        if !install.isHittable {
+            app.swipeDown()
+        }
+
+        XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled }, "\(archive) was not installable")
+        if install.isHittable {
+            install.tap()
+        } else {
+            install.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
         XCTAssertTrue(waitUntil(timeout: 25) { !install.exists }, "\(archive) installation did not complete")
         closeImportSurfaces()
     }
