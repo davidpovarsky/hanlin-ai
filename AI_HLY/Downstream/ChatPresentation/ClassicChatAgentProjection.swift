@@ -294,6 +294,19 @@ struct ClassicChatAgentProjection {
     static func syncAgentRunProjection(
         _ agentRun: AgentRun,
         into assistantMessage: ChatMessages,
+        seenToolContentBlocks: inout Set<String>
+    ) {
+        syncAgentRunProjection(
+            agentRun,
+            into: assistantMessage,
+            seenToolCallKeys: &seenToolContentBlocks
+        )
+    }
+
+    /// Synchronizes completed or in-progress `AgentRun` state into original `ChatMessages` fields.
+    static func syncAgentRunProjection(
+        _ agentRun: AgentRun,
+        into assistantMessage: ChatMessages,
         seenToolCallKeys: inout Set<String>
     ) {
         var entries: [ClassicProjectedToolCallEntry] = []
