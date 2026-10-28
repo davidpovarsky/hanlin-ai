@@ -441,7 +441,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // Switch to Chat tab and ask the Agent to use the new skill
         openChat()
-        let input = app.textFields["hanlin-chat-input"].firstMatch
+        let input = chatInputElement()
         XCTAssertTrue(input.waitForExistence(timeout: 20), "Chat input did not appear")
         tapElement(input)
         input.typeText("Execute ui-next-turn-skill and show its marker.")
@@ -572,11 +572,19 @@ final class HanlinSkillCenterUITests: XCTestCase {
         }
     }
 
+    private func chatInputElement() -> XCUIElement {
+        let tf = app.textFields["hanlin-chat-input"].firstMatch
+        if tf.exists { return tf }
+        let tv = app.textViews["hanlin-chat-input"].firstMatch
+        if tv.exists { return tv }
+        return app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
+    }
+
     private func openChat() {
         navigateBackToSettingsRoot()
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"])
 
-        let input = app.textFields["hanlin-chat-input"].firstMatch
+        let input = chatInputElement()
         if !input.waitForExistence(timeout: 5) {
             let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
             let seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch

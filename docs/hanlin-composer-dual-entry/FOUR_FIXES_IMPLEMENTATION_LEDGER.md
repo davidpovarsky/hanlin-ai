@@ -80,7 +80,7 @@
 | `AI_HLY/Views/Components/ChatViewComponents.swift` | Structured per-call rows in tool accordion, localized header, legacy fallback |
 | `AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift` | Dynamic responsive sizing, navigation race guards |
 | `AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift` | Responsive sizing, localized strings, MCP confirmed selection & rollback |
-| `AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift` | Responsive sizing, localized badges and search placeholders |
+| `AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift` | Responsive sizing, localized badges and search placeholders, NavigationLink for All Models subroute |
 | `AI_HLY/Downstream/AgentSkills/LoadSkillTool.swift` | Hebrew localization in userFacingSummary |
 | `AI_HLY/Downstream/AgentSkills/ReadSkillResourceTool.swift` | Hebrew localization in userFacingSummary |
 | `AI_HLY/Downstream/AgentSkills/ToolSearchTool.swift` | Hebrew localization in userFacingSummary |
@@ -88,6 +88,7 @@
 | `AI_HLY/Resource/Localizable.xcstrings` | 67 new keys with complete `en`, `he`, `zh-Hans` localizations (858 keys total) |
 | `AI_HLYTests/ClassicChatRestorationTests.swift` | Updated Test 25, added Tests 27–31 |
 | `AI_HLYUITests/AgentRuntimeConversationUITests.swift` | Unconditional assertions in `testUI06`, added `testUI09` and `testUI10` |
+| `AI_HLYUITests/HanlinSkillCenterUITests.swift` | Robust `chatInputElement()` helper supporting NativeMultilineTextEditor in `openChat` and `testInstalledSkillAppearsInNextChatRun` |
 
 ### Explicit Out-of-Scope Confirmation
 - No changes to main chat message database or SwiftData schemas.

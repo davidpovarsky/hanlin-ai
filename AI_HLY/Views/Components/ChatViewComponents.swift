@@ -2195,7 +2195,7 @@ struct ChatBubbleView: View {
                         }
                         .padding(.horizontal, 8)
                         .padding(.bottom, 6)
-                        .accessibilityIdentifier("hanlin-tool-content-structured-list")
+                        .accessibilityIdentifier("hanlin-tool-content-expanded-text")
                     } else {
                         // Legacy fallback for stored chats without agentRunJSON
                         Text(effectiveToolContent)
@@ -2275,12 +2275,14 @@ struct ChatBubbleView: View {
                             .fill(Color(.secondarySystemBackground).opacity(0.6))
                     )
                     .textSelection(.enabled)
+                    .accessibilityIdentifier("hanlin-tool-content-expanded-text")
             }
 
             if let errorDesc = entry.errorDescription, !errorDesc.isEmpty {
                 Text("⚠️ \(errorDesc)")
                     .font(.caption)
                     .foregroundColor(.red)
+                    .accessibilityIdentifier("hanlin-tool-content-expanded-text")
             }
         }
         .padding(8)
