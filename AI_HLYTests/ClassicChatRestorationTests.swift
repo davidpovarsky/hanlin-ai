@@ -1467,12 +1467,12 @@ struct ClassicChatRestorationTests {
             price: 2,
             isHidden: false,
             supportsSearch: true,
+            supportsTextGen: true,
+            supportsMultimodal: true,
             supportsReasoning: true,
             supportReasoningChange: true,
-            supportsVoiceGen: true,
             supportsImageGen: true,
-            supportsMultimodal: true,
-            supportsTextGen: true,
+            supportsVoiceGen: true,
             supportsToolUse: true
         )
 
@@ -1500,7 +1500,7 @@ struct ClassicChatRestorationTests {
             activeMCPServerCount: 2,
             selectedImageSize: "landscape"
         )
-        let kinds = chips.map(\.kind)
+        let kinds = chips.map { $0.kind }
         #expect(kinds.contains(.search))
         #expect(kinds.contains(.knowledge))
         #expect(kinds.contains(.thinking))
@@ -1534,7 +1534,7 @@ struct ClassicChatRestorationTests {
 
         let userSummary = LoadSkillTool.userFacingSummary(
             argumentsJSON: #"{"skill_id":"mcp_integrations"}"#,
-            modelResult: modelOutput
+            result: modelOutput
         )
         #expect(!userSummary.contains("### Instructions"))
         #expect(userSummary.contains("MCP"))
@@ -1552,49 +1552,35 @@ struct ClassicChatRestorationTests {
             timestamp: Date()
         )
 
-        let call1 = AgentToolCall.parse(
-            id: "call_skill_1",
-            name: "load_skill",
-            argumentsJSON: #"{"skill_id":"mcp_integrations"}"#
-        )
-        let call2 = AgentToolCall.parse(
-            id: "call_mcp_2",
-            name: "manage_mcp_servers",
-            argumentsJSON: #"{"action":"status"}"#
-        )
-
-        ClassicChatAgentProjection.applyEvent(
-            .toolCallStarted(call1),
-            to: assistantMessage,
+        let entry1 = ClassicProjectedToolCallEntry(
+            id: "\(runID.uuidString):step:call_skill_1",
             runID: runID,
-            modelDisplayName: "GPT-4o"
-        )
-        ClassicChatAgentProjection.appendCompletedToolOutput(
-            userSummary,
-            toolName: "load_skill",
             callID: "call_skill_1",
+            toolName: "load_skill",
+            summary: nil,
+            output: userSummary,
+            isMetaSkillOrDiscoveryTool: true
+        )
+        let entry2 = ClassicProjectedToolCallEntry(
+            id: "\(runID.uuidString):step:call_mcp_2",
             runID: runID,
-            to: assistantMessage
+            callID: "call_mcp_2",
+            toolName: "manage_mcp_servers",
+            summary: nil,
+            output: "MCP Server Status: 1 installed, 1 running.",
+            isMetaSkillOrDiscoveryTool: false
         )
 
-        ClassicChatAgentProjection.applyEvent(
-            .toolCallStarted(call2),
-            to: assistantMessage,
-            runID: runID,
-            modelDisplayName: "GPT-4o"
-        )
-        ClassicChatAgentProjection.appendCompletedToolOutput(
-            "MCP Server Status: 1 installed, 1 running.",
-            toolName: "manage_mcp_servers",
-            callID: "call_mcp_2",
-            runID: runID,
+        ClassicChatAgentProjection.applyFormattedToolProjection(
+            entries: [entry1, entry2],
+            fallbackToolName: "tools",
             to: assistantMessage
         )
 
         #expect(assistantMessage.toolName == "manage_mcp_servers (+1)")
-        #expect(assistantMessage.toolContent.contains("[load_skill]"))
-        #expect(assistantMessage.toolContent.contains("[manage_mcp_servers]"))
-        #expect(!assistantMessage.toolContent.contains("### Instructions"))
+        #expect(assistantMessage.toolContent?.contains("[load_skill]") == true)
+        #expect(assistantMessage.toolContent?.contains("[manage_mcp_servers]") == true)
+        #expect(assistantMessage.toolContent?.contains("### Instructions") == false)
     }
 
     // MARK: - 26. nativeMultilineTextEditorEffectiveMeasurementWidth
