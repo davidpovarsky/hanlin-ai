@@ -86,7 +86,11 @@ public enum ToolSearchTool {
         language: String = "zh"
     ) -> String {
         let isZh = language.hasPrefix("zh")
+        let isHe = language.hasPrefix("he")
         if result.hasPrefix("Error:") || result.hasPrefix("No ") {
+            if isHe {
+                return result.replacingOccurrences(of: "No tools found matching", with: "לא נמצאו כלים התואמים ל")
+            }
             return result
         }
         let aliasLines = result
@@ -104,13 +108,26 @@ public enum ToolSearchTool {
             let query = args.query.trimmingCharacters(in: .whitespacesAndNewlines)
             if !aliases.isEmpty {
                 let preview = aliases.prefix(4).joined(separator: ", ")
-                return isZh
-                    ? "搜索「\(query)」匹配到 \(aliases.count) 个工具：\(preview)"
-                    : "Found \(aliases.count) tool(s) for '\(query)': \(preview)"
+                if isZh {
+                    return "搜索「\(query)」匹配到 \(aliases.count) 个工具：\(preview)"
+                } else if isHe {
+                    return "בחיפוש '\(query)' נמצאו \(aliases.count) כלים: \(preview)"
+                } else {
+                    return "Found \(aliases.count) tool(s) for '\(query)': \(preview)"
+                }
             }
         }
         let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        return firstLine.isEmpty ? (isZh ? "已完成工具搜索" : "Completed tool search") : firstLine
+        if firstLine.isEmpty {
+            if isZh {
+                return "已完成工具搜索"
+            } else if isHe {
+                return "חיפוש הכלים הושלם"
+            } else {
+                return "Completed tool search"
+            }
+        }
+        return firstLine
     }
 
     @MainActor

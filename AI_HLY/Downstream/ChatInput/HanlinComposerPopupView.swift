@@ -70,7 +70,8 @@ struct HanlinComposerGeneralActionsView: View {
     private let expandedSize = CGSize(width: 348, height: 488)
 
     private var currentSize: CGSize {
-        coordinator.generalFrameExpanded ? expandedSize : compactSize
+        let target = coordinator.generalFrameExpanded ? expandedSize : compactSize
+        return coordinator.responsiveSize(target: target)
     }
 
     private var accentColor: Color {
@@ -123,12 +124,12 @@ struct HanlinComposerGeneralActionsView: View {
             VStack(alignment: .leading, spacing: 12) {
                 // Header
                 HStack {
-                    Label("添加与模式", systemImage: "plus.circle.fill")
+                    Label(String(localized: "Add & Modes"), systemImage: "plus.circle.fill")
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(accentColor)
                     Spacer()
                     if capability.isLocal {
-                        Label("本地模型", systemImage: "bolt.horizontal.icloud.fill")
+                        Label(String(localized: "Local Model"), systemImage: "bolt.horizontal.icloud.fill")
                             .font(.caption2.weight(.medium))
                             .foregroundStyle(.hlOrange)
                             .padding(.horizontal, 7)
@@ -143,7 +144,7 @@ struct HanlinComposerGeneralActionsView: View {
                 HStack(spacing: 8) {
                     if !capability.isLocal {
                         attachmentTile(
-                            title: "拍照",
+                            title: String(localized: "Camera"),
                             systemImage: "camera.fill",
                             identifier: "hanlin-general-camera",
                             disabled: isResponding || selectedImages.count >= 5
@@ -153,7 +154,7 @@ struct HanlinComposerGeneralActionsView: View {
                         }
 
                         attachmentTile(
-                            title: "相册",
+                            title: String(localized: "Photos"),
                             systemImage: "photo.fill.on.rectangle.fill",
                             identifier: "hanlin-general-photos",
                             disabled: isResponding || selectedImages.count >= 5
@@ -164,7 +165,7 @@ struct HanlinComposerGeneralActionsView: View {
                     }
 
                     attachmentTile(
-                        title: "文件",
+                        title: String(localized: "Files"),
                         systemImage: "doc.fill",
                         identifier: "hanlin-general-files",
                         disabled: isResponding || selectedDocumentURLs.count >= 5
@@ -175,7 +176,7 @@ struct HanlinComposerGeneralActionsView: View {
                 }
 
                 if !capability.supportsMultimodal && !capability.isLocal {
-                    Text("提示：当前模型非原生视觉模型，附加图片将使用视觉辅助描述。")
+                    Text(String(localized: "Tip: The current model is not a native vision model; attached images will use visual assistance descriptions."))
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                         .padding(.horizontal, 4)
@@ -233,8 +234,8 @@ struct HanlinComposerGeneralActionsView: View {
                 VStack(spacing: 4) {
                     if capability.supportsSearch {
                         modeToggleRow(
-                            title: "联网搜索",
-                            subtitle: "实时检索网页与最新参考资料",
+                            title: String(localized: "Online Search"),
+                            subtitle: String(localized: "Search the web and latest reference material in real time"),
                             systemImage: "globe",
                             tint: .hlAzure,
                             isOn: Binding(
@@ -254,8 +255,8 @@ struct HanlinComposerGeneralActionsView: View {
 
                         HStack(spacing: 6) {
                             modeToggleRow(
-                                title: "知识背包",
-                                subtitle: "检索本地向量化知识库",
+                                title: String(localized: "Knowledge Bag"),
+                                subtitle: String(localized: "Search local vectorized knowledge base"),
                                 systemImage: "backpack.fill",
                                 tint: accentColor,
                                 isOn: Binding(
@@ -291,8 +292,8 @@ struct HanlinComposerGeneralActionsView: View {
                     if capability.supportsReasoning {
                         VStack(alignment: .leading, spacing: 6) {
                             modeToggleRow(
-                                title: "深度思考",
-                                subtitle: capability.supportReasoningChange ? "推演复杂问题并展示推理摘要" : "当前模型默认开启推理",
+                                title: String(localized: "Deep Thinking"),
+                                subtitle: capability.supportReasoningChange ? String(localized: "Reason through complex problems and show reasoning summary") : String(localized: "The current model enables reasoning by default"),
                                 systemImage: "sparkles",
                                 tint: .hlPurple,
                                 isOn: Binding(
@@ -308,11 +309,11 @@ struct HanlinComposerGeneralActionsView: View {
                             )
 
                             if ifThink {
-                                Picker("思考深度", selection: $thinkingLength) {
-                                    Text("默认").tag(0)
-                                    Text("短暂").tag(1)
-                                    Text("中等").tag(2)
-                                    Text("深度").tag(3)
+                                Picker(String(localized: "Thinking Depth"), selection: $thinkingLength) {
+                                    Text(String(localized: "Default")).tag(0)
+                                    Text(String(localized: "Brief")).tag(1)
+                                    Text(String(localized: "Medium")).tag(2)
+                                    Text(String(localized: "Deep")).tag(3)
                                 }
                                 .pickerStyle(.segmented)
                                 .padding(.horizontal, 8)
@@ -322,8 +323,8 @@ struct HanlinComposerGeneralActionsView: View {
                         }
                     } else if !capability.isLocal {
                         modeToggleRow(
-                            title: "规划执行",
-                            subtitle: "分步规划任务后再生成回答",
+                            title: String(localized: "Planning & Execution"),
+                            subtitle: String(localized: "Plan tasks step by step before generating answers"),
                             systemImage: "list.bullet.clipboard.fill",
                             tint: .hlIndigo,
                             isOn: $ifPlanning,
@@ -333,8 +334,8 @@ struct HanlinComposerGeneralActionsView: View {
 
                     if capability.supportsVoiceGen {
                         modeToggleRow(
-                            title: "语音生成",
-                            subtitle: "为助手回复合成自然语音",
+                            title: String(localized: "Voice Generation"),
+                            subtitle: String(localized: "Synthesize natural speech for assistant responses"),
                             systemImage: "waveform",
                             tint: .hlPink,
                             isOn: $ifAudio,
@@ -347,8 +348,8 @@ struct HanlinComposerGeneralActionsView: View {
                             coordinator.pushGeneralSubroute(.imageSize, reduceMotion: reduceMotion)
                         } label: {
                             navigationRowLabel(
-                                title: "图像画幅与反向提示词",
-                                subtitle: "当前画幅：\(selectedImageSize)",
+                                title: String(localized: "Image Aspect Ratio & Negative Prompts"),
+                                subtitle: String(format: String(localized: "Current aspect ratio: %@"), selectedImageSize),
                                 systemImage: "paintbrush.pointed.fill",
                                 tint: .hlGreen
                             )
@@ -367,8 +368,8 @@ struct HanlinComposerGeneralActionsView: View {
                         coordinator.pushGeneralSubroute(.prompts, reduceMotion: reduceMotion)
                     } label: {
                         navigationRowLabel(
-                            title: "提示词模板",
-                            subtitle: availablePrompts.isEmpty ? "暂无未选模板" : "可用 \(availablePrompts.count) 个模板",
+                            title: String(localized: "Prompt Templates"),
+                            subtitle: availablePrompts.isEmpty ? String(localized: "No unselected templates") : String(format: String(localized: "%lld templates available"), availablePrompts.count),
                             systemImage: "text.book.closed.fill",
                             tint: accentColor
                         )
@@ -381,7 +382,7 @@ struct HanlinComposerGeneralActionsView: View {
                         coordinator.pushGeneralSubroute(.parameters, reduceMotion: reduceMotion)
                     } label: {
                         navigationRowLabel(
-                            title: "模型参数调节",
+                            title: String(localized: "Model Parameters"),
                             subtitle: String(format: "Temp %.1f · Top-P %.1f · %d tokens", temperature, topP, maxTokens),
                             systemImage: "slider.horizontal.3",
                             tint: accentColor
@@ -395,8 +396,8 @@ struct HanlinComposerGeneralActionsView: View {
                         coordinator.switchFromGeneralToTools()
                     } label: {
                         navigationRowLabel(
-                            title: "工具、技能与 MCP",
-                            subtitle: "管理原生工具、Agent Skills、MCP 与运行环境",
+                            title: String(localized: "Tools, Skills & MCP"),
+                            subtitle: String(localized: "Manage native tools, agent skills, MCP and runtimes"),
                             systemImage: "wrench.and.screwdriver.fill",
                             tint: .hlBrown
                         )
@@ -409,8 +410,8 @@ struct HanlinComposerGeneralActionsView: View {
                         onExpandEditor()
                     } label: {
                         navigationRowLabel(
-                            title: "展开长文本编辑器",
-                            subtitle: "全屏编辑多段落长提示词",
+                            title: String(localized: "Expand Long Text Editor"),
+                            subtitle: String(localized: "Full screen editing for multi-paragraph prompts"),
                             systemImage: "arrow.up.left.and.arrow.down.right",
                             tint: accentColor,
                             showsChevron: false
@@ -425,8 +426,8 @@ struct HanlinComposerGeneralActionsView: View {
                             onSendObserve()
                         } label: {
                             navigationRowLabel(
-                                title: "观察并继续推演",
-                                subtitle: "不输入新消息，让助手继续当前话题",
+                                title: String(localized: "Observe & Continue"),
+                                subtitle: String(localized: "Let the assistant continue the current topic without new input"),
                                 systemImage: "eye.fill",
                                 tint: accentColor,
                                 showsChevron: false
@@ -446,7 +447,7 @@ struct HanlinComposerGeneralActionsView: View {
 
     private var promptsSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: "选择提示词模板") {
+            subpageHeader(title: String(localized: "Select Prompt Template")) {
                 if !coordinator.generalNavigationPath.isEmpty {
                     coordinator.generalNavigationPath.removeLast()
                 }
@@ -454,9 +455,9 @@ struct HanlinComposerGeneralActionsView: View {
 
             if availablePrompts.isEmpty {
                 ContentUnavailableView(
-                    "暂无可用提示词",
+                    String(localized: "No Prompts Available"),
                     systemImage: "text.book.closed",
-                    description: Text("所有提示词已添加，或可在提示词库中新建。")
+                    description: Text(String(localized: "All prompts have been added, or you can create new ones in Prompt Library."))
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
@@ -474,7 +475,7 @@ struct HanlinComposerGeneralActionsView: View {
                                         .foregroundStyle(accentColor)
                                         .frame(width: 24, height: 24)
                                     VStack(alignment: .leading, spacing: 2) {
-                                        Text(item.name ?? "未命名提示词")
+                                        Text(item.name ?? String(localized: "Untitled Prompt"))
                                             .font(.subheadline.weight(.medium))
                                             .foregroundStyle(.primary)
                                             .lineLimit(1)
@@ -504,7 +505,7 @@ struct HanlinComposerGeneralActionsView: View {
 
     private var parametersSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: "模型参数调节") {
+            subpageHeader(title: String(localized: "Model Parameters")) {
                 if !coordinator.generalNavigationPath.isEmpty {
                     coordinator.generalNavigationPath.removeLast()
                 }
@@ -514,7 +515,7 @@ struct HanlinComposerGeneralActionsView: View {
                 VStack(alignment: .leading, spacing: 14) {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            Text("创意度 (Temperature)")
+                            Text(String(localized: "Creativity (Temperature)"))
                                 .font(.caption.weight(.semibold))
                             Spacer()
                             Text(String(format: "%.2f", temperature))
@@ -529,7 +530,7 @@ struct HanlinComposerGeneralActionsView: View {
 
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            Text("采样范围 (Top-P)")
+                            Text(String(localized: "Sampling Range (Top-P)"))
                                 .font(.caption.weight(.semibold))
                             Spacer()
                             Text(String(format: "%.2f", topP))
@@ -544,7 +545,7 @@ struct HanlinComposerGeneralActionsView: View {
 
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            Text("最大输出长度 (Max Tokens)")
+                            Text(String(localized: "Max Output Length (Max Tokens)"))
                                 .font(.caption.weight(.semibold))
                             Spacer()
                             Text("\(maxTokens)")
@@ -566,7 +567,7 @@ struct HanlinComposerGeneralActionsView: View {
 
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            Text("上下文记忆轮数 (Max History)")
+                            Text(String(localized: "Context Memory Turns (Max History)"))
                                 .font(.caption.weight(.semibold))
                             Spacer()
                             Text("\(maxMessagesNum)")
@@ -596,21 +597,21 @@ struct HanlinComposerGeneralActionsView: View {
 
     private var imageSizeSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: "图像生成设置") {
+            subpageHeader(title: String(localized: "Image Generation Settings")) {
                 if !coordinator.generalNavigationPath.isEmpty {
                     coordinator.generalNavigationPath.removeLast()
                 }
             }
 
             VStack(alignment: .leading, spacing: 12) {
-                Text("选择画幅比例")
+                Text(String(localized: "Select Aspect Ratio"))
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
 
                 ForEach([
-                    ("square", "方形画幅 (1:1)", "square"),
-                    ("landscape", "横向画幅 (4:3 / 16:9)", "rectangle"),
-                    ("portrait", "纵向画幅 (3:4 / 9:16)", "rectangle.portrait")
+                    ("square", String(localized: "Square (1:1)"), "square"),
+                    ("landscape", String(localized: "Landscape (4:3 / 16:9)"), "rectangle"),
+                    ("portrait", String(localized: "Portrait (3:4 / 9:16)"), "rectangle.portrait")
                 ], id: \.0) { value, label, icon in
                     Button {
                         selectedImageSize = value
@@ -636,7 +637,7 @@ struct HanlinComposerGeneralActionsView: View {
                     .buttonStyle(.plain)
                 }
 
-                TextField("反向提示词 (可选)", text: $imageReversePrompt)
+                TextField(String(localized: "Negative Prompt (Optional)"), text: $imageReversePrompt)
                     .font(.footnote)
                     .padding(10)
                     .background(Color(.secondarySystemFill), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -754,7 +755,7 @@ struct HanlinComposerGeneralActionsView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "chevron.backward")
                         .font(.subheadline.weight(.semibold))
-                    Text("返回")
+                    Text(String(localized: "Back"))
                         .font(.subheadline.weight(.medium))
                 }
                 .foregroundStyle(accentColor)
@@ -805,7 +806,8 @@ struct HanlinComposerToolsRootView: View {
     private let expandedSize = CGSize(width: 360, height: 496)
 
     private var currentSize: CGSize {
-        coordinator.toolsFrameExpanded ? expandedSize : compactSize
+        let target = coordinator.toolsFrameExpanded ? expandedSize : compactSize
+        return coordinator.responsiveSize(target: target)
     }
 
     private var accentColor: Color {
@@ -863,12 +865,12 @@ struct HanlinComposerToolsRootView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Label("工具、技能与 MCP", systemImage: "wrench.and.screwdriver.fill")
+                    Label(String(localized: "Tools, Skills & MCP"), systemImage: "wrench.and.screwdriver.fill")
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(accentColor)
                     Spacer()
                     if capability.supportsToolUse {
-                        Text(ifToolUse ? "已启用" : "已暂停")
+                        Text(ifToolUse ? String(localized: "Enabled") : String(localized: "Paused"))
                             .font(.caption2.weight(.semibold))
                             .foregroundStyle(ifToolUse ? .hlBrown : .secondary)
                             .padding(.horizontal, 8)
@@ -888,9 +890,9 @@ struct HanlinComposerToolsRootView: View {
                                 .frame(width: 28, height: 28)
                                 .background((ifToolUse ? Color.hlBrown : Color.secondary).opacity(0.14), in: Circle())
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("允许此对话调用工具")
+                                Text(String(localized: "Allow tool usage in this chat"))
                                     .font(.subheadline.weight(.medium))
-                                Text("开启后模型可按需调用内置工具、技能与 MCP")
+                                Text(String(localized: "When enabled, the model can call built-in tools, skills, and MCP servers as needed"))
                                     .font(.caption2)
                                     .foregroundStyle(.secondary)
                             }
@@ -904,7 +906,7 @@ struct HanlinComposerToolsRootView: View {
                     HStack(spacing: 8) {
                         Image(systemName: "info.circle.fill")
                             .foregroundStyle(.orange)
-                        Text("当前模型「\(capability.displayName)」不支持函数工具调用。您仍可浏览并管理技能、MCP 与运行环境。")
+                        Text(String(format: String(localized: "The current model \"%@\" does not support tool calling. You can still browse and manage skills, MCP, and runtimes."), capability.displayName))
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                     }
@@ -922,8 +924,8 @@ struct HanlinComposerToolsRootView: View {
                         coordinator.pushToolsSubroute(.toolsCatalog, reduceMotion: reduceMotion)
                     } label: {
                         domainCard(
-                            title: "内置工具与权限 (Tools)",
-                            subtitle: "\(enabledToolsCount) 个工具已启用 · \(toolGroups.count) 个工具组",
+                            title: String(localized: "Built-in Tools & Permissions (Tools)"),
+                            subtitle: String(format: String(localized: "%lld tools enabled · %lld tool groups"), enabledToolsCount, toolGroups.count),
                             systemImage: "hammer.circle.fill",
                             tint: .hlBrown
                         )
@@ -937,8 +939,8 @@ struct HanlinComposerToolsRootView: View {
                         coordinator.pushToolsSubroute(.skillsCenter, reduceMotion: reduceMotion)
                     } label: {
                         domainCard(
-                            title: "智能体技能 (Skills)",
-                            subtitle: "\(enabledSkillsCount)/\(allSkills.count) 个技能已启用 · 支持 SKILL.md",
+                            title: String(localized: "Agent Skills (Skills)"),
+                            subtitle: String(format: String(localized: "%lld/%lld skills enabled · SKILL.md supported"), enabledSkillsCount, allSkills.count),
                             systemImage: "sparkles.rectangle.stack.fill",
                             tint: accentColor
                         )
@@ -952,7 +954,7 @@ struct HanlinComposerToolsRootView: View {
                         coordinator.pushToolsSubroute(.mcpServers, reduceMotion: reduceMotion)
                     } label: {
                         domainCard(
-                            title: "MCP 服务器 (MCP)",
+                            title: String(localized: "MCP Servers (MCP)"),
                             subtitle: mcpStatusSummaryText,
                             systemImage: "server.rack",
                             tint: .hlTeal
@@ -967,7 +969,7 @@ struct HanlinComposerToolsRootView: View {
                         coordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: reduceMotion)
                     } label: {
                         domainCard(
-                            title: "本地运行环境 (Runtimes)",
+                            title: String(localized: "Local Runtimes (Runtimes)"),
                             subtitle: runtimeStatusSummaryText,
                             systemImage: "terminal.fill",
                             tint: .hlIndigo
@@ -987,7 +989,7 @@ struct HanlinComposerToolsRootView: View {
 
     private var toolsCatalogSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: "内置工具与权限")
+            subpageHeader(title: String(localized: "Built-in Tools & Permissions"))
 
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
@@ -1008,7 +1010,7 @@ struct HanlinComposerToolsRootView: View {
                                     VStack(alignment: .leading, spacing: 1) {
                                         Text(group.title)
                                             .font(.subheadline.weight(.semibold))
-                                        Text("\(group.toolEntries.count) 项能力")
+                                        Text(String(format: String(localized: "%lld capabilities"), group.toolEntries.count))
                                             .font(.caption2)
                                             .foregroundStyle(.secondary)
                                     }
@@ -1054,13 +1056,13 @@ struct HanlinComposerToolsRootView: View {
 
     private var skillsSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: "智能体技能 (\(enabledSkillsCount)/\(allSkills.count))")
+            subpageHeader(title: String(format: String(localized: "Agent Skills (%lld/%lld)"), enabledSkillsCount, allSkills.count))
 
             HStack(spacing: 6) {
                 Image(systemName: "magnifyingglass")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                TextField("搜索技能名称或 ID...", text: $skillSearchText)
+                TextField(String(localized: "Search skill name or ID..."), text: $skillSearchText)
                     .font(.footnote)
                     .textFieldStyle(.plain)
                     .accessibilityIdentifier("hanlin-tools-skills-search")
@@ -1106,7 +1108,7 @@ struct HanlinComposerToolsRootView: View {
                         SkillCenterView()
                     } label: {
                         HStack {
-                            Label("打开完整技能中心 (导入 / 新建 / 编辑)", systemImage: "arrow.up.forward.app")
+                            Label(String(localized: "Open Skills Center (Import / New / Edit)"), systemImage: "arrow.up.forward.app")
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                             Spacer()
@@ -1133,7 +1135,7 @@ struct HanlinComposerToolsRootView: View {
 
     private var mcpServersSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: "MCP 服务器")
+            subpageHeader(title: String(localized: "MCP Servers"))
 
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
@@ -1148,9 +1150,9 @@ struct HanlinComposerToolsRootView: View {
                         }
                     )) {
                         VStack(alignment: .leading, spacing: 1) {
-                            Text("全局启用 MCP (global_mcp_enabled)")
+                            Text(String(localized: "Enable MCP Globally (global_mcp_enabled)"))
                                 .font(.subheadline.weight(.medium))
-                            Text(mcpProvider.configuration.isEnabled ? "已开启" : "已关闭")
+                            Text(mcpProvider.configuration.isEnabled ? String(localized: "Enabled") : String(localized: "Disabled"))
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                         }
@@ -1165,10 +1167,10 @@ struct HanlinComposerToolsRootView: View {
                             Image(systemName: "server.rack")
                                 .font(.title3)
                                 .foregroundStyle(.secondary)
-                            Text("尚未安装 MCP 服务器 (server_installed: false)")
+                            Text(String(localized: "No MCP servers installed (server_installed: false)"))
                                 .font(.caption.weight(.medium))
                                 .foregroundStyle(.secondary)
-                            Text("可通过对话让助手自动安装，或在下方进入设置添加。")
+                            Text(String(localized: "You can ask the assistant to install servers via chat, or configure them in Settings below."))
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                                 .multilineTextAlignment(.center)
@@ -1186,12 +1188,21 @@ struct HanlinComposerToolsRootView: View {
                                 Toggle(isOn: Binding(
                                     get: { isSelectedForChat },
                                     set: { enabled in
+                                        let previous = selectedMCPServerIDs
                                         var next = selectedMCPServerIDs
                                         if enabled { next.insert(server.id) } else { next.remove(server.id) }
-                                        selectedMCPServerIDs = next
-                                        onMCPSelectionChanged(next.count)
                                         Task {
                                             await mcpProvider.setSelection(next, chatID: chatID, temporary: temporaryRecord)
+                                            let confirmed = await mcpProvider.selection(chatID: chatID, temporary: temporaryRecord)
+                                            await MainActor.run {
+                                                if confirmed.contains(server.id) == enabled {
+                                                    selectedMCPServerIDs = confirmed
+                                                    onMCPSelectionChanged(confirmed.count)
+                                                } else {
+                                                    selectedMCPServerIDs = previous
+                                                    onMCPSelectionChanged(previous.count)
+                                                }
+                                            }
                                         }
                                     }
                                 )) {
@@ -1206,12 +1217,12 @@ struct HanlinComposerToolsRootView: View {
                                 .tint(.hlTeal)
 
                                 HStack(spacing: 6) {
-                                    statusPill("installed", active: true)
-                                    statusPill("enabled", active: server.isGloballyEnabled)
-                                    statusPill("chat", active: isSelectedForChat)
-                                    statusPill("running", active: isRunning)
+                                    statusPill(String(localized: "Installed"), active: true)
+                                    statusPill(String(localized: "Enabled"), active: server.isGloballyEnabled)
+                                    statusPill(String(localized: "Chat"), active: isSelectedForChat)
+                                    statusPill(String(localized: "Running"), active: isRunning)
                                     Spacer()
-                                    Button(isRunning ? "重启" : "启动") {
+                                    Button(isRunning ? String(localized: "Restart") : String(localized: "Start")) {
                                         Task {
                                             if isRunning {
                                                 await mcpProvider.restart(server)
@@ -1235,7 +1246,7 @@ struct HanlinComposerToolsRootView: View {
                         MCPServersSettingsView()
                     } label: {
                         HStack {
-                            Label("打开 MCP 服务器管理与安装", systemImage: "plus.circle.fill")
+                            Label(String(localized: "Open MCP Server Settings & Installation"), systemImage: "plus.circle.fill")
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                             Spacer()
@@ -1261,7 +1272,7 @@ struct HanlinComposerToolsRootView: View {
 
     private var runtimeSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: "本地运行环境")
+            subpageHeader(title: String(localized: "Local Runtimes"))
 
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
@@ -1279,7 +1290,7 @@ struct HanlinComposerToolsRootView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
-                            Button(isReady ? "停止" : "启动") {
+                            Button(isReady ? String(localized: "Stop") : String(localized: "Start")) {
                                 Task {
                                     if isReady {
                                         _ = try? await AppRuntimeCore.shared.stop(snap.kind)
@@ -1302,7 +1313,7 @@ struct HanlinComposerToolsRootView: View {
                         RuntimeCenterView()
                     } label: {
                         HStack {
-                            Label("打开完整运行环境与包管理器", systemImage: "terminal")
+                            Label(String(localized: "Open Runtime & Package Manager"), systemImage: "terminal")
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                             Spacer()
@@ -1348,16 +1359,16 @@ struct HanlinComposerToolsRootView: View {
 
     private var mcpStatusSummaryText: String {
         guard mcpProvider.configuration.isEnabled else {
-            return "全局已关闭 · 点击配置"
+            return String(localized: "Globally Disabled · Tap to Configure")
         }
         let installedCount = mcpProvider.servers.count
         let runningCount = mcpProvider.servers.filter { mcpProvider.statuses[$0.id]?.state == .running }.count
-        return "已安装 \(installedCount) · 当前对话选中 \(selectedMCPServerIDs.count) · 运行中 \(runningCount)"
+        return String(format: String(localized: "Installed %lld · Selected in chat %lld · Running %lld"), installedCount, selectedMCPServerIDs.count, runningCount)
     }
 
     private var runtimeStatusSummaryText: String {
         let readyCount = runtimeSnapshots.filter { $0.state == .ready || $0.state == .executing }.count
-        return "Node / TS / Python / JSC / Shell · 就绪 \(readyCount)/\(max(runtimeSnapshots.count, 5))"
+        return String(format: String(localized: "Node / TS / Python / JSC / Shell · Ready %lld/%lld"), readyCount, max(runtimeSnapshots.count, 5))
     }
 
     private func refreshLiveState() async {
@@ -1437,7 +1448,7 @@ struct HanlinComposerToolsRootView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "chevron.backward")
                         .font(.subheadline.weight(.semibold))
-                    Text("返回")
+                    Text(String(localized: "Back"))
                         .font(.subheadline.weight(.medium))
                 }
                 .foregroundStyle(accentColor)

@@ -28,7 +28,8 @@ struct HanlinModelPickerPopover: View {
     private let expandedSize = CGSize(width: 344, height: 472)
 
     private var currentSize: CGSize {
-        coordinator.modelFrameExpanded ? expandedSize : compactSize
+        let target = coordinator.modelFrameExpanded ? expandedSize : compactSize
+        return coordinator.responsiveSize(target: target)
     }
 
     private var accentColor: Color {
@@ -105,7 +106,7 @@ struct HanlinModelPickerPopover: View {
     private var compactRootPage: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Label("选择模型", systemImage: "cpu")
+                Label(String(localized: "Select Model"), systemImage: "cpu")
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(accentColor)
                 Spacer()
@@ -125,9 +126,9 @@ struct HanlinModelPickerPopover: View {
 
             if visibleIndices.isEmpty {
                 ContentUnavailableView(
-                    "暂无可用模型",
+                    String(localized: "No models available"),
                     systemImage: "sparkles",
-                    description: Text("请前往模型管理页面开启或添加模型")
+                    description: Text(String(localized: "Please configure models in Settings"))
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
@@ -157,7 +158,7 @@ struct HanlinModelPickerPopover: View {
                             .frame(width: 24, height: 24)
                             .background(accentColor.opacity(0.12), in: Circle())
 
-                        Text("全部模型 (\(visibleIndices.count))")
+                        Text(String(format: String(localized: "All Models (%lld)"), visibleIndices.count))
                             .font(.subheadline.weight(.medium))
                             .foregroundStyle(.primary)
 
@@ -194,7 +195,7 @@ struct HanlinModelPickerPopover: View {
                     HStack(spacing: 4) {
                         Image(systemName: "chevron.backward")
                             .font(.subheadline.weight(.semibold))
-                        Text("返回")
+                        Text(String(localized: "Back"))
                             .font(.subheadline.weight(.medium))
                     }
                     .foregroundStyle(accentColor)
@@ -207,7 +208,7 @@ struct HanlinModelPickerPopover: View {
 
                 Spacer()
 
-                Text("全部模型 (\(filteredAllIndices.count))")
+                Text(String(format: String(localized: "All Models (%lld)"), filteredAllIndices.count))
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.primary)
 
@@ -223,7 +224,7 @@ struct HanlinModelPickerPopover: View {
                 Image(systemName: "magnifyingglass")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                TextField("搜索模型或厂商...", text: $searchText)
+                TextField(String(localized: "Search models"), text: $searchText)
                     .font(.footnote)
                     .textFieldStyle(.plain)
                     .accessibilityIdentifier("hanlin-model-picker-search")
@@ -324,25 +325,25 @@ struct HanlinModelPickerPopover: View {
     private func capabilityBadgesRow(for model: AllModels) -> some View {
         HStack(spacing: 4) {
             if model.supportsToolUse {
-                badgePill("工具", color: ifToolUse ? .hlBrown : .secondary)
+                badgePill(String(localized: "Tools"), color: ifToolUse ? .hlBrown : .secondary)
             }
             if model.supportsMultimodal {
-                badgePill("视觉", color: .hlTeal)
+                badgePill(String(localized: "Vision"), color: .hlTeal)
             }
             if model.supportsReasoning {
-                badgePill("思考", color: ifThink ? .hlPurple : .secondary)
+                badgePill(String(localized: "Thinking"), color: ifThink ? .hlPurple : .secondary)
             }
             if model.supportsImageGen {
-                badgePill("生图", color: .hlGreen)
+                badgePill(String(localized: "Image"), color: .hlGreen)
             }
             if model.supportsVoiceGen {
-                badgePill("语音", color: ifAudio ? .hlPink : .secondary)
+                badgePill(String(localized: "Voice"), color: ifAudio ? .hlPink : .secondary)
             }
             if model.company?.uppercased() == "LOCAL" {
-                badgePill("本地", color: .hlOrange)
+                badgePill(String(localized: "On-Device"), color: .hlOrange)
             }
             if model.price == 0 {
-                badgePill("免费", color: .green)
+                badgePill(String(localized: "Free"), color: .green)
             }
         }
     }

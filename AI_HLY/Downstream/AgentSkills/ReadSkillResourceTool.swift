@@ -135,8 +135,16 @@ public enum ReadSkillResourceTool {
         language: String = "zh"
     ) -> String {
         let isZh = language.hasPrefix("zh")
+        let isHe = language.hasPrefix("he")
         if result.hasPrefix("Error:") {
-            return result
+            if isZh {
+                return result
+            } else if isHe {
+                return result.replacingOccurrences(of: "Error: Resource", with: "שגיאה: משאב")
+                    .replacingOccurrences(of: "not found", with: "לא נמצא")
+            } else {
+                return result
+            }
         }
         if let data = argumentsJSON.data(using: .utf8),
            let args = try? JSONDecoder().decode(Arguments.self, from: data) {
@@ -144,12 +152,25 @@ public enum ReadSkillResourceTool {
             if firstLine.hasPrefix("Resource ") {
                 return firstLine.replacingOccurrences(of: ":", with: "")
             }
-            return isZh
-                ? "已读取技能「\(args.skill_id)」资源 \(args.relative_path)"
-                : "Read resource '\(args.relative_path)' from skill '\(args.skill_id)'"
+            if isZh {
+                return "已读取技能「\(args.skill_id)」资源 \(args.relative_path)"
+            } else if isHe {
+                return "נקרא משאב '\(args.relative_path)' מתוך מיומנות '\(args.skill_id)'"
+            } else {
+                return "Read resource '\(args.relative_path)' from skill '\(args.skill_id)'"
+            }
         }
         let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        return firstLine.isEmpty ? (isZh ? "已读取技能资源" : "Read skill resource") : firstLine
+        if firstLine.isEmpty {
+            if isZh {
+                return "已读取技能资源"
+            } else if isHe {
+                return "נקרא משאב מיומנות"
+            } else {
+                return "Read skill resource"
+            }
+        }
+        return firstLine
     }
 
     private static func isBinaryFile(path: String) -> Bool {

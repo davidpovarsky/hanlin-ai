@@ -2068,8 +2068,21 @@ struct ChatBubbleView: View {
             return trimmed
         }
         guard let steps = agentRun?.steps else { return "" }
-        let toolSteps = steps.filter { $0.kind == .toolCall }
-        return toolSteps.last?.title ?? ""
+        let toolSteps = steps.filter {
+            switch $0.kind {
+            case .toolCall, .toolExecution, .codeExecution, .documentRead, .sourceRead, .map, .calendar, .health, .nativeApp:
+                return true
+            default:
+                return false
+            }
+        }
+        if toolSteps.count == 1 {
+            return toolSteps.first?.title ?? ""
+        } else if toolSteps.count > 1 {
+            let format = String(localized: "Tool activity (%lld)")
+            return String(format: format, toolSteps.count)
+        }
+        return ""
     }
 
     private var resolvedResourcesForDisplay: [Resource] {
@@ -2159,30 +2172,126 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func toolContentView() -> some View {
         let effectiveToolContent = resolvedToolContentForDisplay
-        if !effectiveToolContent.isEmpty {
-            VStack(alignment: .leading) {
-                
+        let structuredEntries = ClassicChatAgentProjection.projectToolEntries(from: agentRun)
+        let hasStructured = !structuredEntries.isEmpty
+        let hasLegacy = !effectiveToolContent.isEmpty
+
+        if hasStructured || hasLegacy {
+            VStack(alignment: .leading, spacing: 6) {
                 ToggleButton(
                     title: String(localized: "tooluse_content"),
                     timeText: resolvedToolNameForDisplay,
                     isExpanded: $isToolContentExpanded
                 )
                 .accessibilityIdentifier("hanlin-tool-content-toggle")
-                
+
                 if isToolContentExpanded {
-                    Text(effectiveToolContent)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
+                    if hasStructured {
+                        VStack(alignment: .leading, spacing: 8) {
+                            ForEach(structuredEntries) { entry in
+                                toolCallRowView(entry)
+                            }
+                        }
                         .padding(.horizontal, 8)
-                        .transition(.opacity.combined(with: .scale))
-                        .textSelection(.enabled)
-                        .padding(.bottom, 5)
-                        .accessibilityIdentifier("hanlin-tool-content-expanded-text")
+                        .padding(.bottom, 6)
+                        .accessibilityIdentifier("hanlin-tool-content-structured-list")
+                    } else {
+                        // Legacy fallback for stored chats without agentRunJSON
+                        Text(effectiveToolContent)
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 8)
+                            .transition(.opacity.combined(with: .scale))
+                            .textSelection(.enabled)
+                            .padding(.bottom, 5)
+                            .accessibilityIdentifier("hanlin-tool-content-expanded-text")
+                    }
                 }
             }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tool-content")
         }
+    }
+
+    @ViewBuilder
+    private func toolCallRowView(_ entry: ClassicProjectedToolCallEntry) -> some View {
+        let accent: Color = temporaryRecord ? .primary : .hlBluefont
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 6) {
+                switch entry.status {
+                case .running, .pending:
+                    ProgressView()
+                        .controlSize(.mini)
+                        .frame(width: 14, height: 14)
+                case .completed:
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(.hlGreen)
+                case .failed:
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(.red)
+                case .cancelled:
+                    Image(systemName: "slash.circle")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(.secondary)
+                }
+
+                Text(entry.toolName)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundColor(accent)
+
+                if entry.isMetaSkillOrDiscoveryTool {
+                    Text(String(localized: "Skill"))
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 1)
+                        .background(Color.secondary.opacity(0.12), in: Capsule())
+                }
+
+                Spacer()
+
+                Text(entry.statusText)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+
+            if let summary = entry.summary, !summary.isEmpty, summary != entry.output {
+                Text(summary)
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+            }
+
+            if !entry.output.isEmpty {
+                Text(entry.output)
+                    .font(.caption.monospaced())
+                    .foregroundColor(.primary)
+                    .padding(6)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(Color(.secondarySystemBackground).opacity(0.6))
+                    )
+                    .textSelection(.enabled)
+            }
+
+            if let errorDesc = entry.errorDescription, !errorDesc.isEmpty {
+                Text("⚠️ \(errorDesc)")
+                    .font(.caption)
+                    .foregroundColor(.red)
+            }
+        }
+        .padding(8)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color(.systemBackground).opacity(0.4))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(accent.opacity(0.15), lineWidth: 0.8)
+                )
+        )
+        .accessibilityIdentifier("hanlin-tool-call-row-\(entry.callID)")
     }
     
     // MARK: - 语音消息区域

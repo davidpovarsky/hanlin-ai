@@ -141,8 +141,17 @@ public enum LoadSkillTool {
         language: String = "zh"
     ) -> String {
         let isZh = language.hasPrefix("zh")
+        let isHe = language.hasPrefix("he")
         if result.hasPrefix("Error:") {
-            return result
+            if isZh {
+                return result
+            } else if isHe {
+                return result.replacingOccurrences(of: "Error: Skill", with: "שגיאה: מיומנות")
+                    .replacingOccurrences(of: "not found", with: "לא נמצאה")
+                    .replacingOccurrences(of: "Available skills", with: "מיומנויות זמינות")
+            } else {
+                return result
+            }
         }
         if let data = argumentsJSON.data(using: .utf8),
            let args = try? JSONDecoder().decode(Arguments.self, from: data) {
@@ -153,18 +162,34 @@ public enum LoadSkillTool {
                     return exposedCount > 0
                         ? "已加载技能「\(title)」(\(descriptor.id.rawValue))，关联 \(exposedCount) 个工具"
                         : "已加载技能「\(title)」(\(descriptor.id.rawValue))"
+                } else if isHe {
+                    return exposedCount > 0
+                        ? "נטענה מיומנות '\(title)' (\(descriptor.id.rawValue)) עם \(exposedCount) כלים"
+                        : "נטענה מיומנות '\(title)' (\(descriptor.id.rawValue))"
                 } else {
                     return exposedCount > 0
                         ? "Loaded skill '\(title)' (\(descriptor.id.rawValue)) with \(exposedCount) preferred tool(s)"
                         : "Loaded skill '\(title)' (\(descriptor.id.rawValue))"
                 }
             }
-            return isZh ? "已加载技能 \(args.skill_id)" : "Loaded skill '\(args.skill_id)'"
+            if isZh {
+                return "已加载技能 \(args.skill_id)"
+            } else if isHe {
+                return "נטענה מיומנות \(args.skill_id)"
+            } else {
+                return "Loaded skill '\(args.skill_id)'"
+            }
         }
         let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         if !firstLine.isEmpty && !firstLine.contains("### Instructions") {
             return firstLine
         }
-        return isZh ? "已加载技能" : "Skill loaded"
+        if isZh {
+            return "已加载技能"
+        } else if isHe {
+            return "מיומנות נטענה"
+        } else {
+            return "Skill loaded"
+        }
     }
 }

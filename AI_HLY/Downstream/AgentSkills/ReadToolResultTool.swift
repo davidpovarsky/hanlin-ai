@@ -70,6 +70,7 @@ public enum ReadToolResultTool {
         language: String = "zh"
     ) -> String {
         let isZh = language.hasPrefix("zh")
+        let isHe = language.hasPrefix("he")
         if result.hasPrefix("Error:") {
             return result
         }
@@ -77,6 +78,12 @@ public enum ReadToolResultTool {
         if !firstLine.isEmpty {
             return firstLine.replacingOccurrences(of: ":", with: "")
         }
-        return isZh ? "已读取工具结果片段" : "Read tool result slice"
+        if isZh {
+            return "已读取工具结果片段"
+        } else if isHe {
+            return "נקרא קטע מתוצאת הכלי"
+        } else {
+            return "Read tool result slice"
+        }
     }
 }

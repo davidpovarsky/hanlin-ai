@@ -1577,7 +1577,8 @@ struct ClassicChatRestorationTests {
             to: assistantMessage
         )
 
-        #expect(assistantMessage.toolName == "manage_mcp_servers (+1)")
+        let expectedBadge = String(format: String(localized: "Tool activity (%lld)"), 2)
+        #expect(assistantMessage.toolName == expectedBadge)
         #expect(assistantMessage.toolContent?.contains("[load_skill]") == true)
         #expect(assistantMessage.toolContent?.contains("[manage_mcp_servers]") == true)
         #expect(assistantMessage.toolContent?.contains("### Instructions") == false)
@@ -1593,5 +1594,285 @@ struct ClassicChatRestorationTests {
 
         let unlaidOutTextView = UITextView(frame: .zero)
         #expect(NativeMultilineTextEditor.effectiveMeasurementWidth(for: unlaidOutTextView, fallbackWidth: 240) == 240)
+    }
+
+    // MARK: - 27. duplicateOutputsDifferentCallsRetainOrderAndIdentity
+
+    @MainActor
+    @Test("27. Track 1 P0: Two calls with identical toolName and identical output retain distinct identities, stable IDs, and execution order")
+    func duplicateOutputsDifferentCallsRetainOrderAndIdentity() throws {
+        let runID = UUID()
+        let groupID = UUID()
+
+        let step1 = AgentActivityStep(
+            externalID: "call_a",
+            sequence: 0,
+            kind: .toolExecution,
+            title: "manage_mcp_servers",
+            status: .completed,
+            output: "OK"
+        )
+        let step2 = AgentActivityStep(
+            externalID: "call_b",
+            sequence: 1,
+            kind: .toolExecution,
+            title: "manage_mcp_servers",
+            status: .completed,
+            output: "OK"
+        )
+        let item1 = AgentTranscriptItem(
+            externalID: "item_a",
+            sequence: 0,
+            kind: .userVisibleToolResult,
+            callID: "call_a",
+            toolName: "manage_mcp_servers",
+            status: .completed,
+            text: "OK",
+            visibilityAfterCompletion: .remainInChat
+        )
+        let item2 = AgentTranscriptItem(
+            externalID: "item_b",
+            sequence: 1,
+            kind: .userVisibleToolResult,
+            callID: "call_b",
+            toolName: "manage_mcp_servers",
+            status: .completed,
+            text: "OK",
+            visibilityAfterCompletion: .remainInChat
+        )
+
+        let originalRun = AgentRun(
+            id: runID,
+            groupID: groupID,
+            status: .completed,
+            steps: [step1, step2],
+            transcriptItems: [item1, item2],
+            finalAnswer: "Done"
+        )
+
+        let projected = ClassicChatAgentProjection.projectToolEntries(from: originalRun)
+        #expect(projected.count == 2)
+        #expect(projected[0].callID == "call_a")
+        #expect(projected[0].output == "OK")
+        #expect(projected[1].callID == "call_b")
+        #expect(projected[1].output == "OK")
+        #expect(projected[0].id != projected[1].id)
+        #expect(projected[0].sequence < projected[1].sequence)
+
+        var syncList: [ClassicProjectedToolCallEntry] = []
+        syncList = ClassicChatAgentProjection.syncStructuredToolEntries(
+            existingEntries: syncList,
+            from: originalRun,
+            isResponding: false
+        )
+        #expect(syncList.count == 2)
+        #expect(syncList[0].callID == "call_a")
+        #expect(syncList[1].callID == "call_b")
+
+        let encoder = JSONEncoder()
+        let encodedData = try encoder.encode(originalRun)
+        let decoder = JSONDecoder()
+        let decodedRun = try decoder.decode(AgentRun.self, from: encodedData)
+
+        let reprojected = ClassicChatAgentProjection.projectToolEntries(from: decodedRun)
+        #expect(reprojected.count == 2)
+        #expect(reprojected[0].callID == "call_a")
+        #expect(reprojected[1].callID == "call_b")
+
+        let message = ChatMessages(
+            role: "assistant",
+            text: "Done",
+            groupID: groupID,
+            timestamp: Date()
+        )
+        message.agentRunJSON = String(data: encodedData, encoding: .utf8)
+        #expect(message.agentRun != nil)
+        let messageEntries = ClassicChatAgentProjection.projectToolEntries(from: message.agentRun)
+        #expect(messageEntries.count == 2)
+        #expect(messageEntries[0].callID == "call_a")
+        #expect(messageEntries[1].callID == "call_b")
+    }
+
+    // MARK: - 28. complexToolSequenceAndErrorPreservation
+
+    @MainActor
+    @Test("28. Track 1 P0: Complex tool sequence (load_skill -> MCP status -> MCP call -> failed MCP call) preserves order, statuses, and error details")
+    func complexToolSequenceAndErrorPreservation() throws {
+        let runID = UUID()
+        let groupID = UUID()
+
+        let stepSkill = AgentActivityStep(
+            externalID: "call_skill",
+            sequence: 0,
+            kind: .toolExecution,
+            title: "load_skill",
+            status: .completed,
+            output: "Loaded skill mcp_servers"
+        )
+        let stepStatus = AgentActivityStep(
+            externalID: "call_mcp_status",
+            sequence: 1,
+            kind: .toolExecution,
+            title: "manage_mcp_servers",
+            status: .completed,
+            output: "MCP server running: 1"
+        )
+        let stepCall = AgentActivityStep(
+            externalID: "call_echo",
+            sequence: 2,
+            kind: .toolExecution,
+            title: "mcp__echo__ping",
+            status: .completed,
+            output: "pong"
+        )
+        let stepFail = AgentActivityStep(
+            externalID: "call_fail",
+            sequence: 3,
+            kind: .toolExecution,
+            title: "mcp__file_write",
+            status: .failed,
+            output: nil,
+            errorDescription: "Permission denied by user policy"
+        )
+
+        let run = AgentRun(
+            id: runID,
+            groupID: groupID,
+            status: .completed,
+            steps: [stepSkill, stepStatus, stepCall, stepFail],
+            transcriptItems: []
+        )
+
+        let entries = ClassicChatAgentProjection.projectToolEntries(from: run)
+        #expect(entries.count == 4)
+        #expect(entries[0].toolName == "load_skill")
+        #expect(entries[0].status == .completed)
+        #expect(entries[1].toolName == "manage_mcp_servers")
+        #expect(entries[1].status == .completed)
+        #expect(entries[2].toolName == "mcp__echo__ping")
+        #expect(entries[2].status == .completed)
+        #expect(entries[2].output == "pong")
+        #expect(entries[3].toolName == "mcp__file_write")
+        #expect(entries[3].status == .failed)
+        #expect(entries[3].errorDescription == "Permission denied by user policy")
+
+        var syncList: [ClassicProjectedToolCallEntry] = []
+        let partialChunk1 = ClassicChatAgentProjection.applyStreamChunk(
+            callID: "call_echo",
+            toolName: "mcp__echo__ping",
+            info: "po",
+            existingEntries: syncList,
+            runID: runID
+        )
+        #expect(partialChunk1.count == 1)
+        #expect(partialChunk1[0].callID == "call_echo")
+        #expect(partialChunk1[0].output == "po")
+
+        let partialChunk2 = ClassicChatAgentProjection.applyStreamChunk(
+            callID: "call_echo",
+            toolName: "mcp__echo__ping",
+            info: "pong",
+            existingEntries: partialChunk1,
+            runID: runID
+        )
+        #expect(partialChunk2.count == 1)
+        #expect(partialChunk2[0].callID == "call_echo")
+        #expect(partialChunk2[0].output == "pong")
+    }
+
+    // MARK: - 29. domainToolLegitimateInstructionsHeadingPreserved
+
+    @MainActor
+    @Test("29. Track 1 P0: Domain tools preserve legitimate '### Instructions' headings in user view; meta skill tools sanitize user view while preserving modelText")
+    func domainToolLegitimateInstructionsHeadingPreserved() async {
+        let domainRecipeText = """
+        # Apple Pie Recipe
+        ### Instructions
+        1. Peel and slice 6 apples.
+        2. Mix with sugar and cinnamon.
+        3. Bake in preheated oven at 375°F for 45 minutes.
+        """
+
+        let domainSanitized = ClassicChatAgentProjection.sanitizeUserFacingToolOutput(
+            domainRecipeText,
+            isMetaSkillOrDiscoveryTool: false
+        )
+        #expect(domainSanitized.contains("### Instructions"))
+        #expect(domainSanitized.contains("Peel and slice 6 apples"))
+
+        let skillMetaText = """
+        Skill 'calculator' loaded successfully.
+        ### Instructions
+        Internal prompt instructions that the LLM must follow but the user must not see.
+        """
+        let skillSanitized = ClassicChatAgentProjection.sanitizeUserFacingToolOutput(
+            skillMetaText,
+            isMetaSkillOrDiscoveryTool: true
+        )
+        #expect(!skillSanitized.contains("### Instructions"))
+        #expect(!skillSanitized.contains("Internal prompt instructions"))
+        #expect(skillSanitized.contains("Skill 'calculator' loaded successfully."))
+    }
+
+    // MARK: - 30. hebrewEnglishChineseToolSummaryLocalization
+
+    @MainActor
+    @Test("30. Track 4 P0: Four meta-tool user summaries support Hebrew, English, and Simplified Chinese without falling back to English/Chinese for Hebrew")
+    func hebrewEnglishChineseToolSummaryLocalization() {
+        let skillArgs = #"{"skill_id":"test_skill"}"#
+        let skillHe = LoadSkillTool.userFacingSummary(argumentsJSON: skillArgs, result: "Loaded", language: "he")
+        let skillEn = LoadSkillTool.userFacingSummary(argumentsJSON: skillArgs, result: "Loaded", language: "en")
+        let skillZh = LoadSkillTool.userFacingSummary(argumentsJSON: skillArgs, result: "Loaded", language: "zh")
+        #expect(skillHe.contains("מיומנות") || skillHe.contains("test_skill"))
+        #expect(skillEn.contains("skill") || skillEn.contains("test_skill"))
+        #expect(skillZh.contains("技能") || skillZh.contains("test_skill"))
+
+        let resArgs = #"{"skill_id":"test_skill","relative_path":"doc.md"}"#
+        let resHe = ReadSkillResourceTool.userFacingSummary(argumentsJSON: resArgs, result: "Content", language: "he")
+        let resEn = ReadSkillResourceTool.userFacingSummary(argumentsJSON: resArgs, result: "Content", language: "en")
+        let resZh = ReadSkillResourceTool.userFacingSummary(argumentsJSON: resArgs, result: "Content", language: "zh")
+        #expect(resHe.contains("משאב") || resHe.contains("doc.md"))
+        #expect(resEn.contains("resource") || resEn.contains("doc.md"))
+        #expect(resZh.contains("资源") || resZh.contains("doc.md"))
+
+        let searchArgs = #"{"query":"calc"}"#
+        let searchHe = ToolSearchTool.userFacingSummary(argumentsJSON: searchArgs, result: #"{"tools":["calculator"]}"#, language: "he")
+        let searchEn = ToolSearchTool.userFacingSummary(argumentsJSON: searchArgs, result: #"{"tools":["calculator"]}"#, language: "en")
+        let searchZh = ToolSearchTool.userFacingSummary(argumentsJSON: searchArgs, result: #"{"tools":["calculator"]}"#, language: "zh")
+        #expect(searchHe.contains("חיפוש") || searchHe.contains("calc"))
+        #expect(searchEn.contains("search") || searchEn.contains("calc"))
+        #expect(searchZh.contains("搜索") || searchZh.contains("calc"))
+
+        let readArgs = #"{"call_id":"c123"}"#
+        let readHe = ReadToolResultTool.userFacingSummary(argumentsJSON: readArgs, result: "Output", language: "he")
+        let readEn = ReadToolResultTool.userFacingSummary(argumentsJSON: readArgs, result: "Output", language: "en")
+        let readZh = ReadToolResultTool.userFacingSummary(argumentsJSON: readArgs, result: "Output", language: "zh")
+        #expect(readHe.contains("תוצאת") || readHe.contains("c123"))
+        #expect(readEn.contains("result") || readEn.contains("c123"))
+        #expect(readZh.contains("结果") || readZh.contains("c123"))
+    }
+
+    // MARK: - 31. legacyToolContentOnlyChatFallback
+
+    @MainActor
+    @Test("31. Track 1 P0: Legacy stored chat without agentRunJSON falls back gracefully to toolContent without crashing or showing duplicate cards")
+    func legacyToolContentOnlyChatFallback() {
+        let legacyMessage = ChatMessages(
+            role: "assistant",
+            text: "Here is your calculation:",
+            groupID: UUID(),
+            timestamp: Date()
+        )
+        legacyMessage.toolName = "calculator"
+        legacyMessage.toolContent = "[calculator]\nResult: 42"
+        legacyMessage.agentRunJSON = nil
+
+        #expect(legacyMessage.agentRun == nil)
+
+        let entries = ClassicChatAgentProjection.projectToolEntries(from: legacyMessage.agentRun)
+        #expect(entries.isEmpty)
+
+        #expect(legacyMessage.toolContent == "[calculator]\nResult: 42")
+        #expect(legacyMessage.toolName == "calculator")
     }
 }

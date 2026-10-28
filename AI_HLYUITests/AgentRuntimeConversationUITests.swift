@@ -382,23 +382,18 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         // Navigate into Native Tools subpage inside Tools popover and back
         let nativeToolsRow = app.buttons["hanlin-tools-open-catalog"].firstMatch
-        if nativeToolsRow.waitForExistence(timeout: 5) {
-            tapElement(nativeToolsRow)
-            let nativeToolsPage = app.descendants(matching: .any)["hanlin-tools-catalog-page"].firstMatch
-            XCTAssertTrue(nativeToolsPage.waitForExistence(timeout: 5), "Native Tools subpage did not appear")
-            let backBtn = app.buttons["hanlin-tools-subpage-back"].firstMatch
-            if backBtn.waitForExistence(timeout: 3) {
-                tapElement(backBtn)
-            }
-        }
+        XCTAssertTrue(nativeToolsRow.waitForExistence(timeout: 5), "Native Tools row must exist in Tools popover")
+        tapElement(nativeToolsRow)
+        let nativeToolsPage = app.descendants(matching: .any)["hanlin-tools-catalog-page"].firstMatch
+        XCTAssertTrue(nativeToolsPage.waitForExistence(timeout: 5), "Native Tools subpage did not appear")
+        let backBtn = app.buttons["hanlin-tools-subpage-back"].firstMatch
+        XCTAssertTrue(backBtn.waitForExistence(timeout: 5), "Back button must exist in Native Tools subpage")
+        tapElement(backBtn)
+
         // Dismiss Tools popover
-        if toolsPopover.exists {
-            tapElement(toolsDirect)
-            if !toolsPopover.waitForNonExistence(timeout: 3) {
-                tapElement(toolsDirect)
-                _ = toolsPopover.waitForNonExistence(timeout: 3)
-            }
-        }
+        XCTAssertTrue(toolsPopover.exists, "Tools popover must still exist after returning from subpage")
+        tapElement(toolsDirect)
+        XCTAssertTrue(toolsPopover.waitForNonExistence(timeout: 5), "Tools popover must dismiss on tap")
 
         let input = chatInputElement(in: app)
         tapElement(input)
@@ -426,14 +421,25 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             "Model picker capsule (\(modelPicker.frame)) and send button (\(sendButton.frame)) must never overlap"
         )
 
-        // 4. Open Model Picker popover and verify featured model list
+        // 4. Open Model Picker popover, navigate into All Models, and back
         tapElement(modelPicker)
         let modelPopover = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
         XCTAssertTrue(modelPopover.waitForExistence(timeout: 5), "Model picker popover must appear on tap")
-        let modelCandidate = app.descendants(matching: .any).matching(
-            NSPredicate(format: "label CONTAINS 'Agent Acceptance' OR label CONTAINS '全部模型' OR label CONTAINS 'All Models'")
-        ).firstMatch
-        XCTAssertTrue(modelCandidate.waitForExistence(timeout: 10), "Model picker popover did not display model list")
+        let allModelsButton = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
+        XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "All Models button must exist in model picker popover")
+        tapElement(allModelsButton)
+
+        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
+        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models expanded page did not appear")
+        let modelSearchField = app.textFields["hanlin-model-picker-search"].firstMatch
+        XCTAssertTrue(modelSearchField.waitForExistence(timeout: 5), "Model search textfield did not appear")
+        let modelBackBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
+        XCTAssertTrue(modelBackBtn.waitForExistence(timeout: 5), "Back button must exist in All Models page")
+        tapElement(modelBackBtn)
+
+        XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "Model picker root must reappear after tapping Back")
+        tapElement(modelPicker)
+        XCTAssertTrue(modelPopover.waitForNonExistence(timeout: 5), "Model picker popover must dismiss on tap")
 
         attachScreenshot("UI-06_ComposerMultilineAttachmentsModelSelectorNoOverlap", in: app)
     }
@@ -491,6 +497,117 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(turn2Answer.label.contains("ECHO_PONG_OK:turn2"), "Turn 2 did not include live MCP worker response ECHO_PONG_OK:turn2")
 
         attachScreenshot("UI-08_ConversationalMCPLifecycleAndSecondTurnReuse", in: app)
+    }
+
+    func testUI09DirectToolsCatalogAndSkillsNavigation() throws {
+        let app = launchAcceptanceApp()
+        openChat(in: app)
+
+        let toolsDirect = app.descendants(matching: .any)["hanlin-composer-tools-direct"].firstMatch
+        XCTAssertTrue(toolsDirect.waitForExistence(timeout: 5), "Direct Tools button must exist")
+        tapElement(toolsDirect)
+
+        let toolsPopover = app.descendants(matching: .any)["hanlin-composer-tools-popover"].firstMatch
+        XCTAssertTrue(toolsPopover.waitForExistence(timeout: 5), "Direct Tools button must open Tools popover")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch.exists)
+
+        // 1. Tool Use Toggle exists
+        let toolUseToggle = app.descendants(matching: .any)["hanlin-tool-use-toggle"].firstMatch
+        XCTAssertTrue(toolUseToggle.waitForExistence(timeout: 5), "Tool use toggle must exist")
+
+        // 2. Open Native Tools Catalog subpage and return
+        let catalogRow = app.buttons["hanlin-tools-open-catalog"].firstMatch
+        XCTAssertTrue(catalogRow.waitForExistence(timeout: 5), "Open catalog row must exist")
+        tapElement(catalogRow)
+
+        let catalogPage = app.descendants(matching: .any)["hanlin-tools-catalog-page"].firstMatch
+        XCTAssertTrue(catalogPage.waitForExistence(timeout: 5), "Native tools catalog subpage must appear")
+        let backBtn1 = app.buttons["hanlin-tools-subpage-back"].firstMatch
+        XCTAssertTrue(backBtn1.waitForExistence(timeout: 5), "Back button must exist")
+        tapElement(backBtn1)
+
+        // 3. Open Skills subpage, search field exists, return
+        let skillsRow = app.buttons["hanlin-tools-open-skills"].firstMatch
+        XCTAssertTrue(skillsRow.waitForExistence(timeout: 5), "Open skills row must exist")
+        tapElement(skillsRow)
+
+        let skillsPage = app.descendants(matching: .any)["hanlin-tools-skills-page"].firstMatch
+        XCTAssertTrue(skillsPage.waitForExistence(timeout: 5), "Skills subpage must appear")
+        let skillsSearch = app.textFields["hanlin-tools-skills-search"].firstMatch
+        XCTAssertTrue(skillsSearch.waitForExistence(timeout: 5), "Skills search field must exist")
+        let backBtn2 = app.buttons["hanlin-tools-subpage-back"].firstMatch
+        XCTAssertTrue(backBtn2.waitForExistence(timeout: 5))
+        tapElement(backBtn2)
+
+        // 4. Open MCP subpage, assert global MCP toggle, return
+        let mcpRow = app.buttons["hanlin-tools-open-mcp"].firstMatch
+        XCTAssertTrue(mcpRow.waitForExistence(timeout: 5), "Open MCP row must exist")
+        tapElement(mcpRow)
+
+        let mcpPage = app.descendants(matching: .any)["hanlin-tools-mcp-page"].firstMatch
+        XCTAssertTrue(mcpPage.waitForExistence(timeout: 5), "MCP subpage must appear")
+        let mcpToggle = app.descendants(matching: .any)["hanlin-mcp-global-toggle"].firstMatch
+        XCTAssertTrue(mcpToggle.waitForExistence(timeout: 5), "MCP global toggle must exist")
+        let backBtn3 = app.buttons["hanlin-tools-subpage-back"].firstMatch
+        XCTAssertTrue(backBtn3.waitForExistence(timeout: 5))
+        tapElement(backBtn3)
+
+        // 5. Open Runtime subpage and return
+        let runtimeRow = app.buttons["hanlin-tools-open-runtime"].firstMatch
+        XCTAssertTrue(runtimeRow.waitForExistence(timeout: 5), "Open runtime row must exist")
+        tapElement(runtimeRow)
+
+        let runtimePage = app.descendants(matching: .any)["hanlin-tools-runtime-page"].firstMatch
+        XCTAssertTrue(runtimePage.waitForExistence(timeout: 5), "Runtime subpage must appear")
+        let backBtn4 = app.buttons["hanlin-tools-subpage-back"].firstMatch
+        XCTAssertTrue(backBtn4.waitForExistence(timeout: 5))
+        tapElement(backBtn4)
+
+        // Close Tools popover
+        tapElement(toolsDirect)
+        XCTAssertTrue(toolsPopover.waitForNonExistence(timeout: 5))
+
+        attachScreenshot("UI-09_DirectToolsCatalogAndSkillsNavigation", in: app)
+    }
+
+    func testUI10ModelPickerSearchSelectionAndPersistence() throws {
+        let app = launchAcceptanceApp()
+        openChat(in: app)
+
+        let modelPicker = app.descendants(matching: .any)["hanlin-composer-model-picker"].firstMatch
+        XCTAssertTrue(modelPicker.waitForExistence(timeout: 5), "Compact model picker capsule must exist")
+        tapElement(modelPicker)
+
+        let modelPopover = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
+        XCTAssertTrue(modelPopover.waitForExistence(timeout: 5), "Model picker popover must appear")
+
+        let allModelsButton = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
+        XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "All Models button must exist")
+        tapElement(allModelsButton)
+
+        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
+        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models expanded page must appear")
+
+        let searchField = app.textFields["hanlin-model-picker-search"].firstMatch
+        XCTAssertTrue(searchField.waitForExistence(timeout: 5), "Search field must exist")
+        tapElement(searchField)
+        searchField.typeText("GPT")
+
+        let firstOption = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH 'hanlin-model-picker-option-'")
+        ).firstMatch
+        if firstOption.waitForExistence(timeout: 5) {
+            tapElement(firstOption)
+            _ = modelPopover.waitForNonExistence(timeout: 5)
+        } else {
+            let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
+            if backBtn.waitForExistence(timeout: 5) {
+                tapElement(backBtn)
+                tapElement(modelPicker)
+            }
+        }
+
+        attachScreenshot("UI-10_ModelPickerSearchSelectionAndPersistence", in: app)
     }
 
     // MARK: - Navigation & Toggle Helpers

@@ -179,7 +179,7 @@ final class HanlinComposerPopupCoordinator {
             generalFrameExpanded = true
         } completion: {
             self.isGeneralAnimatingExpand = false
-            guard self.generalFrameExpanded else { return }
+            guard self.activePopup == .general, self.generalFrameExpanded else { return }
             self.generalNavigationPath.append(route)
         }
     }
@@ -226,7 +226,7 @@ final class HanlinComposerPopupCoordinator {
             toolsFrameExpanded = true
         } completion: {
             self.isToolsAnimatingExpand = false
-            guard self.toolsFrameExpanded else { return }
+            guard self.activePopup == .tools, self.toolsFrameExpanded else { return }
             self.toolsNavigationPath.append(route)
         }
     }
@@ -273,9 +273,39 @@ final class HanlinComposerPopupCoordinator {
             modelFrameExpanded = true
         } completion: {
             self.isModelAnimatingExpand = false
-            guard self.modelFrameExpanded else { return }
+            guard self.activePopup == .model, self.modelFrameExpanded else { return }
             self.modelNavigationPath.append(route)
         }
+    }
+
+    /// Dynamically calculates responsive popover dimensions based on available window/screen space
+    /// and safe area insets, preventing clipping in narrow split view or landscape keyboard-up states.
+    func responsiveSize(
+        target: CGSize,
+        horizontalMargin: CGFloat = 20,
+        verticalMargin: CGFloat = 28
+    ) -> CGSize {
+        #if canImport(UIKit)
+        if let window = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow }) ?? UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first {
+            let bounds = window.bounds
+            let insets = window.safeAreaInsets
+            let availableWidth = bounds.width - insets.left - insets.right
+            let availableHeight = bounds.height - insets.top - insets.bottom
+            let maxWidth = max(240, availableWidth - horizontalMargin)
+            let maxHeight = max(260, availableHeight - verticalMargin)
+            return CGSize(
+                width: min(target.width, maxWidth),
+                height: min(target.height, maxHeight)
+            )
+        }
+        #endif
+        return target
     }
 
     func handleModelNavPathChange(reduceMotion: Bool = false) {

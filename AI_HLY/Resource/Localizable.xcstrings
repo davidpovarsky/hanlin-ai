@@ -11141,6 +11141,799 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "更多操作" } }
       }
     }
+,
+    "%lld capabilities" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld capabilities" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld יכולות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld 项能力" } }
+      }
+    },
+    "%lld templates available" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld templates available" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld תבניות זמינות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "可用 %lld 个模板" } }
+      }
+    },
+    "%lld tools enabled · %lld tool groups" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld tools enabled · %lld tool groups" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld כלים מופעלים · %lld קבוצות כלים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld 个工具已启用 · %lld 个工具组" } }
+      }
+    },
+    "%lld/%lld skills enabled · SKILL.md supported" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld/%lld skills enabled · SKILL.md supported" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "%lld/%lld מיומנויות מופעלות · תמיכה ב-SKILL.md" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld/%lld 个技能已启用 · 支持 SKILL.md" } }
+      }
+    },
+    "Add & Modes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add & Modes" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הוספה ומצבים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "添加与模式" } }
+      }
+    },
+    "Agent Skills (%lld/%lld)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Agent Skills (%lld/%lld)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מיומנויות סוכן (%lld/%lld)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "智能体技能 (%lld/%lld)" } }
+      }
+    },
+    "Agent Skills (Skills)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Agent Skills (Skills)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מיומנויות סוכן (Skills)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "智能体技能 (Skills)" } }
+      }
+    },
+    "Agent Skills Store" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Agent Skills Store" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חנות מיומנויות סוכן" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "智能体技能库" } }
+      }
+    },
+    "All Models" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "All Models" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כל המודלים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全部模型" } }
+      }
+    },
+    "All Models (%lld)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "All Models (%lld)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כל המודלים (%lld)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全部模型 (%lld)" } }
+      }
+    },
+    "All prompts have been added, or you can create new ones in Prompt Library." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "All prompts have been added, or you can create new ones in Prompt Library." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כל ההנחיות נוספו, או שניתן ליצור חדשות בספריית ההנחיות." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "所有提示词已添加，或可在提示词库中新建。" } }
+      }
+    },
+    "Allow tool usage in this chat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Allow tool usage in this chat" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אפשר שימוש בכלים בשיחה זו" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "允许此对话调用工具" } }
+      }
+    },
+    "Back" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Back" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חזור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "返回" } }
+      }
+    },
+    "Brief" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Brief" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קצר" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "短暂" } }
+      }
+    },
+    "Built-in Tools & Permissions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Built-in Tools & Permissions" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלים מובנים והרשאות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "内置工具与权限" } }
+      }
+    },
+    "Built-in Tools & Permissions (Tools)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Built-in Tools & Permissions (Tools)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלים מובנים והרשאות (Tools)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "内置工具与权限 (Tools)" } }
+      }
+    },
+    "Camera" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Camera" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מצלמה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "拍照" } }
+      }
+    },
+    "Context Memory Turns (Max History)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Context Memory Turns (Max History)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מספר סבבי שיחה בזיכרון (Max History)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "上下文记忆轮数 (Max History)" } }
+      }
+    },
+    "Creativity (Temperature)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Creativity (Temperature)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יצירתיות (טמפרטורה)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "创意度 (Temperature)" } }
+      }
+    },
+    "Current aspect ratio: %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Current aspect ratio: %@" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יחס ממדים נוכחי: %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "当前画幅：%@" } }
+      }
+    },
+    "Deep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Deep" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עמוק" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "深度" } }
+      }
+    },
+    "Deep Thinking" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Deep Thinking" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חשיבה מעמיקה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "深度思考" } }
+      }
+    },
+    "Default" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Default" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ברירת מחדל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "默认" } }
+      }
+    },
+    "Enable MCP Globally (global_mcp_enabled)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enable MCP Globally (global_mcp_enabled)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הפעל MCP גלובלית (global_mcp_enabled)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全局启用 MCP (global_mcp_enabled)" } }
+      }
+    },
+    "Expand Long Text Editor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Expand Long Text Editor" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתח עורך טקסט מלא" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "展开长文本编辑器" } }
+      }
+    },
+    "Files" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Files" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קבצים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文件" } }
+      }
+    },
+    "Free" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Free" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חינם" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "免费" } }
+      }
+    },
+    "Full screen editing for multi-paragraph prompts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Full screen editing for multi-paragraph prompts" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עריכה במסך מלא להנחיות מרובות פסקאות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全屏编辑多段落长提示词" } }
+      }
+    },
+    "Globally Disabled · Tap to Configure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Globally Disabled · Tap to Configure" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מושבת גלובלית · הקש להגדרה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全局已关闭 · 点击配置" } }
+      }
+    },
+    "Image" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Image" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תמונה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "生图" } }
+      }
+    },
+    "Image Aspect Ratio & Negative Prompts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Image Aspect Ratio & Negative Prompts" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יחס ממדי תמונה והנחיות שלילה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "图像画幅与反向提示词" } }
+      }
+    },
+    "Image Generation Settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Image Generation Settings" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הגדרות יצירת תמונה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "图像生成设置" } }
+      }
+    },
+    "Installed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Installed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מותקן" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已安装" } }
+      }
+    },
+    "Installed %lld · Selected in chat %lld · Running %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Installed %lld · Selected in chat %lld · Running %lld" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מותקנים %lld · נבחרו בשיחה %lld · פעילים %lld" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已安装 %lld · 当前对话选中 %lld · 运行中 %lld" } }
+      }
+    },
+    "Knowledge Bag" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Knowledge Bag" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תיק ידע" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "知识背包" } }
+      }
+    },
+    "Landscape (4:3 / 16:9)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Landscape (4:3 / 16:9)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "לרוחב (4:3 / 16:9)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "横向画幅 (4:3 / 16:9)" } }
+      }
+    },
+    "Let the assistant continue the current topic without new input" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Let the assistant continue the current topic without new input" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "המשך השיחה בנושא הנוכחי ללא הזנת הודעה חדשה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "不输入新消息，让助手继续当前话题" } }
+      }
+    },
+    "Local Model" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Local Model" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מודל מקומי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本地模型" } }
+      }
+    },
+    "Local Runtimes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Local Runtimes" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "סביבות ריצה מקומיות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本地运行环境" } }
+      }
+    },
+    "Local Runtimes (Runtimes)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Local Runtimes (Runtimes)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "סביבות ריצה מקומיות (Runtimes)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本地运行环境 (Runtimes)" } }
+      }
+    },
+    "MCP Server Manager" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "MCP Server Manager" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מנהל שרתי MCP" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "MCP 服务器管理器" } }
+      }
+    },
+    "MCP Servers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "MCP Servers" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שרתי MCP" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "MCP 服务器" } }
+      }
+    },
+    "MCP Servers (MCP)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "MCP Servers (MCP)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שרתי MCP (MCP)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "MCP 服务器 (MCP)" } }
+      }
+    },
+    "Manage native tools, agent skills, MCP and runtimes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Manage native tools, agent skills, MCP and runtimes" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ניהול כלים מובנים, מיומנויות סוכן, MCP וסביבות ריצה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "管理原生工具、Agent Skills、MCP 与运行环境" } }
+      }
+    },
+    "Max Output Length (Max Tokens)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Max Output Length (Max Tokens)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אורך פלט מרבי (Max Tokens)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "最大输出长度 (Max Tokens)" } }
+      }
+    },
+    "Medium" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Medium" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בינוני" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "中等" } }
+      }
+    },
+    "Model Parameters" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Model Parameters" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "התאמת פרמטרי מודל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "模型参数调节" } }
+      }
+    },
+    "Native Tools Catalog" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Native Tools Catalog" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קטלוג כלים מובנים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "原生工具目录" } }
+      }
+    },
+    "Negative Prompt (Optional)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Negative Prompt (Optional)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הנחיית שלילה (אופציונלי)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "反向提示词 (可选)" } }
+      }
+    },
+    "No MCP servers installed (server_installed: false)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No MCP servers installed (server_installed: false)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "לא מותקנים שרתי MCP (server_installed: false)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "尚未安装 MCP 服务器 (server_installed: false)" } }
+      }
+    },
+    "No Prompts Available" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No Prompts Available" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אין הנחיות זמינות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无可用提示词" } }
+      }
+    },
+    "No models available" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No models available" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אין מודלים זמינים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无可用模型" } }
+      }
+    },
+    "No unselected templates" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No unselected templates" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אין תבניות שלא נבחרו" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无未选模板" } }
+      }
+    },
+    "Node / TS / Python / JSC / Shell · Ready %lld/%lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Node / TS / Python / JSC / Shell · Ready %lld/%lld" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "Node / TS / Python / JSC / Shell · מוכנים %lld/%lld" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Node / TS / Python / JSC / Shell · 就绪 %lld/%lld" } }
+      }
+    },
+    "Observe & Continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Observe & Continue" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "צפה והמשך בניתוח" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "观察并继续推演" } }
+      }
+    },
+    "On-Device" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "On-Device" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "במכשיר" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "端侧" } }
+      }
+    },
+    "Online Search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Online Search" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש מקוון" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "联网搜索" } }
+      }
+    },
+    "Open MCP Server Settings & Installation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open MCP Server Settings & Installation" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתח הגדרות שרתי MCP והתקנה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开 MCP 服务器管理与安装" } }
+      }
+    },
+    "Open Runtime & Package Manager" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Runtime & Package Manager" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתח מנהל סביבות ריצה וחבילות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开完整运行环境与包管理器" } }
+      }
+    },
+    "Open Skills Center (Import / New / Edit)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Skills Center (Import / New / Edit)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתח מרכז מיומנויות (ייבוא / חדש / עריכה)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开完整技能中心 (导入 / 新建 / 编辑)" } }
+      }
+    },
+    "Paused" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Paused" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מושהה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已暂停" } }
+      }
+    },
+    "Pending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pending" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ממתין" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待中" } }
+      }
+    },
+    "Photos" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Photos" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תמונות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "相册" } }
+      }
+    },
+    "Plan tasks step by step before generating answers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Plan tasks step by step before generating answers" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תכנון משימות שלב אחר שלב לפני מתן מענה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分步规划任务后再生成回答" } }
+      }
+    },
+    "Planning & Execution" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Planning & Execution" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תכנון וביצוע" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "规划执行" } }
+      }
+    },
+    "Please configure models in Settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Please configure models in Settings" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אנא הגדר מודלים בהגדרות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请在设置中配置模型" } }
+      }
+    },
+    "Portrait (3:4 / 9:16)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Portrait (3:4 / 9:16)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "לאורך (3:4 / 9:16)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "纵向画幅 (3:4 / 9:16)" } }
+      }
+    },
+    "Prompt Templates" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Prompt Templates" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "תבניות הנחיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "提示词模板" } }
+      }
+    },
+    "Reason through complex problems and show reasoning summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reason through complex problems and show reasoning summary" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ניתוח שאלות מורכבות והצגת תקציר חשיבה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "推演复杂问题并展示推理摘要" } }
+      }
+    },
+    "Restart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Restart" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הפעל מחדש" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重启" } }
+      }
+    },
+    "Running" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Running" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פעיל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "运行中" } }
+      }
+    },
+    "Runtime & Packages" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Runtime & Packages" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "סביבות ריצה וחבילות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "运行环境与包管理" } }
+      }
+    },
+    "Sampling Range (Top-P)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sampling Range (Top-P)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "טווח דגימה (Top-P)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "采样范围 (Top-P)" } }
+      }
+    },
+    "Search local vectorized knowledge base" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search local vectorized knowledge base" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש במאגר ידע וקטורי מקומי" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "检索本地向量化知识库" } }
+      }
+    },
+    "Search models" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search models" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חפש מודלים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索模型" } }
+      }
+    },
+    "Search skill name or ID..." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search skill name or ID..." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חפש שם מיומנות או מזהה..." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索技能名称或 ID..." } }
+      }
+    },
+    "Search skills" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search skills" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חפש מיומנויות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索技能" } }
+      }
+    },
+    "Search the web and latest reference material in real time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search the web and latest reference material in real time" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש בזמן אמת באינטרנט ובמקורות עדכניים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "实时检索网页与最新参考资料" } }
+      }
+    },
+    "Select Aspect Ratio" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Select Aspect Ratio" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בחר יחס ממדים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择画幅比例" } }
+      }
+    },
+    "Select Model" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Select Model" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בחר מודל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择模型" } }
+      }
+    },
+    "Select Prompt Template" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Select Prompt Template" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "בחר תבנית הנחיה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择提示词模板" } }
+      }
+    },
+    "Skill" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Skill" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מיומנות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "技能" } }
+      }
+    },
+    "Square (1:1)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Square (1:1)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ריבוע (1:1)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "方形画幅 (1:1)" } }
+      }
+    },
+    "Start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הפעל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "启动" } }
+      }
+    },
+    "Stop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עצור" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "停止" } }
+      }
+    },
+    "Synthesize natural speech for assistant responses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Synthesize natural speech for assistant responses" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יצירת דיבור טבעי לתשובות העוזר" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "为助手回复合成自然语音" } }
+      }
+    },
+    "The current model \"%@\" does not support tool calling. You can still browse and manage skills, MCP, and runtimes." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The current model \"%@\" does not support tool calling. You can still browse and manage skills, MCP, and runtimes." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "המודל הנוכחי \"%@\" אינו תומך בהפעלת כלים. עדיין ניתן לעיין ולנהל מיומנויות, MCP וסביבות ריצה." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "当前模型「%@」不支持函数工具调用。您仍可浏览并管理技能、MCP 与运行环境。" } }
+      }
+    },
+    "The current model enables reasoning by default" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The current model enables reasoning by default" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "המודל הנוכחי מפעיל חשיבה כברירת מחדל" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "当前模型默认开启推理" } }
+      }
+    },
+    "Thinking Depth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Thinking Depth" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עומק חשיבה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "思考深度" } }
+      }
+    },
+    "Tip: The current model is not a native vision model; attached images will use visual assistance descriptions." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tip: The current model is not a native vision model; attached images will use visual assistance descriptions." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הערה: המודל הנוכחי אינו מודל ראייה מקורי; תמונות מצורפות ייעזרו בתיאור חזותי." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "提示：当前模型非原生视觉模型，附加图片将使用视觉辅助描述。" } }
+      }
+    },
+    "Tool Use" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tool Use" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שימוש בכלים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具调用" } }
+      }
+    },
+    "Tool activity (%lld)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tool activity (%lld)" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פעילות כלים (%lld)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具活动 (%lld)" } }
+      }
+    },
+    "Tools" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tools" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具" } }
+      }
+    },
+    "Tools, Skills & MCP" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tools, Skills & MCP" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כלים, מיומנויות ו-MCP" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具、技能与 MCP" } }
+      }
+    },
+    "Untitled Prompt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Untitled Prompt" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הנחיה ללא שם" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未命名提示词" } }
+      }
+    },
+    "Voice" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Voice" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "קול" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语音" } }
+      }
+    },
+    "Voice Generation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Voice Generation" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יצירת קול" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语音生成" } }
+      }
+    },
+    "When enabled, the model can call built-in tools, skills, and MCP servers as needed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When enabled, the model can call built-in tools, skills, and MCP servers as needed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כאשר מופעל, המודל יכול להפעיל כלים מובנים, מיומנויות ושרתי MCP לפי הצורך" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开启后模型可按需调用内置工具、技能与 MCP" } }
+      }
+    },
+    "You can ask the assistant to install servers via chat, or configure them in Settings below." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "You can ask the assistant to install servers via chat, or configure them in Settings below." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ניתן לבקש מהעוזר להתקין שרתים בצ'אט, או להגדירם בהגדרות להלן." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "可通过对话让助手自动安装，或在下方进入设置添加。" } }
+      }
+    }
   },
   "version" : "1.0"
 }
