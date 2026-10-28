@@ -296,26 +296,64 @@ export async function signAndVerifyXCFramework(
 }
 
 async function downloadFile(url, destPath) {
-  return new Promise((res, rej) => {
-    function get(currentURL) {
-      const client = currentURL.startsWith('https') ? https : http;
-      client.get(currentURL, { agent: false }, (response) => {
-        if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
-          const redirectURL = new URL(response.headers.location, currentURL).toString();
-          return get(redirectURL);
-        }
-        if (response.statusCode !== 200) {
-          return rej(new Error(`Download failed with status ${response.statusCode} for ${currentURL}`));
-        }
-        const file = createWriteStream(destPath);
-        response.pipe(file);
-        file.on('finish', () => {
-          file.close(() => res());
-        });
-      }).on('error', rej);
+  const curlBin = process.platform === 'win32' ? 'curl.exe' : 'curl';
+  try {
+    execSync(`${curlBin} -fL --retry 3 --retry-delay 2 --connect-timeout 20 --max-time 300 -sS "${url}" -o "${destPath}"`, {
+      stdio: ['ignore', 'inherit', 'inherit'],
+    });
+    if (existsSync(destPath)) {
+      const fileStat = await stat(destPath);
+      if (fileStat.size > 0) {
+        return;
+      }
     }
-    get(url);
-  });
+  } catch (curlErr) {
+    console.warn(`[HanlinExpo] curl download attempt failed (${curlErr.message}); falling back to Node http client...`);
+  }
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await new Promise((res, rej) => {
+        function get(currentURL, redirects = 0) {
+          if (redirects > 10) {
+            return rej(new Error(`Too many redirects for ${url}`));
+          }
+          const client = currentURL.startsWith('https') ? https : http;
+          const req = client.get(
+            currentURL,
+            { agent: false, headers: { 'User-Agent': 'hanlin-ci-builder/1.0' } },
+            (response) => {
+              if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+                const redirectURL = new URL(response.headers.location, currentURL).toString();
+                return get(redirectURL, redirects + 1);
+              }
+              if (response.statusCode !== 200) {
+                return rej(new Error(`Download failed with status ${response.statusCode} for ${currentURL}`));
+              }
+              const file = createWriteStream(destPath);
+              response.pipe(file);
+              file.on('finish', () => {
+                file.close(() => res());
+              });
+              file.on('error', rej);
+            }
+          );
+          req.setTimeout(60000, () => {
+            req.destroy(new Error(`Socket timeout downloading ${currentURL}`));
+          });
+          req.on('error', rej);
+        }
+        get(url);
+      });
+      if (existsSync(destPath) && (await stat(destPath)).size > 0) {
+        return;
+      }
+    } catch (nodeErr) {
+      console.warn(`[HanlinExpo] Node download attempt ${attempt}/3 failed (${nodeErr.message})...`);
+      if (attempt === 3) throw nodeErr;
+      await new Promise((r) => setTimeout(r, 2000 * attempt));
+    }
+  }
 }
 
 async function prepare() {
