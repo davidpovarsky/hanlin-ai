@@ -451,20 +451,7 @@ jobs:
           done
           if [ -n "$SIMULATOR_UDID" ]; then
             echo "=== SIMULATOR APP LOGS (LAST 100 LINES) ==="
-            python3 - "$SIMULATOR_UDID" "$LOG_DIR/08-ai-hanlin-simulator.log" <<'PY' || true
-import subprocess, sys
-udid, logfile = sys.argv[1], sys.argv[2]
-try:
-    with open(logfile, "w") as out:
-        subprocess.run(
-            ["xcrun", "simctl", "spawn", udid, "log", "show", "--style", "compact", "--last", "5m", "--predicate", 'process == "AI_Hanlin"'],
-            stdout=out,
-            stderr=subprocess.STDOUT,
-            timeout=30,
-        )
-except Exception as e:
-    print(f"Log show timed out or failed: {e}", file=sys.stderr)
-PY
+            python3 -c "import subprocess, sys; subprocess.run(['xcrun', 'simctl', 'spawn', sys.argv[1], 'log', 'show', '--style', 'compact', '--last', '5m', '--predicate', 'process == \"AI_Hanlin\"'], stdout=open(sys.argv[2], 'w'), stderr=subprocess.STDOUT, timeout=30)" "$SIMULATOR_UDID" "$LOG_DIR/08-ai-hanlin-simulator.log" 2>/dev/null || true
             tail -n 100 "$LOG_DIR/08-ai-hanlin-simulator.log" || true
           fi
 
