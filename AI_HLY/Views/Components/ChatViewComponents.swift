@@ -19,6 +19,7 @@ import WebKit
 import RichTextKit
 import LaTeXSwiftUI
 import AVFoundation
+import HanlinPlatformContracts
 
 
 struct LoadingGradientText: View {
