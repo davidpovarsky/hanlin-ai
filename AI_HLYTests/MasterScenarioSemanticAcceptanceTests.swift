@@ -1851,6 +1851,11 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(!run2Output.contains("Cancelled leak token"), "Run 2 must have zero contamination from cancelled Run 1")
 
         // Run 3: Real runtime operation cancellation & cleanup
+        _ = try? await HanlinRuntimeBroker.shared.execute(
+            kind: .node,
+            source: "1 + 1;",
+            context: AgentHostServicesAdapter.makeContext()
+        )
         let longTask = Task {
             try Task.checkCancellation()
             let hostContext = AgentHostServicesAdapter.makeContext()
@@ -1860,7 +1865,7 @@ struct MasterScenarioSemanticAcceptanceTests {
                 context: hostContext
             )
         }
-        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+        try await Task.sleep(nanoseconds: 150_000_000) // 150ms
         let startCancel = Date()
         longTask.cancel()
         let result = await longTask.result
