@@ -1,0 +1,101 @@
+name: Package native Hanlin Expo search MiniApp
+
+on:
+  push:
+    branches:
+      - fix/expo-native-search-events-20261029
+    paths:
+      - .github/workflows/build-expo-native-search-miniapp.yml
+      - Scripts/Expo/miniapps/modular-text-search/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: native-expo-search-package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bundle-and-publish:
+    name: Metro bundle + publish .hanlinExpo
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.5.0'
+          cache: npm
+          cache-dependency-path: Scripts/Expo/package-lock.json
+
+      - name: Install pinned Expo tooling
+        run: npm ci --prefix Scripts/Expo --no-audit --no-fund
+
+      - name: Static native UI regression checks
+        run: node Scripts/Expo/miniapps/modular-text-search/tests/ui-regression.test.cjs
+
+      - name: TypeScript
+        working-directory: Scripts/Expo
+        run: ./node_modules/.bin/tsc6 --noEmit -p miniapps/modular-text-search/tsconfig.json
+
+      - name: Build iOS production JavaScript bundle with Metro
+        working-directory: Scripts/Expo
+        run: |
+          mkdir -p miniapps/modular-text-search/dist
+          ./node_modules/.bin/react-native bundle \
+            --entry-file miniapps/modular-text-search/index.ts \
+            --platform ios --dev false \
+            --bundle-output miniapps/modular-text-search/dist/bundle.js \
+            --config metro.config.cjs
+
+      - name: Pack installable .hanlinExpo
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import zipfile
+
+          root = pathlib.Path("Scripts/Expo/miniapps/modular-text-search")
+          manifest = json.loads((root / "script.json").read_text(encoding="utf-8"))
+          assert manifest["version"] == "1.1.1"
+          assert manifest["hanlinRuntime"] == "hanlin-expo"
+          assert set(manifest["capabilities"]) == {"network", "ios-native-api"}
+          bundle = root / "dist/bundle.js"
+          assert bundle.is_file() and bundle.stat().st_size > 100000
+          destination = root / "dist/ModularTextSearch.hanlinExpo"
+          with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED, compresslevel=8) as archive:
+              for src, name in (
+                  (bundle, "bundle.js"),
+                  (root / "script.json", "script.json"),
+                  (root / "package.json", "package.json"),
+              ):
+                  archive.write(src, arcname=name)
+          with zipfile.ZipFile(destination) as archive:
+              assert set(archive.namelist()) == {"bundle.js", "script.json", "package.json"}
+          print(f"PACKAGED {destination} ({destination.stat().st_size} bytes)")
+          PY
+          shasum -a 256 Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Hanlin-ModularTextSearch-v1.1.1
+          path: Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
+          retention-days: 7
+
+      - name: Publish package file to source branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
+          if ! git diff --cached --quiet; then
+            git commit -m "build(miniapp): publish native-search event repair v1.1.1 [skip ci]"
+            git push origin HEAD:fix/expo-native-search-events-20261029
+          fi
