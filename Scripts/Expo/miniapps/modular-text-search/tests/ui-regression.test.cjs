@@ -41,8 +41,15 @@ assert(!client.includes('executeRuntime('),
   'Search engine must not fall back to broken embedded Node fetch');
 assert(transport.includes('NSURLSession.sharedSession.dataTaskWithRequestCompletionHandler('),
   'Native iOS URLSession must remain wired');
-assert(manifest.version === '1.1.0');
+assert(manifest.version === '1.1.1');
 assert.deepEqual(manifest.capabilities, ['ios-native-api', 'network']);
 
+assert(!app.includes('<Toolbar') && !app.includes('<Menu'), 'Nested toolbar/menu wrapper must not be present');
+assert(app.includes("import { View } from 'react-native';"), 'Restore working 1.0.3 React Native View host wrapper');
+assert(app.includes('<Section title={locale===\'he\'?\'פעולות\':\'Actions\'}>'), 'Direct native List controls missing');
+assert(app.includes("setActionStatus(locale==='he'?'לחיצה על בדיקת חיבור התקבלה."), 'Connection button must expose synchronous event acknowledgement');
+assert(app.includes('<DisclosureGroup label={locale===\'he\'?\'שדה חיפוש חלופי\''), 'Native text input fallback missing');
+assert(app.includes('void checkConnection();'), 'Connection button must run diagnostic request');
+assert(app.includes('void search(query);'), 'Direct native List button must perform search');
 console.log('PASS: native Searchable submit, List rows, Navigation destinations, Form settings');
 console.log('PASS: no HStack/VStack/custom cards; iOS URLSession preserved');
