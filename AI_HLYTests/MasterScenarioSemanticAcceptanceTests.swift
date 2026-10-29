@@ -1860,7 +1860,7 @@ struct MasterScenarioSemanticAcceptanceTests {
                 context: hostContext
             )
         }
-        try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+        try await Task.sleep(nanoseconds: 100_000_000) // 100ms
         let startCancel = Date()
         longTask.cancel()
         let result = await longTask.result
@@ -1882,6 +1882,9 @@ struct MasterScenarioSemanticAcceptanceTests {
         case .success(let execRes):
             #expect(execRes.wasCancelled == true || execRes.exitCode != 0)
         }
+
+        // Allow cancellation cleanup to settle before executing the next run
+        try await Task.sleep(nanoseconds: 100_000_000) // 100ms
 
         // Immediately execute fresh small operation on runtime broker
         let cleanContext = AgentHostServicesAdapter.makeContext()

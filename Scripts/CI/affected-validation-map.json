@@ -587,6 +587,7 @@
         "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/**",
         "AI_HLY/Downstream/Scripting/**",
         "AI_HLY/Downstream/ChatPresentation/**",
+        "AI_HLY/Downstream/ChatInput/**",
         "AI_HLY/Downstream/ChatCore/**",
         "AI_HLY/Downstream/SystemIntegrations/**"
       ],
@@ -594,6 +595,7 @@
         "app_unit_tests"
       ],
       "unit_suites": [
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests",
         "AI_HLYTests/AgentSkillsExposureTests",
         "AI_HLYTests/AppleLocalProvidersTests",
         "AI_HLYTests/CanonicalAdapterTests",

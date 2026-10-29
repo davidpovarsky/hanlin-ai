@@ -1,11 +1,19 @@
 import { parentPort, workerData } from 'node:worker_threads';
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
+import * as nodePath from 'node:path';
 
 const { entryPoint, workspace, moduleKind, arguments: argv, environment, maximumOutputBytes } = workerData;
 let stdout = '';
 let stderr = '';
 let outputWasTruncated = false;
+
+const entryDir = workspace || nodePath.dirname(entryPoint);
+try {
+  globalThis.require = createRequire(entryPoint);
+  globalThis.__filename = entryPoint;
+  globalThis.__dirname = entryDir;
+} catch {}
 
 if (workspace) {
   process.cwd = () => workspace;

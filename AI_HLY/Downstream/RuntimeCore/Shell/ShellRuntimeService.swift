@@ -159,6 +159,19 @@ actor ShellRuntimeService {
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
         let started = ContinuousClock.now
+        if command.trimmingCharacters(in: .whitespacesAndNewlines) == "pwd" {
+            return RuntimeExecutionResult(
+                executionID: UUID(),
+                stdout: scopedWorkspace.path + "\n",
+                stderr: "",
+                value: nil,
+                exitCode: 0,
+                durationMilliseconds: 1,
+                didTimeOut: false,
+                wasCancelled: false,
+                outputWasTruncated: false
+            )
+        }
         snapshotValue.state = .executing
         snapshotValue.activeExecutionCount += 1
         defer {
@@ -203,6 +216,19 @@ actor ShellRuntimeService {
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
         guard !tokens.isEmpty, tokens.count <= 128 else {
             throw RuntimeCoreError.invalidRequest("The command is empty or contains too many arguments.")
+        }
+        if tokens.first == "pwd" {
+            return RuntimeExecutionResult(
+                executionID: UUID(),
+                stdout: scopedWorkspace.path + "\n",
+                stderr: "",
+                value: nil,
+                exitCode: 0,
+                durationMilliseconds: 1,
+                didTimeOut: false,
+                wasCancelled: false,
+                outputWasTruncated: false
+            )
         }
         guard let name = tokens.first, let capability = Self.capabilities.first(where: { $0.name == name }) else {
             throw RuntimeCoreError.invalidRequest("The requested command is not in the verified ios_system catalog.")

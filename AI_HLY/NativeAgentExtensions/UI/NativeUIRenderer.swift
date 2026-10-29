@@ -22,10 +22,15 @@ struct NativeUIExpandedPayload: Identifiable, Hashable {
 struct NativeUIToolResultContainer: View {
     let blocks: [NativeUIBlock]
     let temporaryRecord: Bool
+    var containerWidth: CGFloat = 0
     let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
 
     @State private var sheetPayload: NativeUIExpandedPayload?
     @State private var fullScreenPayload: NativeUIExpandedPayload?
+
+    private var effectiveWidth: CGFloat {
+        containerWidth > 0 ? containerWidth : UIScreen.main.bounds.width
+    }
 
     private var canExpand: Bool {
         blocks.contains { ($0.allowsExpansion ?? true) && $0.hasExpandableContent }
@@ -55,24 +60,26 @@ struct NativeUIToolResultContainer: View {
                     Button {
                         openExpandedPresentation()
                     } label: {
-                        Label(
-                            String(localized: "Expand"),
-                            systemImage: "arrow.down.backward.and.arrow.up.forward"
-                        )
+                        Image(systemName: "arrow.down.backward.and.arrow.up.forward")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
+                            .padding(8)
+                            .background(BlurView(style: .systemUltraThinMaterial))
+                            .clipShape(Circle())
+                            .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
+                    .buttonStyle(.plain)
                 }
             }
         }
         .padding(12)
-        .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke((temporaryRecord ? Color.primary : Color.hlBluefont).opacity(0.22), lineWidth: 1)
-        }
-        .shadow(color: (temporaryRecord ? Color.primary : Color.hlBlue).opacity(0.2), radius: 2, y: 1)
+        .cornerRadius(20)
+        .background(
+            BlurView(style: .systemThinMaterial)
+                .cornerRadius(20)
+                .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
+        )
+        .frame(maxWidth: effectiveWidth * 0.95, alignment: .leading)
         .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
         .sheet(item: $sheetPayload) { payload in
             NativeUIExpandedView(payload: payload, onLaunchRequest: onLaunchRequest)

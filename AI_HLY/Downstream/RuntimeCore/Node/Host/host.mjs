@@ -125,11 +125,23 @@ const server = http.createServer(async (request, response) => {
       const state = executions.get(executionCancel[1].toLowerCase());
       if (state) {
         state.cancelled = true;
+        if (state.finish) {
+          state.finish({
+            executionID: executionCancel[1].toLowerCase(),
+            stdout: '',
+            stderr: '',
+            value: null,
+            exitCode: 1,
+            didTimeOut: false,
+            wasCancelled: true,
+            outputWasTruncated: false,
+          });
+        }
         if (state.terminateWorker) {
-          await state.terminateWorker();
+          state.terminateWorker().catch(() => {});
         } else if (state.worker) {
           try {
-            await Promise.race([state.worker.terminate(), new Promise(r => setTimeout(r, 1000))]);
+            state.worker.terminate().catch(() => {});
           } catch {}
         }
       }
@@ -282,6 +294,14 @@ const server = http.createServer(async (request, response) => {
   }
 });
 
+server.on('clientError', (err, socket) => {
+  if (err.code === 'ECONNRESET' || !socket.writable) {
+    socket.destroy();
+    return;
+  }
+  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+});
+
 server.listen(0, '127.0.0.1', async () => {
   const address = server.address();
   const ready = { port: address.port, nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable };
@@ -329,7 +349,7 @@ async function executeJavaScript(body) {
   const maximumOutputBytes = Math.min(Math.max(Number(body.maximumOutputBytes) || 1_048_576, 1024), 8 * 1024 * 1024);
   const timeoutMilliseconds = Math.min(Math.max(Number(body.timeoutMilliseconds) || 30_000, 1000), 300_000);
   const started = Date.now();
-  const state = { worker: null, cancelled: false, terminateWorker: null };
+  const state = { worker: null, cancelled: false, terminateWorker: null, finish: null };
   const result = await new Promise(resolve => {
     const worker = new Worker(executionWorkerURL, {
       workerData: {
@@ -354,6 +374,7 @@ async function executeJavaScript(body) {
     executions.set(id, state);
     let settled = false;
     const finish = value => { if (!settled) { settled = true; clearTimeout(timer); resolve(value); } };
+    state.finish = finish;
     const timer = setTimeout(async () => {
       await terminateWorker();
       finish({ executionID: id, stdout: '', stderr: 'Execution timed out.\n', value: null, exitCode: null, didTimeOut: true, wasCancelled: false, outputWasTruncated: false });
@@ -1004,9 +1025,14 @@ async function readJSON(request) {
 }
 
 function json(response, status, value) {
-  const body = JSON.stringify(value);
-  response.writeHead(status, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body), 'Cache-Control': 'no-store' });
-  response.end(body);
+  if (response.writableEnded || response.destroyed) return;
+  try {
+    const body = JSON.stringify(value);
+    response.writeHead(status, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body), 'Cache-Control': 'no-store' });
+    response.end(body);
+  } catch (error) {
+    diagnostic('json_write_error', { message: redact(error.message) });
+  }
 }
 
 function validID(value) { return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value); }

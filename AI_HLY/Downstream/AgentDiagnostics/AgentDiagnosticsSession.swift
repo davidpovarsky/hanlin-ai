@@ -13,6 +13,7 @@ struct AgentDiagnosticsSession: Codable, Identifiable, Sendable, Equatable {
     var providerID: String
     var modelID: String
     var endpointKind: String
+    var agentEngineKind: String = "swift_ai_sdk"
     var appVersion: String?
     var buildNumber: String?
     var status: String

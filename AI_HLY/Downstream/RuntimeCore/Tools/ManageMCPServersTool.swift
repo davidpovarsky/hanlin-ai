@@ -73,25 +73,121 @@ struct ManageMCPServersTool: NativeTool {
         )
     }
 
+    private static let supportedActions: [String] = [
+        "status",
+        "list",
+        "preview",
+        "install",
+        "enable",
+        "disable",
+        "select_for_chat",
+        "deselect_for_chat",
+        "start",
+        "stop",
+        "restart",
+        "list_tools",
+        "call_tool",
+        "uninstall"
+    ]
+
+    private static func normalizeAction(_ rawAction: String) -> String {
+        switch rawAction.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() {
+        case "get_status", "check_status", "info", "inspect":
+            return "status"
+        case "list_servers", "get_servers", "servers":
+            return "list"
+        case "preview_package", "inspect_package", "check_package":
+            return "preview"
+        case "install_package", "install_server", "add", "add_server":
+            return "install"
+        case "enable_server", "activate":
+            return "enable"
+        case "disable_server", "deactivate":
+            return "disable"
+        case "select", "enable_for_chat", "attach_to_chat":
+            return "select_for_chat"
+        case "deselect", "disable_for_chat", "detach_from_chat":
+            return "deselect_for_chat"
+        case "start_server", "run":
+            return "start"
+        case "stop_server":
+            return "stop"
+        case "restart_server", "reload":
+            return "restart"
+        case "get_tools", "tools", "discover_tools":
+            return "list_tools"
+        case "call", "invoke", "invoke_tool", "execute_tool":
+            return "call_tool"
+        case "remove", "delete", "uninstall_server", "remove_server":
+            return "uninstall"
+        default:
+            return rawAction.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        }
+    }
+
+    private static func knownPackageCompatibilityWarning(for specString: String) -> String? {
+        let lower = specString.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if lower.contains("transit-allinone-mcp") {
+            return "Package '\(specString)' does not exist on the public npm registry (HTTP 404). Do not retry installing it. For transit/routing queries, use built-in map/location tools (`query_location`, `get_route`) or web search (`search_online`)."
+        }
+        if lower.contains("@modelcontextprotocol/server-sqlite") || lower == "server-sqlite" {
+            return "Package '\(specString)' is deprecated/unpublished on npm and uses native SQLite bindings that are unsupported in the embedded iOS Node runtime. Do not retry installing it; use `execute_local_python_code` with Python's built-in `sqlite3` module instead."
+        }
+        if lower.contains("@modelcontextprotocol/server-git") || lower == "server-git" {
+            return "Package '\(specString)' is a Python uvx package, not a pure-JS npm MCP server, and cannot run in the embedded iOS Node host. Do not retry installing it."
+        }
+        return nil
+    }
+
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
-                allowedKeys: ["action", "package_spec", "server", "entry_point", "tool_name", "tool_arguments"]
+                allowedKeys: [
+                    "action",
+                    "package_spec", "package", "package_name", "npm_package",
+                    "server", "server_id", "server_name", "slug", "name",
+                    "entry_point",
+                    "tool_name", "tool",
+                    "tool_arguments", "arguments", "args"
+                ]
             )
-            let action = try NativeToolJSON.strictRequiredString(arguments, "action")
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .lowercased()
-            let packageSpecString = try NativeToolJSON.strictOptionalString(arguments, "package_spec")?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-            let serverQuery = try NativeToolJSON.strictOptionalString(arguments, "server")?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let rawAction = try NativeToolJSON.strictRequiredString(arguments, "action")
+            let action = Self.normalizeAction(rawAction)
+            let packageSpecString = (
+                (try? NativeToolJSON.strictOptionalString(arguments, "package_spec"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "package"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "package_name"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "npm_package"))
+            )?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let serverQuery = (
+                (try? NativeToolJSON.strictOptionalString(arguments, "server"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "server_id"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "server_name"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "slug"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "name"))
+            )?.trimmingCharacters(in: .whitespacesAndNewlines)
             let entryPointOverride = try NativeToolJSON.strictOptionalString(arguments, "entry_point")?
                 .trimmingCharacters(in: .whitespacesAndNewlines)
-            let toolNameQuery = try NativeToolJSON.strictOptionalString(arguments, "tool_name")?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-            let toolArgumentsJSON = try NativeToolJSON.strictOptionalString(arguments, "tool_arguments")?
-                .trimmingCharacters(in: .whitespacesAndNewlines) ?? "{}"
+            let toolNameQuery = (
+                (try? NativeToolJSON.strictOptionalString(arguments, "tool_name"))
+                ?? (try? NativeToolJSON.strictOptionalString(arguments, "tool"))
+            )?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let toolArgumentsJSON: String = {
+                if let str = (try? NativeToolJSON.strictOptionalString(arguments, "tool_arguments"))
+                    ?? (try? NativeToolJSON.strictOptionalString(arguments, "arguments"))
+                    ?? (try? NativeToolJSON.strictOptionalString(arguments, "args")) {
+                    let trimmed = str.trimmingCharacters(in: .whitespacesAndNewlines)
+                    return trimmed.isEmpty ? "{}" : trimmed
+                }
+                if let dictObj = arguments["tool_arguments"] ?? arguments["arguments"] ?? arguments["args"],
+                   JSONSerialization.isValidJSONObject(dictObj),
+                   let data = try? JSONSerialization.data(withJSONObject: dictObj),
+                   let encoded = String(data: data, encoding: .utf8) {
+                    return encoded
+                }
+                return "{}"
+            }()
 
             let provider = MCPRuntimeProvider.shared
             await provider.loadIfNeeded(startHost: false)
@@ -117,7 +213,14 @@ struct ManageMCPServersTool: NativeTool {
                     return makeFailure(
                         route: "mcp.preview",
                         outcome: .invalidArguments,
-                        message: "Missing required parameter 'package_spec' for action 'preview'."
+                        message: "Missing required parameter 'package_spec' for action 'preview'. Example: {\"action\": \"preview\", \"package_spec\": \"@modelcontextprotocol/server-memory\"}."
+                    )
+                }
+                if let incompatibilityMessage = Self.knownPackageCompatibilityWarning(for: specStr) {
+                    return makeFailure(
+                        route: "mcp.preview",
+                        outcome: .invalidArguments,
+                        message: incompatibilityMessage
                     )
                 }
                 let spec = try MCPPackageSpec(specStr)
@@ -145,7 +248,14 @@ struct ManageMCPServersTool: NativeTool {
                     return makeFailure(
                         route: "mcp.install",
                         outcome: .invalidArguments,
-                        message: "Missing required parameter 'package_spec' for action 'install'."
+                        message: "Missing required parameter 'package_spec' for action 'install'. Example: {\"action\": \"install\", \"package_spec\": \"@modelcontextprotocol/server-memory\"}."
+                    )
+                }
+                if let incompatibilityMessage = Self.knownPackageCompatibilityWarning(for: specStr) {
+                    return makeFailure(
+                        route: "mcp.install",
+                        outcome: .invalidArguments,
+                        message: incompatibilityMessage
                     )
                 }
                 let spec = try MCPPackageSpec(specStr)
@@ -430,6 +540,13 @@ struct ManageMCPServersTool: NativeTool {
                     resultTitle: "\(target.displayName) · \(resolvedOriginalName)",
                     argumentsJSON: toolArgumentsJSON
                 )
+                if !callResult.outcome.isSuccess {
+                    return makeFailure(
+                        route: "mcp.call_tool.\(target.slug).\(resolvedOriginalName)",
+                        outcome: callResult.outcome,
+                        message: callResult.modelText
+                    )
+                }
                 return makeSuccess(
                     route: "mcp.call_tool.\(target.slug).\(resolvedOriginalName)",
                     modelText: callResult.modelText,
@@ -462,10 +579,11 @@ struct ManageMCPServersTool: NativeTool {
                 )
 
             default:
+                let validList = Self.supportedActions.joined(separator: ", ")
                 return makeFailure(
                     route: "mcp.unknown",
                     outcome: .invalidArguments,
-                    message: "Unsupported action '\(action)'."
+                    message: "Unsupported action '\(rawAction)'. Valid 'action' values are: [\(validList)]."
                 )
             }
         } catch {

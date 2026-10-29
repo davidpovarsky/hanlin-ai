@@ -35,6 +35,7 @@ globalThis[Symbol.for('hanlin.mcp.blockChildProcess')] = operation => {
   );
 };
 installChildProcessPolicy();
+installRegExpUnicodeShim();
 
 nodeModule.registerHooks({
   resolve(specifier, context, nextResolve) {
@@ -72,7 +73,7 @@ nodeModule.registerHooks({
       const file = fileURLToPath(url);
       if (!insidePackage(file)) return nextLoad(url, context);
       const isCommonJS = /\.cts$/i.test(file);
-      const result = ts.transpileModule(readFileSync(file, 'utf8'), {
+      const result = ts.transpileModule(sanitizeUnicodePropertyRegexes(readFileSync(file, 'utf8')), {
         fileName: file,
         compilerOptions: {
           target: ts.ScriptTarget.ES2022,
@@ -92,7 +93,26 @@ nodeModule.registerHooks({
       parentPort?.postMessage({ type: 'typescript-compiled', path: reportLocation(url) });
       return { format: isCommonJS ? 'commonjs' : 'module', source: result.outputText, shortCircuit: true };
     }
-    return nextLoad(url, context);
+    const loaded = nextLoad(url, context);
+    if (loaded && typeof url === 'string' && url.startsWith('file:') && /\.(?:js|cjs|mjs)$/i.test(url)) {
+      try {
+        const file = fileURLToPath(url);
+        if (insidePackage(file)) {
+          const rawSource = loaded.source != null
+            ? (typeof loaded.source === 'string' ? loaded.source : Buffer.from(loaded.source).toString('utf8'))
+            : readFileSync(file, 'utf8');
+          if (/\\[pP]\{ASCII\}/.test(rawSource)) {
+            return {
+              ...loaded,
+              source: sanitizeUnicodePropertyRegexes(rawSource),
+            };
+          }
+        }
+      } catch {
+        // Fall through to unmodified loaded result if reading fails.
+      }
+    }
+    return loaded;
   },
 });
 
@@ -185,6 +205,37 @@ function inspectLoadedSource(url) {
 
 function normalizeBuiltin(specifier) {
   return String(specifier).replace(/^node:/, '');
+}
+
+function sanitizeUnicodePropertyRegexes(source) {
+  if (typeof source !== 'string' || !/\\[pP]\{ASCII\}/.test(source)) return source;
+  return source
+    .replace(/\[\^\\P\{ASCII\}/g, '[\\x00-\\x7F')
+    .replace(/\[\\P\{ASCII\}/g, '[\\u0080-\\uFFFF')
+    .replace(/\[\^\\p\{ASCII\}/g, '[\\u0080-\\uFFFF')
+    .replace(/\[\\p\{ASCII\}/g, '[\\x00-\\x7F')
+    .replace(/\\P\{ASCII\}/g, '[^\\x00-\\x7F]')
+    .replace(/\\p\{ASCII\}/g, '[\\x00-\\x7F]');
+}
+
+function installRegExpUnicodeShim() {
+  const OriginalRegExp = globalThis.RegExp;
+  function ShimmedRegExp(pattern, flags) {
+    const sanitizedPattern = typeof pattern === 'string'
+      ? sanitizeUnicodePropertyRegexes(pattern)
+      : pattern;
+    if (new.target) {
+      return flags === undefined
+        ? new OriginalRegExp(sanitizedPattern)
+        : new OriginalRegExp(sanitizedPattern, flags);
+    }
+    return flags === undefined
+      ? OriginalRegExp(sanitizedPattern)
+      : OriginalRegExp(sanitizedPattern, flags);
+  }
+  Object.setPrototypeOf(ShimmedRegExp, OriginalRegExp);
+  ShimmedRegExp.prototype = OriginalRegExp.prototype;
+  globalThis.RegExp = ShimmedRegExp;
 }
 
 function installChildProcessPolicy() {

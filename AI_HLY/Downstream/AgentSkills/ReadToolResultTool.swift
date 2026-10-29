@@ -63,4 +63,54 @@ public enum ReadToolResultTool {
         }
         return header
     }
+
+    public static func userFacingSummary(
+        argumentsJSON: String,
+        result: String,
+        language: String = "zh"
+    ) -> String {
+        let isZh = language.hasPrefix("zh")
+        let isHe = language.hasPrefix("he")
+        if result.hasPrefix("Error:") {
+            if isZh {
+                return result
+            } else if isHe {
+                return result.replacingOccurrences(of: "Error:", with: "שגיאה:")
+            } else {
+                return result
+            }
+        }
+        if let data = argumentsJSON.data(using: .utf8),
+           let args = try? JSONDecoder().decode(Arguments.self, from: data) {
+            let ref = args.reference.trimmingCharacters(in: .whitespacesAndNewlines)
+            if isZh {
+                return "已读取工具结果片段 (\(ref))"
+            } else if isHe {
+                return "נקרא קטע מתוצאת הכלי (\(ref))"
+            } else {
+                return "Read tool result slice (\(ref))"
+            }
+        } else if let data = argumentsJSON.data(using: .utf8),
+                  let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let ref = (obj["reference"] as? String) ?? (obj["call_id"] as? String) ?? (obj["callId"] as? String) {
+            if isZh {
+                return "已读取工具结果片段 (\(ref))"
+            } else if isHe {
+                return "נקרא קטע מתוצאת הכלי (\(ref))"
+            } else {
+                return "Read tool result slice (\(ref))"
+            }
+        }
+        let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !firstLine.isEmpty && !firstLine.contains("###") {
+            return firstLine.replacingOccurrences(of: ":", with: "")
+        }
+        if isZh {
+            return "已读取工具结果片段"
+        } else if isHe {
+            return "נקרא קטע מתוצאת הכלי"
+        } else {
+            return "Read tool result slice"
+        }
+    }
 }

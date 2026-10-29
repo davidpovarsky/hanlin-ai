@@ -43,6 +43,13 @@ public enum LoadSkillTool {
         }
 
         guard let descriptor = catalog.resolve(rawID: args.skill_id) else {
+            if let available = availableAliases, available.contains(args.skill_id) {
+                session.exposeTools(aliases: [args.skill_id])
+                return "Error: '\(args.skill_id)' is a callable tool name, not a skill_id. It is now exposed and ready to call directly as `\(args.skill_id)`."
+            }
+            if let matchingSkill = catalog.allSkills().first(where: { $0.preferredToolIDs.contains(args.skill_id) }) {
+                return "Error: '\(args.skill_id)' is a tool name belonging to skill '\(matchingSkill.id.rawValue)'. Call `load_skill(skill_id: \"\(matchingSkill.id.rawValue)\")` or call `\(args.skill_id)` directly."
+            }
             let available = catalog.allSkills().map { $0.id.rawValue }.joined(separator: ", ")
             return "Error: Skill '\(args.skill_id)' not found. Available skills: [\(available)]."
         }
@@ -124,5 +131,65 @@ public enum LoadSkillTool {
         }
 
         return response.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    @MainActor
+    public static func userFacingSummary(
+        argumentsJSON: String,
+        result: String,
+        catalog: HanlinSkillCatalog = .shared,
+        language: String = "zh"
+    ) -> String {
+        let isZh = language.hasPrefix("zh")
+        let isHe = language.hasPrefix("he")
+        if result.hasPrefix("Error:") {
+            if isZh {
+                return result
+            } else if isHe {
+                return result.replacingOccurrences(of: "Error: Skill", with: "שגיאה: מיומנות")
+                    .replacingOccurrences(of: "not found", with: "לא נמצאה")
+                    .replacingOccurrences(of: "Available skills", with: "מיומנויות זמינות")
+            } else {
+                return result
+            }
+        }
+        if let data = argumentsJSON.data(using: .utf8),
+           let args = try? JSONDecoder().decode(Arguments.self, from: data) {
+            if let descriptor = catalog.resolve(rawID: args.skill_id) {
+                let title = descriptor.title.preferredValue()
+                let exposedCount = descriptor.preferredToolIDs.count
+                if isZh {
+                    return exposedCount > 0
+                        ? "已加载技能「\(title)」(\(descriptor.id.rawValue))，关联 \(exposedCount) 个工具"
+                        : "已加载技能「\(title)」(\(descriptor.id.rawValue))"
+                } else if isHe {
+                    return exposedCount > 0
+                        ? "נטענה מיומנות '\(title)' (\(descriptor.id.rawValue)) עם \(exposedCount) כלים"
+                        : "נטענה מיומנות '\(title)' (\(descriptor.id.rawValue))"
+                } else {
+                    return exposedCount > 0
+                        ? "Loaded skill '\(title)' (\(descriptor.id.rawValue)) with \(exposedCount) preferred tool(s)"
+                        : "Loaded skill '\(title)' (\(descriptor.id.rawValue))"
+                }
+            }
+            if isZh {
+                return "已加载技能 \(args.skill_id)"
+            } else if isHe {
+                return "נטענה מיומנות \(args.skill_id)"
+            } else {
+                return "Loaded skill '\(args.skill_id)'"
+            }
+        }
+        let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !firstLine.isEmpty && !firstLine.contains("### Instructions") {
+            return firstLine
+        }
+        if isZh {
+            return "已加载技能"
+        } else if isHe {
+            return "מיומנות נטענה"
+        } else {
+            return "Skill loaded"
+        }
     }
 }

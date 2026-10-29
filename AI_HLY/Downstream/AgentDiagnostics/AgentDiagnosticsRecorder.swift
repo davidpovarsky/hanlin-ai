@@ -99,6 +99,13 @@ actor AgentDiagnosticsRecorder {
         encoder.dateEncodingStrategy = .iso8601
     }
 
+    func setAgentEngineKind(_ kind: String) async {
+        session.agentEngineKind = kind
+        session.lastUpdatedAt = Date()
+        await persist()
+        trace("AgentEngineSelected", fields: ["agentEngineKind": kind])
+    }
+
     @discardableResult
     func beginRound(
         index: Int,

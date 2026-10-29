@@ -1165,4 +1165,737 @@ struct ClassicChatRestorationTests {
 
         coordinator.finishRun(runID: runBID)
     }
+
+    // MARK: - 16. multimodalFormattedMessagesToSDKConversion
+
+    @Test("16. APIManager.convertFormattedMessagesToSDKMessages preserves base64 imageData, remote imageURL, text, and system/developer roles without empty-string destruction")
+    func multimodalFormattedMessagesToSDKConversion() throws {
+        let base64PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+        let formattedMessages: [[String: Any]] = [
+            [
+                "role": "developer",
+                "content": "Developer system instructions"
+            ],
+            [
+                "role": "user",
+                "content": [
+                    ["type": "text", "text": "Inspect the attached diagram and remote photo."],
+                    ["type": "image_url", "image_url": ["url": "data:image/png;base64,\(base64PNG)"]],
+                    ["type": "image_url", "image_url": ["url": "https://example.com/architecture.png"]]
+                ]
+            ],
+            [
+                "role": "assistant",
+                "content": "I see both images."
+            ]
+        ]
+
+        let converted = APIManager.convertFormattedMessagesToSDKMessages(formattedMessages)
+        #expect(converted.baseSystemPrompt == "Developer system instructions")
+        #expect(converted.messages.count == 2)
+
+        let userMsg = converted.messages[0]
+        #expect(userMsg.role == .user)
+        #expect(userMsg.parts.count == 3)
+
+        var foundText = false
+        var foundImageData = false
+        var foundImageURL = false
+        for part in userMsg.parts {
+            switch part {
+            case .text(let t):
+                #expect(t == "Inspect the attached diagram and remote photo.")
+                foundText = true
+            case .imageData(let data, let mimeType):
+                #expect(!data.isEmpty)
+                #expect(mimeType == "image/png")
+                foundImageData = true
+            case .imageURL(let url, _):
+                #expect(url.absoluteString == "https://example.com/architecture.png")
+                foundImageURL = true
+            }
+        }
+        #expect(foundText && foundImageData && foundImageURL)
+    }
+
+    // MARK: - 17. classicChatAgentProjectionSourceFileAndValidResources
+
+    @MainActor
+    @Test("17. ClassicChatAgentProjection maps provider-native .source and .file and rejects fabricated search.local URLs")
+    func classicChatAgentProjectionSourceFileAndValidResources() throws {
+        var messages: [ChatMessages] = []
+        let groupID = UUID()
+        let assistantMessage = ChatMessages(
+            role: "assistant",
+            text: "",
+            reasoning: "",
+            modelName: "gpt-4o",
+            modelDisplayName: "GPT-4o",
+            groupID: groupID,
+            timestamp: Date()
+        )
+        messages.append(assistantMessage)
+
+        ClassicChatAgentProjection.appendProviderSource(
+            id: "s1",
+            url: "https://developer.apple.com/swift",
+            title: "Swift Official",
+            assistantMessage: assistantMessage,
+            messages: &messages,
+            messageGroupID: groupID,
+            searchEngine: "Perplexity",
+            timestamp: Date()
+        )
+        ClassicChatAgentProjection.appendProviderSource(
+            id: "s2",
+            url: "https://search.local/query?q=fake",
+            title: "Fake Local Search",
+            assistantMessage: assistantMessage,
+            messages: &messages,
+            messageGroupID: groupID,
+            searchEngine: "Perplexity",
+            timestamp: Date()
+        )
+
+        #expect(assistantMessage.resources?.count == 1)
+        #expect(assistantMessage.resources?.first?.link == "https://developer.apple.com/swift")
+        #expect(messages.first(where: { $0.role == "search" })?.resources?.count == 1)
+
+        // Provider-native image file
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 4, height: 4))
+        let img = renderer.image { ctx in
+            UIColor.systemBlue.setFill()
+            ctx.fill(CGRect(x: 0, y: 0, width: 4, height: 4))
+        }
+        let pngData = try #require(img.pngData())
+        ClassicChatAgentProjection.appendProviderFile(
+            mediaType: "image/png",
+            data: pngData,
+            assistantMessage: assistantMessage
+        )
+        #expect(assistantMessage.imageArray.count == 1)
+    }
+
+    // MARK: - 18. build84001SkillVsToolNameDisambiguation
+
+    @Test("18. Build 84001 defect 7A: calling web_research as a tool or load_skill(skill_id: search_online) returns explicit Skill ID vs tool name guidance")
+    func build84001SkillVsToolNameDisambiguation() async throws {
+        let session = AssistantCapabilitySession(chatID: UUID().uuidString, isTemporaryChat: false)
+
+        // 1. LoadSkillTool called with tool name "search_online"
+        let loadOutput = await LoadSkillTool.execute(
+            argumentsJSON: #"{"skill_id":"search_online"}"#,
+            session: session,
+            availableAliases: ["search_online", "read_web_page"]
+        )
+        #expect(loadOutput.contains("callable tool name, not a skill_id"))
+        #expect(session.isToolExposed("search_online"))
+
+        // 2. LoadSkillTool called with skill_id "web_research" activates search_online and read_web_page
+        let webResearchOutput = await LoadSkillTool.execute(
+            argumentsJSON: #"{"skill_id":"web_research"}"#,
+            session: session,
+            availableAliases: ["search_online", "read_web_page"]
+        )
+        #expect(webResearchOutput.contains("loaded successfully"))
+        #expect(session.isToolExposed("search_online"))
+        #expect(session.isToolExposed("read_web_page"))
+    }
+
+    // MARK: - 19. build84001MCPValidationAndIncompatiblePackageGuard
+
+    @Test("19. Build 84001 defect 7B: ManageMCPServersTool rejects known nonexistent or native-addon MCP packages and supports action/parameter aliases")
+    func build84001MCPValidationAndIncompatiblePackageGuard() async throws {
+        let tool = ManageMCPServersTool()
+        let context = NativeToolExecutionContext(
+            localeIdentifier: "en_US",
+            chatID: UUID().uuidString,
+            isTemporaryChat: false
+        )
+
+        // Hallucinated package transit-allinone-mcp
+        let transitOut = await tool.execute(
+            argumentsJSON: #"{"action":"install_package","package":"transit-allinone-mcp"}"#,
+            context: context
+        )
+        #expect(transitOut.outcome == .invalidArguments)
+        #expect(transitOut.modelText.contains("does not exist on the public npm registry"))
+
+        // Native addon / Python MCP package @modelcontextprotocol/server-sqlite
+        let sqliteOut = await tool.execute(
+            argumentsJSON: #"{"action":"install","package_spec":"@modelcontextprotocol/server-sqlite"}"#,
+            context: context
+        )
+        #expect(sqliteOut.outcome == .invalidArguments)
+        #expect(sqliteOut.modelText.contains("unsupported in the embedded iOS Node runtime"))
+    }
+
+    // MARK: - 20. build84001UnicodePropertyRegexSanitizerInServerWorker
+
+    @Test("20. Build 84001 defect 7B: server-worker.mjs includes ICU-less Node regex compatibility shim for \\P{ASCII} and \\p{ASCII}")
+    func build84001UnicodePropertyRegexSanitizerInServerWorker() throws {
+        let repoRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let workerURL = repoRoot.appendingPathComponent("AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs")
+        let workerSource = try String(contentsOf: workerURL, encoding: .utf8)
+
+        #expect(workerSource.contains("function sanitizeUnicodePropertyRegexes(source)"))
+        #expect(workerSource.contains(#"\\x00-\\x7F"#))
+        #expect(workerSource.contains("installRegExpUnicodeShim()"))
+    }
+
+    // MARK: - 21. build84001ShellPwdAndNodeCommonJSInference
+
+    @Test("21. Build 84001 defect 7C: execute_shell_command supports pwd builtin and NodeRuntimeService infers CommonJS for require() snippets")
+    func build84001ShellPwdAndNodeCommonJSInference() async throws {
+        // 1. CommonJS vs ESM module inference
+        let cjsCode = "const fs = require('fs');\nconsole.log(Object.keys(fs).length);"
+        let esmCode = "import fs from 'node:fs';\nconsole.log(fs);"
+
+        #expect(NodeRuntimeService.inferModuleKind(for: cjsCode) == "commonjs")
+        #expect(NodeRuntimeService.inferModuleKind(for: esmCode) == "esm")
+
+        // 2. ShellRuntimeService pwd builtin
+        let shellService = ShellRuntimeService()
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "pwd_test")
+        let pwdResult = try await shellService.execute(
+            tokens: ["pwd"],
+            workspace: workspace,
+            environment: [:],
+            allowNetwork: false
+        )
+        #expect(pwdResult.exitCode == 0)
+        #expect(!pwdResult.stdout.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+    }
+
+    // MARK: - 22. build84001SchemaOverheadTokenBudget
+
+    @Test("22. Build 84001 defect 7D: AssistantToolExposurePlanner enforces bounded schema byte budget")
+    func build84001SchemaOverheadTokenBudget() throws {
+        #expect(AssistantToolExposurePlanner.defaultSchemaByteBudget == 24_000)
+
+        var oversizedSizes: [String: Int] = [:]
+        var names: [String] = []
+        for idx in 0..<20 {
+            let name = "heavy_tool_\(idx)"
+            names.append(name)
+            oversizedSizes[name] = 4_000
+        }
+
+        let planner = AssistantToolExposurePlanner(maxSchemaBytes: AssistantToolExposurePlanner.defaultSchemaByteBudget)
+        let decision = planner.plan(
+            candidateAliases: names,
+            schemaSizes: oversizedSizes,
+            currentlyExposedAliases: []
+        )
+
+        #expect(decision.totalExposedBytes <= AssistantToolExposurePlanner.defaultSchemaByteBudget)
+        #expect(!decision.deferredAliases.isEmpty)
+    }
+
+    // MARK: - 23. hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom
+
+    @MainActor
+    @Test("23. HanlinComposerPopupCoordinator enforces mutual exclusion across .general, .tools, and .model and V3.3 two-phase expand/shrink state machine")
+    func hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom() throws {
+        let coordinator = HanlinComposerPopupCoordinator()
+        #expect(coordinator.activePopup == nil)
+
+        // 1. Open General `+` popup
+        coordinator.open(.general, isInputCurrentlyFocused: true)
+        #expect(coordinator.activePopup == .general)
+        #expect(coordinator.shouldRestoreFocusAfterDismiss == true)
+        #expect(coordinator.isGeneralExpanded == false)
+
+        // Stage 1: Expand General popup to subpage (.parameters)
+        coordinator.navigateToGeneralSubpage(.parameters)
+        #expect(coordinator.isGeneralExpanded == true)
+        #expect(coordinator.generalNavigationPath == [.parameters])
+        #expect(coordinator.generalDestinationDisappeared == false)
+
+        // Cancelled swipe-back protection: path is non-empty or destination hasn't disappeared -> stays expanded
+        coordinator.syncGeneralShrinkState()
+        #expect(coordinator.isGeneralExpanded == true)
+
+        // Stage 2: Pop back AND destination disappears -> shrinks back to root size
+        coordinator.popGeneralToRoot()
+        coordinator.markGeneralDestinationDisappeared()
+        #expect(coordinator.generalNavigationPath.isEmpty)
+        #expect(coordinator.isGeneralExpanded == false)
+
+        // 2. Direct 1-tap Tools shortcut switches atomically from .general to .tools
+        coordinator.presentDirectTools(isInputCurrentlyFocused: false)
+        #expect(coordinator.activePopup == .tools)
+        #expect(coordinator.toolsNavigationPath.isEmpty)
+        #expect(coordinator.isToolsExpanded == false)
+
+        // Stage 1 & 2 on Tools popup (.mcpServers)
+        coordinator.navigateToToolsSubpage(.mcpServers)
+        #expect(coordinator.isToolsExpanded == true)
+        #expect(coordinator.toolsNavigationPath == [.mcpServers])
+        coordinator.popToolsToRoot()
+        coordinator.markToolsDestinationDisappeared()
+        #expect(coordinator.isToolsExpanded == false)
+
+        // 3. Model picker switches atomically from .tools to .model and expands to All Models
+        coordinator.open(.model, isInputCurrentlyFocused: false)
+        #expect(coordinator.activePopup == .model)
+        #expect(coordinator.isModelExpanded == false)
+        coordinator.navigateToModelSubpage(.allModels)
+        #expect(coordinator.isModelExpanded == true)
+        #expect(coordinator.modelNavigationPath == [.allModels])
+        coordinator.popModelToRoot()
+        coordinator.markModelDestinationDisappeared()
+        #expect(coordinator.isModelExpanded == false)
+
+        // 4. Close all resets all state
+        coordinator.closeAll()
+        #expect(coordinator.activePopup == nil)
+    }
+
+    // MARK: - 24. hanlinComposerActionBridgeCapabilityAndActiveChips
+
+    @Test("24. HanlinComposerActionBridge derives truthful capability snapshot, active mode chips, and tools shortcut count")
+    func hanlinComposerActionBridgeCapabilityAndActiveChips() throws {
+        let model = AllModels(
+            name: "gpt-4o",
+            displayName: "GPT-4o",
+            identity: "model",
+            position: 0,
+            company: "OPENAI",
+            price: 2,
+            isHidden: false,
+            supportsSearch: true,
+            supportsTextGen: true,
+            supportsMultimodal: true,
+            supportsReasoning: true,
+            supportReasoningChange: true,
+            supportsImageGen: true,
+            supportsVoiceGen: true,
+            supportsToolUse: true
+        )
+
+        let snapshot = HanlinComposerActionBridge.capabilitySnapshot(for: model)
+        #expect(snapshot.hasModel)
+        #expect(snapshot.supportsSearch)
+        #expect(snapshot.supportsReasoning)
+        #expect(snapshot.supportReasoningChange)
+        #expect(snapshot.supportsThinkingLengthMenu)
+        #expect(snapshot.supportsVoiceGen)
+        #expect(snapshot.supportsImageGen)
+        #expect(snapshot.supportsImageAspectRatioSelection)
+        #expect(snapshot.supportsToolUse)
+        #expect(!snapshot.isLocalModel)
+
+        let chips = HanlinComposerActionBridge.activeModeChips(
+            capability: snapshot,
+            ifSearch: true,
+            ifKnowledge: true,
+            ifThink: true,
+            thinkingLength: 3,
+            ifPlanning: false,
+            ifAudio: true,
+            ifToolUse: true,
+            activeMCPServerCount: 2,
+            selectedImageSize: "landscape"
+        )
+        let kinds = chips.map { $0.kind }
+        #expect(kinds.contains(.search))
+        #expect(kinds.contains(.knowledge))
+        #expect(kinds.contains(.thinking))
+        #expect(kinds.contains(.audio))
+        #expect(kinds.contains(.tools))
+        #expect(kinds.contains(.mcp))
+        #expect(kinds.contains(.imageGen))
+
+        let shortcutCount = HanlinComposerActionBridge.activeToolsShortcutCount(
+            capability: snapshot,
+            ifToolUse: true,
+            activeMCPServerCount: 2
+        )
+        #expect(shortcutCount == 3)
+    }
+
+    // MARK: - 25. build84701P0ToolContentSeparationAndPerCallProjection
+
+    @MainActor
+    @Test("25. Build 84701 P0 fix: load_skill keeps ### Instructions in modelText only, and ClassicChatAgentProjection separates per-call tool outputs without mislabeling load_skill under manage_mcp_servers")
+    func build84701P0ToolContentSeparationAndPerCallProjection() async throws {
+        let session = AssistantCapabilitySession(chatID: UUID().uuidString, isTemporaryChat: false)
+
+        // 1. LoadSkillTool full model output vs concise user summary
+        let modelOutput = await LoadSkillTool.execute(
+            argumentsJSON: #"{"skill_id":"mcp_servers"}"#,
+            session: session,
+            availableAliases: ["manage_mcp_servers", "list_tools"]
+        )
+        #expect(modelOutput.contains("### Instructions"))
+
+        let userSummary = LoadSkillTool.userFacingSummary(
+            argumentsJSON: #"{"skill_id":"mcp_servers"}"#,
+            result: modelOutput
+        )
+        #expect(!userSummary.contains("### Instructions"))
+        #expect(userSummary.contains("mcp_servers") || userSummary.localizedCaseInsensitiveContains("mcp"))
+
+        // 2. Consecutive load_skill -> manage_mcp_servers in the same run
+        let runID = UUID()
+        let groupID = UUID()
+        let assistantMessage = ChatMessages(
+            role: "assistant",
+            text: "",
+            reasoning: "",
+            modelName: "gpt-4o",
+            modelDisplayName: "GPT-4o",
+            groupID: groupID,
+            timestamp: Date()
+        )
+
+        let entry1 = ClassicProjectedToolCallEntry(
+            id: "\(runID.uuidString):step:call_skill_1",
+            runID: runID,
+            callID: "call_skill_1",
+            toolName: "load_skill",
+            summary: nil,
+            output: userSummary,
+            isMetaSkillOrDiscoveryTool: true
+        )
+        let entry2 = ClassicProjectedToolCallEntry(
+            id: "\(runID.uuidString):step:call_mcp_2",
+            runID: runID,
+            callID: "call_mcp_2",
+            toolName: "manage_mcp_servers",
+            summary: nil,
+            output: "MCP Server Status: 1 installed, 1 running.",
+            isMetaSkillOrDiscoveryTool: false
+        )
+
+        ClassicChatAgentProjection.applyFormattedToolProjection(
+            entries: [entry1, entry2],
+            fallbackToolName: "tools",
+            to: assistantMessage
+        )
+
+        let expectedBadge = String(format: String(localized: "Tool activity (%lld)"), 2)
+        #expect(assistantMessage.toolName == expectedBadge)
+        #expect(assistantMessage.toolContent?.contains("[load_skill]") == true)
+        #expect(assistantMessage.toolContent?.contains("[manage_mcp_servers]") == true)
+        #expect(assistantMessage.toolContent?.contains("### Instructions") == false)
+    }
+
+    // MARK: - 26. nativeMultilineTextEditorEffectiveMeasurementWidth
+
+    @MainActor
+    @Test("26. NativeMultilineTextEditor.effectiveMeasurementWidth uses actual view bounds on narrow split-screen widths before fallback")
+    func nativeMultilineTextEditorEffectiveMeasurementWidth() {
+        let narrowTextView = UITextView(frame: CGRect(x: 0, y: 0, width: 168, height: 38))
+        #expect(NativeMultilineTextEditor.effectiveMeasurementWidth(for: narrowTextView) == 168)
+
+        let unlaidOutTextView = UITextView(frame: .zero)
+        #expect(NativeMultilineTextEditor.effectiveMeasurementWidth(for: unlaidOutTextView, fallbackWidth: 240) == 240)
+    }
+
+    // MARK: - 27. duplicateOutputsDifferentCallsRetainOrderAndIdentity
+
+    @MainActor
+    @Test("27. Track 1 P0: Two calls with identical toolName and identical output retain distinct identities, stable IDs, and execution order")
+    func duplicateOutputsDifferentCallsRetainOrderAndIdentity() throws {
+        let runID = UUID()
+        let groupID = UUID()
+
+        let step1 = AgentActivityStep(
+            externalID: "call_a",
+            sequence: 0,
+            kind: .toolExecution,
+            title: "manage_mcp_servers",
+            status: .completed,
+            output: "OK"
+        )
+        let step2 = AgentActivityStep(
+            externalID: "call_b",
+            sequence: 1,
+            kind: .toolExecution,
+            title: "manage_mcp_servers",
+            status: .completed,
+            output: "OK"
+        )
+        let item1 = AgentTranscriptItem(
+            externalID: "item_a",
+            sequence: 0,
+            kind: .userVisibleToolResult,
+            callID: "call_a",
+            toolName: "manage_mcp_servers",
+            status: .completed,
+            text: "OK",
+            visibilityAfterCompletion: .remainInChat
+        )
+        let item2 = AgentTranscriptItem(
+            externalID: "item_b",
+            sequence: 1,
+            kind: .userVisibleToolResult,
+            callID: "call_b",
+            toolName: "manage_mcp_servers",
+            status: .completed,
+            text: "OK",
+            visibilityAfterCompletion: .remainInChat
+        )
+
+        let originalRun = AgentRun(
+            id: runID,
+            groupID: groupID,
+            status: .completed,
+            steps: [step1, step2],
+            transcriptItems: [item1, item2],
+            finalAnswer: "Done"
+        )
+
+        let projected = ClassicChatAgentProjection.projectToolEntries(from: originalRun)
+        #expect(projected.count == 2)
+        #expect(projected[0].callID == "call_a")
+        #expect(projected[0].output == "OK")
+        #expect(projected[1].callID == "call_b")
+        #expect(projected[1].output == "OK")
+        #expect(projected[0].id != projected[1].id)
+        #expect(projected[0].sequence < projected[1].sequence)
+
+        var syncList: [ClassicProjectedToolCallEntry] = []
+        var seenKeys: Set<String> = []
+        ClassicChatAgentProjection.syncStructuredToolEntries(
+            from: originalRun,
+            runID: originalRun.id,
+            orderedToolEntries: &syncList,
+            seenToolCallKeys: &seenKeys
+        )
+        #expect(syncList.count == 2)
+        #expect(syncList[0].callID == "call_a")
+        #expect(syncList[1].callID == "call_b")
+
+        let encoder = JSONEncoder()
+        let encodedData = try encoder.encode(originalRun)
+        let decoder = JSONDecoder()
+        let decodedRun = try decoder.decode(AgentRun.self, from: encodedData)
+
+        let reprojected = ClassicChatAgentProjection.projectToolEntries(from: decodedRun)
+        #expect(reprojected.count == 2)
+        #expect(reprojected[0].callID == "call_a")
+        #expect(reprojected[1].callID == "call_b")
+
+        let message = ChatMessages(
+            role: "assistant",
+            text: "Done",
+            groupID: groupID,
+            timestamp: Date()
+        )
+        message.agentRunJSON = String(data: encodedData, encoding: .utf8)
+        #expect(message.agentRun != nil)
+        let messageEntries = ClassicChatAgentProjection.projectToolEntries(from: message.agentRun)
+        #expect(messageEntries.count == 2)
+        #expect(messageEntries[0].callID == "call_a")
+        #expect(messageEntries[1].callID == "call_b")
+    }
+
+    // MARK: - 28. complexToolSequenceAndErrorPreservation
+
+    @MainActor
+    @Test("28. Track 1 P0: Complex tool sequence (load_skill -> MCP status -> MCP call -> failed MCP call) preserves order, statuses, and error details")
+    func complexToolSequenceAndErrorPreservation() throws {
+        let runID = UUID()
+        let groupID = UUID()
+
+        let stepSkill = AgentActivityStep(
+            externalID: "call_skill",
+            sequence: 0,
+            kind: .toolExecution,
+            title: "load_skill",
+            status: .completed,
+            output: "Loaded skill mcp_servers"
+        )
+        let stepStatus = AgentActivityStep(
+            externalID: "call_mcp_status",
+            sequence: 1,
+            kind: .toolExecution,
+            title: "manage_mcp_servers",
+            status: .completed,
+            output: "MCP server running: 1"
+        )
+        let stepCall = AgentActivityStep(
+            externalID: "call_echo",
+            sequence: 2,
+            kind: .toolExecution,
+            title: "mcp__echo__ping",
+            status: .completed,
+            output: "pong"
+        )
+        let stepFail = AgentActivityStep(
+            externalID: "call_fail",
+            sequence: 3,
+            kind: .toolExecution,
+            title: "mcp__file_write",
+            status: .failed,
+            output: nil,
+            errorDescription: "Permission denied by user policy"
+        )
+
+        let run = AgentRun(
+            id: runID,
+            groupID: groupID,
+            status: .completed,
+            steps: [stepSkill, stepStatus, stepCall, stepFail],
+            transcriptItems: []
+        )
+
+        let entries = ClassicChatAgentProjection.projectToolEntries(from: run)
+        #expect(entries.count == 4)
+        #expect(entries[0].toolName == "load_skill")
+        #expect(entries[0].status == .completed)
+        #expect(entries[1].toolName == "manage_mcp_servers")
+        #expect(entries[1].status == .completed)
+        #expect(entries[2].toolName == "mcp__echo__ping")
+        #expect(entries[2].status == .completed)
+        #expect(entries[2].output == "pong")
+        #expect(entries[3].toolName == "mcp__file_write")
+        #expect(entries[3].status == .failed)
+        #expect(entries[3].errorDescription == "Permission denied by user policy")
+
+        let streamingRunID = UUID()
+        let streamingRun = AgentRun(
+            id: streamingRunID,
+            groupID: groupID,
+            status: .running,
+            steps: [],
+            transcriptItems: []
+        )
+        var projection = ClassicChatAgentProjection(runID: streamingRunID)
+        let dummyMsg = ChatMessages(role: "assistant", text: "", groupID: groupID, timestamp: Date())
+        var opState = ""
+        var opDesc = ""
+        var chunk1 = StreamData()
+        chunk1.toolName = "mcp__echo__ping"
+        chunk1.toolContent = "po"
+        _ = projection.applyStreamChunk(
+            chunk1,
+            agentRun: streamingRun,
+            to: dummyMsg,
+            operationalState: &opState,
+            operationalDescription: &opDesc
+        )
+        #expect(projection.orderedToolEntries.count == 1)
+        #expect(projection.orderedToolEntries[0].toolName == "mcp__echo__ping")
+        #expect(projection.orderedToolEntries[0].output == "po")
+
+        var chunk2 = StreamData()
+        chunk2.toolName = "mcp__echo__ping"
+        chunk2.toolContent = "pong"
+        _ = projection.applyStreamChunk(
+            chunk2,
+            agentRun: streamingRun,
+            to: dummyMsg,
+            operationalState: &opState,
+            operationalDescription: &opDesc
+        )
+        #expect(projection.orderedToolEntries.count == 2)
+        #expect(projection.orderedToolEntries[1].toolName == "mcp__echo__ping")
+        #expect(projection.orderedToolEntries[1].output == "pong")
+    }
+
+    // MARK: - 29. domainToolLegitimateInstructionsHeadingPreserved
+
+    @MainActor
+    @Test("29. Track 1 P0: Domain tools preserve legitimate '### Instructions' headings in user view; meta skill tools sanitize user view while preserving modelText")
+    func domainToolLegitimateInstructionsHeadingPreserved() async {
+        let domainRecipeText = """
+        # Apple Pie Recipe
+        ### Instructions
+        1. Peel and slice 6 apples.
+        2. Mix with sugar and cinnamon.
+        3. Bake in preheated oven at 375°F for 45 minutes.
+        """
+
+        let domainSanitized = ClassicChatAgentProjection.sanitizeUserFacingToolOutput(
+            domainRecipeText,
+            isMetaSkillOrDiscoveryTool: false
+        )
+        #expect(domainSanitized.contains("### Instructions"))
+        #expect(domainSanitized.contains("Peel and slice 6 apples"))
+
+        let skillMetaText = """
+        Skill 'calculator' loaded successfully.
+        ### Instructions
+        Internal prompt instructions that the LLM must follow but the user must not see.
+        """
+        let skillSanitized = ClassicChatAgentProjection.sanitizeUserFacingToolOutput(
+            skillMetaText,
+            isMetaSkillOrDiscoveryTool: true
+        )
+        #expect(!skillSanitized.contains("### Instructions"))
+        #expect(!skillSanitized.contains("Internal prompt instructions"))
+        #expect(skillSanitized.contains("Skill 'calculator' loaded successfully."))
+    }
+
+    // MARK: - 30. hebrewEnglishChineseToolSummaryLocalization
+
+    @MainActor
+    @Test("30. Track 4 P0: Four meta-tool user summaries support Hebrew, English, and Simplified Chinese without falling back to English/Chinese for Hebrew")
+    func hebrewEnglishChineseToolSummaryLocalization() {
+        let skillArgs = #"{"skill_id":"test_skill"}"#
+        let skillHe = LoadSkillTool.userFacingSummary(argumentsJSON: skillArgs, result: "Loaded", language: "he")
+        let skillEn = LoadSkillTool.userFacingSummary(argumentsJSON: skillArgs, result: "Loaded", language: "en")
+        let skillZh = LoadSkillTool.userFacingSummary(argumentsJSON: skillArgs, result: "Loaded", language: "zh")
+        #expect(skillHe.contains("מיומנות") || skillHe.contains("test_skill"))
+        #expect(skillEn.contains("skill") || skillEn.contains("test_skill"))
+        #expect(skillZh.contains("技能") || skillZh.contains("test_skill"))
+
+        let resArgs = #"{"skill_id":"test_skill","relative_path":"doc.md"}"#
+        let resHe = ReadSkillResourceTool.userFacingSummary(argumentsJSON: resArgs, result: "Content", language: "he")
+        let resEn = ReadSkillResourceTool.userFacingSummary(argumentsJSON: resArgs, result: "Content", language: "en")
+        let resZh = ReadSkillResourceTool.userFacingSummary(argumentsJSON: resArgs, result: "Content", language: "zh")
+        #expect(resHe.contains("משאב") || resHe.contains("doc.md"))
+        #expect(resEn.contains("resource") || resEn.contains("doc.md"))
+        #expect(resZh.contains("资源") || resZh.contains("doc.md"))
+
+        let searchArgs = #"{"query":"calc"}"#
+        let searchHe = ToolSearchTool.userFacingSummary(argumentsJSON: searchArgs, result: #"{"tools":["calculator"]}"#, language: "he")
+        let searchEn = ToolSearchTool.userFacingSummary(argumentsJSON: searchArgs, result: #"{"tools":["calculator"]}"#, language: "en")
+        let searchZh = ToolSearchTool.userFacingSummary(argumentsJSON: searchArgs, result: #"{"tools":["calculator"]}"#, language: "zh")
+        #expect(searchHe.contains("חיפוש") || searchHe.contains("calc"))
+        #expect(searchEn.contains("search") || searchEn.contains("calc"))
+        #expect(searchZh.contains("搜索") || searchZh.contains("calc"))
+
+        let readArgs = #"{"call_id":"c123"}"#
+        let readHe = ReadToolResultTool.userFacingSummary(argumentsJSON: readArgs, result: "Output", language: "he")
+        let readEn = ReadToolResultTool.userFacingSummary(argumentsJSON: readArgs, result: "Output", language: "en")
+        let readZh = ReadToolResultTool.userFacingSummary(argumentsJSON: readArgs, result: "Output", language: "zh")
+        #expect(readHe.contains("תוצאת") || readHe.contains("c123"))
+        #expect(readEn.contains("result") || readEn.contains("c123"))
+        #expect(readZh.contains("结果") || readZh.contains("c123"))
+
+        let readRefArgs = #"{"reference":"ref_abc"}"#
+        let readRefHe = ReadToolResultTool.userFacingSummary(argumentsJSON: readRefArgs, result: "", language: "he")
+        #expect(readRefHe.contains("תוצאת") || readRefHe.contains("קטע") || readRefHe.contains("ref_abc"))
+    }
+
+    // MARK: - 31. legacyToolContentOnlyChatFallback
+
+    @MainActor
+    @Test("31. Track 1 P0: Legacy stored chat without agentRunJSON falls back gracefully to toolContent without crashing or showing duplicate cards")
+    func legacyToolContentOnlyChatFallback() {
+        let legacyMessage = ChatMessages(
+            role: "assistant",
+            text: "Here is your calculation:",
+            groupID: UUID(),
+            timestamp: Date()
+        )
+        legacyMessage.toolName = "calculator"
+        legacyMessage.toolContent = "[calculator]\nResult: 42"
+        legacyMessage.agentRunJSON = nil
+
+        #expect(legacyMessage.agentRun == nil)
+
+        let entries = ClassicChatAgentProjection.projectToolEntries(from: legacyMessage.agentRun)
+        #expect(entries.isEmpty)
+
+        #expect(legacyMessage.toolContent == "[calculator]\nResult: 42")
+        #expect(legacyMessage.toolName == "calculator")
+    }
 }

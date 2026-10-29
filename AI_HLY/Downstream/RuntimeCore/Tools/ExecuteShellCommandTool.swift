@@ -15,8 +15,10 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     func openAIToolSchema() -> [String: Any] {
-        NativeToolSchema.function(name: name, description: RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl accepts HTTPS only and requires allow_network=true except for curl --version."), parameters: NativeToolSchema.object(properties: [
-            "program": NativeToolSchema.string(description: RuntimeL10n.string("Approved program name."), enumValues: ShellRuntimeService.capabilities.map(\.name)),
+        let supportedPrograms = ShellRuntimeService.capabilities.map(\.name)
+        let baseDescription = RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl accepts HTTPS only and requires allow_network=true except for curl --version.")
+        return NativeToolSchema.function(name: name, description: baseDescription + " Approved programs: \(supportedPrograms.joined(separator: ", ")).", parameters: NativeToolSchema.object(properties: [
+            "program": NativeToolSchema.string(description: RuntimeL10n.string("Approved program name."), enumValues: supportedPrograms),
             "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Program arguments as separate strings; shell syntax is not interpreted."), maximumItems: 127),
             "command": NativeToolSchema.string(description: RuntimeL10n.string("Command string to execute through ios_system.")),
             "allow_network": ["type": "boolean", "description": RuntimeL10n.string("Explicitly allow HTTPS network access for curl.")]
@@ -55,10 +57,11 @@ struct ExecuteShellCommandTool: NativeTool {
             let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .shell])
             let result: RuntimeExecutionResult
             if let program {
-                guard ShellRuntimeService.capabilities.contains(where: { $0.name == program }) else {
+                guard program == "pwd" || ShellRuntimeService.capabilities.contains(where: { $0.name == program }) else {
+                    let approvedList = (ShellRuntimeService.capabilities.map(\.name) + ["pwd"]).joined(separator: ", ")
                     throw NativeToolJSON.JSONError.invalidValue(
                         key: "program",
-                        description: "program is not in the approved ios_system catalog"
+                        description: "program '\(program)' is not in the approved ios_system catalog. Approved programs: [\(approvedList)]"
                     )
                 }
                 if let shellServiceOverride {
