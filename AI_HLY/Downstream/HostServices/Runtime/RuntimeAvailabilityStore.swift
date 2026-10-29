@@ -59,6 +59,14 @@ final class RuntimeAvailabilityStore: @unchecked Sendable {
         }
     }
     
+    // TypeScript depends on Node - report dependency
+    func dependencyWarning(for kind: RuntimeKind) -> String? {
+        if kind == .typeScript && !isAvailable(.node) {
+            return "TypeScript execution requires Node.js, which is currently disabled. Please enable the Node runtime."
+        }
+        return nil
+    }
+
     // Availability flags remain for legacy observers; runtime authorization
     // is handled separately by HanlinHostCapabilityAuthority.
 }
