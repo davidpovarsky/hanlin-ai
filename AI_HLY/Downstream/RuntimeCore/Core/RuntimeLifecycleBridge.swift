@@ -39,6 +39,9 @@ enum RuntimeLifecycleBridge {
             }
 #endif
             await MCPRuntimeProvider.shared.loadIfNeeded()
+            // Node is a process-lifetime engine. Warm it once without requiring
+            // a user-facing runtime switch; other engines initialize on demand.
+            _ = try? await AppRuntimeCore.shared.node.healthCheck()
         }
         preparationTask = task
         await task.value
@@ -52,8 +55,8 @@ enum RuntimeLifecycleBridge {
         let task = Task { @MainActor in
             if let predecessor { await predecessor.value }
             guard lastHandledScenePhase != phase else { return }
-            await MCPRuntimeProvider.shared.handleScenePhase(phase)
             if phase == .active { await AppRuntimeCore.shared.handleForegroundIfLaunched() }
+            await MCPRuntimeProvider.shared.handleScenePhase(phase)
             lastHandledScenePhase = phase
         }
         sceneTransitionTask = task

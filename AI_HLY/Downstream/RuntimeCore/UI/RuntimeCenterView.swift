@@ -5,47 +5,10 @@ import SwiftUI
 @Observable
 final class RuntimeCenterModel {
     var snapshots: [RuntimeKind: RuntimeSnapshot] = [:]
-    var optimisticStates: [RuntimeKind: RuntimeOperationalState] = [:]
     var isBusy = false
     var lastMessage: String?
 
     private let core = AppRuntimeCore.shared
-
-    func isStarted(for kind: RuntimeKind) -> Bool {
-        if let optimistic = optimisticStates[kind] {
-            return optimistic == .ready || optimistic == .executing || optimistic == .preparing
-        }
-        guard let snapshot = snapshots[kind] else { return false }
-        return snapshot.state == .ready || snapshot.state == .executing || snapshot.state == .preparing
-    }
-
-    func toggleLifecycle(for kind: RuntimeKind) async {
-        if isStarted(for: kind) {
-            await stop(kind)
-        } else {
-            await start(kind)
-        }
-    }
-
-    func start(_ kind: RuntimeKind) async {
-        optimisticStates[kind] = .preparing
-        if kind == .typeScript && !isStarted(for: .node) {
-            optimisticStates[.node] = .preparing
-        }
-        await perform {
-            _ = try await self.core.start(kind)
-        }
-    }
-
-    func stop(_ kind: RuntimeKind) async {
-        optimisticStates[kind] = .stopped
-        await perform {
-            let snapshot = try await self.core.stop(kind)
-            if snapshot.state == .appRestartRequired {
-                self.lastMessage = RuntimeL10n.string("Node.js cannot be unloaded from process memory without restarting the app.")
-            }
-        }
-    }
 
     func load() async {
         let values = await core.snapshots()
@@ -89,7 +52,6 @@ final class RuntimeCenterModel {
         lastMessage = nil
         defer {
             isBusy = false
-            optimisticStates.removeAll()
         }
         do {
             try await operation()
@@ -131,10 +93,6 @@ struct RuntimeCenterView: View {
                         image: image,
                         snapshot: snapshot(for: kind),
                         isBusy: model.isBusy,
-                        isStarted: model.isStarted(for: kind),
-                        onToggle: {
-                            Task { await model.toggleLifecycle(for: kind) }
-                        },
                         smoke: { Task { await model.smokeTest(kind) } },
                         destination: { destination(for: kind) }
                     )
@@ -155,7 +113,7 @@ struct RuntimeCenterView: View {
 
             Section(RuntimeL10n.string("Runtime tools")) { RuntimeToolsSettingsView() }
         }
-        .navigationTitle(RuntimeL10n.string("Runtimes & Packages"))
+        .navigationTitle(RuntimeL10n.string("Runtime diagnostics"))
         .task {
             await model.load()
             for await _ in NotificationCenter.default.notifications(named: RuntimeAvailabilityStore.didChangeNotification) {
@@ -166,29 +124,7 @@ struct RuntimeCenterView: View {
     }
 
     private func snapshot(for kind: RuntimeKind) -> RuntimeSnapshot {
-        var snap = model.snapshots[kind] ?? .stopped(kind)
-        if let optimistic = model.optimisticStates[kind] {
-            snap.state = optimistic
-            return snap
-        }
-        if kind == .typeScript {
-            let isTSStarted = model.isStarted(for: .typeScript)
-            let nodeSnap = model.snapshots[.node] ?? .stopped(.node)
-            let state: RuntimeOperationalState = isTSStarted ? nodeSnap.state : .stopped
-            return RuntimeSnapshot(
-                kind: .typeScript,
-                state: state,
-                version: "6.0.3",
-                source: "typescript npm package",
-                lastHealthCheck: nodeSnap.lastHealthCheck,
-                lastErrorCode: nodeSnap.lastErrorCode,
-                storageBytes: nil,
-                cacheBytes: nil,
-                activeExecutionCount: nodeSnap.activeExecutionCount,
-                packageCount: nil
-            )
-        }
-        return snap
+        model.snapshots[kind] ?? .stopped(kind)
     }
 
     @ViewBuilder
@@ -202,14 +138,30 @@ struct RuntimeCenterView: View {
     }
 }
 
+struct RuntimePackagesView: View {
+    var body: some View {
+        List {
+            Section(RuntimeL10n.string("Installed packages")) {
+                NavigationLink(RuntimeL10n.string("Node.js packages")) { NodePackagesView() }
+                NavigationLink(RuntimeL10n.string("Python packages")) { PythonPackagesView() }
+            }
+            Section(RuntimeL10n.string("Execution settings")) {
+                NavigationLink(RuntimeL10n.string("Environment variables")) { RuntimeEnvironmentView() }
+            }
+            Section(RuntimeL10n.string("Tool permissions")) {
+                RuntimeToolsSettingsView()
+            }
+        }
+        .navigationTitle(RuntimeL10n.string("Packages & Tools"))
+    }
+}
+
 private struct RuntimeCard<Destination: View>: View {
     let kind: RuntimeKind
     let title: String
     let image: String
     let snapshot: RuntimeSnapshot
     let isBusy: Bool
-    let isStarted: Bool
-    let onToggle: () -> Void
     let smoke: () -> Void
     let destination: () -> Destination
 
@@ -220,10 +172,10 @@ private struct RuntimeCard<Destination: View>: View {
                     .font(.headline)
                     .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
                 Spacer()
-                Toggle("", isOn: Binding(get: { isStarted }, set: { _ in onToggle() }))
-                    .labelsHidden()
-                    .accessibilityIdentifier("hanlin-runtime-availability-\(kind.rawValue)")
-                Text(RuntimeL10n.string(snapshot.state.localizationKey)).font(.caption).foregroundStyle(snapshot.state.tint)
+                Text(RuntimeL10n.string(snapshot.state.localizationKey))
+                    .font(.caption)
+                    .foregroundStyle(snapshot.state.tint)
+                    .accessibilityIdentifier("hanlin-runtime-state-\(kind.rawValue)")
             }
             if snapshot.state == .stopped {
                 Text(RuntimeL10n.string("Starts on demand")).font(.caption).foregroundStyle(.secondary)

@@ -3,15 +3,24 @@ import Foundation
 @_silgen_name("HanlinNodeStart")
 private func HanlinNodeStart(_ argumentsJSON: UnsafePointer<CChar>) -> Int32
 
+@_silgen_name("HanlinNodeDidExit")
+private func HanlinNodeDidExit() -> Int32
+
 enum NodeRuntimeBridge {
+    static var didExit: Bool { HanlinNodeDidExit() != 0 }
+
     static func start(arguments: [String]) throws {
         let data = try JSONEncoder().encode(arguments)
         guard let json = String(data: data, encoding: .utf8) else {
             throw MCPError.runtimeUnavailable("Could not encode Node launch arguments.")
         }
         let result = json.withCString(HanlinNodeStart)
-        guard result == 0 || result == 1 else {
-            throw MCPError.runtimeUnavailable("NodeMobile rejected launch arguments (\(result)).")
+        guard result == 0 else {
+            throw MCPError.runtimeUnavailable(
+                result == 1
+                    ? "Embedded Node has already been started in this process; a second launch is not supported."
+                    : "NodeMobile rejected launch arguments (\(result))."
+            )
         }
     }
 }

@@ -9,12 +9,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
 
-        // 1. Initial State: Python runtime is OFF + Assistant Python permission is ON
+        // Runtime status is observational; engine activation must not require a toggle.
         openRuntimeCenter(in: app)
-        let initialPythonToggle = toggleSwitch(for: "localPython", in: app)
-        if !initialPythonToggle.waitForExistence(timeout: 5) { app.swipeUp() }
-        XCTAssertTrue(initialPythonToggle.waitForExistence(timeout: 10), "Python toggle card was missing in Runtime Center")
-        XCTAssertFalse(isToggleOn(initialPythonToggle), "Python toggle should initially be OFF on fresh process")
+        let pythonState = runtimeState(for: "localPython", in: app)
+        if !pythonState.waitForExistence(timeout: 3) { app.swipeUp() }
+        XCTAssertTrue(pythonState.waitForExistence(timeout: 10), "Python runtime state missing in developer diagnostics")
+        XCTAssertFalse(app.switches["hanlin-runtime-availability-localPython"].exists,
+                       "No manual Python lifecycle switch should be exposed")
 
         let toolPerm = app.switches["hanlin-tool-permission-execute_local_python_code"].firstMatch
         for _ in 0..<3 where !toolPerm.waitForExistence(timeout: 3) {
@@ -57,15 +58,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(toolActivity.waitForExistence(timeout: 45), "Tool activity/result was not rendered in the real chat UI.")
 
-        // 3. Verify Runtime Center reactively shows Python ON after agent execution
+        // Verify that agent execution prepared Python without a manual switch.
         openRuntimeCenter(in: app)
-        let postPythonToggle = toggleSwitch(for: "localPython", in: app)
-        if !postPythonToggle.waitForExistence(timeout: 3) { app.swipeDown() }
-        if !postPythonToggle.waitForExistence(timeout: 3) { app.swipeUp() }
-        XCTAssertTrue(
-            waitForToggle(postPythonToggle, toBe: true, timeout: 20),
-            "Python runtime should auto-start on agent execution and Runtime Center must show Python ON"
-        )
+        XCTAssertTrue(waitForRuntimeReady("localPython", in: app, timeout: 20),
+                      "Python runtime should become ready automatically after agent execution")
     }
 
     func testProductionCodeSkillLocalPythonNeedsNoUserNudge() throws {
@@ -75,12 +71,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
 
-        // 1. Initial State: Python runtime is OFF in Runtime Center + Assistant Python permission is ON
+        // Runtime status is observational; engine activation must not require a toggle.
         openRuntimeCenter(in: app)
-        let initialPythonToggle = toggleSwitch(for: "localPython", in: app)
-        if !initialPythonToggle.waitForExistence(timeout: 5) { app.swipeUp() }
-        XCTAssertTrue(initialPythonToggle.waitForExistence(timeout: 10), "Python toggle card was missing in Runtime Center")
-        XCTAssertFalse(isToggleOn(initialPythonToggle), "Python toggle should initially be OFF on fresh process")
+        let pythonState = runtimeState(for: "localPython", in: app)
+        if !pythonState.waitForExistence(timeout: 3) { app.swipeUp() }
+        XCTAssertTrue(pythonState.waitForExistence(timeout: 10), "Python runtime state missing in developer diagnostics")
+        XCTAssertFalse(app.switches["hanlin-runtime-availability-localPython"].exists,
+                       "No manual Python lifecycle switch should be exposed")
 
         let toolPerm = app.switches["hanlin-tool-permission-execute_local_python_code"].firstMatch
         for _ in 0..<3 where !toolPerm.waitForExistence(timeout: 3) {
@@ -111,15 +108,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let remoteActivity = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'execute_remote_python_code'")).firstMatch
         XCTAssertFalse(remoteActivity.exists, "Remote Python must not be invoked when local python is supported")
 
-        // 4. Runtime Center reactively shows Python toggle ON after execution
+        // Verify that agent execution prepared Python without a manual switch.
         openRuntimeCenter(in: app)
-        let postPythonToggle = toggleSwitch(for: "localPython", in: app)
-        if !postPythonToggle.waitForExistence(timeout: 3) { app.swipeDown() }
-        if !postPythonToggle.waitForExistence(timeout: 3) { app.swipeUp() }
-        XCTAssertTrue(
-            waitForToggle(postPythonToggle, toBe: true, timeout: 20),
-            "Python runtime should auto-start on agent execution and Runtime Center must show Python ON"
-        )
+        XCTAssertTrue(waitForRuntimeReady("localPython", in: app, timeout: 20),
+                      "Python runtime should become ready automatically after agent execution")
     }
 
     func testStopThenNewMessageHasNoGhostOldRun() throws {
@@ -750,22 +742,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     private func openRuntimeCenter(in app: XCUIApplication) {
-        if app.navigationBars["Runtimes & Packages"].exists { return }
+        if app.navigationBars["Runtime diagnostics"].exists { return }
         openSettings(in: app)
-        let runtimeCenterNav = app.navigationBars["Runtimes & Packages"].firstMatch
+        let runtimeCenterNav = app.navigationBars["Runtime diagnostics"].firstMatch
         if runtimeCenterNav.waitForExistence(timeout: 3) { return }
-        let link = app.descendants(matching: .any)["hanlin-runtimes-packages-link"].firstMatch
-        if !link.waitForExistence(timeout: 5) {
-            app.swipeUp()
-        }
-        if link.waitForExistence(timeout: 10) {
-            if link.isHittable {
-                link.tap()
-            } else {
-                app.swipeUp()
-                link.tap()
-            }
-        }
+        let link = app.descendants(matching: .any)["hanlin-runtime-diagnostics-link"].firstMatch
+        for _ in 0..<8 where !link.isHittable { app.swipeUp() }
+        XCTAssertTrue(link.waitForExistence(timeout: 10), "Developer runtime diagnostics link missing")
+        tapElement(link)
         _ = runtimeCenterNav.waitForExistence(timeout: 10)
     }
 
@@ -778,7 +762,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     private func openChat(in app: XCUIApplication) {
-        while app.navigationBars["Runtimes & Packages"].exists {
+        while app.navigationBars["Runtime diagnostics"].exists {
             let backButton = app.navigationBars.buttons.element(boundBy: 0)
             if backButton.waitForExistence(timeout: 2) && backButton.isHittable {
                 backButton.tap()
@@ -823,10 +807,19 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         _ = input.waitForExistence(timeout: 15)
     }
 
-    private func toggleSwitch(for kindRaw: String, in app: XCUIApplication) -> XCUIElement {
-        let sw = app.switches["hanlin-runtime-availability-\(kindRaw)"].firstMatch
-        if sw.exists { return sw }
-        return app.descendants(matching: .switch)["hanlin-runtime-availability-\(kindRaw)"].firstMatch
+    private func runtimeState(for kindRaw: String, in app: XCUIApplication) -> XCUIElement {
+        app.staticTexts["hanlin-runtime-state-\(kindRaw)"].firstMatch
+    }
+
+    private func waitForRuntimeReady(
+        _ kindRaw: String, in app: XCUIApplication, timeout: TimeInterval
+    ) -> Bool {
+        let state = runtimeState(for: kindRaw, in: app)
+        if !state.waitForExistence(timeout: 3) { app.swipeUp() }
+        guard state.waitForExistence(timeout: 10) else { return false }
+        let predicate = NSPredicate(format: "label == %@", "Ready")
+        return XCTWaiter.wait(for: [expectation(for: predicate, evaluatedWith: state)],
+                              timeout: timeout) == .completed
     }
 
     private func isToggleOn(_ element: XCUIElement) -> Bool {
@@ -840,12 +833,4 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         return false
     }
 
-    private func waitForToggle(_ element: XCUIElement, toBe targetState: Bool, timeout: TimeInterval = 15) -> Bool {
-        let predicate = NSPredicate { _, _ in
-            self.isToggleOn(element) == targetState
-        }
-        let exp = expectation(for: predicate, evaluatedWith: element)
-        let result = XCTWaiter.wait(for: [exp], timeout: timeout)
-        return result == .completed
-    }
 }

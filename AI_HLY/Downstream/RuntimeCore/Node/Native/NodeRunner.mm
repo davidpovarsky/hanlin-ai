@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <cstring>
 
+static std::atomic_bool gNodeEngineExited(false);
+
 @interface HanlinNodeEngine : NSObject
 + (void)runArguments:(NSArray<NSString *> *)arguments;
 @end
@@ -80,9 +82,14 @@ int HanlinNodeStart(const char *argumentsJSON) {
 
     NSThread *thread = [[NSThread alloc] initWithBlock:^{
         [HanlinNodeEngine runArguments:arguments];
+        gNodeEngineExited.store(true, std::memory_order_release);
     }];
     thread.name = @"Hanlin Embedded Node";
     thread.stackSize = 2 * 1024 * 1024;
     [thread start];
     return 0;
+}
+
+int HanlinNodeDidExit(void) {
+    return gNodeEngineExited.load(std::memory_order_acquire) ? 1 : 0;
 }
