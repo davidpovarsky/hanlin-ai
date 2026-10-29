@@ -147,7 +147,15 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         importAndInstall(archive: "ExpoSwiftUIProbeA")
         launchInstalledPackage(named: probeAPackageName)
 
-        let openProbe = app.buttons["Open Searchable Probe"].firstMatch
+        let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
+        let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
+        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
+
+        let openProbePredicate = NSPredicate(format: "identifier == 'Open Searchable Probe' OR label CONTAINS 'Open Searchable Probe'")
+        var openProbe = app.buttons.matching(openProbePredicate).firstMatch
+        if !openProbe.exists {
+            openProbe = app.descendants(matching: .any).matching(openProbePredicate).firstMatch
+        }
         XCTAssertTrue(openProbe.waitForExistence(timeout: 20), "Searchable regression probe trigger is missing")
         openProbe.tap()
 
@@ -656,13 +664,32 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
     private func openPackageDetails(named packageName: String) {
         let card = findPackageCard(named: packageName)
-        XCTAssertTrue(card.waitForExistence(timeout: 15))
-        card.press(forDuration: 1.5)
-        let detailsPredicate = NSPredicate(format: "label CONTAINS 'Package Information' OR label CONTAINS 'Package Details'")
-        let detailsButton = app.descendants(matching: .any).matching(detailsPredicate).firstMatch
-        if detailsButton.waitForExistence(timeout: 5) {
-            detailsButton.tap()
+        XCTAssertTrue(card.waitForExistence(timeout: 15), "Package card \(packageName) not found for details")
+        if !card.isHittable {
+            app.swipeDown()
+            _ = waitUntil(timeout: 2) { card.isHittable }
         }
+        if !card.isHittable {
+            app.swipeUp()
+            _ = waitUntil(timeout: 2) { card.isHittable }
+        }
+        if card.isHittable {
+            card.press(forDuration: 1.5)
+        } else {
+            card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 1.5)
+        }
+
+        let infoPredicate = NSPredicate(format: "identifier == 'hanlin-package-information-menu-item' OR label CONTAINS 'Package Information' OR identifier CONTAINS 'Package Information' OR label CONTAINS 'Package Details'")
+        let infoButton = app.descendants(matching: .any).matching(infoPredicate).firstMatch
+        if !infoButton.waitForExistence(timeout: 3) {
+            if card.isHittable {
+                card.press(forDuration: 2.0)
+            } else {
+                card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 2.0)
+            }
+        }
+        XCTAssertTrue(infoButton.waitForExistence(timeout: 8), "Package Information context menu item missing for \(packageName)")
+        infoButton.tap()
     }
 
     private func waitUntil(timeout: TimeInterval, condition: () -> Bool) -> Bool {
