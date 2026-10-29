@@ -105,3 +105,8 @@ GitHub Actions can build the installable package without a host TestFlight rebui
 The iPad screenshot showed the native title and Searchable field but no List contents; the 1.1.1 Searchable wrapper was hiding all actionable controls. The root List now attaches directly to NavigationStack with a native TextField, Button, Section and NavigationLink. All result rows and detail screens stay native SwiftUI. The problematic Searchable wrapper is intentionally disabled until its iOS host child-content rendering can be verified on a device; keeping it would leave the app unusable. The previously verified NativeScript/NSURLSession transport is unchanged.
 
 The app displays 'Hanlin Expo 1.1.2' inside the root List as an on-device indicator. If that label is not visible, the native List or its host rendering is still broken and the issue requires host-level iOS simulator/device diagnostics.
+
+
+## 1.2.0: Native Searchable restored with bridge fix (requires updated Host)
+
+This package is for the Hanlin host containing commit 050bceb4358a6feb000b06de451318190ec0f910 or descendant. The SwiftUI Searchable field is again native and the native List is its direct React child, which is rendered by the revised Hanlin Expo bridge without a nested HanlinSlotView. The Sefaria NSURLSession transport is unchanged. DO NOT install on TestFlight Build 86201: the old host native bridge still loses the wrapped List. Host-level XCUITest remains required before a new signed TestFlight build is distributed.

@@ -3,7 +3,7 @@ name: Package native Hanlin Expo search MiniApp
 on:
   push:
     branches:
-      - fix/expo-native-search-events-20261029
+      - fix/expo-searchable-content-bridge-20261029
     paths:
       - .github/workflows/build-expo-native-search-miniapp.yml
       - Scripts/Expo/miniapps/modular-text-search/**
@@ -63,7 +63,7 @@ jobs:
 
           root = pathlib.Path("Scripts/Expo/miniapps/modular-text-search")
           manifest = json.loads((root / "script.json").read_text(encoding="utf-8"))
-          assert manifest["version"] == "1.1.2"
+          assert manifest["version"] == "1.2.0"
           assert manifest["hanlinRuntime"] == "hanlin-expo"
           assert set(manifest["capabilities"]) == {"network", "ios-native-api"}
           bundle = root / "dist/bundle.js"
@@ -84,7 +84,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: Hanlin-ModularTextSearch-v1.1.2
+          name: Hanlin-ModularTextSearch-v1.2.0
           path: Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
           retention-days: 7
 
@@ -96,6 +96,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
           if ! git diff --cached --quiet; then
-            git commit -m "build(miniapp): publish direct-List visible search repair v1.1.2 [skip ci]"
-            git push origin HEAD:fix/expo-native-search-events-20261029
+            git commit -m "build(miniapp): publish direct-List visible search repair v1.2.0 [skip ci]"
+            git push origin HEAD:fix/expo-searchable-content-bridge-20261029
           fi
