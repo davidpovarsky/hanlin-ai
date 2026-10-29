@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { View } from 'react-native';
 import {
   Host, NavigationStack, NavigationLink, NavigationDestination,
-  Searchable, List, Section, Form, Menu, Text, Button, Link,
+  Searchable, List, Section, Form, Text, Button, Link,
   Picker, Toggle, TextField, LabeledContent, DisclosureGroup,
-  ContentUnavailableView, ProgressView, Toolbar, useNativeState,
+  ContentUnavailableView, ProgressView, useNativeState,
   hostServices
 } from '@hanlin/expo-ui';
 import {
@@ -286,6 +287,7 @@ export default function App() {
   const [hasMore,setHasMore] = useState(false);
   const [error,setError] = useState('');
   const [diagnostic,setDiagnostic] = useState('');
+  const [actionStatus,setActionStatus] = useState('');
   const [meta,setMeta] = useState<any>(null);
   const [lastSearchOptions,setLastSearchOptions] = useState<SearchOptions|null>(null);
   const [results,setResults] = useState<any[]>([]);
@@ -442,24 +444,39 @@ export default function App() {
     setError('');
   }
 
-  const controls = <Menu label={t('options')} systemImage="ellipsis.circle">
-    <Button label={t('optionsTitle')} systemImage="slider.horizontal.3"
-      onPress={()=>setPath(['settings'])}/>
-    <Button label={locale==='he'?'בדיקת חיבור':'Check connection'}
-      systemImage="network" onPress={()=>{void checkConnection();}}/>
-    <Button label={locale==='he'?'English':'עברית'} systemImage="globe"
-      onPress={()=>setLocale(locale==='he'?'en':'he')}/>
-  </Menu>;
-
-  return <Host style={{flex:1}}
+  return <View style={{flex:1}}>
+    <Host style={{flex:1}}
       layoutDirection={locale==='he'?'rightToLeft':'leftToRight'}>
       <NavigationStack path={path} onPathChange={setPath}
         modifiers={[navigationTitle(t('appTitle')),navigationBarTitleDisplayMode('large')]}>
-        <Toolbar>
-          <Searchable value={query} onValueChange={setQuery}
-            onSubmit={(submitted)=>{setQuery(submitted);void search(submitted);}}
+        <Searchable value={query} onValueChange={setQuery}
+            onSubmit={(submitted)=>{
+              setQuery(submitted);
+              setActionStatus(locale==='he'?'התקבל חיפוש מהמקלדת.':'Keyboard search received.');
+              void search(submitted);
+            }}
             prompt={t('searchPrompt')}>
             <List modifiers={[listStyle('insetGrouped')]}>
+              <Section title={locale==='he'?'פעולות':'Actions'}>
+                <Button label={t('searchNow')} systemImage="magnifyingglass"
+                  onPress={()=>{
+                    setActionStatus(locale==='he'?'לחיצה על חיפוש התקבלה.':'Search button pressed.');
+                    void search(query);
+                  }}
+                  modifiers={[disabled(isLoading)]}/>
+                <Button label={locale==='he'?'בדיקת חיבור':'Check connection'}
+                  systemImage="network"
+                  onPress={()=>{
+                    setActionStatus(locale==='he'?'לחיצה על בדיקת חיבור התקבלה.':'Connection test button pressed.');
+                    void checkConnection();
+                  }}/>
+                <NavigationLink value="settings">
+                  <Text>{t('optionsTitle')}</Text>
+                </NavigationLink>
+                <Button label={locale==='he'?'English':'עברית'} systemImage="globe"
+                  onPress={()=>setLocale(locale==='he'?'en':'he')}/>
+                {Boolean(actionStatus) && <Text modifiers={[foregroundStyle(secondary)]}>{actionStatus}</Text>}
+              </Section>
               {isLoading &&
                 <Section>
                   <ProgressView><Text>{t('searching')}</Text></ProgressView>
@@ -512,8 +529,6 @@ export default function App() {
                 </Section>}
             </List>
           </Searchable>
-          <Toolbar.Content>{controls}</Toolbar.Content>
-        </Toolbar>
         <NavigationDestination value="settings">
           <NativeSettings locale={locale} engine={engine}
             engines={engines} engineId={engineId}
@@ -534,5 +549,6 @@ export default function App() {
               onLoadFullText={loadFullText}/>
           </NavigationDestination>)}
       </NavigationStack>
-  </Host>;
+    </Host>
+  </View>;
 }
