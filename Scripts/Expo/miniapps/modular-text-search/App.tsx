@@ -470,6 +470,15 @@ export default function App() {
                     setActionStatus(locale==='he'?'לחיצה על בדיקת חיבור התקבלה.':'Connection test button pressed.');
                     void checkConnection();
                   }}/>
+                <DisclosureGroup label={locale==='he'?'שדה חיפוש חלופי':'Alternative search field'}>
+                  <InputRow label={t('searchFieldLabel')} value={query} onChange={setQuery}
+                    placeholder={t('searchPrompt')}/>
+                  <Button label={t('searchNow')} systemImage="magnifyingglass"
+                    onPress={()=>{
+                      setActionStatus(locale==='he'?'התקבלה בקשת חיפוש מהשדה החלופי.':'Alternative search submitted.');
+                      void search(query);
+                    }}/>
+                </DisclosureGroup>
                 <NavigationLink value="settings">
                   <Text>{t('optionsTitle')}</Text>
                 </NavigationLink>
