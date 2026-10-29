@@ -4,8 +4,9 @@
 **Repository**: `davidpovarsky/hanlin-ai`  
 **Branch**: `fix/classic-source-first-agent-acceptance-20261025`  
 **Base Code SHA**: `6318093d7dc2bb0936766d27608c350def307f13`  
-**Code SHA under test**: `acf77c9d3010cfb1dcb5d80e1b7ee3997796f526`  
-**CI Run**: `https://github.com/davidpovarsky/hanlin-ai/actions/runs/40749826755`  
+**Code SHA under test**: `1b2ad47944df9f2ec62aa7ff9da9fefd71918367`  
+**CI Validation Run**: `https://github.com/davidpovarsky/hanlin-ai/actions/runs/40798374636` (Passed 100%)  
+**TestFlight Delivery Run**: `https://github.com/davidpovarsky/hanlin-ai/actions/runs/40802588912`  
 **Testing Environment**:
 - **Simulators**: iPad mini (A17 Pro), iOS 27.0 (UDID `D964FD22-3755-4972-8B2A-EE51929C1018`)
 - **Xcode Toolchain**: Xcode 27.2 Release Candidate (Simulator SDK 27.2)
@@ -23,8 +24,8 @@
 | **F3 Geometry & navigation** | Responsive native popovers constrained by real available space; coordinator race guards; smooth back navigation | **PASS** | Dynamic sizing in `HanlinComposerPopupCoordinator.swift`. Race guards verified. UI tests 06, 09, 10 pass. |
 | **F4 Functional E2E** | Unconditional assertions for direct tools, catalog, skills, MCP, and model picker | **PASS** | Removed all `if exists` skips in `testUI06`. Added unconditional `testUI09` and `testUI10`. MCP toggle confirmed with provider rollback. |
 | **F5 Localization** | Complete `en`, `he`, `zh-Hans` coverage; no Chinese leakage in English/Hebrew; 4 meta-tools localized | **PASS** | 67 new keys added (858 keys total in `Localizable.xcstrings`). Unit test 30 verified. Zero hardcoded Chinese on touched surfaces. |
-| **F6 CI Authenticity** | Fresh affected unit and XCUI pass on final SHA; skipped/live cases truthfully labeled | **READY FOR DISPATCH** | All code changes compile cleanly with `swiftc -parse`. Workflow dispatched on exact tested commit. |
-| **F7 Internal Delivery** | One internal TestFlight build triggered after CI pass; CFBundleVersion and artifact recorded | **READY FOR DISPATCH** | Post-validation phase dispatches `.github/workflows/testflight.yml` with `upload_to_testflight=true`. |
+| **F6 CI Authenticity** | Fresh affected unit and XCUI pass on final SHA; skipped/live cases truthfully labeled | **PASS** | All code changes compile and pass CI on exact tested commit `1b2ad47944df9f2ec62aa7ff9da9fefd71918367` (Run 40798374636: 31/31 ClassicChatRestorationTests, 13/13 AgentRuntimeConversationUITests, 19/19 MasterScenarioSemanticAcceptanceTests including FINAL-11). |
+| **F7 Internal Delivery** | One internal TestFlight build triggered after CI pass; CFBundleVersion and artifact recorded | **DISPATCHED** | Triggered signed TestFlight build run 40802588912 with upload_to_testflight=true after 100% green CI gate pass. |
 
 ---
 

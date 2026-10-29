@@ -4,7 +4,8 @@
 **Repository**: `davidpovarsky/hanlin-ai`  
 **Branch**: `fix/classic-source-first-agent-acceptance-20261025`  
 **Base Code SHA**: `6318093d7dc2bb0936766d27608c350def307f13`  
-**Current Code SHA**: `acf77c9d3010cfb1dcb5d80e1b7ee3997796f526`  
+**Current Code SHA**: `1b2ad47944df9f2ec62aa7ff9da9fefd71918367`  
+**CI Validation Run**: `https://github.com/davidpovarsky/hanlin-ai/actions/runs/40798374636` (100% Passed)  
 **Worktree**: `C:\Users\DAVID\Code\hanlin-classic-source-first-20261027` (Isolated worktree)  
 **Untouched Workspace**: `C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results` (Verified 100% clean)
 
@@ -89,6 +90,8 @@
 | `AI_HLYTests/ClassicChatRestorationTests.swift` | Updated Test 25, added Tests 27–31 |
 | `AI_HLYUITests/AgentRuntimeConversationUITests.swift` | Unconditional assertions in `testUI06`, added `testUI09` and `testUI10` |
 | `AI_HLYUITests/HanlinSkillCenterUITests.swift` | Robust `chatInputElement()` helper supporting NativeMultilineTextEditor in `openChat` and `testInstalledSkillAppearsInNextChatRun` |
+| `AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs` | Non-blocking execution cancellation, resilient HTTP server response handling |
+| `AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift` | Add cancellation settle delay in FINAL-11 |
 
 ### Explicit Out-of-Scope Confirmation
 - No changes to main chat message database or SwiftData schemas.
