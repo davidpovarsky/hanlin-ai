@@ -53,3 +53,22 @@ Search status and errors are displayed directly beneath the query field. An opti
 Verification: the real Sefaria search integration test retrieves 10 hits and groups them into 2 source cards; Node transport test passes; UI wiring regression test passes; TypeScript 6 check passes; Metro builds a release iOS bundle.
 
 No new iOS host or TestFlight release is needed, but these Windows-side checks cannot prove the SwiftUI screen and Node bridge function on the user's iPad. Please confirm on device; read visible diagnostics if it still fails.
+
+
+## 1.0.3: Use iOS NSURLSession instead of embedded Node networking
+
+TestFlight 86201 device feedback from 1.0.2 proved the cause of no results: the embedded Node 24.5.0 runtime produced a stream of unmanaged file-descriptor warnings and TypeError: fetch failed in Undici. The search options and Sefaria query itself were not the cause.
+
+The Sefaria transport now uses the native Apple NSURLSession public Foundation APIs through the already-compiled NativeScript 9.1.2 JSI bridge. Its completion handler uses jsInvoker so NSURLSession's background-queue response is delivered to the React Native JS thread before resolving a search promise. No React Native fetch and no Node fetch are used. Both search POST and full-text GET use the same transport.
+
+The package now declares ios-native-api and network capabilities. It does not request runtime.node; both of the new capabilities must be approved during installation or update. Native access is broad and restricted by the package code to HTTPS API endpoints on www.sefaria.org, with capability checks before each request.
+
+The Check connection control now sends an actual one-hit search using NSURLSession, rather than only testing Node startup. Native transport errors are displayed in the miniapp UI.
+
+Verification:
+- Live Sefaria search of the Hebrew word for life returned ten hits through the NativeScript API mock's NSURLSession callback path.
+- Disallowed URL hosts and revoked network permission are rejected by the native transport.
+- Existing search UI wiring and visible-error tests passed.
+- TypeScript 6 validation and Metro production iOS bundle compilation passed.
+
+These Windows-side tests cannot test the JSI/Objective-C callback against the physical iPad's Apple runtime. Install the .hanlinExpo on Hanlin TestFlight 86201, grant ios-native-api and network, and use Check connection if necessary.

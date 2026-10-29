@@ -340,29 +340,29 @@ export default function App() {
     catch{return '';}
   },[engineId,query,searchOptions,filtersText,filterFieldsText,aggsText]);
   async function checkConnection() {
-    setDiagnostic(locale==='he'?'בודק הרשאות ומנוע Node…':'Checking permissions and Node…');
+    setDiagnostic(locale==='he'?'בודק הרשאות ואת חיבור הרשת המקורי של iOS…':'Checking iOS native permissions and network…');
     try {
-      const nodeAllowed=await hostServices.hasCapability('runtime.node');
+      const nativeAllowed=await hostServices.hasCapability('ios-native-api');
       const networkAllowed=await hostServices.hasCapability('network');
-      if(!nodeAllowed||!networkAllowed){
-        const missing=[!nodeAllowed?'runtime.node':null,!networkAllowed?'network':null].filter(Boolean).join(', ');
+      if(!nativeAllowed||!networkAllowed) {
+        const missing=[!nativeAllowed?'ios-native-api':null,!networkAllowed?'network':null]
+          .filter(Boolean).join(', ');
         setDiagnostic((locale==='he'?'הרשאה חסרה: ':'Missing permission: ')+missing+
-          (locale==='he'?' · אשר אותה בפרטי החבילה.':' · Enable it in package details.'));
+          (locale==='he'?' · יש לאשר בפרטי החבילה.':' · Approve in package details.'));
         return;
       }
-      const result=await hostServices.executeRuntime('node',
-        "console.log('HANLIN_NODE_READY')",
-        {limits:{timeoutMilliseconds:12000,maximumOutputBytes:8192}});
-      if(result?.exitCode===0 && String(result.stdout||'').includes('HANLIN_NODE_READY')){
-        setDiagnostic(locale==='he'?'מנוע Node וההרשאות תקינים. כעת נסה חיפוש.':
-          'Node and permissions are ready. You can search now.');
-      }else{
-        setDiagnostic((locale==='he'?'Node נכשל: ':'Node failed: ')+
-          String(result?.stderr||result?.stdout||result?.exitCode||'unknown').slice(0,350));
+      const probe=await engine.search({...effective('שבת',0,1),query:'שבת',start:0,size:1});
+      const n=Array.isArray(probe?.results)?probe.results.length:0;
+      if(n>0) {
+        setDiagnostic(locale==='he'?'חיבור iOS ל־Sefaria תקין — נמצאה תוצאת ניסיון.':
+          'iOS native Sefaria connection succeeded — test result found.');
+      } else {
+        setDiagnostic(locale==='he'?'החיבור פועל אך החיפוש הניסיוני לא החזיר תוצאות.':
+          'Connected, but the test search returned no results.');
       }
-    }catch(e:any){
-      setDiagnostic((locale==='he'?'שגיאת חיבור: ':'Connection error: ')+
-        (e?.message||String(e)).slice(0,350));
+    } catch(e:any) {
+      setDiagnostic((locale==='he'?'שגיאת רשת iOS: ':'iOS network error: ')+
+        (e?.message||String(e)).slice(0,300));
     }
   }
   async function search(override?:SearchOptions) {
@@ -509,14 +509,7 @@ export default function App() {
                 <SoftText>{t('searchingSource',{source:engine.sourceLabel||engine.label})}</SoftText>
               </HStack>
             </Section>}
-            {Boolean(error) && <Section>
-              <NativeCard inset>
-                <Text modifiers={[foregroundStyle(results.length?'#B97C21':'#CA3232')]}>
-                  {t('message')}
-                </Text>
-                <SoftText>{error}</SoftText>
-              </NativeCard>
-            </Section>}
+
             {showSearchSummary && <Section title={t('resultSummary')}>
               <HStack spacing={8}>
                 <SoftText>{t('shownResults',{count:formatNumber(groups.length,locale)})}</SoftText>

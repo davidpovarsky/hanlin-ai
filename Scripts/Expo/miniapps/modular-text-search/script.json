@@ -1,7 +1,7 @@
 {
     "name":  "חיפוש טקסטים מודולרי — Expo",
-    "version":  "1.0.2",
-    "description":  "Sefaria modular search - visible native search field, live result display, permissions and Node diagnostics.",
+    "version":  "1.0.3",
+    "description":  "Native iOS NSURLSession Sefaria search with full-text, paging, and diagnostic check; avoids embedded Node/undici.",
     "entry":  "bundle.js",
     "runInApp":  true,
     "hanlinRuntime":  "hanlin-expo",
@@ -11,7 +11,7 @@
     "icon":  "magnifyingglass",
     "color":  "#007AFF",
     "capabilities":  [
-                         "runtime.node",
+                         "ios-native-api",
                          "network"
                      ]
 }

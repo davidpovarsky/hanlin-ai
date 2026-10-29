@@ -11,7 +11,14 @@ assert(app.includes('onPress={()=>{setQuery(q);search({query:q});}}'), 'Quick qu
 assert(app.includes('...effective(q,0),...(override||{}),query:q,start:0'), 'Submission must retain advanced search settings');
 assert(app.includes('setSearchPhase(\'failed\')'), 'Search failures must have explicit status');
 assert(app.includes('{error}'), 'Errors must be displayed in the search area');
-assert(app.includes('checkConnection()'), 'Permission/Node diagnostics must be user-accessible');
-assert(pkg.version === '1.0.2');
-assert(pkg.capabilities.includes('runtime.node') && pkg.capabilities.includes('network'));
+assert(app.includes('checkConnection()'), 'Native iOS network diagnostics must be user-accessible');
+assert(pkg.version === '1.0.3');
+assert(pkg.capabilities.includes('ios-native-api') && pkg.capabilities.includes('network'));
+const client=fs.readFileSync(path.join(root,'src/engines/sefaria/client.js'),'utf8');
+const native=fs.readFileSync(path.join(root,'src/engines/sefaria/nativeTransport.js'),'utf8');
+assert(client.includes('from "./nativeTransport.js"'), 'Search client must use native transport');
+assert(!client.includes('executeRuntime('), 'Search client must not call embedded Node');
+assert(native.includes('NSURLSession.sharedSession'), 'Native URLSession request must be configured');
+assert(native.includes('jsInvoker('), 'Background completion callback must enter JS runtime safely');
+assert.equal((app.match(/\{error\}/g)||[]).length,1, 'Error must appear only once on screen');
 console.log('PASS: visible query field, quick-search, retained options, visible failures and diagnostics');
