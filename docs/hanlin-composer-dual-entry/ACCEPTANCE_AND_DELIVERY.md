@@ -25,7 +25,7 @@
 | **F4 Functional E2E** | Unconditional assertions for direct tools, catalog, skills, MCP, and model picker | **PASS** | Removed all `if exists` skips in `testUI06`. Added unconditional `testUI09` and `testUI10`. MCP toggle confirmed with provider rollback. |
 | **F5 Localization** | Complete `en`, `he`, `zh-Hans` coverage; no Chinese leakage in English/Hebrew; 4 meta-tools localized | **PASS** | 67 new keys added (858 keys total in `Localizable.xcstrings`). Unit test 30 verified. Zero hardcoded Chinese on touched surfaces. |
 | **F6 CI Authenticity** | Fresh affected unit and XCUI pass on final SHA; skipped/live cases truthfully labeled | **PASS** | All code changes compile and pass CI on exact tested commit `1b2ad47944df9f2ec62aa7ff9da9fefd71918367` (Run 40798374636: 31/31 ClassicChatRestorationTests, 13/13 AgentRuntimeConversationUITests, 19/19 MasterScenarioSemanticAcceptanceTests including FINAL-11). |
-| **F7 Internal Delivery** | One internal TestFlight build triggered after CI pass; CFBundleVersion and artifact recorded | **DISPATCHED** | Triggered signed TestFlight build run 40802588912 with upload_to_testflight=true after 100% green CI gate pass. |
+| **F7 Internal Delivery** | One internal TestFlight build triggered after CI pass; CFBundleVersion and artifact recorded | **PASS** | Signed TestFlight build run 40802588912 completed successfully (`upload_to_testflight=true`). Build number `86601`, artifact `ChavrusaChat-signed-ipa-86601` (ID `12868002673`, SHA256 `041e0d7c02e789d6afc4ee6f766ca7776a202a7802d125c3454170372824888c`). Validated and uploaded to App Store Connect / TestFlight. |
 
 ---
 
