@@ -5,11 +5,11 @@ import UIKit
 
 public struct HanlinScriptWidgetElementView: View {
     public let element: HanlinScriptWidgetElement
-    public let actionHandler: ((String, [String: Any]?) -> Void)?
+    public let actionHandler: HanlinScriptWidgetActionHandler?
 
     public init(
         element: HanlinScriptWidgetElement,
-        actionHandler: ((String, [String: Any]?) -> Void)? = nil
+        actionHandler: HanlinScriptWidgetActionHandler? = nil
     ) {
         self.element = element
         self.actionHandler = actionHandler
@@ -21,7 +21,7 @@ public struct HanlinScriptWidgetElementView: View {
 
     public static func buildView(
         element: HanlinScriptWidgetElement,
-        actionHandler: ((String, [String: Any]?) -> Void)? = nil
+        actionHandler: HanlinScriptWidgetActionHandler? = nil
     ) -> AnyView {
         let tag = element.tag.lowercased()
         let baseView: AnyView

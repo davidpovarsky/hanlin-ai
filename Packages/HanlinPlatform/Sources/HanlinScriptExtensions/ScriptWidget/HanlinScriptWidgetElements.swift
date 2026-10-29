@@ -4,6 +4,9 @@ import Charts
 #endif
 import AppIntents
 
+public typealias HanlinScriptWidgetActionHandler = @MainActor @Sendable (String, [String: Any]?) -> Void
+
+@MainActor
 public struct HanlinScriptWidgetElements {
     // 1. Text & Date
     public static func renderDate(_ element: HanlinScriptWidgetElement) -> AnyView {
@@ -157,7 +160,7 @@ public struct HanlinScriptWidgetElements {
     public static func renderButton(
         _ element: HanlinScriptWidgetElement,
         children: [HanlinScriptWidgetElement],
-        actionHandler: ((String, [String: Any]?) -> Void)? = nil
+        actionHandler: HanlinScriptWidgetActionHandler? = nil
     ) -> AnyView {
         let label = element.string("title") ?? element.string("label") ?? element.rawText ?? "Action"
         let action = element.string("action") ?? element.string("target") ?? ""
