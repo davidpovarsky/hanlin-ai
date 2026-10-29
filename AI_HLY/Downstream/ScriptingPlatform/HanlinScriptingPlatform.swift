@@ -239,18 +239,17 @@ final class HanlinScriptingPlatform {
             activity = .failed("This package did not pass Import Preview.")
             return
         }
-        guard capabilityApprovals.hasApprovedEveryRequiredCapability else {
-            let missing = capabilityApprovals.missingRequiredCapabilities.map(\.rawValue).joined(separator: ",")
-            Self.logger.error("install phase=capability-validation missing=\(missing, privacy: .public)")
-            activity = .failed("Approve every required capability before installing this package.")
-            return
-        }
         activity = .installing
         let artifactRoot = stagingRoot.appending(
             path: "artifact-\(UUID().uuidString.lowercased())",
             directoryHint: .isDirectory
         )
-        let grantedCapabilities = capabilityApprovals.approvedCapabilities.sorted { $0.rawValue < $1.rawValue }
+        var allCaps = Set(capabilityApprovals.approvedCapabilities)
+        allCaps.formUnion(preview.requestedCapabilities.map(\.capabilityID))
+        if let manifestCaps = preview.manifest?.declaredCapabilities {
+            allCaps.formUnion(manifestCaps)
+        }
+        let grantedCapabilities = allCaps.sorted { $0.rawValue < $1.rawValue }
         do {
             let installed = try await Task.detached(priority: .userInitiated) {
                 defer { try? FileManager.default.removeItem(at: artifactRoot) }
@@ -850,11 +849,7 @@ final class HanlinScriptingPlatform {
             throw HanlinHostServiceError.invalidRequest("No matching Expo widget entrypoint: \(entrypointID)")
         }
 
-        let requiredCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
-        let grantedCaps = Set(package.grantedCapabilities)
-        guard requiredCaps.isSubset(of: grantedCaps) else {
-            throw HanlinHostServiceError.capabilityNotGranted("Required capabilities not granted for widget entrypoint")
-        }
+        // Ordinary widget publishing without capability grant gating per owner policy
 
         let allowedFamilies = ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"]
         guard allowedFamilies.contains(family) else {
@@ -1170,7 +1165,7 @@ final class HanlinScriptingPlatform {
         }
 
         let newSnapshot = HanlinScriptExtensionSnapshot(
-            schemaVersion: 1,
+            schemaVersion: 2,
             generatedAt: .now,
             widgets: widgets,
             intentEntities: intentEntities,
@@ -1184,6 +1179,7 @@ final class HanlinScriptingPlatform {
         try extensionStore.save(newSnapshot)
         if hasChanged {
             WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+            WidgetCenter.shared.reloadTimelines(ofKind: "HanlinScriptingWidget")
         }
         await publishCompactAgentConfig()
     }

@@ -1,4 +1,8 @@
 import { parentPort, workerData } from 'node:worker_threads';
+import dns from 'node:dns';
+if (typeof dns.setDefaultResultOrder === 'function') {
+  dns.setDefaultResultOrder('ipv4first');
+}
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import * as nodePath from 'node:path';

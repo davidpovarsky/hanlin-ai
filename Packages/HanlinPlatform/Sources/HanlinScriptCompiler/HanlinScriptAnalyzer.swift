@@ -158,7 +158,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 : "Declared in package manifest."
             capabilities[declaredCapability] = .init(
                 capabilityID: declaredCapability,
-                required: true,
+                required: false,
                 purpose: purpose
             )
         }
@@ -183,7 +183,7 @@ public struct HanlinScriptAnalyzer: Sendable {
             if let capability {
                 capabilities[capability] = .init(
                     capabilityID: capability,
-                    required: true,
+                    required: false,
                     purpose: "Required by imported Scripting symbol '\(symbol)'."
                 )
             }

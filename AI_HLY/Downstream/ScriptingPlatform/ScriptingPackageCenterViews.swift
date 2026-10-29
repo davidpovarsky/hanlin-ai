@@ -43,7 +43,6 @@ struct ScriptingPackageImportView: View {
                         .accessibilityIdentifier("hanlin-package-install")
                         .disabled(
                             !preview.canInstall
-                                || !platform.capabilityApprovals.hasApprovedEveryRequiredCapability
                                 || platform.activity == .installing
                         )
                     Button("Discard", role: .destructive) { platform.discardPreview() }

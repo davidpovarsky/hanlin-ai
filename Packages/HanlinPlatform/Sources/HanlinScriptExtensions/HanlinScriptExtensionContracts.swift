@@ -27,6 +27,86 @@ public struct HanlinScriptExtensionIdentity: Codable, Hashable, Sendable {
     }
 }
 
+public enum HanlinWidgetEngine: String, Codable, CaseIterable, Hashable, Sendable {
+    case legacy
+    case expo
+    case scriptwidget
+}
+
+public struct ExpoWidgetDescriptor: Codable, Hashable, Sendable {
+    public let layout: String
+    public let props: [String: HanlinValue]?
+    public let sourceName: String?
+
+    public init(
+        layout: String,
+        props: [String: HanlinValue]? = nil,
+        sourceName: String? = nil
+    ) {
+        self.layout = layout
+        self.props = props
+        self.sourceName = sourceName
+    }
+}
+
+public struct ScriptWidgetDescriptor: Codable, Hashable, Sendable {
+    public let script: String
+    public let environment: [String: HanlinValue]?
+
+    public init(
+        script: String,
+        environment: [String: HanlinValue]? = nil
+    ) {
+        self.script = script
+        self.environment = environment
+    }
+}
+
+public enum HanlinWidgetPayload: Codable, Hashable, Sendable {
+    case legacy(HanlinScriptUINode)
+    case expo(ExpoWidgetDescriptor)
+    case scriptwidget(ScriptWidgetDescriptor)
+
+    private enum CodingKeys: String, CodingKey {
+        case kind, legacyNode, expoDescriptor, scriptDescriptor
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let kind = try container.decode(String.self, forKey: .kind)
+        switch kind {
+        case "legacy":
+            let node = try container.decode(HanlinScriptUINode.self, forKey: .legacyNode)
+            self = .legacy(node)
+        case "expo":
+            let desc = try container.decode(ExpoWidgetDescriptor.self, forKey: .expoDescriptor)
+            self = .expo(desc)
+        case "scriptwidget":
+            let desc = try container.decode(ScriptWidgetDescriptor.self, forKey: .scriptDescriptor)
+            self = .scriptwidget(desc)
+        default:
+            let node = try container.decodeIfPresent(HanlinScriptUINode.self, forKey: .legacyNode)
+                ?? HanlinScriptUINode(kind: .text, properties: ["text": .string("Unsupported widget payload")])
+            self = .legacy(node)
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case let .legacy(node):
+            try container.encode("legacy", forKey: .kind)
+            try container.encode(node, forKey: .legacyNode)
+        case let .expo(desc):
+            try container.encode("expo", forKey: .kind)
+            try container.encode(desc, forKey: .expoDescriptor)
+        case let .scriptwidget(desc):
+            try container.encode("scriptwidget", forKey: .kind)
+            try container.encode(desc, forKey: .scriptDescriptor)
+        }
+    }
+}
+
 public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
     public let identity: HanlinScriptExtensionIdentity
     public let displayName: String
@@ -34,6 +114,8 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
     public let actionIdentity: HanlinScriptExtensionIdentity?
     public let validUntil: Date
     public let relevance: Double
+    public let engine: HanlinWidgetEngine
+    public let payload: HanlinWidgetPayload?
     public let root: HanlinScriptUINode
     public let deepLink: URL?
 
@@ -44,6 +126,8 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
         actionIdentity: HanlinScriptExtensionIdentity? = nil,
         validUntil: Date,
         relevance: Double = 0,
+        engine: HanlinWidgetEngine = .legacy,
+        payload: HanlinWidgetPayload? = nil,
         root: HanlinScriptUINode,
         deepLink: URL? = nil
     ) {
@@ -53,12 +137,14 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
         self.actionIdentity = actionIdentity
         self.validUntil = validUntil
         self.relevance = relevance
+        self.engine = engine
+        self.payload = payload ?? (engine == .legacy ? .legacy(root) : nil)
         self.root = root
         self.deepLink = deepLink
     }
 
     private enum CodingKeys: String, CodingKey {
-        case identity, displayName, family, actionIdentity, validUntil, relevance, root, deepLink
+        case identity, displayName, family, actionIdentity, validUntil, relevance, engine, payload, root, deepLink
     }
 
     public init(from decoder: Decoder) throws {
@@ -68,9 +154,31 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
         family = try container.decodeIfPresent(String.self, forKey: .family) ?? "systemMedium"
         actionIdentity = try container.decodeIfPresent(HanlinScriptExtensionIdentity.self, forKey: .actionIdentity)
         validUntil = try container.decode(Date.self, forKey: .validUntil)
-        relevance = try container.decode(Double.self, forKey: .relevance)
-        root = try container.decode(HanlinScriptUINode.self, forKey: .root)
+        relevance = try container.decodeIfPresent(Double.self, forKey: .relevance) ?? 0
+        let decodedEngine = try container.decodeIfPresent(HanlinWidgetEngine.self, forKey: .engine) ?? .legacy
+        engine = decodedEngine
+        let decodedPayload = try container.decodeIfPresent(HanlinWidgetPayload.self, forKey: .payload)
+        payload = decodedPayload
+        if let decodedRoot = try container.decodeIfPresent(HanlinScriptUINode.self, forKey: .root) {
+            root = decodedRoot
+        } else {
+            root = HanlinScriptUINode(kind: .text, properties: ["text": .string(displayName)])
+        }
         deepLink = try container.decodeIfPresent(URL.self, forKey: .deepLink)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identity, forKey: .identity)
+        try container.encode(displayName, forKey: .displayName)
+        try container.encode(family, forKey: .family)
+        try container.encodeIfPresent(actionIdentity, forKey: .actionIdentity)
+        try container.encode(validUntil, forKey: .validUntil)
+        try container.encode(relevance, forKey: .relevance)
+        try container.encode(engine, forKey: .engine)
+        try container.encodeIfPresent(payload, forKey: .payload)
+        try container.encode(root, forKey: .root)
+        try container.encodeIfPresent(deepLink, forKey: .deepLink)
     }
 }
 
@@ -298,5 +406,33 @@ extension HanlinScriptUINode {
             "origin": sessionContext.origin.rawValue,
             "presentation": sessionContext.presentation
         ])
+    }
+}
+
+
+extension HanlinValue {
+    public func toAny() -> Any {
+        switch self {
+        case .null:
+            return NSNull()
+        case let .bool(b):
+            return b
+        case let .integer(i):
+            return i
+        case let .number(d):
+            return d
+        case let .string(s):
+            return s
+        case let .data(d):
+            return d
+        case let .array(arr):
+            return arr.map { $0.toAny() }
+        case let .object(obj):
+            var dict: [String: Any] = [:]
+            for (k, v) in obj {
+                dict[k] = v.toAny()
+            }
+            return dict
+        }
     }
 }

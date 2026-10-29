@@ -222,12 +222,40 @@ private struct HanlinLiveActivityRegionView: View {
 private struct HanlinExtensionSnapshotView: View {
     let snapshot: HanlinScriptWidgetSnapshot?
 
+    @ViewBuilder
     var body: some View {
         if let snapshot {
-            HanlinExtensionNodeView(
-                node: snapshot.root,
-                identity: snapshot.actionIdentity ?? snapshot.identity
-            )
+            switch snapshot.engine {
+            case .legacy:
+                HanlinExtensionNodeView(
+                    node: snapshot.root,
+                    identity: snapshot.actionIdentity ?? snapshot.identity
+                )
+            case .expo:
+                if case let .expo(descriptor) = snapshot.payload {
+                    HanlinExpoWidgetsDynamicView(
+                        descriptor: descriptor,
+                        identity: snapshot.actionIdentity ?? snapshot.identity
+                    )
+                } else {
+                    HanlinExtensionNodeView(
+                        node: snapshot.root,
+                        identity: snapshot.actionIdentity ?? snapshot.identity
+                    )
+                }
+            case .scriptwidget:
+                if case let .scriptwidget(descriptor) = snapshot.payload {
+                    HanlinScriptWidgetDynamicView(
+                        descriptor: descriptor,
+                        identity: snapshot.actionIdentity ?? snapshot.identity
+                    )
+                } else {
+                    HanlinExtensionNodeView(
+                        node: snapshot.root,
+                        identity: snapshot.actionIdentity ?? snapshot.identity
+                    )
+                }
+            }
         } else {
             ContentUnavailableView("Choose a Script", systemImage: "curlybraces.square")
         }

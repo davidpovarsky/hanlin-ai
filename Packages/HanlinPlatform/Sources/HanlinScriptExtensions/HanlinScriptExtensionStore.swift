@@ -42,7 +42,7 @@ public struct HanlinScriptExtensionStore: Sendable {
             throw HanlinScriptExtensionStoreError.snapshotTooLarge
         }
         let envelope = try Self.decoded(Envelope.self, from: data)
-        guard envelope.schemaVersion == 1 else {
+        guard envelope.schemaVersion == 1 || envelope.schemaVersion == 2 else {
             throw HanlinScriptExtensionStoreError.unsupportedSchema(envelope.schemaVersion)
         }
         let snapshotData = try Self.encoded(envelope.snapshot)
@@ -53,12 +53,12 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func save(_ snapshot: HanlinScriptExtensionSnapshot) throws {
-        guard snapshot.schemaVersion == 1 else {
+        guard snapshot.schemaVersion == 1 || snapshot.schemaVersion == 2 else {
             throw HanlinScriptExtensionStoreError.unsupportedSchema(snapshot.schemaVersion)
         }
         let snapshotData = try Self.encoded(snapshot)
         let envelope = Envelope(
-            schemaVersion: 1,
+            schemaVersion: snapshot.schemaVersion,
             sha256: Self.digest(snapshotData),
             snapshot: snapshot
         )

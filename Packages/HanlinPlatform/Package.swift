@@ -216,6 +216,12 @@ let package = Package(
                 "HanlinScriptContracts",
                 "HanlinScriptUI",
                 "HanlinChatCore"
+            ],
+            resources: [
+                .process("Resources")
+            ],
+            linkerSettings: [
+                .linkedFramework("JavaScriptCore")
             ]
         ),
         .testTarget(

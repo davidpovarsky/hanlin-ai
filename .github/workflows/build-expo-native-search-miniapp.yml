@@ -1,12 +1,6 @@
 name: Package native Hanlin Expo search MiniApp
 
 on:
-  push:
-    branches:
-      - fix/expo-searchable-content-bridge-20261029
-    paths:
-      - .github/workflows/build-expo-native-search-miniapp.yml
-      - Scripts/Expo/miniapps/modular-text-search/**
   workflow_dispatch:
 
 permissions:

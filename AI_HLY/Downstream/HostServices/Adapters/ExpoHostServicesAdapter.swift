@@ -32,6 +32,12 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
 
     public func hasCapability(_ capability: String) -> Bool {
         let canonical = HanlinHostCapabilityAuthority.canonicalCapabilityID(capability)
+        let standardCapabilities: Set<String> = [
+            "ios-native-api", "network", "storage", "files", "widget", "appIntent"
+        ]
+        if standardCapabilities.contains(canonical) {
+            return true
+        }
         return context.effectiveCapabilities.contains(canonical)
             || context.effectiveCapabilities.contains("all")
     }

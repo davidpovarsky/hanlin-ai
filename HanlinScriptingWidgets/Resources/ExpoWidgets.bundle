@@ -1,0 +1,2982 @@
+"use strict";
+(() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+
+  // empty:empty-rn
+  var require_empty_rn = __commonJS({
+    "empty:empty-rn"(exports, module) {
+      module.exports = {};
+    }
+  });
+
+  // empty:empty-pkg
+  var require_empty_pkg = __commonJS({
+    "empty:empty-pkg"(exports, module) {
+      module.exports = {};
+    }
+  });
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/decorator.ts
+  var interactiveTargetTypes = [
+    "Button",
+    "FilledTonalButton",
+    "OutlinedButton",
+    "ElevatedButton",
+    "TextButton"
+  ];
+  function decorateInteractiveTargets(node) {
+    return decorateNode(node, {
+      nearestParentKey: null,
+      nextTargetIndex: {
+        current: 0
+      },
+      typesToDecorate: interactiveTargetTypes
+    });
+  }
+  function decorateNode(node, context) {
+    if (Array.isArray(node)) {
+      return node.map((child) => decorateNode(child, context));
+    }
+    if (!isReactElementNode(node)) {
+      return node;
+    }
+    const props = node.props ?? {};
+    if (props.target == null && context.typesToDecorate.includes(node.type)) {
+      props.target = buildButtonTargetId(context.nextTargetIndex.current, context.nearestParentKey);
+      context.nextTargetIndex.current += 1;
+    }
+    if ("children" in props) {
+      props.children = decorateNode(props.children, {
+        nearestParentKey: node.key ?? context.nearestParentKey,
+        nextTargetIndex: context.nextTargetIndex,
+        typesToDecorate: context.typesToDecorate
+      });
+    }
+    return node;
+  }
+  function isReactElementNode(node) {
+    return Boolean(node) && typeof node === "object" && "type" in node && "props" in node;
+  }
+  function buildButtonTargetId(index, parentKey) {
+    const baseTarget = `__expo_widgets_target_${index}`;
+    if (!parentKey) {
+      return baseTarget;
+    }
+    return `${baseTarget}_${parentKey}`;
+  }
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/jsx-runtime-stub.ts
+  var jsx_runtime_stub_exports = {};
+  __export(jsx_runtime_stub_exports, {
+    Fragment: () => Fragment,
+    _Fragment: () => Fragment,
+    _jsx: () => jsxProd,
+    _jsxDEV: () => jsxProd,
+    _jsxFileName: () => jsxFileName,
+    _jsxs: () => jsxProd,
+    jsx: () => jsxProd,
+    jsxDEV: () => jsxProd,
+    jsxProd: () => jsxProd,
+    jsxs: () => jsxProd
+  });
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/react-stub.ts
+  var react_stub_exports = {};
+  __export(react_stub_exports, {
+    Children: () => Children,
+    Fragment: () => Fragment,
+    createContext: () => createContext,
+    createElement: () => createElement,
+    default: () => react_stub_default,
+    isValidElement: () => isValidElement,
+    useCallback: () => useCallback,
+    useContext: () => useContext,
+    useEffect: () => useEffect,
+    useLayoutEffect: () => useLayoutEffect,
+    useMemo: () => useMemo,
+    useRef: () => useRef,
+    useState: () => useState
+  });
+  var Fragment = "react.fragment";
+  var Children = {
+    toArray(children) {
+      return [children].flat(Infinity).filter((child) => child !== void 0 && child !== null && typeof child !== "boolean");
+    }
+  };
+  var isValidElement = (value) => {
+    return value !== null && typeof value === "object" && "type" in value && "props" in value;
+  };
+  var createContext = (defaultValue) => ({
+    Provider: "react.provider",
+    Consumer: "react.consumer",
+    _currentValue: defaultValue
+  });
+  var useContext = (context) => context._currentValue;
+  var useState = (init) => [typeof init === "function" ? init() : init, () => {
+  }];
+  var useRef = (val) => ({ current: val });
+  var useCallback = (fn) => fn;
+  var useMemo = (fn) => typeof fn === "function" ? fn() : fn;
+  var useEffect = () => {
+  };
+  var useLayoutEffect = () => {
+  };
+  var createElement = (type, props, ...children) => {
+    return {
+      type,
+      props: {
+        ...props,
+        children: children.length === 1 ? children[0] : children.length > 0 ? children : props?.children
+      }
+    };
+  };
+  var React = {
+    Fragment,
+    Children,
+    isValidElement,
+    createContext,
+    useContext,
+    useState,
+    useRef,
+    useCallback,
+    useMemo,
+    useEffect,
+    useLayoutEffect,
+    createElement
+  };
+  var react_stub_default = React;
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/jsx-runtime-stub.ts
+  function jsxProd(type, config, maybeKey) {
+    const { key = maybeKey, ...props } = config;
+    return { type, key: key === void 0 ? null : String(key), props };
+  }
+  var jsxFileName = "widget";
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/react-native-stub.ts
+  var react_native_stub_exports = {};
+  __export(react_native_stub_exports, {
+    I18nManager: () => I18nManager,
+    Image: () => Image,
+    PlatformColor: () => PlatformColor,
+    TextInput: () => TextInput,
+    processColor: () => processColor,
+    useColorScheme: () => useColorScheme
+  });
+  var PlatformColor = (...names) => {
+    return { semantic: names };
+  };
+  function resolveAssetSource(source) {
+    if (source == null) {
+      return null;
+    }
+    if (typeof source === "object" && typeof source.uri === "string") {
+      return source;
+    }
+    if (typeof source === "number") {
+      throw new Error(
+        "Bundled require() image sources are not supported inside widgets. Copy the image to widgetsDirectory and pass source={{ uri }} instead."
+      );
+    }
+    throw new Error("Widget Image source must be an object containing a uri string.");
+  }
+  var Image = { resolveAssetSource };
+  var useColorScheme = () => {
+    return globalThis.__expoWidgetEnvironment?.colorScheme ?? null;
+  };
+  var processColor = (color) => color;
+  var TextInput = "react-native.textinput";
+  var I18nManager = { isRTL: false, doLeftAndRightSwapInRTL: false };
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/ui-globals.ts
+  var ui_globals_exports = {};
+  __export(ui_globals_exports, {
+    AccessoryWidgetBackground: () => AccessoryWidgetBackground,
+    Actions: () => Actions3,
+    Alert: () => Alert,
+    Animation: () => Animation,
+    Background: () => Background,
+    BottomSheet: () => BottomSheet,
+    Button: () => Button,
+    Capsule: () => Capsule,
+    Chart: () => Chart,
+    Circle: () => Circle,
+    ColorPicker: () => ColorPicker,
+    ConcentricRectangle: () => ConcentricRectangle,
+    ConfirmationDialog: () => ConfirmationDialog,
+    ContentUnavailableView: () => ContentUnavailableView,
+    ContextMenu: () => ContextMenu,
+    ControlGroup: () => ControlGroup,
+    DatePicker: () => DatePicker,
+    DisclosureGroup: () => DisclosureGroupComponent,
+    Divider: () => Divider,
+    EdgeCornerStyle: () => EdgeCornerStyle,
+    Ellipse: () => Ellipse,
+    Form: () => Form,
+    Gauge: () => Gauge,
+    GlassEffectContainer: () => GlassEffectContainer,
+    Grid: () => Grid,
+    Group: () => Group,
+    HStack: () => HStack,
+    Host: () => Host,
+    Image: () => Image2,
+    Items: () => Items,
+    Label: () => Label2,
+    LabeledContent: () => LabeledContent,
+    LazyHStack: () => LazyHStack,
+    LazyVStack: () => LazyVStack,
+    Link: () => Link,
+    List: () => List,
+    ListForEach: () => ListForEach,
+    Mask: () => Mask,
+    Menu: () => Menu,
+    Namespace: () => Namespace,
+    NavigationDestination: () => NavigationDestination,
+    NavigationLink: () => NavigationLink,
+    NavigationSplitView: () => NavigationSplitView,
+    NavigationStack: () => NavigationStack,
+    Overlay: () => Overlay,
+    Picker: () => Picker,
+    Popover: () => Popover,
+    Preview: () => Preview,
+    ProgressView: () => ProgressView,
+    RNHostView: () => RNHostView,
+    Rectangle: () => Rectangle,
+    RoundedRectangle: () => RoundedRectangle,
+    ScrollView: () => ScrollView,
+    Section: () => Section,
+    SecureField: () => SecureField,
+    ShareLink: () => ShareLink,
+    Slider: () => Slider,
+    Spacer: () => Spacer,
+    Stepper: () => Stepper,
+    SwipeActions: () => SwipeActions,
+    SyncToggle: () => SyncToggle,
+    TabView: () => _TabView,
+    Text: () => Text,
+    TextField: () => TextField,
+    Toggle: () => Toggle,
+    Toolbar: () => Toolbar,
+    Trigger: () => Trigger3,
+    UnevenRoundedRectangle: () => UnevenRoundedRectangle,
+    VStack: () => VStack,
+    ZStack: () => ZStack,
+    accessibilityAddTraits: () => accessibilityAddTraits,
+    accessibilityElement: () => accessibilityElement,
+    accessibilityHidden: () => accessibilityHidden,
+    accessibilityHint: () => accessibilityHint,
+    accessibilityIdentifier: () => accessibilityIdentifier,
+    accessibilityInputLabels: () => accessibilityInputLabels,
+    accessibilityLabel: () => accessibilityLabel,
+    accessibilityRemoveTraits: () => accessibilityRemoveTraits,
+    accessibilityValue: () => accessibilityValue,
+    activityBackgroundTint: () => activityBackgroundTint,
+    alignmentGuide: () => alignmentGuide,
+    allowsTightening: () => allowsTightening,
+    animation: () => animation,
+    aspectRatio: () => aspectRatio,
+    autocorrectionDisabled: () => autocorrectionDisabled,
+    background: () => background,
+    backgroundOverlay: () => backgroundOverlay,
+    badge: () => badge,
+    badgeProminence: () => badgeProminence,
+    blur: () => blur,
+    bold: () => bold,
+    border: () => border,
+    brightness: () => brightness,
+    buttonBorderShape: () => buttonBorderShape,
+    buttonStyle: () => buttonStyle,
+    clipShape: () => clipShape,
+    clipped: () => clipped,
+    colorInvert: () => colorInvert,
+    containerBackground: () => containerBackground,
+    containerRelativeFrame: () => containerRelativeFrame,
+    containerShape: () => containerShape,
+    contentShape: () => contentShape,
+    contentTransition: () => contentTransition,
+    contrast: () => contrast,
+    controlSize: () => controlSize,
+    cornerRadius: () => cornerRadius,
+    createModifier: () => createModifier,
+    createModifierWithEventListener: () => createModifierWithEventListener,
+    createViewModifierEventListener: () => createViewModifierEventListener,
+    datePickerStyle: () => datePickerStyle,
+    defaultScrollAnchor: () => defaultScrollAnchor,
+    defaultScrollAnchorForRole: () => defaultScrollAnchorForRole,
+    deleteDisabled: () => deleteDisabled,
+    disabled: () => disabled,
+    dynamicTypeSize: () => dynamicTypeSize,
+    environment: () => environment,
+    filterModifiers: () => filterModifiers,
+    fixedSize: () => fixedSize,
+    font: () => font,
+    foregroundColor: () => foregroundColor,
+    foregroundStyle: () => foregroundStyle,
+    frame: () => frame,
+    gaugeStyle: () => gaugeStyle,
+    geometryGroup: () => geometryGroup,
+    glassEffect: () => glassEffect,
+    glassEffectId: () => glassEffectId,
+    grayscale: () => grayscale,
+    gridCellAnchor: () => gridCellAnchor,
+    gridCellColumns: () => gridCellColumns,
+    gridCellUnsizedAxes: () => gridCellUnsizedAxes,
+    gridColumnAlignment: () => gridColumnAlignment,
+    headerProminence: () => headerProminence,
+    hidden: () => hidden,
+    hueRotation: () => hueRotation,
+    id: () => id,
+    ignoreSafeArea: () => ignoreSafeArea,
+    imageScale: () => imageScale,
+    indexViewStyle: () => indexViewStyle,
+    interactiveDismissDisabled: () => interactiveDismissDisabled,
+    invalidatableContent: () => invalidatableContent,
+    isModifier: () => isModifier,
+    italic: () => italic,
+    kerning: () => kerning,
+    keyboardType: () => keyboardType,
+    labelStyle: () => labelStyle,
+    labelsHidden: () => labelsHidden,
+    layoutPriority: () => layoutPriority,
+    lineHeight: () => lineHeight,
+    lineLimit: () => lineLimit,
+    lineSpacing: () => lineSpacing,
+    listRowBackground: () => listRowBackground,
+    listRowInsets: () => listRowInsets,
+    listRowSeparator: () => listRowSeparator,
+    listRowSeparatorTint: () => listRowSeparatorTint,
+    listRowSpacing: () => listRowSpacing,
+    listSectionMargins: () => listSectionMargins,
+    listSectionSpacing: () => listSectionSpacing,
+    listStyle: () => listStyle,
+    luminanceToAlpha: () => luminanceToAlpha,
+    mask: () => mask,
+    matchedGeometryEffect: () => matchedGeometryEffect,
+    menuActionDismissBehavior: () => menuActionDismissBehavior,
+    menuIndicator: () => menuIndicator,
+    menuOrder: () => menuOrder,
+    menuStyle: () => menuStyle,
+    minimumScaleFactor: () => minimumScaleFactor,
+    monospacedDigit: () => monospacedDigit,
+    moveDisabled: () => moveDisabled,
+    multilineTextAlignment: () => multilineTextAlignment,
+    navigationSplitViewColumnWidth: () => navigationSplitViewColumnWidth,
+    navigationSplitViewStyle: () => navigationSplitViewStyle,
+    navigationTitle: () => navigationTitle,
+    offset: () => offset,
+    onAppear: () => onAppear,
+    onDisappear: () => onDisappear,
+    onGeometryChange: () => onGeometryChange,
+    onLongPressGesture: () => onLongPressGesture,
+    onScrollPhaseChange: () => onScrollPhaseChange,
+    onSubmit: () => onSubmit,
+    onTapGesture: () => onTapGesture,
+    opacity: () => opacity,
+    overlay: () => overlay,
+    padding: () => padding,
+    pickerStyle: () => pickerStyle,
+    presentationBackground: () => presentationBackground,
+    presentationBackgroundInteraction: () => presentationBackgroundInteraction,
+    presentationDetents: () => presentationDetents,
+    presentationDragIndicator: () => presentationDragIndicator,
+    presentationSizing: () => presentationSizing,
+    privacySensitive: () => privacySensitive,
+    progressViewStyle: () => progressViewStyle,
+    redacted: () => redacted,
+    refreshable: () => refreshable,
+    resizable: () => resizable,
+    rotation3DEffect: () => rotation3DEffect,
+    rotationEffect: () => rotationEffect,
+    saturation: () => saturation,
+    scaleEffect: () => scaleEffect,
+    scrollClipDisabled: () => scrollClipDisabled,
+    scrollContentBackground: () => scrollContentBackground,
+    scrollDisabled: () => scrollDisabled,
+    scrollDismissesKeyboard: () => scrollDismissesKeyboard,
+    scrollIndicators: () => scrollIndicators,
+    scrollPosition: () => scrollPosition,
+    scrollTargetBehavior: () => scrollTargetBehavior,
+    scrollTargetLayout: () => scrollTargetLayout,
+    shadow: () => shadow,
+    shapes: () => shapes,
+    strikethrough: () => strikethrough,
+    strokeBorder: () => strokeBorder,
+    submitLabel: () => submitLabel,
+    symbolEffect: () => symbolEffect,
+    tabViewStyle: () => tabViewStyle,
+    tag: () => tag,
+    textCase: () => textCase,
+    textContentType: () => textContentType,
+    textFieldStyle: () => textFieldStyle,
+    textInputAutocapitalization: () => textInputAutocapitalization,
+    textSelection: () => textSelection,
+    tint: () => tint,
+    toggleStyle: () => toggleStyle,
+    truncationMode: () => truncationMode,
+    underline: () => underline,
+    unredacted: () => unredacted,
+    useNativeState: () => useNativeState,
+    useScrollGeometryChange: () => useScrollGeometryChange,
+    widgetAccentedRenderingMode: () => widgetAccentedRenderingMode,
+    widgetURL: () => widgetURL,
+    withAnimation: () => withAnimation,
+    zIndex: () => zIndex
+  });
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/modules/expo-ui.ts
+  var expo_ui_default = {
+    getMaterialColors(options) {
+      if (options?.seedColor != null) {
+        throw new Error(
+          "'seedColor' is not supported inside a widgets. Omit 'seedColor' to use the device palette."
+        );
+      }
+      const environment2 = globalThis.__expoWidgetEnvironment;
+      const scheme = options?.scheme ?? environment2?.colorScheme;
+      const palettes = environment2?.materialColors;
+      const palette = palettes?.[scheme === "dark" ? "dark" : "light"];
+      if (!palette) {
+        throw new Error("getMaterialColors is only available on widget render.");
+      }
+      return palette;
+    }
+  };
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/expo-stub.ts
+  var nativeModuleStubs = { ExpoUI: expo_ui_default };
+  function requireNativeModule(name) {
+    return nativeModuleStubs[name] ?? {};
+  }
+  function requireNativeView(moduleName, viewName) {
+    const wrapper = {
+      [viewName]: (props) => {
+        return {
+          type: viewName,
+          props: props || {}
+        };
+      }
+    };
+    return wrapper[viewName];
+  }
+  var installOnUIRuntime = () => {
+  };
+  var useReleasingSharedObject = (factory) => typeof factory === "function" ? factory() : factory;
+  var useReleasingSharedObjectWithLifecycle = (factory) => typeof factory === "function" ? factory() : factory;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/AccessoryWidgetBackground/index.js
+  var AccessoryWidgetBackgroundNativeView = requireNativeView("ExpoUI", "AccessoryWidgetBackgroundView");
+  function AccessoryWidgetBackground(props) {
+    return /* @__PURE__ */ jsxProd(AccessoryWidgetBackgroundNativeView, {
+      ...props
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/SlotView.js
+  var SlotNativeView = requireNativeView("ExpoUI", "SlotView");
+  function Slot({ name, extraProps, children }) {
+    return /* @__PURE__ */ jsxProd(SlotNativeView, {
+      name,
+      extraProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/utils.js
+  function createViewModifierEventListener(modifiers) {
+    const eventListeners = {};
+    for (const modifier of modifiers) {
+      if (modifier.eventListener) {
+        eventListeners[modifier.$type] = modifier.eventListener;
+      }
+    }
+    const onGlobalEvent = ({ nativeEvent }) => {
+      for (const [eventName, params] of Object.entries(nativeEvent)) {
+        const listener = eventListeners[eventName];
+        if (listener) {
+          listener(params);
+        }
+      }
+    };
+    return {
+      onGlobalEvent
+    };
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Alert/index.js
+  var AlertNativeView = requireNativeView("ExpoUI", "AlertView");
+  function Trigger(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "trigger",
+      children: props.children
+    });
+  }
+  function Actions(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "actions",
+      children: props.children
+    });
+  }
+  function Message(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "message",
+      children: props.children
+    });
+  }
+  function Alert(props) {
+    const { onIsPresentedChange, modifiers, children, ...restProps } = props;
+    const handleIsPresentedChange = (event) => {
+      onIsPresentedChange?.(event.nativeEvent.isPresented);
+    };
+    return /* @__PURE__ */ jsxProd(AlertNativeView, {
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      modifiers,
+      ...restProps,
+      onIsPresentedChange: handleIsPresentedChange,
+      children
+    });
+  }
+  Alert.Trigger = Trigger;
+  Alert.Actions = Actions;
+  Alert.Message = Message;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/PresentedContentContext.js
+  var PresentedContentContext = /* @__PURE__ */ createContext(false);
+  function useIsPresentedInOwnWindow() {
+    return useContext(PresentedContentContext);
+  }
+  function PresentedContent({ children }) {
+    return /* @__PURE__ */ jsxProd(PresentedContentContext.Provider, {
+      value: true,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/BottomSheet/index.js
+  var BottomSheetNativeView = requireNativeView("ExpoUI", "BottomSheetView");
+  function BottomSheet(props) {
+    const { modifiers, onIsPresentedChange, onDismiss, anchor, children, ...restProps } = props;
+    const [isMounted, setIsMounted] = useState(props.isPresented);
+    if (props.isPresented && !isMounted) {
+      setIsMounted(true);
+    }
+    return /* @__PURE__ */ jsxProd(BottomSheetNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      onIsPresentedChange: ({ nativeEvent: { isPresented } }) => {
+        onIsPresentedChange?.(isPresented);
+      },
+      onDismiss: () => {
+        setIsMounted(false);
+        onDismiss?.();
+      },
+      children: [
+        anchor != null ? /* @__PURE__ */ jsxProd(Slot, {
+          name: "anchor",
+          children: anchor
+        }) : null,
+        isMounted ? /* @__PURE__ */ jsxProd(PresentedContent, {
+          children
+        }) : null
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Button/index.js
+  var ButtonNativeView = requireNativeView("ExpoUI", "Button");
+  function Button(props) {
+    const { label, children, onPress, modifiers, ...restProps } = props;
+    const baseProps = {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      onButtonPress: onPress
+    };
+    return /* @__PURE__ */ jsxProd(ButtonNativeView, {
+      ...baseProps,
+      label,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Chart/index.js
+  var ChartNativeView = requireNativeView("ExpoUI", "ChartView");
+  function Chart({ style, data, modifiers, referenceLines, ...props }) {
+    return /* @__PURE__ */ jsxProd(ChartNativeView, {
+      data,
+      referenceLines,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...props
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ColorPicker/index.js
+  var ColorPickerNativeView = requireNativeView("ExpoUI", "ColorPickerView");
+  function ColorPicker({ selection, onSelectionChange, modifiers, ...restProps }) {
+    const onNativeValueChanged = useCallback((event) => {
+      onSelectionChange?.(event.nativeEvent.value);
+    }, [
+      onSelectionChange
+    ]);
+    return /* @__PURE__ */ jsxProd(ColorPickerNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      selection: processColor(selection || ""),
+      onSelectionChange: onNativeValueChanged,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ContentUnavailableView/index.js
+  var ContentUnavailableViewNativeView = requireNativeView("ExpoUI", "ContentUnavailableView");
+  function transformContentUnavailableViewProps(props) {
+    const { modifiers, ...restProps } = props;
+    return {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    };
+  }
+  function ContentUnavailableView(props) {
+    return /* @__PURE__ */ jsxProd(ContentUnavailableViewNativeView, {
+      ...transformContentUnavailableViewProps(props)
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ConfirmationDialog/index.js
+  var ConfirmationDialogNativeView = requireNativeView("ExpoUI", "ConfirmationDialogView");
+  function Trigger2(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "trigger",
+      children: props.children
+    });
+  }
+  function Actions2(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "actions",
+      children: props.children
+    });
+  }
+  function Message2(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "message",
+      children: props.children
+    });
+  }
+  function ConfirmationDialog(props) {
+    const { onIsPresentedChange, modifiers, children, ...restProps } = props;
+    const handleIsPresentedChange = (event) => {
+      onIsPresentedChange?.(event.nativeEvent.isPresented);
+    };
+    return /* @__PURE__ */ jsxProd(ConfirmationDialogNativeView, {
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      modifiers,
+      ...restProps,
+      onIsPresentedChange: handleIsPresentedChange,
+      children
+    });
+  }
+  ConfirmationDialog.Trigger = Trigger2;
+  ConfirmationDialog.Actions = Actions2;
+  ConfirmationDialog.Message = Message2;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ControlGroup/index.js
+  var ControlGroupNativeView = requireNativeView("ExpoUI", "ControlGroupView");
+  function ControlGroup(props) {
+    const { label, children, systemImage, modifiers, ...rest } = props;
+    const isStringLabel = typeof label === "string";
+    return /* @__PURE__ */ jsxProd(ControlGroupNativeView, {
+      label: isStringLabel ? label : void 0,
+      systemImage,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...rest,
+      children: [
+        !isStringLabel && label != null ? /* @__PURE__ */ jsxProd(Slot, {
+          name: "label",
+          children: label
+        }) : null,
+        children
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ContextMenu/index.js
+  var MenuNativeView = requireNativeView("ExpoUI", "ContextMenu");
+  function Items(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "items",
+      children: props.children
+    });
+  }
+  function Trigger3(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "trigger",
+      children: props.children
+    });
+  }
+  function Preview(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "preview",
+      children: props.children
+    });
+  }
+  function ContextMenu(props) {
+    return /* @__PURE__ */ jsxProd(MenuNativeView, {
+      ...props
+    });
+  }
+  ContextMenu.Trigger = Trigger3;
+  ContextMenu.Preview = Preview;
+  ContextMenu.Items = Items;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/DatePicker/index.js
+  function transformDatePickerProps(props) {
+    const { modifiers, onDateChange, selection, range, ...rest } = props;
+    return {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...rest,
+      selection: selection?.toISOString(),
+      range: range ? {
+        start: range.start?.toISOString(),
+        end: range.end?.toISOString()
+      } : void 0,
+      onDateChange: onDateChange ? ({ nativeEvent: { date } }) => {
+        onDateChange(new Date(date));
+      } : void 0
+    };
+  }
+  var DatePickerNativeView = requireNativeView("ExpoUI", "DatePickerView");
+  function DatePicker(props) {
+    return /* @__PURE__ */ jsxProd(DatePickerNativeView, {
+      ...transformDatePickerProps(props)
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Divider/index.js
+  var DividerNativeView = requireNativeView("ExpoUI", "DividerView");
+  function Divider(props) {
+    return /* @__PURE__ */ jsxProd(DividerNativeView, {
+      ...props
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/DisclosureGroup/index.js
+  var DisclosureGroupNativeView = requireNativeView("ExpoUI", "DisclosureGroupView");
+  function Label({ children }) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "label",
+      children
+    });
+  }
+  function DisclosureGroupComponent(props) {
+    const { onIsExpandedChange, modifiers, ...rest } = props;
+    function handleStateChange(event) {
+      onIsExpandedChange?.(event.nativeEvent.isExpanded);
+    }
+    const transformedProps = {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...rest
+    };
+    return /* @__PURE__ */ jsxProd(DisclosureGroupNativeView, {
+      ...transformedProps,
+      onIsExpandedChange: handleStateChange
+    });
+  }
+  DisclosureGroupComponent.Label = Label;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Form/index.js
+  var FormNativeView = requireNativeView("ExpoUI", "FormView");
+  function transformFormProps(props) {
+    const { modifiers, ...restProps } = props;
+    return {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    };
+  }
+  function Form(props) {
+    return /* @__PURE__ */ jsxProd(FormNativeView, {
+      ...transformFormProps(props)
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Gauge/index.js
+  var GaugeNativeView = requireNativeView("ExpoUI", "GaugeView");
+  function Gauge(props) {
+    const { modifiers, children, currentValueLabel, minimumValueLabel, maximumValueLabel, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(GaugeNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children: [
+        children && /* @__PURE__ */ jsxProd(Slot, {
+          name: "label",
+          children
+        }),
+        currentValueLabel && /* @__PURE__ */ jsxProd(Slot, {
+          name: "currentValue",
+          children: currentValueLabel
+        }),
+        minimumValueLabel && /* @__PURE__ */ jsxProd(Slot, {
+          name: "minimumValue",
+          children: minimumValueLabel
+        }),
+        maximumValueLabel && /* @__PURE__ */ jsxProd(Slot, {
+          name: "maximumValue",
+          children: maximumValueLabel
+        })
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/utils/useMergeRefs.js
+  function useMergeRefs(...refs) {
+    const cleanups = useRef([]);
+    return useCallback(
+      (instance) => {
+        for (const cleanup of cleanups.current) {
+          cleanup?.();
+        }
+        cleanups.current = [];
+        if (instance == null) {
+          return;
+        }
+        cleanups.current = refs.map((ref) => {
+          if (ref == null) {
+            return void 0;
+          }
+          if (typeof ref === "function") {
+            const cleanup = ref(instance);
+            return typeof cleanup === "function" ? cleanup : () => ref(null);
+          }
+          const refObject = ref;
+          refObject.current = instance;
+          return () => {
+            refObject.current = null;
+          };
+        });
+      },
+      // The refs are the dependencies. Changing one has to produce a new ref so that
+      // React detaches the old one and attaches the new, which is how React Native's
+      // own `useMergeRefs` behaves.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      refs
+    );
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/keyboard/textInputState.js
+  var import_TextInputState = __toESM(require_empty_rn());
+
+  // Scripts/Expo/node_modules/@expo/ui/build/keyboard/interop.js
+  var controllers = /* @__PURE__ */ new WeakMap();
+  var installed = false;
+  function attachHostController(instance, controller) {
+    controllers.set(instance, controller);
+    install();
+  }
+  function detachHostController(instance) {
+    controllers.delete(instance);
+  }
+  function install() {
+    if (installed) {
+      return;
+    }
+    installed = true;
+    takeOver(import_TextInputState.default);
+    takeOver(TextInput?.State);
+  }
+  function takeOver(target) {
+    if (typeof target?.blurTextInput !== "function" || typeof target?.focusTextInput !== "function") {
+      return;
+    }
+    const blurTextInput = target.blurTextInput;
+    const focusTextInput = target.focusTextInput;
+    target.blurTextInput = (instance) => {
+      const controller = instance ? controllers.get(instance) : void 0;
+      if (!controller) {
+        blurTextInput(instance);
+        return;
+      }
+      if (import_TextInputState.default.currentlyFocusedInput() !== instance) {
+        return;
+      }
+      import_TextInputState.default.blurInput(instance);
+      controller.blurFocusedFields();
+    };
+    target.focusTextInput = (instance) => {
+      const controller = instance ? controllers.get(instance) : void 0;
+      if (!controller) {
+        focusTextInput(instance);
+        return;
+      }
+      controller.focusLastField();
+    };
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/keyboard/index.js
+  var hosts = /* @__PURE__ */ new WeakMap();
+  var HostInstanceContext = /* @__PURE__ */ createContext(null);
+  function useTextInputHostRef() {
+    return useRef(null);
+  }
+  function TextInputHostProvider({ hostRef, children }) {
+    return /* @__PURE__ */ jsxProd(HostInstanceContext.Provider, {
+      value: hostRef,
+      children
+    });
+  }
+  function addField(instance, field) {
+    let entry = hosts.get(instance);
+    if (!entry) {
+      entry = {
+        mounted: /* @__PURE__ */ new Set(),
+        focused: /* @__PURE__ */ new Set(),
+        lastFocused: null
+      };
+      hosts.set(instance, entry);
+      import_TextInputState.default.registerInput(instance);
+      const hostEntry = entry;
+      attachHostController(instance, {
+        blurFocusedFields: () => hostEntry.focused.forEach((focusedField) => focusedField.blur()),
+        focusLastField: () => hostEntry.lastFocused?.focus()
+      });
+    }
+    entry.mounted.add(field);
+  }
+  function removeField(instance, field) {
+    const entry = hosts.get(instance);
+    if (!entry) {
+      return;
+    }
+    entry.mounted.delete(field);
+    if (entry.lastFocused === field) {
+      entry.lastFocused = null;
+    }
+    if (entry.focused.delete(field) && entry.focused.size === 0) {
+      import_TextInputState.default.blurInput(instance);
+    }
+    if (entry.mounted.size === 0) {
+      import_TextInputState.default.blurInput(instance);
+      import_TextInputState.default.unregisterInput(instance);
+      detachHostController(instance);
+      hosts.delete(instance);
+    }
+  }
+  function setFieldFocused(instance, field, focused) {
+    const entry = hosts.get(instance);
+    if (!entry) {
+      return;
+    }
+    if (focused) {
+      entry.focused.add(field);
+      entry.lastFocused = field;
+    } else {
+      entry.focused.delete(field);
+    }
+    if (entry.focused.size > 0) {
+      import_TextInputState.default.focusInput(instance);
+    } else {
+      import_TextInputState.default.blurInput(instance);
+    }
+  }
+  function useHostedTextInput(ref, onFocusChange, options) {
+    const hostRef = useContext(HostInstanceContext);
+    const nativeRef = useRef(null);
+    const hostInstance = useRef(null);
+    const focusBeforeRegistered = useRef(null);
+    const isFocused = useRef(false);
+    const field = useMemo(() => ({
+      focus: () => callHandle(nativeRef.current, "focus"),
+      blur: () => callHandle(nativeRef.current, "blur")
+    }), []);
+    const blurOnUnmount = options?.blurOnUnmount ?? false;
+    useLayoutEffect(() => {
+      if (!blurOnUnmount) {
+        return;
+      }
+      return () => {
+        if (isFocused.current) {
+          callHandle(nativeRef.current, "blur");
+        }
+      };
+    }, [
+      blurOnUnmount
+    ]);
+    useEffect(() => {
+      const instance = hostRef?.current?.getNativeRef?.() ?? null;
+      hostInstance.current = instance;
+      if (!instance) {
+        return;
+      }
+      addField(instance, field);
+      if (focusBeforeRegistered.current != null) {
+        setFieldFocused(instance, field, focusBeforeRegistered.current);
+        focusBeforeRegistered.current = null;
+      }
+      return () => {
+        removeField(instance, field);
+        hostInstance.current = null;
+      };
+    }, [
+      hostRef,
+      field
+    ]);
+    return {
+      ref: useMergeRefs(ref, nativeRef),
+      onFocusChange: useCallback((focused) => {
+        isFocused.current = focused;
+        if (hostInstance.current) {
+          setFieldFocused(hostInstance.current, field, focused);
+        } else {
+          focusBeforeRegistered.current = focused;
+        }
+        onFocusChange?.(focused);
+      }, [
+        field,
+        onFocusChange
+      ])
+    };
+  }
+  function callHandle(handle, method) {
+    const call = handle?.[method];
+    if (typeof call !== "function") {
+      return;
+    }
+    try {
+      const result = call.call(handle);
+      if (result && typeof result.catch === "function") {
+        result.catch(() => {
+        });
+      }
+    } catch {
+    }
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Host/index.js
+  var HostNativeView = requireNativeView("ExpoUI", "HostView");
+  function Host(props) {
+    const { matchContents, onLayoutContent, ignoreSafeArea: ignoreSafeArea2, modifiers, layoutDirection, seedColor, ref, ...restProps } = props;
+    const hostRef = useTextInputHostRef();
+    const mergedRef = useMergeRefs(ref, hostRef);
+    return /* @__PURE__ */ jsxProd(TextInputHostProvider, {
+      hostRef,
+      children: /* @__PURE__ */ jsxProd(HostNativeView, {
+        modifiers,
+        ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+        matchContentsVertical: typeof matchContents === "object" ? matchContents.vertical : matchContents,
+        matchContentsHorizontal: typeof matchContents === "object" ? matchContents.horizontal : matchContents,
+        onLayoutContent,
+        layoutDirection: layoutDirection ?? (I18nManager.getConstants().isRTL ? "rightToLeft" : "leftToRight"),
+        ignoreSafeArea: ignoreSafeArea2,
+        seedColor,
+        ...restProps,
+        ref: mergedRef
+      })
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/createModifier.js
+  function createModifier(type, params = {}) {
+    return {
+      $type: type,
+      ...params
+    };
+  }
+  function createModifierWithEventListener(type, eventListener, params = {}) {
+    return {
+      $type: type,
+      ...params,
+      eventListener
+    };
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/shapeStyle.js
+  function resolveShapeStyle(style) {
+    if (style == null || typeof style !== "object" || !("type" in style)) {
+      return {
+        type: "color",
+        color: style
+      };
+    }
+    if (style.type === "hierarchical") {
+      return {
+        type: "hierarchical",
+        hierarchical: style.style
+      };
+    }
+    return {
+      ...style
+    };
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/animation/constants.js
+  var VALUE_SYMBOL = Symbol("value");
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/animation/index.js
+  var Animation = {
+    // timing animations
+    easeInOut: (params) => ChainableAnimation({
+      type: "easeInOut",
+      duration: params?.duration
+    }),
+    easeIn: (params) => ChainableAnimation({
+      type: "easeIn",
+      duration: params?.duration
+    }),
+    easeOut: (params) => ChainableAnimation({
+      type: "easeOut",
+      duration: params?.duration
+    }),
+    linear: (params) => ChainableAnimation({
+      type: "linear",
+      duration: params?.duration
+    }),
+    // spring animations
+    spring: (params) => ChainableAnimation({
+      type: "spring",
+      response: params?.response,
+      dampingFraction: params?.dampingFraction,
+      blendDuration: params?.blendDuration,
+      duration: params?.duration,
+      bounce: params?.bounce
+    }),
+    interpolatingSpring: (params) => ChainableAnimation({
+      type: "interpolatingSpring",
+      mass: params?.mass,
+      stiffness: params?.stiffness,
+      damping: params?.damping,
+      initialVelocity: params?.initialVelocity,
+      duration: params?.duration,
+      bounce: params?.bounce
+    }),
+    default: ChainableAnimation({
+      type: "default"
+    })
+  };
+  function ChainableAnimation(animation2) {
+    let _animation = animation2;
+    return {
+      delay: (delay) => {
+        _animation = {
+          ..._animation,
+          delay
+        };
+        return ChainableAnimation(_animation);
+      },
+      repeat: (params) => {
+        _animation = {
+          ..._animation,
+          ...params
+        };
+        return ChainableAnimation(_animation);
+      },
+      [VALUE_SYMBOL]: () => _animation
+    };
+  }
+  var animation = (animationObject, animatedValue) => {
+    return createModifier("animation", {
+      animation: animationObject[VALUE_SYMBOL](),
+      animatedValue
+    });
+  };
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/containerBackground.js
+  var containerBackground = (style, container) => createModifier("containerBackground", {
+    style: resolveShapeStyle(style),
+    container
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/containerShape.js
+  var containerShape = (shape) => createModifier("containerShape", shape);
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/contentShape.js
+  var contentShape = (shape, kind) => createModifier("contentShape", {
+    ...shape,
+    kind: kind === void 0 ? void 0 : [
+      kind
+    ].flat()
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/shapes/index.js
+  var shapes = {
+    roundedRectangle: (params) => ({
+      cornerRadius: params.cornerRadius,
+      roundedCornerStyle: params.roundedCornerStyle,
+      cornerSize: params.cornerSize,
+      shape: "roundedRectangle"
+    }),
+    capsule: (params) => ({
+      roundedCornerStyle: params?.roundedCornerStyle,
+      shape: "capsule"
+    }),
+    rectangle: () => ({
+      shape: "rectangle"
+    }),
+    ellipse: () => ({
+      shape: "ellipse"
+    }),
+    circle: () => ({
+      shape: "circle"
+    }),
+    containerRelativeShape: () => ({
+      shape: "containerRelativeShape"
+    })
+  };
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/background.js
+  function background(style, shapeOrOptions) {
+    return createModifier("background", {
+      style: resolveShapeStyle(style),
+      ...shapeOrOptions
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/tag.js
+  var tag = (tag2) => createModifier("tag", {
+    tag: tag2
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/pickerStyle.js
+  var pickerStyle = (style) => createModifier("pickerStyle", {
+    style
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/menuOrder.js
+  var menuOrder = (order) => createModifier("menuOrder", {
+    order
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/tabViewModifiers.js
+  var tabViewStyle = (config) => createModifier("tabViewStyle", config);
+  var indexViewStyle = (config = {}) => createModifier("indexViewStyle", {
+    type: "page",
+    ...config
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/navigationModifiers.js
+  var navigationSplitViewStyle = (style) => createModifier("navigationSplitViewStyle", {
+    style
+  });
+  function navigationSplitViewColumnWidth(widthOrParams) {
+    return createModifier("navigationSplitViewColumnWidth", typeof widthOrParams === "number" ? {
+      width: widthOrParams
+    } : widthOrParams);
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/datePickerStyle.js
+  var datePickerStyle = (style) => createModifier("datePickerStyle", {
+    style
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/progressViewStyle.js
+  var progressViewStyle = (style) => createModifier("progressViewStyle", {
+    style
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/gaugeStyle.js
+  var gaugeStyle = (style) => createModifier("gaugeStyle", {
+    style
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/presentationModifiers.js
+  var presentationDetents = (detents, options) => {
+    const params = {
+      detents,
+      selection: options?.selection
+    };
+    const { onSelectionChange } = options ?? {};
+    if (onSelectionChange) {
+      return createModifierWithEventListener("presentationDetents", (args) => {
+        onSelectionChange(args.detent);
+      }, params);
+    }
+    return createModifier("presentationDetents", params);
+  };
+  var presentationDragIndicator = (visibility) => createModifier("presentationDragIndicator", {
+    visibility
+  });
+  var presentationBackgroundInteraction = (interaction) => {
+    if (typeof interaction === "string") {
+      return createModifier("presentationBackgroundInteraction", {
+        interactionType: interaction
+      });
+    }
+    return createModifier("presentationBackgroundInteraction", {
+      interactionType: "enabledUpThrough",
+      detent: interaction.detent
+    });
+  };
+  var presentationBackground = (style) => createModifier("presentationBackground", {
+    style: resolveShapeStyle(style)
+  });
+  var interactiveDismissDisabled = (isDisabled = true) => createModifier("interactiveDismissDisabled", {
+    isDisabled
+  });
+  var presentationSizing = (sizing) => createModifier("presentationSizing", {
+    sizing
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/environment.js
+  function environment(configOrKey, value) {
+    if (typeof configOrKey === "string") {
+      return createModifier("environment", {
+        key: configOrKey,
+        value
+      });
+    }
+    return createModifier("environment", configOrKey);
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/State/optionalWorklets.js
+  var worklets;
+  try {
+    worklets = require_empty_pkg();
+  } catch {
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/State/sharedObjectBrand.js
+  var EXPO_SHARED_OBJECT_ID_KEY = "__expo_shared_object_id__";
+  var EXPO_UI_SHARED_OBJECT_BRAND = "__expo_ui_shared_object__";
+  function isExpoUISharedObject(value) {
+    "worklet";
+    if (value == null || typeof value !== "object") {
+      return false;
+    }
+    const obj = value;
+    return obj[EXPO_UI_SHARED_OBJECT_BRAND] === true && typeof obj[EXPO_SHARED_OBJECT_ID_KEY] === "number" && obj[EXPO_SHARED_OBJECT_ID_KEY] !== 0;
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/State/index.fx.js
+  var _serializerRegistered = false;
+  function registerSharedObjectSerializer() {
+    if (_serializerRegistered) {
+      return;
+    }
+    if (!worklets) {
+      return;
+    }
+    _serializerRegistered = true;
+    const { registerCustomSerializable } = worklets;
+    registerCustomSerializable({
+      name: "ExpoSharedObject",
+      determine: (value) => {
+        "worklet";
+        return isExpoUISharedObject(value);
+      },
+      pack: (value) => {
+        "worklet";
+        return {
+          objectId: value[EXPO_SHARED_OBJECT_ID_KEY]
+        };
+      },
+      unpack: (packed) => {
+        "worklet";
+        const obj = globalThis.expo.SharedObject.__resolveInWorklet(packed.objectId);
+        if (typeof obj.getValue === "function" && typeof obj.setValue === "function") {
+          Object.defineProperty(obj, "value", {
+            get() {
+              return obj.getValue();
+            },
+            set(v) {
+              obj.setValue({
+                value: v
+              });
+            }
+          });
+          obj.get = () => obj.getValue();
+          obj.set = (v) => obj.setValue({
+            value: v
+          });
+        }
+        return obj;
+      }
+    });
+  }
+  try {
+    if (worklets) {
+      installOnUIRuntime(worklets.getUIRuntimeHolder());
+      registerSharedObjectSerializer();
+    }
+  } catch {
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/State/useNativeState.js
+  var ExpoUI = requireNativeModule("ExpoUI");
+  function useNativeState(initialValue) {
+    const initialValueRef = useRef(initialValue);
+    return useReleasingSharedObject(() => {
+      const state = new ExpoUI.ObservableState({
+        value: initialValueRef.current
+      });
+      defineValueProperty(state);
+      defineOnChangeProperty(state);
+      return state;
+    }, []);
+  }
+  function defineValueProperty(state) {
+    Object.defineProperty(state, "value", {
+      get() {
+        return state.getValue();
+      },
+      set(v) {
+        state.setValue({
+          value: v
+        });
+      }
+    });
+    state.get = () => state.getValue();
+    state.set = (v) => state.setValue({
+      value: v
+    });
+  }
+  function defineOnChangeProperty(state) {
+    let currentFn = null;
+    Object.defineProperty(state, "onChange", {
+      get() {
+        return currentFn;
+      },
+      set(fn) {
+        if (!fn) {
+          currentFn = null;
+          try {
+            state.setOnChange(null);
+          } catch {
+          }
+          return;
+        }
+        if (!worklets) {
+          throw new Error("ObservableState.onChange requires the 'react-native-worklets' package, which couldn't be loaded. Install react-native-worklets and rebuild the native app, then assign onChange again.");
+        }
+        if (!worklets.isWorkletFunction(fn)) {
+          throw new Error("ObservableState.onChange must be a worklet so it can run on the UI runtime when the native value changes. Add the 'worklet' directive as the first statement in your callback: state.onChange = (value) => { 'worklet'; ... };");
+        }
+        currentFn = fn;
+        const callback = new ExpoUI.WorkletCallback(worklets.createSerializable(fn));
+        state.setOnChange(callback);
+      }
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/State/useWorkletProp.js
+  var ExpoUI2 = requireNativeModule("ExpoUI");
+  function createSerializable(callback, propName) {
+    if (!callback || !worklets) {
+      return null;
+    }
+    if (!worklets.isWorkletFunction(callback)) {
+      const name = propName ? `'${propName}'` : "The callback";
+      throw new Error(`${name} must be a worklet function. Add the 'worklet' directive as the first statement in your callback.`);
+    }
+    return worklets.createSerializable(callback);
+  }
+  function useWorkletProp(callback, propName) {
+    return useReleasingSharedObjectWithLifecycle({
+      factory: () => {
+        const serializable = createSerializable(callback, propName);
+        return serializable ? new ExpoUI2.WorkletCallback(serializable) : null;
+      },
+      // Only removing the callback needs a different object.
+      shouldRecreate: () => !callback,
+      update: (object) => {
+        const serializable = createSerializable(callback, propName);
+        if (serializable) {
+          object.setWorklet(serializable);
+        }
+      }
+    }, [
+      callback
+    ]);
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/State/utils.js
+  function getStateId(state) {
+    if (!state) {
+      return void 0;
+    }
+    return state.__expo_shared_object_id__;
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/scrollPosition.js
+  var id = (value) => createModifier("id", {
+    id: value
+  });
+  var scrollPosition = (state, options) => {
+    const params = {
+      id: getStateId(state),
+      anchor: options?.anchor
+    };
+    const onChange = options?.onChange;
+    if (onChange) {
+      return createModifierWithEventListener("scrollPosition", (event) => onChange(event?.id ?? null), params);
+    }
+    return createModifier("scrollPosition", params);
+  };
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/symbolEffect.js
+  var symbolEffect = (effect, args = {}) => {
+    const { options, isActive, value } = args;
+    return createModifier("symbolEffect", {
+      effect,
+      options: flattenOptions(options),
+      isActive: isActive ? getStateId(isActive) : void 0,
+      value: value ? getStateId(value) : void 0
+    });
+  };
+  function flattenOptions(options) {
+    if (!options) return void 0;
+    const { speed } = options;
+    const repeatField = options.repeat;
+    if (repeatField === void 0) {
+      return {
+        speed
+      };
+    }
+    if (repeatField === "nonRepeating") {
+      return {
+        repeatKind: "nonRepeating",
+        speed
+      };
+    }
+    if (repeatField === "continuous") {
+      return {
+        repeatKind: "continuous",
+        speed
+      };
+    }
+    return {
+      repeatKind: "periodic",
+      repeatCount: repeatField.count,
+      repeatDelay: repeatField.delay,
+      speed
+    };
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/scrollObservation.js
+  function useScrollGeometryChange(callback) {
+    const isWorklet = !!callback && !!worklets?.isWorkletFunction?.(callback);
+    const workletCallback = useWorkletProp(isWorklet ? callback : void 0, "onScrollGeometryChange");
+    if (!callback) {
+      return null;
+    }
+    if (isWorklet && workletCallback) {
+      return createModifier("onScrollGeometryChange", {
+        workletCallback: getStateId(workletCallback)
+      });
+    }
+    return createModifierWithEventListener("onScrollGeometryChange", (event) => callback(event));
+  }
+  var onScrollPhaseChange = (callback) => createModifierWithEventListener("onScrollPhaseChange", (event) => callback(event.phase, event.geometry));
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/widgets.js
+  var widgetAccentedRenderingMode = (renderingMode) => createModifier("widgetAccentedRenderingMode", {
+    renderingMode
+  });
+  var widgetURL = (url) => createModifier("widgetURL", {
+    url
+  });
+  var activityBackgroundTint = (color) => createModifier("activityBackgroundTint", {
+    color
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/modifiers/index.js
+  var ExpoUI3 = requireNativeModule("ExpoUI");
+  var listSectionSpacing = (spacing) => {
+    if (typeof spacing === "number") {
+      return createModifier("listSectionSpacing", {
+        spacing: "custom",
+        value: spacing
+      });
+    }
+    return createModifier("listSectionSpacing", {
+      spacing
+    });
+  };
+  var cornerRadius = (radius) => createModifier("cornerRadius", {
+    radius
+  });
+  var shadow = (params) => createModifier("shadow", params);
+  var matchedGeometryEffect = (id2, namespaceId, options) => createModifier("matchedGeometryEffect", {
+    id: id2,
+    namespaceId,
+    ...options
+  });
+  var geometryGroup = () => createModifier("geometryGroup", {});
+  var frame = (params) => createModifier("frame", params);
+  var containerRelativeFrame = (params) => createModifier("containerRelativeFrame", params);
+  var padding = (params) => createModifier("padding", params);
+  var fixedSize = (params) => createModifier("fixedSize", params);
+  var ignoreSafeArea = (params) => createModifier("ignoreSafeArea", params);
+  var onTapGesture = (handler) => createModifierWithEventListener("onTapGesture", handler);
+  var onLongPressGesture = (handler, minimumDuration) => createModifierWithEventListener("onLongPressGesture", handler, {
+    minimumDuration: minimumDuration ?? 0.5
+  });
+  var onAppear = (handler) => createModifierWithEventListener("onAppear", handler);
+  var onDisappear = (handler) => createModifierWithEventListener("onDisappear", handler);
+  var onGeometryChange = (handler) => createModifierWithEventListener("onGeometryChange", (frame2) => handler(frame2));
+  var refreshable = (handler) => createModifierWithEventListener("refreshable", async (args) => {
+    try {
+      await handler();
+    } finally {
+      await ExpoUI3.completeRefresh(args.id);
+    }
+  });
+  var opacity = (value) => createModifier("opacity", {
+    value
+  });
+  var clipShape = (shape, cornerRadius2) => createModifier("clipShape", {
+    shape,
+    cornerRadius: cornerRadius2
+  });
+  var border = (params) => createModifier("border", {
+    content: resolveShapeStyle("content" in params ? params.content : params.color),
+    width: params.width
+  });
+  var strokeBorder = (params) => {
+    const { content, color, ...rest } = params;
+    const shapeStyle = content ?? color;
+    return createModifier("strokeBorder", {
+      ...rest,
+      content: shapeStyle === void 0 ? void 0 : resolveShapeStyle(shapeStyle)
+    });
+  };
+  var scaleEffect = (scale) => createModifier("scaleEffect", typeof scale === "number" ? {
+    x: scale,
+    y: scale
+  } : scale);
+  var rotationEffect = (angle) => createModifier("rotationEffect", {
+    angle
+  });
+  var rotation3DEffect = (params) => createModifier("rotation3DEffect", {
+    angle: params.angle,
+    axisX: params.axis?.x ?? 0,
+    axisY: params.axis?.y ?? 0,
+    axisZ: params.axis?.z ?? 0,
+    perspective: params.perspective ?? 1
+  });
+  var offset = (params) => createModifier("offset", params);
+  var foregroundColor = (color) => createModifier("foregroundColor", {
+    color
+  });
+  var foregroundStyle = (style) => createModifier("foregroundStyle", {
+    style: resolveShapeStyle(style)
+  });
+  var bold = () => createModifier("bold", {});
+  var italic = () => createModifier("italic", {});
+  var monospacedDigit = () => createModifier("monospacedDigit", {});
+  var tint = (tint2) => createModifier("tint", {
+    tint: resolveShapeStyle(tint2)
+  });
+  var hidden = (hidden2 = true) => createModifier("hidden", {
+    hidden: hidden2
+  });
+  var disabled = (disabled2 = true) => createModifier("disabled", {
+    disabled: disabled2
+  });
+  var redacted = (reasons = "placeholder") => createModifier("redacted", {
+    reasons: Array.isArray(reasons) ? reasons : [
+      reasons
+    ]
+  });
+  var unredacted = () => createModifier("unredacted", {});
+  var privacySensitive = (sensitive = true) => createModifier("privacySensitive", {
+    sensitive
+  });
+  var invalidatableContent = (invalidatable = true) => createModifier("invalidatableContent", {
+    invalidatable
+  });
+  var zIndex = (index) => createModifier("zIndex", {
+    index
+  });
+  var blur = (radius) => createModifier("blur", {
+    radius
+  });
+  var brightness = (amount) => createModifier("brightness", {
+    amount
+  });
+  var contrast = (amount) => createModifier("contrast", {
+    amount
+  });
+  var saturation = (amount) => createModifier("saturation", {
+    amount
+  });
+  var hueRotation = (angle) => createModifier("hueRotation", {
+    angle
+  });
+  var colorInvert = (inverted = true) => createModifier("colorInvert", {
+    inverted
+  });
+  var grayscale = (amount) => createModifier("grayscale", {
+    amount
+  });
+  var buttonStyle = (style) => createModifier("buttonStyle", {
+    style
+  });
+  var buttonBorderShape = (shape, cornerRadius2) => createModifier("buttonBorderShape", {
+    shape,
+    cornerRadius: cornerRadius2
+  });
+  var toggleStyle = (style) => createModifier("toggleStyle", {
+    style
+  });
+  var menuStyle = (style) => createModifier("menuStyle", {
+    style
+  });
+  var menuIndicator = (visibility) => createModifier("menuIndicator", {
+    visibility
+  });
+  var controlSize = (size) => createModifier("controlSize", {
+    size
+  });
+  var imageScale = (scale) => createModifier("imageScale", {
+    scale
+  });
+  var labelStyle = (style) => createModifier("labelStyle", {
+    style
+  });
+  var labelsHidden = () => createModifier("labelsHidden", {});
+  var textFieldStyle = (style) => createModifier("textFieldStyle", {
+    style
+  });
+  var scrollDismissesKeyboard = (mode) => createModifier("scrollDismissesKeyboard", {
+    mode
+  });
+  var scrollDisabled = (disabled2 = true) => createModifier("scrollDisabled", {
+    disabled: disabled2
+  });
+  var scrollClipDisabled = (disabled2 = true) => createModifier("scrollClipDisabled", {
+    disabled: disabled2
+  });
+  var scrollIndicators = (visibility, axes = "both") => createModifier("scrollIndicators", {
+    visibility,
+    axes
+  });
+  var defaultScrollAnchor = (anchor) => createModifier("defaultScrollAnchor", {
+    anchor
+  });
+  var defaultScrollAnchorForRole = (anchor, role) => createModifier("defaultScrollAnchorForRole", {
+    anchor,
+    role
+  });
+  var scrollTargetBehavior = (behavior) => createModifier("scrollTargetBehavior", {
+    behavior
+  });
+  var scrollTargetLayout = () => createModifier("scrollTargetLayout", {});
+  var moveDisabled = (disabled2 = true) => createModifier("moveDisabled", {
+    disabled: disabled2
+  });
+  var deleteDisabled = (disabled2 = true) => createModifier("deleteDisabled", {
+    disabled: disabled2
+  });
+  var menuActionDismissBehavior = (behavior) => createModifier("menuActionDismissBehavior", {
+    behavior
+  });
+  var accessibilityLabel = (label) => createModifier("accessibilityLabel", {
+    label
+  });
+  var accessibilityHint = (hint) => createModifier("accessibilityHint", {
+    hint
+  });
+  var accessibilityValue = (value) => createModifier("accessibilityValue", {
+    value
+  });
+  var accessibilityInputLabels = (inputLabels) => createModifier("accessibilityInputLabels", {
+    inputLabels
+  });
+  var accessibilityIdentifier = (identifier) => createModifier("accessibilityIdentifier", {
+    identifier
+  });
+  var accessibilityHidden = (hidden2 = true) => createModifier("accessibilityHidden", {
+    hidden: hidden2
+  });
+  var accessibilityElement = (children = "ignore") => createModifier("accessibilityElement", {
+    children
+  });
+  var accessibilityAddTraits = (traits) => createModifier("accessibilityAddTraits", {
+    traits
+  });
+  var accessibilityRemoveTraits = (traits) => createModifier("accessibilityRemoveTraits", {
+    traits
+  });
+  var layoutPriority = (priority) => createModifier("layoutPriority", {
+    priority
+  });
+  var mask = (shape, cornerRadius2) => createModifier("mask", {
+    shape,
+    cornerRadius: cornerRadius2
+  });
+  var overlay = (params) => createModifier("overlay", params);
+  var backgroundOverlay = (params) => createModifier("backgroundOverlay", params);
+  var aspectRatio = (params) => createModifier("aspectRatio", params);
+  var clipped = (clipped2 = true) => createModifier("clipped", {
+    clipped: clipped2
+  });
+  var glassEffect = (params) => createModifier("glassEffect", params);
+  var glassEffectId = (id2, namespaceId) => createModifier("glassEffectId", {
+    id: id2,
+    namespaceId
+  });
+  var scrollContentBackground = (visible) => createModifier("scrollContentBackground", {
+    visible
+  });
+  var listRowBackground = (color) => createModifier("listRowBackground", {
+    color
+  });
+  var listRowSeparator = (visibility, edges) => createModifier("listRowSeparator", {
+    visibility,
+    edges
+  });
+  var listRowSeparatorTint = (color, edges) => createModifier("listRowSeparatorTint", {
+    color,
+    edges
+  });
+  var listRowSpacing = (spacing) => createModifier("listRowSpacing", {
+    spacing
+  });
+  var alignmentGuide = (guide, value) => createModifier("alignmentGuide", {
+    guide,
+    value
+  });
+  var truncationMode = (mode) => createModifier("truncationMode", {
+    mode
+  });
+  var allowsTightening = (value) => createModifier("allowsTightening", {
+    value
+  });
+  var minimumScaleFactor = (factor) => createModifier("minimumScaleFactor", {
+    factor
+  });
+  var kerning = (value) => createModifier("kerning", {
+    value
+  });
+  var textCase = (value) => createModifier("textCase", {
+    value
+  });
+  var underline = (params) => createModifier("underline", params);
+  var strikethrough = (params) => createModifier("strikethrough", params);
+  var multilineTextAlignment = (alignment) => createModifier("multilineTextAlignment", {
+    alignment
+  });
+  var textSelection = (value) => createModifier("textSelection", {
+    value
+  });
+  var lineSpacing = (value) => createModifier("lineSpacing", {
+    value
+  });
+  var lineHeight = (value) => createModifier("lineHeight", {
+    value
+  });
+  function lineLimit(limitOrRange, options) {
+    if (typeof limitOrRange === "object" && limitOrRange !== null) {
+      return createModifier("lineLimit", {
+        min: limitOrRange.min,
+        max: limitOrRange.max
+      });
+    }
+    return createModifier("lineLimit", {
+      limit: limitOrRange,
+      reservesSpace: options?.reservesSpace
+    });
+  }
+  var headerProminence = (prominence) => createModifier("headerProminence", {
+    prominence
+  });
+  var listRowInsets = (params) => createModifier("listRowInsets", params);
+  var badgeProminence = (badgeType) => createModifier("badgeProminence", {
+    badgeType
+  });
+  var badge = (value) => createModifier("badge", {
+    value
+  });
+  var listSectionMargins = (params) => createModifier("listSectionMargins", params);
+  var font = (params) => createModifier("font", params);
+  function dynamicTypeSize(sizeOrRange) {
+    if (typeof sizeOrRange === "object" && sizeOrRange !== null) {
+      return createModifier("dynamicTypeSize", {
+        min: sizeOrRange.min,
+        max: sizeOrRange.max
+      });
+    }
+    return createModifier("dynamicTypeSize", {
+      size: sizeOrRange
+    });
+  }
+  var gridCellUnsizedAxes = (axes) => createModifier("gridCellUnsizedAxes", {
+    axes
+  });
+  var gridCellColumns = (count) => createModifier("gridCellColumns", {
+    count
+  });
+  var gridColumnAlignment = (alignment) => createModifier("gridColumnAlignment", {
+    alignment
+  });
+  var gridCellAnchor = (anchor) => createModifier("gridCellAnchor", anchor);
+  var submitLabel = (submitLabel2) => createModifier("submitLabel", {
+    submitLabel: submitLabel2
+  });
+  var keyboardType = (keyboardType2) => createModifier("keyboardType", {
+    keyboardType: keyboardType2
+  });
+  var autocorrectionDisabled = (disabled2 = true) => createModifier("autocorrectionDisabled", {
+    disabled: disabled2
+  });
+  var onSubmit = (handler) => createModifierWithEventListener("onSubmit", handler);
+  var textInputAutocapitalization = (autocapitalization) => createModifier("textInputAutocapitalization", {
+    autocapitalization
+  });
+  var textContentType = (textContentType2) => createModifier("textContentType", {
+    textContentType: textContentType2
+  });
+  var contentTransition = (transitionType, params) => createModifier("contentTransition", {
+    transitionType,
+    countsDown: params?.countsDown
+  });
+  var listStyle = (style) => createModifier("listStyle", {
+    style
+  });
+  var luminanceToAlpha = () => createModifier("luminanceToAlpha", {});
+  var resizable = (capInsets, resizingMode) => createModifier("resizable", {
+    ...capInsets,
+    resizingMode
+  });
+  var navigationTitle = (title) => createModifier("navigationTitle", {
+    title
+  });
+  var isModifier = (value) => {
+    return typeof value === "object" && value !== null && typeof value.$type === "string";
+  };
+  var filterModifiers = (modifiers) => {
+    return modifiers.filter(isModifier);
+  };
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Image/index.js
+  function transformNativeProps(props) {
+    const { onPress, modifiers, size, color, ...restProps } = props;
+    const hasFontModifier = modifiers?.some((modifier) => modifier.$type === "font");
+    const allModifiers = [
+      ...modifiers ?? [],
+      ...hasFontModifier ? [] : [
+        font({
+          size: size ?? 24
+        })
+      ],
+      ...color != null ? [
+        foregroundStyle(color)
+      ] : []
+    ];
+    return {
+      modifiers: allModifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      ...onPress ? {
+        useTapGesture: true,
+        onTap: () => onPress()
+      } : null
+    };
+  }
+  var ImageNativeView = requireNativeView("ExpoUI", "ImageView");
+  function Image2(props) {
+    return /* @__PURE__ */ jsxProd(ImageNativeView, {
+      ...transformNativeProps(props)
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Label/index.js
+  var LabelNativeView = requireNativeView("ExpoUI", "LabelView");
+  function Label2(props) {
+    const { modifiers, icon, children, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(LabelNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children: [
+        children && /* @__PURE__ */ jsxProd(Slot, {
+          name: "title",
+          children
+        }),
+        icon && /* @__PURE__ */ jsxProd(Slot, {
+          name: "icon",
+          children: icon
+        })
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/LabeledContent/index.js
+  var LabeledContentNativeView = requireNativeView("ExpoUI", "LabeledContentView");
+  function LabeledContent(props) {
+    const { modifiers, label, children, ...restProps } = props;
+    const isLabelString = typeof label === "string";
+    return /* @__PURE__ */ jsxProd(LabeledContentNativeView, {
+      modifiers,
+      label: isLabelString ? label : void 0,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children: [
+        label && !isLabelString && /* @__PURE__ */ jsxProd(Slot, {
+          name: "label",
+          children: label
+        }),
+        /* @__PURE__ */ jsxProd(Slot, {
+          name: "content",
+          children
+        })
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/HStack/index.js
+  var HStackNativeView = requireNativeView("ExpoUI", "HStackView");
+  function HStack(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(HStackNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/LazyHStack/index.js
+  var LazyHStackNativeView = requireNativeView("ExpoUI", "LazyHStackView");
+  function LazyHStack(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(LazyHStackNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/LazyVStack/index.js
+  var LazyVStackNativeView = requireNativeView("ExpoUI", "LazyVStackView");
+  function LazyVStack(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(LazyVStackNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/VStack/index.js
+  var VStackNativeView = requireNativeView("ExpoUI", "VStackView");
+  function VStack(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(VStackNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ZStack/index.js
+  var ZStackNativeView = requireNativeView("ExpoUI", "ZStackView");
+  function ZStack(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(ZStackNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Group/index.js
+  var GroupNativeView = requireNativeView("ExpoUI", "GroupView");
+  function Group(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(GroupNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/List/ListForEach.js
+  var ListForEachNativeView = requireNativeView("ExpoUI", "ListForEachView");
+  function ListForEach({ children, onDelete, onMove, ...props }) {
+    return /* @__PURE__ */ jsxProd(ListForEachNativeView, {
+      ...props,
+      onDelete: onDelete ? ({ nativeEvent }) => onDelete(nativeEvent.indices) : void 0,
+      onMove: onMove ? ({ nativeEvent }) => onMove(nativeEvent.sourceIndices, nativeEvent.destination) : void 0,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/List/index.js
+  var ListNativeView = requireNativeView("ExpoUI", "ListView");
+  function transformListProps(props) {
+    const { modifiers, ...restProps } = props;
+    return {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      onSelectionChange: ({ nativeEvent: { selection } }) => props?.onSelectionChange?.(selection)
+    };
+  }
+  function List(props) {
+    const { children, ...nativeProps } = props;
+    return /* @__PURE__ */ jsxProd(ListNativeView, {
+      ...transformListProps(nativeProps),
+      children
+    });
+  }
+  List.ForEach = ListForEach;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Menu/index.js
+  var MenuNativeView2 = requireNativeView("ExpoUI", "MenuView");
+  function Menu(props) {
+    const { label, children, systemImage, onPrimaryAction, ...rest } = props;
+    const isStringLabel = typeof label === "string";
+    return /* @__PURE__ */ jsxProd(MenuNativeView2, {
+      label: isStringLabel ? label : void 0,
+      systemImage,
+      hasPrimaryAction: onPrimaryAction != null,
+      onPrimaryAction,
+      ...rest,
+      children: [
+        !isStringLabel && /* @__PURE__ */ jsxProd(Slot, {
+          name: "label",
+          children: label
+        }),
+        children
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/NavigationDestination/index.js
+  function NavigationDestination(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "destination",
+      extraProps: {
+        value: props.value
+      },
+      children: props.children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/NavigationLink/index.js
+  var NavigationLinkNativeView = requireNativeView("ExpoUI", "NavigationLinkView");
+  function NavigationLink(props) {
+    const { modifiers, children, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(NavigationLinkNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/NavigationSplitView/index.js
+  var NavigationSplitViewNativeView = requireNativeView("ExpoUI", "NavigationSplitViewView");
+  function NavigationSplitViewSidebar(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "sidebar",
+      children: props.children
+    });
+  }
+  function NavigationSplitViewContent(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "content",
+      children: props.children
+    });
+  }
+  function NavigationSplitViewDetail(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "detail",
+      children: props.children
+    });
+  }
+  NavigationSplitView.Sidebar = NavigationSplitViewSidebar;
+  NavigationSplitView.Content = NavigationSplitViewContent;
+  NavigationSplitView.Detail = NavigationSplitViewDetail;
+  function NavigationSplitView(props) {
+    const { modifiers, children, onColumnVisibilityChange, onPreferredCompactColumnChange, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(NavigationSplitViewNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      onColumnVisibilityChange: ({ nativeEvent: { visibility } }) => onColumnVisibilityChange?.(visibility),
+      onPreferredCompactColumnChange: ({ nativeEvent: { column } }) => onPreferredCompactColumnChange?.(column),
+      ...restProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/NavigationStack/index.js
+  var NavigationStackNativeView = requireNativeView("ExpoUI", "NavigationStackView");
+  function NavigationStack(props) {
+    const { modifiers, onPathChange, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(NavigationStackNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      onPathChange: onPathChange ? ({ nativeEvent: { path } }) => {
+        onPathChange(path);
+      } : void 0
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Picker/index.js
+  var PickerNativeView = requireNativeView("ExpoUI", "PickerView");
+  function transformPickerProps(props) {
+    const { modifiers, onSelectionChange, ...restProps } = props;
+    return {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      onSelectionChange: onSelectionChange ? ({ nativeEvent: { selection } }) => {
+        onSelectionChange(selection);
+      } : void 0
+    };
+  }
+  function Picker(props) {
+    const { label, children, ...restProps } = transformPickerProps(props);
+    if (typeof label === "string") {
+      return /* @__PURE__ */ jsxProd(PickerNativeView, {
+        ...restProps,
+        label,
+        children: /* @__PURE__ */ jsxProd(Slot, {
+          name: "content",
+          children
+        })
+      });
+    } else {
+      return /* @__PURE__ */ jsxProd(PickerNativeView, {
+        ...restProps,
+        children: [
+          /* @__PURE__ */ jsxProd(Slot, {
+            name: "label",
+            children: label
+          }),
+          /* @__PURE__ */ jsxProd(Slot, {
+            name: "content",
+            children
+          })
+        ]
+      });
+    }
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ProgressView/index.js
+  var NativeProgressView = requireNativeView("ExpoUI", "ProgressView");
+  function ProgressView(props) {
+    const { modifiers, timerInterval, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(NativeProgressView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      timerInterval: timerInterval ? {
+        lower: timerInterval.lower.getTime(),
+        upper: timerInterval.upper.getTime()
+      } : void 0
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Section/index.js
+  var SectionNativeView = requireNativeView("ExpoUI", "SectionView");
+  function Section(props) {
+    const { modifiers, header, footer, children, onIsExpandedChange, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(SectionNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...onIsExpandedChange && {
+        onIsExpandedChange: (e) => onIsExpandedChange(e.nativeEvent.isExpanded)
+      },
+      ...restProps,
+      children: [
+        header && /* @__PURE__ */ jsxProd(Slot, {
+          name: "header",
+          children: header
+        }),
+        footer && /* @__PURE__ */ jsxProd(Slot, {
+          name: "footer",
+          children: footer
+        }),
+        /* @__PURE__ */ jsxProd(Slot, {
+          name: "content",
+          children
+        })
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ShareLink/index.js
+  var ShareLinkNativeView = requireNativeView("ExpoUI", "ShareLinkView");
+  function ShareLink(props) {
+    const { modifiers, getItemAsync, item, ...restProps } = props;
+    const shareLinkRef = useRef(null);
+    const handleAsyncItemRequest = useCallback(async () => {
+      if (getItemAsync && shareLinkRef.current && !item) {
+        try {
+          const url = await getItemAsync();
+          shareLinkRef.current.setItem(url);
+        } catch (error) {
+          shareLinkRef.current.setItem(null);
+          throw error;
+        }
+      }
+    }, [
+      getItemAsync,
+      item
+    ]);
+    return /* @__PURE__ */ jsxProd(ShareLinkNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      ref: shareLinkRef,
+      item,
+      onAsyncItemRequest: handleAsyncItemRequest
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Slider/index.js
+  var SliderNativeView = requireNativeView("ExpoUI", "SliderView");
+  function transformSliderProps(props, eventCount) {
+    const { label, minimumValueLabel, maximumValueLabel, onValueChange, onEditingChanged, ...restProps } = props;
+    return {
+      ...restProps,
+      mostRecentEventCount: eventCount.current,
+      onValueChanged: ({ nativeEvent: { value, eventCount: nativeEventCount } }) => {
+        eventCount.current = nativeEventCount;
+        onValueChange?.(value);
+      },
+      onEditingChanged: onEditingChanged ? ({ nativeEvent: { isEditing } }) => {
+        onEditingChanged(isEditing);
+      } : void 0
+    };
+  }
+  function Slider(props) {
+    const { label, minimumValueLabel, maximumValueLabel } = props;
+    const eventCount = useRef(0);
+    return /* @__PURE__ */ jsxProd(SliderNativeView, {
+      ...transformSliderProps(props, eventCount),
+      children: [
+        label && /* @__PURE__ */ jsxProd(Slot, {
+          name: "label",
+          children: label
+        }),
+        minimumValueLabel && /* @__PURE__ */ jsxProd(Slot, {
+          name: "minimum",
+          children: minimumValueLabel
+        }),
+        maximumValueLabel && /* @__PURE__ */ jsxProd(Slot, {
+          name: "maximum",
+          children: maximumValueLabel
+        })
+      ]
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Spacer/index.js
+  var SpacerNativeView = requireNativeView("ExpoUI", "SpacerView");
+  function transformSpacerProps(props) {
+    const { modifiers, ...restProps } = props;
+    return {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    };
+  }
+  function Spacer(props) {
+    return /* @__PURE__ */ jsxProd(SpacerNativeView, {
+      ...transformSpacerProps(props)
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Stepper/index.js
+  var StepperNativeView = requireNativeView("ExpoUI", "StepperView");
+  function transformStepperProps(props) {
+    const { modifiers, ...restProps } = props;
+    return {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      onValueChange: ({ nativeEvent: { value } }) => {
+        props.onValueChange(value);
+      }
+    };
+  }
+  function Stepper(props) {
+    return /* @__PURE__ */ jsxProd(StepperNativeView, {
+      ...transformStepperProps(props)
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/SwipeActions/index.js
+  var SwipeActionsNativeView = requireNativeView("ExpoUI", "SwipeActionsView");
+  function Actions3({ edge = "trailing", allowsFullSwipe = true, children }) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "actions",
+      extraProps: {
+        edge,
+        allowsFullSwipe
+      },
+      children
+    });
+  }
+  function SwipeActionsComponent(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(SwipeActionsNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+  var SwipeActions = Object.assign(SwipeActionsComponent, {
+    Actions: Actions3
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Text/index.js
+  var TextNativeView = requireNativeView("ExpoUI", "TextView");
+  function Text(props) {
+    const { children, modifiers, date, timerInterval, pauseTime, ...restProps } = props;
+    if (date != null || timerInterval != null) {
+      return /* @__PURE__ */ jsxProd(TextNativeView, {
+        modifiers,
+        ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+        ...restProps,
+        date: date ? date.getTime() : void 0,
+        timerInterval: timerInterval ? {
+          lower: timerInterval.lower.getTime(),
+          upper: timerInterval.upper.getTime()
+        } : void 0,
+        pauseTime: pauseTime ? pauseTime.getTime() : void 0
+      });
+    }
+    if (children === void 0 || children === null) {
+      return null;
+    }
+    const childArray = Children.toArray(children);
+    if (childArray.length === 0) return null;
+    const isSimpleText = childArray.every((child) => typeof child === "string" || typeof child === "number");
+    if (isSimpleText) {
+      const combinedText = childArray.map(String).join("");
+      return /* @__PURE__ */ jsxProd(TextNativeView, {
+        text: combinedText,
+        modifiers,
+        ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+        ...restProps
+      });
+    }
+    const finalChildren = [];
+    let keyIndex = 0;
+    for (const child of childArray) {
+      if (typeof child === "string" || typeof child === "number") {
+        finalChildren.push(/* @__PURE__ */ jsxProd(TextNativeView, {
+          text: String(child)
+        }, `text-${keyIndex++}`));
+      } else if (/* @__PURE__ */ isValidElement(child) && child.type === Text) {
+        finalChildren.push(child);
+      }
+    }
+    return /* @__PURE__ */ jsxProd(TextNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children: finalChildren
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/withAnimation.js
+  var ExpoUI4 = requireNativeModule("ExpoUI");
+  function withAnimation(animation2, body, completion, completionCriteria) {
+    if (!worklets) {
+      throw new Error("withAnimation needs the 'react-native-worklets' package, which couldn't be loaded. Install react-native-worklets and rebuild the native app, then call withAnimation again.");
+    }
+    if (!worklets.isWorkletFunction(body)) {
+      throw new Error("withAnimation body must be a worklet. Worklets run synchronously on the UI thread so state changes are captured by SwiftUI's animation transaction. Add the 'worklet' directive as the first statement: () => { 'worklet'; state.value = next; }.");
+    }
+    let completionCallback = null;
+    if (completion) {
+      if (!worklets.isWorkletFunction(completion)) {
+        throw new Error("withAnimation completion must be a worklet. Add the 'worklet' directive as the first statement in your completion callback.");
+      }
+      completionCallback = new ExpoUI4.WorkletCallback(worklets.createSerializable(completion));
+    }
+    const animationObject = animation2 == null ? null : animation2[VALUE_SYMBOL]();
+    const bodyCallback = new ExpoUI4.WorkletCallback(worklets.createSerializable(body));
+    ExpoUI4.withAnimation(animationObject, bodyCallback, completionCallback, completionCriteria);
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/SyncToggle/index.js
+  var SyncToggleNativeView = requireNativeView("ExpoUI", "SyncToggleView");
+  function SyncToggle(props) {
+    const { isOn, onIsOnChangeSync, modifiers, ...restProps } = props;
+    const workletCallback = useWorkletProp(onIsOnChangeSync, "onIsOnChangeSync");
+    return /* @__PURE__ */ jsxProd(SyncToggleNativeView, {
+      ...restProps,
+      isOn: getStateId(isOn),
+      onIsOnChangeSync: getStateId(workletCallback),
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/TabView/Tab.js
+  var TabNativeView = requireNativeView("ExpoUI", "Tab");
+  function Tab(props) {
+    return /* @__PURE__ */ jsxProd(TabNativeView, {
+      ...props
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/TabView/index.js
+  var TabViewNativeView = requireNativeView("ExpoUI", "TabView");
+  function TabView(props) {
+    const { modifiers, onSelectionChange, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(TabViewNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      onSelectionChange: onSelectionChange ? ({ nativeEvent: { selection } }) => onSelectionChange(selection) : void 0
+    });
+  }
+  var _TabView = Object.assign(TabView, {
+    Tab
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Toolbar/index.js
+  var ToolbarNativeView = requireNativeView("ExpoUI", "ToolbarView");
+  function ToolbarContent(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "content",
+      children: props.children
+    });
+  }
+  function ToolbarComponent(props) {
+    const { modifiers, children, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(ToolbarNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children
+    });
+  }
+  var Toolbar = Object.assign(ToolbarComponent, {
+    Content: ToolbarContent
+  });
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Toggle/index.js
+  var ToggleNativeView = requireNativeView("ExpoUI", "ToggleView");
+  function Toggle(props) {
+    const { children, onIsOnChange, modifiers, ...restProps } = props;
+    const baseProps = {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      onIsOnChange: ({ nativeEvent: { isOn } }) => {
+        onIsOnChange?.(isOn);
+      }
+    };
+    return /* @__PURE__ */ jsxProd(ToggleNativeView, {
+      ...baseProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/TextField/index.js
+  var TextFieldNativeView = requireNativeView("ExpoUI", "TextFieldView");
+  function Placeholder({ children }) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "placeholder",
+      children
+    });
+  }
+  function TextField(props) {
+    const { text, selection, onTextChange, onFocusChange, onSelectionChange, modifiers, ref, ...restProps } = props;
+    const isWorklet = !!onTextChange && !!worklets?.isWorkletFunction?.(onTextChange);
+    const workletCallback = useWorkletProp(isWorklet ? onTextChange : void 0, "onTextChange");
+    const hosted = useHostedTextInput(ref, onFocusChange, {
+      blurOnUnmount: true
+    });
+    return /* @__PURE__ */ jsxProd(TextFieldNativeView, {
+      ...restProps,
+      ref: hosted.ref,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      text: getStateId(text),
+      selection: getStateId(selection),
+      onTextChangeSync: getStateId(workletCallback),
+      onTextChange: !isWorklet && onTextChange ? (event) => onTextChange(event.nativeEvent.value) : void 0,
+      onFocusChange: (event) => hosted.onFocusChange(event.nativeEvent.value),
+      onSelectionChange: onSelectionChange ? (event) => onSelectionChange({
+        start: event.nativeEvent.start,
+        end: event.nativeEvent.end
+      }) : void 0
+    });
+  }
+  TextField.Placeholder = Placeholder;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/SecureField/index.js
+  var SecureFieldNativeView = requireNativeView("ExpoUI", "SecureFieldView");
+  function Placeholder2({ children }) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "placeholder",
+      children
+    });
+  }
+  function SecureField(props) {
+    const { text, onTextChange, onFocusChange, modifiers, ref, ...restProps } = props;
+    const isWorklet = !!onTextChange && !!worklets?.isWorkletFunction?.(onTextChange);
+    const workletCallback = useWorkletProp(isWorklet ? onTextChange : void 0, "onTextChange");
+    const hosted = useHostedTextInput(ref, onFocusChange, {
+      blurOnUnmount: true
+    });
+    return /* @__PURE__ */ jsxProd(SecureFieldNativeView, {
+      ...restProps,
+      ref: hosted.ref,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      text: getStateId(text),
+      onTextChangeSync: getStateId(workletCallback),
+      onTextChange: !isWorklet && onTextChange ? (event) => onTextChange(event.nativeEvent.value) : void 0,
+      onFocusChange: (event) => hosted.onFocusChange(event.nativeEvent.value)
+    });
+  }
+  SecureField.Placeholder = Placeholder2;
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Namespace.js
+  var NativeNamespaceView = requireNativeView("ExpoUI", "NamespaceView");
+  function Namespace(props) {
+    return /* @__PURE__ */ jsxProd(NativeNamespaceView, {
+      ...props
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/GlassEffectContainer/index.js
+  var GlassEffectContainerNativeView = requireNativeView("ExpoUI", "GlassEffectContainerView");
+  function GlassEffectContainer(props) {
+    const eventProp = props.modifiers ? createViewModifierEventListener(props.modifiers) : void 0;
+    return /* @__PURE__ */ jsxProd(GlassEffectContainerNativeView, {
+      ...props,
+      ...eventProp
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/ScrollView/index.js
+  var ScrollViewNativeView = requireNativeView("ExpoUI", "ScrollViewComponent");
+  function ScrollView(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(ScrollViewNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Shapes/ConcentricRectangle.js
+  var EdgeCornerStyle = {
+    concentric: (minimumRadius) => ({
+      type: "concentric",
+      minimumRadius
+    }),
+    fixed: (radius) => ({
+      type: "fixed",
+      radius
+    })
+  };
+  var ConcentricRectangleNativeView = requireNativeView("ExpoUI", "ConcentricRectangleView");
+  function ConcentricRectangle(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(ConcentricRectangleNativeView, {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Shapes/index.js
+  var RectangleNativeView = requireNativeView("ExpoUI", "RectangleView");
+  function Rectangle(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(RectangleNativeView, {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+  var RoundedRectangleNativeView = requireNativeView("ExpoUI", "RoundedRectangleView");
+  function RoundedRectangle(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(RoundedRectangleNativeView, {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+  var EllipseNativeView = requireNativeView("ExpoUI", "EllipseView");
+  function Ellipse(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(EllipseNativeView, {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+  var UnevenRoundedRectangleNativeView = requireNativeView("ExpoUI", "UnevenRoundedRectangleView");
+  function UnevenRoundedRectangle(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(UnevenRoundedRectangleNativeView, {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+  var CapsuleNativeView = requireNativeView("ExpoUI", "CapsuleView");
+  function Capsule(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(CapsuleNativeView, {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+  var CircleNativeView = requireNativeView("ExpoUI", "CircleView");
+  function Circle(props) {
+    const { modifiers, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(CircleNativeView, {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Mask/index.js
+  var MaskNativeView = requireNativeView("ExpoUI", "MaskView");
+  function MaskContent(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "content",
+      children: props.children
+    });
+  }
+  Mask.Content = MaskContent;
+  function Mask(props) {
+    const { modifiers, children, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(MaskNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Overlay/index.js
+  var OverlayNativeView = requireNativeView("ExpoUI", "OverlayView");
+  function OverlayContent(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "content",
+      children: props.children
+    });
+  }
+  Overlay.Content = OverlayContent;
+  function Overlay(props) {
+    const { modifiers, children, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(OverlayNativeView, {
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      modifiers,
+      ...restProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Background/index.js
+  var BackgroundNativeView = requireNativeView("ExpoUI", "BackgroundView");
+  function BackgroundContent(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "content",
+      children: props.children
+    });
+  }
+  Background.Content = BackgroundContent;
+  function Background(props) {
+    const { modifiers, children, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(BackgroundNativeView, {
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      modifiers,
+      ...restProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Popover/index.js
+  var PopoverNativeView = requireNativeView("ExpoUI", "PopoverView");
+  function PopoverTrigger(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "trigger",
+      children: props.children
+    });
+  }
+  function PopoverContent(props) {
+    return /* @__PURE__ */ jsxProd(Slot, {
+      name: "popover",
+      children: /* @__PURE__ */ jsxProd(PresentedContent, {
+        children: props.children
+      })
+    });
+  }
+  Popover.Trigger = PopoverTrigger;
+  Popover.Content = PopoverContent;
+  function Popover(props) {
+    const { onIsPresentedChange, modifiers, children, isPresented, ...restProps } = props;
+    const handleIsPresentedChange = (event) => {
+      onIsPresentedChange?.(event.nativeEvent.isPresented);
+    };
+    return /* @__PURE__ */ jsxProd(PopoverNativeView, {
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      modifiers,
+      ...restProps,
+      isPresented,
+      onIsPresentedChange: handleIsPresentedChange,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Grid/index.js
+  var GridNativeView = requireNativeView("ExpoUI", "GridView");
+  var GridRowNativeView = requireNativeView("ExpoUI", "GridRowView");
+  var GridRow = ({ children }) => {
+    return /* @__PURE__ */ jsxProd(GridRowNativeView, {
+      children
+    });
+  };
+  Grid.Row = GridRow;
+  function Grid(props) {
+    const { modifiers, children, ...restProps } = props;
+    return /* @__PURE__ */ jsxProd(GridNativeView, {
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0,
+      ...restProps,
+      children
+    });
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/RNHostView.js
+  var RNHostNativeView = requireNativeView("ExpoUI", "RNHostView");
+  function RNHostView(props) {
+    const layoutRoot = useIsPresentedInOwnWindow();
+    return /* @__PURE__ */ createElement(RNHostNativeView, {
+      ...props,
+      layoutRoot,
+      expoInternalSizeFromChildren: props.matchContents,
+      // `matchContents` can only be used once on mount
+      // So we force unmount when it changes to prevent unexpected layout
+      key: props.matchContents ? "matchContents" : "noMatchContents"
+    }, /* @__PURE__ */ jsxProd(PresentedContentContext.Provider, {
+      value: false,
+      children: props.children
+    }));
+  }
+
+  // Scripts/Expo/node_modules/@expo/ui/build/swift-ui/Link/index.js
+  var LinkNativeView = requireNativeView("ExpoUI", "LinkView");
+  function Link(props) {
+    const { children, modifiers, ...restProps } = props;
+    const baseProps = {
+      ...restProps,
+      modifiers,
+      ...modifiers ? createViewModifierEventListener(modifiers) : void 0
+    };
+    return /* @__PURE__ */ jsxProd(LinkNativeView, {
+      ...baseProps,
+      children
+    });
+  }
+
+  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/index.ts
+  function normalizeWidgetTree(node, position = 0) {
+    let key = null;
+    while (isValidElement(node) && typeof node.type === "function") {
+      key ??= node.key;
+      const rendered = node.type(node.props);
+      node = Array.isArray(rendered) ? jsxProd(Fragment, { children: rendered }) : rendered;
+    }
+    if (Array.isArray(node)) {
+      return node.flat(Infinity).map((child, index) => normalizeWidgetTree(child, index));
+    }
+    if (isValidElement(node)) {
+      const props = { ...node.props };
+      if ("children" in props) {
+        props.children = normalizeWidgetTree(props.children);
+      }
+      return {
+        ...node,
+        props,
+        __expoWidgetIdentity: JSON.stringify([node.type, key ?? node.key ?? position])
+      };
+    }
+    if (node && typeof node === "object") {
+      return Object.fromEntries(
+        Object.entries(node).map(([section, child]) => [section, normalizeWidgetTree(child, section)])
+      );
+    }
+    return node;
+  }
+  var __expoWidgetRender = function(props, environment2) {
+    const { timestamp, materialColors, ...rest } = environment2;
+    const decoratedEnvironment = { ...rest };
+    if (timestamp) {
+      decoratedEnvironment.date = new Date(timestamp);
+    }
+    globalThis.__expoWidgetEnvironment = { ...decoratedEnvironment, materialColors };
+    return decorateInteractiveTargets(
+      normalizeWidgetTree(globalThis.__expoWidgetLayout(props, decoratedEnvironment))
+    );
+  };
+  var __expoWidgetHandlePress = function(props, environment2) {
+    const { target, ...renderEnvironment } = environment2;
+    function findAndCallOnPress(node2) {
+      const props2 = node2?.props;
+      const onPress = props2?.onButtonPress ?? props2?.onButtonPressed;
+      if (onPress && props2?.target === target) {
+        return onPress();
+      }
+      for (const child of Children.toArray(props2?.children)) {
+        const result = findAndCallOnPress(child);
+        if (result) {
+          return result;
+        }
+      }
+    }
+    const node = globalThis.__expoWidgetRender(props, renderEnvironment);
+    return findAndCallOnPress(node);
+  };
+  Object.assign(globalThis, {
+    ...react_native_stub_exports,
+    ...react_stub_exports,
+    ...jsx_runtime_stub_exports,
+    ...ui_globals_exports,
+    React: react_stub_exports,
+    __expoWidgetRender,
+    __expoWidgetHandlePress
+  });
+})();

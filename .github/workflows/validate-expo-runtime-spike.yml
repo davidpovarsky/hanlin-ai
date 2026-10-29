@@ -109,13 +109,15 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - name: Bundle native Searchable regression probe
+      - name: Bundle native Searchable regression probe and widget samples
         shell: bash
         run: |
           set -euxo pipefail
           npm run build:probe --prefix Scripts/Expo
+          node Scripts/Widgets/build-sample-packages.mjs
           test -s AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo
           test -s AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo
+          test -s AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo
 
       - name: Prepare Expo iOS dependency closure
         shell: bash
@@ -217,12 +219,14 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - name: Run focused HanlinScriptAnalyzerTests
+      - name: Run focused HanlinScriptAnalyzerTests and HanlinScriptExtensionsTests
         shell: bash
         run: |
           set -euxo pipefail
           swift test --package-path Packages/HanlinPlatform --filter HanlinScriptAnalyzerTests \
             2>&1 | tee "$LOG_DIR/04-analyzer-tests.log"
+          swift test --package-path Packages/HanlinPlatform --filter HanlinScriptExtensionsTests \
+            2>&1 | tee "$LOG_DIR/04-extensions-tests.log"
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
