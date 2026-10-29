@@ -1,7 +1,7 @@
 {
     "name":  "חיפוש טקסטים מודולרי — Expo",
-    "version":  "1.0.1",
-    "description":  "Native SwiftUI Sefaria text search through Hanlin Node network bridge (React Native networking bypass).",
+    "version":  "1.0.2",
+    "description":  "Sefaria modular search - visible native search field, live result display, permissions and Node diagnostics.",
     "entry":  "bundle.js",
     "runInApp":  true,
     "hanlinRuntime":  "hanlin-expo",

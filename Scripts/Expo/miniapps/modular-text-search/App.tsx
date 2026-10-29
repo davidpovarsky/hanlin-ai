@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Linking, View } from 'react-native';
 import {
   Host, NavigationStack, List, Section, VStack, HStack, Text, Button,
-  Toggle, Picker, TextField, Searchable, PopoverPresentation,
-  ProgressView, ScrollView, useNativeState
+  Toggle, Picker, TextField, PopoverPresentation,
+  ProgressView, ScrollView, useNativeState, hostServices
 } from '@hanlin/expo-ui';
 import {
   navigationTitle, navigationBarTitleDisplayMode, listStyle, font,
@@ -311,6 +311,8 @@ export default function App() {
   const [showOptions,setShowOptions]=useState(false);
   const [showPayload,setShowPayload]=useState(false);
   const [isLoading,setIsLoading]=useState(false);
+  const [searchPhase,setSearchPhase]=useState<'idle'|'loading'|'ready'|'empty'|'failed'>('idle');
+  const [diagnostic,setDiagnostic]=useState('');
   const [isLoadingMore,setIsLoadingMore]=useState(false);
   const [hasMore,setHasMore]=useState(false);
   const [error,setError]=useState('');
@@ -337,26 +339,60 @@ export default function App() {
     try{return JSON.stringify(engine.buildSearchPayload(effective(query)),null,2);}
     catch{return '';}
   },[engineId,query,searchOptions,filtersText,filterFieldsText,aggsText]);
+  async function checkConnection() {
+    setDiagnostic(locale==='he'?'בודק הרשאות ומנוע Node…':'Checking permissions and Node…');
+    try {
+      const nodeAllowed=await hostServices.hasCapability('runtime.node');
+      const networkAllowed=await hostServices.hasCapability('network');
+      if(!nodeAllowed||!networkAllowed){
+        const missing=[!nodeAllowed?'runtime.node':null,!networkAllowed?'network':null].filter(Boolean).join(', ');
+        setDiagnostic((locale==='he'?'הרשאה חסרה: ':'Missing permission: ')+missing+
+          (locale==='he'?' · אשר אותה בפרטי החבילה.':' · Enable it in package details.'));
+        return;
+      }
+      const result=await hostServices.executeRuntime('node',
+        "console.log('HANLIN_NODE_READY')",
+        {limits:{timeoutMilliseconds:12000,maximumOutputBytes:8192}});
+      if(result?.exitCode===0 && String(result.stdout||'').includes('HANLIN_NODE_READY')){
+        setDiagnostic(locale==='he'?'מנוע Node וההרשאות תקינים. כעת נסה חיפוש.':
+          'Node and permissions are ready. You can search now.');
+      }else{
+        setDiagnostic((locale==='he'?'Node נכשל: ':'Node failed: ')+
+          String(result?.stderr||result?.stdout||result?.exitCode||'unknown').slice(0,350));
+      }
+    }catch(e:any){
+      setDiagnostic((locale==='he'?'שגיאת חיבור: ':'Connection error: ')+
+        (e?.message||String(e)).slice(0,350));
+    }
+  }
   async function search(override?:SearchOptions) {
     if(searching.current)return;
     const q=String(override?.query??query).trim();
     if(!q){
-      setError(t('noQueryError'));setResults([]);setMeta(null);setSubmittedQuery('');setHasMore(false);return;
+      setError(t('noQueryError'));setResults([]);setMeta(null);setSubmittedQuery('');setHasMore(false);
+      setSearchPhase('failed');
+      return;
     }
     searching.current=true;
-    const options={...(override||effective(q,0)),query:q,start:0};
+    // Always retain the selected search settings. The previous implementation
+    // discarded them when submitting a query via the native search field.
+    const options={...effective(q,0),...(override||{}),query:q,start:0};
+    setSearchPhase('loading');
     setIsLoading(true);setIsLoadingMore(false);setHasMore(false);setError('');
     setExpanded({});setExpandedVersions({});
     try{
       const response=await engine.search(options);
       const total=typeof response.total==='object'?Number(response.total.value||0):Number(response.total||0);
-      setResults(response.results||[]);
+      const incoming=Array.isArray(response?.results)?response.results:[];
+      setResults(incoming);
       setMeta({...response,total});
       setSubmittedQuery(q);
       setLastSearchOptions(options);
-      setHasMore(response.results.length>0 && response.results.length<total);
-      if(!response.results.length)setError(t('noResultsError'));
+      setHasMore(incoming.length>0 && incoming.length<total);
+      setSearchPhase(incoming.length>0?'ready':'empty');
+      if(!incoming.length)setError(t('noResultsError'));
     }catch(e:any){
+      setSearchPhase('failed');
       setError(e?.message||String(e));setResults([]);setMeta(null);setSubmittedQuery('');setHasMore(false);
     }finally{searching.current=false;setIsLoading(false);}
   }
@@ -403,6 +439,13 @@ export default function App() {
     setCustomVersionsText('');setResults([]);setExpanded({});setExpandedVersions({});
     setMeta(null);setSubmittedQuery('');setHasMore(false);setError('');
   }
+  const searchPhaseLabel=(locale==='he'?{
+    idle:'מוכן לחיפוש', loading:'מחפש במקורות…',
+    ready:'החיפוש הושלם',empty:'לא נמצאו תוצאות',failed:'החיפוש נכשל'
+  }:{
+    idle:'Ready to search',loading:'Searching sources…',
+    ready:'Search completed',empty:'No results found',failed:'Search failed'
+  })[searchPhase];
   const showSearchSummary=!!meta;
   const searchResultsText=showSearchSummary
     ? t('searchResultsFor',{query:submittedQuery}):t('quickExamples');
@@ -413,19 +456,23 @@ export default function App() {
       <NavigationStack modifiers={[
         navigationTitle(t('appTitle')),navigationBarTitleDisplayMode('large')
       ]}>
-        <Searchable value={query} onValueChange={setQuery} onSubmit={(x)=>{search({query:x||query});}}
-          prompt={t('searchPrompt')}>
-          <List modifiers={[listStyle('insetGrouped')]}>
+        <List modifiers={[listStyle('insetGrouped')]}>
             <Section>
               <NativeCard>
                 <TitleText>{searchResultsText}</TitleText>
                 <SoftText>{totalsText}</SoftText>
+                <EditableField value={query} onChange={setQuery} placeholder={t('searchPrompt')}/>
+                <SoftText small>{searchPhaseLabel}</SoftText>
+                {Boolean(error) && <Text modifiers={[font({size:14}),foregroundStyle('#BC3535')]}>
+                  {error}
+                </Text>}
                 {!showSearchSummary && <HStack spacing={7}>
-                  {suggestions.slice(0,3).map(q=><PillButton key={q} label={q} onPress={()=>setQuery(q)}/>)}
+                  {suggestions.slice(0,3).map(q=><PillButton key={q} label={q}
+                    onPress={()=>{setQuery(q);search({query:q});}}/>)}
                 </HStack>}
                 <HStack spacing={8}>
                   <PillButton label={isLoading?t('searching'):t('searchNow')} primary
-                    disabledValue={isLoading||isLoadingMore} onPress={()=>{search();}}/>
+                    disabledValue={isLoading||isLoadingMore} onPress={()=>{search({query});}}/>
                   <PopoverPresentation isPresented={showOptions} onPresentedChange={setShowOptions}
                     onDismiss={()=>setShowOptions(false)}
                     presented={<SearchOptionsPanel
@@ -444,9 +491,14 @@ export default function App() {
                       t('filtersButtonWithCount',{count:formatNumber(activeFilters.length,locale)})
                       :t('filtersButton')} onPress={()=>setShowOptions(true)}/>
                   </PopoverPresentation>
+                  <PillButton label={locale==='he'?'בדיקת חיבור':'Check connection'}
+                    onPress={()=>{void checkConnection();}}/>
                   <PillButton label={locale==='he'?'English':'עברית'}
                     onPress={()=>setLocale(locale==='he'?'en':'he')}/>
                 </HStack>
+                {Boolean(diagnostic) && <Text modifiers={[
+                  font({size:12}),foregroundStyle(muted)
+                ]}>{diagnostic}</Text>}
               </NativeCard>
             </Section>
             {showPayload && <Section title={t('payload')}>
@@ -493,8 +545,7 @@ export default function App() {
                 <SoftText>{t('emptyMessage')}</SoftText>
               </VStack>
             </Section> : null}
-          </List>
-        </Searchable>
+        </List>
       </NavigationStack>
     </Host>
   </View>;

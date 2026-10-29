@@ -13,7 +13,7 @@ Installable file: dist/ModularTextSearch.hanlinExpo.
 - All search and full-text options, including sheet/text types, sorting, filters, slop, and version selection.
 - Next-page loading, Sefaria source links, error and progress states.
 
-The modules in src/engines and src/logic are copied from the user's .scripting archive without functional API changes. App.tsx is an independent Expo UI port of the Scripting screen and components. The screen uses the preinstalled @hanlin/expo-ui native SwiftUI Host/List/Searchable/Popover/TextField bridge and React state.
+The modules in src/engines and src/logic are copied from the user's .scripting archive without functional API changes. App.tsx is an independent Expo UI port of the Scripting screen and components. The screen uses the preinstalled @hanlin/expo-ui native SwiftUI Host/List/Popover/TextField bridge and React state.
 
 ## Scope boundary
 
@@ -42,3 +42,14 @@ The automatically invoking next-page onAppear modifier was also removed to avoid
 Verification performed: TypeScript 6 check passes; Metro creates a release iOS bundle; standalone Node transport integration test passes with a real Sefaria HTTP 200 POST request. Native iPad installation and absence of the original crash are NOT YET VERIFIED.
 
 Run the transport check from the package directory: node tests/network-transport.test.cjs
+
+
+## 1.0.2: No visible results fix + device diagnostics
+
+The original quick-query buttons only changed the text and never invoked search. This update makes them actually submit a search. It also removes the native Searchable wrapper and adds a persistent, native SwiftUI TextField and explicit Search button. The submit code now merges the active advanced search options rather than discarding them.
+
+Search status and errors are displayed directly beneath the query field. An optional Check connection button queries live host permissions for runtime.node/network and executes a small Node readiness probe; failures show diagnostic text rather than an apparently empty list.
+
+Verification: the real Sefaria search integration test retrieves 10 hits and groups them into 2 source cards; Node transport test passes; UI wiring regression test passes; TypeScript 6 check passes; Metro builds a release iOS bundle.
+
+No new iOS host or TestFlight release is needed, but these Windows-side checks cannot prove the SwiftUI screen and Node bridge function on the user's iPad. Please confirm on device; read visible diagnostics if it still fails.
