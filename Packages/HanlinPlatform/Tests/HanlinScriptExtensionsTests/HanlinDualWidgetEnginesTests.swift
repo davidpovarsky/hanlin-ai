@@ -6,6 +6,7 @@ import Testing
 import SwiftUI
 
 @Suite("Dual Native Widget Engines & Schema V2 Verification")
+@MainActor
 struct HanlinDualWidgetEnginesTests {
 
     @Test("Schema V2 save and load round-trip with all 3 engines")

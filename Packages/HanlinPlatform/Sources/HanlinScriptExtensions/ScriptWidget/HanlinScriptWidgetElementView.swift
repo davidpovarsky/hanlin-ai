@@ -7,7 +7,7 @@ public struct HanlinScriptWidgetElementView: View {
     public let element: HanlinScriptWidgetElement
     public let actionHandler: ((String, [String: Any]?) -> Void)?
 
-    public nonisolated init(
+    public init(
         element: HanlinScriptWidgetElement,
         actionHandler: ((String, [String: Any]?) -> Void)? = nil
     ) {

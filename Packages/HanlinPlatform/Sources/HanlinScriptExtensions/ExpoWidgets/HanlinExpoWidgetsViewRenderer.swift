@@ -10,6 +10,7 @@ import WidgetKit
 #endif
 import AppIntents
 
+@MainActor
 public struct HanlinExpoWidgetsViewRenderer {
     public static func renderNode(_ node: [String: Any], actionContext: HanlinExpoActionContext? = nil) -> AnyView {
         guard let type = node["type"] as? String else {
