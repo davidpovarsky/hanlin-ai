@@ -129,7 +129,8 @@ struct HanlinDualWidgetEnginesTests {
                     "relevance": 1.0,
                     "root": {
                         "kind": "text",
-                        "properties": { "text": { "type": "string", "value": "Old Root" } }
+                        "properties": { "text": { "type": "string", "value": "Old Root" } },
+                        "children": []
                     }
                 }],
                 "intentEntities": [],
