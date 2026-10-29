@@ -40,8 +40,8 @@ public struct HanlinGenericWidgetActionIntent: AppIntent {
             let entry = entrypointID.isEmpty ? "default" : entrypointID
             let invocation = HanlinScriptIntentInvocation(
                 identity: HanlinScriptExtensionIdentity(
-                    installedPackageID: HanlinInstalledPackageID(rawValue: pkg),
-                    packageID: HanlinPackageID(rawValue: pkg),
+                    installedPackageID: HanlinInstalledPackageID(unchecked: pkg),
+                    packageID: HanlinPackageID(unchecked: pkg),
                     generation: 1,
                     entrypointID: entry
                 ),

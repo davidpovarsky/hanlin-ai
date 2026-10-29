@@ -5,6 +5,9 @@ import Charts
 #if canImport(UIKit)
 import UIKit
 #endif
+#if canImport(WidgetKit)
+import WidgetKit
+#endif
 import AppIntents
 
 public struct HanlinExpoWidgetsViewRenderer {
@@ -23,7 +26,7 @@ public struct HanlinExpoWidgetsViewRenderer {
             baseView = renderText(props)
 
         case "HStackView", "HStack":
-            let spacing = (props["spacing"] as? NSNumber)?.doubleValue.map { CGFloat($0) }
+            let spacing = parseCGFloat(props["spacing"])
             let alignment = parseVerticalAlignment(props["alignment"] as? String)
             baseView = AnyView(
                 HStack(alignment: alignment, spacing: spacing) {
@@ -34,7 +37,7 @@ public struct HanlinExpoWidgetsViewRenderer {
             )
 
         case "VStackView", "VStack":
-            let spacing = (props["spacing"] as? NSNumber)?.doubleValue.map { CGFloat($0) }
+            let spacing = parseCGFloat(props["spacing"])
             let alignment = parseHorizontalAlignment(props["alignment"] as? String)
             baseView = AnyView(
                 VStack(alignment: alignment, spacing: spacing) {
@@ -71,7 +74,7 @@ public struct HanlinExpoWidgetsViewRenderer {
             baseView = AnyView(Ellipse().fill(parseColor(props["fill"] ?? props["color"]) ?? Color.primary))
 
         case "SpacerView", "Spacer":
-            let minLength = (props["minLength"] as? NSNumber)?.doubleValue.map { CGFloat($0) }
+            let minLength = parseCGFloat(props["minLength"])
             baseView = AnyView(Spacer(minLength: minLength))
 
         case "DividerView", "Divider":
@@ -102,11 +105,15 @@ public struct HanlinExpoWidgetsViewRenderer {
             }
 
         case "AccessoryWidgetBackgroundView":
-            if #available(iOS 16.0, *) {
+            #if canImport(WidgetKit)
+            if #available(iOS 16.0, macOS 13.0, watchOS 9.0, *) {
                 baseView = AnyView(AccessoryWidgetBackground())
             } else {
                 baseView = AnyView(Color.clear)
             }
+            #else
+            baseView = AnyView(Color.clear)
+            #endif
 
         case "ScriptWidgetSubtree":
             // Mixed-tree bridge: embed ScriptWidget Element/JSX inside Expo layout!
@@ -301,12 +308,12 @@ public struct HanlinExpoWidgetsViewRenderer {
     private static func applyModifiers(_ view: AnyView, props: [String: Any]) -> AnyView {
         var v = view
 
-        if let padding = (props["padding"] as? NSNumber)?.doubleValue {
-            v = AnyView(v.padding(CGFloat(padding)))
+        if let padding = parseCGFloat(props["padding"]) {
+            v = AnyView(v.padding(padding))
         }
 
-        let width = (props["width"] as? NSNumber)?.doubleValue.map { CGFloat($0) }
-        let height = (props["height"] as? NSNumber)?.doubleValue.map { CGFloat($0) }
+        let width = parseCGFloat(props["width"])
+        let height = parseCGFloat(props["height"])
         if width != nil || height != nil {
             v = AnyView(v.frame(width: width, height: height))
         }
@@ -315,15 +322,22 @@ public struct HanlinExpoWidgetsViewRenderer {
             v = AnyView(v.background(bg))
         }
 
-        if let cornerRadius = (props["cornerRadius"] as? NSNumber)?.doubleValue {
-            v = AnyView(v.cornerRadius(CGFloat(cornerRadius)))
+        if let cornerRadius = parseCGFloat(props["cornerRadius"]) {
+            v = AnyView(v.cornerRadius(cornerRadius))
         }
 
-        if let opacity = (props["opacity"] as? NSNumber)?.doubleValue {
+        if let opacity = (props["opacity"] as? NSNumber)?.doubleValue ?? (props["opacity"] as? Double) {
             v = AnyView(v.opacity(opacity))
         }
 
         return v
+    }
+
+    public static func parseCGFloat(_ val: Any?) -> CGFloat? {
+        if let n = val as? NSNumber { return CGFloat(truncating: n) }
+        if let d = val as? Double { return CGFloat(d) }
+        if let i = val as? Int { return CGFloat(i) }
+        return nil
     }
 
     private static func extractChildren(_ raw: Any?) -> [[String: Any]] {
