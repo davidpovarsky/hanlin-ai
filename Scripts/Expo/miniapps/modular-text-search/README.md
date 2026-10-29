@@ -29,3 +29,16 @@ Requires Scripts/Expo node_modules prepared using the repository's existing Expo
 In PowerShell, run from this folder: ./build.ps1
 
 This script checks TypeScript, invokes the pinned local Metro/React Native CLI, and packs bundle.js, package.json, and script.json into dist/ModularTextSearch.hanlinExpo. It does not run Xcode, CI, simulator, or TestFlight.
+
+
+## 1.0.1: TestFlight 86201 crash workaround
+
+An iPad TestFlight crash during Sefaria search had signature SIGABRT on React's ObjCTurboModule::performVoidMethodInvocation background queue. That confirms an uncaught native exception in the RN TurboModule path, but the crash report does NOT identify the throwing module.
+
+Version 1.0.1 no longer calls React Native fetch for Sefaria requests. Instead, the package uses the existing Hanlin Expo host-services bridge to run a restricted HTTPS request through the embedded Node runtime. Both runtime.node and network capabilities must be approved on install. All requests are scoped to https://www.sefaria.org, and failures become visible errors instead of being allowed to escape from the search function.
+
+The automatically invoking next-page onAppear modifier was also removed to avoid a possible repeated-load/render feedback loop. Pagination now requires pressing the More Results button.
+
+Verification performed: TypeScript 6 check passes; Metro creates a release iOS bundle; standalone Node transport integration test passes with a real Sefaria HTTP 200 POST request. Native iPad installation and absence of the original crash are NOT YET VERIFIED.
+
+Run the transport check from the package directory: node tests/network-transport.test.cjs

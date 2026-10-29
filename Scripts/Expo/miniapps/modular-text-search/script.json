@@ -1,14 +1,17 @@
 {
-  "name": "חיפוש טקסטים מודולרי — Expo",
-  "version": "1.0.0",
-  "description": "Sefaria modular text search ported from original Scripting package to native Expo SwiftUI MiniApp.",
-  "entry": "bundle.js",
-  "runInApp": true,
-  "hanlinRuntime": "hanlin-expo",
-  "author": {
-    "name": "david povarsky"
-  },
-  "icon": "magnifyingglass",
-  "color": "#007AFF",
-  "capabilities": []
+    "name":  "חיפוש טקסטים מודולרי — Expo",
+    "version":  "1.0.1",
+    "description":  "Native SwiftUI Sefaria text search through Hanlin Node network bridge (React Native networking bypass).",
+    "entry":  "bundle.js",
+    "runInApp":  true,
+    "hanlinRuntime":  "hanlin-expo",
+    "author":  {
+                   "name":  "david povarsky"
+               },
+    "icon":  "magnifyingglass",
+    "color":  "#007AFF",
+    "capabilities":  [
+                         "runtime.node",
+                         "network"
+                     ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "hanlin-expo-modular-text-search",
-  "version": "1.0.0",
-  "private": true,
-  "main": "bundle.js",
-  "hanlinRuntime": "hanlin-expo",
-  "hanlinExpo": {
-    "runtimeVersion": "58.0.3",
-    "bridgeVersion": "3.0.0",
-    "plugins": {
-      "@expo/ui": "58.0.3",
-      "@hanlin/expo-ui": "3.0.0"
-    }
-  },
-  "dependencies": {
-    "@expo/ui": "58.0.3",
-    "@hanlin/expo-ui": "3.0.0",
-    "expo": "58.0.0",
-    "react": "19.3.0",
-    "react-native": "0.88.0"
-  }
+    "name":  "hanlin-expo-modular-text-search",
+    "version":  "1.0.1",
+    "private":  true,
+    "main":  "bundle.js",
+    "hanlinRuntime":  "hanlin-expo",
+    "hanlinExpo":  {
+                       "runtimeVersion":  "58.0.3",
+                       "bridgeVersion":  "3.0.0",
+                       "plugins":  {
+                                       "@expo/ui":  "58.0.3",
+                                       "@hanlin/expo-ui":  "3.0.0"
+                                   }
+                   },
+    "dependencies":  {
+                         "@expo/ui":  "58.0.3",
+                         "@hanlin/expo-ui":  "3.0.0",
+                         "expo":  "58.0.0",
+                         "react":  "19.3.0",
+                         "react-native":  "0.88.0"
+                     }
 }

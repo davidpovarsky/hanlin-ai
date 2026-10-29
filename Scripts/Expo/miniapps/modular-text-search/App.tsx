@@ -8,7 +8,7 @@ import {
 import {
   navigationTitle, navigationBarTitleDisplayMode, listStyle, font,
   foregroundStyle, background, cornerRadius, frame, padding,
-  buttonStyle, controlSize, pickerStyle, tag, onAppear,
+  buttonStyle, controlSize, pickerStyle, tag,
   multilineTextAlignment, textFieldStyle, disabled
 } from '@hanlin/expo-ui/modifiers';
 import {
@@ -484,9 +484,7 @@ export default function App() {
                 {isLoadingMore && <ProgressView/>}
                 <SoftText>{isLoadingMore?t('loadingMore'):t('loadingMoreHint')}</SoftText>
                 <Button label={t('moreResults')} onPress={loadMore}
-                  modifiers={[buttonStyle('bordered'),onAppear(()=>{
-                    if(!loadingPage.current && !isLoadingMore)loadMore();
-                  })]}/>
+                  modifiers={[buttonStyle('bordered')]}/>
               </VStack>}
               {!hasMore && !isLoadingMore && <SoftText>{t('endOfResults')}</SoftText>}
             </Section> : !isLoading&&!error ? <Section>
