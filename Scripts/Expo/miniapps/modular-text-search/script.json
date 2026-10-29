@@ -1,7 +1,7 @@
 {
   "name": "חיפוש טקסטים מודולרי — Expo",
-  "version": "1.1.1",
-  "description": "Sefaria native SwiftUI search using visible List action buttons, alternate native TextField, results and URLSession transport",
+  "version": "1.1.2",
+  "description": "Sefaria native SwiftUI List, TextField search and result navigation with proven iOS NSURLSession transport.",
   "entry": "bundle.js",
   "runInApp": true,
   "hanlinRuntime": "hanlin-expo",

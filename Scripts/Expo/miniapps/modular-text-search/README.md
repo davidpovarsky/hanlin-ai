@@ -98,3 +98,10 @@ The iPad reported that v1.1.0 rendered but both search and the connection check 
 A visible status message is updated synchronously by the search and connection-test button handlers, distinguishing event propagation from network failures. Existing iOS NSURLSession transport and capabilities ios-native-api/network are unchanged.
 
 GitHub Actions can build the installable package without a host TestFlight rebuild. This release still requires physical iPad confirmation; static tests cannot prove iOS event propagation.
+
+
+## 1.1.2: Recover visible native List / search controls
+
+The iPad screenshot showed the native title and Searchable field but no List contents; the 1.1.1 Searchable wrapper was hiding all actionable controls. The root List now attaches directly to NavigationStack with a native TextField, Button, Section and NavigationLink. All result rows and detail screens stay native SwiftUI. The problematic Searchable wrapper is intentionally disabled until its iOS host child-content rendering can be verified on a device; keeping it would leave the app unusable. The previously verified NativeScript/NSURLSession transport is unchanged.
+
+The app displays 'Hanlin Expo 1.1.2' inside the root List as an on-device indicator. If that label is not visible, the native List or its host rendering is still broken and the issue requires host-level iOS simulator/device diagnostics.

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View } from 'react-native';
 import {
   Host, NavigationStack, NavigationLink, NavigationDestination,
-  Searchable, List, Section, Form, Text, Button, Link,
+  List, Section, Form, Text, Button, Link,
   Picker, Toggle, TextField, LabeledContent, DisclosureGroup,
   ContentUnavailableView, ProgressView, useNativeState,
   hostServices
@@ -449,15 +449,11 @@ export default function App() {
       layoutDirection={locale==='he'?'rightToLeft':'leftToRight'}>
       <NavigationStack path={path} onPathChange={setPath}
         modifiers={[navigationTitle(t('appTitle')),navigationBarTitleDisplayMode('large')]}>
-        <Searchable value={query} onValueChange={setQuery}
-            onSubmit={(submitted)=>{
-              setQuery(submitted);
-              setActionStatus(locale==='he'?'התקבל חיפוש מהמקלדת.':'Keyboard search received.');
-              void search(submitted);
-            }}
-            prompt={t('searchPrompt')}>
-            <List modifiers={[listStyle('insetGrouped')]}>
-              <Section title={locale==='he'?'פעולות':'Actions'}>
+        <List modifiers={[listStyle('insetGrouped')]}>
+              <Section title={locale==='he'?'חיפוש':'Search'}>
+                <InputRow label={t('searchPrompt')} value={query} onChange={setQuery}
+                  placeholder={t('searchPrompt')}/>
+                <Text modifiers={[foregroundStyle(secondary)]}>Hanlin Expo 1.1.2</Text>
                 <Button label={t('searchNow')} systemImage="magnifyingglass"
                   onPress={()=>{
                     setActionStatus(locale==='he'?'לחיצה על חיפוש התקבלה.':'Search button pressed.');
@@ -470,15 +466,6 @@ export default function App() {
                     setActionStatus(locale==='he'?'לחיצה על בדיקת חיבור התקבלה.':'Connection test button pressed.');
                     void checkConnection();
                   }}/>
-                <DisclosureGroup label={locale==='he'?'שדה חיפוש חלופי':'Alternative search field'}>
-                  <InputRow label={t('searchFieldLabel')} value={query} onChange={setQuery}
-                    placeholder={t('searchPrompt')}/>
-                  <Button label={t('searchNow')} systemImage="magnifyingglass"
-                    onPress={()=>{
-                      setActionStatus(locale==='he'?'התקבלה בקשת חיפוש מהשדה החלופי.':'Alternative search submitted.');
-                      void search(query);
-                    }}/>
-                </DisclosureGroup>
                 <NavigationLink value="settings">
                   <Text>{t('optionsTitle')}</Text>
                 </NavigationLink>
@@ -523,8 +510,8 @@ export default function App() {
                   <ContentUnavailableView title={t('emptyTitle')}
                     systemImage="text.magnifyingglass"
                     description={locale==='he'
-                      ? 'הקלד מילה בשדה החיפוש המקורי של iOS ולחץ חיפוש.'
-                      : 'Enter a query in the native iOS search field and tap Search.'}/>
+                      ? 'הקלד מילה בשדה החיפוש למעלה ולחץ על חפש עכשיו.'
+                      : 'Enter a term in the search field above and tap Search.'}/>
                 </Section>}
               {!meta && !isLoading &&
                 <Section title={t('quickExamples')}>
@@ -536,8 +523,7 @@ export default function App() {
                 <Section title={t('payload')}>
                   <Text modifiers={[font({textStyle:'footnote'})]}>{payload}</Text>
                 </Section>}
-            </List>
-          </Searchable>
+        </List>
         <NavigationDestination value="settings">
           <NativeSettings locale={locale} engine={engine}
             engines={engines} engineId={engineId}
