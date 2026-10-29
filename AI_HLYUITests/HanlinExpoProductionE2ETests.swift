@@ -139,6 +139,43 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         closeExpoApp()
     }
 
+    // Regression: native SwiftUI .searchable must never swallow its List content.
+    // Reproduced on the iPad after moving from direct List (working) to the
+    // HanlinSearchable wrapper (search field visible, actions/list absent).
+    func testProductionExpoSearchableContentAndEvents() throws {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+
+        let openProbe = app.buttons["Open Searchable Probe"].firstMatch
+        XCTAssertTrue(openProbe.waitForExistence(timeout: 20), "Searchable regression probe trigger is missing")
+        openProbe.tap()
+
+        let marker = app.staticTexts["SEARCHABLE_CONTENT_VISIBLE"].firstMatch
+        XCTAssertTrue(marker.waitForExistence(timeout: 20),
+                      "Hanlin Searchable rendered its search field but LOST the native List content")
+
+        let initial = app.buttons["SEARCHABLE_ACTION_COUNT_0"].firstMatch
+        XCTAssertTrue(initial.waitForExistence(timeout: 10),
+                      "Searchable List child native Button was not rendered")
+        initial.tap()
+        XCTAssertTrue(app.buttons["SEARCHABLE_ACTION_COUNT_1"].firstMatch.waitForExistence(timeout: 10),
+                      "Searchable child Button click did not reach React state")
+
+        let field = app.searchFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 15), "Native SwiftUI Searchable field is missing")
+        field.tap()
+        field.typeText("hanlin")
+        let typed = app.staticTexts["SEARCHABLE_QUERY_VALUE:hanlin"].firstMatch
+        XCTAssertTrue(typed.waitForExistence(timeout: 12),
+                      "Native Searchable typing was not forwarded to React")
+
+        field.typeText("\n")
+        XCTAssertTrue(app.staticTexts["SEARCHABLE_SUBMIT_COUNT:1"].firstMatch.waitForExistence(timeout: 12),
+                      "Native Searchable keyboard submit was not forwarded to React")
+        closeExpoApp()
+    }
+
     func testProductionExpoDynamicPackageSwitching() throws {
         openApps()
 

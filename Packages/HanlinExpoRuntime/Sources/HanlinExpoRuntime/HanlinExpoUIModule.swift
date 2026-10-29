@@ -255,24 +255,71 @@ public struct HanlinSearchableView: ExpoSwiftUI.View {
             }
     }
 
+    // Render the searchable root directly. The former Slot(name: "content")
+    // wrapped a native List in an extra SwiftUI view; on iPadOS it displayed
+    // the search field but left the List (including all actions) invisible.
+    // Keep legacy named-slot package bundles working by flattening their
+    // children into the root rather than mounting HanlinSlotView itself.
+    @ViewBuilder private var searchableRootContent: some View {
+        if let legacyContent = props.children?
+            .compactMap({ $0.childView as? HanlinSlotView })
+            .first(where: { $0.props.name == "content" }) {
+            ForEach(legacyContent.props.children ?? [], id: \.id) { child in
+                let view: any View = child.childView
+                AnyView(view)
+            }
+        } else {
+            ForEach(props.children?.filter { child in
+                guard let slot = child.childView as? HanlinSlotView else { return true }
+                return slot.props.name != "suggestions"
+            } ?? [], id: \.id) { child in
+                let view: any View = child.childView
+                AnyView(view)
+            }
+        }
+    }
+
+    private var hasSuggestions: Bool {
+        props.children?.contains {
+            ($0.childView as? HanlinSlotView)?.props.name == "suggestions"
+        } ?? false
+    }
+
     @ViewBuilder private var searchableContent: some View {
         if let prompt = props.prompt {
-            hanlinNamedSlot(props, "content")
-                .searchable(
-                    text: $text,
-                    isPresented: $presented,
-                    placement: props.placement.value,
-                    prompt: Text(prompt)
-                )
-                .searchSuggestions { hanlinNamedSlot(props, "suggestions") }
-        } else {
-            hanlinNamedSlot(props, "content")
+            if hasSuggestions {
+                searchableRootContent
+                    .searchable(
+                        text: $text,
+                        isPresented: $presented,
+                        placement: props.placement.value,
+                        prompt: Text(prompt)
+                    )
+                    .searchSuggestions { hanlinNamedSlot(props, "suggestions") }
+            } else {
+                searchableRootContent
+                    .searchable(
+                        text: $text,
+                        isPresented: $presented,
+                        placement: props.placement.value,
+                        prompt: Text(prompt)
+                    )
+            }
+        } else if hasSuggestions {
+            searchableRootContent
                 .searchable(
                     text: $text,
                     isPresented: $presented,
                     placement: props.placement.value
                 )
                 .searchSuggestions { hanlinNamedSlot(props, "suggestions") }
+        } else {
+            searchableRootContent
+                .searchable(
+                    text: $text,
+                    isPresented: $presented,
+                    placement: props.placement.value
+                )
         }
     }
 }

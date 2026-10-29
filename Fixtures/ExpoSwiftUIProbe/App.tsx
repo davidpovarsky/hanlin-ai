@@ -4,6 +4,7 @@ import {
   Host,
   NavigationSplitView,
   NavigationStack,
+  Searchable,
   List,
   Section,
   Button,
@@ -74,6 +75,10 @@ export default function App({ variant = 'A' }: AppProps) {
   const [toolbarActionCount, setToolbarActionCount] = useState<number>(0);
   const [editorText, setEditorText] = useState<string>('SwiftUI bridge text');
   const [counter, setCounter] = useState<number>(7);
+  const [showSearchProbe, setShowSearchProbe] = useState<boolean>(false);
+  const [searchProbeText, setSearchProbeText] = useState<string>('');
+  const [searchProbeSubmits, setSearchProbeSubmits] = useState<number>(0);
+  const [searchProbeActions, setSearchProbeActions] = useState<number>(0);
 
   const publishCurrentWidget = async (cnt: number) => {
     try {
@@ -99,6 +104,37 @@ export default function App({ variant = 'A' }: AppProps) {
 
   const currentBook = TORAH_BOOKS.find((b) => b.id === selectedBookId) ?? TORAH_BOOKS[0];
 
+  if (showSearchProbe) {
+    return (
+      <View style={styles.container}>
+        <Host style={styles.host}>
+          <NavigationStack modifiers={[navigationTitle('Searchable Regression Probe')]}>
+            <Searchable
+              value={searchProbeText}
+              onValueChange={setSearchProbeText}
+              onSubmit={(value) => {
+                setSearchProbeText(value);
+                setSearchProbeSubmits((count) => count + 1);
+              }}
+              prompt="Search native test"
+            >
+              <List>
+                <Section title="Native Searchable Content">
+                  <Text>SEARCHABLE_CONTENT_VISIBLE</Text>
+                  <Button label={'SEARCHABLE_ACTION_COUNT_' + searchProbeActions}
+                    onPress={() => setSearchProbeActions((count) => count + 1)} />
+                  <Text>{'SEARCHABLE_QUERY_VALUE:' + searchProbeText}</Text>
+                  <Text>{'SEARCHABLE_SUBMIT_COUNT:' + searchProbeSubmits}</Text>
+                  <Button label="Exit Searchable Probe" onPress={() => setShowSearchProbe(false)} />
+                </Section>
+              </List>
+            </Searchable>
+          </NavigationStack>
+        </Host>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Host style={styles.host}>
@@ -114,6 +150,7 @@ export default function App({ variant = 'A' }: AppProps) {
             <NavigationStack modifiers={[navigationTitle('חומשי תורה')]}>
               <List modifiers={[listStyle('sidebar')]}>
                 <Section title="ספרי תורה">
+                  <Button label="Open Searchable Probe" onPress={() => setShowSearchProbe(true)} />
                   {TORAH_BOOKS.map((book) => (
                     <Button
                       key={book.id}

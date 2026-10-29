@@ -135,7 +135,7 @@ export function Searchable({
       onValueChange={(event) => onValueChange?.(event.nativeEvent.value)}
       onPresentedChange={(event) => onPresentedChange?.(event.nativeEvent.value)}
       onSubmit={(event) => onSubmit?.(event.nativeEvent.value)}>
-      <Slot name="content">{children}</Slot>
+      {children}
       {suggestions === undefined ? null : <Slot name="suggestions">{suggestions}</Slot>}
     </NativeSearchable>
   );

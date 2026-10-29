@@ -109,6 +109,14 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Bundle native Searchable regression probe
+        shell: bash
+        run: |
+          set -euxo pipefail
+          npm run build:probe --prefix Scripts/Expo
+          test -s AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo
+          test -s AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo
+
       - name: Prepare Expo iOS dependency closure
         shell: bash
         run: |
@@ -426,6 +434,7 @@ jobs:
             -skipMacroValidation \
             -parallel-testing-enabled NO \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSearchableContentAndEvents \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoDynamicPackageSwitching \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoLifecycleAndUninstall \
             -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMountAndInteraction \
