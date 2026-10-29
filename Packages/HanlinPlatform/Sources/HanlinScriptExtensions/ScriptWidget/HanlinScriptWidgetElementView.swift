@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 public struct HanlinScriptWidgetElementView: View {
     public let element: HanlinScriptWidgetElement
@@ -82,10 +85,16 @@ public struct HanlinScriptWidgetElementView: View {
         case "image", "gif":
             if let sf = element.string("systemName") ?? element.string("name") {
                 baseView = AnyView(Image(systemName: sf).font(HanlinScriptWidgetAttributes.parseFont(element)))
-            } else if let src = element.string("src") ?? element.string("url"), let img = UIImage(contentsOfFile: src) {
-                baseView = AnyView(Image(uiImage: img).resizable())
             } else {
+                #if canImport(UIKit)
+                if let src = element.string("src") ?? element.string("url"), let img = UIImage(contentsOfFile: src) {
+                    baseView = AnyView(Image(uiImage: img).resizable())
+                } else {
+                    baseView = AnyView(Image(systemName: "photo"))
+                }
+                #else
                 baseView = AnyView(Image(systemName: "photo"))
+                #endif
             }
 
         case "spacer":

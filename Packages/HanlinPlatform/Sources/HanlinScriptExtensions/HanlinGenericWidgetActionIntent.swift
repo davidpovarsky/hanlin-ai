@@ -5,8 +5,8 @@ import WidgetKit
 
 @available(iOS 17.0, *)
 public struct HanlinGenericWidgetActionIntent: AppIntent {
-    public static var title: LocalizedStringResource = "Hanlin Widget Action"
-    public static var isDiscoverable: Bool = false
+    public static let title: LocalizedStringResource = "Hanlin Widget Action"
+    public static let isDiscoverable: Bool = false
 
     @Parameter(title: "packageID")
     public var packageID: String
@@ -59,8 +59,8 @@ public struct HanlinGenericWidgetActionIntent: AppIntent {
 
 @available(iOS 17.0, *)
 public struct WidgetUserInteraction: AppIntent {
-    public static var title: LocalizedStringResource = "User Interaction"
-    public static var isDiscoverable: Bool = false
+    public static let title: LocalizedStringResource = "User Interaction"
+    public static let isDiscoverable: Bool = false
 
     @Parameter(title: "source")
     public var source: String?

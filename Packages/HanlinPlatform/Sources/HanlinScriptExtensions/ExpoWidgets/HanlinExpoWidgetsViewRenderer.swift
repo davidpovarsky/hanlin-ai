@@ -2,6 +2,9 @@ import SwiftUI
 #if canImport(Charts)
 import Charts
 #endif
+#if canImport(UIKit)
+import UIKit
+#endif
 import AppIntents
 
 public struct HanlinExpoWidgetsViewRenderer {
@@ -173,9 +176,11 @@ public struct HanlinExpoWidgetsViewRenderer {
                 let name = String(uri.dropFirst("system:".count))
                 return AnyView(Image(systemName: name))
             }
+            #if canImport(UIKit)
             if let img = UIImage(contentsOfFile: uri) {
                 return AnyView(Image(uiImage: img).resizable())
             }
+            #endif
         }
         return AnyView(Image(systemName: "photo"))
     }
