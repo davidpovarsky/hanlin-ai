@@ -197,7 +197,7 @@ public struct HanlinScriptWidgetElements {
                 environment: "{}"
             )
             return AnyView(
-                SwiftUI.Toggle(isOn: intent) {
+                SwiftUI.Toggle(isOn: isOn, intent: intent) {
                     Text(label)
                 }
             )
