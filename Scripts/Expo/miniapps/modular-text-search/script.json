@@ -1,7 +1,7 @@
 {
     "name":  "חיפוש טקסטים מודולרי — Expo",
-    "version":  "1.0.3",
-    "description":  "Native iOS NSURLSession Sefaria search with full-text, paging, and diagnostic check; avoids embedded Node/undici.",
+    "version":  "1.1.0",
+    "description":  "Sefaria modular text search with native iOS SwiftUI Searchable, List, navigation, settings Form and native URLSession.",
     "entry":  "bundle.js",
     "runInApp":  true,
     "hanlinRuntime":  "hanlin-expo",

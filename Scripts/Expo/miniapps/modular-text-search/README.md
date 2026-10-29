@@ -72,3 +72,21 @@ Verification:
 - TypeScript 6 validation and Metro production iOS bundle compilation passed.
 
 These Windows-side tests cannot test the JSI/Objective-C callback against the physical iPad's Apple runtime. Install the .hanlinExpo on Hanlin TestFlight 86201, grant ios-native-api and network, and use Check connection if necessary.
+
+
+## 1.1.0: All-native SwiftUI interface
+
+This update replaces the hand-built card / chip / HStack / VStack presentation with actual native SwiftUI primitives from the embedded Expo UI bridge:
+- Real iOS Searchable attached to the native result List, using the keyboard Search action.
+- System List and Section for grouped results, examples, search progress and messages.
+- Tappable native NavigationLink rows, opening native NavigationDestination source detail screens.
+- Native LabeledContent for result metadata; native DisclosureGroup for full-text versions.
+- Native Form, Picker, Toggle and TextField for all advanced settings.
+- Native Menu and Toolbar for access to options, language and connection diagnostics.
+- Native ContentUnavailableView for initial empty state and Link for the Sefaria source.
+
+No hand-built HStack/VStack cards, colors, rounded rectangles, or badges are present in the application UI. React manages state and data; Expo UI renders the visible native Apple components. The temporary React Native View root wrapper is removed.
+
+The iOS NSURLSession/NativeScript transport from version 1.0.3 remains unchanged and is still used for both search and full-text requests. The required permissions remain ios-native-api and network.
+
+Tests on Windows verify search submission wiring, native component usage, grouped result navigation, permission declarations, the unchanged transport, and a live Sefaria request through a test implementation of the URLSession callback. TypeScript 6 and Metro production bundling passed. Native presentation behavior requires confirmation on the iPad.
