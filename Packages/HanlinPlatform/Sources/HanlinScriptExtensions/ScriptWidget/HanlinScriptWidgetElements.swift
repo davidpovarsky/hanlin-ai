@@ -239,7 +239,7 @@ public struct HanlinScriptWidgetElements {
     public static func renderGrid(
         isVertical: Bool,
         element: HanlinScriptWidgetElement,
-        renderChild: (HanlinScriptWidgetElement) -> AnyView
+        renderChild: @escaping (HanlinScriptWidgetElement) -> AnyView
     ) -> AnyView {
         let columnsCount = Int(element.number("columns") ?? element.number("rows") ?? 2)
         let spacing = CGFloat(element.number("spacing") ?? 8.0)
