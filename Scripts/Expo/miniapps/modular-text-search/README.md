@@ -90,3 +90,11 @@ No hand-built HStack/VStack cards, colors, rounded rectangles, or badges are pre
 The iOS NSURLSession/NativeScript transport from version 1.0.3 remains unchanged and is still used for both search and full-text requests. The required permissions remain ios-native-api and network.
 
 Tests on Windows verify search submission wiring, native component usage, grouped result navigation, permission declarations, the unchanged transport, and a live Sefaria request through a test implementation of the URLSession callback. TypeScript 6 and Metro production bundling passed. Native presentation behavior requires confirmation on the iPad.
+
+## v1.1.1: Native search event repair
+
+The iPad reported that v1.1.0 rendered but both search and the connection check stopped responding. This release removes the nested Expo Toolbar/Menu wrapper around the Searchable component and restores the proven React Native View -> SwiftUI Host structure from v1.0.3. Native Button controls are direct List rows, not menu items. A native DisclosureGroup provides an alternative native TextField and Search Button if the platform Searchable keyboard event does not fire. Native Searchable, List, NavigationLink, Form, DisclosureGroup, and other native controls remain intact.
+
+A visible status message is updated synchronously by the search and connection-test button handlers, distinguishing event propagation from network failures. Existing iOS NSURLSession transport and capabilities ios-native-api/network are unchanged.
+
+GitHub Actions can build the installable package without a host TestFlight rebuild. This release still requires physical iPad confirmation; static tests cannot prove iOS event propagation.
