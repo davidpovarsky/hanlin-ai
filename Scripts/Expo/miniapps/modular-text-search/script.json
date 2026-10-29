@@ -1,17 +1,17 @@
 {
-    "name":  "חיפוש טקסטים מודולרי — Expo",
-    "version":  "1.1.0",
-    "description":  "Sefaria modular text search with native iOS SwiftUI Searchable, List, navigation, settings Form and native URLSession.",
-    "entry":  "bundle.js",
-    "runInApp":  true,
-    "hanlinRuntime":  "hanlin-expo",
-    "author":  {
-                   "name":  "david povarsky"
-               },
-    "icon":  "magnifyingglass",
-    "color":  "#007AFF",
-    "capabilities":  [
-                         "ios-native-api",
-                         "network"
-                     ]
+  "name": "חיפוש טקסטים מודולרי — Expo",
+  "version": "1.1.1",
+  "description": "Sefaria native SwiftUI search using visible List action buttons, alternate native TextField, results and URLSession transport",
+  "entry": "bundle.js",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-expo",
+  "author": {
+    "name": "david povarsky"
+  },
+  "icon": "magnifyingglass",
+  "color": "#007AFF",
+  "capabilities": [
+    "ios-native-api",
+    "network"
+  ]
 }
