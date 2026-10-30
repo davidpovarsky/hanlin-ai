@@ -9,22 +9,22 @@
 | 1 | `hstack` | `ScriptWidgetElementTagStack` | `HStack` with alignment & spacing | `alignment`, `spacing`, `padding`, `background` | **NOT_TESTED** |
 | 2 | `vstack` | `ScriptWidgetElementTagStack` | `VStack` with alignment & spacing | `alignment`, `spacing`, `padding`, `background` | **NOT_TESTED** |
 | 3 | `zstack` | `ScriptWidgetElementTagZStack` | `ZStack` with 9-point alignment | `alignment`, `padding`, `background` | **NOT_TESTED** |
-| 4 | `hgrid` | `ScriptWidgetElementTagGrid` | `LazyHGrid` with dynamic GridItems | `rows`, `spacing`, `padding` | **NOT_TESTED** |
+| 4 | `hgrid` | `ScriptWidgetElementTagGrid` | `LazyHGrid` with dynamic GridItems | `columns` (JSON grid descriptors), `spacing`, `padding` | **NOT_TESTED** |
 | 5 | `vgrid` | `ScriptWidgetElementTagGrid` | `LazyVGrid` with dynamic GridItems | `columns`, `spacing`, `padding` | **NOT_TESTED** |
 | 6 | `text` | `ScriptWidgetElementTagText` | Native SwiftUI `Text` | `font`, `size`, `weight`, `bold`, `italic`, `color` | **NOT_TESTED** |
-| 7 | `date` | `ScriptWidgetElementTagDate` | Native SwiftUI `Text(date, style:)` | `date`, `timestamp`, `style` (time/relative/offset/timer) | **NOT_TESTED** |
+| 7 | `date` | `ScriptWidgetElementTagDate` | Native SwiftUI `Text(date, style:)` | `date` (name or milliseconds), `style` (date/time/relative/offset/timer) | **NOT_TESTED** |
 | 8 | `image` | `ScriptWidgetElementTagImage` | SFSymbol / Local UIImage | `systemName`, `name`, `src`, `url`, `color` | **NOT_TESTED** |
-| 9 | `gif` | `ScriptWidgetElementTagGif` | Static / First frame Fallback | `src`, `name`, `systemName` | **NOT_TESTED** |
+| 9 | `gif` | `ScriptWidgetElementTagGif` | Original GIF frame pipeline | `file`, image/general modifiers | **NOT_TESTED** |
 | 10 | `spacer` | `ScriptWidgetElementTagSpacer` | Native SwiftUI `Spacer` | `minLength` | **NOT_TESTED** |
 | 11 | `rect` | `ScriptWidgetElementTagShape` | Native SwiftUI `Rectangle` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
 | 12 | `capsule` | `ScriptWidgetElementTagShape` | Native SwiftUI `Capsule` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
 | 13 | `ellipse` | `ScriptWidgetElementTagShape` | Native SwiftUI `Ellipse` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
 | 14 | `circle` | `ScriptWidgetElementTagShape` | Native SwiftUI `Circle` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
-| 15 | `gauge` | `ScriptWidgetElementTagGauge` | Native SwiftUI `Gauge` / `ProgressView` | `value`, `min`, `max`, `label`, `title` | **NOT_TESTED** |
-| 16 | `chart` | `ScriptWidgetElementTagChart` | Native SwiftUI `Chart` (Bar/Line/Point) | `type`, `data: [{x, y}]`, `color` | **NOT_TESTED** |
+| 15 | `gauge` | `ScriptWidgetElementTagGauge` | Original MineGaugeView / native SwiftUI `Gauge` | `value`, `min`, `max`, `label`, `title` | **NOT_TESTED** |
+| 16 | `chart` | `ScriptWidgetElementTagChart` | Native SwiftUI `Chart` (Bar/Line/Point) | `type`, JSON-string `data: [{label, value}]`; Gantt and rule schemas differ | **NOT_TESTED** |
 | 17 | `link` | `ScriptWidgetElementTagLink` | Native SwiftUI `Link` | `title`, `url` | **NOT_TESTED** |
-| 18 | `divider` | `ScriptWidgetElementTagDivider` | Native SwiftUI `Divider` | None (system line) | **NOT_TESTED** |
-| 19 | `line` | `ScriptWidgetElementTagLine` | Native 1pt `Rectangle` | `color`, `height` | **NOT_TESTED** |
+| 18 | `divider` | `ScriptWidgetElementTagDivider` | Native SwiftUI `Rectangle` | `axis`, `thickness`, `color` | **NOT_TESTED** |
+| 19 | `line` | `ScriptWidgetElementTagLine` | Native sized `Rectangle` | `axis`, `length`, `thickness`, `color` | **NOT_TESTED** |
 | 20 | `roundedrect` | `ScriptWidgetElementTagShape` | Native SwiftUI `RoundedRectangle` | `radius`, `fill`, `color` | **NOT_TESTED** |
 | 21 | `icon` | `ScriptWidgetElementTagExtras` | Native SF Symbol `Image(systemName:)` | `name`, `systemName`, `size`, `color` | **NOT_TESTED** |
 | 22 | `label` | `ScriptWidgetElementTagExtras` | Native SwiftUI `Label` | `title`, `icon`, `systemImage` | **NOT_TESTED** |
