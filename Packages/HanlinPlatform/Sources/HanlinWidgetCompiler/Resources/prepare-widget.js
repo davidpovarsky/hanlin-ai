@@ -27,6 +27,9 @@ function __hanlinCompileWidget(input) {
       } }
     } };
   };
+  if (input.engine === 'scriptwidget-import') {
+    return Babel.transform(input.files[input.entry], { presets:['scriptwidget'], plugins:[guardPlugin] }).code;
+  }
   if (input.engine === 'scriptwidget') {
     const calls = input.actions.filter(a => a.handler).map(a => {
       if (!/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(a.handler)) throw new Error('Invalid action handler');
@@ -47,13 +50,53 @@ function __hanlinCompileWidget(input) {
   if (input.format === 'expo-layout') {
     return Babel.transform('(' + input.files[input.entry] + ')', { plugins: [guardPlugin] }).code.replace(/;\s*$/, '');
   }
-  const factories = Object.keys(input.files).sort().map(path => {
-    const plugins = ['transform-modules-commonjs', guardPlugin];
+  const compiled = {};
+  const external = ['react', 'react/jsx-runtime', '@expo/ui/swift-ui', '@expo/ui/swift-ui/modifiers'];
+  let sourceBytes = 0;
+  function resolve(name, parent) {
+    if (external.includes(name)) return null;
+    if (!name.startsWith('.')) throw new Error('Unsupported widget import: ' + name);
+    const parts = parent.split('/'); parts.pop();
+    for (const part of name.split('/')) {
+      if (part === '..') { if (!parts.length) throw new Error('Widget import escapes package'); parts.pop(); }
+      else if (part !== '.') parts.push(part);
+    }
+    const base = parts.join('/');
+    const path = [base, ...['.js', '.jsx', '.ts', '.tsx'].map(ext => base + ext)].find(p => p in input.files);
+    if (!path) throw new Error('Missing widget module: ' + name);
+    return path;
+  }
+  function compileModule(path) {
+    if (path in compiled) return;
+    const bytes = encodeURIComponent(input.files[path]).replace(/%[A-F\d]{2}/gi, 'x').length;
+    sourceBytes += bytes;
+    if (bytes > 524288 || sourceBytes > 2097152) throw new Error('Widget source graph exceeds budget');
+    compiled[path] = ''; // break valid CommonJS module cycles
+    const dependencies = [];
+    let hasDefault = false;
+    const dependencyPlugin = () => ({ visitor: {
+      ImportDeclaration(p) { dependencies.push(p.node.source.value); },
+      ExportNamedDeclaration(p) { if (p.node.source) dependencies.push(p.node.source.value); },
+      ExportAllDeclaration(p) { dependencies.push(p.node.source.value); },
+      ExportDefaultDeclaration() { hasDefault = true; },
+      CallExpression(p) {
+        if (p.node.callee.type === 'Identifier' && p.node.callee.name === 'require') {
+          const argument = p.node.arguments[0];
+          if (p.node.arguments.length !== 1 || !argument || argument.type !== 'StringLiteral') throw new Error('Widget require must use a literal module path');
+          dependencies.push(argument.value);
+        }
+      }
+    } });
+    const plugins = [dependencyPlugin, 'transform-modules-commonjs', guardPlugin];
     const presets = input.format === 'tsx' ? ['typescript', 'scriptwidget'] :
       input.format === 'jsx' ? ['scriptwidget'] : [];
     const code = Babel.transform(input.files[path], { filename: path, presets, plugins }).code;
-    return JSON.stringify(path) + ': function(module, exports, require) {\n' + code + '\n}';
-  });
+    if (path === input.entry && !hasDefault) throw new Error('Expo widget must export a default layout function');
+    compiled[path] = code;
+    for (const dependency of dependencies) { const child = resolve(dependency, path); if (child) compileModule(child); }
+  }
+  compileModule(input.entry);
+  const factories = Object.keys(compiled).sort().map(path => JSON.stringify(path) + ': function(module, exports, require) {\n' + compiled[path] + '\n}');
   return '(function() {\n' +
     'const ScriptWidget = { createElement: React.createElement, Fragment: React.Fragment };\n' +
     'const factories = {' + factories.join(',\n') + '}; const cache = {};\n' +

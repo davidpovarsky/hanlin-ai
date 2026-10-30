@@ -46,6 +46,13 @@ test('P3-08: separate executions cannot retain another package global', () => {
   const first = expo(widgetSamples[0]), second = expo(widgetSamples[0]);
   first.context.leaked = 42; assert.equal(second.context.leaked, undefined);
 });
+test('P3-15: the widget module closure excludes an unrelated foreground bundle', () => {
+  const sample = { ...widgetSamples[0], files: { ...widgetSamples[0].files, 'app/bundle.js': 'invalid app-only bundle syntax '.repeat(30000) } };
+  const result = expo(sample).context.__expoWidgetHandlePress({}, { target:'increment' });
+  assert.equal(result.count, 8);
+  const missing = { ...sample, files:{ ...sample.files, 'widget.tsx': 'import x from "./absent"; export default function W(){return x;}' } };
+  assert.throws(()=>compile(missing), /Missing widget module/);
+});
 test('P3-03/P3-24: ScriptWidget source functions preserve typed state', async () => {
   const values = {};
   const program = compile(widgetSamples[3]);

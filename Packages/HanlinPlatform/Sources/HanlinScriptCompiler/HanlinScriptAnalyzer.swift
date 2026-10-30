@@ -83,6 +83,9 @@ public struct HanlinScriptAnalyzer: Sendable {
         var unresolved: Set<String> = []
         var findings: [HanlinCompatibilityFinding] = []
         var importedSymbols: Set<String> = []
+        if package.manifest.declaredWidgetEngine != nil && !entrypoints.contains(where: { $0.kind == .widget }) {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json", message: "widgetEngine requires a declared or discoverable widget entrypoint."))
+        }
 
         do {
             try package.manifest.validateWidgetMetadata()
@@ -474,6 +477,11 @@ public struct HanlinScriptAnalyzer: Sendable {
                     message: "This Hanlin build supports Expo \(expoSDKVersion), but the package requires \(runtimeVersion)."
                 ))
                 return
+            }
+            if widgetEntrypoints.contains(where: { $0.widgetEngine == .expo }),
+               runtimeVersion != expoSDKVersion || plugins["@expo/ui"] as? String != expoUIVersion {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                    message: "Native Expo widgets require the exact embedded runtime 58.0.3 and @expo/ui plugin 58.0.3."))
             }
             if let requiredBridgeVersion = contract["bridgeVersion"] as? String,
                !isVersion(requiredBridgeVersion, atMost: expoUIBridgeVersion) {

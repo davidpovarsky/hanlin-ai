@@ -50,9 +50,9 @@ export default function Visuals(props) {
     'script.json': json(manifest('ScriptWidget Dashboard', 'scriptwidget', [])), 'assets/pixel.png': png,
     'widget.jsx': `function Heading({children}) { return <text font="headline">{children}</text>; }
 $render(<vstack spacing="6"><Heading>ScriptWidget Dashboard</Heading>
- <hgrid columns="flexible,flexible"><badge text="Native"/><chip text="JSX"/></hgrid>
- <vgrid columns="flexible,flexible"><stat title="Lessons" value="7"/><ring value="0.7" frame="32"/></vgrid>
- <image name="assets/pixel.png" frame="24"/><date date="2026-10-30T12:00:00Z"/>
+ <hgrid columns={JSON.stringify([{type:'flexible'},{type:'flexible'}])}><badge text="Native"/><chip text="JSX"/></hgrid>
+ <vgrid columns={JSON.stringify([{type:'flexible'},{type:'flexible'}])}><stat title="Lessons" value="7"/><ring value="0.7" frame="32"/></vgrid>
+ <image name="assets/pixel.png" frame="24"/><date date={Date.parse('2026-10-30T12:00:00Z')} style="date"/>
  <chart type="bar" data={JSON.stringify([{label:'A',value:3},{label:'B',value:7}])} frame="80"/>
 </vstack>);\n`
   } },

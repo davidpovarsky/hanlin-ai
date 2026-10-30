@@ -19,6 +19,8 @@ jobs:
     name: Compile widget source and execute package regression tests
     runs-on: xcode-27
     timeout-minutes: 30
+    env:
+      HANLIN_WIDGET_EVIDENCE_DIR: ${{ github.workspace }}/build-logs/widgets/rendered
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,7 +53,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          swift test --package-path Packages/HanlinPlatform --filter 'HanlinDualWidgetEnginesTests|HanlinScriptExtensionStoreTests|HanlinScriptAnalyzerTests' 2>&1 | tee build-logs/widgets/package-tests.log
+          swift test --package-path Packages/HanlinPlatform --filter 'HanlinDualWidgetEnginesTests|HanlinOriginalScriptWidgetRenderingTests|HanlinScriptExtensionStoreTests|HanlinScriptAnalyzerTests' 2>&1 | tee build-logs/widgets/package-tests.log
       - uses: actions/cache/save@v4
         if: success() && steps.widget-spm-cache.outputs.cache-hit != 'true'
         with:

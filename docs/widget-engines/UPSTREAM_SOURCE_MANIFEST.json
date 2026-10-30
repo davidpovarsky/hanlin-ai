@@ -208,7 +208,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagDate.swift",
       "upstreamBlob": "e5360fd1cb801cdd5a5c8f1e30d3a96e3c5d6db6",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagDate.swift",
-      "localSHA256": "687cf2466aba2c7297c7793410b8d3a13582513dfe7eb1dbde612ed90e64410f",
+      "localSHA256": "1247f4d44e566d3c2a08dc9d674a7fc08ecac6b16737cc39bf1892fdb9286446",
       "byteIdentical": false,
       "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
     },
@@ -358,7 +358,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Util/MineGaugeView.swift",
       "upstreamBlob": "6ed524427848e881439ebee37b504b35311fcc3c",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Util/MineGaugeView.swift",
-      "localSHA256": "c3d1087e177b6996d5abcd73ed46fd09d386ef88d431c5ceff509499dca3e41e",
+      "localSHA256": "925deb00b1dc893b3bd94fa4890d234c667fe1b131106343ee31b10317e18e46",
       "byteIdentical": false,
       "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
     },
@@ -598,7 +598,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "localSHA256": "a3db94725601eef92d7ccf21c4e08a7dc00ca318c1d14535813939e482ee20b9",
+      "localSHA256": "59b4b902c8fe01a4e131f3fe245cebc42cc4849a4a7be7f1e48a0e16395f60e6",
       "byteIdentical": false,
       "adaptation": "Adapted original widget execution lifecycle and component resolution; fresh VM, frozen transfer and transactional storage. Full app/editor/system-service API surface excluded."
     },
@@ -608,7 +608,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
-      "localSHA256": "5a128cc7954d571c24df75122d586b8e877400276a5c3fbdef77ef0eae0bb2bb",
+      "localSHA256": "307c1898c7a1a00ecb624d25a65576518c12ff69d813c93a79ecc9237d360ed8",
       "byteIdentical": false,
       "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned."
     },

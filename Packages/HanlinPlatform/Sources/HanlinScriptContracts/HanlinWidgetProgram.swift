@@ -17,9 +17,10 @@ public struct HanlinWidgetProgram: Codable, Hashable, Sendable {
     public let actions: [HanlinWidgetActionDeclaration]
     public let families: [String]
     public let resources: [String: Data]
+    public let imports: [String: String]
 
     public init(engine: HanlinWidgetEngine, sourceSHA256: String, compilerSHA256: String,
-                javaScript: String, actions: [HanlinWidgetActionDeclaration], families: [String], resources: [String: Data] = [:]) {
+                javaScript: String, actions: [HanlinWidgetActionDeclaration], families: [String], resources: [String: Data] = [:], imports: [String: String] = [:]) {
         self.abiVersion = Self.abiVersion
         self.engine = engine
         upstreamCommit = engine == .expo ? Self.expoCommit : Self.scriptWidgetCommit
@@ -29,6 +30,7 @@ public struct HanlinWidgetProgram: Codable, Hashable, Sendable {
         self.actions = actions
         self.families = families
         self.resources = resources
+        self.imports = imports
     }
 
     public func validate(engine expected: HanlinWidgetEngine) throws {
@@ -48,7 +50,8 @@ public struct HanlinWidgetProgram: Codable, Hashable, Sendable {
                   case .reload: return true
                   }
               }),
-              resources.values.reduce(0, { $0 + $1.count }) <= 1_024 * 1_024 else {
+              resources.values.reduce(0, { $0 + $1.count }) <= 1_024 * 1_024,
+              imports.count <= 64, imports.values.reduce(0, { $0 + $1.utf8.count }) + javaScript.utf8.count <= 2 * 1_024 * 1_024 else {
             throw HanlinWidgetProgramError.invalidProgram
         }
     }

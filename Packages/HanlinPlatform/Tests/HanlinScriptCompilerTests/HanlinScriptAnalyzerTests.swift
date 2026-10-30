@@ -324,7 +324,8 @@ struct HanlinScriptAnalyzerTests {
             $0.severity == .error && $0.message.contains("appIntent") && $0.message.contains("unsupported")
         })
 
-        // 4. Widget only (FAIL: no foreground app)
+        // 4. Undeclared widget-only source fails the package contract. Genuine
+        // explicitly declared widget-only JSX is exercised by real archive tests.
         let widgetOnly = try package(files: [
             "script.json": #"{"name":"Expo Widget Only","version":"1.0.0","hanlinRuntime":"hanlin-expo"}"#,
             "widget.tsx": "export const renderWidget = () => ({});"
@@ -336,7 +337,7 @@ struct HanlinScriptAnalyzerTests {
         #expect(widgetOnlyPreview.entrypoints.first?.kind == .widget)
         #expect(widgetOnlyPreview.entrypoints.first?.runtimeProfile == .hanlinExpo)
         #expect(widgetOnlyPreview.findings.contains {
-            $0.severity == .error && $0.message.contains("Expo requires exactly one foreground app entrypoint")
+            $0.severity == .error && $0.message.contains("package.json")
         })
     }
 

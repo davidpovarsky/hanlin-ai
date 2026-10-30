@@ -26,11 +26,11 @@ public enum HanlinWidgetCompiler {
               let source = files[entryPath], source.count <= 512 * 1_024 else { throw HanlinWidgetProgramError.invalidSource }
         var sources: [String: String] = [:]
         for (path, data) in files where ["js", "jsx", "ts", "tsx"].contains(URL(filePath: path).pathExtension) {
-            guard data.count <= 512 * 1_024, let text = String(data: data, encoding: .utf8) else { throw HanlinWidgetProgramError.invalidSource }
-            sources[path] = text
+            // The compiler follows only the widget's module closure. A large
+            // unrelated foreground Expo bundle is not a widget source module.
+            if let text = String(data: data, encoding: .utf8) { sources[path] = text }
         }
-        guard sources.values.reduce(0, { $0 + $1.utf8.count }) <= 2 * 1_024 * 1_024,
-              let babelURL = Bundle.module.url(forResource: "core", withExtension: "js"),
+        guard let babelURL = Bundle.module.url(forResource: "core", withExtension: "js"),
               let adapterURL = Bundle.module.url(forResource: "prepare-widget", withExtension: "js") else {
             throw HanlinWidgetProgramError.missingCompiler
         }
@@ -54,10 +54,24 @@ public enum HanlinWidgetCompiler {
         guard ContinuousClock.now < deadline, let javaScript = result?.toString(), !javaScript.isEmpty else {
             throw HanlinWidgetProgramError.compilationFailed("Compiler produced no output or exceeded its budget")
         }
+        var imports: [String: String] = [:]
+        if engine == .scriptwidget {
+            for (path, code) in sources where path != entryPath {
+                guard code.utf8.count <= 512 * 1_024 else { throw HanlinWidgetProgramError.invalidSource }
+                let output = context.objectForKeyedSubscript("__hanlinCompileWidget")?.call(withArguments: [[
+                    "engine": "scriptwidget-import", "format": "jsx", "entry": path, "files": sources, "actions": []
+                ]])
+                if let exception = context.exception { throw HanlinWidgetProgramError.compilationFailed(exception.toString() ?? "Import compilation failed") }
+                guard ContinuousClock.now < deadline, let text = output?.toString() else { throw HanlinWidgetProgramError.invalidSource }
+                imports[path] = text
+            }
+        }
+        var resources = files.filter { !sources.keys.contains($0.key) && !["script.json", "package.json"].contains($0.key) }
+        if engine == .scriptwidget { resources[entryPath] = source }
         let program = HanlinWidgetProgram(engine: engine, sourceSHA256: digest(source),
             compilerSHA256: digest(Data((babel + adapter).utf8)), javaScript: javaScript,
             actions: metadata.actions, families: metadata.families,
-            resources: files.filter { !sources.keys.contains($0.key) && !["script.json", "package.json"].contains($0.key) })
+            resources: resources, imports: imports)
         try program.validate(engine: engine)
         return program
 #else

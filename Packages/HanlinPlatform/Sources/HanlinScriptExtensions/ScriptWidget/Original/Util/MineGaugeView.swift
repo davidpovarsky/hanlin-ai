@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct MineGaugeViewSection: Identifiable {
+public struct MineGaugeViewSection: Identifiable, Sendable {
     public var id = UUID()
     var color: Color
     var value: Double

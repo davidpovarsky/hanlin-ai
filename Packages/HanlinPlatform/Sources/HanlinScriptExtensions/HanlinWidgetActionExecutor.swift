@@ -19,8 +19,19 @@ public struct HanlinWidgetActionCommand: Codable, Hashable, Sendable {
     }
 }
 
-public enum HanlinWidgetActionError: Error, Equatable, Sendable {
+public enum HanlinWidgetActionError: Error, LocalizedError, Equatable, Sendable {
     case invalidIdentity, inactiveInstance, staleArtifact, undeclaredAction, missingValue, noCallback, invalidState
+    public var errorDescription: String? {
+        switch self {
+        case .invalidIdentity: "The widget action has an invalid installation identity. Reconfigure the widget."
+        case .inactiveInstance: "This widget instance is disabled, removed or belongs to an older generation."
+        case .staleArtifact: "The installed widget program changed. Reload the widget before using this action."
+        case .undeclaredAction: "The installed script does not declare this widget action."
+        case .missingValue: "The toggle action is missing its intended Boolean value."
+        case .noCallback: "No matching source callback executed for this widget button."
+        case .invalidState: "The script returned invalid or oversized widget state."
+        }
+    }
 }
 
 public struct HanlinWidgetActionReceipt: Sendable {

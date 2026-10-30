@@ -11,8 +11,9 @@ import SwiftUI
 /// The clock `<date>` uses for absolute styles (`time`, `date`). Tests that
 /// compare snapshots set `fixedNow`; the app always leaves it nil. Relative
 /// styles keep the real clock because SwiftUI measures them against it.
+@MainActor
 enum ScriptWidgetRenderClock {
-    nonisolated(unsafe) static var fixedNow: Date?
+    static var fixedNow: Date?
 }
 
 @MainActor

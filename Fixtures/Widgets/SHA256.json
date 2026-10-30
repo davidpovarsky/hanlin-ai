@@ -25,14 +25,14 @@
   },
   {
     "archive": "Hanlin-ScriptWidget-Dashboard.scripting",
-    "sha256": "296798dff34610ce8c79b241e4921b128e32138d70c449a1f2e2b83c2d65c0a3",
-    "bytes": 940,
+    "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+    "bytes": 968,
     "engine": "scriptwidget",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
       "script.json": "ac72a19ad65ee94a8b0dd8b5fe124a328453a71a8be651cb97edc6988ac1d911",
       "assets/pixel.png": "56bd3a7251ed205191d3bdfe70576ef51adf978c47276caf4e22707d45d54a9d",
-      "widget.jsx": "7d9abcd479e1faf4c3622f5fcc9232c97afd5e8611dc0bf51605df6915209298"
+      "widget.jsx": "d88d0504ce658d1a22d77cf9e86e642cb11d51c38d41301405b16f55de748cff"
     }
   },
   {
