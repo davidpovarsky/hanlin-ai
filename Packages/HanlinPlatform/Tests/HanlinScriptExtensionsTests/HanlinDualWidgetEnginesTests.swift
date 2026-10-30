@@ -192,17 +192,17 @@ struct HanlinDualWidgetEnginesTests {
         let artifact = try store.storeArtifact(data: Data("program".utf8), installedPackageID: id, generation: 1)
         #expect(try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) == Data("program".utf8))
         for ref in ["../outside", "/tmp/outside", artifact.ref + "/../" + artifact.sha256] {
-            #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
+            #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
         }
-        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 2) }
+        #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 2) }
         let url = root.appending(path: artifact.ref)
         try Data("tampered".utf8).write(to: url)
-        #expect(throws: HanlinScriptExtensionStoreError.integrityMismatch) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
+        #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.integrityMismatch) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
         try FileManager.default.removeItem(at: url)
         let outside = root.appending(path: "outside")
         try Data("program".utf8).write(to: outside)
         try FileManager.default.createSymbolicLink(at: url, withDestinationURL: outside)
-        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
+        #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
     }
 
     @Test func actualHistoricalV1EncoderAndDowngradeReader() throws {
@@ -255,7 +255,7 @@ struct HanlinDualWidgetEnginesTests {
         let marker = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: root.appending(path: "commit.json"))) as? [String: Any])
         let hash = try #require(marker["snapshotHash"] as? String)
         try Data("broken".utf8).write(to: root.appending(path: "Revisions/\(hash).json"))
-        #expect(throws: HanlinScriptExtensionStoreError.integrityMismatch) { try store.load() }
+        #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.integrityMismatch) { try store.load() }
     }
 
     @Test func unconfiguredAndWrongFamilyNeverSelectAnotherWidget() async throws {
