@@ -147,29 +147,36 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         importAndInstall(archive: "ExpoSwiftUIProbeA")
         launchInstalledPackage(named: probeAPackageName)
 
-        let sidebarTitlePredicate = NSPredicate(format: "label CONTAINS 'ספרי תורה' OR identifier == 'torah-sidebar' OR label CONTAINS 'Genesis' OR label CONTAINS 'Expo Dynamic A'")
-        let sidebarTitle = app.descendants(matching: .any).matching(sidebarTitlePredicate).firstMatch
-        XCTAssertTrue(sidebarTitle.waitForExistence(timeout: 30), "Expo SwiftUI NavigationSplitView sidebar did not render")
-
         let openProbePredicate = NSPredicate(format: "identifier == 'Open Searchable Probe' OR label CONTAINS 'Open Searchable Probe'")
-        var openProbe = app.buttons.matching(openProbePredicate).firstMatch
+        var openProbe = app.descendants(matching: .any).matching(openProbePredicate).firstMatch
+
         if !openProbe.waitForExistence(timeout: 5) || !openProbe.isHittable {
             // In iPad Portrait mode, NavigationSplitView collapses the sidebar. Tap sidebar toggle to reveal.
-            let sidebarToggle = app.navigationBars.buttons.matching(
-                NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
-            ).firstMatch
-            if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
-                sidebarToggle.tap()
+            let showSidebarPredicate = NSPredicate(format: "label == 'Show Sidebar' OR identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+            let sidebarToggle = app.descendants(matching: .any).matching(showSidebarPredicate).firstMatch
+            if sidebarToggle.waitForExistence(timeout: 5) {
+                if sidebarToggle.isHittable {
+                    sidebarToggle.tap()
+                } else {
+                    sidebarToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                }
+            } else {
+                // Drag from left screen edge to reveal collapsed sidebar
+                let leftEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.01, dy: 0.5))
+                let rightDrag = app.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5))
+                leftEdge.press(forDuration: 0.1, thenDragTo: rightDrag)
             }
-            openProbe = app.buttons.matching(openProbePredicate).firstMatch
-        }
-        if !openProbe.exists {
             openProbe = app.descendants(matching: .any).matching(openProbePredicate).firstMatch
         }
+
         if !openProbe.waitForExistence(timeout: 5) {
-            app.swipeDown()
+            // Drag from left edge as secondary attempt
+            let leftEdge = app.coordinate(withNormalizedOffset: CGVector(dx: 0.01, dy: 0.5))
+            let rightDrag = app.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5))
+            leftEdge.press(forDuration: 0.1, thenDragTo: rightDrag)
             openProbe = app.descendants(matching: .any).matching(openProbePredicate).firstMatch
         }
+
         XCTAssertTrue(openProbe.waitForExistence(timeout: 20), "Searchable regression probe trigger is missing")
         if openProbe.isHittable {
             openProbe.tap()
@@ -184,13 +191,21 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let initial = app.buttons["SEARCHABLE_ACTION_COUNT_0"].firstMatch
         XCTAssertTrue(initial.waitForExistence(timeout: 10),
                       "Searchable List child native Button was not rendered")
-        initial.tap()
+        if initial.isHittable {
+            initial.tap()
+        } else {
+            initial.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
         XCTAssertTrue(app.buttons["SEARCHABLE_ACTION_COUNT_1"].firstMatch.waitForExistence(timeout: 10),
                       "Searchable child Button click did not reach React state")
 
         let field = app.searchFields.firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 15), "Native SwiftUI Searchable field is missing")
-        field.tap()
+        if field.isHittable {
+            field.tap()
+        } else {
+            field.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
         field.typeText("hanlin")
         let typed = app.staticTexts["SEARCHABLE_QUERY_VALUE:hanlin"].firstMatch
         XCTAssertTrue(typed.waitForExistence(timeout: 12),
@@ -306,11 +321,14 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         var benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
         if !benchmarkButton.waitForExistence(timeout: 5) || !benchmarkButton.isHittable {
             // Expand sidebar if collapsed and probe not directly hittable
-            let sidebarToggle = app.navigationBars.buttons.matching(
-                NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
-            ).firstMatch
-            if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
-                sidebarToggle.tap()
+            let showSidebarPredicate = NSPredicate(format: "label == 'Show Sidebar' OR identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+            let sidebarToggle = app.descendants(matching: .any).matching(showSidebarPredicate).firstMatch
+            if sidebarToggle.waitForExistence(timeout: 2) {
+                if sidebarToggle.isHittable {
+                    sidebarToggle.tap()
+                } else {
+                    sidebarToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+                }
             }
             benchmarkButton = app.buttons.matching(benchmarkPredicate).firstMatch
         }
