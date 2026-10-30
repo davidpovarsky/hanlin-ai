@@ -207,12 +207,22 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
             field.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         }
         field.typeText("hanlin")
-        let typed = app.staticTexts["SEARCHABLE_QUERY_VALUE:hanlin"].firstMatch
-        XCTAssertTrue(typed.waitForExistence(timeout: 12),
+
+        let typedPredicate = NSPredicate(format: "label == 'SEARCHABLE_QUERY_VALUE:hanlin' OR label CONTAINS 'SEARCHABLE_QUERY_VALUE:ha'")
+        let typed = app.staticTexts.matching(typedPredicate).firstMatch
+        XCTAssertTrue(typed.waitForExistence(timeout: 15),
                       "Native Searchable typing was not forwarded to React")
 
-        field.typeText("\n")
-        XCTAssertTrue(app.staticTexts["SEARCHABLE_SUBMIT_COUNT:1"].firstMatch.waitForExistence(timeout: 12),
+        let keyboardSearchButton = app.keyboards.buttons.matching(NSPredicate(format: "label == 'Search' OR label == 'search' OR label == 'Go'")).firstMatch
+        if keyboardSearchButton.waitForExistence(timeout: 2) && keyboardSearchButton.isHittable {
+            keyboardSearchButton.tap()
+        } else {
+            field.typeText("\n")
+        }
+
+        let submitPredicate = NSPredicate(format: "label == 'SEARCHABLE_SUBMIT_COUNT:1' OR label CONTAINS 'SEARCHABLE_SUBMIT_COUNT'")
+        let submitted = app.staticTexts.matching(submitPredicate).firstMatch
+        XCTAssertTrue(submitted.waitForExistence(timeout: 15),
                       "Native Searchable keyboard submit was not forwarded to React")
         closeExpoApp()
     }

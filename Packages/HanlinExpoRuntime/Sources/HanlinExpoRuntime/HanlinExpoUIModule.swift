@@ -239,7 +239,9 @@ public struct HanlinSearchableView: ExpoSwiftUI.View {
             .onSubmit(of: .search) { props.onSubmit(["value": text]) }
             .onChange(of: props.value) { _, value in
                 guard let value, value != text else { return }
-                text = value
+                if !text.hasPrefix(value) || value.isEmpty {
+                    text = value
+                }
             }
             .onChange(of: props.isPresented) { _, value in
                 guard let value, value != presented else { return }
