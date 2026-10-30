@@ -76,7 +76,12 @@ public enum HanlinWidgetActionExecutor {
                 receipt = .init(revision: state.revision, applied: false)
                 return current
             }
-            var environment = context.environment
+            // Rebuild execution environment from the authoritative installation,
+            // rather than trusting a stale serialized AppIntent environment.
+            var environment: [String: HanlinValue] = [:]
+            if case let .scriptwidget(descriptor) = widget.payload { environment = descriptor.environment ?? [:] }
+            let instance = current.widgetInstances.first { $0.identity == identity && $0.engine == context.engine }
+            environment["settings"] = try HanlinWidgetJSON.value((instance?.settings ?? [:]).mapValues { $0.toAny() })
             environment["family"] = .string(widget.family)
             environment["widgetFamily"] = .string(widget.family)
             environment["timestamp"] = .number(Date.now.timeIntervalSince1970 * 1_000)

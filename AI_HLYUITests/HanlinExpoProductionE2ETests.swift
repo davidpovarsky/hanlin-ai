@@ -21,6 +21,127 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
     // MARK: - Test Cases
 
+    func testNativeExpoWidgetSourceActionsWithHostTerminated() throws {
+        openApps()
+        importAndInstall(archive: "Hanlin-Expo-Widget-Counter")
+        openPackageDetails(named: "Expo Counter Widget")
+        createNativeWidgetInstance(named: "A1")
+        createNativeWidgetInstance(named: "A2")
+        app.terminate()
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        defer { recordWidgetEvidence(springboard, name: "expo-final") }
+        try placeNativeWidget(in: springboard, selecting: "A1")
+        XCTAssertTrue(springboard.staticTexts["Expo Counter"].firstMatch.waitForExistence(timeout: 30))
+        XCTAssertTrue(springboard.staticTexts["7"].firstMatch.exists)
+        let increment = springboard.buttons["Increment +1"].firstMatch
+        XCTAssertTrue(increment.waitForExistence(timeout: 10), "Native Expo Button was absent")
+        increment.tap()
+        XCTAssertTrue(springboard.staticTexts["8"].firstMatch.waitForExistence(timeout: 30), "Source callback did not publish 7 → 8")
+        XCTAssertEqual(app.state, .notRunning, "Widget press unexpectedly opened the host")
+        recordWidgetEvidence(springboard, name: "expo-a1-after-source-increment")
+        springboard.buttons["Decrement -1"].firstMatch.tap()
+        XCTAssertTrue(springboard.staticTexts["7"].firstMatch.waitForExistence(timeout: 30), "Source callback did not publish 8 → 7")
+        springboard.buttons["Set custom status"].firstMatch.tap()
+        XCTAssertTrue(springboard.staticTexts["Source callback ran"].firstMatch.waitForExistence(timeout: 30))
+        XCTAssertEqual(app.state, .notRunning)
+        try placeNativeWidget(in: springboard, selecting: "A2")
+        XCTAssertTrue(springboard.staticTexts["Ready"].firstMatch.waitForExistence(timeout: 30), "A2 inherited A1's custom status")
+        XCTAssertTrue(springboard.staticTexts["Source callback ran"].firstMatch.exists, "Adding A2 lost A1 state")
+    }
+
+    func testNativeScriptWidgetBooleanWithHostTerminated() throws {
+        openApps()
+        importAndInstall(archive: "Hanlin-ScriptWidget-Actions")
+        openPackageDetails(named: "ScriptWidget Actions")
+        createNativeWidgetInstance(named: "Script A1")
+        app.terminate()
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        defer { recordWidgetEvidence(springboard, name: "scriptwidget-final") }
+        try placeNativeWidget(in: springboard, selecting: "Script A1")
+        let sync = springboard.buttons["Sync now"].firstMatch
+        XCTAssertTrue(sync.waitForExistence(timeout: 30))
+        sync.tap()
+        XCTAssertTrue(springboard.staticTexts["1"].firstMatch.waitForExistence(timeout: 30))
+        springboard.buttons["Named function"].firstMatch.tap()
+        XCTAssertTrue(springboard.staticTexts["Named source function ran"].firstMatch.waitForExistence(timeout: 30))
+        let toggle = springboard.switches["Backup"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 10), "Native ScriptWidget Toggle was absent")
+        let initial = String(describing: toggle.value)
+        toggle.tap()
+        XCTAssertTrue(waitUntil(timeout: 30) { String(describing: toggle.value) != initial })
+        recordWidgetEvidence(springboard, name: "scriptwidget-toggle-on")
+        toggle.tap()
+        XCTAssertTrue(waitUntil(timeout: 30) { String(describing: toggle.value) == initial })
+        XCTAssertEqual(app.state, .notRunning)
+    }
+
+    private func createNativeWidgetInstance(named name: String) {
+        let field = app.textFields["hanlin-widget-instance-name"].firstMatch
+        if !field.waitForExistence(timeout: 3) { app.swipeUp() }
+        XCTAssertTrue(field.waitForExistence(timeout: 10), "Independent instance editor missing")
+        field.tap()
+        field.typeText(name)
+        let create = app.buttons["hanlin-widget-create-instance"].firstMatch
+        if !create.isHittable { app.swipeUp() }
+        XCTAssertTrue(create.isEnabled)
+        create.tap()
+        XCTAssertTrue(app.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
+    }
+
+    private func placeNativeWidget(in springboard: XCUIApplication, selecting instance: String) throws {
+        XCUIDevice.shared.press(.home)
+        recordWidgetEvidence(springboard, name: "home-before-gallery-\(instance)")
+        let icon = springboard.icons.matching(NSPredicate(format: "label CONTAINS[c] 'Hanlin'")).firstMatch
+        XCTAssertTrue(icon.waitForExistence(timeout: 15), "Hanlin app icon missing from Home Screen")
+        icon.press(forDuration: 2)
+        let editHome = springboard.buttons["Edit Home Screen"].firstMatch
+        XCTAssertTrue(editHome.waitForExistence(timeout: 10), "SpringBoard Edit Home Screen unavailable; inspect attached accessibility tree")
+        editHome.tap()
+        let edit = springboard.buttons["Edit"].firstMatch
+        if edit.waitForExistence(timeout: 3) { edit.tap() }
+        let addWidgets = springboard.buttons.matching(NSPredicate(format: "label == 'Add Widget' OR label == 'Add Widgets'")).firstMatch
+        recordWidgetEvidence(springboard, name: "home-edit-\(instance)")
+        XCTAssertTrue(addWidgets.waitForExistence(timeout: 10), "SpringBoard Add Widgets unavailable")
+        addWidgets.tap()
+        let search = springboard.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 10))
+        search.tap()
+        search.typeText("Hanlin")
+        let galleryItem = springboard.descendants(matching: .any).matching(NSPredicate(format: "label == 'Hanlin Script' OR label == 'AI Hanlin' OR label == 'Hanlin'")).firstMatch
+        XCTAssertTrue(galleryItem.waitForExistence(timeout: 10))
+        galleryItem.tap()
+        let add = springboard.buttons["Add Widget"].firstMatch
+        XCTAssertTrue(add.waitForExistence(timeout: 10))
+        add.tap()
+        let done = springboard.buttons["Done"].firstMatch
+        if done.waitForExistence(timeout: 5) { done.tap() }
+        let unconfigured = springboard.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS 'Choose a widget instance'")).firstMatch
+        XCTAssertTrue(unconfigured.waitForExistence(timeout: 20), "New native widget did not show its configuration placeholder")
+        unconfigured.press(forDuration: 2)
+        let editWidget = springboard.buttons["Edit Widget"].firstMatch
+        XCTAssertTrue(editWidget.waitForExistence(timeout: 10))
+        editWidget.tap()
+        let choose = springboard.descendants(matching: .any).matching(NSPredicate(format: "label == 'Choose' OR label == 'Widget instance'")).firstMatch
+        XCTAssertTrue(choose.waitForExistence(timeout: 10))
+        choose.tap()
+        let selected = springboard.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", instance)).firstMatch
+        XCTAssertTrue(selected.waitForExistence(timeout: 15), "The real picker did not contain instance \(instance)")
+        selected.tap()
+        XCUIDevice.shared.press(.home)
+        recordWidgetEvidence(springboard, name: "configured-\(instance)")
+    }
+
+    private func recordWidgetEvidence(_ springboard: XCUIApplication, name: String) {
+        let screenshot = XCTAttachment(screenshot: springboard.screenshot())
+        screenshot.name = name
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        let tree = XCTAttachment(string: springboard.debugDescription)
+        tree.name = "\(name)-accessibility.txt"
+        tree.lifetime = .keepAlways
+        add(tree)
+    }
+
     func testProductionExpoSwiftUIProbeEndToEnd() throws {
         openApps()
         importAndInstall(archive: "ExpoSwiftUIProbeA")

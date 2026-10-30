@@ -342,6 +342,7 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -only-testing:AI_HLYUITests \
+            -only-testing:AI_HLYTests/HanlinNativeWidgetRendererTests \
             ENABLE_TESTABILITY=YES \
             IPHONEOS_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
             ARCHS=arm64 \
@@ -412,7 +413,7 @@ jobs:
 
           sim_udid = sys.argv[1]
           bundle_id = sys.argv[2]
-          fixtures = glob.glob("AI_HLYUITests/Fixtures/*.hanlinExpo")
+          fixtures = glob.glob("AI_HLYUITests/Fixtures/*.hanlinExpo") + glob.glob("AI_HLYUITests/Fixtures/*.scripting")
           if not fixtures:
               print("Warning: No .hanlinExpo fixtures found in AI_HLYUITests/Fixtures")
               sys.exit(0)
@@ -480,6 +481,16 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Audit built native widget dependency closure
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -name AI_Hanlin.app -type d | head -1)"
+          node Scripts/Widgets/audit-native-products.mjs "$APP_PATH" "$LOG_DIR/widget-native-mach-o.json"
+          find "$APP_PATH/PlugIns" -name HanlinScriptingWidgets -type f -exec otool -L {} \; > "$LOG_DIR/widget-native-otool.log"
+          find "$APP_PATH/PlugIns" -name HanlinScriptingWidgets -type f -exec nm -g {} \; > "$LOG_DIR/widget-native-symbols.log"
+
       - name: Run Expo SwiftUI Production E2E Tests
         shell: bash
         run: |
@@ -495,6 +506,9 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -parallel-testing-enabled NO \
+            -only-testing:AI_HLYTests/HanlinNativeWidgetRendererTests \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeScriptWidgetBooleanWithHostTerminated \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSearchableContentAndEvents \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoDynamicPackageSwitching \

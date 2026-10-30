@@ -99,7 +99,7 @@ struct WidgetsViewRenderer {
       try updateProps?(props)
       return makeChild(V(props: props))
     } catch {
-      return makeChild(EmptyView())
+      return makeChild(Text("Invalid Expo widget props: \(error.localizedDescription)"))
     }
   }
 
@@ -115,7 +115,7 @@ struct WidgetsViewRenderer {
         }
       } else if let child = props["children"] as? [String: Any] {
         initialProps.children = [
-          WidgetsViewRenderer(name: name, kind: kind, node: child, entryIndex: entryIndex, environmentString: environmentString).render()
+          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, node: child).render()
         ]
       }
     }

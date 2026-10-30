@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E3A100000000000000000003 /* HanlinExpoWidgetNative in Test Frameworks */ = {isa = PBXBuildFile; productRef = E3A100000000000000000004 /* HanlinExpoWidgetNative */; };
 		E3A100000000000000000001 /* HanlinExpoWidgetNative in Frameworks */ = {isa = PBXBuildFile; productRef = E3A100000000000000000002 /* HanlinExpoWidgetNative */; };
 		A10000000000000000000001 /* MCP in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000011 /* MCP */; };
 		A10000000000000000000002 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000012 /* SWCompression */; };
@@ -382,6 +383,7 @@
 				B10000000000000000000001 /* HanlinPlatformContracts in Frameworks */,
 				B10000000000000000000079 /* HanlinNativeScriptRuntime in Frameworks */,
 				B1000000000000000000007A /* HanlinExpoRuntime in Frameworks */,
+				E3A100000000000000000003 /* HanlinExpoWidgetNative in Test Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +563,7 @@
 			);
 			name = AI_HLYTests;
 			packageProductDependencies = (
+				E3A100000000000000000004 /* HanlinExpoWidgetNative */,
 				A10000000000000000000015 /* HanlinPlatformContracts */,
 				C10000000000000000000025 /* HanlinNativeScriptRuntime */,
 				C10000000000000000000026 /* HanlinExpoRuntime */,
@@ -1777,6 +1780,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E3A100000000000000000004 /* HanlinExpoWidgetNative */ = {isa = XCSwiftPackageProductDependency; package = A10000000000000000000047 /* HanlinExpoRuntime */; productName = HanlinExpoWidgetNative; };
 		E3A100000000000000000002 /* HanlinExpoWidgetNative */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */;

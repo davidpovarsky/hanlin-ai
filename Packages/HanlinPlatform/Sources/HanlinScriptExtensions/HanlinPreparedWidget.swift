@@ -87,13 +87,14 @@ public enum HanlinWidgetPreparation {
             guard !snapshot.inactiveWidgetInstallations.contains(widget.identity.installedPackageID.rawValue) else { return .failure("Widget package is being updated or is disabled.") }
             guard widget.validUntil > .now else { return .failure("The widget snapshot has expired. Open Hanlin to republish it.") }
             if widget.engine == .legacy { return .legacy(widget) }
-            guard snapshot.widgetInstances.contains(where: { $0.identity == widget.identity && $0.engine == widget.engine }) else {
+            guard let instance = snapshot.widgetInstances.first(where: { $0.identity == widget.identity && $0.engine == widget.engine }) else {
                 return .failure("This widget instance is no longer active.")
             }
             let (program, digest) = try store.loadProgram(for: widget)
             let state = snapshot.widgetStates.first { $0.identity == widget.identity && $0.engine == widget.engine && $0.artifactSHA256 == digest }
             var environment: [String: HanlinValue] = ["widgetFamily": .string(family), "family": .string(family),
                 "timestamp": .number(Date.now.timeIntervalSince1970 * 1_000)]
+            environment["settings"] = try HanlinWidgetJSON.value(instance.settings.mapValues { $0.toAny() })
             if case let .scriptwidget(descriptor) = widget.payload {
                 environment.merge(descriptor.environment ?? [:]) { current, _ in current }
             }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 
+@MainActor
 struct ScriptWidgetElementTagLink {
 
     static func buildView(_ element: ScriptWidgetRuntimeElement, _ context: ScriptWidgetElementContext) -> AnyView {
@@ -19,23 +20,27 @@ struct ScriptWidgetElementTagLink {
     }
 
     @ViewBuilder static func buildVStack(element: ScriptWidgetRuntimeElement, context: ScriptWidgetElementContext) -> some View {
-        Link( destination: ScriptWidgetElementTagLink.getDestination("url", element)) {
+        if let destination = ScriptWidgetElementTagLink.getDestination("url", element) {
+        Link(destination: destination) {
             ForEach(element.childrenAsElements()) { item -> AnyView in
                 return ScriptWidgetElementView.buildView(element: item, context: context)
             }
         }
         .buttonStyle(.plain)
         .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+        } else {
+            Text("Invalid widget link")
+        }
     }
 
-    static func getDestination(_ attrName: String, _ element: ScriptWidgetRuntimeElement) -> URL {
+    static func getDestination(_ attrName: String, _ element: ScriptWidgetRuntimeElement) -> URL? {
 
         guard let urlString = element.getPropString(attrName) else {
-            return kDeepLinkDefaultURL
+            return nil
         }
 
-        guard let url = URL(string: urlString) else {
-            return kDeepLinkDefaultURL
+        guard let url = URL(string: urlString), url.scheme != nil else {
+            return nil
         }
 
         return url

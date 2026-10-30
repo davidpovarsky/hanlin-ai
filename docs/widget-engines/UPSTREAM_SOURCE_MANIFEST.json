@@ -268,7 +268,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagLink.swift",
       "upstreamBlob": "dea66a81e66d9e7c404d2ca2c590cd81bb86d3c4",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagLink.swift",
-      "localSHA256": "dde8fc6fd636121f659bba9aa00eb79f9b34d2e972ad7ccf79f2e5f46e966512",
+      "localSHA256": "94fef7c6700785d51d46d321d385e483f3c9b5c6175bcb17dad72f86b0b4817a",
       "byteIdentical": false,
       "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
     },
@@ -408,7 +408,7 @@
       "upstream": "packages/expo-widgets/ios/Widgets/ViewRenderer.swift",
       "upstreamBlob": "68e376fdd5a4a1b088f6e2e28b0babb285feec12",
       "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
-      "localSHA256": "1596a024b3ffb75365c29ca6791981ad4fad08f2cccdb7948ac12ab906fa4521",
+      "localSHA256": "5aad710edbcb2d91e28e3cc156d2568211428541c3fadcb8b3a0855016dbfe1a",
       "byteIdentical": false,
       "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
     },
