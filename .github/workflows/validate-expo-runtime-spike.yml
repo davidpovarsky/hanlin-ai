@@ -487,9 +487,11 @@ jobs:
         run: |
           set -euo pipefail
           APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -name AI_Hanlin.app -type d | head -1)"
-          node Scripts/Widgets/audit-native-products.mjs "$APP_PATH" "$LOG_DIR/widget-native-mach-o.json"
+          audit_status=0
+          node Scripts/Widgets/audit-native-products.mjs "$APP_PATH" "$LOG_DIR/widget-native-mach-o.json" || audit_status=$?
           find "$APP_PATH/PlugIns" -name HanlinScriptingWidgets -type f -exec otool -L {} \; > "$LOG_DIR/widget-native-otool.log"
           find "$APP_PATH/PlugIns" -name HanlinScriptingWidgets -type f -exec nm -g {} \; > "$LOG_DIR/widget-native-symbols.log"
+          exit "$audit_status"
 
       - name: Run Expo SwiftUI Production E2E Tests
         shell: bash

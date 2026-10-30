@@ -75,6 +75,7 @@ extension Shape {
 
 @MainActor
 class ScriptWidgetElementTagRectangle {
+    @MainActor
     struct CompactStyle {
         let width: CGFloat
         let height: CGFloat

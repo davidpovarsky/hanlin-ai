@@ -227,7 +227,7 @@ let package = Package(
                 "HanlinScriptUI",
                 "HanlinChatCore"
             ],
-            exclude: ["ScriptWidget/Original/LICENSE.txt", "ScriptWidget/Original/NOTICE.txt", "ScriptWidget/Original/Component/Attributes/Animation/ClockHandKit-LICENSE.txt"],
+            exclude: ["ScriptWidget/Original/MIT-previous.txt", "ScriptWidget/Original/LICENSE.txt", "ScriptWidget/Original/NOTICE.txt", "ScriptWidget/Original/Component/Attributes/Animation/ClockHandKit-LICENSE.txt"],
             resources: [
                 .process("Resources")
             ],

@@ -83,6 +83,11 @@ public struct HanlinScriptAnalyzer: Sendable {
         var unresolved: Set<String> = []
         var findings: [HanlinCompatibilityFinding] = []
         var importedSymbols: Set<String> = []
+        let conventionalWidgets = ["widget.jsx", "widget.tsx", "widget.ts", "widget.js", "widget.json"].filter { files[$0] != nil }
+        if !package.manifest.isWidgetOnlyPackage, conventionalWidgets.count > 1 {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "Ambiguous widget entrypoints: \(conventionalWidgets.joined(separator: ", ")). Supply one widget entrypoint; source order never selects an engine or program."))
+        }
         if package.manifest.declaredWidgetEngine != nil && !entrypoints.contains(where: { $0.kind == .widget }) {
             findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json", message: "widgetEngine requires a declared or discoverable widget entrypoint."))
         }

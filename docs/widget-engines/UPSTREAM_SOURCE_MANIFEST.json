@@ -278,7 +278,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagShape.swift",
       "upstreamBlob": "a50aa20daf6f16aad5b91f07e46bf6fe22f16960",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagShape.swift",
-      "localSHA256": "14e89b7018a34fe776edf638695db22806ff5e051cb1794d5710430bc57f45dd",
+      "localSHA256": "39ffb53d22a1a01fce310e3503d828478341aec60bffe425e21ea65bc2d60ac8",
       "byteIdentical": false,
       "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
     },

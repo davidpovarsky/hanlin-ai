@@ -17,6 +17,26 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
+    @Test func originalScriptWidgetImportedHelpersAndVerifiedFileStorage() throws {
+        let program = HanlinWidgetProgram(engine: .scriptwidget,
+            sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64),
+            javaScript: """
+              async function $main() {
+                if (!$import('helper.js')) throw Error('helper not found');
+                if ($storage.getString('missing') !== '') throw Error('upstream string default');
+                if (!$storage.compareAndSetString('mode', '', 'verified')) throw Error('CAS failed');
+                $storage.setJSON('payload', $file.readJSON('payload.json'));
+                $render(ScriptWidget.createElement('text', {}, helper($storage.getString('mode'))));
+              }
+              """, actions: [], families: ["systemMedium"],
+            resources: ["payload.json": Data(#"{"count":9}"#.utf8)],
+            imports: ["helper.js": "function helper(value) { return 'Imported ' + value; }"])
+        let result = try HanlinScriptWidgetRuntime.shared.run(program: program, values: [:], environment: [:])
+        #expect(result.node.tag == "text")
+        #expect(result.node.children == [.value(.string("Imported verified"))])
+        #expect(result.values["mode"] == .string("verified"))
+        #expect(result.values["payload"]?.toAny() as? [String: Int] == ["count": 9])
+    }
     @Test(arguments: ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo", "Hanlin-ScriptWidget-Dashboard.scripting", "Hanlin-ScriptWidget-Actions.scripting", "Hanlin-Widget-Legacy-Regression.scripting", "Hanlin-Mixed-Native-Widget.hanlinExpo", "Hanlin-Widget-Invalid-Cases.hanlinExpo"])
     func realArchiveImport(name: String) throws {
         let root = try temporary()
