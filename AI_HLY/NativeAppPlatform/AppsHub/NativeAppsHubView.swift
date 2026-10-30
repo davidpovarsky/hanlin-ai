@@ -211,6 +211,7 @@ struct NativeAppsHubView: View {
             Button { scriptingPackageID = pkg.record.installedPackageID } label: {
                 Label("Package Information", systemImage: "info.circle")
             }
+            .accessibilityIdentifier("hanlin-package-information-menu-item")
         }
         Button { informationItem = item } label: { Label("App Information", systemImage: "info.circle") }
         Divider()

@@ -297,6 +297,7 @@ struct ScriptingInstalledPackageDetailView: View {
                         dismiss()
                     }
                 }
+                .accessibilityIdentifier("hanlin-package-uninstall")
             }
         }
     }

@@ -153,11 +153,29 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         let openProbePredicate = NSPredicate(format: "identifier == 'Open Searchable Probe' OR label CONTAINS 'Open Searchable Probe'")
         var openProbe = app.buttons.matching(openProbePredicate).firstMatch
+        if !openProbe.waitForExistence(timeout: 5) || !openProbe.isHittable {
+            // In iPad Portrait mode, NavigationSplitView collapses the sidebar. Tap sidebar toggle to reveal.
+            let sidebarToggle = app.navigationBars.buttons.matching(
+                NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+            ).firstMatch
+            if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
+                sidebarToggle.tap()
+            }
+            openProbe = app.buttons.matching(openProbePredicate).firstMatch
+        }
         if !openProbe.exists {
             openProbe = app.descendants(matching: .any).matching(openProbePredicate).firstMatch
         }
+        if !openProbe.waitForExistence(timeout: 5) {
+            app.swipeDown()
+            openProbe = app.descendants(matching: .any).matching(openProbePredicate).firstMatch
+        }
         XCTAssertTrue(openProbe.waitForExistence(timeout: 20), "Searchable regression probe trigger is missing")
-        openProbe.tap()
+        if openProbe.isHittable {
+            openProbe.tap()
+        } else {
+            openProbe.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
 
         let marker = app.staticTexts["SEARCHABLE_CONTENT_VISIBLE"].firstMatch
         XCTAssertTrue(marker.waitForExistence(timeout: 20),
@@ -245,7 +263,16 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         // Open package details and uninstall
         openPackageDetails(named: probeAPackageName)
-        let uninstallButton = app.buttons["Uninstall"].firstMatch
+        let uninstallPredicate = NSPredicate(format: "identifier == 'hanlin-package-uninstall' OR label == 'Uninstall'")
+        var uninstallButton = app.buttons.matching(uninstallPredicate).firstMatch
+        if !uninstallButton.waitForExistence(timeout: 5) {
+            app.swipeUp()
+            uninstallButton = app.buttons.matching(uninstallPredicate).firstMatch
+        }
+        if !uninstallButton.waitForExistence(timeout: 5) {
+            app.swipeUp()
+            uninstallButton = app.buttons.matching(uninstallPredicate).firstMatch
+        }
         XCTAssertTrue(uninstallButton.waitForExistence(timeout: 10), "Uninstall button missing in package details")
         uninstallButton.tap()
 
@@ -373,6 +400,8 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         if direct.exists { return direct }
         let navDirect = app.navigationBars.buttons["hanlin-apps-add"].firstMatch
         if navDirect.exists { return navDirect }
+        let byId = app.descendants(matching: .any).matching(identifier: "hanlin-apps-add").firstMatch
+        if byId.exists { return byId }
         let byLabel = app.buttons["Add App"].firstMatch
         if byLabel.exists { return byLabel }
         let navByLabel = app.navigationBars.buttons["Add App"].firstMatch
@@ -659,7 +688,12 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
             closeButton.tap()
         }
         _ = waitUntil(timeout: 5) { !closeButton.exists }
-        ensureAppsAddButton(timeout: 15)
+        if !appsAddButton.waitForExistence(timeout: 5) {
+            app.swipeDown()
+        }
+        if !appsAddButton.waitForExistence(timeout: 3) {
+            openApps()
+        }
     }
 
     private func openPackageDetails(named packageName: String) {
@@ -680,13 +714,14 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         }
 
         let infoPredicate = NSPredicate(format: "identifier == 'hanlin-package-information-menu-item' OR label CONTAINS 'Package Information' OR identifier CONTAINS 'Package Information' OR label CONTAINS 'Package Details'")
-        let infoButton = app.descendants(matching: .any).matching(infoPredicate).firstMatch
+        var infoButton = app.descendants(matching: .any).matching(infoPredicate).firstMatch
         if !infoButton.waitForExistence(timeout: 3) {
             if card.isHittable {
                 card.press(forDuration: 2.0)
             } else {
                 card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 2.0)
             }
+            infoButton = app.descendants(matching: .any).matching(infoPredicate).firstMatch
         }
         XCTAssertTrue(infoButton.waitForExistence(timeout: 8), "Package Information context menu item missing for \(packageName)")
         infoButton.tap()
