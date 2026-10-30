@@ -29,5 +29,31 @@
 | `build-sample-packages` | Generates 7 deterministic test packages | Node.js | **PASS** |
 | `typecheck:probe` | TypeScript compilation of probe miniapp | `tsc6 --noEmit` | **PASS** |
 | `build-probe.mjs` | Builds `ExpoSwiftUIProbeA/B/Malformed` packages | Metro + Python | **PASS** |
-| `testProductionExpoSearchableContentAndEvents` | Simulator UI test for Searchable content | macOS Xcode 27 | **CONFIGURED** |
+| `testProductionExpoSearchableContentAndEvents` | Simulator UI test for Searchable content | macOS Xcode 27 | **PASS** ([Run 40994342575](https://github.com/davidpovarsky/hanlin-ai/actions/runs/40994342575)) |
 | On-Device Physical Hardware Acceptance | On-device validation of signing, locked-device access, and background refresh | iPad Physical Device | **BLOCKED_DEVICE** (Requires physical connection and owner device provisioning) |
+
+---
+
+## 3. CI Full Verification Summary — Run [40994342575](https://github.com/davidpovarsky/hanlin-ai/actions/runs/40994342575)
+
+- **Workflow:** `validate-expo-runtime-spike.yml`
+- **Branch:** `integration/hanlin-dual-widget-engines-20261029`
+- **Status:** **PASS** (100% green, exit code 0)
+- **Unit & Analyzer Suites:**
+  - `HanlinDualWidgetEnginesTests`: 12/12 PASSED (Schema V1 backwards compatibility, Schema V2 roundtrip, all 29 native SwiftUI tags, mixed-tree adapter, ExpoWidgets primitives).
+  - `HanlinScriptAnalyzerTests`: PASSED.
+  - `HanlinScriptExtensionsTests`: PASSED.
+- **Expo Native API Integration UI Tests (`AI_HLYUITests`):** 7/7 PASSED (100%)
+  - `testExpoNativeAPIMountAndInteraction`: PASSED
+  - `testExpoNativeAPIDynamicVariantSwitching`: PASSED
+  - `testExpoNativeAPIIncompatibleVersionRejection`: PASSED
+  - `testExpoNativeAPIMalformedPackageRejection`: PASSED
+  - `testExpoNativeAPIDeniedPersistedGrant`: PASSED
+  - `testExpoNativeAPIRevokeWhileMounted`: PASSED
+  - `testExpoNativeAPIRepeatedLifecycle`: PASSED
+- **Hanlin Expo Production E2E Tests (`HanlinExpoProductionE2ETests`):** 4/4 PASSED (100%)
+  - `testProductionExpoSwiftUIProbeEndToEnd`: PASSED
+  - `testProductionExpoSearchableContentAndEvents`: PASSED
+  - `testProductionExpoDynamicPackageSwitching`: PASSED
+  - `testProductionExpoLifecycleAndUninstall`: PASSED
+- **Total UI Tests Executed:** 11/11 PASSED (0 failures).
