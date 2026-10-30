@@ -1,0 +1,636 @@
+{
+  "generatedAt": "2026-10-30",
+  "nativeLinkStatus": "NOT_RUN",
+  "files": [
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Animation/ScriptWidgetAttributeAnimationModifier.swift",
+      "upstreamBlob": "7d3c17a9040473dbe606e66761f38068ff5240cd",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ScriptWidgetAttributeAnimationModifier.swift",
+      "localSHA256": "95ebf74529b7ea72a71542fe6bf45a49fb1d4ef9b5b6271583504ebcae95d77f",
+      "byteIdentical": true,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Animation/SwingAnimationModifier.swift",
+      "upstreamBlob": "51482885873ca7731631b85702c2c99d1c41d48e",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/SwingAnimationModifier.swift",
+      "localSHA256": "ff3208bb34852beb392b3eee6798b06bbe7e9eeac5e11e978f7d58adac365e1b",
+      "byteIdentical": true,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Debug/ScriptWidgetAttributeDebugModeModifier.swift",
+      "upstreamBlob": "be0993d8ffe6b19150c08f847dffaedefd51717c",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Debug/ScriptWidgetAttributeDebugModeModifier.swift",
+      "localSHA256": "79de4d21274385da3ff06a1083e69990f8da50d3008d9bd4441156e7bd70c4c4",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Effect/ScriptWidgetAttributeRotation3DEffectModifier.swift",
+      "upstreamBlob": "5a1e77cfb02306bdd701ac9d2532acb487a90179",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Effect/ScriptWidgetAttributeRotation3DEffectModifier.swift",
+      "localSHA256": "5fe5feb87c529694157a277c9305ca29280b2ec080bee93bf764c761c7c7e927",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Effect/ScriptWidgetAttributeRotationEffectModifier.swift",
+      "upstreamBlob": "3575035351618702149a781f33ca9107c1ab7569",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Effect/ScriptWidgetAttributeRotationEffectModifier.swift",
+      "localSHA256": "e873ed4aa8865f3f512dd0f50db2aac70a06b9efc5d0affcf5d829c8fb9fce49",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Effect/ScriptWidgetAttributeShadowModifier.swift",
+      "upstreamBlob": "36668f76cac028aee9060950359dcc48c197603c",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Effect/ScriptWidgetAttributeShadowModifier.swift",
+      "localSHA256": "5b7dfa96d2251454f6cd8f05bc6af9a18dfa69b0ceebfd048aa5e93ab3683eb7",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/General/ScriptWidgetAttributeBackgroundModifier.swift",
+      "upstreamBlob": "50c9dced01e230412c5b374c836d5032172f56f8",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeBackgroundModifier.swift",
+      "localSHA256": "f960547f57144faa6b7c607e80bc231a769076256e3376ec7beaa05f0435cd7e",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/General/ScriptWidgetAttributeClippedModifier.swift",
+      "upstreamBlob": "4dfb5cb009664f43eefddc4440dc90243fa004bf",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeClippedModifier.swift",
+      "localSHA256": "6cbf7d96d5be2efbd09ca7bf1abc1eecfb5fa98df060b1961d24bc06dc6e9492",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/General/ScriptWidgetAttributeCornerRadiusModifier.swift",
+      "upstreamBlob": "6e735e2151a4b8a10782e48c96425d788f4bac66",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeCornerRadiusModifier.swift",
+      "localSHA256": "45a279c32e99a601cb68654ec9226b328987fd7fc7b140c99c9d3a135d75c39f",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/General/ScriptWidgetAttributeFrameModifier.swift",
+      "upstreamBlob": "dec4b7feaeda23ec4fc1c3cd40ee901981087c39",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeFrameModifier.swift",
+      "localSHA256": "211eebf26d77d233381723678d6c7e472cdd28756141ffd98a14bb029d86adea",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/General/ScriptWidgetAttributeOpacityModifier.swift",
+      "upstreamBlob": "bcb26c7615f56893a10451a5143f536ce46869ad",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeOpacityModifier.swift",
+      "localSHA256": "43affb943131baea0a4b5dd0c7ba817f29863cdbd93d3ef4111fdb013e3248fd",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/General/ScriptWidgetAttributePaddingModifier.swift",
+      "upstreamBlob": "f5ccedbcd7896437766dbb058ef378442553fd61",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributePaddingModifier.swift",
+      "localSHA256": "416a203d7e946bbb8a907b9a01be1835c7646a49776dd277e4e225d4a313f188",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Image/ScriptWidgetAttributeImageModifier.swift",
+      "upstreamBlob": "2262694622f647fe9c60e80ecd2a612644cfb222",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Image/ScriptWidgetAttributeImageModifier.swift",
+      "localSHA256": "ba7a7a41c2c0ff1dbab66ac124b8ec65c5d29e6b23a88beb9eeb9405052a593f",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/ScriptWidgetAttributeGeneral.swift",
+      "upstreamBlob": "dcb9a4c88e916b0dc6a05ccfa71a94e6d8a72d98",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/ScriptWidgetAttributeGeneral.swift",
+      "localSHA256": "837579d921ec14adfeeac7b4c3b1f341448f2c587a9b0c7c8e5ab74abf3eb5ef",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/ScriptWidgetAttributeText.swift",
+      "upstreamBlob": "a4f5eb1692e41b6e8d741ed05d5b1555c1c97d0c",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/ScriptWidgetAttributeText.swift",
+      "localSHA256": "441e3b05222c1588ff762ec3074ab7fe485ff55f39082e2fad33a42c117762b4",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Text/ScriptWidgetAttributeFontModifier.swift",
+      "upstreamBlob": "9b6c70b8589452ead4eb78c21c4dcd3d1b70b1f9",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Text/ScriptWidgetAttributeFontModifier.swift",
+      "localSHA256": "dbf56b866365155530809fb49efcffbcfed7240ae3183fe18e9c9dbcf411d4ca",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Text/ScriptWidgetAttributeForegroundModifier.swift",
+      "upstreamBlob": "8d49cde771e03bafa509425ace82d2011dd028a3",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Text/ScriptWidgetAttributeForegroundModifier.swift",
+      "localSHA256": "59020ef3cb119759d208e79270bd2c047e5cb69358c14edeb6ca8290ea0ea901",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Text/ScriptWidgetAttributeTextAlignmentModifier.swift",
+      "upstreamBlob": "2782262a6f0247612d27cbd6b4f865fd2dadcaca",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Text/ScriptWidgetAttributeTextAlignmentModifier.swift",
+      "localSHA256": "7b7b20487bfc956c42ce0b33298a8f0a7c12de08c1a597bb2c763b97dbf5fb17",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagButton.swift",
+      "upstreamBlob": "25322f0747ef96cd4179775d2552aa30e43f1dc0",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagButton.swift",
+      "localSHA256": "73faa10f02fe94c9ef526810e6630805caff13d7dca9374b8d0c1b30c8ec4d19",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagChart.swift",
+      "upstreamBlob": "b3fb8f3ddeb0ae41a69de348d6d65e8c79842f68",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagChart.swift",
+      "localSHA256": "9b77de749cc363bcb7147375730313b9278ea4f10a375b7fd8e541bcfccf961f",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagDate.swift",
+      "upstreamBlob": "e5360fd1cb801cdd5a5c8f1e30d3a96e3c5d6db6",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagDate.swift",
+      "localSHA256": "687cf2466aba2c7297c7793410b8d3a13582513dfe7eb1dbde612ed90e64410f",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagExtras.swift",
+      "upstreamBlob": "8a6ef107b12fb523c95af66fd0ac7b891f565072",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagExtras.swift",
+      "localSHA256": "4d1267a89e671b81a3c34e0f44680465956af24c0a60b650297870f64c51fd85",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagGauge.swift",
+      "upstreamBlob": "19533fb8da6946e83a0ceab8c9d1959c9c52c07d",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagGauge.swift",
+      "localSHA256": "170f9f6892b127ab1bbecce89563306976bd7a39255eeffa6cb73613dc03a03a",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagGif.swift",
+      "upstreamBlob": "ff90f29134e5e26fe056f1b828e3329cc8ddcd4b",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagGif.swift",
+      "localSHA256": "8aeead9cd540e565ab6b1cd2f168ad0001701cc30e583786d7a7bffcf61ce06d",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagGrid.swift",
+      "upstreamBlob": "86911523c32d55faeed33cd4e9a64f761eecf9ea",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagGrid.swift",
+      "localSHA256": "14a57077b13cfb47bd485a752ae27870aca8b213daba44da85f5578e63addbf5",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagImage.swift",
+      "upstreamBlob": "79210576738aa3416ef8ea8a282062747f407304",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagImage.swift",
+      "localSHA256": "d075f2e5e2776f859695160b1482fa99600589234aaf340ef03ae38b8fb5f0e3",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagLink.swift",
+      "upstreamBlob": "dea66a81e66d9e7c404d2ca2c590cd81bb86d3c4",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagLink.swift",
+      "localSHA256": "dde8fc6fd636121f659bba9aa00eb79f9b34d2e972ad7ccf79f2e5f46e966512",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagShape.swift",
+      "upstreamBlob": "a50aa20daf6f16aad5b91f07e46bf6fe22f16960",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagShape.swift",
+      "localSHA256": "14e89b7018a34fe776edf638695db22806ff5e051cb1794d5710430bc57f45dd",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagSpacer.swift",
+      "upstreamBlob": "f9b71064e28a5ce8c2174ab9ee04bc7a21dac80f",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagSpacer.swift",
+      "localSHA256": "a04e4665e5ee585b7936027be34d4a724c1aaabf5fcc8cb1934941b1b497143b",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagStack.swift",
+      "upstreamBlob": "4b3fade00981d15e79981636c3ec9eb9a275692d",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift",
+      "localSHA256": "e7dfd59707360b803e62143a8623c58228c3371f923cc01dccca2a12184d091e",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagText.swift",
+      "upstreamBlob": "bc88fec4fed2d1a82b01c777251dcb0ad5563f23",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagText.swift",
+      "localSHA256": "0aeb8bcb8953c39cc4a1f440e66ff07281c34203fd79d982feba09d062fe9549",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagToggle.swift",
+      "upstreamBlob": "0c33188263deb182ba10c58a2187ca8eff8a318d",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagToggle.swift",
+      "localSHA256": "75682d8d9cd51623ad78c2647d8dd2838a7ffe82570926a25f5c5767df6294aa",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagZStack.swift",
+      "upstreamBlob": "2f930cce1f7847ef72ad89153052ff39f78d4815",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagZStack.swift",
+      "localSHA256": "70424ae1eb2dd629ce1b59c30f96ce2fdfe517c82ea6f8d14cdf5e9788f3cd7b",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/ScriptWidgetElementView.swift",
+      "upstreamBlob": "7cbdd84cd1a5a67a89e52c759f493e2816e092e6",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/ScriptWidgetElementView.swift",
+      "localSHA256": "5a415b485046fcfdf522604464b6cfb5a9bc85d6c89e5f0b69e2a465fa9e357e",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/ScriptWidgetRuntimeElement.swift",
+      "upstreamBlob": "85d2ef8f65503aa3fc3d3c43c224509c8fcf3a41",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/ScriptWidgetRuntimeElement.swift",
+      "localSHA256": "be05cea780d55eac944292b825f7a4ce2515e75ef5106c318f8df34bb26e85fc",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Util/MineGaugeView.swift",
+      "upstreamBlob": "6ed524427848e881439ebee37b504b35311fcc3c",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Util/MineGaugeView.swift",
+      "localSHA256": "c3d1087e177b6996d5abcd73ed46fd09d386ef88d431c5ceff509499dca3e41e",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Util/MineRingView.swift",
+      "upstreamBlob": "65547b2b907496559ce7d79fb93d9b9f48f8836e",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Util/MineRingView.swift",
+      "localSHA256": "77738eb7a15cb1ed538510431bc06ea771d518c79a1740c018e509f6ee013f54",
+      "byteIdentical": true,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Util/ScriptWidgetElementColor.swift",
+      "upstreamBlob": "28a7e5ac63ae21fde240c6d5ccbfc818799ca007",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Util/ScriptWidgetElementColor.swift",
+      "localSHA256": "8f3ecdb68edfbbc98d1501c467150f524f60e2cd9604a4415e6516a050912c07",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Util/ScriptWidgetElementGradient.swift",
+      "upstreamBlob": "9878c675c2a1a722d2b8aed4b28a5114b703b08d",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Util/ScriptWidgetElementGradient.swift",
+      "localSHA256": "3e08a463970ed8e8ed63df5f8fb39fee0261f397c0648f1c7849486fca4bc14b",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Util/ScriptWidgetElementPoint.swift",
+      "upstreamBlob": "7a526fc0c39b950ce92e7893fc19cb8ef74e8c02",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Util/ScriptWidgetElementPoint.swift",
+      "localSHA256": "c312b0e86709aed3250b96b1915c37d1bd2754f5cad3040e538cb53cad8779ca",
+      "byteIdentical": false,
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/ios/Widgets/ViewRenderer.swift",
+      "upstreamBlob": "68e376fdd5a4a1b088f6e2e28b0babb285feec12",
+      "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
+      "localSHA256": "1596a024b3ffb75365c29ca6791981ad4fad08f2cccdb7948ac12ab906fa4521",
+      "byteIdentical": false,
+      "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/ios/Widgets/ChildView.swift",
+      "upstreamBlob": "0d107a67f85635fafc02013b0a97205b7146c731",
+      "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ChildView.swift",
+      "localSHA256": "92a4d139cedbce3bec62f31c4491d6eb45042caab8594d2c45038412e7583c51",
+      "byteIdentical": true,
+      "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/ios/Widgets/Fragment.swift",
+      "upstreamBlob": "0f17a9d07cc37831acd9978215077e5d87c6feeb",
+      "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/Fragment.swift",
+      "localSHA256": "1f68553d6fe9314204451b2cf51cc990de387c6f5e120c53f8b04034fb6a6b6f",
+      "byteIdentical": true,
+      "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Resource/support.bundle/core.js",
+      "upstreamBlob": "dc20f84735ca553e83d606ab06807593151a907a",
+      "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/core.js",
+      "localSHA256": "01546b893cd7951ab5e3dce30009b0e684022f334e9a49d4b498b85b4c4bf163",
+      "byteIdentical": true,
+      "adaptation": "Bundled support resource; util.js trailing spaces normalized."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Resource/support.bundle/moment.min.js",
+      "upstreamBlob": "57cd2d4f3d3d8b64a34577593a9be3be50503e1b",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/support.bundle/moment.min.js",
+      "localSHA256": "73de4254959530e4d1d9bec586379184f96b4953dacf9cd5e5e2bdd7bfeceef7",
+      "byteIdentical": true,
+      "adaptation": "Bundled support resource; util.js trailing spaces normalized."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Resource/support.bundle/util.js",
+      "upstreamBlob": "5511336f0875feaa2643372aab3ecc7d788438f3",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/support.bundle/util.js",
+      "localSHA256": "08f291ad3d1ddcc0a9c7637bef13506a978b7d2f47da1a69e8adaaf1618ba642",
+      "byteIdentical": false,
+      "adaptation": "Bundled support resource; util.js trailing spaces normalized."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/async-require-stub.ts",
+      "upstreamBlob": "6fb0795b13bac7172a9298beb2768a58f21298a9",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/async-require-stub.ts",
+      "localSHA256": "5bb3c7f4e1bdc4d967bed7b42f098c2d3ad57ae7eb70d544ab04d330179b72ae",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/decorator.ts",
+      "upstreamBlob": "d06d8296aa25611e397d43ad43d427e4a8542056",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/decorator.ts",
+      "localSHA256": "991130ce645d0715b1b0ac638f7da8ef1af5ee1a3c94493df0a96434e62a29da",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/expo-modules-core-stub.ts",
+      "upstreamBlob": "2751fe1727023904cfa3e21fdec44b180bdc2083",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/expo-modules-core-stub.ts",
+      "localSHA256": "3712df959df0f33381c99feacbed6e0f3e0b65140ecffff5f41c32ed6dfe3353",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/expo-stub.ts",
+      "upstreamBlob": "ebd57e5dda24cc939a3423cae0ac2148828c8687",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/expo-stub.ts",
+      "localSHA256": "223e513b9b1d3ad6ea96e0124a61ebf70609e2735018488892b8fe64ee7cc7d9",
+      "byteIdentical": false,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/index.ts",
+      "upstreamBlob": "4ef905a5620c1f9f92b15fef2f82d9b9fe27e816",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/index.ts",
+      "localSHA256": "37a2191a82c65a677a2815d5538127dbe9333e7a1a26dd62a129967905f9fd75",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/jsx-runtime-stub.ts",
+      "upstreamBlob": "724e7387a9658d7338485b4f2204b1c4c8b58f6b",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/jsx-runtime-stub.ts",
+      "localSHA256": "205dd31fd749c1227557cf9ff74623e4f272a0fc2a4d431fc5aa9a0731d25719",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/layout-registry-entry.js",
+      "upstreamBlob": "a112a0f90925a94089c270f8f8821d094b01d240",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/layout-registry-entry.js",
+      "localSHA256": "9c8e903b1ae5040a6d4d7e9a3e4ddc04d243c10a9fde8f066420508e23bacc21",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/layout-registry-stub.ts",
+      "upstreamBlob": "b320764e85d0a089c058df8f8078c5e4187a21ee",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/layout-registry-stub.ts",
+      "localSHA256": "36ce61332695bbdc3b44e8335df10022c2a443543fb97c2a405ba55dcfd7fd31",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/modules/expo-ui.ts",
+      "upstreamBlob": "e34fcdebc4cbc0f49316c3103ae36fca70674899",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/modules/expo-ui.ts",
+      "localSHA256": "08e3941a93d4885ed6c606d0fc8b11dae1b85046639701c661ddc0a544622788",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/react-native-stub.ts",
+      "upstreamBlob": "2e46e0f9dd4d24807c397bd64d55c7fa4475f966",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/react-native-stub.ts",
+      "localSHA256": "e977e6647f6790ff6a8f81ab113d4a7b10ea02654dc6f32c3a2b6b24e2765add",
+      "byteIdentical": false,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/react-stub.ts",
+      "upstreamBlob": "dc78634f06d13b7272197056d0f829ab9e0f793f",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/react-stub.ts",
+      "localSHA256": "2f8fb792f53b57d64e3b55d0a8bb5df8a047f9cb9bef18c718a8dc83d661653e",
+      "byteIdentical": false,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/ui-globals.android.ts",
+      "upstreamBlob": "ee9d1e1cf71a2bebabbcfac2a1aa28add9c84158",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/ui-globals.android.ts",
+      "localSHA256": "70cab0c6961b51a4d6126b642310d2ca76803941aaeaf95e988de0d348b7fffd",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/bundle/ui-globals.ts",
+      "upstreamBlob": "bce40a13e242467f6585045dfcac20616ba4160f",
+      "local": "Scripts/Widgets/vendor/expo-widgets/bundle/ui-globals.ts",
+      "localSHA256": "20acca5a89abaa3e802a72f72cf28b7fdb0ee400b0517d6b23b38e5dcd5fa1f5",
+      "byteIdentical": true,
+      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "localSHA256": "a3db94725601eef92d7ccf21c4e08a7dc00ca318c1d14535813939e482ee20b9",
+      "byteIdentical": false,
+      "adaptation": "Adapted original widget execution lifecycle and component resolution; fresh VM, frozen transfer and transactional storage. Full app/editor/system-service API surface excluded."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
+      "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+      "localSHA256": "5a128cc7954d571c24df75122d586b8e877400276a5c3fbdef77ef0eae0bb2bb",
+      "byteIdentical": false,
+      "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/ios/Widgets/Buttons.swift",
+      "upstreamBlob": "55fb9b3d5fa04d38ab8c2a8b3de7f7656afc401e",
+      "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
+      "localSHA256": "d7c33b4c1f1a989ae3f6d2b4234574d72df02155fb6ecb897584d694dc8131b9",
+      "byteIdentical": false,
+      "adaptation": "Original native button props/Children/role/label; typed Hanlin intent injection."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-widgets/ios/WidgetsContext.swift",
+      "upstreamBlob": "773736591450af7567b34b62c97a26f7cd314a0d",
+      "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
+      "localSHA256": "d7c33b4c1f1a989ae3f6d2b4234574d72df02155fb6ecb897584d694dc8131b9",
+      "byteIdentical": false,
+      "adaptation": "Same widget-only AppContext; isolated MainActor ownership."
+    }
+  ]
+}

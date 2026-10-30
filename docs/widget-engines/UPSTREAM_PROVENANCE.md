@@ -1,30 +1,11 @@
-# Upstream Provenance — Dual Native Widget Engines
+# Pass 3 upstream source provenance
 
-## 1. Upstream Commit Pins & Provenance
+Expo is pinned to expo/expo@917a61b581baeb852aa4fe331da2c1395d824351, MIT. ScriptWidget is pinned to everettjf/scriptwidget@68f04194f00222558c44d5a832e7617a96f62574, Apache-2.0 with its retained historical notices. SwiftyJSON is 5.0.1, the exact version/revision found in pinned ScriptWidget's Package.resolved.
 
-### A. ScriptWidget
-- **Source Repository:** `https://github.com/everettjf/scriptwidget`
-- **Pinned Commit:** `68f04194f00222558c44d5a832e7617a96f62574`
-- **Original Author:** everettjf
-- **License:** MIT License
-- **Attribution Notice:**
-  > Portions of the ScriptWidget component rendering engine and JavaScriptCore runtime evaluation are derived from Everett's ScriptWidget project (`everettjf/scriptwidget`), licensed under the MIT License. Copyright (c) 2020 everettjf.
-- **Hanlin Adaptations:**
-  - Removed dependency on hardcoded `group.everettjf.scriptwidget` App Group and standalone `ScriptManager` database.
-  - Replaced with Hanlin's `group.com.itorah.chavrusachat` App Group store.
-  - Adapted `ScriptWidgetElementView` and its 15 element builders to Hanlin's Swift 6 / iOS 27 deployment target.
-  - Embedded `support.bundle` (`core.js`, `moment.min.js`, `util.js`) into Hanlin platform and extension resources.
+UPSTREAM_SOURCE_MANIFEST.json records original paths, Git blob IDs, local paths and SHA256, byte identity and adaptations. Expo license is retained beside its native source. ScriptWidget LICENSE/NOTICE are retained in ScriptWidget/Original. The original compiler guard visitor and runtime lifecycle/component-resolution code are adapted fragments, not an assertion that all editor, iCloud and system-service APIs were imported.
 
-### B. Expo Widgets
-- **Source Repository:** `https://github.com/expo/expo`
-- **Sub-package:** `packages/expo-widgets` (version `58.0.3`)
-- **Git Head:** `917a61b581baeb852aa4fe331da2c1395d824351`
-- **Original Author:** 650 Industries, Inc. (Expo)
-- **License:** MIT License
-- **Attribution Notice:**
-  > Portions of the Expo Widgets layout evaluation and dynamic view renderer are derived from Expo (`expo/expo`), licensed under the MIT License. Copyright (c) 650 Industries, Inc.
-- **Hanlin Adaptations:**
-  - Bundled `ExpoWidgets.bundle` using an esbuild pipeline resolving React, React Native, and Expo stubs cleanly.
-  - Adapted `WidgetsJSRuntime` to look for bundle files in `HanlinScriptingWidgets.appex`, `HanlinScriptExtensions` SPM module, and App Group storage.
-  - Rewrote button action routing to dispatch `HanlinGenericWidgetActionIntent` and reload `"HanlinScriptingWidget"`.
-  - Added mixed-tree adapter case (`ScriptWidgetSubtree`) in `HanlinExpoWidgetsViewRenderer`.
+Expo native rendering preserves actual ExpoUI ViewProps/UIBaseView, native Text representation, slot children and original AnyChild identity. Hanlin changes widget source identity, injection of its typed AppIntent Button, widget-only context and visible diagnostics. The previous handcrafted AnyView switch has been removed. Actual extension-safe linkage has not yet been proven.
+
+ScriptWidget's original native builders replace the handcrafted replicas. Narrow changes cover MainActor isolation, prepared-only context, Hanlin Button/Toggle intents, bounded image transport, native dynamic colors and safe malformed-gradient handling. Full parity requires rendered native semantic tests; source names are not evidence of parity.
+
+The JS bundle uses original Expo stubs/decorators and a classic JSX createElement/key adapter. Both checked-in ExpoWidgets.bundle resources are produced by Scripts/Widgets/build-expo-bundle.mjs with the locked esbuild dependency and a fixed working root. No personal absolute path is an allowed bundle input/output annotation. Hanlin-only layout registry helper files are distinguished from copied upstream blobs in the manifest.

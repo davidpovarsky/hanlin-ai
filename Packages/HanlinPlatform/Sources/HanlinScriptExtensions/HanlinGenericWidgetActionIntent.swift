@@ -1,92 +1,44 @@
 import AppIntents
 import Foundation
-import HanlinPlatformContracts
 import WidgetKit
 
-@available(iOS 17.0, *)
 public struct HanlinGenericWidgetActionIntent: AppIntent {
     public static let title: LocalizedStringResource = "Hanlin Widget Action"
-    public static let isDiscoverable: Bool = false
-
-    @Parameter(title: "packageID")
-    public var packageID: String
-
-    @Parameter(title: "entrypointID")
-    public var entrypointID: String
-
-    @Parameter(title: "target")
-    public var target: String
-
-    @Parameter(title: "environment")
-    public var environment: String
-
-    public init() {
-        self.packageID = ""
-        self.entrypointID = ""
-        self.target = ""
-        self.environment = "{}"
+    public static let isDiscoverable = false
+    public static let openAppWhenRun = false
+    @Parameter(title: "Widget action") public var commandJSON: String
+    public init() { commandJSON = "" }
+    public init(command: HanlinWidgetActionCommand) throws {
+        commandJSON = String(decoding: try JSONEncoder().encode(command), as: UTF8.self)
     }
-
-    public init(packageID: String, entrypointID: String, target: String, environment: String = "{}") {
-        self.packageID = packageID
-        self.entrypointID = entrypointID
-        self.target = target
-        self.environment = environment
-    }
-
     public func perform() async throws -> some IntentResult {
-        if let store = try? HanlinScriptExtensionStore() {
-            let pkg = packageID.isEmpty ? "hanlin-widget" : packageID
-            let entry = entrypointID.isEmpty ? "default" : entrypointID
-            let invocation = HanlinScriptIntentInvocation(
-                identity: HanlinScriptExtensionIdentity(
-                    installedPackageID: HanlinInstalledPackageID(unchecked: pkg),
-                    packageID: HanlinPackageID(unchecked: pkg),
-                    generation: 1,
-                    entrypointID: entry
-                ),
-                entityID: target,
-                parameters: .string(environment),
-                continueInForeground: false
-            )
-            try? store.enqueue(HanlinScriptResumeCommand(invocation: invocation))
-        }
-
-        WidgetCenter.shared.reloadTimelines(ofKind: "HanlinScriptingWidget")
+        guard commandJSON.utf8.count <= 256 * 1_024 else { throw HanlinWidgetActionError.invalidIdentity }
+        let command = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(commandJSON.utf8))
+        _ = try HanlinWidgetActionExecutor.perform(command, store: HanlinScriptExtensionStore())
+        WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
         return .result()
     }
 }
 
-@available(iOS 17.0, *)
-public struct WidgetUserInteraction: AppIntent {
-    public static let title: LocalizedStringResource = "User Interaction"
-    public static let isDiscoverable: Bool = false
-
-    @Parameter(title: "source")
-    public var source: String?
-
-    @Parameter(title: "target")
-    public var target: String?
-
-    @Parameter(title: "entryIndex")
-    public var entryIndex: Int?
-
-    @Parameter(title: "environmentString")
-    public var environmentString: String?
-
-    public init() {}
-    public init(source: String?, target: String?, entryIndex: Int?, environmentString: String?) {
-        self.source = source
-        self.target = target
-        self.entryIndex = entryIndex
-        self.environmentString = environmentString
+/// SDK SetValueIntent supplies the intended Boolean; repeated on/off requests
+/// set that value rather than interpreting a string or blindly flipping it.
+public struct HanlinSetWidgetValueIntent: SetValueIntent {
+    public static let title: LocalizedStringResource = "Set Hanlin Widget Value"
+    public static let isDiscoverable = false
+    public static let openAppWhenRun = false
+    @Parameter(title: "Widget action") public var commandJSON: String
+    @Parameter(title: "Value") public var value: Bool
+    public init() { commandJSON = ""; value = false }
+    public init(command: HanlinWidgetActionCommand, value: Bool) throws {
+        commandJSON = String(decoding: try JSONEncoder().encode(command), as: UTF8.self)
+        self.value = value
     }
-
     public func perform() async throws -> some IntentResult {
-        if let source {
-            WidgetCenter.shared.reloadTimelines(ofKind: source)
-        }
-        WidgetCenter.shared.reloadTimelines(ofKind: "HanlinScriptingWidget")
+        guard commandJSON.utf8.count <= 256 * 1_024 else { throw HanlinWidgetActionError.invalidIdentity }
+        var command = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(commandJSON.utf8))
+        command.desiredValue = value
+        _ = try HanlinWidgetActionExecutor.perform(command, store: HanlinScriptExtensionStore())
+        WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
         return .result()
     }
 }

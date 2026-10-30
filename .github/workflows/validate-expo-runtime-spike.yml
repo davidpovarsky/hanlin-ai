@@ -2,13 +2,69 @@ name: Validate Expo Runtime Spike
 
 on:
   workflow_dispatch:
+    inputs:
+      validation_scope:
+        description: Focused widget package verification or the existing app/simulator validation
+        type: choice
+        default: full
+        options: [full, widget-package]
 
 permissions:
   actions: read
   contents: read
 
 jobs:
+  validate-widget-package:
+    if: inputs.validation_scope == 'widget-package'
+    name: Compile widget source and execute package regression tests
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.5.0
+      - name: Select stable SDK without changing the runner default
+        id: widget-toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+          echo "build=$(DEVELOPER_DIR="$selected_xcode/Contents/Developer" xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@v4
+        id: widget-spm-cache
+        with:
+          path: Packages/HanlinPlatform/.build
+          key: widget-spm-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.widget-toolchain.outputs.build }}-${{ hashFiles('Packages/HanlinPlatform/Package.resolved') }}
+          restore-keys: widget-spm-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.widget-toolchain.outputs.build }}-
+      - name: Compiler and fixture semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build-logs/widgets
+          xcodebuild -version | tee build-logs/widgets/toolchain.log
+          swift --version | tee -a build-logs/widgets/toolchain.log
+          node --test Scripts/Widgets/Tests/compiler-and-actions.test.mjs 2>&1 | tee build-logs/widgets/javascript-tests.log
+      - name: Focused widget and affected importer regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test --package-path Packages/HanlinPlatform --filter 'HanlinDualWidgetEnginesTests|HanlinScriptExtensionStoreTests|HanlinScriptAnalyzerTests' 2>&1 | tee build-logs/widgets/package-tests.log
+      - uses: actions/cache/save@v4
+        if: success() && steps.widget-spm-cache.outputs.cache-hit != 'true'
+        with:
+          path: Packages/HanlinPlatform/.build
+          key: ${{ steps.widget-spm-cache.outputs.cache-primary-key }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: widget-package-evidence-${{ github.run_id }}
+          path: build-logs/widgets
+          retention-days: 14
   validate-expo-runtime:
+    if: inputs.validation_scope != 'widget-package'
     name: Compile and test Hanlin Expo runtime on macOS
     runs-on: xcode-27
     timeout-minutes: 90

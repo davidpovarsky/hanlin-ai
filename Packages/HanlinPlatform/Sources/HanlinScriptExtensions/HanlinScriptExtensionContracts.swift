@@ -13,52 +13,91 @@ public struct HanlinScriptExtensionIdentity: Codable, Hashable, Sendable {
     public let packageID: HanlinPackageID
     public let generation: UInt64
     public let entrypointID: String
+    public let variantID: String
 
     public init(
         installedPackageID: HanlinInstalledPackageID,
         packageID: HanlinPackageID,
         generation: UInt64,
-        entrypointID: String
+        entrypointID: String,
+        variantID: String = "default"
     ) {
         self.installedPackageID = installedPackageID
         self.packageID = packageID
         self.generation = generation
         self.entrypointID = entrypointID
+        self.variantID = variantID
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case installedPackageID, packageID, generation, entrypointID, variantID
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        installedPackageID = try container.decode(HanlinInstalledPackageID.self, forKey: .installedPackageID)
+        packageID = try container.decode(HanlinPackageID.self, forKey: .packageID)
+        generation = try container.decode(UInt64.self, forKey: .generation)
+        entrypointID = try container.decode(String.self, forKey: .entrypointID)
+        variantID = try container.decodeIfPresent(String.self, forKey: .variantID) ?? "default"
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(installedPackageID, forKey: .installedPackageID)
+        try container.encode(packageID, forKey: .packageID)
+        try container.encode(generation, forKey: .generation)
+        try container.encode(entrypointID, forKey: .entrypointID)
+        try container.encode(variantID, forKey: .variantID)
     }
 }
 
-public enum HanlinWidgetEngine: String, Codable, CaseIterable, Hashable, Sendable {
-    case legacy
-    case expo
-    case scriptwidget
-}
+public typealias HanlinWidgetEngine = HanlinPlatformContracts.HanlinWidgetEngine
 
 public struct ExpoWidgetDescriptor: Codable, Hashable, Sendable {
     public let layout: String
     public let props: [String: HanlinValue]?
     public let sourceName: String?
+    public let layoutRef: String?
+    public let layoutSHA256: String?
+    public let propsRef: String?
 
     public init(
         layout: String,
         props: [String: HanlinValue]? = nil,
-        sourceName: String? = nil
+        sourceName: String? = nil,
+        layoutRef: String? = nil,
+        layoutSHA256: String? = nil,
+        propsRef: String? = nil
     ) {
         self.layout = layout
         self.props = props
         self.sourceName = sourceName
+        self.layoutRef = layoutRef
+        self.layoutSHA256 = layoutSHA256
+        self.propsRef = propsRef
     }
 }
 
 public struct ScriptWidgetDescriptor: Codable, Hashable, Sendable {
     public let script: String
     public let environment: [String: HanlinValue]?
+    public let scriptRef: String?
+    public let scriptSHA256: String?
+    public let resourcesManifestRef: String?
 
     public init(
         script: String,
-        environment: [String: HanlinValue]? = nil
+        environment: [String: HanlinValue]? = nil,
+        scriptRef: String? = nil,
+        scriptSHA256: String? = nil,
+        resourcesManifestRef: String? = nil
     ) {
         self.script = script
         self.environment = environment
+        self.scriptRef = scriptRef
+        self.scriptSHA256 = scriptSHA256
+        self.resourcesManifestRef = resourcesManifestRef
     }
 }
 
@@ -66,9 +105,10 @@ public enum HanlinWidgetPayload: Codable, Hashable, Sendable {
     case legacy(HanlinScriptUINode)
     case expo(ExpoWidgetDescriptor)
     case scriptwidget(ScriptWidgetDescriptor)
+    case malformed(String)
 
     private enum CodingKeys: String, CodingKey {
-        case kind, legacyNode, expoDescriptor, scriptDescriptor
+        case kind, legacyNode, expoDescriptor, scriptDescriptor, malformedReason
     }
 
     public init(from decoder: Decoder) throws {
@@ -84,10 +124,11 @@ public enum HanlinWidgetPayload: Codable, Hashable, Sendable {
         case "scriptwidget":
             let desc = try container.decode(ScriptWidgetDescriptor.self, forKey: .scriptDescriptor)
             self = .scriptwidget(desc)
+        case "malformed":
+            let reason = try container.decodeIfPresent(String.self, forKey: .malformedReason) ?? "Malformed widget payload"
+            self = .malformed(reason)
         default:
-            let node = try container.decodeIfPresent(HanlinScriptUINode.self, forKey: .legacyNode)
-                ?? HanlinScriptUINode(kind: .text, properties: ["text": .string("Unsupported widget payload")])
-            self = .legacy(node)
+            self = .malformed("Unsupported widget payload kind: \(kind)")
         }
     }
 
@@ -103,6 +144,9 @@ public enum HanlinWidgetPayload: Codable, Hashable, Sendable {
         case let .scriptwidget(desc):
             try container.encode("scriptwidget", forKey: .kind)
             try container.encode(desc, forKey: .scriptDescriptor)
+        case let .malformed(reason):
+            try container.encode("malformed", forKey: .kind)
+            try container.encode(reason, forKey: .malformedReason)
         }
     }
 }
@@ -118,6 +162,7 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
     public let payload: HanlinWidgetPayload?
     public let root: HanlinScriptUINode
     public let deepLink: URL?
+    let engineIsExplicit: Bool
 
     public init(
         identity: HanlinScriptExtensionIdentity,
@@ -141,6 +186,7 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
         self.payload = payload ?? (engine == .legacy ? .legacy(root) : nil)
         self.root = root
         self.deepLink = deepLink
+        self.engineIsExplicit = true
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -155,10 +201,17 @@ public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
         actionIdentity = try container.decodeIfPresent(HanlinScriptExtensionIdentity.self, forKey: .actionIdentity)
         validUntil = try container.decode(Date.self, forKey: .validUntil)
         relevance = try container.decodeIfPresent(Double.self, forKey: .relevance) ?? 0
-        let decodedEngine = try container.decodeIfPresent(HanlinWidgetEngine.self, forKey: .engine) ?? .legacy
-        engine = decodedEngine
-        let decodedPayload = try container.decodeIfPresent(HanlinWidgetPayload.self, forKey: .payload)
-        payload = decodedPayload
+        let rawEngine = try? container.decode(String.self, forKey: .engine)
+        engineIsExplicit = container.contains(.engine)
+        engine = rawEngine.flatMap(HanlinWidgetEngine.init(rawValue:)) ?? .legacy
+        if engineIsExplicit && rawEngine == nil {
+            payload = .malformed("Widget engine must be a string")
+        } else if let rawEngine, HanlinWidgetEngine(rawValue: rawEngine) == nil {
+            payload = .malformed("Unsupported widget engine: \(rawEngine)")
+        } else {
+            do { payload = try container.decodeIfPresent(HanlinWidgetPayload.self, forKey: .payload) }
+            catch { payload = .malformed("Invalid \(engine.rawValue) widget payload: \(error)") }
+        }
         if let decodedRoot = try container.decodeIfPresent(HanlinScriptUINode.self, forKey: .root) {
             root = decodedRoot
         } else {
@@ -346,6 +399,10 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
     public let intentEntities: [HanlinScriptIntentEntityRecord]
     public let liveActivities: [HanlinScriptLiveActivityDescriptor]
     public let translationApps: [HanlinScriptTranslationUISnapshot]
+    public let widgetInstances: [HanlinWidgetInstance]
+    public let widgetStates: [HanlinWidgetInstanceState]
+    public let widgetEntityMigrations: [String: String]
+    public let inactiveWidgetInstallations: [String]
 
     public init(
         schemaVersion: UInt32 = 1,
@@ -353,7 +410,11 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         widgets: [HanlinScriptWidgetSnapshot] = [],
         intentEntities: [HanlinScriptIntentEntityRecord] = [],
         liveActivities: [HanlinScriptLiveActivityDescriptor] = [],
-        translationApps: [HanlinScriptTranslationUISnapshot] = []
+        translationApps: [HanlinScriptTranslationUISnapshot] = [],
+        widgetInstances: [HanlinWidgetInstance] = [],
+        widgetStates: [HanlinWidgetInstanceState] = [],
+        widgetEntityMigrations: [String: String] = [:],
+        inactiveWidgetInstallations: [String] = []
     ) {
         self.schemaVersion = schemaVersion
         self.generatedAt = generatedAt
@@ -361,20 +422,38 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         self.intentEntities = intentEntities
         self.liveActivities = liveActivities
         self.translationApps = translationApps
+        self.widgetInstances = widgetInstances
+        self.widgetStates = widgetStates
+        self.widgetEntityMigrations = widgetEntityMigrations
+        self.inactiveWidgetInstallations = inactiveWidgetInstallations
     }
 
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, generatedAt, widgets, intentEntities, liveActivities, translationApps
+        case widgetInstances, widgetStates
+        case widgetEntityMigrations
+        case inactiveWidgetInstallations
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try container.decodeIfPresent(UInt32.self, forKey: .schemaVersion) ?? 1
         generatedAt = try container.decode(Date.self, forKey: .generatedAt)
-        widgets = try container.decodeIfPresent([HanlinScriptWidgetSnapshot].self, forKey: .widgets) ?? []
+        let decodedWidgets = try container.decodeIfPresent([HanlinScriptWidgetSnapshot].self, forKey: .widgets) ?? []
+        let version = schemaVersion
+        widgets = decodedWidgets.map { widget in
+            guard version == 2, !widget.engineIsExplicit else { return widget }
+            return .init(identity: widget.identity, displayName: widget.displayName, family: widget.family,
+                actionIdentity: widget.actionIdentity, validUntil: widget.validUntil, relevance: widget.relevance,
+                engine: .legacy, payload: .malformed("Schema v2 widget is missing its engine declaration"), root: widget.root, deepLink: widget.deepLink)
+        }
         intentEntities = try container.decodeIfPresent([HanlinScriptIntentEntityRecord].self, forKey: .intentEntities) ?? []
         liveActivities = try container.decodeIfPresent([HanlinScriptLiveActivityDescriptor].self, forKey: .liveActivities) ?? []
         translationApps = try container.decodeIfPresent([HanlinScriptTranslationUISnapshot].self, forKey: .translationApps) ?? []
+        widgetInstances = try container.decodeIfPresent([HanlinWidgetInstance].self, forKey: .widgetInstances) ?? []
+        widgetStates = try container.decodeIfPresent([HanlinWidgetInstanceState].self, forKey: .widgetStates) ?? []
+        widgetEntityMigrations = try container.decodeIfPresent([String: String].self, forKey: .widgetEntityMigrations) ?? [:]
+        inactiveWidgetInstallations = try container.decodeIfPresent([String].self, forKey: .inactiveWidgetInstallations) ?? []
     }
 }
 

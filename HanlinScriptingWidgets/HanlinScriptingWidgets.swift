@@ -1,5 +1,6 @@
 import ActivityKit
 import AppIntents
+import HanlinExpoWidgetNative
 import HanlinPlatformContracts
 import HanlinScriptExtensions
 import HanlinScriptUI
@@ -8,138 +9,82 @@ import WidgetKit
 
 @main
 struct HanlinScriptingWidgetBundle: WidgetBundle {
-    var body: some Widget {
-        HanlinScriptingWidget()
-        HanlinScriptingLiveActivityWidget()
-    }
+    var body: some Widget { HanlinScriptingWidget(); HanlinScriptingLiveActivityWidget() }
 }
-
 struct HanlinScriptPackageEntity: AppEntity {
-    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Script")
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Widget instance")
     static let defaultQuery = HanlinScriptPackageEntityQuery()
-
     let id: String
     let displayName: String
     let identity: HanlinScriptExtensionIdentity
-
-    var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: "\(displayName)")
-    }
+    var displayRepresentation: DisplayRepresentation { .init(title: "\(displayName)") }
 }
-
 struct HanlinScriptPackageEntityQuery: EntityQuery {
     func entities(for identifiers: [String]) async throws -> [HanlinScriptPackageEntity] {
-        try availableEntities().filter { identifiers.contains($0.id) }
-    }
-
-    func suggestedEntities() async throws -> [HanlinScriptPackageEntity] {
-        try availableEntities()
-    }
-
-    private func availableEntities() throws -> [HanlinScriptPackageEntity] {
         let snapshot = try HanlinScriptExtensionStore().load()
+        let resolved = Set(identifiers.map { snapshot?.widgetEntityMigrations[$0] ?? $0 })
+        return availableEntities(snapshot).filter { resolved.contains($0.id) }
+    }
+    func suggestedEntities() async throws -> [HanlinScriptPackageEntity] { availableEntities(try HanlinScriptExtensionStore().load()) }
+    private func availableEntities(_ snapshot: HanlinScriptExtensionSnapshot?) -> [HanlinScriptPackageEntity] {
+        guard let snapshot else { return [] }
         var seen: Set<String> = []
-        return snapshot?.widgets.compactMap {
-            let id = Self.id($0.identity)
-            guard seen.insert(id).inserted else { return nil }
-            return HanlinScriptPackageEntity(
-                id: id,
-                displayName: $0.displayName,
-                identity: $0.identity
-            )
-        } ?? []
-    }
-
-    static func id(_ identity: HanlinScriptExtensionIdentity) -> String {
-        "\(identity.packageID.rawValue)|\(identity.entrypointID)"
-    }
-
-    static func matches(identity: HanlinScriptExtensionIdentity, id: String) -> Bool {
-        id == "\(identity.packageID.rawValue)|\(identity.entrypointID)"
-            || id == "\(identity.installedPackageID.rawValue)|\(identity.entrypointID)"
+        return snapshot.widgets.compactMap { widget in
+            guard !snapshot.inactiveWidgetInstallations.contains(widget.identity.installedPackageID.rawValue) else { return nil }
+            let instance = HanlinWidgetInstance(identity: widget.identity, engine: widget.engine, displayName: widget.displayName)
+            guard seen.insert(instance.entityID).inserted else { return nil }
+            return .init(id: instance.entityID, displayName: "\(widget.displayName) · \(widget.engine.rawValue) · \(widget.identity.installedPackageID.rawValue)", identity: widget.identity)
+        }
     }
 }
-
 struct HanlinWidgetConfigurationIntent: WidgetConfigurationIntent {
-    static let title: LocalizedStringResource = "Script"
-    static let description = IntentDescription("Choose an installed Script to display.")
-
-    @Parameter(title: "Script")
-    var package: HanlinScriptPackageEntity?
+    static let title: LocalizedStringResource = "Widget instance"
+    static let description = IntentDescription("Choose an installed instance. Placements using the same instance share state.")
+    @Parameter(title: "Widget instance") var package: HanlinScriptPackageEntity?
 }
-
 struct HanlinWidgetEntry: TimelineEntry {
     let date: Date
-    let snapshot: HanlinScriptWidgetSnapshot?
+    let presentation: HanlinPreparedWidget
 }
-
 struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> HanlinWidgetEntry {
-        .init(date: .now, snapshot: nil)
+    func placeholder(in context: Context) -> HanlinWidgetEntry { .init(date: .now, presentation: .failure("Choose a widget instance")) }
+    func snapshot(for configuration: HanlinWidgetConfigurationIntent, in context: Context) async -> HanlinWidgetEntry { await prepare(configuration, family: context.family) }
+    func timeline(for configuration: HanlinWidgetConfigurationIntent, in context: Context) async -> Timeline<HanlinWidgetEntry> {
+        let entry = await prepare(configuration, family: context.family)
+        return Timeline(entries: [entry], policy: .after(entry.date.addingTimeInterval(900)))
     }
-
-    func snapshot(
-        for configuration: HanlinWidgetConfigurationIntent,
-        in context: Context
-    ) async -> HanlinWidgetEntry {
-        .init(date: .now, snapshot: selectedSnapshot(configuration, family: context.family))
-    }
-
-    func timeline(
-        for configuration: HanlinWidgetConfigurationIntent,
-        in context: Context
-    ) async -> Timeline<HanlinWidgetEntry> {
-        let selected = selectedSnapshot(configuration, family: context.family)
-        let now = Date.now
-        let minRefresh = now.addingTimeInterval(300)
-        let targetRefresh = selected?.validUntil ?? now.addingTimeInterval(900)
-        let refresh = max(targetRefresh, minRefresh)
-        return Timeline(entries: [.init(date: now, snapshot: selected)], policy: .after(refresh))
-    }
-
-    private func selectedSnapshot(
-        _ configuration: HanlinWidgetConfigurationIntent,
-        family: WidgetFamily
-    ) -> HanlinScriptWidgetSnapshot? {
-        guard let snapshots = try? HanlinScriptExtensionStore().load()?.widgets else { return nil }
-        let familyName = switch family {
-        case .systemSmall: "systemSmall"
-        case .systemMedium: "systemMedium"
-        case .systemLarge: "systemLarge"
-        case .systemExtraLarge: "systemExtraLarge"
-        case .accessoryCircular: "accessoryCircular"
-        case .accessoryRectangular: "accessoryRectangular"
-        case .accessoryInline: "accessoryInline"
-        @unknown default: "systemMedium"
+    private func prepare(_ configuration: HanlinWidgetConfigurationIntent, family: WidgetFamily) async -> HanlinWidgetEntry {
+        guard let id = configuration.package?.id else { return .init(date: .now, presentation: .failure("Choose a widget instance")) }
+        let familyName: String
+        switch family {
+        case .systemSmall: familyName = "systemSmall"
+        case .systemMedium: familyName = "systemMedium"
+        case .systemLarge: familyName = "systemLarge"
+        case .systemExtraLarge: familyName = "systemExtraLarge"
+        default: return .init(date: .now, presentation: .failure("Unsupported widget family"))
         }
-        if let selected = configuration.package {
-            return snapshots.first {
-                HanlinScriptPackageEntityQuery.matches(identity: $0.identity, id: selected.id) && $0.family == familyName
-            }
-        }
-        return snapshots.first { $0.family == familyName }
+        let presentation = await Task.detached(priority: .userInitiated) {
+            do {
+                let store = try HanlinScriptExtensionStore()
+                let snapshot = try store.load()
+                let resolved = snapshot?.widgetEntityMigrations[id] ?? id
+                return HanlinWidgetPreparation.prepare(store: store, entityID: resolved, family: familyName)
+            } catch { return HanlinPreparedWidget.failure("Widget storage failed: \(error)") }
+        }.value
+        return .init(date: .now, presentation: presentation)
     }
 }
-
 struct HanlinScriptingWidget: Widget {
-    let kind = "com.hanlin.scripting.widget"
-
+    let kind = HanlinWidgetActionExecutor.widgetKind
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(
-            kind: kind,
-            intent: HanlinWidgetConfigurationIntent.self,
-            provider: HanlinWidgetTimelineProvider()
-        ) { entry in
-            HanlinExtensionSnapshotView(snapshot: entry.snapshot)
-                .widgetURL(entry.snapshot?.deepLink)
-                .containerBackground(.background, for: .widget)
+        AppIntentConfiguration(kind: kind, intent: HanlinWidgetConfigurationIntent.self, provider: HanlinWidgetTimelineProvider()) { entry in
+            HanlinExtensionSnapshotView(presentation: entry.presentation).containerBackground(.background, for: .widget)
         }
         .configurationDisplayName("Hanlin Script")
-        .description("Displays an extension-safe snapshot from an installed Script.")
+        .description("Native widgets from installed packages. Create independent instances in Hanlin.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
     }
 }
-
 struct HanlinScriptingLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: HanlinGenericLiveActivityAttributes.self) { context in
@@ -220,44 +165,31 @@ private struct HanlinLiveActivityRegionView: View {
 }
 
 private struct HanlinExtensionSnapshotView: View {
-    let snapshot: HanlinScriptWidgetSnapshot?
-
-    @ViewBuilder
-    var body: some View {
-        if let snapshot {
-            switch snapshot.engine {
-            case .legacy:
-                HanlinExtensionNodeView(
-                    node: snapshot.root,
-                    identity: snapshot.actionIdentity ?? snapshot.identity
-                )
-            case .expo:
-                if case let .expo(descriptor) = snapshot.payload {
-                    HanlinExpoWidgetsDynamicView(
-                        descriptor: descriptor,
-                        identity: snapshot.actionIdentity ?? snapshot.identity
-                    )
-                } else {
-                    HanlinExtensionNodeView(
-                        node: snapshot.root,
-                        identity: snapshot.actionIdentity ?? snapshot.identity
-                    )
-                }
-            case .scriptwidget:
-                if case let .scriptwidget(descriptor) = snapshot.payload {
-                    HanlinScriptWidgetDynamicView(
-                        descriptor: descriptor,
-                        identity: snapshot.actionIdentity ?? snapshot.identity
-                    )
-                } else {
-                    HanlinExtensionNodeView(
-                        node: snapshot.root,
-                        identity: snapshot.actionIdentity ?? snapshot.identity
-                    )
-                }
+    let presentation: HanlinPreparedWidget
+    @ViewBuilder var body: some View {
+        switch presentation {
+        case let .legacy(snapshot): HanlinExtensionNodeView(node: snapshot.root, identity: snapshot.actionIdentity ?? snapshot.identity)
+        case let .expo(node, context):
+            HanlinExpoWidgetsDynamicView(node: node, context: context) { node, context in
+                HanlinPreparedExpoNativeView(node: node, context: context)
             }
-        } else {
-            ContentUnavailableView("Choose a Script", systemImage: "curlybraces.square")
+        case let .scriptwidget(node, context): HanlinScriptWidgetDynamicView(node: node, context: context)
+        case let .failure(reason): ContentUnavailableView("Hanlin Widget", systemImage: "exclamationmark.triangle", description: Text(reason))
         }
+    }
+}
+private struct HanlinPreparedExpoNativeView: View {
+    let node: HanlinValue
+    let context: HanlinWidgetActionContext
+    @ViewBuilder var body: some View {
+        if let object = node.toAny() as? [String: Any] {
+            let child = HanlinExpoWidgetNative.render(node: object) { target, role, label in
+                guard let intent = try? HanlinExpoWidgetsViewRenderer.actionIntent(target: target, context: context) else {
+                    return AnyView(label.disabled(true).accessibilityHint("Widget action is unavailable"))
+                }
+                return AnyView(SwiftUI.Button(role: role, intent: intent) { label })
+            }
+            AnyView(child)
+        } else { Text("Invalid prepared Expo widget") }
     }
 }

@@ -1,5 +1,11 @@
 import Foundation
 
+public enum HanlinWidgetEngine: String, Codable, CaseIterable, Hashable, Sendable {
+    case legacy
+    case expo
+    case scriptwidget
+}
+
 public enum HanlinRuntimeProfile: String, Codable, CaseIterable, Hashable, Sendable {
     case scriptingJSC = "scripting-jsc"
     case hanlinQuickJS = "hanlin-quickjs"

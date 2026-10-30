@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E3A100000000000000000001 /* HanlinExpoWidgetNative in Frameworks */ = {isa = PBXBuildFile; productRef = E3A100000000000000000002 /* HanlinExpoWidgetNative */; };
 		A10000000000000000000001 /* MCP in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000011 /* MCP */; };
 		A10000000000000000000002 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000012 /* SWCompression */; };
 		A10000000000000000000003 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000013 /* Logging */; };
@@ -398,6 +399,7 @@
 				D20000000000000000000004 /* HanlinPlatformContracts in Frameworks */,
 				D20000000000000000000003 /* HanlinScriptUI in Frameworks */,
 				D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */,
+				E3A100000000000000000001 /* HanlinExpoWidgetNative in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +609,7 @@
 			);
 			name = HanlinScriptingWidgets;
 			packageProductDependencies = (
+				E3A100000000000000000002 /* HanlinExpoWidgetNative */,
 				C10000000000000000000021 /* HanlinScriptExtensions */,
 				C10000000000000000000022 /* HanlinScriptUI */,
 				A10000000000000000000015 /* HanlinPlatformContracts */,
@@ -1774,6 +1777,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E3A100000000000000000002 /* HanlinExpoWidgetNative */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */;
+			productName = HanlinExpoWidgetNative;
+		};
 		F70000000000000000000011 /* HanlinMiniAppCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;

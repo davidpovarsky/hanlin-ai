@@ -1,266 +1,313 @@
+import CryptoKit
 import Foundation
 import HanlinPlatformContracts
-@testable import HanlinScriptExtensions
+import HanlinScriptCompiler
+import HanlinScriptContracts
+import HanlinScriptStore
 import HanlinScriptUI
+import HanlinLegacyWidgetStoreFixture
+@testable import HanlinScriptExtensions
 import Testing
 import SwiftUI
 
-@Suite("Dual Native Widget Engines & Schema V2 Verification")
-@MainActor
+private typealias Store = HanlinScriptExtensions.HanlinScriptExtensionStore
+private typealias Snapshot = HanlinScriptExtensions.HanlinScriptExtensionSnapshot
+private typealias Identity = HanlinScriptExtensions.HanlinScriptExtensionIdentity
+private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
+
+@Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
-
-    @Test("Schema V2 save and load round-trip with all 3 engines")
-    func schemaV2RoundTrip() throws {
-        let tempDir = FileManager.default.temporaryDirectory.appending(
-            path: "hanlin-dual-widget-test-\(UUID().uuidString)",
-            directoryHint: .isDirectory
-        )
-        defer { try? FileManager.default.removeItem(at: tempDir) }
-
-        let identity = HanlinScriptExtensionIdentity(
-            installedPackageID: try .init(validating: "package.dual.engine"),
-            packageID: try .init(validating: "package.dual.engine"),
-            generation: 1,
-            entrypointID: "widget.main"
-        )
-
-        // 1. Legacy snapshot
-        let legacySnapshot = HanlinScriptWidgetSnapshot(
-            identity: identity,
-            displayName: "Legacy Widget",
-            family: "systemSmall",
-            validUntil: Date(timeIntervalSince1970: 1000),
-            engine: .legacy,
-            payload: .legacy(HanlinScriptUINode(kind: .text, properties: ["text": .string("Legacy Fallback")])),
-            root: HanlinScriptUINode(kind: .text, properties: ["text": .string("Legacy Fallback")])
-        )
-
-        // 2. Expo snapshot
-        let expoDesc = ExpoWidgetDescriptor(
-            layout: "function(props, env) { return { type: 'TextView', props: { text: 'Expo Native' } }; }",
-            props: ["name": .string("Hanlin")],
-            sourceName: "ExpoCounter"
-        )
-        let expoSnapshot = HanlinScriptWidgetSnapshot(
-            identity: identity,
-            displayName: "Expo Widget",
-            family: "systemMedium",
-            validUntil: Date(timeIntervalSince1970: 2000),
-            engine: .expo,
-            payload: .expo(expoDesc),
-            root: HanlinScriptUINode(kind: .text, properties: ["text": .string("Expo Native")])
-        )
-
-        // 3. ScriptWidget snapshot
-        let scriptDesc = ScriptWidgetDescriptor(
-            script: "render(<vstack><text>ScriptWidget Native</text></vstack>)",
-            environment: ["colorScheme": .string("dark")]
-        )
-        let scriptWidgetSnapshot = HanlinScriptWidgetSnapshot(
-            identity: identity,
-            displayName: "ScriptWidget Dashboard",
-            family: "systemLarge",
-            validUntil: Date(timeIntervalSince1970: 3000),
-            engine: .scriptwidget,
-            payload: .scriptwidget(scriptDesc),
-            root: HanlinScriptUINode(kind: .text, properties: ["text": .string("ScriptWidget Native")])
-        )
-
-        let snapshot = HanlinScriptExtensionSnapshot(
-            schemaVersion: 2,
-            generatedAt: Date(timeIntervalSince1970: 500),
-            widgets: [legacySnapshot, expoSnapshot, scriptWidgetSnapshot]
-        )
-
-        let store = HanlinScriptExtensionStore(root: tempDir)
-        try store.save(snapshot)
-
-        let loaded = try #require(try store.load())
-        #expect(loaded.schemaVersion == 2)
-        #expect(loaded.widgets.count == 3)
-
-        // Verify engines
-        #expect(loaded.widgets[0].engine == .legacy)
-        #expect(loaded.widgets[1].engine == .expo)
-        #expect(loaded.widgets[2].engine == .scriptwidget)
-
-        // Verify payloads
-        if case let .legacy(node) = loaded.widgets[0].payload {
-            #expect(node.kind == .text)
-            #expect(node.properties["text"] == .string("Legacy Fallback"))
-        } else {
-            Issue.record("Expected legacy payload")
-        }
-
-        if case let .expo(desc) = loaded.widgets[1].payload {
-            #expect(desc.sourceName == "ExpoCounter")
-            #expect(desc.props?["name"] == .string("Hanlin"))
-        } else {
-            Issue.record("Expected expo payload")
-        }
-
-        if case let .scriptwidget(desc) = loaded.widgets[2].payload {
-            #expect(desc.script.contains("ScriptWidget Native"))
-            #expect(desc.environment?["colorScheme"] == .string("dark"))
-        } else {
-            Issue.record("Expected scriptwidget payload")
+    @Test(arguments: ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo", "Hanlin-ScriptWidget-Dashboard.scripting", "Hanlin-ScriptWidget-Actions.scripting", "Hanlin-Widget-Legacy-Regression.scripting", "Hanlin-Mixed-Native-Widget.hanlinExpo", "Hanlin-Widget-Invalid-Cases.hanlinExpo"])
+    func realArchiveImport(name: String) throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let staged = try HanlinPackageCenter().stageAndInspect(sourceURL: fixtureURL(name), stagingParent: root)
+        let preview = try HanlinScriptAnalyzer(inventory: inventory).analyze(staged)
+        let expected = !name.contains("Invalid") && !name.contains("Mixed")
+        #expect(preview.canInstall == expected, "\(preview.findings)")
+        if expected {
+            let entry = try #require(preview.entrypoints.first)
+            #expect(preview.entrypoints.count == 1)
+            #expect(entry.kind == .widget)
+            #expect(entry.widgetEngine?.rawValue == (name.contains("Legacy") ? "legacy" : name.contains("ScriptWidget") ? "scriptwidget" : "expo"))
+            let encoded = try JSONEncoder().encode(entry)
+            #expect(try JSONDecoder().decode(HanlinPackageEntrypointDescriptor.self, from: encoded).widgetEngine == entry.widgetEngine)
         }
     }
 
-    @Test("Schema V1 backwards compatibility: unversioned snapshot decodes as legacy")
-    func schemaV1BackwardsCompatibility() throws {
-        let v1JSON = """
-        {
-            "schemaVersion": 1,
-            "sha256": "ignored_in_raw_decode",
-            "snapshot": {
-                "schemaVersion": 1,
-                "generatedAt": "1970-01-01T00:00:10.000Z",
-                "widgets": [{
-                    "identity": {
-                        "installedPackageID": "pkg.v1",
-                        "packageID": "pkg.v1",
-                        "generation": 1,
-                        "entrypointID": "w1"
-                    },
-                    "displayName": "V1 Widget",
-                    "family": "systemSmall",
-                    "validUntil": "1970-01-01T00:01:00.000Z",
-                    "relevance": 1.0,
-                    "root": {
-                        "kind": "text",
-                        "properties": { "text": { "type": "string", "value": "Old Root" } },
-                        "children": []
-                    }
-                }],
-                "intentEntities": [],
-                "liveActivities": [],
-                "translationApps": []
+    @Test(arguments: ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-ScriptWidget-Actions.scripting"])
+    func installAndVerifiedLoader(name: String) async throws {
+        let fixture = try await InstalledFixture(name)
+        defer { fixture.remove() }
+        let snapshot = try #require(try fixture.store.load())
+        let widget = try #require(snapshot.widgets.first)
+        let (program, _) = try fixture.store.loadProgram(for: widget)
+        #expect(program.engine == widget.engine)
+        #expect(widget.identity.generation == 1)
+        #expect(try await fixture.installed.snapshots().first?.entrypoints.first?.widgetEngine == widget.engine)
+        let reopened = Store(root: fixture.extensionRoot)
+        #expect(try reopened.load() == snapshot)
+    }
+
+    @MainActor @Test
+    func emittedExpoIntentCarriesVerifiedIdentityAndCallsSource() async throws {
+        let fixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo")
+        defer { fixture.remove() }
+        let context = try fixture.context()
+        // This factory is the exact path called by the original native renderer's
+        // injected Button builder. Actual SpringBoard tapping is a separate UI gate.
+        let intent = try HanlinExpoWidgetsViewRenderer.actionIntent(target: "increment", context: context)
+        let command = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(intent.commandJSON.utf8))
+        #expect(command.context.engine == .expo)
+        #expect(command.context.identity == fixture.identity)
+        #expect(command.context.artifactSHA256 == context.artifactSHA256)
+        _ = try HanlinWidgetActionExecutor.perform(command, store: fixture.store)
+        #expect(try fixture.values()["count"] == .integer(8))
+        _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "decrement"), store: fixture.store)
+        #expect(try fixture.values()["count"] == .integer(7))
+        _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "status"), store: fixture.store)
+        #expect(try fixture.values()["status"] == .string("Source callback ran"))
+        #expect(try fixture.values()["trace"] == .string("status-handler"))
+        #expect(try fixture.values()["count"] == .integer(7))
+    }
+
+    @Test func userCreatedInstancesAndHostRefreshPreserveState() async throws {
+        let fixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo")
+        defer { fixture.remove() }
+        let base = try #require(try fixture.store.load()?.widgetInstances.first)
+        let a1 = try fixture.store.createWidgetInstance(from: base.entityID, displayName: "A1")
+        let a2 = try fixture.store.createWidgetInstance(from: base.entityID, displayName: "A2")
+        #expect(a1.entityID != a2.entityID)
+        let context = try fixture.context(entityID: a1.entityID)
+        _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "increment"), store: fixture.store)
+        try fixture.republish()
+        let reopened = Store(root: fixture.extensionRoot)
+        let state = try #require(try reopened.load())
+        #expect(state.widgetInstances.contains(a1))
+        #expect(state.widgetInstances.contains(a2))
+        #expect(state.widgetStates.first { $0.identity == a1.identity }?.values["count"] == .integer(8))
+        #expect(state.widgetStates.first { $0.identity == a2.identity } == nil)
+        guard case let .expo(node, _) = HanlinWidgetPreparation.prepare(store: reopened, entityID: a2.entityID, family: "systemMedium") else { Issue.record("A2 failed to prepare"); return }
+        #expect(String(decoding: try node.jsonValue().canonicalJSONData(), as: UTF8.self).contains("\"7\""))
+    }
+
+    @Test func scriptWidgetNamedActionsAndBooleanSetValue() async throws {
+        let fixture = try await InstalledFixture("Hanlin-ScriptWidget-Actions.scripting")
+        defer { fixture.remove() }
+        let context = try fixture.context()
+        _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "sync"), store: fixture.store)
+        _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "named"), store: fixture.store)
+        #expect(try fixture.values()["syncCount"] == .integer(1))
+        #expect(try fixture.values()["status"] == .string("Named source function ran"))
+        for value in [true, true, false, false] {
+            _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "backup", desiredValue: value), store: fixture.store)
+            #expect(try fixture.values()["backup"] == .bool(value))
+            guard case let .scriptwidget(node, _) = HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium") else { Issue.record("Toggle preparation failed"); return }
+            #expect(find(node, tag: "toggle")?.props["on"] == .bool(value))
+        }
+        try fixture.republish()
+        #expect(try fixture.values()["backup"] == .bool(false))
+    }
+
+    @Test func staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation() async throws {
+        let fixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo")
+        defer { fixture.remove() }
+        let context = try fixture.context()
+        let identity = Identity(installedPackageID: fixture.identity.installedPackageID, packageID: fixture.identity.packageID,
+            generation: 2, entrypointID: fixture.identity.entrypointID)
+        let stale = HanlinWidgetActionContext(identity: identity, engine: .expo, artifactSHA256: context.artifactSHA256, family: context.family)
+        let before = try fixture.store.load()
+        #expect(throws: HanlinWidgetActionError.self) { try HanlinWidgetActionExecutor.perform(.init(context: stale, actionID: "increment"), store: fixture.store) }
+        #expect(throws: HanlinWidgetActionError.undeclaredAction) { try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "not-declared"), store: fixture.store) }
+        #expect(try fixture.store.load() == before)
+        try fixture.store.invalidateWidgetActions(installedPackageID: fixture.identity.installedPackageID)
+        #expect(throws: HanlinWidgetActionError.inactiveInstance) { try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "increment"), store: fixture.store) }
+        _ = try fixture.store.publishWidgetTemplates([], intentEntities: [], translationApps: [], installedPackageIDs: [])
+        #expect(throws: HanlinWidgetActionError.inactiveInstance) { try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "increment"), store: fixture.store) }
+    }
+
+    @Test func concurrentSourceActionsReplayAndHostPublication() async throws {
+        let fixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo")
+        defer { fixture.remove() }
+        let context = try fixture.context()
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for index in 0..<12 {
+                group.addTask { _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "increment", nonce: "tap-\(index)"), store: fixture.store) }
             }
+            group.addTask { try fixture.republish() }
+            try await group.waitForAll()
         }
-        """
-
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-
-        struct TestEnvelope: Decodable {
-            let schemaVersion: UInt32
-            let snapshot: HanlinScriptWidgetSnapshotContainer
-        }
-        struct HanlinScriptWidgetSnapshotContainer: Decodable {
-            let widgets: [HanlinScriptWidgetSnapshot]
-        }
-
-        let envelope = try decoder.decode(TestEnvelope.self, from: v1JSON.data(using: .utf8)!)
-        #expect(envelope.schemaVersion == 1)
-        let widget = try #require(envelope.snapshot.widgets.first)
-        #expect(widget.engine == .legacy)
-        #expect(widget.displayName == "V1 Widget")
-        #expect(widget.root.kind == .text)
-        #expect(widget.root.properties["text"] == .string("Old Root"))
+        let snapshot = try #require(try fixture.store.load())
+        let state = try #require(snapshot.widgetStates.first)
+        #expect(state.revision == 12)
+        #expect(state.values["count"] == .integer(19))
+        let replay = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "increment", nonce: "tap-0"), store: fixture.store)
+        #expect(!replay.applied)
+        #expect(replay.revision == 12)
+        #expect(try fixture.values()["count"] == .integer(19))
     }
 
-    @Test("ScriptWidgetElement: parses and renders all 29 native SwiftUI tags")
-    func scriptWidgetAll29Tags() throws {
-        let all29Tags = [
-            "hstack", "vstack", "zstack", "hgrid", "vgrid",
-            "text", "date", "image", "gif", "spacer",
-            "rect", "capsule", "ellipse", "circle", "gauge",
-            "chart", "link", "divider", "line", "roundedrect",
-            "icon", "label", "progress", "ring", "badge",
-            "chip", "stat", "button", "toggle"
-        ]
+    @Test func actionAndPublicationPreserveUnrelatedCollections() async throws {
+        let fixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo")
+        defer { fixture.remove() }
+        let node = HanlinScriptUINode(kind: .text, properties: ["text": .string("Live")])
+        let activity = HanlinScriptExtensions.HanlinScriptLiveActivityDescriptor(identity: fixture.identity, activityID: "live", title: "Live", state: .bool(true), root: node)
+        let entity = HanlinScriptExtensions.HanlinScriptIntentEntityRecord(identity: fixture.identity, id: "intent", displayName: "Intent")
+        let translation = HanlinScriptExtensions.HanlinScriptTranslationUISnapshot(identity: fixture.identity, appID: "translation", displayName: "Translation", entrypointID: "translation")
+        try fixture.store.update { current in
+            let current = try #require(current)
+            return .init(schemaVersion: 2, generatedAt: .now, widgets: current.widgets, intentEntities: [entity], liveActivities: [activity], translationApps: [translation], widgetInstances: current.widgetInstances)
+        }
+        _ = try HanlinWidgetActionExecutor.perform(.init(context: fixture.context(), actionID: "increment"), store: fixture.store)
+        _ = try fixture.store.publishWidgetTemplates([fixture.template], intentEntities: [entity], translationApps: [translation], installedPackageIDs: [fixture.identity.installedPackageID])
+        let after = try #require(try fixture.store.load())
+        #expect(after.liveActivities == [activity]); #expect(after.intentEntities == [entity]); #expect(after.translationApps == [translation])
+        #expect(after.widgetStates.first?.values["count"] == .integer(8))
+    }
 
-        #expect(all29Tags.count == 29)
+    @Test func checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root), id = try HanlinInstalledPackageID(validating: "installed.test")
+        let artifact = try store.storeArtifact(data: Data("program".utf8), installedPackageID: id, generation: 1)
+        #expect(try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) == Data("program".utf8))
+        for ref in ["../outside", "/tmp/outside", artifact.ref + "/../" + artifact.sha256] {
+            #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
+        }
+        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 2) }
+        let url = root.appending(path: artifact.ref)
+        try Data("tampered".utf8).write(to: url)
+        #expect(throws: HanlinScriptExtensionStoreError.integrityMismatch) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
+        try FileManager.default.removeItem(at: url)
+        let outside = root.appending(path: "outside")
+        try Data("program".utf8).write(to: outside)
+        try FileManager.default.createSymbolicLink(at: url, withDestinationURL: outside)
+        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) { try store.loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256, installedPackageID: id, generation: 1) }
+    }
 
-        for tag in all29Tags {
-            let elem = HanlinScriptWidgetElement(
-                tag: tag,
-                props: [
-                    "title": "Tag \(tag)",
-                    "text": "Content for \(tag)",
-                    "value": NSNumber(value: 42.0),
-                    "min": NSNumber(value: 0.0),
-                    "max": NSNumber(value: 100.0),
-                    "color": "#FF5500",
-                    "systemName": "star.fill"
-                ],
-                children: [
-                    HanlinScriptWidgetElement(tag: "text", rawText: "Child of \(tag)")
-                ],
-                rawText: "Raw \(tag)"
-            )
+    @Test func actualHistoricalV1EncoderAndDowngradeReader() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let old = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionStore(root: root)
+        let identity = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionIdentity(installedPackageID: try .init(validating: "installed.old"), packageID: try .init(validating: "package.old"), generation: 3, entrypointID: "widget")
+        let legacy = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionSnapshot(generatedAt: Date(timeIntervalSince1970: 12), widgets: [.init(identity: identity, displayName: "Old widget", validUntil: Date(timeIntervalSince1970: 120), root: .init(kind: .text, properties: ["text": .string("Legacy bytes")]))])
+        try old.save(legacy)
+        let store = Store(root: root), migrated = try #require(try store.load())
+        #expect(migrated.widgets.first?.engine == .legacy)
+        #expect(migrated.widgets.first?.identity.variantID == "default")
+        let v2 = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 13), widgets: migrated.widgets)
+        try store.save(v2)
+        #expect(try old.load()?.widgets.first?.root == legacy.widgets.first?.root)
+        try old.save(legacy)
+        #expect(try store.loadWithRecovery().recovery == .legacyWriterDetected)
+        #expect(try store.load()?.schemaVersion == 1)
+        try store.save(v2)
+        #expect(try store.load()?.schemaVersion == 2)
+    }
 
-            // Must produce a non-nil SwiftUI AnyView without crash
-            let view = HanlinScriptWidgetElementView.buildView(element: elem)
-            #expect(String(describing: type(of: view)) == "AnyView")
+    @Test func interruptedShadowPublicationRestoresExactCommittedRevision() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        let before = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 1))
+        let next = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 2))
+        try store.save(before)
+        let marker = try Data(contentsOf: root.appending(path: "commit.json"))
+        let shadow = try Data(contentsOf: root.appending(path: "snapshot-v1.json"))
+        try store.save(next)
+        let candidate = try JSONSerialization.jsonObject(with: Data(contentsOf: root.appending(path: "commit.json")))
+        let pending: [String: Any] = ["candidate": candidate, "previousShadowHash": sha(shadow)]
+        try JSONSerialization.data(withJSONObject: pending).write(to: root.appending(path: "pending.json"))
+        try marker.write(to: root.appending(path: "commit.json"))
+        let recovered = try store.loadWithRecovery()
+        #expect(recovered.recovery == .interruptedPublication)
+        #expect(recovered.snapshot == before)
+        #expect(try Data(contentsOf: root.appending(path: "snapshot-v1.json")) == shadow)
+        try store.save(next)
+        #expect(try store.load() == next)
+    }
+
+    @Test func corruptCommittedV2NeverFallsBackToGoodV1() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        try store.save(.init(schemaVersion: 2, generatedAt: .now))
+        let marker = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: root.appending(path: "commit.json"))) as? [String: Any])
+        let hash = try #require(marker["snapshotHash"] as? String)
+        try Data("broken".utf8).write(to: root.appending(path: "Revisions/\(hash).json"))
+        #expect(throws: HanlinScriptExtensionStoreError.integrityMismatch) { try store.load() }
+    }
+
+    @Test func unconfiguredAndWrongFamilyNeverSelectAnotherWidget() async throws {
+        let fixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo")
+        defer { fixture.remove() }
+        for (id, family) in [("", "systemMedium"), ("other", "systemMedium"), (fixture.entityID, "accessoryInline")] {
+            guard case .failure = HanlinWidgetPreparation.prepare(store: fixture.store, entityID: id, family: family) else { Issue.record("Invalid selection rendered content"); continue }
         }
     }
+}
 
-    @Test("Mixed Tree: ScriptWidget JSX subtree embedded inside Expo layout node")
-    func mixedTreeScriptWidgetInsideExpo() throws {
-        let scriptWidgetChildDict: [String: Any] = [
-            "tag": "vstack",
-            "props": ["spacing": NSNumber(value: 4)],
-            "children": [
-                [
-                    "tag": "badge",
-                    "props": ["color": "#00AAFF"],
-                    "text": "Mixed JSX Subtree"
-                ],
-                [
-                    "tag": "text",
-                    "props": ["bold": true],
-                    "text": "Native ScriptWidget in Expo!"
-                ]
-            ]
-        ]
-
-        let expoParentNode: [String: Any] = [
-            "type": "VStackView",
-            "props": [
-                "spacing": NSNumber(value: 8),
-                "children": [
-                    [
-                        "type": "TextView",
-                        "props": ["text": "Expo Header", "font": "headline"]
-                    ],
-                    [
-                        "type": "ScriptWidgetSubtree",
-                        "props": [
-                            "element": scriptWidgetChildDict
-                        ]
-                    ]
-                ]
-            ]
-        ]
-
-        let renderedView = HanlinExpoWidgetsViewRenderer.renderNode(expoParentNode)
-        #expect(String(describing: type(of: renderedView)) == "AnyView")
+private let inventory = HanlinCompatibilityInventory(baselineID: "widget-tests", baselineDigest: String(repeating: "a", count: 64), symbols: [])
+private func temporary() throws -> URL {
+    let root = FileManager.default.temporaryDirectory.appending(path: "hanlin-widget-pass3-\(UUID().uuidString)")
+    try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+    return root
+}
+private func fixtureURL(_ name: String) -> URL {
+    URL(filePath: #filePath).deletingLastPathComponent().appending(path: "../../../../Fixtures/Widgets/\(name)").standardizedFileURL
+}
+private func sha(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
+private func find(_ node: HanlinScriptWidgetPreparedNode, tag: String) -> HanlinScriptWidgetPreparedNode? {
+    if node.tag == tag { return node }
+    for child in node.children { if case let .element(child) = child, let match = find(child, tag: tag) { return match } }
+    return nil
+}
+private struct ForbiddenScriptingCompiler: HanlinTrustedCompilerClient {
+    func compile(_ project: HanlinVirtualTypeScriptProject) async throws -> HanlinTrustedCompilerResult { throw HanlinWidgetProgramError.unsupportedImport }
+}
+private struct InstalledFixture: Sendable {
+    let root: URL
+    let extensionRoot: URL
+    let store: Store
+    let installed: HanlinAtomicScriptStore
+    let identity: Identity
+    let template: Widget
+    var entityID: String { HanlinWidgetInstance(identity: identity, engine: template.engine, displayName: "Default").entityID }
+    init(_ name: String) async throws {
+        root = try temporary()
+        extensionRoot = root.appending(path: "Extensions")
+        store = Store(root: extensionRoot)
+        installed = try HanlinAtomicScriptStore(root: root.appending(path: "Installed"))
+        let staged = try HanlinPackageCenter().stageAndInspect(sourceURL: fixtureURL(name), stagingParent: root)
+        let preview = try HanlinScriptAnalyzer(inventory: inventory).analyze(staged)
+        #expect(preview.canInstall, "\(preview.findings)")
+        let programs = try HanlinWidgetPackagePreparation.programs(packageRoot: staged.packageRoot, preview: preview)
+        let compiled = HanlinScriptingBundle(manifest: .init(compilerVersion: "Widget-ABI-1", compilerIntegrity: preview.source.contentSHA256, compilerOptionsHash: String(repeating: "b", count: 64), baselineID: inventory.baselineID, baselineDigest: inventory.baselineDigest, hanlinABIVersion: "1", packageContentDigest: preview.source.contentSHA256, cacheFingerprint: preview.source.contentSHA256, files: []), modules: [], diagnostics: [])
+        let bundler = HanlinScriptingBundler(baseline: inventory, abiVersion: "1", scriptingDeclarations: [], compiler: ForbiddenScriptingCompiler())
+        let artifactRoot = root.appending(path: "Artifact")
+        let manifest = try bundler.writeInstallArtifact(compiled, packageRoot: staged.packageRoot, to: artifactRoot, preparedWidgetPrograms: programs)
+        let entries = HanlinWidgetPackagePreparation.installedEntrypoints(preview: preview, artifactDigest: manifest.cacheFingerprint)
+        let id = try HanlinInstalledPackageID(validating: "installed.widget")
+        let packageID = try HanlinPackageID(validating: "package.widget")
+        let plan = HanlinInstallPlan(installedPackageID: id, packageID: packageID, version: try .init(validating: "1.0.0"), sourceDigest: preview.source.contentSHA256, entrypoints: entries, requestedCapabilities: preview.requestedCapabilities, manifest: staged.manifest)
+        let record = try await installed.install(plan: plan, artifactDirectory: artifactRoot, artifactManifest: manifest)
+        let entry = try #require(entries.first)
+        identity = .init(installedPackageID: id, packageID: packageID, generation: record.activeGeneration, entrypointID: entry.id)
+        let bytes = try #require(programs[entry.sourcePath])
+        let artifact = try store.storeArtifact(data: bytes, installedPackageID: id, generation: record.activeGeneration)
+        let engine = try #require(entry.widgetEngine)
+        let payload: HanlinScriptExtensions.HanlinWidgetPayload = engine == .expo ? .expo(.init(layout: "", layoutRef: artifact.ref, layoutSHA256: artifact.sha256)) : .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256))
+        template = .init(identity: identity, displayName: staged.manifest.name, validUntil: .distantFuture, engine: engine, payload: payload, root: .init(kind: .text))
+        try republish()
     }
-
-    @Test("ExpoWidgetsViewRenderer renders native shapes, gauges, and charts")
-    func expoWidgetsViewRendererPrimitives() throws {
-        let sampleNodes: [[String: Any]] = [
-            ["type": "TextView", "props": ["text": "Hello Expo", "font": "title2", "color": "#123456"]],
-            ["type": "RectangleView", "props": ["fill": "#FF0000", "width": NSNumber(value: 50), "height": NSNumber(value: 20)]],
-            ["type": "RoundedRectangleView", "props": ["cornerRadius": NSNumber(value: 12), "fill": "blue"]],
-            ["type": "CapsuleView", "props": ["fill": "green"]],
-            ["type": "CircleView", "props": ["fill": "purple"]],
-            ["type": "EllipseView", "props": ["fill": "orange"]],
-            ["type": "DividerView", "props": [:]],
-            ["type": "SpacerView", "props": ["minLength": NSNumber(value: 10)]],
-            ["type": "ProgressView", "props": ["value": NSNumber(value: 0.6), "total": NSNumber(value: 1.0)]],
-            ["type": "GaugeView", "props": ["value": NSNumber(value: 75), "min": NSNumber(value: 0), "max": NSNumber(value: 100), "label": "CPU"]],
-            ["type": "ChartView", "props": ["chartType": "bar", "data": [["x": "Mon", "y": NSNumber(value: 10)], ["x": "Tue", "y": NSNumber(value: 20)]]]],
-            ["type": "Button", "props": ["title": "Tap Me", "target": "__expo_widgets_target_0"]],
-            ["type": "LinkView", "props": ["title": "Open Web", "url": "https://example.com"]],
-            ["type": "ImageView", "props": ["systemName": "sun.max.fill"]]
-        ]
-
-        for node in sampleNodes {
-            let v = HanlinExpoWidgetsViewRenderer.renderNode(node)
-            #expect(String(describing: type(of: v)) == "AnyView")
+    func republish() throws { try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [identity.installedPackageID]) }
+    func remove() { try? FileManager.default.removeItem(at: root) }
+    func values() throws -> [String: HanlinValue] { try store.load()?.widgetStates.first?.values ?? [:] }
+    func context(entityID: String? = nil) throws -> HanlinWidgetActionContext {
+        switch HanlinWidgetPreparation.prepare(store: store, entityID: entityID ?? self.entityID, family: "systemMedium") {
+        case let .expo(_, context), let .scriptwidget(_, context): return context
+        case let .failure(reason): throw HanlinScriptWidgetError(reason)
+        case .legacy: throw HanlinWidgetProgramError.invalidProgram
         }
     }
 }

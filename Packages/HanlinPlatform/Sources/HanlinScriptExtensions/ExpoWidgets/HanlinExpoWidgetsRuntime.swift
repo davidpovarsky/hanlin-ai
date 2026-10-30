@@ -7,14 +7,22 @@ public struct HanlinExpoWidgetError: Error, LocalizedError, Sendable {
     public var errorDescription: String? { message }
 }
 
-public final class HanlinExpoWidgetsRuntime: @unchecked Sendable {
+public struct HanlinExpoWidgetsRuntime: Sendable {
     public static let shared = HanlinExpoWidgetsRuntime()
 
-    private let lock = NSRecursiveLock()
-    private var context: JSContext?
-    private var bundleScript: String?
 
     private init() {}
+
+    public func renderNodeSync(
+        layout: String,
+        props: [String: Any]? = nil,
+        environment: [String: Any] = [:]
+    ) -> [String: Any]? {
+        switch render(layout: layout, props: props, environment: environment) {
+        case let .success(dict): return dict
+        case .failure: return nil
+        }
+    }
 
     public func render(
         layout: String,
@@ -24,7 +32,7 @@ public final class HanlinExpoWidgetsRuntime: @unchecked Sendable {
         call(layout: layout, functionName: "__expoWidgetRender") { ctx in
             [props.map { $0 } ?? JSValue(undefinedIn: ctx) as Any, environment]
         }.flatMap { result in
-            guard let dict = result?.toObject() as? [String: Any] else {
+            guard let dict = result as? [String: Any] else {
                 return .failure(HanlinExpoWidgetError("Expo widget render did not produce a dictionary node."))
             }
             return .success(dict)
@@ -39,7 +47,7 @@ public final class HanlinExpoWidgetsRuntime: @unchecked Sendable {
         call(layout: layout, functionName: "__expoWidgetHandlePress") { _ in
             [props, environment]
         }.map { result in
-            result?.toObject() as? [String: Any]
+            result as? [String: Any]
         }
     }
 
@@ -47,13 +55,19 @@ public final class HanlinExpoWidgetsRuntime: @unchecked Sendable {
         layout: String,
         functionName: String,
         arguments: (JSContext) -> [Any]
-    ) -> Result<JSValue?, HanlinExpoWidgetError> {
-        lock.lock()
-        defer { lock.unlock() }
-
+    ) -> Result<Any?, HanlinExpoWidgetError> {
         guard let ctx = getContext() else {
             return .failure(HanlinExpoWidgetError("Could not initialize JavaScriptCore context."))
         }
+
+        guard layout.utf8.count <= 2 * 1_024 * 1_024 else { return .failure(.init("Expo layout exceeds its compiled-source budget")) }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+        let checkExecution: @convention(block) () -> Void = {
+            if ContinuousClock.now >= deadline, let current = JSContext.current() {
+                current.exception = JSValue(newErrorFromMessage: "Widget execution budget exceeded", in: current)
+            }
+        }
+        ctx.setObject(checkExecution, forKeyedSubscript: "__scriptWidgetCheckExecution" as NSString)
 
         ctx.exception = nil
         let layoutVal = ctx.evaluateScript("(\(layout))")
@@ -80,11 +94,19 @@ public final class HanlinExpoWidgetsRuntime: @unchecked Sendable {
             return .failure(HanlinExpoWidgetError("Execution error in '\(functionName)': \(msg)"))
         }
 
-        return .success(res)
+        // Drop callback functions inside the owner VM. JSON is the immutable
+        // transfer boundary; native views never receive a JSValue or closure.
+        guard let res, !res.isUndefined, !res.isNull else { return .success(nil) }
+        guard let json = ctx.objectForKeyedSubscript("JSON")?.invokeMethod("stringify", withArguments: [res])?.toString(),
+              let data = json.data(using: .utf8), data.count <= 256 * 1_024,
+              let object = try? JSONSerialization.jsonObject(with: data) else {
+            return .failure(.init("Expo output is not bounded JSON"))
+        }
+        guard ContinuousClock.now < deadline else { return .failure(.init("Expo execution budget exceeded")) }
+        return .success(object)
     }
 
     private func getContext() -> JSContext? {
-        if let context { return context }
         guard let ctx = JSContext() else { return nil }
 
         guard let script = getBundleScript() else {
@@ -98,45 +120,19 @@ public final class HanlinExpoWidgetsRuntime: @unchecked Sendable {
             return nil
         }
 
-        self.context = ctx
         return ctx
     }
 
-    private func getBundleScript() -> String? {
-        if let bundleScript { return bundleScript }
+    private func getBundleScript() -> String? { Self.bundleScript }
 
-        // 1. Try Bundle.main (app extension bundle or host app)
-        if let url = Bundle.main.url(forResource: "ExpoWidgets", withExtension: "bundle") {
-            if let str = try? String(contentsOf: url, encoding: .utf8) {
-                self.bundleScript = str
-                return str
-            }
-            if let innerBundle = Bundle(url: url),
-               let innerURL = innerBundle.url(forResource: "ExpoWidgets", withExtension: "bundle") ?? innerBundle.url(forResource: "ExpoWidgets", withExtension: "js"),
-               let str = try? String(contentsOf: innerURL, encoding: .utf8) {
-                self.bundleScript = str
-                return str
-            }
-        }
-
-        // 2. Try Bundle.module (SPM resource)
+    // Only immutable resources embedded in the executable are trusted runtime code.
+    private static let bundleScript: String? = {
         #if SWIFT_PACKAGE
         if let url = Bundle.module.url(forResource: "ExpoWidgets", withExtension: "bundle"),
-           let str = try? String(contentsOf: url, encoding: .utf8) {
-            self.bundleScript = str
-            return str
-        }
+           let value = try? String(contentsOf: url, encoding: .utf8) { return value }
         #endif
-
-        // 3. Try App Group ScriptingExtensions directory
-        if let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.itorah.chavrusachat") {
-            let fileURL = container.appending(path: "ScriptingExtensions/ExpoWidgets.bundle")
-            if let str = try? String(contentsOf: fileURL, encoding: .utf8) {
-                self.bundleScript = str
-                return str
-            }
-        }
-
+        if let url = Bundle.main.url(forResource: "ExpoWidgets", withExtension: "bundle"),
+           let value = try? String(contentsOf: url, encoding: .utf8) { return value }
         return nil
-    }
+    }()
 }

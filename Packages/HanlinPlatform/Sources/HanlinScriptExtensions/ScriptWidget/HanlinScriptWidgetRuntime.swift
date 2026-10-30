@@ -1,4 +1,6 @@
 import Foundation
+import HanlinPlatformContracts
+import HanlinScriptContracts
 import JavaScriptCore
 
 public struct HanlinScriptWidgetError: Error, LocalizedError, Sendable {
@@ -7,191 +9,137 @@ public struct HanlinScriptWidgetError: Error, LocalizedError, Sendable {
     public var errorDescription: String? { message }
 }
 
-public final class HanlinScriptWidgetRuntime: @unchecked Sendable {
-    public static let shared = HanlinScriptWidgetRuntime()
+@objc protocol ScriptWidgetStorageJSExports: JSExport {
+    func get(_ key: String) -> Any?
+    func set(_ key: String, _ value: Any) -> Bool
+    func remove(_ key: String) -> Bool
+    func getString(_ key: String) -> String?
+    func setString(_ key: String, _ value: String) -> Bool
+    func getJSON(_ key: String) -> Any?
+    func setJSON(_ key: String, _ value: Any) -> Bool
+}
 
-    private let lock = NSRecursiveLock()
-    private var compilerContext: JSContext?
-    private var runtimeContext: JSContext?
-    private var coreJs: String?
-    private var momentJs: String?
-
-    private init() {}
-
-    public func execute(
-        script: String,
-        environment: [String: Any] = [:]
-    ) -> Result<HanlinScriptWidgetElement, HanlinScriptWidgetError> {
-        lock.lock()
-        defer { lock.unlock() }
-
-        // 1. Compile JSX to JS if needed
-        let jsCode: String
-        if script.contains("<") && script.contains(">") {
-            switch compileJSX(script) {
-            case let .success(compiled):
-                jsCode = compiled
-            case let .failure(err):
-                return .failure(err)
-            }
-        } else {
-            jsCode = script
-        }
-
-        // 2. Prepare runtime execution context
-        guard let ctx = getRuntimeContext() else {
-            return .failure(HanlinScriptWidgetError("Could not create JavaScript runtime context."))
-        }
-
-        ctx.exception = nil
-
-        // Set environment variables
-        for (k, v) in environment {
-            ctx.setObject(v, forKeyedSubscript: k as NSString)
-        }
-
-        // Wrap execution in an IIFE to capture the return value
-        let wrapped = """
-        (function() {
-            var __renderResult = null;
-            function render(elem) { __renderResult = elem; return elem; }
-            \(jsCode)
-            if (typeof main === 'function') {
-                var res = main();
-                if (res) return res;
-            }
-            if (__renderResult) return __renderResult;
-            return null;
-        })()
-        """
-
-        let result = ctx.evaluateScript(wrapped)
-        if let exception = ctx.exception {
-            let msg = exception.toString() ?? "Script evaluation error"
-            ctx.exception = nil
-            return .failure(HanlinScriptWidgetError(msg))
-        }
-
-        guard let result, !result.isUndefined, !result.isNull else {
-            return .failure(HanlinScriptWidgetError("Script did not return a widget element."))
-        }
-
-        guard let dict = result.toObject() as? [String: Any] else {
-            return .failure(HanlinScriptWidgetError("Script result was not an element dictionary."))
-        }
-
-        return .success(HanlinScriptWidgetElement(dictionary: dict))
+/// Execution-local typed storage. Only the verified outer transaction publishes
+/// it; JavaScript never writes UserDefaults or a process-local fallback.
+@objc final class ScriptWidgetStorageBridge: NSObject, ScriptWidgetStorageJSExports {
+    var values: [String: HanlinValue]
+    var failure: String?
+    init(values: [String: HanlinValue]) { self.values = values }
+    func get(_ key: String) -> Any? { values[key]?.toAny() }
+    func set(_ key: String, _ value: Any) -> Bool {
+        do {
+            guard key.utf8.count <= 256, values.count < 128 || values[key] != nil else { throw HanlinWidgetProgramError.invalidProgram }
+            values[key] = try HanlinWidgetJSON.value(value)
+            return true
+        } catch { failure = "Invalid typed storage value: \(error)"; return false }
     }
+    func remove(_ key: String) -> Bool { values.removeValue(forKey: key); return true }
+    func getString(_ key: String) -> String? { get(key) as? String }
+    func setString(_ key: String, _ value: String) -> Bool { set(key, value) }
+    func getJSON(_ key: String) -> Any? { get(key) }
+    func setJSON(_ key: String, _ value: Any) -> Bool { set(key, value) }
+}
 
-    public func compileJSX(_ jsx: String) -> Result<String, HanlinScriptWidgetError> {
-        guard let ctx = getCompilerContext() else {
-            return .failure(HanlinScriptWidgetError("Could not initialize Babel compiler context."))
+public struct HanlinScriptWidgetExecution: Sendable {
+    public let node: HanlinScriptWidgetPreparedNode
+    public let values: [String: HanlinValue]
+}
+
+/// Adapted widget lifecycle from ScriptWidgetRuntime.swift at 68f04194:
+/// $element JSExport -> original util.js -> async $main -> $render -> resolve
+/// custom function components -> freeze. One invocation owns its VM. No
+/// JSContext, JSValue or mutable exported object is retained or sent out.
+public struct HanlinScriptWidgetRuntime: Sendable {
+    public static let shared = Self()
+    public init() {}
+
+    public func run(program: HanlinWidgetProgram, values: [String: HanlinValue],
+                    environment: [String: HanlinValue], actionID: String? = nil,
+                    actionValue: Bool? = nil) throws -> HanlinScriptWidgetExecution {
+        try program.validate(engine: .scriptwidget)
+        guard let context = JSContext(), let util = Self.resource("util.js") else {
+            throw HanlinScriptWidgetError("Missing ScriptWidget runtime resource")
         }
-
-        ctx.exception = nil
-        guard let transformFn = ctx.objectForKeyedSubscript("HanlinBabelTransform"), !transformFn.isUndefined else {
-            return .failure(HanlinScriptWidgetError("HanlinBabelTransform not available."))
-        }
-
-        let res = transformFn.call(withArguments: [jsx])
-        if let exception = ctx.exception {
-            let msg = exception.toString() ?? "Babel transformation failed"
-            ctx.exception = nil
-            return .failure(HanlinScriptWidgetError("JSX compilation error: \(msg)"))
-        }
-
-        guard let transformed = res?.toString() else {
-            return .failure(HanlinScriptWidgetError("Babel transform produced empty output."))
-        }
-
-        return .success(transformed)
-    }
-
-    private func getCompilerContext() -> JSContext? {
-        if let compilerContext { return compilerContext }
-        guard let ctx = JSContext() else { return nil }
-
-        guard let core = getResourceString(fileName: "core.js") else {
-            print("[HanlinScriptWidget] Missing core.js for Babel compilation")
-            return nil
-        }
-
-        ctx.evaluateScript(core)
-        ctx.evaluateScript("""
-        function HanlinBabelTransform(source) {
-            return Babel.transform(source, {
-                presets: ['react'],
-                plugins: []
-            }).code;
-        }
-        """)
-
-        self.compilerContext = ctx
-        return ctx
-    }
-
-    private func getRuntimeContext() -> JSContext? {
-        if let runtimeContext { return runtimeContext }
-        guard let ctx = JSContext() else { return nil }
-
-        // Setup React.createElement stub for JSX runtime
-        ctx.evaluateScript("""
-        var React = {
-            createElement: function(tag, props) {
-                var children = [];
-                for (var i = 2; i < arguments.length; i++) {
-                    var child = arguments[i];
-                    if (Array.isArray(child)) {
-                        for (var j = 0; j < child.length; j++) children.push(child[j]);
-                    } else if (child !== null && child !== undefined) {
-                        children.push(child);
-                    }
-                }
-                return {
-                    tag: typeof tag === 'string' ? tag : (tag.name || 'custom'),
-                    props: props || {},
-                    children: children
-                };
-            }
-        };
-        var createElement = React.createElement;
-        """)
-
-        if let moment = getResourceString(fileName: "moment.min.js") {
-            ctx.evaluateScript(moment)
-        }
-
-        self.runtimeContext = ctx
-        return ctx
-    }
-
-    private func getResourceString(fileName: String) -> String? {
-        // 1. Try Bundle.main url for support.bundle/fileName
-        if let bundleURL = Bundle.main.url(forResource: "support", withExtension: "bundle"),
-           let bundle = Bundle(url: bundleURL),
-           let fileURL = bundle.url(forResource: fileName, withExtension: nil),
-           let content = try? String(contentsOf: fileURL, encoding: .utf8) {
-            return content
-        }
-
-        // 2. Try Bundle.module for support.bundle/fileName
-        #if SWIFT_PACKAGE
-        if let bundleURL = Bundle.module.url(forResource: "support", withExtension: "bundle"),
-           let bundle = Bundle(url: bundleURL),
-           let fileURL = bundle.url(forResource: fileName, withExtension: nil),
-           let content = try? String(contentsOf: fileURL, encoding: .utf8) {
-            return content
-        }
-        #endif
-
-        // 3. Try App Group folder
-        if let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.itorah.chavrusachat") {
-            let fileURL = container.appending(path: "ScriptingExtensions/support.bundle/\(fileName)")
-            if let content = try? String(contentsOf: fileURL, encoding: .utf8) {
-                return content
+        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+        let guardExecution: @convention(block) () -> Void = {
+            if ContinuousClock.now >= deadline, let current = JSContext.current() {
+                current.exception = JSValue(newErrorFromMessage: "Widget execution budget exceeded", in: current)
             }
         }
+        context.setObject(guardExecution, forKeyedSubscript: "__scriptWidgetCheckExecution" as NSString)
+        context.setObject(ScriptWidgetRuntimeElement.self, forKeyedSubscript: "$element" as NSString)
+        let storage = ScriptWidgetStorageBridge(values: values)
+        context.setObject(storage, forKeyedSubscript: "$storage" as NSString)
+        let getenv: @convention(block) (String) -> Any = { environment[$0]?.toAny() ?? "" }
+        context.setObject(getenv, forKeyedSubscript: "$getenv" as NSString)
+        context.setObject(environment.mapValues { $0.toAny() }, forKeyedSubscript: "$widget" as NSString)
+        context.setObject(actionID ?? "", forKeyedSubscript: "__hanlinAction" as NSString)
+        context.setObject(actionValue.map { ["value": $0] } ?? [:], forKeyedSubscript: "__hanlinEvent" as NSString)
+        var rendered: ScriptWidgetRuntimeElement?
+        var scriptError: String?
+        let render: @convention(block) (ScriptWidgetRuntimeElement) -> Void = { rendered = $0 }
+        let error: @convention(block) (String) -> Void = { scriptError = $0 }
+        context.setObject(render, forKeyedSubscript: "$render" as NSString)
+        context.setObject(error, forKeyedSubscript: "$error" as NSString)
+        context.evaluateScript("var console = {log:function(){},warn:function(){},error:function(e){$error(String(e));}}; var $console=console;")
+        context.evaluateScript(util)
+        if program.javaScript.contains("moment"), let moment = Self.resource("moment.min.js") { context.evaluateScript(moment) }
+        context.evaluateScript(program.javaScript)
+        context.evaluateScript("$main().then(function(){globalThis.__hanlinComplete=true;},function(e){$error(String(e));});")
+        if let exception = context.exception { throw HanlinScriptWidgetError(exception.toString() ?? "ScriptWidget exception") }
+        if let scriptError = scriptError ?? storage.failure { throw HanlinScriptWidgetError(scriptError) }
+        guard ContinuousClock.now < deadline else { throw HanlinScriptWidgetError("Widget execution budget exceeded") }
+        guard context.objectForKeyedSubscript("__hanlinComplete")?.toBool() == true else {
+            throw HanlinScriptWidgetError("Widget is awaiting an unsupported asynchronous operation")
+        }
+        guard let rendered else { throw HanlinScriptWidgetError("The script did not call $render") }
+        var count = 0
+        var active: Set<ObjectIdentifier> = []
+        let frozen = try freeze(rendered, depth: 1, count: &count, active: &active, context: context)
+        return .init(node: frozen, values: storage.values)
+    }
 
-        return nil
+    // Source-derived component resolution, performed only by the VM owner.
+    private func freeze(_ input: ScriptWidgetRuntimeElement, depth: Int, count: inout Int,
+                        active: inout Set<ObjectIdentifier>, context: JSContext) throws -> HanlinScriptWidgetPreparedNode {
+        guard depth <= 64, count < 1_000 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+        var element = input
+        var inserted: [ObjectIdentifier] = []
+        defer { inserted.forEach { active.remove($0) } }
+        for _ in 0..<64 {
+            let identifier = ObjectIdentifier(element)
+            guard active.insert(identifier).inserted else { throw HanlinScriptWidgetError("Widget component cycle") }
+            inserted.append(identifier)
+            if element.tagAsString() != nil { break }
+            var arguments = element.getProps()
+            arguments["children"] = element.getChildren()
+            guard let result = element.tag.call(withArguments: [arguments])?.toObject() as? ScriptWidgetRuntimeElement else {
+                throw HanlinScriptWidgetError("Custom component must return a ScriptWidget element")
+            }
+            element = result
+        }
+        guard let tag = element.tagAsString(), element.getProps().count <= 128 else { throw HanlinScriptWidgetError("Invalid native widget element") }
+        count += 1
+        var props: [String: HanlinValue] = [:]
+        for (key, value) in element.getProps() {
+            guard let key = key as? String else { throw HanlinScriptWidgetError("Invalid property key") }
+            props[key] = try HanlinWidgetJSON.value(value)
+        }
+        var children: [HanlinScriptWidgetPreparedNode.Child] = []
+        func append(_ value: Any) throws {
+            if let child = value as? ScriptWidgetRuntimeElement {
+                children.append(.element(try freeze(child, depth: depth + 1, count: &count, active: &active, context: context)))
+            } else if let nested = value as? [Any] {
+                for item in nested { try append(item) }
+            } else { children.append(.value(try HanlinWidgetJSON.value(value))) }
+        }
+        for child in element.getChildren() { try append(child) }
+        if let exception = context.exception { throw HanlinScriptWidgetError(exception.toString() ?? "Component exception") }
+        return .init(tag: tag, props: props, children: children)
+    }
+
+    private static func resource(_ name: String) -> String? {
+        guard let url = Bundle.module.url(forResource: name, withExtension: nil, subdirectory: "support.bundle") else { return nil }
+        return try? String(contentsOf: url, encoding: .utf8)
     }
 }

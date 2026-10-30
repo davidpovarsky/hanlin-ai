@@ -1,0 +1,86 @@
+[
+  {
+    "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
+    "sha256": "e7a982ea032b4e98edde6d8052189660b80c908c63009325e8d9fb4ee46a51c4",
+    "bytes": 1125,
+    "engine": "expo",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "80c22aeab814f67b488edf0f48fb6c5f552b2cf6f30c00e6a92457a086c5ac0b",
+      "package.json": "654f333f2ea880593c03ea667ed552730cbea8bbb419a124fd702f9e233e7379",
+      "widget.tsx": "537a393b527f84784dd8b5309e505255bf9923b9999998ea4282fca343630f4c"
+    }
+  },
+  {
+    "archive": "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+    "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68",
+    "bytes": 1281,
+    "engine": "expo",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "a931e3e24e79587ac5030d0931ce9d8b82cc316427374b0190fc27637cd355c1",
+      "package.json": "92e3dead62810727abe07f25596ac40dcd7b314312133322ccd1be5736fc27a2",
+      "widget.jsx": "e94a3349aff5092029f02e17572bb84f9cf803d2b83578c51893beaed9a924d8"
+    }
+  },
+  {
+    "archive": "Hanlin-ScriptWidget-Dashboard.scripting",
+    "sha256": "296798dff34610ce8c79b241e4921b128e32138d70c449a1f2e2b83c2d65c0a3",
+    "bytes": 940,
+    "engine": "scriptwidget",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "ac72a19ad65ee94a8b0dd8b5fe124a328453a71a8be651cb97edc6988ac1d911",
+      "assets/pixel.png": "56bd3a7251ed205191d3bdfe70576ef51adf978c47276caf4e22707d45d54a9d",
+      "widget.jsx": "7d9abcd479e1faf4c3622f5fcc9232c97afd5e8611dc0bf51605df6915209298"
+    }
+  },
+  {
+    "archive": "Hanlin-ScriptWidget-Actions.scripting",
+    "sha256": "4627a525d145da03f0062b813237acdbb3eb28507cbc722468b4f548f9ca741b",
+    "bytes": 786,
+    "engine": "scriptwidget",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "409945c1945dcd574b6596b64161243d7a98c8902dc2f5bd0a1e4ee8e24e4c69",
+      "widget.jsx": "05b287d759d4867612f35844d75ea17b0cf37fb3d758ebe106c49fa4dbf83c42"
+    }
+  },
+  {
+    "archive": "Hanlin-Mixed-Native-Widget.hanlinExpo",
+    "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e",
+    "bytes": 999,
+    "engine": "expo",
+    "expected": "DEFERRED_OPTIONAL",
+    "sources": {
+      "script.json": "1d8e2d59fd7bd37aa2e5ef63448a9bb068673cbde9aa725a2fd4b4847f1c14d9",
+      "package.json": "134d880cc27eab880f7cbb4357c5808a31033ad97180645ba83e2274e078b9e5",
+      "widget.jsx": "b57ec0ea5ae1bfc97b374b6b0ec1f880cf4483428007c84d7db6075c1f446a12",
+      "README.txt": "6e25fe76db504eed99b59fe7d058d3e84abb5117bc646668040ffc389f8689ff"
+    }
+  },
+  {
+    "archive": "Hanlin-Widget-Legacy-Regression.scripting",
+    "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+    "bytes": 444,
+    "engine": "legacy",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "b966a83666cd2acfb5d9498ce6d4b99cfbd638805f876d518581972a50b2d22b",
+      "widget.json": "701f8e641f0e756d986e0d14471cb0178761a18bb6965b1f95223981850a5b9a"
+    }
+  },
+  {
+    "archive": "Hanlin-Widget-Invalid-Cases.hanlinExpo",
+    "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c",
+    "bytes": 948,
+    "engine": "foowidget",
+    "expected": "REJECT_IMPORT",
+    "sources": {
+      "script.json": "5c227caedcc50532bca25796b6cf1d576c304109ccbd3ef446889f7c397bc248",
+      "package.json": "d9e5982141be29b6e31f7552163556f4f9bd0283dcf94345c40a658bd4d0832d",
+      "widget.jsx": "29bbbe6a63f5381d5575b3a8a29272db8d21579b24130bdf7f43d800f4bc992c",
+      "negative-cases.json": "1823cdae5c48142036aece46a0af7c9e6a88540aaeea9c9c5125f8bf48def6b0"
+    }
+  }
+]

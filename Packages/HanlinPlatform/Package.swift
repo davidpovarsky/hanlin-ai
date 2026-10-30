@@ -63,6 +63,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
             revision: "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6"
@@ -101,8 +102,15 @@ let package = Package(
             dependencies: ["HanlinScriptContracts"]
         ),
         .target(
+            name: "HanlinWidgetCompiler",
+            dependencies: ["HanlinPlatformContracts", "HanlinScriptContracts"],
+            resources: [.copy("Resources/core.js"), .copy("Resources/prepare-widget.js")],
+            linkerSettings: [.linkedFramework("JavaScriptCore", .when(platforms: [.iOS, .macOS]))]
+        ),
+        .target(
             name: "HanlinScriptCompiler",
             dependencies: [
+                "HanlinWidgetCompiler",
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
@@ -212,11 +220,14 @@ let package = Package(
         .target(
             name: "HanlinScriptExtensions",
             dependencies: [
+                .product(name: "SwiftyJSON", package: "SwiftyJSON"),
+                "HanlinWidgetCompiler",
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
                 "HanlinScriptUI",
                 "HanlinChatCore"
             ],
+            exclude: ["ScriptWidget/Original/LICENSE.txt", "ScriptWidget/Original/NOTICE.txt", "ScriptWidget/Original/Component/Attributes/Animation/ClockHandKit-LICENSE.txt"],
             resources: [
                 .process("Resources")
             ],
@@ -226,8 +237,10 @@ let package = Package(
         ),
         .testTarget(
             name: "HanlinScriptExtensionsTests",
-            dependencies: ["HanlinScriptExtensions", "HanlinChatCore"]
+            dependencies: ["HanlinScriptExtensions", "HanlinChatCore", "HanlinScriptCompiler", "HanlinScriptStore", "HanlinLegacyWidgetStoreFixture"]
         ),
+        .target(name: "HanlinLegacyWidgetStoreFixture", dependencies: ["HanlinPlatformContracts", "HanlinScriptUI"],
+            path: "Tests/Fixtures/LegacyWidgetStore", exclude: ["PROVENANCE.txt"]),
         .target(
             name: "HanlinScriptingApplicationRuntime",
             dependencies: [

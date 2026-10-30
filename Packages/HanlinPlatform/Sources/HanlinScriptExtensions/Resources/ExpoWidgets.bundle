@@ -44,7 +44,7 @@
     }
   });
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/decorator.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/decorator.ts
   var interactiveTargetTypes = [
     "Button",
     "FilledTonalButton",
@@ -93,7 +93,7 @@
     return `${baseTarget}_${parentKey}`;
   }
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/jsx-runtime-stub.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/jsx-runtime-stub.ts
   var jsx_runtime_stub_exports = {};
   __export(jsx_runtime_stub_exports, {
     Fragment: () => Fragment,
@@ -108,7 +108,7 @@
     jsxs: () => jsxProd
   });
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/react-stub.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/react-stub.ts
   var react_stub_exports = {};
   __export(react_stub_exports, {
     Children: () => Children,
@@ -150,10 +150,12 @@
   var useLayoutEffect = () => {
   };
   var createElement = (type, props, ...children) => {
+    const { key, ...rest } = props ?? {};
     return {
       type,
+      key: key == null ? null : String(key),
       props: {
-        ...props,
+        ...rest,
         children: children.length === 1 ? children[0] : children.length > 0 ? children : props?.children
       }
     };
@@ -174,14 +176,14 @@
   };
   var react_stub_default = React;
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/jsx-runtime-stub.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/jsx-runtime-stub.ts
   function jsxProd(type, config, maybeKey) {
     const { key = maybeKey, ...props } = config;
     return { type, key: key === void 0 ? null : String(key), props };
   }
   var jsxFileName = "widget";
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/react-native-stub.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/react-native-stub.ts
   var react_native_stub_exports = {};
   __export(react_native_stub_exports, {
     I18nManager: () => I18nManager,
@@ -216,7 +218,7 @@
   var TextInput = "react-native.textinput";
   var I18nManager = { isRTL: false, doLeftAndRightSwapInRTL: false };
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/ui-globals.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/ui-globals.ts
   var ui_globals_exports = {};
   __export(ui_globals_exports, {
     AccessoryWidgetBackground: () => AccessoryWidgetBackground,
@@ -451,7 +453,7 @@
     zIndex: () => zIndex
   });
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/modules/expo-ui.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/modules/expo-ui.ts
   var expo_ui_default = {
     getMaterialColors(options) {
       if (options?.seedColor != null) {
@@ -470,7 +472,7 @@
     }
   };
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/expo-stub.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/expo-stub.ts
   var nativeModuleStubs = { ExpoUI: expo_ui_default };
   function requireNativeModule(name) {
     return nativeModuleStubs[name] ?? {};
@@ -2912,7 +2914,7 @@
     });
   }
 
-  // ../../.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package/bundle/index.ts
+  // Scripts/Widgets/vendor/expo-widgets/bundle/index.ts
   function normalizeWidgetTree(node, position = 0) {
     let key = null;
     while (isValidElement(node) && typeof node.type === "function") {

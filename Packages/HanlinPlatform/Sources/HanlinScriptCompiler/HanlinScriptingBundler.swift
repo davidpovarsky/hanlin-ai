@@ -312,7 +312,8 @@ public struct HanlinScriptingBundler: Sendable {
     public func writeInstallArtifact(
         _ bundle: HanlinScriptingBundle,
         packageRoot: URL,
-        to root: URL
+        to root: URL,
+        preparedWidgetPrograms: [String: Data] = [:]
     ) throws -> HanlinPackageArtifactManifest {
         guard !fileManager.fileExists(atPath: root.path(percentEncoded: false)) else {
             throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_destination_exists")
@@ -328,7 +329,18 @@ public struct HanlinScriptingBundler: Sendable {
             to: temporary.appending(path: "source", directoryHint: .isDirectory)
         )
         try write(bundle, to: temporary)
-        let complete = try completeArtifactManifest(bundle.manifest, artifactRoot: temporary)
+        var widgetFiles: [HanlinArtifactFile] = []
+        for (path, data) in preparedWidgetPrograms.sorted(by: { $0.key < $1.key }) {
+            guard HanlinArchivePolicy.normalizedRelativePath(path) == path,
+                  path.hasPrefix("widgets/"), path.hasSuffix(".json"), data.count <= 3 * 1_024 * 1_024 else {
+                throw HanlinScriptingBundlerError.invalidCompilerOutput("invalid_widget_program")
+            }
+            let url = temporary.appending(path: path)
+            try fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try data.write(to: url, options: .atomic)
+            widgetFiles.append(.init(logicalPath: path, sha256: Self.sha256(data), byteCount: Int64(data.count), context: .widget))
+        }
+        let complete = try completeArtifactManifest(bundle.manifest, artifactRoot: temporary, additionalFiles: widgetFiles)
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.sortedKeys]
         try encoder.encode(complete).write(
@@ -377,7 +389,8 @@ public struct HanlinScriptingBundler: Sendable {
 
     private func completeArtifactManifest(
         _ compiled: HanlinPackageArtifactManifest,
-        artifactRoot: URL
+        artifactRoot: URL,
+        additionalFiles: [HanlinArtifactFile] = []
     ) throws -> HanlinPackageArtifactManifest {
         let sourceRoot = artifactRoot.appending(path: "source", directoryHint: .isDirectory)
         guard let enumerator = fileManager.enumerator(
@@ -387,7 +400,7 @@ public struct HanlinScriptingBundler: Sendable {
         ) else {
             throw HanlinScriptingBundlerError.invalidCompilerOutput("artifact_source_enumeration_failed")
         }
-        var files = compiled.files
+        var files = compiled.files + additionalFiles
         for case let url as URL in enumerator {
             let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
             guard values.isSymbolicLink != true else {

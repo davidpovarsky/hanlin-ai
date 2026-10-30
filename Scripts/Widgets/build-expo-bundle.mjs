@@ -1,18 +1,17 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { existsSync } from 'node:fs';
 
 const require = createRequire(import.meta.url);
 const repoRoot = path.resolve(import.meta.dirname, '../..');
 const esbuild = require(path.join(repoRoot, 'Scripts/Expo/node_modules/esbuild'));
+const lock = JSON.parse(await fs.readFile(path.join(repoRoot, 'Scripts/Expo/package-lock.json'), 'utf8'));
+if (esbuild.version !== lock.packages['node_modules/esbuild'].version) {
+  throw new Error('Install the locked Expo tooling dependencies with npm ci before building widgets.');
+}
 
-// Upstream expo-widgets source location
-const packageRoot = path.join(repoRoot, 'scratch/expo-widgets-source/package');
-const fallbackPackageRoot = path.resolve('C:/Users/DAVID/.gemini/antigravity/brain/ec337a59-3bc1-4f74-b199-e8057268ddd6/scratch/expo-widgets-source/package');
-const resolvedPackageRoot = existsSync(packageRoot) ? packageRoot : fallbackPackageRoot;
-
-const bundleDir = path.join(resolvedPackageRoot, 'bundle');
+// Vendored upstream expo-widgets source location
+const bundleDir = path.join(repoRoot, 'Scripts/Widgets/vendor/expo-widgets/bundle');
 const entryPoint = path.join(bundleDir, 'index.ts');
 
 const emptyPlugin = {
@@ -28,11 +27,13 @@ async function buildExpoWidgetsBundle() {
   console.log('[HanlinWidgets] Bundling ExpoWidgets.bundle with esbuild...');
 
   const result = await esbuild.build({
-    entryPoints: [entryPoint],
+    absWorkingDir: repoRoot,
+    entryPoints: [path.relative(repoRoot, entryPoint).split(path.sep).join('/')],
     bundle: true,
     write: false,
     format: 'iife',
     minify: false, // Keep readable for inspection/debugging in development
+    sourcemap: false,
     nodePaths: [path.join(repoRoot, 'Scripts/Expo/node_modules')],
     alias: {
       'expo': path.join(bundleDir, 'expo-stub.ts'),

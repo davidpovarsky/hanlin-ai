@@ -8,6 +8,7 @@ let package = Package(
     name: "HanlinExpoRuntime",
     platforms: [.iOS("27.0")],
     products: [
+        .library(name: "HanlinExpoWidgetNative", targets: ["HanlinExpoWidgetNative"]),
         .library(
             name: "HanlinExpoRuntime",
             targets: ["HanlinExpoRuntime"]
@@ -17,6 +18,13 @@ let package = Package(
         .package(name: "HanlinExpoNativeAPI", path: "../HanlinExpoNativeAPI")
     ],
     targets: [
+        .target(
+            name: "HanlinExpoWidgetNative",
+            dependencies: ["ExpoUI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoModulesJSI", "ReactNativeHeaders"],
+            exclude: ["LICENSE-EXPO.txt"],
+            swiftSettings: [.unsafeFlags(["-application-extension"])],
+            linkerSettings: [.linkedFramework("SwiftUI"), .linkedFramework("WidgetKit")]
+        ),
         .target(
             name: "HanlinExpoRuntime",
             dependencies: [

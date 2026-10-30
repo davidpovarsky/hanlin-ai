@@ -2,6 +2,7 @@ import CryptoKit
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptContracts
+import HanlinWidgetCompiler
 
 public struct HanlinAPISymbolRecord: Codable, Hashable, Sendable {
     public let symbol: String
@@ -72,6 +73,8 @@ public struct HanlinScriptAnalyzer: Sendable {
             || package.manifest.unknownFields["hanlinRuntime"] == .string(HanlinRuntimeProfile.hanlinNativeScript.rawValue)
         let expoDeclared = package.manifest.hanlinRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue
             || package.manifest.unknownFields["hanlinRuntime"] == .string(HanlinRuntimeProfile.hanlinExpo.rawValue)
+            || package.manifest.declaredWidgetEngine == .expo
+        let scriptWidgetDeclared = package.manifest.declaredWidgetEngine == .scriptwidget
         let entrypoints = discoverEntrypoints(
             manifest: package.manifest,
             sourcePaths: sourcePaths
@@ -80,6 +83,17 @@ public struct HanlinScriptAnalyzer: Sendable {
         var unresolved: Set<String> = []
         var findings: [HanlinCompatibilityFinding] = []
         var importedSymbols: Set<String> = []
+
+        do {
+            try package.manifest.validateWidgetMetadata()
+        } catch {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "Invalid widget manifest: \(error). Declare a supported engine and matching runtime explicitly."))
+        }
+        if let entry = package.manifest.entry,
+           HanlinArchivePolicy.normalizedRelativePath(entry) != entry || files[entry] == nil {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json", message: "The declared entry must be a canonical existing package-relative source path."))
+        }
 
         for path in sourcePaths where Self.isSource(path) {
             guard let data = files[path], let source = String(data: data, encoding: .utf8) else {
@@ -91,7 +105,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
                 continue
             }
-            if !nativeScriptDeclared && !expoDeclared {
+            if !nativeScriptDeclared && !expoDeclared && !scriptWidgetDeclared {
                 if Self.matches(#"\bimport\s*\("#, source) {
                     findings.append(.init(
                         state: .unsupported,
@@ -149,6 +163,15 @@ public struct HanlinScriptAnalyzer: Sendable {
                 declaredCapabilities: package.manifest.declaredCapabilities,
                 findings: &findings
             )
+        }
+
+        for entrypoint in entrypoints where entrypoint.kind == .widget && entrypoint.widgetEngine != .legacy && entrypoint.widgetEngine != nil {
+            do {
+                _ = try HanlinWidgetCompiler.prepare(manifest: package.manifest, entryPath: entrypoint.sourcePath, files: files)
+            } catch {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: entrypoint.sourcePath,
+                    message: "Widget preparation failed: \(error)"))
+            }
         }
 
         var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
@@ -219,7 +242,8 @@ public struct HanlinScriptAnalyzer: Sendable {
                 runtimePolicyID: descriptor.runtimePolicyID,
                 runtimeProfile: descriptor.runtimeProfile,
                 artifactDigest: descriptor.artifactDigest,
-                compatibility: descriptor.compatibility
+                compatibility: descriptor.compatibility,
+                widgetEngine: descriptor.widgetEngine
             )
         }
         let approvalState = HanlinCapabilityApprovalState(
@@ -384,7 +408,9 @@ public struct HanlinScriptAnalyzer: Sendable {
         findings: inout [HanlinCompatibilityFinding]
     ) {
         let appEntrypoints = entrypoints.filter { $0.kind == .app }
-        guard appEntrypoints.count == 1, let entrypoint = appEntrypoints.first else {
+        let widgetEntrypoints = entrypoints.filter { $0.kind == .widget }
+
+        guard appEntrypoints.count <= 1, let entrypoint = appEntrypoints.first ?? widgetEntrypoints.first else {
             findings.append(.init(
                 state: .unsupported,
                 severity: .error,
@@ -423,6 +449,10 @@ public struct HanlinScriptAnalyzer: Sendable {
                 message: "Expo requires a prepared app package.json with hanlinRuntime set to hanlin-expo."
             ))
             return
+        }
+        if !widgetEntrypoints.isEmpty, packageJSON["hanlinExpo"] == nil {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                message: "Expo widgets require an explicit hanlinExpo runtimeVersion/plugins contract."))
         }
         if let contractValue = packageJSON["hanlinExpo"] {
             guard let contract = contractValue as? [String: Any],
@@ -643,44 +673,58 @@ public struct HanlinScriptAnalyzer: Sendable {
         sourcePaths: [String]
     ) -> [HanlinPackageEntrypointDescriptor] {
         let available = Set(sourcePaths)
-        var candidates: [(String, HanlinPackageEntrypointKind, Set<HanlinExecutionContext>, String)] = []
-        let appPath = manifest.entry.flatMap { available.contains($0) ? $0 : nil }
-            ?? ["index.tsx", "index.ts", "index.jsx", "index.js", "index.py"].first { available.contains($0) }
-        if let appPath {
-            candidates.append((appPath, .app, [.mainApplication], "foreground-app-v1"))
+        var candidates: [(String, HanlinPackageEntrypointKind, Set<HanlinExecutionContext>, String, HanlinWidgetEngine?)] = []
+        let isWidgetOnly = manifest.isWidgetOnlyPackage
+
+        if !isWidgetOnly {
+            let appPath = manifest.entry.flatMap { available.contains($0) ? $0 : nil }
+                ?? ["index.tsx", "index.ts", "index.jsx", "index.js", "index.py"].first { available.contains($0) }
+            if let appPath {
+                candidates.append((appPath, .app, [.mainApplication], "foreground-app-v1", nil))
+            }
         }
-        let conventions: [(String, HanlinPackageEntrypointKind, HanlinExecutionContext, String)] = [
-            ("assistant_tool.tsx", .assistantTool, .mainApplication, "assistant-tool-v1"),
-            ("assistant_tool.ts", .assistantTool, .mainApplication, "assistant-tool-v1"),
-            ("embedded_result.tsx", .embeddedResult, .mainApplication, "embedded-result-v1"),
-            ("embedded_result.ts", .embeddedResult, .mainApplication, "embedded-result-v1"),
-            ("chat_card.tsx", .embeddedResult, .mainApplication, "embedded-result-v1"),
-            ("chat_card.ts", .embeddedResult, .mainApplication, "embedded-result-v1"),
-            ("widget.tsx", .widget, .widget, "widget-v1"),
-            ("widget.ts", .widget, .widget, "widget-v1"),
-            ("widget.json", .widget, .widget, "widget-v1"),
-            ("app_intents.tsx", .appIntent, .appIntent, "app-intent-v1"),
-            ("intent.tsx", .appIntent, .appIntent, "app-intent-v1"),
-            ("intent.json", .appIntent, .appIntent, "app-intent-v1"),
-            ("live_activity.tsx", .liveActivity, .liveActivity, "live-activity-v1"),
-            ("translation_ui_provider.tsx", .translationUI, .translationUI, "translation-ui-v1"),
-            ("translation_ui_provider.ts", .translationUI, .translationUI, "translation-ui-v1"),
-            ("translation.json", .translationUI, .translationUI, "translation-ui-v1"),
-            ("translation_ui.json", .translationUI, .translationUI, "translation-ui-v1")
+
+        // Widget entrypoint from manifest.entry when widget-only
+        if isWidgetOnly, let entry = manifest.entry, available.contains(entry) {
+            let engine = manifest.declaredWidgetEngine ?? .legacy
+            candidates.append((entry, .widget, [.widget], "widget-v1", engine))
+        }
+
+        let conventions: [(String, HanlinPackageEntrypointKind, HanlinExecutionContext, String, HanlinWidgetEngine?)] = [
+            ("assistant_tool.tsx", .assistantTool, .mainApplication, "assistant-tool-v1", nil),
+            ("assistant_tool.ts", .assistantTool, .mainApplication, "assistant-tool-v1", nil),
+            ("embedded_result.tsx", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("embedded_result.ts", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("chat_card.tsx", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("chat_card.ts", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("widget.jsx", .widget, .widget, "widget-v1", .legacy),
+            ("widget.tsx", .widget, .widget, "widget-v1", .legacy),
+            ("widget.ts", .widget, .widget, "widget-v1", .legacy),
+            ("widget.js", .widget, .widget, "widget-v1", .legacy),
+            ("widget.json", .widget, .widget, "widget-v1", .legacy),
+            ("app_intents.tsx", .appIntent, .appIntent, "app-intent-v1", nil),
+            ("intent.tsx", .appIntent, .appIntent, "app-intent-v1", nil),
+            ("intent.json", .appIntent, .appIntent, "app-intent-v1", nil),
+            ("live_activity.tsx", .liveActivity, .liveActivity, "live-activity-v1", nil),
+            ("translation_ui_provider.tsx", .translationUI, .translationUI, "translation-ui-v1", nil),
+            ("translation_ui_provider.ts", .translationUI, .translationUI, "translation-ui-v1", nil),
+            ("translation.json", .translationUI, .translationUI, "translation-ui-v1", nil),
+            ("translation_ui.json", .translationUI, .translationUI, "translation-ui-v1", nil)
         ]
         var kinds = Set(candidates.map { $0.1 })
-        for (path, kind, context, policy) in conventions
+        for (path, kind, context, policy, defaultEngine) in conventions
             where available.contains(path) && kinds.insert(kind).inserted
         {
-            candidates.append((path, kind, [context], policy))
+            let engine = (kind == .widget) ? (manifest.declaredWidgetEngine ?? defaultEngine) : nil
+            candidates.append((path, kind, [context], policy, engine))
         }
-        return candidates.map { path, kind, contexts, policy in
+        return candidates.map { path, kind, contexts, policy, engine in
             let requestedRuntime = manifest.hanlinRuntime ?? manifest.unknownFields["hanlinRuntime"].flatMap { value -> String? in
                 if case let .string(rawValue) = value { rawValue } else { nil }
             }
             let profile: HanlinRuntimeProfile = if requestedRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue {
                 .hanlinNativeScript
-            } else if requestedRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue {
+            } else if requestedRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue || engine == .expo {
                 .hanlinExpo
             } else if path.lowercased().hasSuffix(".py") {
                 .hanlinPython
@@ -694,7 +738,8 @@ public struct HanlinScriptAnalyzer: Sendable {
                 supportedContexts: contexts,
                 runtimePolicyID: policy,
                 runtimeProfile: profile,
-                compatibility: .partial
+                compatibility: .partial,
+                widgetEngine: engine
             )
         }.sorted { ($0.kind.rawValue, $0.sourcePath) < ($1.kind.rawValue, $1.sourcePath) }
     }

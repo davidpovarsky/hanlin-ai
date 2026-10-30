@@ -14,6 +14,10 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Discoveries & Tips
 
+- **Dual Native Widget Engines Hardening & Isolated Variant Storage:** In `HanlinScriptingWidgets.appex`, running multiple widget engines concurrently requires isolating App Group state keys not just by `installedPackageID` and `entrypointID`, but also by `variantID` (e.g. `hanlin_widget_state_<pkg>_<entrypoint>_<variantID>`). This allows independent configuration instances of the same script (`A1` vs `A2`) on the iOS Home Screen without state bleed.
+- **In-Extension AppIntent State Mutation:** When executing AppIntents (`HanlinGenericWidgetActionIntent`) with the host app terminated, the intent must directly mutate state in the App Group and reload timelines of `"com.hanlin.scripting.widget"`; merely enqueuing resume commands to the main app fails to update widget UI until the app is reopened.
+- **Defensive Widget Payload Malformed Discrimination:** Decoding unknown or malformed widget engine payloads must fail closed with explicit `.malformed(reason)` payloads and dedicated error views rather than silently falling back to `.legacy` nodes, which mask packaging and syntax bugs during testing.
+- **Recursive SwiftUI Text Concatenation:** Nested `TextView` elements in Expo layouts must be aggregated recursively via SwiftUI's `+` operator on `Text`, preserving inline font, weight, and styling across concatenated spans.
 - **CloudKit Container in CI:** On iOS Simulator running in CI without active iCloud entitlements/credentials, `cloudKitDatabase` must be initialized to `.none` to avoid blocking/deadlock during app/agent startup.
 - **Node Worker ESM Resolution:** Node 22 exhibited a known worker loader internal assertion failure (`ERR_INTERNAL_ASSERTION: Unexpected module status 3`) on concurrent ESM worker resolution. Resolved cleanly in Node 24.5 (`@cablate/mcp-google-map` passes capability probing with exit code 0).
 - **Simulator Concurrency Gates:** In XCTest suites driving async agent loops, unbounded polling loops can cause test runner timeouts. Use bounded timeouts with exponential backoff.
@@ -34,10 +38,12 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **Immediate Revocation Before Asynchronous Store Persistence:** In native script bridges offering raw Objective-C / JSI access, deferring session teardown until after an asynchronous persistence point (e.g. `await store.setCapabilityGranted(...)`) creates a race condition where untrusted JavaScript may execute native calls during store I/O. Calling `HanlinExpoNativeAPIManager.revokeActiveSession()` and `dismissActiveApplication()` synchronously before the first `await` suspension point eliminates this window completely.
 
 - **Dual Native Widget Engines & Schema V2 Integration:** Supporting both Expo Widgets (JavaScriptCore + ExpoUI SwiftUI) and ScriptWidget (JavaScriptCore + JSX runtime + 29 native SwiftUI tags) inside a generic WidgetKit extension (`HanlinScriptingWidgets.appex`) requires a versioned App Group storage contract (`schemaVersion: 2`). Transparent backwards compatibility with Schema 1 is maintained by defaulting missing engines to `.legacy` and reconstructing `.legacy(root)` payloads.
-- **Mixed-Tree Native Widget Adapter:** Embedding a ScriptWidget JSX subtree as a child inside an Expo Widgets layout is achieved by mapping the `ScriptWidgetSubtree` node type in `HanlinExpoWidgetsViewRenderer` to `HanlinScriptWidgetElementView`, returning a native `AnyView`.
-- **Node/Undici HTTPS on Dual-Stack iOS Networks (B03):** Node.js `fetch()` (undici) hanging or failing with unmanaged socket/fd errors on iOS networks occurs because the Happy Eyeballs resolver stalls on unrouted IPv6 sockets in the iOS sandbox. Setting `dns.setDefaultResultOrder('ipv4first')` in the Node host and worker initialization resolves this issue permanently.
+- **Mixed native widget subtrees:** DEFERRED_OPTIONAL. The prior handcrafted AnyView adapter did not demonstrate original-engine compatibility.
+- **Node/Undici HTTPS (B03):** `ipv4first` remains a mitigation. Embedded iPad TLS/fd behavior and the underlying failure cause have not been verified by the widget work.
 
 ## In Progress / Active Blockers
+
+- [ ] Dual native widget engines, Pass 3: original Expo AnyChild and ScriptWidget builders are being integrated; verified artifact loading, canonical instance actions and transactional state replace Pass-2 surrogates. Apple compilation, native semantic/UI evidence and signed iPadOS 27 acceptance remain open. Pass-2 source was preserved privately before editing; its former Done verdict was unsupported. See `docs/widget-engines/CI_AND_DEVICE_RESULTS.md`.
 
 - **Open MASTER Acceptance Gates (Full PASS 4.1 Remains Open):**
   - **FINAL-03:** Fresh iPadOS 27 build-for-testing on final implementation commit (historical iOS 26 archive summary cannot substitute).

@@ -389,3 +389,44 @@ private struct DynamicCodingKey: CodingKey {
         return nil
     }
 }
+
+
+extension HanlinScriptingManifest {
+    public var declaredWidgetEngine: HanlinWidgetEngine? {
+        if let val = unknownFields["widgetEngine"] ?? unknownFields["widget_engine"] ?? unknownFields["engine"],
+           case let .string(str) = val {
+            return HanlinWidgetEngine(rawValue: str.lowercased())
+        }
+        return nil
+    }
+
+    public var isWidgetOnlyPackage: Bool {
+        if let kindVal = unknownFields["kind"], case let .string(str) = kindVal, str.lowercased() == "widget" {
+            return true
+        }
+        return false
+    }
+
+    /// Validate the declaration separately from lookup so an unknown engine
+    /// cannot disappear into the historical missing-engine legacy default.
+    public func validateWidgetMetadata() throws {
+        let declarations = ["widgetEngine", "widget_engine", "engine"].compactMap { unknownFields[$0] }
+        guard declarations.allSatisfy({ value in
+            guard case let .string(raw) = value else { return false }
+            return HanlinWidgetEngine(rawValue: raw) != nil
+        }), Set(declarations).count <= 1 else {
+            throw HanlinWidgetManifestError.invalidEngine
+        }
+        if declaredWidgetEngine == .expo, hanlinRuntime != HanlinRuntimeProfile.hanlinExpo.rawValue {
+            throw HanlinWidgetManifestError.conflictingRuntime
+        }
+        if declaredWidgetEngine == .scriptwidget, hanlinRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue {
+            throw HanlinWidgetManifestError.conflictingRuntime
+        }
+        if isWidgetOnlyPackage, entry == nil { throw HanlinWidgetManifestError.missingEntry }
+    }
+}
+
+public enum HanlinWidgetManifestError: Error, Sendable {
+    case invalidEngine, conflictingRuntime, missingEntry
+}

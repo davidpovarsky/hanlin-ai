@@ -1,5 +1,6 @@
 import HanlinPlatformContracts
 import HanlinScriptContracts
+import HanlinScriptExtensions
 import HanlinScriptStore
 import HanlinScriptUI
 import SwiftUI
@@ -200,6 +201,10 @@ struct ScriptingInstalledPackageDetailView: View {
     let packageID: HanlinInstalledPackageID
     let platform: HanlinScriptingPlatform
     @Environment(\.dismiss) private var dismiss
+    @State private var widgetInstances: [HanlinWidgetInstance] = []
+    @State private var sourceInstanceID = ""
+    @State private var newInstanceName = ""
+    @State private var widgetInstanceError: String?
 
     var body: some View {
         Group {
@@ -210,6 +215,7 @@ struct ScriptingInstalledPackageDetailView: View {
             }
         }
         .navigationTitle(package?.manifest?.name ?? "Script Package")
+        .task { loadWidgetInstances() }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") {
@@ -240,6 +246,32 @@ struct ScriptingInstalledPackageDetailView: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
+                }
+            }
+            if package.enabled, package.entrypoints.contains(where: { $0.kind == .widget && $0.widgetEngine != nil && $0.widgetEngine != .legacy }) {
+                Section("Widget instances") {
+                    ForEach(widgetInstances, id: \.entityID) { instance in
+                        LabeledContent(instance.displayName, value: instance.engine.rawValue)
+                    }
+                    Picker("Copy from", selection: $sourceInstanceID) {
+                        ForEach(widgetInstances, id: \.entityID) { instance in
+                            Text(instance.displayName).tag(instance.entityID)
+                        }
+                    }
+                    TextField("Instance name", text: $newInstanceName)
+                        .accessibilityIdentifier("hanlin-widget-instance-name")
+                    Button("Create independent instance") {
+                        do {
+                            try platform.createWidgetInstance(from: sourceInstanceID, name: newInstanceName)
+                            newInstanceName = ""
+                            loadWidgetInstances()
+                        } catch { widgetInstanceError = String(describing: error) }
+                    }
+                    .disabled(sourceInstanceID.isEmpty || newInstanceName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .accessibilityIdentifier("hanlin-widget-create-instance")
+                    Text("Choose these names in the Home Screen widget configuration. Two placements selecting the same instance share state; separate instances keep independent state.")
+                        .font(.caption).foregroundStyle(.secondary)
+                    if let widgetInstanceError { Text(widgetInstanceError).foregroundStyle(.red) }
                 }
             }
             let capabilities = Set(
@@ -309,6 +341,14 @@ struct ScriptingInstalledPackageDetailView: View {
                 Task { await platform.setEnabled(value, for: packageID) }
             }
         )
+    }
+
+    private func loadWidgetInstances() {
+        do {
+            widgetInstances = try platform.widgetInstances(for: packageID).filter { $0.engine != .legacy }
+            if !widgetInstances.contains(where: { $0.entityID == sourceInstanceID }) { sourceInstanceID = widgetInstances.first?.entityID ?? "" }
+            widgetInstanceError = nil
+        } catch { widgetInstanceError = String(describing: error) }
     }
 }
 

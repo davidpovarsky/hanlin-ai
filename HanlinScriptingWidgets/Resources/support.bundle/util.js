@@ -7,17 +7,17 @@ class ScriptWidget {
 //        for (let child of children) {
 //            console.log(child);
 //        }
-        
+
         return $element.createElement(tag, props, children);
     }
-    
+
     /*
      short syntax for
      <>
          <text>1</text>
          <text>1</text>
      </>
-     
+
      */
     static Fragment = "Fragment"
 }
