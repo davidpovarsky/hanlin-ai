@@ -55,14 +55,23 @@ struct HanlinDualWidgetEnginesTests {
         }
     }
 
-    @Test(arguments: ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-ScriptWidget-Actions.scripting"])
+    @Test(arguments: ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo", "Hanlin-ScriptWidget-Dashboard.scripting", "Hanlin-ScriptWidget-Actions.scripting", "Hanlin-Widget-Legacy-Regression.scripting"])
     func installAndVerifiedLoader(name: String) async throws {
         let fixture = try await InstalledFixture(name)
         defer { fixture.remove() }
         let snapshot = try #require(try fixture.store.load())
         let widget = try #require(snapshot.widgets.first)
-        let (program, _) = try fixture.store.loadProgram(for: widget)
-        #expect(program.engine == widget.engine)
+        if widget.engine == .legacy {
+            guard case let .legacy(prepared) = HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium") else { Issue.record("Installed legacy archive failed to prepare"); return }
+            #expect(prepared.root.properties["text"] == .string("Legacy HanlinScriptUINode Tree"))
+        } else {
+            let (program, _) = try fixture.store.loadProgram(for: widget)
+            #expect(program.engine == widget.engine)
+            switch HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium") {
+            case .expo, .scriptwidget: break
+            default: Issue.record("The actual installed program failed to prepare")
+            }
+        }
         #expect(widget.identity.generation == 1)
         #expect(try await fixture.installed.snapshots().first?.entrypoints.first?.widgetEngine == widget.engine)
         let reopened = Store(root: fixture.extensionRoot)
@@ -313,11 +322,16 @@ private struct InstalledFixture: Sendable {
         let record = try await installed.install(plan: plan, artifactDirectory: artifactRoot, artifactManifest: manifest)
         let entry = try #require(entries.first)
         identity = .init(installedPackageID: id, packageID: packageID, generation: record.activeGeneration, entrypointID: entry.id)
-        let bytes = try #require(programs[entry.sourcePath])
-        let artifact = try store.storeArtifact(data: bytes, installedPackageID: id, generation: record.activeGeneration)
         let engine = try #require(entry.widgetEngine)
-        let payload: HanlinScriptExtensions.HanlinWidgetPayload = engine == .expo ? .expo(.init(layout: "", layoutRef: artifact.ref, layoutSHA256: artifact.sha256)) : .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256))
-        template = .init(identity: identity, displayName: staged.manifest.name, validUntil: .distantFuture, engine: engine, payload: payload, root: .init(kind: .text))
+        if engine == .legacy {
+            let node = try JSONDecoder().decode(HanlinScriptUINode.self, from: Data(contentsOf: artifactRoot.appending(path: entry.sourcePath)))
+            template = .init(identity: identity, displayName: staged.manifest.name, validUntil: .distantFuture, engine: engine, payload: .legacy(node), root: node)
+        } else {
+            let bytes = try #require(programs[entry.sourcePath])
+            let artifact = try store.storeArtifact(data: bytes, installedPackageID: id, generation: record.activeGeneration)
+            let payload: HanlinScriptExtensions.HanlinWidgetPayload = engine == .expo ? .expo(.init(layout: "", layoutRef: artifact.ref, layoutSHA256: artifact.sha256)) : .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256))
+            template = .init(identity: identity, displayName: staged.manifest.name, validUntil: .distantFuture, engine: engine, payload: payload, root: .init(kind: .text))
+        }
         try republish()
     }
     func republish() throws { try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [identity.installedPackageID]) }

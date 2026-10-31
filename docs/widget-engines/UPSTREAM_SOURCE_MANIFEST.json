@@ -631,6 +631,16 @@
       "localSHA256": "d7c33b4c1f1a989ae3f6d2b4234574d72df02155fb6ecb897584d694dc8131b9",
       "byteIdentical": false,
       "adaptation": "Same widget-only AppContext; isolated MainActor ownership."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Animation/ClockHandRotationEffect.swift",
+      "upstreamBlob": "1c62becc47e241aa6d5cc25952bd4e123f7f0263",
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift",
+      "adaptation": "Public SwiftUI clock helper copied; MainActor annotation for native view composition.",
+      "localSHA256": "b079ef6cba8fa1702c6a041f9386cc22361fcfc34ad34c871a09bdb5cc542293",
+      "byteIdentical": false
     }
   ]
 }

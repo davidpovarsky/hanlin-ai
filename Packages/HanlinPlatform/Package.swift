@@ -110,7 +110,6 @@ let package = Package(
         .target(
             name: "HanlinScriptCompiler",
             dependencies: [
-                "HanlinWidgetCompiler",
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
@@ -229,7 +228,8 @@ let package = Package(
             ],
             exclude: ["ScriptWidget/Original/MIT-previous.txt", "ScriptWidget/Original/LICENSE.txt", "ScriptWidget/Original/NOTICE.txt", "ScriptWidget/Original/Component/Attributes/Animation/ClockHandKit-LICENSE.txt"],
             resources: [
-                .process("Resources")
+                .copy("Resources/support.bundle"),
+                .copy("Resources/ExpoWidgets.bundle")
             ],
             linkerSettings: [
                 .linkedFramework("JavaScriptCore")
