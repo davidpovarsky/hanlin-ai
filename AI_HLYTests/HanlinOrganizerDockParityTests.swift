@@ -19,50 +19,48 @@ import Testing
 @Suite("7A.1 OrganizerDockState — Source Height Formulas, Drag & Resize Thresholds", .serialized)
 struct OrganizerDockStateTests {
 
-    @Test("1.1 Default collapsed state matches InteriorOrganizerV3_3 formulas (92pt composer, 132pt panel, 120pt editorMax)")
+    @Test("1.1 Default collapsed state matches InteriorOrganizerV3_3 formulas (126pt composer, 161pt panel, 140pt editorMax)")
     func defaultCollapsedStateMatchesSourceFormulas() {
         let state = HanlinOrganizerDockState()
         #expect(state.mode == .collapsed)
         #expect(state.lastExpandedMode == .general)
         #expect(!state.isExpanded)
-        #expect(state.draftLineCount == 1)
-        #expect(state.autoComposerHeight == 92)
-        #expect(state.maxComposerHeight == 334)
-        #expect(state.composerHeight == 92)
-        #expect(state.panelHeight == 132) // 92 + 40
-        #expect(state.editorMaxHeight == 120) // max(120, 92 - 40)
+        #expect(state.measuredInputHeight == 26)
+        #expect(state.autoComposerHeight == 126) // min(226, max(126, max(26, 26) + 99))
+        #expect(state.maxComposerHeight == 515)  // min(515, max(200, 780) * 0.76)
+        #expect(state.composerHeight == 126)
+        #expect(state.panelHeight == 161)        // composerHeight + 35
+        #expect(state.editorMaxHeight == 140)    // max(140, 126 - 88)
     }
 
-    @Test("1.2 Multiline draft growth (up to 4 lines at +20pt/line) and attachment strip offset (+44pt)")
+    @Test("1.2 Multiline measuredInputHeight growth (up to 226pt base) and attachment overhead (up to 310pt)")
     func multilineDraftAndAttachmentHeightFormulas() {
         let state = HanlinOrganizerDockState()
-        state.updateDraftMetrics(text: "Line 1\nLine 2\nLine 3", hasAttachments: false)
-        #expect(state.draftLineCount == 3)
-        #expect(state.autoComposerHeight == 132) // 92 + 2 * 20
-        #expect(state.composerHeight == 132)
-        #expect(state.panelHeight == 172) // 132 + 40
+        state.measuredInputHeight = 68
+        #expect(state.autoComposerHeight == 167) // 68 + 99
+        #expect(state.composerHeight == 167)
+        #expect(state.panelHeight == 202)        // 167 + 35
 
-        // 6 lines clamps to max 4 lines in autoComposerHeight
-        state.updateDraftMetrics(text: "1\n2\n3\n4\n5\n6", hasAttachments: true)
-        #expect(state.draftLineCount == 6)
-        #expect(state.autoComposerHeight == 196) // 92 + 3 * 20 + 44
-        #expect(state.composerHeight == 196)
-        #expect(state.panelHeight == 236) // 196 + 40
-        #expect(state.editorMaxHeight == 120) // max(120, 196 - 84 = 112) -> 120
+        // Large input clamps base to 226, plus attachmentOverheadHeight (62pt) -> 288pt
+        state.measuredInputHeight = 180
+        state.attachmentOverheadHeight = 62
+        #expect(state.autoComposerHeight == 288) // min(310, 226 + 62)
+        #expect(state.composerHeight == 288)
+        #expect(state.panelHeight == 323)        // 288 + 35
+        #expect(state.editorMaxHeight == 140)    // max(140, 288 - 88 - 62 = 138) -> 140
     }
 
-    @Test("1.3 Expanded state clamps maxComposerHeight to 244 and sets panelHeight to composerHeight + 356")
-    func expandedStatePanelAndMaxComposerHeight() {
+    @Test("1.3 Expanded state sets panelHeight to min(max(composerHeight + 36, effectiveAvailable - 10), composerHeight + 321)")
+    func expandedStatePanelAndComposerHeight() {
         let state = HanlinOrganizerDockState()
         state.manualComposerHeight = 320
         #expect(state.composerHeight == 320)
-        #expect(state.editorMaxHeight == 280) // max(120, 320 - 40)
+        #expect(state.editorMaxHeight == 232) // max(140, 320 - 88)
 
-        state.setMode(.general)
+        state.openMode(.general)
         #expect(state.isExpanded)
-        #expect(state.maxComposerHeight == 244)
-        #expect(state.composerHeight == 244) // clamped from 320 to 244 while expanded
-        #expect(state.panelHeight == 600) // 244 + 356
+        #expect(state.mode == .general)
+        #expect(state.panelHeight == 641) // min(max(320 + 36, 780 - 10), 320 + 321) = 641
     }
 
     @Test("1.4 Drawer drag gesture threshold (< -34 expands to lastExpandedMode, > 34 collapses, -34...34 no-op)")
@@ -89,49 +87,55 @@ struct OrganizerDockStateTests {
         #expect(state.lastExpandedMode == .tools)
     }
 
-    @Test("1.5 Composer resize handle drag and +/-72pt accessibility step with snap-to-auto (< 8pt)")
+    @Test("1.5 Composer resize handle drag and +/-72pt accessibility step with snap-to-auto (<= auto + 6pt)")
     func composerResizeDragAndAccessibilityAdjustment() {
         let state = HanlinOrganizerDockState()
-        #expect(state.composerHeight == 92)
+        #expect(state.composerHeight == 126)
 
-        // Drag up by 60pt -> composerHeight becomes 152pt
+        // Drag up by 60pt -> composerHeight becomes 186pt
         state.handleComposerResizeChanged(translationHeight: -60)
-        #expect(state.composerHeight == 152)
-        #expect(state.editorMaxHeight == 120) // max(120, 152 - 40 = 112)
+        #expect(state.composerHeight == 186)
+        #expect(state.editorMaxHeight == 140) // max(140, 186 - 88 = 98)
 
-        // Drag up by 120pt from base 152 after end
+        // End gesture clears gestureStartHeight
         state.handleComposerResizeEnded()
-        #expect(state.composerResizeDragBase == 0)
+        #expect(state.gestureStartHeight == nil)
 
         // Accessibility increment (+72pt)
         state.adjustComposerHeightByAccessibility(increment: true)
-        #expect(state.composerHeight == 224) // 152 + 72
-        #expect(state.editorMaxHeight == 184) // 224 - 40
+        #expect(state.composerHeight == 258) // 186 + 72
+        #expect(state.editorMaxHeight == 170) // 258 - 88
 
-        // Accessibility decrement (-72pt twice back toward 92pt)
+        // Accessibility decrement (-72pt twice back to 126pt auto snap)
         state.adjustComposerHeightByAccessibility(increment: false)
-        #expect(state.composerHeight == 152)
+        #expect(state.composerHeight == 186)
         state.adjustComposerHeightByAccessibility(increment: false)
-        #expect(state.composerHeight == 92)
-        #expect(state.manualComposerHeight == 0)
+        #expect(state.composerHeight == 126)
+        #expect(state.manualComposerHeight == nil)
     }
 
-    @Test("1.6 Input focus and draft sent / context change reset drawer and manual heights")
+    @Test("1.6 Input focus, empty draft, and context key change reset transient layout state")
     func focusAndLifecycleResets() {
         let state = HanlinOrganizerDockState()
-        state.setMode(.general)
+        state.openMode(.general)
         state.manualComposerHeight = 220
 
-        // Focusing input collapses drawer automatically
-        state.handleInputFocusChanged(true)
+        // Focusing input collapses drawer automatically while keeping manual height
+        state.handleInputFocusChange(true)
         #expect(state.mode == .collapsed)
         #expect(state.manualComposerHeight == 220)
 
-        // Sending draft resets manual height and collapses drawer
-        state.setMode(.tools)
-        state.resetForDraftSent()
+        // Clearing draft text resets manualComposerHeight
+        state.handleDraftTextChange("")
+        #expect(state.manualComposerHeight == nil)
+
+        // Switching context key collapses drawer and resets transient measurements
+        state.openMode(.tools)
+        state.manualComposerHeight = 240
+        state.handleContextKeyChange("chat-123")
+        #expect(state.contextKey == "chat-123")
         #expect(state.mode == .collapsed)
-        #expect(state.manualComposerHeight == 0)
+        #expect(state.manualComposerHeight == nil)
     }
 }
 
@@ -148,34 +152,34 @@ struct HanlinComposerDrawerRouteTests {
         #expect(coordinator.dockState.mode == .collapsed)
 
         // 1 tap on `+` opens .general in the dock
-        coordinator.toggleGeneralMenu()
+        coordinator.toggle(.general)
         #expect(coordinator.activePopup == .general)
         #expect(coordinator.dockState.mode == .general)
         #expect(coordinator.dockState.isExpanded)
 
-        // Push a subroute inside General, then tap Tools -> swaps directly to .tools and clears generalPath
-        coordinator.pushGeneralSubroute(.prompts)
-        #expect(coordinator.generalPath == [.prompts])
+        // Push a subroute inside General, then tap Tools -> swaps directly to .tools and clears generalNavigationPath
+        coordinator.pushGeneralSubroute(.prompts, reduceMotion: true)
+        #expect(coordinator.generalNavigationPath == [.prompts])
 
-        coordinator.toggleToolsMenu()
+        coordinator.toggle(.tools)
         #expect(coordinator.activePopup == .tools)
         #expect(coordinator.dockState.mode == .tools)
         #expect(coordinator.dockState.isExpanded)
-        #expect(coordinator.generalPath.isEmpty)
-        #expect(coordinator.toolsPath.isEmpty)
+        #expect(coordinator.generalNavigationPath.isEmpty)
+        #expect(coordinator.toolsNavigationPath.isEmpty)
 
-        // Push a subroute inside Tools, then tap `+` -> swaps directly to .general and clears toolsPath
-        coordinator.pushToolsSubroute(.skills)
-        #expect(coordinator.toolsPath == [.skills])
+        // Push a subroute inside Tools, then tap `+` -> swaps directly to .general and clears toolsNavigationPath
+        coordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
+        #expect(coordinator.toolsNavigationPath == [.skillsCenter])
 
-        coordinator.toggleGeneralMenu()
+        coordinator.toggle(.general)
         #expect(coordinator.activePopup == .general)
         #expect(coordinator.dockState.mode == .general)
         #expect(coordinator.dockState.isExpanded)
-        #expect(coordinator.toolsPath.isEmpty)
+        #expect(coordinator.toolsNavigationPath.isEmpty)
 
         // Tapping `+` again while .general is open collapses the dock
-        coordinator.toggleGeneralMenu()
+        coordinator.toggle(.general)
         #expect(coordinator.activePopup == nil)
         #expect(coordinator.dockState.mode == .collapsed)
         #expect(!coordinator.dockState.isExpanded)
@@ -185,14 +189,14 @@ struct HanlinComposerDrawerRouteTests {
     @Test("2.2 Direct 1-tap Tools button opens Tools root immediately from collapsed state")
     func directOneTapToolsOpensToolsRootImmediately() {
         let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.toggleToolsMenu()
+        coordinator.presentDirectTools()
         #expect(coordinator.activePopup == .tools)
         #expect(coordinator.dockState.mode == .tools)
         #expect(coordinator.dockState.lastExpandedMode == .tools)
-        #expect(coordinator.toolsPath.isEmpty)
+        #expect(coordinator.toolsNavigationPath.isEmpty)
 
         // Tapping Tools again collapses and remembers .tools as lastExpandedMode for drawer handle tap
-        coordinator.toggleToolsMenu()
+        coordinator.toggle(.tools)
         #expect(coordinator.dockState.mode == .collapsed)
         #expect(coordinator.dockState.lastExpandedMode == .tools)
 
@@ -203,11 +207,11 @@ struct HanlinComposerDrawerRouteTests {
     @Test("2.3 Opening Model Picker collapses any open dock drawer so only one surface is active")
     func modelPickerCollapsesDrawer() {
         let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.toggleToolsMenu()
+        coordinator.presentDirectTools()
         #expect(coordinator.dockState.mode == .tools)
 
-        coordinator.toggleModelPicker()
-        #expect(coordinator.activePopup == .modelPicker)
+        coordinator.toggle(.model)
+        #expect(coordinator.activePopup == .model)
         #expect(coordinator.dockState.mode == .collapsed)
         #expect(!coordinator.dockState.isExpanded)
     }
@@ -289,19 +293,43 @@ struct CompactChatRouteTests {
     @Test("4.1 Compact workspace activates on iPhone and narrow iPad (< 640pt), preserving SplitView on wide iPad (>= 640pt)")
     func compactWorkspaceThresholdMatchesSpec() {
         // iPhone always uses compact workspace
-        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(availableWidth: 393, isPad: false))
-        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(availableWidth: 852, isPad: false))
+        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+            isPhoneIdiom: true,
+            horizontalSizeClass: .compact,
+            availableWidth: 393
+        ))
+        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+            isPhoneIdiom: true,
+            horizontalSizeClass: .regular,
+            availableWidth: 852
+        ))
 
         // Narrow iPad (Slide Over / 1/3 Split View / narrow Stage Manager < 640pt) uses compact workspace
-        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(availableWidth: 320, isPad: true))
-        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(availableWidth: 639.5, isPad: true))
+        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+            isPhoneIdiom: false,
+            horizontalSizeClass: .compact,
+            availableWidth: 320
+        ))
+        #expect(HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+            isPhoneIdiom: false,
+            horizontalSizeClass: .regular,
+            availableWidth: 639.5
+        ))
 
-        // Wide iPad (>= 640pt) keeps NavigationSplitView
-        #expect(!HanlinCompactChatWorkspace.shouldUseCompactWorkspace(availableWidth: 640, isPad: true))
-        #expect(!HanlinCompactChatWorkspace.shouldUseCompactWorkspace(availableWidth: 1024, isPad: true))
+        // Wide iPad (>= 640pt with regular horizontalSizeClass) keeps NavigationSplitView
+        #expect(!HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+            isPhoneIdiom: false,
+            horizontalSizeClass: .regular,
+            availableWidth: 640
+        ))
+        #expect(!HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+            isPhoneIdiom: false,
+            horizontalSizeClass: .regular,
+            availableWidth: 1024
+        ))
     }
 
-    @Test("4.2 Workspace route distinguishes .allConversations library from .chat(UUID)")
+    @Test("4.2 Workspace route distinguishes .allConversations library (composer hidden) from .chat(UUID) (composer visible)")
     func workspaceRouteIdentity() {
         let idA = UUID()
         let idB = UUID()
@@ -312,6 +340,14 @@ struct CompactChatRouteTests {
         #expect(routeLibrary != routeChatA)
         #expect(routeChatA != routeChatB)
         #expect(routeChatA == .chat(idA))
+
+        #expect(HanlinCompactChatWorkspace.isComposerVisible(for: []))
+        #expect(HanlinCompactChatWorkspace.isComposerVisible(for: [routeChatA]))
+        #expect(!HanlinCompactChatWorkspace.isComposerVisible(for: [routeLibrary]))
+        #expect(HanlinCompactChatWorkspace.isComposerVisible(for: [routeLibrary, routeChatA]))
+
+        #expect(HanlinCompactChatWorkspace.activeComposerKey(for: []) == "new")
+        #expect(HanlinCompactChatWorkspace.activeComposerKey(for: [routeChatA]) == idA.uuidString)
     }
 }
 
@@ -321,90 +357,124 @@ struct CompactChatRouteTests {
 @Suite("7A.5 ChatComposerSessionBridgeTests — Live Endpoint Registration, Stale Unregister Guard & Per-Chat Drafts", .serialized)
 struct ChatComposerSessionBridgeTests {
 
+    private static func makeTestEndpoint(
+        sessionID: UUID,
+        token: UUID = UUID(),
+        isReadyToSend: Bool = true,
+        message: Binding<String>,
+        selectedImages: Binding<[UIImage]> = .constant([]),
+        selectedDocumentURLs: Binding<[URL]> = .constant([]),
+        ifSearch: Binding<Bool> = .constant(false),
+        ifKnowledge: Binding<Bool> = .constant(false),
+        ifThink: Binding<Bool> = .constant(false),
+        thinkingLength: Binding<Int> = .constant(0),
+        ifPlanning: Binding<Bool> = .constant(false),
+        ifAudio: Binding<Bool> = .constant(false),
+        ifToolUse: Binding<Bool> = .constant(false),
+        onSendUser: @escaping () -> Void = {},
+        onSendObserve: @escaping () -> Void = {},
+        onCancel: @escaping () -> Void = {}
+    ) -> HanlinActiveComposerSessionBridge.Endpoint {
+        let record = ChatRecords(id: sessionID, name: "Test Chat", type: "chat", lastEdited: Date())
+        let model = AllModels(name: "gpt-4o-mini", displayName: "GPT-4o Mini", position: 0, company: "OPENAI")
+        return HanlinActiveComposerSessionBridge.Endpoint(
+            sessionID: sessionID,
+            registrationToken: token,
+            isReadyToSend: isReadyToSend,
+            chatRecord: record,
+            modelTemp: [model],
+            temporaryRecord: false,
+            respondIndex: 0,
+            selectedModelIndex: .constant(0),
+            showScrollToBottomButton: .constant(false),
+            needScrollToBottomButton: .constant(false),
+            isMultiSelectMode: .constant(false),
+            selectedMessageIDs: .constant([]),
+            chatTemps: .constant([]),
+            showTemperatureSlider: .constant(false),
+            temperature: .constant(0.7),
+            showTopPSlider: .constant(false),
+            topP: .constant(0.95),
+            showMaxTokensSlider: .constant(false),
+            maxTokens: .constant(2048),
+            showMaxMessagesNumSlider: .constant(false),
+            maxMessagesNum: .constant(12),
+            message: message,
+            selectedImages: selectedImages,
+            selectedDocumentURLs: selectedDocumentURLs,
+            selectedURLs: .constant([]),
+            selectedPrompts: .constant([]),
+            showPhotoSourceOptions: .constant(false),
+            showModelSuggestions: .constant(false),
+            filteredModels: .constant([]),
+            isResponding: .constant(false),
+            isFeedBack: .constant(false),
+            ifKnowledge: ifKnowledge,
+            ifSearch: ifSearch,
+            ifToolUse: ifToolUse,
+            ifThink: ifThink,
+            ifAudio: ifAudio,
+            ifPlanning: ifPlanning,
+            thinkingLength: thinkingLength,
+            showKnowledgeAlert: .constant(false),
+            knowledgeAlertMessage: .constant(""),
+            showSearchAlert: .constant(false),
+            selectedImageSize: .constant("1024x1024"),
+            imageReversePrompt: .constant(""),
+            onSelectModel: { _ in },
+            onSendUser: onSendUser,
+            onSendObserve: onSendObserve,
+            onCancel: onCancel
+        )
+    }
+
     @Test("5.1 Registers, dispatches send/observe/cancel, and guards against stale unregister from previous ChatView")
     func endpointRegistrationAndStaleUnregisterGuard() {
         let bridge = HanlinActiveComposerSessionBridge()
         let chatA = UUID()
+        let tokenA = UUID()
         let chatB = UUID()
+        let tokenB = UUID()
 
         var sentUserA = 0
         var sentObserveA = 0
         var cancelledA = 0
         var textA = "Draft A"
-        var imagesA: [UIImage] = []
-        var docsA: [URL] = []
-        var boolState = false
-        var intState = 0
-        var optIntState: Int? = nil
-        var strState = "1024x1024"
-        var modelA: AllModels? = nil
 
-        let makeEndpoint = { (id: UUID, onUser: @escaping () -> Void, onObserve: @escaping () -> Void, onCancel: @escaping () -> Void) -> HanlinActiveComposerSessionBridge.Endpoint in
-            HanlinActiveComposerSessionBridge.Endpoint(
-                chatID: id,
-                inputText: Binding(get: { textA }, set: { textA = $0 }),
-                selectedImages: Binding(get: { imagesA }, set: { imagesA = $0 }),
-                selectedDocumentURLs: Binding(get: { docsA }, set: { docsA = $0 }),
-                ifSearch: Binding(get: { boolState }, set: { boolState = $0 }),
-                ifKnowledge: Binding(get: { boolState }, set: { boolState = $0 }),
-                ifThink: Binding(get: { boolState }, set: { boolState = $0 }),
-                thinkingLength: Binding(get: { intState }, set: { intState = $0 }),
-                ifPlanning: Binding(get: { boolState }, set: { boolState = $0 }),
-                ifAudio: Binding(get: { boolState }, set: { boolState = $0 }),
-                ifToolUse: Binding(get: { boolState }, set: { boolState = $0 }),
-                temporaryRecord: Binding(get: { boolState }, set: { boolState = $0 }),
-                isResponding: Binding(get: { boolState }, set: { boolState = $0 }),
-                currentModel: Binding(get: { modelA }, set: { modelA = $0 }),
-                selectedImageSize: Binding(get: { strState }, set: { strState = $0 }),
-                currentAspectRatioIndex: Binding(get: { intState }, set: { intState = $0 }),
-                locationText: Binding(get: { nil }, set: { _ in }),
-                chooseModelSheet: Binding(get: { boolState }, set: { boolState = $0 }),
-                showKnowledgeAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-                showSearchAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-                showReasoningAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-                showLanAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-                showModelPicker: Binding(get: { boolState }, set: { boolState = $0 }),
-                showPromptSelector: Binding(get: { boolState }, set: { boolState = $0 }),
-                showPhotoPicker: Binding(get: { boolState }, set: { boolState = $0 }),
-                showCameraSheet: Binding(get: { boolState }, set: { boolState = $0 }),
-                showDocumentPicker: Binding(get: { boolState }, set: { boolState = $0 }),
-                selectedQuickIndex: Binding(get: { optIntState }, set: { optIntState = $0 }),
-                onSelectModel: { _ in },
-                checkSearchAvailability: { true },
-                checkEmbeddingAvailability: { true },
-                onClearChat: {},
-                onResetContext: {},
-                onPolishInput: {},
-                onSummarizeChat: {},
-                onExportConversationText: {},
-                onOpenEmbeddingSettings: {},
-                onOpenMCPSettings: {},
-                onOpenSkillsSettings: {},
-                onOpenSystemPromptEditor: {},
-                onOpenCanvas: {},
-                sendUser: onUser,
-                sendObserve: onObserve,
-                cancelRun: onCancel
-            )
-        }
+        let endpointA = Self.makeTestEndpoint(
+            sessionID: chatA,
+            token: tokenA,
+            message: Binding(get: { textA }, set: { textA = $0 }),
+            onSendUser: { sentUserA += 1 },
+            onSendObserve: { sentObserveA += 1 },
+            onCancel: { cancelledA += 1 }
+        )
 
-        bridge.register(makeEndpoint(chatA, { sentUserA += 1 }, { sentObserveA += 1 }, { cancelledA += 1 }))
-        #expect(bridge.activeChatID == chatA)
+        bridge.register(endpoint: endpointA)
+        #expect(bridge.activeEndpoint?.sessionID == chatA)
 
-        bridge.performSendUser(createChatFromHome: { nil })
-        bridge.performSendObserve(createChatFromHome: { nil })
-        bridge.performCancel()
+        #expect(bridge.performSendUser(expectedSessionID: chatA))
+        #expect(bridge.performSendObserve(expectedSessionID: chatA))
+        #expect(bridge.performCancel(expectedSessionID: chatA))
         #expect(sentUserA == 1)
         #expect(sentObserveA == 1)
         #expect(cancelledA == 1)
 
         // Register chatB BEFORE chatA's onDisappear runs -> unregister(chatA) must NOT clear chatB
-        bridge.register(makeEndpoint(chatB, {}, {}, {}))
-        #expect(bridge.activeChatID == chatB)
-        bridge.unregister(chatID: chatA)
-        #expect(bridge.activeChatID == chatB)
-        bridge.unregister(chatID: chatB)
-        #expect(bridge.activeChatID == nil)
+        var textB = "Draft B"
+        let endpointB = Self.makeTestEndpoint(
+            sessionID: chatB,
+            token: tokenB,
+            message: Binding(get: { textB }, set: { textB = $0 })
+        )
+        bridge.register(endpoint: endpointB)
+        #expect(bridge.activeEndpoint?.sessionID == chatB)
+
+        bridge.unregister(sessionID: chatA, token: tokenA)
+        #expect(bridge.activeEndpoint?.sessionID == chatB)
+
+        bridge.unregister(sessionID: chatB, token: tokenB)
+        #expect(bridge.activeEndpoint == nil)
     }
 
     @Test("5.2 Per-chat draft snapshots isolate text, attachments, and toggles across Chat A and Chat B")
@@ -414,54 +484,48 @@ struct ChatComposerSessionBridgeTests {
         let chatB = UUID()
         let docURL = URL(fileURLWithPath: "/tmp/docA.txt")
 
-        bridge.saveDraftSnapshot(
-            HanlinChatDraftSnapshot(
-                inputText: "Draft in A",
-                selectedImages: [],
-                selectedDocumentURLs: [docURL],
-                ifSearch: true,
-                ifKnowledge: false,
-                ifThink: true,
-                thinkingLength: 2,
-                ifPlanning: false,
-                ifAudio: false,
-                ifToolUse: true,
-                selectedImageSize: "1024x1024",
-                currentAspectRatioIndex: 0,
-                selectedModelID: "gpt-4o"
-            ),
-            for: chatA
+        var textA = "Draft in A"
+        var docsA = [docURL]
+        var searchA = true
+        let endpointA = Self.makeTestEndpoint(
+            sessionID: chatA,
+            message: Binding(get: { textA }, set: { textA = $0 }),
+            selectedDocumentURLs: Binding(get: { docsA }, set: { docsA = $0 }),
+            ifSearch: Binding(get: { searchA }, set: { searchA = $0 })
         )
-        bridge.saveDraftSnapshot(
-            HanlinChatDraftSnapshot(
-                inputText: "Draft in B",
-                selectedImages: [],
-                selectedDocumentURLs: [],
-                ifSearch: false,
-                ifKnowledge: true,
-                ifThink: false,
-                thinkingLength: 0,
-                ifPlanning: true,
-                ifAudio: false,
-                ifToolUse: false,
-                selectedImageSize: "1024x1024",
-                currentAspectRatioIndex: 0,
-                selectedModelID: "claude-sonnet"
-            ),
-            for: chatB
+        bridge.snapshotDraft(from: endpointA)
+
+        var textB = "Draft in B"
+        var knowledgeB = true
+        let endpointB = Self.makeTestEndpoint(
+            sessionID: chatB,
+            message: Binding(get: { textB }, set: { textB = $0 }),
+            ifKnowledge: Binding(get: { knowledgeB }, set: { knowledgeB = $0 })
         )
+        bridge.snapshotDraft(from: endpointB)
 
-        let restoredA = bridge.restoreDraftSnapshot(for: chatA)
-        let restoredB = bridge.restoreDraftSnapshot(for: chatB)
-        #expect(restoredA?.inputText == "Draft in A")
-        #expect(restoredA?.selectedDocumentURLs == [docURL])
-        #expect(restoredA?.ifSearch == true)
-        #expect(restoredA?.selectedModelID == "gpt-4o")
+        #expect(bridge.perChatDrafts[chatA]?.message == "Draft in A")
+        #expect(bridge.perChatDrafts[chatA]?.selectedDocumentURLs == [docURL])
+        #expect(bridge.perChatDrafts[chatA]?.ifSearch == true)
 
-        #expect(restoredB?.inputText == "Draft in B")
-        #expect(restoredB?.selectedDocumentURLs.isEmpty == true)
-        #expect(restoredB?.ifKnowledge == true)
-        #expect(restoredB?.selectedModelID == "claude-sonnet")
+        #expect(bridge.perChatDrafts[chatB]?.message == "Draft in B")
+        #expect(bridge.perChatDrafts[chatB]?.selectedDocumentURLs.isEmpty == true)
+        #expect(bridge.perChatDrafts[chatB]?.ifKnowledge == true)
+
+        // Restoring into a fresh Chat A endpoint restores Chat A's snapshot
+        var restoredTextA = ""
+        var restoredDocsA: [URL] = []
+        var restoredSearchA = false
+        let freshEndpointA = Self.makeTestEndpoint(
+            sessionID: chatA,
+            message: Binding(get: { restoredTextA }, set: { restoredTextA = $0 }),
+            selectedDocumentURLs: Binding(get: { restoredDocsA }, set: { restoredDocsA = $0 }),
+            ifSearch: Binding(get: { restoredSearchA }, set: { restoredSearchA = $0 })
+        )
+        bridge.register(endpoint: freshEndpointA)
+        #expect(restoredTextA == "Draft in A")
+        #expect(restoredDocsA == [docURL])
+        #expect(restoredSearchA == true)
     }
 }
 
@@ -471,95 +535,97 @@ struct ChatComposerSessionBridgeTests {
 @Suite("7A.6 PendingFirstTurnTests — Home First-Send State Machine & Cancellation", .serialized)
 struct PendingFirstTurnTests {
 
-    @Test("6.1 Sending from Home creates chat, transitions to .awaitingEndpoint, and dispatches once ChatView registers")
+    @Test("6.1 Sending from Home creates chat, transitions to .waitingForEndpoint, and dispatches once ChatView registers")
     func homeFirstTurnDispatchesOnEndpointRegistration() {
         let bridge = HanlinActiveComposerSessionBridge()
-        bridge.homeInputText = "Hello from compact Home"
+        bridge.homeMessage = "Hello from compact Home"
         let createdChatID = UUID()
+        let model = AllModels(name: "gpt-4o-mini", displayName: "GPT-4o Mini", position: 0, company: "OPENAI")
 
-        let returnedID = bridge.beginHomeFirstTurn(mode: .userMessage) {
-            createdChatID
+        let returnedID = bridge.beginHomeFirstTurn(availableModels: [model]) {
+            ChatRecords(id: createdChatID, name: "New Chat", type: "chat", lastEdited: Date())
         }
         #expect(returnedID == createdChatID)
-        #expect(bridge.homeInputText.isEmpty)
-        #expect(bridge.pendingFirstTurn?.chatID == createdChatID)
-        #expect(bridge.pendingFirstTurn?.state == .awaitingEndpoint)
+        #expect(bridge.homeMessage.isEmpty)
+        #expect(bridge.pendingFirstTurn?.targetChatID == createdChatID)
+        #expect(bridge.pendingFirstTurn?.status == .waitingForEndpoint)
+        #expect(bridge.pendingFirstTurn?.isPendingHandoff == true)
 
         var transferredText = ""
         var userSendDispatched = 0
-        var boolState = false
-        var intState = 0
-        var optIntState: Int? = nil
-        var strState = "1024x1024"
-        var imgs: [UIImage] = []
-        var docs: [URL] = []
-        var model: AllModels? = nil
-
+        let record = ChatRecords(id: createdChatID, name: "New Chat", type: "chat", lastEdited: Date())
         let endpoint = HanlinActiveComposerSessionBridge.Endpoint(
-            chatID: createdChatID,
-            inputText: Binding(get: { transferredText }, set: { transferredText = $0 }),
-            selectedImages: Binding(get: { imgs }, set: { imgs = $0 }),
-            selectedDocumentURLs: Binding(get: { docs }, set: { docs = $0 }),
-            ifSearch: Binding(get: { boolState }, set: { boolState = $0 }),
-            ifKnowledge: Binding(get: { boolState }, set: { boolState = $0 }),
-            ifThink: Binding(get: { boolState }, set: { boolState = $0 }),
-            thinkingLength: Binding(get: { intState }, set: { intState = $0 }),
-            ifPlanning: Binding(get: { boolState }, set: { boolState = $0 }),
-            ifAudio: Binding(get: { boolState }, set: { boolState = $0 }),
-            ifToolUse: Binding(get: { boolState }, set: { boolState = $0 }),
-            temporaryRecord: Binding(get: { boolState }, set: { boolState = $0 }),
-            isResponding: Binding(get: { boolState }, set: { boolState = $0 }),
-            currentModel: Binding(get: { model }, set: { model = $0 }),
-            selectedImageSize: Binding(get: { strState }, set: { strState = $0 }),
-            currentAspectRatioIndex: Binding(get: { intState }, set: { intState = $0 }),
-            locationText: Binding(get: { nil }, set: { _ in }),
-            chooseModelSheet: Binding(get: { boolState }, set: { boolState = $0 }),
-            showKnowledgeAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-            showSearchAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-            showReasoningAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-            showLanAlert: Binding(get: { boolState }, set: { boolState = $0 }),
-            showModelPicker: Binding(get: { boolState }, set: { boolState = $0 }),
-            showPromptSelector: Binding(get: { boolState }, set: { boolState = $0 }),
-            showPhotoPicker: Binding(get: { boolState }, set: { boolState = $0 }),
-            showCameraSheet: Binding(get: { boolState }, set: { boolState = $0 }),
-            showDocumentPicker: Binding(get: { boolState }, set: { boolState = $0 }),
-            selectedQuickIndex: Binding(get: { optIntState }, set: { optIntState = $0 }),
+            sessionID: createdChatID,
+            registrationToken: UUID(),
+            isReadyToSend: true,
+            chatRecord: record,
+            modelTemp: [model],
+            temporaryRecord: false,
+            respondIndex: 0,
+            selectedModelIndex: .constant(0),
+            showScrollToBottomButton: .constant(false),
+            needScrollToBottomButton: .constant(false),
+            isMultiSelectMode: .constant(false),
+            selectedMessageIDs: .constant([]),
+            chatTemps: .constant([]),
+            showTemperatureSlider: .constant(false),
+            temperature: .constant(0.7),
+            showTopPSlider: .constant(false),
+            topP: .constant(0.95),
+            showMaxTokensSlider: .constant(false),
+            maxTokens: .constant(2048),
+            showMaxMessagesNumSlider: .constant(false),
+            maxMessagesNum: .constant(12),
+            message: Binding(get: { transferredText }, set: { transferredText = $0 }),
+            selectedImages: .constant([]),
+            selectedDocumentURLs: .constant([]),
+            selectedURLs: .constant([]),
+            selectedPrompts: .constant([]),
+            showPhotoSourceOptions: .constant(false),
+            showModelSuggestions: .constant(false),
+            filteredModels: .constant([]),
+            isResponding: .constant(false),
+            isFeedBack: .constant(false),
+            ifKnowledge: .constant(false),
+            ifSearch: .constant(false),
+            ifToolUse: .constant(false),
+            ifThink: .constant(false),
+            ifAudio: .constant(false),
+            ifPlanning: .constant(false),
+            thinkingLength: .constant(0),
+            showKnowledgeAlert: .constant(false),
+            knowledgeAlertMessage: .constant(""),
+            showSearchAlert: .constant(false),
+            selectedImageSize: .constant("1024x1024"),
+            imageReversePrompt: .constant(""),
             onSelectModel: { _ in },
-            checkSearchAvailability: { true },
-            checkEmbeddingAvailability: { true },
-            onClearChat: {},
-            onResetContext: {},
-            onPolishInput: {},
-            onSummarizeChat: {},
-            onExportConversationText: {},
-            onOpenEmbeddingSettings: {},
-            onOpenMCPSettings: {},
-            onOpenSkillsSettings: {},
-            onOpenSystemPromptEditor: {},
-            onOpenCanvas: {},
-            sendUser: { userSendDispatched += 1 },
-            sendObserve: {},
-            cancelRun: {}
+            onSendUser: { userSendDispatched += 1 },
+            onSendObserve: {},
+            onCancel: {}
         )
 
-        bridge.register(endpoint)
+        bridge.register(endpoint: endpoint)
         #expect(transferredText == "Hello from compact Home")
         #expect(userSendDispatched == 1)
-        #expect(bridge.pendingFirstTurn == nil)
+        #expect(bridge.pendingFirstTurn?.status == .dispatched)
+        #expect(bridge.pendingFirstTurn?.isPendingHandoff == false)
     }
 
     @Test("6.2 Cancelling pending first turn before endpoint registration prevents late execution")
     func cancellingPendingFirstTurnPreventsExecution() {
         let bridge = HanlinActiveComposerSessionBridge()
-        bridge.homeInputText = "Cancel before mount"
+        bridge.homeMessage = "Cancel before mount"
         let createdChatID = UUID()
+        let model = AllModels(name: "gpt-4o-mini", displayName: "GPT-4o Mini", position: 0, company: "OPENAI")
 
-        _ = bridge.beginHomeFirstTurn(mode: .userMessage) { createdChatID }
-        #expect(bridge.isAwaitingPendingFirstTurn)
+        _ = bridge.beginHomeFirstTurn(availableModels: [model]) {
+            ChatRecords(id: createdChatID, name: "New Chat", type: "chat", lastEdited: Date())
+        }
+        #expect(bridge.pendingFirstTurn?.isPendingHandoff == true)
 
         bridge.cancelPendingFirstTurn()
-        #expect(!bridge.isAwaitingPendingFirstTurn)
-        #expect(bridge.pendingFirstTurn == nil)
+        #expect(bridge.pendingFirstTurn?.status == .cancelled)
+        #expect(bridge.pendingFirstTurn?.isPendingHandoff == false)
     }
 }
 
@@ -574,21 +640,21 @@ struct ModelPopoverZoomOrderTests {
         let coordinator = HanlinComposerPopupCoordinator()
         coordinator.deferAnimationCompletionsForTesting = true
 
-        coordinator.toggleModelPicker()
-        #expect(coordinator.activePopup == .modelPicker)
-        #expect(!coordinator.isModelPopoverExpanded)
-        #expect(coordinator.modelPath.isEmpty)
+        coordinator.toggle(.model)
+        #expect(coordinator.activePopup == .model)
+        #expect(!coordinator.modelFrameExpanded)
+        #expect(coordinator.modelNavigationPath.isEmpty)
 
         // Trigger All Models transition with reduceMotion = false
         coordinator.pushModelSubroute(.allModels, reduceMotion: false)
 
-        // Immediately after call: popover MUST be expanded, but .allModels MUST NOT be in modelPath yet!
-        #expect(coordinator.isModelPopoverExpanded == true)
-        #expect(coordinator.modelPath.isEmpty)
+        // Immediately after call: popover MUST be expanded, but .allModels MUST NOT be in modelNavigationPath yet!
+        #expect(coordinator.modelFrameExpanded == true)
+        #expect(coordinator.modelNavigationPath.isEmpty)
 
         // Once the expansion animation completion fires, .allModels is appended so matched zoom runs in expanded bounds
         coordinator.flushPendingAnimationCompletions()
-        #expect(coordinator.modelPath == [.allModels])
+        #expect(coordinator.modelNavigationPath == [.allModels])
     }
 
     @Test("7.2 Generation token cancels stale completion if popover is dismissed or popped mid-animation")
@@ -596,31 +662,32 @@ struct ModelPopoverZoomOrderTests {
         let coordinator = HanlinComposerPopupCoordinator()
         coordinator.deferAnimationCompletionsForTesting = true
 
-        coordinator.toggleModelPicker()
+        coordinator.toggle(.model)
         coordinator.pushModelSubroute(.allModels, reduceMotion: false)
-        #expect(coordinator.isModelPopoverExpanded)
-        #expect(coordinator.modelPath.isEmpty)
+        #expect(coordinator.modelFrameExpanded)
+        #expect(coordinator.modelNavigationPath.isEmpty)
 
         // Dismiss before completion fires
         coordinator.closeAll()
         coordinator.flushPendingAnimationCompletions()
 
         // Stale completion must NOT append .allModels
-        #expect(coordinator.modelPath.isEmpty)
-        #expect(!coordinator.isModelPopoverExpanded)
+        #expect(coordinator.modelNavigationPath.isEmpty)
+        #expect(!coordinator.modelFrameExpanded)
     }
 
     @Test("7.3 With Reduce Motion enabled, expansion and .allModels navigation happen immediately")
     func reduceMotionNavigatesImmediately() {
         let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.toggleModelPicker()
+        coordinator.toggle(.model)
         coordinator.pushModelSubroute(.allModels, reduceMotion: true)
-        #expect(coordinator.isModelPopoverExpanded)
-        #expect(coordinator.modelPath == [.allModels])
+        #expect(coordinator.modelFrameExpanded)
+        #expect(coordinator.modelNavigationPath == [.allModels])
 
-        coordinator.popModelSubroute()
-        #expect(!coordinator.isModelPopoverExpanded)
-        #expect(coordinator.modelPath.isEmpty)
+        coordinator.popModelToRoot()
+        coordinator.markModelDestinationDisappeared(reduceMotion: true)
+        #expect(!coordinator.modelFrameExpanded)
+        #expect(coordinator.modelNavigationPath.isEmpty)
     }
 }
 
