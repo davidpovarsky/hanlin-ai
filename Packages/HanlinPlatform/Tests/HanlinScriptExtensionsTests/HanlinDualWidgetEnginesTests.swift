@@ -75,6 +75,11 @@ struct HanlinDualWidgetEnginesTests {
         let preview = try HanlinScriptAnalyzer(inventory: inventory).analyze(staged)
         let expected = !name.contains("Invalid") && !name.contains("Mixed")
         #expect(preview.canInstall == expected, "\(preview.findings)")
+        try recordEvidence(name: "analysis-\(name)", values: [
+            "scope": "Real shared analyzer; not a native UI assertion",
+            "archive": name, "archiveSHA256": sha(try Data(contentsOf: fixtureURL(name))),
+            "canInstall": preview.canInstall, "findings": String(describing: preview.findings)
+        ])
         if expected {
             let entry = try #require(preview.entrypoints.first)
             #expect(preview.entrypoints.count == 1)
@@ -106,6 +111,21 @@ struct HanlinDualWidgetEnginesTests {
         #expect(try await fixture.installed.snapshots().first?.entrypoints.first?.widgetEngine == widget.engine)
         let reopened = Store(root: fixture.extensionRoot)
         #expect(try reopened.load() == snapshot)
+        var evidence: [String: Any] = [
+            "scope": "Actual shared atomic installation and preparation; not SpringBoard placement",
+            "archive": name, "archiveSHA256": sha(try Data(contentsOf: fixtureURL(name))),
+            "familyPrepared": "systemMedium", "entityID": fixture.entityID,
+            "installedWidget": try JSONSerialization.jsonObject(with: JSONEncoder().encode(widget))
+        ]
+        if widget.engine != .legacy {
+            let (program, _) = try fixture.store.loadProgram(for: widget)
+            evidence["sourceSHA256"] = program.sourceSHA256
+            evidence["compilerSHA256"] = program.compilerSHA256
+            evidence["compiledJavaScriptSHA256"] = sha(Data(program.javaScript.utf8))
+            evidence["upstreamCommit"] = program.upstreamCommit
+            evidence["declaredFamilies"] = program.families
+        }
+        try recordEvidence(name: "installed-\(name)", values: evidence)
     }
 
     @MainActor @Test
@@ -316,6 +336,13 @@ private func fixtureURL(_ name: String) -> URL {
     URL(filePath: #filePath).deletingLastPathComponent().appending(path: "../../../../Fixtures/Widgets/\(name)").standardizedFileURL
 }
 private func sha(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
+private func recordEvidence(name: String, values: [String: Any]) throws {
+    guard let directory = ProcessInfo.processInfo.environment["HANLIN_WIDGET_EVIDENCE_DIR"] else { return }
+    let root = URL(filePath: directory)
+    try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+    try JSONSerialization.data(withJSONObject: values, options: [.prettyPrinted, .sortedKeys])
+        .write(to: root.appending(path: "\(name).json"), options: .atomic)
+}
 private func find(_ node: HanlinScriptWidgetPreparedNode, tag: String) -> HanlinScriptWidgetPreparedNode? {
     if node.tag == tag { return node }
     for child in node.children { if case let .element(child) = child, let match = find(child, tag: tag) { return match } }
