@@ -178,7 +178,10 @@ public protocol ExpoSwiftUIView<Props>: SwiftUI.View, ExpoSwiftUI.AnyChild {
 }
 public extension ExpoSwiftUIView {
     func Children() -> ForEach<[any ExpoSwiftUI.AnyChild], ExpoSwiftUI.ChildIdentity, AnyView> {
-        ForEach(props.children ?? [], id: \.childIdentity) { child in AnyView(child.childView) }
+        ForEach(props.children ?? [], id: \.childIdentity) { child in
+            let view: any SwiftUI.View = child.childView
+            AnyView(view)
+        }
     }
 }
 struct WidgetSourceLogger { func warn(_ message: String) { NSLog("[HanlinExpoWidgetSubset] %@", message) } }

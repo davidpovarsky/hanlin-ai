@@ -433,8 +433,28 @@ jobs:
           echo "Selected simulator: $SIMULATOR_MODEL ($SIMULATOR_UDID) running $SIMULATOR_RUNTIME"
           echo "$SIMULATOR_UDID" > "$LOG_DIR/simulator-udid.txt"
 
-          xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
-          xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/06-bootstatus.log"
+          python3 - "$SIMULATOR_UDID" "$LOG_DIR" <<'PY'
+          import subprocess, sys
+          from pathlib import Path
+          simulator, log_dir = sys.argv[1:]
+          log = Path(log_dir) / "06-bootstatus.log"
+          with log.open("w") as output:
+              try:
+                  # An already booted simulator can make boot return nonzero;
+                  # bootstatus remains the authoritative readiness check.
+                  subprocess.run(["xcrun", "simctl", "boot", simulator], stdout=output, stderr=subprocess.STDOUT, timeout=60)
+                  subprocess.run(["xcrun", "simctl", "bootstatus", simulator, "-b"], stdout=output, stderr=subprocess.STDOUT, timeout=240, check=True)
+              except (subprocess.TimeoutExpired, subprocess.CalledProcessError) as error:
+                  output.write("\nSIMULATOR_BOOT_FAILED: " + str(error) + "\n")
+                  output.flush()
+                  for query in ("devices", "runtimes"):
+                      try:
+                          subprocess.run(["xcrun", "simctl", "list", query, "--json"], stdout=output, stderr=subprocess.STDOUT, timeout=20)
+                      except subprocess.TimeoutExpired:
+                          output.write("simctl diagnostics timed out\n")
+                  raise SystemExit(74)
+          print(log.read_text())
+          PY
 
           xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
 
