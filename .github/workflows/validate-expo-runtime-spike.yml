@@ -7,13 +7,47 @@ on:
         description: Focused widget package verification or the existing app/simulator validation
         type: choice
         default: full
-        options: [full, widget-package]
+        options: [full, widget-package, widget-native-subset]
 
 permissions:
   actions: read
   contents: read
 
 jobs:
+  validate-widget-native-subset:
+    if: inputs.validation_scope == 'widget-native-subset'
+    name: Compile and link source-only Expo widget subset
+    runs-on: xcode-27
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile against the real iOS Simulator SDK with extension enforcement
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          mkdir -p build-logs/widget-native-subset build/widget-native-subset
+          xcodebuild -version | tee build-logs/widget-native-subset/toolchain.log
+          xcrun swiftc --version | tee -a build-logs/widget-native-subset/toolchain.log
+          sdk="$(xcrun --sdk iphonesimulator --show-sdk-path)"
+          sources=()
+          while IFS= read -r -d '' source; do sources+=("$source"); done < <(find Packages/HanlinExpoWidgetSubset/Sources -name '*.swift' -print0)
+          xcrun swiftc -emit-library -emit-module -parse-as-library -module-name HanlinExpoWidgetSubset \
+            -swift-version 5 -application-extension -sdk "$sdk" -target arm64-apple-ios27.0-simulator \
+            "${sources[@]}" -o build/widget-native-subset/libHanlinExpoWidgetSubset.dylib \
+            2>&1 | tee build-logs/widget-native-subset/compiler.log
+          otool -L build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/otool.log
+          otool -hv build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/mach-header.log
+          shasum -a 256 build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/SHA256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: widget-native-subset-${{ github.run_id }}
+          path: |
+            build-logs/widget-native-subset
+            build/widget-native-subset
+          retention-days: 14
   validate-widget-package:
     if: inputs.validation_scope == 'widget-package'
     name: Compile widget source and execute package regression tests
@@ -66,7 +100,7 @@ jobs:
           path: build-logs/widgets
           retention-days: 14
   validate-expo-runtime:
-    if: inputs.validation_scope != 'widget-package'
+    if: inputs.validation_scope == 'full'
     name: Compile and test Hanlin Expo runtime on macOS
     runs-on: xcode-27
     timeout-minutes: 90

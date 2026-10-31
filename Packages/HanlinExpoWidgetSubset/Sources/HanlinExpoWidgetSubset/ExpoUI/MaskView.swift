@@ -1,0 +1,33 @@
+// Copyright 2025-present 650 Industries. All rights reserved.
+
+import SwiftUI
+
+public final class MaskViewProps: UIBaseViewProps {
+  @Field var alignment: AlignmentOptions?
+}
+
+public struct MaskView: ExpoSwiftUI.View {
+  @ObservedObject public var props: MaskViewProps
+
+  public init(props: MaskViewProps) {
+    self.props = props
+  }
+
+  public var body: some View {
+    if let mask = props.children?.slot("content") {
+      baseContent.mask(alignment: props.alignment?.toAlignment() ?? .center) {
+        mask
+      }
+    } else {
+      baseContent
+    }
+  }
+
+  @ViewBuilder
+  private var baseContent: some View {
+    ForEach(props.children?.withoutSlots() ?? [], id: \.childIdentity) { child in
+      let view: any View = child.childView
+      AnyView(view)
+    }
+  }
+}
