@@ -878,7 +878,7 @@
       "upstream": "packages/expo-ui/ios/ClosedRangeDateRecord.swift",
       "upstreamBlob": "61a52dff098cfc03706bf205e881bc45c5bdf360",
       "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/ClosedRangeDateRecord.swift",
-      "localSHA256": "86d422e2e7586ce65c3eb5ef2a5974ca523b094785d93efe660c839f5e3d5dab",
+      "localSHA256": "db064432869c21e6c7cd3e7210049f0b6da85f5f05c8bfd96071121b9926e5de",
       "byteIdentical": false,
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
     },
@@ -1321,6 +1321,16 @@
       "localSHA256": "73665775cfce6f11c4c30dc258ba81320e7bac537568294afb4a42c248448952",
       "byteIdentical": true,
       "adaptation": "No changes."
+    },
+    {
+      "repository": "expo/expo",
+      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstream": "packages/expo-ui/ios/NamespaceRegistry.swift",
+      "upstreamBlob": "b035578d5b143b3abefde34ec71ada3fe264ae32",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/NamespaceRegistry.swift",
+      "byteIdentical": true,
+      "adaptation": "No changes.",
+      "localSHA256": "f4d2ef488cca26102854d6705f3110fa1bdf1c2d6233b1584a4270d9ec5d4e96"
     }
   ]
 }

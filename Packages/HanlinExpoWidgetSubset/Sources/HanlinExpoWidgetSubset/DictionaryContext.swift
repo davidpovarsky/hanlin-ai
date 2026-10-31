@@ -138,6 +138,17 @@ public final class EventDispatcher {
     public init(_ name: String? = nil) {}
     public func callAsFunction(_ payload: Any? = nil) {}
 }
+/// Widget presentations carry a frozen value; shared JSI state and its setters
+/// are deliberately absent. The original symbol-effect view reads this value.
+public final class ObservableState: ObservableObject, Convertible {
+    public let value: Any
+    private init(value: Any) { self.value = value }
+    public static func convert(from value: Any?, appContext: AppContext) throws -> ObservableState {
+        guard let object = value as? [String: Any], let scalar = object["value"],
+              scalar is String || scalar is NSNumber else { throw Conversions.ConvertingException<ObservableState>(value) }
+        return .init(value: scalar)
+    }
+}
 extension ExpoSwiftUI {
     open class ViewProps: ObservableObject, Record {
         public var children: [any AnyChild]?
