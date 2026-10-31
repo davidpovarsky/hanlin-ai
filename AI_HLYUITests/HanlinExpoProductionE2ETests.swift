@@ -91,7 +91,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     private func placeNativeWidget(in springboard: XCUIApplication, selecting instance: String) throws {
         XCUIDevice.shared.press(.home)
         recordWidgetEvidence(springboard, name: "home-before-gallery-\(instance)")
-        let icon = springboard.icons.matching(NSPredicate(format: "label CONTAINS[c] 'Hanlin'")).firstMatch
+        let icon = springboard.icons.matching(NSPredicate(format: "label == 'ChavrusaChat' OR label CONTAINS[c] 'Hanlin'")).firstMatch
         XCTAssertTrue(icon.waitForExistence(timeout: 15), "Hanlin app icon missing from Home Screen")
         icon.press(forDuration: 2)
         let editHome = springboard.buttons["Edit Home Screen"].firstMatch
@@ -106,8 +106,8 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let search = springboard.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 10))
         search.tap()
-        search.typeText("Hanlin")
-        let galleryItem = springboard.descendants(matching: .any).matching(NSPredicate(format: "label == 'Hanlin Script' OR label == 'AI Hanlin' OR label == 'Hanlin'")).firstMatch
+        search.typeText("ChavrusaChat")
+        let galleryItem = springboard.descendants(matching: .any).matching(NSPredicate(format: "label == 'ChavrusaChat' OR label == 'Hanlin Script' OR label == 'AI Hanlin' OR label == 'Hanlin'")).firstMatch
         XCTAssertTrue(galleryItem.waitForExistence(timeout: 10))
         galleryItem.tap()
         let add = springboard.buttons["Add Widget"].firstMatch

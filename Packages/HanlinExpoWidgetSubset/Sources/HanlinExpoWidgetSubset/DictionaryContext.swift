@@ -19,11 +19,12 @@ public extension Enumerable {
         return result
     }
 }
-open class GenericException<Param>: Error, CustomStringConvertible, @unchecked Sendable {
+open class GenericException<Param>: Error, LocalizedError, CustomStringConvertible, @unchecked Sendable {
     public let param: Param
     public init(_ param: Param) { self.param = param }
     open var reason: String { "Invalid widget property: \(param)" }
     public var description: String { reason }
+    public var errorDescription: String? { reason }
 }
 public enum Conversions {
     public final class ConvertingException<Value>: GenericException<Any?>, @unchecked Sendable {}
