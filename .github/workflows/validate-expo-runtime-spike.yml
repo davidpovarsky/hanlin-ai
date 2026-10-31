@@ -575,6 +575,16 @@ jobs:
         run: |
           set -euxo pipefail
           SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
+          # Sample process RSS without collecting process arguments or credentials.
+          (
+            for sample in $(seq 1 1200); do
+              stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              ps -axo pid=,rss=,comm= | awk -v stamp="$stamp" '/HanlinScriptingWidgets|AI_Hanlin/ { print stamp, $0 }'
+              sleep 2
+            done
+          ) > "$LOG_DIR/widget-simulator-rss-kib.log" &
+          widget_probe_pid=$!
+          trap 'kill "$widget_probe_pid" 2>/dev/null || true' EXIT
           xcodebuild test-without-building \
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
@@ -609,6 +619,12 @@ jobs:
         run: |
           set +e
           SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt" 2>/dev/null || true)"
+          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -name AI_Hanlin.app -type d | head -1)"
+          if [ -n "$SIMULATOR_UDID" ] && [ -d "$APP_PATH" ]; then
+            BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist")"
+            python3 Scripts/Widgets/capture-simulator-widget-state.py --device "$SIMULATOR_UDID" --bundle-id "$BUNDLE_ID" \
+              --group group.com.itorah.chavrusachat --output "$LOG_DIR/widgets/widget-state-trace.json"
+          fi
           echo "=== DIAGNOSTIC REPORTS / CRASH REPORTS ==="
           find ~/Library/Logs/DiagnosticReports -type f | while read -r f; do
             echo "--- $f ---"
