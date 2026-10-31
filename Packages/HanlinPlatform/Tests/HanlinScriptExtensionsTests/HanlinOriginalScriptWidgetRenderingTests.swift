@@ -21,9 +21,9 @@ struct HanlinOriginalScriptWidgetRenderingTests {
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
         let gifURL = root.appending(path: "poster.gif")
-        try #require(Data(base64Encoded: "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7")).write(to: gifURL)
+        try #require(Data(base64Encoded: "R0lGODlhAQABAIAAABJtxP///yH5BAAAAAAALAAAAAABAAEAAAIBRAA7")).write(to: gifURL)
         let context = try context(resources: ["poster.gif": gifURL])
-        let props: [AnyHashable: Any] = [
+        var props: [AnyHashable: Any] = [
             "columns": #"[{"type":"fixed","value":"60"},{"type":"flexible"}]"#,
             "color": "#126dc4", "value": "0.7", "total": "1", "type": tag == "gauge" ? "system" : "bar",
             "style": tag == "date" ? "date" : "linear", "date": 1_793_361_600_000.0,
@@ -31,6 +31,7 @@ struct HanlinOriginalScriptWidgetRenderingTests {
             "systemName": "star.fill", "file": "poster.gif", "url": "https://example.com", "text": "Native \(tag)",
             "title": "Native \(tag)", "subtitle": "Original source", "on": true
         ]
+        if tag == "gif" { props["frame"] = "40" }
         let text = ScriptWidgetRuntimeElement(tagString: "text", props: ["font": "caption"], children: ["Native \(tag)"])
         let element = ScriptWidgetRuntimeElement(tagString: tag, props: props, children: [text, "Native \(tag)"])
         ScriptWidgetRenderClock.fixedNow = Date(timeIntervalSince1970: 1_793_361_600)
@@ -43,6 +44,8 @@ struct HanlinOriginalScriptWidgetRenderingTests {
         if tag == "gif" {
             let sequence = try #require(ScriptWidgetGifPipeline.sequence(at: gifURL, animated: false))
             #expect(sequence.frames.count == 1)
+            let blank = try raster(element: .init(tagString: "spacer", props: nil, children: nil), context: context)
+            #expect(png != blank, "The GIF resource rendered no visible pixels")
         }
     }
 

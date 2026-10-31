@@ -64,7 +64,8 @@ struct HanlinDualWidgetEnginesTests {
         #expect(result.node.tag == "text")
         #expect(result.node.children == [.value(.string("Imported verified"))])
         #expect(result.values["mode"] == .string("verified"))
-        #expect(result.values["payload"]?.toAny() as? [String: Int] == ["count": 9])
+        guard case let .object(payload)? = result.values["payload"] else { Issue.record("Verified JSON file did not retain an object value"); return }
+        #expect(payload["count"] == .integer(9))
     }
     @Test(arguments: ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo", "Hanlin-ScriptWidget-Dashboard.scripting", "Hanlin-ScriptWidget-Actions.scripting", "Hanlin-Widget-Legacy-Regression.scripting", "Hanlin-Mixed-Native-Widget.hanlinExpo", "Hanlin-Widget-Invalid-Cases.hanlinExpo"])
     func realArchiveImport(name: String) throws {
