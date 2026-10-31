@@ -21,9 +21,11 @@ extension UIColor: Convertible {
       return try uiColorWithComponents(components) as! Self
     }
     if let value = value as? Int {
+      guard value >= 0, UInt64(value) <= UInt64(UInt32.max) else { throw Conversions.ConvertingException<UIColor>(value) }
       return try colorFromArgb(UInt64(value)) as! Self
     }
     if let value = value as? Double {
+      guard value.isFinite, value >= 0, value <= Double(UInt32.max) else { throw Conversions.ConvertingException<UIColor>(value) }
       return try colorFromArgb(UInt64(value)) as! Self
     }
 

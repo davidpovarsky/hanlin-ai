@@ -1,14 +1,14 @@
 [
   {
     "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
-    "sha256": "e7a982ea032b4e98edde6d8052189660b80c908c63009325e8d9fb4ee46a51c4",
-    "bytes": 1125,
+    "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
+    "bytes": 1148,
     "engine": "expo",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
       "script.json": "80c22aeab814f67b488edf0f48fb6c5f552b2cf6f30c00e6a92457a086c5ac0b",
       "package.json": "654f333f2ea880593c03ea667ed552730cbea8bbb419a124fd702f9e233e7379",
-      "widget.tsx": "537a393b527f84784dd8b5309e505255bf9923b9999998ea4282fca343630f4c"
+      "widget.tsx": "1ab32165c7ae1d0c2d0a3d45a673e323c22a27bc09fe8bb4c0dccf237b4ff824"
     }
   },
   {
@@ -37,13 +37,13 @@
   },
   {
     "archive": "Hanlin-ScriptWidget-Actions.scripting",
-    "sha256": "4627a525d145da03f0062b813237acdbb3eb28507cbc722468b4f548f9ca741b",
-    "bytes": 786,
+    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "bytes": 825,
     "engine": "scriptwidget",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
       "script.json": "409945c1945dcd574b6596b64161243d7a98c8902dc2f5bd0a1e4ee8e24e4c69",
-      "widget.jsx": "05b287d759d4867612f35844d75ea17b0cf37fb3d758ebe106c49fa4dbf83c42"
+      "widget.jsx": "ef54486085896a09a05274594ac57064bbfb9873717604e87cb8e016af1756fa"
     }
   },
   {

@@ -1,5 +1,5 @@
 import CryptoKit
-import HanlinExpoWidgetSubset
+@testable import HanlinExpoWidgetSubset
 import Foundation
 import HanlinExpoWidgetNative
 import HanlinPlatformContracts
@@ -14,6 +14,68 @@ import UIKit
 /// A successful raster is distinct from a SpringBoard action acceptance test.
 @MainActor
 final class HanlinNativeWidgetRendererTests: XCTestCase {
+    func testOriginalTextConcatenationPreservesNativeTypeAndChildStyles() throws {
+        let styled: [String: Any] = ["type": "TextView", "props": ["text": " styled", "modifiers": [
+            ["$type": "font", "size": 24, "weight": "bold"], ["$type": "foregroundColor", "color": "#0000ff"]]]]
+        let child = render(["type": "TextView", "props": ["text": "Base", "children": [styled]]])
+        let native = try XCTUnwrap(child.childView as? TextView)
+        XCTAssertEqual(native.props.text, "Base")
+        XCTAssertEqual(native.props.children?.count, 1)
+        XCTAssertTrue(native.props.children?.first?.childView is TextView)
+        let expected = Text("Base") + Text(" styled").font(.system(size: 24, weight: .bold)).foregroundColor(Color(red: 0, green: 0, blue: 1))
+        XCTAssertEqual(try raster(AnyView(child)), try raster(AnyView(expected)), "Native Text concatenation lost source styles")
+    }
+
+    func testOriginalSlotsMatchNativeOverlayBackgroundAndMaskPixels() throws {
+        let circle: [String: Any] = ["type": "CircleView", "props": ["modifiers": [
+            ["$type": "frame", "width": 12, "height": 12], ["$type": "foregroundColor", "color": "#0000ff"]]]]
+        let base: [String: Any] = ["type": "TextView", "props": ["text": "Native slots"]]
+        let slot: [String: Any] = ["type": "SlotView", "props": ["name": "content", "children": [circle]]]
+        for type in ["OverlayView", "BackgroundView", "MaskView"] {
+            let child = render(["type": type, "props": ["alignment": "topTrailing", "children": [base, slot]]])
+            let props: ExpoSwiftUI.ViewProps
+            let reference: AnyView
+            let shape = Circle().frame(width: 12, height: 12).foregroundColor(Color(red: 0, green: 0, blue: 1))
+            switch type {
+            case "OverlayView":
+                props = try XCTUnwrap(child.childView as? UIBaseView<OverlayViewProps, OverlayView>).props
+                reference = AnyView(Text("Native slots").overlay(alignment: .topTrailing) { shape })
+            case "BackgroundView":
+                props = try XCTUnwrap(child.childView as? UIBaseView<BackgroundViewProps, BackgroundView>).props
+                reference = AnyView(Text("Native slots").background(alignment: .topTrailing) { shape })
+            default:
+                props = try XCTUnwrap(child.childView as? UIBaseView<MaskViewProps, MaskView>).props
+                reference = AnyView(Text("Native slots").mask(alignment: .topTrailing) { shape })
+            }
+            XCTAssertEqual(props.children?.withoutSlots().count, 1)
+            XCTAssertEqual(props.children?.slot("content")?.props.name, "content")
+            XCTAssertEqual(try raster(AnyView(child)), try raster(reference), "\(type) lost its native slot projection")
+        }
+    }
+
+    func testOriginalChartAndGaugeReceiveTheirTypedNativeData() throws {
+        let chart = render(["type": "ChartView", "props": ["type": "bar", "data": [["x": "A", "y": 3], ["x": "B", "y": 7]]]])
+        let nativeChart = try XCTUnwrap(chart.childView as? UIBaseView<ChartProps, ChartView>)
+        XCTAssertEqual(nativeChart.props.data.map(\.xValue), ["A", "B"])
+        XCTAssertEqual(nativeChart.props.data.map(\.y), [3, 7])
+        XCTAssertEqual(nativeChart.props.type, .bar)
+        let gauge = render(["type": "GaugeView", "props": ["value": 0.7, "min": 0, "max": 1, "children": [
+            ["type": "SlotView", "props": ["name": "currentValue", "children": [["type": "TextView", "props": ["text": "70%"]]]]]]]])
+        let nativeGauge = try XCTUnwrap(gauge.childView as? UIBaseView<GaugeProps, GaugeView>)
+        XCTAssertEqual(nativeGauge.props.value, 0.7)
+        XCTAssertEqual(nativeGauge.props.min, 0)
+        XCTAssertEqual(nativeGauge.props.max, 1)
+        XCTAssertEqual(nativeGauge.props.children?.slot("currentValue")?.props.name, "currentValue")
+        let frozen = render(["type": "GaugeView", "props": ["value": Int64(1), "min": Int64(0), "max": Int64(3)]])
+        XCTAssertEqual((frozen.childView as? UIBaseView<GaugeProps, GaugeView>)?.props.max, 3)
+        XCTAssertThrowsError(try Color.convert(from: Double.nan, appContext: AppContext()))
+        XCTAssertThrowsError(try Color.convert(from: -1, appContext: AppContext()))
+    }
+
+    private func render(_ node: [String: Any]) -> any ExpoSwiftUI.AnyChild {
+        HanlinExpoWidgetNative.render(node: node) { _, _, label in AnyView(label) }
+    }
+
     func testInstalledExternalSourceRendersThroughAnyChild() throws {
       for archive in ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo"] {
         let bundle = Bundle(for: Self.self)

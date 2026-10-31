@@ -20,8 +20,8 @@ import { padding, font } from '@expo/ui/swift-ui/modifiers';
 export default function Counter(props: { count?: number; status?: string }) {
   'widget';
   const count = props.count ?? 7;
-  return <VStack spacing={8} modifiers={[padding({all: 12})]}>
-    <Text>Expo Counter</Text><Text modifiers={[font({size: 32})]}>{String(count)}</Text>
+  return <VStack spacing={4} modifiers={[padding({all: 6}), font({textStyle: 'caption'})]}>
+    <HStack><Text>Expo Counter</Text><Text modifiers={[font({size: 28})]}>{String(count)}</Text></HStack>
     <Text>{props.status ?? 'Ready'}</Text>
     <HStack><Button label="Increment +1" target="increment" onPress={() => ({count: count + 1})}/>
     <Button label="Decrement -1" target="decrement" onPress={() => ({count: count - 1})}/></HStack>
@@ -60,10 +60,10 @@ $render(<vstack spacing="6"><Heading>ScriptWidget Dashboard</Heading>
     'script.json': json(manifest('ScriptWidget Actions', 'scriptwidget', scriptActions)),
     'widget.jsx': `function syncNow() { $storage.set('syncCount', ($storage.get('syncCount') ?? 0) + 1); }
 function setStatus() { $storage.set('status', 'Named source function ran'); }
-$render(<vstack><text>ScriptWidget Actions</text><text>{$storage.get('status') ?? 'Ready'}</text>
- <text>{String($storage.get('syncCount') ?? 0)}</text>
- <button actionID="sync"><text>Sync now</text></button>
- <button onClick="setStatus"><text>Named function</text></button>
+$render(<vstack spacing="2"><hstack spacing="4"><text font="caption">ScriptWidget Actions</text><text font="caption">{String($storage.get('syncCount') ?? 0)}</text></hstack>
+ <text font="caption">{$storage.get('status') ?? 'Ready'}</text>
+ <hstack spacing="4"><button actionID="sync"><text font="caption">Sync now</text></button>
+ <button onClick="setStatus"><text font="caption">Named function</text></button></hstack>
  <toggle on={$storage.get('backup') ?? false} actionID="backup" stateKey="backup"><text>Backup</text></toggle>
  <button action="reload"><text>Reload</text></button>
 </vstack>);\n`

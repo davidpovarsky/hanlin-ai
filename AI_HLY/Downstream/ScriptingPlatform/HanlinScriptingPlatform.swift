@@ -259,7 +259,8 @@ final class HanlinScriptingPlatform {
                 defer { try? FileManager.default.removeItem(at: artifactRoot) }
                 let contexts = Set(preview.entrypoints
                     .filter { ![.hanlinPython, .hanlinNativeScript, .hanlinExpo].contains($0.runtimeProfile)
-                        && !($0.kind == .widget && $0.widgetEngine == .scriptwidget) }
+                        && !($0.kind == .widget && $0.widgetEngine == .scriptwidget)
+                        && !($0.kind == .widget && $0.widgetEngine == .legacy && URL(filePath: $0.sourcePath).pathExtension.lowercased() == "json") }
                     .map(\.kind))
                     .sorted { $0.rawValue < $1.rawValue }
                 guard !preview.entrypoints.isEmpty else {
@@ -279,6 +280,8 @@ final class HanlinScriptingPlatform {
                     try Self.preparedSourceBundle(preview: preview, compilerVersion: "Expo-58.0.3-prepared")
                 } else if preview.entrypoints.contains(where: { $0.widgetEngine == .scriptwidget }) && bundles.isEmpty {
                     try Self.preparedSourceBundle(preview: preview, compilerVersion: "ScriptWidget-68f04194-prepared")
+                } else if bundles.isEmpty && preview.entrypoints.allSatisfy({ $0.kind == .widget && $0.widgetEngine == .legacy && URL(filePath: $0.sourcePath).pathExtension.lowercased() == "json" }) {
+                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "Hanlin-widget-json-v1")
                 } else if bundles.isEmpty {
                     try Self.pythonSourceBundle(preview: preview)
                 } else {

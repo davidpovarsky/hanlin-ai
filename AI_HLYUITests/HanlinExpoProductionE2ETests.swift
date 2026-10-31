@@ -21,6 +21,17 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
     // MARK: - Test Cases
 
+    func testNativeLegacyWidgetWithHostTerminated() throws {
+        openApps()
+        importAndInstall(archive: "Hanlin-Widget-Legacy-Regression")
+        app.terminate()
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        defer { recordWidgetEvidence(springboard, name: "legacy-final") }
+        try placeNativeWidget(in: springboard, selecting: "Widget Legacy Regression")
+        XCTAssertTrue(springboard.staticTexts["Legacy HanlinScriptUINode Tree"].firstMatch.waitForExistence(timeout: 30))
+        XCTAssertEqual(app.state, .notRunning)
+    }
+
     func testNativeExpoWidgetSourceActionsWithHostTerminated() throws {
         openApps()
         importAndInstall(archive: "Hanlin-Expo-Widget-Counter")

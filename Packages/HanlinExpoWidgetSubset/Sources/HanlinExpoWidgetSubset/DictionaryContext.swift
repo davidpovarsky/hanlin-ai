@@ -1,4 +1,5 @@
 import Foundation
+import CoreFoundation
 import SwiftUI
 import UIKit
 
@@ -52,8 +53,17 @@ private protocol DictionaryField: AnyObject {
 private func dictionaryValue<T>(_ value: Any?, context: AppContext) throws -> T {
     if let convertible = T.self as? any Convertible.Type,
        let result = try convertible.convert(from: value, appContext: context) as? T { return result }
+    // Frozen Hanlin integers arrive as Swift Int64, while native Expo props
+    // use Double/CGFloat/Int. Normalize the numeric representation explicitly.
+    if let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID() {
+        let scalar = number.doubleValue
+        guard scalar.isFinite else { throw Conversions.ConvertingException<T>(value) }
+        if T.self == Double.self { return scalar as! T }
+        if T.self == CGFloat.self { return CGFloat(scalar) as! T }
+        if T.self == Float.self, abs(scalar) <= Double(Float.greatestFiniteMagnitude) { return Float(scalar) as! T }
+        if T.self == Int.self, let integer = Int(exactly: scalar) { return integer as! T }
+    }
     if let result = value as? T { return result }
-    if T.self == CGFloat.self, let number = value as? NSNumber { return CGFloat(number.doubleValue) as! T }
     throw Conversions.ConvertingException<T>(value)
 }
 extension Optional: Convertible {
@@ -190,6 +200,7 @@ extension ExpoSwiftUI {
     }
     public typealias View = ExpoSwiftUIView
 }
+@MainActor @preconcurrency
 public protocol ExpoSwiftUIView<Props>: SwiftUI.View, ExpoSwiftUI.AnyChild {
     associatedtype Props: ExpoSwiftUI.ViewProps
     var props: Props { get }

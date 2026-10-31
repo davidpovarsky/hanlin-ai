@@ -1258,9 +1258,9 @@
       "upstream": "packages/expo-modules-core/ios/Core/Views/SwiftUI/AnyChild.swift",
       "upstreamBlob": "6545b1ae5242d15536da909a5207aec170d64feb",
       "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/Core/AnyChild.swift",
-      "localSHA256": "846664cf7cfd62bcc6f7de66ca296e50e8cd294b319e8668bcea43367d184bf1",
+      "localSHA256": "eff413c039109cd46d883c08aa16f1425d9ebd2c8c335c7d5ca89c8d75a0f9a0",
       "byteIdentical": false,
-      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
+      "adaptation": "UIKit/Foundation imports and explicit MainActor/preconcurrency protocol isolation matching the installed public SDK interface; native child and identity semantics retained."
     },
     {
       "repository": "expo/expo",
@@ -1298,9 +1298,9 @@
       "upstream": "packages/expo-modules-core/ios/Core/Convertibles/Convertibles+Color.swift",
       "upstreamBlob": "b98ff1726c27edcd5c843e55d510985d24736e76",
       "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/Core/Convertibles+Color.swift",
-      "localSHA256": "00ece1f14d845b0112b6225d78d325e320828701d2fac7c40f62b590e6629b18",
+      "localSHA256": "00a1a995dbe004329af6422184f7dbc44eddfeecda0e28789810ce590d0a7e94",
       "byteIdentical": false,
-      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
+      "adaptation": "UIKit/Foundation imports; reject non-finite, negative or overflowing numeric ARGB input before UInt64 conversion. Original native CSS/dynamic color behavior retained."
     },
     {
       "repository": "expo/expo",

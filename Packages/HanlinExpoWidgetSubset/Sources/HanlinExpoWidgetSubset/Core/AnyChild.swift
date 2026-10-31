@@ -8,6 +8,7 @@ import SwiftUI
  A type-erased protocol representing a child view for a SwiftUI view.
  */
 extension ExpoSwiftUI {
+  @MainActor @preconcurrency
   public protocol AnyChild: SwiftUI.View {
     // swiftlint:disable:next nesting - Keep AnyChild protocol inside ExpoSwiftUI namespace
     associatedtype ChildViewType: SwiftUI.View
@@ -25,6 +26,7 @@ extension ExpoSwiftUI {
   /**
    An `AnyChild` that provides a string-based identity for child collections.
    */
+  @MainActor @preconcurrency
   public protocol StringIdentityChild: AnyChild {
     var stringIdentity: String? { get }
   }

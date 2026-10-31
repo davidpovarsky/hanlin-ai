@@ -586,6 +586,7 @@ jobs:
             -skipMacroValidation \
             -parallel-testing-enabled NO \
             -only-testing:AI_HLYTests/HanlinNativeWidgetRendererTests \
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeScriptWidgetBooleanWithHostTerminated \
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd \
