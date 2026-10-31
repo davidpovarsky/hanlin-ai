@@ -110,6 +110,7 @@ let package = Package(
         .target(
             name: "HanlinScriptCompiler",
             dependencies: [
+                "HanlinWidgetCompiler",
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
@@ -220,7 +221,6 @@ let package = Package(
             name: "HanlinScriptExtensions",
             dependencies: [
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
-                "HanlinWidgetCompiler",
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
                 "HanlinScriptUI",
