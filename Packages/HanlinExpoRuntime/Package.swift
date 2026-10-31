@@ -15,12 +15,13 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(name: "HanlinExpoWidgetSubset", path: "../HanlinExpoWidgetSubset"),
         .package(name: "HanlinExpoNativeAPI", path: "../HanlinExpoNativeAPI")
     ],
     targets: [
         .target(
             name: "HanlinExpoWidgetNative",
-            dependencies: ["ExpoUI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoModulesJSI", "ReactNativeHeaders"],
+            dependencies: [.product(name: "HanlinExpoWidgetSubset", package: "HanlinExpoWidgetSubset")],
             exclude: ["LICENSE-EXPO.txt"],
             swiftSettings: [.unsafeFlags(["-application-extension"])],
             linkerSettings: [.linkedFramework("SwiftUI"), .linkedFramework("WidgetKit")]

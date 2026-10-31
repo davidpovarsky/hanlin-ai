@@ -1,8 +1,7 @@
+import HanlinExpoWidgetSubset
 import SwiftUI
-import ExpoModulesCore
-import ExpoUI
 
-final class FragmentProps: ExpoUI.ButtonProps {}
+final class FragmentProps: HanlinExpoWidgetSubset.ButtonProps {}
 
 struct FragmentView: ExpoSwiftUI.View {
   @ObservedObject var props: FragmentProps

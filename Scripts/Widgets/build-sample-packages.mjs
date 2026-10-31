@@ -5,7 +5,7 @@ import { widgetSamples } from './samples.mjs';
 import { deterministicZip } from './deterministic-zip.mjs';
 
 const repoRoot = path.resolve(import.meta.dirname, '../..');
-const outputs = ['Fixtures/Widgets', 'AI_HLYUITests/Fixtures'];
+const outputs = ['Fixtures/Widgets', 'AI_HLYUITests/Fixtures', 'AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle'];
 const hashes = [];
 for (const sample of widgetSamples) {
   const bytes = deterministicZip(sample.files), name = `${sample.name}.${sample.extension}`;

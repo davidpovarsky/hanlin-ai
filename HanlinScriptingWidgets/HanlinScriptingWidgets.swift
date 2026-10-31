@@ -183,7 +183,7 @@ private struct HanlinPreparedExpoNativeView: View {
     let context: HanlinWidgetActionContext
     @ViewBuilder var body: some View {
         if let object = node.toAny() as? [String: Any] {
-            let child = HanlinExpoWidgetNative.render(node: object) { target, role, label in
+            let child = HanlinExpoWidgetNative.render(node: object, resources: context.resources) { target, role, label in
                 guard let intent = try? HanlinExpoWidgetsViewRenderer.actionIntent(target: target, context: context) else {
                     return AnyView(label.disabled(true).accessibilityHint("Widget action is unavailable"))
                 }

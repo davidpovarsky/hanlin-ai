@@ -1,14 +1,14 @@
+import HanlinExpoWidgetSubset
 // Source: expo/expo@917a61b581baeb852aa4fe331da2c1395d824351
 // Hanlin: injected native intent button; widget-only context; visible diagnostics.
 import SwiftUI
-import ExpoModulesCore
-import ExpoUI
 
 @MainActor
 struct WidgetsViewRenderer {
   let name: String
   let buttonBuilder: (String, SwiftUI.ButtonRole?, AnyView) -> AnyView
   let node: [String: Any]
+  let context: AppContext
 
   func render() -> any ExpoSwiftUI.AnyChild {
     switch node["type"] as? String {
@@ -95,7 +95,7 @@ struct WidgetsViewRenderer {
       guard let rawProps = node["props"] as? [String: Any] else {
         return makeChild(Text("Missing Expo widget props"))
       }
-      let props = try propsType.init(rawProps: rawProps, context: WidgetsContext.shared.context)
+      let props = try propsType.init(rawProps: rawProps, context: context)
       try updateProps?(props)
       return makeChild(V(props: props))
     } catch {
@@ -111,11 +111,11 @@ struct WidgetsViewRenderer {
       if let children = props["children"] as? [Any] {
         let validChildren = flattenChildNodes(children)
         initialProps.children = validChildren.map {
-          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, node: $0).render()
+          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, node: $0, context: context).render()
         }
       } else if let child = props["children"] as? [String: Any] {
         initialProps.children = [
-          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, node: child).render()
+          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, node: child, context: context).render()
         ]
       }
     }

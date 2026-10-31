@@ -408,7 +408,7 @@
       "upstream": "packages/expo-widgets/ios/Widgets/ViewRenderer.swift",
       "upstreamBlob": "68e376fdd5a4a1b088f6e2e28b0babb285feec12",
       "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
-      "localSHA256": "5aad710edbcb2d91e28e3cc156d2568211428541c3fadcb8b3a0855016dbfe1a",
+      "localSHA256": "12845faebfe415e523cc27378c2358f94f89746853d95e75c89fa288c2b2a3c6",
       "byteIdentical": false,
       "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
     },
@@ -418,8 +418,8 @@
       "upstream": "packages/expo-widgets/ios/Widgets/ChildView.swift",
       "upstreamBlob": "0d107a67f85635fafc02013b0a97205b7146c731",
       "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ChildView.swift",
-      "localSHA256": "92a4d139cedbce3bec62f31c4491d6eb45042caab8594d2c45038412e7583c51",
-      "byteIdentical": true,
+      "localSHA256": "9107874b24a49c4cca17a1776d60e01fa556ac66bc1b17ae5c6fda039344a49d",
+      "byteIdentical": false,
       "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
     },
     {
@@ -428,8 +428,8 @@
       "upstream": "packages/expo-widgets/ios/Widgets/Fragment.swift",
       "upstreamBlob": "0f17a9d07cc37831acd9978215077e5d87c6feeb",
       "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/Fragment.swift",
-      "localSHA256": "1f68553d6fe9314204451b2cf51cc990de387c6f5e120c53f8b04034fb6a6b6f",
-      "byteIdentical": true,
+      "localSHA256": "59e3a1bd1f4c12751075b4e7c0c72c1e5bfd6f7ffc128883c93d1b4fb226c681",
+      "byteIdentical": false,
       "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
     },
     {
@@ -618,7 +618,7 @@
       "upstream": "packages/expo-widgets/ios/Widgets/Buttons.swift",
       "upstreamBlob": "55fb9b3d5fa04d38ab8c2a8b3de7f7656afc401e",
       "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
-      "localSHA256": "d7c33b4c1f1a989ae3f6d2b4234574d72df02155fb6ecb897584d694dc8131b9",
+      "localSHA256": "a5eb7cab2adb753cacbab0cf3055da4797aa4cac1407fafc7a44453767ecc355",
       "byteIdentical": false,
       "adaptation": "Original native button props/Children/role/label; typed Hanlin intent injection."
     },
@@ -628,7 +628,7 @@
       "upstream": "packages/expo-widgets/ios/WidgetsContext.swift",
       "upstreamBlob": "773736591450af7567b34b62c97a26f7cd314a0d",
       "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
-      "localSHA256": "d7c33b4c1f1a989ae3f6d2b4234574d72df02155fb6ecb897584d694dc8131b9",
+      "localSHA256": "a5eb7cab2adb753cacbab0cf3055da4797aa4cac1407fafc7a44453767ecc355",
       "byteIdentical": false,
       "adaptation": "Same widget-only AppContext; isolated MainActor ownership."
     },

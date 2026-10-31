@@ -78,10 +78,11 @@ test('P3-12: reserved guard identifiers and malformed JSX fail compilation', () 
     assert.throws(()=>compile(sample));
   }
 });
-test('P3-26: fixture archives rebuild byte-for-byte in both locations', () => {
+test('P3-26: fixture archives rebuild byte-for-byte in all three locations', () => {
   for(const sample of widgetSamples) {
     const bytes=deterministicZip(sample.files),name=sample.name+'.'+sample.extension;
     assert.deepEqual(bytes,fs.readFileSync(path.join(root,'Fixtures/Widgets',name)));
     assert.deepEqual(bytes,fs.readFileSync(path.join(root,'AI_HLYUITests/Fixtures',name)));
+    assert.deepEqual(bytes,fs.readFileSync(path.join(root,'AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle',name)));
   }
 });

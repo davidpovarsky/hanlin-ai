@@ -4,7 +4,10 @@ import UIKit
 
 /// Dictionary-only widget adapter for the pinned ExpoUI source props. It has no
 /// React registry, JavaScript engine, hosting controller or module lifecycle.
-public final class AppContext { public init() {} }
+public final class AppContext {
+    public let resources: [String: URL]
+    public init(resources: [String: URL] = [:]) { self.resources = resources }
+}
 
 public protocol Convertible {
     static func convert(from value: Any?, appContext: AppContext) throws -> Self
@@ -152,7 +155,9 @@ public final class ObservableState: ObservableObject, Convertible {
 extension ExpoSwiftUI {
     open class ViewProps: ObservableObject, Record {
         public var children: [any AnyChild]?
-        public internal(set) weak var appContext: AppContext?
+        // This dictionary-only context owns no views, so a strong reference is
+        // cycle-free and preserves modifier/resource lifetime for prepared views.
+        public internal(set) var appContext: AppContext?
         public let globalEventDispatcher = EventDispatcher()
         public required init() {}
         public required init(rawProps: [String: Any], context: AppContext) throws {
@@ -166,7 +171,20 @@ extension ExpoSwiftUI {
                     }
                 }
             }
-            try updateFields(self, props: rawProps, context: context)
+            var props = rawProps
+            if let name = props["assetName"] as? String, let url = context.resources[name] {
+                props["uiImage"] = url.absoluteString
+                props.removeValue(forKey: "assetName")
+            }
+            if let image = props["uiImage"] as? String {
+                if let resource = context.resources[image] { props["uiImage"] = resource.absoluteString }
+                else {
+                    guard let url = URL(string: image), url.isFileURL, context.resources.values.contains(url) else {
+                        throw GenericException("Image must reference a verified package resource or an SF Symbol")
+                    }
+                }
+            }
+            try updateFields(self, props: props, context: context)
         }
     }
     public typealias View = ExpoSwiftUIView

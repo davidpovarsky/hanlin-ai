@@ -1,5 +1,5 @@
 import CryptoKit
-import ExpoModulesCore
+import HanlinExpoWidgetSubset
 import Foundation
 import HanlinExpoWidgetNative
 import HanlinPlatformContracts
@@ -16,10 +16,12 @@ import UIKit
 final class HanlinNativeWidgetRendererTests: XCTestCase {
     func testInstalledExternalSourceRendersThroughAnyChild() throws {
       for archive in ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo"] {
-        let repository = URL(filePath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+        let bundle = Bundle(for: Self.self)
+        let fixtures = try XCTUnwrap(bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle", subdirectory: "Fixtures") ?? bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle"))
         let root = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
-        let staged = try HanlinPackageCenter().stageAndInspect(sourceURL: repository.appending(path: "Fixtures/Widgets/\(archive)"), stagingParent: root)
+        let staged = try HanlinPackageCenter().stageAndInspect(sourceURL: fixtures.appending(path: archive), stagingParent: root)
         let entry = try XCTUnwrap(staged.manifest.entry)
         var files: [String: Data] = [:]
         let enumerator = try XCTUnwrap(FileManager.default.enumerator(at: staged.packageRoot, includingPropertiesForKeys: [.isRegularFileKey]))

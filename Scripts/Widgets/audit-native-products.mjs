@@ -37,7 +37,7 @@ export function inspectMachO(file) {
     offset += size;
   }
   const flags = bytes.readUInt32LE(24);
-  return { file, sha256: crypto.createHash('sha256').update(original).digest('hex'), inspectedArchitecture: 'arm64', flags: `0x${flags.toString(16)}`,
+  return { file, sha256: crypto.createHash('sha256').update(original).digest('hex'), inspectedArchitecture: 'arm64', fileType: bytes.readUInt32LE(12), flags: `0x${flags.toString(16)}`,
     applicationExtensionSafe: Boolean(flags & 0x02000000), dylibs };
 }
 
@@ -49,7 +49,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     for (const item of fs.readdirSync(directory, { withFileTypes: true })) {
       const file = path.join(directory, item.name);
       if (item.isDirectory() && !item.name.endsWith('.dSYM')) visit(file);
-      else if (item.isFile() && ['ExpoUI', 'ExpoModulesCore', 'ExpoModulesWorklets', 'ExpoModulesJSI', 'HanlinScriptingWidgets', 'AI_Hanlin'].includes(item.name)) {
+      else if (item.isFile() && (['ExpoUI', 'ExpoModulesCore', 'ExpoModulesWorklets', 'ExpoModulesJSI', 'HanlinScriptingWidgets', 'AI_Hanlin'].includes(item.name)
+        || item.name.endsWith('.debug.dylib') || path.basename(directory) === item.name + '.framework')) {
         const record = inspectMachO(file);
         record.file = path.relative(root, file).replaceAll('\\', '/');
         records.push(record);
@@ -57,11 +58,34 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     }
   }
   visit(root);
-  const native = records.filter(r => /Expo(UI|ModulesCore|ModulesWorklets)$/.test(r.file));
+  const entry = records.find(record => record.file.endsWith('PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets'));
+  const native = [], missingDependencies = [], seen = new Set();
+  function walk(record) {
+    if (seen.has(record.file)) return;
+    seen.add(record.file);
+    native.push(record);
+    for (const library of record.dylibs) {
+      if (library.startsWith('/System/') || library.startsWith('/usr/lib/')) continue;
+      const suffix = library.replace(/^@rpath\//, '');
+      const candidates = records.filter(item => item.file.endsWith('/' + suffix) || item.file === suffix);
+      let dependency = candidates.find(item => item.file.includes('.appex/')) ?? candidates[0];
+      if (!dependency && library.startsWith('@loader_path/')) {
+        const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(record.file), library.slice('@loader_path/'.length)));
+        dependency = records.find(item => item.file === resolved);
+      }
+      if (dependency) walk(dependency);
+      else if (!library.startsWith('@rpath/libswift')) missingDependencies.push({ file: record.file, library });
+    }
+  }
+  if (entry) walk(entry);
+  else native.push(...records.filter(r => /Expo(UI|ModulesCore|ModulesWorklets)$/.test(r.file)));
   const forbiddenDependencies = native.flatMap(record => record.dylibs.filter(lib => /\/(hermesvm|React|ReactNativeDependencies)\.framework\//.test(lib)).map(library => ({ file: record.file, library })));
-  const status = native.length > 0 && native.every(r => r.applicationExtensionSafe) && !forbiddenDependencies.length ? 'PASS' : 'FAILED_EXTENSION_CLOSURE';
+  // Xcode's debug executable stub has no extension-safe library flag; audit
+  // the loaded dylib containing its code, plus every custom dylib it loads.
+  const unsafeLibraries = native.filter(record => record.fileType === 6 && !record.applicationExtensionSafe);
+  const status = native.length > 0 && !unsafeLibraries.length && !forbiddenDependencies.length && !missingDependencies.length ? 'PASS' : 'FAILED_EXTENSION_CLOSURE';
   fs.mkdirSync(path.dirname(output), { recursive: true });
-  fs.writeFileSync(output, JSON.stringify({ status, records, forbiddenDependencies }, null, 2) + '\n');
+  fs.writeFileSync(output, JSON.stringify({ status, mode: entry ? 'appex-reachable-closure' : 'prebuilt-framework-inventory', records, reachableFiles: native.map(record => record.file), unsafeLibraries, missingDependencies, forbiddenDependencies }, null, 2) + '\n');
   console.log(`${status}: ${records.length} binaries; ${forbiddenDependencies.length} forbidden transitive loads. See ${output}`);
   if (status !== 'PASS') process.exitCode = 1;
 }

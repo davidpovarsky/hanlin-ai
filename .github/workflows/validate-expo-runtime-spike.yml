@@ -37,6 +37,13 @@ jobs:
             -swift-version 5 -application-extension -sdk "$sdk" -target arm64-apple-ios27.0-simulator \
             "${sources[@]}" -o build/widget-native-subset/libHanlinExpoWidgetSubset.dylib \
             2>&1 | tee build-logs/widget-native-subset/compiler.log
+          native_sources=()
+          while IFS= read -r -d '' source; do native_sources+=("$source"); done < <(find Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative -name '*.swift' -print0)
+          xcrun swiftc -emit-library -emit-module -parse-as-library -module-name HanlinExpoWidgetNative \
+            -swift-version 6 -application-extension -sdk "$sdk" -target arm64-apple-ios27.0-simulator \
+            -I build/widget-native-subset -L build/widget-native-subset -lHanlinExpoWidgetSubset \
+            "${native_sources[@]}" -o build/widget-native-subset/libHanlinExpoWidgetNative.dylib \
+            2>&1 | tee build-logs/widget-native-subset/native-renderer-compiler.log
           otool -L build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/otool.log
           otool -hv build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/mach-header.log
           shasum -a 256 build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/SHA256.txt
@@ -393,6 +400,19 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Preserve simulator extension and actual executable hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -name AI_Hanlin.app -type d | head -1)"
+          APPEX_PATH="$APP_PATH/PlugIns/HanlinScriptingWidgets.appex"
+          test -d "$APPEX_PATH"
+          mkdir -p "$LOG_DIR/widgets"
+          for binary in "$APP_PATH/AI_Hanlin" "$APP_PATH/AI_Hanlin.debug.dylib" "$APPEX_PATH/HanlinScriptingWidgets" "$APPEX_PATH/HanlinScriptingWidgets.debug.dylib"; do
+            if [ -f "$binary" ]; then shasum -a 256 "$binary"; fi
+          done > "$LOG_DIR/widgets/executable-SHA256.txt"
+          ditto -c -k --keepParent "$APPEX_PATH" "$LOG_DIR/widgets/HanlinScriptingWidgets-simulator.appex.zip"
+
       - name: Boot iPad Simulator and stage fixtures
         id: stage-fixtures
         shell: bash
@@ -443,7 +463,7 @@ jobs:
                   # An already booted simulator can make boot return nonzero;
                   # bootstatus remains the authoritative readiness check.
                   subprocess.run(["xcrun", "simctl", "boot", simulator], stdout=output, stderr=subprocess.STDOUT, timeout=60)
-                  subprocess.run(["xcrun", "simctl", "bootstatus", simulator, "-b"], stdout=output, stderr=subprocess.STDOUT, timeout=240, check=True)
+                  subprocess.run(["xcrun", "simctl", "bootstatus", simulator, "-b"], stdout=output, stderr=subprocess.STDOUT, timeout=900, check=True)
               except (subprocess.TimeoutExpired, subprocess.CalledProcessError) as error:
                   output.write("\nSIMULATOR_BOOT_FAILED: " + str(error) + "\n")
                   output.flush()
@@ -546,8 +566,8 @@ jobs:
           APP_PATH="$(find "$DERIVED_DATA_PATH/Build/Products" -name AI_Hanlin.app -type d | head -1)"
           audit_status=0
           node Scripts/Widgets/audit-native-products.mjs "$APP_PATH" "$LOG_DIR/widget-native-mach-o.json" || audit_status=$?
-          find "$APP_PATH/PlugIns" -name HanlinScriptingWidgets -type f -exec otool -L {} \; > "$LOG_DIR/widget-native-otool.log"
-          find "$APP_PATH/PlugIns" -name HanlinScriptingWidgets -type f -exec nm -g {} \; > "$LOG_DIR/widget-native-symbols.log"
+          find "$APP_PATH/PlugIns" \( -name HanlinScriptingWidgets -o -name HanlinScriptingWidgets.debug.dylib \) -type f -exec otool -L {} \; > "$LOG_DIR/widget-native-otool.log"
+          find "$APP_PATH/PlugIns" \( -name HanlinScriptingWidgets -o -name HanlinScriptingWidgets.debug.dylib \) -type f -exec nm -g {} \; > "$LOG_DIR/widget-native-symbols.log"
           exit "$audit_status"
 
       - name: Run Expo SwiftUI Production E2E Tests
