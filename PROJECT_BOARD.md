@@ -43,7 +43,7 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## In Progress / Active Blockers
 
-- [ ] Dual native widget engines, Pass 3: original Expo AnyChild and ScriptWidget builders are being integrated; verified artifact loading, canonical instance actions and transactional state replace Pass-2 surrogates. Apple compilation, native semantic/UI evidence and signed iPadOS 27 acceptance remain open. Pass-2 source was preserved privately before editing; its former Done verdict was unsupported. See `docs/widget-engines/CI_AND_DEVICE_RESULTS.md`.
+- [ ] Dual native widget engines, Pass 3: package semantics now pass on Apple (seven archive analyses, five installations, source callbacks, Boolean state, A1/A2, concurrent publication, real v1 reader/encoder and timeline storage). The original ExpoUI binaries load React/Hermes and are not extension safe; a pinned SwiftUI source subset and original renderer bridge now compile/link without those dependencies (41239669157, 5bfcf03b). Final appex reachability, native WidgetKit UI and signed iPadOS 27 acceptance remain open. Read-only timeline preparation must not rewrite snapshots; actual ScriptWidget storage writes commit under the same lock as intents. See `docs/widget-engines/CI_AND_DEVICE_RESULTS.md`.
 
 - **Open MASTER Acceptance Gates (Full PASS 4.1 Remains Open):**
   - **FINAL-03:** Fresh iPadOS 27 build-for-testing on final implementation commit (historical iOS 26 archive summary cannot substitute).

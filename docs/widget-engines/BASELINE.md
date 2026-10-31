@@ -29,3 +29,7 @@
 ## 3. Conflict Reconciliation Against Historical `main`
 
 Historical `main` (`454bd90c463e77ada9fa8290246d19fc2c7ca0e1`) conflicts in 13 documentation, rule, and workflow files remain unmerged per mandate §0.2. No merge into `main` will be performed during this work; isolated development and verification occur strictly on `integration/hanlin-dual-widget-engines-20261029`.
+
+## Pass 3 source baseline clarification — 2026-10-31
+
+The c73eacd6 Expo row above is historical reference only. All Pass-3 copied Expo Widgets/ExpoUI/Core source uses immutable commit 917a61b581baeb852aa4fe331da2c1395d824351. Actual initial task HEAD was ce586667b7103a6c2c7243d33461768c51a9dd8d plus the preserved dirty Pass-2 files; exact per-file source provenance is in UPSTREAM_SOURCE_MANIFEST.json. The old foreground XCFramework closure is unsuitable for WidgetKit. The new source-only subset/bridge compiled and linked in 41239669157; this does not establish OS or device acceptance.

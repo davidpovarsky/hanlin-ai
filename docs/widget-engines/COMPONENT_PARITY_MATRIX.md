@@ -1,4 +1,4 @@
-> Pass 3, 2026-10-30: original native builders are now source-ported. Every native semantic/screenshot result remains NOT_TESTED until an Apple run supplies matching assertions. Previous AnyView construction checks did not establish parity. Mixed-tree is DEFERRED_OPTIONAL.
+> Pass 3, observed 2026-10-31: original native builders are source-ported and Apple compiled. Run 41239674500 at 5bfcf03b executes originalTagProducesDistinctNativeRaster for all 29 tags, originalChartVariantUsesItsNativeDataSchema for ten charts and gridColumnsDateAndNativeElementSemantics. Raw native PNGs are in its widget-package artifact. This is PARTIAL semantic coverage, not complete per-prop, WidgetKit, RTL or Dynamic Type parity. Mixed-tree is DEFERRED_OPTIONAL.
 
 # Component Parity Matrix — Dual Native Widget Engines
 
@@ -6,35 +6,35 @@
 
 | # | Tag Name | Upstream Implementation | Hanlin Native Implementation | Supported Attributes & Props | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | `hstack` | `ScriptWidgetElementTagStack` | `HStack` with alignment & spacing | `alignment`, `spacing`, `padding`, `background` | **NOT_TESTED** |
-| 2 | `vstack` | `ScriptWidgetElementTagStack` | `VStack` with alignment & spacing | `alignment`, `spacing`, `padding`, `background` | **NOT_TESTED** |
-| 3 | `zstack` | `ScriptWidgetElementTagZStack` | `ZStack` with 9-point alignment | `alignment`, `padding`, `background` | **NOT_TESTED** |
-| 4 | `hgrid` | `ScriptWidgetElementTagGrid` | `LazyHGrid` with dynamic GridItems | `columns` (JSON grid descriptors), `spacing`, `padding` | **NOT_TESTED** |
-| 5 | `vgrid` | `ScriptWidgetElementTagGrid` | `LazyVGrid` with dynamic GridItems | `columns`, `spacing`, `padding` | **NOT_TESTED** |
-| 6 | `text` | `ScriptWidgetElementTagText` | Native SwiftUI `Text` | `font`, `size`, `weight`, `bold`, `italic`, `color` | **NOT_TESTED** |
-| 7 | `date` | `ScriptWidgetElementTagDate` | Native SwiftUI `Text(date, style:)` | `date` (name or milliseconds), `style` (date/time/relative/offset/timer) | **NOT_TESTED** |
-| 8 | `image` | `ScriptWidgetElementTagImage` | SFSymbol / Local UIImage | `systemName`, `name`, `src`, `url`, `color` | **NOT_TESTED** |
-| 9 | `gif` | `ScriptWidgetElementTagGif` | Original GIF frame pipeline | `file`, image/general modifiers | **NOT_TESTED** |
-| 10 | `spacer` | `ScriptWidgetElementTagSpacer` | Native SwiftUI `Spacer` | `minLength` | **NOT_TESTED** |
-| 11 | `rect` | `ScriptWidgetElementTagShape` | Native SwiftUI `Rectangle` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
-| 12 | `capsule` | `ScriptWidgetElementTagShape` | Native SwiftUI `Capsule` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
-| 13 | `ellipse` | `ScriptWidgetElementTagShape` | Native SwiftUI `Ellipse` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
-| 14 | `circle` | `ScriptWidgetElementTagShape` | Native SwiftUI `Circle` | `fill`, `color`, `width`, `height` | **NOT_TESTED** |
-| 15 | `gauge` | `ScriptWidgetElementTagGauge` | Original MineGaugeView / native SwiftUI `Gauge` | `value`, `min`, `max`, `label`, `title` | **NOT_TESTED** |
-| 16 | `chart` | `ScriptWidgetElementTagChart` | Native SwiftUI `Chart` (Bar/Line/Point) | `type`, JSON-string `data: [{label, value}]`; Gantt and rule schemas differ | **NOT_TESTED** |
-| 17 | `link` | `ScriptWidgetElementTagLink` | Native SwiftUI `Link` | `title`, `url` | **NOT_TESTED** |
-| 18 | `divider` | `ScriptWidgetElementTagDivider` | Native SwiftUI `Rectangle` | `axis`, `thickness`, `color` | **NOT_TESTED** |
-| 19 | `line` | `ScriptWidgetElementTagLine` | Native sized `Rectangle` | `axis`, `length`, `thickness`, `color` | **NOT_TESTED** |
-| 20 | `roundedrect` | `ScriptWidgetElementTagShape` | Native SwiftUI `RoundedRectangle` | `radius`, `fill`, `color` | **NOT_TESTED** |
-| 21 | `icon` | `ScriptWidgetElementTagExtras` | Native SF Symbol `Image(systemName:)` | `name`, `systemName`, `size`, `color` | **NOT_TESTED** |
-| 22 | `label` | `ScriptWidgetElementTagExtras` | Native SwiftUI `Label` | `title`, `icon`, `systemImage` | **NOT_TESTED** |
-| 23 | `progress` | `ScriptWidgetElementTagExtras` | Native SwiftUI `ProgressView` | `value`, `total` | **NOT_TESTED** |
-| 24 | `ring` | `ScriptWidgetElementTagExtras` | Native circular progress ring | `value`, `lineWidth`, `color`, `width`, `height` | **NOT_TESTED** |
-| 25 | `badge` | `ScriptWidgetElementTagExtras` | Pill styled caption | `text`, `color` | **NOT_TESTED** |
-| 26 | `chip` | `ScriptWidgetElementTagExtras` | Interactive chip with icon | `text`, `icon` | **NOT_TESTED** |
-| 27 | `stat` | `ScriptWidgetElementTagExtras` | Metric header + value + trend | `title`, `value`, `trend` | **NOT_TESTED** |
-| 28 | `button` | `ScriptWidgetElementTagButton` | SwiftUI `Button` with AppIntent | `title`, `label`, `action`, `target` | **NOT_TESTED** |
-| 29 | `toggle` | `ScriptWidgetElementTagToggle` | SwiftUI `Toggle` with AppIntent | `title`, `label`, `isOn`, `target` | **NOT_TESTED** |
+| 1 | `hstack` | `ScriptWidgetElementTagStack` | `HStack` with alignment & spacing | `alignment`, `spacing`, `padding`, `background` | **PARTIAL** |
+| 2 | `vstack` | `ScriptWidgetElementTagStack` | `VStack` with alignment & spacing | `alignment`, `spacing`, `padding`, `background` | **PARTIAL** |
+| 3 | `zstack` | `ScriptWidgetElementTagZStack` | `ZStack` with 9-point alignment | `alignment`, `padding`, `background` | **PARTIAL** |
+| 4 | `hgrid` | `ScriptWidgetElementTagGrid` | `LazyHGrid` with dynamic GridItems | `columns` (JSON grid descriptors), `spacing`, `padding` | **PARTIAL** |
+| 5 | `vgrid` | `ScriptWidgetElementTagGrid` | `LazyVGrid` with dynamic GridItems | `columns`, `spacing`, `padding` | **PARTIAL** |
+| 6 | `text` | `ScriptWidgetElementTagText` | Native SwiftUI `Text` | `font`, `size`, `weight`, `bold`, `italic`, `color` | **PARTIAL** |
+| 7 | `date` | `ScriptWidgetElementTagDate` | Native SwiftUI `Text(date, style:)` | `date` (name or milliseconds), `style` (date/time/relative/offset/timer) | **PARTIAL** |
+| 8 | `image` | `ScriptWidgetElementTagImage` | SFSymbol / Local UIImage | `systemName`, `name`, `src`, `url`, `color` | **PARTIAL** |
+| 9 | `gif` | `ScriptWidgetElementTagGif` | Original GIF frame pipeline | `file`, image/general modifiers | **PARTIAL** |
+| 10 | `spacer` | `ScriptWidgetElementTagSpacer` | Native SwiftUI `Spacer` | `minLength` | **PARTIAL** |
+| 11 | `rect` | `ScriptWidgetElementTagShape` | Native SwiftUI `Rectangle` | `fill`, `color`, `width`, `height` | **PARTIAL** |
+| 12 | `capsule` | `ScriptWidgetElementTagShape` | Native SwiftUI `Capsule` | `fill`, `color`, `width`, `height` | **PARTIAL** |
+| 13 | `ellipse` | `ScriptWidgetElementTagShape` | Native SwiftUI `Ellipse` | `fill`, `color`, `width`, `height` | **PARTIAL** |
+| 14 | `circle` | `ScriptWidgetElementTagShape` | Native SwiftUI `Circle` | `fill`, `color`, `width`, `height` | **PARTIAL** |
+| 15 | `gauge` | `ScriptWidgetElementTagGauge` | Original MineGaugeView / native SwiftUI `Gauge` | `type`, `style`, `value`, `current`, `min`, `max`, `sections`, `label`, `title` | **PARTIAL** |
+| 16 | `chart` | `ScriptWidgetElementTagChart` | Native SwiftUI `Chart` (Bar/Line/Point) | `type`, JSON-string `data: [{label, value}]`; Gantt and rule schemas differ | **PARTIAL** |
+| 17 | `link` | `ScriptWidgetElementTagLink` | Native SwiftUI `Link` | `title`, `url` | **PARTIAL** |
+| 18 | `divider` | `ScriptWidgetElementTagDivider` | Native SwiftUI `Rectangle` | `axis`, `thickness`, `color` | **PARTIAL** |
+| 19 | `line` | `ScriptWidgetElementTagLine` | Native sized `Rectangle` | `axis`, `length`, `thickness`, `color` | **PARTIAL** |
+| 20 | `roundedrect` | `ScriptWidgetElementTagShape` | Native SwiftUI `RoundedRectangle` | `radius`, `fill`, `color` | **PARTIAL** |
+| 21 | `icon` | `ScriptWidgetElementTagExtras` | Native SF Symbol `Image(systemName:)` | `name`, `systemName`, `size`, `color` | **PARTIAL** |
+| 22 | `label` | `ScriptWidgetElementTagExtras` | Native SwiftUI `Label` | `title`, `systemName` | **PARTIAL** |
+| 23 | `progress` | `ScriptWidgetElementTagExtras` | Native SwiftUI `ProgressView` | `value`, `total` | **PARTIAL** |
+| 24 | `ring` | `ScriptWidgetElementTagExtras` | Native circular progress ring | `value`, `lineWidth`, `color`, `width`, `height` | **PARTIAL** |
+| 25 | `badge` | `ScriptWidgetElementTagExtras` | Pill styled caption | `text`, `color` | **PARTIAL** |
+| 26 | `chip` | `ScriptWidgetElementTagExtras` | Original styled chip text | `text`, `icon` | **PARTIAL** |
+| 27 | `stat` | `ScriptWidgetElementTagExtras` | Metric header + value + trend | `title`, `value`, `subtitle`, `color`, `mutedColor` | **PARTIAL** |
+| 28 | `button` | `ScriptWidgetElementTagButton` | SwiftUI `Button` with AppIntent | native child labels; `onClick`, declared `actionID` | **PARTIAL** |
+| 29 | `toggle` | `ScriptWidgetElementTagToggle` | SwiftUI `Toggle` with AppIntent | native child labels; `on` Bool, declared `actionID`, `stateKey`, `onClick` | **PARTIAL** |
 
 ---
 
@@ -60,4 +60,6 @@
 | `Button` / `WidgetButtonView` | SwiftUI `Button` | `title`, `systemImage`, `target` | **Interactive AppIntent** | **NOT_TESTED** |
 | `LinkView` | SwiftUI `Link` | `title`, `url` | URL Navigation | **NOT_TESTED** |
 | `AccessoryWidgetBackgroundView` | `AccessoryWidgetBackground` | Standard watchOS / Lock Screen background | System background | **NOT_TESTED** |
-| `ScriptWidgetSubtree` | `HanlinScriptWidgetElementView` | Embedded JSX script / element tree | Mixed Tree | **NOT_TESTED** |
+| `ScriptWidgetSubtree` | No supported mixed-tree ABI | Explicitly rejected ABI-0 fixture | Optional | **DEFERRED_OPTIONAL** |
+
+Expo rows above remain NOT_TESTED for native semantic outcomes until the four real iOS renderer methods in HanlinNativeWidgetRendererTests finish. Both source-built modules compiled/linked against SDK 27 in 41239669157. Text/slot tests compare exact PNG bytes with native SwiftUI reference views; Chart/Gauge tests inspect their concrete original typed props. These assertions are distinct from actual Home Screen interactions and will be reported individually.

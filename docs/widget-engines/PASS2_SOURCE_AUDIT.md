@@ -123,3 +123,7 @@ This audit completes Milestone P0. We now immediately proceed to Phase A (P1) im
 ## Pass 3 corrective appendix — 2026-10-30
 
 The dirty ce586667 starting work was preserved before edits. The supplied Pass-3 mandate identifies 31 corrective findings. The handwritten Expo/ScriptWidget native replicas, string-toggle/hardcoded-counter intent, body-time JSC fallbacks, suffix engine inference and unchecked dual-write store were not authentic acceptance evidence. Source ports, prepared programs, verified loading, configured instances, source actions and transactional revisions now replace those paths, but Apple compilation, native component/OS tap tests and device acceptance remain pending. The previous 12 method names were not 12 executed Apple tests. Historical 40994342575 remains prior foreground evidence only. See TEST_MATRIX.md and CI_AND_DEVICE_RESULTS.md for current statuses.
+
+### Executed follow-up — 2026-10-31
+
+The 31 findings now map individually to assertions/status in TEST_MATRIX.md. Real Apple package run 41239674500 at 5bfcf03b passed the focused extension/analyzer suites; source-only ExpoUI subset AND renderer bridge compile/link passed in 41239669157. App/appex build passed in 41239679485, with final iOS native/UI outcomes pending. These measured results supersede the preceding pending sentence only for their explicit scope. Full changed-path inventory, including retained Pass-2 paths, is PASS3_CHANGED_PATH_AUDIT.json; no measured failing-before run is invented for the initial dirty state.

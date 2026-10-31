@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-30",
-  "nativeLinkStatus": "NOT_RUN",
+  "generatedAt": "2026-10-31",
+  "nativeLinkStatus": "EXECUTED_PASS_SOURCE_SUBSET_AND_BRIDGE_41239669157; FINAL_APPEX_AUDIT_PENDING",
   "files": [
     {
       "repository": "everettjf/scriptwidget",

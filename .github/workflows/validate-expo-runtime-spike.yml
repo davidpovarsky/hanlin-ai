@@ -580,7 +580,18 @@ jobs:
           find "$APP_PATH/PlugIns" \( -name HanlinScriptingWidgets -o -name HanlinScriptingWidgets.debug.dylib \) -type f -exec nm -g {} \; > "$LOG_DIR/widget-native-symbols.log"
           exit "$audit_status"
 
+      - name: Upload native closure evidence before simulator interaction
+        if: always() && steps.widget-native-audit.outcome != 'skipped'
+        uses: actions/upload-artifact@v4
+        with:
+          name: widget-native-build-evidence-${{ github.run_id }}
+          path: |
+            build-logs/widget-native-mach-o.json
+            build-logs/widget-native-otool.log
+            build-logs/widgets/executable-SHA256.txt
+
       - name: Run Expo SwiftUI Production E2E Tests
+        timeout-minutes: 45
         shell: bash
         run: |
           set -euxo pipefail
