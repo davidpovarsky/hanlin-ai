@@ -134,7 +134,11 @@ struct ChatView: View {
     @Environment(\.modelContext) private var context: ModelContext
     @Environment(\.dismiss) private var dismiss
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    
+    @Environment(\.hanlinExternalCompactComposerHost) private var isExternalCompactComposerHost
+    @Environment(\.hanlinExternalDockHeight) private var externalDockHeight
+    @Environment(\.hanlinComposerSessionBridge) private var sessionBridge
+
+    @State private var composerRegistrationToken = UUID()
     @State private var chatTemps: [ChatMessages] = []
     @State private var modelTemp: [AllModels] = []
     @Query private var userInfos: [UserInfo]
@@ -238,13 +242,68 @@ struct ChatView: View {
     }
 
     private func dynamicBottomPadding() -> CGFloat {
-        Self.calculateDynamicBottomPadding(
+        if isExternalCompactComposerHost {
+            return max(225, externalDockHeight + 24)
+        }
+        return Self.calculateDynamicBottomPadding(
             measuredComposerHeight: measuredComposerHeight,
             hasURLs: !selectedURLs.isEmpty,
             hasImages: !selectedImages.isEmpty,
             hasDocuments: !selectedDocumentURLs.isEmpty,
             showPhotoSourceOptions: showPhotoSourceOptions,
             hasPrompts: !selectedPrompts.isEmpty
+        )
+    }
+
+    private func makeExternalComposerEndpoint() -> HanlinActiveComposerSessionBridge.Endpoint {
+        HanlinActiveComposerSessionBridge.Endpoint(
+            sessionID: effectiveChatSessionID,
+            registrationToken: composerRegistrationToken,
+            isReadyToSend: !loadHistoryMessages && !modelTemp.isEmpty,
+            chatRecord: chatRecord,
+            modelTemp: modelTemp,
+            temporaryRecord: TemporaryRecord,
+            respondIndex: respondIndex,
+            selectedModelIndex: $selectedModelIndex,
+            showScrollToBottomButton: $showScrollToBottomButton,
+            needScrollToBottomButton: $needScrollToBottomButton,
+            isMultiSelectMode: $isMultiSelectMode,
+            selectedMessageIDs: $selectedMessageIDs,
+            chatTemps: $chatTemps,
+            showTemperatureSlider: $showTemperatureSlider,
+            temperature: $temperature,
+            showTopPSlider: $showTopPSlider,
+            topP: $topP,
+            showMaxTokensSlider: $showMaxTokensSlider,
+            maxTokens: $maxTokens,
+            showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
+            maxMessagesNum: $maxMessagesNum,
+            message: $message,
+            selectedImages: $selectedImages,
+            selectedDocumentURLs: $selectedDocumentURLs,
+            selectedURLs: $selectedURLs,
+            selectedPrompts: $selectedPrompts,
+            showPhotoSourceOptions: $showPhotoSourceOptions,
+            showModelSuggestions: $showModelSuggestions,
+            filteredModels: $filteredModels,
+            isResponding: $isResponding,
+            isFeedBack: $isFeedBack,
+            ifKnowledge: $ifKnowledge,
+            ifSearch: $ifSearch,
+            ifToolUse: $ifToolUse,
+            ifThink: $ifThink,
+            ifAudio: $ifAudio,
+            ifPlanning: $ifPlanning,
+            thinkingLength: $thinkingLength,
+            showKnowledgeAlert: $showKnowledgeAlert,
+            knowledgeAlertMessage: $KnowledgeAlertMessgae,
+            showSearchAlert: $showSearchAlert,
+            selectedImageSize: $selectedImageSize,
+            imageReversePrompt: $imageReversePrompt,
+            onSelectModel: selectModel,
+            onSendUser: { handleMessageSending(ifObservingMode: false) },
+            onSendObserve: { handleMessageSending(ifObservingMode: true) },
+            onCancel: handleCancellation
         )
     }
     
@@ -269,73 +328,102 @@ struct ChatView: View {
                 .allowsHitTesting(false)
                 .zIndex(0)
                 
-                ChatViewBottom(
-                    chatRecord: chatRecord,
-                    modelTemp: modelTemp,
-                    TemporaryRecord: TemporaryRecord,
-                    respondIndex: respondIndex,
-                    onSelectModel: selectModel,
-                    onSendUser: { handleMessageSending(ifObservingMode: false) },
-                    onSendObserve: { handleMessageSending(ifObservingMode: true) },
-                    onCancel: handleCancellation,
-                    selectedModelIndex: $selectedModelIndex,
-                    showScrollToBottomButton: $showScrollToBottomButton,
-                    needScrollToBottomButton: $needScrollToBottomButton,
-                    isMultiSelectMode: $isMultiSelectMode,
-                    selectedMessageIDs: $selectedMessageIDs,
-                    chatTemps: $chatTemps,
-                    showTemperatureSlider: $showTemperatureSlider,
-                    temperature: $temperature,
-                    showTopPSlider: $showTopPSlider,
-                    topP: $topP,
-                    showMaxTokensSlider: $showMaxTokensSlider,
-                    maxTokens: $maxTokens,
-                    showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
-                    maxMessagesNum: $maxMessagesNum,
-                    message: $message,
-                    selectedImages: $selectedImages,
-                    selectedDocumentURLs: $selectedDocumentURLs,
-                    selectedURLs: $selectedURLs,
-                    selectedPrompts: $selectedPrompts,
-                    showPhotoSourceOptions: $showPhotoSourceOptions,
-                    showModelSuggestions: $showModelSuggestions,
-                    filteredModels: $filteredModels,
-                    isResponding: $isResponding,
-                    isFeedBack: $isFeedBack,
-                    ifKnowledge: $ifKnowledge,
-                    ifSearch: $ifSearch,
-                    ifToolUse: $ifToolUse,
-                    ifThink: $ifThink,
-                    ifAudio: $ifAudio,
-                    ifPlanning: $ifPlanning,
-                    thinkingLength: $thinkingLength,
-                    showKnowledgeAlert: $showKnowledgeAlert,
-                    knowledgeAlertMessage: $KnowledgeAlertMessgae,
-                    showSearchAlert: $showSearchAlert,
-                    selectedImageSize: $selectedImageSize,
-                    imageReversePrompt: $imageReversePrompt,
-                    isInputActive: $isInputActive
-                )
+                if !isExternalCompactComposerHost {
+                    ChatViewBottom(
+                        chatRecord: chatRecord,
+                        modelTemp: modelTemp,
+                        TemporaryRecord: TemporaryRecord,
+                        respondIndex: respondIndex,
+                        onSelectModel: selectModel,
+                        onSendUser: { handleMessageSending(ifObservingMode: false) },
+                        onSendObserve: { handleMessageSending(ifObservingMode: true) },
+                        onCancel: handleCancellation,
+                        selectedModelIndex: $selectedModelIndex,
+                        showScrollToBottomButton: $showScrollToBottomButton,
+                        needScrollToBottomButton: $needScrollToBottomButton,
+                        isMultiSelectMode: $isMultiSelectMode,
+                        selectedMessageIDs: $selectedMessageIDs,
+                        chatTemps: $chatTemps,
+                        showTemperatureSlider: $showTemperatureSlider,
+                        temperature: $temperature,
+                        showTopPSlider: $showTopPSlider,
+                        topP: $topP,
+                        showMaxTokensSlider: $showMaxTokensSlider,
+                        maxTokens: $maxTokens,
+                        showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
+                        maxMessagesNum: $maxMessagesNum,
+                        message: $message,
+                        selectedImages: $selectedImages,
+                        selectedDocumentURLs: $selectedDocumentURLs,
+                        selectedURLs: $selectedURLs,
+                        selectedPrompts: $selectedPrompts,
+                        showPhotoSourceOptions: $showPhotoSourceOptions,
+                        showModelSuggestions: $showModelSuggestions,
+                        filteredModels: $filteredModels,
+                        isResponding: $isResponding,
+                        isFeedBack: $isFeedBack,
+                        ifKnowledge: $ifKnowledge,
+                        ifSearch: $ifSearch,
+                        ifToolUse: $ifToolUse,
+                        ifThink: $ifThink,
+                        ifAudio: $ifAudio,
+                        ifPlanning: $ifPlanning,
+                        thinkingLength: $thinkingLength,
+                        showKnowledgeAlert: $showKnowledgeAlert,
+                        knowledgeAlertMessage: $KnowledgeAlertMessgae,
+                        showSearchAlert: $showSearchAlert,
+                        selectedImageSize: $selectedImageSize,
+                        imageReversePrompt: $imageReversePrompt,
+                        isInputActive: $isInputActive
+                    )
+                }
             }
             .onPreferenceChange(ComposerHeightPreferenceKey.self) { newHeight in
                 guard newHeight > 0, abs(measuredComposerHeight - newHeight) > 1 else { return }
                 measuredComposerHeight = newHeight
             }
         }
-        .toolbar(horizontalSizeClass == .compact ? .hidden : .visible, for: .tabBar)
+        .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
         .onAppear {
+            composerRegistrationToken = UUID()
             handleOnAppear()
-            if horizontalSizeClass == .compact {
+            if isExternalCompactComposerHost {
+                sessionBridge?.register(endpoint: makeExternalComposerEndpoint())
+            }
+            if horizontalSizeClass == .compact || isExternalCompactComposerHost {
                 NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
             }
         }
+        .onChange(of: TemporaryRecord) { _, _ in
+            if isExternalCompactComposerHost {
+                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
+            }
+        }
+        .onChange(of: respondIndex) { _, _ in
+            if isExternalCompactComposerHost {
+                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
+            }
+        }
+        .onChange(of: isResponding) { _, _ in
+            if isExternalCompactComposerHost {
+                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
+            }
+        }
+        .onChange(of: message) { _, _ in
+            if isExternalCompactComposerHost {
+                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
+            }
+        }
         .onDisappear {
-            if horizontalSizeClass == .compact {
+            if isExternalCompactComposerHost {
+                sessionBridge?.unregister(sessionID: effectiveChatSessionID, token: composerRegistrationToken)
+            }
+            if horizontalSizeClass == .compact || isExternalCompactComposerHost {
                 NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
             }
             openHistory()
-            if TemporaryRecord {
+            if TemporaryRecord && sessionBridge?.isTransitioningLayoutMode != true {
                 context.delete(chatRecord)
                 do {
                     try context.save()

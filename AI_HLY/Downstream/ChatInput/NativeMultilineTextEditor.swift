@@ -27,6 +27,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
     var onPasteFile: ((URL) -> Void)?
     var onSendMessage: (() -> Void)?
     var onMentionTriggered: (() -> Void)?
+    var onFocusChange: ((Bool) -> Void)? = nil
 
     static let mentionRegex = try! NSRegularExpression(pattern: "@[^\\s]+", options: [])
 
@@ -139,6 +140,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
 
         func textViewDidBeginEditing(_ textView: UITextView) {
             isEditing = true
+            parent.onFocusChange?(true)
             if textView.textColor == .placeholderText {
                 textView.text = ""
                 textView.textColor = .label
@@ -147,6 +149,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
 
         func textViewDidEndEditing(_ textView: UITextView) {
             isEditing = false
+            parent.onFocusChange?(false)
             if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 textView.text = parent.placeholderText
                 textView.textColor = .placeholderText

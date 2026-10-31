@@ -602,7 +602,405 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("UI-10_ModelPickerSearchSelectionAndPersistence", in: app)
     }
 
+    // MARK: - §7B InteriorOrganizer V3.3 Source-Parity OrganizerDock & Compact Workspace XCUI Suite
+
+    func testDockCompactHomeShowsThreeRecentWithOnePersistentComposer() throws {
+        let app = launchDockAcceptanceApp()
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+
+        let windowWidth = app.windows.firstMatch.frame.width
+        guard windowWidth < 640 else {
+            // Wide iPad layout is verified in testIpadNarrowShowsRecentAndWidePreservesSplitSidebar
+            return
+        }
+
+        let recentSection = app.descendants(matching: .any)["hanlin-compact-recent-section"].firstMatch
+        let viewAllBtn = app.buttons["hanlin-compact-view-all-button"].firstMatch
+        XCTAssertTrue(recentSection.waitForExistence(timeout: 15), "Compact Recent Conversations section must appear on Home")
+        XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 10), "View All zoom source button must appear on Home")
+
+        // Exactly 3 recent conversation rows (sorted strictly by lastEdited descending)
+        let row0 = app.buttons["hanlin-compact-recent-row-0"].firstMatch
+        let row1 = app.buttons["hanlin-compact-recent-row-1"].firstMatch
+        let row2 = app.buttons["hanlin-compact-recent-row-2"].firstMatch
+        let row3 = app.buttons["hanlin-compact-recent-row-3"].firstMatch
+        XCTAssertTrue(row0.waitForExistence(timeout: 10), "Recent row 0 must exist")
+        XCTAssertTrue(row1.waitForExistence(timeout: 5), "Recent row 1 must exist")
+        XCTAssertTrue(row2.waitForExistence(timeout: 5), "Recent row 2 must exist")
+        XCTAssertFalse(row3.exists, "At most 3 recent conversations may be shown on compact Home")
+        XCTAssertTrue(row0.label.contains("Agent Acceptance Chat"), "Newest conversation must be row 0")
+
+        // Persistent OrganizerDock anchored at the bottom of compact Home
+        let dock = app.descendants(matching: .any)["hanlin-organizer-dock"].firstMatch
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(dock.waitForExistence(timeout: 10), "Persistent OrganizerDock must exist on compact Home")
+        XCTAssertTrue(input.waitForExistence(timeout: 10), "Persistent chat input must exist on compact Home")
+        XCTAssertGreaterThan(
+            dock.frame.maxY,
+            app.windows.firstMatch.frame.height * 0.65,
+            "Persistent OrganizerDock must be anchored near the bottom of the screen"
+        )
+
+        attachScreenshot("7B-01_CompactHome_ThreeRecent_PersistentComposer", in: app)
+    }
+
+    func testViewAllZoomSourceToLibraryAndCancelledInteractiveBack() throws {
+        let app = launchDockAcceptanceApp()
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+
+        guard app.windows.firstMatch.frame.width < 640 else { return }
+
+        let viewAllBtn = app.buttons["hanlin-compact-view-all-button"].firstMatch
+        XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 15), "View All button must exist on compact Home")
+        attachScreenshot("7B-02a_BeforeViewAllZoom", in: app)
+        tapElement(viewAllBtn)
+
+        let library = app.descendants(matching: .any)["hanlin-compact-conversation-library"].firstMatch
+        XCTAssertTrue(library.waitForExistence(timeout: 10), "Full Conversation Library must open via zoom transition")
+        attachScreenshot("7B-02b_InsideConversationLibrary", in: app)
+
+        // All 4 seeded conversations (including the 4th older pinned thread) appear in the library
+        let olderRow = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS 'Older Archived Thread' OR identifier CONTAINS 'Older Archived Thread'")
+        ).firstMatch
+        XCTAssertTrue(olderRow.waitForExistence(timeout: 10), "4th conversation must be visible in full library")
+
+        // Persistent bottom composer is hidden while browsing the full conversation library
+        let dock = app.descendants(matching: .any)["hanlin-organizer-dock"].firstMatch
+        XCTAssertFalse(dock.exists && dock.isHittable, "Persistent composer dock must be hidden on the full conversation library screen")
+
+        // Simulate a short cancelled interactive edge-swipe back (dx 0.02 -> 0.16)
+        let window = app.windows.firstMatch
+        let startCoord = window.coordinate(withNormalizedOffset: CGVector(dx: 0.02, dy: 0.5))
+        let shortDragCoord = window.coordinate(withNormalizedOffset: CGVector(dx: 0.16, dy: 0.5))
+        startCoord.press(forDuration: 0.05, thenDragTo: shortDragCoord)
+
+        // Navigate back to compact Home and verify the persistent composer dock is restored
+        if library.exists {
+            navigateBack(in: app)
+        }
+        XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 10), "Must return to compact Home after library back navigation")
+        XCTAssertTrue(dock.waitForExistence(timeout: 10), "Persistent composer dock must be restored on compact Home")
+        attachScreenshot("7B-02c_ReturnedFromLibraryZoom", in: app)
+    }
+
+    func testIpadNarrowShowsRecentAndWidePreservesSplitSidebar() throws {
+        let app = launchDockAcceptanceApp()
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+
+        let windowWidth = app.windows.firstMatch.frame.width
+        if windowWidth < 640 {
+            let recentSection = app.descendants(matching: .any)["hanlin-compact-recent-section"].firstMatch
+            XCTAssertTrue(recentSection.waitForExistence(timeout: 15), "Narrow width (<640pt) must present compact Recent Conversations")
+        } else {
+            ensureChatListVisible(in: app)
+            let newChatBtn = app.buttons["hanlin-new-chat-button"].firstMatch
+            XCTAssertTrue(newChatBtn.waitForExistence(timeout: 15), "Wide iPad (>=640pt) must preserve NavigationSplitView sidebar")
+        }
+        attachScreenshot("7B-03_WidthAdaptiveWorkspace_\(Int(windowWidth))pt", in: app)
+    }
+
+    func testDrawerGrowsFromComposerNotPopover() throws {
+        let app = launchDockAcceptanceApp()
+        openChat(in: app)
+
+        let drawer = app.descendants(matching: .any)["hanlin-organizer-drawer"].firstMatch
+        let composerShell = app.descendants(matching: .any)["hanlin-organizer-composer-shell"].firstMatch
+        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+
+        XCTAssertTrue(drawer.waitForExistence(timeout: 10), "Back drawer layer must exist")
+        XCTAssertTrue(composerShell.waitForExistence(timeout: 10), "Front composer shell must exist")
+        XCTAssertTrue(generalBtn.waitForExistence(timeout: 10), "General `+` button must exist")
+
+        let collapsedDrawerFrame = drawer.frame
+        let collapsedComposerFrame = composerShell.frame
+        attachScreenshot("7B-04a_DockCollapsed", in: app)
+
+        // Tap `+` to expand the integrated drawer upward behind the composer
+        tapElement(generalBtn)
+        let generalDrawerContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
+        XCTAssertTrue(generalDrawerContent.waitForExistence(timeout: 5), "General drawer content must appear inside dock")
+        attachScreenshot("7B-04b_DockExpanded_General", in: app)
+
+        let expandedDrawerFrame = drawer.frame
+        let expandedComposerFrame = composerShell.frame
+
+        // Prove upward growth from the SAME bottom dock (not a detached floating popover)
+        XCTAssertLessThan(
+            expandedDrawerFrame.minY,
+            collapsedDrawerFrame.minY - 180,
+            "Expanded drawer top edge (\(expandedDrawerFrame.minY)) must grow upward well above collapsed top edge (\(collapsedDrawerFrame.minY))"
+        )
+        XCTAssertLessThan(
+            abs(expandedDrawerFrame.maxY - expandedComposerFrame.maxY),
+            16,
+            "Drawer and composer must share the bottom edge of ZStack(alignment: .bottom)"
+        )
+        XCTAssertLessThan(
+            abs(expandedComposerFrame.maxY - collapsedComposerFrame.maxY),
+            16,
+            "Composer bottom edge must remain anchored while drawer expands behind it"
+        )
+        XCTAssertEqual(app.popovers.count, 0, "General drawer must NOT present a floating UIPopover")
+
+        // Verify R7 Saved Prompts horizontal gallery slot is rendered inside the General drawer
+        let savedPromptsSlot = app.descendants(matching: .any)["hanlin-drawer-saved-prompts-slot"].firstMatch
+        XCTAssertTrue(savedPromptsSlot.waitForExistence(timeout: 5), "Saved Prompts horizontal gallery slot must exist in General drawer")
+
+        // Collapse drawer
+        tapElement(generalBtn)
+        XCTAssertTrue(generalDrawerContent.waitForNonExistence(timeout: 5))
+    }
+
+    func testDrawerHandleDragCloseOpenAndComposerResize() throws {
+        let app = launchDockAcceptanceApp()
+        openChat(in: app)
+
+        let drawerHandle = app.buttons["hanlin-organizer-drawer-handle"].firstMatch
+        let resizeHandle = app.descendants(matching: .any)["hanlin-composer-resize-handle"].firstMatch
+        let composerShell = app.descendants(matching: .any)["hanlin-organizer-composer-shell"].firstMatch
+        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+
+        XCTAssertTrue(drawerHandle.waitForExistence(timeout: 10), "Drawer handle must exist")
+        XCTAssertTrue(resizeHandle.waitForExistence(timeout: 10), "Composer resize handle must exist")
+        XCTAssertTrue(composerShell.waitForExistence(timeout: 10), "Composer shell must exist")
+
+        // 1. Open drawer via `+`, then drag drawer handle downward (> 34pt) to collapse
+        tapElement(generalBtn)
+        let generalContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
+        XCTAssertTrue(generalContent.waitForExistence(timeout: 5))
+
+        let handleStart = drawerHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let handleDragDown = handleStart.withOffset(CGVector(dx: 0, dy: 120))
+        handleStart.press(forDuration: 0.05, thenDragTo: handleDragDown)
+        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Dragging drawer handle downward (>34pt) must collapse the drawer")
+        attachScreenshot("7B-05a_AfterDrawerDragClose", in: app)
+
+        // 2. Tap or drag drawer handle upward (< -34pt) to reopen last expanded mode
+        let collapsedHandleStart = drawerHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let handleDragUp = collapsedHandleStart.withOffset(CGVector(dx: 0, dy: -120))
+        collapsedHandleStart.press(forDuration: 0.05, thenDragTo: handleDragUp)
+        if !generalContent.waitForExistence(timeout: 3) {
+            tapElement(drawerHandle)
+        }
+        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Drawer handle must reopen last expanded mode")
+
+        // Close drawer before testing composer resize handle
+        tapElement(generalBtn)
+        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5))
+
+        // 3. Drag composer resize handle upward to increase composer height
+        let heightBefore = composerShell.frame.height
+        let resizeStart = resizeHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let resizeDragUp = resizeStart.withOffset(CGVector(dx: 0, dy: -90))
+        resizeStart.press(forDuration: 0.05, thenDragTo: resizeDragUp)
+
+        let heightAfter = composerShell.frame.height
+        XCTAssertGreaterThan(
+            heightAfter,
+            heightBefore + 20,
+            "Dragging composer resize handle upward must increase composer height (before: \(heightBefore), after: \(heightAfter))"
+        )
+        attachScreenshot("7B-05b_AfterComposerResizeUp", in: app)
+    }
+
+    func testDirectToolsOneTapAndRealState() throws {
+        let app = launchDockAcceptanceApp()
+        openChat(in: app)
+
+        let toolsDirect = app.descendants(matching: .any)["hanlin-composer-tools-direct"].firstMatch
+        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        let drawer = app.descendants(matching: .any)["hanlin-organizer-drawer"].firstMatch
+
+        XCTAssertTrue(toolsDirect.waitForExistence(timeout: 10), "Direct Tools button must exist")
+        tapElement(toolsDirect)
+
+        // 1 tap opens Tools/Skills/MCP/Runtime root directly in the integrated dock
+        let toolsContent = app.descendants(matching: .any)["hanlin-composer-tools-popover"].firstMatch
+        XCTAssertTrue(toolsContent.waitForExistence(timeout: 5), "1 tap on Tools button must open Tools root in dock")
+        XCTAssertEqual(app.popovers.count, 0, "Tools drawer must not be a floating UIPopover")
+
+        let drawerFrameInTools = drawer.frame
+        attachScreenshot("7B-06a_DirectToolsInDock", in: app)
+
+        // Switching directly from Tools to `+` swaps mode inside the SAME expanded dock
+        tapElement(generalBtn)
+        let generalContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
+        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Tapping `+` while Tools is open must swap to General in the same dock")
+        XCTAssertFalse(toolsContent.exists, "Tools content must be replaced by General content")
+        XCTAssertLessThan(
+            abs(drawer.frame.height - drawerFrameInTools.height),
+            24,
+            "Dock panel height must remain continuously expanded when swapping between Tools and General"
+        )
+        attachScreenshot("7B-06b_SwappedToGeneralInSameDock", in: app)
+
+        tapElement(generalBtn)
+        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5))
+    }
+
+    func testClassicHanlinIconAndVisualParity() throws {
+        let app = launchDockAcceptanceApp()
+        openChat(in: app)
+
+        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        let toolsDirect = app.descendants(matching: .any)["hanlin-composer-tools-direct"].firstMatch
+        let modelPicker = app.descendants(matching: .any)["hanlin-composer-model-picker"].firstMatch
+        let micBtn = app.buttons["hanlin-chat-mic"].firstMatch
+
+        XCTAssertTrue(generalBtn.waitForExistence(timeout: 10))
+        XCTAssertTrue(toolsDirect.waitForExistence(timeout: 5))
+        XCTAssertTrue(modelPicker.waitForExistence(timeout: 5))
+        XCTAssertTrue(micBtn.waitForExistence(timeout: 5), "Classic mic button must appear when draft is empty")
+
+        XCTAssertFalse(generalBtn.frame.intersects(toolsDirect.frame))
+        XCTAssertFalse(toolsDirect.frame.intersects(modelPicker.frame))
+        XCTAssertFalse(modelPicker.frame.intersects(micBtn.frame))
+
+        // Typing draft reveals classic send button (`arrow.up.circle.fill`)
+        let input = chatInputElement(in: app)
+        tapElement(input)
+        input.typeText("Classic visual parity check")
+        let sendBtn = app.buttons["hanlin-chat-send"].firstMatch
+        XCTAssertTrue(sendBtn.waitForExistence(timeout: 5), "Classic send button must appear when draft is non-empty")
+        attachScreenshot("7B-07_ClassicHanlinVisualParity", in: app)
+    }
+
+    func testModelPopoverZoomExpandThenNavigate() throws {
+        let app = launchDockAcceptanceApp()
+        openChat(in: app)
+
+        let modelPicker = app.descendants(matching: .any)["hanlin-composer-model-picker"].firstMatch
+        XCTAssertTrue(modelPicker.waitForExistence(timeout: 10))
+        tapElement(modelPicker)
+
+        let modelPopover = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
+        XCTAssertTrue(modelPopover.waitForExistence(timeout: 5), "Model picker popover must appear")
+        let compactPopoverFrame = modelPopover.frame
+        attachScreenshot("7B-08a_ModelPopover_CompactRoot", in: app)
+
+        let allModelsBtn = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
+        XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+        tapElement(allModelsBtn)
+
+        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
+        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models page must appear after expansion + zoom")
+        let expandedPopoverFrame = modelPopover.frame
+        XCTAssertGreaterThan(
+            expandedPopoverFrame.height,
+            compactPopoverFrame.height + 40,
+            "Model popover must expand before/during All Models transition (compact: \(compactPopoverFrame.height), expanded: \(expandedPopoverFrame.height))"
+        )
+        attachScreenshot("7B-08b_ModelPopover_ExpandedAllModels", in: app)
+
+        // Back button collapses back to compact root
+        let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
+        XCTAssertTrue(backBtn.waitForExistence(timeout: 5))
+        tapElement(backBtn)
+        XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+    }
+
+    func testDraftAndAttachmentPersistenceAtoBAndFirstSend() throws {
+        let app = launchDockAcceptanceApp()
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+
+        // 1. If on compact Home, test sending first turn directly from Home persistent composer
+        let viewAllBtn = app.buttons["hanlin-compact-view-all-button"].firstMatch
+        if viewAllBtn.waitForExistence(timeout: 5) {
+            sendPrompt("PROMPT_FIRST_TURN_HOME", in: app)
+            let firstTurnAnswer = app.staticTexts.matching(
+                NSPredicate(format: "label CONTAINS 'FIRST_TURN_HOME_COMPLETE'")
+            ).firstMatch
+            XCTAssertTrue(firstTurnAnswer.waitForExistence(timeout: 30), "Sending from compact Home must create a new chat and complete first turn")
+            attachScreenshot("7B-09a_FirstTurnFromCompactHome", in: app)
+
+            // Return to compact Home
+            navigateBack(in: app)
+            XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 10))
+        }
+
+        // 2. Open Agent Acceptance Chat and enter a draft
+        openChat(in: app)
+        let inputA = chatInputElement(in: app)
+        XCTAssertTrue(inputA.waitForExistence(timeout: 10))
+        tapElement(inputA)
+        inputA.typeText("Isolated Draft For Chat A")
+
+        // Switch to Architecture Review Notes and verify empty draft
+        ensureChatListVisible(in: app)
+        selectChatRow(named: "Architecture Review Notes", in: app)
+        let inputB = chatInputElement(in: app)
+        XCTAssertTrue(inputB.waitForExistence(timeout: 10))
+        let valB = (inputB.value as? String) ?? ""
+        XCTAssertFalse(valB.contains("Isolated Draft For Chat A"), "Chat B must not inherit Chat A's draft")
+
+        // Switch back to Agent Acceptance Chat and verify Chat A's draft was preserved
+        ensureChatListVisible(in: app)
+        selectChatRow(named: "Agent Acceptance Chat", in: app)
+        let restoredInputA = chatInputElement(in: app)
+        XCTAssertTrue(restoredInputA.waitForExistence(timeout: 10))
+        let restoredValA = (restoredInputA.value as? String) ?? ""
+        XCTAssertTrue(restoredValA.contains("Isolated Draft For Chat A"), "Chat A draft must be preserved across navigation")
+        attachScreenshot("7B-09b_PerChatDraftIsolation", in: app)
+    }
+
+    func testStreamingStopObserveTemporaryAndStateTransitions() throws {
+        let app = launchDockAcceptanceApp()
+        openChat(in: app)
+
+        // Start delayed run and verify stop button + disabled drawer handle during active run
+        sendPrompt("START_DELAYED_RUN_A", in: app)
+        let stopBtn = app.buttons["hanlin-chat-stop"].firstMatch
+        XCTAssertTrue(stopBtn.waitForExistence(timeout: 10), "Stop button must appear during streaming run")
+
+        let drawerHandle = app.buttons["hanlin-organizer-drawer-handle"].firstMatch
+        if drawerHandle.exists {
+            XCTAssertFalse(drawerHandle.isEnabled, "Drawer handle must be disabled while streaming")
+        }
+        tapElement(stopBtn)
+        XCTAssertTrue(stopBtn.waitForNonExistence(timeout: 10), "Stop button must disappear after stopping run")
+        attachScreenshot("7B-10_StreamingStopAndStateTransition", in: app)
+    }
+
+    func testAccessibilityKeyboardRTLReduceMotion() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(he)", "-AppleLocale", "he_IL"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
+        app.launch()
+
+        openChat(in: app)
+
+        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        let drawerHandle = app.buttons["hanlin-organizer-drawer-handle"].firstMatch
+        let resizeHandle = app.descendants(matching: .any)["hanlin-composer-resize-handle"].firstMatch
+        XCTAssertTrue(generalBtn.waitForExistence(timeout: 10))
+        XCTAssertTrue(drawerHandle.waitForExistence(timeout: 10))
+        XCTAssertTrue(resizeHandle.waitForExistence(timeout: 10))
+
+        // Open drawer, then focus text input -> drawer must automatically collapse to yield space to keyboard
+        tapElement(generalBtn)
+        let generalContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
+        XCTAssertTrue(generalContent.waitForExistence(timeout: 5))
+
+        let input = chatInputElement(in: app)
+        tapElement(input)
+        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Focusing text editor must automatically collapse open drawer")
+        attachScreenshot("7B-11_RTL_KeyboardAutoCollapse_Accessibility", in: app)
+    }
+
     // MARK: - Navigation & Toggle Helpers
+
+    private func launchDockAcceptanceApp() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
+        app.launch()
+        return app
+    }
 
     private func launchAcceptanceApp() -> XCUIApplication {
         let app = XCUIApplication()
@@ -773,7 +1171,18 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
 
         let input = chatInputElement(in: app)
-        if input.waitForExistence(timeout: 3) { return }
+        let compactViewAll = app.buttons["hanlin-compact-view-all-button"].firstMatch
+        if input.waitForExistence(timeout: 3) && !compactViewAll.exists { return }
+
+        // If on compact Home, tap the seeded Agent Acceptance Chat row directly
+        if compactViewAll.exists {
+            let recentRow0 = app.buttons["hanlin-compact-recent-row-0"].firstMatch
+            if recentRow0.waitForExistence(timeout: 3) && recentRow0.label.contains("Agent Acceptance Chat") {
+                tapElement(recentRow0)
+                _ = input.waitForExistence(timeout: 10)
+                return
+            }
+        }
 
         // Expand sidebar on iPad if collapsed
         let sidebarToggle = app.navigationBars.buttons.matching(

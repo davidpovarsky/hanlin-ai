@@ -62,6 +62,7 @@ struct HanlinComposerGeneralActionsView: View {
     // Composer actions
     let onExpandEditor: () -> Void
     let onSendObserve: () -> Void
+    var embeddedInDrawer: Bool = true
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -79,7 +80,7 @@ struct HanlinComposerGeneralActionsView: View {
     }
 
     var body: some View {
-        NavigationStack(path: $coordinator.generalNavigationPath) {
+        let stack = NavigationStack(path: $coordinator.generalNavigationPath) {
             generalRootPage
                 .navigationDestination(for: ComposerGeneralSubroute.self) { route in
                     Group {
@@ -103,18 +104,28 @@ struct HanlinComposerGeneralActionsView: View {
                     }
                 }
         }
-        .frame(width: currentSize.width, height: currentSize.height)
-        .background(GlassView(style: .systemUltraThinMaterial))
-        .clipShape(.rect(cornerRadius: 22, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
-        )
         .onChange(of: coordinator.generalNavigationPath) { _, _ in
             coordinator.handleGeneralNavPathChange(reduceMotion: reduceMotion)
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-general-popover")
+
+        if embeddedInDrawer {
+            stack
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .scrollContentBackground(.hidden)
+                .background(Color.clear)
+        } else {
+            stack
+                .frame(width: currentSize.width, height: currentSize.height)
+                .background(GlassView(style: .systemUltraThinMaterial))
+                .clipShape(.rect(cornerRadius: 22, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
+                        .allowsHitTesting(false)
+                )
+        }
     }
 
     // MARK: - Root Page
@@ -124,7 +135,7 @@ struct HanlinComposerGeneralActionsView: View {
             VStack(alignment: .leading, spacing: 12) {
                 // Header
                 HStack {
-                    Label(String(localized: "Add & Modes"), systemImage: "plus.circle.fill")
+                    Label(String(localized: "Add & Modes"), systemImage: "plus.circle")
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(accentColor)
                     Spacer()
@@ -228,7 +239,17 @@ struct HanlinComposerGeneralActionsView: View {
                 }
                 #endif
 
-                Divider()
+                Rectangle()
+                    .fill(Color.primary.opacity(0.08))
+                    .frame(height: 0.6)
+
+                // R7: Source-faithful horizontal gallery slot (ContentView.swift lines 726-748)
+                // Backed by real Hanlin PromptRepo templates ("Saved Prompts"), never fake demo projects.
+                savedPromptsGallerySlot
+
+                Rectangle()
+                    .fill(Color.primary.opacity(0.08))
+                    .frame(height: 0.6)
 
                 // 2. Conversation Modes
                 VStack(spacing: 4) {
@@ -398,7 +419,7 @@ struct HanlinComposerGeneralActionsView: View {
                         navigationRowLabel(
                             title: String(localized: "Tools, Skills & MCP"),
                             subtitle: String(localized: "Manage native tools, agent skills, MCP and runtimes"),
-                            systemImage: "wrench.and.screwdriver.fill",
+                            systemImage: "hammer.circle.fill",
                             tint: .hlBrown
                         )
                     }
@@ -441,6 +462,104 @@ struct HanlinComposerGeneralActionsView: View {
             .padding(12)
         }
         .toolbar(.hidden, for: .navigationBar)
+    }
+
+    @ViewBuilder
+    private var savedPromptsGallerySlot: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(String(localized: "Saved Prompts"))
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button {
+                    coordinator.pushGeneralSubroute(.prompts, reduceMotion: reduceMotion)
+                } label: {
+                    HStack(spacing: 3) {
+                        Text(String(localized: "Browse"))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 10, weight: .semibold))
+                    }
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(accentColor)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 4)
+
+            if availablePrompts.isEmpty {
+                Button {
+                    coordinator.pushGeneralSubroute(.prompts, reduceMotion: reduceMotion)
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: "text.book.closed")
+                            .font(.subheadline)
+                            .foregroundStyle(accentColor)
+                            .frame(width: 28, height: 28)
+                            .background(accentColor.opacity(0.12), in: Circle())
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(String(localized: "No unselected saved prompts"))
+                                .font(.caption.weight(.medium))
+                                .foregroundStyle(.primary)
+                            Text(String(localized: "Create or manage templates in Prompt Library"))
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                    }
+                    .padding(10)
+                    .background(accentColor.opacity(0.06), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("hanlin-drawer-prompts-empty")
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(Array(availablePrompts.prefix(6).enumerated()), id: \.element.id) { index, item in
+                            Button {
+                                if !selectedPrompts.contains(where: { $0.id == item.id }) {
+                                    selectedPrompts.append(item)
+                                }
+                                coordinator.closeAll()
+                            } label: {
+                                VStack(alignment: .leading, spacing: 5) {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "text.quote")
+                                            .font(.caption.weight(.semibold))
+                                            .foregroundStyle(accentColor)
+                                        Text(item.name ?? String(localized: "Untitled Prompt"))
+                                            .font(.caption.weight(.semibold))
+                                            .foregroundStyle(.primary)
+                                            .lineLimit(1)
+                                    }
+                                    Text(item.content ?? "")
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(2)
+                                        .multilineTextAlignment(.leading)
+                                }
+                                .padding(10)
+                                .frame(width: 146, height: 68, alignment: .topLeading)
+                                .background(
+                                    accentColor.opacity(0.09),
+                                    in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                        .stroke(accentColor.opacity(0.18), lineWidth: 0.7)
+                                        .allowsHitTesting(false)
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("hanlin-drawer-prompt-card-\(index)")
+                        }
+                    }
+                    .padding(.horizontal, 2)
+                }
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-drawer-saved-prompts-slot")
     }
 
     // MARK: - Subpages
@@ -790,6 +909,7 @@ struct HanlinComposerToolsRootView: View {
     let capability: HanlinComposerActionBridge.ModelCapabilitySnapshot
     @Binding var ifToolUse: Bool
     let onMCPSelectionChanged: (Int) -> Void
+    var embeddedInDrawer: Bool = true
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -815,7 +935,7 @@ struct HanlinComposerToolsRootView: View {
     }
 
     var body: some View {
-        NavigationStack(path: $coordinator.toolsNavigationPath) {
+        let stack = NavigationStack(path: $coordinator.toolsNavigationPath) {
             toolsRootPage
                 .navigationDestination(for: ComposerToolsSubroute.self) { route in
                     Group {
@@ -842,13 +962,6 @@ struct HanlinComposerToolsRootView: View {
                     }
                 }
         }
-        .frame(width: currentSize.width, height: currentSize.height)
-        .background(GlassView(style: .systemUltraThinMaterial))
-        .clipShape(.rect(cornerRadius: 22, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
-        )
         .onChange(of: coordinator.toolsNavigationPath) { _, _ in
             coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
         }
@@ -857,6 +970,23 @@ struct HanlinComposerToolsRootView: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-tools-popover")
+
+        if embeddedInDrawer {
+            stack
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .scrollContentBackground(.hidden)
+                .background(Color.clear)
+        } else {
+            stack
+                .frame(width: currentSize.width, height: currentSize.height)
+                .background(GlassView(style: .systemUltraThinMaterial))
+                .clipShape(.rect(cornerRadius: 22, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
+                        .allowsHitTesting(false)
+                )
+        }
     }
 
     // MARK: - Root Page
@@ -865,7 +995,7 @@ struct HanlinComposerToolsRootView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Label(String(localized: "Tools, Skills & MCP"), systemImage: "wrench.and.screwdriver.fill")
+                    Label(String(localized: "Tools, Skills & MCP"), systemImage: "hammer.circle.fill")
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(accentColor)
                     Spacer()

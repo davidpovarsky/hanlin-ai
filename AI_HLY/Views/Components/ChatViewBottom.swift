@@ -257,8 +257,11 @@ struct ChatViewBottom: View {
     @Binding var imageReversePrompt: String
 
     var isInputActive: FocusState<Bool>.Binding
+    var dockContextKey: String? = nil
+    var availableWorkspaceSize: CGSize = .zero
 
     @Environment(\.modelContext) private var context
+    @Namespace private var modelPopoverZoom
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -280,6 +283,15 @@ struct ChatViewBottom: View {
     @State private var selectedMCPCountForChat: Int = 0
     @State private var showEmbeddingSettingSheet: Bool = false
     @State private var isEmbeddingModelError: Bool = false
+    @State private var sessionFallbackChatID = UUID()
+
+    private var effectiveDockContextKey: String {
+        dockContextKey ?? chatRecord.id?.uuidString ?? sessionFallbackChatID.uuidString
+    }
+
+    private var effectiveMCPChatID: UUID {
+        chatRecord.id ?? sessionFallbackChatID
+    }
 
     static func shouldEnableSend(
         message: String,
@@ -379,10 +391,35 @@ struct ChatViewBottom: View {
             buildMultiSelectAndInputControls()
         }
         .onAppear {
+            syncDockGeometryAndContext()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // **延迟 0.3 秒触发动画**
                 withAnimation {
                     isViewLoaded = true
                 }
+            }
+        }
+        .onChange(of: effectiveDockContextKey) { _, newKey in
+            popupCoordinator.dockState.handleContextKeyChange(newKey)
+            popupCoordinator.closeAll()
+        }
+        .onChange(of: availableWorkspaceSize) { _, newSize in
+            if newSize.height > 160 {
+                popupCoordinator.dockState.availableHeight = newSize.height
+            }
+            if newSize.width > 120 && newSize.height > 120 {
+                popupCoordinator.measuredContainerSize = newSize
+            }
+        }
+        .onChange(of: textEditorHeight) { _, newHeight in
+            popupCoordinator.dockState.measuredInputHeight = newHeight
+        }
+        .onChange(of: attachmentOverheadHeightEstimate) { _, newOverhead in
+            popupCoordinator.dockState.attachmentOverheadHeight = newOverhead
+        }
+        .onChange(of: isInputActive.wrappedValue) { _, focused in
+            popupCoordinator.dockState.handleInputFocusChange(focused)
+            if focused && (popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools) {
+                popupCoordinator.closeAll()
             }
         }
         .onChange(of: isMultiSelectMode) {
@@ -402,14 +439,13 @@ struct ChatViewBottom: View {
                 showPhotoSourceOptions = isGeneral
             }
             isSourceOptionsVisible = isGeneral
-        }
-        .task(id: chatRecord.id) {
-            guard let chatID = chatRecord.id else {
-                selectedMCPCountForChat = 0
-                return
+            if newPopup == .general || newPopup == .tools {
+                isInputActive.wrappedValue = false
             }
+        }
+        .task(id: effectiveMCPChatID) {
             let selection = await MCPRuntimeProvider.shared.selection(
-                chatID: chatID,
+                chatID: effectiveMCPChatID,
                 temporary: TemporaryRecord
             )
             selectedMCPCountForChat = selection.count
@@ -561,24 +597,26 @@ struct ChatViewBottom: View {
                 }
                 .transition(.move(edge: .top))
 
-                VStack {
-                    messageInput
-                }
-                .padding(.bottom, 10)
-                .onTapGesture {
-                    showTemperatureSlider = false
-                    showTopPSlider = false
-                    showMaxTokensSlider = false
-                    showMaxMessagesNumSlider = false
-                }
-                .background(
-                    GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
-                        .clipShape(RoundedRectangle(cornerRadius: 26))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 26)
-                                .stroke((TemporaryRecord ? Color.primary : Color.hlBluefont).opacity(0.22), lineWidth: 0.8)
-                        )
-                        .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                HanlinOrganizerDock(
+                    dockState: popupCoordinator.dockState,
+                    popupCoordinator: popupCoordinator,
+                    temporaryRecord: TemporaryRecord,
+                    isResponding: isResponding,
+                    onTapComposerBackground: {
+                        showTemperatureSlider = false
+                        showTopPSlider = false
+                        showMaxTokensSlider = false
+                        showMaxMessagesNumSlider = false
+                    },
+                    generalDrawerContent: {
+                        generalDrawerView
+                    },
+                    toolsDrawerContent: {
+                        toolsDrawerView
+                    },
+                    composerContent: {
+                        messageInput
+                    }
                 )
                 .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
@@ -590,7 +628,90 @@ struct ChatViewBottom: View {
         }
     }
 
-    // MARK: 输入区域
+    // MARK: 输入区域与抽屉视图
+    private func syncDockGeometryAndContext() {
+        popupCoordinator.dockState.handleContextKeyChange(effectiveDockContextKey)
+        popupCoordinator.dockState.measuredInputHeight = textEditorHeight
+        popupCoordinator.dockState.attachmentOverheadHeight = attachmentOverheadHeightEstimate
+        if availableWorkspaceSize.height > 160 {
+            popupCoordinator.dockState.availableHeight = availableWorkspaceSize.height
+        }
+        if availableWorkspaceSize.width > 120 && availableWorkspaceSize.height > 120 {
+            popupCoordinator.measuredContainerSize = availableWorkspaceSize
+        }
+    }
+
+    private var attachmentOverheadHeightEstimate: CGFloat {
+        var overhead: CGFloat = 0
+        if !selectedImages.isEmpty { overhead += 54 }
+        if !selectedDocumentURLs.isEmpty { overhead += 42 }
+        if !selectedURLs.isEmpty { overhead += 34 }
+        if !selectedPrompts.isEmpty { overhead += 38 }
+        if showModelSuggestions && !filteredModels.isEmpty { overhead += 46 }
+        if !activeChips.isEmpty { overhead += 28 }
+        return overhead
+    }
+
+    private var generalDrawerView: some View {
+        HanlinComposerGeneralActionsView(
+            coordinator: popupCoordinator,
+            capability: currentModelSnapshot,
+            temporaryRecord: TemporaryRecord,
+            isResponding: isResponding,
+            canObserve: canObserveCurrentChat,
+            selectedImages: $selectedImages,
+            selectedDocumentURLs: $selectedDocumentURLs,
+            selectedPrompts: $selectedPrompts,
+            availablePrompts: filteredPromptTemps,
+            onOpenCamera: { showCameraPicker = true },
+            onOpenPhotoLibrary: { showImagePicker = true },
+            onOpenDocumentPicker: { showDocumentPicker = true },
+            ifSearch: $ifSearch,
+            ifKnowledge: $ifKnowledge,
+            ifThink: $ifThink,
+            thinkingLength: $thinkingLength,
+            ifPlanning: $ifPlanning,
+            ifAudio: $ifAudio,
+            selectedImageSize: $selectedImageSize,
+            imageReversePrompt: $imageReversePrompt,
+            checkSearchAvailability: { checkSearchAvailability() },
+            checkEmbeddingAvailability: { checkEmbeddingAvailability() },
+            showSearchAlert: $showSearchAlert,
+            showKnowledgeAlert: $showKnowledgeAlert,
+            onOpenEmbeddingSettings: { showEmbeddingSettingSheet = true },
+            temperature: $temperature,
+            topP: $topP,
+            maxTokens: $maxTokens,
+            maxMessagesNum: $maxMessagesNum,
+            onSaveParameters: {
+                if chatRecord.modelContext != nil {
+                    chatRecord.temperature = temperature
+                    chatRecord.topP = topP
+                    chatRecord.maxTokens = maxTokens
+                    chatRecord.maxMessagesNum = maxMessagesNum
+                    try? context.save()
+                }
+            },
+            onExpandEditor: { inputExpanded = true },
+            onSendObserve: { onSendObserve() },
+            embeddedInDrawer: true
+        )
+    }
+
+    private var toolsDrawerView: some View {
+        HanlinComposerToolsRootView(
+            coordinator: popupCoordinator,
+            chatID: effectiveMCPChatID,
+            temporaryRecord: TemporaryRecord,
+            capability: currentModelSnapshot,
+            ifToolUse: $ifToolUse,
+            onMCPSelectionChanged: { count in
+                selectedMCPCountForChat = count
+            },
+            embeddedInDrawer: true
+        )
+    }
+
     private var messageInput: some View {
         VStack(spacing: 6) {
             imagePreviewSection
@@ -973,7 +1094,7 @@ struct ChatViewBottom: View {
                         textHeight: $textEditorHeight,
                         placeholderText: String(localized: "Message"),
                         minHeight: 38,
-                        maxHeight: 140,
+                        maxHeight: popupCoordinator.dockState.editorMaxHeight,
                         onPasteImage: { pastedImage in
                             selectedImages.append(pastedImage)
                         },
@@ -993,6 +1114,12 @@ struct ChatViewBottom: View {
                         },
                         onMentionTriggered: {
                             updateModelSuggestions()
+                        },
+                        onFocusChange: { focused in
+                            popupCoordinator.dockState.handleInputFocusChange(focused)
+                            if focused && (popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools) {
+                                popupCoordinator.closeAll()
+                            }
                         }
                     )
                     .padding(.leading, 12)
@@ -1000,15 +1127,18 @@ struct ChatViewBottom: View {
                     .focused(isInputActive)
                     .accessibilityIdentifier("hanlin-chat-input")
                     .onChange(of: message) {
+                        popupCoordinator.dockState.handleDraftTextChange(message)
                         debounceWorkItem?.cancel()
                         debounceWorkItem = DispatchWorkItem {
                             updateModelSuggestions()
-                            chatRecord.input = message
                             extractURLs(from: message)
-                            do {
-                                try context.save()
-                            } catch {
-                                print("Failed to save chat record updates: \(error)")
+                            if chatRecord.modelContext != nil {
+                                chatRecord.input = message
+                                do {
+                                    try context.save()
+                                } catch {
+                                    print("Failed to save chat record updates: \(error)")
+                                }
                             }
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: debounceWorkItem!)
@@ -1099,9 +1229,10 @@ struct ChatViewBottom: View {
     // MARK: - 双入口底部控制栏（+ 通用菜单 / 工具直达 / 紧凑模型胶囊 / 麦克风 / 发送）
     private var composerBottomToolbar: some View {
         let accent: Color = TemporaryRecord ? .primary : .hlBluefont
-        let isGeneralOpen = popupCoordinator.activePopup == .general
-        let isToolsOpen = popupCoordinator.activePopup == .tools
+        let isGeneralOpen = popupCoordinator.dockState.mode == .general
+        let isToolsOpen = popupCoordinator.dockState.mode == .tools
         let isModelOpen = popupCoordinator.activePopup == .model
+        let isToolsActive = ifToolUse && currentModelSnapshot.supportsToolUse
         let toolsActiveBadgeCount = HanlinComposerActionBridge.activeToolsShortcutCount(
             capability: currentModelSnapshot,
             ifToolUse: ifToolUse,
@@ -1109,13 +1240,13 @@ struct ChatViewBottom: View {
         )
 
         return HStack(spacing: 8) {
-            // Entrypoint 1: General `+` button
+            // Entrypoint 1: General `+` button (restored classic `plus.circle`, drives integrated dock drawer)
             Button {
                 isFeedBack.toggle()
                 popupCoordinator.toggle(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
             } label: {
-                Image(systemName: "plus.circle.fill")
-                    .font(.system(size: size_20 + 6, weight: .medium))
+                Image(systemName: "plus.circle")
+                    .font(.system(size: size_20 + 6, weight: .regular))
                     .foregroundStyle(
                         isResponding
                         ? Color.gray
@@ -1129,79 +1260,32 @@ struct ChatViewBottom: View {
             .accessibilityIdentifier("hanlin-composer-general-menu")
             .disabled(isResponding)
             .sensoryFeedback(.impact, trigger: isFeedBack)
-            .popover(
-                isPresented: popupCoordinator.binding(for: .general),
-                attachmentAnchor: .rect(.bounds),
-                arrowEdge: .bottom
-            ) {
-                HanlinComposerGeneralActionsView(
-                    coordinator: popupCoordinator,
-                    capability: currentModelSnapshot,
-                    temporaryRecord: TemporaryRecord,
-                    isResponding: isResponding,
-                    canObserve: canObserveCurrentChat,
-                    selectedImages: $selectedImages,
-                    selectedDocumentURLs: $selectedDocumentURLs,
-                    selectedPrompts: $selectedPrompts,
-                    availablePrompts: filteredPromptTemps,
-                    onOpenCamera: { showCameraPicker = true },
-                    onOpenPhotoLibrary: { showImagePicker = true },
-                    onOpenDocumentPicker: { showDocumentPicker = true },
-                    ifSearch: $ifSearch,
-                    ifKnowledge: $ifKnowledge,
-                    ifThink: $ifThink,
-                    thinkingLength: $thinkingLength,
-                    ifPlanning: $ifPlanning,
-                    ifAudio: $ifAudio,
-                    selectedImageSize: $selectedImageSize,
-                    imageReversePrompt: $imageReversePrompt,
-                    checkSearchAvailability: { checkSearchAvailability() },
-                    checkEmbeddingAvailability: { checkEmbeddingAvailability() },
-                    showSearchAlert: $showSearchAlert,
-                    showKnowledgeAlert: $showKnowledgeAlert,
-                    onOpenEmbeddingSettings: { showEmbeddingSettingSheet = true },
-                    temperature: $temperature,
-                    topP: $topP,
-                    maxTokens: $maxTokens,
-                    maxMessagesNum: $maxMessagesNum,
-                    onSaveParameters: {
-                        chatRecord.temperature = temperature
-                        chatRecord.topP = topP
-                        chatRecord.maxTokens = maxTokens
-                        chatRecord.maxMessagesNum = maxMessagesNum
-                        try? context.save()
-                    },
-                    onExpandEditor: { inputExpanded = true },
-                    onSendObserve: { onSendObserve() }
-                )
-                .presentationCompactAdaptation(.popover)
-            }
 
-            // Entrypoint 2: Direct 1-Tap Tools / Skills / MCP button
+            // Entrypoint 2: Direct 1-Tap Tools / Skills / MCP button (restored classic `hammer.circle`, drives integrated dock drawer)
             Button {
                 isFeedBack.toggle()
                 popupCoordinator.toggle(.tools, isInputCurrentlyFocused: isInputActive.wrappedValue)
             } label: {
                 ZStack(alignment: .topTrailing) {
-                    Image(systemName: (ifToolUse && currentModelSnapshot.supportsToolUse) ? "wrench.and.screwdriver.fill" : "wrench.and.screwdriver")
-                        .font(.system(size: 14, weight: .semibold))
+                    Image(systemName: (isToolsOpen || isToolsActive) ? "hammer.circle.fill" : "hammer.circle")
+                        .font(.system(size: size_20 + 5, weight: .regular))
                         .foregroundStyle(
                             isResponding
                             ? Color.gray
-                            : ((isToolsOpen || (ifToolUse && currentModelSnapshot.supportsToolUse)) ? accent : Color.secondary)
+                            : (isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hlBrown) : Color.secondary))
                         )
                         .frame(width: size_32, height: size_32)
                         .background(
-                            (isToolsOpen || (ifToolUse && currentModelSnapshot.supportsToolUse))
-                            ? (TemporaryRecord ? Color.primary : Color.hlBlue).opacity(0.14)
+                            (isToolsOpen || isToolsActive)
+                            ? (isToolsActive ? Color.hlBrown : (TemporaryRecord ? Color.primary : Color.hlBlue)).opacity(0.14)
                             : Color.secondary.opacity(0.08),
                             in: Circle()
                         )
                         .overlay(
                             Circle()
                                 .stroke(
-                                    (isToolsOpen || (ifToolUse && currentModelSnapshot.supportsToolUse))
-                                    ? accent.opacity(0.32)
+                                    (isToolsOpen || isToolsActive)
+                                    ? (isToolsActive ? Color.hlBrown : accent).opacity(0.32)
                                     : Color.clear,
                                     lineWidth: 0.8
                                 )
@@ -1209,7 +1293,7 @@ struct ChatViewBottom: View {
 
                     if toolsActiveBadgeCount > 0 {
                         Circle()
-                            .fill(accent)
+                            .fill(isToolsActive ? Color.hlBrown : accent)
                             .frame(width: 7, height: 7)
                             .offset(x: -1, y: 1)
                     }
@@ -1219,25 +1303,8 @@ struct ChatViewBottom: View {
             .accessibilityIdentifier("hanlin-composer-tools-direct")
             .disabled(isResponding)
             .sensoryFeedback(.impact, trigger: isFeedBack)
-            .popover(
-                isPresented: popupCoordinator.binding(for: .tools),
-                attachmentAnchor: .rect(.bounds),
-                arrowEdge: .bottom
-            ) {
-                HanlinComposerToolsRootView(
-                    coordinator: popupCoordinator,
-                    chatID: chatRecord.id ?? UUID(),
-                    temporaryRecord: TemporaryRecord,
-                    capability: currentModelSnapshot,
-                    ifToolUse: $ifToolUse,
-                    onMCPSelectionChanged: { count in
-                        selectedMCPCountForChat = count
-                    }
-                )
-                .presentationCompactAdaptation(.popover)
-            }
 
-            // Entrypoint 3: Compact Discoverable Model Picker Capsule
+            // Entrypoint 3: Compact Discoverable Model Picker Capsule (sole anchored `.popover` with matched zoom)
             Button {
                 isFeedBack.toggle()
                 popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
@@ -1245,6 +1312,7 @@ struct ChatViewBottom: View {
                 composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
             }
             .buttonStyle(.plain)
+            .matchedTransitionSource(id: "model-popover", in: modelPopoverZoom)
             .accessibilityIdentifier("hanlin-composer-model-picker")
             .sensoryFeedback(.selection, trigger: isSelect)
             .popover(
@@ -1265,6 +1333,7 @@ struct ChatViewBottom: View {
                     ifThink: ifThink,
                     ifAudio: ifAudio
                 )
+                .navigationTransition(.zoom(sourceID: "model-popover", in: modelPopoverZoom))
                 .presentationCompactAdaptation(.popover)
             }
 
