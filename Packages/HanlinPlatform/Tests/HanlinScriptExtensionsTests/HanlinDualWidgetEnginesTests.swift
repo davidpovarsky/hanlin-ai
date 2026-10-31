@@ -17,6 +17,35 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
+    @Test func timelinePreparationCommitsOriginalTypedStorageAcrossColdReads() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        let identity = Identity(installedPackageID: try .init(validating: "installed.timeline"), packageID: try .init(validating: "package.timeline"), generation: 1, entrypointID: "widget")
+        let program = HanlinWidgetProgram(engine: .scriptwidget, sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64), javaScript: """
+            async function $main() {
+              const count = ($storage.get('count') || 0) + 1;
+              $storage.set('count', count);
+              $storage.set('temporary', true);
+              $storage.remove('temporary');
+              $render(ScriptWidget.createElement('text', {}, String(count)));
+            }
+            """, actions: [], families: ["systemMedium"])
+        let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: identity.installedPackageID, generation: 1)
+        let widget = Widget(identity: identity, displayName: "Timeline storage", validUntil: .distantFuture, engine: .scriptwidget,
+            payload: .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256)), root: .init(kind: .text))
+        try store.publishWidgetTemplates([widget], intentEntities: [], translationApps: [], installedPackageIDs: [identity.installedPackageID])
+        let instance = try #require(try store.load()?.widgetInstances.first)
+        for expected in [1, 2] {
+            let reopened = Store(root: root)
+            guard case let .scriptwidget(node, _) = HanlinWidgetPreparation.prepare(store: reopened, entityID: instance.entityID, family: "systemMedium") else { Issue.record("Timeline storage preparation failed"); return }
+            #expect(node.children == [.value(.string(String(expected)))])
+            let state = try #require(try reopened.load()?.widgetStates.first)
+            #expect(state.values["count"] == .integer(Int64(expected)))
+            #expect(state.values["temporary"] == nil)
+            #expect(state.revision == UInt64(expected))
+        }
+    }
     @Test func originalScriptWidgetImportedHelpersAndVerifiedFileStorage() throws {
         let program = HanlinWidgetProgram(engine: .scriptwidget,
             sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64),

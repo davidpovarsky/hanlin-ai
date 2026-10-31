@@ -78,20 +78,23 @@ extension HanlinScriptExtensionStore {
 public enum HanlinWidgetPreparation {
     public static func prepare(store: HanlinScriptExtensionStore, entityID: String, family: String) -> HanlinPreparedWidget {
         do {
-            guard let snapshot = try store.load(),
+          var prepared = HanlinPreparedWidget.failure("Widget preparation did not finish")
+          try store.update { snapshot in
+            guard let snapshot,
                   let widget = snapshot.widgets.first(where: { widget in
                       HanlinWidgetInstance(identity: widget.identity, engine: widget.engine, displayName: widget.displayName).entityID == entityID
                           && widget.family == family
-                  }) else { return .failure("The selected widget is unavailable, disabled or belongs to an older generation.") }
-            if case let .malformed(reason) = widget.payload { return .failure(reason) }
-            guard !snapshot.inactiveWidgetInstallations.contains(widget.identity.installedPackageID.rawValue) else { return .failure("Widget package is being updated or is disabled.") }
-            guard widget.validUntil > .now else { return .failure("The widget snapshot has expired. Open Hanlin to republish it.") }
-            if widget.engine == .legacy { return .legacy(widget) }
+                  }) else { throw HanlinScriptWidgetError("The selected widget is unavailable, disabled or belongs to an older generation.") }
+            if case let .malformed(reason) = widget.payload { throw HanlinScriptWidgetError(reason) }
+            guard !snapshot.inactiveWidgetInstallations.contains(widget.identity.installedPackageID.rawValue) else { throw HanlinScriptWidgetError("Widget package is being updated or is disabled.") }
+            guard widget.validUntil > .now else { throw HanlinScriptWidgetError("The widget snapshot has expired. Open Hanlin to republish it.") }
+            if widget.engine == .legacy { prepared = .legacy(widget); return snapshot }
             guard let instance = snapshot.widgetInstances.first(where: { $0.identity == widget.identity && $0.engine == widget.engine }) else {
-                return .failure("This widget instance is no longer active.")
+                throw HanlinScriptWidgetError("This widget instance is no longer active.")
             }
             let (program, digest) = try store.loadProgram(for: widget)
-            let state = snapshot.widgetStates.first { $0.identity == widget.identity && $0.engine == widget.engine && $0.artifactSHA256 == digest }
+            let state = snapshot.widgetStates.first { $0.identity == widget.identity && $0.engine == widget.engine }
+            guard state == nil || state?.artifactSHA256 == digest else { throw HanlinWidgetActionError.staleArtifact }
             var environment: [String: HanlinValue] = ["widgetFamily": .string(family), "family": .string(family),
                 "timestamp": .number(Date.now.timeIntervalSince1970 * 1_000)]
             environment["settings"] = try HanlinWidgetJSON.value(instance.settings.mapValues { $0.toAny() })
@@ -108,10 +111,22 @@ public enum HanlinWidgetPreparation {
                 }()
                 let node = try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript,
                     props: props.mapValues { $0.toAny() }, environment: environment.mapValues { $0.toAny() }).get()
-                return .expo(node: try HanlinWidgetJSON.value(node), context: context)
+                prepared = .expo(node: try HanlinWidgetJSON.value(node), context: context)
+                return snapshot
             }
             let result = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state?.values ?? [:], environment: environment)
-            return .scriptwidget(node: result.node, context: context)
+            prepared = .scriptwidget(node: result.node, context: context)
+            // ScriptWidget scripts can populate typed storage during timeline
+            // preparation too. Publish those writes in this same transaction;
+            // a concurrent AppIntent cannot be overwritten by an old read.
+            guard result.values != (state?.values ?? [:]) else { return snapshot }
+            guard (state?.revision ?? 0) < UInt64.max,
+                  try JSONEncoder().encode(result.values).count <= 256 * 1_024 else { throw HanlinWidgetActionError.invalidState }
+            let updated = HanlinWidgetInstanceState(identity: widget.identity, engine: widget.engine, artifactSHA256: digest,
+                revision: (state?.revision ?? 0) + 1, values: result.values, committedNonces: state?.committedNonces ?? [])
+            return snapshot.replacing(states: snapshot.widgetStates.filter { !($0.identity == widget.identity && $0.engine == widget.engine) } + [updated])
+          }
+          return prepared
         } catch { return .failure("Widget preparation failed: \(error)") }
     }
 }

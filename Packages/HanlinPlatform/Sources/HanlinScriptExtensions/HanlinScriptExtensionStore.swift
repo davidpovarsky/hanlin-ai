@@ -81,8 +81,9 @@ public struct HanlinScriptExtensionStore: Sendable {
         _ mutation: (HanlinScriptExtensionSnapshot?) throws -> HanlinScriptExtensionSnapshot
     ) throws -> HanlinScriptExtensionSnapshot {
         try withLock {
-            let snapshot = try mutation(loadUnlocked().snapshot)
-            try saveUnlocked(snapshot)
+            let previous = try loadUnlocked().snapshot
+            let snapshot = try mutation(previous)
+            if snapshot != previous { try saveUnlocked(snapshot) }
             return snapshot
         }
     }
