@@ -8,6 +8,11 @@ on:
         type: choice
         default: full
         options: [full, widget-package, widget-native-subset]
+      simulator_suite:
+        description: Restrict a full simulator run after inspecting dependency impact
+        type: choice
+        default: all
+        options: [all, native-widgets]
 
 permissions:
   actions: read
@@ -412,6 +417,11 @@ jobs:
             if [ -f "$binary" ]; then shasum -a 256 "$binary"; fi
           done > "$LOG_DIR/widgets/executable-SHA256.txt"
           ditto -c -k --keepParent "$APPEX_PATH" "$LOG_DIR/widgets/HanlinScriptingWidgets-simulator.appex.zip"
+          ditto -c -k --keepParent "$APP_PATH" "$LOG_DIR/widgets/AI_Hanlin-simulator.app.zip"
+          shasum -a 256 "$LOG_DIR/widgets/"*.zip > "$LOG_DIR/widgets/archive-SHA256.txt"
+          codesign --display --verbose=2 "$APP_PATH" > "$LOG_DIR/widgets/simulator-app-signature.log" 2>&1 || true
+          codesign --display --verbose=2 "$APPEX_PATH" > "$LOG_DIR/widgets/simulator-extension-signature.log" 2>&1 || true
+          echo 'arm64 iOS Simulator build only; not a developer/ad-hoc signed physical-device IPA.' > "$LOG_DIR/widgets/ARTIFACT-SCOPE.txt"
 
       - name: Boot iPad Simulator and stage fixtures
         id: stage-fixtures
@@ -585,6 +595,27 @@ jobs:
           ) > "$LOG_DIR/widget-simulator-rss-kib.log" &
           widget_probe_pid=$!
           trap 'kill "$widget_probe_pid" 2>/dev/null || true' EXIT
+          selected_tests=(
+            -only-testing:AI_HLYTests/HanlinNativeWidgetRendererTests
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated
+            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeScriptWidgetBooleanWithHostTerminated
+          )
+          if [ '${{ inputs.simulator_suite }}' != 'native-widgets' ]; then
+            selected_tests+=(
+              -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd
+              -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSearchableContentAndEvents
+              -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoDynamicPackageSwitching
+              -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoLifecycleAndUninstall
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMountAndInteraction
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDynamicVariantSwitching
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIIncompatibleVersionRejection
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMalformedPackageRejection
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDeniedPersistedGrant
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRevokeWhileMounted
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRepeatedLifecycle
+            )
+          fi
           xcodebuild test-without-building \
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
@@ -595,21 +626,9 @@ jobs:
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -parallel-testing-enabled NO \
-            -only-testing:AI_HLYTests/HanlinNativeWidgetRendererTests \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeScriptWidgetBooleanWithHostTerminated \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSearchableContentAndEvents \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoDynamicPackageSwitching \
-            -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoLifecycleAndUninstall \
-            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMountAndInteraction \
-            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDynamicVariantSwitching \
-            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIIncompatibleVersionRejection \
-            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMalformedPackageRejection \
-            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDeniedPersistedGrant \
-            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRevokeWhileMounted \
-            -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRepeatedLifecycle \
+            -test-timeouts-enabled YES \
+            -maximum-test-execution-time-allowance 600 \
+            "${selected_tests[@]}" \
             -resultBundlePath "build/ExpoE2EResults.xcresult" \
             2>&1 | tee "$LOG_DIR/07-expo-e2e-tests.log"
 
@@ -634,6 +653,13 @@ jobs:
             echo "=== SIMULATOR APP LOGS (LAST 100 LINES) ==="
             python3 -c "import subprocess, sys; subprocess.run(['xcrun', 'simctl', 'spawn', sys.argv[1], 'log', 'show', '--style', 'compact', '--last', '5m', '--predicate', 'process == \"AI_Hanlin\"'], stdout=open(sys.argv[2], 'w'), stderr=subprocess.STDOUT, timeout=30)" "$SIMULATOR_UDID" "$LOG_DIR/08-ai-hanlin-simulator.log" 2>/dev/null || true
             tail -n 100 "$LOG_DIR/08-ai-hanlin-simulator.log" || true
+          fi
+          if [ -d build/ExpoE2EResults.xcresult ]; then
+            xcrun xcresulttool export attachments --help > "$LOG_DIR/xcresult-attachments-help.log" 2>&1
+            if [ $? -eq 0 ]; then
+              xcrun xcresulttool export attachments --path build/ExpoE2EResults.xcresult \
+                --output-path "$LOG_DIR/widget-ui-attachments" > "$LOG_DIR/xcresult-attachments-export.log" 2>&1
+            fi
           fi
 
       - name: Live Activity · refresh
