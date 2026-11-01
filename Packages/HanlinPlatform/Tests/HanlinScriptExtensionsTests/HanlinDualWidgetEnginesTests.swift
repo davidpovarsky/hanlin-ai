@@ -20,6 +20,44 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
+    @Test func installedProgramPreparationAndActionMeasurements() async throws {
+        let names = ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo", "Hanlin-ScriptWidget-Dashboard.scripting", "Hanlin-ScriptWidget-Actions.scripting", "Hanlin-Widget-Legacy-Regression.scripting"]
+        func milliseconds(since start: ContinuousClock.Instant) -> Double {
+            let elapsed = start.duration(to: .now).components
+            return Double(elapsed.seconds) * 1_000 + Double(elapsed.attoseconds) / 1e15
+        }
+        var records: [[String: Any]] = []
+        for name in names {
+            let installedAt = ContinuousClock.now
+            let fixture = try await InstalledFixture(name)
+            defer { fixture.remove() }
+            let installMS = milliseconds(since: installedAt)
+            var preparationMS: [Double] = []
+            for _ in 0..<3 {
+                let start = ContinuousClock.now
+                let presentation = HanlinWidgetPreparation.prepare(store: Store(root: fixture.extensionRoot), entityID: fixture.entityID, family: "systemMedium")
+                preparationMS.append(milliseconds(since: start))
+                if case let .failure(reason) = presentation { Issue.record("Measured preparation failed: \(reason)") }
+            }
+            var record: [String: Any] = ["archive": name, "archiveSHA256": sha(try Data(contentsOf: fixtureURL(name))),
+                "engine": fixture.template.engine.rawValue, "family": "systemMedium", "installCompilePublishMS": installMS,
+                "preparationFirstThenRepeatMS": preparationMS]
+            if name.contains("Counter") || name.contains("Actions") {
+                let context = try fixture.context()
+                let action = name.contains("Counter") ? "increment" : "sync"
+                let start = ContinuousClock.now
+                _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: action), store: fixture.store)
+                record["sourceActionCommitMS"] = milliseconds(since: start)
+                record["sourceAction"] = action
+                record["programSHA256"] = context.artifactSHA256
+                #expect(try fixture.values()[name.contains("Counter") ? "count" : "syncCount"] == .integer(name.contains("Counter") ? 8 : 1))
+            }
+            records.append(record)
+        }
+        try recordEvidence(name: "native-program-measurements", values: ["scope": "macOS shared installed-program execution; five isolated temporary installations, not five configured OS widgets",
+            "vmLifecycle": "New JavaScriptCore context per preparation/action. Repeated samples do not reuse a VM.",
+            "memoryPeak": "NOT_MEASURED", "deviceOrWidgetKitLatency": "NOT_MEASURED", "measurements": records])
+    }
     #if os(macOS)
     @Test func originalScriptWidgetHTTPUsesBoundedRealTransport() throws {
         let root = try temporary()
