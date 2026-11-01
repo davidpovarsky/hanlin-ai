@@ -169,7 +169,8 @@ jobs:
             | sort -V \
             | tail -1)"
           test -n "$selected_xcode"
-          sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
           xcodebuild -version | tee "$LOG_DIR/01-xcode-version.log"
           swift --version | tee -a "$LOG_DIR/01-xcode-version.log"
           xcrun --sdk iphonesimulator --show-sdk-version | tee "$LOG_DIR/01-sdk-version.log"

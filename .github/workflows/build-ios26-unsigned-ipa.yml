@@ -672,37 +672,23 @@ jobs:
           cache: npm
           cache-dependency-path: AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
 
-      - name: Select Xcode 27 or 26
+      - name: Select stable Xcode 27 for the device artifact
         id: app-toolchain
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print \
+            | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -d "$selected_xcode/Contents/Developer"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
 
           {
-            echo "Trying to select the newest available Xcode..."
-
-            selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) ! -name '*_beta*' -print \
-              | sort -V \
-              | tail -1)"
-            if [ -z "$selected_xcode" ]; then
-              selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
-                | sort -V \
-                | tail -1)"
-            fi
-            if [ -z "$selected_xcode" ]; then
-              dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
-              selected_xcode="$(dirname "$(dirname "$dev_dir")")"
-            fi
-            if [ -d "$selected_xcode/Contents/Developer" ]; then
-              sudo xcode-select -s "$selected_xcode/Contents/Developer"
-              echo "Selected $selected_xcode"
-            else
-              echo "Using default xcode-select: $(xcode-select -p)"
-            fi
+            echo "Selected stable Xcode: $selected_xcode"
 
             echo
             echo "===== Selected developer dir ====="
-            xcode-select -p
+            echo "$DEVELOPER_DIR"
 
             echo
             echo "===== Selected Xcode version ====="
@@ -714,8 +700,8 @@ jobs:
 
             echo
             echo "===== iOS SDK check ====="
-            xcodebuild -showsdks | grep -E "iphoneos2[67]|iOS 2[67]" || {
-              echo "ERROR: Xcode selected, but iOS SDK was not found."
+            xcodebuild -showsdks | grep -E "iphoneos27|iOS 27" || {
+              echo "ERROR: Stable Xcode selected, but iOS 27 SDK was not found."
               exit 1
             }
           } 2>&1 | tee "$LOG_DIR/02-select-xcode26.log"
