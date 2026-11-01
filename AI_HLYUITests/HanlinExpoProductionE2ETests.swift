@@ -16,6 +16,16 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        if app.state != .notRunning {
+            let attachment = XCTAttachment(string: app.debugDescription)
+            attachment.name = "host-final-accessibility.txt"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "host-final"
+            screenshot.lifetime = .keepAlways
+            add(screenshot)
+        }
         app.terminate()
     }
 
@@ -857,7 +867,13 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     }
 
     private func openPackageDetails(named packageName: String) {
-        let card = findPackageCard(named: packageName)
+        var card = findPackageCard(named: packageName)
+        if !card.exists {
+            // Original Scripting/widget-only packages live in the Add Apps
+            // package list, whereas Expo packages also have canonical hub cards.
+            ensureAppsAddButton(timeout: 10).tap()
+            card = findPackageCard(named: packageName)
+        }
         XCTAssertTrue(card.waitForExistence(timeout: 15), "Package card \(packageName) not found for details")
         if !card.isHittable {
             app.swipeDown()

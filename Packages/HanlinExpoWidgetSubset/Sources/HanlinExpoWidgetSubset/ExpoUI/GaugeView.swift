@@ -18,7 +18,11 @@ public struct GaugeView: ExpoSwiftUI.View {
   public var body: some View {
 #if !os(tvOS)
     if #available(iOS 16.0, *) {
-      gaugeContent
+      if (props.min ?? 0) <= (props.max ?? 1) {
+        gaugeContent
+      } else {
+        Text("Invalid gauge range")
+      }
     }
 #else
     EmptyView()

@@ -76,6 +76,21 @@ final class HanlinNativeWidgetRendererTests: XCTestCase {
         HanlinExpoWidgetNative.render(node: node) { _, _, label in AnyView(label) }
     }
 
+    func testOriginalLabelAndProgressKeepTheirPreparedChildren() throws {
+        let text: [String: Any] = ["type": "TextView", "props": ["text": "Native label"]]
+        let slot: [String: Any] = ["type": "SlotView", "props": ["name": "title", "children": [text]]]
+        let label = render(["type": "LabelView", "props": ["children": [slot]]])
+        let nativeLabel = try XCTUnwrap(label.childView as? UIBaseView<LabelViewProps, LabelView>)
+        XCTAssertEqual(nativeLabel.props.children?.slot("title")?.props.children?.count, 1)
+        XCTAssertEqual(try raster(AnyView(label)), try raster(AnyView(Text("Native label"))))
+        let progress = render(["type": "ProgressView", "props": ["value": 0.7, "children": [text]]])
+        let nativeProgress = try XCTUnwrap(progress.childView as? UIBaseView<ProgressViewProps, HanlinExpoWidgetSubset.ProgressView>)
+        XCTAssertEqual(nativeProgress.props.children?.count, 1)
+        XCTAssertEqual(try raster(AnyView(progress)), try raster(AnyView(SwiftUI.ProgressView(value: 0.7) { Text("Native label") })))
+        let invalid = render(["type": "GaugeView", "props": ["min": 2, "max": 1]])
+        XCTAssertEqual(try raster(AnyView(invalid)), try raster(AnyView(Text("Invalid gauge range"))))
+    }
+
     func testInstalledExternalSourceRendersThroughAnyChild() throws {
       for archive in ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo"] {
         let bundle = Bundle(for: Self.self)

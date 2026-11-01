@@ -47,15 +47,15 @@ struct WidgetsViewRenderer {
     case "EllipseView":
       return renderWithModifiers(EllipseView.self, EllipseViewProps.self)
     case "LabelView":
-      return renderWithModifiers(LabelView.self, LabelViewProps.self)
+      return renderWithModifiers(LabelView.self, LabelViewProps.self, updateProps: updateChildren)
     case "ProgressView":
-      return renderWithModifiers(ProgressView.self, ProgressViewProps.self)
+      return renderWithModifiers(ProgressView.self, ProgressViewProps.self, updateProps: updateChildren)
     case "SpacerView":
       return renderWithModifiers(SpacerView.self, SpacerViewProps.self)
     case "UnevenRoundedRectangleView":
       return renderWithModifiers(UnevenRoundedRectangleView.self, UnevenRoundedRectangleViewProps.self)
     case "GaugeView":
-      return renderWithModifiers(GaugeView.self, GaugeProps.self)
+      return renderWithModifiers(GaugeView.self, GaugeProps.self, updateProps: updateChildren)
     case "ChartView":
       return renderWithModifiers(ChartView.self, ChartProps.self)
     case "Button":

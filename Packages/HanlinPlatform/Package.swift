@@ -78,7 +78,9 @@ let package = Package(
             name: "HanlinPlatformContracts",
             resources: [
                 .process("Resources")
-            ]
+            ],
+            swiftSettings: [.unsafeFlags(["-application-extension"], .when(platforms: [.iOS]))],
+            linkerSettings: [.unsafeFlags(["-Xlinker", "-application_extension"], .when(platforms: [.iOS]))]
         ),
         .testTarget(
             name: "HanlinPlatformContractsTests",
