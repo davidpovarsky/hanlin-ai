@@ -154,7 +154,8 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         recordWidgetEvidence(springboard, name: "gallery-search-\(instance)")
         galleryItem.tap()
         recordWidgetEvidence(springboard, name: "gallery-preview-\(instance)")
-        let add = springboard.buttons["Add Widget"].firstMatch
+        // iPadOS 27 exposes the plus icon as a leading space in this label.
+        let add = springboard.buttons.matching(NSPredicate(format: "label MATCHES %@", "\\s*Add Widget\\s*")).firstMatch
         XCTAssertTrue(add.waitForExistence(timeout: 10))
         add.tap()
         let done = springboard.buttons["Done"].firstMatch
@@ -172,6 +173,10 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertTrue(selected.waitForExistence(timeout: 15), "The real picker did not contain instance \(instance)")
         selected.tap()
         XCUIDevice.shared.press(.home)
+        // Entity queries may start the host in the background. The action test
+        // must kill it after configuration, immediately before native presses.
+        app.terminate()
+        XCTAssertEqual(app.state, .notRunning)
         recordWidgetEvidence(springboard, name: "configured-\(instance)")
     }
 
