@@ -535,7 +535,7 @@ struct ChatComposerSessionBridgeTests {
 @Suite("7A.6 PendingFirstTurnTests — Home First-Send State Machine & Cancellation", .serialized)
 struct PendingFirstTurnTests {
 
-    @Test("6.1 Sending from Home creates chat, transitions to .waitingForEndpoint, and dispatches once ChatView registers")
+    @Test("6.1 Sending from Home creates chat, transitions to .awaitingEndpoint, and dispatches once ChatView registers")
     func homeFirstTurnDispatchesOnEndpointRegistration() {
         let bridge = HanlinActiveComposerSessionBridge()
         bridge.homeMessage = "Hello from compact Home"
@@ -548,7 +548,7 @@ struct PendingFirstTurnTests {
         #expect(returnedID == createdChatID)
         #expect(bridge.homeMessage.isEmpty)
         #expect(bridge.pendingFirstTurn?.targetChatID == createdChatID)
-        #expect(bridge.pendingFirstTurn?.status == .waitingForEndpoint)
+        #expect(bridge.pendingFirstTurn?.status == .awaitingEndpoint(targetChatID: createdChatID))
         #expect(bridge.pendingFirstTurn?.isPendingHandoff == true)
 
         var transferredText = ""
@@ -607,7 +607,7 @@ struct PendingFirstTurnTests {
         bridge.register(endpoint: endpoint)
         #expect(transferredText == "Hello from compact Home")
         #expect(userSendDispatched == 1)
-        #expect(bridge.pendingFirstTurn?.status == .dispatched)
+        #expect(bridge.pendingFirstTurn?.status == .dispatched(targetChatID: createdChatID))
         #expect(bridge.pendingFirstTurn?.isPendingHandoff == false)
     }
 
@@ -624,7 +624,7 @@ struct PendingFirstTurnTests {
         #expect(bridge.pendingFirstTurn?.isPendingHandoff == true)
 
         bridge.cancelPendingFirstTurn()
-        #expect(bridge.pendingFirstTurn?.status == .cancelled)
+        #expect(bridge.pendingFirstTurn?.status == .cancelled(reason: "Cancelled by navigation"))
         #expect(bridge.pendingFirstTurn?.isPendingHandoff == false)
     }
 }
