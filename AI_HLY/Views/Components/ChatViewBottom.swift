@@ -261,6 +261,7 @@ struct ChatViewBottom: View {
     var availableWorkspaceSize: CGSize = .zero
 
     @Environment(\.modelContext) private var context
+    @Namespace private var modelPopoverZoom
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -1352,6 +1353,7 @@ struct ChatViewBottom: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("hanlin-composer-model-picker")
+            .matchedTransitionSource(id: "model-popover", in: modelPopoverZoom)
             .sensoryFeedback(.selection, trigger: isSelect)
             .popover(
                 isPresented: popupCoordinator.binding(for: .model),
@@ -1372,6 +1374,7 @@ struct ChatViewBottom: View {
                     ifAudio: ifAudio
                 )
                 .presentationCompactAdaptation(.popover)
+                .navigationTransition(.zoom(sourceID: "model-popover", in: modelPopoverZoom))
             }
 
             Spacer(minLength: 4)

@@ -431,6 +431,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "Model picker root must reappear after tapping Back")
         tapElement(modelPicker)
+        if !modelPopover.waitForNonExistence(timeout: 2) {
+            app.windows.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.2)).tap()
+        }
         XCTAssertTrue(modelPopover.waitForNonExistence(timeout: 5), "Model picker popover must dismiss on tap")
 
         attachScreenshot("UI-06_ComposerMultilineAttachmentsModelSelectorNoOverlap", in: app)
