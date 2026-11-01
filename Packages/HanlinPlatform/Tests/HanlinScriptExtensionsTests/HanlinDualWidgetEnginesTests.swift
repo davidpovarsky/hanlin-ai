@@ -20,6 +20,22 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
+    @Test func scriptWidgetBoundsFlattenedChildrenAndAggregatePreparedMaterials() throws {
+        func run(_ source: String) throws -> HanlinScriptWidgetExecution {
+            try HanlinScriptWidgetRuntime.shared.run(program: .init(engine: .scriptwidget,
+                sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64),
+                javaScript: "async function $main() { \(source) }", actions: [], families: ["systemMedium"]), values: [:], environment: [:])
+        }
+        for source in [
+            "$render(ScriptWidget.createElement('text', {}, Array(1001).fill('x')));",
+            "$render(ScriptWidget.createElement('vstack', {}, Array.from({length:250}, () => ScriptWidget.createElement('text', {title:'x'.repeat(1100)}, 'x'))));",
+            "const props = {}; for (let i=0;i<120;i++) props['key'+i] = 'x'.repeat(2300); $render(ScriptWidget.createElement('text', props, 'x'));"
+        ] {
+            #expect(throws: HanlinScriptWidgetError.self) { _ = try run(source) }
+        }
+        let valid = try run("$render(ScriptWidget.createElement('text', {}, Array(500).fill('x')));")
+        #expect(valid.node.children.count == 500)
+    }
     @Test func sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated() async throws {
         let first = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo", installationID: "installed.first", packageID: "package.first")
         defer { first.remove() }
