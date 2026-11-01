@@ -1341,6 +1341,7 @@ jobs:
             --app "$PACKAGED_APP_PATH" \
             --json-output "$LOG_DIR/09-packaged-ios-system-resources.json"
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript -- --app "$PACKAGED_APP_PATH"
+          node Scripts/Widgets/audit-native-products.mjs "$PACKAGED_APP_PATH" "$LOG_DIR/widget-native-mach-o.json"
           SOURCE_APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
           test "$(shasum -a 256 "$SOURCE_APP_PATH/commandDictionary.plist" | awk '{print $1}')" \
             = "$(shasum -a 256 "$PACKAGED_APP_PATH/commandDictionary.plist" | awk '{print $1}')"
