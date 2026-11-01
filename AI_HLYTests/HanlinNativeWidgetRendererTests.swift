@@ -112,7 +112,7 @@ final class HanlinNativeWidgetRendererTests: XCTestCase {
             }
             if name.hasPrefix("button-") { XCTAssertEqual(targets, ["run"]) }
             for rtl in [false, true] {
-                let native = AnyView(child.environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight).dynamicTypeSize(rtl ? .accessibility3 : .large))
+                let native = AnyView(AnyView(child).environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight).dynamicTypeSize(rtl ? .accessibility3 : .large))
                 let expected = AnyView(reference.environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight).dynamicTypeSize(rtl ? .accessibility3 : .large))
                 let png = try raster(native)
                 XCTAssertEqual(png, try raster(expected), "Original \(name) differs from native SwiftUI; RTL/accessibility=\(rtl)")
