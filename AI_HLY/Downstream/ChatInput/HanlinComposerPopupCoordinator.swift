@@ -2,10 +2,10 @@
 //  HanlinComposerPopupCoordinator.swift
 //  AI_HLY
 //
-//  Single shared popup coordinator for the two-entry native composer.
-//  Guarantees mutual exclusion across General (+), Direct Tools, and Model Picker
-//  popups, and implements the InteriorOrganizerV3_3 two-phase expand/shrink
-//  animation state machine.
+//  Shared coordinator for the integrated HanlinOrganizerDock drawer (.general, .tools)
+//  and the anchored Model Picker popover (.model).
+//  Enforces mutual exclusion, synchronizes drawer mode with HanlinOrganizerDockState,
+//  and implements the completion-ordered two-phase expand-then-push zoom state machine (§4.8).
 //
 
 import Foundation
@@ -40,19 +40,23 @@ enum ComposerModelSubroute: String, Hashable, Sendable {
 @MainActor
 @Observable
 final class HanlinComposerPopupCoordinator {
-    /// Currently presented popup (`nil` when all popups are closed).
-    /// Setting this guarantees that at most one popup is ever presented.
+    /// Integrated OrganizerDock state for `.general` and `.tools` drawer modes.
+    let dockState = HanlinOrganizerDockState()
+
+    /// Currently active surface (`nil` when collapsed and model popover closed).
+    /// Note: `.general` and `.tools` are rendered as modes of the integrated `HanlinOrganizerDock` drawer,
+    /// NEVER as floating `.popover` sheets. Only `.model` is presented as a native `.popover`.
     var activePopup: ComposerPopup?
 
-    /// Internal navigation stacks for each popup.
+    /// Internal navigation stacks for each surface.
     var generalNavigationPath: [ComposerGeneralSubroute] = []
     var toolsNavigationPath: [ComposerToolsSubroute] = []
     var modelNavigationPath: [ComposerModelSubroute] = []
 
-    /// InteriorOrganizerV3_3 two-phase size state per popup:
+    /// InteriorOrganizerV3_3 two-phase size state:
     /// Stage 1: `frameExpanded` becomes `true` BEFORE pushing destination onto `NavigationPath`.
     /// Stage 2: `frameExpanded` returns to `false` ONLY when BOTH `navigationPath.isEmpty`
-    /// AND `destinationHasDisappeared` are `true` (protecting against cancelled interactive swipe-back).
+    /// AND `destinationDisappeared` are `true` (protecting against cancelled interactive swipe-back).
     var generalFrameExpanded: Bool = false
     var generalDestinationDisappeared: Bool = true
     var isGeneralAnimatingExpand: Bool = false
@@ -65,7 +69,19 @@ final class HanlinComposerPopupCoordinator {
     var modelDestinationDisappeared: Bool = true
     var isModelAnimatingExpand: Bool = false
 
-    /// Tracks whether the text input was focused before a popup opened so focus can be restored cleanly.
+    /// Monotonically increasing generation counter for the model popover presentation.
+    /// Guards against late animation completion callbacks firing after dismissal.
+    private(set) var modelPresentationGeneration: Int = 0
+
+    /// Optional measured container size from the hosting workspace/detail column.
+    var measuredContainerSize: CGSize = .zero
+
+    /// Deterministic testing hook: when `true`, Stage 1 sets `modelFrameExpanded = true` immediately
+    /// and Stage 2 (`modelNavigationPath.append`) waits until `flushPendingAnimationCompletions()` is called.
+    var deferAnimationCompletionsForTesting: Bool = false
+    private var pendingAnimationCompletions: [@MainActor () -> Void] = []
+
+    /// Tracks whether the text input was focused before opening so focus can be restored cleanly if desired.
     var wasInputFocusedBeforePopup: Bool = false
 
     var shouldRestoreFocusAfterDismiss: Bool {
@@ -86,7 +102,7 @@ final class HanlinComposerPopupCoordinator {
 
     init() {}
 
-    // MARK: - Mutual Exclusion Entrypoints
+    // MARK: - Mutual Exclusion & Drawer Mode Synchronization
 
     func toggle(_ popup: ComposerPopup, isInputCurrentlyFocused: Bool = false) {
         open(popup, isInputCurrentlyFocused: isInputCurrentlyFocused)
@@ -100,8 +116,18 @@ final class HanlinComposerPopupCoordinator {
         if activePopup == nil {
             wasInputFocusedBeforePopup = isInputCurrentlyFocused
         }
+        modelPresentationGeneration &+= 1
         resetSubroutesAndExpansion()
         activePopup = popup
+
+        switch popup {
+        case .general:
+            dockState.openMode(.general)
+        case .tools:
+            dockState.openMode(.tools)
+        case .model:
+            dockState.collapse()
+        }
     }
 
     func presentDirectTools(isInputCurrentlyFocused: Bool = false) {
@@ -112,13 +138,26 @@ final class HanlinComposerPopupCoordinator {
         if activePopup == nil {
             wasInputFocusedBeforePopup = isInputCurrentlyFocused
         }
+        modelPresentationGeneration &+= 1
         resetSubroutesAndExpansion()
         activePopup = .tools
+        dockState.openMode(.tools)
     }
 
+    /// Switches from General (`+`) to Tools inside the SAME expanded OrganizerDock drawer without dismissing or reopening.
     func switchFromGeneralToTools() {
+        modelPresentationGeneration &+= 1
         resetSubroutesAndExpansion()
         activePopup = .tools
+        dockState.openMode(.tools)
+    }
+
+    /// Switches from Tools to General (`+`) inside the SAME expanded OrganizerDock drawer without dismissing or reopening.
+    func switchFromToolsToGeneral() {
+        modelPresentationGeneration &+= 1
+        resetSubroutesAndExpansion()
+        activePopup = .general
+        dockState.openMode(.general)
     }
 
     func close(_ popup: ComposerPopup) {
@@ -127,8 +166,33 @@ final class HanlinComposerPopupCoordinator {
     }
 
     func closeAll() {
+        modelPresentationGeneration &+= 1
         activePopup = nil
+        dockState.collapse()
         resetSubroutesAndExpansion()
+    }
+
+    /// Synchronizes `activePopup` when `dockState.mode` is changed by a drawer handle tap, drag gesture, or editor resize.
+    func syncFromDockModeChange(_ newMode: HanlinOrganizerDrawerMode) {
+        switch newMode {
+        case .collapsed:
+            if activePopup == .general || activePopup == .tools {
+                activePopup = nil
+                resetSubroutesAndExpansion()
+            }
+        case .general:
+            if activePopup != .general {
+                modelPresentationGeneration &+= 1
+                resetSubroutesAndExpansion()
+                activePopup = .general
+            }
+        case .tools:
+            if activePopup != .tools {
+                modelPresentationGeneration &+= 1
+                resetSubroutesAndExpansion()
+                activePopup = .tools
+            }
+        }
     }
 
     func binding(for popup: ComposerPopup) -> Binding<Bool> {
@@ -137,8 +201,7 @@ final class HanlinComposerPopupCoordinator {
             set: { isPresented in
                 if isPresented {
                     if self.activePopup != popup {
-                        self.resetSubroutesAndExpansion()
-                        self.activePopup = popup
+                        self.open(popup)
                     }
                 } else if self.activePopup == popup {
                     self.closeAll()
@@ -164,7 +227,7 @@ final class HanlinComposerPopupCoordinator {
         isModelAnimatingExpand = false
     }
 
-    // MARK: - V3.3 Two-Phase Expand & Shrink (General Popup)
+    // MARK: - V3.3 Two-Phase Expand & Shrink (General Drawer Subroutes)
 
     func pushGeneralSubroute(_ route: ComposerGeneralSubroute, reduceMotion: Bool = false) {
         guard !generalNavigationPath.contains(route) else { return }
@@ -207,7 +270,7 @@ final class HanlinComposerPopupCoordinator {
         }
     }
 
-    // MARK: - V3.3 Two-Phase Expand & Shrink (Tools Popup)
+    // MARK: - V3.3 Two-Phase Expand & Shrink (Tools Drawer Subroutes)
 
     func pushToolsSubroute(_ route: ComposerToolsSubroute, reduceMotion: Bool = false) {
         guard !toolsNavigationPath.contains(route) else { return }
@@ -250,29 +313,81 @@ final class HanlinComposerPopupCoordinator {
         }
     }
 
-    // MARK: - V3.3 Two-Phase Expand & Shrink (Model Picker Popup)
+    // MARK: - V3.3 Completion-Ordered Two-Phase Expand & Shrink (Model Picker Popover, §4.8)
 
+    /// Expands the model popover frame FIRST, and appends `route` ONLY after the expansion animation
+    /// completes (using `.removed` completion criteria), matching `ContentView.swift` lines 1018-1025.
     func pushModelSubroute(_ route: ComposerModelSubroute = .allModels, reduceMotion: Bool = false) {
-        guard !modelNavigationPath.contains(route) else { return }
+        guard !modelNavigationPath.contains(route), !isModelAnimatingExpand else { return }
+        if activePopup != .model {
+            activePopup = .model
+        }
+        let capturedGeneration = modelPresentationGeneration
         modelDestinationDisappeared = false
-        if reduceMotion {
+
+        let completeRoutePush: @MainActor () -> Void = { [weak self] in
+            guard let self else { return }
+            guard self.activePopup == .model,
+                  self.modelPresentationGeneration == capturedGeneration,
+                  self.modelFrameExpanded,
+                  self.modelNavigationPath.isEmpty,
+                  !self.modelNavigationPath.contains(route) else {
+                self.isModelAnimatingExpand = false
+                return
+            }
+            self.isModelAnimatingExpand = false
+            self.modelNavigationPath.append(route)
+        }
+
+        if deferAnimationCompletionsForTesting {
+            isModelAnimatingExpand = true
             modelFrameExpanded = true
-            modelNavigationPath.append(route)
+            pendingAnimationCompletions.append(completeRoutePush)
             return
         }
-        withAnimation(.easeInOut(duration: 0.24)) {
+
+        if reduceMotion {
             modelFrameExpanded = true
-            modelNavigationPath.append(route)
+            completeRoutePush()
+            return
+        }
+
+        isModelAnimatingExpand = true
+        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
+            modelFrameExpanded = true
+        } completion: {
+            Task { @MainActor in
+                completeRoutePush()
+            }
         }
     }
 
-    /// Dynamically calculates responsive popover dimensions based on available window/screen space
-    /// and safe area insets, preventing clipping in narrow split view or landscape keyboard-up states.
+    /// Executes any queued animation completions in deterministic unit tests (`ModelPopoverZoomOrderTests`).
+    func flushPendingAnimationCompletions() {
+        let completions = pendingAnimationCompletions
+        pendingAnimationCompletions.removeAll()
+        for completion in completions {
+            completion()
+        }
+    }
+
+    /// Dynamically calculates responsive popover dimensions based on actual container geometry
+    /// (when provided) or active window scene bounds, preventing clipping in narrow split view.
     func responsiveSize(
         target: CGSize,
+        availableContainerSize: CGSize? = nil,
         horizontalMargin: CGFloat = 20,
         verticalMargin: CGFloat = 28
     ) -> CGSize {
+        let candidateContainer = availableContainerSize ?? measuredContainerSize
+        if candidateContainer.width > 120 && candidateContainer.height > 120 {
+            let maxWidth = max(240, candidateContainer.width - horizontalMargin)
+            let maxHeight = max(260, candidateContainer.height - verticalMargin)
+            return CGSize(
+                width: min(target.width, maxWidth),
+                height: min(target.height, maxHeight)
+            )
+        }
         #if canImport(UIKit)
         if let window = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })

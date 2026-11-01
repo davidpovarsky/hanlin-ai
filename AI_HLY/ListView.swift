@@ -24,6 +24,8 @@ struct ListView: View {
     @State private var editingTitle: String = "title"
     
     @State private var navigationPath: [ChatRecords] = []
+    @State private var compactWorkspacePath: [HanlinCompactWorkspaceRoute] = []
+    @State private var measuredContainerWidth: CGFloat = 0
     @State private var selectedChatRecord: ChatRecords? = nil
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
     
@@ -87,9 +89,20 @@ struct ListView: View {
         Self.filterAndSortChatRecords(chatRecords, searchText: searchText)
     }
     
+    private var useCompactWorkspace: Bool {
+        let effectiveWidth = HanlinCompactChatWorkspace.effectiveContainerWidth(
+            measuredWidth: measuredContainerWidth
+        )
+        return HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+            isPhoneIdiom: UIDevice.current.userInterfaceIdiom == .phone,
+            horizontalSizeClass: horizontalSizeClass,
+            availableWidth: effectiveWidth
+        )
+    }
+
     var body: some View {
         Group {
-            if horizontalSizeClass == .regular {
+            if !useCompactWorkspace {
                 NavigationSplitView {
                     sidebarContent
                         .navigationTitle("Hylic.AI")
@@ -112,22 +125,62 @@ struct ListView: View {
                     }
                 }
             } else {
-                NavigationStack(path: $navigationPath) {
-                    content
-                        .navigationTitle("Hylic.AI")
-                        .safeAreaInset(edge: .bottom) {
-                            Color.clear.frame(height: 75)
-                        }
-                        .toolbar {
-                            commonToolbar
-                        }
+                HanlinCompactChatWorkspace(
+                    chatRecords: chatRecords,
+                    allModels: allModels,
+                    path: $compactWorkspacePath,
+                    searchText: $searchText,
+                    matchedSnippets: matchedSnippets,
+                    loadHistoryMessages: loadHistoryMessages,
+                    forceRefresh: forceRefresh,
+                    onOpenSafariGuide: { showSafariGuide = true },
+                    onOpenTranslation: { showTranslationSheet = true },
+                    onOpenPolish: { showPolishSheet = true },
+                    onOpenSummary: { showSummarySheet = true },
+                    onCreateAuthorizedNewChat: { createAuthorizedNewChatRecord() },
+                    onTogglePin: { record in togglePin(record) },
+                    onEditRecord: { record in beginEditingRecord(record) },
+                    onDeleteRecord: { record in deleteChat(record) },
+                    onRefresh: { handleOnAppear() }
+                )
+            }
+        }
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.width
+        } action: { newWidth in
+            if abs(measuredContainerWidth - newWidth) > 1 {
+                measuredContainerWidth = newWidth
+            }
+        }
+        .onChange(of: useCompactWorkspace) { _, isCompact in
+            if isCompact {
+                if compactWorkspacePath.isEmpty, let selectedID = selectedChatRecord?.id {
+                    compactWorkspacePath = [.chat(selectedID)]
                 }
+            } else {
+                if case .chat(let activeID) = compactWorkspacePath.last,
+                   let match = chatRecords.first(where: { $0.id == activeID }) {
+                    selectedChatRecord = match
+                } else if selectedChatRecord == nil {
+                    selectedChatRecord = filteredChatRecords.first
+                }
+            }
+        }
+        .onChange(of: searchText) {
+            searchTask?.cancel()
+            searchTask = Task {
+                do {
+                    try await Task.sleep(nanoseconds: 300_000_000)
+                    if !Task.isCancelled {
+                        searchRecords()
+                    }
+                } catch {}
             }
         }
         .onAppear {
             handleOnAppear()
             searchText = ""
-            if horizontalSizeClass == .regular && selectedChatRecord == nil {
+            if !useCompactWorkspace && selectedChatRecord == nil {
                 selectedChatRecord = filteredChatRecords.first
             }
         }
@@ -575,13 +628,22 @@ struct ListView: View {
         }
     }
     
-    private func addNewChat() {
+    private func beginEditingRecord(_ record: ChatRecords) {
+        editingRecord = record
+        editingIcon   = record.icon ?? "bubble.left.circle"
+        editingColor  = Color.from(name: record.color ?? ".hlBlue")
+        editingTitle  = record.name ?? ""
+        showIconSheet = true
+    }
+
+    @discardableResult
+    private func createAuthorizedNewChatRecord() -> ChatRecords? {
         // 验证是否有开启的大模型厂商
         if noAPIKeys {
             validationAlertMessage = "暂无开启的大模型厂商，请前往“设置-模型-模型厂商”设置大模型密钥并启用厂商。"
             validationSettingType = .apiKeys
             showValidationAlert = true
-            return
+            return nil
         }
 
         // 验证是否选择了文本优化模型
@@ -589,20 +651,20 @@ struct ListView: View {
             validationAlertMessage = "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。"
             validationSettingType = .optimization
             showValidationAlert = true
-            return
+            return nil
         }
 
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
 
         let chatName: String = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
         let welcomeText: String = currentLanguage.hasPrefix("zh") ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
-        
+
         let newChat = ChatRecords(
             name: chatName,
             type: "chat",
             lastEdited: Date()
         )
-        
+
         let welcomeMessage = ChatMessages(
             role: "information",
             text: welcomeText,
@@ -611,22 +673,26 @@ struct ListView: View {
             timestamp: Date(),
             record: newChat
         )
-        
+
         do {
             modelContext.insert(newChat)
             modelContext.insert(welcomeMessage)
             try modelContext.save()
-            
-            DispatchQueue.main.async {
-                if horizontalSizeClass == .regular {
-                    selectedChatRecord = newChat
-                } else {
-                    navigationPath.append(newChat) // 触发跳转
-                }
-            }
-            
+            return newChat
         } catch {
             print("Error saving new chat: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    private func addNewChat() {
+        guard let newChat = createAuthorizedNewChatRecord() else { return }
+        DispatchQueue.main.async {
+            if !useCompactWorkspace {
+                selectedChatRecord = newChat
+            } else if let id = newChat.id {
+                compactWorkspacePath.append(.chat(id))
+            }
         }
     }
 }

@@ -10,8 +10,18 @@ import ZIPFoundation
 enum AgentRuntimeUIAcceptanceProvider {
     static let environmentKey = "HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"
     static let skillsEnvironmentKey = "HANLIN_AGENT_SKILLS_EMBEDDED_ACCEPTANCE"
+    static let dockFixturesEnvironmentKey = "HANLIN_DOCK_ACCEPTANCE_FIXTURES"
     static let modelName = "hanlin-agent-acceptance"
+    static let secondaryModelName = "hanlin-gpt4o-acceptance"
     static let chatName = "Agent Acceptance Chat"
+
+    static var isDockFixturesEnabled: Bool {
+#if targetEnvironment(simulator)
+        ProcessInfo.processInfo.environment[dockFixturesEnvironmentKey] == "1"
+#else
+        false
+#endif
+    }
 
     static var isSkillsEnabled: Bool {
 #if targetEnvironment(simulator)
@@ -135,11 +145,68 @@ enum AgentRuntimeUIAcceptanceProvider {
                 isHidden: false,
                 apiType: .openAI
             ))
+            let now = Date()
             context.insert(ChatRecords(
                 name: chatName,
                 type: "chat",
+                lastEdited: now,
                 useModel: 0
             ))
+            if isDockFixturesEnabled {
+                for prompt in try context.fetch(FetchDescriptor<PromptRepo>()) {
+                    context.delete(prompt)
+                }
+                context.insert(AllModels(
+                    name: secondaryModelName,
+                    displayName: "GPT-4o Acceptance",
+                    position: 1,
+                    company: "OPENAI",
+                    supportsTextGen: true,
+                    supportsMultimodal: true,
+                    supportsReasoning: false,
+                    supportReasoningChange: false,
+                    supportsToolUse: true
+                ))
+                context.insert(APIKeys(
+                    name: "OpenAI Acceptance",
+                    company: "OPENAI",
+                    key: "acceptance-only",
+                    requestURL: "https://agent.acceptance/v1/chat/completions",
+                    isHidden: false,
+                    apiType: .openAI
+                ))
+                context.insert(ChatRecords(
+                    name: "Architecture Review Notes",
+                    type: "chat",
+                    lastEdited: now.addingTimeInterval(-60),
+                    useModel: 0
+                ))
+                context.insert(ChatRecords(
+                    name: "MCP Server Diagnostics",
+                    type: "chat",
+                    lastEdited: now.addingTimeInterval(-120),
+                    useModel: 0
+                ))
+                context.insert(ChatRecords(
+                    name: "Older Archived Thread",
+                    type: "chat",
+                    lastEdited: now.addingTimeInterval(-3600),
+                    isPinned: true,
+                    useModel: 0
+                ))
+                context.insert(PromptRepo(
+                    name: "Code Review Checklist",
+                    content: "Review architecture boundaries and RTL layout parity.",
+                    position: 0,
+                    timestamp: now
+                ))
+                context.insert(PromptRepo(
+                    name: "RTL Layout Audit",
+                    content: "Verify leading and trailing margins in Hebrew and Arabic.",
+                    position: 1,
+                    timestamp: now.addingTimeInterval(-30)
+                ))
+            }
             if isSkillsEnabled {
                 if let skillID = try? HanlinSkillID(validating: "acceptance_skill"),
                    let descriptor = try? HanlinSkillDescriptor(
@@ -353,6 +420,16 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         // 6. UI-02 Classic user and assistant bubbles with direct action buttons
         if bodyString.contains("PROMPT_UI02_CLASSIC_BUBBLES") {
             emitFinalAnswer("### Classic Bubble Heading\nHere is **bold** markdown and inline math $E=mc^2$. UI02_CLASSIC_COMPLETE")
+            return
+        }
+
+        if bodyString.contains("PROMPT_FIRST_TURN_HOME") {
+            emitFinalAnswer("FIRST_TURN_HOME_COMPLETE")
+            return
+        }
+
+        if bodyString.contains("PROMPT_OBSERVE_ACCEPTANCE") {
+            emitFinalAnswer("OBSERVE_TURN_COMPLETE")
             return
         }
 

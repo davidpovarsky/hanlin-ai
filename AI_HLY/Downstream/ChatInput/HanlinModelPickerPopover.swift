@@ -2,9 +2,9 @@
 //  HanlinModelPickerPopover.swift
 //  AI_HLY
 //
-//  Compact anchored model picker popover with InteriorOrganizerV3_3 two-stage
-//  size expansion and zoom navigation into searchable "All Models", styled in
-//  Hanlin's original delicate blue glass aesthetic.
+//  Compact anchored model picker popover with InteriorOrganizerV3_3 completion-ordered
+//  two-stage size expansion and matched zoom navigation into searchable provider-grouped
+//  "All Models", styled in Hanlin's original delicate blue glass aesthetic (§4.8).
 //
 
 import SwiftUI
@@ -68,6 +68,26 @@ struct HanlinModelPickerPopover: View {
         }
     }
 
+    private struct ProviderGroup: Identifiable {
+        let provider: String
+        let indices: [Int]
+        var id: String { provider }
+    }
+
+    private var providerGroups: [ProviderGroup] {
+        var order: [String] = []
+        var grouped: [String: [Int]] = [:]
+        for idx in filteredAllIndices {
+            let provider = (models[safe: idx]?.company ?? "OTHER").uppercased()
+            if grouped[provider] == nil {
+                order.append(provider)
+                grouped[provider] = []
+            }
+            grouped[provider]?.append(idx)
+        }
+        return order.map { ProviderGroup(provider: $0, indices: grouped[$0] ?? []) }
+    }
+
     var body: some View {
         NavigationStack(path: $coordinator.modelNavigationPath) {
             compactRootPage
@@ -76,7 +96,7 @@ struct HanlinModelPickerPopover: View {
                         switch route {
                         case .allModels:
                             allModelsDestinationPage
-                                .navigationTransition(.zoom(sourceID: "hanlin-model-picker-all-models-row", in: zoomNamespace))
+                                .navigationTransition(.zoom(sourceID: "all-models", in: zoomNamespace))
                         }
                     }
                     .onAppear {
@@ -95,6 +115,7 @@ struct HanlinModelPickerPopover: View {
         .overlay(
             RoundedRectangle(cornerRadius: 22, style: .continuous)
                 .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
+                .allowsHitTesting(false)
         )
         .onChange(of: coordinator.modelNavigationPath) { _, newPath in
             if !newPath.isEmpty {
@@ -163,7 +184,11 @@ struct HanlinModelPickerPopover: View {
                     .padding(.horizontal, 12)
                     .padding(.vertical, 4)
 
-                NavigationLink(value: ComposerModelSubroute.allModels) {
+                // Repaired single Button calling completion-ordered pushModelSubroute (§4.8)
+                Button {
+                    searchText = ""
+                    coordinator.pushModelSubroute(.allModels, reduceMotion: reduceMotion)
+                } label: {
                     HStack(spacing: 10) {
                         Image(systemName: "square.grid.2x2")
                             .font(.subheadline.weight(.medium))
@@ -186,19 +211,17 @@ struct HanlinModelPickerPopover: View {
                     .contentShape(.rect(cornerRadius: 12))
                 }
                 .buttonStyle(.plain)
-                .simultaneousGesture(TapGesture().onEnded {
-                    coordinator.pushModelSubroute(.allModels, reduceMotion: reduceMotion)
-                })
+                .disabled(coordinator.isModelAnimatingExpand)
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
-                .matchedTransitionSource(id: "hanlin-model-picker-all-models-row", in: zoomNamespace)
+                .matchedTransitionSource(id: "all-models", in: zoomNamespace)
                 .accessibilityIdentifier("hanlin-model-picker-all-models-button")
             }
         }
         .toolbar(.hidden, for: .navigationBar)
     }
 
-    // MARK: - Stage 2: Expanded All Models Page
+    // MARK: - Stage 2: Expanded All Models Page (Provider Sections)
 
     private var allModelsDestinationPage: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -262,10 +285,20 @@ struct HanlinModelPickerPopover: View {
             .padding(.bottom, 6)
 
             ScrollView(.vertical, showsIndicators: true) {
-                LazyVStack(spacing: 4) {
-                    ForEach(filteredAllIndices, id: \.self) { index in
-                        if let model = models[safe: index] {
-                            modelRowButton(model: model, index: index, compact: false)
+                LazyVStack(alignment: .leading, spacing: 10) {
+                    ForEach(providerGroups) { group in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(group.provider)
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 10)
+                                .padding(.top, 2)
+
+                            ForEach(group.indices, id: \.self) { index in
+                                if let model = models[safe: index] {
+                                    modelRowButton(model: model, index: index, compact: false)
+                                }
+                            }
                         }
                     }
                 }

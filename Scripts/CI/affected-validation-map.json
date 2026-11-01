@@ -612,7 +612,16 @@
         "AI_HLYTests/ProductionSystemSkillsTests",
         "AI_HLYTests/RuntimeToolContractTests",
         "AI_HLYTests/ScriptingCanonicalAuthorityTests",
-        "AI_HLYTests/SkillStoreAndImportTests"
+        "AI_HLYTests/SkillStoreAndImportTests",
+        "AI_HLYTests/OrganizerDockStateTests",
+        "AI_HLYTests/HanlinComposerDrawerRouteTests",
+        "AI_HLYTests/CompactRecentConversationsTests",
+        "AI_HLYTests/CompactChatRouteTests",
+        "AI_HLYTests/ChatComposerSessionBridgeTests",
+        "AI_HLYTests/PendingFirstTurnTests",
+        "AI_HLYTests/ModelPopoverZoomOrderTests",
+        "AI_HLYTests/ComposerActionsParityTests",
+        "AI_HLYTests/OriginalSourceNonRegressionTests"
       ],
       "consumers": [
         "app_ui"
@@ -821,6 +830,27 @@
       ],
       "unit_suites": [
         "AI_HLYTests/ClassicChatRestorationTests"
+      ],
+      "consumers": []
+    },
+    "hanlin_organizer_dock_parity_unit_tests": {
+      "description": "InteriorOrganizer V3.3 OrganizerDock source parity, compact workspace, and zoom unit tests",
+      "patterns": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/OrganizerDockStateTests",
+        "AI_HLYTests/HanlinComposerDrawerRouteTests",
+        "AI_HLYTests/CompactRecentConversationsTests",
+        "AI_HLYTests/CompactChatRouteTests",
+        "AI_HLYTests/ChatComposerSessionBridgeTests",
+        "AI_HLYTests/PendingFirstTurnTests",
+        "AI_HLYTests/ModelPopoverZoomOrderTests",
+        "AI_HLYTests/ComposerActionsParityTests",
+        "AI_HLYTests/OriginalSourceNonRegressionTests"
       ],
       "consumers": []
     },
