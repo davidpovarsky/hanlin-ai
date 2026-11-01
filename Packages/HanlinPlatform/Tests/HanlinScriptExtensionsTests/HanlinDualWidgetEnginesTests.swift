@@ -20,6 +20,40 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
+    @Test func sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated() async throws {
+        let first = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo", installationID: "installed.first", packageID: "package.first")
+        defer { first.remove() }
+        let second = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo", installationID: "installed.second", packageID: "package.second")
+        defer { second.remove() }
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        var templates: [Widget] = []
+        for fixture in [first, second] {
+            let (program, _) = try fixture.store.loadProgram(for: fixture.template)
+            let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: fixture.identity.installedPackageID, generation: fixture.identity.generation)
+            templates.append(.init(identity: fixture.identity, displayName: fixture.template.displayName, validUntil: .distantFuture, engine: .expo,
+                payload: .expo(.init(layout: "", layoutRef: artifact.ref, layoutSHA256: artifact.sha256)), root: fixture.template.root))
+        }
+        let installedIDs = [first.identity.installedPackageID, second.identity.installedPackageID]
+        try store.publishWidgetTemplates(templates, intentEntities: [], translationApps: [], installedPackageIDs: installedIDs)
+        let instances = try #require(try store.load()?.widgetInstances)
+        let firstBase = try #require(instances.first { $0.identity == first.identity })
+        let secondBase = try #require(instances.first { $0.identity == second.identity })
+        let a1 = try store.createWidgetInstance(from: firstBase.entityID, displayName: "A1")
+        let a2 = try store.createWidgetInstance(from: firstBase.entityID, displayName: "A2")
+        for (instance, taps) in [(a1, 1), (a2, 2), (secondBase, 3)] {
+            guard case let .expo(_, context) = HanlinWidgetPreparation.prepare(store: store, entityID: instance.entityID, family: "systemMedium") else { Issue.record("Independent installed instance failed preparation"); return }
+            for _ in 0..<taps { _ = try HanlinWidgetActionExecutor.perform(.init(context: context, actionID: "increment"), store: store) }
+        }
+        try store.publishWidgetTemplates(templates, intentEntities: [], translationApps: [], installedPackageIDs: installedIDs)
+        let reopened = try #require(try Store(root: root).load())
+        for (instance, expected) in [(a1, Int64(8)), (a2, Int64(9)), (secondBase, Int64(10))] {
+            #expect(reopened.widgetStates.first { $0.identity == instance.identity }?.values["count"] == .integer(expected))
+            #expect(reopened.widgetInstances.contains(instance))
+        }
+        #expect(reopened.widgetStates.first { $0.identity == firstBase.identity } == nil)
+    }
     @Test func installedProgramPreparationAndActionMeasurements() async throws {
         let names = ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo", "Hanlin-ScriptWidget-Dashboard.scripting", "Hanlin-ScriptWidget-Actions.scripting", "Hanlin-Widget-Legacy-Regression.scripting"]
         func milliseconds(since start: ContinuousClock.Instant) -> Double {
@@ -517,7 +551,7 @@ private struct InstalledFixture: Sendable {
     let identity: Identity
     let template: Widget
     var entityID: String { HanlinWidgetInstance(identity: identity, engine: template.engine, displayName: "Default").entityID }
-    init(_ name: String) async throws {
+    init(_ name: String, installationID: String = "installed.widget", packageID packageName: String = "package.widget") async throws {
         root = try temporary()
         extensionRoot = root.appending(path: "Extensions")
         store = Store(root: extensionRoot)
@@ -531,8 +565,8 @@ private struct InstalledFixture: Sendable {
         let artifactRoot = root.appending(path: "Artifact")
         let manifest = try bundler.writeInstallArtifact(compiled, packageRoot: staged.packageRoot, to: artifactRoot, preparedWidgetPrograms: programs)
         let entries = HanlinWidgetPackagePreparation.installedEntrypoints(preview: preview, artifactDigest: manifest.cacheFingerprint)
-        let id = try HanlinInstalledPackageID(validating: "installed.widget")
-        let packageID = try HanlinPackageID(validating: "package.widget")
+        let id = try HanlinInstalledPackageID(validating: installationID)
+        let packageID = try HanlinPackageID(validating: packageName)
         let plan = HanlinInstallPlan(installedPackageID: id, packageID: packageID, version: try .init(validating: "1.0.0"), sourceDigest: preview.source.contentSHA256, entrypoints: entries, requestedCapabilities: preview.requestedCapabilities, manifest: staged.manifest)
         let record = try await installed.install(plan: plan, artifactDirectory: artifactRoot, artifactManifest: manifest)
         let entry = try #require(entries.first)
