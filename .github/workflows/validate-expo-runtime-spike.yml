@@ -17,6 +17,10 @@ on:
         description: Swift test filter for widget-package scope; narrow this only after checking dependency impact
         type: string
         default: 'HanlinDualWidgetEnginesTests|HanlinOriginalScriptWidgetRenderingTests|HanlinScriptExtensionStoreTests|HanlinScriptAnalyzerTests'
+      simulator_tests:
+        description: Optional comma-separated exact XCTest paths; requires separately documented unchanged package evidence
+        type: string
+        default: ''
 
 permissions:
   actions: read
@@ -130,6 +134,7 @@ jobs:
       CLONED_PACKAGES_PATH: build/SourcePackages
       LOG_DIR: build-logs
       IOS_DEPLOYMENT_TARGET: "27.0"
+      SIMULATOR_TESTS: ${{ inputs.simulator_tests }}
 
     steps:
       - name: Live Activity · refresh
@@ -329,6 +334,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Run focused HanlinScriptAnalyzerTests and HanlinScriptExtensionsTests
+        if: inputs.simulator_tests == ''
         id: package-regressions
         continue-on-error: true
         shell: bash
@@ -617,7 +623,14 @@ jobs:
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated
             -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeScriptWidgetBooleanWithHostTerminated
           )
-          if [ '${{ inputs.simulator_suite }}' != 'native-widgets' ]; then
+          if [ -n "$SIMULATOR_TESTS" ]; then
+            selected_tests=()
+            IFS=',' read -r -a requested_tests <<< "$SIMULATOR_TESTS"
+            for selected in "${requested_tests[@]}"; do
+              [[ "$selected" =~ ^AI_HLY(Tests|UITests)/[A-Za-z0-9_/]+$ ]] || { echo "Invalid exact XCTest path"; exit 2; }
+              selected_tests+=("-only-testing:$selected")
+            done
+          elif [ '${{ inputs.simulator_suite }}' != 'native-widgets' ]; then
             selected_tests+=(
               -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd
               -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSearchableContentAndEvents
