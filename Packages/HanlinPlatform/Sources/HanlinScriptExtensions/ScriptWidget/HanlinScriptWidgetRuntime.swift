@@ -193,20 +193,48 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             throw HanlinScriptWidgetError("Widget is awaiting an unsupported asynchronous operation")
         }
         guard let rendered else { throw HanlinScriptWidgetError("The script did not call $render") }
-        var count = 0
+        var budget = FreezeBudget(deadline: deadline)
         var active: Set<ObjectIdentifier> = []
-        let frozen = try freeze(rendered, depth: 1, count: &count, active: &active, context: context)
+        let frozen = try freeze(rendered, depth: 1, budget: &budget, active: &active, context: context)
+        guard try JSONEncoder().encode(frozen).count <= 1_024 * 1_024 else { throw HanlinScriptWidgetError("Widget prepared payload budget exceeded") }
+        try budget.checkTime()
         return .init(node: frozen, values: storage.values)
     }
 
+    private struct FreezeBudget {
+        let deadline: ContinuousClock.Instant
+        var nodes = 0
+        var materialBytes = 0
+        func checkTime() throws {
+            guard ContinuousClock.now < deadline else { throw HanlinScriptWidgetError("Widget execution budget exceeded") }
+        }
+        mutating func node() throws {
+            try checkTime()
+            guard nodes < 1_000 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+            nodes += 1
+        }
+        mutating func charge(_ size: Int) throws {
+            try checkTime()
+            guard size <= 256 * 1_024 - materialBytes else { throw HanlinScriptWidgetError("Widget material budget exceeded") }
+            materialBytes += size
+        }
+        mutating func value(_ object: Any) throws -> HanlinValue {
+            let value = try HanlinWidgetJSON.value(object)
+            try charge(try value.jsonValue().canonicalJSONData().count)
+            return value
+        }
+    }
+
     // Source-derived component resolution, performed only by the VM owner.
-    private func freeze(_ input: ScriptWidgetRuntimeElement, depth: Int, count: inout Int,
+    private func freeze(_ input: ScriptWidgetRuntimeElement, depth: Int, budget: inout FreezeBudget,
                         active: inout Set<ObjectIdentifier>, context: JSContext) throws -> HanlinScriptWidgetPreparedNode {
-        guard depth <= 64, count < 1_000 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+        guard depth <= 64 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+        try budget.node()
         var element = input
         var inserted: [ObjectIdentifier] = []
         defer { inserted.forEach { active.remove($0) } }
         for _ in 0..<64 {
+            try budget.checkTime()
             let identifier = ObjectIdentifier(element)
             guard active.insert(identifier).inserted else { throw HanlinScriptWidgetError("Widget component cycle") }
             inserted.append(identifier)
@@ -219,19 +247,25 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             element = result
         }
         guard let tag = element.tagAsString(), element.getProps().count <= 128 else { throw HanlinScriptWidgetError("Invalid native widget element") }
-        count += 1
+        try budget.charge(tag.utf8.count)
         var props: [String: HanlinValue] = [:]
         for (key, value) in element.getProps() {
             guard let key = key as? String else { throw HanlinScriptWidgetError("Invalid property key") }
-            props[key] = try HanlinWidgetJSON.value(value)
+            try budget.charge(key.utf8.count)
+            props[key] = try budget.value(value)
         }
         var children: [HanlinScriptWidgetPreparedNode.Child] = []
-        func append(_ value: Any) throws {
+        func append(_ value: Any, arrayDepth: Int = 0) throws {
+            guard depth + arrayDepth <= 64 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+            try budget.checkTime()
             if let child = value as? ScriptWidgetRuntimeElement {
-                children.append(.element(try freeze(child, depth: depth + 1, count: &count, active: &active, context: context)))
+                children.append(.element(try freeze(child, depth: depth + arrayDepth + 1, budget: &budget, active: &active, context: context)))
             } else if let nested = value as? [Any] {
-                for item in nested { try append(item) }
-            } else { children.append(.value(try HanlinWidgetJSON.value(value))) }
+                for item in nested { try append(item, arrayDepth: arrayDepth + 1) }
+            } else {
+                try budget.node()
+                children.append(.value(try budget.value(value)))
+            }
         }
         for child in element.getChildren() { try append(child) }
         if let exception = context.exception { throw HanlinScriptWidgetError(exception.toString() ?? "Component exception") }

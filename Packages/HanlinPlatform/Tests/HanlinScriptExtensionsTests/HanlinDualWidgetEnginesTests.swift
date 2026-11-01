@@ -35,6 +35,18 @@ struct HanlinDualWidgetEnginesTests {
         }
         let valid = try run("$render(ScriptWidget.createElement('text', {}, Array(500).fill('x')));")
         #expect(valid.node.children.count == 500)
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        let identity = Identity(installedPackageID: try .init(validating: "installed.budget"), packageID: try .init(validating: "package.budget"), generation: 1, entrypointID: "widget")
+        let program = HanlinWidgetProgram(engine: .scriptwidget, sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64), javaScript: "async function $main() { $storage.set('staged',true); $render(ScriptWidget.createElement('text',{},Array(1001).fill('x'))); }", actions: [], families: ["systemMedium"])
+        let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: identity.installedPackageID, generation: 1)
+        let widget = Widget(identity: identity, displayName: "Budget failure", validUntil: .distantFuture, engine: .scriptwidget,
+            payload: .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256)), root: .init(kind: .text))
+        try store.publishWidgetTemplates([widget], intentEntities: [], translationApps: [], installedPackageIDs: [identity.installedPackageID])
+        let entityID = try #require(try store.load()?.widgetInstances.first?.entityID)
+        guard case .failure = HanlinWidgetPreparation.prepare(store: store, entityID: entityID, family: "systemMedium") else { Issue.record("Oversized native tree was published"); return }
+        #expect(try store.load()?.widgetStates.isEmpty == true, "Failed preparation committed staged script storage")
     }
     @Test func sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated() async throws {
         let first = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo", installationID: "installed.first", packageID: "package.first")
