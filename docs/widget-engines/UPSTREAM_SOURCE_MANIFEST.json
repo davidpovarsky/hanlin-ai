@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-01",
-  "nativeLinkStatus": "PARTIAL: 41239679485 confirms no React/Hermes in actual appex; shared HanlinPlatformContracts dylib lacks APP_EXTENSION_SAFE. Compile/link enforcement added; final rerun pending.",
+  "nativeLinkStatus": "EXECUTED_PASS_APPEX_REACHABLE_CLOSURE_41261389588 at 6e3e7f54; later ScriptWidget numeric/passive-legacy source still requires final iOS execution",
   "files": [
     {
       "repository": "everettjf/scriptwidget",
@@ -228,9 +228,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagGauge.swift",
       "upstreamBlob": "19533fb8da6946e83a0ceab8c9d1959c9c52c07d",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagGauge.swift",
-      "localSHA256": "170f9f6892b127ab1bbecce89563306976bd7a39255eeffa6cb73613dc03a03a",
+      "localSHA256": "f6b9151db2099ee7e17a32155a6c96402144ed6a6c09929d6e0ce62fb65107d8",
       "byteIdentical": false,
-      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+      "adaptation": "Swift 6 MainActor isolation; reject nonfinite/negative values and angles, zero/negative thickness and invalid fractional sections before native Int/ClosedRange geometry. Original valid builder and source ABI preserved; native negative/positive raster regression added."
     },
     {
       "repository": "everettjf/scriptwidget",

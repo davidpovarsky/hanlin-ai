@@ -16,6 +16,37 @@ import UIKit
 @MainActor
 @Suite("Original ScriptWidget native rendering")
 struct HanlinOriginalScriptWidgetRenderingTests {
+    @Test func originalGaugeRejectsUnsafeNumbersAndPreservesValidNeedle() throws {
+        let context = try context()
+        let cases: [([AnyHashable: Any], String)] = [
+            (["value": "nan"], "Invalid gauge value"),
+            (["value": "inf"], "Invalid gauge value"),
+            (["value": "-1"], "Invalid gauge value"),
+            (["type": "system", "value": "nan"], "Invalid gauge value"),
+            (["angle": "-1"], "Invalid gauge angle"),
+            (["angle": "nan"], "Invalid gauge angle"),
+            (["angle": "inf"], "Invalid gauge angle"),
+            (["thickness": "0"], "Invalid gauge thickness"),
+            (["thickness": "-1"], "Invalid gauge thickness"),
+            (["sections": #"[{"color":"red","value":"-0.5"}]"#], "Invalid gauge sections"),
+            (["sections": #"[{"color":"red","value":"nan"}]"#], "Invalid gauge sections"),
+            (["sections": #"[{"color":"red","value":"1e300"}]"#], "Invalid gauge sections")
+        ]
+        for (index, entry) in cases.enumerated() {
+            let element = ScriptWidgetRuntimeElement(tagString: "gauge", props: entry.0, children: [])
+            let actual = try raster(element: frozenElement(element).nativeElement(), context: context)
+            let expected = try raster(element: .init(tagString: "text", props: nil, children: [entry.1]), context: context)
+            #expect(actual == expected, "Malformed Gauge did not render the native diagnostic: \(entry.0)")
+            try save(actual, name: "gauge-invalid-\(index).png")
+        }
+        let sections = ##"[{"color":"#ff0000","value":"0.5"},{"color":"#0000ff","value":"0.5"}]"##
+        let first = try raster(element: .init(tagString: "gauge", props: ["value": "0.1", "sections": sections], children: []), context: context)
+        let second = try raster(element: .init(tagString: "gauge", props: ["value": "0.8", "sections": sections], children: []), context: context)
+        #expect(first != second, "Valid original Gauge ignored its native needle value")
+        try save(first, name: "gauge-original-valid-a.png")
+        try save(second, name: "gauge-original-valid-b.png")
+    }
+
     @Test(arguments: ["hstack", "vstack", "zstack", "hgrid", "vgrid", "text", "date", "image", "gif", "spacer", "rect", "capsule", "ellipse", "circle", "gauge", "chart", "link", "divider", "line", "roundedrect", "icon", "label", "progress", "ring", "badge", "chip", "stat", "button", "toggle"])
     func originalTagProducesDistinctNativeRaster(tag: String) throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "hanlin-original-raster-\(UUID().uuidString)")

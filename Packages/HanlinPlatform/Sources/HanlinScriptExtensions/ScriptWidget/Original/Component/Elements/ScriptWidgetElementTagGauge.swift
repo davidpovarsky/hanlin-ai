@@ -40,6 +40,7 @@ class ScriptWidgetElementTagGauge {
     }
     static func buildSystem(_ element: ScriptWidgetRuntimeElement, _ context: ScriptWidgetElementContext) -> AnyView {
         let value = Double(element.getPropString("value") ?? "0.6") ?? 0.6
+        guard value.isFinite, value >= 0 else { return AnyView(Text("Invalid gauge value")) }
         let gaugeStyle = element.getPropString("style") ?? "circular"
 
         let text = element.getPropString("text") ?? ""
@@ -99,16 +100,19 @@ class ScriptWidgetElementTagGauge {
         if let valueDouble = element.getPropDouble("value") {
             value = valueDouble
         }
+        guard value.isFinite, value >= 0 else { return AnyView(Text("Invalid gauge value")) }
         if value > 1 { value = 1 }
 
         if let angleString = element.getPropString("angle") {
             angle = Double(angleString) ?? 260
         }
+        guard angle.isFinite, angle >= 0 else { return AnyView(Text("Invalid gauge angle")) }
         if angle > 360 { angle = 360 }
 
         if let thicknessString = element.getPropString("thickness") {
             thickness = Int(thicknessString) ?? 10
         }
+        guard thickness > 0 else { return AnyView(Text("Invalid gauge thickness")) }
 
         if let needleColorString = element.getPropString("needleColor") {
             let color = ScriptWidgetAttributeColor(needleColorString)
@@ -136,6 +140,11 @@ class ScriptWidgetElementTagGauge {
 
                         let color = ScriptWidgetAttributeColor(colorString).color ?? defaultColor
                         var value = Double(valueString) ?? 0.0
+                        // Preserve the original valid builder while rejecting
+                        // Int overflow/NaN and negative ClosedRange trim inputs.
+                        guard value.isFinite, (0...1).contains(value) else {
+                            return AnyView(Text("Invalid gauge sections"))
+                        }
                         if Int(value*100) > leftValue {
                             value = 0.0
                         }
