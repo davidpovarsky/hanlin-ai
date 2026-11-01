@@ -109,11 +109,33 @@ struct HanlinOriginalScriptWidgetRenderingTests {
         let actions: [HanlinWidgetActionDeclaration] = [.init(id: "run", kind: .function, handler: "run"), .init(id: "flag", kind: .setValue, stateKey: "flag")]
         let context = ScriptWidgetElementContext(actionContext: .init(identity: identity, engine: .scriptwidget,
             artifactSHA256: String(repeating: "a", count: 64), family: "systemMedium", actions: actions, resources: resources))
-        let first = try raster(element: semanticElement(tag: tag, alternate: false), context: context)
-        let second = try raster(element: semanticElement(tag: tag, alternate: true), context: context)
+        let first = try raster(element: frozenElement(semanticElement(tag: tag, alternate: false)).nativeElement(), context: context)
+        let second = try raster(element: frozenElement(semanticElement(tag: tag, alternate: true)).nativeElement(), context: context)
         #expect(first != second, "\(tag) ignored its source-defined content/layout/value/resource/control input")
         try save(first, name: "semantic-\(tag)-a.png")
         try save(second, name: "semantic-\(tag)-b.png")
+    }
+
+    @Test func frozenIntegerPropsPreserveOriginalJSCNumberSemantics() throws {
+        let node = HanlinScriptWidgetPreparedNode(tag: "line", props: ["length": .integer(40), "clip": .integer(2), "on": .bool(true), "date": .integer(1_793_361_600_000)], children: [.value(.integer(17))])
+        let native = node.nativeElement()
+        #expect(native.getPropDouble("length") == 40)
+        #expect(native.getPropInt("clip") == 2)
+        #expect(native.getPropBool("on") == true)
+        #expect(native.getPropDouble("date") == 1_793_361_600_000)
+        #expect((native.getChildren().first as? NSNumber)?.intValue == 17)
+    }
+
+    private func frozenElement(_ element: ScriptWidgetRuntimeElement) throws -> HanlinScriptWidgetPreparedNode {
+        let tag = try #require(element.tagAsString())
+        let props = try Dictionary(uniqueKeysWithValues: element.getProps().map { key, value in
+            (String(describing: key), try HanlinWidgetJSON.value(value))
+        })
+        let children = try element.getChildren().map { child -> HanlinScriptWidgetPreparedNode.Child in
+            if let child = child as? ScriptWidgetRuntimeElement { return .element(try frozenElement(child)) }
+            return .value(try HanlinWidgetJSON.value(child))
+        }
+        return .init(tag: tag, props: props, children: children)
     }
 
     private func semanticElement(tag: String, alternate: Bool) -> ScriptWidgetRuntimeElement {
@@ -131,7 +153,8 @@ struct HanlinOriginalScriptWidgetRenderingTests {
         case "hgrid", "vgrid":
             props["columns"] = alternate ? #"[{"type":"fixed","value":"35"},{"type":"fixed","value":"35"}]"# : #"[{"type":"fixed","value":"35"}]"#
             children = [cell("red"), cell("blue"), cell("green"), cell("orange")]
-        case "text", "link", "button":
+        case "text": children = [alternate ? "Changed source label" : "Native source label"]
+        case "link", "button":
             props["url"] = "https://example.com/native"
             props["actionID"] = "run"
         case "date":
