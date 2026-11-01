@@ -78,11 +78,20 @@ struct HanlinScriptingWidget: Widget {
     let kind = HanlinWidgetActionExecutor.widgetKind
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: HanlinWidgetConfigurationIntent.self, provider: HanlinWidgetTimelineProvider()) { entry in
-            HanlinExtensionSnapshotView(presentation: entry.presentation).containerBackground(.background, for: .widget)
+            HanlinExtensionSnapshotView(presentation: entry.presentation)
+                .modifier(PassiveLegacyWidgetURL(url: entry.presentation.passiveLegacyURL))
+                .containerBackground(.background, for: .widget)
         }
         .configurationDisplayName("Hanlin Script")
         .description("Native widgets from installed packages. Create independent instances in Hanlin.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
+    }
+}
+private struct PassiveLegacyWidgetURL: ViewModifier {
+    let url: URL?
+    @ViewBuilder func body(content: Content) -> some View {
+        if let url { content.widgetURL(url) }
+        else { content }
     }
 }
 struct HanlinScriptingLiveActivityWidget: Widget {

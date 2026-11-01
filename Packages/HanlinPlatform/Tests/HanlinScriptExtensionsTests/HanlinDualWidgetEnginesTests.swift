@@ -20,6 +20,19 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
+    @Test func passiveLegacyNavigationCannotCoverNativeOrNestedButtons() throws {
+        let identity = Identity(installedPackageID: try .init(validating: "installed.legacy-link"), packageID: try .init(validating: "package.legacy-link"), generation: 1, entrypointID: "widget")
+        let url = try #require(URL(string: "hanlin://scripts/legacy-link"))
+        let passive = Widget(identity: identity, displayName: "Legacy link", validUntil: .distantFuture, root: .init(kind: .text), deepLink: url)
+        #expect(HanlinPreparedWidget.legacy(passive).passiveLegacyURL == url)
+        let interactive = Widget(identity: identity, displayName: "Legacy action", validUntil: .distantFuture,
+            root: .init(kind: .vStack, children: [.init(kind: .button)]), deepLink: url)
+        #expect(HanlinPreparedWidget.legacy(interactive).passiveLegacyURL == nil)
+        let context = HanlinWidgetActionContext(identity: identity, engine: .expo, artifactSHA256: String(repeating: "a", count: 64), family: "systemMedium")
+        #expect(HanlinPreparedWidget.expo(node: .object([:]), context: context).passiveLegacyURL == nil)
+        #expect(HanlinPreparedWidget.scriptwidget(node: .init(tag: "button", props: [:], children: []), context: context).passiveLegacyURL == nil)
+        #expect(HanlinPreparedWidget.failure("Missing widget").passiveLegacyURL == nil)
+    }
     @Test func timelinePreparationCommitsOriginalTypedStorageAcrossColdReads() throws {
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }

@@ -1,6 +1,7 @@
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptContracts
+import HanlinScriptUI
 
 public struct HanlinWidgetActionContext: Codable, Hashable, Sendable {
     public let identity: HanlinScriptExtensionIdentity
@@ -29,6 +30,18 @@ public enum HanlinPreparedWidget: Sendable {
     case expo(node: HanlinValue, context: HanlinWidgetActionContext)
     case scriptwidget(node: HanlinScriptWidgetPreparedNode, context: HanlinWidgetActionContext)
     case failure(String)
+
+    /// Retain historical whole-widget navigation only when it cannot cover an
+    /// interactive control. Native engines always route through their own links.
+    public var passiveLegacyURL: URL? {
+        guard case let .legacy(widget) = self, widget.engine == .legacy,
+              !Self.containsButton(widget.root) else { return nil }
+        return widget.deepLink
+    }
+
+    private static func containsButton(_ node: HanlinScriptUINode) -> Bool {
+        node.kind == .button || node.children.contains(where: containsButton)
+    }
 }
 
 public struct HanlinScriptWidgetPreparedNode: Codable, Hashable, Sendable {
