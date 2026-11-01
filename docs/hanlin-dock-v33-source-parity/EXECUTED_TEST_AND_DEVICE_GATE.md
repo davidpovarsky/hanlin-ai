@@ -44,3 +44,50 @@ In historical CI run `41255137841` (`161640097a8aab3eebbfb2da08d721e56ef2bca9`),
 | 6 | `testUI07StopAndRetryRecoveryWithoutDuplicateBubbles` | Lines 458, 463, 464 (`hanlin-error-retry-button` tap did not trigger retry; `RETRY_RECOVERY_OK` absent) | **`DOCK_INTRODUCED` (P1)**: `hanlin-error-retry-button` inside the chat transcript `ScrollView` was covered by the `961.8 pt` `composerLayer`, so `tapElement(retryButton)` hit the transparent composer layer instead of the retry button. | Bounded `HanlinOrganizerDock` and `composerLayer` to exact `panelHeight` / `composerHeight` so the transcript `ScrollView` is completely uncovered above the dock. |
 | 7 | `testRealChatUISendsPromptShowsToolActivityAndFinalAnswer` | Lines 76, 86, 134, 151 (`hanlin-tool-content-toggle` tap blocked; `hanlin-settings-tab` tap blocked) | **`DOCK_INTRODUCED` (P1)**: The `961.8 pt` `composerLayer` covered both the transcript's `hanlin-tool-content-toggle` accordion and the top iPad `TabView` bar (`hanlin-settings-tab`), preventing navigation to Settings -> Runtime Center to verify Python readiness. | Bounded `HanlinOrganizerDock` and `composerLayer` so both the transcript tool accordion and the top iPad tab bar are unobstructed. |
 | 8 | `testProductionCodeSkillLocalPythonNeedsNoUserNudge` | Line 195 (`Python runtime was not automatically ready`) | **`DOCK_INTRODUCED` (P1)**: Navigating to `hanlin-settings-tab` to inspect `hanlin-open-runtime-center` was blocked by the `961.8 pt` `composerLayer` covering the top tab bar. | Bounded `HanlinOrganizerDock` and `composerLayer` so `selectTab(identifier: "hanlin-settings-tab")` reaches Settings -> Runtime Center cleanly. |
+
+
+---
+
+## 4. Final CI Simulator Verification (S8 Evidence)
+
+- **Final Verified Code Commit SHA:** `c7b8d0127ddd980f29735aba8ae7fc4a3d8c0207`
+- **Final CI Run:** `41324941721` (`https://github.com/davidpovarsky/hanlin-ai/actions/runs/41324941721`) — workflow `build-ios26-unsigned-ipa.yml`, `testflight_upload=false`, `simulator_e2e_only=false`, `compare_base_sha=279f0ead777b961728ed91386c136e7e33659c36`
+- **Run Conclusion:** `success` (job `Launch full app on iPad Simulator` ✓ in 57m19s; `Verify provider conformance test summary` ✓)
+- **Downstream unit tests (`DownstreamTestsResult.xcresult`, Swift Testing):** `EXECUTED_PASS` — **232 tests in 27 suites passed** after 103.5 s (`downstream_test_status=0`), including all 9 `7A.*` dock suites.
+- **XCUI (`AgentRuntimeConversationUITests`):** `EXECUTED_PASS` — **24 / 24 tests passed, 0 failures** in 1559.5 s.
+
+| XCUI Test | Result | Duration (s) |
+| :--- | :--- | ---: |
+| `testAccessibilityKeyboardRTLReduceMotion` | PASS | 83.2 |
+| `testClassicHanlinIconAndVisualParity` | PASS | 45.5 |
+| `testDirectToolsOneTapAndRealState` | PASS | 43.0 |
+| `testDockCompactHomeShowsThreeRecentWithOnePersistentComposer` | PASS | 41.6 |
+| `testDraftAndAttachmentPersistenceAtoBAndFirstSend` | PASS | 95.5 |
+| `testDrawerGrowsFromComposerNotPopover` | PASS | 46.5 |
+| `testDrawerHandleDragCloseOpenAndComposerResize` | PASS | 63.8 |
+| `testIpadNarrowShowsRecentAndWidePreservesSplitSidebar` | PASS | 39.6 |
+| `testModelPopoverZoomExpandThenNavigate` | PASS | 40.0 |
+| `testProductionCodeSkillLocalPythonNeedsNoUserNudge` | PASS | 155.5 |
+| `testRealChatUISendsPromptShowsToolActivityAndFinalAnswer` | PASS | 171.1 |
+| `testStopThenNewMessageHasNoGhostOldRun` | PASS | 67.5 |
+| `testStreamingStopObserveTemporaryAndStateTransitions` | PASS | 39.6 |
+| `testUI01UnifiedHistoryPinSearchSwitchDraftPreservation` | PASS | 39.5 |
+| `testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons` | PASS | 35.2 |
+| `testUI03SearchMessageAndDeduplicatedCitations` | PASS | 48.0 |
+| `testUI04CollapsedProgressAndInspectorWithoutRawCoT` | PASS | 49.8 |
+| `testUI05RichCodeBlockHTMLCardAndAttachments` | PASS | 47.7 |
+| `testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap` | PASS | 98.7 |
+| `testUI07StopAndRetryRecoveryWithoutDuplicateBubbles` | PASS | 55.3 |
+| `testUI08ConversationalMCPLifecycleAndSecondTurnReuse` | PASS | 60.2 |
+| `testUI09DirectToolsCatalogAndSkillsNavigation` | PASS | 90.9 |
+| `testUI10ModelPickerSearchSelectionAndPersistence` | PASS | 55.7 |
+| `testViewAllZoomSourceToLibraryAndCancelledInteractiveBack` | PASS | 46.1 |
+
+### Final model-popover repair (commit `c7b8d012`)
+- Restored `matchedTransitionSource(id: "model-popover")` + `navigationTransition(.zoom(sourceID: "model-popover"))` in `ChatViewBottom.swift`; without the zoom presentation, iOS 26 tore down the popover during the `286x324 → 344x472` All-Models expansion (observed in run `41321590599`).
+- `testUI06` now dismisses the popover via the native `PopoverDismissRegion` (tap outside) when tapping the zoom source capsule does not dismiss it; the dismissal assertion is unchanged.
+
+### Notes
+- Protected files (`ChatViewComponents.swift`, `ChatandFile.swift`, `APIManager.swift`) verified byte-identical to base `279f0ead` via `git diff --exit-code` before commit.
+- Annotation in the conformance job (`phase1-validation-<sha>` artifact not found) is due to the `Validate baseline…` job being planner-skipped for this impact set; the conformance job itself concluded `success`.
+- **S9 remains `DEVICE_PENDING`** → overall status **`CODE_READY_DEVICE_PENDING`**.
