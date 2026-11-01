@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-01",
-  "nativeLinkStatus": "EXECUTED_PASS_APPEX_REACHABLE_CLOSURE_41261389588 at 6e3e7f54; later ScriptWidget numeric/passive-legacy source still requires final iOS execution",
+  "nativeLinkStatus": "EXECUTED_PASS_APPEX_REACHABLE_CLOSURE_41304461973 at 5cf8c022; later Gauge/material guards Apple package PASS (41305235263/41306244662), stable device SDK artifact verification pending",
   "files": [
     {
       "repository": "everettjf/scriptwidget",
@@ -598,9 +598,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "localSHA256": "59b4b902c8fe01a4e131f3fe245cebc42cc4849a4a7be7f1e48a0e16395f60e6",
+      "localSHA256": "35eda755938508899e9f69c855036eaac138cad73af653f0217390cd8416b8a7",
       "byteIdentical": false,
-      "adaptation": "Adapted original widget execution lifecycle and component resolution; fresh VM, frozen transfer and transactional storage. Full app/editor/system-service API surface excluded."
+      "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage, bounded HTTP and prepared Sendable tree. Aggregate preparation charges scalar children/UTF-8 keys/canonical values, enforces 1000 nodes/64 depth/256-KiB materials/1-MiB encoded DTO and cooperative five-second deadline. Not a byte-identical copy or hard VM-memory/preemption guarantee."
     },
     {
       "repository": "everettjf/scriptwidget",

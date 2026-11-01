@@ -11,3 +11,7 @@ An explicit new-store v1 save publishes a new commit pointing to that revision; 
 Package generation rollback uses HanlinAtomicScriptStore.rollback. The host invalidates action authority first and republishes the selected installed generation transactionally. Variant IDs remain configured; state belongs to each exact generation. On mutation failure a package can remain inactive until successful re-publication, preserving fail-closed behavior.
 
 Release remains gated on native build/link tests, simulator WidgetKit behavior and signed physical iPadOS 27 acceptance. No main merge, TestFlight/App Store/public release or signing changes are authorized here. Asana remains read-only.
+
+## Owner override — 2026-11-01
+
+The owner explicitly authorizes upload of the current version to TestFlight and will perform iPad acceptance there. This supersedes only the earlier TestFlight prohibition and the prerequisite for physical testing before that upload. No additional optional tests are requested. Public App Store release and main merge remain outside this authorization. Asana remains read-only.

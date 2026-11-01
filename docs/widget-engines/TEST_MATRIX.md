@@ -1,45 +1,47 @@
-# Pass 3 acceptance ledger — 2026-10-30
+# Pass 3 acceptance ledger — updated 2026-11-01
 
-No Pass-2 CLOSED/AnyView/ZIP-existence assertion is accepted as native execution evidence. Each row uses its own matching assertions. Package evidence: 41239674500 at 5bfcf03b; iOS source-only evidence: 41239669157 at the same SHA. Full iOS results: 41239679485 pending. These runs use Xcode 27.1 / Swift 6.4; package assertions execute on arm64 macOS, native SDK checks target arm64 iOS 27 Simulator. Current raw run links and platform scope are in CI_AND_DEVICE_RESULTS.md.
+The gate IDs below retain the mandate's exact original obligations. Earlier versions accidentally shifted G01–G07; inventory preservation is a prerequisite, not a replacement for Source/ABI. No Pass-2 CLOSED/AnyView/ZIP-existence assertion is accepted as native execution evidence.
+
+Evidence keys: **P** = [41263527148](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41263527148), source 23ee9f15951864382762bcbba442a219f9424d8d, 28 extension/10 analyzer/7 JS tests, arm64 macOS. Its 28 extension/ten analyzer methods pass again at c6fcd063 in 41265958805, whose later build fails on test-only teardown isolation. **N** = [41261389588](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588), source 6e3e7f54795fdbac507c0accc75a32a12d54b242, five native iOS renderer and eleven foreground UI methods passed; three Home Screen methods failed. Both use Xcode 27.1 (27A9275)/Swift 6.4; N targets iPad mini (A17 Pro), iPadOS 27 Simulator. Exact native executable hashes, raw artifacts and assertion identities are in CI_AND_DEVICE_RESULTS.md. N predates the later NSNumber/passive-legacy correction. **W** = [41267448297](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41267448297), source a1efb9ff0d778fd8d52e350b71632dab343e2ec9, exactly two new native semantic/wire and three Home Screen methods IN_PROGRESS; no result inferred. Separately, real loopback HTTP passes in 41266251371, measured installed-program durations in 41266957877, and same-target cross-package/variant isolation in 41267451217. Full source hashes and narrowly executed/reused scopes are in the CI ledger.
 
 | Gate | Obligation | Status |
 |---|---|---|
-| G01 | Inventory/preservation | EXECUTED_PASS: backups preserved; Nov 1 owner synchronization imports two deliberate Chat edits, no widget-authored Chat edits |
-| G02 | Original Expo AnyChild | PARTIAL: original AnyChild subset AND bridge SDK compile/link PASS (41239669157); native Text/slot iOS PASS; Gauge slot failed, follow-up not yet executed; OS pending |
-| G03 | Original ScriptWidget native builders | PARTIAL: original JSExport/native builders compile and 29-tag/10-chart macOS raster assertions PASS (41239674500) |
-| G04 | JSX compiler/resources | EXECUTED_PASS for install-time JSX/resources: 7 JS tests, real 7 archive analyses/5 installs; OS separate |
-| G05 | Explicit import/engine metadata | EXECUTED_PASS for real analyzer/install/verified preparation; host UI acceptance pending |
-| G06 | Complete native component parity | PARTIAL: original 29-tag distinct-output/10-chart data tests; full props/RTL/Dynamic Type/OS parity NOT_TESTED |
-| G07 | Prepared presentation/JSC isolation | PARTIAL: frozen preparation/source actions/cold timeline storage PASS; actual provider UI pending |
-| G08 | Three engines concurrently | NOT_RUN_SIMULATOR_UI / BLOCKED_DEVICE |
-| G09 | New post-build package install | NOT_RUN_SIMULATOR_UI: actual post-build fixture import test pending; shared importer PASS |
-| G10 | Picker/families | PARTIAL: exact identity/wrong-family/unconfigured tests PASS; actual picker/family UI pending |
-| G11 | Configured independent variants | PARTIAL: real public create-instance registry/isolation/refresh tests PASS; A1/A2 picker UI pending |
-| G12 | Actual native AppIntent press | NOT_RUN_SIMULATOR_UI: source callbacks/Bool SetValue integration PASS; actual native press pending |
-| G13 | OS widget lifecycle | BLOCKED_DEVICE: signed lock/reboot/OS lifecycle absent |
-| G14 | State, checksum, v1 rollback | PARTIAL: actual old encoder/reader, crash/journal/checksum/state tests PASS; signed binary downgrade pending |
-| G15 | Malformed/negative cases | PARTIAL: invalid/mixed archives, artifact attacks, stale/disabled/uninstalled/family negatives PASS; native error UI pending |
-| G16 | Measured performance/memory | NOT_RUN: no device memory/latency claim; sampled simulator RSS probe added, not yet run |
-| G17 | No Hanlin grant gate | PARTIAL: source inspection and real shared installation PASS; app UI result pending |
-| G18 | Existing regressions | PARTIAL: ten foreground UI methods PASS in 41239679485; Probe exits on close; new owner integration rerun pending |
-| G19 | Searchable/Probe | PARTIAL: Searchable PASS at 5bfcf03b / 41239679485; Probe close failed; synchronized owner source rerun pending |
+| G01 | Source/ABI | EXECUTED_PASS for N built appex: original AnyChild bridge/source-built ExpoUI/Core subset; audit-native-products follows three reachable images, no React/Hermes/missing/unsafe dependencies. W affected build pending |
+| G02 | Original ScriptWidget | EXECUTED_PASS for original JSExport/runtime and 29 source builders compiled into N appex; P actual JSX/custom components and native rasters. Full notice/source SHA manifest retained |
+| G03 | Resources | PARTIAL: deterministic Expo bundle hash cad96de7…; P real Babel/support/assets load through installAndVerifiedLoader/originalScriptWidgetImportedHelpersAndVerifiedFileStorage; N built resources, actual WidgetKit provider resource loading pending |
+| G04 | Expo execution | PARTIAL: N testInstalledExternalSourceRendersThroughAnyChild renders actual Counter/Visuals source; real Home Screen placement failed before configuration, W pending |
+| G05 | ScriptWidget execution | PARTIAL: P installAndVerifiedLoader and native installed Dashboard/Actions PNGs from original runtime; N host imported Actions/created Script A1; actual WidgetKit display pending |
+| G06 | 29 ScriptWidget tags | PARTIAL: P originalTagRespondsToItsSemanticInput passes 29 changed input pairs; ten original chart variants pass. Significant dimensions enumerated in COMPONENT_PARITY_MATRIX; full per-prop/RTL/Dynamic Type/OS parity not inferred |
+| G07 | Expo visual parity | PARTIAL: N all five renderer methods pass typed Text, slots, Label/Progress pixel references, Chart/Gauge children/data and installed Counter/Visuals native PNGs. Other native semantic rows remain individually untested |
+| G08 | Three engines same extension | NOT_RUN_SIMULATOR_UI / BLOCKED_DEVICE: N imports all three engines into one frozen host but fails before configuring widgets; imports are not simultaneous Home Screen proof |
+| G09 | Dynamic install after IPA | PARTIAL: N frozen simulator app/appex build followed by genuine previously absent source imports. Actual configure/display/action and physical frozen IPA proof remain open |
+| G10 | Picker/families | PARTIAL: P unconfiguredAndWrongFamilyNeverSelectAnotherWidget and exact entity validation pass; actual picker/four-family UI pending |
+| G11 | Independent instances | PARTIAL: P userCreatedInstancesAndHostRefreshPreserveState and concurrency pass; 41267451217 sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated proves two real installations and A1/A2 keep 8/9/10 independently through republish/cold reload. N actual host UI creates A1/A2 with unique IDs; OS picker/action isolation pending |
+| G12 | AppIntent actions | PARTIAL: P emittedExpoIntentCarriesVerifiedIdentityAndCallsSource/scriptWidgetNamedActionsAndBooleanSetValue pass; N fails before native OS press; W pending |
+| G13 | WidgetKit lifecycle | NOT_RUN_SIMULATOR_UI / BLOCKED_DEVICE: provider restart/offline and signed lock/reboot/first-unlock observations absent |
+| G14 | Storage & rollback | PARTIAL: P actualHistoricalV1EncoderAndDowngradeReader, interruptedShadowPublicationRestoresExactCommittedRevision, corruptCommittedV2NeverFallsBackToGoodV1 and checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink pass; signed binary downgrade pending |
+| G15 | Malformed/negative cases | PARTIAL: P realArchiveImport rejects Invalid/Mixed; staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation and artifact attacks pass; native visible error UI pending |
+| G16 | Performance/resources | PARTIAL: N sampled simulator process RSS retained; 41266957877 installedProgramPreparationAndActionMeasurements records first/repeat fresh-VM execution and action/commit times for five isolated macOS installs. No 3–5 configured OS-widget stress or physical memory-peak/leak claim |
+| G17 | No Hanlin grant gates | PARTIAL: P shared real install with empty approvals and N three native fixture imports work without Hanlin approval. Native widget action path not yet reached |
+| G18 | Existing regressions | PARTIAL: N eleven existing foreground UI methods EXECUTED_PASS; concurrent package test preserves nonempty Live Activity/translation/intent collections. Full NativeScript/compiled Swift/Sefaria/Chat semantic scope not blanket tested; owner Chat edits preserved |
+| G19 | Searchable/Probe | EXECUTED_PASS in N: testProductionExpoSearchableContentAndEvents, testProductionExpoSwiftUIProbeEndToEnd, DynamicPackageSwitching and LifecycleAndUninstall. Reuse after N only for documented unchanged dependency scope |
 | G20 | Embedded Node HTTPS | MITIGATED / BLOCKED_DEVICE |
 | G21 | RNHostView Fabric | MITIGATED: no proven Fabric root-cause fix |
 | G22 | Mixed tree optional | DEFERRED_OPTIONAL: mixed ABI-0 rejected explicitly |
 | G23 | Activity/WidgetKit native surfaces | PARTIAL: nonempty Live Activity/translation/intent arrays preserved by concurrent package tests; OS surfaces pending |
-| G24 | Final integrity/release | PARTIAL: scoped non-force commits/push; final full CI and signed acceptance open |
+| G24 | Final integrity/release | PARTIAL: same-branch non-force commits/push and all raw failed/passed runs retained; W affected tests and final clean SHA pending; physical acceptance BLOCKED_DEVICE |
 
 | Defect | Current evidence / status |
 |---|---|
 | B01 | PARTIAL: real shared install tests PASS; actual install/action UI pending. |
-| B02 | Historical 11 selected foreground UI methods passed in run 40994342575 at e9226517; affected import/publication requires fresh testing. |
+| B02 | EXECUTED_PASS for the Probe/Searchable assertions in N; full old import/publication suite not inferred beyond the eleven named methods. |
 | B03 | MITIGATED / BLOCKED_DEVICE: ipv4first does not prove an IPv6 root cause or embedded TLS/fd reliability. |
 | B04 | MITIGATED: explicit RN bounds do not prove the underlying Fabric crash is resolved. |
-| B05 | SOURCE_CHANGED_NOT_EXECUTED: wire/timestamp regressions remain open until their own native tests. |
+| B05 | PARTIAL: N native typed values and P actual source/install/cold-state tests pass; raw/tagged/date-specific publication/action roundtrip scope remains separately unverified. |
 | B06 | PARTIAL: true source ports compile; shared state/action/selection tests PASS and original native rasters PARTIAL; OS presses pending. |
-| B07 | PARTIAL: deterministic JS resources and both original source-built native modules compile/link PASS; final .appex audit pending. |
+| B07 | PARTIAL: N actual .appex native closure EXECUTED_PASS; deterministic JS resources and original native modules compile/link. Actual provider resource execution pending. |
 | B08 | SOURCE_INSPECTED: only workflow_dispatch is used; no automatic trigger added. |
-| B09 | PARTIAL: four frozen Chat paths unchanged from ce586667; whole-series 37ba baseline differs historically. Runtime/Chat semantic execution not rerun yet. |
+| B09 | PARTIAL: zero widget-authored diff to all four Chat files relative to owner b5ce6f60. Two owner Chat changes deliberately imported; the other two remain unchanged from ce586667. N foreground regressions pass; full Chat/Runtime/Node/Sefaria scope not inferred. |
 
 P3 source regression suite: HanlinDualWidgetEnginesTests.realArchiveImport, installAndVerifiedLoader, emittedExpoIntentCarriesVerifiedIdentityAndCallsSource, userCreatedInstancesAndHostRefreshPreserveState, scriptWidgetNamedActionsAndBooleanSetValue, staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation, concurrentSourceActionsReplayAndHostPublication, actionAndPublicationPreserveUnrelatedCollections, checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink, actualHistoricalV1EncoderAndDowngradeReader, interruptedShadowPublicationRestoresExactCommittedRevision, corruptCommittedV2NeverFallsBackToGoodV1, unconfiguredAndWrongFamilyNeverSelectAnotherWidget.
 
@@ -59,12 +61,12 @@ Statuses below are acceptance scopes, not a blanket CLOSED label. Package PASS r
 | P3-06 | PARTIAL | userCreatedInstancesAndHostRefreshPreserveState PASS; actual A1/A2 picker pending |
 | P3-07 | PARTIAL | No JSC fallback in bodies; timelinePreparationCommitsOriginalTypedStorageAcrossColdReads PASS; provider OS pending |
 | P3-08 | PARTIAL | One-shot context; alternating JS globals and concurrent native action tests PASS; no device stress claim |
-| P3-09 | PARTIAL | Original pinned AnyChild/ExpoUI source compiles/links; native pixel/slot iOS results pending |
-| P3-10 | PARTIAL | Original 29 builders and ten chart native rasters PASS; broad raster is not full semantic parity |
+| P3-09 | PARTIAL | N original pinned AnyChild/ExpoUI source compiles/links; five exact native pixel/slot/data methods pass; further visual dimensions under focused verification |
+| P3-10 | PARTIAL | Original 29 builders, 29 changed semantic-input pairs and ten native chart variants PASS in P; full per-prop/OS acceptance remains separate |
 | P3-11 | EXECUTED_PASS | Real JSExport JSX lifecycle/custom component/helper/storage preparation and actions PASS |
 | P3-12 | PARTIAL | Install-time compiler and cooperative guards/size/tree budgets compile and malformed JSX tests PASS; memory/hard preemption not proven |
 | P3-13 | EXECUTED_PASS | checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink; same checked loader used by preparation/actions |
-| P3-14 | PARTIAL | realArchiveImport/installAndVerifiedLoader preserve engine; host install UI pending |
+| P3-14 | PARTIAL | realArchiveImport/installAndVerifiedLoader preserve engine; N imports Counter/Actions/legacy through actual host UI and captures declared engine identities; native placement still open |
 | P3-15 | EXECUTED_PASS | Dedicated widget compiler executes actual Expo/ScriptWidget JSX and all five positive installs |
 | P3-16 | EXECUTED_PASS | Seven real archives plus strict analyzer version/engine/conflict negative assertions |
 | P3-17 | PARTIAL | Real independent registry, durable source state, host publication package regression PASS; host relaunch UI pending |
@@ -72,15 +74,19 @@ Statuses below are acceptance scopes, not a blanket CLOSED label. Package PASS r
 | P3-19 | PARTIAL | actualHistoricalV1EncoderAndDowngradeReader, interruptedShadowPublicationRestoresExactCommittedRevision, corruptCommittedV2NeverFallsBackToGoodV1 PASS; signed old-binary downgrade pending |
 | P3-20 | PARTIAL | concurrentSourceActionsReplayAndHostPublication PASS; explicit nonce dedup; OS automatic retry IDs unavailable/at-least-once |
 | P3-21 | PARTIAL | Versioned exact entity IDs, public instance creation and wrong-family/unconfigured tests PASS; real picker pending |
-| P3-22 | PARTIAL | Root widgetURL removed; actual native Link/Button hit routing pending |
+| P3-22 | PARTIAL | Native engines have no covering root widgetURL; passive legacy URL retained only without nested buttons, P regression passes; actual Link/Button hit routing pending |
 | P3-23 | PARTIAL | Only registered generic kind reload remains; OS source-action reload pending |
-| P3-24 | PARTIAL | Typed storage/helper/file and timeline persistence PASS; bounded HTTP transport semantics NOT_TESTED |
+| P3-24 | PARTIAL | Typed storage/helper/file and timeline persistence PASS; 41266251371 actual loopback HTTP verbs/JSON/metadata/base64/limits/timeout/redirect tests PASS. Remote TLS and device network unverified |
 | P3-25 | PARTIAL | AnyView type-name tests replaced by semantic/source/state/native raster suites; actual SpringBoard tests pending |
 | P3-26 | PARTIAL | Authentic reproducible seven archives, real seven analyses/five installs PASS; actual new package Home Screen pending |
-| P3-27 | PARTIAL | 133 source/blob hashes, full notices, reproducible JS and source-only native modules PASS; final appex closure pending |
+| P3-27 | PARTIAL | 133 source/blob hashes, full notices, reproducible JS and source-only native modules PASS; N actual three-image reachable appex closure PASS; provider resource execution pending |
 | P3-28 | PARTIAL | Bad manifest/payload/artifact rejects without v1 fallback in tests; native visible error UI pending |
 | P3-29 | PARTIAL | Historical overclaims reopened; per-path/gate evidence prepared; final result reconciliation pending |
 | P3-30 | MITIGATED / BLOCKED_DEVICE | B03/B04 preserved; no new embedded TLS/fd/Fabric device proof |
 | P3-31 | PARTIAL | Same branch scoped commits/non-force push; SDK/package PASS, actual full UI pending, signed device BLOCKED_DEVICE |
 
 Current measured iOS failures and follow-up source are detailed in CI_AND_DEVICE_RESULTS.md (2026-11-01). The current merged source includes the owner OrganizerDock branch, so no pre-merge full app PASS is inferred. Native Home Screen interaction remains open; five original native renderer methods now cover the repaired Gauge, Label and Progress routes. The per-path audit separates 27 imported owner paths from widget-authored changes.
+
+## Delivery override — 2026-11-01
+
+Latest iOS run 41304461973: both added native renderer methods PASS (34 reference comparisons and wire/action roundtrip); three widget Home Screen methods FAILED at Add Widget. The final selector fix is not execution evidence. Retry 41308904140 and unsigned retry 41309874110 were cancelled at owner request. Owner now requests immediate TestFlight upload and will test on iPad: OWNER_DEVICE_QA_PENDING. No new optional tests are authorized by this handoff; earlier chronological pending statements are historical.

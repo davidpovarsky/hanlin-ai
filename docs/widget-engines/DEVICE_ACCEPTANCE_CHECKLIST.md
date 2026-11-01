@@ -20,3 +20,11 @@ Record before testing: observed_at, device model/UDID, iPadOS version, source SH
 Investigate Node HTTPS/fd and RNHostView layout separately if available; neither mitigation is a proven device fix. Mixed subtree is optional and deferred. Simulator Home Screen attempts and any actual automation restriction must be documented with raw logs, not inferred here. Final acceptance remains open until the signed physical rows execute.
 
 Hardware discovery on 2026-10-31: the Windows present-device inventory exposed an iPad Bluetooth/audio pairing only, with no Apple Mobile USB/development connection and no reported iPadOS version or developer provisioning. Connected Desktop Commander inventory exposed the Linux torah-social server and this Windows workstation, with no Mac/Xcode development host. A Bluetooth pairing does not supply a signed installation/debug path. Exact missing steps: connect/trust a compatible iPadOS 27 iPad to an Xcode Mac, enable Developer Mode, choose an authorized development/ad-hoc profile, sign the frozen build, then execute the rows above and retain their logs. Signing identities and profiles were not changed.
+
+Discovery repeated on 2026-11-01: Desktop Commander still exposes only the Windows workstation and Linux torah-social; SentinelX exposes only the Windows workstation. No connected Mac/Xcode development host or signed physical-iPad install/test session was available through either connector. The hosted CI Mac is being used for iPad Simulator validation, not as a claim of attached physical hardware.
+
+The Nov 1 present-device scan again found only iPad Bluetooth/audio endpoints, with no Apple USB/Mobile development device. No device OS version or developer provisioning was inferred from that pairing.
+
+## Owner delivery handoff — 2026-11-01
+
+OWNER_DEVICE_QA_PENDING: owner requested TestFlight upload and will test on iPad. No physical-device row is changed to PASS. Additional optional simulator/device workflows were stopped; the current delivery follows the existing signed TestFlight workflow.
