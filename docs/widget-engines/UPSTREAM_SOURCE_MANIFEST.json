@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-01",
-  "nativeLinkStatus": "EXECUTED_PASS_APPEX_REACHABLE_CLOSURE_41304461973 at 5cf8c022; later Gauge/material guards Apple package PASS (41305235263/41306244662), stable device SDK artifact verification pending",
+  "nativeLinkStatus": "EXECUTED_PASS_SIMULATOR_APPEX_REACHABLE_CLOSURE_41304461973; later Gauge/material guards package PASS (41305235263/41306244662); stable SDK 27.1 signed device archive/export/signatures PASS and TestFlight 0.7.3 (87401) VALID in 41310977352. No new device dependency-closure audit or physical WidgetKit acceptance claimed.",
   "files": [
     {
       "repository": "everettjf/scriptwidget",

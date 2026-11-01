@@ -28,3 +28,5 @@ The Nov 1 present-device scan again found only iPad Bluetooth/audio endpoints, w
 ## Owner delivery handoff — 2026-11-01
 
 OWNER_DEVICE_QA_PENDING: owner requested TestFlight upload and will test on iPad. No physical-device row is changed to PASS. Additional optional simulator/device workflows were stopped; the current delivery follows the existing signed TestFlight workflow.
+
+Delivered: TestFlight 0.7.3 (87401), Apple processing VALID at 2026-11-01T14:00:38Z. [Signed delivery evidence](TESTFLIGHT_87401_DELIVERY.md). Physical-device rows remain pending owner execution.

@@ -15,3 +15,5 @@ Release remains gated on native build/link tests, simulator WidgetKit behavior a
 ## Owner override — 2026-11-01
 
 The owner explicitly authorizes upload of the current version to TestFlight and will perform iPad acceptance there. This supersedes only the earlier TestFlight prohibition and the prerequisite for physical testing before that upload. No additional optional tests are requested. Public App Store release and main merge remain outside this authorization. Asana remains read-only.
+
+Owner-authorized TestFlight delivery completed: version 0.7.3 (87401), Apple VALID, workflow 41310977352 SUCCESS. [Exact source and signed artifact record](TESTFLIGHT_87401_DELIVERY.md). Public release/main merge were not performed.

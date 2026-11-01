@@ -151,3 +151,5 @@ Potential improvements, features, optimizations, or architectural ideas.
   - Notes: Executed full downstream app and simulator suites on real macOS 27 / Xcode 27 / iOS Simulator 27 infrastructure. Eliminated all 368 `NOT_RUN_PLATFORM` scenarios. Built 116MB unsigned Release IPA (`f6fe11fbaae74702b3c8e63907d58fea6d851481a6f97a9a08e1a489755b3347`). Resolved CabLate MCP-04 with exit code 0. Generated verified acceptance matrix and requirement results (R01–R47).
 
 - 2026-11-01 [נועם | DEV] [MAIN_SESSION]: Owner requests current version on TestFlight without more optional tests; iPad acceptance transfers to owner. Extra UI/unsigned retries cancelled. Preserve partial status for actual WidgetKit interactions; record signed delivery result in docs/widget-engines/CI_AND_DEVICE_RESULTS.md.
+
+- 2026-11-01 [נועם | DEV] [MAIN_SESSION]: TestFlight 0.7.3 (87401) delivered; Apple VALID, stable Xcode 27.1, workflow 41310977352 SUCCESS. Signed delivery record: docs/widget-engines/TESTFLIGHT_87401_DELIVERY.md. Owner iPad/WidgetKit acceptance remains pending.

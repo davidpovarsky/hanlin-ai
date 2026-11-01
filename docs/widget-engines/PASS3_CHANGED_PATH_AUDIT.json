@@ -1,7 +1,7 @@
 {
   "baseline": "ce586667b7103a6c2c7243d33461768c51a9dd8d",
-  "sourceHead": "7f041dc935e124470a89112111c0fba4961caf36",
-  "observedAt": "2026-11-01T13:22:34.197Z",
+  "sourceHead": "279f0ead777b961728ed91386c136e7e33659c36",
+  "observedAt": "2026-11-01T14:04:12.776Z",
   "scope": "All tracked changes against actual starting HEAD plus all untracked paths. sourceHead is the existing commit at generation time; the containing evidence commit cannot hash itself. Output omits its own digest. Compile coverage is distinct from per-feature/OS acceptance.",
   "evidenceRuns": {
     "package": {
@@ -48,9 +48,20 @@
       "41308904140",
       "41309874110"
     ],
-    "deviceAcceptance": "OWNER_DEVICE_QA_PENDING"
+    "deviceAcceptance": "OWNER_DEVICE_QA_PENDING",
+    "testflight": {
+      "version": "0.7.3",
+      "build": "87401",
+      "sourceSHA": "279f0ead777b961728ed91386c136e7e33659c36",
+      "run": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41310977352",
+      "conclusion": "SUCCESS",
+      "appleProcessingState": "VALID",
+      "observedAt": "2026-11-01T14:00:38.9875840Z",
+      "ipaSHA256": "cf18f0edad4b5ddd49b089f77e024fc5234ca11757dcf75827e637fc91d2ef27"
+    }
   },
   "commits": [
+    "279f0ead777b961728ed91386c136e7e33659c36 release: prepare owner-requested TestFlight handoff and preserve execution evidence",
     "7f041dc935e124470a89112111c0fba4961caf36 ci(apple): select stable device SDK and isolate developer directory per job",
     "bbd5406a42505d183600cde0a95d7a45ebb54a8a fix(tests): match iPad widget add label and kill host after entity selection",
     "add9268a67f6910ed691c5f6108e9c003f5720b9 ci(widgets): audit native dependency closure inside packaged device IPA",
@@ -1590,7 +1601,7 @@
     {
       "path": "docs/widget-engines/CI_AND_DEVICE_RESULTS.md",
       "change": "A",
-      "sha256": "7758699757b9db57a73aea7dd5196110ed8a986dafed442d9a68d6bd670a6d48",
+      "sha256": "6b8eb7b7ddccf41c9af721ca2f2ce7b245db73d631a4918ead1e38c2e6ba9439",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1630,7 +1641,7 @@
     {
       "path": "docs/widget-engines/DEVICE_ACCEPTANCE_CHECKLIST.md",
       "change": "A",
-      "sha256": "51e4aa686c5c9029d7e2172cb58013458c6c288d3bf5635434e3b105e7ac8a1e",
+      "sha256": "eaf2e535628363fd9e63ea30e84f8a7f1e524bad3ac6801833d2cf3e381a6f19",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1730,7 +1741,7 @@
     {
       "path": "docs/widget-engines/RELEASE_AND_ROLLBACK.md",
       "change": "M",
-      "sha256": "3a7b30cdad54c52678df73f32623a96b54a090dc36c3b171704f4bbe46eabb10",
+      "sha256": "a46fa64dcc15771464a07a124af690c88372d1fb844d9f8e035e8228f5569fde",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1770,7 +1781,27 @@
     {
       "path": "docs/widget-engines/TEST_MATRIX.md",
       "change": "M",
-      "sha256": "f02d876d6070bc0aaf268869b928b2d68817365d38bb9fc0661e791757cf6155",
+      "sha256": "a5762ded6e634a827c092b5ee9487132c669f18cee2fca3a601a422d44e21258",
+      "purpose": "Evidence, provenance or acceptance documentation",
+      "target": "Documentation",
+      "findings": [
+        "P3-29",
+        "P3-31"
+      ],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": false,
+      "coverage": {
+        "status": "SOURCE_INSPECTED; no runtime assertion applies",
+        "runs": [],
+        "assertions": []
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/widget-engines/TESTFLIGHT_87401_DELIVERY.md",
+      "change": "A",
+      "sha256": "48da455713229999880594ba3dbe851fdbb04fd048bb399072e1cf6727303c49",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1810,7 +1841,7 @@
     {
       "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
       "change": "A",
-      "sha256": "3c783e70838be2e6ccd560d774e3b4584647b4fbdb0dc111ff3fc24db68d45c1",
+      "sha256": "0b3081db6a1b50fb73f9173da5c093a9fedc158d0748010d35133dfaa55c3635",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -8341,7 +8372,7 @@
     {
       "path": "PROJECT_BOARD.md",
       "change": "M",
-      "sha256": "e8c1a8acb31e3f0a38a5e3541bdae4ee0335f2b92be3cd20e7143d8f0b357a20",
+      "sha256": "7ab51f6051c9d81913f16b12dddbcbc0e2098d30bb0277d5cc7773ef098059e6",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -8383,7 +8414,7 @@
     {
       "path": "Scripts/Widgets/audit-changed-paths.mjs",
       "change": "A",
-      "sha256": "0f7296c3d40afaeccd072b01e9bd15088d324d22e5521cd3c4a6b5b86d0322ce",
+      "sha256": "70af4688d384a1e46754d2504af65b8ee8ddd9b2622f490bf4f1ac5f58667820",
       "purpose": "Reproducible exhaustive changed-path coverage/provenance inventory",
       "target": "Local evidence tooling",
       "findings": [

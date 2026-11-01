@@ -1,6 +1,6 @@
 # Pass 3 execution evidence — 2026-10-30
 
-Status as of 2026-11-01: PARTIAL / OWNER_DEVICE_QA_PENDING. Native renderer and package evidence is recorded below; actual WidgetKit interaction acceptance is open. The owner now explicitly requests TestFlight delivery with no further optional tests. See the dated owner delivery instruction at the end.
+Status as of 2026-11-01: TESTFLIGHT_DELIVERED_VALID / OWNER_DEVICE_QA_PENDING. Native renderer and package evidence is recorded below; actual WidgetKit interaction acceptance is open. The owner now explicitly requests TestFlight delivery with no further optional tests. See the dated owner delivery instruction at the end.
 
 ## Executed Apple evidence, separate from acceptance
 
@@ -129,3 +129,6 @@ Unsigned run [41305503511](https://github.com/davidpovarsky/hanlin-ai/actions/ru
 
 Original ScriptWidget Gauge safety/raster cases passed in 41305235263. Material/node budgets have measured RED evidence in 41305995723 and seven affected integration methods PASS in 41306244662, including rollback of staged storage after rejected preparation. These are macOS package results, not iPad/WidgetKit acceptance.
 
+## TestFlight delivery completed — 2026-11-01
+
+[נועם | DEV] [MAIN_SESSION] [Run 41310977352](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41310977352) at 279f0ead777b961728ed91386c136e7e33659c36 finished SUCCESS. Stable Xcode 27.1 / SDK 27.1 signed Release archive/export, all five bundle signature/provisioning checks, App Store Connect validation and upload passed. Version 0.7.3 / build 87401 is VALID in Apple processing, observed 2026-11-01T14:00:38Z. Temporary signing material cleanup passed. No extra optional tests were dispatched. See [delivery record](TESTFLIGHT_87401_DELIVERY.md) for exact IPA/artifact hashes. Physical iPad/WidgetKit acceptance remains with the owner.

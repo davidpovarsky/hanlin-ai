@@ -90,3 +90,5 @@ Current measured iOS failures and follow-up source are detailed in CI_AND_DEVICE
 ## Delivery override — 2026-11-01
 
 Latest iOS run 41304461973: both added native renderer methods PASS (34 reference comparisons and wire/action roundtrip); three widget Home Screen methods FAILED at Add Widget. The final selector fix is not execution evidence. Retry 41308904140 and unsigned retry 41309874110 were cancelled at owner request. Owner now requests immediate TestFlight upload and will test on iPad: OWNER_DEVICE_QA_PENDING. No new optional tests are authorized by this handoff; earlier chronological pending statements are historical.
+
+TestFlight delivery: [41310977352](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41310977352) SUCCESS; 0.7.3 (87401) VALID. This closes signed delivery, not the outstanding owner iPad/WidgetKit interaction rows.
