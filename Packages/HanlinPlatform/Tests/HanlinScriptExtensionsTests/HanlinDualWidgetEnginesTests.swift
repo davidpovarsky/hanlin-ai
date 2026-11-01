@@ -9,6 +9,9 @@ import HanlinLegacyWidgetStoreFixture
 @testable import HanlinScriptExtensions
 import Testing
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
 
 private typealias Store = HanlinScriptExtensions.HanlinScriptExtensionStore
 private typealias Snapshot = HanlinScriptExtensions.HanlinScriptExtensionSnapshot
@@ -126,6 +129,14 @@ struct HanlinDualWidgetEnginesTests {
             evidence["declaredFamilies"] = program.families
         }
         try recordEvidence(name: "installed-\(name)", values: evidence)
+        #if os(macOS)
+        let presentation = HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium")
+        if let png = try await installedNativeRaster(presentation) {
+            if let directory = ProcessInfo.processInfo.environment["HANLIN_WIDGET_EVIDENCE_DIR"] {
+                try png.write(to: URL(filePath: directory).appending(path: "installed-\(name)-native.png"), options: .atomic)
+            }
+        }
+        #endif
     }
 
     @MainActor @Test
@@ -336,6 +347,22 @@ private func fixtureURL(_ name: String) -> URL {
     URL(filePath: #filePath).deletingLastPathComponent().appending(path: "../../../../Fixtures/Widgets/\(name)").standardizedFileURL
 }
 private func sha(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
+#if os(macOS)
+@MainActor private func installedNativeRaster(_ presentation: HanlinPreparedWidget) throws -> Data? {
+    let view: AnyView
+    switch presentation {
+    case let .legacy(widget): view = AnyView(HanlinExtensionNodeView(node: widget.root))
+    case let .scriptwidget(node, context): view = AnyView(HanlinScriptWidgetDynamicView(node: node, context: context))
+    case .expo: return nil // Exact Expo native product is covered by the iOS renderer target.
+    case .failure: Issue.record("Installed fixture failed native preparation"); return nil
+    }
+    let renderer = ImageRenderer(content: view.frame(width: 360, height: 320).environment(\.colorScheme, .light))
+    renderer.scale = 1
+    let image = try #require(renderer.cgImage)
+    #expect(image.width == 360 && image.height == 320)
+    return try #require(NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:]))
+}
+#endif
 private func recordEvidence(name: String, values: [String: Any]) throws {
     guard let directory = ProcessInfo.processInfo.environment["HANLIN_WIDGET_EVIDENCE_DIR"] else { return }
     let root = URL(filePath: directory)

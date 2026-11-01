@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import HanlinPlatformContracts
+import HanlinScriptContracts
 @testable import HanlinScriptExtensions
 import SwiftUI
 import Testing
@@ -79,6 +80,99 @@ struct HanlinOriginalScriptWidgetRenderingTests {
         #expect(parent.childrenAsElements().map(\.id) == [first.id, second.id])
         #expect(first.getPropBool("flag") == true)
         #expect(first.getPropDouble("size") == 24)
+    }
+
+    @Test(arguments: ["hstack", "vstack", "zstack", "hgrid", "vgrid", "text", "date", "image", "gif", "spacer", "rect", "capsule", "ellipse", "circle", "gauge", "chart", "link", "divider", "line", "roundedrect", "icon", "label", "progress", "ring", "badge", "chip", "stat", "button", "toggle"])
+    func originalTagRespondsToItsSemanticInput(tag: String) throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "hanlin-semantic-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        var resources: [String: URL] = [:]
+        for (name, color) in [("red", Color.red), ("blue", Color.blue)] {
+            let image = ImageRenderer(content: color.frame(width: 16, height: 16))
+            let cg = try #require(image.cgImage)
+            #if os(macOS)
+            let png = try #require(NSBitmapImageRep(cgImage: cg).representation(using: .png, properties: [:]))
+            #else
+            let png = try #require(UIImage(cgImage: cg).pngData())
+            #endif
+            let file = root.appending(path: "\(name).png")
+            try png.write(to: file)
+            resources["\(name).png"] = file
+            var gif = try #require(Data(base64Encoded: "R0lGODlhAQABAIAAABJtxP///yH5BAAAAAAALAAAAAABAAEAAAIBRAA7"))
+            gif.replaceSubrange(13..<16, with: name == "red" ? [255, 0, 0] : [0, 0, 255])
+            let gifFile = root.appending(path: "\(name).gif")
+            try gif.write(to: gifFile)
+            resources["\(name).gif"] = gifFile
+        }
+        let identity = HanlinScriptExtensionIdentity(installedPackageID: try .init(validating: "installed.semantic"), packageID: try .init(validating: "package.semantic"), generation: 1, entrypointID: "widget")
+        let actions: [HanlinWidgetActionDeclaration] = [.init(id: "run", kind: .function, handler: "run"), .init(id: "flag", kind: .setValue, stateKey: "flag")]
+        let context = ScriptWidgetElementContext(actionContext: .init(identity: identity, engine: .scriptwidget,
+            artifactSHA256: String(repeating: "a", count: 64), family: "systemMedium", actions: actions, resources: resources))
+        let first = try raster(element: semanticElement(tag: tag, alternate: false), context: context)
+        let second = try raster(element: semanticElement(tag: tag, alternate: true), context: context)
+        #expect(first != second, "\(tag) ignored its source-defined content/layout/value/resource/control input")
+        try save(first, name: "semantic-\(tag)-a.png")
+        try save(second, name: "semantic-\(tag)-b.png")
+    }
+
+    private func semanticElement(tag: String, alternate: Bool) -> ScriptWidgetRuntimeElement {
+        func text(_ value: String) -> ScriptWidgetRuntimeElement { .init(tagString: "text", props: nil, children: [value]) }
+        func cell(_ color: String) -> ScriptWidgetRuntimeElement { .init(tagString: "rect", props: ["color": color, "frame": "30,30"], children: []) }
+        var props: [AnyHashable: Any] = [:]
+        var children: [Any] = [text(alternate ? "Changed source label" : "Native source label")]
+        switch tag {
+        case "hstack", "vstack":
+            props["spacing"] = alternate ? 40 : 0
+            children = [cell("red"), cell("blue")]
+        case "zstack":
+            // The original ZStack is centered; its contract is child draw order.
+            children = alternate ? [cell("red"), cell("blue")] : [cell("blue"), cell("red")]
+        case "hgrid", "vgrid":
+            props["columns"] = alternate ? #"[{"type":"fixed","value":"35"},{"type":"fixed","value":"35"}]"# : #"[{"type":"fixed","value":"35"}]"#
+            children = [cell("red"), cell("blue"), cell("green"), cell("orange")]
+        case "text", "link", "button":
+            props["url"] = "https://example.com/native"
+            props["actionID"] = "run"
+        case "date":
+            props["date"] = alternate ? 1_793_448_000_000.0 : 1_793_361_600_000.0
+            props["style"] = "date"
+        case "image":
+            props["name"] = alternate ? "blue.png" : "red.png"
+            props["frame"] = "40,40"
+        case "gif":
+            props["file"] = alternate ? "blue.gif" : "red.gif"
+            props["frame"] = "40,40"
+        case "spacer":
+            let spacer = ScriptWidgetRuntimeElement(tagString: "spacer", props: ["frame": alternate ? "80,20" : "10,20"], children: [])
+            return .init(tagString: "hstack", props: ["spacing": 0], children: [cell("red"), spacer, cell("blue")])
+        case "rect", "capsule", "ellipse", "circle", "roundedrect":
+            props["color"] = alternate ? "blue" : "red"
+            props["frame"] = "60,40"
+        case "gauge":
+            props["type"] = "system"; props["style"] = "linear"
+            props["value"] = alternate ? "0.8" : "0.2"
+            children = []
+        case "chart":
+            props["type"] = "bar"
+            props["data"] = alternate ? #"[{"label":"A","value":2},{"label":"B","value":8},{"label":"C","value":10}]"# : #"[{"label":"A","value":2},{"label":"B","value":4},{"label":"C","value":10}]"#
+        case "divider":
+            props["axis"] = alternate ? "vertical" : "horizontal"
+            props["color"] = "red"; props["thickness"] = 4
+        case "line":
+            props["length"] = alternate ? 100 : 30
+            props["color"] = "red"; props["thickness"] = 4
+        case "icon": props["systemName"] = alternate ? "heart.fill" : "star.fill"
+        case "label": props["title"] = alternate ? "Second label" : "First label"; props["systemName"] = "star.fill"
+        case "progress", "ring": props["value"] = alternate ? 0.8 : 0.2; props["total"] = 1
+        case "badge", "chip": props["text"] = alternate ? "Second" : "First"
+        case "stat": props["value"] = alternate ? "28" : "17"; props["title"] = "Metric"
+        case "toggle":
+            props["actionID"] = "flag"; props["stateKey"] = "flag"; props["on"] = alternate
+            children = [text("Backup")]
+        default: Issue.record("Missing semantic input case: \(tag)")
+        }
+        return .init(tagString: tag, props: props, children: children)
     }
 
     private func context(resources: [String: URL] = [:]) throws -> ScriptWidgetElementContext {
