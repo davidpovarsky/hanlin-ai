@@ -65,6 +65,7 @@ struct HanlinChatDraftSnapshot {
     var thinkingLength: Int
     var selectedImageSize: String
     var imageReversePrompt: String
+    var temporaryRecord: Bool = false
 }
 
 // MARK: - Active Composer Session Bridge
@@ -132,22 +133,53 @@ final class HanlinActiveComposerSessionBridge {
         var onSendUser: () -> Void
         var onSendObserve: () -> Void
         var onCancel: () -> Void
+        var validateSendAcceptance: (() -> Bool)? = nil
     }
 
     /// Currently mounted chat endpoint (`nil` when on Home or Library).
     private(set) var activeEndpoint: Endpoint?
 
-    /// Cached per-chat draft & attachment snapshots across compact navigation switches.
+    /// Optional authoritative active session ID set by the workspace router to reject out-of-order registrations.
+    var expectedActiveSessionID: UUID?
+
+    /// Cached per-chat draft & attachment snapshots across compact and wide navigation switches.
     private(set) var perChatDrafts: [UUID: HanlinChatDraftSnapshot] = [:]
+
+    /// Tracks active temporary chat IDs across layout transitions so temporary chats are excluded from recent lists and preserved on resize.
+    private(set) var temporaryChatIDs: Set<UUID> = []
 
     /// Pending one-time first-turn handoff created from the compact Home screen.
     private(set) var pendingFirstTurn: HanlinPendingFirstTurn?
 
-    /// Set of submission IDs already dispatched, guaranteeing at-most-once execution.
+    /// Set of submission IDs already accepted, guaranteeing at-most-once execution.
     private(set) var completedSubmissionIDs: Set<UUID> = []
 
     /// Prevents temporary chat deletion in `ChatView.onDisappear` when layout mode transitions between compact and wide.
     var isTransitioningLayoutMode: Bool = false
+
+    func beginLayoutModeTransition() {
+        isTransitioningLayoutMode = true
+    }
+
+    func endLayoutModeTransition() {
+        isTransitioningLayoutMode = false
+    }
+
+    func setTemporaryChat(_ isTemporary: Bool, for sessionID: UUID) {
+        if isTemporary {
+            temporaryChatIDs.insert(sessionID)
+        } else {
+            temporaryChatIDs.remove(sessionID)
+        }
+        if var snapshot = perChatDrafts[sessionID] {
+            snapshot.temporaryRecord = isTemporary
+            perChatDrafts[sessionID] = snapshot
+        }
+    }
+
+    func isTemporaryChat(_ sessionID: UUID) -> Bool {
+        temporaryChatIDs.contains(sessionID) || (perChatDrafts[sessionID]?.temporaryRecord == true)
+    }
 
     // MARK: - Home ("new") Unsent Draft State
 
@@ -194,36 +226,48 @@ final class HanlinActiveComposerSessionBridge {
 
     // MARK: - Endpoint Registration & Generation Protection (§4.3)
 
-    func register(endpoint: Endpoint) {
-        // Restore any cached attachments/mode flags for this chat if no pending first turn is targeting it
-        if pendingFirstTurn?.targetChatID != endpoint.sessionID,
-           let cached = perChatDrafts[endpoint.sessionID] {
-            if endpoint.message.wrappedValue.isEmpty && !cached.message.isEmpty {
-                endpoint.message.wrappedValue = cached.message
-            }
-            if endpoint.selectedImages.wrappedValue.isEmpty && !cached.selectedImages.isEmpty {
-                endpoint.selectedImages.wrappedValue = cached.selectedImages
-            }
-            if endpoint.selectedDocumentURLs.wrappedValue.isEmpty && !cached.selectedDocumentURLs.isEmpty {
-                endpoint.selectedDocumentURLs.wrappedValue = cached.selectedDocumentURLs
-            }
-            if endpoint.selectedPrompts.wrappedValue.isEmpty && !cached.selectedPrompts.isEmpty {
-                endpoint.selectedPrompts.wrappedValue = cached.selectedPrompts
-            }
-            endpoint.ifKnowledge.wrappedValue = cached.ifKnowledge
-            endpoint.ifSearch.wrappedValue = cached.ifSearch
-            endpoint.ifToolUse.wrappedValue = cached.ifToolUse
-            endpoint.ifThink.wrappedValue = cached.ifThink
-            endpoint.ifAudio.wrappedValue = cached.ifAudio
-            endpoint.ifPlanning.wrappedValue = cached.ifPlanning
-            endpoint.thinkingLength.wrappedValue = cached.thinkingLength
-            endpoint.selectedImageSize.wrappedValue = cached.selectedImageSize
-            endpoint.imageReversePrompt.wrappedValue = cached.imageReversePrompt
-            if endpoint.modelTemp.indices.contains(cached.selectedModelIndex) {
-                endpoint.selectedModelIndex.wrappedValue = cached.selectedModelIndex
+    func restoreCachedDraftIfNeeded(into endpoint: Endpoint) {
+        guard pendingFirstTurn?.targetChatID != endpoint.sessionID,
+              let cached = perChatDrafts[endpoint.sessionID] else {
+            return
+        }
+        if endpoint.message.wrappedValue.isEmpty && !cached.message.isEmpty {
+            endpoint.message.wrappedValue = cached.message
+            if endpoint.chatRecord.modelContext != nil {
+                endpoint.chatRecord.input = cached.message
             }
         }
+        if endpoint.selectedImages.wrappedValue.isEmpty && !cached.selectedImages.isEmpty {
+            endpoint.selectedImages.wrappedValue = cached.selectedImages
+        }
+        if endpoint.selectedDocumentURLs.wrappedValue.isEmpty && !cached.selectedDocumentURLs.isEmpty {
+            endpoint.selectedDocumentURLs.wrappedValue = cached.selectedDocumentURLs
+        }
+        if endpoint.selectedURLs.wrappedValue.isEmpty && !cached.selectedURLs.isEmpty {
+            endpoint.selectedURLs.wrappedValue = cached.selectedURLs
+        }
+        if endpoint.selectedPrompts.wrappedValue.isEmpty && !cached.selectedPrompts.isEmpty {
+            endpoint.selectedPrompts.wrappedValue = cached.selectedPrompts
+        }
+        endpoint.ifKnowledge.wrappedValue = cached.ifKnowledge
+        endpoint.ifSearch.wrappedValue = cached.ifSearch
+        endpoint.ifToolUse.wrappedValue = cached.ifToolUse
+        endpoint.ifThink.wrappedValue = cached.ifThink
+        endpoint.ifAudio.wrappedValue = cached.ifAudio
+        endpoint.ifPlanning.wrappedValue = cached.ifPlanning
+        endpoint.thinkingLength.wrappedValue = cached.thinkingLength
+        endpoint.selectedImageSize.wrappedValue = cached.selectedImageSize
+        endpoint.imageReversePrompt.wrappedValue = cached.imageReversePrompt
+        if endpoint.modelTemp.indices.contains(cached.selectedModelIndex) && !endpoint.modelTemp[cached.selectedModelIndex].isHidden {
+            endpoint.selectedModelIndex.wrappedValue = cached.selectedModelIndex
+        }
+    }
 
+    func register(endpoint: Endpoint) {
+        if let expectedID = expectedActiveSessionID, endpoint.sessionID != expectedID {
+            return
+        }
+        restoreCachedDraftIfNeeded(into: endpoint)
         activeEndpoint = endpoint
         snapshotDraft(from: endpoint)
         fulfillPendingFirstTurnIfReady()
@@ -233,6 +277,10 @@ final class HanlinActiveComposerSessionBridge {
         guard let current = activeEndpoint,
               current.sessionID == endpoint.sessionID,
               current.registrationToken == endpoint.registrationToken else {
+            // Even when not the compact external activeEndpoint (e.g. wide split view), keep per-chat draft snapshot fresh
+            if expectedActiveSessionID == nil || expectedActiveSessionID == endpoint.sessionID {
+                snapshotDraft(from: endpoint)
+            }
             return
         }
         activeEndpoint = endpoint
@@ -252,6 +300,7 @@ final class HanlinActiveComposerSessionBridge {
         if let pending = pendingFirstTurn,
            pending.targetChatID == sessionID,
            pending.isPendingHandoff {
+            restoreHomeDraft(from: pending)
             var cancelled = pending
             cancelled.status = .cancelled(reason: "Target chat view disappeared before first-turn handoff completed.")
             pendingFirstTurn = cancelled
@@ -259,6 +308,11 @@ final class HanlinActiveComposerSessionBridge {
     }
 
     func snapshotDraft(from endpoint: Endpoint) {
+        if endpoint.temporaryRecord {
+            temporaryChatIDs.insert(endpoint.sessionID)
+        } else {
+            temporaryChatIDs.remove(endpoint.sessionID)
+        }
         perChatDrafts[endpoint.sessionID] = HanlinChatDraftSnapshot(
             message: endpoint.message.wrappedValue,
             selectedImages: endpoint.selectedImages.wrappedValue,
@@ -274,12 +328,14 @@ final class HanlinActiveComposerSessionBridge {
             ifPlanning: endpoint.ifPlanning.wrappedValue,
             thinkingLength: endpoint.thinkingLength.wrappedValue,
             selectedImageSize: endpoint.selectedImageSize.wrappedValue,
-            imageReversePrompt: endpoint.imageReversePrompt.wrappedValue
+            imageReversePrompt: endpoint.imageReversePrompt.wrappedValue,
+            temporaryRecord: endpoint.temporaryRecord
         )
     }
 
     func clearCachedDraft(for sessionID: UUID) {
         perChatDrafts.removeValue(forKey: sessionID)
+        temporaryChatIDs.remove(sessionID)
     }
 
     // MARK: - Guarded Action Dispatch (§4.3)
@@ -355,14 +411,11 @@ final class HanlinActiveComposerSessionBridge {
             return nil
         }
 
-        let validModelIndex: Int
-        if availableModels.indices.contains(homeSelectedModelIndex) && !availableModels[homeSelectedModelIndex].isHidden {
-            validModelIndex = homeSelectedModelIndex
-        } else if let defaultIndex = HanlinDefaultChatPolicy.defaultModelIndex(in: availableModels) {
-            validModelIndex = defaultIndex
-        } else {
+        guard availableModels.indices.contains(homeSelectedModelIndex),
+              !availableModels[homeSelectedModelIndex].isHidden else {
             return nil
         }
+        let validModelIndex = homeSelectedModelIndex
 
         var submission = HanlinPendingFirstTurn(
             submissionID: UUID(),
@@ -400,20 +453,22 @@ final class HanlinActiveComposerSessionBridge {
         submission.status = .awaitingEndpoint(targetChatID: targetID)
         pendingFirstTurn = submission
 
-        // Clear Home draft fields now that the payload is owned by the pending submission for targetID
-        homeMessage = ""
-        homeSelectedImages.removeAll()
-        homeSelectedDocumentURLs.removeAll()
-        homeSelectedURLs.removeAll()
-        homeSelectedPrompts.removeAll()
+        // Clear Home draft fields while payload is in-flight; restored automatically if cancelled/failed before acceptance
+        clearHomeDraftFields()
 
         fulfillPendingFirstTurnIfReady()
         return targetID
     }
 
-    func cancelPendingFirstTurn(reason: String = "Cancelled by navigation") {
-        guard var pending = pendingFirstTurn, pending.isPendingHandoff else { return }
-        // Restore draft back to Home so user never loses typed text on abort
+    private func clearHomeDraftFields() {
+        homeMessage = ""
+        homeSelectedImages.removeAll()
+        homeSelectedDocumentURLs.removeAll()
+        homeSelectedURLs.removeAll()
+        homeSelectedPrompts.removeAll()
+    }
+
+    private func restoreHomeDraft(from pending: HanlinPendingFirstTurn) {
         if homeMessage.isEmpty {
             homeMessage = pending.text
         }
@@ -423,10 +478,35 @@ final class HanlinActiveComposerSessionBridge {
         if homeSelectedDocumentURLs.isEmpty {
             homeSelectedDocumentURLs = pending.documentURLs
         }
+        if homeSelectedURLs.isEmpty {
+            homeSelectedURLs = pending.selectedURLs
+        }
         if homeSelectedPrompts.isEmpty {
             homeSelectedPrompts = pending.prompts
         }
+        homeSelectedModelIndex = pending.selectedModelIndex
+        homeIfSearch = pending.ifSearch
+        homeIfKnowledge = pending.ifKnowledge
+        homeIfToolUse = pending.ifToolUse
+        homeIfThink = pending.ifThink
+        homeThinkingLength = pending.thinkingLength
+        homeIfPlanning = pending.ifPlanning
+        homeIfAudio = pending.ifAudio
+        homeSelectedImageSize = pending.selectedImageSize
+        homeImageReversePrompt = pending.imageReversePrompt
+    }
+
+    func cancelPendingFirstTurn(reason: String = "Cancelled by navigation") {
+        guard var pending = pendingFirstTurn, pending.isPendingHandoff else { return }
+        restoreHomeDraft(from: pending)
         pending.status = .cancelled(reason: reason)
+        pendingFirstTurn = pending
+    }
+
+    func failPendingFirstTurn(reason: String) {
+        guard var pending = pendingFirstTurn, pending.isPendingHandoff else { return }
+        restoreHomeDraft(from: pending)
+        pending.status = .failed(reason: reason)
         pendingFirstTurn = pending
     }
 
@@ -437,19 +517,25 @@ final class HanlinActiveComposerSessionBridge {
               let endpoint = activeEndpoint,
               endpoint.sessionID == targetID,
               endpoint.isReadyToSend,
-              endpoint.modelTemp.indices.contains(pending.selectedModelIndex) || !endpoint.modelTemp.isEmpty else {
+              !endpoint.isResponding.wrappedValue else {
             return
         }
 
-        // Mark dispatched BEFORE invoking onSendUser to prevent re-entrancy
-        completedSubmissionIDs.insert(pending.submissionID)
-        pending.status = .dispatched(targetChatID: targetID)
+        // Strict model validation: never silently fall back to an unintended model if the selected index is invalid
+        guard endpoint.modelTemp.indices.contains(pending.selectedModelIndex),
+              !endpoint.modelTemp[pending.selectedModelIndex].isHidden else {
+            if !endpoint.modelTemp.isEmpty {
+                failPendingFirstTurn(reason: "Selected model index \(pending.selectedModelIndex) is unavailable in target chat.")
+            }
+            return
+        }
+
+        // Enter .dispatching state with the endpoint's registrationToken before invoking onSendUser
+        pending.status = .dispatching(targetChatID: targetID, registrationToken: endpoint.registrationToken)
         pendingFirstTurn = pending
 
         // Transfer payload into the mounted ChatView's live bindings once
-        let resolvedModelIndex = endpoint.modelTemp.indices.contains(pending.selectedModelIndex)
-            ? pending.selectedModelIndex
-            : (HanlinDefaultChatPolicy.defaultModelIndex(in: endpoint.modelTemp) ?? 0)
+        let resolvedModelIndex = pending.selectedModelIndex
         if endpoint.selectedModelIndex.wrappedValue != resolvedModelIndex {
             endpoint.onSelectModel(resolvedModelIndex)
         }
@@ -473,8 +559,34 @@ final class HanlinActiveComposerSessionBridge {
         endpoint.selectedURLs.wrappedValue = pending.selectedURLs
         endpoint.selectedPrompts.wrappedValue = pending.prompts
 
+        let previousUserMessageCount = endpoint.chatTemps.wrappedValue.filter { $0.role == "user" }.count
+
         // Invoke the mounted ChatView's authoritative handleMessageSending(ifObservingMode: false)
         endpoint.onSendUser()
+
+        // Verify that the send was not synchronously cancelled/unregistered and that acceptance succeeded
+        guard let currentPending = pendingFirstTurn,
+              currentPending.submissionID == pending.submissionID,
+              case .dispatching(let activeTargetID, let token) = currentPending.status,
+              activeTargetID == targetID,
+              token == endpoint.registrationToken else {
+            return
+        }
+
+        let isAccepted = endpoint.validateSendAcceptance?() ?? true
+        guard isAccepted else {
+            failPendingFirstTurn(reason: "Target ChatView rejected first-turn send.")
+            return
+        }
+
+        completedSubmissionIDs.insert(pending.submissionID)
+        var accepted = currentPending
+        let currentUserMessages = endpoint.chatTemps.wrappedValue.filter { $0.role == "user" }
+        if currentUserMessages.count > previousUserMessageCount {
+            accepted.acceptedUserMessageID = currentUserMessages.last?.id
+        }
+        accepted.status = .dispatched(targetChatID: targetID)
+        pendingFirstTurn = accepted
         snapshotDraft(from: endpoint)
     }
 }

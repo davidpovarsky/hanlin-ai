@@ -75,7 +75,7 @@ final class HanlinOrganizerDockState {
         guard attachmentOverheadHeight > 0 else {
             return base
         }
-        return min(310, base + attachmentOverheadHeight)
+        return min(440, base + attachmentOverheadHeight)
     }
 
     var autoComposerHeight: CGFloat {
@@ -143,6 +143,18 @@ final class HanlinOrganizerDockState {
     var editorMaxHeight: CGFloat {
         let usable = composerHeight - 88 - attachmentOverheadHeight
         return max(140, usable)
+    }
+
+    /// Visible frame height for the inner `NativeMultilineTextEditor` (`hanlin-chat-input`).
+    /// In automatic mode (`manualComposerHeight == nil`), follows intrinsic text height (at least `minimumInteractiveHeight`).
+    /// When manually resized (`manualComposerHeight != nil`), expands the inner editor frame proportionally.
+    func effectiveEditorFrameHeight(intrinsicHeight: CGFloat, minimumInteractiveHeight: CGFloat = 44) -> CGFloat {
+        let autoFrame = max(minimumInteractiveHeight, min(max(intrinsicHeight, 38), editorMaxHeight))
+        guard manualComposerHeight != nil else {
+            return autoFrame
+        }
+        let usable = max(minimumInteractiveHeight, composerHeight - 88 - attachmentOverheadHeight)
+        return max(autoFrame, min(usable, editorMaxHeight))
     }
 
     // MARK: - Mode Transitions (R2 & R3)
@@ -255,6 +267,22 @@ final class HanlinOrganizerDockState {
         isInputFocused = focused
         if focused && isExpanded {
             mode = .collapsed
+        }
+    }
+
+    /// Updates `keyboardHeight` from UIKit keyboard frame notifications while avoiding double-subtraction
+    /// when SwiftUI's keyboard safe area has already reduced `availableHeight`.
+    func updateKeyboardOverlap(_ rawOverlap: CGFloat, baselineContainerHeight: CGFloat = 0) {
+        let clampedOverlap = max(0, rawOverlap)
+        guard clampedOverlap > 0 else {
+            keyboardHeight = 0
+            return
+        }
+        if baselineContainerHeight > 0 {
+            let alreadyReduced = max(0, baselineContainerHeight - availableHeight)
+            keyboardHeight = max(0, clampedOverlap - alreadyReduced)
+        } else {
+            keyboardHeight = clampedOverlap
         }
     }
 }

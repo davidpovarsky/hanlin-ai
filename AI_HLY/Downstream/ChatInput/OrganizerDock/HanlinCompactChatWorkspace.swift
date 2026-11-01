@@ -37,9 +37,9 @@ struct HanlinCompactChatWorkspace: View {
     let onEditRecord: (ChatRecords) -> Void
     let onDeleteRecord: (ChatRecords) -> Void
     let onRefresh: () -> Void
+    @Bindable var sessionBridge: HanlinActiveComposerSessionBridge
 
     @Namespace private var libraryZoom
-    @State private var sessionBridge = HanlinActiveComposerSessionBridge()
     @State private var dockHeight: CGFloat = 176
     @State private var matchedMessageIDByChat: [UUID: UUID] = [:]
     @FocusState private var isCompactComposerInputActive: Bool
@@ -124,6 +124,7 @@ struct HanlinCompactChatWorkspace: View {
             .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
             .onChange(of: path) { oldPath, newPath in
                 isCompactComposerInputActive = false
+                sessionBridge.expectedActiveSessionID = activeChatID
                 let isHidden = !newPath.isEmpty
                 NotificationCenter.default.post(name: .hideTabBar, object: isHidden)
 
@@ -136,6 +137,7 @@ struct HanlinCompactChatWorkspace: View {
                 _ = oldPath
             }
             .onAppear {
+                sessionBridge.expectedActiveSessionID = activeChatID
                 if let defaultIndex = HanlinDefaultChatPolicy.defaultModelIndex(in: allModels) {
                     sessionBridge.homeSelectedModelIndex = defaultIndex
                 }
@@ -256,7 +258,7 @@ struct HanlinCompactChatWorkspace: View {
 
                 HanlinCompactRecentChats(
                     chatRecords: chatRecords,
-                    temporaryChatIDs: [],
+                    temporaryChatIDs: sessionBridge.temporaryChatIDs,
                     libraryZoom: libraryZoom,
                     onSelectConversation: { record in
                         guard let id = record.id else { return }

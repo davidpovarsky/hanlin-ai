@@ -7,6 +7,7 @@
 //  session bridge, pending first turn state machine, and non-regression of original chat files.
 //
 
+import CryptoKit
 import Foundation
 import SwiftUI
 import SwiftData
@@ -136,6 +137,49 @@ struct OrganizerDockStateTests {
         #expect(state.contextKey == "chat-123")
         #expect(state.mode == .collapsed)
         #expect(state.manualComposerHeight == nil)
+    }
+
+    @Test("1.7 Manual composer resize expands and shrinks effectiveEditorFrameHeight monotonically")
+    func manualResizeExpandsInnerEditorFrameHeight() {
+        let state = HanlinOrganizerDockState()
+        #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 38, minimumInteractiveHeight: 44) == 44)
+
+        // Drag up by 60pt (composerHeight = 186pt) -> inner editor frame expands to 98pt
+        state.handleComposerResizeChanged(translationHeight: -60)
+        state.handleComposerResizeEnded()
+        #expect(state.composerHeight == 186)
+        #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 38, minimumInteractiveHeight: 44) == 98)
+
+        // Drag up further by 72pt (composerHeight = 258pt) -> inner editor frame expands to 170pt
+        state.adjustComposerHeightByAccessibility(increment: true)
+        #expect(state.composerHeight == 258)
+        #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 38, minimumInteractiveHeight: 44) == 170)
+
+        // Step back down to auto height -> inner editor frame returns to 44pt
+        state.adjustComposerHeightByAccessibility(increment: false)
+        state.adjustComposerHeightByAccessibility(increment: false)
+        #expect(state.manualComposerHeight == nil)
+        #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 38, minimumInteractiveHeight: 44) == 44)
+    }
+
+    @Test("1.8 Keyboard overlap updates keyboardHeight without double-subtracting when container already shrunk")
+    func keyboardOverlapAvoidsDoubleSubtraction() {
+        let state = HanlinOrganizerDockState()
+        state.availableHeight = 780
+
+        // Container not shrunk by safe area -> full 300pt keyboard overlap applied
+        state.updateKeyboardOverlap(300, baselineContainerHeight: 780)
+        #expect(state.keyboardHeight == 300)
+
+        // Container already shrunk by 300pt safe area (780 -> 480) -> keyboardHeight is 0 (no double-subtraction)
+        state.availableHeight = 480
+        state.updateKeyboardOverlap(300, baselineContainerHeight: 780)
+        #expect(state.keyboardHeight == 0)
+
+        // Keyboard hidden -> resets to 0
+        state.availableHeight = 780
+        state.updateKeyboardOverlap(0, baselineContainerHeight: 780)
+        #expect(state.keyboardHeight == 0)
     }
 }
 
@@ -527,6 +571,51 @@ struct ChatComposerSessionBridgeTests {
         #expect(restoredDocsA == [docURL])
         #expect(restoredSearchA == true)
     }
+
+    @Test("5.3 Out-of-order stale endpoint registration is rejected when expectedActiveSessionID does not match")
+    func outOfOrderStaleRegistrationRejected() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        let chatA = UUID()
+        let chatB = UUID()
+        bridge.expectedActiveSessionID = chatB
+
+        var textA = "Stale A"
+        let endpointA = Self.makeTestEndpoint(
+            sessionID: chatA,
+            message: Binding(get: { textA }, set: { textA = $0 })
+        )
+        bridge.register(endpoint: endpointA)
+        #expect(bridge.activeEndpoint == nil)
+
+        var textB = "Active B"
+        let endpointB = Self.makeTestEndpoint(
+            sessionID: chatB,
+            message: Binding(get: { textB }, set: { textB = $0 })
+        )
+        bridge.register(endpoint: endpointB)
+        #expect(bridge.activeEndpoint?.sessionID == chatB)
+    }
+
+    @Test("5.4 Layout mode transition guard preserves temporary chat state across width transitions")
+    func layoutModeTransitionPreservesTemporaryChat() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        let tempChatID = UUID()
+
+        bridge.setTemporaryChat(true, for: tempChatID)
+        #expect(bridge.isTemporaryChat(tempChatID))
+        #expect(bridge.temporaryChatIDs.contains(tempChatID))
+
+        bridge.beginLayoutModeTransition()
+        #expect(bridge.isTransitioningLayoutMode == true)
+        #expect(bridge.isTemporaryChat(tempChatID))
+
+        bridge.endLayoutModeTransition()
+        #expect(bridge.isTransitioningLayoutMode == false)
+        #expect(bridge.isTemporaryChat(tempChatID))
+
+        bridge.clearCachedDraft(for: tempChatID)
+        #expect(!bridge.isTemporaryChat(tempChatID))
+    }
 }
 
 // MARK: - 7A.6 PendingFirstTurnTests
@@ -626,6 +715,103 @@ struct PendingFirstTurnTests {
         bridge.cancelPendingFirstTurn()
         #expect(bridge.pendingFirstTurn?.status == .cancelled(reason: "Cancelled by navigation"))
         #expect(bridge.pendingFirstTurn?.isPendingHandoff == false)
+        #expect(bridge.homeMessage == "Cancel before mount")
+    }
+
+    @Test("6.3 Rejected send rolls back to .failed and restores all Home draft fields including URLs and mode flags")
+    func rejectedSendRollsBackAndRestoresHomeDraft() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        bridge.homeMessage = "Recoverable Home Turn"
+        bridge.homeSelectedURLs = ["https://example.com/spec"]
+        bridge.homeSelectedDocumentURLs = [URL(fileURLWithPath: "/tmp/spec.pdf")]
+        bridge.homeIfSearch = true
+        bridge.homeIfThink = true
+        let createdChatID = UUID()
+        let model = AllModels(name: "gpt-4o-mini", displayName: "GPT-4o Mini", position: 0, company: "OPENAI")
+
+        let returnedID = bridge.beginHomeFirstTurn(availableModels: [model]) {
+            ChatRecords(id: createdChatID, name: "New Chat", type: "chat", lastEdited: Date())
+        }
+        #expect(returnedID == createdChatID)
+        #expect(bridge.homeMessage.isEmpty)
+        #expect(bridge.homeSelectedURLs.isEmpty)
+
+        var transferredText = ""
+        let record = ChatRecords(id: createdChatID, name: "New Chat", type: "chat", lastEdited: Date())
+        let rejectingEndpoint = HanlinActiveComposerSessionBridge.Endpoint(
+            sessionID: createdChatID,
+            registrationToken: UUID(),
+            isReadyToSend: true,
+            chatRecord: record,
+            modelTemp: [model],
+            temporaryRecord: false,
+            respondIndex: 0,
+            selectedModelIndex: .constant(0),
+            showScrollToBottomButton: .constant(false),
+            needScrollToBottomButton: .constant(false),
+            isMultiSelectMode: .constant(false),
+            selectedMessageIDs: .constant([]),
+            chatTemps: .constant([]),
+            showTemperatureSlider: .constant(false),
+            temperature: .constant(0.7),
+            showTopPSlider: .constant(false),
+            topP: .constant(0.95),
+            showMaxTokensSlider: .constant(false),
+            maxTokens: .constant(2048),
+            showMaxMessagesNumSlider: .constant(false),
+            maxMessagesNum: .constant(12),
+            message: Binding(get: { transferredText }, set: { transferredText = $0 }),
+            selectedImages: .constant([]),
+            selectedDocumentURLs: .constant([]),
+            selectedURLs: .constant([]),
+            selectedPrompts: .constant([]),
+            showPhotoSourceOptions: .constant(false),
+            showModelSuggestions: .constant(false),
+            filteredModels: .constant([]),
+            isResponding: .constant(false),
+            isFeedBack: .constant(false),
+            ifKnowledge: .constant(false),
+            ifSearch: .constant(false),
+            ifToolUse: .constant(false),
+            ifThink: .constant(false),
+            ifAudio: .constant(false),
+            ifPlanning: .constant(false),
+            thinkingLength: .constant(0),
+            showKnowledgeAlert: .constant(false),
+            knowledgeAlertMessage: .constant(""),
+            showSearchAlert: .constant(false),
+            selectedImageSize: .constant("1024x1024"),
+            imageReversePrompt: .constant(""),
+            onSelectModel: { _ in },
+            onSendUser: {},
+            onSendObserve: {},
+            onCancel: {},
+            validateSendAcceptance: { false }
+        )
+
+        bridge.register(endpoint: rejectingEndpoint)
+        #expect(bridge.pendingFirstTurn?.status == .failed(reason: "Target ChatView rejected first-turn send."))
+        #expect(bridge.pendingFirstTurn?.isAccepted == false)
+        #expect(bridge.homeMessage == "Recoverable Home Turn")
+        #expect(bridge.homeSelectedURLs == ["https://example.com/spec"])
+        #expect(bridge.homeSelectedDocumentURLs == [URL(fileURLWithPath: "/tmp/spec.pdf")])
+        #expect(bridge.homeIfSearch == true)
+        #expect(bridge.homeIfThink == true)
+    }
+
+    @Test("6.4 Invalid or hidden homeSelectedModelIndex is strictly refused without silent fallback")
+    func invalidHomeSelectedModelIndexRefused() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        bridge.homeMessage = "Should not silently switch model"
+        bridge.homeSelectedModelIndex = 5 // Out of bounds
+        let model = AllModels(name: "gpt-4o-mini", displayName: "GPT-4o Mini", position: 0, company: "OPENAI")
+
+        let returnedID = bridge.beginHomeFirstTurn(availableModels: [model]) {
+            ChatRecords(id: UUID(), name: "New Chat", type: "chat", lastEdited: Date())
+        }
+        #expect(returnedID == nil)
+        #expect(bridge.homeMessage == "Should not silently switch model")
+        #expect(bridge.pendingFirstTurn == nil)
     }
 }
 
@@ -768,5 +954,45 @@ struct OriginalSourceNonRegressionTests {
         #expect(componentsSource.contains("hanlin-code-block-row"))
         #expect(componentsSource.contains("hanlin-html-web-bubble"))
         #expect(!chatAndFileSource.isEmpty)
+    }
+
+    @Test("9.2 Protected chat files and authoritative V3.3 reference metadata remain cryptographically intact")
+    func protectedFilesAndReferenceMetadataRemainIntact() throws {
+        let repoRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+
+        func normalizedSHA256AndLength(relativePath: String) throws -> (String, Int) {
+            let url = repoRoot.appendingPathComponent(relativePath)
+            let raw = try Data(contentsOf: url)
+            let normalized = String(decoding: raw, as: UTF8.self)
+                .replacingOccurrences(of: "\r\n", with: "\n")
+            let data = Data(normalized.utf8)
+            let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+            return (digest, data.count)
+        }
+
+        let (componentsSHA, componentsBytes) = try normalizedSHA256AndLength(
+            relativePath: "AI_HLY/Views/Components/ChatViewComponents.swift"
+        )
+        let (chatAndFileSHA, chatAndFileBytes) = try normalizedSHA256AndLength(
+            relativePath: "AI_HLY/Views/Components/ChatandFile.swift"
+        )
+        let (apiManagerSHA, apiManagerBytes) = try normalizedSHA256AndLength(
+            relativePath: "AI_HLY/Services/ChatServices/APIManager.swift"
+        )
+
+        #expect(componentsBytes == 245684)
+        #expect(componentsSHA == "cbcbdffd5a05abe6889b9eafe83a5266661f61c6440c6e12ac74be4565ba1901")
+        #expect(chatAndFileBytes == 1966)
+        #expect(chatAndFileSHA == "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d")
+        #expect(apiManagerBytes == 197303)
+        #expect(apiManagerSHA == "ec09f12217985b6f37e9f88ea6653eff2823a31f96a9eb0ad6fe1062ea204df4")
+
+        let sourceRefURL = repoRoot.appendingPathComponent("docs/hanlin-dock-v33-source-parity/SOURCE_REFERENCE_AND_SHA.md")
+        let sourceRefText = try String(contentsOf: sourceRefURL, encoding: .utf8)
+        #expect(sourceRefText.contains("8611c6f7f537296f6ddc365b349f4bf773c2de70728183a94c75ea5731705723"))
+        #expect(sourceRefText.contains("9d9ebe09a5f2ec6c590b7ad52cc15db6c967951acca6be42e9044623c642a716"))
+        #expect(sourceRefText.contains("1,810") || sourceRefText.contains("1810"))
     }
 }
