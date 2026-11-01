@@ -20,6 +20,86 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
+    #if os(macOS)
+    @Test func originalScriptWidgetHTTPUsesBoundedRealTransport() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let portFile = root.appending(path: "port")
+        let server = Process()
+        server.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        server.arguments = ["python3", "-u", "-c", #"""
+            import http.server, json, pathlib, sys, time
+            class Handler(http.server.BaseHTTPRequestHandler):
+                def log_message(self, *args): pass
+                def handle_request(self):
+                    if self.path == '/slow': time.sleep(0.5)
+                    if self.path == '/redirect':
+                        self.send_response(302); self.send_header('Location', 'file:///etc/hosts'); self.end_headers(); return
+                    if self.path == '/large':
+                        self.send_response(200); self.send_header('Content-Length', str(1024*1024+1)); self.end_headers(); return
+                    body = self.rfile.read(int(self.headers.get('Content-Length', '0'))).decode()
+                    data = bytes([0, 127, 255]) if self.path == '/binary' else json.dumps({'method': self.command, 'body': body, 'header': self.headers.get('X-Widget'), 'type': self.headers.get('Content-Type')}).encode()
+                    self.send_response(503 if self.path == '/status' else 200)
+                    self.send_header('Content-Type', 'application/json'); self.send_header('Retry-After', '3'); self.send_header('Content-Length', str(len(data))); self.end_headers()
+                    try: self.wfile.write(data)
+                    except (BrokenPipeError, ConnectionResetError): pass
+                do_GET = do_POST = do_PUT = do_PATCH = do_DELETE = handle_request
+            server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            pathlib.Path(sys.argv[1]).write_text(str(server.server_port))
+            server.serve_forever()
+            """#, portFile.path]
+        server.standardOutput = FileHandle.nullDevice
+        server.standardError = FileHandle.nullDevice
+        try server.run()
+        defer { if server.isRunning { server.terminate(); server.waitUntilExit() } }
+        let startDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while !FileManager.default.fileExists(atPath: portFile.path), server.isRunning, ContinuousClock.now < startDeadline {
+            Thread.sleep(forTimeInterval: 0.01)
+        }
+        let port = try String(contentsOf: portFile, encoding: .utf8)
+        let base = "http://127.0.0.1:\(port)"
+        func execute(_ source: String) throws -> HanlinScriptWidgetExecution {
+            let program = HanlinWidgetProgram(engine: .scriptwidget,
+                sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64),
+                javaScript: "async function $main() { const base = '\(base)'; \(source); $render(ScriptWidget.createElement('text', {}, 'Transport verified')); }",
+                actions: [], families: ["systemMedium"])
+            return try HanlinScriptWidgetRuntime.shared.run(program: program, values: [:], environment: [:])
+        }
+        let verbs = try execute(#"""
+            for (const method of ['get', 'post', 'put', 'patch']) {
+              const result = JSON.parse(await $http[method](base + '/echo', {headers:{'X-Widget':'source'}, body:method === 'get' ? undefined : {count:7}}));
+              if (result.method !== method.toUpperCase() || result.header !== 'source') throw Error('HTTP method/header lost');
+              if (method !== 'get' && (JSON.parse(result.body).count !== 7 || result.type !== 'application/json')) throw Error('JSON body lost');
+              $storage.set(method, result.method);
+            }
+            let rejected = false;
+            try { await $fetch(base + '/echo'); } catch (_) { rejected = true; }
+            if (!rejected) throw Error('Fifth request exceeded budget');
+            """#)
+        #expect(verbs.values["post"] == .string("POST"))
+        let response = try execute(#"""
+            const deleted = JSON.parse(await $http.delete(base + '/echo', {body:'raw source'}));
+            if (deleted.method !== 'DELETE' || deleted.body !== 'raw source') throw Error('DELETE body lost');
+            const status = await $http.getResponse(base + '/status');
+            if (status.status !== 503 || status.headers['retry-after'] !== '3' || JSON.parse(status.body).method !== 'GET') throw Error('Response metadata lost');
+            const bytes = await $fetch(base + '/binary', {responseType:'base64'});
+            if (bytes !== 'AH//') throw Error('Binary response lost');
+            $storage.set('status', status.status);
+            """#)
+        #expect(response.values["status"] == .integer(503))
+        let limits = try execute(#"""
+            for (const [path, params] of [['/large', {}], ['/redirect', {}], ['/slow', {timeoutInterval:0.05}]]) {
+              let rejected = false;
+              try { await $http.get(base + path, params); } catch (_) { rejected = true; }
+              if (!rejected) throw Error('Unsafe or over-budget transport accepted: ' + path);
+            }
+            let rejected = false;
+            try { await $fetch('file:///etc/hosts'); } catch (_) { rejected = true; }
+            if (!rejected) throw Error('File transport accepted');
+            """#)
+        #expect(limits.node.children == [.value(.string("Transport verified"))])
+    }
+    #endif
     @Test func passiveLegacyNavigationCannotCoverNativeOrNestedButtons() throws {
         let identity = Identity(installedPackageID: try .init(validating: "installed.legacy-link"), packageID: try .init(validating: "package.legacy-link"), generation: 1, entrypointID: "widget")
         let url = try #require(URL(string: "hanlin://scripts/legacy-link"))
