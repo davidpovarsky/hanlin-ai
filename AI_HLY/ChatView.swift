@@ -311,6 +311,44 @@ struct ChatView: View {
         )
     }
 
+    private struct ComposerBridgeSyncState: Equatable {
+        var temporaryRecord: Bool
+        var respondIndex: Int
+        var isResponding: Bool
+        var message: String
+        var selectedImagesCount: Int
+        var selectedDocumentURLs: [URL]
+        var selectedURLs: [String]
+        var selectedPromptsCount: Int
+        var selectedModelIndex: Int
+        var ifKnowledge: Bool
+        var ifSearch: Bool
+        var ifToolUse: Bool
+        var ifThink: Bool
+        var ifAudio: Bool
+        var ifPlanning: Bool
+    }
+
+    private var composerBridgeSyncState: ComposerBridgeSyncState {
+        ComposerBridgeSyncState(
+            temporaryRecord: TemporaryRecord,
+            respondIndex: respondIndex,
+            isResponding: isResponding,
+            message: message,
+            selectedImagesCount: selectedImages.count,
+            selectedDocumentURLs: selectedDocumentURLs,
+            selectedURLs: selectedURLs,
+            selectedPromptsCount: selectedPrompts.count,
+            selectedModelIndex: selectedModelIndex,
+            ifKnowledge: ifKnowledge,
+            ifSearch: ifSearch,
+            ifToolUse: ifToolUse,
+            ifThink: ifThink,
+            ifAudio: ifAudio,
+            ifPlanning: ifPlanning
+        )
+    }
+
     private func syncComposerEndpointWithBridge() {
         guard let sessionBridge else { return }
         let endpoint = makeExternalComposerEndpoint()
@@ -320,18 +358,17 @@ struct ChatView: View {
             sessionBridge.snapshotDraft(from: endpoint)
         }
     }
-    
-    var body: some View {
+
+    @ViewBuilder
+    private var chatWorkspaceStack: some View {
         VStack {
-            
             ZStack(alignment: .bottom) {
-                
                 // 第一部分：可滚动聊天区
                 ScrollViewReader { scrollViewProxy in
                     buildScrollContent(scrollViewProxy)
                         .padding(.bottom, 6)
                 }
-                
+
                 // 渐变背景
                 LinearGradient(
                     gradient: Gradient(colors: [Color(.systemBackground).opacity(0), Color(.systemBackground)]),
@@ -341,7 +378,7 @@ struct ChatView: View {
                 .frame(height: 120)
                 .allowsHitTesting(false)
                 .zIndex(0)
-                
+
                 if !isExternalCompactComposerHost {
                     ChatViewBottom(
                         chatRecord: chatRecord,
@@ -406,6 +443,10 @@ struct ChatView: View {
                 measuredComposerHeight = newHeight
             }
         }
+    }
+
+    var body: some View {
+        chatWorkspaceStack
         .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
         .onAppear {
@@ -427,48 +468,8 @@ struct ChatView: View {
         }
         .onChange(of: TemporaryRecord) { _, newValue in
             sessionBridge?.setTemporaryChat(newValue, for: effectiveChatSessionID)
-            syncComposerEndpointWithBridge()
         }
-        .onChange(of: respondIndex) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: isResponding) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: message) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: selectedImages.count) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: selectedDocumentURLs) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: selectedURLs) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: selectedPrompts.count) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: selectedModelIndex) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: ifKnowledge) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: ifSearch) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: ifToolUse) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: ifThink) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: ifAudio) { _, _ in
-            syncComposerEndpointWithBridge()
-        }
-        .onChange(of: ifPlanning) { _, _ in
+        .onChange(of: composerBridgeSyncState) { _, _ in
             syncComposerEndpointWithBridge()
         }
         .onDisappear {
