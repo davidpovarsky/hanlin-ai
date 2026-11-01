@@ -1,7 +1,7 @@
 {
   "baseline": "ce586667b7103a6c2c7243d33461768c51a9dd8d",
-  "sourceHead": "63ef266b4ce322ac34900a9734dbb41f716799fa",
-  "observedAt": "2026-10-31T21:18:54.206Z",
+  "sourceHead": "4721fc125267e9c9c068d52e3fa3325f1eae9a77",
+  "observedAt": "2026-11-01T01:30:37.281Z",
   "scope": "All tracked changes against actual starting HEAD plus all untracked paths. sourceHead is the existing commit at generation time; the containing evidence commit cannot hash itself. Output omits its own digest. Compile coverage is distinct from per-feature/OS acceptance.",
   "evidenceRuns": {
     "package": {
@@ -19,7 +19,7 @@
     "full": {
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239679485",
       "sourceSHA": "5bfcf03b2114f1952a9fa8d46d92e2c4f3d1edc0",
-      "status": "PENDING_RESULT",
+      "status": "FAILED: 3/4 native renderer and 10/11 foreground UI passed; three widget UI failures; contracts dylib unsafe flag; follow-up source not yet run",
       "target": "iPad mini (A17 Pro), iPadOS 27 Simulator; actual app/appex build passed"
     }
   },
@@ -46,6 +46,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: subset/package executed; latest diagnostic-only change NOT_RUN",
         "runs": [
@@ -72,6 +73,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; final extension closure audit pending",
         "runs": [
@@ -81,6 +83,423 @@
         ],
         "assertions": [
           "SDK source-only compile/link; app build-for-testing; audit-native-products.mjs"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "change": "M",
+      "sha256": "a7411d54f58cc7d5bfdf404b7f7f9ed775d5ecae534a6643ccce56eb4e04b96e",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "ChatView",
+        "handleOnAppear",
+        "loadMoreMessages",
+        "calculateDynamicBottomPadding",
+        "dynamicBottomPadding",
+        "makeExternalComposerEndpoint",
+        "ScrollTriggerState",
+        "buildScrollContent",
+        "scrollToLastMessage",
+        "scheduleAutoFollow",
+        "createChatBubble",
+        "openHistory",
+        "newConversation",
+        "insertDeleteMessage",
+        "deleteChatMessages",
+        "autoGenerateTitleIfNeeded"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "change": "M",
+      "sha256": "cc1298652f72a109be554a92f93e9ba2d115ac569ba57cad7696ed0390e8bf36",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "AgentRuntimeUIAcceptanceProvider",
+        "sampleMCPArchiveURL",
+        "respond",
+        "configureIfRequested",
+        "makeSessionConfiguration",
+        "makeChatEngine",
+        "AgentRuntimeUIAcceptanceURLProtocol",
+        "reset",
+        "func",
+        "startLoading",
+        "stopLoading",
+        "emitToolCall",
+        "emitFinalAnswer",
+        "emitPayload",
+        "handlePistonExecute",
+        "handleWikiPage"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+      "change": "M",
+      "sha256": "26c9a21393c64c020c1b5bf772774bf0ff2224c3b896d209b06d8e7de2343203",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "ComposerPopup",
+        "ComposerGeneralSubroute",
+        "ComposerToolsSubroute",
+        "ComposerModelSubroute",
+        "HanlinComposerPopupCoordinator",
+        "toggle",
+        "open",
+        "presentDirectTools",
+        "switchFromGeneralToTools",
+        "switchFromToolsToGeneral",
+        "close",
+        "closeAll",
+        "syncFromDockModeChange",
+        "binding",
+        "resetSubroutesAndExpansion",
+        "pushGeneralSubroute"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift",
+      "change": "M",
+      "sha256": "a481ceb82943f7e21ea7da3befd965b480943af82654d7dadbdf33b6e7f2529c",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinComposerGeneralActionsView",
+        "attachmentTile",
+        "modeToggleRow",
+        "navigationRowLabel",
+        "subpageHeader",
+        "HanlinComposerToolsRootView",
+        "refreshLiveState",
+        "refreshSkillsState",
+        "domainCard",
+        "statusPill"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift",
+      "change": "M",
+      "sha256": "8536f99174f00f1953f069ffdee4af1ee0aea1928b2e8ac531bd41198b460433",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinModelPickerPopover",
+        "ProviderGroup",
+        "modelRowButton",
+        "modelIconView",
+        "capabilityBadgesRow",
+        "badgePill"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
+      "change": "M",
+      "sha256": "f87d3ffdb6ebd4f46e3f637d297629a86822fa5cc7a06bedc95594a278aa48e2",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "ComposerHeightPreferenceKey",
+        "reduce",
+        "NativeMultilineTextEditor",
+        "calculatedHeight",
+        "shouldScrollInternally",
+        "effectiveMeasurementWidth",
+        "makeUIView",
+        "updateUIView",
+        "makeCoordinator",
+        "Coordinator",
+        "textViewDidBeginEditing",
+        "textViewDidEndEditing",
+        "textViewDidChange",
+        "textView",
+        "matchContaining",
+        "MultilineInnerTextView"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "change": "A",
+      "sha256": "cc9cf592c87a98babeebed59d15ff4f026e201af1fb523869af2965cc842a0da",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinCompactWorkspaceRoute",
+        "HanlinCompactChatWorkspace",
+        "effectiveContainerWidth",
+        "shouldUseCompactWorkspace",
+        "isComposerVisible",
+        "activeComposerKey",
+        "navigationRoot",
+        "destinationView",
+        "compactHomeScreen",
+        "anchoredComposer"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift",
+      "change": "A",
+      "sha256": "13ef4fe7b93156bb1ad28cd8343115b07196c4b0d61c04e268a272d3a9877b99",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinCompactConversationLibrary",
+        "libraryRow",
+        "pinnedBackground"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift",
+      "change": "A",
+      "sha256": "a3c978426684c1e0e814ff284ce1ed522acd36da4c041ef591d13748f3e11b7b",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinCompactRecentChats",
+        "recentConversations",
+        "HanlinRecentConversationRow"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "change": "A",
+      "sha256": "c371f401ecaf8baefaf1f165d3cda1556ef9cf35e3c3456c9718a3e017bf47de",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinExternalCompactComposerHostKey",
+        "HanlinExternalDockHeightKey",
+        "HanlinComposerSessionBridgeKey",
+        "HanlinChatDraftSnapshot",
+        "HanlinActiveComposerSessionBridge",
+        "Endpoint",
+        "register",
+        "update",
+        "unregister",
+        "snapshotDraft",
+        "clearCachedDraft",
+        "performSendUser",
+        "performSendObserve",
+        "performCancel",
+        "beginHomeFirstTurn",
+        "cancelPendingFirstTurn"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDock.swift",
+      "change": "A",
+      "sha256": "16107a2bb9bac0440d121b10be83d4931d45943289ebdb0f76e2176f1f2dab01",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinOrganizerDock"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift",
+      "change": "A",
+      "sha256": "2634ad9ebd826a54ae14be7b075670bab87f75f7e7ac5814bf2b19daf6224dff",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinOrganizerDrawerMode",
+        "HanlinOrganizerDockState",
+        "calculateAutoComposerHeight",
+        "calculateMaxComposerHeight",
+        "calculatePanelHeight",
+        "toggleMode",
+        "openMode",
+        "collapse",
+        "handleDrawerHandleTap",
+        "handleDrawerDragEnded",
+        "handleComposerResizeChanged",
+        "handleComposerResizeEnded",
+        "adjustComposerHeightByAccessibility",
+        "handleContextKeyChange",
+        "handleDraftTextChange",
+        "handleInputFocusChange"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift",
+      "change": "A",
+      "sha256": "743f67caefd26e91095a8146113e77bb26f53ec3477f62093ebb7bc17aabbfd1",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "HanlinPendingFirstTurn",
+        "Status"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
         ]
       },
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
@@ -117,6 +536,7 @@
         "setEnabled"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: app compile and shared package assertions; actual host UI results pending",
         "runs": [
@@ -156,6 +576,7 @@
         "updateUIViewController"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: app compile and shared package assertions; actual host UI results pending",
         "runs": [
@@ -164,6 +585,80 @@
         ],
         "assertions": [
           "userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections; native UI scenarios pending"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/ListView.swift",
+      "change": "M",
+      "sha256": "16f758299ac8b347bef59e93a95c3d7bc46a0bc14c26729d57e5da0b08352009",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "ListView",
+        "SettingType",
+        "filterAndSortChatRecords",
+        "backgroundView",
+        "chatRecordRow",
+        "handleOnAppear",
+        "sortChatRecords",
+        "searchRecords",
+        "findMatchSnippet",
+        "togglePin",
+        "deleteChat",
+        "beginEditingRecord",
+        "createAuthorizedNewChatRecord",
+        "addNewChat"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "change": "M",
+      "sha256": "3c78fb6818b6eada6def0b40645f66175f8942265001d902d8fc4a5c6ac504a5",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "InputTextField",
+        "InnerTextField",
+        "paste",
+        "canPerformAction",
+        "Coordinator",
+        "textField",
+        "textFieldDidChangeSelection",
+        "textFieldShouldReturn",
+        "matchContaining",
+        "makeCoordinator",
+        "makeUIView",
+        "updateUIView",
+        "ChatViewBottom",
+        "shouldEnableSend",
+        "BottomAnimationState",
+        "buildMultiSelectAndInputControls"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
         ]
       },
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
@@ -181,6 +676,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -205,6 +701,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -229,6 +726,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -253,6 +751,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -277,6 +776,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -301,6 +801,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -325,6 +826,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -339,7 +841,7 @@
     {
       "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
       "change": "A",
-      "sha256": "071c95a95f03d91b9def059506890b086a400705d232e550c13a54055bb30588",
+      "sha256": "9f8369efb1fca9b5607ac41bda4c9bc7be79c31479d41a059cad8bb6a34361f8",
       "purpose": "Actual installed archive/native AnyChild typed props, pixel references, slots and Chart/Gauge assertions",
       "target": "AI_HLYTests on iPadOS 27 Simulator",
       "findings": [
@@ -352,10 +854,12 @@
         "testOriginalSlotsMatchNativeOverlayBackgroundAndMaskPixels",
         "testOriginalChartAndGaugeReceiveTheirTypedNativeData",
         "render",
+        "testOriginalLabelAndProgressKeepTheirPreparedChildren",
         "testInstalledExternalSourceRendersThroughAnyChild",
         "raster"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_CHANGED_NOT_EXECUTED: final iOS test outcome pending",
         "runs": [
@@ -363,6 +867,82 @@
         ],
         "assertions": [
           "testInstalledExternalSourceRendersThroughAnyChild; testOriginalTextConcatenationPreservesNativeTypeAndChildStyles; testOriginalSlotsMatchNativeOverlayBackgroundAndMaskPixels; testOriginalChartAndGaugeReceiveTheirTypedNativeData"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "change": "A",
+      "sha256": "26efd8e239350fdb777422263b7712c80d1a129a45cfce9be35294a5bad6a112",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "OrganizerDockStateTests",
+        "defaultCollapsedStateMatchesSourceFormulas",
+        "multilineDraftAndAttachmentHeightFormulas",
+        "expandedStatePanelAndComposerHeight",
+        "drawerDragThresholdsMatchSource",
+        "composerResizeDragAndAccessibilityAdjustment",
+        "focusAndLifecycleResets",
+        "HanlinComposerDrawerRouteTests",
+        "switchingPlusAndToolsSwapsModeInSameDock",
+        "directOneTapToolsOpensToolsRootImmediately",
+        "modelPickerCollapsesDrawer",
+        "CompactRecentConversationsTests",
+        "selectsTopThreeByLastEditedIgnoringPinnedAndTemp",
+        "CompactChatRouteTests",
+        "compactWorkspaceThresholdMatchesSpec",
+        "workspaceRouteIdentity"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "change": "M",
+      "sha256": "780647fe0e70836bfd35cfb4a279e052d560c14c46e267df1300f6dc208f2d7c",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [
+        "AgentRuntimeConversationUITests",
+        "testRealChatUISendsPromptShowsToolActivityAndFinalAnswer",
+        "testProductionCodeSkillLocalPythonNeedsNoUserNudge",
+        "testStopThenNewMessageHasNoGhostOldRun",
+        "testUI01UnifiedHistoryPinSearchSwitchDraftPreservation",
+        "testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons",
+        "testUI03SearchMessageAndDeduplicatedCitations",
+        "testUI04CollapsedProgressAndInspectorWithoutRawCoT",
+        "testUI05RichCodeBlockHTMLCardAndAttachments",
+        "testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+        "testUI07StopAndRetryRecoveryWithoutDuplicateBubbles",
+        "testUI08ConversationalMCPLifecycleAndSecondTurnReuse",
+        "testUI09DirectToolsCatalogAndSkillsNavigation",
+        "testUI10ModelPickerSearchSelectionAndPersistence",
+        "testDockCompactHomeShowsThreeRecentWithOnePersistentComposer",
+        "testViewAllZoomSourceToLibraryAndCancelledInteractiveBack"
+      ],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
         ]
       },
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
@@ -380,6 +960,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -404,6 +985,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -428,6 +1010,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -452,6 +1035,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -476,6 +1060,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -500,6 +1085,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -524,6 +1110,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -538,7 +1125,7 @@
     {
       "path": "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
       "change": "M",
-      "sha256": "da0d88c261e1c9ea74a6b06a0170e9e4560f45e2d8d39b319d5cbbaac82fa575",
+      "sha256": "febffad422d9a0f48bf670b68f59eaf1b7cef817c4d46dbca880940ce16f7e10",
       "purpose": "Real import/install/instance UI, SpringBoard placement and host-terminated source actions; retain foreground tests",
       "target": "AI_HLYUITests / SpringBoard",
       "findings": [
@@ -567,6 +1154,7 @@
         "testProductionExpoMalformedPackageRejection"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "NOT_RUN_SIMULATOR_UI: final matching outcomes pending",
         "runs": [
@@ -579,9 +1167,198 @@
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
     },
     {
+      "path": "docs/hanlin-composer-dual-entry/COMPOSER_ACTION_PARITY_MATRIX.md",
+      "change": "M",
+      "sha256": "76c3e3142c73a737b4b9af6902f1f41d3f98cdd21d3d1bc1a740d1540b4b9fb1",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-composer-dual-entry/README.md",
+      "change": "M",
+      "sha256": "cd32c31faafb8dc6812fbf7a872b08c4c29a664d32b9827b0063cc616fe59bdd",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/ACTION_PARITY_AND_DATA_SOURCES.md",
+      "change": "A",
+      "sha256": "5b7dc0e29cb4ce043688dae3a6ff36be8ee9fffcc6e7a8876a3cbb1d98a35fae",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/COMPACT_NAVIGATION_AND_SESSION_LIFECYCLE.md",
+      "change": "A",
+      "sha256": "3c9f1b15b03fc1708f1d0729beb38ff854083ac5e051f675114717a313407eaa",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/DRAWER_AND_MODEL_ANIMATION_SPEC.md",
+      "change": "A",
+      "sha256": "0225eef9a2357ee4a1e54ee29f9b7684e8ae0ac83027b2c852183d2b9c51e082",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md",
+      "change": "A",
+      "sha256": "4f9d3423be775551532f9da6731ca4bc85fecfeb453e7ca8b67e834d79f7b772",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/ORIGINAL_CHAT_TOUCHPOINT_LEDGER.md",
+      "change": "A",
+      "sha256": "7fa77c77323271e38a0a34d57bef8b53ab760a991a3de916c3c25bbdaf7b3047",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/SOURCE_REFERENCE_AND_SHA.md",
+      "change": "A",
+      "sha256": "91f04031d83e96aeb471f5f4b83ca1f76e9f4e22b3a543056a6b830265b44ddc",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/SOURCE_TO_HANLIN_COMPONENT_MATRIX.md",
+      "change": "A",
+      "sha256": "47cb84b4b640991518d505516417edc2eda2a2c51eccfabaee2bd081f0e32d82",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
       "path": "docs/widget-engines/ARCHITECTURE_AND_PAYLOAD_CONTRACT.md",
       "change": "M",
-      "sha256": "5b7f48335af9b188aaa6bce7664566784320235f7f5083ececd561f4f1b0c7c7",
+      "sha256": "f35163c8ea6be3ff9236400503d709a444abdc09ebbfbb6fd70bc7e0d052adb3",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -590,6 +1367,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -609,6 +1387,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -619,7 +1398,7 @@
     {
       "path": "docs/widget-engines/CI_AND_DEVICE_RESULTS.md",
       "change": "A",
-      "sha256": "5bff3cc423826c5abecc80453d83a59c04b463ecb2b33d7a597840341a280132",
+      "sha256": "6638f9d9c7909c1d74d862c6a853ecf1134633d48168a961246ad7b3311f698d",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -628,6 +1407,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -647,6 +1427,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -666,6 +1447,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -685,6 +1467,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -704,6 +1487,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -723,6 +1507,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -742,6 +1527,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -761,6 +1547,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -771,7 +1558,7 @@
     {
       "path": "docs/widget-engines/SOURCE_AND_ABI_INVENTORY.md",
       "change": "M",
-      "sha256": "c4f1d46a1015195e88196f79a70b7a405c081bc1f2e4b4452b0302a0a45d91a5",
+      "sha256": "c8f9e22b1298c828d2dfb9bd8c3b2d64636a57124c71ed462b3cb8443e2007ce",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -780,6 +1567,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -790,7 +1578,7 @@
     {
       "path": "docs/widget-engines/TEST_MATRIX.md",
       "change": "M",
-      "sha256": "a83a43736dd763d56a6901cb81b6c29ff8992d4ff6916e298f578a3de0b761e2",
+      "sha256": "c397950fa6b23e4bfdfd117a99688999db009e84e7b87239a79511f361790150",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -799,6 +1587,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -809,7 +1598,7 @@
     {
       "path": "docs/widget-engines/UPSTREAM_PROVENANCE.md",
       "change": "M",
-      "sha256": "db265c763749addb4e5940cf55a98cf36a66e0290dcb1a259d23c0dd0f6ca1c8",
+      "sha256": "ea772cb126715245f1516a831516e658f338257be6446859f92d07e1ec16eb43",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -818,6 +1607,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -828,7 +1618,7 @@
     {
       "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
       "change": "A",
-      "sha256": "704a88adb59c6e39163f063b0291cc7da40b1c70e392d2bd4b414b30a5b4b371",
+      "sha256": "f22dc4fe9d8057450d13c384869d18505262a7ee23b0a2c94a9b6101cc8c113c",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -837,6 +1627,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -857,6 +1648,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -881,6 +1673,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -905,6 +1698,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -929,6 +1723,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -953,6 +1748,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -977,6 +1773,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -1001,6 +1798,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -1025,6 +1823,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -1068,6 +1867,7 @@
         "HanlinLiveActivityLockScreenView"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: actual app/appex build succeeded; binary closure and OS UI results pending",
         "runs": [
@@ -1094,6 +1894,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: actual app/appex build succeeded; binary closure and OS UI results pending",
         "runs": [
@@ -1120,6 +1921,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: actual app/appex build succeeded; binary closure and OS UI results pending",
         "runs": [
@@ -1146,6 +1948,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: actual app/appex build succeeded; binary closure and OS UI results pending",
         "runs": [
@@ -1172,6 +1975,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: actual app/appex build succeeded; binary closure and OS UI results pending",
         "runs": [
@@ -1196,6 +2000,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; final extension closure audit pending",
         "runs": [
@@ -1235,6 +2040,7 @@
         "byteIdentical": false,
         "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; actual SpringBoard presses pending",
         "runs": [
@@ -1272,6 +2078,7 @@
         "byteIdentical": false,
         "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; actual SpringBoard presses pending",
         "runs": [
@@ -1313,6 +2120,7 @@
         "byteIdentical": false,
         "adaptation": "Same widget-only AppContext; isolated MainActor ownership."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; actual SpringBoard presses pending",
         "runs": [
@@ -1337,6 +2145,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; license text is not a runtime test",
         "runs": [],
@@ -1347,7 +2156,7 @@
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
       "change": "A",
-      "sha256": "12845faebfe415e523cc27378c2358f94f89746853d95e75c89fa288c2b2a3c6",
+      "sha256": "4760b6a99eae4a0452def92276761776a0f890febb6ea3dbff86100dbd896f51",
       "purpose": "Original pinned AnyChild renderer/children/fragment with typed Hanlin AppIntent injection",
       "target": "HanlinExpoWidgetNative -> widget extension and iOS renderer tests",
       "findings": [
@@ -1370,10 +2179,11 @@
         "upstream": "packages/expo-widgets/ios/Widgets/ViewRenderer.swift",
         "upstreamBlob": "68e376fdd5a4a1b088f6e2e28b0babb285feec12",
         "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
-        "localSHA256": "12845faebfe415e523cc27378c2358f94f89746853d95e75c89fa288c2b2a3c6",
+        "localSHA256": "4760b6a99eae4a0452def92276761776a0f890febb6ea3dbff86100dbd896f51",
         "byteIdentical": false,
-        "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
+        "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors. Measured Gauge slot failure in 41239679485: preserve children for Gauge/Label/Progress, whose original native bodies consume slots/labels."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; actual SpringBoard presses pending",
         "runs": [
@@ -1398,6 +2208,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; license text is not a runtime test",
         "runs": [],
@@ -1417,6 +2228,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1455,6 +2267,7 @@
         "byteIdentical": false,
         "adaptation": "UIKit/Foundation imports and explicit MainActor/preconcurrency protocol isolation matching the installed public SDK interface; native child and identity semantics retained."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1504,6 +2317,7 @@
         "byteIdentical": false,
         "adaptation": "UIKit/Foundation imports; reject non-finite, negative or overflowing numeric ARGB input before UInt64 conversion. Original native CSS/dynamic color behavior retained."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1539,6 +2353,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1579,6 +2394,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1611,6 +2427,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1643,6 +2460,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1677,6 +2495,7 @@
         "byteIdentical": true,
         "adaptation": "No changes."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1717,6 +2536,7 @@
         "Record"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1752,6 +2572,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1787,6 +2608,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1823,6 +2645,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1859,6 +2682,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1908,6 +2732,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1943,6 +2768,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -1977,6 +2803,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2012,6 +2839,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2047,6 +2875,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2082,6 +2911,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2118,6 +2948,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2153,6 +2984,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2188,6 +3020,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2227,6 +3060,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2262,6 +3096,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2297,6 +3132,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2332,6 +3168,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2346,7 +3183,7 @@
     {
       "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/GaugeView.swift",
       "change": "A",
-      "sha256": "a705f79f149a690c3516e386bb30528de62aa18e61e655ee6194f7e095f0c060",
+      "sha256": "cfd84b2392341fb5c9814c54807e7f66972d3febbcf6eaa8e27c8d7d63880b5e",
       "purpose": "Source-built original ExpoUI/Core native widget subset; explicit dictionary/context adapters",
       "target": "HanlinExpoWidgetSubset -> HanlinExpoWidgetNative -> HanlinScriptingWidgets",
       "findings": [
@@ -2363,10 +3200,11 @@
         "upstream": "packages/expo-ui/ios/GaugeView.swift",
         "upstreamBlob": "be46e3dd541f63f5949cd7b3e19b1b3423a12251",
         "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/GaugeView.swift",
-        "localSHA256": "a705f79f149a690c3516e386bb30528de62aa18e61e655ee6194f7e095f0c060",
+        "localSHA256": "cfd84b2392341fb5c9814c54807e7f66972d3febbcf6eaa8e27c8d7d63880b5e",
         "byteIdentical": false,
-        "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
+        "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored. Reject an inverted closed range with a native diagnostic rather than trapping in Swift ClosedRange."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2404,6 +3242,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2439,6 +3278,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2474,6 +3314,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2509,6 +3350,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2544,6 +3386,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2582,6 +3425,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2617,6 +3461,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2653,6 +3498,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2689,6 +3535,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2724,6 +3571,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2759,6 +3607,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2797,6 +3646,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2833,6 +3683,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2870,6 +3721,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2907,6 +3759,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2947,6 +3800,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -2987,6 +3841,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3023,6 +3878,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3060,6 +3916,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3097,6 +3954,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3134,6 +3992,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3169,6 +4028,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3206,6 +4066,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3241,6 +4102,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3276,6 +4138,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3320,6 +4183,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3369,6 +4233,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3403,6 +4268,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3439,6 +4305,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3488,6 +4355,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3527,6 +4395,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3565,6 +4434,7 @@
         "adaptation": "No changes.",
         "localSHA256": "f4d2ef488cca26102854d6705f3110fa1bdf1c2d6233b1584a4270d9ec5d4e96"
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3600,6 +4470,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3635,6 +4506,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3670,6 +4542,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3705,6 +4578,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3745,6 +4619,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3780,6 +4655,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3818,6 +4694,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3856,6 +4733,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3890,6 +4768,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3925,6 +4804,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3962,6 +4842,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -3997,6 +4878,7 @@
         "byteIdentical": false,
         "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests",
         "runs": [
@@ -4021,6 +4903,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; final extension closure audit pending",
         "runs": [
@@ -4037,7 +4920,7 @@
     {
       "path": "Packages/HanlinPlatform/Package.swift",
       "change": "M",
-      "sha256": "4967811b882e325a6715232780800593ae82a0c4d073dfb07b55e8c758e910c6",
+      "sha256": "c1fd1af02d901512adc0a0aacb69bc5ef30bb44400ac642a58361aaa59ff9250",
       "purpose": "Minimal target/product/resource wiring; foreground binary owners preserved and compiler excluded from extension closure",
       "target": "SwiftPM / AI_HLY / widget extension / tests",
       "findings": [
@@ -4047,6 +4930,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; final extension closure audit pending",
         "runs": [
@@ -4085,6 +4969,7 @@
         "HanlinCompilerProvenance"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -4128,6 +5013,7 @@
         "ambientScriptingSymbols"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -4171,6 +5057,7 @@
         "completeArtifactManifest"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -4201,6 +5088,7 @@
         "programs"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -4244,6 +5132,7 @@
         "HanlinPackageArtifactManifest"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -4286,6 +5175,7 @@
         "HanlinWidgetManifestError"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -4319,6 +5209,7 @@
         "HanlinWidgetProgramError"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -4350,6 +5241,7 @@
         "HanlinExpoWidgetsDynamicView"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4389,6 +5281,7 @@
         "getBundleScript"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4421,6 +5314,7 @@
         "actionIntent"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4454,6 +5348,7 @@
         "HanlinSetWidgetValueIntent"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4494,6 +5389,7 @@
         "prepare"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4540,6 +5436,7 @@
         "HanlinScriptTranslationUISnapshot"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4587,6 +5484,7 @@
         "envelopeData"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; OS lifecycle/device pending",
         "runs": [
@@ -4623,6 +5521,7 @@
         "perform"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; OS lifecycle/device pending",
         "runs": [
@@ -4661,6 +5560,7 @@
         "publishWidgetTemplates"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; OS lifecycle/device pending",
         "runs": [
@@ -4690,6 +5590,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4719,6 +5620,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4757,6 +5659,7 @@
         "byteIdentical": true,
         "adaptation": "Bundled support resource; util.js trailing spaces normalized."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4795,6 +5698,7 @@
         "byteIdentical": false,
         "adaptation": "Bundled support resource; util.js trailing spaces normalized."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4824,6 +5728,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4855,6 +5760,7 @@
         "HanlinScriptWidgetDynamicView"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4884,6 +5790,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4913,6 +5820,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4946,6 +5854,7 @@
         "nativeElement"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -4990,6 +5899,7 @@
         "request"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -5045,6 +5955,7 @@
         "byteIdentical": false,
         "adaptation": "Adapted original widget execution lifecycle and component resolution; fresh VM, frozen transfer and transactional storage. Full app/editor/system-service API surface excluded."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for package integration; network transport and actual OS intent taps remain unproven",
         "runs": [
@@ -5069,6 +5980,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; license text is not a runtime test",
         "runs": [],
@@ -5101,6 +6013,7 @@
         "localSHA256": "b079ef6cba8fa1702c6a041f9386cc22361fcfc34ad34c871a09bdb5cc542293",
         "byteIdentical": false
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5148,6 +6061,7 @@
         "byteIdentical": true,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5186,6 +6100,7 @@
         "byteIdentical": true,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5222,6 +6137,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5259,6 +6175,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5295,6 +6212,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5331,6 +6249,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5374,6 +6293,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5410,6 +6330,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5446,6 +6367,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5485,6 +6407,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5521,6 +6444,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5557,6 +6481,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5593,6 +6518,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5629,6 +6555,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5665,6 +6592,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5708,6 +6636,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5746,6 +6675,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5783,6 +6713,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5823,6 +6754,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5873,6 +6805,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5912,6 +6845,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -5958,6 +6892,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6000,6 +6935,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6042,6 +6978,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6085,6 +7022,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6131,6 +7069,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6171,6 +7110,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6220,6 +7160,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6256,6 +7197,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6301,6 +7243,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6337,6 +7280,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6377,6 +7321,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6414,6 +7359,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6455,6 +7401,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6502,6 +7449,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6526,6 +7474,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; license text is not a runtime test",
         "runs": [],
@@ -6546,6 +7495,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6570,6 +7520,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; license text is not a runtime test",
         "runs": [],
@@ -6606,6 +7557,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6642,6 +7594,7 @@
         "byteIdentical": true,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6680,6 +7633,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6718,6 +7672,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6754,6 +7709,7 @@
         "byteIdentical": false,
         "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
@@ -6786,6 +7742,7 @@
         "digest"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -6821,6 +7778,7 @@
         "byteIdentical": true,
         "adaptation": "Bundled support resource; util.js trailing spaces normalized."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -6856,6 +7814,7 @@
         "byteIdentical": false,
         "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
@@ -6895,6 +7854,7 @@
         "substituting"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -6931,6 +7891,7 @@
         "digest"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -6955,6 +7916,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
@@ -6992,6 +7954,7 @@
         "package"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for focused analyzer tests",
         "runs": [
@@ -7033,6 +7996,7 @@
         "interruptedShadowPublicationRestoresExactCommittedRevision"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for matching assertions; broad tag raster remains PARTIAL semantics",
         "runs": [
@@ -7065,6 +8029,7 @@
         "save"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for matching assertions; broad tag raster remains PARTIAL semantics",
         "runs": [
@@ -7088,6 +8053,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; no runtime assertion applies",
         "runs": [],
@@ -7096,9 +8062,30 @@
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
     },
     {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "change": "M",
+      "sha256": "f9d9b1fb834d3e480d1694f4a41a97486ca323927762db79d7233df86d7d072e",
+      "purpose": "Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction",
+      "target": "Owner app/composer/Chat source or its test/documentation",
+      "findings": [],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": true,
+      "coverage": {
+        "status": "OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841"
+        ],
+        "assertions": [
+          "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
       "path": "Scripts/Widgets/audit-changed-paths.mjs",
       "change": "A",
-      "sha256": "5d6e050ac9aefd5ad76f3b84ab345f405acc3865c703dbc8e2fb9d8813839f08",
+      "sha256": "de5974f369872b66c05dfa999ee6bca482ca5a73f0db37ce9fb7470964fa8892",
       "purpose": "Reproducible exhaustive changed-path coverage/provenance inventory",
       "target": "Local evidence tooling",
       "findings": [
@@ -7109,6 +8096,7 @@
         "classify"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "SOURCE_INSPECTED; executed to generate this inventory",
         "runs": [],
@@ -7133,6 +8121,7 @@
         "walk"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: JS checks executed; final built appex audit separately tracked",
         "runs": [
@@ -7159,6 +8148,7 @@
         "buildExpoWidgetsBundle"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: JS checks executed; final built appex audit separately tracked",
         "runs": [
@@ -7183,6 +8173,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: JS checks executed; final built appex audit separately tracked",
         "runs": [
@@ -7205,6 +8196,7 @@
       ],
       "declarations": [],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "NOT_RUN: diagnostic script not yet exercised on CI",
         "runs": [],
@@ -7228,6 +8220,7 @@
         "deterministicZip"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: JS checks executed; final built appex audit separately tracked",
         "runs": [
@@ -7261,6 +8254,7 @@
         "Invalid"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "PARTIAL: JS checks executed; final built appex audit separately tracked",
         "runs": [
@@ -7290,6 +8284,7 @@
         "ran"
       ],
       "provenance": null,
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS for focused analyzer tests",
         "runs": [
@@ -7328,6 +8323,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7366,6 +8362,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7401,6 +8398,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7437,6 +8435,7 @@
         "byteIdentical": false,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7473,6 +8472,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7508,6 +8508,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7541,6 +8542,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7581,6 +8583,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7614,6 +8617,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7649,6 +8653,7 @@
         "byteIdentical": false,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7682,6 +8687,7 @@
         "byteIdentical": false,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7715,6 +8721,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
@@ -7748,6 +8755,7 @@
         "byteIdentical": true,
         "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
       },
+      "ownerImported": false,
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [

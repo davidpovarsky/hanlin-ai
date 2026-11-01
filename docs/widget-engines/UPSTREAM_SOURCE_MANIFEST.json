@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-31",
-  "nativeLinkStatus": "EXECUTED_PASS_SOURCE_SUBSET_AND_BRIDGE_41239669157; FINAL_APPEX_AUDIT_PENDING",
+  "generatedAt": "2026-11-01",
+  "nativeLinkStatus": "PARTIAL: 41239679485 confirms no React/Hermes in actual appex; shared HanlinPlatformContracts dylib lacks APP_EXTENSION_SAFE. Compile/link enforcement added; final rerun pending.",
   "files": [
     {
       "repository": "everettjf/scriptwidget",
@@ -408,9 +408,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/ViewRenderer.swift",
       "upstreamBlob": "68e376fdd5a4a1b088f6e2e28b0babb285feec12",
       "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
-      "localSHA256": "12845faebfe415e523cc27378c2358f94f89746853d95e75c89fa288c2b2a3c6",
+      "localSHA256": "4760b6a99eae4a0452def92276761776a0f890febb6ea3dbff86100dbd896f51",
       "byteIdentical": false,
-      "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors."
+      "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors. Measured Gauge slot failure in 41239679485: preserve children for Gauge/Label/Progress, whose original native bodies consume slots/labels."
     },
     {
       "repository": "expo/expo",
@@ -848,9 +848,9 @@
       "upstream": "packages/expo-ui/ios/GaugeView.swift",
       "upstreamBlob": "be46e3dd541f63f5949cd7b3e19b1b3423a12251",
       "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/GaugeView.swift",
-      "localSHA256": "a705f79f149a690c3516e386bb30528de62aa18e61e655ee6194f7e095f0c060",
+      "localSHA256": "cfd84b2392341fb5c9814c54807e7f66972d3febbcf6eaa8e27c8d7d63880b5e",
       "byteIdentical": false,
-      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored."
+      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored. Reject an inverted closed range with a native diagnostic rather than trapping in Swift ClosedRange."
     },
     {
       "repository": "expo/expo",

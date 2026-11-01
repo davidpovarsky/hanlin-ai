@@ -4,8 +4,8 @@ No Pass-2 CLOSED/AnyView/ZIP-existence assertion is accepted as native execution
 
 | Gate | Obligation | Status |
 |---|---|---|
-| G01 | Inventory/preservation | EXECUTED_PASS: preserved backup/inventory; four frozen paths unchanged from ce586667 |
-| G02 | Original Expo AnyChild | PARTIAL: original AnyChild subset AND bridge SDK compile/link PASS (41239669157); native iOS semantics/OS pending |
+| G01 | Inventory/preservation | EXECUTED_PASS: backups preserved; Nov 1 owner synchronization imports two deliberate Chat edits, no widget-authored Chat edits |
+| G02 | Original Expo AnyChild | PARTIAL: original AnyChild subset AND bridge SDK compile/link PASS (41239669157); native Text/slot iOS PASS; Gauge slot failed, follow-up not yet executed; OS pending |
 | G03 | Original ScriptWidget native builders | PARTIAL: original JSExport/native builders compile and 29-tag/10-chart macOS raster assertions PASS (41239674500) |
 | G04 | JSX compiler/resources | EXECUTED_PASS for install-time JSX/resources: 7 JS tests, real 7 archive analyses/5 installs; OS separate |
 | G05 | Explicit import/engine metadata | EXECUTED_PASS for real analyzer/install/verified preparation; host UI acceptance pending |
@@ -21,8 +21,8 @@ No Pass-2 CLOSED/AnyView/ZIP-existence assertion is accepted as native execution
 | G15 | Malformed/negative cases | PARTIAL: invalid/mixed archives, artifact attacks, stale/disabled/uninstalled/family negatives PASS; native error UI pending |
 | G16 | Measured performance/memory | NOT_RUN: no device memory/latency claim; sampled simulator RSS probe added, not yet run |
 | G17 | No Hanlin grant gate | PARTIAL: source inspection and real shared installation PASS; app UI result pending |
-| G18 | Existing regressions | NOT_RUN: latest dependency-affected foreground UI run pending |
-| G19 | Searchable/Probe | HISTORICAL_PASS_ONLY (40994342575/e9226517); latest affected Searchable/Probe rerun pending |
+| G18 | Existing regressions | PARTIAL: ten foreground UI methods PASS in 41239679485; Probe exits on close; new owner integration rerun pending |
+| G19 | Searchable/Probe | PARTIAL: Searchable PASS at 5bfcf03b / 41239679485; Probe close failed; synchronized owner source rerun pending |
 | G20 | Embedded Node HTTPS | MITIGATED / BLOCKED_DEVICE |
 | G21 | RNHostView Fabric | MITIGATED: no proven Fabric root-cause fix |
 | G22 | Mixed tree optional | DEFERRED_OPTIONAL: mixed ABI-0 rejected explicitly |
@@ -82,3 +82,5 @@ Statuses below are acceptance scopes, not a blanket CLOSED label. Package PASS r
 | P3-29 | PARTIAL | Historical overclaims reopened; per-path/gate evidence prepared; final result reconciliation pending |
 | P3-30 | MITIGATED / BLOCKED_DEVICE | B03/B04 preserved; no new embedded TLS/fd/Fabric device proof |
 | P3-31 | PARTIAL | Same branch scoped commits/non-force push; SDK/package PASS, actual full UI pending, signed device BLOCKED_DEVICE |
+
+Current measured iOS failures and follow-up source are detailed in CI_AND_DEVICE_RESULTS.md (2026-11-01). The current merged source includes the owner OrganizerDock branch, so no pre-merge full app PASS is inferred. Native Home Screen interaction remains open; five original native renderer methods now cover the repaired Gauge, Label and Progress routes. The per-path audit separates 27 imported owner paths from widget-authored changes.

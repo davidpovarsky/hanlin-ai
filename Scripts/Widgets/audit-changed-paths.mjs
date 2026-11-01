@@ -20,7 +20,10 @@ changes.set(output, fs.existsSync(path.join(root, output)) ? changes.get(output)
 const packageRun = 'https://github.com/davidpovarsky/hanlin-ai/actions/runs/41242542513';
 const subsetRun = 'https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157';
 const fullRun = 'https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239679485';
+const ownerPaths = new Set(git('diff', '--name-only', '9281bd2f6e2c11706b1ae47962cc9a312d17d412', 'b5ce6f60d827436a4d39219dc08e9c4144012ed0').split('\n'));
 function classify(file) {
+  if (ownerPaths.has(file)) return ['Preserve owner OrganizerDock/source-parity change during explicitly requested 2026-11-01 synchronization; not authored as a widget correction', 'Owner app/composer/Chat source or its test/documentation', [], 'OWNER_IMPORTED: own source unchanged; owner run overall FAILED, per-case results reported in owner ledger; final widget integration build pending', ['https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841'], ['See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; no blanket owner acceptance PASS inferred']];
+
   if (/^docs\/|PROJECT_BOARD/.test(file)) return ['Evidence, provenance or acceptance documentation', 'Documentation', ['P3-29', 'P3-31'], 'SOURCE_INSPECTED; no runtime assertion applies', [], []];
   if (/LICENSE|NOTICE/.test(file)) return ['Retain full upstream copyright and license notices', 'Resource/legal notice', ['P3-09', 'P3-10', 'P3-27'], 'SOURCE_INSPECTED; license text is not a runtime test', [], []];
   if (/HanlinExpoWidgetSubset\//.test(file)) return ['Source-built original ExpoUI/Core native widget subset; explicit dictionary/context adapters', 'HanlinExpoWidgetSubset -> HanlinExpoWidgetNative -> HanlinScriptingWidgets', ['P3-09', 'P3-27'], 'EXECUTED_PASS: SDK compile/link; individual native semantics PARTIAL/pending iOS tests', [subsetRun], ['HanlinNativeWidgetRendererTests (native semantic results tracked separately)']];
@@ -50,13 +53,13 @@ const files = [...changes].sort(([a], [b]) => a.localeCompare(b)).map(([file, ch
   const text = bytes && /\.(swift|mjs|ts|py)$/.test(file) ? bytes.toString('utf8') : '';
   return { path: file, change, sha256: bytes ? digest(bytes) : null, purpose: change === 'D' ? `Remove obsolete handwritten substitute: ${purpose}` : purpose,
     target, findings, declarations: [...text.matchAll(/(?:struct|class|enum|protocol|func|function)\s+(\w+)/g)].map(match => match[1]).filter((name, index, values) => values.indexOf(name) === index).slice(0, 16),
-    provenance: byPath.get(file) ?? null, coverage: { status, runs, assertions },
+    provenance: byPath.get(file) ?? null, ownerImported: ownerPaths.has(file), coverage: { status, runs, assertions },
     beforeEvidence: 'Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green.' };
 });
 fs.writeFileSync(path.join(root, output), JSON.stringify({ baseline, sourceHead: git('rev-parse', 'HEAD'), observedAt: new Date().toISOString(), scope: 'All tracked changes against actual starting HEAD plus all untracked paths. sourceHead is the existing commit at generation time; the containing evidence commit cannot hash itself. Output omits its own digest. Compile coverage is distinct from per-feature/OS acceptance.', evidenceRuns: {
 package: { url: packageRun, sourceSHA: '997d88bffd8cb2598bcf2772d783adb7514b24ca', status: 'EXECUTED_PASS', target: 'arm64 macOS, Xcode 27.1 (27A9275), Swift 6.4; 25 extension/10 analyzer/7 JS tests' },
 nativeSource: { url: subsetRun, sourceSHA: '5bfcf03b2114f1952a9fa8d46d92e2c4f3d1edc0', status: 'EXECUTED_PASS', target: 'arm64 iOS 27 Simulator SDK; subset Swift 5 / bridge Swift 6; application-extension enforcement' },
-full: { url: fullRun, sourceSHA: '5bfcf03b2114f1952a9fa8d46d92e2c4f3d1edc0', status: 'PENDING_RESULT', target: 'iPad mini (A17 Pro), iPadOS 27 Simulator; actual app/appex build passed' }
+full: { url: fullRun, sourceSHA: '5bfcf03b2114f1952a9fa8d46d92e2c4f3d1edc0', status: 'FAILED: 3/4 native renderer and 10/11 foreground UI passed; three widget UI failures; contracts dylib unsafe flag; follow-up source not yet run', target: 'iPad mini (A17 Pro), iPadOS 27 Simulator; actual app/appex build passed' }
 }, intentionallyUnchanged: [
 { path: 'HanlinScriptingWidgets/Info.plist', reason: 'Existing widget extension registration preserved; one generic kind remains.' },
 { path: 'HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements', reason: 'Existing App Groups already match verified store identifier; no signing/entitlement change.' }

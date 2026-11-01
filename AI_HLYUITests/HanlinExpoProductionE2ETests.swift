@@ -112,10 +112,25 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     private func placeNativeWidget(in springboard: XCUIApplication, selecting instance: String) throws {
         XCUIDevice.shared.press(.home)
         recordWidgetEvidence(springboard, name: "home-before-gallery-\(instance)")
-        let icon = springboard.icons.matching(NSPredicate(format: "label == 'ChavrusaChat' OR label CONTAINS[c] 'Hanlin'")).firstMatch
-        XCTAssertTrue(icon.waitForExistence(timeout: 15), "Hanlin app icon missing from Home Screen")
-        icon.press(forDuration: 2)
+        let icons = springboard.icons.matching(NSPredicate(format: "label == 'ChavrusaChat' OR label CONTAINS[c] 'Hanlin'"))
+        let screen = springboard.frame
+        var homeIcon: XCUIElement?
+        for _ in 0..<4 {
+            homeIcon = icons.allElementsBoundByIndex.first { icon in
+                let frame = icon.frame
+                return frame.minX >= screen.minX && frame.maxX <= screen.maxX &&
+                    frame.minY >= screen.minY && frame.maxY < screen.maxY - 140 && icon.isHittable
+            }
+            if homeIcon != nil { break }
+            springboard.swipeLeft()
+        }
+        let icon = try XCTUnwrap(homeIcon, "Hanlin Home Screen icon was absent; Dock shortcuts have a different menu")
+        icon.press(forDuration: 1)
+        recordWidgetEvidence(springboard, name: "home-icon-menu-\(instance)")
         let editHome = springboard.buttons["Edit Home Screen"].firstMatch
+        if !editHome.exists, springboard.buttons["Options"].firstMatch.exists {
+            springboard.buttons["Options"].firstMatch.tap()
+        }
         XCTAssertTrue(editHome.waitForExistence(timeout: 10), "SpringBoard Edit Home Screen unavailable; inspect attached accessibility tree")
         editHome.tap()
         let edit = springboard.buttons["Edit"].firstMatch
