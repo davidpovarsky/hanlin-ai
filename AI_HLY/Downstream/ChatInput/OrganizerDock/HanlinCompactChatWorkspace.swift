@@ -458,6 +458,5 @@ struct HanlinCompactChatWorkspace: View {
                 dockHeight = clamped
             }
         }
-        .accessibilityIdentifier("hanlin-persistent-compact-composer")
     }
 }

@@ -34,6 +34,14 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            Color.clear
+                .frame(maxWidth: .infinity)
+                .frame(height: dockState.panelHeight)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "Organizer Dock"))
+                .accessibilityIdentifier("hanlin-organizer-dock")
+
             drawerLayer
                 .frame(height: dockState.panelHeight, alignment: .top)
             composerLayer

@@ -261,7 +261,6 @@ struct ChatViewBottom: View {
     var availableWorkspaceSize: CGSize = .zero
 
     @Environment(\.modelContext) private var context
-    @Namespace private var modelPopoverZoom
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -1344,7 +1343,7 @@ struct ChatViewBottom: View {
             .disabled(isResponding)
             .sensoryFeedback(.impact, trigger: isFeedBack)
 
-            // Entrypoint 3: Compact Discoverable Model Picker Capsule (sole anchored `.popover` with matched zoom)
+            // Entrypoint 3: Compact Discoverable Model Picker Capsule (sole anchored `.popover` with internal matched zoom)
             Button {
                 isFeedBack.toggle()
                 popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
@@ -1352,7 +1351,6 @@ struct ChatViewBottom: View {
                 composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
             }
             .buttonStyle(.plain)
-            .matchedTransitionSource(id: "model-popover", in: modelPopoverZoom)
             .accessibilityIdentifier("hanlin-composer-model-picker")
             .sensoryFeedback(.selection, trigger: isSelect)
             .popover(
@@ -1373,7 +1371,6 @@ struct ChatViewBottom: View {
                     ifThink: ifThink,
                     ifAudio: ifAudio
                 )
-                .navigationTransition(.zoom(sourceID: "model-popover", in: modelPopoverZoom))
                 .presentationCompactAdaptation(.popover)
             }
 
