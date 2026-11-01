@@ -16,6 +16,9 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        if name.contains("testNative") {
+            recordWidgetEvidence(XCUIApplication(bundleIdentifier: "com.apple.springboard"), name: "home-final-\(name)")
+        }
         if app.state != .notRunning {
             let attachment = XCTAttachment(string: app.debugDescription)
             attachment.name = "host-final-accessibility.txt"
@@ -143,9 +146,15 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertTrue(search.waitForExistence(timeout: 10))
         search.tap()
         search.typeText("ChavrusaChat")
-        let galleryItem = springboard.descendants(matching: .any).matching(NSPredicate(format: "label == 'ChavrusaChat' OR label == 'Hanlin Script' OR label == 'AI Hanlin' OR label == 'Hanlin'")).firstMatch
+        // The underlying Home Screen icon remains in SpringBoard's hierarchy.
+        // Select the actual gallery row, never an identically named app icon.
+        let gallery = springboard.collectionViews["add-sheet-collection-view"].firstMatch
+        XCTAssertTrue(gallery.waitForExistence(timeout: 10))
+        let galleryItem = gallery.cells.matching(NSPredicate(format: "label == 'ChavrusaChat' OR label == 'Hanlin Script' OR label == 'AI Hanlin' OR label == 'Hanlin'")).firstMatch
         XCTAssertTrue(galleryItem.waitForExistence(timeout: 10))
+        recordWidgetEvidence(springboard, name: "gallery-search-\(instance)")
         galleryItem.tap()
+        recordWidgetEvidence(springboard, name: "gallery-preview-\(instance)")
         let add = springboard.buttons["Add Widget"].firstMatch
         XCTAssertTrue(add.waitForExistence(timeout: 10))
         add.tap()

@@ -35,7 +35,7 @@ private extension HanlinValue {
         case let .integer(value): NSNumber(value: value)
         case let .number(value): NSNumber(value: value)
         case let .array(values): values.map(\.scriptWidgetNativeValue)
-        case let .object(values): Dictionary(uniqueKeysWithValues: values.map { ($0.key, $0.value.scriptWidgetNativeValue) })
+        case let .object(values): Dictionary(values.map { ($0.key, $0.value.scriptWidgetNativeValue) }, uniquingKeysWith: { _, latest in latest })
         default: toAny()
         }
     }

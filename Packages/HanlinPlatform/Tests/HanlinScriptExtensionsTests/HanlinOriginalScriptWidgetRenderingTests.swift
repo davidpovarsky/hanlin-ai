@@ -117,13 +117,19 @@ struct HanlinOriginalScriptWidgetRenderingTests {
     }
 
     @Test func frozenIntegerPropsPreserveOriginalJSCNumberSemantics() throws {
-        let node = HanlinScriptWidgetPreparedNode(tag: "line", props: ["length": .integer(40), "clip": .integer(2), "on": .bool(true), "date": .integer(1_793_361_600_000)], children: [.value(.integer(17))])
+        // Canonical JSON retains distinct UTF-8 keys; Foundation dictionaries
+        // merge canonically equivalent Unicode spellings without trapping.
+        let object = try HanlinObject<HanlinValue>(uniqueMembers: [("e\u{301}", .integer(1)), ("\u{e9}", .integer(2))])
+        let node = HanlinScriptWidgetPreparedNode(tag: "line", props: ["length": .integer(40), "clip": .integer(2), "on": .bool(true), "date": .integer(1_793_361_600_000)], children: [.value(.integer(17)), .value(.object(object))])
         let native = node.nativeElement()
         #expect(native.getPropDouble("length") == 40)
         #expect(native.getPropInt("clip") == 2)
         #expect(native.getPropBool("on") == true)
         #expect(native.getPropDouble("date") == 1_793_361_600_000)
         #expect((native.getChildren().first as? NSNumber)?.intValue == 17)
+        let nativeObject = try #require(native.getChildren().last as? [String: Any])
+        #expect(nativeObject.count == 1)
+        #expect((nativeObject["\u{e9}"] as? NSNumber)?.intValue == 2)
     }
 
     private func frozenElement(_ element: ScriptWidgetRuntimeElement) throws -> HanlinScriptWidgetPreparedNode {
