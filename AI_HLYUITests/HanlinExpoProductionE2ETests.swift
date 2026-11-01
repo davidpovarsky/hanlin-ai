@@ -16,16 +16,15 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        if name.contains("testNative") {
-            recordWidgetEvidence(XCUIApplication(bundleIdentifier: "com.apple.springboard"), name: "home-final-\(name)")
-        }
-        if app.state != .notRunning {
-            let attachment = XCTAttachment(string: app.debugDescription)
-            attachment.name = "host-final-accessibility.txt"
+        let captureHome = name.contains("testNative") && app.state == .notRunning
+        let surface = captureHome ? XCUIApplication(bundleIdentifier: "com.apple.springboard") : app
+        if surface.state != .notRunning {
+            let attachment = XCTAttachment(string: surface.debugDescription)
+            attachment.name = captureHome ? "home-final-accessibility.txt" : "host-final-accessibility.txt"
             attachment.lifetime = .keepAlways
             add(attachment)
-            let screenshot = XCTAttachment(screenshot: app.screenshot())
-            screenshot.name = "host-final"
+            let screenshot = XCTAttachment(screenshot: surface.screenshot())
+            screenshot.name = captureHome ? "home-final" : "host-final"
             screenshot.lifetime = .keepAlways
             add(screenshot)
         }

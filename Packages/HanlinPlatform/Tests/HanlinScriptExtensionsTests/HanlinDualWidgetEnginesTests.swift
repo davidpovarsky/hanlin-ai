@@ -35,7 +35,7 @@ struct HanlinDualWidgetEnginesTests {
             templates.append(.init(identity: fixture.identity, displayName: fixture.template.displayName, validUntil: .distantFuture, engine: .expo,
                 payload: .expo(.init(layout: "", layoutRef: artifact.ref, layoutSHA256: artifact.sha256)), root: fixture.template.root))
         }
-        let installedIDs = [first.identity.installedPackageID, second.identity.installedPackageID]
+        let installedIDs: Set<HanlinInstalledPackageID> = [first.identity.installedPackageID, second.identity.installedPackageID]
         try store.publishWidgetTemplates(templates, intentEntities: [], translationApps: [], installedPackageIDs: installedIDs)
         let instances = try #require(try store.load()?.widgetInstances)
         let firstBase = try #require(instances.first { $0.identity == first.identity })
