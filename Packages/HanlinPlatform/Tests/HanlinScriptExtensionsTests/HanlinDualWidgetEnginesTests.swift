@@ -736,7 +736,7 @@ struct HanlinDualWidgetEnginesTests {
             case .scriptwidget:
                 payload = .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256))
             case .legacy:
-                payload = fixture.template.payload
+                payload = try #require(fixture.template.payload)
             }
             templates.append(.init(identity: fixture.identity, displayName: fixture.template.displayName, validUntil: .distantFuture, engine: fixture.template.engine, payload: payload, root: fixture.template.root))
         }
