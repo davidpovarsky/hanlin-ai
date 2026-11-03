@@ -727,13 +727,15 @@ struct HanlinDualWidgetEnginesTests {
 
         var templates: [Widget] = []
         for fixture in [expoFixture, scriptFixture, legacyFixture] {
-            let (program, _) = try fixture.store.loadProgram(for: fixture.template)
-            let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: fixture.identity.installedPackageID, generation: fixture.identity.generation)
             let payload: HanlinWidgetPayload
             switch fixture.template.engine {
             case .expo:
+                let (program, _) = try fixture.store.loadProgram(for: fixture.template)
+                let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: fixture.identity.installedPackageID, generation: fixture.identity.generation)
                 payload = .expo(.init(layout: "", layoutRef: artifact.ref, layoutSHA256: artifact.sha256))
             case .scriptwidget:
+                let (program, _) = try fixture.store.loadProgram(for: fixture.template)
+                let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: fixture.identity.installedPackageID, generation: fixture.identity.generation)
                 payload = .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256))
             case .legacy:
                 payload = try #require(fixture.template.payload)
