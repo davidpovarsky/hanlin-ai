@@ -1,7 +1,7 @@
 {
   "baseline": "ce586667b7103a6c2c7243d33461768c51a9dd8d",
-  "sourceHead": "35fa7b06dcf6ae68e2ad13d0a27176e45de9767e",
-  "observedAt": "2026-11-03T02:42:46.541Z",
+  "sourceHead": "bac84e3a3968daba9768c6525ffd21be52f45d28",
+  "observedAt": "2026-11-03T03:37:27.136Z",
   "scope": "All tracked changes against actual starting HEAD plus all untracked paths. sourceHead is the existing commit at generation time; the containing evidence commit cannot hash itself. Output omits its own digest. Compile coverage is distinct from per-feature/OS acceptance.",
   "evidenceRuns": {
     "package": {
@@ -42,8 +42,8 @@
     }
   },
   "deliveryInstruction": {
-    "date": "2026-11-01",
-    "authorization": "Owner explicitly requests current version uploaded to TestFlight without further optional tests, then owner iPad QA. No public release or main merge.",
+    "date": "2026-11-03",
+    "authorization": "Owner explicitly requested Pass 4 version uploaded to TestFlight, then owner physical iPad QA. No public release or main merge.",
     "stoppedOptionalRuns": [
       "41308904140",
       "41309874110"
@@ -51,16 +51,23 @@
     "deviceAcceptance": "OWNER_DEVICE_QA_PENDING",
     "testflight": {
       "version": "0.7.3",
-      "build": "87401",
-      "sourceSHA": "279f0ead777b961728ed91386c136e7e33659c36",
-      "run": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41310977352",
+      "build": "88001",
+      "sourceSHA": "bac84e3a3968daba9768c6525ffd21be52f45d28",
+      "run": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41568291224",
       "conclusion": "SUCCESS",
       "appleProcessingState": "VALID",
-      "observedAt": "2026-11-01T14:00:38.9875840Z",
-      "ipaSHA256": "cf18f0edad4b5ddd49b089f77e024fc5234ca11757dcf75827e637fc91d2ef27"
+      "observedAt": "2026-11-03T03:31:19.6882290Z",
+      "ipaSHA256": "0c02d6fb98918e6310546a99459eeee3928e6f029d586aec4cbf3da87e80769b",
+      "priorBuild87401": {
+        "build": "87401",
+        "sourceSHA": "279f0ead777b961728ed91386c136e7e33659c36",
+        "run": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41310977352",
+        "deviceOutcome": "OWNER_EXECUTED_FAIL_INVALID_ARTIFACT_REFERENCE"
+      }
     }
   },
   "commits": [
+    "bac84e3a3968daba9768c6525ffd21be52f45d28 Record Pass 4 physical iPad reproduction, root cause, and CI/Simulator verification evidence",
     "35fa7b06dcf6ae68e2ad13d0a27176e45de9767e Fix installed.installedPackageID and nonisolated safeMessage in HanlinScriptingPlatform",
     "3daf6e2b4d1c11880cb88c26074d48dbbcb98f2f Use counterWidgetEntrypoint.supportedContexts in Pass 4 routing test",
     "0b34b7e64a078a3b56ab6a597dabf1af95a9879a Provide full HanlinPackageEntrypointDescriptor arguments in Pass 4 routing test",
@@ -1714,7 +1721,7 @@
     {
       "path": "docs/widget-engines/CI_AND_DEVICE_RESULTS.md",
       "change": "A",
-      "sha256": "5576515353573616b8ffb8b92d76c7e538c08882fa88b4b0d2683d96462826ee",
+      "sha256": "f97f1258e92ddaa59f860f08b34a9cd8ac27a23e45aad800f3fa849da57c3778",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1754,7 +1761,7 @@
     {
       "path": "docs/widget-engines/DEVICE_ACCEPTANCE_CHECKLIST.md",
       "change": "A",
-      "sha256": "d6528c9f89ef38bd59feb88fff490278c5e544d11ebf8065eb8d3c3239c8c70a",
+      "sha256": "799e92034bc06e65a1a6c4c6d5a71ba06285e1b186ecf3b94e042ca3fef34f71",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1854,7 +1861,7 @@
     {
       "path": "docs/widget-engines/RELEASE_AND_ROLLBACK.md",
       "change": "M",
-      "sha256": "355c329d3d1db68f4b76e94e54c10e664d417dcbb63ebc5aa1562802a9a320a2",
+      "sha256": "0623a6fa64792f6c8bbb3f7126980779eeaecbc547bfcd3532711fc2e21c62b3",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1894,7 +1901,7 @@
     {
       "path": "docs/widget-engines/TEST_MATRIX.md",
       "change": "M",
-      "sha256": "f03e07e33d0c80886c4110c25ba0eee8bc35453016cbabdac901c54b623f7a93",
+      "sha256": "a9a4a5a926d530c3752307b93ae6a221c0659438a63c1c9c6cd72e8991cb22d0",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1915,6 +1922,26 @@
       "path": "docs/widget-engines/TESTFLIGHT_87401_DELIVERY.md",
       "change": "A",
       "sha256": "48da455713229999880594ba3dbe851fdbb04fd048bb399072e1cf6727303c49",
+      "purpose": "Evidence, provenance or acceptance documentation",
+      "target": "Documentation",
+      "findings": [
+        "P3-29",
+        "P3-31"
+      ],
+      "declarations": [],
+      "provenance": null,
+      "ownerImported": false,
+      "coverage": {
+        "status": "SOURCE_INSPECTED; no runtime assertion applies",
+        "runs": [],
+        "assertions": []
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "docs/widget-engines/TESTFLIGHT_88001_DELIVERY.md",
+      "change": "A",
+      "sha256": "817962809fac427b9e1458a821aa92e64d86167932e216e7d52829217827dd59",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -8568,7 +8595,7 @@
     {
       "path": "Scripts/Widgets/audit-changed-paths.mjs",
       "change": "A",
-      "sha256": "f8409eb477a222711d2a76ef960818a55e9a874a6303e0c6a496485dd5141ce2",
+      "sha256": "d3ff98f4f70df2f709cc3f531300f658b01b2ddace3b75bb656f29f9d3bec1a4",
       "purpose": "Reproducible exhaustive changed-path coverage/provenance inventory",
       "target": "Local evidence tooling",
       "findings": [
