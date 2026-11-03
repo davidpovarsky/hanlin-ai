@@ -331,12 +331,12 @@ final class HanlinScriptingPlatform {
             } catch {
                 print("HANLIN_INSTALL_PREVIEW_PUBLICATION_FAILED: \(error)")
                 let diag = Self.makePublicationDiagnostic(
-                    for: installed.record.installedPackageID,
+                    for: installed.installedPackageID,
                     phase: .hostPublishSnapshot,
                     error: error,
                     storeDiagnostic: extensionStore?.lastDiagnostic
                 )
-                widgetPublicationDiagnostics[installed.record.installedPackageID] = diag
+                widgetPublicationDiagnostics[installed.installedPackageID] = diag
                 lastWidgetStorageDiagnostic = diag
                 activity = .idle
             }
@@ -2210,7 +2210,7 @@ final class HanlinScriptingPlatform {
         return url.appending(path: "Hanlin", directoryHint: .isDirectory)
     }
 
-    private static func safeMessage(_ error: Error) -> String {
+    nonisolated private static func safeMessage(_ error: Error) -> String {
         String(String(describing: error).prefix(512))
     }
 
