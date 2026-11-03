@@ -32,4 +32,10 @@ This upload is distinct from public App Store release or a `main` merge; neither
 
 Actual SpringBoard widget placement, button/toggle execution, and physical iPad acceptance remain `OWNER_DEVICE_QA_PENDING` on build `0.7.3 (88001)`: see [device checklist](DEVICE_ACCEPTANCE_CHECKLIST.md) and [CI evidence](CI_AND_DEVICE_RESULTS.md). `VALID` processing is delivery evidence, not physical-device interaction acceptance.
 
+### 2026-11-03 Physical Device Retrospective & Pass 5 Scope
+On 2026-11-03, owner physical iPad testing of build `0.7.3 (88001)` reported `OWNER_REPORTED_FAIL`:
+1. **WidgetKit System Picker Empty (`WK-03` / `WP-04`):** In the iPadOS system Edit Widget configuration sheet, tapping "Widget instance" displayed no selectable installed scripts/instances (`NO_SCRIPT_SELECTION_IN_SYSTEM_WIDGET_CONFIGURATION`).
+2. **Missing Chat V3.3 / OrganizerDock (`CH-01`):** Build 88001 branch (`integration/hanlin-dual-widget-engines-20261029`) lacked the owner-approved Chat V3.3 / OrganizerDock repairs separately delivered in TestFlight `0.7.3 (87901)` on `fix/hanlin-organizerdock-v33-final-repair-20261101`.
+Both issues are addressed in Pass 5 under unified branch `fix/hanlin-widget-picker-dock-unified-20261103`. Delivery facts for 88001 remain authentic and historical.
+
 Raw workflow log is preserved outside Git at `C:/Users/DAVID/.codex/backups/hanlin-testflight-41568291224/job-125694985379.log`. The signed IPA and SHA256 remain in the linked workflow artifact (`13202017641`).

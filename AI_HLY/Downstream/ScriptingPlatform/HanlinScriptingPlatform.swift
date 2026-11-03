@@ -422,7 +422,7 @@ final class HanlinScriptingPlatform {
     }
 
     func widgetPublicationDiagnostic(for id: HanlinInstalledPackageID) -> HanlinWidgetStorageDiagnostic? {
-        widgetPublicationDiagnostics[id]
+        widgetPublicationDiagnostics[id] ?? extensionStore?.latestDurableQueryDiagnostic
     }
 
     @discardableResult

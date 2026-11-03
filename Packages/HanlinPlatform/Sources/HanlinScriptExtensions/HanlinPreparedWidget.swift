@@ -97,7 +97,14 @@ public enum HanlinWidgetPreparation {
                   let widget = snapshot.widgets.first(where: { widget in
                       HanlinWidgetInstance(identity: widget.identity, engine: widget.engine, displayName: widget.displayName).entityID == entityID
                           && widget.family == family
-                  }) else { throw HanlinScriptWidgetError("The selected widget is unavailable, disabled or belongs to an older generation.") }
+                  }) else {
+                      if let snapshot, snapshot.widgets.contains(where: { widget in
+                          HanlinWidgetInstance(identity: widget.identity, engine: widget.engine, displayName: widget.displayName).entityID == entityID
+                      }) {
+                          throw HanlinScriptWidgetError("This widget does not support the \(family) size.")
+                      }
+                      throw HanlinScriptWidgetError("The selected widget is unavailable, disabled or belongs to an older generation.")
+                  }
             if case let .malformed(reason) = widget.payload { throw HanlinScriptWidgetError(reason) }
             guard !snapshot.inactiveWidgetInstallations.contains(widget.identity.installedPackageID.rawValue) else { throw HanlinScriptWidgetError("Widget package is being updated or is disabled.") }
             guard widget.validUntil > .now else { throw HanlinScriptWidgetError("The widget snapshot has expired. Open Hanlin to republish it.") }

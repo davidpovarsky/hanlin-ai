@@ -157,3 +157,45 @@ Original ScriptWidget Gauge safety/raster cases passed in 41305235263. Material/
 ### Owner-authorized Pass 4 TestFlight delivery — `0.7.3 (88001)` — 2026-11-03
 
 [נועם | DEV] [MAIN_SESSION] At the owner's explicit request on 2026-11-03, signed TestFlight workflow [41568291224](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41568291224) was dispatched on `integration/hanlin-dual-widget-engines-20261029` at `bac84e3a3968daba9768c6525ffd21be52f45d28` (containing Pass 4 source `35fa7b06dcf6ae68e2ad13d0a27176e45de9767e`) and finished **SUCCESS** in 43m57s (signed job `125694985379` in 39m01s). Stable Xcode 27.1 (`27A9275`) / iOS 27.1 SDK archive/export, app + four extension signature/provisioning checks, App Store Connect validation (`2026-11-03T03:18:08Z`), and upload (`2026-11-03T03:21:06Z`) passed. Version `0.7.3` / build `88001` reached Apple processing state `VALID` at `2026-11-03T03:31:19.6882290Z`. Signed IPA SHA256: `0c02d6fb98918e6310546a99459eeee3928e6f029d586aec4cbf3da87e80769b`; retained artifact `ChavrusaChat-signed-ipa-88001` (ID `13202017641`, `260154676` bytes, ZIP SHA256 `d54eb553f5d9a1118af64bd1b2b5b2ad34b00ce7408a377952148739603d4e46`). See [delivery record](TESTFLIGHT_88001_DELIVERY.md). Physical iPad retest of build `0.7.3 (88001)` remains `OPEN` / `OWNER_DEVICE_QA_PENDING`.
+
+## Pass 5 — WidgetKit system picker repair & 87901 Chat/OrganizerDock V3.3 synchronization — 2026-11-03
+
+[נועם | DEV] [MAIN_SESSION]
+
+### 1. Two-Branch Integration Provenance
+- **Widget Integration Branch (Pass 4):** `integration/hanlin-dual-widget-engines-20261029` @ `a6a836cd665b4d76107f1708ef17b30d7680e24d` (signed 88001 code at `bac84e3a3968daba9768c6525ffd21be52f45d28`).
+- **OrganizerDock V3.3 Branch (Pass 3.3):** `fix/hanlin-organizerdock-v33-final-repair-20261101` @ `35b9782bda76e2b2789d0532d22cf71a1a3f3500` (code at `c7b8d0127ddd980f29735aba8ae7fc4a3d8c0207`).
+- **Shared Merge Base:** `279f0ead777b961728ed91386c136e7e33659c36`.
+- **Synthetic Tree Object:** `2b153a84626d40cad6537b2f3b8c6981c51690f8` (clean text merge, exit code 0).
+- **Task Branch:** `fix/hanlin-widget-picker-dock-unified-20261103`.
+- **Merge Commit:** Normal non-destructive merge preserving full commit history from both lines.
+- **Classic Chat Invariants Verified:**
+  - `AI_HLY/Views/Components/ChatViewComponents.swift` (identical to `279f0ead`)
+  - `AI_HLY/Views/Components/ChatandFile.swift` (identical to `279f0ead`)
+  - `APIManager.swift` (identical to `279f0ead`)
+- **Eleven Approved V3.3 Chat Paths Preserved:** `ChatView.swift`, `ChatViewBottom.swift`, `HanlinComposerPopupView.swift`, `HanlinCompactChatWorkspace.swift`, `HanlinComposerSessionBridge.swift`, `HanlinOrganizerDock.swift`, `HanlinOrganizerDockState.swift`, `HanlinPendingFirstTurn.swift`, `ListView.swift`, `HanlinOrganizerDockParityTests.swift`, `AgentRuntimeConversationUITests.swift`.
+
+### 2. WidgetKit System Picker Root Cause & Fixes
+- **Root Cause 1 (`EnumerableEntityQuery` & `EntityStringQuery` Missing):** `HanlinScriptPackageEntityQuery` only conformed to basic `EntityQuery`, lacking `allEntities()` and `entities(matching:)`. In iPadOS 27 WidgetKit, editing the `@Parameter` on `HanlinWidgetConfigurationIntent` requires an enumerable/string query to populate the system configuration picker sheet.
+  - *Fix:* Conformed `HanlinScriptPackageEntityQuery` to `EnumerableEntityQuery` and `EntityStringQuery`, implementing `allEntities()` and `entities(matching:)` backed by `selectableWidgetEntities()`.
+- **Root Cause 2 (`availableEntities` Enumerated Snapshots, Not Instances):** The old implementation enumerated `snapshot.widgets` instead of `snapshot.widgetInstances`, creating mismatch with user-created instances and per-family templates.
+  - *Fix:* Created `HanlinSelectableWidgetEntity` and `selectableWidgetEntities()` on `HanlinScriptExtensionSnapshot`. Performs an authoritative join between `widgetInstances` and active family templates, filters inactive installations, formats clean labels (`package name · engine · variant`), and sorts deterministically (Default first, then alphabetical).
+- **Root Cause 3 (Default Retention on Republish):** In `publishWidgetTemplates`, `previous.isEmpty ? [base] : previous.map(...)` would permanently drop `Default` if previous instances only contained custom variants.
+  - *Fix:* Idempotently restores `Default` if missing from `previous`, preserving all custom variants (`A1`/`A2`), settings, revisions, and migrations.
+- **Root Cause 4 (Cross-Process Error Diagnosability):** Entity query errors in the extension process were held in ephemeral in-memory storage.
+  - *Fix:* Added `recordDurableQueryDiagnostic` writing atomically to `latest-query-diagnostic.json` in the App Group, exposed to host Package Information via `extensionStore?.latestDurableQueryDiagnostic`.
+- **Root Cause 5 (Family-Specific Error Clarity):** `HanlinWidgetPreparation.prepare` now checks if the widget exists for other families, throwing explicit `"This widget does not support the \(family) size."` rather than a generic stale-generation error.
+
+### 3. Added Regression Unit Tests
+In `Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift`:
+1. `testNativeEntitySuggestionsReadPublishedDefaultAndVariants`: Verifies all 3 engines (expo, scriptwidget, legacy), Default and A1/A2 instances, label formatting, and deterministic sorting.
+2. `testNativeEntityLookupResolvesOnlyExactIDs`: Verifies exact ID resolution, rejection of unknown IDs, and exclusion of disabled/inactive installations.
+3. `testRegistryAndTemplateJoinHandlesFamilyAndOrphans`: Verifies supported family join, explicit family mismatch error, and exclusion of orphan instances without templates.
+4. `testNativePublisherRepairsMissingDefaultWithoutLosingA1A2`: Verifies idempotent Default restoration when previously missing, with variant and state preservation.
+5. `testDurableQueryDiagnosticCrossProcess`: Verifies durable diagnostic persistence and loading across process boundaries.
+
+### 4. Status Verdict
+- **Code & Local Integration:** `CODE_READY_DEVICE_PENDING`.
+- **Signed TestFlight Delivery:** NOT DISPATCHED (requires separate explicit owner instruction).
+- **Asana Status:** READ-ONLY (no tasks created, modified, or completed per project instructions).
+- **Physical iPad Verification:** `OWNER_DEVICE_QA_PENDING`.

@@ -38,3 +38,26 @@ On 2026-11-01, the owner installed signed TestFlight build `0.7.3 (87401)` (`279
 - **Steps 1, 2, 5, 6, 7, 8, 9, 10:** Remain `NOT_RUN` / `BLOCKED_DEVICE` on build `87401` because instance publication was blocked before SpringBoard widget configuration could proceed.
 - **Pass 4 corrective status (2026-11-03):** Root cause (`/private/var` vs `/var` `standardizedFileURL` mismatch for non-existent child paths in `HanlinScriptExtensionStore.rejectSymlinks`, plus widget-only tap routing and two-store publication error handling) is fixed and verified on macOS/iPadOS 27 Simulator in runs [41559080533](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533), [41561161396](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41561161396), and [41564460036](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41564460036) at `35fa7b06dcf6ae68e2ad13d0a27176e45de9767e`.
 - **Owner-authorized Pass 4 TestFlight build `0.7.3 (88001)` (2026-11-03):** Delivered in [Run 41568291224](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41568291224) at `bac84e3a3968daba9768c6525ffd21be52f45d28`, Apple processing state `VALID` at `2026-11-03T03:31:19Z` ([signed delivery record](TESTFLIGHT_88001_DELIVERY.md)). Physical device checklist rows 1–10 remain `OPEN` / `OWNER_DEVICE_QA_PENDING` until the owner tests build `0.7.3 (88001)` on the physical iPad.
+
+## Owner physical iPad test of 0.7.3 (88001) — 2026-11-03 (`OWNER_REPORTED_FAIL` / `DEVICE_QA_FAILED`)
+
+On 2026-11-03, the owner installed signed TestFlight build `0.7.3 (88001)` on their physical iPad and reported:
+- **`NO_SCRIPT_SELECTION_IN_SYSTEM_WIDGET_CONFIGURATION` (`OWNER_REPORTED_FAIL` / `DEVICE_QA_FAILED` on build `88001`):** In the native iPadOS Home Screen widget configuration editor ("Edit Widget"), tapping the "Widget instance" parameter displayed no selectable installed scripts or instances.
+- **Root Cause Analysis (Pass 5):**
+  1. `HanlinScriptPackageEntityQuery` only conformed to `EntityQuery` and omitted `EnumerableEntityQuery` (`allEntities()`) and `EntityStringQuery` (`entities(matching:)`), preventing WidgetKit from enumerating entity options in the configuration picker sheet.
+  2. `availableEntities` enumerated `snapshot.widgets` instead of authoritative `snapshot.widgetInstances`.
+  3. `publishWidgetTemplates` could permanently omit `Default` if previous instances only had custom variants.
+  4. Query errors in the extension process were ephemeral in-memory without cross-process durable logging.
+  5. Missing branch integration: 88001 was built from `integration/hanlin-dual-widget-engines-20261029` and lacked the approved Chat V3.3 / OrganizerDock repairs from `fix/hanlin-organizerdock-v33-final-repair-20261101` (`0.7.3 (87901)`).
+
+### Pass 5 Unified Physical iPad Acceptance Procedure (Post-Fix)
+
+When an authorized new TestFlight build is released, execute the following steps on physical iPadOS 27:
+1. **In-place Upgrade:** Install the new build over `88001` to preserve existing App Group packages and data.
+2. **Package Information:** Open ChavrusaChat -> Apps -> Add Apps -> tap installed `ScriptWidget Actions`. Confirm widget-only row opens Package Information (no `Script App Error`). Under `Widget instances`, confirm `Default` is present.
+3. **Instance Creation:** Create independent instance `A1` and `A2`.
+4. **Home Screen Widget Placement & System Picker:** Long-press Home Screen -> Edit Home Screen -> Add Widget -> Hanlin Script (Medium). Long-press placed widget -> **Edit Widget**. Tap **Widget instance** parameter row.
+   - Verify non-empty list of installed choices: `ScriptWidget Actions · scriptwidget · Default`, `A1`, `A2`, `Expo Counter`, `Legacy`.
+   - Select an instance, return to Home Screen, confirm widget renders selected package.
+5. **Native Action Execution (Host Terminated):** Force-terminate ChavrusaChat. Tap `Sync now` on ScriptWidget (0->1->2) and toggle `Backup` (off->on->off). Tap `Increment +1` on Expo Counter (7->8->7). Confirm host does NOT open.
+6. **Chat V3.3 & OrganizerDock Parity:** Open ChavrusaChat, verify compact/wide split, three recent conversations, native model popover zoom, and bounded composer.

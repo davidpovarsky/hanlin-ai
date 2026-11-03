@@ -18,67 +18,78 @@ struct HanlinScriptPackageEntity: AppEntity {
     let displayName: String
     let identity: HanlinScriptExtensionIdentity
     var displayRepresentation: DisplayRepresentation { .init(title: "\(displayName)") }
+
+    init(from selectable: HanlinSelectableWidgetEntity) {
+        self.id = selectable.id
+        self.displayName = selectable.displayName
+        self.identity = selectable.identity
+    }
+
+    init(id: String, displayName: String, identity: HanlinScriptExtensionIdentity) {
+        self.id = id
+        self.displayName = displayName
+        self.identity = identity
+    }
 }
-struct HanlinScriptPackageEntityQuery: EntityQuery {
+
+struct HanlinScriptPackageEntityQuery: EnumerableEntityQuery, EntityStringQuery {
     func entities(for identifiers: [String]) async throws -> [HanlinScriptPackageEntity] {
         do {
-            let snapshot = try HanlinScriptExtensionStore().load()
-            let resolved = Set(identifiers.map { snapshot?.widgetEntityMigrations[$0] ?? $0 })
-            return availableEntities(snapshot).filter { resolved.contains($0.id) }
-        } catch {
-            if let diag = HanlinScriptExtensionStore.latestDiagnostic {
-                HanlinScriptExtensionStore.recordDiagnostic(.init(
-                    correlationID: diag.correlationID,
-                    phase: .widgetExtensionEntityQuery,
-                    decisionPoint: diag.decisionPoint,
-                    relativePath: diag.relativePath,
-                    failingComponentIndex: diag.failingComponentIndex,
-                    failingComponentName: diag.failingComponentName,
-                    errorDomain: diag.errorDomain,
-                    errorCode: diag.errorCode,
-                    posixErrno: diag.posixErrno,
-                    summary: diag.summary
-                ))
+            let store = try HanlinScriptExtensionStore()
+            let snapshot = try store.load()
+            let available = snapshot?.selectableWidgetEntities() ?? []
+            let availableMap = Dictionary(uniqueKeysWithValues: available.map { ($0.id, $0) })
+            var results: [HanlinScriptPackageEntity] = []
+            for id in identifiers {
+                let resolved = snapshot?.widgetEntityMigrations[id] ?? id
+                if let entity = availableMap[resolved] {
+                    results.append(HanlinScriptPackageEntity(from: entity))
+                }
             }
+            return results
+        } catch {
+            HanlinScriptExtensionStore.recordQueryDiagnostic(error: error, phase: .widgetExtensionEntityQuery)
             throw error
         }
     }
+
     func suggestedEntities() async throws -> [HanlinScriptPackageEntity] {
         do {
-            return availableEntities(try HanlinScriptExtensionStore().load())
+            let store = try HanlinScriptExtensionStore()
+            let snapshot = try store.load()
+            return (snapshot?.selectableWidgetEntities() ?? []).map { HanlinScriptPackageEntity(from: $0) }
         } catch {
-            if let diag = HanlinScriptExtensionStore.latestDiagnostic {
-                HanlinScriptExtensionStore.recordDiagnostic(.init(
-                    correlationID: diag.correlationID,
-                    phase: .widgetExtensionEntityQuery,
-                    decisionPoint: diag.decisionPoint,
-                    relativePath: diag.relativePath,
-                    failingComponentIndex: diag.failingComponentIndex,
-                    failingComponentName: diag.failingComponentName,
-                    errorDomain: diag.errorDomain,
-                    errorCode: diag.errorCode,
-                    posixErrno: diag.posixErrno,
-                    summary: diag.summary
-                ))
-            }
+            HanlinScriptExtensionStore.recordQueryDiagnostic(error: error, phase: .widgetExtensionEntityQuery)
             throw error
         }
     }
-    private func availableEntities(_ snapshot: HanlinScriptExtensionSnapshot?) -> [HanlinScriptPackageEntity] {
-        guard let snapshot else { return [] }
-        var seen: Set<String> = []
-        return snapshot.widgets.compactMap { widget in
-            guard !snapshot.inactiveWidgetInstallations.contains(widget.identity.installedPackageID.rawValue) else { return nil }
-            let instance = HanlinWidgetInstance(identity: widget.identity, engine: widget.engine, displayName: widget.displayName)
-            guard seen.insert(instance.entityID).inserted else { return nil }
-            return .init(id: instance.entityID, displayName: "\(widget.displayName) · \(widget.engine.rawValue) · \(widget.identity.installedPackageID.rawValue)", identity: widget.identity)
+
+    func allEntities() async throws -> [HanlinScriptPackageEntity] {
+        try await suggestedEntities()
+    }
+
+    func entities(matching string: String) async throws -> [HanlinScriptPackageEntity] {
+        let all = try await suggestedEntities()
+        let query = string.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return all }
+        return all.filter {
+            $0.displayName.localizedCaseInsensitiveContains(query)
         }
     }
 }
+
 struct HanlinWidgetConfigurationIntent: WidgetConfigurationIntent {
     static let title: LocalizedStringResource = "Widget instance"
     static let description = IntentDescription("Choose an installed instance. Placements using the same instance share state.")
-    @Parameter(title: "Widget instance") var package: HanlinScriptPackageEntity?
+
+    @Parameter(title: "Widget instance")
+    var package: HanlinScriptPackageEntity?
+
+    init() {}
+
+    init(package: HanlinScriptPackageEntity?) {
+        self.package = package
+    }
 }
 struct HanlinWidgetEntry: TimelineEntry {
     let date: Date
