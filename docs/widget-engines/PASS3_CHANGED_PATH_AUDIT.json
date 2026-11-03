@@ -1,11 +1,11 @@
 {
   "baseline": "ce586667b7103a6c2c7243d33461768c51a9dd8d",
-  "sourceHead": "61a1d6f2566856715a12a118490eeab2078ec95b",
-  "observedAt": "2026-11-03T01:04:19.680Z",
+  "sourceHead": "35fa7b06dcf6ae68e2ad13d0a27176e45de9767e",
+  "observedAt": "2026-11-03T02:42:46.541Z",
   "scope": "All tracked changes against actual starting HEAD plus all untracked paths. sourceHead is the existing commit at generation time; the containing evidence commit cannot hash itself. Output omits its own digest. Compile coverage is distinct from per-feature/OS acceptance.",
   "evidenceRuns": {
     "package": {
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
       "sourceSHA": "c6fcd0631878387cc6386015b45b11f5dfc85d61",
       "status": "28 extension/10 analyzer methods EXECUTED_PASS; overall full workflow FAILED later in UITest compilation. No whole-run PASS inferred.",
       "target": "arm64 macOS, Xcode 27.1 (27A9275), Swift 6.4; includes Unicode native-value regression"
@@ -61,6 +61,11 @@
     }
   },
   "commits": [
+    "35fa7b06dcf6ae68e2ad13d0a27176e45de9767e Fix installed.installedPackageID and nonisolated safeMessage in HanlinScriptingPlatform",
+    "3daf6e2b4d1c11880cb88c26074d48dbbcb98f2f Use counterWidgetEntrypoint.supportedContexts in Pass 4 routing test",
+    "0b34b7e64a078a3b56ab6a597dabf1af95a9879a Provide full HanlinPackageEntrypointDescriptor arguments in Pass 4 routing test",
+    "1e479c22b4099f400386abe99b6521fb9cb32878 Fix combined app+widget snapshot routing check in HanlinDualWidgetEnginesTests",
+    "494c37c3eefb3414f7a494887538a15f0fe6aac2 Fix Pass 4 iPadOS widget store path canonicalization, retry UX, and widget-only routing",
     "61a1d6f2566856715a12a118490eeab2078ec95b docs: record TestFlight 87401 delivery and Apple VALID processing",
     "279f0ead777b961728ed91386c136e7e33659c36 release: prepare owner-requested TestFlight handoff and preserve execution evidence",
     "7f041dc935e124470a89112111c0fba4961caf36 ci(apple): select stable device SDK and isolate developer directory per job",
@@ -142,7 +147,7 @@
       "coverage": {
         "status": "PARTIAL: actual subset/package and full diagnostic collection executed; exact package filter PASS in 41266251371; exact iOS renderer methods PASS and three widget UI methods FAIL in 41304461973; signed TestFlight delivery now explicitly authorized",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371",
@@ -170,7 +175,7 @@
       "coverage": {
         "status": "PARTIAL: actual subset/package and full diagnostic collection executed; exact package filter PASS in 41266251371; exact iOS renderer methods PASS and three widget UI methods FAIL in 41304461973; signed TestFlight delivery now explicitly authorized",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371",
@@ -198,7 +203,7 @@
       "coverage": {
         "status": "PARTIAL: actual subset/package and full diagnostic collection executed; exact package filter PASS in 41266251371; exact iOS renderer methods PASS and three widget UI methods FAIL in 41304461973; signed TestFlight delivery now explicitly authorized",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371",
@@ -227,7 +232,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; actual extension closure PASS at 6e3e7f54; later widget execution pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
         ],
@@ -695,10 +700,10 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "PARTIAL: Pass 4 unit and simulator UI verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "status": "EXECUTED_PASS on macOS package and iPadOS 27 Simulator UI; physical iPad retest pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41561161396"
         ],
         "assertions": [
           "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testWidgetOnlyRowOpensPackageInformationNotApp"
@@ -732,7 +737,7 @@
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "change": "M",
-      "sha256": "39dbbecfadc65866e3b3f5e8169338198134b90ea421b3311465abe0cf72f7b9",
+      "sha256": "ff716593560fadaa5366a78663c27896d8d5b1ee322d7ba9606c90b2a18c894a",
       "purpose": "Host install/publication retains validated engines, independent named instances, durable revisions, non-destructive two-store diagnostics and retry UX",
       "target": "AI_HLY app",
       "findings": [
@@ -766,10 +771,11 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "PARTIAL: app compile and shared package assertions; Pass 4 simulator/package verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "status": "EXECUTED_PASS on macOS package and iPadOS 27 Simulator UI; physical iPad retest pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588",
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41561161396",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41564460036"
         ],
         "assertions": [
           "userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections; pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testInstalledScriptWidgetPackageInformationShowsDefaultInstance"
@@ -810,10 +816,11 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "PARTIAL: app compile and shared package assertions; Pass 4 simulator/package verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "status": "EXECUTED_PASS on macOS package and iPadOS 27 Simulator UI; physical iPad retest pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588",
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41561161396",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41564460036"
         ],
         "assertions": [
           "userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections; pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testInstalledScriptWidgetPackageInformationShowsDefaultInstance"
@@ -874,10 +881,10 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "PARTIAL: Pass 4 unit and simulator UI verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "status": "EXECUTED_PASS on macOS package and iPadOS 27 Simulator UI; physical iPad retest pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41561161396"
         ],
         "assertions": [
           "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testWidgetOnlyRowOpensPackageInformationNotApp"
@@ -906,10 +913,10 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "PARTIAL: Pass 4 unit and simulator UI verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "status": "EXECUTED_PASS on macOS package and iPadOS 27 Simulator UI; physical iPad retest pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41561161396"
         ],
         "assertions": [
           "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testWidgetOnlyRowOpensPackageInformationNotApp"
@@ -973,7 +980,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -998,7 +1005,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1023,7 +1030,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1048,7 +1055,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1073,7 +1080,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1098,7 +1105,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1123,7 +1130,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1263,7 +1270,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1288,7 +1295,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1313,7 +1320,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1338,7 +1345,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1363,7 +1370,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1388,7 +1395,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1413,7 +1420,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -1707,7 +1714,7 @@
     {
       "path": "docs/widget-engines/CI_AND_DEVICE_RESULTS.md",
       "change": "A",
-      "sha256": "6b8eb7b7ddccf41c9af721ca2f2ce7b245db73d631a4918ead1e38c2e6ba9439",
+      "sha256": "5576515353573616b8ffb8b92d76c7e538c08882fa88b4b0d2683d96462826ee",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1747,7 +1754,7 @@
     {
       "path": "docs/widget-engines/DEVICE_ACCEPTANCE_CHECKLIST.md",
       "change": "A",
-      "sha256": "eaf2e535628363fd9e63ea30e84f8a7f1e524bad3ac6801833d2cf3e381a6f19",
+      "sha256": "d6528c9f89ef38bd59feb88fff490278c5e544d11ebf8065eb8d3c3239c8c70a",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1847,7 +1854,7 @@
     {
       "path": "docs/widget-engines/RELEASE_AND_ROLLBACK.md",
       "change": "M",
-      "sha256": "a46fa64dcc15771464a07a124af690c88372d1fb844d9f8e035e8228f5569fde",
+      "sha256": "355c329d3d1db68f4b76e94e54c10e664d417dcbb63ebc5aa1562802a9a320a2",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1887,7 +1894,7 @@
     {
       "path": "docs/widget-engines/TEST_MATRIX.md",
       "change": "M",
-      "sha256": "a5762ded6e634a827c092b5ee9487132c669f18cee2fca3a601a422d44e21258",
+      "sha256": "f03e07e33d0c80886c4110c25ba0eee8bc35453016cbabdac901c54b623f7a93",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -1981,7 +1988,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2006,7 +2013,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2031,7 +2038,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2056,7 +2063,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2081,7 +2088,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2106,7 +2113,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2131,7 +2138,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2156,7 +2163,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -2338,7 +2345,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; actual extension closure PASS at 6e3e7f54; later widget execution pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
         ],
@@ -5316,7 +5323,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; actual extension closure PASS at 6e3e7f54; later widget execution pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
         ],
@@ -5343,7 +5350,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: package and app build; actual extension closure PASS at 6e3e7f54; later widget execution pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41239669157",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
         ],
@@ -5382,7 +5389,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -5426,7 +5433,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -5470,7 +5477,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -5501,7 +5508,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -5545,7 +5552,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -5588,7 +5595,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -5622,7 +5629,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -5654,7 +5661,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -5695,7 +5702,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -5729,7 +5736,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -5764,7 +5771,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -5807,7 +5814,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -5855,7 +5862,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -5904,7 +5911,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration; OS lifecycle/device pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink; actualHistoricalV1EncoderAndDowngradeReader; interruptedShadowPublicationRestoresExactCommittedRevision; corruptCommittedV2NeverFallsBackToGoodV1; concurrentSourceActionsReplayAndHostPublication; userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections"
@@ -5941,7 +5948,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration; OS lifecycle/device pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink; actualHistoricalV1EncoderAndDowngradeReader; interruptedShadowPublicationRestoresExactCommittedRevision; corruptCommittedV2NeverFallsBackToGoodV1; concurrentSourceActionsReplayAndHostPublication; userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections"
@@ -5980,7 +5987,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration; OS lifecycle/device pending",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink; actualHistoricalV1EncoderAndDowngradeReader; interruptedShadowPublicationRestoresExactCommittedRevision; corruptCommittedV2NeverFallsBackToGoodV1; concurrentSourceActionsReplayAndHostPublication; userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections"
@@ -6010,7 +6017,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6041,7 +6048,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6081,7 +6088,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6121,7 +6128,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6152,7 +6159,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6185,7 +6192,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6216,7 +6223,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6247,7 +6254,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6282,7 +6289,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6328,7 +6335,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6385,7 +6392,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for package integration and actual bounded loopback HTTP; remote TLS/device and actual OS intent taps remain unproven",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41266251371"
         ],
         "assertions": [
@@ -6444,7 +6451,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6492,7 +6499,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6531,7 +6538,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6568,7 +6575,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6606,7 +6613,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6643,7 +6650,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6680,7 +6687,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6724,7 +6731,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6761,7 +6768,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6798,7 +6805,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6838,7 +6845,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6875,7 +6882,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6912,7 +6919,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6949,7 +6956,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -6986,7 +6993,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7023,7 +7030,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7067,7 +7074,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7106,7 +7113,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7144,7 +7151,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7185,7 +7192,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7236,7 +7243,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7276,7 +7283,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7323,7 +7330,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7366,7 +7373,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7409,7 +7416,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7453,7 +7460,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7500,7 +7507,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7541,7 +7548,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7591,7 +7598,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7628,7 +7635,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7674,7 +7681,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7711,7 +7718,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7752,7 +7759,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7790,7 +7797,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7832,7 +7839,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7880,7 +7887,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7926,7 +7933,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -7988,7 +7995,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -8025,7 +8032,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -8064,7 +8071,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -8103,7 +8110,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -8140,7 +8147,7 @@
       "coverage": {
         "status": "PARTIAL: compiled and native raster suite executed; complete per-prop/OS parity NOT_TESTED",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "originalTagProducesDistinctNativeRaster (29 tags); originalChartVariantUsesItsNativeDataSchema (10 variants); gridColumnsDateAndNativeElementSemantics"
@@ -8178,12 +8185,13 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "EXECUTED_PASS in package tests",
+        "status": "EXECUTED_PASS in package and simulator UI tests",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41561161396"
         ],
         "assertions": [
-          "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting"
+          "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testWidgetOnlyRowOpensPackageInformationNotApp"
         ]
       },
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
@@ -8213,7 +8221,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -8249,7 +8257,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -8285,7 +8293,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: focused real archive analyzer/install tests and JS checks",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; HanlinScriptAnalyzerTests; compiler-and-actions.test.mjs"
@@ -8325,7 +8333,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -8362,7 +8370,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -8387,7 +8395,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: seven analyses/five positive installs; mixed and invalid rejected; OS placement tracked separately",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "realArchiveImport; installAndVerifiedLoader; compiler-and-actions.test.mjs"
@@ -8425,7 +8433,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for focused analyzer tests",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "HanlinScriptAnalyzerTests (10 methods)"
@@ -8436,7 +8444,7 @@
     {
       "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
       "change": "M",
-      "sha256": "c66a692ea4c01b3cbdec519c543d9488c0bc30fe437b437a847a2356328f1245",
+      "sha256": "0b1102300056c25b0aec03b6bb50c4ea60613fdd3dabefa671083734ccb180f0",
       "purpose": "Semantic integration and original-native raster/actual historical encoder-reader coverage",
       "target": "HanlinScriptExtensionsTests on macOS SDK 27.1",
       "findings": [
@@ -8467,7 +8475,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for matching assertions; broad tag raster remains PARTIAL semantics",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "28 extension tests across three suites, 29 semantic input variants; actual method names in source and raw logs"
@@ -8507,7 +8515,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for matching assertions; broad tag raster remains PARTIAL semantics",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "28 extension tests across three suites, 29 semantic input variants; actual method names in source and raw logs"
@@ -8518,7 +8526,7 @@
     {
       "path": "PROJECT_BOARD.md",
       "change": "M",
-      "sha256": "7ab51f6051c9d81913f16b12dddbcbc0e2098d30bb0277d5cc7773ef098059e6",
+      "sha256": "c29df4e2789e092639917de7fd99fea53a0415c6a92a19be3fa2c3fcb10550e2",
       "purpose": "Evidence, provenance or acceptance documentation",
       "target": "Documentation",
       "findings": [
@@ -8560,7 +8568,7 @@
     {
       "path": "Scripts/Widgets/audit-changed-paths.mjs",
       "change": "A",
-      "sha256": "c634f84731233846fe05859d6d74a7676fd6185507949b9773756e161abd66c3",
+      "sha256": "f8409eb477a222711d2a76ef960818a55e9a874a6303e0c6a496485dd5141ce2",
       "purpose": "Reproducible exhaustive changed-path coverage/provenance inventory",
       "target": "Local evidence tooling",
       "findings": [
@@ -8600,7 +8608,7 @@
       "coverage": {
         "status": "PARTIAL: JS checks executed; actual appex closure PASS in 41261389588; later widget execution separately tracked",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs; audit-native-products.mjs"
@@ -8627,7 +8635,7 @@
       "coverage": {
         "status": "PARTIAL: JS checks executed; actual appex closure PASS in 41261389588; later widget execution separately tracked",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs; audit-native-products.mjs"
@@ -8652,7 +8660,7 @@
       "coverage": {
         "status": "PARTIAL: JS checks executed; actual appex closure PASS in 41261389588; later widget execution separately tracked",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs; audit-native-products.mjs"
@@ -8703,7 +8711,7 @@
       "coverage": {
         "status": "PARTIAL: JS checks executed; actual appex closure PASS in 41261389588; later widget execution separately tracked",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs; audit-native-products.mjs"
@@ -8737,7 +8745,7 @@
       "coverage": {
         "status": "PARTIAL: JS checks executed; actual appex closure PASS in 41261389588; later widget execution separately tracked",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs; audit-native-products.mjs"
@@ -8767,7 +8775,7 @@
       "coverage": {
         "status": "EXECUTED_PASS for focused analyzer tests",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "HanlinScriptAnalyzerTests (10 methods)"
@@ -8806,7 +8814,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -8845,7 +8853,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -8881,7 +8889,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -8918,7 +8926,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -8955,7 +8963,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -8991,7 +8999,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -9025,7 +9033,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -9066,7 +9074,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -9100,7 +9108,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -9136,7 +9144,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -9170,7 +9178,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -9204,7 +9212,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
@@ -9238,7 +9246,7 @@
       "coverage": {
         "status": "EXECUTED_PASS: real JSX/source callback/module/slot JS assertions",
         "runs": [
-          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41559080533"
         ],
         "assertions": [
           "compiler-and-actions.test.mjs (7 tests); emittedExpoIntentCarriesVerifiedIdentityAndCallsSource"
