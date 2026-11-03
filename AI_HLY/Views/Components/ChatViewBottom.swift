@@ -279,6 +279,8 @@ struct ChatViewBottom: View {
     @State private var isImageViewerPresented: Bool = false
     @State private var isSelect = false
     @State private var textEditorHeight: CGFloat = 38
+    @State private var measuredAttachmentPreviewHeight: CGFloat = 0
+    @State private var baselineWorkspaceHeight: CGFloat = 0
     @State private var popupCoordinator = HanlinComposerPopupCoordinator()
     @State private var selectedMCPCountForChat: Int = 0
     @State private var showEmbeddingSettingSheet: Bool = false
@@ -404,17 +406,39 @@ struct ChatViewBottom: View {
         }
         .onChange(of: availableWorkspaceSize) { _, newSize in
             if newSize.height > 160 {
+                if popupCoordinator.dockState.keyboardHeight == 0 && newSize.height > baselineWorkspaceHeight {
+                    baselineWorkspaceHeight = newSize.height
+                }
                 popupCoordinator.dockState.availableHeight = newSize.height
             }
             if newSize.width > 120 && newSize.height > 120 {
                 popupCoordinator.measuredContainerSize = newSize
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { notification in
+            guard let endFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+            let screenHeight = UIScreen.main.bounds.height
+            let overlap = max(0, screenHeight - endFrame.minY)
+            popupCoordinator.dockState.updateKeyboardOverlap(
+                overlap,
+                baselineContainerHeight: baselineWorkspaceHeight
+            )
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            popupCoordinator.dockState.updateKeyboardOverlap(0, baselineContainerHeight: baselineWorkspaceHeight)
+        }
         .onChange(of: textEditorHeight) { _, newHeight in
             popupCoordinator.dockState.measuredInputHeight = newHeight
         }
         .onChange(of: attachmentOverheadHeightEstimate) { _, newOverhead in
-            popupCoordinator.dockState.attachmentOverheadHeight = newOverhead
+            popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, newOverhead)
+        }
+        .onDisappear {
+            debounceWorkItem?.cancel()
+            if chatRecord.modelContext != nil {
+                chatRecord.input = message
+                try? context.save()
+            }
         }
         .onChange(of: isInputActive.wrappedValue) { _, focused in
             popupCoordinator.dockState.handleInputFocusChange(focused)
@@ -439,7 +463,7 @@ struct ChatViewBottom: View {
                 showPhotoSourceOptions = isGeneral
             }
             isSourceOptionsVisible = isGeneral
-            if newPopup == .general || newPopup == .tools {
+            if newPopup == .general || newPopup == .tools || newPopup == .model {
                 isInputActive.wrappedValue = false
             }
         }
@@ -632,7 +656,7 @@ struct ChatViewBottom: View {
     private func syncDockGeometryAndContext() {
         popupCoordinator.dockState.handleContextKeyChange(effectiveDockContextKey)
         popupCoordinator.dockState.measuredInputHeight = textEditorHeight
-        popupCoordinator.dockState.attachmentOverheadHeight = attachmentOverheadHeightEstimate
+        popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, attachmentOverheadHeightEstimate)
         if availableWorkspaceSize.height > 160 {
             popupCoordinator.dockState.availableHeight = availableWorkspaceSize.height
         }
@@ -643,12 +667,12 @@ struct ChatViewBottom: View {
 
     private var attachmentOverheadHeightEstimate: CGFloat {
         var overhead: CGFloat = 0
-        if !selectedImages.isEmpty { overhead += 54 }
-        if !selectedDocumentURLs.isEmpty { overhead += 42 }
-        if !selectedURLs.isEmpty { overhead += 34 }
-        if !selectedPrompts.isEmpty { overhead += 38 }
-        if showModelSuggestions && !filteredModels.isEmpty { overhead += 46 }
-        if !activeChips.isEmpty { overhead += 28 }
+        if !selectedImages.isEmpty { overhead += 108 }
+        if !selectedDocumentURLs.isEmpty { overhead += 58 }
+        if !selectedURLs.isEmpty { overhead += 48 }
+        if !selectedPrompts.isEmpty { overhead += 52 }
+        if showModelSuggestions && !filteredModels.isEmpty { overhead += 48 }
+        if !activeChips.isEmpty { overhead += 36 }
         return overhead
     }
 
@@ -714,12 +738,20 @@ struct ChatViewBottom: View {
 
     private var messageInput: some View {
         VStack(spacing: 6) {
-            imagePreviewSection
-            documentPreviewSection
-            linkPreviewSection
-            promptSection
-            modelSuggestionSection
-            activeModeChipsSection
+            VStack(spacing: 6) {
+                imagePreviewSection
+                documentPreviewSection
+                linkPreviewSection
+                promptSection
+                modelSuggestionSection
+                activeModeChipsSection
+            }
+            .onGeometryChange(for: CGFloat.self) { proxy in
+                proxy.size.height
+            } action: { newHeight in
+                measuredAttachmentPreviewHeight = newHeight
+                popupCoordinator.dockState.attachmentOverheadHeight = max(newHeight, attachmentOverheadHeightEstimate)
+            }
             inputFieldSection
         }
     }
@@ -1123,11 +1155,19 @@ struct ChatViewBottom: View {
                         }
                     )
                     .padding(.leading, 12)
-                    .frame(height: max(size_44, textEditorHeight))
+                    .frame(
+                        height: popupCoordinator.dockState.effectiveEditorFrameHeight(
+                            intrinsicHeight: textEditorHeight,
+                            minimumInteractiveHeight: size_44
+                        )
+                    )
                     .focused(isInputActive)
                     .accessibilityIdentifier("hanlin-chat-input")
                     .onChange(of: message) {
                         popupCoordinator.dockState.handleDraftTextChange(message)
+                        if chatRecord.modelContext != nil {
+                            chatRecord.input = message
+                        }
                         debounceWorkItem?.cancel()
                         debounceWorkItem = DispatchWorkItem {
                             updateModelSuggestions()
@@ -1304,7 +1344,7 @@ struct ChatViewBottom: View {
             .disabled(isResponding)
             .sensoryFeedback(.impact, trigger: isFeedBack)
 
-            // Entrypoint 3: Compact Discoverable Model Picker Capsule (sole anchored `.popover` with matched zoom)
+            // Entrypoint 3: Compact Discoverable Model Picker Capsule (sole anchored `.popover` with internal matched zoom)
             Button {
                 isFeedBack.toggle()
                 popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
@@ -1312,8 +1352,8 @@ struct ChatViewBottom: View {
                 composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
             }
             .buttonStyle(.plain)
-            .matchedTransitionSource(id: "model-popover", in: modelPopoverZoom)
             .accessibilityIdentifier("hanlin-composer-model-picker")
+            .matchedTransitionSource(id: "model-popover", in: modelPopoverZoom)
             .sensoryFeedback(.selection, trigger: isSelect)
             .popover(
                 isPresented: popupCoordinator.binding(for: .model),
@@ -1333,8 +1373,8 @@ struct ChatViewBottom: View {
                     ifThink: ifThink,
                     ifAudio: ifAudio
                 )
-                .navigationTransition(.zoom(sourceID: "model-popover", in: modelPopoverZoom))
                 .presentationCompactAdaptation(.popover)
+                .navigationTransition(.zoom(sourceID: "model-popover", in: modelPopoverZoom))
             }
 
             Spacer(minLength: 4)

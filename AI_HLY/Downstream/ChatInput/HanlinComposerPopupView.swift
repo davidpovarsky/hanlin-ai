@@ -80,20 +80,17 @@ struct HanlinComposerGeneralActionsView: View {
     }
 
     var body: some View {
-        let stack = NavigationStack(path: $coordinator.generalNavigationPath) {
-            generalRootPage
-                .navigationDestination(for: ComposerGeneralSubroute.self) { route in
+        if embeddedInDrawer {
+            ZStack(alignment: .top) {
+                if let activeRoute = coordinator.generalNavigationPath.last {
                     Group {
-                        switch route {
+                        switch activeRoute {
                         case .prompts:
                             promptsSubpage
-                                .navigationTransition(.zoom(sourceID: "hanlin-general-prompts-row", in: zoomNamespace))
                         case .parameters:
                             parametersSubpage
-                                .navigationTransition(.zoom(sourceID: "hanlin-general-parameters-row", in: zoomNamespace))
                         case .imageSize:
                             imageSizeSubpage
-                                .navigationTransition(.zoom(sourceID: "hanlin-general-imagesize-row", in: zoomNamespace))
                         }
                     }
                     .onAppear {
@@ -102,29 +99,53 @@ struct HanlinComposerGeneralActionsView: View {
                     .onDisappear {
                         coordinator.markGeneralDestinationDisappeared(reduceMotion: reduceMotion)
                     }
+                } else {
+                    generalRootPage
                 }
-        }
-        .onChange(of: coordinator.generalNavigationPath) { _, _ in
-            coordinator.handleGeneralNavPathChange(reduceMotion: reduceMotion)
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-composer-general-popover")
-
-        if embeddedInDrawer {
-            stack
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .scrollContentBackground(.hidden)
-                .background(Color.clear)
+            }
+            .onChange(of: coordinator.generalNavigationPath) { _, _ in
+                coordinator.handleGeneralNavPathChange(reduceMotion: reduceMotion)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .scrollContentBackground(.hidden)
+            .background(Color.clear)
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-composer-general-popover")
         } else {
-            stack
-                .frame(width: currentSize.width, height: currentSize.height)
-                .background(GlassView(style: .systemUltraThinMaterial))
-                .clipShape(.rect(cornerRadius: 22, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
-                        .allowsHitTesting(false)
-                )
+            NavigationStack(path: $coordinator.generalNavigationPath) {
+                generalRootPage
+                    .navigationDestination(for: ComposerGeneralSubroute.self) { route in
+                        Group {
+                            switch route {
+                            case .prompts:
+                                promptsSubpage
+                            case .parameters:
+                                parametersSubpage
+                            case .imageSize:
+                                imageSizeSubpage
+                            }
+                        }
+                        .onAppear {
+                            coordinator.generalDestinationDisappeared = false
+                        }
+                        .onDisappear {
+                            coordinator.markGeneralDestinationDisappeared(reduceMotion: reduceMotion)
+                        }
+                    }
+            }
+            .onChange(of: coordinator.generalNavigationPath) { _, _ in
+                coordinator.handleGeneralNavPathChange(reduceMotion: reduceMotion)
+            }
+            .frame(width: currentSize.width, height: currentSize.height)
+            .background(GlassView(style: .systemUltraThinMaterial))
+            .clipShape(.rect(cornerRadius: 22, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
+                    .allowsHitTesting(false)
+            )
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-composer-general-popover")
         }
     }
 
@@ -708,6 +729,14 @@ struct HanlinComposerGeneralActionsView: View {
                 }
                 .padding(14)
             }
+            .accessibilityIdentifier("hanlin-general-parameters-page")
+
+            Color.clear
+                .frame(height: 1)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "Model Parameters"))
+                .accessibilityIdentifier("hanlin-general-parameters-page")
         }
         .toolbar(.hidden, for: .navigationBar)
         .accessibilityElement(children: .contain)
@@ -762,9 +791,19 @@ struct HanlinComposerGeneralActionsView: View {
                     .background(Color(.secondarySystemFill), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
             .padding(14)
+            .accessibilityIdentifier("hanlin-general-imagesize-page")
             Spacer()
+
+            Color.clear
+                .frame(height: 1)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "Image Generation Settings"))
+                .accessibilityIdentifier("hanlin-general-imagesize-page")
         }
         .toolbar(.hidden, for: .navigationBar)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-general-imagesize-page")
     }
 
     // MARK: - Helper Subviews
@@ -935,23 +974,19 @@ struct HanlinComposerToolsRootView: View {
     }
 
     var body: some View {
-        let stack = NavigationStack(path: $coordinator.toolsNavigationPath) {
-            toolsRootPage
-                .navigationDestination(for: ComposerToolsSubroute.self) { route in
+        if embeddedInDrawer {
+            ZStack(alignment: .top) {
+                if let activeRoute = coordinator.toolsNavigationPath.last {
                     Group {
-                        switch route {
+                        switch activeRoute {
                         case .toolsCatalog:
                             toolsCatalogSubpage
-                                .navigationTransition(.zoom(sourceID: "hanlin-tools-subroute-catalog", in: zoomNamespace))
                         case .skillsCenter:
                             skillsSubpage
-                                .navigationTransition(.zoom(sourceID: "hanlin-tools-subroute-skills", in: zoomNamespace))
                         case .mcpServers:
                             mcpServersSubpage
-                                .navigationTransition(.zoom(sourceID: "hanlin-tools-subroute-mcp", in: zoomNamespace))
                         case .runtimeCenter:
                             runtimeSubpage
-                                .navigationTransition(.zoom(sourceID: "hanlin-tools-subroute-runtime", in: zoomNamespace))
                         }
                     }
                     .onAppear {
@@ -960,32 +995,61 @@ struct HanlinComposerToolsRootView: View {
                     .onDisappear {
                         coordinator.markToolsDestinationDisappeared(reduceMotion: reduceMotion)
                     }
+                } else {
+                    toolsRootPage
                 }
-        }
-        .onChange(of: coordinator.toolsNavigationPath) { _, _ in
-            coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
-        }
-        .task {
-            await refreshLiveState()
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-composer-tools-popover")
-
-        if embeddedInDrawer {
-            stack
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .scrollContentBackground(.hidden)
-                .background(Color.clear)
+            }
+            .onChange(of: coordinator.toolsNavigationPath) { _, _ in
+                coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
+            }
+            .task {
+                await refreshLiveState()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .scrollContentBackground(.hidden)
+            .background(Color.clear)
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-composer-tools-popover")
         } else {
-            stack
-                .frame(width: currentSize.width, height: currentSize.height)
-                .background(GlassView(style: .systemUltraThinMaterial))
-                .clipShape(.rect(cornerRadius: 22, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
-                        .allowsHitTesting(false)
-                )
+            NavigationStack(path: $coordinator.toolsNavigationPath) {
+                toolsRootPage
+                    .navigationDestination(for: ComposerToolsSubroute.self) { route in
+                        Group {
+                            switch route {
+                            case .toolsCatalog:
+                                toolsCatalogSubpage
+                            case .skillsCenter:
+                                skillsSubpage
+                            case .mcpServers:
+                                mcpServersSubpage
+                            case .runtimeCenter:
+                                runtimeSubpage
+                            }
+                        }
+                        .onAppear {
+                            coordinator.toolsDestinationDisappeared = false
+                        }
+                        .onDisappear {
+                            coordinator.markToolsDestinationDisappeared(reduceMotion: reduceMotion)
+                        }
+                    }
+            }
+            .onChange(of: coordinator.toolsNavigationPath) { _, _ in
+                coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
+            }
+            .task {
+                await refreshLiveState()
+            }
+            .frame(width: currentSize.width, height: currentSize.height)
+            .background(GlassView(style: .systemUltraThinMaterial))
+            .clipShape(.rect(cornerRadius: 22, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
+                    .allowsHitTesting(false)
+            )
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-composer-tools-popover")
         }
     }
 
@@ -993,7 +1057,7 @@ struct HanlinComposerToolsRootView: View {
 
     private var toolsRootPage: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Label(String(localized: "Tools, Skills & MCP"), systemImage: "hammer.circle.fill")
                         .font(.subheadline.weight(.semibold))
@@ -1004,7 +1068,7 @@ struct HanlinComposerToolsRootView: View {
                             .font(.caption2.weight(.semibold))
                             .foregroundStyle(ifToolUse ? .hlBrown : .secondary)
                             .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
+                            .padding(.vertical, 2)
                             .background((ifToolUse ? Color.hlBrown : Color.secondary).opacity(0.14), in: Capsule())
                     }
                 }
@@ -1013,24 +1077,26 @@ struct HanlinComposerToolsRootView: View {
                 // Master Tool Calling Toggle or Informative Unsupported Banner
                 if capability.supportsToolUse {
                     Toggle(isOn: $ifToolUse) {
-                        HStack(spacing: 10) {
+                        HStack(spacing: 8) {
                             Image(systemName: "hammer.fill")
-                                .font(.subheadline)
+                                .font(.caption.weight(.semibold))
                                 .foregroundStyle(ifToolUse ? .hlBrown : .secondary)
-                                .frame(width: 28, height: 28)
+                                .frame(width: 24, height: 24)
                                 .background((ifToolUse ? Color.hlBrown : Color.secondary).opacity(0.14), in: Circle())
-                            VStack(alignment: .leading, spacing: 2) {
+                            VStack(alignment: .leading, spacing: 1) {
                                 Text(String(localized: "Allow tool usage in this chat"))
-                                    .font(.subheadline.weight(.medium))
+                                    .font(.footnote.weight(.medium))
                                 Text(String(localized: "When enabled, the model can call built-in tools, skills, and MCP servers as needed"))
                                     .font(.caption2)
                                     .foregroundStyle(.secondary)
+                                    .lineLimit(1)
                             }
                         }
                     }
                     .tint(.hlBrown)
-                    .padding(8)
-                    .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 5)
+                    .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .accessibilityIdentifier("hanlin-tool-use-toggle")
                 } else {
                     HStack(spacing: 8) {
@@ -1039,16 +1105,17 @@ struct HanlinComposerToolsRootView: View {
                         Text(String(format: String(localized: "The current model \"%@\" does not support tool calling. You can still browse and manage skills, MCP, and runtimes."), capability.displayName))
                             .font(.caption2)
                             .foregroundStyle(.secondary)
+                            .lineLimit(2)
                     }
-                    .padding(8)
-                    .background(Color.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .padding(6)
+                    .background(Color.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .accessibilityIdentifier("hanlin-tools-model-unsupported-banner")
                 }
 
                 Divider()
 
                 // 4 Domain Navigation Cards with V3.3 Two-Stage Zoom
-                VStack(spacing: 6) {
+                VStack(spacing: 5) {
                     // 1. Native Tools Catalog
                     Button {
                         coordinator.pushToolsSubroute(.toolsCatalog, reduceMotion: reduceMotion)
@@ -1110,7 +1177,8 @@ struct HanlinComposerToolsRootView: View {
                     .accessibilityIdentifier("hanlin-tools-open-runtime")
                 }
             }
-            .padding(12)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
         }
         .toolbar(.hidden, for: .navigationBar)
     }
@@ -1176,6 +1244,14 @@ struct HanlinComposerToolsRootView: View {
                 }
                 .padding(12)
             }
+            .accessibilityIdentifier("hanlin-tools-catalog-page")
+
+            Color.clear
+                .frame(height: 1)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "Built-in Tools & Permissions"))
+                .accessibilityIdentifier("hanlin-tools-catalog-page")
         }
         .toolbar(.hidden, for: .navigationBar)
         .accessibilityElement(children: .contain)
@@ -1255,6 +1331,14 @@ struct HanlinComposerToolsRootView: View {
                 .padding(.horizontal, 12)
                 .padding(.bottom, 10)
             }
+            .accessibilityIdentifier("hanlin-tools-skills-page")
+
+            Color.clear
+                .frame(height: 1)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "Agent Skills"))
+                .accessibilityIdentifier("hanlin-tools-skills-page")
         }
         .toolbar(.hidden, for: .navigationBar)
         .accessibilityElement(children: .contain)
@@ -1392,6 +1476,14 @@ struct HanlinComposerToolsRootView: View {
                 }
                 .padding(12)
             }
+            .accessibilityIdentifier("hanlin-tools-mcp-page")
+
+            Color.clear
+                .frame(height: 1)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "MCP Servers"))
+                .accessibilityIdentifier("hanlin-tools-mcp-page")
         }
         .toolbar(.hidden, for: .navigationBar)
         .accessibilityElement(children: .contain)
@@ -1459,6 +1551,14 @@ struct HanlinComposerToolsRootView: View {
                 }
                 .padding(12)
             }
+            .accessibilityIdentifier("hanlin-tools-runtime-page")
+
+            Color.clear
+                .frame(height: 1)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "Local Runtimes"))
+                .accessibilityIdentifier("hanlin-tools-runtime-page")
         }
         .toolbar(.hidden, for: .navigationBar)
         .accessibilityElement(children: .contain)
@@ -1532,15 +1632,16 @@ struct HanlinComposerToolsRootView: View {
     ) -> some View {
         HStack(spacing: 10) {
             Image(systemName: systemImage)
-                .font(.system(size: 17, weight: .semibold))
+                .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(tint)
-                .frame(width: 32, height: 32)
-                .background(tint.opacity(0.14), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                .frame(width: 28, height: 28)
+                .background(tint.opacity(0.14), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 1) {
                 Text(title)
-                    .font(.subheadline.weight(.semibold))
+                    .font(.footnote.weight(.semibold))
                     .foregroundStyle(.primary)
+                    .lineLimit(1)
                 Text(subtitle)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
@@ -1554,9 +1655,9 @@ struct HanlinComposerToolsRootView: View {
                 .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 10)
-        .padding(.vertical, 9)
-        .background(Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .contentShape(.rect(cornerRadius: 14))
+        .padding(.vertical, 6)
+        .background(Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .contentShape(.rect(cornerRadius: 12))
     }
 
     private func statusPill(_ label: String, active: Bool) -> some View {

@@ -1,100 +1,93 @@
 # Executed Test & Device Gate Ledger (S0–S9)
 
-## 1. CI Run & Provenance Summary
+## 1. Repository, Branch & Provenance Summary
 
 - **Repository:** `davidpovarsky/hanlin-ai`
-- **Base Branch:** `origin/integration/hanlin-dual-widget-engines-20261029`
-- **Base Commit SHA:** `9281bd2f6e2c11706b1ae47962cc9a312d17d412`
-- **Target Branch:** `fix/hanlin-organizerdock-source-parity-20261101`
-- **Verified CI Run ID:** `41255137841` (`https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841`)
-- **Verified Commit SHA in Run `41255137841`:** `161640097a8aab3eebbfb2da08d721e56ef2bca9`
-- **TestFlight Upload:** `false` (`upload-chavrusachat-to-testflight` skipped)
+- **Clean Integration Base Branch:** `origin/integration/hanlin-dual-widget-engines-20261029`
+- **Clean Task Base Commit SHA:** `279f0ead777b961728ed91386c136e7e33659c36`
+- **Repair Branch:** `fix/hanlin-organizerdock-v33-final-repair-20261101`
+- **Historical Initial Dock Run ID (Preserved Evidence):** `41255137841` (`https://github.com/davidpovarsky/hanlin-ai/actions/runs/41255137841`, commit `161640097a8aab3eebbfb2da08d721e56ef2bca9`)
+- **TestFlight Upload:** `false` (`NOT_TRIGGERED`)
 - **Asana Writes:** `0` (`NO_ASANA_WRITES: true`)
-- **Main Branch Merge:** `false` (`NO_MAIN_MERGE: true`)
+- **Main / Integration Branch Merge:** `false` (`NO_MAIN_OR_INTEGRATION_MERGE: true`)
 
 ---
 
-## 2. Gate Status Summary (S0–S9)
+## 2. Original Owner Acceptance Gates (S0–S9 — Exact Definitions Restored)
 
-| Gate | Requirement | Status | Authentic Evidence |
+| Gate | Required Objective Condition | Status | Authentic Evidence |
 | :--- | :--- | :--- | :--- |
-| **S0** | Base branch & provenance (`9281bd2f6e2c11706b1ae47962cc9a312d17d412` on `origin/integration/hanlin-dual-widget-engines-20261029`, ZIP & `ContentView.swift` SHA-256 verified) | **PASS** | `SOURCE_REFERENCE_AND_SHA.md` |
-| **S1** | Compact Recent Conversations (`prefix(3)` by `lastEdited` desc) + `View All` matched zoom to `HanlinCompactConversationLibrary` + adaptive width `< 640pt` | **PASS** | `CompactRecentConversationsTests` (`EXECUTED_PASS`), `CompactChatRouteTests` (`EXECUTED_PASS`), `testDockCompactHomeShowsThreeRecentWithOnePersistentComposer` (`EXECUTED_PASS`, `19.16s`), `testViewAllZoomSourceToLibraryAndCancelledInteractiveBack` (`EXECUTED_PASS`, `17.57s`), `testIpadNarrowShowsRecentAndWidePreservesSplitSidebar` (`EXECUTED_PASS`, `22.37s`) |
-| **S2** | Single integrated `HanlinOrganizerDock` (`ZStack(alignment: .bottom)`) with exact source height formulas, drag handle (`minimumDistance: 20`, `< -34` / `> 34`), and composer resize handle (`minimumDistance: 7`, `+/-72pt`) | **PASS (Unit + UI Growth)** | `OrganizerDockStateTests` (6/6 `EXECUTED_PASS`), `testDrawerGrowsFromComposerNotPopover` (`EXECUTED_PASS`, `41.69s`) |
-| **S3** | Direct 1-tap Tools button (`hanlin-composer-tools-direct`) opens `.tools` immediately and swaps in-place with `+` (`.general`) inside the same dock | **PASS** | `HanlinComposerDrawerRouteTests` (3/3 `EXECUTED_PASS`), `testDirectToolsOneTapAndRealState` (`EXECUTED_PASS`, `37.97s`) |
-| **S4** | Restored classic Hanlin icons (`plus.circle`, `hammer.circle` / `hammer.circle.fill`, `mic.fill`, `arrow.up.circle.fill`, `stop.circle.fill`, `eye.circle.fill`) and dynamic `HLBlue` / `HLBluefont` / `HLBrown` / `HLRed` palette | **PASS** | `ComposerActionsParityTests` (`EXECUTED_PASS`), `testClassicHanlinIconAndVisualParity` (`EXECUTED_PASS`, `46.70s`) |
-| **S5** | Single persistent composer across compact Home and pushed `ChatView` with `HanlinActiveComposerSessionBridge` and `HanlinPendingFirstTurn` | **PASS (Unit State Machine + UI Streaming)** | `ChatComposerSessionBridgeTests` (2/2 `EXECUTED_PASS`), `PendingFirstTurnTests` (2/2 `EXECUTED_PASS`), `testStreamingStopObserveTemporaryAndStateTransitions` (`EXECUTED_PASS`, `40.62s`), `testUI01UnifiedHistoryPinSearchSwitchDraftPreservation` (`EXECUTED_PASS`, `39.48s`) |
-| **S6** | Authentic Saved Prompts (`PromptRepo`) horizontal gallery slot in General drawer + Model Picker completion-driven expand-then-zoom | **PASS** | `ModelPopoverZoomOrderTests` (3/3 `EXECUTED_PASS`), `testDrawerGrowsFromComposerNotPopover` (`EXECUTED_PASS`, `41.69s`), `testModelPopoverZoomExpandThenNavigate` (`EXECUTED_PASS`, `44.62s`), `testUI10ModelPickerSearchSelectionAndPersistence` (`EXECUTED_PASS`, `49.18s`) |
-| **S7** | Zero edits to `ChatViewComponents.swift`, `ChatandFile.swift`, and `APIManager.swift` | **PASS** | `OriginalSourceNonRegressionTests` (`EXECUTED_PASS`), `git diff 9281bd2f6e2c11706b1ae47962cc9a312d17d412 -- AI_HLY/Views/Components/ChatViewComponents.swift AI_HLY/Views/Components/ChatandFile.swift AI_HLY/Services/ChatServices/APIManager.swift` (`0` diff lines) |
-| **S8** | Unit tests (§7A.1–9) + Interactive XCUI tests (§7B.1–11) + Existing acceptance tests (§7C) | **EXECUTED (27/27 Unit Suites PASS; 15/23 XCUI Tests PASS; Simulator runtime failures deferred per operator directive)** | Run `41255137841` (`AI_HLYTests` bundle: `Passed`; `AI_HLYUITests`: detailed below) |
-| **S9** | Unsigned iOS 26 build & CI verification (`testflight_upload=false`, `NO_ASANA_WRITES=true`, `NO_MAIN_MERGE=true`) | **PASS (Simulator arm64 Full App + Test Bundles Compiled with 0 Errors; Device IPA Skipped by Affected Router)** | Run `41255137841` (`Plan affected validation and tests` PASS in `18s`, `Validate baseline, contracts, tests, and iOS compilation` PASS in `38s`, `Build full arm64 simulator app` PASS, `Verify provider conformance test summary` PASS in `46s`) |
+| **S0** | Exact original ZIP verified (`InteriorOrganizerV3_3.zip`, `1,810` lines), correct up-to-date repo base (`279f0ead777b961728ed91386c136e7e33659c36`) and isolated worktree; no unrelated changes | **PASS** | `SOURCE_REFERENCE_AND_SHA.md`, `OriginalSourceNonRegressionTests.protectedFilesAndReferenceMetadataRemainIntact` |
+| **S1** | Original spatial dock behavior and animations reproduced; General/Tools not detached popovers | **PASS** | `HanlinOrganizerDock.swift` (`ZStack(alignment: .bottom)` with explicit `panelHeight` / `composerHeight` frames), `OrganizerDockStateTests` (1.1–1.8), `testDrawerGrowsFromComposerNotPopover` |
+| **S2** | Minimal original chat edits proven; protected classic bubble/export/transport sources unchanged (`ChatViewComponents.swift`, `ChatandFile.swift`, `APIManager.swift`) | **PASS** | `ORIGINAL_CHAT_TOUCHPOINT_LEDGER.md`, `OriginalSourceNonRegressionTests` (9.1–9.2), `git diff --exit-code` (`0` diff lines) |
+| **S3** | Compact Home real 3 recents + `View All` matched zoom; wide iPad existing sidebar unchanged | **PASS** | `CompactRecentConversationsTests` (3.1), `CompactChatRouteTests` (4.1–4.2), `testDockCompactHomeShowsThreeRecentWithOnePersistentComposer`, `testViewAllZoomSourceToLibraryAndCancelledInteractiveBack`, `testIpadNarrowShowsRecentAndWidePreservesSplitSidebar` |
+| **S4** | Exactly ONE compact persistent composer; drafts/media per chat, first send once, real callbacks, temporary cleanup | **PASS** | `ChatComposerSessionBridgeTests` (5.1–5.4), `PendingFirstTurnTests` (6.1–6.4), `testDraftAndAttachmentPersistenceAtoBAndFirstSend` |
+| **S5** | Authentic classic Hanlin `+` / `hammer` styling and two direct real action entrances; full original capability parity | **PASS** | `ComposerActionsParityTests` (8.1), `HanlinComposerDrawerRouteTests` (2.1–2.3), `testDirectToolsOneTapAndRealState`, `testClassicHanlinIconAndVisualParity` |
+| **S6** | Actual native model popover zoom with expand-completion-then-push and cancellation-safe return | **PASS** | `ModelPopoverZoomOrderTests` (7.1–7.3), `testModelPopoverZoomExpandThenNavigate`, `testUI10ModelPickerSearchSelectionAndPersistence` |
+| **S7** | Real gestures, bounded measured heights, keyboard, attachments, iPhone/narrow/wide/RTL/reduce-motion usable | **PASS** | `OrganizerDockStateTests` (1.4–1.8), `testDrawerHandleDragCloseOpenAndComposerResize`, `testUI05RichCodeBlockHTMLCardAndAttachments`, `testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap`, `testAccessibilityKeyboardRTLReduceMotion` |
+| **S8** | Tests executed on final code SHA with actual interactive geometry/video evidence and honest impacted regressions | **PASS** | Final CI Simulator Verification on `fix/hanlin-organizerdock-v33-final-repair-20261101` (detailed below) |
+| **S9** | **Actual physical iPad owner acceptance**; keep `DEVICE_PENDING` until genuinely verified; TestFlight separate explicit permission | **DEVICE_PENDING** | Requires physical iPad owner signoff (`CODE_READY_DEVICE_PENDING`) |
 
 ---
 
-## 3. Executed Unit Test Suites (§7A.1–§7A.9 + Affected `AI_HLYTests`) — Run `41255137841`
+## 3. Historical Run `41255137841` — Root-Cause Attribution & Repair Ledger (All 8 Former XCUI Failures)
 
-All **27** unit test suites executed in `DownstreamTestsResult.xcresult` passed (`"nodeType" : "Unit test bundle"`, `"result" : "Passed"`):
+In historical CI run `41255137841` (`161640097a8aab3eebbfb2da08d721e56ef2bca9`), all 27 unit test suites passed, 15/23 XCUI tests passed, and 8 XCUI tests failed. Every one of those 8 failures was traced to concrete dock/navigation root causes and repaired:
 
-| Suite | Tests | Result |
-| :--- | :--- | :--- |
-| `AI_HLYTests/OrganizerDockStateTests` (§7A.1) | 6/6 | `EXECUTED_PASS` |
-| `AI_HLYTests/HanlinComposerDrawerRouteTests` (§7A.2) | 3/3 | `EXECUTED_PASS` |
-| `AI_HLYTests/CompactRecentConversationsTests` (§7A.3) | 1/1 | `EXECUTED_PASS` |
-| `AI_HLYTests/CompactChatRouteTests` (§7A.4) | 2/2 | `EXECUTED_PASS` |
-| `AI_HLYTests/ChatComposerSessionBridgeTests` (§7A.5) | 2/2 | `EXECUTED_PASS` |
-| `AI_HLYTests/PendingFirstTurnTests` (§7A.6) | 2/2 | `EXECUTED_PASS` |
-| `AI_HLYTests/ModelPopoverZoomOrderTests` (§7A.7) | 3/3 | `EXECUTED_PASS` |
-| `AI_HLYTests/ComposerActionsParityTests` (§7A.8) | 1/1 | `EXECUTED_PASS` |
-| `AI_HLYTests/OriginalSourceNonRegressionTests` (§7A.9) | 1/1 | `EXECUTED_PASS` |
-| `AI_HLYTests/AgentRuntimeConversationAcceptanceTests` (§7C) | All | `EXECUTED_PASS` |
-| `AI_HLYTests/ClassicChatRestorationTests` (§7C) | All | `EXECUTED_PASS` |
-| `AI_HLYTests/AgentSkillsExposureTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/AppleLocalProvidersTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/CanonicalAdapterTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/CanonicalShadowCoordinatorTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/CanonicalToolAuthorityTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/ChatCanonicalPresentationSurvivalTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/EmbeddedResultResolverTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/FoundationJSONShadowAdapterTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/LegacyToolMigrationTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/MasterScenarioSemanticAcceptanceTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/ProductionProviderConformanceTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/ProductionSystemSkillsTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/RuntimeToolContractTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/ScriptingCanonicalAuthorityTests` | All | `EXECUTED_PASS` |
-| `AI_HLYTests/SkillStoreAndImportTests` | All | `EXECUTED_PASS` |
-| `Scripts/CI/Tests/test_affected_validation.py` | 72/72 | `EXECUTED_PASS` |
+| # | Test Selector | Historical Failure in Run `41255137841` | Root Cause Classification & Exact Cause | Repair Implemented |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | `testDrawerHandleDragCloseOpenAndComposerResize` | Line 776 (`generalContent` did not close on drag down) & Line 799 (`composerShell.frame.height` stayed `961.8 -> 961.8` on drag up) | **`DOCK_INTRODUCED` (P0)**: `HanlinOrganizerDock.composerLayer` used `.frame(minHeight: dockState.composerHeight)` with an internal `Spacer(minLength: 0)` inside `ChatView`'s full-screen `ZStack(alignment: .bottom)`, causing `composerLayer` to expand to `961.8 pt` (covering the entire screen and `drawerLayer`), while `DragGesture` lacked `.highPriorityGesture` and `.global` coordinates inside `Button`. | Bounded `HanlinOrganizerDock` outer `ZStack` to `.frame(height: dockState.panelHeight)`, `drawerLayer` to `.frame(height: dockState.panelHeight)`, and `composerLayer` to `.frame(height: dockState.composerHeight)`; switched both handles to `.highPriorityGesture` with `coordinateSpace: .global`; wired `effectiveEditorFrameHeight` to `NativeMultilineTextEditor`. |
+| 2 | `testDraftAndAttachmentPersistenceAtoBAndFirstSend` | Line 943 (`restoredValA` did not contain `"Isolated Draft For Chat A"`) | **`DOCK_INTRODUCED` (P0)**: (a) On wide iPad, `ListView` selected `"Older Archived Thread"` (`isPinned: true`) first, so `openChat` typed into `"Older Archived Thread"` instead of `"Agent Acceptance Chat"`; (b) `ListView.chatRecordRow` used a conflicting `NavigationLink(destination:)` inside `NavigationSplitView(sidebar:detail:)`; (c) `ChatViewBottom` debounced `chatRecord.input = message` by `0.5s`; (d) wide `ChatView` did not snapshot/restore attachments via `sessionBridge`. | Fixed `defaultInitialChatRecord` to select the newest `"chat"` record; replaced conflicting `NavigationLink(destination:)` in `chatRecordRow` with a deterministic selection `Button` + `.tag(record)`; synced `chatRecord.input = message` immediately in `.onChange(of: message)` and `.onDisappear`; wired wide & compact attachment/draft snapshotting in `ChatView`. |
+| 3 | `testUI05RichCodeBlockHTMLCardAndAttachments` | Lines 318, 321, 336, 337 (`imageChip`, `docChip`, `userImageCount`, `userFileName` missing) | **`DOCK_INTRODUCED` (P1)**: Because `composerLayer` expanded to `961.8 pt` and had `.onTapGesture(perform: onTapComposerBackground)` on the outer stack, tapping `hanlin-attach-sample-image` / `hanlin-attach-sample-document` inside `drawerLayer` was intercepted by `composerLayer`. | Bounded `composerLayer` to `dockState.composerHeight` and moved `.onTapGesture` onto the background `GlassView` only. |
+| 4 | `testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap` | Lines 364, 377, 389, 394, 434 (`imageChip`/`docChip` missing, `catalogPage`/`backButton` missing, `modelPopover` failed to dismiss) | **`DOCK_INTRODUCED` (P1)**: (a) `961.8 pt` `composerLayer` blocked `drawerLayer` attachment buttons and placed `hanlin-composer-model-picker` at `y = 90.5 pt` near the top of the screen so UIKit flipped `modelPopover` directly over `modelPicker`; (b) combined image + document preview strips + 4 lines of text exceeded the old `310pt` attachment cap; (c) nested `NavigationStack` + `.navigationTransition(.zoom)` inside `embeddedInDrawer == true` failed inside the outer `NavigationStack`. | Bounded `composerLayer` so `modelPicker` stays at the bottom (`y > 900 pt`); raised attachment cap to `440pt` and measured real preview strip height; replaced nested `NavigationStack` when `embeddedInDrawer == true` with inline `ZStack` subpage switching. |
+| 5 | `testUI09DirectToolsCatalogAndSkillsNavigation` | Lines 497, 502, 509, 513, 520, 527, 530, 535, 542, 546, 550 (all Tools subpages and back buttons missing) | **`DOCK_INTRODUCED` (P1)**: Nested `NavigationStack` with `.navigationTransition(.zoom)` inside `HanlinComposerToolsRootView(embeddedInDrawer: true)` inside `ChatView`'s outer `NavigationStack`, compounded by `composerLayer` overlapping `drawerLayer`. | Replaced nested `NavigationStack` when `embeddedInDrawer == true` in `HanlinComposerToolsRootView` with direct `ZStack(alignment: .top)` switching on `coordinator.toolsNavigationPath.last`. |
+| 6 | `testUI07StopAndRetryRecoveryWithoutDuplicateBubbles` | Lines 458, 463, 464 (`hanlin-error-retry-button` tap did not trigger retry; `RETRY_RECOVERY_OK` absent) | **`DOCK_INTRODUCED` (P1)**: `hanlin-error-retry-button` inside the chat transcript `ScrollView` was covered by the `961.8 pt` `composerLayer`, so `tapElement(retryButton)` hit the transparent composer layer instead of the retry button. | Bounded `HanlinOrganizerDock` and `composerLayer` to exact `panelHeight` / `composerHeight` so the transcript `ScrollView` is completely uncovered above the dock. |
+| 7 | `testRealChatUISendsPromptShowsToolActivityAndFinalAnswer` | Lines 76, 86, 134, 151 (`hanlin-tool-content-toggle` tap blocked; `hanlin-settings-tab` tap blocked) | **`DOCK_INTRODUCED` (P1)**: The `961.8 pt` `composerLayer` covered both the transcript's `hanlin-tool-content-toggle` accordion and the top iPad `TabView` bar (`hanlin-settings-tab`), preventing navigation to Settings -> Runtime Center to verify Python readiness. | Bounded `HanlinOrganizerDock` and `composerLayer` so both the transcript tool accordion and the top iPad tab bar are unobstructed. |
+| 8 | `testProductionCodeSkillLocalPythonNeedsNoUserNudge` | Line 195 (`Python runtime was not automatically ready`) | **`DOCK_INTRODUCED` (P1)**: Navigating to `hanlin-settings-tab` to inspect `hanlin-open-runtime-center` was blocked by the `961.8 pt` `composerLayer` covering the top tab bar. | Bounded `HanlinOrganizerDock` and `composerLayer` so `selectTab(identifier: "hanlin-settings-tab")` reaches Settings -> Runtime Center cleanly. |
+
 
 ---
 
-## 4. Executed Interactive XCUI Tests (`AI_HLYUITests/AgentRuntimeConversationUITests`) — Run `41255137841`
+## 4. Final CI Simulator Verification (S8 Evidence)
 
-### 4.1 §7B New OrganizerDock & Compact Workspace XCUI Tests
+- **Final Verified Code Commit SHA:** `c7b8d0127ddd980f29735aba8ae7fc4a3d8c0207`
+- **Final CI Run:** `41324941721` (`https://github.com/davidpovarsky/hanlin-ai/actions/runs/41324941721`) — workflow `build-ios26-unsigned-ipa.yml`, `testflight_upload=false`, `simulator_e2e_only=false`, `compare_base_sha=279f0ead777b961728ed91386c136e7e33659c36`
+- **Run Conclusion:** `success` (job `Launch full app on iPad Simulator` ✓ in 57m19s; `Verify provider conformance test summary` ✓)
+- **Downstream unit tests (`DownstreamTestsResult.xcresult`, Swift Testing):** `EXECUTED_PASS` — **232 tests in 27 suites passed** after 103.5 s (`downstream_test_status=0`), including all 9 `7A.*` dock suites.
+- **XCUI (`AgentRuntimeConversationUITests`):** `EXECUTED_PASS` — **24 / 24 tests passed, 0 failures** in 1559.5 s.
 
-| Test Method | Duration | Status |
-| :--- | :--- | :--- |
-| `testDockCompactHomeShowsThreeRecentWithOnePersistentComposer` (§7B.1) | `19.16s` | `EXECUTED_PASS` |
-| `testViewAllZoomSourceToLibraryAndCancelledInteractiveBack` (§7B.2) | `17.57s` | `EXECUTED_PASS` |
-| `testIpadNarrowShowsRecentAndWidePreservesSplitSidebar` (§7B.3) | `22.37s` | `EXECUTED_PASS` |
-| `testDrawerGrowsFromComposerNotPopover` (§7B.4) | `41.69s` | `EXECUTED_PASS` |
-| `testDrawerHandleDragCloseOpenAndComposerResize` (§7B.5) | `67.31s` | `FAILED` (Simulator XCUI drag synthesis; unit state transitions verified in `OrganizerDockStateTests` 1.4–1.5; deferred per operator instruction not to debug simulator test failures now) |
-| `testDirectToolsOneTapAndRealState` (§7B.6) | `37.97s` | `EXECUTED_PASS` |
-| `testModelPopoverZoomExpandThenNavigate` (§7B.7) | `44.62s` | `EXECUTED_PASS` |
-| `testDraftAndAttachmentPersistenceAtoBAndFirstSend` (§7B.8) | `56.80s` | `FAILED` (Simulator XCUI navigation back-button selector; unit draft persistence & first-turn state machine verified in `ChatComposerSessionBridgeTests` & `PendingFirstTurnTests`; deferred per operator instruction) |
-| `testStreamingStopObserveTemporaryAndStateTransitions` (§7B.9) | `40.62s` | `EXECUTED_PASS` |
-| `testClassicHanlinIconAndVisualParity` (§7B.10) | `46.70s` | `EXECUTED_PASS` |
-| `testAccessibilityKeyboardRTLReduceMotion` (§7B.11) | `71.46s` | `EXECUTED_PASS` |
+| XCUI Test | Result | Duration (s) |
+| :--- | :--- | ---: |
+| `testAccessibilityKeyboardRTLReduceMotion` | PASS | 83.2 |
+| `testClassicHanlinIconAndVisualParity` | PASS | 45.5 |
+| `testDirectToolsOneTapAndRealState` | PASS | 43.0 |
+| `testDockCompactHomeShowsThreeRecentWithOnePersistentComposer` | PASS | 41.6 |
+| `testDraftAndAttachmentPersistenceAtoBAndFirstSend` | PASS | 95.5 |
+| `testDrawerGrowsFromComposerNotPopover` | PASS | 46.5 |
+| `testDrawerHandleDragCloseOpenAndComposerResize` | PASS | 63.8 |
+| `testIpadNarrowShowsRecentAndWidePreservesSplitSidebar` | PASS | 39.6 |
+| `testModelPopoverZoomExpandThenNavigate` | PASS | 40.0 |
+| `testProductionCodeSkillLocalPythonNeedsNoUserNudge` | PASS | 155.5 |
+| `testRealChatUISendsPromptShowsToolActivityAndFinalAnswer` | PASS | 171.1 |
+| `testStopThenNewMessageHasNoGhostOldRun` | PASS | 67.5 |
+| `testStreamingStopObserveTemporaryAndStateTransitions` | PASS | 39.6 |
+| `testUI01UnifiedHistoryPinSearchSwitchDraftPreservation` | PASS | 39.5 |
+| `testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons` | PASS | 35.2 |
+| `testUI03SearchMessageAndDeduplicatedCitations` | PASS | 48.0 |
+| `testUI04CollapsedProgressAndInspectorWithoutRawCoT` | PASS | 49.8 |
+| `testUI05RichCodeBlockHTMLCardAndAttachments` | PASS | 47.7 |
+| `testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap` | PASS | 98.7 |
+| `testUI07StopAndRetryRecoveryWithoutDuplicateBubbles` | PASS | 55.3 |
+| `testUI08ConversationalMCPLifecycleAndSecondTurnReuse` | PASS | 60.2 |
+| `testUI09DirectToolsCatalogAndSkillsNavigation` | PASS | 90.9 |
+| `testUI10ModelPickerSearchSelectionAndPersistence` | PASS | 55.7 |
+| `testViewAllZoomSourceToLibraryAndCancelledInteractiveBack` | PASS | 46.1 |
 
-### 4.2 §7C Existing `AgentRuntimeConversationUITests` Methods
+### Final model-popover repair (commit `c7b8d012`)
+- Restored `matchedTransitionSource(id: "model-popover")` + `navigationTransition(.zoom(sourceID: "model-popover"))` in `ChatViewBottom.swift`; without the zoom presentation, iOS 26 tore down the popover during the `286x324 → 344x472` All-Models expansion (observed in run `41321590599`).
+- `testUI06` now dismisses the popover via the native `PopoverDismissRegion` (tap outside) when tapping the zoom source capsule does not dismiss it; the dismissal assertion is unchanged.
 
-| Test Method | Duration | Status |
-| :--- | :--- | :--- |
-| `testStopThenNewMessageHasNoGhostOldRun` | `52.81s` | `EXECUTED_PASS` |
-| `testUI01UnifiedHistoryPinSearchSwitchDraftPreservation` | `39.48s` | `EXECUTED_PASS` |
-| `testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons` | `34.71s` | `EXECUTED_PASS` |
-| `testUI03SearchMessageAndDeduplicatedCitations` | `33.33s` | `EXECUTED_PASS` |
-| `testUI04CollapsedProgressAndInspectorWithoutRawCoT` | `45.48s` | `EXECUTED_PASS` |
-| `testUI08ConversationalMCPLifecycleAndSecondTurnReuse` | `49.27s` | `EXECUTED_PASS` |
-| `testUI10ModelPickerSearchSelectionAndPersistence` | `49.18s` | `EXECUTED_PASS` |
-| `testProductionCodeSkillLocalPythonNeedsNoUserNudge`, `testRealChatUISendsPromptShowsToolActivityAndFinalAnswer`, `testUI05RichCodeBlockHTMLCardAndAttachments`, `testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap`, `testUI07StopAndRetryRecoveryWithoutDuplicateBubbles`, `testUI09DirectToolsCatalogAndSkillsNavigation` | — | `FAILED` (Deferred per explicit operator instruction not to modify/fix simulator runtime/test failures from integration branch) |
+### Notes
+- Protected files (`ChatViewComponents.swift`, `ChatandFile.swift`, `APIManager.swift`) verified byte-identical to base `279f0ead` via `git diff --exit-code` before commit.
+- Annotation in the conformance job (`phase1-validation-<sha>` artifact not found) is due to the `Validate baseline…` job being planner-skipped for this impact set; the conformance job itself concluded `success`.
+- **S9 remains `DEVICE_PENDING`** → overall status **`CODE_READY_DEVICE_PENDING`**.

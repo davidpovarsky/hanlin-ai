@@ -110,4 +110,58 @@ Pass 4 corrective evidence keys:
 | P4-04 (Widget-only row tap opens Package Information, not foreground app launch) | EXECUTED_PASS (macOS + iPadOS 27 Simulator) / OPEN (physical iPad retest) | `pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting` in **P4-PKG**; `testWidgetOnlyRowOpensPackageInformationNotApp` in **P4-SIM-A** |
 | P4-05 (Cross-process store/instance lifecycle & `Default` + `Secondary` persistence) | EXECUTED_PASS (macOS + iPadOS 27 Simulator) / OPEN (physical iPad retest) | `pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds` in **P4-PKG**; `testInstalledScriptWidgetPackageInformationShowsDefaultInstance` in **P4-SIM-B** |
 | P4-06 (Privacy-safe `HanlinWidgetStorageDiagnostic` with `HWG-<12hex>` correlation ID) | EXECUTED_PASS (macOS) | `pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics` and `pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting` in **P4-PKG** |
-| Physical iPad owner retest on new signed TestFlight build `0.7.3 (88001)` | OPEN / `OWNER_DEVICE_QA_PENDING` | Signed TestFlight build `0.7.3 (88001)` delivered in [41568291224](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41568291224) (`VALID` at `2026-11-03T03:31:19Z`, IPA SHA256 `0c02d6fb98918e6310546a99459eeee3928e6f029d586aec4cbf3da87e80769b`); physical iPad verification of checklist steps 1–10 pending owner execution |
+| Physical iPad owner retest on new signed TestFlight build `0.7.3 (88001)` | OWNER_REPORTED_FAIL / DEVICE_QA_FAILED (2026-11-03) | Signed TestFlight build `0.7.3 (88001)` delivered in [41568291224](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41568291224) (`VALID` at `2026-11-03T03:31:19Z`). Owner physical iPad test reported empty WidgetKit instance selection list and missing Chat V3.3. Reopened for Pass 5 unified repair. |
+
+## Pass 5 unified integration & WidgetKit picker acceptance matrix — 2026-11-03
+
+**Unified Branch:** `fix/hanlin-widget-picker-dock-unified-20261103`
+**Base Commit 1 (Widget Pass 4):** `a6a836cd665b4d76107f1708ef17b30d7680e24d` (`integration/hanlin-dual-widget-engines-20261029`)
+**Base Commit 2 (OrganizerDock V3.3):** `35b9782bda76e2b2789d0532d22cf71a1a3f3500` (`fix/hanlin-organizerdock-v33-final-repair-20261101`)
+**Shared Merge Base:** `279f0ead777b961728ed91386c136e7e33659c36`
+**CI Validation Run:** [41720700203](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41720700203) (SUCCESS, commit `9967d20a`, 41 package regression tests + 10 analyzer tests + 7 JS tests PASS)
+
+### WidgetKit Acceptance Gates (`WK-01` … `WK-12`)
+
+| Gate | Requirement | Status | Executed Evidence / Notes |
+|---|---|---|---|
+| **WK-01** | Install and publication of ScriptWidget Actions & Expo Counter | EXECUTED_PASS | `pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting`, `testNativeEntitySuggestionsReadPublishedDefaultAndVariants` |
+| **WK-02** | In-app Default instance display & Copy from | EXECUTED_PASS | `testInstalledScriptWidgetPackageInformationShowsDefaultInstance` (41564460036), `testNativeEntitySuggestionsReadPublishedDefaultAndVariants` |
+| **WK-03** | Native system picker exposes installed scripts/variants | CODE_READY_DEVICE_PENDING / NOT_RUN_SIMULATOR_UI | `HanlinScriptPackageEntityQuery` conforms to `EnumerableEntityQuery` (`allEntities()`) and `EntityStringQuery` (`entities(matching:)`), backed by `snapshot.selectableWidgetEntities()`. Physical verification pending owner test. |
+| **WK-04** | AppEntity symmetry & exact ID roundtrip | EXECUTED_PASS | `testNativeEntityLookupResolvesOnlyExactIDs`, `selectableWidgetEntities()` exact join |
+| **WK-05** | Exact engine and family compatibility | EXECUTED_PASS | `testRegistryAndTemplateJoinHandlesFamilyAndOrphans` (explicit `"This widget does not support the systemSmall size."`) |
+| **WK-06** | Expo native app-closed action (7->8->7) | REUSED_VERIFIED_PASS (unit/runtime) / OPEN (SpringBoard) | `sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated`, `emittedExpoIntentCarriesVerifiedIdentityAndCallsSource` |
+| **WK-07** | ScriptWidget native action & Toggle | REUSED_VERIFIED_PASS (unit/runtime) / OPEN (SpringBoard) | `scriptWidgetNamedActionsAndBooleanSetValue`, `timelinePreparationCommitsOriginalTypedStorageAcrossColdReads` |
+| **WK-08** | A1/A2 instance state isolation | EXECUTED_PASS | `sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated`, `testNativeEntitySuggestionsReadPublishedDefaultAndVariants` |
+| **WK-09** | Three-engine extension coexistence | EXECUTED_PASS | `testNativeEntitySuggestionsReadPublishedDefaultAndVariants` (expo, scriptwidget, legacy in single snapshot) |
+| **WK-10** | Updates, republish, and Default retention | EXECUTED_PASS | `testNativePublisherRepairsMissingDefaultWithoutLosingA1A2` |
+| **WK-11** | Security, canonical path, and non-destructive data | EXECUTED_PASS | `pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics`, `pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds` |
+| **WK-12** | Cross-process durable diagnostics | EXECUTED_PASS | `testDurableQueryDiagnosticCrossProcess`, `HanlinScriptExtensionStore.recordQueryDiagnostic` |
+
+### Chat / OrganizerDock V3.3 Integration Gates (`CH-01` … `CH-09`)
+
+| Gate | Requirement | Status | Executed Evidence / Notes |
+|---|---|---|---|
+| **CH-01** | Exact source from owner V3.3 on all 11 paths | EXECUTED_PASS | Verified identical byte-level diff to `35b9782b` across all 11 paths; clean Git merge |
+| **CH-02** | Classic chat transcript & bubble rendering | REUSED_VERIFIED_PASS | Protected files `ChatViewComponents.swift` & `ChatandFile.swift` byte-identical to `279f0ead`; `HanlinOrganizerDockParityTests` |
+| **CH-03** | Bounded dock height / no transparent touch swallowing | REUSED_VERIFIED_PASS | `HanlinOrganizerDock.swift` outer frame bounded to `panelHeight`; `HanlinOrganizerDockParityTests` S0–S7 |
+| **CH-04** | Compact 3-recent chats + native View All zoom | REUSED_VERIFIED_PASS | `HanlinCompactChatWorkspace.swift`, `AgentRuntimeConversationUITests` (41324941721) |
+| **CH-05** | Per-chat drafts & media bridge persistence A<->B | REUSED_VERIFIED_PASS | `HanlinComposerSessionBridge.swift`, `HanlinOrganizerDockParityTests` |
+| **CH-06** | Composer icons, direct Tools & inline drawer routes | REUSED_VERIFIED_PASS | `HanlinComposerPopupView.swift`, `ChatViewBottom.swift` immediate draft sync |
+| **CH-07** | Native model popover zoom & outside-tap dismissal | REUSED_VERIFIED_PASS | `matchedTransitionSource(id: "model-popover")`, `navigationTransition(.zoom(sourceID: "model-popover"))`, `PopoverDismissRegion` |
+| **CH-08** | Keyboard/RTL/Reduce Motion & multiline co-existence | REUSED_VERIFIED_PASS | `HanlinOrganizerDockState.swift`, `AgentRuntimeConversationUITests` |
+| **CH-09** | 24 XCUI and 232 unit tests acceptance | REUSED_VERIFIED_PASS | Historical 24/24 UI & 232/232 unit tests passed in 41324941721 on `c7b8d012`; zero source collisions in merged tree |
+
+### Cross-Domain and Release Integrity Gates (`INT-01` … `INT-10`)
+
+| Gate | Requirement | Status | Notes |
+|---|---|---|---|
+| **INT-01** | Protected Chat files invariant | EXECUTED_PASS | `ChatViewComponents.swift`, `ChatandFile.swift`, `APIManager.swift` byte-identical to `279f0ead` |
+| **INT-02** | Widget-only row tap opens Package Info | EXECUTED_PASS | `testWidgetOnlyRowOpensPackageInformationNotApp` preserved |
+| **INT-03** | NativeScript/Expo/Sefaria/Runtime preserved | REUSED_VERIFIED_PASS | Unchanged shared dependencies and runtime profiles |
+| **INT-04** | Translation UI, Live Activity, generic widget kind | EXECUTED_PASS | Snapshot preserves collections; single kind `com.hanlin.scripting.widget` |
+| **INT-05** | Secure path validation & negative traversal checks | EXECUTED_PASS | `pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics` |
+| **INT-06** | Upgrade non-destructive over 88001 | EXECUTED_PASS | `testNativePublisherRepairsMissingDefaultWithoutLosingA1A2`, schema v2 retained |
+| **INT-07** | Exact source SHA matched, truthful attribution | EXECUTED_PASS | Branch `fix/hanlin-widget-picker-dock-unified-20261103`, no false claims |
+| **INT-08** | No unauthorized main merge / TestFlight / Asana write | EXECUTED_PASS | Adheres strictly to private developer app mandate and read-only Asana |
+| **INT-09** | 88001 device fail recorded, new device gate open | EXECUTED_PASS | `OWNER_REPORTED_FAIL` on 88001; post-fix signed physical acceptance remains `OWNER_DEVICE_QA_PENDING` |
+| **INT-10** | Truthful final verdict | CODE_READY_DEVICE_PENDING | All code, merge, and unit/query repairs verified; physical iPad test pending |

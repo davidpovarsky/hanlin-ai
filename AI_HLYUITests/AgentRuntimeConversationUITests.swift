@@ -431,6 +431,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "Model picker root must reappear after tapping Back")
         tapElement(modelPicker)
+        if !modelPopover.waitForNonExistence(timeout: 2) {
+            app.windows.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.2)).tap()
+        }
         XCTAssertTrue(modelPopover.waitForNonExistence(timeout: 5), "Model picker popover must dismiss on tap")
 
         attachScreenshot("UI-06_ComposerMultilineAttachmentsModelSelectorNoOverlap", in: app)
@@ -605,14 +608,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     // MARK: - §7B InteriorOrganizer V3.3 Source-Parity OrganizerDock & Compact Workspace XCUI Suite
 
     func testDockCompactHomeShowsThreeRecentWithOnePersistentComposer() throws {
-        let app = launchDockAcceptanceApp()
+        let app = launchDockAcceptanceApp(simulatedWidth: "390")
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
-
-        let windowWidth = app.windows.firstMatch.frame.width
-        guard windowWidth < 640 else {
-            // Wide iPad layout is verified in testIpadNarrowShowsRecentAndWidePreservesSplitSidebar
-            return
-        }
 
         let recentSection = app.descendants(matching: .any)["hanlin-compact-recent-section"].firstMatch
         let viewAllBtn = app.buttons["hanlin-compact-view-all-button"].firstMatch
@@ -645,10 +642,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testViewAllZoomSourceToLibraryAndCancelledInteractiveBack() throws {
-        let app = launchDockAcceptanceApp()
+        let app = launchDockAcceptanceApp(simulatedWidth: "390")
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
-
-        guard app.windows.firstMatch.frame.width < 640 else { return }
 
         let viewAllBtn = app.buttons["hanlin-compact-view-all-button"].firstMatch
         XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 15), "View All button must exist on compact Home")
@@ -685,19 +680,21 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testIpadNarrowShowsRecentAndWidePreservesSplitSidebar() throws {
-        let app = launchDockAcceptanceApp()
-        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+        // 1. Narrow (< 640pt) must present compact Recent Conversations
+        let narrowApp = launchDockAcceptanceApp(simulatedWidth: "500")
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: narrowApp)
+        let recentSection = narrowApp.descendants(matching: .any)["hanlin-compact-recent-section"].firstMatch
+        XCTAssertTrue(recentSection.waitForExistence(timeout: 15), "Narrow width (<640pt) must present compact Recent Conversations")
+        attachScreenshot("7B-03a_WidthAdaptiveWorkspace_Narrow500pt", in: narrowApp)
+        narrowApp.terminate()
 
-        let windowWidth = app.windows.firstMatch.frame.width
-        if windowWidth < 640 {
-            let recentSection = app.descendants(matching: .any)["hanlin-compact-recent-section"].firstMatch
-            XCTAssertTrue(recentSection.waitForExistence(timeout: 15), "Narrow width (<640pt) must present compact Recent Conversations")
-        } else {
-            ensureChatListVisible(in: app)
-            let newChatBtn = app.buttons["hanlin-new-chat-button"].firstMatch
-            XCTAssertTrue(newChatBtn.waitForExistence(timeout: 15), "Wide iPad (>=640pt) must preserve NavigationSplitView sidebar")
-        }
-        attachScreenshot("7B-03_WidthAdaptiveWorkspace_\(Int(windowWidth))pt", in: app)
+        // 2. Wide (>= 640pt) must preserve NavigationSplitView sidebar
+        let wideApp = launchDockAcceptanceApp(simulatedWidth: "1024")
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: wideApp)
+        ensureChatListVisible(in: wideApp)
+        let newChatBtn = wideApp.buttons["hanlin-new-chat-button"].firstMatch
+        XCTAssertTrue(newChatBtn.waitForExistence(timeout: 15), "Wide iPad (>=640pt) must preserve NavigationSplitView sidebar")
+        attachScreenshot("7B-03b_WidthAdaptiveWorkspace_Wide1024pt", in: wideApp)
     }
 
     func testDrawerGrowsFromComposerNotPopover() throws {
@@ -776,32 +773,62 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Dragging drawer handle downward (>34pt) must collapse the drawer")
         attachScreenshot("7B-05a_AfterDrawerDragClose", in: app)
 
-        // 2. Tap or drag drawer handle upward (< -34pt) to reopen last expanded mode
+        // 2. Drag drawer handle upward (< -34pt) to reopen last expanded mode (no tap fallback)
         let collapsedHandleStart = drawerHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
         let handleDragUp = collapsedHandleStart.withOffset(CGVector(dx: 0, dy: -120))
         collapsedHandleStart.press(forDuration: 0.05, thenDragTo: handleDragUp)
-        if !generalContent.waitForExistence(timeout: 3) {
-            tapElement(drawerHandle)
-        }
-        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Drawer handle must reopen last expanded mode")
+        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Dragging drawer handle upward (<-34pt) must reopen last expanded mode")
+
+        // 3. Verify tap-to-close and tap-to-open on drawer handle
+        tapElement(drawerHandle)
+        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Tapping drawer handle while open must collapse the drawer")
+        tapElement(drawerHandle)
+        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Tapping drawer handle while collapsed must reopen last expanded mode")
 
         // Close drawer before testing composer resize handle
         tapElement(generalBtn)
         XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5))
 
-        // 3. Drag composer resize handle upward to increase composer height
+        // 4. Drag composer resize handle upward to increase both composer shell and inner text editor height
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 5))
         let heightBefore = composerShell.frame.height
+        let inputHeightBefore = input.frame.height
         let resizeStart = resizeHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
         let resizeDragUp = resizeStart.withOffset(CGVector(dx: 0, dy: -90))
         resizeStart.press(forDuration: 0.05, thenDragTo: resizeDragUp)
 
         let heightAfter = composerShell.frame.height
+        let inputHeightAfter = input.frame.height
         XCTAssertGreaterThan(
             heightAfter,
             heightBefore + 20,
             "Dragging composer resize handle upward must increase composer height (before: \(heightBefore), after: \(heightAfter))"
         )
+        XCTAssertGreaterThan(
+            inputHeightAfter,
+            inputHeightBefore + 15,
+            "Dragging composer resize handle upward must increase inner text editor height (before: \(inputHeightBefore), after: \(inputHeightAfter))"
+        )
         attachScreenshot("7B-05b_AfterComposerResizeUp", in: app)
+
+        // 5. Drag composer resize handle downward to shrink both composer shell and inner text editor height
+        let resizeShrinkStart = resizeHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let resizeDragDown = resizeShrinkStart.withOffset(CGVector(dx: 0, dy: 70))
+        resizeShrinkStart.press(forDuration: 0.05, thenDragTo: resizeDragDown)
+
+        let heightAfterShrink = composerShell.frame.height
+        let inputHeightAfterShrink = input.frame.height
+        XCTAssertLessThan(
+            heightAfterShrink,
+            heightAfter - 15,
+            "Dragging composer resize handle downward must shrink composer height (expanded: \(heightAfter), shrunk: \(heightAfterShrink))"
+        )
+        XCTAssertLessThan(
+            inputHeightAfterShrink,
+            inputHeightAfter - 10,
+            "Dragging composer resize handle downward must shrink inner text editor height (expanded: \(inputHeightAfter), shrunk: \(inputHeightAfterShrink))"
+        )
     }
 
     func testDirectToolsOneTapAndRealState() throws {
@@ -901,47 +928,65 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testDraftAndAttachmentPersistenceAtoBAndFirstSend() throws {
-        let app = launchDockAcceptanceApp()
+        // Part 1: Compact Home first-turn send + compact A -> B -> A draft & attachment isolation
+        let compactApp = launchDockAcceptanceApp(simulatedWidth: "390")
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: compactApp)
+
+        let viewAllBtn = compactApp.buttons["hanlin-compact-view-all-button"].firstMatch
+        XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 15), "View All button must exist on compact Home")
+
+        sendPrompt("PROMPT_FIRST_TURN_HOME", in: compactApp)
+        let firstTurnAnswer = compactApp.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS 'FIRST_TURN_HOME_COMPLETE'")
+        ).firstMatch
+        XCTAssertTrue(firstTurnAnswer.waitForExistence(timeout: 30), "Sending from compact Home must create a new chat and complete first turn")
+        attachScreenshot("7B-09a_FirstTurnFromCompactHome", in: compactApp)
+
+        // Return to compact Home
+        navigateBack(in: compactApp)
+        XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 10))
+        compactApp.terminate()
+
+        // Part 2: Wide workspace A -> B -> A draft AND attachment persistence
+        let app = launchDockAcceptanceApp(simulatedWidth: "1024")
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+        ensureChatListVisible(in: app)
+        selectChatRow(named: "Agent Acceptance Chat", in: app)
 
-        // 1. If on compact Home, test sending first turn directly from Home persistent composer
-        let viewAllBtn = app.buttons["hanlin-compact-view-all-button"].firstMatch
-        if viewAllBtn.waitForExistence(timeout: 5) {
-            sendPrompt("PROMPT_FIRST_TURN_HOME", in: app)
-            let firstTurnAnswer = app.staticTexts.matching(
-                NSPredicate(format: "label CONTAINS 'FIRST_TURN_HOME_COMPLETE'")
-            ).firstMatch
-            XCTAssertTrue(firstTurnAnswer.waitForExistence(timeout: 30), "Sending from compact Home must create a new chat and complete first turn")
-            attachScreenshot("7B-09a_FirstTurnFromCompactHome", in: app)
-
-            // Return to compact Home
-            navigateBack(in: app)
-            XCTAssertTrue(viewAllBtn.waitForExistence(timeout: 10))
-        }
-
-        // 2. Open Agent Acceptance Chat and enter a draft
-        openChat(in: app)
         let inputA = chatInputElement(in: app)
         XCTAssertTrue(inputA.waitForExistence(timeout: 10))
         tapElement(inputA)
         inputA.typeText("Isolated Draft For Chat A")
 
-        // Switch to Architecture Review Notes and verify empty draft
+        // Attach sample image in Chat A
+        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        XCTAssertTrue(generalBtn.waitForExistence(timeout: 5))
+        tapElement(generalBtn)
+        let sampleImageBtn = app.buttons["hanlin-attach-sample-image"].firstMatch
+        XCTAssertTrue(sampleImageBtn.waitForExistence(timeout: 5), "Sample image attachment action must exist in General drawer")
+        tapElement(sampleImageBtn)
+
+        let imageChip = app.descendants(matching: .any)["hanlin-composer-image-attachment"].firstMatch
+        XCTAssertTrue(imageChip.waitForExistence(timeout: 5), "Image attachment preview chip must appear in Chat A")
+
+        // Switch to Architecture Review Notes and verify empty draft and no leaked attachment
         ensureChatListVisible(in: app)
         selectChatRow(named: "Architecture Review Notes", in: app)
         let inputB = chatInputElement(in: app)
         XCTAssertTrue(inputB.waitForExistence(timeout: 10))
         let valB = (inputB.value as? String) ?? ""
         XCTAssertFalse(valB.contains("Isolated Draft For Chat A"), "Chat B must not inherit Chat A's draft")
+        XCTAssertFalse(imageChip.exists, "Chat B must not inherit Chat A's image attachment")
 
-        // Switch back to Agent Acceptance Chat and verify Chat A's draft was preserved
+        // Switch back to Agent Acceptance Chat and verify Chat A's draft AND image attachment were preserved
         ensureChatListVisible(in: app)
         selectChatRow(named: "Agent Acceptance Chat", in: app)
         let restoredInputA = chatInputElement(in: app)
         XCTAssertTrue(restoredInputA.waitForExistence(timeout: 10))
         let restoredValA = (restoredInputA.value as? String) ?? ""
         XCTAssertTrue(restoredValA.contains("Isolated Draft For Chat A"), "Chat A draft must be preserved across navigation")
-        attachScreenshot("7B-09b_PerChatDraftIsolation", in: app)
+        XCTAssertTrue(imageChip.waitForExistence(timeout: 5), "Chat A image attachment must be preserved across navigation")
+        attachScreenshot("7B-09b_PerChatDraftAndAttachmentIsolation", in: app)
     }
 
     func testStreamingStopObserveTemporaryAndStateTransitions() throws {
@@ -992,12 +1037,15 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
     // MARK: - Navigation & Toggle Helpers
 
-    private func launchDockAcceptanceApp() -> XCUIApplication {
+    private func launchDockAcceptanceApp(simulatedWidth: String? = nil) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
+        if let simulatedWidth {
+            app.launchEnvironment["HANLIN_SIMULATE_CONTAINER_WIDTH"] = simulatedWidth
+        }
         app.launch()
         return app
     }

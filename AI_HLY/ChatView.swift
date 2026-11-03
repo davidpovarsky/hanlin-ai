@@ -139,6 +139,7 @@ struct ChatView: View {
     @Environment(\.hanlinComposerSessionBridge) private var sessionBridge
 
     @State private var composerRegistrationToken = UUID()
+    @State private var measuredWorkspaceSize: CGSize = .zero
     @State private var chatTemps: [ChatMessages] = []
     @State private var modelTemp: [AllModels] = []
     @Query private var userInfos: [UserInfo]
@@ -230,7 +231,7 @@ struct ChatView: View {
         hasPrompts: Bool
     ) -> CGFloat {
         if measuredComposerHeight > 40 {
-            return max(96, min(measuredComposerHeight + 20, 420))
+            return max(96, min(measuredComposerHeight + 20, 680))
         }
         var baseHeight: CGFloat = 116
         if hasURLs { baseHeight += 32 }
@@ -303,21 +304,71 @@ struct ChatView: View {
             onSelectModel: selectModel,
             onSendUser: { handleMessageSending(ifObservingMode: false) },
             onSendObserve: { handleMessageSending(ifObservingMode: true) },
-            onCancel: handleCancellation
+            onCancel: handleCancellation,
+            validateSendAcceptance: { [self] in
+                isResponding || chatTemps.contains(where: { $0.role == "user" })
+            }
         )
     }
-    
-    var body: some View {
+
+    private struct ComposerBridgeSyncState: Equatable {
+        var temporaryRecord: Bool
+        var respondIndex: Int
+        var isResponding: Bool
+        var message: String
+        var selectedImagesCount: Int
+        var selectedDocumentURLs: [URL]
+        var selectedURLs: [String]
+        var selectedPromptsCount: Int
+        var selectedModelIndex: Int
+        var ifKnowledge: Bool
+        var ifSearch: Bool
+        var ifToolUse: Bool
+        var ifThink: Bool
+        var ifAudio: Bool
+        var ifPlanning: Bool
+    }
+
+    private var composerBridgeSyncState: ComposerBridgeSyncState {
+        ComposerBridgeSyncState(
+            temporaryRecord: TemporaryRecord,
+            respondIndex: respondIndex,
+            isResponding: isResponding,
+            message: message,
+            selectedImagesCount: selectedImages.count,
+            selectedDocumentURLs: selectedDocumentURLs,
+            selectedURLs: selectedURLs,
+            selectedPromptsCount: selectedPrompts.count,
+            selectedModelIndex: selectedModelIndex,
+            ifKnowledge: ifKnowledge,
+            ifSearch: ifSearch,
+            ifToolUse: ifToolUse,
+            ifThink: ifThink,
+            ifAudio: ifAudio,
+            ifPlanning: ifPlanning
+        )
+    }
+
+    private func syncComposerEndpointWithBridge() {
+        guard let sessionBridge else { return }
+        let endpoint = makeExternalComposerEndpoint()
+        if isExternalCompactComposerHost {
+            sessionBridge.update(endpoint: endpoint)
+        } else {
+            sessionBridge.snapshotDraft(from: endpoint)
+        }
+    }
+
+    @ViewBuilder
+    private var chatWorkspaceStack: some View {
         VStack {
-            
             ZStack(alignment: .bottom) {
-                
                 // 第一部分：可滚动聊天区
                 ScrollViewReader { scrollViewProxy in
                     buildScrollContent(scrollViewProxy)
                         .padding(.bottom, 6)
                 }
-                
+
                 // 渐变背景
                 LinearGradient(
                     gradient: Gradient(colors: [Color(.systemBackground).opacity(0), Color(.systemBackground)]),
@@ -327,7 +378,7 @@ struct ChatView: View {
                 .frame(height: 120)
                 .allowsHitTesting(false)
                 .zIndex(0)
-                
+
                 if !isExternalCompactComposerHost {
                     ChatViewBottom(
                         chatRecord: chatRecord,
@@ -374,8 +425,17 @@ struct ChatView: View {
                         showSearchAlert: $showSearchAlert,
                         selectedImageSize: $selectedImageSize,
                         imageReversePrompt: $imageReversePrompt,
-                        isInputActive: $isInputActive
+                        isInputActive: $isInputActive,
+                        dockContextKey: effectiveChatSessionID.uuidString,
+                        availableWorkspaceSize: measuredWorkspaceSize
                     )
+                }
+            }
+            .onGeometryChange(for: CGSize.self) { proxy in
+                proxy.size
+            } action: { newSize in
+                if abs(measuredWorkspaceSize.width - newSize.width) > 1 || abs(measuredWorkspaceSize.height - newSize.height) > 1 {
+                    measuredWorkspaceSize = newSize
                 }
             }
             .onPreferenceChange(ComposerHeightPreferenceKey.self) { newHeight in
@@ -383,47 +443,47 @@ struct ChatView: View {
                 measuredComposerHeight = newHeight
             }
         }
+    }
+
+    var body: some View {
+        chatWorkspaceStack
         .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
         .onAppear {
             composerRegistrationToken = UUID()
             handleOnAppear()
+            if sessionBridge?.isTemporaryChat(effectiveChatSessionID) == true {
+                TemporaryRecord = true
+            }
             if isExternalCompactComposerHost {
                 sessionBridge?.register(endpoint: makeExternalComposerEndpoint())
+            } else if let sessionBridge {
+                let endpoint = makeExternalComposerEndpoint()
+                sessionBridge.restoreCachedDraftIfNeeded(into: endpoint)
+                sessionBridge.snapshotDraft(from: endpoint)
             }
             if horizontalSizeClass == .compact || isExternalCompactComposerHost {
                 NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
             }
         }
-        .onChange(of: TemporaryRecord) { _, _ in
-            if isExternalCompactComposerHost {
-                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
-            }
+        .onChange(of: TemporaryRecord) { _, newValue in
+            sessionBridge?.setTemporaryChat(newValue, for: effectiveChatSessionID)
         }
-        .onChange(of: respondIndex) { _, _ in
-            if isExternalCompactComposerHost {
-                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
-            }
-        }
-        .onChange(of: isResponding) { _, _ in
-            if isExternalCompactComposerHost {
-                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
-            }
-        }
-        .onChange(of: message) { _, _ in
-            if isExternalCompactComposerHost {
-                sessionBridge?.update(endpoint: makeExternalComposerEndpoint())
-            }
+        .onChange(of: composerBridgeSyncState) { _, _ in
+            syncComposerEndpointWithBridge()
         }
         .onDisappear {
             if isExternalCompactComposerHost {
                 sessionBridge?.unregister(sessionID: effectiveChatSessionID, token: composerRegistrationToken)
+            } else {
+                sessionBridge?.snapshotDraft(from: makeExternalComposerEndpoint())
             }
             if horizontalSizeClass == .compact || isExternalCompactComposerHost {
                 NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
             }
             openHistory()
             if TemporaryRecord && sessionBridge?.isTransitioningLayoutMode != true {
+                sessionBridge?.clearCachedDraft(for: effectiveChatSessionID)
                 context.delete(chatRecord)
                 do {
                     try context.save()
@@ -1139,7 +1199,9 @@ struct ChatView: View {
         if !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             chatRecord.infoDescription = "[草稿] \(message)"
             chatRecord.input = message
-        } else if let lastMessage = chatTemps.last {
+        } else {
+            chatRecord.input = ""
+            if let lastMessage = chatTemps.last {
             if let text = lastMessage.text,
                !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 // 如果最后一条消息有文字，则保存文字预览
@@ -1159,8 +1221,9 @@ struct ChatView: View {
                 } else {
                     chatRecord.infoDescription = "[图像]"
                 }
-            } else {
-                chatRecord.infoDescription = ""
+                } else {
+                    chatRecord.infoDescription = ""
+                }
             }
         }
         do {

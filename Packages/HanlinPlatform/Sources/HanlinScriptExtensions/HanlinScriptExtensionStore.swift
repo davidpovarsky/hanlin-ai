@@ -126,6 +126,68 @@ public struct HanlinScriptExtensionStore: Sendable {
         logger.error("widget_storage_diagnostic \(diagnostic.redactedReportString, privacy: .public)")
     }
 
+    private var queryDiagnosticURL: URL {
+        root.appending(path: "diagnostics", directoryHint: .isDirectory)
+            .appending(path: "latest-query-diagnostic.json")
+    }
+
+    public func recordDurableQueryDiagnostic(_ diagnostic: HanlinWidgetStorageDiagnostic) {
+        Self.recordDiagnostic(diagnostic)
+        do {
+            let dir = root.appending(path: "diagnostics", directoryHint: .isDirectory)
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let data = try JSONEncoder().encode(diagnostic)
+            try data.write(to: queryDiagnosticURL, options: .atomic)
+        } catch {
+            Self.logger.error("Failed to write durable query diagnostic: \(error.localizedDescription)")
+        }
+    }
+
+    public var latestDurableQueryDiagnostic: HanlinWidgetStorageDiagnostic? {
+        guard let data = try? Data(contentsOf: queryDiagnosticURL),
+              let diag = try? JSONDecoder().decode(HanlinWidgetStorageDiagnostic.self, from: data) else {
+            return nil
+        }
+        return diag
+    }
+
+    public static func recordQueryDiagnostic(
+        error: Error,
+        phase: HanlinWidgetStorageDiagnostic.Phase = .widgetExtensionEntityQuery
+    ) {
+        let store = try? HanlinScriptExtensionStore()
+        let diag: HanlinWidgetStorageDiagnostic
+        if let existing = store?.lastDiagnostic ?? latestDiagnostic {
+            diag = HanlinWidgetStorageDiagnostic(
+                correlationID: existing.correlationID,
+                phase: phase,
+                decisionPoint: existing.decisionPoint,
+                relativePath: existing.relativePath,
+                failingComponentIndex: existing.failingComponentIndex,
+                failingComponentName: existing.failingComponentName,
+                errorDomain: existing.errorDomain,
+                errorCode: existing.errorCode,
+                posixErrno: existing.posixErrno,
+                summary: existing.summary
+            )
+        } else {
+            let nsError = error as NSError
+            diag = HanlinWidgetStorageDiagnostic(
+                phase: phase,
+                decisionPoint: .instancePublication,
+                relativePath: "ScriptingExtensions",
+                errorDomain: nsError.domain,
+                errorCode: nsError.code,
+                summary: "Widget extension query failed: \(error.localizedDescription)"
+            )
+        }
+        if let store {
+            store.recordDurableQueryDiagnostic(diag)
+        } else {
+            recordDiagnostic(diag)
+        }
+    }
+
     public func load() throws -> HanlinScriptExtensionSnapshot? {
         try loadWithRecovery().snapshot
     }

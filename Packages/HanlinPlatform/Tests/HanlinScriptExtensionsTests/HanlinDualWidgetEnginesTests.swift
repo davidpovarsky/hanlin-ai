@@ -712,6 +712,223 @@ struct HanlinDualWidgetEnginesTests {
             return
         }
     }
+
+    @Test func testNativeEntitySuggestionsReadPublishedDefaultAndVariants() async throws {
+        let expoFixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo", installationID: "installed.expo", packageID: "package.expo")
+        defer { expoFixture.remove() }
+        let scriptFixture = try await InstalledFixture("Hanlin-ScriptWidget-Actions.scripting", installationID: "installed.script", packageID: "package.script")
+        defer { scriptFixture.remove() }
+        let legacyFixture = try await InstalledFixture("Hanlin-Widget-Legacy-Regression.scripting", installationID: "installed.legacy", packageID: "package.legacy")
+        defer { legacyFixture.remove() }
+
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+
+        var templates: [Widget] = []
+        for fixture in [expoFixture, scriptFixture, legacyFixture] {
+            let payload: HanlinWidgetPayload
+            switch fixture.template.engine {
+            case .expo:
+                let (program, _) = try fixture.store.loadProgram(for: fixture.template)
+                let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: fixture.identity.installedPackageID, generation: fixture.identity.generation)
+                payload = .expo(.init(layout: "", layoutRef: artifact.ref, layoutSHA256: artifact.sha256))
+            case .scriptwidget:
+                let (program, _) = try fixture.store.loadProgram(for: fixture.template)
+                let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: fixture.identity.installedPackageID, generation: fixture.identity.generation)
+                payload = .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256))
+            case .legacy:
+                payload = try #require(fixture.template.payload)
+            }
+            templates.append(.init(identity: fixture.identity, displayName: fixture.template.displayName, validUntil: .distantFuture, engine: fixture.template.engine, payload: payload, root: fixture.template.root))
+        }
+
+        let installedIDs: Set<HanlinInstalledPackageID> = [expoFixture.identity.installedPackageID, scriptFixture.identity.installedPackageID, legacyFixture.identity.installedPackageID]
+        try store.publishWidgetTemplates(templates, intentEntities: [], translationApps: [], installedPackageIDs: installedIDs)
+
+        // Create variants A1 and A2 for expo
+        let initialSnapshot = try #require(try store.load())
+        let expoDefault = try #require(initialSnapshot.widgetInstances.first { $0.identity == expoFixture.identity })
+        let expoA1 = try store.createWidgetInstance(from: expoDefault.entityID, displayName: "A1")
+        let expoA2 = try store.createWidgetInstance(from: expoDefault.entityID, displayName: "A2")
+
+        let snapshot = try #require(try store.load())
+        let selectables = snapshot.selectableWidgetEntities()
+
+        // Verify all 3 engines present: expo, scriptwidget, legacy
+        let engines = Set(selectables.map(\.engine))
+        #expect(engines.contains(.expo))
+        #expect(engines.contains(.scriptwidget))
+        #expect(engines.contains(.legacy))
+
+        // Verify Default, A1, A2 entities for expo
+        let expoEntities = selectables.filter { $0.identity.installedPackageID == expoFixture.identity.installedPackageID }
+        #expect(expoEntities.count == 3)
+        #expect(expoEntities.contains { $0.isDefault && $0.variantName == "Default" })
+        #expect(expoEntities.contains { !$0.isDefault && $0.variantName == "A1" && $0.id == expoA1.entityID })
+        #expect(expoEntities.contains { !$0.isDefault && $0.variantName == "A2" && $0.id == expoA2.entityID })
+
+        // Verify label format "package name · engine · variant"
+        for entity in selectables {
+            #expect(entity.displayName.contains(entity.packageName))
+            #expect(entity.displayName.contains(entity.engine.rawValue))
+            #expect(entity.displayName.contains(entity.variantName))
+        }
+
+        // Verify deterministic sorting: Default precedes custom variants for same package
+        if let defaultIndex = expoEntities.firstIndex(where: \.isDefault),
+           let a1Index = expoEntities.firstIndex(where: { $0.variantName == "A1" }) {
+            #expect(defaultIndex < a1Index)
+        }
+    }
+
+    @Test func testNativeEntityLookupResolvesOnlyExactIDs() async throws {
+        let fixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo")
+        defer { fixture.remove() }
+
+        let snapshot = try #require(try fixture.store.load())
+        let selectables = snapshot.selectableWidgetEntities()
+        #expect(!selectables.isEmpty)
+
+        for entity in selectables {
+            let matched = selectables.filter { $0.id == entity.id }
+            #expect(matched.count == 1)
+            #expect(matched.first?.identity == entity.identity)
+        }
+
+        // Unknown ID must not resolve
+        let unknownID = "widget-v2:dW5rbm93bg==.dW5rbm93bg==.MQ==.d2lkZ2V0.ZXhwbw==.ZGVmYXVsdA=="
+        #expect(selectables.filter { $0.id == unknownID }.isEmpty)
+
+        // Inactive installation must be excluded
+        try fixture.store.invalidateWidgetActions(installedPackageID: fixture.identity.installedPackageID)
+        let disabledSnapshot = try #require(try fixture.store.load())
+        #expect(disabledSnapshot.selectableWidgetEntities().isEmpty)
+    }
+
+    @Test func testRegistryAndTemplateJoinHandlesFamilyAndOrphans() async throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+
+        let id = try HanlinInstalledPackageID(validating: "installed.single-family")
+        let pkgID = try HanlinPackageID(validating: "package.single-family")
+        let identity = Identity(installedPackageID: id, packageID: pkgID, generation: 1, entrypointID: "widget")
+
+        let program = HanlinWidgetProgram(engine: .scriptwidget, sourceSHA256: String(repeating: "a", count: 64),
+            compilerSHA256: String(repeating: "b", count: 64), javaScript: "async function $main() { $render(ScriptWidget.createElement('text', {}, 'Medium only')); }",
+            actions: [], families: ["systemMedium"])
+        let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: id, generation: 1)
+
+        // Template only for systemMedium
+        let template = Widget(identity: identity, displayName: "Single Family", family: "systemMedium",
+            validUntil: .distantFuture, engine: .scriptwidget,
+            payload: .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256)),
+            root: .init(kind: .text))
+
+        try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [id])
+        let snapshot = try #require(try store.load())
+        let selectables = snapshot.selectableWidgetEntities()
+        #expect(selectables.count == 1)
+        let entity = try #require(selectables.first)
+        #expect(entity.supportedFamilies == ["systemMedium"])
+
+        // Preparation for systemMedium succeeds
+        let prepMedium = HanlinWidgetPreparation.prepare(store: store, entityID: entity.id, family: "systemMedium")
+        guard case .scriptwidget = prepMedium else {
+            Issue.record("Expected scriptwidget for systemMedium")
+            return
+        }
+
+        // Preparation for systemSmall fails with explicit family mismatch message
+        let prepSmall = HanlinWidgetPreparation.prepare(store: store, entityID: entity.id, family: "systemSmall")
+        guard case let .failure(reason) = prepSmall else {
+            Issue.record("Expected failure for systemSmall")
+            return
+        }
+        #expect(reason.contains("systemSmall"))
+
+        // An orphan instance (no templates in snapshot.widgets) must be excluded from selectables
+        let orphanInstance = HanlinWidgetInstance(
+            identity: Identity(installedPackageID: try .init(validating: "installed.orphan"), packageID: try .init(validating: "package.orphan"), generation: 1, entrypointID: "widget"),
+            engine: .scriptwidget,
+            displayName: "Orphan"
+        )
+        let mutatedSnapshot = snapshot.replacing(instances: snapshot.widgetInstances + [orphanInstance])
+        let selectablesWithOrphan = mutatedSnapshot.selectableWidgetEntities()
+        #expect(!selectablesWithOrphan.contains { $0.id == orphanInstance.entityID })
+    }
+
+    @Test func testNativePublisherRepairsMissingDefaultWithoutLosingA1A2() async throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+
+        let id = try HanlinInstalledPackageID(validating: "installed.repair")
+        let pkgID = try HanlinPackageID(validating: "package.repair")
+        let identity = Identity(installedPackageID: id, packageID: pkgID, generation: 1, entrypointID: "widget")
+
+        let program = HanlinWidgetProgram(engine: .scriptwidget, sourceSHA256: String(repeating: "a", count: 64),
+            compilerSHA256: String(repeating: "b", count: 64), javaScript: "async function $main() { $render(ScriptWidget.createElement('text', {}, 'Repair')); }",
+            actions: [], families: ["systemMedium"])
+        let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: id, generation: 1)
+
+        let template = Widget(identity: identity, displayName: "Repair Test", family: "systemMedium",
+            validUntil: .distantFuture, engine: .scriptwidget,
+            payload: .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256)),
+            root: .init(kind: .text))
+
+        // Initial publication produces Default
+        try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [id])
+        let defaultInstance = try #require(try store.load()?.widgetInstances.first { $0.isDefault })
+        let a1 = try store.createWidgetInstance(from: defaultInstance.entityID, displayName: "A1")
+
+        // Simulate corrupted state: Default was dropped from widgetInstances, only A1 remains
+        try store.update { current in
+            let current = try #require(current)
+            return current.replacing(instances: [a1])
+        }
+        let corrupted = try #require(try store.load())
+        #expect(corrupted.widgetInstances.count == 1)
+        #expect(!corrupted.widgetInstances.first!.isDefault)
+
+        // Republish must restore Default idempotently and preserve A1
+        try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [id])
+        let repaired = try #require(try store.load())
+        #expect(repaired.widgetInstances.count == 2)
+        #expect(repaired.widgetInstances.contains { $0.isDefault && $0.displayName == "Default" })
+        #expect(repaired.widgetInstances.contains { !$0.isDefault && $0.displayName == "A1" && $0.identity.variantID == a1.identity.variantID })
+
+        // Second republish must not duplicate Default or A1
+        try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [id])
+        let reRepaired = try #require(try store.load())
+        #expect(reRepaired.widgetInstances.count == 2)
+        let defaultCount = reRepaired.widgetInstances.filter(\.isDefault).count
+        #expect(defaultCount == 1)
+    }
+
+    @Test func testDurableQueryDiagnosticCrossProcess() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+
+        #expect(store.latestDurableQueryDiagnostic == nil)
+
+        let diag = HanlinWidgetStorageDiagnostic(
+            phase: .widgetExtensionEntityQuery,
+            decisionPoint: .instancePublication,
+            relativePath: "ScriptingExtensions",
+            errorDomain: "HanlinWidgetStorage",
+            errorCode: 42,
+            summary: "Test query failure for durable cross-process diagnostic verification."
+        )
+        store.recordDurableQueryDiagnostic(diag)
+
+        let loaded = try #require(store.latestDurableQueryDiagnostic)
+        #expect(loaded.phase == .widgetExtensionEntityQuery)
+        #expect(loaded.errorCode == 42)
+        #expect(loaded.summary.contains("Test query failure"))
+    }
 }
 
 private let inventory = HanlinCompatibilityInventory(baselineID: "widget-tests", baselineDigest: String(repeating: "a", count: 64), symbols: [])

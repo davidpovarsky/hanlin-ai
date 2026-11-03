@@ -26,6 +26,39 @@ public struct HanlinWidgetInstance: Codable, Hashable, Sendable, Identifiable {
     }
 }
 
+/// A typed, extension-safe projection of an installed widget instance that has at
+/// least one valid family template. Backs both the system WidgetKit picker and host UI.
+public struct HanlinSelectableWidgetEntity: Codable, Hashable, Sendable, Identifiable {
+    public let id: String
+    public let displayName: String
+    public let packageName: String
+    public let variantName: String
+    public let identity: HanlinScriptExtensionIdentity
+    public let engine: HanlinWidgetEngine
+    public let supportedFamilies: [String]
+    public let isDefault: Bool
+
+    public init(
+        id: String,
+        displayName: String,
+        packageName: String,
+        variantName: String,
+        identity: HanlinScriptExtensionIdentity,
+        engine: HanlinWidgetEngine,
+        supportedFamilies: [String],
+        isDefault: Bool
+    ) {
+        self.id = id
+        self.displayName = displayName
+        self.packageName = packageName
+        self.variantName = variantName
+        self.identity = identity
+        self.engine = engine
+        self.supportedFamilies = supportedFamilies
+        self.isDefault = isDefault
+    }
+}
+
 public struct HanlinWidgetInstanceState: Codable, Hashable, Sendable {
     public let identity: HanlinScriptExtensionIdentity
     public let engine: HanlinWidgetEngine
@@ -57,6 +90,74 @@ extension HanlinScriptExtensionSnapshot {
               widgetInstances: instances ?? widgetInstances, widgetStates: states ?? widgetStates, widgetEntityMigrations: widgetEntityMigrations,
               inactiveWidgetInstallations: inactiveInstallations ?? inactiveWidgetInstallations)
     }
+
+    /// Authoritative joined projection of selectable widget instances for system
+    /// WidgetKit picker and host UI. Joins authoritative widgetInstances with
+    /// active family templates, filters inactive installations, and sorts deterministically.
+    public func selectableWidgetEntities() -> [HanlinSelectableWidgetEntity] {
+        var templatesByIdentity: [HanlinScriptExtensionIdentity: [HanlinScriptWidgetSnapshot]] = [:]
+        for template in widgets {
+            guard !inactiveWidgetInstallations.contains(template.identity.installedPackageID.rawValue) else { continue }
+            templatesByIdentity[template.identity, default: []].append(template)
+        }
+
+        var nameOccurrences: [String: Set<String>] = [:]
+        for instance in widgetInstances {
+            guard !inactiveWidgetInstallations.contains(instance.identity.installedPackageID.rawValue) else { continue }
+            if let templates = templatesByIdentity[instance.identity], let first = templates.first {
+                let pkgName = first.displayName.components(separatedBy: " · ").first ?? first.displayName
+                nameOccurrences[pkgName, default: []].insert(instance.identity.installedPackageID.rawValue)
+            }
+        }
+
+        var entities: [HanlinSelectableWidgetEntity] = []
+        var seenIDs: Set<String> = []
+
+        for instance in widgetInstances {
+            guard !inactiveWidgetInstallations.contains(instance.identity.installedPackageID.rawValue) else { continue }
+            guard let templates = templatesByIdentity[instance.identity], !templates.isEmpty else {
+                continue
+            }
+            guard seenIDs.insert(instance.entityID).inserted else { continue }
+
+            let first = templates[0]
+            let pkgName = first.displayName.components(separatedBy: " · ").first ?? first.displayName
+            let needsPackageIDDisambiguation = (nameOccurrences[pkgName]?.count ?? 0) > 1
+
+            let label: String
+            if needsPackageIDDisambiguation {
+                label = "\(pkgName) · \(instance.engine.rawValue) · \(instance.displayName) (\(instance.identity.installedPackageID.rawValue))"
+            } else {
+                label = "\(pkgName) · \(instance.engine.rawValue) · \(instance.displayName)"
+            }
+
+            let families = templates.map(\.family)
+
+            entities.append(HanlinSelectableWidgetEntity(
+                id: instance.entityID,
+                displayName: label,
+                packageName: pkgName,
+                variantName: instance.displayName,
+                identity: instance.identity,
+                engine: instance.engine,
+                supportedFamilies: families,
+                isDefault: instance.isDefault
+            ))
+        }
+
+        entities.sort { lhs, rhs in
+            let cmpPkg = lhs.packageName.localizedStandardCompare(rhs.packageName)
+            if cmpPkg != .orderedSame { return cmpPkg == .orderedAscending }
+            if lhs.isDefault != rhs.isDefault { return lhs.isDefault && !rhs.isDefault }
+            let cmpVar = lhs.variantName.localizedStandardCompare(rhs.variantName)
+            if cmpVar != .orderedSame { return cmpVar == .orderedAscending }
+            let cmpEng = lhs.engine.rawValue.compare(rhs.engine.rawValue)
+            if cmpEng != .orderedSame { return cmpEng == .orderedAscending }
+            return lhs.id < rhs.id
+        }
+
+        return entities
+    }
 }
 
 extension HanlinScriptWidgetSnapshot {
@@ -65,7 +166,8 @@ extension HanlinScriptWidgetSnapshot {
             HanlinScriptExtensionIdentity(installedPackageID: $0.installedPackageID, packageID: $0.packageID,
                 generation: $0.generation, entrypointID: $0.entrypointID, variantID: instance.identity.variantID)
         }
-        return .init(identity: instance.identity, displayName: "\(displayName) · \(instance.displayName)", family: family,
+        let baseName = displayName.components(separatedBy: " · ").first ?? displayName
+        return .init(identity: instance.identity, displayName: "\(baseName) · \(instance.displayName)", family: family,
             actionIdentity: actionIdentity, validUntil: validUntil, relevance: relevance, engine: engine, payload: payload, root: root, deepLink: deepLink)
     }
 }
@@ -131,7 +233,19 @@ extension HanlinScriptExtensionStore {
                         && $0.identity.packageID == template.identity.packageID
                         && $0.identity.entrypointID == template.identity.entrypointID && $0.engine == template.engine
                 }
-                let variants = previous.isEmpty ? [base] : previous.map { old in
+                let hasDefault = previous.contains { $0.isDefault || $0.identity.variantID == base.identity.variantID }
+                var candidateVariants = previous
+                if !hasDefault {
+                    candidateVariants.insert(base, at: 0)
+                }
+                var seenVariants: Set<String> = []
+                var deduped: [HanlinWidgetInstance] = []
+                for item in candidateVariants {
+                    if seenVariants.insert(item.identity.variantID).inserted {
+                        deduped.append(item)
+                    }
+                }
+                let variants = deduped.map { old in
                     let identity = HanlinScriptExtensionIdentity(installedPackageID: template.identity.installedPackageID,
                         packageID: template.identity.packageID, generation: template.identity.generation,
                         entrypointID: template.identity.entrypointID, variantID: old.identity.variantID)
