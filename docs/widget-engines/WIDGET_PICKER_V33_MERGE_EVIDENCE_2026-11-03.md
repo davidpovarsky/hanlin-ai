@@ -89,7 +89,21 @@ Added in `Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWi
 
 ---
 
-## 5. Cross-Ledger References
+## 5. Continuous Integration Validation Evidence
+
+- **Workflow Run:** [41720700203](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41720700203) (`validate-expo-runtime-spike.yml` on `fix/hanlin-widget-picker-dock-unified-20261103`)
+- **Validation Scope:** `widget-package`
+- **Head Commit:** `9967d20a`
+- **Outcome:** **SUCCESS** (all jobs and steps completed with exit code 0)
+- **Execution Details:**
+  - `Compiler and fixture semantics`: 7 JavaScript tests PASS.
+  - `HanlinScriptExtensionsTests` & `HanlinOriginalScriptWidgetRenderingTests`: 41 tests across 3 suites PASS in 9.377s (including all 5 Pass 5 regression tests).
+  - `HanlinScriptAnalyzerTests`: 10 tests across 1 suite PASS in 0.046s.
+  - Retained artifact: `widget-package-evidence-41720700203`.
+
+---
+
+## 6. Cross-Ledger References
 - Test Matrix: [TEST_MATRIX.md](TEST_MATRIX.md)
 - CI & Device Ledger: [CI_AND_DEVICE_RESULTS.md](CI_AND_DEVICE_RESULTS.md)
 - Physical Device Checklist: [DEVICE_ACCEPTANCE_CHECKLIST.md](DEVICE_ACCEPTANCE_CHECKLIST.md)

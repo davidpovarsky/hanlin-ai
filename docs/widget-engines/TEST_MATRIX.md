@@ -118,6 +118,7 @@ Pass 4 corrective evidence keys:
 **Base Commit 1 (Widget Pass 4):** `a6a836cd665b4d76107f1708ef17b30d7680e24d` (`integration/hanlin-dual-widget-engines-20261029`)
 **Base Commit 2 (OrganizerDock V3.3):** `35b9782bda76e2b2789d0532d22cf71a1a3f3500` (`fix/hanlin-organizerdock-v33-final-repair-20261101`)
 **Shared Merge Base:** `279f0ead777b961728ed91386c136e7e33659c36`
+**CI Validation Run:** [41720700203](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41720700203) (SUCCESS, commit `9967d20a`, 41 package regression tests + 10 analyzer tests + 7 JS tests PASS)
 
 ### WidgetKit Acceptance Gates (`WK-01` … `WK-12`)
 

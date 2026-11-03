@@ -194,7 +194,20 @@ In `Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEn
 4. `testNativePublisherRepairsMissingDefaultWithoutLosingA1A2`: Verifies idempotent Default restoration when previously missing, with variant and state preservation.
 5. `testDurableQueryDiagnosticCrossProcess`: Verifies durable diagnostic persistence and loading across process boundaries.
 
-### 4. Status Verdict
+### 4. CI Validation Evidence (Pass 5)
+- **Workflow Run:** [41720700203](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41720700203) (`widget-package` on `fix/hanlin-widget-picker-dock-unified-20261103` at `9967d20a`)
+- **Outcome:** **SUCCESS** in 5m14s on Xcode 27.1 / macOS arm64.
+  - Job `126212374892`: `Compile widget source and execute package regression tests` — **SUCCESS**.
+  - Compiler and fixture semantics: 7 JS tests passed (0 failed).
+  - Package regression test suites:
+    - Suite `Scripting extension snapshot store`: passed in 8.495s.
+    - Suite `Pass 3 installed widget programs, actions and transactions`: passed in 9.374s.
+    - Suite `Original ScriptWidget native rendering`: passed in 9.376s.
+    - Total Swift Testing package tests: 41 tests in 3 suites passed in 9.377s (including all 5 new Pass 5 regression tests).
+    - Suite `Static Scripting analyzer`: 10 tests passed in 0.046s.
+  - Retained artifact: `widget-package-evidence-41720700203`.
+
+### 5. Status Verdict
 - **Code & Local Integration:** `CODE_READY_DEVICE_PENDING`.
 - **Signed TestFlight Delivery:** NOT DISPATCHED (requires separate explicit owner instruction).
 - **Asana Status:** READ-ONLY (no tasks created, modified, or completed per project instructions).
