@@ -655,12 +655,20 @@ struct HanlinDualWidgetEnginesTests {
         #expect(counterSnapshot.hasWidgetEntrypoint)
         #expect(counterSnapshot.isWidgetOnly)
 
+        let counterWidgetEntrypoint = try #require(counterSnapshot.entrypoints.first)
+        let appEntrypoint = HanlinPackageEntrypointDescriptor(
+            id: "app",
+            kind: .app,
+            sourcePath: "app/index.tsx",
+            supportedContexts: [.foregroundApp],
+            runtimePolicyID: counterWidgetEntrypoint.runtimePolicyID,
+            runtimeProfile: .hanlinExpo,
+            compatibility: counterWidgetEntrypoint.compatibility
+        )
+
         let combinedSnapshot = HanlinStoredPackageSnapshot(
             record: counterSnapshot.record,
-            entrypoints: [
-                .init(id: "app", kind: .app, sourcePath: "app/index.tsx", runtimeProfile: .hanlinExpo),
-                .init(id: "widget", kind: .widget, sourcePath: "widgets/CounterWidget.tsx", runtimeProfile: .scriptingJSC, widgetEngine: .expo),
-            ],
+            entrypoints: [appEntrypoint, counterWidgetEntrypoint],
             enabled: true,
             availableGenerations: counterSnapshot.availableGenerations,
             grantedCapabilities: counterSnapshot.grantedCapabilities,
@@ -672,9 +680,7 @@ struct HanlinDualWidgetEnginesTests {
 
         let appOnlySnapshot = HanlinStoredPackageSnapshot(
             record: counterSnapshot.record,
-            entrypoints: [
-                .init(id: "app", kind: .app, sourcePath: "app/index.tsx", runtimeProfile: .hanlinExpo),
-            ],
+            entrypoints: [appEntrypoint],
             enabled: true,
             availableGenerations: counterSnapshot.availableGenerations
         )
