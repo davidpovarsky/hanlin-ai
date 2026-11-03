@@ -660,7 +660,7 @@ struct HanlinDualWidgetEnginesTests {
             id: "app",
             kind: .app,
             sourcePath: "app/index.tsx",
-            supportedContexts: [.foregroundApp],
+            supportedContexts: counterWidgetEntrypoint.supportedContexts,
             runtimePolicyID: counterWidgetEntrypoint.runtimePolicyID,
             runtimeProfile: .hanlinExpo,
             compatibility: counterWidgetEntrypoint.compatibility
