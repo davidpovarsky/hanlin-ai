@@ -21,11 +21,49 @@ struct HanlinScriptPackageEntity: AppEntity {
 }
 struct HanlinScriptPackageEntityQuery: EntityQuery {
     func entities(for identifiers: [String]) async throws -> [HanlinScriptPackageEntity] {
-        let snapshot = try HanlinScriptExtensionStore().load()
-        let resolved = Set(identifiers.map { snapshot?.widgetEntityMigrations[$0] ?? $0 })
-        return availableEntities(snapshot).filter { resolved.contains($0.id) }
+        do {
+            let snapshot = try HanlinScriptExtensionStore().load()
+            let resolved = Set(identifiers.map { snapshot?.widgetEntityMigrations[$0] ?? $0 })
+            return availableEntities(snapshot).filter { resolved.contains($0.id) }
+        } catch {
+            if let diag = HanlinScriptExtensionStore.latestDiagnostic {
+                HanlinScriptExtensionStore.recordDiagnostic(.init(
+                    correlationID: diag.correlationID,
+                    phase: .widgetExtensionEntityQuery,
+                    decisionPoint: diag.decisionPoint,
+                    relativePath: diag.relativePath,
+                    failingComponentIndex: diag.failingComponentIndex,
+                    failingComponentName: diag.failingComponentName,
+                    errorDomain: diag.errorDomain,
+                    errorCode: diag.errorCode,
+                    posixErrno: diag.posixErrno,
+                    summary: diag.summary
+                ))
+            }
+            throw error
+        }
     }
-    func suggestedEntities() async throws -> [HanlinScriptPackageEntity] { availableEntities(try HanlinScriptExtensionStore().load()) }
+    func suggestedEntities() async throws -> [HanlinScriptPackageEntity] {
+        do {
+            return availableEntities(try HanlinScriptExtensionStore().load())
+        } catch {
+            if let diag = HanlinScriptExtensionStore.latestDiagnostic {
+                HanlinScriptExtensionStore.recordDiagnostic(.init(
+                    correlationID: diag.correlationID,
+                    phase: .widgetExtensionEntityQuery,
+                    decisionPoint: diag.decisionPoint,
+                    relativePath: diag.relativePath,
+                    failingComponentIndex: diag.failingComponentIndex,
+                    failingComponentName: diag.failingComponentName,
+                    errorDomain: diag.errorDomain,
+                    errorCode: diag.errorCode,
+                    posixErrno: diag.posixErrno,
+                    summary: diag.summary
+                ))
+            }
+            throw error
+        }
+    }
     private func availableEntities(_ snapshot: HanlinScriptExtensionSnapshot?) -> [HanlinScriptPackageEntity] {
         guard let snapshot else { return [] }
         var seen: Set<String> = []
@@ -69,7 +107,12 @@ struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
                 let snapshot = try store.load()
                 let resolved = snapshot?.widgetEntityMigrations[id] ?? id
                 return HanlinWidgetPreparation.prepare(store: store, entityID: resolved, family: familyName)
-            } catch { return HanlinPreparedWidget.failure("Widget storage failed: \(error)") }
+            } catch {
+                if let diag = HanlinScriptExtensionStore.latestDiagnostic {
+                    return HanlinPreparedWidget.failure("\(diag.userFacingHeadline) (\(diag.correlationID))")
+                }
+                return HanlinPreparedWidget.failure("Widget storage failed")
+            }
         }.value
         return .init(date: .now, presentation: presentation)
     }

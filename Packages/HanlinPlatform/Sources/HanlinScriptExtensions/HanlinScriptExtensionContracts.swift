@@ -515,3 +515,142 @@ extension HanlinValue {
         }
     }
 }
+
+public struct HanlinWidgetStorageDiagnostic: Codable, Hashable, Sendable, Identifiable {
+    public enum Phase: String, Codable, Hashable, Sendable {
+        case hostRestore = "host.restore"
+        case hostInstallAtomicCommit = "host.install.atomicCommit"
+        case hostPublishWidgetProgram = "host.publish.widgetProgram"
+        case hostPublishSnapshot = "host.publish.snapshot"
+        case packageDetailsLoadInstances = "packageDetails.loadInstances"
+        case widgetExtensionEntityQuery = "widgetExtension.entityQuery"
+        case widgetExtensionPrepare = "widgetExtension.prepare"
+        case actionPerform = "action.perform"
+        case storeLoad = "store.load"
+        case storeSave = "store.save"
+        case storeArtifact = "store.artifact"
+    }
+
+    public enum DecisionPoint: String, Codable, Hashable, Sendable {
+        case appGroupResolution
+        case rootPreparation
+        case lexicalBoundary
+        case symlinkDetected
+        case nonDirectoryAncestor
+        case openNoFollowFailed
+        case filesystemError
+        case digestMismatch
+        case invalidIdentifier
+        case snapshotDecode
+        case widgetCompilation
+        case instancePublication
+    }
+
+    public let correlationID: String
+    public let phase: Phase
+    public let decisionPoint: DecisionPoint
+    public let relativePath: String
+    public let failingComponentIndex: Int?
+    public let failingComponentName: String?
+    public let errorDomain: String
+    public let errorCode: Int
+    public let posixErrno: Int32?
+    public let summary: String
+    public let recordedAt: Date
+
+    public var id: String { correlationID }
+
+    public init(
+        correlationID: String? = nil,
+        phase: Phase,
+        decisionPoint: DecisionPoint,
+        relativePath: String,
+        failingComponentIndex: Int? = nil,
+        failingComponentName: String? = nil,
+        errorDomain: String,
+        errorCode: Int,
+        posixErrno: Int32? = nil,
+        summary: String,
+        recordedAt: Date = .now
+    ) {
+        self.correlationID = correlationID ?? Self.makeCorrelationID(
+            phase: phase,
+            decisionPoint: decisionPoint,
+            relativePath: relativePath,
+            errorDomain: errorDomain,
+            errorCode: errorCode
+        )
+        self.phase = phase
+        self.decisionPoint = decisionPoint
+        self.relativePath = Self.sanitizeRelativePath(relativePath)
+        self.failingComponentIndex = failingComponentIndex
+        self.failingComponentName = failingComponentName.map(Self.sanitizeComponentName)
+        self.errorDomain = errorDomain
+        self.errorCode = errorCode
+        self.posixErrno = posixErrno
+        self.summary = summary
+        self.recordedAt = recordedAt
+    }
+
+    public var userFacingHeadline: String {
+        "Widget configuration unavailable — storage validation failed"
+    }
+
+    public var redactedReportString: String {
+        var fields: [String] = [
+            "id=\(correlationID)",
+            "phase=\(phase.rawValue)",
+            "decision=\(decisionPoint.rawValue)",
+            "relPath=\(relativePath)",
+            "domain=\(errorDomain)",
+            "code=\(errorCode)"
+        ]
+        if let failingComponentIndex {
+            fields.append("componentIndex=\(failingComponentIndex)")
+        }
+        if let failingComponentName {
+            fields.append("componentName=\(failingComponentName)")
+        }
+        if let posixErrno {
+            fields.append("errno=\(posixErrno)")
+        }
+        fields.append("summary=\(summary)")
+        return fields.joined(separator: " ")
+    }
+
+    private static func makeCorrelationID(
+        phase: Phase,
+        decisionPoint: DecisionPoint,
+        relativePath: String,
+        errorDomain: String,
+        errorCode: Int
+    ) -> String {
+        let seed = "\(phase.rawValue)|\(decisionPoint.rawValue)|\(sanitizeRelativePath(relativePath))|\(errorDomain)|\(errorCode)"
+        var hash: UInt64 = 14_695_981_039_346_656_037
+        for byte in seed.utf8 {
+            hash ^= UInt64(byte)
+            hash &*= 1_099_511_628_211
+        }
+        return String(format: "HWG-%012llX", hash & 0xFFFF_FFFF_FFFF)
+    }
+
+    public static func sanitizeRelativePath(_ raw: String) -> String {
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return "." }
+        if let markerRange = trimmed.range(of: "ScriptingExtensions/") {
+            return String(trimmed[markerRange.upperBound...])
+        }
+        if trimmed.hasSuffix("ScriptingExtensions") {
+            return "."
+        }
+        if trimmed.hasPrefix("/") {
+            return URL(filePath: trimmed).lastPathComponent
+        }
+        return String(trimmed.prefix(160))
+    }
+
+    public static func sanitizeComponentName(_ raw: String) -> String {
+        let name = URL(filePath: raw).lastPathComponent
+        return String(name.prefix(64))
+    }
+}

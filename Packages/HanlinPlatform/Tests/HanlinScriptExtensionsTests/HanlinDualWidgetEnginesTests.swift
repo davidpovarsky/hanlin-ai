@@ -528,6 +528,157 @@ struct HanlinDualWidgetEnginesTests {
             guard case .failure = HanlinWidgetPreparation.prepare(store: fixture.store, entityID: id, family: family) else { Issue.record("Invalid selection rendered content"); continue }
         }
     }
+
+    @Test func pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds() throws {
+        let base = try temporary()
+        defer { try? FileManager.default.removeItem(at: base) }
+
+        let realContainer = base.appending(path: "RealContainer", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: realContainer, withIntermediateDirectories: true)
+        let aliasContainer = base.appending(path: "AliasContainer", directoryHint: .isDirectory)
+        try FileManager.default.createSymbolicLink(at: aliasContainer, withDestinationURL: realContainer)
+
+        let rawRealPath = realContainer.path(percentEncoded: false)
+        let privatePrefixedPath = rawRealPath.hasPrefix("/private/") ? rawRealPath : "/private" + rawRealPath
+        let privateRoot = URL(filePath: privatePrefixedPath, directoryHint: .isDirectory)
+            .appending(path: "ScriptingExtensions", directoryHint: .isDirectory)
+        let aliasRoot = aliasContainer.appending(path: "ScriptingExtensions", directoryHint: .isDirectory)
+
+        let privateStore = Store(root: privateRoot)
+        let aliasStore = Store(root: aliasRoot)
+
+        // Gate D2 exact reproduction: root directory exists on disk under /private/var/...,
+        // while commit.json / pending.json do not exist yet. Clean load() must return nil, never throw.
+        try FileManager.default.createDirectory(at: privateRoot, withIntermediateDirectories: true)
+        #expect(try privateStore.load() == nil)
+        #expect(try aliasStore.load() == nil)
+
+        let installedID = try HanlinInstalledPackageID(validating: "install-script-b567e179bfc7e661414077ad")
+        let packageID = try HanlinPackageID(validating: "script-b567e179bfc7e661414077ad")
+        let identity = Identity(installedPackageID: installedID, packageID: packageID, generation: 1, entrypointID: "widgets/widget.json")
+        let payloadBytes = Data("{\"engine\":\"scriptwidget\",\"families\":[\"systemMedium\"]}".utf8)
+        let stored = try privateStore.storeArtifact(data: payloadBytes, installedPackageID: installedID, generation: 1)
+        let loadedBytes = try aliasStore.loadVerifiedArtifact(
+            ref: stored.ref,
+            sha256: stored.sha256,
+            installedPackageID: installedID,
+            generation: 1
+        )
+        #expect(loadedBytes == payloadBytes)
+
+        let template = Widget(
+            identity: identity,
+            displayName: "ScriptWidget Actions",
+            family: "systemMedium",
+            actionIdentity: identity,
+            validUntil: .distantFuture,
+            engine: .scriptwidget,
+            payload: .scriptwidget(.init(script: "", scriptRef: stored.ref, scriptSHA256: stored.sha256)),
+            root: .init(kind: .text, properties: ["text": .string("placeholder")])
+        )
+        let published = try privateStore.publishWidgetTemplates(
+            [template],
+            intentEntities: [],
+            translationApps: [],
+            installedPackageIDs: [installedID]
+        )
+        #expect(published.widgetInstances.count == 1)
+        let defaultInstance = try #require(published.widgetInstances.first)
+        #expect(defaultInstance.displayName == "Default")
+        #expect(defaultInstance.isDefault)
+
+        let secondary = try aliasStore.createWidgetInstance(from: defaultInstance.entityID, displayName: "Secondary")
+        #expect(secondary.displayName == "Secondary")
+        #expect(!secondary.isDefault)
+        let reloaded = try #require( try privateStore.load() )
+        #expect(reloaded.widgetInstances.map(\.displayName) == ["Default", "Secondary"])
+    }
+
+    @Test func pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics() throws {
+        let base = try temporary()
+        defer { try? FileManager.default.removeItem(at: base) }
+
+        let outside = base.appending(path: "outside.json")
+        try Data("{}".utf8).write(to: outside)
+
+        // 1. Root itself is a symlink -> must reject with symlinkDetected at index 0.
+        let symlinkedRoot = base.appending(path: "SymlinkRoot")
+        try FileManager.default.createSymbolicLink(at: symlinkedRoot, withDestinationURL: outside.deletingLastPathComponent())
+        let rootLinkStore = Store(root: symlinkedRoot)
+        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) {
+            _ = try rootLinkStore.load()
+        }
+        let rootDiag = try #require(HanlinScriptExtensionStore.latestDiagnostic)
+        #expect(rootDiag.decisionPoint == .symlinkDetected)
+        #expect(rootDiag.failingComponentIndex == 0)
+        #expect(!rootDiag.redactedReportString.contains(base.path(percentEncoded: false)))
+
+        // 2. Dangling symlink at commit.json inside valid root -> must reject via lstat.
+        let managedRoot = base.appending(path: "ManagedStore", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: managedRoot, withIntermediateDirectories: true)
+        let danglingCommit = managedRoot.appending(path: "commit.json")
+        try FileManager.default.createSymbolicLink(
+            atPath: danglingCommit.path(percentEncoded: false),
+            withDestinationPath: base.appending(path: "does-not-exist-\(UUID().uuidString)").path(percentEncoded: false)
+        )
+        let managedStore = Store(root: managedRoot)
+        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) {
+            _ = try managedStore.load()
+        }
+        let danglingDiag = try #require(HanlinScriptExtensionStore.latestDiagnostic)
+        #expect(danglingDiag.decisionPoint == .symlinkDetected)
+        #expect(danglingDiag.failingComponentName == "commit.json")
+        try FileManager.default.removeItem(at: danglingCommit)
+
+        // 3. Traversal in artifact reference -> must reject with lexicalBoundary.
+        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) {
+            _ = try managedStore.loadArtifact(ref: "Packages/../outside.json")
+        }
+        let traversalDiag = try #require(HanlinScriptExtensionStore.latestDiagnostic)
+        #expect(traversalDiag.decisionPoint == .lexicalBoundary)
+    }
+
+    @Test func pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting() async throws {
+        let fixture = try await InstalledFixture("Hanlin-ScriptWidget-Actions.scripting", installationID: "install-script-actions", packageID: "script-actions")
+        defer { fixture.remove() }
+
+        let snapshots = try await fixture.installed.snapshots()
+        let actionsSnapshot = try #require(snapshots.first)
+        #expect(!actionsSnapshot.hasLaunchableApp)
+        #expect(actionsSnapshot.hasWidgetEntrypoint)
+        #expect(actionsSnapshot.isWidgetOnly)
+
+        let combinedFixture = try await InstalledFixture("Hanlin-Expo-Tasks-Store.hanlinExpo", installationID: "install-expo-tasks", packageID: "expo-tasks")
+        defer { combinedFixture.remove() }
+        let combinedSnapshot = try #require(try await combinedFixture.installed.snapshots().first)
+        #expect(combinedSnapshot.hasLaunchableApp)
+        #expect(combinedSnapshot.hasWidgetEntrypoint)
+        #expect(!combinedSnapshot.isWidgetOnly)
+
+        // Inject a transient storage fault (dangling symlink at pending.json) before republishing,
+        // verify publication fails with a structured diagnostic while installed package store stays at gen 1,
+        // then remove the fault and verify idempotent republish succeeds without re-importing.
+        let pendingLink = fixture.extensionRoot.appending(path: "pending.json")
+        try FileManager.default.createSymbolicLink(
+            atPath: pendingLink.path(percentEncoded: false),
+            withDestinationPath: fixture.root.appending(path: "missing-target").path(percentEncoded: false)
+        )
+        #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) {
+            try fixture.republish()
+        }
+        let diag = try #require(fixture.store.lastDiagnostic)
+        #expect(diag.decisionPoint == .symlinkDetected)
+        #expect(try await fixture.installed.snapshots().first?.record.activeGeneration == 1)
+
+        try FileManager.default.removeItem(at: pendingLink)
+        try fixture.republish()
+        let recovered = try #require(try fixture.store.load())
+        #expect(recovered.widgetInstances.contains { $0.identity.installedPackageID == fixture.identity.installedPackageID && $0.isDefault })
+        guard case .scriptwidget = HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium") else {
+            Issue.record("Expected ScriptWidget preparation to succeed after idempotent republish")
+            return
+        }
+    }
 }
 
 private let inventory = HanlinCompatibilityInventory(baselineID: "widget-tests", baselineDigest: String(repeating: "a", count: 64), symbols: [])

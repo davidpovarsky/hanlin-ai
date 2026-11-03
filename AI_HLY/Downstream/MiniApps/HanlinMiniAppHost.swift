@@ -127,6 +127,9 @@ final class HanlinMiniAppHost {
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
             let dynamicPackages = installedPackages.filter { package in
+                guard package.hasLaunchableApp || package.entrypoints.isEmpty else {
+                    return false
+                }
                 if package.entrypoints.contains(where: {
                     $0.runtimeProfile == .hanlinNativeScript || $0.runtimeProfile == .hanlinExpo
                 }) {

@@ -68,9 +68,14 @@ struct NativeAppsHubView: View {
                 refreshCatalog()
                 if let packageID = pendingPackageLaunchID {
                     pendingPackageLaunchID = nil
-                    Task {
-                        try? await Task.sleep(for: .milliseconds(350))
-                        await scriptingPlatform.launch(packageID)
+                    if let pkg = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == packageID }),
+                       !pkg.hasLaunchableApp {
+                        scriptingPackageID = packageID
+                    } else {
+                        Task {
+                            try? await Task.sleep(for: .milliseconds(350))
+                            await scriptingPlatform.launch(packageID)
+                        }
                     }
                 }
             }) {
@@ -79,7 +84,12 @@ struct NativeAppsHubView: View {
                     host: miniAppHost,
                     scriptingPlatform: scriptingPlatform,
                     onLaunchPackage: { packageID in
-                        pendingPackageLaunchID = packageID
+                        if let pkg = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == packageID }),
+                           !pkg.hasLaunchableApp {
+                            scriptingPackageID = packageID
+                        } else {
+                            pendingPackageLaunchID = packageID
+                        }
                     }
                 )
             }

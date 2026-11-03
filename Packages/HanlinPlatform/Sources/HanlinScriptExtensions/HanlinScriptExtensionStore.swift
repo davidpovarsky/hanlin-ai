@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import HanlinPlatformContracts
+import OSLog
 #if canImport(Darwin)
 import Darwin
 #endif
@@ -18,10 +19,40 @@ public enum HanlinScriptExtensionStoreError: Error, Equatable, Sendable {
     case invalidCommit
 }
 
+private final class HanlinWidgetDiagnosticBuffer: @unchecked Sendable {
+    static let shared = HanlinWidgetDiagnosticBuffer()
+    private let lock = NSLock()
+    private var latest: HanlinWidgetStorageDiagnostic?
+    private var history: [HanlinWidgetStorageDiagnostic] = []
+
+    func record(_ diagnostic: HanlinWidgetStorageDiagnostic) {
+        lock.lock()
+        defer { lock.unlock() }
+        latest = diagnostic
+        history.append(diagnostic)
+        if history.count > 64 {
+            history.removeFirst(history.count - 64)
+        }
+    }
+
+    func lastDiagnostic() -> HanlinWidgetStorageDiagnostic? {
+        lock.lock()
+        defer { lock.unlock() }
+        return latest
+    }
+
+    func recentDiagnostics() -> [HanlinWidgetStorageDiagnostic] {
+        lock.lock()
+        defer { lock.unlock() }
+        return history
+    }
+}
+
 public struct HanlinScriptExtensionStore: Sendable {
     public static let appGroupIdentifier = "group.com.itorah.chavrusachat"
     public static let maximumSnapshotBytes = 4 * 1_024 * 1_024
     public static let maximumArtifactBytes = 3 * 1_024 * 1_024
+    private static let logger = Logger(subsystem: "com.hanlin.ai", category: "WidgetStorage")
 
     public enum Recovery: String, Sendable {
         case interruptedPublication
@@ -51,19 +82,48 @@ public struct HanlinScriptExtensionStore: Sendable {
         let snapshot: HanlinScriptExtensionSnapshot
     }
 
-    private let root: URL
+    public let root: URL
 
     public init(root: URL) {
-        self.root = root
+        self.root = Self.canonicalManagedRoot(for: root)
     }
 
     public init(appGroupIdentifier: String = Self.appGroupIdentifier) throws {
         guard let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: appGroupIdentifier
         ) else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .appGroupResolution,
+                relativePath: ".",
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 1,
+                summary: "Shared App Group container is unavailable."
+            )
+            Self.recordDiagnostic(diag)
             throw HanlinScriptExtensionStoreError.appGroupUnavailable
         }
-        root = container.appending(path: "ScriptingExtensions", directoryHint: .isDirectory)
+        let canonicalContainer = container.resolvingSymlinksInPath().standardizedFileURL
+        self.root = Self.canonicalManagedRoot(
+            for: canonicalContainer.appending(path: "ScriptingExtensions", directoryHint: .isDirectory)
+        )
+    }
+
+    public var lastDiagnostic: HanlinWidgetStorageDiagnostic? {
+        HanlinWidgetDiagnosticBuffer.shared.lastDiagnostic()
+    }
+
+    public static var latestDiagnostic: HanlinWidgetStorageDiagnostic? {
+        HanlinWidgetDiagnosticBuffer.shared.lastDiagnostic()
+    }
+
+    public static var recentDiagnostics: [HanlinWidgetStorageDiagnostic] {
+        HanlinWidgetDiagnosticBuffer.shared.recentDiagnostics()
+    }
+
+    public static func recordDiagnostic(_ diagnostic: HanlinWidgetStorageDiagnostic) {
+        HanlinWidgetDiagnosticBuffer.shared.record(diagnostic)
+        logger.error("widget_storage_diagnostic \(diagnostic.redactedReportString, privacy: .public)")
     }
 
     public func load() throws -> HanlinScriptExtensionSnapshot? {
@@ -138,6 +198,7 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     private func loadFile(at url: URL) throws -> HanlinScriptExtensionSnapshot? {
+        try rejectSymlinks(to: url, phase: .storeLoad)
         guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
         let data = try Data(contentsOf: url, options: .mappedIfSafe)
         guard data.count <= Self.maximumSnapshotBytes else {
@@ -178,7 +239,9 @@ public struct HanlinScriptExtensionStore: Sendable {
         guard snapshot.schemaVersion == 1 || snapshot.schemaVersion == 2 else {
             throw HanlinScriptExtensionStoreError.unsupportedSchema(snapshot.schemaVersion)
         }
+        try rejectSymlinks(to: root, phase: .storeSave)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try rejectSymlinks(to: root, phase: .storeSave)
 
         let shadow: HanlinScriptExtensionSnapshot
         if snapshot.schemaVersion == 2 {
@@ -215,10 +278,13 @@ public struct HanlinScriptExtensionStore: Sendable {
         let previousShadow = try optionalData(at: snapshotV1URL)
         if let previousShadow { try writeRevision(previousShadow) }
         let pending = Pending(candidate: candidate, previousShadowHash: previousShadow.map(Self.digest))
+        try rejectSymlinks(to: pendingURL, phase: .storeSave)
         try Self.encoded(pending).write(to: pendingURL, options: Self.writeOptions)
         // Older readers see one complete v1 shadow. New readers switch only at
         // the atomic commit marker after both immutable revisions are durable.
+        try rejectSymlinks(to: snapshotV1URL, phase: .storeSave)
         try shadowData.write(to: snapshotV1URL, options: Self.writeOptions)
+        try rejectSymlinks(to: commitURL, phase: .storeSave)
         try Self.encoded(candidate).write(to: commitURL, options: Self.writeOptions)
         try FileManager.default.removeItem(at: pendingURL)
     }
@@ -273,16 +339,36 @@ public struct HanlinScriptExtensionStore: Sendable {
         generation: UInt64
     ) throws -> (ref: String, sha256: String) {
         guard data.count <= Self.maximumArtifactBytes else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
-        guard generation > 0 else { throw HanlinScriptExtensionStoreError.invalidArtifactReference }
+        guard generation > 0 else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .invalidIdentifier,
+                relativePath: "Packages/\(installedPackageID.rawValue)/generations/\(generation)",
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 2,
+                summary: "Artifact generation must be greater than zero."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
         let hash = Self.digest(data)
         let relativePath = "Packages/\(installedPackageID.rawValue)/generations/\(generation)/artifacts/\(hash)"
         let fileURL = root.appending(path: relativePath, directoryHint: .notDirectory)
-        try rejectSymlinks(to: fileURL)
+        try rejectSymlinks(to: fileURL, phase: .storeArtifact)
         let dir = fileURL.deletingLastPathComponent()
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        try rejectSymlinks(to: fileURL)
-        if FileManager.default.fileExists(atPath: fileURL.path) {
-            guard Self.digest(try Data(contentsOf: fileURL)) == hash else { throw HanlinScriptExtensionStoreError.integrityMismatch }
+        try rejectSymlinks(to: fileURL, phase: .storeArtifact)
+        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
+            guard Self.digest(try Data(contentsOf: fileURL)) == hash else {
+                Self.recordDiagnostic(.init(
+                    phase: .storeArtifact,
+                    decisionPoint: .digestMismatch,
+                    relativePath: relativePath,
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 3,
+                    summary: "Existing artifact file digest did not match expected SHA-256."
+                ))
+                throw HanlinScriptExtensionStoreError.integrityMismatch
+            }
         } else {
             try data.write(to: fileURL, options: Self.writeOptions)
         }
@@ -292,7 +378,17 @@ public struct HanlinScriptExtensionStore: Sendable {
     public func loadArtifact(ref: String) throws -> Data? {
         let parts = ref.split(separator: "/", omittingEmptySubsequences: false)
         guard parts.count == 6, parts[0] == "Packages", parts[2] == "generations", parts[4] == "artifacts",
-              let generation = UInt64(parts[3]), generation > 0 else { throw HanlinScriptExtensionStoreError.invalidArtifactReference }
+              let generation = UInt64(parts[3]), generation > 0 else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .lexicalBoundary,
+                relativePath: ref,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 4,
+                summary: "Artifact reference format did not match canonical 6-segment layout."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
         return try loadVerifiedArtifact(ref: ref, sha256: String(parts[5]), installedPackageID: HanlinInstalledPackageID(validating: String(parts[1])), generation: generation)
     }
 
@@ -301,17 +397,48 @@ public struct HanlinScriptExtensionStore: Sendable {
     ) throws -> Data {
         guard generation > 0, Self.isDigest(sha256),
               ref == "Packages/\(installedPackageID.rawValue)/generations/\(generation)/artifacts/\(sha256)" else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .invalidIdentifier,
+                relativePath: ref,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 5,
+                summary: "Artifact reference did not match package/generation/digest authority."
+            ))
             throw HanlinScriptExtensionStoreError.invalidArtifactReference
         }
         let url = root.appending(path: ref, directoryHint: .notDirectory)
-        try rejectSymlinks(to: url)
-        guard FileManager.default.fileExists(atPath: url.path) else { throw HanlinScriptExtensionStoreError.artifactMissing }
+        try rejectSymlinks(to: url, phase: .storeArtifact)
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else {
+            throw HanlinScriptExtensionStoreError.artifactMissing
+        }
         let values = try url.resourceValues(forKeys: [.fileSizeKey, .isRegularFileKey])
-        guard values.isRegularFile == true else { throw HanlinScriptExtensionStoreError.invalidArtifactReference }
+        guard values.isRegularFile == true else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .nonDirectoryAncestor,
+                relativePath: ref,
+                failingComponentName: url.lastPathComponent,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 6,
+                summary: "Artifact leaf is not a regular file."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
         guard (values.fileSize ?? Int.max) <= Self.maximumArtifactBytes else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
         let data = try readArtifactWithoutSymlinks(ref: ref)
         guard data.count <= Self.maximumArtifactBytes else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
-        guard Self.digest(data) == sha256 else { throw HanlinScriptExtensionStoreError.integrityMismatch }
+        guard Self.digest(data) == sha256 else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .digestMismatch,
+                relativePath: ref,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 7,
+                summary: "Loaded artifact bytes failed SHA-256 verification."
+            ))
+            throw HanlinScriptExtensionStoreError.integrityMismatch
+        }
         return data
     }
 
@@ -319,13 +446,46 @@ public struct HanlinScriptExtensionStore: Sendable {
 #if canImport(Darwin)
         var descriptors: [Int32] = []
         defer { descriptors.reversed().forEach { _ = Darwin.close($0) } }
-        var descriptor = Darwin.open(root.path, O_RDONLY | O_DIRECTORY | O_NOFOLLOW)
-        guard descriptor >= 0 else { throw HanlinScriptExtensionStoreError.artifactMissing }
+        let rootPath = Self.lexicalNormalizedPath(root)
+        var descriptor = Darwin.open(rootPath, O_RDONLY | O_DIRECTORY | O_NOFOLLOW)
+        guard descriptor >= 0 else {
+            let err = errno
+            if err == ENOENT {
+                throw HanlinScriptExtensionStoreError.artifactMissing
+            }
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: err == ELOOP ? .symlinkDetected : .openNoFollowFailed,
+                relativePath: ref,
+                failingComponentIndex: 0,
+                failingComponentName: root.lastPathComponent,
+                errorDomain: NSPOSIXErrorDomain,
+                errorCode: Int(err),
+                posixErrno: err,
+                summary: "Failed to open root directory with O_NOFOLLOW."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
         descriptors.append(descriptor)
         let parts = ref.split(separator: "/")
         for (index, part) in parts.enumerated() {
-            descriptor = openat(descriptor, String(part), O_RDONLY | O_NOFOLLOW | (index == parts.count - 1 ? 0 : O_DIRECTORY))
-            guard descriptor >= 0 else { throw HanlinScriptExtensionStoreError.invalidArtifactReference }
+            let componentName = String(part)
+            descriptor = openat(descriptor, componentName, O_RDONLY | O_NOFOLLOW | (index == parts.count - 1 ? 0 : O_DIRECTORY))
+            guard descriptor >= 0 else {
+                let err = errno
+                Self.recordDiagnostic(.init(
+                    phase: .storeArtifact,
+                    decisionPoint: err == ELOOP ? .symlinkDetected : .openNoFollowFailed,
+                    relativePath: ref,
+                    failingComponentIndex: index + 1,
+                    failingComponentName: componentName,
+                    errorDomain: NSPOSIXErrorDomain,
+                    errorCode: Int(err),
+                    posixErrno: err,
+                    summary: "Failed to open artifact path component with O_NOFOLLOW."
+                ))
+                throw HanlinScriptExtensionStoreError.invalidArtifactReference
+            }
             descriptors.append(descriptor)
         }
         var info = stat()
@@ -354,6 +514,14 @@ public struct HanlinScriptExtensionStore: Sendable {
             let parts = name.split(separator: "/", omittingEmptySubsequences: false)
             guard !name.contains("\\"), !name.contains(":"), !name.contains("\0"),
                   parts.allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." }) else {
+                Self.recordDiagnostic(.init(
+                    phase: .storeArtifact,
+                    decisionPoint: .lexicalBoundary,
+                    relativePath: name,
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 8,
+                    summary: "Resource name failed relative path validation."
+                ))
                 throw HanlinScriptExtensionStoreError.invalidArtifactReference
             }
             let artifact = try storeArtifact(data: data, installedPackageID: identity.installedPackageID, generation: identity.generation)
@@ -365,7 +533,9 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func enqueue(_ command: HanlinScriptResumeCommand) throws {
+        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
         try FileManager.default.createDirectory(at: commandRoot, withIntermediateDirectories: true)
+        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
         let existing = try FileManager.default.contentsOfDirectory(
             at: commandRoot,
             includingPropertiesForKeys: nil,
@@ -378,13 +548,16 @@ public struct HanlinScriptExtensionStore: Sendable {
         guard data.count <= 256 * 1_024 else {
             throw HanlinScriptExtensionStoreError.snapshotTooLarge
         }
+        let targetURL = commandRoot.appending(path: "\(command.id.uuidString.lowercased()).json")
+        try rejectSymlinks(to: targetURL, phase: .actionPerform)
         try data.write(
-            to: commandRoot.appending(path: "\(command.id.uuidString.lowercased()).json"),
+            to: targetURL,
             options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication]
         )
     }
 
     public func pendingCommands(limit: Int = 64) throws -> [HanlinScriptResumeCommand] {
+        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
         guard FileManager.default.fileExists(atPath: commandRoot.path(percentEncoded: false)) else { return [] }
         let urls = try FileManager.default.contentsOfDirectory(
             at: commandRoot,
@@ -392,12 +565,14 @@ public struct HanlinScriptExtensionStore: Sendable {
             options: [.skipsHiddenFiles]
         ).filter { $0.pathExtension == "json" }.sorted { $0.lastPathComponent < $1.lastPathComponent }
         return try urls.prefix(max(0, limit)).map {
-            try Self.decoded(HanlinScriptResumeCommand.self, from: Data(contentsOf: $0))
+            try rejectSymlinks(to: $0, phase: .actionPerform)
+            return try Self.decoded(HanlinScriptResumeCommand.self, from: Data(contentsOf: $0))
         }.sorted { $0.createdAt < $1.createdAt }
     }
 
     public func acknowledge(_ commandID: UUID) throws {
         let url = commandRoot.appending(path: "\(commandID.uuidString.lowercased()).json")
+        try rejectSymlinks(to: url, phase: .actionPerform)
         if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
             try FileManager.default.removeItem(at: url)
         }
@@ -430,22 +605,23 @@ public struct HanlinScriptExtensionStore: Sendable {
 
     private func writeRevision(_ data: Data) throws {
         let url = try revisionURL(Self.digest(data))
+        try rejectSymlinks(to: url, phase: .storeSave)
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try rejectSymlinks(to: url)
-        if !FileManager.default.fileExists(atPath: url.path) { try data.write(to: url, options: Self.writeOptions) }
+        try rejectSymlinks(to: url, phase: .storeSave)
+        if !FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) { try data.write(to: url, options: Self.writeOptions) }
     }
 
     private func checkedRevision(_ hash: String) throws -> Data {
         let url = try revisionURL(hash)
-        try rejectSymlinks(to: url)
+        try rejectSymlinks(to: url, phase: .storeLoad)
         let data = try Data(contentsOf: url)
         guard data.count <= Self.maximumSnapshotBytes, Self.digest(data) == hash else { throw HanlinScriptExtensionStoreError.integrityMismatch }
         return data
     }
 
     private func optionalData(at url: URL) throws -> Data? {
-        try rejectSymlinks(to: url)
-        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        try rejectSymlinks(to: url, phase: .storeLoad)
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
         let data = try Data(contentsOf: url)
         guard data.count <= Self.maximumSnapshotBytes else { throw HanlinScriptExtensionStoreError.snapshotTooLarge }
         return data
@@ -455,31 +631,215 @@ public struct HanlinScriptExtensionStore: Sendable {
         try optionalData(at: url).map { try Self.decoded(type, from: $0) }
     }
 
-    private func rejectSymlinks(to url: URL) throws {
-        let base = root.standardizedFileURL
-        let target = url.standardizedFileURL
-        guard target.path.hasPrefix(base.path + "/") else { throw HanlinScriptExtensionStoreError.invalidArtifactReference }
-        var current = target
-        while current.path.count >= base.path.count {
-            do {
-                let attributes = try FileManager.default.attributesOfItem(atPath: current.path)
-                if attributes[.type] as? FileAttributeType == .typeSymbolicLink {
+    /// Canonicalizes the trusted parent container above the managed `ScriptingExtensions` root
+    /// without resolving a symlink on the `ScriptingExtensions` leaf itself.
+    private static func canonicalManagedRoot(for candidateRoot: URL) -> URL {
+        let leafName = candidateRoot.lastPathComponent
+        guard !leafName.isEmpty, leafName != "/" else {
+            return URL(filePath: lexicalNormalizedPath(candidateRoot), directoryHint: .isDirectory)
+        }
+        let parentURL = candidateRoot.deletingLastPathComponent()
+        let parentRawPath = parentURL.path(percentEncoded: false)
+        let resolvedParentPath: String
+        if FileManager.default.fileExists(atPath: parentRawPath) {
+            resolvedParentPath = lexicalNormalizedPath(parentURL.resolvingSymlinksInPath())
+        } else {
+            resolvedParentPath = lexicalNormalizedPath(parentURL)
+        }
+        return URL(filePath: resolvedParentPath, directoryHint: .isDirectory)
+            .appending(path: leafName, directoryHint: .isDirectory)
+    }
+
+    /// Normalizes a filesystem path lexically and canonicalizes Darwin's `/var` and `/tmp`
+    /// system symlink prefixes consistently regardless of whether the target leaf currently exists on disk.
+    private static func lexicalNormalizedPath(_ url: URL) -> String {
+        var raw = url.path(percentEncoded: false)
+        while raw.count > 1 && raw.hasSuffix("/") {
+            raw.removeLast()
+        }
+#if canImport(Darwin)
+        if raw == "/var" || raw.hasPrefix("/var/") {
+            raw = "/private" + raw
+        } else if raw == "/tmp" || raw.hasPrefix("/tmp/") {
+            raw = "/private" + raw
+        } else if raw == "/etc" || raw.hasPrefix("/etc/") {
+            raw = "/private" + raw
+        }
+#endif
+        return raw
+    }
+
+    private func rejectSymlinks(
+        to url: URL,
+        phase: HanlinWidgetStorageDiagnostic.Phase = .storeLoad
+    ) throws {
+        let rawTarget = url.path(percentEncoded: false)
+        let rawSegments = rawTarget.split(separator: "/", omittingEmptySubsequences: true)
+        if rawTarget.contains("\0") || rawTarget.contains("\\") || rawSegments.contains(".") || rawSegments.contains("..") {
+            Self.recordDiagnostic(.init(
+                phase: phase,
+                decisionPoint: .lexicalBoundary,
+                relativePath: HanlinWidgetStorageDiagnostic.sanitizeRelativePath(rawTarget),
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 10,
+                summary: "Target path contained prohibited traversal or control segments."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+
+        let basePath = Self.lexicalNormalizedPath(root)
+        let targetPath = Self.lexicalNormalizedPath(url)
+        let isRootSelf = (targetPath == basePath)
+        guard isRootSelf || targetPath.hasPrefix(basePath + "/") else {
+            Self.recordDiagnostic(.init(
+                phase: phase,
+                decisionPoint: .lexicalBoundary,
+                relativePath: HanlinWidgetStorageDiagnostic.sanitizeRelativePath(targetPath),
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 11,
+                summary: "Target path is outside the canonical ScriptingExtensions store root."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+
+        let relativePath: String
+        let components: [String]
+        if isRootSelf {
+            relativePath = "."
+            components = []
+        } else {
+            relativePath = String(targetPath.dropFirst(basePath.count + 1))
+            components = relativePath.split(separator: "/", omittingEmptySubsequences: false).map(String.init)
+            guard !components.isEmpty,
+                  components.allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." && !$0.contains("\0") && !$0.contains("\\") }) else {
+                Self.recordDiagnostic(.init(
+                    phase: phase,
+                    decisionPoint: .lexicalBoundary,
+                    relativePath: relativePath,
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 12,
+                    summary: "Relative path under ScriptingExtensions contained invalid component."
+                ))
+                throw HanlinScriptExtensionStoreError.invalidArtifactReference
+            }
+        }
+
+#if canImport(Darwin)
+        var currentPath = basePath
+        for index in 0...components.count {
+            let componentName: String
+            if index == 0 {
+                componentName = root.lastPathComponent
+            } else {
+                componentName = components[index - 1]
+                currentPath += "/" + componentName
+            }
+            var info = stat()
+            if Darwin.lstat(currentPath, &info) == 0 {
+                let mode = info.st_mode & S_IFMT
+                if mode == S_IFLNK {
+                    Self.recordDiagnostic(.init(
+                        phase: phase,
+                        decisionPoint: .symlinkDetected,
+                        relativePath: relativePath,
+                        failingComponentIndex: index,
+                        failingComponentName: componentName,
+                        errorDomain: "HanlinScriptExtensionStoreError",
+                        errorCode: 13,
+                        summary: "Symbolic link rejected inside managed ScriptingExtensions tree."
+                    ))
                     throw HanlinScriptExtensionStoreError.invalidArtifactReference
                 }
-            } catch let error as CocoaError where error.code == .fileReadNoSuchFile {
-                // A not-yet-created immutable artifact is allowed; all existing
-                // ancestors must still be examined (including dangling links).
+                if index < components.count && mode != S_IFDIR {
+                    Self.recordDiagnostic(.init(
+                        phase: phase,
+                        decisionPoint: .nonDirectoryAncestor,
+                        relativePath: relativePath,
+                        failingComponentIndex: index,
+                        failingComponentName: componentName,
+                        errorDomain: "HanlinScriptExtensionStoreError",
+                        errorCode: 14,
+                        summary: "Ancestor component inside ScriptingExtensions is not a directory."
+                    ))
+                    throw HanlinScriptExtensionStoreError.invalidArtifactReference
+                }
+            } else {
+                let err = errno
+                if err == ENOENT {
+                    // A not-yet-created file or directory is allowed; lstat only returns
+                    // ENOENT when the component itself does not exist (dangling symlinks
+                    // return 0 with S_IFLNK and are rejected above).
+                    continue
+                }
+                if err == ENOTDIR || err == ELOOP {
+                    Self.recordDiagnostic(.init(
+                        phase: phase,
+                        decisionPoint: err == ELOOP ? .symlinkDetected : .nonDirectoryAncestor,
+                        relativePath: relativePath,
+                        failingComponentIndex: index,
+                        failingComponentName: componentName,
+                        errorDomain: NSPOSIXErrorDomain,
+                        errorCode: Int(err),
+                        posixErrno: err,
+                        summary: "Path traversal failed due to non-directory or symlink ancestor."
+                    ))
+                    throw HanlinScriptExtensionStoreError.invalidArtifactReference
+                }
+                Self.recordDiagnostic(.init(
+                    phase: phase,
+                    decisionPoint: .filesystemError,
+                    relativePath: relativePath,
+                    failingComponentIndex: index,
+                    failingComponentName: componentName,
+                    errorDomain: NSPOSIXErrorDomain,
+                    errorCode: Int(err),
+                    posixErrno: err,
+                    summary: "Filesystem lstat error while validating ScriptingExtensions path."
+                ))
+                throw NSError(domain: NSPOSIXErrorDomain, code: Int(err))
             }
-            if current == base { break }
-            current.deleteLastPathComponent()
         }
+#endif
     }
 
     private func withLock<T>(_ operation: () throws -> T) throws -> T {
+        try rejectSymlinks(to: root, phase: .storeLoad)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try rejectSymlinks(to: root, phase: .storeLoad)
 #if canImport(Darwin)
-        let descriptor = Darwin.open(root.appending(path: ".transaction.lock").path, O_CREAT | O_RDWR | O_NOFOLLOW, S_IRUSR | S_IWUSR)
-        guard descriptor >= 0 else { throw HanlinScriptExtensionStoreError.storageBusy }
+        let lockURL = root.appending(path: ".transaction.lock", directoryHint: .notDirectory)
+        try rejectSymlinks(to: lockURL, phase: .storeLoad)
+        let lockPath = Self.lexicalNormalizedPath(lockURL)
+        let descriptor = Darwin.open(lockPath, O_CREAT | O_RDWR | O_NOFOLLOW, S_IRUSR | S_IWUSR)
+        guard descriptor >= 0 else {
+            let err = errno
+            if err == ELOOP {
+                Self.recordDiagnostic(.init(
+                    phase: .storeLoad,
+                    decisionPoint: .symlinkDetected,
+                    relativePath: ".transaction.lock",
+                    failingComponentIndex: 1,
+                    failingComponentName: ".transaction.lock",
+                    errorDomain: NSPOSIXErrorDomain,
+                    errorCode: Int(err),
+                    posixErrno: err,
+                    summary: "Transaction lock file is a symbolic link."
+                ))
+                throw HanlinScriptExtensionStoreError.invalidArtifactReference
+            }
+            Self.recordDiagnostic(.init(
+                phase: .storeLoad,
+                decisionPoint: .openNoFollowFailed,
+                relativePath: ".transaction.lock",
+                failingComponentIndex: 1,
+                failingComponentName: ".transaction.lock",
+                errorDomain: NSPOSIXErrorDomain,
+                errorCode: Int(err),
+                posixErrno: err,
+                summary: "Failed to open transaction lock file."
+            ))
+            throw HanlinScriptExtensionStoreError.storageBusy
+        }
         defer { Darwin.close(descriptor) }
         let deadline = ContinuousClock.now.advanced(by: .seconds(10))
         while flock(descriptor, LOCK_EX | LOCK_NB) != 0 {

@@ -205,6 +205,9 @@ struct ScriptingInstalledPackageDetailView: View {
     @State private var sourceInstanceID = ""
     @State private var newInstanceName = ""
     @State private var widgetInstanceError: String?
+    @State private var storageDiagnostic: HanlinWidgetStorageDiagnostic?
+    @State private var isRetryingPublication = false
+    @State private var didAttemptAutoRepublish = false
 
     var body: some View {
         Group {
@@ -215,7 +218,18 @@ struct ScriptingInstalledPackageDetailView: View {
             }
         }
         .navigationTitle(package?.manifest?.name ?? "Script Package")
-        .task { loadWidgetInstances() }
+        .task(id: packageID) {
+            loadWidgetInstances()
+            if let package,
+               package.enabled,
+               hasNativeWidget(package),
+               widgetInstances.isEmpty,
+               !didAttemptAutoRepublish {
+                didAttemptAutoRepublish = true
+                _ = await platform.republishWidgets(for: packageID)
+                loadWidgetInstances()
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") {
@@ -228,6 +242,10 @@ struct ScriptingInstalledPackageDetailView: View {
 
     private var package: HanlinStoredPackageSnapshot? {
         platform.installedPackages.first { $0.record.installedPackageID == packageID }
+    }
+
+    private func hasNativeWidget(_ package: HanlinStoredPackageSnapshot) -> Bool {
+        package.entrypoints.contains { $0.kind == .widget && $0.widgetEngine != nil && $0.widgetEngine != .legacy }
     }
 
     private func installedPackageList(_ package: HanlinStoredPackageSnapshot) -> some View {
@@ -248,7 +266,7 @@ struct ScriptingInstalledPackageDetailView: View {
                     }
                 }
             }
-            if package.enabled, package.entrypoints.contains(where: { $0.kind == .widget && $0.widgetEngine != nil && $0.widgetEngine != .legacy }) {
+            if package.enabled, hasNativeWidget(package) {
                 Section("Widget instances") {
                     ForEach(widgetInstances, id: \.entityID) { instance in
                         LabeledContent(instance.displayName, value: instance.engine.rawValue)
@@ -265,13 +283,66 @@ struct ScriptingInstalledPackageDetailView: View {
                             try platform.createWidgetInstance(from: sourceInstanceID, name: newInstanceName)
                             newInstanceName = ""
                             loadWidgetInstances()
-                        } catch { widgetInstanceError = String(describing: error) }
+                        } catch {
+                            storageDiagnostic = HanlinScriptingPlatform.makePublicationDiagnostic(
+                                for: packageID,
+                                phase: .packageDetailsLoadInstances,
+                                error: error,
+                                storeDiagnostic: HanlinScriptExtensionStore.latestDiagnostic
+                            )
+                        }
                     }
                     .disabled(sourceInstanceID.isEmpty || newInstanceName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     .accessibilityIdentifier("hanlin-widget-create-instance")
                     Text("Choose these names in the Home Screen widget configuration. Two placements selecting the same instance share state; separate instances keep independent state.")
                         .font(.caption).foregroundStyle(.secondary)
-                    if let widgetInstanceError { Text(widgetInstanceError).foregroundStyle(.red) }
+
+                    if let diag = storageDiagnostic ?? platform.widgetPublicationDiagnostic(for: packageID) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(diag.userFacingHeadline)
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(.red)
+                                .accessibilityIdentifier("hanlin-widget-storage-error-headline")
+                            Text("Diagnostic ID: \(diag.correlationID) • \(diag.phase.rawValue) (\(diag.decisionPoint.rawValue))")
+                                .font(.caption.monospaced())
+                                .foregroundStyle(.secondary)
+                                .accessibilityIdentifier("hanlin-widget-storage-diagnostic-id")
+                            Text(diag.summary)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            HStack(spacing: 12) {
+                                Button {
+                                    Task {
+                                        isRetryingPublication = true
+                                        defer { isRetryingPublication = false }
+                                        _ = await platform.republishWidgets(for: packageID)
+                                        loadWidgetInstances()
+                                    }
+                                } label: {
+                                    Label("Retry Widget Publication", systemImage: "arrow.clockwise")
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .controlSize(.small)
+                                .disabled(isRetryingPublication)
+                                .accessibilityIdentifier("hanlin-widget-republish-retry")
+
+                                Button {
+                                    UIPasteboard.general.string = diag.redactedReportString
+                                } label: {
+                                    Label("Copy Diagnostic", systemImage: "doc.on.doc")
+                                }
+                                .buttonStyle(.bordered)
+                                .controlSize(.small)
+                                .accessibilityIdentifier("hanlin-widget-copy-diagnostic")
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    if let widgetInstanceError {
+                        Text(widgetInstanceError)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                    }
                 }
             }
             let capabilities = Set(
@@ -346,9 +417,22 @@ struct ScriptingInstalledPackageDetailView: View {
     private func loadWidgetInstances() {
         do {
             widgetInstances = try platform.widgetInstances(for: packageID).filter { $0.engine != .legacy }
-            if !widgetInstances.contains(where: { $0.entityID == sourceInstanceID }) { sourceInstanceID = widgetInstances.first?.entityID ?? "" }
+            if !widgetInstances.contains(where: { $0.entityID == sourceInstanceID }) {
+                sourceInstanceID = widgetInstances.first(where: \.isDefault)?.entityID ?? widgetInstances.first?.entityID ?? ""
+            }
             widgetInstanceError = nil
-        } catch { widgetInstanceError = String(describing: error) }
+            storageDiagnostic = platform.widgetPublicationDiagnostic(for: packageID)
+        } catch {
+            widgetInstances = []
+            sourceInstanceID = ""
+            widgetInstanceError = nil
+            storageDiagnostic = HanlinScriptingPlatform.makePublicationDiagnostic(
+                for: packageID,
+                phase: .packageDetailsLoadInstances,
+                error: error,
+                storeDiagnostic: HanlinScriptExtensionStore.latestDiagnostic
+            )
+        }
     }
 }
 

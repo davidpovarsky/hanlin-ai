@@ -95,6 +95,18 @@ public struct HanlinStoredPackageSnapshot: Codable, Hashable, Sendable {
         self.grantedCapabilities = grantedCapabilities.sorted { $0.rawValue < $1.rawValue }
         self.manifest = manifest
     }
+
+    public var hasLaunchableApp: Bool {
+        entrypoints.contains { $0.kind == .app }
+    }
+
+    public var hasWidgetEntrypoint: Bool {
+        entrypoints.contains { $0.kind == .widget }
+    }
+
+    public var isWidgetOnly: Bool {
+        !hasLaunchableApp && hasWidgetEntrypoint
+    }
 }
 
 public actor HanlinAtomicScriptStore {

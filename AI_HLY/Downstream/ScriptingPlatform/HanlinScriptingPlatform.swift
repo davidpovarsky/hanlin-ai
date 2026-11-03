@@ -46,6 +46,8 @@ final class HanlinScriptingPlatform {
     private(set) var activeExpoController: UIViewController?
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
     private(set) var installedRoot: URL?
+    private(set) var widgetPublicationDiagnostics: [HanlinInstalledPackageID: HanlinWidgetStorageDiagnostic] = [:]
+    private(set) var lastWidgetStorageDiagnostic: HanlinWidgetStorageDiagnostic?
 
     private let packageCenter = HanlinPackageCenter()
     private var stagedPackage: HanlinStagedPackage?
@@ -322,10 +324,22 @@ final class HanlinScriptingPlatform {
                 )
             }.value
             installedPackages = try await store.snapshots()
-            _ = installed
-            try await refreshExtensionSnapshot()
             discardPreview()
-            activity = .idle
+            do {
+                try await refreshExtensionSnapshot()
+                activity = .idle
+            } catch {
+                print("HANLIN_INSTALL_PREVIEW_PUBLICATION_FAILED: \(error)")
+                let diag = Self.makePublicationDiagnostic(
+                    for: installed.record.installedPackageID,
+                    phase: .hostPublishSnapshot,
+                    error: error,
+                    storeDiagnostic: extensionStore?.lastDiagnostic
+                )
+                widgetPublicationDiagnostics[installed.record.installedPackageID] = diag
+                lastWidgetStorageDiagnostic = diag
+                activity = .idle
+            }
         } catch {
             print("HANLIN_INSTALL_PREVIEW_FAILED: \(error)")
             activity = .failed(Self.safeMessage(error))
@@ -361,6 +375,7 @@ final class HanlinScriptingPlatform {
             try invalidateExtensionWidgets(for: id)
             if activeApplicationID == id { dismissActiveApplication() }
             try await store.uninstall(id)
+            widgetPublicationDiagnostics[id] = nil
             installedPackages = try await store.snapshots()
             try await refreshExtensionSnapshot()
         } catch {
@@ -387,6 +402,7 @@ final class HanlinScriptingPlatform {
             try invalidateExtensionWidgets(for: id)
             if !enabled, activeApplicationID == id { dismissActiveApplication() }
             try await store.setEnabled(enabled, for: id)
+            if !enabled { widgetPublicationDiagnostics[id] = nil }
             installedPackages = try await store.snapshots()
             try await refreshExtensionSnapshot()
         } catch {
@@ -403,6 +419,32 @@ final class HanlinScriptingPlatform {
     func widgetInstances(for id: HanlinInstalledPackageID) throws -> [HanlinWidgetInstance] {
         guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
         return try extensionStore.load()?.widgetInstances.filter { $0.identity.installedPackageID == id } ?? []
+    }
+
+    func widgetPublicationDiagnostic(for id: HanlinInstalledPackageID) -> HanlinWidgetStorageDiagnostic? {
+        widgetPublicationDiagnostics[id]
+    }
+
+    @discardableResult
+    func republishWidgets(for id: HanlinInstalledPackageID) async -> Bool {
+        do {
+            try await refreshExtensionSnapshot()
+            if widgetPublicationDiagnostics[id] != nil {
+                return false
+            }
+            let instances = (try? widgetInstances(for: id).filter { $0.engine != .legacy }) ?? []
+            return !instances.isEmpty
+        } catch {
+            let diag = Self.makePublicationDiagnostic(
+                for: id,
+                phase: .hostPublishSnapshot,
+                error: error,
+                storeDiagnostic: extensionStore?.lastDiagnostic
+            )
+            widgetPublicationDiagnostics[id] = diag
+            lastWidgetStorageDiagnostic = diag
+            return false
+        }
     }
 
     func createWidgetInstance(from entityID: String, name: String) throws {
@@ -900,6 +942,8 @@ final class HanlinScriptingPlatform {
         var widgets: [HanlinScriptWidgetSnapshot] = []
         var intentEntities: [HanlinScriptIntentEntityRecord] = []
         var translationApps: [HanlinScriptTranslationUISnapshot] = []
+        var packageDiagnostics: [HanlinInstalledPackageID: HanlinWidgetStorageDiagnostic] = [:]
+        var failedWidgetPackageIDs = Set<HanlinInstalledPackageID>()
 
         for package in installedPackages where package.enabled {
             do {
@@ -1142,8 +1186,18 @@ final class HanlinScriptingPlatform {
                     }
                 }
             } catch {
+                let diag = Self.makePublicationDiagnostic(
+                    for: package.record.installedPackageID,
+                    phase: .hostPublishWidgetProgram,
+                    error: error,
+                    storeDiagnostic: extensionStore.lastDiagnostic
+                )
+                if package.hasWidgetEntrypoint {
+                    packageDiagnostics[package.record.installedPackageID] = diag
+                    failedWidgetPackageIDs.insert(package.record.installedPackageID)
+                }
                 Self.logger.error(
-                    "extension-refresh package=\(package.record.installedPackageID.rawValue, privacy: .public) phase=artifact-resolution error=\(Self.safeMessage(error), privacy: .public)"
+                    "extension-refresh package=\(package.record.installedPackageID.rawValue, privacy: .public) phase=artifact-resolution diag=\(diag.redactedReportString, privacy: .public)"
                 )
             }
         }
@@ -1182,14 +1236,121 @@ final class HanlinScriptingPlatform {
             }
         }
 
-        let previousSnapshot = try extensionStore.load()
-        let newSnapshot = try extensionStore.publishWidgetTemplates(widgets,
-            intentEntities: intentEntities, translationApps: translationApps,
-            installedPackageIDs: Set(installedPackages.map { $0.record.installedPackageID }))
+        let previousSnapshot: HanlinScriptExtensionSnapshot?
+        do {
+            previousSnapshot = try extensionStore.load()
+        } catch {
+            let diag = Self.makePublicationDiagnostic(
+                for: nil,
+                phase: .hostPublishSnapshot,
+                error: error,
+                storeDiagnostic: extensionStore.lastDiagnostic
+            )
+            lastWidgetStorageDiagnostic = diag
+            for pkg in installedPackages where pkg.enabled && pkg.hasWidgetEntrypoint {
+                packageDiagnostics[pkg.record.installedPackageID] = diag
+            }
+            widgetPublicationDiagnostics = packageDiagnostics
+            throw error
+        }
+
+        if let previousSnapshot, !failedWidgetPackageIDs.isEmpty {
+            let activeGenerations = Dictionary(
+                uniqueKeysWithValues: installedPackages.map { ($0.record.installedPackageID, $0.record.activeGeneration) }
+            )
+            for existingWidget in previousSnapshot.widgets {
+                let pkgID = existingWidget.identity.installedPackageID
+                if failedWidgetPackageIDs.contains(pkgID),
+                   activeGenerations[pkgID] == existingWidget.identity.generation,
+                   !widgets.contains(where: { $0.identity == existingWidget.identity && $0.family == existingWidget.family }) {
+                    widgets.append(existingWidget)
+                }
+            }
+        }
+
+        let newSnapshot: HanlinScriptExtensionSnapshot
+        do {
+            newSnapshot = try extensionStore.publishWidgetTemplates(
+                widgets,
+                intentEntities: intentEntities,
+                translationApps: translationApps,
+                installedPackageIDs: Set(installedPackages.map { $0.record.installedPackageID })
+            )
+        } catch {
+            let diag = Self.makePublicationDiagnostic(
+                for: nil,
+                phase: .hostPublishSnapshot,
+                error: error,
+                storeDiagnostic: extensionStore.lastDiagnostic
+            )
+            lastWidgetStorageDiagnostic = diag
+            for pkg in installedPackages where pkg.enabled && pkg.hasWidgetEntrypoint {
+                packageDiagnostics[pkg.record.installedPackageID] = diag
+            }
+            widgetPublicationDiagnostics = packageDiagnostics
+            throw error
+        }
+
+        for package in installedPackages where package.enabled {
+            let hasNativeWidget = package.entrypoints.contains {
+                $0.kind == .widget && $0.widgetEngine != nil && $0.widgetEngine != .legacy
+            }
+            guard hasNativeWidget else { continue }
+            let hasPublishedDefault = newSnapshot.widgetInstances.contains {
+                $0.identity.installedPackageID == package.record.installedPackageID
+                    && $0.identity.generation == package.record.activeGeneration
+                    && $0.engine != .legacy
+            }
+            if !hasPublishedDefault, packageDiagnostics[package.record.installedPackageID] == nil {
+                packageDiagnostics[package.record.installedPackageID] = HanlinWidgetStorageDiagnostic(
+                    phase: .hostPublishSnapshot,
+                    decisionPoint: .instancePublication,
+                    relativePath: "Packages/\(package.record.installedPackageID.rawValue)/generations/\(package.record.activeGeneration)",
+                    errorDomain: "HanlinWidgetPublication",
+                    errorCode: 1,
+                    summary: "Default widget instance was not published for active generation."
+                )
+            }
+        }
+
+        widgetPublicationDiagnostics = packageDiagnostics
+        lastWidgetStorageDiagnostic = packageDiagnostics.values.first
         if previousSnapshot?.widgets != newSnapshot.widgets || previousSnapshot?.widgetInstances != newSnapshot.widgetInstances {
             WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
         }
         await publishCompactAgentConfig()
+    }
+
+    nonisolated static func makePublicationDiagnostic(
+        for installedPackageID: HanlinInstalledPackageID?,
+        phase: HanlinWidgetStorageDiagnostic.Phase,
+        error: Error,
+        storeDiagnostic: HanlinWidgetStorageDiagnostic?
+    ) -> HanlinWidgetStorageDiagnostic {
+        if let storeDiagnostic {
+            return HanlinWidgetStorageDiagnostic(
+                correlationID: storeDiagnostic.correlationID,
+                phase: phase,
+                decisionPoint: storeDiagnostic.decisionPoint,
+                relativePath: storeDiagnostic.relativePath,
+                failingComponentIndex: storeDiagnostic.failingComponentIndex,
+                failingComponentName: storeDiagnostic.failingComponentName,
+                errorDomain: storeDiagnostic.errorDomain,
+                errorCode: storeDiagnostic.errorCode,
+                posixErrno: storeDiagnostic.posixErrno,
+                summary: storeDiagnostic.summary
+            )
+        }
+        let nsError = error as NSError
+        let relPath = installedPackageID.map { "Packages/\($0.rawValue)" } ?? "."
+        return HanlinWidgetStorageDiagnostic(
+            phase: phase,
+            decisionPoint: .instancePublication,
+            relativePath: relPath,
+            errorDomain: nsError.domain,
+            errorCode: nsError.code,
+            summary: Self.safeMessage(error)
+        )
     }
 
     func publishCompactAgentConfig() async {

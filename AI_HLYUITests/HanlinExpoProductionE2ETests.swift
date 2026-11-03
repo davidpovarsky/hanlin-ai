@@ -98,6 +98,47 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         XCTAssertEqual(app.state, .notRunning)
     }
 
+    func testInstalledScriptWidgetPackageInformationShowsDefaultInstance() throws {
+        openApps()
+        importAndInstall(archive: "Hanlin-ScriptWidget-Actions")
+        XCTAssertFalse(app.alerts["Script App Error"].exists, "Unexpected Script App Error alert after installing ScriptWidget Actions")
+
+        openPackageDetails(named: "ScriptWidget Actions")
+
+        let defaultInstance = app.staticTexts["Default"].firstMatch
+        XCTAssertTrue(defaultInstance.waitForExistence(timeout: 10), "Expected Default widget instance in Package Information")
+        XCTAssertFalse(app.staticTexts["invalidArtifactReference"].exists, "Raw invalidArtifactReference error must never appear")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-widget-storage-error-headline"].exists, "Storage validation error must not appear for valid ScriptWidget Actions")
+
+        createNativeWidgetInstance(named: "Secondary")
+        XCTAssertTrue(app.staticTexts["Secondary"].firstMatch.waitForExistence(timeout: 10), "Expected Secondary instance to be created from Default")
+
+        let done = app.buttons["hanlin-package-details-done"].firstMatch
+        if done.waitForExistence(timeout: 5) { done.tap() }
+    }
+
+    func testWidgetOnlyRowOpensPackageInformationNotApp() throws {
+        openApps()
+        importAndInstall(archive: "Hanlin-ScriptWidget-Actions")
+        XCTAssertFalse(app.alerts["Script App Error"].exists)
+
+        ensureAppsAddButton(timeout: 10).tap()
+        let card = findPackageCard(named: "ScriptWidget Actions")
+        XCTAssertTrue(card.waitForExistence(timeout: 15), "Expected ScriptWidget Actions row in Add Apps")
+        if card.isHittable {
+            card.tap()
+        } else {
+            card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+
+        XCTAssertFalse(app.alerts["Script App Error"].exists, "Tapping a widget-only package row must not trigger a foreground Script App Error")
+        let defaultInstance = app.staticTexts["Default"].firstMatch
+        XCTAssertTrue(defaultInstance.waitForExistence(timeout: 10), "Tapping widget-only row must open Package Information showing Default instance")
+
+        let done = app.buttons["hanlin-package-details-done"].firstMatch
+        if done.waitForExistence(timeout: 5) { done.tap() }
+    }
+
     private func createNativeWidgetInstance(named name: String) {
         let field = app.textFields["hanlin-widget-instance-name"].firstMatch
         if !field.waitForExistence(timeout: 3) { app.swipeUp() }

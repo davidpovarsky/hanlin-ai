@@ -44,16 +44,23 @@ struct NativeAppsAddSheet: View {
                     }
                 }
 
-                let canonicalAppIDs = Set(items.map(\.id))
-                let legacyPackages = scriptingPlatform.installedPackages.filter { !canonicalAppIDs.contains($0.appID) }
+                let compiledSwiftAppIDs = Set(items.filter { $0.engine == .swift }.map(\.id))
+                let legacyPackages = scriptingPlatform.installedPackages.filter { !compiledSwiftAppIDs.contains($0.appID) }
                 if !legacyPackages.isEmpty {
                     Section("Scripting Packages") {
                         ForEach(legacyPackages, id: \.self) { package in
                             let livePackage = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == package.record.installedPackageID }) ?? package
                             let name = livePackage.manifest?.name ?? livePackage.record.packageID.rawValue
+                            let hasLaunchableApp = livePackage.entrypoints.contains { $0.kind == .app }
+                            let hasWidget = livePackage.entrypoints.contains { $0.kind == .widget }
                             Button {
-                                guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }),
-                                      current.enabled else { return }
+                                guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }) else { return }
+                                let currentHasLaunchableApp = current.entrypoints.contains { $0.kind == .app }
+                                guard currentHasLaunchableApp else {
+                                    selectedPackageID = current.record.installedPackageID
+                                    return
+                                }
+                                guard current.enabled else { return }
                                 let required = Set(current.entrypoints.first(where: { $0.kind == .app })?.requiredCapabilities.filter(\.required).map(\.capabilityID) ?? [])
                                 guard required.isSubset(of: Set(current.grantedCapabilities)) else {
                                     return
@@ -83,6 +90,10 @@ struct NativeAppsAddSheet: View {
                                         Text("Disabled")
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
+                                    } else if !hasLaunchableApp && hasWidget {
+                                        Text("Widget")
+                                            .font(.caption2.weight(.medium))
+                                            .foregroundStyle(.secondary)
                                     }
                                 }
                                 .contentShape(Rectangle())
@@ -91,23 +102,34 @@ struct NativeAppsAddSheet: View {
                             .accessibilityIdentifier("hanlin-package-card-\(name)")
                             .accessibilityLabel(name)
                             .contextMenu {
-                                Button {
-                                    guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }),
-                                          current.enabled else { return }
-                                    if let onLaunchPackage {
-                                        onLaunchPackage(current.record.installedPackageID)
-                                        dismiss()
-                                    } else {
-                                        dismiss()
-                                        Task {
-                                            try? await Task.sleep(for: .milliseconds(500))
-                                            await scriptingPlatform.launch(current.record.installedPackageID)
+                                if hasLaunchableApp {
+                                    Button {
+                                        guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }),
+                                              current.enabled else { return }
+                                        if let onLaunchPackage {
+                                            onLaunchPackage(current.record.installedPackageID)
+                                            dismiss()
+                                        } else {
+                                            dismiss()
+                                            Task {
+                                                try? await Task.sleep(for: .milliseconds(500))
+                                                await scriptingPlatform.launch(current.record.installedPackageID)
+                                            }
                                         }
+                                    } label: {
+                                        Label("Open", systemImage: "play.fill")
                                     }
-                                } label: {
-                                    Label("Open", systemImage: "play.fill")
+                                    .disabled(!livePackage.enabled)
                                 }
-                                .disabled(!livePackage.enabled)
+
+                                if hasWidget {
+                                    Button {
+                                        selectedPackageID = livePackage.record.installedPackageID
+                                    } label: {
+                                        Label("Configure Widget", systemImage: "square.grid.2x2")
+                                    }
+                                    .accessibilityIdentifier("hanlin-configure-widget-menu-item")
+                                }
 
                                 Button {
                                     selectedPackageID = livePackage.record.installedPackageID

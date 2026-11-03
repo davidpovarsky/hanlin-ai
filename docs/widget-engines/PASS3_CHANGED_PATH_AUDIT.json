@@ -1,7 +1,7 @@
 {
   "baseline": "ce586667b7103a6c2c7243d33461768c51a9dd8d",
-  "sourceHead": "279f0ead777b961728ed91386c136e7e33659c36",
-  "observedAt": "2026-11-01T14:04:12.776Z",
+  "sourceHead": "61a1d6f2566856715a12a118490eeab2078ec95b",
+  "observedAt": "2026-11-03T01:04:19.680Z",
   "scope": "All tracked changes against actual starting HEAD plus all untracked paths. sourceHead is the existing commit at generation time; the containing evidence commit cannot hash itself. Output omits its own digest. Compile coverage is distinct from per-feature/OS acceptance.",
   "evidenceRuns": {
     "package": {
@@ -61,6 +61,7 @@
     }
   },
   "commits": [
+    "61a1d6f2566856715a12a118490eeab2078ec95b docs: record TestFlight 87401 delivery and Apple VALID processing",
     "279f0ead777b961728ed91386c136e7e33659c36 release: prepare owner-requested TestFlight handoff and preserve execution evidence",
     "7f041dc935e124470a89112111c0fba4961caf36 ci(apple): select stable device SDK and isolate developer directory per job",
     "bbd5406a42505d183600cde0a95d7a45ebb54a8a fix(tests): match iPad widget add label and kill host after entity selection",
@@ -667,6 +668,45 @@
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
     },
     {
+      "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "change": "M",
+      "sha256": "4ec354c6ef470d81134267199dcf633a581ca93668c555455214ccd6d0d5806b",
+      "purpose": "Route widget-only packages to Package Information/widget configuration instead of foreground app launch; preserve app launch for .app packages",
+      "target": "AI_HLY AppsHub / MiniAppHost",
+      "findings": [
+        "P4-04"
+      ],
+      "declarations": [
+        "replace",
+        "authorize",
+        "HanlinMiniAppHost",
+        "SwiftDestination",
+        "registerFallbackRoutes",
+        "refresh",
+        "setHidden",
+        "isHidden",
+        "swiftDestination",
+        "launchNativeScript",
+        "launchExpo",
+        "launchScriptingJSC",
+        "fetchStatus",
+        "PersistedParityState"
+      ],
+      "provenance": null,
+      "ownerImported": false,
+      "coverage": {
+        "status": "PARTIAL: Pass 4 unit and simulator UI verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
+        ],
+        "assertions": [
+          "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testWidgetOnlyRowOpensPackageInformationNotApp"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
       "path": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
       "change": "M",
       "sha256": "dc4321cb6300cc685fc02c6bb039a44f764a0191e6f6fd69adf14c6ba7b824a5",
@@ -692,15 +732,18 @@
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "change": "M",
-      "sha256": "f148fb25ff7afddad822034b443e878101641ddec855ab62e47dda080ced9235",
-      "purpose": "Host install/publication retains validated engines, independent named instances, durable revisions and unrelated collections",
+      "sha256": "39dbbecfadc65866e3b3f5e8169338198134b90ea421b3311465abe0cf72f7b9",
+      "purpose": "Host install/publication retains validated engines, independent named instances, durable revisions, non-destructive two-store diagnostics and retry UX",
       "target": "AI_HLY app",
       "findings": [
         "P3-06",
         "P3-14",
         "P3-17",
         "P3-18",
-        "P3-21"
+        "P3-21",
+        "P4-02",
+        "P4-03",
+        "P4-06"
       ],
       "declarations": [
         "HanlinScriptingPlatform",
@@ -723,13 +766,13 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "PARTIAL: app compile and shared package assertions; actual host UI results pending",
+        "status": "PARTIAL: app compile and shared package assertions; Pass 4 simulator/package verification tracked in CI_AND_DEVICE_RESULTS.md",
         "runs": [
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
         ],
         "assertions": [
-          "userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections; native UI scenarios pending"
+          "userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections; pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testInstalledScriptWidgetPackageInformationShowsDefaultInstance"
         ]
       },
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
@@ -737,21 +780,25 @@
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
       "change": "M",
-      "sha256": "77d6054eb5a49dd0a1595d73425fb87cd65bc2a4d8a4803280bf184fe2617759",
-      "purpose": "Host install/publication retains validated engines, independent named instances, durable revisions and unrelated collections",
+      "sha256": "e5dd8455fcde3eb07a871a67915989ee5ab623ac8d2a7e7e4104e544165167a7",
+      "purpose": "Host install/publication retains validated engines, independent named instances, durable revisions, non-destructive two-store diagnostics and retry UX",
       "target": "AI_HLY app",
       "findings": [
         "P3-06",
         "P3-14",
         "P3-17",
         "P3-18",
-        "P3-21"
+        "P3-21",
+        "P4-02",
+        "P4-03",
+        "P4-06"
       ],
       "declarations": [
         "ScriptingPackageImportView",
         "ScriptingImportPreviewSections",
         "runtimeReason",
         "ScriptingInstalledPackageDetailView",
+        "hasNativeWidget",
         "installedPackageList",
         "enabledBinding",
         "loadWidgetInstances",
@@ -763,13 +810,13 @@
       "provenance": null,
       "ownerImported": false,
       "coverage": {
-        "status": "PARTIAL: app compile and shared package assertions; actual host UI results pending",
+        "status": "PARTIAL: app compile and shared package assertions; Pass 4 simulator/package verification tracked in CI_AND_DEVICE_RESULTS.md",
         "runs": [
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588",
           "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
         ],
         "assertions": [
-          "userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections; native UI scenarios pending"
+          "userCreatedInstancesAndHostRefreshPreserveState; actionAndPublicationPreserveUnrelatedCollections; pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testInstalledScriptWidgetPackageInformationShowsDefaultInstance"
         ]
       },
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
@@ -807,6 +854,65 @@
         ],
         "assertions": [
           "See docs/hanlin-dock-v33-source-parity/EXECUTED_TEST_AND_DEVICE_GATE.md; original owner run overall FAILED"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+      "change": "M",
+      "sha256": "15bdabeb4d2adc8dcc31ab390e409456b53d1111de314a5deef6f9842c40f9e3",
+      "purpose": "Route widget-only packages to Package Information/widget configuration instead of foreground app launch; preserve app launch for .app packages",
+      "target": "AI_HLY AppsHub / MiniAppHost",
+      "findings": [
+        "P4-04"
+      ],
+      "declarations": [
+        "NativeAppsAddSheet",
+        "IdentifiablePackageID"
+      ],
+      "provenance": null,
+      "ownerImported": false,
+      "coverage": {
+        "status": "PARTIAL: Pass 4 unit and simulator UI verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
+        ],
+        "assertions": [
+          "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testWidgetOnlyRowOpensPackageInformationNotApp"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "change": "M",
+      "sha256": "ed90845555a31620d60baefeb9da795a9c1e4fb950a8ed66c40f75a801421357",
+      "purpose": "Route widget-only packages to Package Information/widget configuration instead of foreground app launch; preserve app launch for .app packages",
+      "target": "AI_HLY AppsHub / MiniAppHost",
+      "findings": [
+        "P4-04"
+      ],
+      "declarations": [
+        "NativeAppsHubView",
+        "engineSection",
+        "miniAppCard",
+        "commonActions",
+        "launch",
+        "refreshCatalog",
+        "MiniAppDescriptorDetailView"
+      ],
+      "provenance": null,
+      "ownerImported": false,
+      "coverage": {
+        "status": "PARTIAL: Pass 4 unit and simulator UI verification tracked in CI_AND_DEVICE_RESULTS.md",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805",
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41261389588"
+        ],
+        "assertions": [
+          "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting; testWidgetOnlyRowOpensPackageInformationNotApp"
         ]
       },
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
@@ -1318,7 +1424,7 @@
     {
       "path": "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
       "change": "M",
-      "sha256": "ee932cec87db6ee092daa295372f174da7b13caab25d4ff9f7590749651b82bc",
+      "sha256": "294c8b8fb7dd4587177d1ab8bd02bc04e0241ba7ef3426af0a6daa65ac7f8a98",
       "purpose": "Real import/install/instance UI, actual gallery-cell SpringBoard placement and host-terminated source actions; preserve foreground tests",
       "target": "AI_HLYUITests / SpringBoard",
       "findings": [
@@ -1336,15 +1442,15 @@
         "testNativeExpoWidgetSourceActionsWithHostTerminated",
         "testNativeScriptWidgetBooleanWithHostTerminated",
         "ran",
+        "testInstalledScriptWidgetPackageInformationShowsDefaultInstance",
+        "testWidgetOnlyRowOpensPackageInformationNotApp",
         "createNativeWidgetInstance",
         "placeNativeWidget",
         "recordWidgetEvidence",
         "testProductionExpoSwiftUIProbeEndToEnd",
         "testProductionExpoSearchableContentAndEvents",
         "testProductionExpoDynamicPackageSwitching",
-        "testProductionExpoLifecycleAndUninstall",
-        "testProductionExpo1000RowsProbe",
-        "testProductionExpoMalformedPackageRejection"
+        "testProductionExpoLifecycleAndUninstall"
       ],
       "provenance": null,
       "ownerImported": false,
@@ -2061,7 +2167,7 @@
     {
       "path": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
       "change": "M",
-      "sha256": "45068c6f237f4474bec2d02668c2e13f9ae765c750e69a5aeeb6b4fb45872d37",
+      "sha256": "15c15cbd2433f913865305ca57f7284e95508d4c73405aeb53dd0a822c3db722",
       "purpose": "Generic widget provider uses exact configured entity and frozen native presentation; passive legacy URL only without nested Button; pinned resource copies",
       "target": "HanlinScriptingWidgets.appex",
       "findings": [
@@ -5713,7 +5819,7 @@
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
       "change": "M",
-      "sha256": "c20f09c3d36ceadece6fa707eef30300ddfb3cd9f0d9999139de651b2569ee9e",
+      "sha256": "41299e04a3544996b3f63e984adc2a0e0e1824fee355744fdd1749f2030961df",
       "purpose": "Prepared engine-specific presentation, source execution/actions, typed state or pinned execution resource; no body-time JSC",
       "target": "HanlinScriptExtensions -> host/widget extension",
       "findings": [
@@ -5761,7 +5867,7 @@
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
       "change": "M",
-      "sha256": "b7eccd67d7e0b59baf0b09e766d6aef4a2cb623d69820d42674927872464cd2e",
+      "sha256": "ddb49251b9277e300ed4a80d1c63c0c92f1338cae30b39ed0eef2ad041b62501",
       "purpose": "Checked immutable artifact reads and exact generation/variant authority; atomic revisions, publication and source mutations",
       "target": "HanlinScriptExtensions -> host/widget extension",
       "findings": [
@@ -5777,21 +5883,21 @@
       ],
       "declarations": [
         "HanlinScriptExtensionStoreError",
+        "HanlinWidgetDiagnosticBuffer",
+        "record",
+        "lastDiagnostic",
+        "recentDiagnostics",
         "HanlinScriptExtensionStore",
         "Recovery",
         "LoadResult",
         "Commit",
         "Pending",
         "Envelope",
+        "recordDiagnostic",
         "load",
         "loadWithRecovery",
         "update",
-        "loadUnlocked",
-        "loadFile",
-        "decodeEnvelope",
-        "save",
-        "saveUnlocked",
-        "envelopeData"
+        "loadUnlocked"
       ],
       "provenance": null,
       "ownerImported": false,
@@ -5846,7 +5952,7 @@
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift",
       "change": "A",
-      "sha256": "55082b3ce88cda0c48b26183b326589ab94bbea21cfd0c9307a164af3509847d",
+      "sha256": "1ef6ea972d2b5c0854a5aa301a514aada6d1557ab9757116054179b22f3efe0a",
       "purpose": "Checked immutable artifact reads and exact generation/variant authority; atomic revisions, publication and source mutations",
       "target": "HanlinScriptExtensions -> host/widget extension",
       "findings": [
@@ -8043,6 +8149,46 @@
       "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
     },
     {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+      "change": "M",
+      "sha256": "e58a2d8ca7927c061d9f141d43fe4b7bbebced9f03d79a4cc55e36fadec5e729",
+      "purpose": "Expose canonical hasLaunchableApp, hasWidgetEntrypoint and isWidgetOnly predicates on HanlinStoredPackageSnapshot",
+      "target": "HanlinScriptStore -> AI_HLY AppsHub",
+      "findings": [
+        "P4-04"
+      ],
+      "declarations": [
+        "HanlinInstallFaultPoint",
+        "HanlinInstallFaultInjector",
+        "check",
+        "HanlinNoInstallFaults",
+        "HanlinAtomicScriptStoreError",
+        "HanlinScriptCatalogEntry",
+        "HanlinUnifiedPackageCatalogSnapshot",
+        "HanlinStoredPackageSnapshot",
+        "Registry",
+        "RegistryEntry",
+        "GenerationMetadata",
+        "TransactionKind",
+        "TransactionPhase",
+        "Journal",
+        "restore",
+        "snapshots"
+      ],
+      "provenance": null,
+      "ownerImported": false,
+      "coverage": {
+        "status": "EXECUTED_PASS in package tests",
+        "runs": [
+          "https://github.com/davidpovarsky/hanlin-ai/actions/runs/41265958805"
+        ],
+        "assertions": [
+          "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting"
+        ]
+      },
+      "beforeEvidence": "Starting dirty Pass-2 Apple execution NOT_RUN; measured intermediate failures are individually listed in CI_AND_DEVICE_RESULTS.md, never invented red/green."
+    },
+    {
       "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
       "change": "A",
       "sha256": "3e567980f4da27e9f5e7c2a466fe9bf533c52de54921a8787f7b67ac9e4aef86",
@@ -8290,7 +8436,7 @@
     {
       "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
       "change": "M",
-      "sha256": "bf753001054cfbeaeda253de9098aa349f3eaa23cd5251909320700c7da20119",
+      "sha256": "c66a692ea4c01b3cbdec519c543d9488c0bc30fe437b437a847a2356328f1245",
       "purpose": "Semantic integration and original-native raster/actual historical encoder-reader coverage",
       "target": "HanlinScriptExtensionsTests on macOS SDK 27.1",
       "findings": [
@@ -8414,7 +8560,7 @@
     {
       "path": "Scripts/Widgets/audit-changed-paths.mjs",
       "change": "A",
-      "sha256": "70af4688d384a1e46754d2504af65b8ee8ddd9b2622f490bf4f1ac5f58667820",
+      "sha256": "c634f84731233846fe05859d6d74a7676fd6185507949b9773756e161abd66c3",
       "purpose": "Reproducible exhaustive changed-path coverage/provenance inventory",
       "target": "Local evidence tooling",
       "findings": [

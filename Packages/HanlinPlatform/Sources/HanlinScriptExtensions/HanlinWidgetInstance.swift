@@ -3,6 +3,7 @@ import HanlinPlatformContracts
 
 public struct HanlinWidgetInstance: Codable, Hashable, Sendable, Identifiable {
     public var id: String { identity.variantID }
+    public var isDefault: Bool { identity.variantID == "default" }
     public let identity: HanlinScriptExtensionIdentity
     public let engine: HanlinWidgetEngine
     public let displayName: String
