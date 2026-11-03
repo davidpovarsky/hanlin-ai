@@ -1,6 +1,6 @@
 # Popover Responsive Geometry and Navigation Evidence
 
-**Document Purpose**: Document the dynamic sizing calculations, race condition guards, and navigation transitions for the three composer popovers: General `+`, Direct Tools, and Model Picker.
+**Document Purpose**: Document the dynamic sizing calculations, race condition guards, and navigation transitions for the composer controls (originally General `+`, Direct Tools, and Model Picker; **superseded for General `+` and Direct Tools on 2026-11-01 by the integrated `HanlinOrganizerDock` (`InteriorOrganizerV3_3`)** — only the Model Picker remains a floating `.popover`, while General `+` and Direct Tools render inside the bottom-aligned `HanlinOrganizerDock` drawer with inline subpage switching).
 
 ---
 

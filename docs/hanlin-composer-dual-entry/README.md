@@ -16,9 +16,11 @@ This document specifies the design, state coordination, V3.3 two-phase zoom/expa
 
 ---
 
-## 2. Shared Popup Coordinator & V3.3 Two-Phase Transition Adaptation
+## 2. Shared Popup Coordinator & V3.3 Integrated Dock vs. Model Popover Transition
 
-`HanlinComposerPopupCoordinator` (`AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift`) is the single `@MainActor @Observable` coordinator governing all composer popovers:
+> **Supersession Note (2026-11-01 — `InteriorOrganizerV3_3` Source Parity)**: The earlier floating `.popover` presentation for General (`+`) and Direct Tools (`hammer.circle`) described in the initial Build 84701 audit is **superseded** by the single bottom-integrated `HanlinOrganizerDock` (`ZStack(alignment: .bottom)`). Only the Model Picker (`hanlin-composer-model-picker`) remains a floating `.popover` with matched-geometry zoom (`model-popover` -> `all-models`). Embedded General and Tools subpages (`imageSize`, `toolsCatalog`, `skills`, `mcp`, `runtime`) switch inline inside the expanded dock drawer without nested `NavigationStack` or popover frame resizing.
+
+`HanlinComposerPopupCoordinator` (`AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift`) is the single `@MainActor @Observable` coordinator governing the integrated dock drawer modes (`.general`, `.tools`) and the model picker popover (`.model`):
 
 ```swift
 public enum ComposerPopup: String, Identifiable, Equatable, Sendable {

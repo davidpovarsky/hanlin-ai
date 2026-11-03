@@ -34,9 +34,21 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            Color.clear
+                .frame(maxWidth: .infinity)
+                .frame(height: dockState.panelHeight)
+                .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(String(localized: "Organizer Dock"))
+                .accessibilityIdentifier("hanlin-organizer-dock")
+
             drawerLayer
+                .frame(height: dockState.panelHeight, alignment: .top)
             composerLayer
+                .frame(height: dockState.composerHeight, alignment: .top)
         }
+        .frame(maxWidth: .infinity)
+        .frame(height: dockState.panelHeight, alignment: .bottom)
         .animation(
             reduceMotion ? nil : .spring(response: 0.48, dampingFraction: 0.87),
             value: dockState.isExpanded
@@ -82,13 +94,24 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
             }
             .buttonStyle(.plain)
             .disabled(isResponding)
-            .gesture(drawerDragGesture)
+            .highPriorityGesture(drawerDragGesture)
             .accessibilityLabel(
                 dockState.isExpanded
                 ? String(localized: "Collapse organizer panel")
                 : String(localized: "Expand organizer panel")
             )
             .accessibilityIdentifier("hanlin-organizer-drawer-handle")
+            .accessibilityAdjustableAction { direction in
+                guard !isResponding else { return }
+                let delta: CGFloat = (direction == .increment) ? -48 : 48
+                if reduceMotion {
+                    dockState.handleDrawerDragEnded(translationHeight: delta)
+                } else {
+                    withAnimation(.spring(response: 0.48, dampingFraction: 0.87)) {
+                        dockState.handleDrawerDragEnded(translationHeight: delta)
+                    }
+                }
+            }
 
             if dockState.isExpanded {
                 Group {
@@ -128,7 +151,7 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
     }
 
     private var drawerDragGesture: some Gesture {
-        DragGesture(minimumDistance: 20)
+        DragGesture(minimumDistance: 20, coordinateSpace: .global)
             .onEnded { value in
                 guard !isResponding else { return }
                 if reduceMotion {
@@ -152,7 +175,7 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
                 .frame(width: 82, height: 20)
                 .contentShape(Rectangle())
                 .padding(.top, 3)
-                .gesture(composerResizeGesture)
+                .highPriorityGesture(composerResizeGesture)
                 .accessibilityElement()
                 .accessibilityLabel(String(localized: "Text box size handle"))
                 .accessibilityHint(String(localized: "Swipe up or down to adjust the message input height."))
@@ -168,16 +191,15 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
                 }
 
             composerContent()
-
-            Spacer(minLength: 0)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .padding(.bottom, 6)
         .frame(maxWidth: .infinity)
-        .frame(minHeight: dockState.composerHeight, alignment: .top)
-        .contentShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-        .onTapGesture(perform: onTapComposerBackground)
+        .frame(height: dockState.composerHeight, alignment: .top)
         .background(
             GlassView(style: .systemUltraThinMaterial)
+                .contentShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+                .onTapGesture(perform: onTapComposerBackground)
         )
         .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
         .overlay(
@@ -191,7 +213,7 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
     }
 
     private var composerResizeGesture: some Gesture {
-        DragGesture(minimumDistance: 7)
+        DragGesture(minimumDistance: 7, coordinateSpace: .global)
             .onChanged { value in
                 dockState.handleComposerResizeChanged(translationHeight: value.translation.height)
             }

@@ -20,6 +20,7 @@ struct HanlinPendingFirstTurn: Identifiable, Sendable {
     enum Status: Equatable, Sendable {
         case created
         case awaitingEndpoint(targetChatID: UUID)
+        case dispatching(targetChatID: UUID, registrationToken: UUID)
         case dispatched(targetChatID: UUID)
         case cancelled(reason: String)
         case failed(reason: String)
@@ -47,12 +48,13 @@ struct HanlinPendingFirstTurn: Identifiable, Sendable {
     let maxMessagesNum: Int
 
     var status: Status
+    var acceptedUserMessageID: UUID? = nil
 
     var id: UUID { submissionID }
 
     var targetChatID: UUID? {
         switch status {
-        case .awaitingEndpoint(let id), .dispatched(let id):
+        case .awaitingEndpoint(let id), .dispatching(let id, _), .dispatched(let id):
             return id
         default:
             return nil
@@ -61,10 +63,17 @@ struct HanlinPendingFirstTurn: Identifiable, Sendable {
 
     var isPendingHandoff: Bool {
         switch status {
-        case .created, .awaitingEndpoint:
+        case .created, .awaitingEndpoint, .dispatching:
             return true
         case .dispatched, .cancelled, .failed:
             return false
         }
+    }
+
+    var isAccepted: Bool {
+        if case .dispatched = status {
+            return true
+        }
+        return false
     }
 }

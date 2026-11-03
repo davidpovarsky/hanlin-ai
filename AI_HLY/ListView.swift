@@ -25,6 +25,7 @@ struct ListView: View {
     
     @State private var navigationPath: [ChatRecords] = []
     @State private var compactWorkspacePath: [HanlinCompactWorkspaceRoute] = []
+    @State private var sessionBridge = HanlinActiveComposerSessionBridge()
     @State private var measuredContainerWidth: CGFloat = 0
     @State private var selectedChatRecord: ChatRecords? = nil
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
@@ -88,6 +89,13 @@ struct ListView: View {
     private var filteredChatRecords: [ChatRecords] {
         Self.filterAndSortChatRecords(chatRecords, searchText: searchText)
     }
+
+    private var defaultInitialChatRecord: ChatRecords? {
+        chatRecords
+            .filter { ($0.type ?? "chat") == "chat" }
+            .max(by: { $0.lastEdited < $1.lastEdited })
+            ?? filteredChatRecords.first
+    }
     
     private var useCompactWorkspace: Bool {
         let effectiveWidth = HanlinCompactChatWorkspace.effectiveContainerWidth(
@@ -141,29 +149,59 @@ struct ListView: View {
                     onTogglePin: { record in togglePin(record) },
                     onEditRecord: { record in beginEditingRecord(record) },
                     onDeleteRecord: { record in deleteChat(record) },
-                    onRefresh: { handleOnAppear() }
+                    onRefresh: { handleOnAppear() },
+                    sessionBridge: sessionBridge
                 )
             }
         }
+        .environment(\.hanlinComposerSessionBridge, sessionBridge)
         .onGeometryChange(for: CGFloat.self) { proxy in
             proxy.size.width
         } action: { newWidth in
             if abs(measuredContainerWidth - newWidth) > 1 {
+                let wasCompact = useCompactWorkspace
+                let nextEffective = HanlinCompactChatWorkspace.effectiveContainerWidth(measuredWidth: newWidth)
+                let willBeCompact = HanlinCompactChatWorkspace.shouldUseCompactWorkspace(
+                    isPhoneIdiom: UIDevice.current.userInterfaceIdiom == .phone,
+                    horizontalSizeClass: horizontalSizeClass,
+                    availableWidth: nextEffective
+                )
+                if wasCompact != willBeCompact {
+                    sessionBridge.beginLayoutModeTransition()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        sessionBridge.endLayoutModeTransition()
+                    }
+                }
                 measuredContainerWidth = newWidth
             }
         }
+        .onChange(of: selectedChatRecord) { _, newSelected in
+            if !useCompactWorkspace {
+                sessionBridge.expectedActiveSessionID = newSelected?.id
+            }
+        }
         .onChange(of: useCompactWorkspace) { _, isCompact in
+            sessionBridge.beginLayoutModeTransition()
             if isCompact {
                 if compactWorkspacePath.isEmpty, let selectedID = selectedChatRecord?.id {
                     compactWorkspacePath = [.chat(selectedID)]
+                }
+                if case .chat(let activeID) = compactWorkspacePath.last {
+                    sessionBridge.expectedActiveSessionID = activeID
+                } else {
+                    sessionBridge.expectedActiveSessionID = nil
                 }
             } else {
                 if case .chat(let activeID) = compactWorkspacePath.last,
                    let match = chatRecords.first(where: { $0.id == activeID }) {
                     selectedChatRecord = match
                 } else if selectedChatRecord == nil {
-                    selectedChatRecord = filteredChatRecords.first
+                    selectedChatRecord = defaultInitialChatRecord
                 }
+                sessionBridge.expectedActiveSessionID = selectedChatRecord?.id
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                sessionBridge.endLayoutModeTransition()
             }
         }
         .onChange(of: searchText) {
@@ -181,7 +219,8 @@ struct ListView: View {
             handleOnAppear()
             searchText = ""
             if !useCompactWorkspace && selectedChatRecord == nil {
-                selectedChatRecord = filteredChatRecords.first
+                selectedChatRecord = defaultInitialChatRecord
+                sessionBridge.expectedActiveSessionID = selectedChatRecord?.id
             }
         }
         .sheet(isPresented: $showTranslationSheet) {
@@ -433,19 +472,18 @@ struct ListView: View {
     // MARK: - 子视图：聊天记录列表
     @ViewBuilder
     private func chatRecordRow(for record: ChatRecords) -> some View {
-        // 将 matchedSnippets 的取值与 NavigationLink 封装到此处
         let snippetPair = matchedSnippets[record.id ?? UUID()]
         let snippet = snippetPair?.0
-        let messageID = snippetPair?.1
-        
-        NavigationLink(destination: {
-            ChatViewWrapper(chatRecord: record, matchedMessageID: messageID)
-        }) {
+
+        Button {
+            selectedChatRecord = record
+        } label: {
             ChatRowView(
                 record: record,
                 searchText: searchText,
                 matchedSnippet: snippet
             )
+            .contentShape(Rectangle())
             .contextMenu {
                 Button {
                     // 编辑图标操作
@@ -471,6 +509,7 @@ struct ListView: View {
                 }
             }
         }
+        .buttonStyle(.plain)
         .padding(.horizontal)
         .padding(.vertical, 5)
         .listRowInsets(EdgeInsets())
@@ -506,9 +545,8 @@ struct ListView: View {
             }
             .tint(.hlGreen)
         }
-        // 利用 forceRefresh 作为 id 变化触发视图刷新
-        .id((record.id?.uuidString ?? "") + String(forceRefresh))
         .tag(record)
+        .id((record.id?.uuidString ?? "") + String(forceRefresh))
         .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")
     }
     
