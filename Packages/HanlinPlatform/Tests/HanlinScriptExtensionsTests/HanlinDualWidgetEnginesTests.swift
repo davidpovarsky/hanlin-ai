@@ -648,12 +648,39 @@ struct HanlinDualWidgetEnginesTests {
         #expect(actionsSnapshot.hasWidgetEntrypoint)
         #expect(actionsSnapshot.isWidgetOnly)
 
-        let combinedFixture = try await InstalledFixture("Hanlin-Expo-Tasks-Store.hanlinExpo", installationID: "install-expo-tasks", packageID: "expo-tasks")
-        defer { combinedFixture.remove() }
-        let combinedSnapshot = try #require(try await combinedFixture.installed.snapshots().first)
+        let counterFixture = try await InstalledFixture("Hanlin-Expo-Widget-Counter.hanlinExpo", installationID: "install-expo-counter", packageID: "expo-counter")
+        defer { counterFixture.remove() }
+        let counterSnapshot = try #require(try await counterFixture.installed.snapshots().first)
+        #expect(!counterSnapshot.hasLaunchableApp)
+        #expect(counterSnapshot.hasWidgetEntrypoint)
+        #expect(counterSnapshot.isWidgetOnly)
+
+        let combinedSnapshot = HanlinStoredPackageSnapshot(
+            record: counterSnapshot.record,
+            entrypoints: [
+                .init(id: "app", kind: .app, sourcePath: "app/index.tsx", runtimeProfile: .hanlinExpo),
+                .init(id: "widget", kind: .widget, sourcePath: "widgets/CounterWidget.tsx", runtimeProfile: .scriptingJSC, widgetEngine: .expo),
+            ],
+            enabled: true,
+            availableGenerations: counterSnapshot.availableGenerations,
+            grantedCapabilities: counterSnapshot.grantedCapabilities,
+            manifest: counterSnapshot.manifest
+        )
         #expect(combinedSnapshot.hasLaunchableApp)
         #expect(combinedSnapshot.hasWidgetEntrypoint)
         #expect(!combinedSnapshot.isWidgetOnly)
+
+        let appOnlySnapshot = HanlinStoredPackageSnapshot(
+            record: counterSnapshot.record,
+            entrypoints: [
+                .init(id: "app", kind: .app, sourcePath: "app/index.tsx", runtimeProfile: .hanlinExpo),
+            ],
+            enabled: true,
+            availableGenerations: counterSnapshot.availableGenerations
+        )
+        #expect(appOnlySnapshot.hasLaunchableApp)
+        #expect(!appOnlySnapshot.hasWidgetEntrypoint)
+        #expect(!appOnlySnapshot.isWidgetOnly)
 
         // Inject a transient storage fault (dangling symlink at pending.json) before republishing,
         // verify publication fails with a structured diagnostic while installed package store stays at gen 1,
