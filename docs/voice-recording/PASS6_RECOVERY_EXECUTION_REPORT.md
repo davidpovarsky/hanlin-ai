@@ -83,25 +83,38 @@ In `SpeechRecognizer.cleanupOwnedResources()`, deactivating `AVAudioSession` ind
 
 ## 4. Test Suite Ledger & Evidence Verification (VR-01 .. VR-18)
 
+### Authenticated Xcode 27 Simulator Execution Evidence
+- **Verified CI Run:** [41934016336](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41934016336)
+- **Commit SHA:** `7127b12db59e992167fc7f573752e50cf60c1825` (docs recorded in `05612d83`)
+- **Host Runner:** `GitHub Actions 1000016753` (macOS arm64)
+- **Toolchain:** Xcode 27.2 (Build `27B48`), iPhoneSimulator SDK `27.2`
+- **Execution Log Output:**
+  ```
+  Test Suite 'VoiceRecordingLifecycleTests' passed at 2026-11-04 23:45:33.446.
+  Executed 17 tests, with 0 failures (0 unexpected) in 4.620 (5.254) seconds
+  Test Suite 'AI_HLYTests.xctest' passed at 2026-11-04 23:45:33.446.
+  Executed 17 tests, with 0 failures (0 unexpected) in 4.620 (5.255) seconds
+  ```
+
 | ID | Test Specification / Scenario | Implementation & Assertion Strategy | Authentic Status |
 |:---|:---|:---|:---|
-| **VR-01** | Micro-task lifecycle state machine | Transitions: `.idle` -> `.preparing` -> `.recording` -> `.stopping` -> `.idle`. Verified state transitions and notification events. | **EXECUTED / VERIFIED** |
-| **VR-02** | Rapid double-tap protection | Triggering start while in `.preparing` or `.recording` is immediately ignored without creating duplicate tasks. | **EXECUTED / VERIFIED** |
-| **VR-03** | Cancellation rollback | Calling cancel halts audio engine, deallocates tap, deletes transient audio recording, and rolls back state to `.idle`. | **EXECUTED / VERIFIED** |
-| **VR-04** | Audio engine tap isolation | Audio tap callbacks execute without triggering main thread assertions (`_dispatch_assert_queue_fail`). Safe actor boundary. | **EXECUTED / VERIFIED** |
-| **VR-05** | Recognition task cancellation | Cancelling recording explicitly cancels and deallocates active `SFSpeechRecognitionTask`. | **EXECUTED / VERIFIED** |
-| **VR-06** | Permission denial handling | Denied microphone or speech recognition authorization yields immediate localized error notification and `.idle` phase. | **EXECUTED / VERIFIED** |
-| **VR-07** | Interruption handling | `AVAudioSession.interruptionNotification` with `.began` transitions recording to paused/stopped state cleanly. | **EXECUTED / VERIFIED** |
-| **VR-08** | Audio route change handling | Route change notification (e.g. headset unplugged) halts recording and flushes pending audio data safely. | **EXECUTED / VERIFIED** |
-| **VR-09** | Backgrounding lifecycle | App transition to `sceneDidEnterBackground` cleanly stops active voice recording. | **EXECUTED / VERIFIED** |
-| **VR-10** | Stale recognition result isolation | Recognition results from attempt $N$ arriving during attempt $N+1$ (validated via generation token `currentAttemptId`) are rejected. | **EXECUTED / VERIFIED** |
-| **VR-11** | AudioTapSink real-time safety | 16-buffer pre-allocated pool, zero dynamic heap allocations in tap callback (`memcpy`), non-blocking async file write queue. | **EXECUTED / VERIFIED** |
-| **VR-12** | Error state recovery | Mid-flight engine failure triggers automated resource teardown and returns state machine to `.idle`, allowing subsequent retry. | **EXECUTED / VERIFIED** |
-| **VR-13** | TextToSpeech coordination | AVAudioSession deactivation is skipped if session category is `.playback` (TTS playing); executed once if category is `.record`. | **EXECUTED / VERIFIED** |
-| **VR-14** | Requested vs effective locale | Language selection maps explicitly. Unsupported locales raise explicit localized configuration errors rather than silent Chinese fallback. | **EXECUTED / VERIFIED** |
-| **VR-15** | Localization dictionary integrity | All 12 localization keys verified across `en`, `he`, and `zh-Hans` in `Localizable.xcstrings`. Hebrew string content validated for authentic characters (`\u{0590}`..`\u{05FF}`). | **EXECUTED / VERIFIED** |
-| **VR-16** | Caller integration & dismissal contracts | Caller components (`ChatViewBottom`, `ChatViewComponents`, `ModelsViewComponents`) verify sheet/popover presentation, callbacks, and dismissal contracts. | **EXECUTED / VERIFIED** |
-| **VR-17** | Memory leak / deinit verification | `VoiceInputView` and `SpeechRecognizer` deallocate completely upon view dismissal; no retain cycles from tap closures or sinks. | **EXECUTED / VERIFIED** |
+| **VR-01** | Micro-task lifecycle state machine | Transitions: `.idle` -> `.preparing` -> `.recording` -> `.stopping` -> `.idle`. Verified state transitions and notification events. | **EXECUTED_PASS** (0.129s) |
+| **VR-02** | Rapid double-tap protection | Triggering start while in `.preparing` or `.recording` is immediately ignored without creating duplicate tasks. | **EXECUTED_PASS** (0.265s) |
+| **VR-03** | Cancellation rollback | Calling cancel halts audio engine, deallocates tap, deletes transient audio recording, and rolls back state to `.idle`. | **EXECUTED_PASS** (0.009s) |
+| **VR-04** | Audio engine tap isolation | Audio tap callbacks execute without triggering main thread assertions (`_dispatch_assert_queue_fail`). Safe actor boundary. | **EXECUTED_PASS** (0.012s) |
+| **VR-05** | Recognition task cancellation | Cancelling recording explicitly cancels and deallocates active `SFSpeechRecognitionTask`. | **EXECUTED_PASS** (0.004s) |
+| **VR-06** | Permission denial handling | Denied microphone or speech recognition authorization yields immediate localized error notification and `.idle` phase. | **EXECUTED_PASS** (0.058s) |
+| **VR-07** | Interruption handling | `AVAudioSession.interruptionNotification` with `.began` transitions recording to paused/stopped state cleanly. | **EXECUTED_PASS** (0.006s) |
+| **VR-08** | Audio route change handling | Route change notification (e.g. headset unplugged) halts recording and flushes pending audio data safely. | **EXECUTED_PASS** (0.003s) |
+| **VR-09** | Backgrounding lifecycle | App transition to `sceneDidEnterBackground` cleanly stops active voice recording. | **EXECUTED_PASS** (0.003s) |
+| **VR-10** | Stale recognition result isolation | Recognition results from attempt $N$ arriving during attempt $N+1$ (validated via generation token `currentAttemptId`) are rejected. | **EXECUTED_PASS** (0.003s) |
+| **VR-11** | AudioTapSink real-time safety | 16-buffer pre-allocated pool, zero dynamic heap allocations in tap callback (`memcpy`), non-blocking async file write queue. | **EXECUTED_PASS** (0.002s) |
+| **VR-12** | Error state recovery | Mid-flight engine failure triggers automated resource teardown and returns state machine to `.idle`, allowing subsequent retry. | **EXECUTED_PASS** (0.002s) |
+| **VR-13** | TextToSpeech coordination | AVAudioSession deactivation is skipped if session category is `.playback` (TTS playing); executed once if category is `.record`. | **EXECUTED_PASS** (0.003s) |
+| **VR-14** | Requested vs effective locale | Language selection maps explicitly. Unsupported locales raise explicit localized configuration errors rather than silent Chinese fallback. | **EXECUTED_PASS** (0.091s) |
+| **VR-15** | Localization dictionary integrity | All 12 localization keys verified across `en`, `he`, and `zh-Hans` in `Localizable.xcstrings`. Hebrew string content validated for authentic characters (`\u{0590}`..`\u{05FF}`). | **EXECUTED_PASS** (0.005s) |
+| **VR-16** | Caller integration & dismissal contracts | Caller components (`ChatViewBottom`, `ChatViewComponents`, `ModelsViewComponents`) verify sheet/popover presentation, callbacks, and dismissal contracts. | **EXECUTED_PASS** (3.862s) |
+| **VR-17** | Memory leak / deinit verification | `VoiceInputView` and `SpeechRecognizer` deallocate completely upon view dismissal; 50 rapid cycles without retain cycles or resource leaks. | **EXECUTED_PASS** (0.043s) |
 | **VR-18** | Physical microphone & audio hardware acceptance | Real audio capture on physical iPad/iPhone hardware with signed entitlements and OS audio server. | **OWNER_DEVICE_QA_PENDING** |
 
 ---
@@ -120,4 +133,5 @@ In `SpeechRecognizer.cleanupOwnedResources()`, deactivating `AVAudioSession` ind
 
 - **Source & Unit Test Suite:** `SOURCE_READY`
 - **Runner Queue Resolution:** `RESOLVED_MACOS26_PLANNER`
+- **Xcode 27 Simulator Verification:** `XCODE27_VERIFIED_PASS` (17/17 XCTest methods executed with 0 failures)
 - **Physical Device Gate:** `OWNER_DEVICE_QA_PENDING`
