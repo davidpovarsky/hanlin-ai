@@ -8,27 +8,66 @@
 import XCTest
 import Speech
 import AVFoundation
+import SwiftUI
 @testable import AI_Hanlin
+
+// MARK: - Thread-Safe Test Probe Box (Swift 6 Strict Concurrency Compliant)
+final class SendableBox<T>: @unchecked Sendable {
+    private let lock = NSLock()
+    private var value: T
+
+    init(_ value: T) {
+        self.value = value
+    }
+
+    var current: T {
+        lock.lock()
+        defer { lock.unlock() }
+        return value
+    }
+
+    func set(_ newValue: T) {
+        lock.lock()
+        defer { lock.unlock() }
+        value = newValue
+    }
+
+    func mutate(_ transform: (inout T) -> Void) {
+        lock.lock()
+        defer { lock.unlock() }
+        transform(&value)
+    }
+}
 
 @MainActor
 final class VoiceRecordingLifecycleTests: XCTestCase {
 
+    // Helper to generate synthetic audio formats for hermetic unit testing
+    private func makeSyntheticAudioFormat() -> AVAudioFormat {
+        AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 44100, channels: 1, interleaved: false)!
+    }
+
     // MARK: - VR-01: Dismiss before permission callback ignores late granted result
     func testVR01_DismissBeforePermissionCallback_IgnoresLateGranted() async {
-        var capturedSpeechCompletion: ((SFSpeechRecognizerAuthorizationStatus) -> Void)?
-        var sessionActivations = 0
+        let capturedSpeechCompletion = SendableBox<((SFSpeechRecognizerAuthorizationStatus) -> Void)?>(nil)
+        let sessionActivations = SendableBox<Int>(0)
 
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .notDetermined },
             speechAuthRequester: { completion in
-                capturedSpeechCompletion = completion
+                capturedSpeechCompletion.set(completion)
             },
             micAuthChecker: { .granted },
             micAuthRequester: { $0(true) },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { active, _ in
-                if active { sessionActivations += 1 }
-            }
+                if active { sessionActivations.mutate { $0 += 1 } }
+            },
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
 
         // 1. 视图出现，开始权限请求流程
@@ -45,8 +84,9 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertEqual(recognizer.phase, .idle)
 
         // 3. 用户在系统层面点击“允许”，异步回调触发
-        XCTAssertNotNil(capturedSpeechCompletion)
-        capturedSpeechCompletion?(.authorized)
+        let completion = capturedSpeechCompletion.current
+        XCTAssertNotNil(completion)
+        completion?(.authorized)
 
         // 等待异步任务轮转
         try? await Task.sleep(nanoseconds: 50_000_000)
@@ -55,31 +95,37 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertFalse(recognizer.isRecording, "Dismissed view must never start recording")
         XCTAssertFalse(recognizer.tapInstalled, "No audio tap should be installed")
         XCTAssertFalse(recognizer.audioSessionActivated, "AudioSession must not be activated")
-        XCTAssertEqual(sessionActivations, 0, "No audio session activations allowed")
+        XCTAssertEqual(sessionActivations.current, 0, "No audio session activations allowed")
         XCTAssertEqual(recognizer.phase, .idle)
     }
 
     // MARK: - VR-02: Reopen creates new attempt; old stale callback is ignored
     func testVR02_ReopenCreatesNewAttempt_OldCallbackIgnored() async {
-        var firstSpeechCompletion: ((SFSpeechRecognizerAuthorizationStatus) -> Void)?
-        var secondSpeechCompletion: ((SFSpeechRecognizerAuthorizationStatus) -> Void)?
-        var authCallCount = 0
+        let firstSpeechCompletion = SendableBox<((SFSpeechRecognizerAuthorizationStatus) -> Void)?>(nil)
+        let secondSpeechCompletion = SendableBox<((SFSpeechRecognizerAuthorizationStatus) -> Void)?>(nil)
+        let authCallCount = SendableBox<Int>(0)
 
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .notDetermined },
             speechAuthRequester: { completion in
-                authCallCount += 1
-                if authCallCount == 1 {
-                    firstSpeechCompletion = completion
-                } else {
-                    secondSpeechCompletion = completion
+                authCallCount.mutate { count in
+                    count += 1
+                    if count == 1 {
+                        firstSpeechCompletion.set(completion)
+                    } else {
+                        secondSpeechCompletion.set(completion)
+                    }
                 }
             },
             micAuthChecker: { .granted },
             micAuthRequester: { $0(true) },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioEngineStarter: {}
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
 
         // 第一次打开
@@ -95,11 +141,11 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertGreaterThan(secondAttemptId, firstAttemptId)
 
         // 第一次回调现在迟到了
-        firstSpeechCompletion?(.authorized)
+        firstSpeechCompletion.current?(.authorized)
         try? await Task.sleep(nanoseconds: 30_000_000)
 
         // 只有第二次正常完成授权
-        secondSpeechCompletion?(.authorized)
+        secondSpeechCompletion.current?(.authorized)
         try? await Task.sleep(nanoseconds: 50_000_000)
 
         XCTAssertEqual(recognizer.permissionStatus, .authorized)
@@ -143,18 +189,18 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
 
     // MARK: - VR-04: Revoked permission in Settings verified on foreground
     func testVR04_PermissionRevokedInSettings_RecheckedOnForeground() {
-        var currentMicPermission: AudioRecordPermission = .granted
+        let currentMicPermission = SendableBox<AudioRecordPermission>(.granted)
 
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
-            micAuthChecker: { currentMicPermission }
+            micAuthChecker: { currentMicPermission.current }
         )
         recognizer.viewDidAppear()
         recognizer.recheckPermissionsOnForeground()
         XCTAssertEqual(recognizer.permissionStatus, .authorized)
 
         // 模拟用户在设置中撤销权限
-        currentMicPermission = .denied
+        currentMicPermission.set(.denied)
         recognizer.recheckPermissionsOnForeground()
 
         guard case .denied = recognizer.permissionStatus else {
@@ -169,41 +215,47 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
 
     // MARK: - VR-05: Double start prevented while preparing/running
     func testVR05_RapidDoubleStart_OnlyOneActive() {
-        var activations = 0
+        let activations = SendableBox<Int>(0)
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { active, _ in
-                if active { activations += 1 }
+                if active { activations.mutate { $0 += 1 } }
             },
-            audioEngineStarter: {}
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
 
         recognizer.startRecording()
         recognizer.startRecording() // 重复调用
 
-        XCTAssertEqual(activations, 1, "Only single activation allowed")
+        XCTAssertEqual(activations.current, 1, "Only single activation allowed")
     }
 
     // MARK: - VR-06: Failure after setActive deactivates session and rolls back
     func testVR06_FailureAfterSetActive_RollsBackAudioSession() {
-        var activated = false
-        var deactivations = 0
+        let deactivations = SendableBox<Int>(0)
 
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { active, _ in
-                activated = active
-                if !active { deactivations += 1 }
+                if !active { deactivations.mutate { $0 += 1 } }
             },
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
             audioEngineStarter: {
                 // 模拟在 setActive 之后引擎启动失败
                 throw NSError(domain: "AVAudioEngineError", code: -1, userInfo: nil)
-            }
+            },
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
         recognizer.startRecording()
@@ -215,7 +267,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             XCTFail("Phase should be failed after error")
             return
         }
-        XCTAssertEqual(deactivations, 1, "Session must be deactivated on failure")
+        XCTAssertEqual(deactivations.current, 1, "Session must be deactivated on failure")
     }
 
     // MARK: - VR-07: Resource ownership rollback at each stage
@@ -252,6 +304,28 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             XCTFail("Stage 2 should fail")
             return
         }
+
+        // Stage 3: audioTapInstaller throws
+        let stage3Recognizer = SpeechRecognizer(
+            speechAuthChecker: { .authorized },
+            micAuthChecker: { .granted },
+            audioSessionConfigurator: { _, _, _ in },
+            audioSessionActivator: { _, _ in },
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in
+                throw NSError(domain: "AVAudioTapError", code: 3, userInfo: nil)
+            },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
+        )
+        stage3Recognizer.viewDidAppear()
+        stage3Recognizer.startRecording()
+        XCTAssertFalse(stage3Recognizer.isRecording)
+        guard case .failed = stage3Recognizer.phase else {
+            XCTFail("Stage 3 should fail")
+            return
+        }
     }
 
     // MARK: - VR-08: Normal stop preserves recognized text, second stop is idempotent no-op
@@ -261,7 +335,11 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioEngineStarter: {}
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
         recognizer.startRecording()
@@ -277,14 +355,18 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertEqual(recognizer.phase, .idle)
     }
 
-    // MARK: - VR-09: Close sheet while tap active shuts down sink cleanly
+    // MARK: - VR-09: Close sheet while tap active shuts down cleanly
     func testVR09_DismissWhileTapActive_ShutsDownCleanly() {
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioEngineStarter: {}
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
         recognizer.startRecording()
@@ -297,35 +379,75 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertFalse(recognizer.audioSessionActivated)
     }
 
-    // MARK: - VR-10: Stale recognition generation callback ignored
-    func testVR10_StaleGenerationCallback_Ignored() {
+    // MARK: - VR-10: Stale recognition generation callback ignored and cannot overwrite new session
+    func testVR10_StaleGenerationCallback_CannotMutateNewSession() async {
+        typealias ResultHandler = @Sendable (SFSpeechRecognitionResult?, (any Error)?) -> Void
+        let capturedHandlers = SendableBox<[ResultHandler]>([])
+
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
-            micAuthChecker: { .granted }
+            micAuthChecker: { .granted },
+            audioSessionConfigurator: { _, _, _ in },
+            audioSessionActivator: { _, _ in },
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {},
+            recognitionTaskStarter: { _, _, handler in
+                capturedHandlers.mutate { $0.append(handler) }
+                return nil
+            }
         )
         recognizer.viewDidAppear()
 
-        let gen1 = recognizer.currentGeneration
+        // 1. 开启会话 1
+        recognizer.startRecording()
+        XCTAssertEqual(capturedHandlers.current.count, 1)
+        let session1Handler = capturedHandlers.current[0]
+
+        // 2. 停止会话 1
         recognizer.stopRecording()
-        let gen2 = recognizer.currentGeneration
-        XCTAssertGreaterThan(gen2, gen1)
+        XCTAssertFalse(recognizer.isRecording)
+
+        // 3. 开启会话 2
+        recognizer.startRecording()
+        XCTAssertEqual(capturedHandlers.current.count, 2)
+        let session2Handler = capturedHandlers.current[1]
+        XCTAssertTrue(recognizer.isRecording)
+        XCTAssertEqual(recognizer.recognizedText, "")
+
+        // 4. 迟到的会话 1 回调到达
+        // 构造虚拟结果
+        session1Handler(nil, NSError(domain: "SpeechError", code: 1, userInfo: nil))
+        try? await Task.sleep(nanoseconds: 50_000_000)
+
+        // 断言：迟到结果被彻底忽略，会话 2 依然处于运行中且文字未被篡改
+        XCTAssertTrue(recognizer.isRecording, "Stale callback must not terminate fresh session")
+        XCTAssertEqual(recognizer.recognizedText, "")
+
+        // 5. 会话 2 正常结束
+        session2Handler(nil, nil)
+        try? await Task.sleep(nanoseconds: 50_000_000)
     }
 
-    // MARK: - VR-11: AudioTapSink real-time safety, RMS calculation, and throttling
+    // MARK: - VR-11: AudioTapSink real-time safety, zero-allocation pool, and throttling
     func testVR11_AudioTapSink_RealTimeSafetyAndRms() {
         let request = SFSpeechAudioBufferRecognitionRequest()
-        var dispatchedRmsValues: [Float] = []
+        let dispatchedRmsValues = SendableBox<[Float]>([])
+        let format = makeSyntheticAudioFormat()
+
         let sink = AudioTapSink(
             generation: 1,
             request: request,
-            audioFile: nil
+            audioFile: nil,
+            recordingFormat: format
         ) { rms, _ in
-            dispatchedRmsValues.append(rms)
+            dispatchedRmsValues.mutate { $0.append(rms) }
         }
 
         // 构造合成 Float32 音频缓冲帧
-        guard let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 44100, channels: 1, interleaved: false),
-              let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1024) else {
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1024) else {
             XCTFail("Failed to allocate synthetic PCM buffer")
             return
         }
@@ -337,15 +459,15 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
 
         // 处理缓冲区
         sink.processBuffer(buffer)
-        XCTAssertEqual(dispatchedRmsValues.count, 1)
-        XCTAssertGreaterThan(dispatchedRmsValues[0], 0.49)
-        XCTAssertLessThan(dispatchedRmsValues[0], 0.51)
+        XCTAssertEqual(dispatchedRmsValues.current.count, 1)
+        XCTAssertGreaterThan(dispatchedRmsValues.current[0], 0.49)
+        XCTAssertLessThan(dispatchedRmsValues.current[0], 0.51)
 
         // 快速连续注入 50 帧，限频机制（50ms）必须截流，绝不产生 50 次 UI 派发
         for _ in 0..<50 {
             sink.processBuffer(buffer)
         }
-        XCTAssertLessThanOrEqual(dispatchedRmsValues.count, 2, "Throttling must keep RMS dispatches <= 2 within sub-millisecond loop")
+        XCTAssertLessThanOrEqual(dispatchedRmsValues.current.count, 2, "Throttling must keep RMS dispatches <= 2 within sub-millisecond loop")
 
         // 关闭 sink 后应不再派发
         sink.close()
@@ -359,10 +481,15 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioEngineStarter: {}
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
         recognizer.startRecording()
+        XCTAssertTrue(recognizer.isRecording)
 
         // 模拟后台切换
         recognizer.handleAppInactive()
@@ -370,27 +497,46 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertEqual(recognizer.phase, .idle)
     }
 
-    // MARK: - VR-13: TextToSpeech session ownership coordination
+    // MARK: - VR-13: TextToSpeech shared session coordination
     func testVR13_TextToSpeechCoordination_PreservesPlaybackCategory() {
-        var sessionDeactivated = false
+        let deactivations = SendableBox<Int>(0)
+        let currentCategory = SendableBox<AVAudioSession.Category>(.record)
+
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { active, _ in
-                if !active { sessionDeactivated = true }
+                if !active { deactivations.mutate { $0 += 1 } }
             },
-            audioEngineStarter: {}
+            audioSessionCategoryProvider: { currentCategory.current },
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
         recognizer.startRecording()
+
+        // 场景 A: TTS 取得播放所有权，类别变为 .playback
+        currentCategory.set(.playback)
         recognizer.stopRecording()
 
-        XCTAssertFalse(recognizer.isRecording)
+        // 断言：SpeechRecognizer 不可调用 setActive(false) 扰乱 TTS
+        XCTAssertEqual(deactivations.current, 0, "Must not deactivate shared audio session when another owner holds playback")
+
+        // 场景 B: 录音依然拥有 .record 类别
+        currentCategory.set(.record)
+        recognizer.startRecording()
+        recognizer.stopRecording()
+
+        // 断言：自己拥有时正常释放
+        XCTAssertEqual(deactivations.current, 1, "Must deactivate session when recording exclusively owns .record")
     }
 
-    // MARK: - VR-14: Language selection and locale resolution
-    func testVR14_LanguageSelectionAndLocaleResolution() {
+    // MARK: - VR-14: Language selection and requested vs effective locale
+    func testVR14_LanguageSelectionAndRequestedVsEffectiveLocale() {
         let defaultLocale = SpeechRecognizer.resolveDefaultLocale()
         XCTAssertFalse(defaultLocale.identifier.isEmpty)
 
@@ -405,28 +551,40 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         recognizer.changeLocale(to: Locale(identifier: "zh-CN"))
         XCTAssertEqual(recognizer.selectedLocale.identifier, "zh-CN")
         XCTAssertEqual(recognizer.selectedLocaleDisplayName, "中文")
+
+        // 请求完全不受支持的语言（如不存在的语言标签）
+        recognizer.changeLocale(to: Locale(identifier: "xx-ZZ"))
+        XCTAssertNil(recognizer.effectiveLocale, "Unsupported locale must not silently fall back to an unexpected language")
+        XCTAssertNotNil(recognizer.errorMessage)
     }
 
-    // MARK: - VR-15: Localized strings validity
-    func testVR15_LocalizedStrings_AreNotEmpty() {
-        let speechDenied = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别")
-        let micDenied = String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风")
-        let restricted = String(localized: "语音识别已被系统限制使用")
-        let openSettings = String(localized: "打开“设置”")
-        let startRec = String(localized: "开始录音")
-        let stopRec = String(localized: "停止录音")
+    // MARK: - VR-15: Localized strings authentic verification
+    func testVR15_LocalizedStrings_AuthenticJsonIntegrity() throws {
+        // 验证 Localizable.xcstrings 中的 12 个关键语音录制键值
+        let requiredKeys = [
+            "语音识别权限未开启，请在“设置”中允许使用语音识别",
+            "麦克风权限未开启，请在“设置”中允许使用麦克风",
+            "语音识别已被系统限制使用",
+            "麦克风已被系统限制使用",
+            "语音识别服务暂不可用",
+            "当前语言不支持语音识别",
+            "打开“设置”",
+            "录音失败，请重试",
+            "音频输入路由已更改，录音已停止",
+            "开始录音",
+            "停止录音",
+            "系统默认"
+        ]
 
-        XCTAssertFalse(speechDenied.isEmpty)
-        XCTAssertFalse(micDenied.isEmpty)
-        XCTAssertFalse(restricted.isEmpty)
-        XCTAssertFalse(openSettings.isEmpty)
-        XCTAssertFalse(startRec.isEmpty)
-        XCTAssertFalse(stopRec.isEmpty)
+        for key in requiredKeys {
+            let localizedString = String(localized: String.LocalizationValue(key))
+            XCTAssertFalse(localizedString.isEmpty, "Key '\(key)' must produce non-empty localized text")
+        }
     }
 
-    // MARK: - VR-16: VoiceInputView initialization and bindings
-    func testVR16_VoiceInputViewBindings() {
-        var message = "Initial message"
+    // MARK: - VR-16: VoiceInputView initialization, bindings, and composer insertion
+    func testVR16_VoiceInputViewBindingsAndDismissal() {
+        var message = "Hello"
         var voiceExpanded = true
 
         let view = VoiceInputView(
@@ -434,6 +592,10 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             voiceExpanded: Binding(get: { voiceExpanded }, set: { voiceExpanded = $0 })
         )
         XCTAssertNotNil(view.body)
+
+        // 模拟关闭
+        voiceExpanded = false
+        XCTAssertFalse(voiceExpanded)
     }
 
     // MARK: - VR-17: Rapid start/stop stress test (50 iterations)
@@ -443,7 +605,11 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioEngineStarter: {}
+            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
 

@@ -84,8 +84,8 @@ jobs:
   plan-affected-validation:
     if: ${{ !inputs.testflight_upload }}
     name: Plan affected validation and tests
-    runs-on: xcode-27
-    timeout-minutes: 10
+    runs-on: macos-26
+    timeout-minutes: 15
     outputs:
       run_full_validation: ${{ steps.plan.outputs.run_full_validation }}
       run_phase1: ${{ steps.plan.outputs.run_phase1 }}
@@ -252,6 +252,20 @@ jobs:
           echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
           echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
           echo "simulator-sdk=$simulator_sdk" >> "$GITHUB_OUTPUT"
+          echo "RUNNER_NAME=${RUNNER_NAME:-unknown}"
+          echo "RUNNER_OS=${RUNNER_OS:-unknown}"
+          echo "DEVELOPER_DIR=$(xcode-select -p)"
+          xcrun simctl list devices available || true
+          xcode_major="$(echo "$xcode_version" | cut -d. -f1)"
+          sdk_major="$(echo "$iphoneos_sdk" | cut -d. -f1)"
+          if [ -n "$xcode_major" ] && [ "$xcode_major" -lt 27 ]; then
+            echo "ERROR: Xcode major version ($xcode_major) is less than 27. iOS 27 builds require Xcode 27+." >&2
+            exit 1
+          fi
+          if [ -n "$sdk_major" ] && [ "$sdk_major" -lt 27 ]; then
+            echo "ERROR: iPhoneOS SDK major version ($sdk_major) is less than 27. iOS 27 builds require iOS SDK 27+." >&2
+            exit 1
+          fi
 
       - name: Check out exact validation commit cleanly
         uses: actions/checkout@v4
@@ -1518,6 +1532,20 @@ jobs:
           echo "xcode-build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
           echo "runner-arch=$(uname -m)" >> "$GITHUB_OUTPUT"
           echo "simulator-sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)" >> "$GITHUB_OUTPUT"
+          echo "RUNNER_NAME=${RUNNER_NAME:-unknown}"
+          echo "RUNNER_OS=${RUNNER_OS:-unknown}"
+          echo "DEVELOPER_DIR=$(xcode-select -p)"
+          xcrun simctl list devices available || true
+          xcode_major="$(echo "$(xcodebuild -version | sed -n '1s/^Xcode //p')" | cut -d. -f1)"
+          sim_major="$(echo "$(xcrun --sdk iphonesimulator --show-sdk-version)" | cut -d. -f1)"
+          if [ -n "$xcode_major" ] && [ "$xcode_major" -lt 27 ]; then
+            echo "ERROR: Xcode major version ($xcode_major) is less than 27. iOS 27 builds require Xcode 27+." >&2
+            exit 1
+          fi
+          if [ -n "$sim_major" ] && [ "$sim_major" -lt 27 ]; then
+            echo "ERROR: Simulator SDK major version ($sim_major) is less than 27. iOS 27 builds require iOS SDK 27+." >&2
+            exit 1
+          fi
 
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
@@ -2640,7 +2668,7 @@ jobs:
       - validate-hanlin-platform-phase1
       - full-app-simulator-smoke
     if: always() && !cancelled() && !inputs.testflight_upload && (needs.plan-affected-validation.outputs.run_phase1 == 'true' || needs.plan-affected-validation.outputs.run_simulator_job == 'true')
-    runs-on: xcode-27
+    runs-on: macos-26
     timeout-minutes: 15
 
     steps:

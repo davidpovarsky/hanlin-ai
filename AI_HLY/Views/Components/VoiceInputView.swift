@@ -382,6 +382,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     @Published var permissionStatus: PermissionStatus = .notDetermined
     @Published var phase: RecordingPhase = .idle
     @Published var selectedLocale: Locale
+    @Published var effectiveLocale: Locale?
     @Published var errorMessage: String? = nil
 
     // 测试与依赖注入闭包类型定义
@@ -391,7 +392,13 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     typealias MicAuthRequester = @Sendable (@escaping @Sendable (Bool) -> Void) -> Void
     typealias AudioSessionConfigurator = @Sendable (AVAudioSession.Category, AVAudioSession.Mode, AVAudioSession.CategoryOptions) throws -> Void
     typealias AudioSessionActivator = @Sendable (Bool, AVAudioSession.SetActiveOptions) throws -> Void
+    typealias AudioSessionCategoryProvider = @Sendable () -> AVAudioSession.Category
+    typealias AudioFormatProvider = @Sendable () -> AVAudioFormat?
+    typealias AudioTapInstaller = @Sendable (AVAudioFormat, @escaping @Sendable (AVAudioPCMBuffer) -> Void) throws -> Void
+    typealias AudioTapRemover = @Sendable () -> Void
     typealias AudioEngineStarter = @Sendable () throws -> Void
+    typealias AudioEngineStopper = @Sendable () -> Void
+    typealias RecognitionTaskStarter = @Sendable (SFSpeechRecognizer, SFSpeechAudioBufferRecognitionRequest, @escaping @Sendable (SFSpeechRecognitionResult?, (any Error)?) -> Void) -> SFSpeechRecognitionTask?
 
     private let speechAuthChecker: SpeechAuthChecker
     private let speechAuthRequester: SpeechAuthRequester
@@ -399,7 +406,13 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     private let micAuthRequester: MicAuthRequester
     private let audioSessionConfigurator: AudioSessionConfigurator
     private let audioSessionActivator: AudioSessionActivator
+    private let audioSessionCategoryProvider: AudioSessionCategoryProvider
+    private let audioFormatProvider: AudioFormatProvider
+    private let audioTapInstaller: AudioTapInstaller
+    private let audioTapRemover: AudioTapRemover
     private let audioEngineStarter: AudioEngineStarter?
+    private let audioEngineStopper: AudioEngineStopper
+    private let recognitionTaskStarter: RecognitionTaskStarter
 
     // 视图可见性与世代跟踪
     private(set) var isVisible: Bool = false
@@ -445,7 +458,15 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         audioSessionActivator: @escaping AudioSessionActivator = { active, opt in
             try AVAudioSession.sharedInstance().setActive(active, options: opt)
         },
-        audioEngineStarter: AudioEngineStarter? = nil
+        audioSessionCategoryProvider: @escaping AudioSessionCategoryProvider = {
+            AVAudioSession.sharedInstance().category
+        },
+        audioFormatProvider: AudioFormatProvider? = nil,
+        audioTapInstaller: AudioTapInstaller? = nil,
+        audioTapRemover: AudioTapRemover? = nil,
+        audioEngineStarter: AudioEngineStarter? = nil,
+        audioEngineStopper: AudioEngineStopper? = nil,
+        recognitionTaskStarter: RecognitionTaskStarter? = nil
     ) {
         let resolvedLocale = locale ?? SpeechRecognizer.resolveDefaultLocale()
         self.selectedLocale = resolvedLocale
@@ -455,12 +476,40 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         self.micAuthRequester = micAuthRequester
         self.audioSessionConfigurator = audioSessionConfigurator
         self.audioSessionActivator = audioSessionActivator
+        self.audioSessionCategoryProvider = audioSessionCategoryProvider
         self.audioEngineStarter = audioEngineStarter
+
+        let engine = self.audioEngine
+        self.audioFormatProvider = audioFormatProvider ?? { [weak engine] in
+            engine?.inputNode.outputFormat(forBus: 0)
+        }
+        self.audioTapInstaller = audioTapInstaller ?? { [weak engine] format, handler in
+            guard let inputNode = engine?.inputNode else { return }
+            inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { @Sendable buffer, _ in
+                handler(buffer)
+            }
+        }
+        self.audioTapRemover = audioTapRemover ?? { [weak engine] in
+            engine?.inputNode.removeTap(onBus: 0)
+        }
+        self.audioEngineStopper = audioEngineStopper ?? { [weak engine] in
+            engine?.stop()
+        }
+        self.recognitionTaskStarter = recognitionTaskStarter ?? { recognizer, request, handler in
+            recognizer.recognitionTask(with: request, resultHandler: handler)
+        }
 
         super.init()
 
-        self.speechRecognizer = resolveRecognizer(for: resolvedLocale)
-        self.speechRecognizer?.delegate = self
+        if let recognizer = resolveRecognizer(for: resolvedLocale) {
+            self.speechRecognizer = recognizer
+            self.effectiveLocale = recognizer.locale
+            recognizer.delegate = self
+        } else {
+            self.speechRecognizer = nil
+            self.effectiveLocale = nil
+            self.errorMessage = String(localized: "当前语言不支持语音识别")
+        }
 
         // 监听音频中断与硬件路由变更
         NotificationCenter.default.addObserver(
@@ -515,8 +564,10 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         errorMessage = nil
         if let recognizer = resolveRecognizer(for: newLocale) {
             speechRecognizer = recognizer
+            effectiveLocale = recognizer.locale
             recognizer.delegate = self
         } else {
+            effectiveLocale = nil
             let msg = String(localized: "当前语言不支持语音识别")
             errorMessage = msg
         }
@@ -524,10 +575,6 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
 
     private func resolveRecognizer(for locale: Locale) -> SFSpeechRecognizer? {
         if let r = SFSpeechRecognizer(locale: locale), r.isAvailable {
-            return r
-        }
-        let fallback = SpeechRecognizer.resolveDefaultLocale()
-        if fallback != locale, let r = SFSpeechRecognizer(locale: fallback), r.isAvailable {
             return r
         }
         return nil
@@ -709,13 +756,19 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         errorMessage = nil
 
         // 1. 语言与识别器校验
-        let recognizer = speechRecognizer ?? resolveRecognizer(for: selectedLocale)
-        guard let recognizer, recognizer.isAvailable else {
+        guard let recognizer = speechRecognizer ?? resolveRecognizer(for: selectedLocale) else {
+            let errorMsg = String(localized: "当前语言不支持语音识别")
+            rollbackPartialStart(attemptId: attemptId, reason: errorMsg)
+            return
+        }
+        guard recognizer.isAvailable else {
             let errorMsg = String(localized: "语音识别服务暂不可用")
             rollbackPartialStart(attemptId: attemptId, reason: errorMsg)
             return
         }
         self.speechRecognizer = recognizer
+        self.effectiveLocale = recognizer.locale
+        recognizer.delegate = self
 
         // 2. 配置与激活音频会话
         do {
@@ -728,9 +781,8 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         }
 
         // 3. 校验音频输入格式
-        let inputNode = audioEngine.inputNode
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        guard recordingFormat.sampleRate > 0 && recordingFormat.channelCount > 0 else {
+        guard let recordingFormat = audioFormatProvider(),
+              recordingFormat.sampleRate > 0 && recordingFormat.channelCount > 0 else {
             rollbackPartialStart(attemptId: attemptId, reason: "Invalid audio format")
             return
         }
@@ -759,7 +811,8 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         let sink = AudioTapSink(
             generation: generation,
             request: request,
-            audioFile: audioFile
+            audioFile: audioFile,
+            recordingFormat: recordingFormat
         ) { [weak self] (rms: Float, gen: Int) in
             Task { @MainActor [weak self] in
                 guard let self, self.isRecording, self.currentGeneration == gen else { return }
@@ -770,30 +823,41 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
 
         // 6. 安装实时音频 Tap
         if tapInstalled {
-            inputNode.removeTap(onBus: 0)
+            audioTapRemover()
             tapInstalled = false
         }
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { @Sendable buffer, _ in
-            sink.processBuffer(buffer)
-        }
-        tapInstalled = true
-
-        // 7. 启动音频引擎
-        audioEngine.prepare()
         do {
-            if let customStarter = audioEngineStarter {
-                try customStarter()
-            } else {
-                try audioEngine.start()
+            try audioTapInstaller(recordingFormat) { buffer in
+                sink.processBuffer(buffer)
             }
-            audioEngineRunning = true
+            tapInstalled = true
         } catch {
             rollbackPartialStart(attemptId: attemptId, reason: error.localizedDescription)
             return
         }
 
+        // 7. 启动音频引擎
+        if let customStarter = audioEngineStarter {
+            do {
+                try customStarter()
+                audioEngineRunning = true
+            } catch {
+                rollbackPartialStart(attemptId: attemptId, reason: error.localizedDescription)
+                return
+            }
+        } else {
+            audioEngine.prepare()
+            do {
+                try audioEngine.start()
+                audioEngineRunning = true
+            } catch {
+                rollbackPartialStart(attemptId: attemptId, reason: error.localizedDescription)
+                return
+            }
+        }
+
         // 8. 启动语音识别任务
-        recognitionTask = recognizer.recognitionTask(with: request) { [weak self] result, error in
+        let task = recognitionTaskStarter(recognizer, request) { [weak self] result, error in
             let text = result?.bestTranscription.formattedString
             let isFinal = result?.isFinal ?? false
             let hasError = error != nil
@@ -808,6 +872,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
                 }
             }
         }
+        self.recognitionTask = task
 
         isRecording = true
         phase = .running(attemptId: attemptId)
@@ -848,11 +913,11 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         audioSink = nil
 
         if tapInstalled {
-            audioEngine.inputNode.removeTap(onBus: 0)
+            audioTapRemover()
             tapInstalled = false
         }
         if audioEngineRunning || audioEngine.isRunning {
-            audioEngine.stop()
+            audioEngineStopper()
             audioEngineRunning = false
         }
 
@@ -866,7 +931,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
 
         if audioSessionActivated {
             audioSessionActivated = false
-            let currentCategory = AVAudioSession.sharedInstance().category
+            let currentCategory = audioSessionCategoryProvider()
             if currentCategory == .record {
                 do {
                     try audioSessionActivator(false, .notifyOthersOnDeactivation)
@@ -905,15 +970,15 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     }
 }
 
-// MARK: - AudioTapSink (Swift 6 实时音频回调安全隔离与非阻塞写入)
+// MARK: - AudioTapSink (Swift 6 实时音频回调安全隔离与非阻塞零分配写入)
 /// 专用于桥接 AVAudioEngine 实时音频回调与 SFSpeechAudioBufferRecognitionRequest 的线程安全接收器。
 /// 关键并发与实时性保证：
 /// 1. AVFoundation 在内部专用音频线程串行调用 tap 回调。
-/// 2. mutable 状态由轻量 NSLock 保护，仅持锁微秒级别执行 request.append。
-/// 3. 音频文件写入移至后台串行队列，带最大有界深度保护，避免阻塞实时音频线程或产生内存膨胀。
+/// 2. mutable 状态由轻量 NSLock 保护，仅持锁微秒级别执行 request.append 与预分配内存池借用。
+/// 3. 音频文件写入移至后台串行队列，带最大有界深度保护（16个预分配池化缓冲区），无堆分配（Zero-allocation），避免阻塞实时音频线程或产生内存膨胀。
 /// 4. RMS 计算为无锁、无堆分配（Zero-allocation），严格校验 Float32 格式及有限值。
 /// 5. UI 派发限制在 ~20Hz（50ms），最后派发时间戳在锁内安全同步，杜绝数据竞争。
-/// 6. close() 安全标记并排空队列，无死锁风险。
+/// 6. close() 安全标记并清理内存池，无死锁与主线程阻塞风险。
 internal final class AudioTapSink: @unchecked Sendable {
     private let generation: Int
     private let request: SFSpeechAudioBufferRecognitionRequest
@@ -925,29 +990,40 @@ internal final class AudioTapSink: @unchecked Sendable {
     private var lastRmsDispatchTime: UInt64 = 0
 
     private let fileWriterQueue = DispatchQueue(label: "org.hanlin.AudioFileWriter", qos: .utility)
-    private var pendingWrites: Int = 0
-    private let maxPendingWrites: Int = 16
+    private var bufferPool: [AVAudioPCMBuffer] = []
+    private var droppedWritesCount: Int = 0
+    private let maxPoolCapacity: Int = 16
 
     init(
         generation: Int,
         request: SFSpeechAudioBufferRecognitionRequest,
         audioFile: AVAudioFile?,
+        recordingFormat: AVAudioFormat? = nil,
         onRmsLevel: @escaping @Sendable (Float, Int) -> Void
     ) {
         self.generation = generation
         self.request = request
         self.audioFile = audioFile
         self.onRmsLevel = onRmsLevel
+
+        if audioFile != nil, let format = recordingFormat {
+            for _ in 0..<maxPoolCapacity {
+                if let buf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 2048) {
+                    self.bufferPool.append(buf)
+                }
+            }
+        }
     }
 
     func close() {
         lock.lock()
-        isClosed = true
-        lock.unlock()
-
-        fileWriterQueue.sync { [audioFile] in
-            _ = audioFile
+        guard !isClosed else {
+            lock.unlock()
+            return
         }
+        isClosed = true
+        bufferPool.removeAll()
+        lock.unlock()
     }
 
     func processBuffer(_ buffer: AVAudioPCMBuffer) {
@@ -960,14 +1036,21 @@ internal final class AudioTapSink: @unchecked Sendable {
         // 1. 写入识别请求（Apple 官方设计支持在 tap 回调中实时追加）
         request.append(buffer)
 
-        // 2. 异步将音频写入文件（不在实时音频线程中执行磁盘 I/O）
-        if let audioFile, pendingWrites < maxPendingWrites {
-            if let bufferCopy = buffer.copy() as? AVAudioPCMBuffer {
-                pendingWrites += 1
-                fileWriterQueue.async { [weak self, audioFile] in
-                    try? audioFile.write(from: bufferCopy)
-                    self?.decrementPendingWrites()
+        // 2. 预分配池化复制并异步将音频写入文件（在实时音频线程中零堆分配，不执行磁盘 I/O）
+        var pooledBuffer: AVAudioPCMBuffer? = nil
+        if audioFile != nil {
+            if let freeBuf = bufferPool.popLast() {
+                let frameCount = buffer.frameLength
+                let channelCount = Int(buffer.format.channelCount)
+                freeBuf.frameLength = frameCount
+                for ch in 0..<channelCount {
+                    if let src = buffer.floatChannelData?[ch], let dst = freeBuf.floatChannelData?[ch] {
+                        memcpy(dst, src, Int(frameCount) * MemoryLayout<Float>.size)
+                    }
                 }
+                pooledBuffer = freeBuf
+            } else {
+                droppedWritesCount += 1
             }
         }
 
@@ -979,6 +1062,14 @@ internal final class AudioTapSink: @unchecked Sendable {
             shouldDispatchRms = true
         }
         lock.unlock()
+
+        // 异步写入文件
+        if let audioFile, let writeBuf = pooledBuffer {
+            fileWriterQueue.async { [weak self, audioFile, writeBuf] in
+                try? audioFile.write(from: writeBuf)
+                self?.returnBufferToPool(writeBuf)
+            }
+        }
 
         guard shouldDispatchRms else { return }
 
@@ -1005,10 +1096,10 @@ internal final class AudioTapSink: @unchecked Sendable {
         }
     }
 
-    private func decrementPendingWrites() {
+    private func returnBufferToPool(_ buffer: AVAudioPCMBuffer) {
         lock.lock()
-        if pendingWrites > 0 {
-            pendingWrites -= 1
+        if bufferPool.count < maxPoolCapacity && !isClosed {
+            bufferPool.append(buffer)
         }
         lock.unlock()
     }
