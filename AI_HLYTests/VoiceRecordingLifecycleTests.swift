@@ -193,7 +193,14 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
 
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
-            micAuthChecker: { currentMicPermission.current }
+            micAuthChecker: { currentMicPermission.current },
+            audioSessionConfigurator: { _, _, _ in },
+            audioSessionActivator: { _, _ in },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
         recognizer.recheckPermissionsOnForeground()
@@ -248,6 +255,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             audioSessionActivator: { active, _ in
                 if !active { deactivations.mutate { $0 += 1 } }
             },
+            audioSessionCategoryProvider: { .record },
             audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
@@ -258,7 +266,6 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             audioEngineStopper: {}
         )
         recognizer.viewDidAppear()
-        recognizer.startRecording()
 
         // 断言：失败必须触发完全回滚，且释放音频会话
         XCTAssertFalse(recognizer.isRecording)

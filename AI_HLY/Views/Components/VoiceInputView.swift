@@ -606,6 +606,9 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
             permissionStatus = .authorized
             errorMessage = nil
         } else if speechStatus == .denied || micStatus == .denied {
+            if isRecording {
+                stopRecording()
+            }
             if speechStatus == .denied {
                 permissionStatus = .denied(String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别"))
             } else {
@@ -932,7 +935,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         if audioSessionActivated {
             audioSessionActivated = false
             let currentCategory = audioSessionCategoryProvider()
-            if currentCategory == .record {
+            if currentCategory != .playback {
                 do {
                     try audioSessionActivator(false, .notifyOthersOnDeactivation)
                 } catch {
