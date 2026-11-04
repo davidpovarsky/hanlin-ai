@@ -531,7 +531,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     }
 
     // MARK: - 语言解析与切换
-    static func resolveDefaultLocale() -> Locale {
+    nonisolated static func resolveDefaultLocale() -> Locale {
         let supported = SFSpeechRecognizer.supportedLocales()
         for preferred in Locale.preferredLanguages {
             let preferredLocale = Locale(identifier: preferred)
@@ -943,7 +943,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     }
 
     // MARK: - 系统权限适配
-    static func systemMicAuthChecker() -> AudioRecordPermission {
+    nonisolated static func systemMicAuthChecker() -> AudioRecordPermission {
         if #available(iOS 17.0, *) {
             switch AVAudioApplication.shared.recordPermission {
             case .granted: return .granted
@@ -961,7 +961,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         }
     }
 
-    static func systemMicAuthRequester(_ completion: @escaping @Sendable (Bool) -> Void) {
+    nonisolated static func systemMicAuthRequester(_ completion: @escaping @Sendable (Bool) -> Void) {
         if #available(iOS 17.0, *) {
             AVAudioApplication.requestRecordPermission(completionHandler: completion)
         } else {
