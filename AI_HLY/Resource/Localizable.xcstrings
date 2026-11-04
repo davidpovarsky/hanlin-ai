@@ -11933,6 +11933,102 @@
         "he" : { "stringUnit" : { "state" : "translated", "value" : "ניתן לבקש מהעוזר להתקין שרתים בצ'אט, או להגדירם בהגדרות להלן." } },
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "可通过对话让助手自动安装，或在下方进入设置添加。" } }
       }
+    },
+    "语音识别权限未开启，请在“设置”中允许使用语音识别" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speech recognition permission is not enabled. Please allow it in Settings." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הרשאת זיהוי דיבור אינה מופעלת. יש לאפשר אותה בהגדרות." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语音识别权限未开启，请在“设置”中允许使用语音识别" } }
+      }
+    },
+    "麦克风权限未开启，请在“设置”中允许使用麦克风" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Microphone permission is not enabled. Please allow it in Settings." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הרשאת מיקרופון אינה מופעלת. יש לאפשר אותה בהגדרות." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "麦克风权限未开启，请在“设置”中允许使用麦克风" } }
+      }
+    },
+    "语音识别已被系统限制使用" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speech recognition is restricted by the system." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "זיהוי דיבור מוגבל על ידי המערכת." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语音识别已被系统限制使用" } }
+      }
+    },
+    "麦克风已被系统限制使用" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Microphone is restricted by the system." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "המיקרופון מוגבל על ידי המערכת." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "麦克风已被系统限制使用" } }
+      }
+    },
+    "语音识别服务暂不可用" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speech recognition service is currently unavailable." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "שירות זיהוי דיבור אינו זמין כעת." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语音识别服务暂不可用" } }
+      }
+    },
+    "当前语言不支持语音识别" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Current language is not supported for speech recognition." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "השפה הנוכחית אינה נתמכת לזיהוי דיבור." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "当前语言不支持语音识别" } }
+      }
+    },
+    "打开“设置”" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Settings" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתח הגדרות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开“设置”" } }
+      }
+    },
+    "录音失败，请重试" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recording failed, please try again." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ההקלטה נכשלה, אנא נסה שוב." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "录音失败，请重试" } }
+      }
+    },
+    "音频输入路由已更改，录音已停止" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Audio route changed, recording stopped." } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "נתיב קלט השמע השתנה, ההקלטה הופסקה." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "音频输入路由已更改，录音已停止" } }
+      }
+    },
+    "开始录音" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start Recording" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "התחל הקלטה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始录音" } }
+      }
+    },
+    "停止录音" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop Recording" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "עצור הקלטה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "停止录音" } }
+      }
+    },
+    "系统默认" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "System Default" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ברירת מחדל של המערכת" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "系统默认" } }
+      }
     }
   },
   "version" : "1.0"

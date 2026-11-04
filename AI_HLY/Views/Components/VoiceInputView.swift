@@ -13,6 +13,7 @@ import Combine
 // MARK: - 语音输入界面
 struct VoiceInputView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
     @Binding var message: String
     @Binding var voiceExpanded: Bool
     @StateObject private var speechRecognizer = SpeechRecognizer()
@@ -46,23 +47,78 @@ struct VoiceInputView: View {
             }
             .padding(.horizontal)
 
+            // 语言选择与状态指示条
+            HStack {
+                Menu {
+                    Button(action: { speechRecognizer.changeLocale(to: SpeechRecognizer.resolveDefaultLocale()) }) {
+                        Text(String(localized: "系统默认"))
+                    }
+                    Button(action: { speechRecognizer.changeLocale(to: Locale(identifier: "he-IL")) }) {
+                        Text("עברית (ישראל)")
+                    }
+                    Button(action: { speechRecognizer.changeLocale(to: Locale(identifier: "en-US")) }) {
+                        Text("English (US)")
+                    }
+                    Button(action: { speechRecognizer.changeLocale(to: Locale(identifier: "zh-CN")) }) {
+                        Text("简体中文")
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "globe")
+                        Text(speechRecognizer.selectedLocaleDisplayName)
+                        Image(systemName: "chevron.up.chevron.down")
+                            .font(.caption2)
+                    }
+                    .font(.caption)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(Capsule().fill(Color(.systemGray5)))
+                    .foregroundColor(.primary)
+                }
+                .disabled(speechRecognizer.isRecording)
+
+                Spacer()
+
+                if let err = speechRecognizer.errorMessage {
+                    Text(err)
+                        .font(.caption)
+                        .foregroundColor(.orange)
+                        .lineLimit(1)
+                }
+            }
+            .padding(.horizontal)
+
             // 权限提示（若被拒绝或受限）
             if case .denied(let reason) = speechRecognizer.permissionStatus {
-                HStack(spacing: 6) {
+                HStack(spacing: 8) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
                     Text(reason)
                         .font(.caption)
                         .foregroundColor(.secondary)
+                    Spacer()
+                    Button(action: openSettings) {
+                        Text(String(localized: "打开“设置”"))
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundColor(.hlBluefont)
+                    }
                 }
                 .padding(.horizontal)
             } else if case .restricted = speechRecognizer.permissionStatus {
-                HStack(spacing: 6) {
+                HStack(spacing: 8) {
                     Image(systemName: "lock.shield.fill")
                         .foregroundColor(.secondary)
-                    Text("语音识别已被系统限制使用")
+                    Text(String(localized: "语音识别已被系统限制使用"))
                         .font(.caption)
                         .foregroundColor(.secondary)
+                    Spacer()
+                    Button(action: openSettings) {
+                        Text(String(localized: "打开“设置”"))
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundColor(.hlBluefont)
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -74,9 +130,10 @@ struct VoiceInputView: View {
                     if speechRecognizer.isRecording {
                         // 停止录音
                         speechRecognizer.stopRecording()
-                        message += speechRecognizer.recognizedText
+                        if !speechRecognizer.recognizedText.isEmpty {
+                            message += speechRecognizer.recognizedText
+                        }
                         if let url = speechRecognizer.recordedAudioURL {
-                            // 执行高级处理，例如上传服务器、语音情感分析等
                             print("录音文件存储在：\(url)")
                         }
                     } else {
@@ -100,11 +157,12 @@ struct VoiceInputView: View {
                     .padding(12)
                 }
                 .disabled(isOptimizing)
+                .accessibilityLabel(speechRecognizer.isRecording ? String(localized: "停止录音") : String(localized: "开始录音"))
 
                 Spacer()
 
                 if speechRecognizer.isRecording {
-                    // 使用新的柱状波形可视化
+                    // 柱状波形可视化
                     ScrollView(.horizontal) {
                         HStack(alignment: .center) {
                             WaveformBarsView(currentLevel: $speechRecognizer.audioLevel)
@@ -118,15 +176,15 @@ struct VoiceInputView: View {
                     }
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
                     .defaultScrollAnchor(.trailing)
+                    .accessibilityHidden(true)
                 }
 
                 Spacer()
 
                 if !speechRecognizer.isRecording {
-
                     Button(action: optimizeMessage) {
                         if isOptimizing {
-                            ProgressView() // 显示加载指示器
+                            ProgressView()
                                 .frame(width: 40, height: 40)
                                 .font(.system(size: 40))
                                 .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
@@ -150,10 +208,11 @@ struct VoiceInputView: View {
                         }
                     }
                     .disabled(isOptimizing || speechRecognizer.isRecording)
+                    .accessibilityLabel(String(localized: "优化提示词"))
                     .onChange(of: message) {
                         if optimized && (message != optimizedMessage) {
                             optimized = false
-                        } else if message == optimizedMessage , !message.isEmpty {
+                        } else if message == optimizedMessage, !message.isEmpty {
                             optimized = true
                         }
                     }
@@ -162,7 +221,12 @@ struct VoiceInputView: View {
                 // 插入
                 Button(action: {
                     isFeedBack.toggle()
-                    message = message
+                    if speechRecognizer.isRecording {
+                        speechRecognizer.stopRecording()
+                        if !speechRecognizer.recognizedText.isEmpty {
+                            message += speechRecognizer.recognizedText
+                        }
+                    }
                     voiceExpanded = false
                 }) {
                     Image(systemName: "checkmark.circle")
@@ -174,6 +238,7 @@ struct VoiceInputView: View {
                         .padding(12)
                 }
                 .disabled(isOptimizing || speechRecognizer.isRecording)
+                .accessibilityLabel(String(localized: "插入"))
             }
             .background(
                 BlurView(style: .systemUltraThinMaterial)
@@ -188,11 +253,26 @@ struct VoiceInputView: View {
         .padding(12)
         .background(Color(.systemGray6))
         .onAppear {
-            speechRecognizer.requestPermissionsAndStartIfAuthorized()
+            speechRecognizer.viewDidAppear()
         }
         .onDisappear {
-            speechRecognizer.stopRecording()
+            speechRecognizer.viewDidDisappear()
         }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                speechRecognizer.recheckPermissionsOnForeground()
+            } else {
+                speechRecognizer.handleAppInactive()
+            }
+        }
+    }
+
+    private func openSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString),
+              UIApplication.shared.canOpenURL(url) else {
+            return
+        }
+        UIApplication.shared.open(url)
     }
 
     // 文本优化
@@ -206,8 +286,8 @@ struct VoiceInputView: View {
                 optimized = false
             } else {
                 optimized = false
-                isOptimizing = true // 开始优化
-                original = message // 保留原句
+                isOptimizing = true
+                original = message
                 if !message.isEmpty {
                     do {
                         let optimizer = SystemOptimizer(context: modelContext)
@@ -215,11 +295,11 @@ struct VoiceInputView: View {
                         message = optimizedMessage
                         optimized = true
                     } catch {
-                        errorMessage = error.localizedDescription // 捕获错误信息
-                        showErrorAlert = true // 显示错误弹窗
+                        errorMessage = error.localizedDescription
+                        showErrorAlert = true
                     }
                 }
-                isOptimizing = false // 优化结束
+                isOptimizing = false
             }
         }
     }
@@ -265,8 +345,26 @@ struct WaveformBarsView: View {
     }
 }
 
+// MARK: - 录音与权限状态
+enum RecordingPhase: Equatable, Sendable {
+    case idle
+    case authorizing(attemptId: UInt64)
+    case preparing(attemptId: UInt64)
+    case running(attemptId: UInt64)
+    case stopping(attemptId: UInt64)
+    case failed(attemptId: UInt64, reason: String)
+}
+
+enum AudioRecordPermission: Equatable, Sendable {
+    case undetermined
+    case granted
+    case denied
+    case restricted
+}
+
 // MARK: - SpeechRecognizer 类
-/// 使用 Apple Speech 框架实现语音识别，同时通过 AVAudioEngine 获取音频信号的 RMS 值用于波形可视化
+/// 使用 Apple Speech 框架实现语音识别，同时通过 AVAudioEngine 获取音频信号的 RMS 值用于波形可视化。
+/// 严格遵守 Swift 6 并发模型，支持精确世代失效、全分支资源回滚、多语言自适应及路由中断安全处理。
 @MainActor
 final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     enum PermissionStatus: Equatable {
@@ -280,34 +378,101 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     @Published var recognizedText: String = ""
     @Published var isRecording: Bool = false
     @Published var audioLevel: Float = 0.0
-    // 保存录音片段的文件 URL
     @Published var recordedAudioURL: URL? = nil
     @Published var permissionStatus: PermissionStatus = .notDetermined
+    @Published var phase: RecordingPhase = .idle
+    @Published var selectedLocale: Locale
+    @Published var errorMessage: String? = nil
+
+    // 测试与依赖注入闭包类型定义
+    typealias SpeechAuthChecker = @Sendable () -> SFSpeechRecognizerAuthorizationStatus
+    typealias SpeechAuthRequester = @Sendable (@escaping @Sendable (SFSpeechRecognizerAuthorizationStatus) -> Void) -> Void
+    typealias MicAuthChecker = @Sendable () -> AudioRecordPermission
+    typealias MicAuthRequester = @Sendable (@escaping @Sendable (Bool) -> Void) -> Void
+    typealias AudioSessionConfigurator = @Sendable (AVAudioSession.Category, AVAudioSession.Mode, AVAudioSession.CategoryOptions) throws -> Void
+    typealias AudioSessionActivator = @Sendable (Bool, AVAudioSession.SetActiveOptions) throws -> Void
+    typealias AudioEngineStarter = @Sendable () throws -> Void
+
+    private let speechAuthChecker: SpeechAuthChecker
+    private let speechAuthRequester: SpeechAuthRequester
+    private let micAuthChecker: MicAuthChecker
+    private let micAuthRequester: MicAuthRequester
+    private let audioSessionConfigurator: AudioSessionConfigurator
+    private let audioSessionActivator: AudioSessionActivator
+    private let audioEngineStarter: AudioEngineStarter?
+
+    // 视图可见性与世代跟踪
+    private(set) var isVisible: Bool = false
+    private(set) var currentAttemptId: UInt64 = 0
+    private(set) var currentGeneration: Int = 0
+
+    // 资源归属标志（用于精确安全回滚）
+    private(set) var audioSessionActivated: Bool = false
+    private(set) var tapInstalled: Bool = false
+    private(set) var audioEngineRunning: Bool = false
 
     private let audioEngine = AVAudioEngine()
     private var speechRecognizer: SFSpeechRecognizer?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-
-    // 用于写入录音数据
     private var audioFile: AVAudioFile?
-
-    // 跟踪 Tap 状态与世代，避免重复安装或跨世代回调污染
-    private var tapInstalled: Bool = false
-    private var currentGeneration: Int = 0
+    private var tempRecordingURL: URL?
     private var audioSink: AudioTapSink?
 
-    override init() {
-        super.init()
-        // 使用中文语音识别
-        speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "zh-CN"))
-        speechRecognizer?.delegate = self
+    // 语言展示名
+    var selectedLocaleDisplayName: String {
+        let id = selectedLocale.identifier
+        if id.starts(with: "he") {
+            return "עברית"
+        } else if id.starts(with: "en") {
+            return "English"
+        } else if id.starts(with: "zh") {
+            return "中文"
+        } else {
+            return selectedLocale.localizedString(forIdentifier: id) ?? id
+        }
+    }
 
-        // 监听音频中断（来电、Siri、后台切换）
+    init(
+        locale: Locale? = nil,
+        speechAuthChecker: @escaping SpeechAuthChecker = { SFSpeechRecognizer.authorizationStatus() },
+        speechAuthRequester: @escaping SpeechAuthRequester = { SFSpeechRecognizer.requestAuthorization($0) },
+        micAuthChecker: @escaping MicAuthChecker = { SpeechRecognizer.systemMicAuthChecker() },
+        micAuthRequester: @escaping MicAuthRequester = { SpeechRecognizer.systemMicAuthRequester($0) },
+        audioSessionConfigurator: @escaping AudioSessionConfigurator = { cat, mode, opt in
+            try AVAudioSession.sharedInstance().setCategory(cat, mode: mode, options: opt)
+        },
+        audioSessionActivator: @escaping AudioSessionActivator = { active, opt in
+            try AVAudioSession.sharedInstance().setActive(active, options: opt)
+        },
+        audioEngineStarter: AudioEngineStarter? = nil
+    ) {
+        let resolvedLocale = locale ?? SpeechRecognizer.resolveDefaultLocale()
+        self.selectedLocale = resolvedLocale
+        self.speechAuthChecker = speechAuthChecker
+        self.speechAuthRequester = speechAuthRequester
+        self.micAuthChecker = micAuthChecker
+        self.micAuthRequester = micAuthRequester
+        self.audioSessionConfigurator = audioSessionConfigurator
+        self.audioSessionActivator = audioSessionActivator
+        self.audioEngineStarter = audioEngineStarter
+
+        super.init()
+
+        self.speechRecognizer = resolveRecognizer(for: resolvedLocale)
+        self.speechRecognizer?.delegate = self
+
+        // 监听音频中断与硬件路由变更
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleAudioInterruption(_:)),
             name: AVAudioSession.interruptionNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAudioRouteChange(_:)),
+            name: AVAudioSession.routeChangeNotification,
             object: nil
         )
     }
@@ -316,6 +481,93 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         NotificationCenter.default.removeObserver(self)
     }
 
+    // MARK: - 语言解析与切换
+    static func resolveDefaultLocale() -> Locale {
+        let supported = SFSpeechRecognizer.supportedLocales()
+        for preferred in Locale.preferredLanguages {
+            let preferredLocale = Locale(identifier: preferred)
+            if supported.contains(preferredLocale) {
+                return preferredLocale
+            }
+            if let langCode = preferredLocale.language.languageCode?.identifier {
+                if let match = supported.first(where: { $0.language.languageCode?.identifier == langCode }) {
+                    return match
+                }
+            }
+        }
+        if supported.contains(Locale(identifier: "he-IL")) {
+            return Locale(identifier: "he-IL")
+        }
+        if supported.contains(Locale(identifier: "en-US")) {
+            return Locale(identifier: "en-US")
+        }
+        if supported.contains(Locale(identifier: "zh-CN")) {
+            return Locale(identifier: "zh-CN")
+        }
+        return supported.first ?? Locale(identifier: "en-US")
+    }
+
+    func changeLocale(to newLocale: Locale) {
+        if isRecording {
+            stopRecording()
+        }
+        selectedLocale = newLocale
+        errorMessage = nil
+        if let recognizer = resolveRecognizer(for: newLocale) {
+            speechRecognizer = recognizer
+            recognizer.delegate = self
+        } else {
+            let msg = String(localized: "当前语言不支持语音识别")
+            errorMessage = msg
+        }
+    }
+
+    private func resolveRecognizer(for locale: Locale) -> SFSpeechRecognizer? {
+        if let r = SFSpeechRecognizer(locale: locale), r.isAvailable {
+            return r
+        }
+        let fallback = SpeechRecognizer.resolveDefaultLocale()
+        if fallback != locale, let r = SFSpeechRecognizer(locale: fallback), r.isAvailable {
+            return r
+        }
+        return nil
+    }
+
+    // MARK: - 视图与前后台生命周期
+    func viewDidAppear() {
+        isVisible = true
+        requestPermissionsAndStartIfAuthorized()
+    }
+
+    func viewDidDisappear() {
+        isVisible = false
+        currentAttemptId += 1
+        stopRecording()
+    }
+
+    func handleAppInactive() {
+        if isRecording || phase != .idle {
+            stopRecording()
+        }
+    }
+
+    func recheckPermissionsOnForeground() {
+        guard isVisible else { return }
+        let speechStatus = speechAuthChecker()
+        let micStatus = micAuthChecker()
+        if speechStatus == .authorized && micStatus == .granted {
+            permissionStatus = .authorized
+            errorMessage = nil
+        } else if speechStatus == .denied || micStatus == .denied {
+            if speechStatus == .denied {
+                permissionStatus = .denied(String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别"))
+            } else {
+                permissionStatus = .denied(String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风"))
+            }
+        }
+    }
+
+    // MARK: - 通知处理
     @objc private func handleAudioInterruption(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
@@ -324,156 +576,189 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         }
         if type == .began {
             Task { @MainActor [weak self] in
-                self?.stopRecording()
+                guard let self, self.isRecording else { return }
+                self.stopRecording()
             }
         }
     }
 
-    /// 统一状态化权限检查并在授权后自动开启录音
-    func requestPermissionsAndStartIfAuthorized() {
-        guard permissionStatus != .requesting else { return }
-
-        if permissionStatus == .authorized {
-            startRecording()
+    @objc private func handleAudioRouteChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+              let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
             return
         }
+        switch reason {
+        case .oldDeviceUnavailable, .categoryChange:
+            Task { @MainActor [weak self] in
+                guard let self, self.isRecording else { return }
+                self.stopRecording()
+                self.errorMessage = String(localized: "音频输入路由已更改，录音已停止")
+            }
+        default:
+            break
+        }
+    }
 
+    // MARK: - 权限请求
+    func requestPermissionsAndStartIfAuthorized() {
+        guard isVisible else { return }
+        if isRecording { return }
+        if case .preparing = phase { return }
+        if case .running = phase { return }
+
+        currentAttemptId += 1
+        let attemptId = currentAttemptId
+        phase = .authorizing(attemptId: attemptId)
         permissionStatus = .requesting
+        errorMessage = nil
 
-        let speechStatus = SFSpeechRecognizer.authorizationStatus()
+        let speechStatus = speechAuthChecker()
         switch speechStatus {
         case .authorized:
-            checkMicrophonePermission(autoStart: true)
+            checkMicrophonePermission(attemptId: attemptId)
         case .notDetermined:
-            SFSpeechRecognizer.requestAuthorization { [weak self] status in
+            speechAuthRequester { [weak self] status in
                 Task { @MainActor [weak self] in
-                    guard let self else { return }
+                    guard let self, self.isVisible, self.currentAttemptId == attemptId, case .authorizing = self.phase else {
+                        return
+                    }
                     if status == .authorized {
-                        self.checkMicrophonePermission(autoStart: true)
+                        self.checkMicrophonePermission(attemptId: attemptId)
                     } else if status == .restricted {
                         self.permissionStatus = .restricted
+                        self.phase = .failed(attemptId: attemptId, reason: String(localized: "语音识别已被系统限制使用"))
                     } else {
-                        self.permissionStatus = .denied("语音识别权限未开启，请在“设置”中允许使用语音识别")
+                        let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别")
+                        self.permissionStatus = .denied(reason)
+                        self.phase = .failed(attemptId: attemptId, reason: reason)
                     }
                 }
             }
         case .denied:
-            permissionStatus = .denied("语音识别权限未开启，请在“设置”中允许使用语音识别")
+            let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别")
+            permissionStatus = .denied(reason)
+            phase = .failed(attemptId: attemptId, reason: reason)
         case .restricted:
             permissionStatus = .restricted
+            phase = .failed(attemptId: attemptId, reason: String(localized: "语音识别已被系统限制使用"))
         @unknown default:
-            permissionStatus = .denied("语音识别状态未知")
+            let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别")
+            permissionStatus = .denied(reason)
+            phase = .failed(attemptId: attemptId, reason: reason)
         }
     }
 
-    private func checkMicrophonePermission(autoStart: Bool) {
-        if #available(iOS 17.0, *) {
-            let recordPermission = AVAudioApplication.shared.recordPermission
-            switch recordPermission {
-            case .granted:
-                permissionStatus = .authorized
-                if autoStart { startRecording() }
-            case .undetermined:
-                AVAudioApplication.requestRecordPermission { [weak self] granted in
-                    Task { @MainActor [weak self] in
-                        guard let self else { return }
-                        if granted {
-                            self.permissionStatus = .authorized
-                            if autoStart { self.startRecording() }
-                        } else {
-                            self.permissionStatus = .denied("麦克风权限未开启，请在“设置”中允许使用麦克风")
-                        }
+    private func checkMicrophonePermission(attemptId: UInt64) {
+        guard isVisible, currentAttemptId == attemptId, case .authorizing = phase else { return }
+        let micStatus = micAuthChecker()
+        switch micStatus {
+        case .granted:
+            permissionStatus = .authorized
+            startRecordingSession(attemptId: attemptId)
+        case .undetermined:
+            micAuthRequester { [weak self] granted in
+                Task { @MainActor [weak self] in
+                    guard let self, self.isVisible, self.currentAttemptId == attemptId, case .authorizing = self.phase else {
+                        return
+                    }
+                    if granted {
+                        self.permissionStatus = .authorized
+                        self.startRecordingSession(attemptId: attemptId)
+                    } else {
+                        let reason = String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风")
+                        self.permissionStatus = .denied(reason)
+                        self.phase = .failed(attemptId: attemptId, reason: reason)
                     }
                 }
-            case .denied:
-                permissionStatus = .denied("麦克风权限未开启，请在“设置”中允许使用麦克风")
-            @unknown default:
-                permissionStatus = .denied("麦克风状态未知")
             }
-        } else {
-            let session = AVAudioSession.sharedInstance()
-            switch session.recordPermission {
-            case .granted:
-                permissionStatus = .authorized
-                if autoStart { startRecording() }
-            case .undetermined:
-                session.requestRecordPermission { [weak self] granted in
-                    Task { @MainActor [weak self] in
-                        guard let self else { return }
-                        if granted {
-                            self.permissionStatus = .authorized
-                            if autoStart { self.startRecording() }
-                        } else {
-                            self.permissionStatus = .denied("麦克风权限未开启，请在“设置”中允许使用麦克风")
-                        }
-                    }
-                }
-            case .denied:
-                permissionStatus = .denied("麦克风权限未开启，请在“设置”中允许使用麦克风")
-            @unknown default:
-                permissionStatus = .denied("麦克风状态未知")
-            }
+        case .denied:
+            let reason = String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风")
+            permissionStatus = .denied(reason)
+            phase = .failed(attemptId: attemptId, reason: reason)
+        case .restricted:
+            permissionStatus = .restricted
+            phase = .failed(attemptId: attemptId, reason: String(localized: "麦克风已被系统限制使用"))
         }
     }
 
-    /// 开始录音和语音识别
+    // MARK: - 录音控制
     func startRecording() {
-        if isRecording || tapInstalled { return }
+        guard isVisible else { return }
+        if isRecording || tapInstalled || audioEngineRunning { return }
         guard permissionStatus == .authorized else {
             requestPermissionsAndStartIfAuthorized()
             return
         }
 
+        currentAttemptId += 1
+        let attemptId = currentAttemptId
+        startRecordingSession(attemptId: attemptId)
+    }
+
+    private func startRecordingSession(attemptId: UInt64) {
+        guard isVisible, currentAttemptId == attemptId else { return }
+        guard !isRecording && !tapInstalled && !audioEngineRunning else { return }
+
+        phase = .preparing(attemptId: attemptId)
+        currentGeneration += 1
+        let generation = currentGeneration
+
         recognizedText = ""
         audioLevel = 0.0
+        errorMessage = nil
 
-        let generation = currentGeneration + 1
-        currentGeneration = generation
+        // 1. 语言与识别器校验
+        let recognizer = speechRecognizer ?? resolveRecognizer(for: selectedLocale)
+        guard let recognizer, recognizer.isAvailable else {
+            let errorMsg = String(localized: "语音识别服务暂不可用")
+            rollbackPartialStart(attemptId: attemptId, reason: errorMsg)
+            return
+        }
+        self.speechRecognizer = recognizer
 
-        // 配置音频会话
-        let audioSession = AVAudioSession.sharedInstance()
+        // 2. 配置与激活音频会话
         do {
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+            try audioSessionConfigurator(.record, .measurement, .duckOthers)
+            try audioSessionActivator(true, .notifyOthersOnDeactivation)
+            audioSessionActivated = true
         } catch {
-            print("设置音频会话失败：\(error.localizedDescription)")
-            stopRecording()
+            rollbackPartialStart(attemptId: attemptId, reason: error.localizedDescription)
             return
         }
 
-        // 检查输入节点格式
+        // 3. 校验音频输入格式
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         guard recordingFormat.sampleRate > 0 && recordingFormat.channelCount > 0 else {
-            print("无效的输入音频格式: sampleRate=\(recordingFormat.sampleRate), channels=\(recordingFormat.channelCount)")
-            stopRecording()
+            rollbackPartialStart(attemptId: attemptId, reason: "Invalid audio format")
             return
         }
 
-        // 创建录音文件，匹配输入格式
+        // 4. 创建录音文件（可选，文件不可用时不阻断语音转文字）
         let tempDir = FileManager.default.temporaryDirectory
         let fileName = "recording-\(UUID().uuidString).caf"
         let fileURL = tempDir.appendingPathComponent(fileName)
-        recordedAudioURL = fileURL
-
         var audioFile: AVAudioFile? = nil
         do {
             audioFile = try AVAudioFile(forWriting: fileURL, settings: recordingFormat.settings)
+            self.tempRecordingURL = fileURL
+            self.recordedAudioURL = fileURL
         } catch {
-            print("无法创建录音文件：\(error.localizedDescription)")
+            self.tempRecordingURL = nil
+            self.recordedAudioURL = nil
             audioFile = nil
         }
         self.audioFile = audioFile
 
-        // 创建识别请求
-        let recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        self.recognitionRequest = recognitionRequest
-        recognitionRequest.shouldReportPartialResults = true
+        // 5. 创建识别请求与 AudioTapSink
+        let request = SFSpeechAudioBufferRecognitionRequest()
+        request.shouldReportPartialResults = true
+        self.recognitionRequest = request
 
-        // 构造音频回调 Sink（线程安全、@Sendable、限频 UI 派发）
         let sink = AudioTapSink(
             generation: generation,
-            request: recognitionRequest,
+            request: request,
             audioFile: audioFile
         ) { [weak self] (rms: Float, gen: Int) in
             Task { @MainActor [weak self] in
@@ -483,26 +768,32 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         }
         self.audioSink = sink
 
-        // AVAudioEngine 的 tap 回调运行在其私有实时音频队列，不运行在 MainActor。
-        // 使用 @Sendable 闭包避免 Swift 6 继承 MainActor 导致运行时 SIGTRAP 断言崩溃。
+        // 6. 安装实时音频 Tap
+        if tapInstalled {
+            inputNode.removeTap(onBus: 0)
+            tapInstalled = false
+        }
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { @Sendable buffer, _ in
             sink.processBuffer(buffer)
         }
         tapInstalled = true
 
-        // 启动音频引擎
+        // 7. 启动音频引擎
         audioEngine.prepare()
         do {
-            try audioEngine.start()
-            isRecording = true
+            if let customStarter = audioEngineStarter {
+                try customStarter()
+            } else {
+                try audioEngine.start()
+            }
+            audioEngineRunning = true
         } catch {
-            print("audioEngine 启动失败：\(error.localizedDescription)")
-            stopRecording()
+            rollbackPartialStart(attemptId: attemptId, reason: error.localizedDescription)
             return
         }
 
-        // 开始语音识别任务
-        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+        // 8. 启动语音识别任务
+        recognitionTask = recognizer.recognitionTask(with: request) { [weak self] result, error in
             let text = result?.bestTranscription.formattedString
             let isFinal = result?.isFinal ?? false
             let hasError = error != nil
@@ -517,57 +808,113 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
                 }
             }
         }
+
+        isRecording = true
+        phase = .running(attemptId: attemptId)
     }
 
-    /// 停止录音和语音识别（幂等安全）
-    func stopRecording() {
-        if !isRecording && !tapInstalled && recognitionTask == nil { return }
+    private func rollbackPartialStart(attemptId: UInt64, reason: String) {
+        cleanupOwnedResources()
+        phase = .failed(attemptId: attemptId, reason: reason)
+        errorMessage = reason
+        isRecording = false
+        audioLevel = 0.0
+        if let tempURL = tempRecordingURL {
+            try? FileManager.default.removeItem(at: tempURL)
+            tempRecordingURL = nil
+            recordedAudioURL = nil
+        }
+    }
 
-        // 递增世代，废弃旧异步回调
+    /// 停止录音和语音识别（幂等安全，不丢失已有识别文字）
+    func stopRecording() {
+        currentAttemptId += 1
+        cleanupOwnedResources()
+        isRecording = false
+        audioLevel = 0.0
+        if case .running = phase {
+            phase = .idle
+        } else if case .authorizing = phase {
+            phase = .idle
+        } else if case .preparing = phase {
+            phase = .idle
+        }
+    }
+
+    private func cleanupOwnedResources() {
         currentGeneration += 1
 
-        // 关闭 Sink，停止写入音频数据
         audioSink?.close()
         audioSink = nil
 
-        // 移除 tap 并停止引擎
         if tapInstalled {
             audioEngine.inputNode.removeTap(onBus: 0)
             tapInstalled = false
         }
-        if audioEngine.isRunning {
+        if audioEngineRunning || audioEngine.isRunning {
             audioEngine.stop()
+            audioEngineRunning = false
         }
 
-        // 结束请求和任务
         recognitionRequest?.endAudio()
-        recognitionTask?.cancel()
-
         recognitionRequest = nil
+
+        recognitionTask?.cancel()
         recognitionTask = nil
+
         audioFile = nil
 
-        isRecording = false
-        audioLevel = 0.0
+        if audioSessionActivated {
+            audioSessionActivated = false
+            let currentCategory = AVAudioSession.sharedInstance().category
+            if currentCategory == .record {
+                do {
+                    try audioSessionActivator(false, .notifyOthersOnDeactivation)
+                } catch {
+                    // Non-fatal
+                }
+            }
+        }
+    }
 
-        // 释放音频会话，消除状态栏麦克风指示器
-        do {
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        } catch {
-            // Non-fatal
+    // MARK: - 系统权限适配
+    static func systemMicAuthChecker() -> AudioRecordPermission {
+        if #available(iOS 17.0, *) {
+            switch AVAudioApplication.shared.recordPermission {
+            case .granted: return .granted
+            case .undetermined: return .undetermined
+            case .denied: return .denied
+            @unknown default: return .denied
+            }
+        } else {
+            switch AVAudioSession.sharedInstance().recordPermission {
+            case .granted: return .granted
+            case .undetermined: return .undetermined
+            case .denied: return .denied
+            @unknown default: return .denied
+            }
+        }
+    }
+
+    static func systemMicAuthRequester(_ completion: @escaping @Sendable (Bool) -> Void) {
+        if #available(iOS 17.0, *) {
+            AVAudioApplication.requestRecordPermission(completionHandler: completion)
+        } else {
+            AVAudioSession.sharedInstance().requestRecordPermission(completion)
         }
     }
 }
 
-// MARK: - AudioTapSink (Swift 6 实时音频回调安全隔离)
+// MARK: - AudioTapSink (Swift 6 实时音频回调安全隔离与非阻塞写入)
 /// 专用于桥接 AVAudioEngine 实时音频回调与 SFSpeechAudioBufferRecognitionRequest 的线程安全接收器。
-/// 关键并发保证：
+/// 关键并发与实时性保证：
 /// 1. AVFoundation 在内部专用音频线程串行调用 tap 回调。
-/// 2. mutable 状态（isClosed, audioFile, request）由锁保护。
-/// 3. RMS 计算为无锁、无堆分配（Zero-allocation）。
-/// 4. UI 派发限制在 ~20Hz（50ms），防止音频线程产生大量并发 Task 饱和 MainActor。
-/// 5. close() 调用后，所有后续音频数据立即丢弃。
-private final class AudioTapSink: @unchecked Sendable {
+/// 2. mutable 状态由轻量 NSLock 保护，仅持锁微秒级别执行 request.append。
+/// 3. 音频文件写入移至后台串行队列，带最大有界深度保护，避免阻塞实时音频线程或产生内存膨胀。
+/// 4. RMS 计算为无锁、无堆分配（Zero-allocation），严格校验 Float32 格式及有限值。
+/// 5. UI 派发限制在 ~20Hz（50ms），最后派发时间戳在锁内安全同步，杜绝数据竞争。
+/// 6. close() 安全标记并排空队列，无死锁风险。
+internal final class AudioTapSink: @unchecked Sendable {
     private let generation: Int
     private let request: SFSpeechAudioBufferRecognitionRequest
     private let audioFile: AVAudioFile?
@@ -576,6 +923,10 @@ private final class AudioTapSink: @unchecked Sendable {
     private let lock = NSLock()
     private var isClosed = false
     private var lastRmsDispatchTime: UInt64 = 0
+
+    private let fileWriterQueue = DispatchQueue(label: "org.hanlin.AudioFileWriter", qos: .utility)
+    private var pendingWrites: Int = 0
+    private let maxPendingWrites: Int = 16
 
     init(
         generation: Int,
@@ -593,6 +944,10 @@ private final class AudioTapSink: @unchecked Sendable {
         lock.lock()
         isClosed = true
         lock.unlock()
+
+        fileWriterQueue.sync { [audioFile] in
+            _ = audioFile
+        }
     }
 
     func processBuffer(_ buffer: AVAudioPCMBuffer) {
@@ -602,35 +957,59 @@ private final class AudioTapSink: @unchecked Sendable {
             return
         }
 
-        // 1. 将音频数据写入识别请求
+        // 1. 写入识别请求（Apple 官方设计支持在 tap 回调中实时追加）
         request.append(buffer)
 
-        // 2. 写入录音文件（忽略单帧写入异常，避免阻塞音频线程）
-        if let audioFile {
-            do {
-                try audioFile.write(from: buffer)
-            } catch {
-                // 忽略非致命写入错误
+        // 2. 异步将音频写入文件（不在实时音频线程中执行磁盘 I/O）
+        if let audioFile, pendingWrites < maxPendingWrites {
+            if let bufferCopy = buffer.copy() as? AVAudioPCMBuffer {
+                pendingWrites += 1
+                fileWriterQueue.async { [weak self, audioFile] in
+                    try? audioFile.write(from: bufferCopy)
+                    self?.decrementPendingWrites()
+                }
             }
+        }
+
+        // 3. 限频派发检查（在锁内同步时间戳，消除多线程数据竞争）
+        let now = DispatchTime.now().uptimeNanoseconds
+        var shouldDispatchRms = false
+        if now - lastRmsDispatchTime >= 50_000_000 { // 50ms = 20Hz
+            lastRmsDispatchTime = now
+            shouldDispatchRms = true
         }
         lock.unlock()
 
-        // 3. 计算 RMS 振幅（直接指针遍历，无数组拷贝与堆分配）
+        guard shouldDispatchRms else { return }
+
+        // 4. 计算 RMS 振幅（严格 Float32 格式与通道数据校验，Zero-allocation）
+        guard buffer.format.commonFormat == .pcmFormatFloat32,
+              let channelData = buffer.floatChannelData else {
+            return
+        }
         let frameCount = Int(buffer.frameLength)
-        guard frameCount > 0, let channelData = buffer.floatChannelData?[0] else { return }
+        let channelCount = Int(buffer.format.channelCount)
+        guard frameCount > 0, channelCount > 0 else { return }
 
         var sumOfSquares: Float = 0.0
+        let ptr = channelData[0]
         for index in 0..<frameCount {
-            let sample = channelData[index]
-            sumOfSquares += sample * sample
+            let sample = ptr[index]
+            if !sample.isNaN && !sample.isInfinite {
+                sumOfSquares += sample * sample
+            }
         }
         let rms = sqrt(sumOfSquares / Float(frameCount))
-
-        // 4. 限频派发 UI 波形电平（至多 20Hz / 50ms 一次）
-        let now = DispatchTime.now().uptimeNanoseconds
-        if now - lastRmsDispatchTime >= 50_000_000 {
-            lastRmsDispatchTime = now
+        if !rms.isNaN && !rms.isInfinite {
             onRmsLevel(rms, generation)
         }
+    }
+
+    private func decrementPendingWrites() {
+        lock.lock()
+        if pendingWrites > 0 {
+            pendingWrites -= 1
+        }
+        lock.unlock()
     }
 }
