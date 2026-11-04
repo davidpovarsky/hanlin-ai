@@ -29,6 +29,8 @@
   - Mapped `VoiceRecordingLifecycleTests.swift` in `Scripts/CI/affected-validation-map.json` and attached it to `app_ui.unit_suites`.
 - **Pass 6 Swift 6 Actor Isolation Remediation Commit:** `0e4156c5847fa27f4da7e7b6d194cf2123d2e67e`  
   - Marked `systemMicAuthChecker()`, `systemMicAuthRequester(_:)`, and `resolveDefaultLocale()` as `nonisolated static func` in `SpeechRecognizer`, resolving compiler errors `[#ActorIsolatedCall]` when evaluating default closure arguments in caller compilation units (`VoiceInputView`, `ChatViewBottom`).
+- **Pass 6 Test Concurrency & Non-Sendable Capture Remediation Commit:** `b8341142b93ff064cb89a3ca4ba0e0dcdaec1c21`  
+  - Marked `makeSyntheticAudioFormat()` as `nonisolated static func` in `VoiceRecordingLifecycleTests`, eliminating all captures of `self` (an `XCTestCase` instance) inside `@Sendable` test closures (`[#SendableClosureCaptures]` and `[#ActorIsolatedCall]`).
 
 ---
 
