@@ -25,6 +25,10 @@
   - Introduced hardware-decoupled test seams in `SpeechRecognizer` (format provider, tap installer/remover, engine starter/stopper, session category provider, recognition task starter).
   - Hardened `AudioTapSink` with a bounded pre-allocated pool (16 buffers) for 100% zero-allocation on real-time audio thread.
   - Strengthened tests VR-01 through VR-17 with authentic assertions (stale attempt rejection, real TTS coordination, locale fallback validation, Hebrew localization checks).
+- **Pass 6 Router Mapping Commit:** `4fddfbac1809bf35a4d4ff46b62dd0434ff44ee9`  
+  - Mapped `VoiceRecordingLifecycleTests.swift` in `Scripts/CI/affected-validation-map.json` and attached it to `app_ui.unit_suites`.
+- **Pass 6 Swift 6 Actor Isolation Remediation Commit:** `0e4156c5847fa27f4da7e7b6d194cf2123d2e67e`  
+  - Marked `systemMicAuthChecker()`, `systemMicAuthRequester(_:)`, and `resolveDefaultLocale()` as `nonisolated static func` in `SpeechRecognizer`, resolving compiler errors `[#ActorIsolatedCall]` when evaluating default closure arguments in caller compilation units (`VoiceInputView`, `ChatViewBottom`).
 
 ---
 
