@@ -31,6 +31,9 @@
   - Marked `systemMicAuthChecker()`, `systemMicAuthRequester(_:)`, and `resolveDefaultLocale()` as `nonisolated static func` in `SpeechRecognizer`, resolving compiler errors `[#ActorIsolatedCall]` when evaluating default closure arguments in caller compilation units (`VoiceInputView`, `ChatViewBottom`).
 - **Pass 6 Test Concurrency & Non-Sendable Capture Remediation Commit:** `b8341142b93ff064cb89a3ca4ba0e0dcdaec1c21`  
   - Marked `makeSyntheticAudioFormat()` as `nonisolated static func` in `VoiceRecordingLifecycleTests`, eliminating all captures of `self` (an `XCTestCase` instance) inside `@Sendable` test closures (`[#SendableClosureCaptures]` and `[#ActorIsolatedCall]`).
+- **Pass 6 Test Seams & Session Rollback Alignment Commit:** `7127b12db59e992167fc7f573752e50cf60c1825`  
+  - In `testVR04`: provided hermetic seams preventing AVFoundation simulator hardware crash on `viewDidAppear()`, and added `stopRecording()` on settings revocation.
+  - In `testVR06`: aligned deactivation contract with `audioSessionCategoryProvider: { .record }` and `currentCategory != .playback`, eliminating redundant start calls.
 
 ---
 
