@@ -43,7 +43,7 @@ final class SendableBox<T>: @unchecked Sendable {
 final class VoiceRecordingLifecycleTests: XCTestCase {
 
     // Helper to generate synthetic audio formats for hermetic unit testing
-    private func makeSyntheticAudioFormat() -> AVAudioFormat {
+    private nonisolated static func makeSyntheticAudioFormat() -> AVAudioFormat {
         AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 44100, channels: 1, interleaved: false)!
     }
 
@@ -63,7 +63,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             audioSessionActivator: { active, _ in
                 if active { sessionActivations.mutate { $0 += 1 } }
             },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -121,7 +121,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthRequester: { $0(true) },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -223,7 +223,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             audioSessionActivator: { active, _ in
                 if active { activations.mutate { $0 += 1 } }
             },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -248,7 +248,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             audioSessionActivator: { active, _ in
                 if !active { deactivations.mutate { $0 += 1 } }
             },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {
@@ -311,7 +311,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in
                 throw NSError(domain: "AVAudioTapError", code: 3, userInfo: nil)
             },
@@ -335,7 +335,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -362,7 +362,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -389,7 +389,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -435,7 +435,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
     func testVR11_AudioTapSink_RealTimeSafetyAndRms() {
         let request = SFSpeechAudioBufferRecognitionRequest()
         let dispatchedRmsValues = SendableBox<[Float]>([])
-        let format = makeSyntheticAudioFormat()
+        let format = VoiceRecordingLifecycleTests.makeSyntheticAudioFormat()
 
         let sink = AudioTapSink(
             generation: 1,
@@ -481,7 +481,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -510,7 +510,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
                 if !active { deactivations.mutate { $0 += 1 } }
             },
             audioSessionCategoryProvider: { currentCategory.current },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
@@ -605,7 +605,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
             audioSessionActivator: { _, _ in },
-            audioFormatProvider: { self.makeSyntheticAudioFormat() },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
