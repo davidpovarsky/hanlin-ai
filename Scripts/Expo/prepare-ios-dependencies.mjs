@@ -1255,11 +1255,17 @@ template <typename CharTransformT = fnv1a_identity>
         if (entry.isDirectory()) {
           await cleanSwiftInterfaces(fullPath);
         } else if (entry.name.endsWith('.swiftinterface')) {
+          // ExpoModulesJSI is built freshly on macOS with its own verified swiftinterface cleanup;
+          // do not mutate its internal let/var bindings.
+          if (fullPath.includes('ExpoModulesJSI.xcframework')) {
+            continue;
+          }
           let content = await readFile(fullPath, 'utf8');
           let cleaned = content.replace(/^extension\s+__ObjC[\s\S]*?^}[^\S\r\n]*\r?\n?/gm, '');
           cleaned = cleaned.replaceAll('(ExpoModulesCore.FunctionCallResult) ->', '(borrowing ExpoModulesCore.FunctionCallResult) ->');
           cleaned = cleaned.replaceAll('(FunctionCallResult) ->', '(borrowing FunctionCallResult) ->');
-          cleaned = cleaned.replace(/:\s+((?:ExpoModulesJSI\.)?JavaScriptValue\b)/g, ': borrowing $1');
+          // Only add borrowing to parameter declarations, never to local let or var bindings
+          cleaned = cleaned.replace(/(?<!\blet\s+\w+)(?<!\bvar\s+\w+):\s+((?:ExpoModulesJSI\.)?JavaScriptValue\b)/g, ': borrowing $1');
           if (cleaned !== content) {
             await writeFile(fullPath, cleaned, 'utf8');
             console.log(`[HanlinExpo] Stripped unresolved __ObjC extension and added ownership to noncopyable Result/Value in ${entry.name}`);
