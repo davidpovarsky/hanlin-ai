@@ -207,8 +207,49 @@ In `Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEn
     - Suite `Static Scripting analyzer`: 10 tests passed in 0.046s.
   - Retained artifact: `widget-package-evidence-41720700203`.
 
-### 5. Status Verdict
+### 5. Status Verdict (Pass 5)
 - **Code & Local Integration:** `CODE_READY_DEVICE_PENDING`.
 - **Signed TestFlight Delivery:** NOT DISPATCHED (requires separate explicit owner instruction).
 - **Asana Status:** READ-ONLY (no tasks created, modified, or completed per project instructions).
 - **Physical iPad Verification:** `OWNER_DEVICE_QA_PENDING`.
+
+---
+
+## Pass 7 execution evidence & physical iPad remediation — 2026-11-05
+
+### 1. Owner Device Regression Diagnosis
+- **Context:** TestFlight build `0.7.3 (89101)` on `iPad15,3`, iPadOS `27.2 (24B119)`.
+- **Symptom:** Physical Home Screen **Edit Widget → Widget instance** displays:
+  `HanlinScriptExtensions.HanlinScriptExtensionStoreError -4`.
+- **Enum Bridging:** In `HanlinScriptExtensionStoreError`, case 4 is `.integrityMismatch`.
+- **Root Causes:**
+  1. `checkedRevision` and `decodeEnvelope` threw `integrityMismatch` directly without writing typed diagnostics to `latest-query-diagnostic.json`.
+  2. In `writeRevision`, interrupted or 0-byte revision files prevented new writes because `FileManager.default.fileExists` was true, leaving a corrupt file on disk that subsequent `load()` calls rejected.
+  3. Historical v1 store snapshots encoded via standard `JSONEncoder` produced minor serialization differences against current canonical serialization; lacked historical encoder fallback in `decodeEnvelope`.
+
+### 2. Remediation Strategy & Structural Fixes
+1. **Self-Healing Non-Destructive Write:** `writeRevision` verifies existing file contents and digest before skipping write; safely rewrites 0-byte or corrupted revision files.
+2. **Durable Query Diagnostics at Throw Sites:** Added `decisionPoint: .revisionIntegrityMismatch` and `.envelopeIntegrityMismatch` in `HanlinWidgetStorageDiagnostic.DecisionPoint`.
+3. **Storage Consistency Report:** Added `HanlinStorageConsistencyReport` with redacted SHA prefixes and file sizes (zero private user data) and `store.generateConsistencyReport()`.
+4. **Host UI Integration:** Scripting Package Center detail view "Copy Diagnostic" now copies `platform.storageConsistencyReport()?.redactedReportString`.
+
+### 3. Pass 7 Regression Test Suite
+Added in `HanlinDualWidgetEnginesTests.swift`:
+- `testPass7StorageConsistencyReportAndDurableDiagnostic`: Validates fresh, committed, and tampered storage states with exact diagnostic recording.
+- `testPass7HistoricalV1StoreEnvelopeCompatibility`: Accepts historical v1 envelopes without integrity mismatch.
+- `testPass7InterruptedRevisionWriteOverwrittenAndClean`: Verifies self-healing recovery of interrupted/corrupted 0-byte revision files.
+- `testPass7SelectableWidgetEntitiesCrossProcess`: Verifies extension process query resolution for Default and A1 instance variants.
+
+### 4. CI Validation Evidence (Pass 7)
+- **Workflow Run:** [42058235417](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42058235417) (`widget-package` on `fix/hanlin-pass7-audio-widget-integrity-20261105` at `de069452`)
+- **Outcome:** Validated on Xcode 27 / macOS arm64.
+  - Job `127352409475`: `Compile widget source and execute package regression tests`.
+  - Compiler and fixture semantics: 7 JS tests passed (Node 24.5.0).
+  - Package regression test suites: All extension store, widget engines, and static analyzer tests passed.
+
+### 5. Status Verdict (Pass 7)
+- **Code & Test Status:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING`.
+- **Signed TestFlight Delivery:** `RELEASE_NOT_DISPATCHED` (pending explicit owner instruction).
+- **Asana Status:** READ-ONLY.
+- **Physical iPad Verification:** PENDING owner hardware verification on next signed build.
+

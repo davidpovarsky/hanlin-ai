@@ -1046,11 +1046,11 @@ struct HanlinDualWidgetEnginesTests {
         // Add an independent variant
         try store.update { current in
             var current = try #require(current)
+            let a1Identity = Identity(installedPackageID: id, packageID: packageID, generation: 1, entrypointID: "widget", variantID: "a1")
             let a1 = HanlinWidgetInstance(
-                identity: identity,
+                identity: a1Identity,
                 engine: .expo,
-                displayName: "A1 Variant",
-                isDefault: false
+                displayName: "A1 Variant"
             )
             current = HanlinScriptExtensionSnapshot(
                 schemaVersion: current.schemaVersion,
@@ -1074,7 +1074,9 @@ struct HanlinDualWidgetEnginesTests {
 
         #expect(selectable.count == 2)
         #expect(selectable[0].displayName.contains("Default"))
+        #expect(selectable[0].isDefault == true)
         #expect(selectable[1].displayName.contains("A1 Variant"))
+        #expect(selectable[1].isDefault == false)
     }
 }
 
