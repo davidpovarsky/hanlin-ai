@@ -4,11 +4,11 @@
 **Repository:** `davidpovarsky/hanlin-ai`  
 **Working Branch:** `fix/hanlin-pass7-audio-widget-integrity-20261105`  
 **Parent / Base SHA:** `f97e8798b3480282e488448cb18eb947922ba3e0`  
-**Final Commit SHA:** `bda44783eb5a43564943f60da3ba001d8112040b`  
+**Final Commit SHA:** `00830202bb916b92a3bbdf9772a170a48a43f9a7`  
 **Device Context:** `iPad15,3`, iPadOS `27.2 (24B119)` — Physical device reproduction on TestFlight build `0.7.3 (89101)` (Run `41947393634`)  
 **Agents & Roles:** נועם (Noam, Engineering) `[נועם | DEV] [MAIN_SESSION]`, רוני (Roni, QA) `[רוני | QA] [MAIN_SESSION]`, איתן (Eitan, Architecture) `[איתן | ARCH] [MAIN_SESSION]`  
 **Asana Status:** READ-ONLY (Preserved untouched per prompt instruction line 15)  
-**Distribution Gate:** `RELEASE_NOT_DISPATCHED` (Release build and TestFlight upload strictly pending separate, explicit owner authorization)  
+**Distribution Gate:** `TESTFLIGHT_DISPATCHED` (Release build dispatched per explicit owner authorization; Run `42098595922`)  
 **Overall Verdict:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING` (Truthful status: physical hardware verification explicitly pending owner device testing)  
 
 ---
@@ -261,7 +261,10 @@ To be executed on owner hardware (`iPad15,3`, iPadOS `27.2`) upon delivery of a 
 
 ## 6. Release & Distribution Boundary
 
-- **Release Authorization:** The previous TestFlight authorization was strictly for build `89101`. No new signed TestFlight build has been dispatched.
-- **Workflow State:** `RELEASE_NOT_DISPATCHED`.
-- **Status:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING`.
-- All code changes are committed to `fix/hanlin-pass7-audio-widget-integrity-20261105` and ready for build upon owner approval.
+- **Release Authorization:** The owner explicitly authorized TestFlight delivery on 2026-11-05.
+- **Workflow State:** `TESTFLIGHT_DISPATCHED`.
+- **Active Release Run:** [42098595922](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42098595922) (`Build iOS 26 Unsigned IPA`, job: `upload-chavrusachat-to-testflight`)
+- **Source SHA:** `00830202bb916b92a3bbdf9772a170a48a43f9a7`
+- **Signing & Validation:** Release build, Apple Developer Team ID signing, embedded provisioning profiles, App Store Connect validation.
+- **Toolchain Remediation:** Excluded native `ExpoModulesJSI.xcframework` from `cleanSwiftInterfaces` string replacement in `Scripts/Expo/prepare-ios-dependencies.mjs` and guarded against `let`/`var` mutations, ensuring clean module compilation across Xcode 27.2 / Swift 6.4.2 toolchains.
+- **Status:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING` (Truthful status: physical device verification explicitly pending owner device testing upon TestFlight availability).
