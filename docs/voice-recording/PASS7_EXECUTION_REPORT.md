@@ -8,8 +8,8 @@
 **Device Context:** `iPad15,3`, iPadOS `27.2 (24B119)` — Physical device reproduction on TestFlight build `0.7.3 (89101)` (Run `41947393634`)  
 **Agents & Roles:** נועם (Noam, Engineering) `[נועם | DEV] [MAIN_SESSION]`, רוני (Roni, QA) `[רוני | QA] [MAIN_SESSION]`, איתן (Eitan, Architecture) `[איתן | ARCH] [MAIN_SESSION]`  
 **Asana Status:** READ-ONLY (Preserved untouched per prompt instruction line 15)  
-**Distribution Gate:** `TESTFLIGHT_DISPATCHED` (Release build dispatched per explicit owner authorization; Run `42098595922`)  
-**Overall Verdict:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING` (Truthful status: physical hardware verification explicitly pending owner device testing)  
+**Distribution Gate:** `TESTFLIGHT_DELIVERED_VALID` (Build 89401 signed, validated, and uploaded to TestFlight; Run `42098595922`)  
+**Overall Verdict:** `TESTFLIGHT_UPLOADED_VALID_OWNER_DEVICE_PENDING` (Truthful status: build uploaded and validated; physical hardware verification pending owner device testing)  
 
 ---
 
@@ -262,9 +262,12 @@ To be executed on owner hardware (`iPad15,3`, iPadOS `27.2`) upon delivery of a 
 ## 6. Release & Distribution Boundary
 
 - **Release Authorization:** The owner explicitly authorized TestFlight delivery on 2026-11-05.
-- **Workflow State:** `TESTFLIGHT_DISPATCHED`.
-- **Active Release Run:** [42098595922](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42098595922) (`Build iOS 26 Unsigned IPA`, job: `upload-chavrusachat-to-testflight`)
-- **Source SHA:** `00830202bb916b92a3bbdf9772a170a48a43f9a7`
-- **Signing & Validation:** Release build, Apple Developer Team ID signing, embedded provisioning profiles, App Store Connect validation.
+- **Workflow State:** `TESTFLIGHT_DELIVERED_VALID`.
+- **Successful Release Run:** [42098595922](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42098595922) (`Build iOS 26 Unsigned IPA`, job: `upload-chavrusachat-to-testflight / build-sign-and-upload` in 46m18s)
+- **Delivered TestFlight Build:** `ChavrusaChat 0.7.3 (89401)`
+- **Delivered Artifact:** `ChavrusaChat-signed-ipa-89401`
+- **Source Commit SHA:** `00830202bb916b92a3bbdf9772a170a48a43f9a7`
+- **App Store Connect Status:** Validated and successfully uploaded to TestFlight (`verify_testflight_build.py` confirmed build presence).
+- **Signing & Entitlements:** Signed with Apple Developer Team ID (`DEVELOPMENT_TEAM = ${{ secrets.APPLE_TEAM_ID }}`), distribution certificate, App Store provisioning profiles, and strict App Group entitlements (`group.com.itorah.chavrusachat`).
 - **Toolchain Remediation:** Excluded native `ExpoModulesJSI.xcframework` from `cleanSwiftInterfaces` string replacement in `Scripts/Expo/prepare-ios-dependencies.mjs` and guarded against `let`/`var` mutations, ensuring clean module compilation across Xcode 27.2 / Swift 6.4.2 toolchains.
-- **Status:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING` (Truthful status: physical device verification explicitly pending owner device testing upon TestFlight availability).
+- **Status:** `TESTFLIGHT_UPLOADED_VALID_OWNER_DEVICE_PENDING` (Truthful status: physical device verification explicitly pending owner device testing upon TestFlight installation).

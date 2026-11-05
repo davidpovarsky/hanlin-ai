@@ -255,8 +255,8 @@ Added in `HanlinDualWidgetEnginesTests.swift`:
   - Retained artifact: `widget-package-evidence-42059943062`.
 
 ### 5. Status Verdict (Pass 7)
-- **Code & Test Status:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING`.
-- **Signed TestFlight Delivery:** `RELEASE_NOT_DISPATCHED` (pending explicit owner instruction).
+- **Code & Test Status:** `TESTFLIGHT_UPLOADED_VALID_OWNER_DEVICE_PENDING`.
+- **Signed TestFlight Delivery:** `TESTFLIGHT_DELIVERED_VALID` — Build `0.7.3 (89401)` successfully built, signed, archived, and uploaded via GitHub Actions run [42098595922](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42098595922) (Artifact: `ChavrusaChat-signed-ipa-89401`, source `00830202`).
 - **Asana Status:** READ-ONLY.
-- **Physical iPad Verification:** PENDING owner hardware verification on next signed build.
+- **Physical iPad Verification:** PENDING owner hardware verification on TestFlight build `0.7.3 (89401)`.
 
