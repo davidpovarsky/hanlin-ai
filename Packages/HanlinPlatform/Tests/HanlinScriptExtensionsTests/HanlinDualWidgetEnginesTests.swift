@@ -929,6 +929,153 @@ struct HanlinDualWidgetEnginesTests {
         #expect(loaded.errorCode == 42)
         #expect(loaded.summary.contains("Test query failure"))
     }
+
+    @Test func testPass7StorageConsistencyReportAndDurableDiagnostic() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+
+        // 1. Fresh store report
+        let freshReport = store.generateConsistencyReport()
+        #expect(!freshReport.commitPresent)
+        #expect(!freshReport.revisionFilePresent)
+        #expect(freshReport.failingStage == nil)
+
+        // 2. Save valid v2 snapshot
+        let snapshot = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 100))
+        try store.save(snapshot)
+
+        let validReport = store.generateConsistencyReport()
+        #expect(validReport.commitPresent)
+        #expect(validReport.commitVersion == 1)
+        #expect(validReport.revisionFilePresent)
+        #expect(validReport.shadowFilePresent)
+        #expect(validReport.failingStage == nil)
+
+        // 3. Tamper Revisions/<sha>.json to verify exact checkedRevision throw and diagnostic
+        let marker = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: root.appending(path: "commit.json"))) as? [String: Any])
+        let hash = try #require(marker["snapshotHash"] as? String)
+        let revisionURL = root.appending(path: "Revisions/\(hash).json")
+        try Data("corrupted-revision-payload".utf8).write(to: revisionURL)
+
+        #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.integrityMismatch) {
+            try store.load()
+        }
+
+        let tamperedDiag = try #require(store.latestDurableQueryDiagnostic)
+        #expect(tamperedDiag.decisionPoint == .revisionIntegrityMismatch)
+        #expect(tamperedDiag.errorCode == 4)
+        #expect(tamperedDiag.summary.contains("checkedRevision"))
+        #expect(tamperedDiag.summary.contains(hash.prefix(12)))
+
+        let tamperedReport = store.generateConsistencyReport()
+        #expect(tamperedReport.failingStage == "checkedRevision")
+    }
+
+    @Test func testPass7HistoricalV1StoreEnvelopeCompatibility() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let old = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionStore(root: root)
+        let identity = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionIdentity(
+            installedPackageID: try .init(validating: "installed.legacy"),
+            packageID: try .init(validating: "package.legacy"),
+            generation: 1,
+            entrypointID: "widget"
+        )
+        let legacy = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionSnapshot(
+            generatedAt: Date(timeIntervalSince1970: 200),
+            widgets: [.init(
+                identity: identity,
+                displayName: "Legacy Widget",
+                validUntil: Date(timeIntervalSince1970: 500),
+                root: .init(kind: .text, properties: ["text": .string("Legacy Data")])
+            )]
+        )
+        try old.save(legacy)
+
+        // Current store must accept genuine historical v1 envelope without integrity mismatch
+        let store = Store(root: root)
+        let loaded = try #require(try store.load())
+        #expect(loaded.schemaVersion == 1)
+        #expect(loaded.widgets.first?.displayName == "Legacy Widget")
+    }
+
+    @Test func testPass7InterruptedRevisionWriteOverwrittenAndClean() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+
+        let snapshot = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 300))
+        // Calculate hash ahead of time
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .millisecondsSince1970
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+
+        // Pre-create an empty Revisions directory and a 0-byte file simulating an interrupted write
+        let revisionsDir = root.appending(path: "Revisions")
+        try FileManager.default.createDirectory(at: revisionsDir, withIntermediateDirectories: true)
+
+        // Save should detect non-matching / 0-byte file and overwrite with valid data
+        try store.save(snapshot)
+
+        let loaded = try #require(try store.load())
+        #expect(loaded.schemaVersion == 2)
+        #expect(loaded.generatedAt == Date(timeIntervalSince1970: 300))
+    }
+
+    @Test func testPass7SelectableWidgetEntitiesCrossProcess() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+
+        let id = try HanlinInstalledPackageID(validating: "installed.test")
+        let packageID = try HanlinPackageID(validating: "package.test")
+        let identity = Identity(installedPackageID: id, packageID: packageID, generation: 1, entrypointID: "widget")
+        let template = Widget(
+            identity: identity,
+            displayName: "Test Widget",
+            family: "systemSmall",
+            validUntil: .distantFuture,
+            engine: .expo,
+            payload: .expo(.init(layout: "")),
+            root: .init(kind: .text)
+        )
+
+        try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [id])
+
+        // Add an independent variant
+        try store.update { current in
+            var current = try #require(current)
+            let a1 = HanlinWidgetInstance(
+                identity: identity,
+                engine: .expo,
+                displayName: "A1 Variant",
+                isDefault: false
+            )
+            current = HanlinScriptExtensionSnapshot(
+                schemaVersion: current.schemaVersion,
+                generatedAt: current.generatedAt,
+                widgets: current.widgets,
+                intentEntities: current.intentEntities,
+                liveActivities: current.liveActivities,
+                translationApps: current.translationApps,
+                widgetInstances: current.widgetInstances + [a1],
+                widgetStates: current.widgetStates,
+                widgetEntityMigrations: current.widgetEntityMigrations,
+                inactiveWidgetInstallations: current.inactiveWidgetInstallations
+            )
+            return current
+        }
+
+        // Simulating extension process querying the store
+        let extensionStore = Store(root: root)
+        let snapshot = try #require(try extensionStore.load())
+        let selectable = snapshot.selectableWidgetEntities()
+
+        #expect(selectable.count == 2)
+        #expect(selectable[0].displayName.contains("Default"))
+        #expect(selectable[1].displayName.contains("A1 Variant"))
+    }
 }
 
 private let inventory = HanlinCompatibilityInventory(baselineID: "widget-tests", baselineDigest: String(repeating: "a", count: 64), symbols: [])

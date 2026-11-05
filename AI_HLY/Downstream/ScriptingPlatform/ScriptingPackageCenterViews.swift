@@ -327,7 +327,8 @@ struct ScriptingInstalledPackageDetailView: View {
                                 .accessibilityIdentifier("hanlin-widget-republish-retry")
 
                                 Button {
-                                    UIPasteboard.general.string = diag.redactedReportString
+                                    let report = platform.storageConsistencyReport()?.redactedReportString ?? diag.redactedReportString
+                                    UIPasteboard.general.string = report
                                 } label: {
                                     Label("Copy Diagnostic", systemImage: "doc.on.doc")
                                 }

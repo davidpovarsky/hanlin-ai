@@ -995,7 +995,23 @@ internal final class AudioTapSink: @unchecked Sendable {
     private let fileWriterQueue = DispatchQueue(label: "org.hanlin.AudioFileWriter", qos: .utility)
     private var bufferPool: [AVAudioPCMBuffer] = []
     private var droppedWritesCount: Int = 0
+    private var lastDropLogNanoseconds: UInt64 = 0
     private let maxPoolCapacity: Int = 16
+    private let poolBufferCapacity: AVAudioFrameCount = 8192
+
+    #if DEBUG
+    var testDroppedWritesCount: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return droppedWritesCount
+    }
+
+    var testPoolCount: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return bufferPool.count
+    }
+    #endif
 
     init(
         generation: Int,
@@ -1011,7 +1027,7 @@ internal final class AudioTapSink: @unchecked Sendable {
 
         if audioFile != nil, let format = recordingFormat {
             for _ in 0..<maxPoolCapacity {
-                if let buf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 2048) {
+                if let buf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: poolBufferCapacity) {
                     self.bufferPool.append(buf)
                 }
             }
@@ -1043,15 +1059,45 @@ internal final class AudioTapSink: @unchecked Sendable {
         var pooledBuffer: AVAudioPCMBuffer? = nil
         if audioFile != nil {
             if let freeBuf = bufferPool.popLast() {
-                let frameCount = buffer.frameLength
-                let channelCount = Int(buffer.format.channelCount)
-                freeBuf.frameLength = frameCount
-                for ch in 0..<channelCount {
-                    if let src = buffer.floatChannelData?[ch], let dst = freeBuf.floatChannelData?[ch] {
-                        memcpy(dst, src, Int(frameCount) * MemoryLayout<Float>.size)
+                let inputFrames = buffer.frameLength
+                let inputCapacity = buffer.frameCapacity
+                let poolCapacity = freeBuf.frameCapacity
+                let srcChannels = Int(buffer.format.channelCount)
+                let dstChannels = Int(freeBuf.format.channelCount)
+                let isFormatCompatible = buffer.format.commonFormat == .pcmFormatFloat32 &&
+                                         freeBuf.format.commonFormat == .pcmFormatFloat32 &&
+                                         buffer.format.isInterleaved == freeBuf.format.isInterleaved &&
+                                         srcChannels == dstChannels &&
+                                         srcChannels > 0
+
+                // Strict invariant check: input length must be positive, within input capacity,
+                // and within destination pool buffer capacity, with matching Float32 non-interleaved format
+                if isFormatCompatible &&
+                   inputFrames > 0 &&
+                   inputFrames <= inputCapacity &&
+                   inputFrames <= poolCapacity,
+                   let srcChannelData = buffer.floatChannelData,
+                   let dstChannelData = freeBuf.floatChannelData {
+
+                    freeBuf.frameLength = inputFrames
+                    let bytesPerChannel = Int(inputFrames) * MemoryLayout<Float>.size
+                    for ch in 0..<srcChannels {
+                        memcpy(dstChannelData[ch], srcChannelData[ch], bytesPerChannel)
+                    }
+                    pooledBuffer = freeBuf
+                } else {
+                    // Oversized or incompatible buffer: DO NOT crash or invoke setFrameLength beyond capacity.
+                    // Return freeBuf to pool to prevent buffer leakage, and track bounded drop count.
+                    bufferPool.append(freeBuf)
+                    droppedWritesCount += 1
+
+                    let now = DispatchTime.now().uptimeNanoseconds
+                    if now - lastDropLogNanoseconds >= 1_000_000_000 { // at most 1Hz bounded log
+                        lastDropLogNanoseconds = now
+                        // Privacy-safe bounded log with zero audio/PCM content
+                        print("[AudioTapSink] Dropped file write frame: length=\(inputFrames), inCapacity=\(inputCapacity), poolCapacity=\(poolCapacity), channels=\(srcChannels), format=\(buffer.format.commonFormat.rawValue), drops=\(droppedWritesCount)")
                     }
                 }
-                pooledBuffer = freeBuf
             } else {
                 droppedWritesCount += 1
             }

@@ -631,4 +631,137 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
 
         XCTAssertEqual(recognizer.phase, .idle)
     }
+
+    // MARK: - VR-19: AudioTapSink file-write pool branch with real AVAudioFile across various frame sizes
+    func testVR19_AudioTapSink_RealFilePoolBranchExecution_VariousFrameSizes() async throws {
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("vr19-test-\(UUID().uuidString).caf")
+        defer { try? FileManager.default.removeItem(at: tempURL) }
+
+        let format = VoiceRecordingLifecycleTests.makeSyntheticAudioFormat()
+        let audioFile = try AVAudioFile(forWriting: tempURL, settings: format.settings)
+        let request = SFSpeechAudioBufferRecognitionRequest()
+        let rmsValues = SendableBox<[Float]>([])
+
+        let sink = AudioTapSink(
+            generation: 1,
+            request: request,
+            audioFile: audioFile,
+            recordingFormat: format
+        ) { rms, _ in
+            rmsValues.mutate { $0.append(rms) }
+        }
+
+        // Test boundary frame sizes: 1024, 2048, 2049, 4096, 8192
+        let testSizes: [AVAudioFrameCount] = [1024, 2048, 2049, 4096, 8192]
+        for size in testSizes {
+            guard let buf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: size) else {
+                XCTFail("Failed to allocate buffer of size \(size)")
+                return
+            }
+            buf.frameLength = size
+            let ptr = buf.floatChannelData![0]
+            for i in 0..<Int(size) {
+                ptr[i] = 0.25
+            }
+            sink.processBuffer(buf)
+        }
+
+        // Assert all valid within-capacity sizes were accepted with zero drops
+        XCTAssertEqual(sink.testDroppedWritesCount, 0, "All frame sizes up to 8192 must be accepted without drops")
+
+        // Wait for async writer queue to process and return buffers
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertEqual(sink.testPoolCount, 16, "All 16 pooled buffers must be returned to pool after write")
+        sink.close()
+    }
+
+    // MARK: - VR-20: AudioTapSink oversized (>8192) and incompatible format drop safety without crash
+    func testVR20_AudioTapSink_OversizedAndIncompatibleFrameSafety_NoCrash() async throws {
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("vr20-test-\(UUID().uuidString).caf")
+        defer { try? FileManager.default.removeItem(at: tempURL) }
+
+        let format = VoiceRecordingLifecycleTests.makeSyntheticAudioFormat()
+        let audioFile = try AVAudioFile(forWriting: tempURL, settings: format.settings)
+        let request = SFSpeechAudioBufferRecognitionRequest()
+        let rmsValues = SendableBox<[Float]>([])
+
+        let sink = AudioTapSink(
+            generation: 1,
+            request: request,
+            audioFile: audioFile,
+            recordingFormat: format
+        ) { rms, _ in
+            rmsValues.mutate { $0.append(rms) }
+        }
+
+        // 1. Inject oversized buffer: 16384 frames (larger than pool capacity 8192)
+        // In unpatched code, setting freeBuf.frameLength = 16384 crashes with AVAudioPCMBuffer setFrameLength: exception!
+        let oversizedCount: AVAudioFrameCount = 16384
+        guard let oversizeBuf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: oversizedCount) else {
+            XCTFail("Failed to allocate 16384 buffer")
+            return
+        }
+        oversizeBuf.frameLength = oversizedCount
+        let ptr = oversizeBuf.floatChannelData![0]
+        for i in 0..<Int(oversizedCount) {
+            ptr[i] = 0.3
+        }
+
+        sink.processBuffer(oversizeBuf)
+        XCTAssertEqual(sink.testDroppedWritesCount, 1, "Oversized buffer must be safely dropped from file write")
+        XCTAssertEqual(sink.testPoolCount, 16, "Pool buffer must not be leaked when frame is dropped")
+
+        // 2. Inject incompatible format buffer: Stereo format into Mono sink
+        let stereoFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 44100, channels: 2, interleaved: false)!
+        guard let stereoBuf = AVAudioPCMBuffer(pcmFormat: stereoFormat, frameCapacity: 1024) else {
+            XCTFail("Failed to allocate stereo buffer")
+            return
+        }
+        stereoBuf.frameLength = 1024
+        sink.processBuffer(stereoBuf)
+        XCTAssertEqual(sink.testDroppedWritesCount, 2, "Incompatible channel format must be safely dropped")
+        XCTAssertEqual(sink.testPoolCount, 16, "Pool buffer must not be leaked on format mismatch")
+
+        // 3. Inject valid 1024 buffer to confirm pool operates normally
+        guard let validBuf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1024) else {
+            XCTFail("Failed to allocate valid buffer")
+            return
+        }
+        validBuf.frameLength = 1024
+        sink.processBuffer(validBuf)
+        XCTAssertEqual(sink.testDroppedWritesCount, 2, "Subsequent valid buffer must be accepted")
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertEqual(sink.testPoolCount, 16, "Pool must remain intact")
+        sink.close()
+    }
+
+    // MARK: - VR-21: Repeated 50 start/stop cycles with real sink file mode
+    func testVR21_RepeatedCyclesWithRealSinkFileMode() async throws {
+        let recognizer = SpeechRecognizer(
+            speechAuthChecker: { .authorized },
+            micAuthChecker: { .granted },
+            audioSessionConfigurator: { _, _, _ in },
+            audioSessionActivator: { _, _ in },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {}
+        )
+        recognizer.viewDidAppear()
+
+        for _ in 0..<50 {
+            recognizer.startRecording()
+            XCTAssertTrue(recognizer.isRecording)
+            recognizer.stopRecording()
+            XCTAssertFalse(recognizer.isRecording)
+            XCTAssertNil(recognizer.audioFile)
+            XCTAssertNil(recognizer.audioSink)
+        }
+
+        XCTAssertEqual(recognizer.phase, .idle)
+        recognizer.viewDidDisappear()
+    }
 }

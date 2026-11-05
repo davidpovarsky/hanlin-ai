@@ -544,6 +544,8 @@ public struct HanlinWidgetStorageDiagnostic: Codable, Hashable, Sendable, Identi
         case snapshotDecode
         case widgetCompilation
         case instancePublication
+        case revisionIntegrityMismatch
+        case envelopeIntegrityMismatch
     }
 
     public let correlationID: String
@@ -652,5 +654,76 @@ public struct HanlinWidgetStorageDiagnostic: Codable, Hashable, Sendable, Identi
     public static func sanitizeComponentName(_ raw: String) -> String {
         let name = URL(filePath: raw).lastPathComponent
         return String(name.prefix(64))
+    }
+}
+
+public struct HanlinStorageConsistencyReport: Codable, Hashable, Sendable {
+    public let correlationID: String
+    public let commitPresent: Bool
+    public let commitVersion: UInt32?
+    public let commitSnapshotHashPrefix: String?
+    public let commitShadowHashPrefix: String?
+    public let revisionFilePresent: Bool
+    public let revisionFileSize: Int?
+    public let actualRevisionHashPrefix: String?
+    public let shadowFilePresent: Bool
+    public let shadowFileSize: Int?
+    public let actualShadowHashPrefix: String?
+    public let pendingPresent: Bool
+    public let failingStage: String?
+    public let summary: String
+    public let recordedAt: Date
+
+    public init(
+        correlationID: String,
+        commitPresent: Bool,
+        commitVersion: UInt32? = nil,
+        commitSnapshotHashPrefix: String? = nil,
+        commitShadowHashPrefix: String? = nil,
+        revisionFilePresent: Bool,
+        revisionFileSize: Int? = nil,
+        actualRevisionHashPrefix: String? = nil,
+        shadowFilePresent: Bool,
+        shadowFileSize: Int? = nil,
+        actualShadowHashPrefix: String? = nil,
+        pendingPresent: Bool,
+        failingStage: String? = nil,
+        summary: String,
+        recordedAt: Date = .now
+    ) {
+        self.correlationID = correlationID
+        self.commitPresent = commitPresent
+        self.commitVersion = commitVersion
+        self.commitSnapshotHashPrefix = commitSnapshotHashPrefix
+        self.commitShadowHashPrefix = commitShadowHashPrefix
+        self.revisionFilePresent = revisionFilePresent
+        self.revisionFileSize = revisionFileSize
+        self.actualRevisionHashPrefix = actualRevisionHashPrefix
+        self.shadowFilePresent = shadowFilePresent
+        self.shadowFileSize = shadowFileSize
+        self.actualShadowHashPrefix = actualShadowHashPrefix
+        self.pendingPresent = pendingPresent
+        self.failingStage = failingStage
+        self.summary = summary
+        self.recordedAt = recordedAt
+    }
+
+    public var redactedReportString: String {
+        var fields: [String] = [
+            "id=\(correlationID)",
+            "commitPresent=\(commitPresent)",
+            "revisionPresent=\(revisionFilePresent)",
+            "shadowPresent=\(shadowFilePresent)",
+            "pendingPresent=\(pendingPresent)"
+        ]
+        if let commitSnapshotHashPrefix { fields.append("commitSnapHash=\(commitSnapshotHashPrefix)") }
+        if let actualRevisionHashPrefix { fields.append("actualRevHash=\(actualRevisionHashPrefix)") }
+        if let commitShadowHashPrefix { fields.append("commitShadowHash=\(commitShadowHashPrefix)") }
+        if let actualShadowHashPrefix { fields.append("actualShadowHash=\(actualShadowHashPrefix)") }
+        if let revisionFileSize { fields.append("revSize=\(revisionFileSize)") }
+        if let shadowFileSize { fields.append("shadowSize=\(shadowFileSize)") }
+        if let failingStage { fields.append("stage=\(failingStage)") }
+        fields.append("summary=\(summary)")
+        return fields.joined(separator: " ")
     }
 }

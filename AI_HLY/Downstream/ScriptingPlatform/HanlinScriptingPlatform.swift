@@ -425,6 +425,10 @@ final class HanlinScriptingPlatform {
         widgetPublicationDiagnostics[id] ?? extensionStore?.latestDurableQueryDiagnostic
     }
 
+    func storageConsistencyReport() -> HanlinStorageConsistencyReport? {
+        extensionStore?.generateConsistencyReport()
+    }
+
     @discardableResult
     func republishWidgets(for id: HanlinInstalledPackageID) async -> Bool {
         do {
