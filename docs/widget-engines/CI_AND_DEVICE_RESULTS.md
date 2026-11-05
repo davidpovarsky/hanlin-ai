@@ -241,11 +241,18 @@ Added in `HanlinDualWidgetEnginesTests.swift`:
 - `testPass7SelectableWidgetEntitiesCrossProcess`: Verifies extension process query resolution for Default and A1 instance variants.
 
 ### 4. CI Validation Evidence (Pass 7)
-- **Workflow Run:** [42059943062](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42059943062) (`widget-package` on `fix/hanlin-pass7-audio-widget-integrity-20261105` at `bda44783`)
-- **Outcome:** Validated on Xcode 27 / macOS arm64.
-  - Job `127352409475`: `Compile widget source and execute package regression tests`.
+- **Workflow Run:** [42059943062](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42059943062) (`widget-package` on `fix/hanlin-pass7-audio-widget-integrity-20261105` at `bda44783` / `7fa09d67`)
+- **Outcome:** **SUCCESS** in 5m16s on Xcode 27.2 / macOS arm64.
+  - Job `127358491449`: `Compile widget source and execute package regression tests` — **SUCCESS**.
   - Compiler and fixture semantics: 7 JS tests passed (Node 24.5.0).
-  - Package regression test suites: All extension store, widget engines, and static analyzer tests passed.
+  - Package regression test suites:
+    - Suite `Scripting extension snapshot store`: passed in 6.465s.
+    - Suite `Pass 3 installed widget programs, actions and transactions`: passed in 7.309s.
+    - Suite `Original ScriptWidget native rendering`: passed in 7.310s.
+    - Total Swift Testing package tests: 45 tests in 3 suites passed in 7.310s (including all 4 new Pass 7 regression tests).
+    - Suite `Static Scripting analyzer`: 10 tests passed in 0.091s.
+  - Total tests executed: 62 tests (55 Swift tests + 7 JS tests), 0 failures.
+  - Retained artifact: `widget-package-evidence-42059943062`.
 
 ### 5. Status Verdict (Pass 7)
 - **Code & Test Status:** `SOURCE_FIXED_TARGETED_TESTS_PASS_DEVICE_PENDING`.

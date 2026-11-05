@@ -215,6 +215,18 @@ Under Apple's AVFAudio implementation, `-[AVAudioPCMBuffer setFrameLength:]` val
 - `testPass7SelectableWidgetEntitiesCrossProcess`:
   - Extension process query simulates cross-process entity lookup for Default and A1 instances without error.
 
+### C. Authenticated CI Evidence Ledger
+- **Verified CI Run:** [42059943062](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42059943062) (`Validate Expo Runtime Spike`, scope: `widget-package`)
+- **Git Commit:** `bda44783eb5a43564943f60da3ba001d8112040b` (docs: `7fa09d67`)
+- **Host Runner:** GitHub Actions macOS arm64 (`xcode-27`)
+- **Toolchain:** Xcode 27.2 (Build `27B48`), macOS SDK `27.0`
+- **Result:** **SUCCESS** in 5m16s
+  - `Node.js 24.5.0` compiler & fixture semantics: 7 tests passed (0 failed).
+  - `Swift Testing` package tests: 45 tests in 3 suites passed in 7.310s (including all 4 Pass 7 tests).
+  - `Static Scripting analyzer`: 10 tests passed in 0.091s.
+  - Total tests executed: 62 tests, 0 failures.
+  - Artifact: `widget-package-evidence-42059943062`.
+
 ---
 
 ## 5. Physical iPad Acceptance Checklist (3–5 Minutes)
