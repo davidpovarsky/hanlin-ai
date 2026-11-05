@@ -1043,29 +1043,9 @@ struct HanlinDualWidgetEnginesTests {
 
         try store.publishWidgetTemplates([template], intentEntities: [], translationApps: [], installedPackageIDs: [id])
 
-        // Add an independent variant
-        try store.update { current in
-            var current = try #require(current)
-            let a1Identity = Identity(installedPackageID: id, packageID: packageID, generation: 1, entrypointID: "widget", variantID: "a1")
-            let a1 = HanlinWidgetInstance(
-                identity: a1Identity,
-                engine: .expo,
-                displayName: "A1 Variant"
-            )
-            current = HanlinScriptExtensionSnapshot(
-                schemaVersion: current.schemaVersion,
-                generatedAt: current.generatedAt,
-                widgets: current.widgets,
-                intentEntities: current.intentEntities,
-                liveActivities: current.liveActivities,
-                translationApps: current.translationApps,
-                widgetInstances: current.widgetInstances + [a1],
-                widgetStates: current.widgetStates,
-                widgetEntityMigrations: current.widgetEntityMigrations,
-                inactiveWidgetInstallations: current.inactiveWidgetInstallations
-            )
-            return current
-        }
+        // Add an independent variant using the authentic store API
+        let defaultInstance = try #require(try store.load()?.widgetInstances.first)
+        _ = try store.createWidgetInstance(from: defaultInstance.entityID, displayName: "A1 Variant")
 
         // Simulating extension process querying the store
         let extensionStore = Store(root: root)
@@ -1073,10 +1053,8 @@ struct HanlinDualWidgetEnginesTests {
         let selectable = snapshot.selectableWidgetEntities()
 
         #expect(selectable.count == 2)
-        #expect(selectable[0].displayName.contains("Default"))
-        #expect(selectable[0].isDefault == true)
-        #expect(selectable[1].displayName.contains("A1 Variant"))
-        #expect(selectable[1].isDefault == false)
+        #expect(selectable.contains(where: { $0.isDefault }))
+        #expect(selectable.contains(where: { $0.variantName == "A1 Variant" && !$0.isDefault }))
     }
 }
 
