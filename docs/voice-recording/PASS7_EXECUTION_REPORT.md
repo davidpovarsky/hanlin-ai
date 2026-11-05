@@ -4,7 +4,7 @@
 **Repository:** `davidpovarsky/hanlin-ai`  
 **Working Branch:** `fix/hanlin-pass7-audio-widget-integrity-20261105`  
 **Parent / Base SHA:** `f97e8798b3480282e488448cb18eb947922ba3e0`  
-**Final Commit SHA:** `de069452b453aeb30d876378ae75ea2476579899`  
+**Final Commit SHA:** `bda44783eb5a43564943f60da3ba001d8112040b`  
 **Device Context:** `iPad15,3`, iPadOS `27.2 (24B119)` — Physical device reproduction on TestFlight build `0.7.3 (89101)` (Run `41947393634`)  
 **Agents & Roles:** נועם (Noam, Engineering) `[נועם | DEV] [MAIN_SESSION]`, רוני (Roni, QA) `[רוני | QA] [MAIN_SESSION]`, איתן (Eitan, Architecture) `[איתן | ARCH] [MAIN_SESSION]`  
 **Asana Status:** READ-ONLY (Preserved untouched per prompt instruction line 15)  

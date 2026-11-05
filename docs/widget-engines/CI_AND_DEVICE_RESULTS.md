@@ -241,7 +241,7 @@ Added in `HanlinDualWidgetEnginesTests.swift`:
 - `testPass7SelectableWidgetEntitiesCrossProcess`: Verifies extension process query resolution for Default and A1 instance variants.
 
 ### 4. CI Validation Evidence (Pass 7)
-- **Workflow Run:** [42058235417](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42058235417) (`widget-package` on `fix/hanlin-pass7-audio-widget-integrity-20261105` at `de069452`)
+- **Workflow Run:** [42059943062](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42059943062) (`widget-package` on `fix/hanlin-pass7-audio-widget-integrity-20261105` at `bda44783`)
 - **Outcome:** Validated on Xcode 27 / macOS arm64.
   - Job `127352409475`: `Compile widget source and execute package regression tests`.
   - Compiler and fixture semantics: 7 JS tests passed (Node 24.5.0).
