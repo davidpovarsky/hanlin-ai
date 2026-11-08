@@ -19,7 +19,7 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 | Native widget engines/actions | Implemented engines and package-level evidence | Actual Home Screen instance/action acceptance remains open |
 | Shared chat / Translation / Shortcuts | Approved subsequent scope | Implementation and acceptance still pending |
 
-Current scoped simulator run: [42526628486](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42526628486), app source plus staging at `9b5c87f4`. It is pending and does not establish an aggregate PASS. No new TestFlight distribution or merge has occurred.
+Current scoped simulator run: [42531030422](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42531030422), source and deferred staging at `82a6bcd0`. It is pending and does not establish an aggregate PASS. No new TestFlight distribution or merge has occurred.
 
 ## Execution order
 
