@@ -18,12 +18,15 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import os
 from pathlib import Path
 import shutil
-import subprocess
 import sys
 from typing import List, Optional
+
+try:
+    from Scripts.CI.stage_simulator_fixtures import run_bounded
+except ModuleNotFoundError:
+    from stage_simulator_fixtures import run_bounded
 
 try:
     from .create_scriptui_fixtures import create_fixtures, FIXTURE_NAMES
@@ -56,7 +59,7 @@ def stage_fixtures(
     fixtures_dir: Optional[Path] = None,
     log_file: Optional[Path] = None,
     dry_run: bool = False,
-    runner=subprocess.run,
+    runner=run_bounded,
 ) -> dict:
     root = Path(__file__).resolve().parents[2]
     repo_fixtures_dir = root / "AI_HLYUITests" / "Fixtures"
@@ -78,9 +81,19 @@ def stage_fixtures(
         f"Fixtures directory: {fix_dir}",
     ]
 
+    def failure(status: str, message: str) -> dict:
+        logs.append(message)
+        if log_file:
+            log_file.parent.mkdir(parents=True, exist_ok=True)
+            log_file.write_text("\n".join(logs) + "\n", encoding="utf-8")
+        return {"staged": False, "status": status, "error": message, "logs": logs}
+
     for fname in generated:
         fpath = fix_dir / fname
         logs.append(f"Fixture {fname} sha256={compute_sha256(fpath)}")
+
+    if not generated:
+        return failure("FIXTURES_MISSING", "No ScriptUI or Expo fixtures were generated.")
 
     if dry_run:
         logs.append("Dry run enabled - skipping simctl commands")
@@ -91,32 +104,34 @@ def stage_fixtures(
         return res
 
     # 2. Install tested app if app_path is provided
-    if app_path and app_path.exists():
+    if app_path:
+        if not app_path.is_dir():
+            return failure("INSTALL_FAILED", f"App bundle is missing: {app_path}")
         logs.append(f"Installing app: {app_path}")
         install_res = runner(
             ["xcrun", "simctl", "install", simulator_udid, str(app_path)],
-            capture_output=True,
-            text=True,
-            check=False,
+            timeout_seconds=60.0,
         )
         if install_res.returncode != 0:
-            logs.append(f"Warning: simctl install returned {install_res.returncode}: {install_res.stderr.strip()}")
+            return failure("INSTALL_FAILED", f"simctl install returned {install_res.returncode}: {install_res.stderr.strip()}")
         else:
             logs.append("App installed successfully")
 
     # 3. Get app data container
     container_cmd = ["xcrun", "simctl", "get_app_container", simulator_udid, bundle_id, "data"]
-    c_res = runner(container_cmd, capture_output=True, text=True, check=False)
+    c_res = runner(container_cmd, timeout_seconds=5.0)
     app_container: Optional[Path] = None
     if c_res.returncode == 0 and c_res.stdout.strip():
         app_container = Path(c_res.stdout.strip())
         logs.append(f"App data container: {app_container}")
     else:
-        logs.append(f"Warning: could not get app container for {bundle_id}: {c_res.stderr.strip()}")
+        return failure("CONTAINER_NOT_FOUND", f"Could not get app container for {bundle_id}: {c_res.stderr.strip()}")
+    if not app_container.is_dir():
+        return failure("CONTAINER_NOT_FOUND", f"App data container is missing: {app_container}")
 
     # Copy fixtures into app container Documents/
     staged_targets = []
-    if app_container and app_container.exists():
+    if app_container:
         app_docs = app_container / "Documents"
         app_docs.mkdir(parents=True, exist_ok=True)
         for fname in generated:
@@ -128,8 +143,8 @@ def stage_fixtures(
 
     # 4. Also stage into com.apple.DocumentsApp if available
     files_cmd = ["xcrun", "simctl", "get_app_container", simulator_udid, "com.apple.DocumentsApp", "data"]
-    f_res = runner(files_cmd, capture_output=True, text=True, check=False)
-    if f_res.returncode == 0 and f_res.stdout.strip():
+    f_res = runner(files_cmd, timeout_seconds=5.0)
+    if f_res.returncode == 0 and f_res.stdout.strip() and Path(f_res.stdout.strip()).is_dir():
         files_container = Path(f_res.stdout.strip())
         files_docs = files_container / "Documents"
         files_docs.mkdir(parents=True, exist_ok=True)
@@ -140,6 +155,8 @@ def stage_fixtures(
             shutil.copy2(src, dst)
             logs.append(f"Staged to Files {fname} -> {dst}")
             staged_targets.append(str(dst))
+    else:
+        logs.append("Files container unavailable or timed out (optional); app fixtures are staged.")
 
     if log_file:
         log_file.parent.mkdir(parents=True, exist_ok=True)
@@ -147,6 +164,7 @@ def stage_fixtures(
 
     return {
         "staged": True,
+        "status": "SUCCESS",
         "app_container": str(app_container) if app_container else None,
         "staged_targets": staged_targets,
         "logs": logs,
@@ -180,7 +198,7 @@ def main() -> int:
     for line in res["logs"]:
         print(line)
 
-    return 0
+    return 0 if res["staged"] else 1
 
 
 if __name__ == "__main__":

@@ -2011,6 +2011,7 @@ jobs:
           payload = json.loads(subprocess.check_output(
               ["xcrun", "simctl", "list", "devices", "available", "--json"],
               text=True,
+              timeout=15,
           ))
           candidates = []
           for runtime, devices in payload.get("devices", {}).items():
@@ -2035,8 +2036,21 @@ jobs:
           printf '%s\n' "$BUNDLE_ID" > "$LOG_DIR/bundle-id.txt"
           printf '%s\n' "$APP_EXECUTABLE" > "$LOG_DIR/app-executable.txt"
 
-          xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
-          xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
+          python3 - "$SIMULATOR_UDID" <<'PY'
+          import os
+          from pathlib import Path
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import run_bounded
+
+          simulator = sys.argv[1]
+          run_bounded(["xcrun", "simctl", "boot", simulator], timeout_seconds=15.0)
+          result = run_bounded(["xcrun", "simctl", "bootstatus", simulator, "-b"], timeout_seconds=45.0)
+          output = result.stdout + result.stderr
+          Path(os.environ["LOG_DIR"], "08-bootstatus.log").write_text(output, encoding="utf-8")
+          print(output, flush=True)
+          if result.returncode:
+              raise SystemExit(f"Simulator boot failed or timed out: {result.returncode}")
+          PY
           if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
             python3 Scripts/CI/stage_simulator_fixtures.py \
               --simulator-udid "$SIMULATOR_UDID" \

@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 SCRIPT_PATH = Path(__file__).parents[1] / "stage_scriptui_fixtures.py"
 SPEC = importlib.util.spec_from_file_location("stage_scriptui_fixtures", SCRIPT_PATH)
@@ -14,6 +15,63 @@ SPEC.loader.exec_module(stager)
 
 
 class StageScriptUIFixturesTests(unittest.TestCase):
+    def test_required_install_or_container_failure_fails_closed(self) -> None:
+        for failed_command, expected in [("install", "INSTALL_FAILED"), ("get_app_container", "CONTAINER_NOT_FOUND")]:
+            with self.subTest(command=failed_command), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                app = root / "Host.app"
+                app.mkdir()
+                calls = []
+
+                def runner(cmd, **kwargs):
+                    calls.append(cmd)
+                    code = 124 if failed_command in cmd else 0
+                    return subprocess.CompletedProcess(cmd, code, "", "timeout" if code else "")
+
+                result = stager.stage_fixtures("sim", app_path=app, fixtures_dir=root / "Fixtures", runner=runner)
+                self.assertFalse(result["staged"])
+                self.assertEqual(result["status"], expected)
+                self.assertFalse(any("com.apple.DocumentsApp" in cmd for cmd in calls))
+
+    def test_optional_files_timeout_preserves_required_staging(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            container = root / "AppData"
+            container.mkdir()
+            calls = []
+
+            def runner(cmd, **kwargs):
+                calls.append((cmd, kwargs))
+                self.assertEqual(kwargs["timeout_seconds"], 5.0)
+                if "com.apple.DocumentsApp" in cmd:
+                    return subprocess.CompletedProcess(cmd, 124, "", "timeout")
+                return subprocess.CompletedProcess(cmd, 0, str(container), "")
+
+            result = stager.stage_fixtures("sim", fixtures_dir=root / "Fixtures", runner=runner)
+            self.assertTrue(result["staged"])
+            self.assertEqual(result["status"], "SUCCESS")
+            self.assertTrue((container / "Documents" / "ExpoSwiftUIProbeA.hanlinExpo").is_file())
+            self.assertEqual(len(calls), 2)
+            self.assertIn("optional", result["logs"][-1])
+
+    def test_shared_bounded_runner_converts_timeout_to_failure(self) -> None:
+        command = ["xcrun", "simctl", "get_app_container"]
+        with patch.object(subprocess, "run", side_effect=subprocess.TimeoutExpired(command, 5)) as execute:
+            result = stager.run_bounded(command, timeout_seconds=5.0)
+        self.assertEqual(result.returncode, 124)
+        self.assertEqual(execute.call_args.kwargs["timeout"], 5.0)
+
+    def test_missing_required_bundle_or_fixtures_never_succeeds(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            runner = MagicMock()
+            result = stager.stage_fixtures("sim", app_path=root / "Missing.app", fixtures_dir=root / "Fixtures", runner=runner)
+            self.assertEqual(result["status"], "INSTALL_FAILED")
+            with patch.object(stager, "create_fixtures", return_value=[]), patch.object(Path, "glob", return_value=[]):
+                result = stager.stage_fixtures("sim", fixtures_dir=root / "Empty", runner=runner)
+            self.assertEqual(result["status"], "FIXTURES_MISSING")
+            runner.assert_not_called()
+
     def test_dry_run_mode(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
