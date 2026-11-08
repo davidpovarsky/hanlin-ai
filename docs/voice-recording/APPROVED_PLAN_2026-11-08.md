@@ -57,6 +57,12 @@ Current scoped simulator run: [42526628486](https://github.com/davidpovarsky/han
 - Existing two-stage expand/navigation and Reduce Motion behavior remain. Added deterministic tests for stale/reopened presentations and narrow/short containers; strengthened UI search hit-testing, clipping and shrink assertions.
 - Required validation: affected coordinator unit tests, management navigation compact/wide, All Models expand/back/reopen, plus subsequent physical animation review. No physical animation PASS is inferred from state tests.
 
+## Embedded Node diagnostic follow-up — 2026-11-09
+
+- `execution-worker.mjs` discarded `Error.cause` in failed executions and serialized logged Errors without their useful cause/code fields. Two actual Worker regressions failed before correction on the pinned Node 24.5.0 (not the workstation's default 22.17.0).
+- Errors now use bounded-depth native `node:util.inspect`, retaining nested/aggregate DNS/TLS/socket codes and cyclic causes in the existing stderr string. Custom inspectors/getters are disabled; the existing combined output-byte cap remains authoritative. No request/network policy or wire schema changes.
+- All seven affected runtime-worker tests passed on pinned Node 24.5.0 (788ms), including both new regressions, ESM/CommonJS values, Hebrew output and truncation. This is desktop JavaScript execution evidence, not physical HTTPS acceptance. Embedded iPad GET/POST, suspend/resume and FD ownership remain open; do not claim that diagnostic reporting fixes TLS or unmanaged descriptors.
+
 ## CI dependency synchronization
 
 - Audited official GitHub Actions stable releases and major-version changelogs on 2026-11-08. Updated the eight existing workflows consistently: checkout 7.0.1, setup-node/setup-python 7.1.0, cache 6.1.0, upload-artifact 7.0.2, download-artifact 8.0.2. These use the current Node 24 action runtime, removing obsolete Node 20 action declarations. Embedded Node and compiler runtime versions remain independently pinned.

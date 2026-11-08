@@ -60,6 +60,50 @@ test('lifecycle planner accepts brokered actions and rejects shell syntax', () =
   assert.match(rejected.rejected[0].reason, /unsupported/i);
 });
 
+test('failed executions preserve aggregate HTTPS cause codes', async () => {
+  const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-error-cause-'));
+  try {
+    const entryPoint = path.join(workspace, 'main.mjs');
+    await fs.writeFile(entryPoint, `
+      const refused = Object.assign(new Error('connection refused'), { code: 'ECONNREFUSED', syscall: 'connect', address: '127.0.0.1', port: 443 });
+      const timedOut = Object.assign(new Error('connection timed out'), { code: 'ETIMEDOUT' });
+      throw new TypeError('fetch failed', { cause: new AggregateError([refused, timedOut], 'all connections failed') });
+    `);
+    const result = await runWorker({ entryPoint, moduleKind: 'esm', maximumOutputBytes: 8192 });
+    assert.equal(result.type, 'failed');
+    assert.match(result.stderr, /fetch failed/);
+    assert.match(result.stderr, /ECONNREFUSED/);
+    assert.match(result.stderr, /ETIMEDOUT/);
+    assert.match(result.stderr, /127\.0\.0\.1/);
+  } finally {
+    await fs.rm(workspace, { recursive: true, force: true });
+  }
+});
+
+test('console errors preserve cyclic causes within the output budget', async () => {
+  const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-console-error-'));
+  try {
+    const entryPoint = path.join(workspace, 'main.mjs');
+    await fs.writeFile(entryPoint, `
+      const error = Object.assign(new Error('TLS diagnostic'), { code: 'CERT_HAS_EXPIRED' });
+      error.cause = error;
+      console.error(error);
+      console.error('x'.repeat(4096));
+      export default 42;
+    `);
+    const result = await runWorker({ entryPoint, moduleKind: 'esm', maximumOutputBytes: 1024 });
+    assert.equal(result.type, 'completed');
+    assert.equal(result.value, 42);
+    assert.match(result.stderr, /TLS diagnostic/);
+    assert.match(result.stderr, /CERT_HAS_EXPIRED/);
+    assert.match(result.stderr, /Circular/);
+    assert.equal(Buffer.byteLength(result.stdout) + Buffer.byteLength(result.stderr), 1024);
+    assert.equal(result.outputWasTruncated, true);
+  } finally {
+    await fs.rm(workspace, { recursive: true, force: true });
+  }
+});
+
 function runWorker(workerData) {
   return new Promise((resolve, reject) => {
     const worker = new Worker(executionWorkerURL, { workerData });

@@ -53,6 +53,7 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **Dual Native Widget Engines & Schema V2 Integration:** Supporting both Expo Widgets (JavaScriptCore + ExpoUI SwiftUI) and ScriptWidget (JavaScriptCore + JSX runtime + 29 native SwiftUI tags) inside a generic WidgetKit extension (`HanlinScriptingWidgets.appex`) requires a versioned App Group storage contract (`schemaVersion: 2`). Transparent backwards compatibility with Schema 1 is maintained by defaulting missing engines to `.legacy` and reconstructing `.legacy(root)` payloads.
 - **Mixed native widget subtrees:** DEFERRED_OPTIONAL. The prior handcrafted AnyView adapter did not demonstrate original-engine compatibility.
 - **Node/Undici HTTPS (B03):** `ipv4first` remains a mitigation. Embedded iPad TLS/fd behavior and the underlying failure cause have not been verified by the widget work.
+- **2026-11-09 embedded Node error visibility:** The execution worker dropped nested causes and codes from failed/logged Errors. Native bounded-depth inspection now preserves aggregate/cyclic causes under the existing stderr byte cap; two regressions failed before correction and all seven runtime-worker tests passed on pinned Node 24.5.0. Actual device HTTPS/FD diagnosis remains open. Server/probe workers disable unmanaged-FD tracking while generic execution uses the default; investigate ownership on device before treating that difference as a cause or changing it.
 
 ## In Progress / Active Blockers
 

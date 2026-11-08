@@ -6,6 +6,7 @@ if (typeof dns.setDefaultResultOrder === 'function') {
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import * as nodePath from 'node:path';
+import { inspect } from 'node:util';
 
 const { entryPoint, workspace, moduleKind, arguments: argv, environment, maximumOutputBytes } = workerData;
 let stdout = '';
@@ -60,6 +61,12 @@ function append(channel, values) {
 
 function format(value) {
   if (typeof value === 'string') return value;
+  if (value instanceof Error) {
+    return inspect(value, {
+      depth: 6, maxArrayLength: 8, maxStringLength: 4096,
+      customInspect: false, getters: false, colors: false,
+    });
+  }
   try { return JSON.stringify(value); } catch { return String(value); }
 }
 
@@ -74,7 +81,7 @@ try {
   else value = (await import(`${pathToFileURL(entryPoint).href}?execution=${Date.now()}`)).default;
   parentPort.postMessage({ type: 'completed', stdout, stderr, value: jsonSafe(value), outputWasTruncated });
 } catch (error) {
-  append('stderr', [error?.stack ?? error?.message ?? String(error)]);
+  append('stderr', [error]);
   parentPort.postMessage({ type: 'failed', stdout, stderr, outputWasTruncated });
 }
 
