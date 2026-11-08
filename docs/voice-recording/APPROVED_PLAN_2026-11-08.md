@@ -29,4 +29,6 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 
 ## Results
 
-Implementation and validation in progress. Record exact implementation SHA, run/job/artifact IDs and raw executed results here; do not treat a planned run as a pass.
+- Audio implementation `978888a2933413b3f5d6ad2e3bbb2db03a432c52`; focused run [42511840857](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42511840857) dispatched. Result pending, not a pass.
+- Widget recovery test audit found `testPass7InterruptedRevisionWriteOverwrittenAndClean` did not create a corrupt file at all. It now seeds authentic candidate revision paths with both zero bytes and nonempty corrupt bytes and asserts exact restored bytes. Existing committed-revision integrity rejection remains required: candidate repair must not imply arbitrary reconstruction of lost committed user state.
+- Widget validation: execute the changed test with the existing `widget-package` workflow filter; unaffected renderer/action tests retain their original historical provenance, without claiming execution on this SHA.

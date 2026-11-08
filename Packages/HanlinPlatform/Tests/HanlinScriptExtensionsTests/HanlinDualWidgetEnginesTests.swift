@@ -1000,24 +1000,32 @@ struct HanlinDualWidgetEnginesTests {
         #expect(loaded.widgets.first?.displayName == "Legacy Widget")
     }
 
-    @Test func testPass7InterruptedRevisionWriteOverwrittenAndClean() throws {
+    @Test(arguments: [Data(), Data("corrupt candidate revision".utf8)])
+    func testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes: Data) throws {
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }
         let store = Store(root: root)
 
         let snapshot = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 300))
-        // Calculate hash ahead of time
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .millisecondsSince1970
-        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        // Obtain authentic candidate bytes from an independent store. The old test
+        // created only a directory, so it never exercised the corrupted-file branch.
+        let referenceRoot = try temporary()
+        defer { try? FileManager.default.removeItem(at: referenceRoot) }
+        try Store(root: referenceRoot).save(snapshot)
+        let marker = try #require(try JSONSerialization.jsonObject(
+            with: Data(contentsOf: referenceRoot.appending(path: "commit.json"))) as? [String: Any])
+        let hash = try #require(marker["snapshotHash"] as? String)
+        let expectedBytes = try Data(contentsOf: referenceRoot.appending(path: "Revisions/\(hash).json"))
 
-        // Pre-create an empty Revisions directory and a 0-byte file simulating an interrupted write
         let revisionsDir = root.appending(path: "Revisions")
         try FileManager.default.createDirectory(at: revisionsDir, withIntermediateDirectories: true)
+        let candidateURL = revisionsDir.appending(path: "\(hash).json")
+        try corruptedBytes.write(to: candidateURL)
+        #expect(try Data(contentsOf: candidateURL) == corruptedBytes)
 
-        // Save should detect non-matching / 0-byte file and overwrite with valid data
         try store.save(snapshot)
 
+        #expect(try Data(contentsOf: candidateURL) == expectedBytes)
         let loaded = try #require(try store.load())
         #expect(loaded.schemaVersion == 2)
         #expect(loaded.generatedAt == Date(timeIntervalSince1970: 300))
