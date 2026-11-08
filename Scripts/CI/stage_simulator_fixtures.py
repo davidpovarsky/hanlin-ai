@@ -43,6 +43,8 @@ FIXTURE_NAMES = [
 # Keep both staging consumers bounded without treating that install as a failure.
 INSTALL_TIMEOUT_SECONDS = 180.0
 APP_CONTAINER_TIMEOUT_SECONDS = 20.0
+# Cold iPadOS migration exceeded the previous 90-second allowance in CI.
+BOOT_TIMEOUT_SECONDS = 300.0
 
 
 def sha256_file(path: Path) -> str:
@@ -104,7 +106,7 @@ def stage_simulator_fixtures(
     # 1. Boot simulator if needed and verify bootstatus
     print(f"[stage_simulator_fixtures] Verifying simulator boot state for {simulator_udid}...")
     runner(["xcrun", "simctl", "boot", simulator_udid], timeout_seconds=15.0)
-    bootstatus_res = runner(["xcrun", "simctl", "bootstatus", simulator_udid, "-b"], timeout_seconds=45.0)
+    bootstatus_res = runner(["xcrun", "simctl", "bootstatus", simulator_udid, "-b"], timeout_seconds=BOOT_TIMEOUT_SECONDS)
     logs.append(f"Bootstatus exit: {bootstatus_res.returncode}")
     if bootstatus_res.returncode != 0:
         err_msg = f"Fatal: Simulator bootstatus failed with code {bootstatus_res.returncode}: {bootstatus_res.stderr.strip()}"

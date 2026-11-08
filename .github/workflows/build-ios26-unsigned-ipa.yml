@@ -2048,11 +2048,11 @@ jobs:
           import os
           from pathlib import Path
           import sys
-          from Scripts.CI.stage_simulator_fixtures import run_bounded
+          from Scripts.CI.stage_simulator_fixtures import BOOT_TIMEOUT_SECONDS, run_bounded
 
           simulator = sys.argv[1]
           run_bounded(["xcrun", "simctl", "boot", simulator], timeout_seconds=15.0)
-          result = run_bounded(["xcrun", "simctl", "bootstatus", simulator, "-b"], timeout_seconds=90.0)
+          result = run_bounded(["xcrun", "simctl", "bootstatus", simulator, "-b"], timeout_seconds=BOOT_TIMEOUT_SECONDS)
           output = result.stdout + result.stderr
           Path(os.environ["LOG_DIR"], "08-bootstatus.log").write_text(output, encoding="utf-8")
           print(output, flush=True)
@@ -2671,12 +2671,26 @@ jobs:
           } > "$LOG_DIR/09-host-resources.log" 2>&1
           if [ -f "$LOG_DIR/simulator-udid.txt" ]; then
             SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
-            xcrun simctl spawn "$SIMULATOR_UDID" log show --style compact --last 5m \
-              --predicate 'process == "installd" OR process == "installcoordinationd" OR subsystem CONTAINS[c] "install" OR eventMessage CONTAINS[c] "com.itorah.chavrusachat"' \
-              2>&1 | tail -n 5000 > "$LOG_DIR/09-simulator-system.log" || true
+            python3 - "$SIMULATOR_UDID" <<'PY'
+          import os
+          from pathlib import Path
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import run_bounded
+          predicate = 'process == "installd" OR process == "installcoordinationd" OR subsystem CONTAINS[c] "install" OR eventMessage CONTAINS[c] "com.itorah.chavrusachat"'
+          result = run_bounded(["xcrun", "simctl", "spawn", sys.argv[1], "log", "show", "--style", "compact", "--last", "5m", "--predicate", predicate], timeout_seconds=20.0)
+          output = result.stdout + result.stderr
+          Path(os.environ["LOG_DIR"], "09-simulator-system.log").write_text("\n".join(output.splitlines()[-5000:]) + "\n", encoding="utf-8")
+          PY
             if [ -f "$LOG_DIR/bundle-id.txt" ]; then
               BUNDLE_ID="$(cat "$LOG_DIR/bundle-id.txt")"
-              DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
+              DATA_CONTAINER="$(python3 - "$SIMULATOR_UDID" "$BUNDLE_ID" <<'PY'
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import run_bounded
+          result = run_bounded(["xcrun", "simctl", "get_app_container", sys.argv[1], sys.argv[2], "data"], timeout_seconds=20.0)
+          if result.returncode == 0:
+              print(result.stdout.strip())
+          PY
+              )"
               if [ -n "$DATA_CONTAINER" ]; then
                 cp "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json" \
                   "$LOG_DIR/shell-acceptance.json" 2>/dev/null || true
