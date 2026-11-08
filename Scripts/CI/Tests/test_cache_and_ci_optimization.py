@@ -627,9 +627,11 @@ class CICacheAndOptimizationTests(unittest.TestCase):
             self.assertEqual(rep["report_status"], "INCOMPLETE_MEASUREMENTS")
 
             import unittest.mock
-            with unittest.mock.patch("sys.argv", ["prog", "--log-dir", str(empty_dir), "--require-complete"]):
+            output = root / "incomplete-performance-report.json"
+            with unittest.mock.patch("sys.argv", ["prog", "--log-dir", str(empty_dir), "--output-json", str(output), "--require-complete"]):
                 code = generate_performance_report.main()
                 self.assertEqual(code, 1)
+                self.assertTrue(output.is_file())
 
 if __name__ == "__main__":
     unittest.main()
