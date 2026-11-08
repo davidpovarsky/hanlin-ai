@@ -994,7 +994,8 @@ struct HanlinDualWidgetEnginesTests {
         #expect(try Data(contentsOf: commitURL) == preservedCommit, "Diagnostics must not reset existing data")
     }
 
-    @Test func testPass7HistoricalV1StoreEnvelopeCompatibility() throws {
+    @Test(arguments: [200.0, 1730826191.123456])
+    func testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp: Double) throws {
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }
         let old = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionStore(root: root)
@@ -1005,12 +1006,16 @@ struct HanlinDualWidgetEnginesTests {
             entrypointID: "widget"
         )
         let legacy = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionSnapshot(
-            generatedAt: Date(timeIntervalSince1970: 200),
+            generatedAt: Date(timeIntervalSince1970: timestamp),
             widgets: [.init(
                 identity: identity,
                 displayName: "Legacy Widget",
-                validUntil: Date(timeIntervalSince1970: 500),
-                root: .init(kind: .text, properties: ["text": .string("Legacy Data")])
+                validUntil: Date(timeIntervalSince1970: timestamp + 300),
+                root: .init(kind: .text, properties: [
+                    "text": .string("Legacy Data"),
+                    "offset": .number(-0.0),
+                    "ratio": .number(1e-7)
+                ])
             )]
         )
         try old.save(legacy)
@@ -1020,6 +1025,7 @@ struct HanlinDualWidgetEnginesTests {
         let loaded = try #require(try store.load())
         #expect(loaded.schemaVersion == 1)
         #expect(loaded.widgets.first?.displayName == "Legacy Widget")
+        #expect(loaded.widgets.first?.root.properties["ratio"] == .number(1e-7))
     }
 
     @Test(arguments: [Data(), Data("corrupt candidate revision".utf8)])
