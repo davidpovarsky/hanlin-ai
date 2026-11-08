@@ -235,6 +235,8 @@
       "description": "Hanlin Expo dynamic runtime and fixtures",
       "patterns": [
         "Packages/HanlinExpoRuntime/**",
+        "Packages/HanlinExpoNativeAPI/**",
+        "Scripts/ExpoNativeAPI/**",
         "Fixtures/ExpoSwiftUIProbe/**",
         "Scripts/Expo/**",
         "AI_HLYUITests/HanlinExpoProductionE2ETests.swift"

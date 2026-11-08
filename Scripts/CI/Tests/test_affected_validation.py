@@ -705,6 +705,15 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
         self.assertNotIn("-configuration", plan.step_outputs["simulator_build_for_testing_args"])
 
+    def test_native_api_bridge_changes_require_expo_runtime_validation(self) -> None:
+        plan = self.plan_files([
+            "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/Runtime/HanlinExpoRuntimeScheduler.mm",
+            "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+        ])
+        self.assertIn("expo_runtime", plan.affected_components)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertIn("AI_HLYUITests/HanlinExpoProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+
     def test_exact_selectors_mix_unit_and_ui_without_broadening(self) -> None:
         unit = "AI_HLYTests/ModelPopoverZoomOrderTests"
         ui = "AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft"
