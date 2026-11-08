@@ -15,7 +15,7 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 | Compact/wide management | Both navigation/draft-preservation cases passed in `42515491917` | Physical compact iPad acceptance |
 | All Models | Coordinator tests passed; old zoom failed UI and was replaced with native stack push | Fresh UI execution of the replacement |
 | Expo scheduler/lifecycle | Source correction compiled; three earlier UI passes retain their run provenance | Fresh fixture-staged UI run and physical Hermes acceptance |
-| Runtime policy / Node HTTPS | Pass 7 read/execute and wire corrections; seven Node error-reporting tests passed on pinned 24.5.0 | Capability-policy completion, actual device HTTPS/FD diagnosis |
+| Runtime policy / Node HTTPS | Pass 7 read/execute and wire corrections; eight Node error/output tests passed on pinned 24.5.0 | Capability-policy completion, actual device HTTPS/FD diagnosis |
 | Native widget engines/actions | Implemented engines and package-level evidence | Actual Home Screen instance/action acceptance remains open |
 | Shared chat / Translation / Shortcuts | Approved subsequent scope | Implementation and acceptance still pending |
 
@@ -62,6 +62,7 @@ Current scoped simulator run: [42531030422](https://github.com/davidpovarsky/han
 - `execution-worker.mjs` discarded `Error.cause` in failed executions and serialized logged Errors without their useful cause/code fields. Two actual Worker regressions failed before correction on the pinned Node 24.5.0 (not the workstation's default 22.17.0).
 - Errors now use bounded-depth native `node:util.inspect`, retaining nested/aggregate DNS/TLS/socket codes and cyclic causes in the existing stderr string. Custom inspectors/getters are disabled; the existing combined output-byte cap remains authoritative. No request/network policy or wire schema changes.
 - All seven affected runtime-worker tests passed on pinned Node 24.5.0 (788ms), including both new regressions, ESM/CommonJS values, Hebrew output and truncation. This is desktop JavaScript execution evidence, not physical HTTPS acceptance. Embedded iPad GET/POST, suspend/resume and FD ownership remain open; do not claim that diagnostic reporting fixes TLS or unmanaged descriptors.
+- Follow-up reproduced UTF-8 truncation exceeding the advertised byte cap: a partial Hebrew/emoji sequence became the three-byte replacement character. Output now backs up to a valid code-point boundary. All eight affected Worker tests passed on pinned Node 24.5.0 (1.266s), including ten byte-boundary budgets, existing error causes and value/protocol assertions. This supersedes the seven-test Worker result without changing network policy or physical acceptance.
 
 ## CI dependency synchronization
 

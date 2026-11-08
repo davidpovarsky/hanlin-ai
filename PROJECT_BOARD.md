@@ -56,6 +56,7 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **Mixed native widget subtrees:** DEFERRED_OPTIONAL. The prior handcrafted AnyView adapter did not demonstrate original-engine compatibility.
 - **Node/Undici HTTPS (B03):** `ipv4first` remains a mitigation. Embedded iPad TLS/fd behavior and the underlying failure cause have not been verified by the widget work.
 - **2026-11-09 embedded Node error visibility:** The execution worker dropped nested causes and codes from failed/logged Errors. Native bounded-depth inspection now preserves aggregate/cyclic causes under the existing stderr byte cap; two regressions failed before correction and all seven runtime-worker tests passed on pinned Node 24.5.0. Actual device HTTPS/FD diagnosis remains open. Server/probe workers disable unmanaged-FD tracking while generic execution uses the default; investigate ownership on device before treating that difference as a cause or changing it.
+- **2026-11-09 UTF-8 output budgets:** Cutting a Buffer inside a Hebrew/emoji code point inserts U+FFFD when decoded and can exceed the remaining byte budget. Back up to a valid code-point boundary before decoding; ten actual Worker budgets now cover it. All eight runtime-worker tests passed on pinned Node 24.5.0 after the fix.
 
 ## In Progress / Active Blockers
 

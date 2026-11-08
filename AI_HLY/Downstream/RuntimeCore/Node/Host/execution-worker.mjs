@@ -53,7 +53,12 @@ function append(channel, values) {
   const rendered = `${values.map(format).join(' ')}\n`;
   const current = channel === 'stdout' ? stdout : stderr;
   const remaining = Math.max(0, maximumOutputBytes - Buffer.byteLength(stdout) - Buffer.byteLength(stderr));
-  const accepted = Buffer.from(rendered).subarray(0, remaining).toString('utf8');
+  const encoded = Buffer.from(rendered);
+  let end = Math.min(Math.floor(remaining), encoded.length);
+  // The first excluded byte must begin a code point, not continue one.
+  // Decoding a split sequence inserts U+FFFD and can exceed the byte budget.
+  while (end > 0 && end < encoded.length && (encoded[end] & 0xc0) === 0x80) end -= 1;
+  const accepted = encoded.subarray(0, end).toString('utf8');
   if (channel === 'stdout') stdout = current + accepted;
   else stderr = current + accepted;
   if (Buffer.byteLength(rendered) > Buffer.byteLength(accepted)) outputWasTruncated = true;

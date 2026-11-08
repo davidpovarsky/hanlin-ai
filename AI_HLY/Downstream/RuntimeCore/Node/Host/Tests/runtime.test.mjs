@@ -50,6 +50,25 @@ test('execution output is capped without splitting the worker protocol', async (
   await fs.rm(workspace, { recursive: true, force: true });
 });
 
+test('UTF-8 output budgets never split Hebrew or emoji', async () => {
+  const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-utf8-budget-'));
+  try {
+    const entryPoint = path.join(workspace, 'main.mjs');
+    const text = 'שלום😀'.repeat(200);
+    await fs.writeFile(entryPoint, `console.log(${JSON.stringify(text)}); export default 42;`);
+    for (const budget of [1, 3, 5, 8, 9, 10, 11, 12, 13, 1025]) {
+      const result = await runWorker({ entryPoint, moduleKind: 'esm', maximumOutputBytes: budget });
+      assert.equal(result.type, 'completed');
+      assert.equal(result.value, 42);
+      assert.ok(Buffer.byteLength(result.stdout) + Buffer.byteLength(result.stderr) <= budget, `budget=${budget}`);
+      assert.ok(text.startsWith(result.stdout), `valid UTF-8 prefix, budget=${budget}`);
+      assert.equal(result.outputWasTruncated, true);
+    }
+  } finally {
+    await fs.rm(workspace, { recursive: true, force: true });
+  }
+});
+
 test('lifecycle planner accepts brokered actions and rejects shell syntax', () => {
   const accepted = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { install: 'node setup.mjs', prepare: 'npm run compile', compile: 'tsc --project tsconfig.json' } }, 'sha512-fixture');
   assert.equal(accepted.requiresApproval, true);
