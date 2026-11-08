@@ -28,6 +28,7 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         full_validation: bool = False,
         target_group: str | None = None,
         manual_modes: dict[str, bool] | None = None,
+        exact_test_selector: str | None = None,
     ):
         return planner.plan_affected_validation(
             mapping_config=self.mapping_config,
@@ -38,6 +39,7 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             full_validation=full_validation,
             target_group=target_group,
             manual_modes=manual_modes,
+            exact_test_selector=exact_test_selector,
         )
 
     # 1. docs-only change -> no simulator/device/IPA
@@ -702,6 +704,34 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
         self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
         self.assertNotIn("-configuration", plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_exact_selectors_mix_unit_and_ui_without_broadening(self) -> None:
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests"
+        ui = "AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft"
+        plan = self.plan_files(["README.md"], exact_test_selector=unit + "," + ui)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], unit)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], ui)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"],
+                         f"-only-testing:{unit} -only-testing:{ui}")
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertNotIn("AI_HLYUITests/AgentRuntimeConversationUITests", plan.not_required_tests)
+
+    def test_exact_selectors_reject_invalid_members(self) -> None:
+        valid = "AI_HLYTests/VoiceRecordingLifecycleTests"
+        for suffix in [",", ",OtherBundle/Suite", ",AI_HLYUITests/Suite;echo"]:
+            # Surrounding whitespace is accepted, but a missing path, unknown
+            # bundle or shell syntax must never reach xcodebuild.
+            with self.subTest(suffix=suffix), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], exact_test_selector=valid + suffix)
+
+    def test_exact_selectors_deduplicate_and_keep_method_boundaries(self) -> None:
+        method = "AI_HLYTests/VoiceRecordingLifecycleTests/testVR17_StressFiftyRapidCycles"
+        plan = self.plan_files(["README.md"], exact_test_selector=f" {method} , {method} ")
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], method)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{method}")
 
     def test_exact_test_selector_rejects_malformed_input(self) -> None:
         with self.assertRaises(planner.RoutingError) as ctx:

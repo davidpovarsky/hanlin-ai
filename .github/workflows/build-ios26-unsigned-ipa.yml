@@ -64,7 +64,7 @@ on:
         default: ''
         type: string
       exact_test_selector:
-        description: Explicitly run a single exact XCTest method or suite selector (e.g. AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime)
+        description: Comma-separated exact XCTest methods or suites, including mixed unit and UI selectors
         required: false
         default: ''
         type: string
