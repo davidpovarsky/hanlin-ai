@@ -945,11 +945,36 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testModelPopoverZoomExpandThenNavigate() throws {
-        let app = launchDockAcceptanceApp()
+        try verifyModelPopoverZoom(simulatedWidth: "1024")
+    }
+
+    func testModelPopoverZoomNarrowAndRepeatedPresentation() throws {
+        try verifyModelPopoverZoom(simulatedWidth: "500", repeatPresentation: true)
+    }
+
+    private func verifyModelPopoverZoom(simulatedWidth: String, repeatPresentation: Bool = false) throws {
+        let app = launchDockAcceptanceApp(simulatedWidth: simulatedWidth)
         openChat(in: app)
 
         let modelPicker = app.descendants(matching: .any)["hanlin-composer-model-picker"].firstMatch
         XCTAssertTrue(modelPicker.waitForExistence(timeout: 10))
+        let sourceFrame = modelPicker.frame
+        // Keep action times and source rectangles beside the uninterrupted simctl
+        // recording. Final-state AX assertions alone do not verify a zoom animation.
+        var motionEvents: [[String: Any]] = []
+        func mark(_ action: String, frame: CGRect) {
+            motionEvents.append(["action": action, "time": Date().timeIntervalSince1970,
+                "x": frame.minX, "y": frame.minY, "width": frame.width, "height": frame.height])
+        }
+        defer {
+            if let data = try? JSONSerialization.data(withJSONObject: motionEvents, options: [.prettyPrinted, .sortedKeys]) {
+                let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+                attachment.name = "ModelPopover_MotionEvents_\(simulatedWidth)"
+                attachment.lifetime = .keepAlways
+                add(attachment)
+            }
+        }
+        mark("open-from-model-button", frame: sourceFrame)
         tapElement(modelPicker)
 
         let modelPopover = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
@@ -959,6 +984,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         let allModelsBtn = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
         XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+        mark("zoom-from-all-models-button", frame: allModelsBtn.frame)
         tapElement(allModelsBtn)
 
         let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
@@ -986,6 +1012,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // Back button collapses back to compact root
         let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
         XCTAssertTrue(backBtn.waitForExistence(timeout: 5))
+        mark("zoom-back-to-all-models-button", frame: backBtn.frame)
         tapElement(backBtn)
         XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
         let collapsed = NSPredicate { _, _ in
@@ -993,6 +1020,23 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
         let collapsedExpectation = expectation(for: collapsed, evaluatedWith: modelPopover)
         XCTAssertEqual(XCTWaiter.wait(for: [collapsedExpectation], timeout: 5), .completed)
+        mark("compact-after-back", frame: modelPopover.frame)
+        // Dismiss outside the popover, then reopen from the same stable source.
+        mark("dismiss-to-model-button", frame: sourceFrame)
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.3)).tap()
+        XCTAssertTrue(modelPopover.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(modelPicker.frame, sourceFrame, "The zoom source must not move when the presentation closes")
+        if repeatPresentation {
+            mark("reopen-from-model-button", frame: modelPicker.frame)
+            tapElement(modelPicker)
+            XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+            mark("double-tap-all-models", frame: allModelsBtn.frame)
+            allModelsBtn.doubleTap()
+            XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5))
+            tapElement(backBtn)
+            XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5), "Repeated taps must not push duplicate destinations")
+            attachScreenshot("ModelPopover_Reopened_Narrow", in: app)
+        }
     }
 
     func testDraftAndAttachmentPersistenceAtoBAndFirstSend() throws {

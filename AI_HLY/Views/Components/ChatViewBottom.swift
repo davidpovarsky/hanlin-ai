@@ -281,6 +281,7 @@ struct ChatViewBottom: View {
     @State private var measuredAttachmentPreviewHeight: CGFloat = 0
     @State private var baselineWorkspaceHeight: CGFloat = 0
     @State private var popupCoordinator = HanlinComposerPopupCoordinator()
+    @Namespace private var modelPopoverZoom
     @State private var selectedMCPCountForChat: Int = 0
     @State private var showEmbeddingSettingSheet: Bool = false
     @State private var isEmbeddingModelError: Bool = false
@@ -1343,7 +1344,7 @@ struct ChatViewBottom: View {
             .disabled(isResponding)
             .sensoryFeedback(.impact, trigger: isFeedBack)
 
-            // Entrypoint 3: Compact Discoverable Model Picker Capsule (sole anchored `.popover` with internal matched zoom)
+            // The presentation source is independent of the All Models navigation source.
             Button {
                 isFeedBack.toggle()
                 popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
@@ -1352,6 +1353,9 @@ struct ChatViewBottom: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("hanlin-composer-model-picker")
+            .matchedTransitionSource(id: "model-popover", in: modelPopoverZoom) { source in
+                source.clipShape(RoundedRectangle(cornerRadius: 14))
+            }
             .sensoryFeedback(.selection, trigger: isSelect)
             .popover(
                 isPresented: popupCoordinator.binding(for: .model),
@@ -1372,6 +1376,9 @@ struct ChatViewBottom: View {
                     ifAudio: ifAudio
                 )
                 .presentationCompactAdaptation(.popover)
+                .presentationCornerRadius(22)
+                .presentationBackground(.ultraThinMaterial)
+                .navigationTransition(.zoom(sourceID: "model-popover", in: modelPopoverZoom))
             }
 
             Spacer(minLength: 4)

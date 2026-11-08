@@ -2199,6 +2199,15 @@ jobs:
                   ui_test_args+=("-only-testing:$suite")
                 fi
               done
+              # Preserve successful model motion evidence too, not just XCTest
+              # failure recordings. Scope this capture to the explicitly selected test.
+              model_video_pid=""
+              if [[ "${SIMULATOR_UI_FILTER:-}" == *"testModelPopover"* ]]; then
+                xcrun simctl io "$SIMULATOR_UDID" recordVideo --codec=h264 "$LOG_DIR/model-popover-motion.mp4" \
+                  > "$LOG_DIR/model-popover-video.log" 2>&1 &
+                model_video_pid=$!
+                sleep 1
+              fi
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
@@ -2214,6 +2223,10 @@ jobs:
               "${ui_test_args[@]}" \
               2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
               nativescript_e2e_status="${PIPESTATUS[0]}"
+              if [ -n "$model_video_pid" ]; then
+                kill -INT "$model_video_pid" 2>/dev/null || true
+                wait "$model_video_pid" || true
+              fi
               set -e
               test_duration_seconds="$(( $(date +%s) - nativescript_e2e_started_at ))"
               echo "$test_duration_seconds" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"

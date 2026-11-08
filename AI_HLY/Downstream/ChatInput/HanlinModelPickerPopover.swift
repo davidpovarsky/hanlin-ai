@@ -3,7 +3,7 @@
 //  AI_HLY
 //
 //  Compact anchored model picker popover with InteriorOrganizerV3_3 completion-ordered
-//  two-stage size expansion and native stack navigation into searchable provider-grouped
+//  two-stage size expansion and source-linked zoom navigation into searchable provider-grouped
 //  "All Models", styled in Hanlin's original delicate blue glass aesthetic (§4.8).
 //
 
@@ -21,6 +21,7 @@ struct HanlinModelPickerPopover: View {
     let ifAudio: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Namespace private var allModelsZoom
     @State private var searchText: String = ""
 
     private let compactSize = CGSize(width: 286, height: 324)
@@ -95,6 +96,7 @@ struct HanlinModelPickerPopover: View {
                         switch route {
                         case .allModels:
                             allModelsDestinationPage
+                                .navigationTransition(.zoom(sourceID: "all-models", in: allModelsZoom))
                         }
                     }
                     .onAppear {
@@ -107,15 +109,8 @@ struct HanlinModelPickerPopover: View {
         }
         .frame(width: currentSize.width, height: currentSize.height)
         .fixedSize()
-        .background(
-            GlassView(style: .systemUltraThinMaterial)
-        )
-        .clipShape(.rect(cornerRadius: 22, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
-                .allowsHitTesting(false)
-        )
+        // The native presentation owns its material and corner radius. A second
+        // clipped blur surface here would be snapshotted by both zoom transitions.
         .onChange(of: coordinator.modelNavigationPath) { _, newPath in
             if !newPath.isEmpty {
                 coordinator.modelDestinationDisappeared = false
@@ -213,6 +208,9 @@ struct HanlinModelPickerPopover: View {
                 .disabled(coordinator.isModelAnimatingExpand)
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
+                .matchedTransitionSource(id: "all-models", in: allModelsZoom) { source in
+                    source.clipShape(RoundedRectangle(cornerRadius: 12))
+                }
                 .accessibilityIdentifier("hanlin-model-picker-all-models-button")
             }
         }

@@ -338,7 +338,11 @@ final class HanlinComposerPopupCoordinator {
                 return
             }
             self.isModelAnimatingExpand = false
-            self.modelNavigationPath.append(route)
+            // Completion executes in a fresh transaction; explicitly animate the
+            // navigation too, after the popover has reached its expanded size.
+            withAnimation(reduceMotion ? nil : .smooth(duration: 0.32)) {
+                self.modelNavigationPath.append(route)
+            }
         }
 
         if deferAnimationCompletionsForTesting {
