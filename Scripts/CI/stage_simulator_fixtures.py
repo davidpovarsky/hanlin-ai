@@ -21,6 +21,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from typing import Dict, List, Optional
 
@@ -56,23 +57,31 @@ def run_bounded(
     timeout_seconds: float = 30.0,
     check: bool = False,
 ) -> subprocess.CompletedProcess[str]:
-    """Execute command with strict timeout and output capture."""
-    try:
-        return subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            timeout=timeout_seconds,
-            check=check,
-        )
-    except subprocess.TimeoutExpired:
-        print(f"[stage_simulator_fixtures] Command timed out after {timeout_seconds}s: {' '.join(cmd)}", file=sys.stderr)
-        return subprocess.CompletedProcess(
-            args=cmd,
-            returncode=124,
-            stdout="",
-            stderr=f"Timed out after {timeout_seconds}s",
-        )
+    """Wait for the command, not EOF from a descendant that inherited its output."""
+    with tempfile.TemporaryFile(mode="w+t", encoding="utf-8", errors="replace") as out, \
+            tempfile.TemporaryFile(mode="w+t", encoding="utf-8", errors="replace") as err:
+        timed_out = False
+        try:
+            result = subprocess.run(
+                cmd,
+                stdout=out,
+                stderr=err,
+                timeout=timeout_seconds,
+                check=False,
+            )
+            returncode = result.returncode
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            returncode = 124
+            print(f"[stage_simulator_fixtures] Command execution timed out after {timeout_seconds}s: {' '.join(cmd)}", file=sys.stderr)
+        out.seek(0)
+        err.seek(0)
+        stdout, stderr = out.read(), err.read()
+        if timed_out:
+            stderr += f"\nTimed out after {timeout_seconds}s"
+        elif check and returncode:
+            raise subprocess.CalledProcessError(returncode, cmd, output=stdout, stderr=stderr)
+        return subprocess.CompletedProcess(cmd, returncode, stdout, stderr)
 
 
 def stage_simulator_fixtures(

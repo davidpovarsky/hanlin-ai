@@ -43,6 +43,30 @@ from Scripts.CI import xcode_cache_inputs
 
 
 class CICacheAndOptimizationTests(unittest.TestCase):
+    def test_bounded_capture_preserves_exit_status_and_check_contract(self):
+        command = [sys.executable, "-c", "import sys; print('captured-out'); print('captured-err',file=sys.stderr); sys.exit(3)"]
+        result = stage_simulator_fixtures.run_bounded(command, timeout_seconds=5.0)
+        self.assertEqual(result.returncode, 3)
+        self.assertEqual(result.stdout.strip(), "captured-out")
+        self.assertEqual(result.stderr.strip(), "captured-err")
+        with self.assertRaises(subprocess.CalledProcessError) as raised:
+            stage_simulator_fixtures.run_bounded(command, timeout_seconds=5.0, check=True)
+        self.assertEqual(raised.exception.returncode, 3)
+        self.assertEqual(raised.exception.stdout.strip(), "captured-out")
+        self.assertEqual(raised.exception.stderr.strip(), "captured-err")
+
+    def test_completed_command_does_not_wait_for_descendant_output_handles(self):
+        code = (
+            "import subprocess,sys; "
+            "subprocess.Popen([sys.executable,'-c','import time; time.sleep(2)'], "
+            "stdout=sys.stdout,stderr=sys.stderr, "
+            "creationflags=subprocess.CREATE_NO_WINDOW if sys.platform=='win32' else 0); "
+            "print('parent-complete',flush=True)"
+        )
+        result = stage_simulator_fixtures.run_bounded([sys.executable, "-c", code], timeout_seconds=1.0)
+        self.assertEqual(result.returncode, 0, "A completed command must not time out on a descendant's open output pipe")
+        self.assertIn("parent-complete", result.stdout)
+
     @classmethod
     def setUpClass(cls):
         cls.repo_root = Path(__file__).resolve().parents[3]
