@@ -393,6 +393,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     typealias AudioSessionConfigurator = @Sendable (AVAudioSession.Category, AVAudioSession.Mode, AVAudioSession.CategoryOptions) throws -> Void
     typealias AudioSessionActivator = @Sendable (Bool, AVAudioSession.SetActiveOptions) throws -> Void
     typealias AudioSessionCategoryProvider = @Sendable () -> AVAudioSession.Category
+    typealias AudioInputUIDsProvider = @Sendable () -> Set<String>
     typealias AudioFormatProvider = @Sendable () -> AVAudioFormat?
     typealias AudioTapInstaller = @Sendable (AVAudioFormat, @escaping @Sendable (AVAudioPCMBuffer) -> Void) throws -> Void
     typealias AudioTapRemover = @Sendable () -> Void
@@ -407,6 +408,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     private let audioSessionConfigurator: AudioSessionConfigurator
     private let audioSessionActivator: AudioSessionActivator
     private let audioSessionCategoryProvider: AudioSessionCategoryProvider
+    private let audioInputUIDsProvider: AudioInputUIDsProvider
     private let audioFormatProvider: AudioFormatProvider
     private let audioTapInstaller: AudioTapInstaller
     private let audioTapRemover: AudioTapRemover
@@ -431,6 +433,8 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     private var audioFile: AVAudioFile?
     private var tempRecordingURL: URL?
     private var audioSink: AudioTapSink?
+    private var recordingInputUIDs: Set<String> = []
+    private var activeRecordingFormat: AVAudioFormat?
 
     #if DEBUG
     var testHasRecordingResources: Bool {
@@ -467,6 +471,9 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         audioSessionCategoryProvider: @escaping AudioSessionCategoryProvider = {
             AVAudioSession.sharedInstance().category
         },
+        audioInputUIDsProvider: @escaping AudioInputUIDsProvider = {
+            Set(AVAudioSession.sharedInstance().currentRoute.inputs.map(\.uid))
+        },
         audioFormatProvider: AudioFormatProvider? = nil,
         audioTapInstaller: AudioTapInstaller? = nil,
         audioTapRemover: AudioTapRemover? = nil,
@@ -483,6 +490,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         self.audioSessionConfigurator = audioSessionConfigurator
         self.audioSessionActivator = audioSessionActivator
         self.audioSessionCategoryProvider = audioSessionCategoryProvider
+        self.audioInputUIDsProvider = audioInputUIDsProvider
         self.audioEngineStarter = audioEngineStarter
 
         let engine = self.audioEngine
@@ -652,16 +660,32 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     func handleAudioRouteChange(reason: AVAudioSession.RouteChangeReason) {
         guard isRecording else { return }
         switch reason {
-        case .categoryChange where audioSessionCategoryProvider() == .record:
-            // Starting our own recording changes the category to .record. Its
-            // notification is delivered after start finishes; it is not a lost input.
-            return
-        case .oldDeviceUnavailable, .categoryChange:
+        case .oldDeviceUnavailable, .categoryChange, .newDeviceAvailable, .routeConfigurationChange:
+            // Route notifications describe outputs as well as inputs. Keep the
+            // owned tap only while its microphone, format and engine still match.
+            guard !recordingInputIsUnchanged else { return }
+            stopRecording()
+            errorMessage = String(localized: "音频输入路由已更改，录音已停止")
+        case .noSuitableRouteForCategory:
             stopRecording()
             errorMessage = String(localized: "音频输入路由已更改，录音已停止")
         default:
             break
         }
+    }
+
+    private var recordingInputIsUnchanged: Bool {
+        guard audioSessionCategoryProvider() == .record,
+              !recordingInputUIDs.isEmpty,
+              audioInputUIDsProvider() == recordingInputUIDs,
+              let activeRecordingFormat,
+              let currentFormat = audioFormatProvider() else { return false }
+        let engineIsRunning = audioEngineStarter == nil ? audioEngine.isRunning : audioEngineRunning
+        return engineIsRunning
+            && currentFormat.sampleRate == activeRecordingFormat.sampleRate
+            && currentFormat.channelCount == activeRecordingFormat.channelCount
+            && currentFormat.commonFormat == activeRecordingFormat.commonFormat
+            && currentFormat.isInterleaved == activeRecordingFormat.isInterleaved
     }
 
     // MARK: - 权限请求
@@ -803,6 +827,8 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
             rollbackPartialStart(attemptId: attemptId, reason: "Invalid audio format")
             return
         }
+        recordingInputUIDs = audioInputUIDsProvider()
+        activeRecordingFormat = recordingFormat
 
         // 4. 创建录音文件（可选，文件不可用时不阻断语音转文字）
         let tempDir = FileManager.default.temporaryDirectory
@@ -925,6 +951,8 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
 
     private func cleanupOwnedResources() {
         currentGeneration += 1
+        recordingInputUIDs.removeAll()
+        activeRecordingFormat = nil
 
         audioSink?.close()
         audioSink = nil
@@ -949,7 +977,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         if audioSessionActivated {
             audioSessionActivated = false
             let currentCategory = audioSessionCategoryProvider()
-            if currentCategory != .playback {
+            if currentCategory == .record {
                 do {
                     try audioSessionActivator(false, .notifyOthersOnDeactivation)
                 } catch {

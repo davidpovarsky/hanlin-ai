@@ -634,12 +634,16 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
 
     func testVR22_OwnRecordingCategoryChangeDoesNotStopMicrophone() throws {
         let category = SendableBox<AVAudioSession.Category>(.record)
+        let deactivations = SendableBox<Int>(0)
         let recognizer = SpeechRecognizer(
             speechAuthChecker: { .authorized },
             micAuthChecker: { .granted },
             audioSessionConfigurator: { _, _, _ in },
-            audioSessionActivator: { _, _ in },
+            audioSessionActivator: { active, _ in
+                if !active { deactivations.mutate { $0 += 1 } }
+            },
             audioSessionCategoryProvider: { category.current },
+            audioInputUIDsProvider: { ["microphone.test"] },
             audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
@@ -656,12 +660,58 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertTrue(recognizer.isRecording, "Our own category activation must not cancel recording")
         XCTAssertNil(recognizer.errorMessage)
 
-        category.set(.playback)
+        category.set(.playAndRecord)
         recognizer.handleAudioRouteChange(reason: .categoryChange)
         XCTAssertFalse(recognizer.isRecording, "A competing audio category must stop this recording")
         XCTAssertNotNil(recognizer.errorMessage)
         XCTAssertFalse(recognizer.testHasRecordingResources)
+        XCTAssertEqual(deactivations.current, 0, "Do not deactivate another owner's play-and-record session")
         recognizer.viewDidDisappear()
+    }
+
+    func testVR23_OutputChangesPreserveInputButInputOrFormatLossStopsRecording() throws {
+        let initialFormat = VoiceRecordingLifecycleTests.makeSyntheticAudioFormat()
+        let changedFormat = try XCTUnwrap(AVAudioFormat(
+            standardFormatWithSampleRate: initialFormat.sampleRate / 2,
+            channels: initialFormat.channelCount
+        ))
+        for change in ["microphone", "format", "no-input"] {
+            let inputUIDs = SendableBox<Set<String>>(["microphone.builtin"])
+            let format = SendableBox<AVAudioFormat>(initialFormat)
+            let recognizer = SpeechRecognizer(
+                speechAuthChecker: { .authorized },
+                micAuthChecker: { .granted },
+                audioSessionConfigurator: { _, _, _ in },
+                audioSessionActivator: { _, _ in },
+                audioSessionCategoryProvider: { .record },
+                audioInputUIDsProvider: { inputUIDs.current },
+                audioFormatProvider: { format.current },
+                audioTapInstaller: { _, _ in },
+                audioTapRemover: {},
+                audioEngineStarter: {},
+                audioEngineStopper: {},
+                recognitionTaskStarter: { _, _, _ in nil }
+            )
+            recognizer.viewDidAppear()
+            let recordingURL = try XCTUnwrap(recognizer.recordedAudioURL)
+            defer { try? FileManager.default.removeItem(at: recordingURL) }
+            XCTAssertTrue(recognizer.isRecording)
+            for reason: AVAudioSession.RouteChangeReason in [.oldDeviceUnavailable, .newDeviceAvailable, .routeConfigurationChange] {
+                recognizer.handleAudioRouteChange(reason: reason)
+                XCTAssertTrue(recognizer.isRecording, "Output-only changes must preserve the active microphone")
+            }
+
+            if change == "microphone" { inputUIDs.set(["microphone.usb"]) }
+            if change == "format" { format.set(changedFormat) }
+            recognizer.handleAudioRouteChange(reason: change == "no-input" ? .noSuitableRouteForCategory : .routeConfigurationChange)
+            XCTAssertFalse(recognizer.isRecording, "Stop safely after \(change) changes the owned input")
+            XCTAssertNotNil(recognizer.errorMessage)
+            XCTAssertFalse(recognizer.testHasRecordingResources)
+            XCTAssertFalse(recognizer.audioSessionActivated)
+            XCTAssertEqual(recognizer.recordedAudioURL, recordingURL)
+            XCTAssertTrue(FileManager.default.fileExists(atPath: recordingURL.path), "Preserve the recording for saving after input loss")
+            recognizer.viewDidDisappear()
+        }
     }
 
     // MARK: - VR-19: AudioTapSink file-write pool branch with real AVAudioFile across various frame sizes
