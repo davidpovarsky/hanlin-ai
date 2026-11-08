@@ -24,9 +24,9 @@ import sys
 from typing import List, Optional
 
 try:
-    from Scripts.CI.stage_simulator_fixtures import INSTALL_TIMEOUT_SECONDS, run_bounded
+    from Scripts.CI.stage_simulator_fixtures import APP_CONTAINER_TIMEOUT_SECONDS, INSTALL_TIMEOUT_SECONDS, run_bounded
 except ModuleNotFoundError:
-    from stage_simulator_fixtures import INSTALL_TIMEOUT_SECONDS, run_bounded
+    from stage_simulator_fixtures import APP_CONTAINER_TIMEOUT_SECONDS, INSTALL_TIMEOUT_SECONDS, run_bounded
 
 try:
     from .create_scriptui_fixtures import create_fixtures, FIXTURE_NAMES
@@ -120,7 +120,7 @@ def stage_fixtures(
 
     # 3. Get app data container
     container_cmd = ["xcrun", "simctl", "get_app_container", simulator_udid, bundle_id, "data"]
-    c_res = runner(container_cmd, timeout_seconds=5.0)
+    c_res = runner(container_cmd, timeout_seconds=APP_CONTAINER_TIMEOUT_SECONDS)
     app_container: Optional[Path] = None
     if c_res.returncode == 0 and c_res.stdout.strip():
         app_container = Path(c_res.stdout.strip())

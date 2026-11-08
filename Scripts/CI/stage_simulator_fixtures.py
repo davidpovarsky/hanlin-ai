@@ -42,6 +42,7 @@ FIXTURE_NAMES = [
 # A cold install of the full host exceeded 60 seconds on the macOS arm64 runner.
 # Keep both staging consumers bounded without treating that install as a failure.
 INSTALL_TIMEOUT_SECONDS = 180.0
+APP_CONTAINER_TIMEOUT_SECONDS = 20.0
 
 
 def sha256_file(path: Path) -> str:
@@ -155,7 +156,7 @@ def stage_simulator_fixtures(
     app_container_path: Optional[Path] = None
     container_res = runner(
         ["xcrun", "simctl", "get_app_container", simulator_udid, bundle_id, "data"],
-        timeout_seconds=20.0,
+        timeout_seconds=APP_CONTAINER_TIMEOUT_SECONDS,
     )
     if container_res.returncode == 0 and container_res.stdout.strip():
         app_container_path = Path(container_res.stdout.strip())

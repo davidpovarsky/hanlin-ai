@@ -42,9 +42,10 @@ class StageScriptUIFixturesTests(unittest.TestCase):
 
             def runner(cmd, **kwargs):
                 calls.append((cmd, kwargs))
-                self.assertEqual(kwargs["timeout_seconds"], 5.0)
                 if "com.apple.DocumentsApp" in cmd:
+                    self.assertEqual(kwargs["timeout_seconds"], 5.0)
                     return subprocess.CompletedProcess(cmd, 124, "", "timeout")
+                self.assertEqual(kwargs["timeout_seconds"], 20.0)
                 return subprocess.CompletedProcess(cmd, 0, str(container), "")
 
             result = stager.stage_fixtures("sim", fixtures_dir=root / "Fixtures", runner=runner)
