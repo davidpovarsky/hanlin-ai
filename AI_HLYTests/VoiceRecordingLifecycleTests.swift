@@ -669,10 +669,14 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         // Assert all valid within-capacity sizes were accepted with zero drops
         XCTAssertEqual(sink.testDroppedWritesCount, 0, "All frame sizes up to 8192 must be accepted without drops")
 
-        // Wait for async writer queue to process and return buffers
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await sink.waitForPendingTestWrites()
 
         XCTAssertEqual(sink.testPoolCount, 16, "All 16 pooled buffers must be returned to pool after write")
+        let recordedFile = try AVAudioFile(forReading: tempURL)
+        XCTAssertEqual(recordedFile.length, AVAudioFramePosition(testSizes.reduce(0, +)))
+        let recorded = try XCTUnwrap(AVAudioPCMBuffer(pcmFormat: recordedFile.processingFormat, frameCapacity: 1))
+        try recordedFile.read(into: recorded, frameCount: 1)
+        XCTAssertEqual(try XCTUnwrap(recorded.floatChannelData)[0][0], 0.25, accuracy: 0.0001)
         sink.close()
     }
 
@@ -703,7 +707,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             return
         }
         oversizeBuf.frameLength = oversizedCount
-        let ptr = oversizeBuf.floatChannelData![0]
+        let ptr = try XCTUnwrap(oversizeBuf.floatChannelData)[0]
         for i in 0..<Int(oversizedCount) {
             ptr[i] = 0.3
         }
@@ -719,6 +723,9 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             return
         }
         stereoBuf.frameLength = 1024
+        for channel in 0..<2 {
+            try XCTUnwrap(stereoBuf.floatChannelData)[channel].initialize(repeating: 0, count: 1024)
+        }
         sink.processBuffer(stereoBuf)
         XCTAssertEqual(sink.testDroppedWritesCount, 2, "Incompatible channel format must be safely dropped")
         XCTAssertEqual(sink.testPoolCount, 16, "Pool buffer must not be leaked on format mismatch")
@@ -729,11 +736,14 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             return
         }
         validBuf.frameLength = 1024
+        try XCTUnwrap(validBuf.floatChannelData)[0].initialize(repeating: 0.5, count: 1024)
         sink.processBuffer(validBuf)
         XCTAssertEqual(sink.testDroppedWritesCount, 2, "Subsequent valid buffer must be accepted")
 
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await sink.waitForPendingTestWrites()
         XCTAssertEqual(sink.testPoolCount, 16, "Pool must remain intact")
+        XCTAssertEqual(try AVAudioFile(forReading: tempURL).length, 1024,
+                       "Only compatible frames may reach the recording file")
         sink.close()
     }
 
@@ -748,17 +758,21 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
-            audioEngineStopper: {}
+            audioEngineStopper: {},
+            recognitionTaskStarter: { _, _, _ in nil }
         )
         recognizer.viewDidAppear()
 
         for _ in 0..<50 {
             recognizer.startRecording()
             XCTAssertTrue(recognizer.isRecording)
+            XCTAssertTrue(recognizer.testHasRecordingResources)
+            let recordingURL = try XCTUnwrap(recognizer.recordedAudioURL)
+            XCTAssertTrue(FileManager.default.fileExists(atPath: recordingURL.path))
             recognizer.stopRecording()
             XCTAssertFalse(recognizer.isRecording)
-            XCTAssertNil(recognizer.audioFile)
-            XCTAssertNil(recognizer.audioSink)
+            XCTAssertFalse(recognizer.testHasRecordingResources)
+            try FileManager.default.removeItem(at: recordingURL)
         }
 
         XCTAssertEqual(recognizer.phase, .idle)

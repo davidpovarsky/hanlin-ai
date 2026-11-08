@@ -432,6 +432,12 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     private var tempRecordingURL: URL?
     private var audioSink: AudioTapSink?
 
+    #if DEBUG
+    var testHasRecordingResources: Bool {
+        audioFile != nil || audioSink != nil || recognitionRequest != nil || recognitionTask != nil
+    }
+    #endif
+
     // 语言展示名
     var selectedLocaleDisplayName: String {
         let id = selectedLocale.identifier
@@ -1011,6 +1017,12 @@ internal final class AudioTapSink: @unchecked Sendable {
         defer { lock.unlock() }
         return bufferPool.count
     }
+
+    func waitForPendingTestWrites() async {
+        await withCheckedContinuation { continuation in
+            fileWriterQueue.async { continuation.resume() }
+        }
+    }
     #endif
 
     init(
@@ -1066,7 +1078,9 @@ internal final class AudioTapSink: @unchecked Sendable {
                 let dstChannels = Int(freeBuf.format.channelCount)
                 let isFormatCompatible = buffer.format.commonFormat == .pcmFormatFloat32 &&
                                          freeBuf.format.commonFormat == .pcmFormatFloat32 &&
-                                         buffer.format.isInterleaved == freeBuf.format.isInterleaved &&
+                                         !buffer.format.isInterleaved &&
+                                         !freeBuf.format.isInterleaved &&
+                                         buffer.format.sampleRate == freeBuf.format.sampleRate &&
                                          srcChannels == dstChannels &&
                                          srcChannels > 0
 
