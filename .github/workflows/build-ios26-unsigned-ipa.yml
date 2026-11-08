@@ -2071,11 +2071,22 @@ jobs:
           fi
 
           if [ "$STAGE_SCRIPTUI_FIXTURES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinScriptUIProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinExpoProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]]; then
-            python3 Scripts/CI/stage_scriptui_fixtures.py \
-              --simulator-udid "$SIMULATOR_UDID" \
-              --app-path "$APP_PATH" \
-              --bundle-id "$BUNDLE_ID" \
-              --log-file "$LOG_DIR/08-scriptui-files-staging.log"
+            if [ "$RUN_SIMULATOR_UNIT" = "true" ] && [ -n "${SIMULATOR_UNIT_FILTER:-}" ] \
+              && [ "$SIMULATOR_E2E_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ] \
+              && [ "$RUN_FULL_VALIDATION" != "true" ] && [ "$RUN_NATIVESCRIPT_DEPENDENCIES" != "true" ]; then
+              # Xcode installs the exact build-for-testing host for unit execution.
+              # Seed its Documents afterwards instead of first installing a different,
+              # pruned runtime copy and then replacing it during test-without-building.
+              echo "STAGE_SCRIPTUI_AFTER_UNIT=true" >> "$GITHUB_ENV"
+              printf '%s\n' "ScriptUI fixtures deferred until successful Xcode unit-host installation." \
+                > "$LOG_DIR/08-scriptui-files-staging-deferred.txt"
+            else
+              python3 Scripts/CI/stage_scriptui_fixtures.py \
+                --simulator-udid "$SIMULATOR_UDID" \
+                --app-path "$APP_PATH" \
+                --bundle-id "$BUNDLE_ID" \
+                --log-file "$LOG_DIR/08-scriptui-files-staging.log"
+            fi
           else
             printf '%s\n' "ScriptUI fixture staging skipped (ScriptUI not affected)." > "$LOG_DIR/08-scriptui-files-staging-skipped.txt"
           fi
@@ -2136,6 +2147,19 @@ jobs:
               fi
             else
               printf '%s\n' "Downstream unit tests skipped by affected-validation router." > "$LOG_DIR/08-downstream-unit-tests-skipped.txt"
+            fi
+
+            if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}" = "true" ]; then
+              if [ "$downstream_test_status" -ne 0 ]; then
+                echo "Cannot stage UI fixtures: Xcode unit-host installation/execution failed." >&2
+                exit "$downstream_test_status"
+              fi
+              staging_started_at="$(date +%s)"
+              python3 Scripts/CI/stage_scriptui_fixtures.py \
+                --simulator-udid "$SIMULATOR_UDID" \
+                --bundle-id "$(cat "$LOG_DIR/bundle-id.txt")" \
+                --log-file "$LOG_DIR/08-scriptui-files-staging.log"
+              echo "$(( $(date +%s) - staging_started_at ))" > "$LOG_DIR/08-scriptui-staging-duration-seconds.txt"
             fi
 
             if [ "$SIMULATOR_E2E_ONLY" != "true" ] && { [ "$RUN_SIMULATOR_SCRIPTING_ACCEPTANCE" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; }; then
