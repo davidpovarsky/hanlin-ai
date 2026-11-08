@@ -1037,7 +1037,7 @@ class ComprehensiveValidationInfrastructureTests(unittest.TestCase):
     def test_i_bounded_diagnostics_timeout(self) -> None:
         workflow_text = (self.repo_root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
         self.assertIn("timeout-minutes: 2", workflow_text)
-        self.assertIn("head -n 5000", workflow_text)
+        self.assertIn("tail -n 5000", workflow_text)
 
     # Test J: Deterministic failure handling: never masquerades as PASS
     def test_j_deterministic_failure_handling(self) -> None:

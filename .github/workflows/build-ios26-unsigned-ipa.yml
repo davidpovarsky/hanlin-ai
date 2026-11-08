@@ -1860,6 +1860,14 @@ jobs:
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/Testing.framework
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/lib_Testing*
           test ! -e build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
+          # Removing sealed test resources invalidates the copied app's signature.
+          # Re-seal only this simulator copy, retaining its Xcode entitlements.
+          codesign --force --sign - --timestamp=none \
+            --preserve-metadata=identifier,entitlements,flags --generate-entitlement-der \
+            build/SimulatorRuntimeApp/AI_Hanlin.app \
+            > "$LOG_DIR/07-simulator-runtime-signature.log" 2>&1
+          codesign --verify --deep --strict --verbose=2 build/SimulatorRuntimeApp/AI_Hanlin.app \
+            >> "$LOG_DIR/07-simulator-runtime-signature.log" 2>&1
 
       - name: Measure same-run simulator no-op rebuild
         if: ${{ inputs.measure_warm_rebuild }}
@@ -2632,10 +2640,16 @@ jobs:
         timeout-minutes: 2
         run: |
           set +e
+          {
+            df -h .
+            vm_stat
+            ps -axo pid,ppid,%cpu,%mem,etime,comm
+          } > "$LOG_DIR/09-host-resources.log" 2>&1
           if [ -f "$LOG_DIR/simulator-udid.txt" ]; then
             SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
             xcrun simctl spawn "$SIMULATOR_UDID" log show --style compact --last 5m \
-              | head -n 5000 > "$LOG_DIR/09-simulator-system.log" 2>&1 || true
+              --predicate 'process == "installd" OR process == "installcoordinationd" OR subsystem CONTAINS[c] "install" OR eventMessage CONTAINS[c] "com.itorah.chavrusachat"' \
+              2>&1 | tail -n 5000 > "$LOG_DIR/09-simulator-system.log" || true
             if [ -f "$LOG_DIR/bundle-id.txt" ]; then
               BUNDLE_ID="$(cat "$LOG_DIR/bundle-id.txt")"
               DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
