@@ -6,6 +6,21 @@ Owner approved the ordered plan on 2026-11-08, including necessary infrastructur
 Base: `507cd0409e722d933e7fd568a24b4221a7a5d346` (Pass 7).
 Branch: `fix/hanlin-approved-plan-20261108`.
 
+## Current acceptance state
+
+| Scope | Executed evidence | Remaining acceptance |
+| --- | --- | --- |
+| Microphone | 22 lifecycle tests passed in `42521723147` at `3182b369` | Fresh signed-device recording; owner failed 89401 |
+| Widget store | 40 Swift + seven JS tests passed in `42515208307` | Owner's existing store/picker error 4 remains unresolved; no data reset |
+| Compact/wide management | Both navigation/draft-preservation cases passed in `42515491917` | Physical compact iPad acceptance |
+| All Models | Coordinator tests passed; old zoom failed UI and was replaced with native stack push | Fresh UI execution of the replacement |
+| Expo scheduler/lifecycle | Source correction compiled; three earlier UI passes retain their run provenance | Fresh fixture-staged UI run and physical Hermes acceptance |
+| Runtime policy / Node HTTPS | Historical read/execute alias and wire parsing already corrected in Pass 7 | Capability-policy completion, device HTTPS/FD diagnosis |
+| Native widget engines/actions | Implemented engines and package-level evidence | Actual Home Screen instance/action acceptance remains open |
+| Shared chat / Translation / Shortcuts | Approved subsequent scope | Implementation and acceptance still pending |
+
+Current scoped simulator run: [42526628486](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42526628486), app source plus staging at `9b5c87f4`. It is pending and does not establish an aggregate PASS. No new TestFlight distribution or merge has occurred.
+
 ## Execution order
 
 1. Reconcile Asana evidence without closing physical-device gates.
@@ -50,6 +65,12 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 - Exact-selector routing now accepts validated comma-separated unit/UI method paths in one build, retaining separate execution filters. Three new regressions cover mixed bundles, malformed members, duplicate selectors, and method boundaries. 107 local infrastructure tests passed; no full device build or distribution is selected.
 
 ## Owner evidence received during execution
+
+### Historical checksum regression — 2026-11-09
+
+- Expanded the actual frozen v1-writer fixture test from integer dates to fractional timestamps plus native numeric values. Run [42527512291](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42527512291) at `6a2998d0` EXECUTED_FAIL: the authentic `1730826191.123456` snapshot was rejected with `integrityMismatch`; the integer-date case passed. This proves a compatibility bug, without identifying the owner's exact persisted failure stage.
+- The reader now also checks SHA-256 against the exact original top-level snapshot bytes. JSONSerialization numeric normalization and typed Date/default-field re-encoding cannot substitute for those historical bytes. Existing canonical and typed compatibility checks remain; every accepted path still requires a matching digest and valid schema/model. Duplicate snapshot keys are excluded from the exact-byte path; quoted delimiters and nested decoys are skipped correctly. Reads do not rewrite or reset the store.
+- Expanded acceptance covers unchanged read bytes, nested decoys/escaped strings, rejection and preservation of tampered payloads, and a duplicate escaped snapshot-key negative case. Swift frontend parsing passed; fresh store/dual-engine package execution is required after the source correction.
 
 Owner reported both microphone and Widgets FAILED on physical 89401, then supplied two crash logs and screenshots. Hardware: iPad15,3, iPadOS 27.2 (24B119), build 89401.
 

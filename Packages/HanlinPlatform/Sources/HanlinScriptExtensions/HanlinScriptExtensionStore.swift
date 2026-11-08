@@ -437,6 +437,13 @@ public struct HanlinScriptExtensionStore: Sendable {
         let wireHash = Self.digest(wireData)
 
         var matches = (wireHash == expectedHash)
+        if !matches, let original = Self.originalSnapshotData(in: data) {
+            // Historical writers hashed JSONEncoder's exact snapshot bytes.
+            // JSONSerialization can normalize fractional numbers differently;
+            // decoding the model can also change Date precision/add v2 defaults.
+            // Accept only an exact digest match, without rewriting stored data.
+            matches = Self.digest(original) == expectedHash
+        }
         if !matches {
             // Check historical encoder compatibility: early stores computed expectedHash on JSONEncoder().encode(snapshot)
             if let envelopeModel = try? Self.decoded(Envelope.self, from: data) {
@@ -484,6 +491,64 @@ public struct HanlinScriptExtensionStore: Sendable {
             throw HanlinScriptExtensionStoreError.invalidEnvelope
         }
         return envelope.snapshot
+    }
+
+    /// Extracts the unique top-level snapshot value from already-validated JSON.
+    /// Preserve its exact bytes: re-encoding is not an integrity-preserving step.
+    private static func originalSnapshotData(in data: Data) -> Data? {
+        let bytes = Array(data)
+        var index = 0
+        var depth = 0
+        var snapshotKeys = 0
+        var snapshotStart: Int?
+        var snapshotRange: Range<Int>?
+
+        func skippingWhitespace(_ start: Int) -> Int {
+            var cursor = start
+            while cursor < bytes.count, [UInt8(32), 9, 10, 13].contains(bytes[cursor]) {
+                cursor += 1
+            }
+            return cursor
+        }
+
+        while index < bytes.count {
+            let byte = bytes[index]
+            if byte == 34 { // Skip whole strings, including escaped delimiters.
+                let start = index
+                index += 1
+                var escaped = false
+                while index < bytes.count {
+                    if escaped { escaped = false }
+                    else if bytes[index] == 92 { escaped = true }
+                    else if bytes[index] == 34 { break }
+                    index += 1
+                }
+                guard index < bytes.count else { return nil }
+                if depth == 1 {
+                    let colon = skippingWhitespace(index + 1)
+                    if colon < bytes.count, bytes[colon] == 58,
+                       let key = try? JSONDecoder().decode(String.self, from: Data(bytes[start...index])),
+                       key == "snapshot" {
+                        snapshotKeys += 1
+                        guard snapshotKeys == 1 else { return nil }
+                        let valueStart = skippingWhitespace(colon + 1)
+                        guard valueStart < bytes.count, bytes[valueStart] == 123 else { return nil }
+                        snapshotStart = valueStart
+                    }
+                }
+            } else if byte == 123 || byte == 91 {
+                depth += 1
+            } else if byte == 125 || byte == 93 {
+                depth -= 1
+                guard depth >= 0 else { return nil }
+                if depth == 1, let start = snapshotStart, index >= start, snapshotRange == nil {
+                    snapshotRange = start..<(index + 1)
+                }
+            }
+            index += 1
+        }
+        guard depth == 0, snapshotKeys == 1, let range = snapshotRange else { return nil }
+        return Data(bytes[range])
     }
 
     public func save(_ snapshot: HanlinScriptExtensionSnapshot) throws {

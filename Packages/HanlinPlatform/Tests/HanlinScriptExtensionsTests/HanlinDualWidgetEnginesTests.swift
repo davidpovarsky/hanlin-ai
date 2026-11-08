@@ -1013,12 +1013,15 @@ struct HanlinDualWidgetEnginesTests {
                 validUntil: Date(timeIntervalSince1970: timestamp + 300),
                 root: .init(kind: .text, properties: [
                     "text": .string("Legacy Data"),
+                    "literal": .string("escaped \"snapshot\": { braces } and slash \\ אבג"),
                     "offset": .number(-0.0),
                     "ratio": .number(1e-7)
                 ])
             )]
         )
         try old.save(legacy)
+        let snapshotURL = root.appending(path: "snapshot-v1.json")
+        let originalBytes = try Data(contentsOf: snapshotURL)
 
         // Current store must accept genuine historical v1 envelope without integrity mismatch
         let store = Store(root: root)
@@ -1026,6 +1029,29 @@ struct HanlinDualWidgetEnginesTests {
         #expect(loaded.schemaVersion == 1)
         #expect(loaded.widgets.first?.displayName == "Legacy Widget")
         #expect(loaded.widgets.first?.root.properties["ratio"] == .number(1e-7))
+        #expect(try Data(contentsOf: snapshotURL) == originalBytes)
+        let withDecoy = Data((#"{"decoy":{"snapshot":{"text":"}"}},"#
+            + String(decoding: originalBytes.dropFirst(), as: UTF8.self)).utf8)
+        try withDecoy.write(to: snapshotURL)
+        #expect(try store.load() == loaded)
+        #expect(try Data(contentsOf: snapshotURL) == withDecoy)
+        let changedBytes = Data(String(decoding: originalBytes, as: UTF8.self)
+            .replacingOccurrences(of: "Legacy Data", with: "Changed Data").utf8)
+        #expect(changedBytes != originalBytes)
+        try changedBytes.write(to: snapshotURL)
+        #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.integrityMismatch) {
+            try store.load()
+        }
+        #expect(try Data(contentsOf: snapshotURL) == changedBytes)
+        if timestamp != 200 {
+            let duplicateKey = Data((#"{"snap\u0073hot":{},"#
+                + String(decoding: originalBytes.dropFirst(), as: UTF8.self)).utf8)
+            try duplicateKey.write(to: snapshotURL)
+            #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.integrityMismatch) {
+                try store.load()
+            }
+            #expect(try Data(contentsOf: snapshotURL) == duplicateKey)
+        }
     }
 
     @Test(arguments: [Data(), Data("corrupt candidate revision".utf8)])
