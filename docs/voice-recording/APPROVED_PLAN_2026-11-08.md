@@ -19,7 +19,7 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 | Native widget engines/actions | Implemented engines and package-level evidence | Actual Home Screen instance/action acceptance remains open |
 | Shared chat / Translation / Shortcuts | Approved subsequent scope | Implementation and acceptance still pending |
 
-Current scoped simulator run: [42531030422](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42531030422), source and deferred staging at `82a6bcd0`. It is pending and does not establish an aggregate PASS. No new TestFlight distribution or merge has occurred.
+Current scoped simulator run: [42533011298](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42533011298), source and bounded cold-boot preparation at `c423c7f4`. It reached test-suite execution; final results are pending and do not establish an aggregate PASS. No new TestFlight distribution or merge has occurred.
 
 ## Execution order
 
@@ -63,6 +63,7 @@ Current scoped simulator run: [42531030422](https://github.com/davidpovarsky/han
 - Errors now use bounded-depth native `node:util.inspect`, retaining nested/aggregate DNS/TLS/socket codes and cyclic causes in the existing stderr string. Custom inspectors/getters are disabled; the existing combined output-byte cap remains authoritative. No request/network policy or wire schema changes.
 - All seven affected runtime-worker tests passed on pinned Node 24.5.0 (788ms), including both new regressions, ESM/CommonJS values, Hebrew output and truncation. This is desktop JavaScript execution evidence, not physical HTTPS acceptance. Embedded iPad GET/POST, suspend/resume and FD ownership remain open; do not claim that diagnostic reporting fixes TLS or unmanaged descriptors.
 - Follow-up reproduced UTF-8 truncation exceeding the advertised byte cap: a partial Hebrew/emoji sequence became the three-byte replacement character. Output now backs up to a valid code-point boundary. All eight affected Worker tests passed on pinned Node 24.5.0 (1.266s), including ten byte-boundary budgets, existing error causes and value/protocol assertions. This supersedes the seven-test Worker result without changing network policy or physical acceptance.
+- Existing read-only runtime validators also passed on pinned Node 24.5.0: runtime lock schema/pins and all 196 RuntimeL10n keys for en/he/zh-Hans. These verify internal consistency, not latest-version status or an advisory/reachability audit.
 
 ## CI dependency synchronization
 
