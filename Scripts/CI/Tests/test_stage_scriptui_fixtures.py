@@ -138,12 +138,15 @@ class StageScriptUIFixturesTests(unittest.TestCase):
             self.assertTrue((app_docs / "ExpoSwiftUIProbeA.hanlinExpo").exists())
             self.assertTrue((app_docs / "ExpoSwiftUIProbeB.hanlinExpo").exists())
             self.assertTrue((app_docs / "ExpoSwiftUIMalformed.hanlinExpo").exists())
+            for name in ("Hanlin-ScriptWidget-Actions.scripting", "Hanlin-ScriptWidget-Dashboard.scripting", "Hanlin-Widget-Legacy-Regression.scripting"):
+                self.assertEqual((app_docs / name).read_bytes(), (SCRIPT_PATH.parents[2] / "AI_HLYUITests" / "Fixtures" / name).read_bytes())
 
             # Verify files staged in Files container Documents
             files_docs = mock_files_container / "Documents"
             self.assertTrue(files_docs.exists())
             self.assertTrue((files_docs / "HanlinScriptUIValid.scripting").exists())
             self.assertTrue((files_docs / "ExpoSwiftUIProbeA.hanlinExpo").exists())
+            self.assertTrue((files_docs / "Hanlin-ScriptWidget-Actions.scripting").exists())
 
 
 if __name__ == "__main__":

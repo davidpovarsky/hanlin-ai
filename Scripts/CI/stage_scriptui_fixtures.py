@@ -68,13 +68,14 @@ def stage_fixtures(
     # 1. Ensure fixtures exist and are deterministic
     generated = list(create_fixtures(fix_dir))
     if fix_dir != repo_fixtures_dir and repo_fixtures_dir.exists():
-        for expo_src in sorted(repo_fixtures_dir.glob("*.hanlinExpo")):
-            expo_dst = fix_dir / expo_src.name
-            if not expo_dst.exists():
-                shutil.copy2(expo_src, expo_dst)
-    for expo_file in sorted(fix_dir.glob("*.hanlinExpo")):
-        if expo_file.name not in generated:
-            generated.append(expo_file.name)
+        for pattern in ("*.hanlinExpo", "*.scripting"):
+            for source in sorted(repo_fixtures_dir.glob(pattern)):
+                if source.name not in generated:
+                    shutil.copy2(source, fix_dir / source.name)
+    for pattern in ("*.hanlinExpo", "*.scripting"):
+        for fixture in sorted(fix_dir.glob(pattern)):
+            if fixture.name not in generated:
+                generated.append(fixture.name)
 
     logs: List[str] = [
         f"Staging ScriptUI and Expo fixtures for simulator: {simulator_udid}",

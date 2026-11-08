@@ -2044,7 +2044,7 @@ jobs:
 
           simulator = sys.argv[1]
           run_bounded(["xcrun", "simctl", "boot", simulator], timeout_seconds=15.0)
-          result = run_bounded(["xcrun", "simctl", "bootstatus", simulator, "-b"], timeout_seconds=45.0)
+          result = run_bounded(["xcrun", "simctl", "bootstatus", simulator, "-b"], timeout_seconds=90.0)
           output = result.stdout + result.stderr
           Path(os.environ["LOG_DIR"], "08-bootstatus.log").write_text(output, encoding="utf-8")
           print(output, flush=True)

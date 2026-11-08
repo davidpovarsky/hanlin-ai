@@ -3,7 +3,7 @@
 //  AI_HLY
 //
 //  Compact anchored model picker popover with InteriorOrganizerV3_3 completion-ordered
-//  two-stage size expansion and matched zoom navigation into searchable provider-grouped
+//  two-stage size expansion and native stack navigation into searchable provider-grouped
 //  "All Models", styled in Hanlin's original delicate blue glass aesthetic (§4.8).
 //
 
@@ -21,7 +21,6 @@ struct HanlinModelPickerPopover: View {
     let ifAudio: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Namespace private var zoomNamespace
     @State private var searchText: String = ""
 
     private let compactSize = CGSize(width: 286, height: 324)
@@ -96,7 +95,6 @@ struct HanlinModelPickerPopover: View {
                         switch route {
                         case .allModels:
                             allModelsDestinationPage
-                                .navigationTransition(.zoom(sourceID: "all-models", in: zoomNamespace))
                         }
                     }
                     .onAppear {
@@ -215,7 +213,6 @@ struct HanlinModelPickerPopover: View {
                 .disabled(coordinator.isModelAnimatingExpand)
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
-                .matchedTransitionSource(id: "all-models", in: zoomNamespace)
                 .accessibilityIdentifier("hanlin-model-picker-all-models-button")
             }
         }

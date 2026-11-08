@@ -962,7 +962,15 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(allModelsBtn)
 
         let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
-        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models page must appear after expansion + zoom")
+        guard allModelsPage.waitForExistence(timeout: 5) else {
+            attachScreenshot("ModelPopover_TransitionFailure", in: app)
+            XCTFail("All Models page must appear after expansion and navigation")
+            return
+        }
+        guard modelPopover.exists else {
+            XCTFail("The model popover must remain presented while navigating")
+            return
+        }
         let expandedPopoverFrame = modelPopover.frame
         XCTAssertGreaterThan(
             expandedPopoverFrame.height,
