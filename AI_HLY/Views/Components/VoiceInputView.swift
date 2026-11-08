@@ -624,7 +624,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     }
 
     // MARK: - 通知处理
-    @objc private func handleAudioInterruption(_ notification: Notification) {
+    @objc nonisolated private func handleAudioInterruption(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
               let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
@@ -638,19 +638,27 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         }
     }
 
-    @objc private func handleAudioRouteChange(_ notification: Notification) {
+    @objc nonisolated private func handleAudioRouteChange(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
               let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
             return
         }
+        Task { @MainActor [weak self] in
+            self?.handleAudioRouteChange(reason: reason)
+        }
+    }
+
+    func handleAudioRouteChange(reason: AVAudioSession.RouteChangeReason) {
+        guard isRecording else { return }
         switch reason {
+        case .categoryChange where audioSessionCategoryProvider() == .record:
+            // Starting our own recording changes the category to .record. Its
+            // notification is delivered after start finishes; it is not a lost input.
+            return
         case .oldDeviceUnavailable, .categoryChange:
-            Task { @MainActor [weak self] in
-                guard let self, self.isRecording else { return }
-                self.stopRecording()
-                self.errorMessage = String(localized: "音频输入路由已更改，录音已停止")
-            }
+            stopRecording()
+            errorMessage = String(localized: "音频输入路由已更改，录音已停止")
         default:
             break
         }

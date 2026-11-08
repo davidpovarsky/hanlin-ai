@@ -1783,7 +1783,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--exact-test-selector",
-        help="Explicitly run a single exact XCTest method or suite selector (e.g. AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime)",
+        help="Comma-separated exact XCTest method or suite paths: Bundle/Suite[/Method]",
     )
     parser.add_argument(
         "--evaluate-reuse",

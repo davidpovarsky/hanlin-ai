@@ -3,6 +3,7 @@ import ExpoBrownfield
 import ExpoModulesCore
 import ExpoUI
 import HanlinExpoNativeAPI
+import HanlinExpoNativeAPICore
 import ObjectiveC
 import React
 @_implementationOnly import React_RCTAppDelegate
@@ -30,7 +31,7 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         let sel = NSSelectorFromString("host:didInitializeRuntime:")
         let fn: @convention(c) (AnyObject, Selector, AnyObject, UnsafeMutableRawPointer) -> Void = hostDidInitRuntimeCallback
         let imp = unsafeBitCast(fn, to: IMP.self)
-        let types = "v@:@@"
+        let types = "v@:@^v"
         if !class_addMethod(HanlinExpoReactNativeFactoryDelegate.self, sel, imp, types) {
             if let method = class_getInstanceMethod(HanlinExpoReactNativeFactoryDelegate.self, sel) {
                 method_setImplementation(method, imp)
@@ -63,7 +64,10 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
 
     nonisolated fileprivate func handleHostDidInitializeRuntime(_ runtime: UnsafeMutableRawPointer) {
         NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
-        appContext.setRuntime(runtime, scheduler: nil, dispatch: nil)
+        guard HanlinExpoInstallScheduledRuntime(runtime, appContext) else {
+            NSLog("%@", "HANLIN_EXPO_BOOTSTRAP_FAILED: React runtime scheduler is missing")
+            return
+        }
         NSLog("%@", "HANLIN_EXPO_SET_RUNTIME_DONE")
         let moduleNames = appContext.getModuleNames()
         NSLog("%@", "HANLIN_EXPO_REGISTERED_MODULES=\(moduleNames.joined(separator: ", "))")
@@ -267,8 +271,9 @@ public final class HanlinExpoSession {
         if let appContext {
             HanlinExpoHostServicesBridge.unbind(appContext: appContext)
             NSLog("%@", "HANLIN_EXPO_UNBOUND")
-            appContext.destroy()
-            NSLog("%@", "HANLIN_EXPO_APPCONTEXT_DESTROYED")
+            // Expo's native state owns destroy() and executes it on the JS
+            // thread when React tears down the runtime. Calling it here on
+            // MainActor races queued JSI callbacks and releases live JS values.
         }
         appContext = nil
         isActive = false

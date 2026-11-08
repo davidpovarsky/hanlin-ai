@@ -632,6 +632,38 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertEqual(recognizer.phase, .idle)
     }
 
+    func testVR22_OwnRecordingCategoryChangeDoesNotStopMicrophone() throws {
+        let category = SendableBox<AVAudioSession.Category>(.record)
+        let recognizer = SpeechRecognizer(
+            speechAuthChecker: { .authorized },
+            micAuthChecker: { .granted },
+            audioSessionConfigurator: { _, _, _ in },
+            audioSessionActivator: { _, _ in },
+            audioSessionCategoryProvider: { category.current },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {},
+            recognitionTaskStarter: { _, _, _ in nil }
+        )
+        recognizer.viewDidAppear()
+        let recordingURL = try XCTUnwrap(recognizer.recordedAudioURL)
+        defer { try? FileManager.default.removeItem(at: recordingURL) }
+        XCTAssertTrue(recognizer.isRecording)
+
+        recognizer.handleAudioRouteChange(reason: .categoryChange)
+        XCTAssertTrue(recognizer.isRecording, "Our own category activation must not cancel recording")
+        XCTAssertNil(recognizer.errorMessage)
+
+        category.set(.playback)
+        recognizer.handleAudioRouteChange(reason: .categoryChange)
+        XCTAssertFalse(recognizer.isRecording, "A competing audio category must stop this recording")
+        XCTAssertNotNil(recognizer.errorMessage)
+        XCTAssertFalse(recognizer.testHasRecordingResources)
+        recognizer.viewDidDisappear()
+    }
+
     // MARK: - VR-19: AudioTapSink file-write pool branch with real AVAudioFile across various frame sizes
     func testVR19_AudioTapSink_RealFilePoolBranchExecution_VariousFrameSizes() async throws {
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("vr19-test-\(UUID().uuidString).caf")
