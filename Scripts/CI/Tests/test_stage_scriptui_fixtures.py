@@ -106,6 +106,8 @@ class StageScriptUIFixturesTests(unittest.TestCase):
             mock_files_container.mkdir(parents=True, exist_ok=True)
 
             def mock_runner(cmd, **kwargs):
+                if "install" in cmd:
+                    self.assertEqual(kwargs["timeout_seconds"], 180.0)
                 mock = MagicMock()
                 mock.returncode = 0
                 if "get_app_container" in cmd:

@@ -38,6 +38,10 @@ FIXTURE_NAMES = [
     "hanlin-script-parity.hanlinNativeScript",
 ]
 
+# A cold install of the full host exceeded 60 seconds on the macOS arm64 runner.
+# Keep both staging consumers bounded without treating that install as a failure.
+INSTALL_TIMEOUT_SECONDS = 180.0
+
 
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
@@ -121,7 +125,7 @@ def stage_simulator_fixtures(
                 "logs": logs,
             }
         print(f"[stage_simulator_fixtures] Installing {app_path.name}...")
-        install_res = runner(["xcrun", "simctl", "install", simulator_udid, str(app_path)], timeout_seconds=60.0)
+        install_res = runner(["xcrun", "simctl", "install", simulator_udid, str(app_path)], timeout_seconds=INSTALL_TIMEOUT_SECONDS)
         logs.append(f"Install exit: {install_res.returncode}")
         if install_res.returncode != 0:
             err_msg = f"Fatal: simctl install failed with code {install_res.returncode}: {install_res.stderr.strip()}"

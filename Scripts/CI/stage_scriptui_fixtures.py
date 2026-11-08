@@ -24,9 +24,9 @@ import sys
 from typing import List, Optional
 
 try:
-    from Scripts.CI.stage_simulator_fixtures import run_bounded
+    from Scripts.CI.stage_simulator_fixtures import INSTALL_TIMEOUT_SECONDS, run_bounded
 except ModuleNotFoundError:
-    from stage_simulator_fixtures import run_bounded
+    from stage_simulator_fixtures import INSTALL_TIMEOUT_SECONDS, run_bounded
 
 try:
     from .create_scriptui_fixtures import create_fixtures, FIXTURE_NAMES
@@ -111,7 +111,7 @@ def stage_fixtures(
         logs.append(f"Installing app: {app_path}")
         install_res = runner(
             ["xcrun", "simctl", "install", simulator_udid, str(app_path)],
-            timeout_seconds=60.0,
+            timeout_seconds=INSTALL_TIMEOUT_SECONDS,
         )
         if install_res.returncode != 0:
             return failure("INSTALL_FAILED", f"simctl install returned {install_res.returncode}: {install_res.stderr.strip()}")
