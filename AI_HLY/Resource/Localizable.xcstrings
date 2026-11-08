@@ -1,6 +1,22 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Widget status" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Widget status" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מצב הווידג׳טים" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "小组件状态" } }
+      }
+    },
+    "Copy Diagnostic" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy Diagnostic" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "העתק פרטי אבחון" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "复制诊断信息" } }
+      }
+    },
     "" : {},
     "%lld Reminders used" : {
       "localizations" : {

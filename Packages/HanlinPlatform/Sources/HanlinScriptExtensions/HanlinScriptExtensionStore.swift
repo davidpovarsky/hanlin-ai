@@ -176,8 +176,10 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func generateConsistencyReport() -> HanlinStorageConsistencyReport {
+        var validationFailure: (any Error)?
+        do { _ = try load() } catch { validationFailure = error }
         let commit = try? optionalDecode(Commit.self, at: commitURL)
-        let commitPresent = (commit != nil)
+        let commitPresent = FileManager.default.fileExists(atPath: commitURL.path)
         let commitVersion = commit?.version
         let commitSnapPrefix = commit?.snapshotHash.prefix(12).description
         let commitShadowPrefix = commit?.shadowHash.prefix(12).description
@@ -219,6 +221,18 @@ public struct HanlinScriptExtensionStore: Sendable {
             }
         } else if !shadowPresent && !(FileManager.default.fileExists(atPath: snapshotV2URL.path)) {
             summary = "Fresh storage root (no committed snapshot)."
+        }
+
+        if let validationFailure {
+            if commitPresent && commit == nil {
+                failingStage = "commitDecode"
+            } else if commit != nil && !revPresent {
+                failingStage = "checkedRevision"
+            } else {
+                failingStage = failingStage ?? latestDurableQueryDiagnostic?.decisionPoint.rawValue ?? "storeLoad"
+            }
+            let error = validationFailure as NSError
+            summary = "Widget storage validation failed (\(error.domain), code \(error.code))."
         }
 
         let correlationID = lastDiagnostic?.correlationID ?? String(format: "HWG-%012llX", UInt64.random(in: 0...UInt64.max) & 0xFFFF_FFFF_FFFF)

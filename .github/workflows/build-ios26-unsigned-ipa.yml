@@ -2689,6 +2689,7 @@ jobs:
           python-version: "3.12"
 
       - name: Download Phase 1 validation logs
+        if: ${{ needs.plan-affected-validation.outputs.run_phase1 == 'true' }}
         uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:
@@ -2696,6 +2697,7 @@ jobs:
           path: logs/phase1-validation-logs
 
       - name: Download simulator test logs
+        if: ${{ needs.plan-affected-validation.outputs.run_simulator_job == 'true' }}
         uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:

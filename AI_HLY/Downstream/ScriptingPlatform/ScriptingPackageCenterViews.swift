@@ -208,6 +208,8 @@ struct ScriptingInstalledPackageDetailView: View {
     @State private var storageDiagnostic: HanlinWidgetStorageDiagnostic?
     @State private var isRetryingPublication = false
     @State private var didAttemptAutoRepublish = false
+    @State private var showsWidgetStatus = false
+    @State private var widgetStatusText = ""
 
     var body: some View {
         Group {
@@ -231,12 +233,32 @@ struct ScriptingInstalledPackageDetailView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                if let package, hasNativeWidget(package) {
+                    Button {
+                        let report = platform.storageConsistencyReport()?.redactedReportString ?? ""
+                        let diagnostic = (storageDiagnostic ?? platform.widgetPublicationDiagnostic(for: packageID))?.redactedReportString ?? ""
+                        widgetStatusText = [report, diagnostic].filter { !$0.isEmpty }.joined(separator: "\n\n")
+                        showsWidgetStatus = true
+                    } label: {
+                        Label(String(localized: "Widget status"), systemImage: "waveform.path.ecg")
+                    }
+                    .accessibilityIdentifier("hanlin-widget-status")
+                }
+            }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") {
                     dismiss()
                 }
                 .accessibilityIdentifier("hanlin-package-details-done")
             }
+        }
+        .alert(String(localized: "Widget status"), isPresented: $showsWidgetStatus) {
+            Button(String(localized: "Copy Diagnostic")) { UIPasteboard.general.string = widgetStatusText }
+                .accessibilityIdentifier("hanlin-widget-status-copy")
+            Button(String(localized: "Done"), role: .cancel) {}
+        } message: {
+            Text(widgetStatusText)
         }
     }
 

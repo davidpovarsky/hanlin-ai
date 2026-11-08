@@ -972,6 +972,28 @@ struct HanlinDualWidgetEnginesTests {
         #expect(tamperedReport.failingStage == "checkedRevision")
     }
 
+    @Test(arguments: [true, false])
+    func consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision: Bool) throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        try store.save(Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 100)))
+        let commitURL = root.appending(path: "commit.json")
+        let marker = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: commitURL)) as? [String: Any])
+        if missingRevision {
+            let hash = try #require(marker["snapshotHash"] as? String)
+            try FileManager.default.removeItem(at: root.appending(path: "Revisions/\(hash).json"))
+        } else {
+            try Data("broken commit".utf8).write(to: commitURL)
+        }
+        let preservedCommit = try Data(contentsOf: commitURL)
+        let report = store.generateConsistencyReport()
+        #expect(report.commitPresent)
+        #expect(report.failingStage == (missingRevision ? "checkedRevision" : "commitDecode"))
+        #expect(report.summary.contains("validation failed"))
+        #expect(try Data(contentsOf: commitURL) == preservedCommit, "Diagnostics must not reset existing data")
+    }
+
     @Test func testPass7HistoricalV1StoreEnvelopeCompatibility() throws {
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }
