@@ -258,5 +258,5 @@ Added in `HanlinDualWidgetEnginesTests.swift`:
 - **Code & Test Status:** `TESTFLIGHT_UPLOADED_VALID_OWNER_DEVICE_PENDING`.
 - **Signed TestFlight Delivery:** `TESTFLIGHT_DELIVERED_VALID` — Build `0.7.3 (89401)` successfully built, signed, archived, and uploaded via GitHub Actions run [42098595922](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42098595922) (Artifact: `ChavrusaChat-signed-ipa-89401`, source `00830202`).
 - **Asana Status:** READ-ONLY.
-- **Physical iPad Verification:** PENDING owner hardware verification on TestFlight build `0.7.3 (89401)`.
+- **Latest Physical iPad Verification (2026-11-09):** `OWNER_EXECUTED_FAIL_89401` — owner confirmed failures and supplied the Home Screen instance-picker integrity-error screenshot plus microphone route-change self-stop. The conditional diagnostic button was inaccessible to the owner; do not repeat that collection request. A real fractional-timestamp historical-envelope regression was reproduced and corrected in follow-up, with 40 store/dual-engine tests plus seven JS tests passing in [42528052562](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42528052562) at `8305fff7`. This does not prove repair of the owner's exact persisted store. See [approved execution report](../voice-recording/APPROVED_PLAN_2026-11-08.md); no new distribution or physical PASS.
 
