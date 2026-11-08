@@ -56,7 +56,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Check out exact validation commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           clean: true
           fetch-depth: 1
@@ -70,7 +70,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up pinned Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 22.17.0
 
@@ -112,7 +112,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Restore isolated SwiftPM compiler cache
         if: ${{ !inputs.force_clean_build }}
-        uses: actions/cache@v4
+        uses: actions/cache@v6.1.0
         with:
           path: Packages/HanlinPlatform/.build
           key: ${{ runner.os }}-xcode-${{ steps.toolchain.outputs.build }}-scripting-v1-${{ steps.runtime-inputs.outputs.source-hash }}

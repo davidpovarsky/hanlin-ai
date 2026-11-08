@@ -33,7 +33,7 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - name: Compile against the real iOS Simulator SDK with extension enforcement
         shell: bash
         run: |
@@ -60,7 +60,7 @@ jobs:
           otool -L build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/otool.log
           otool -hv build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/mach-header.log
           shasum -a 256 build/widget-native-subset/libHanlinExpoWidgetSubset.dylib | tee build-logs/widget-native-subset/SHA256.txt
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: widget-native-subset-${{ github.run_id }}
@@ -77,8 +77,8 @@ jobs:
       HANLIN_WIDGET_EVIDENCE_DIR: ${{ github.workspace }}/build-logs/widgets/rendered
       WIDGET_PACKAGE_TEST_FILTER: ${{ inputs.package_test_filter }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
       - name: Select stable SDK without changing the runner default
@@ -90,7 +90,7 @@ jobs:
           test -n "$selected_xcode"
           echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
           echo "build=$(DEVELOPER_DIR="$selected_xcode/Contents/Developer" xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6.1.0
         id: widget-spm-cache
         with:
           path: Packages/HanlinPlatform/.build
@@ -109,12 +109,12 @@ jobs:
         run: |
           set -euo pipefail
           swift test --package-path Packages/HanlinPlatform --filter "$WIDGET_PACKAGE_TEST_FILTER" 2>&1 | tee build-logs/widgets/package-tests.log
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v6.1.0
         if: success() && steps.widget-spm-cache.outputs.cache-hit != 'true'
         with:
           path: Packages/HanlinPlatform/.build
           key: ${{ steps.widget-spm-cache.outputs.cache-primary-key }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: widget-package-evidence-${{ github.run_id }}
@@ -146,7 +146,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -185,7 +185,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
 
@@ -198,7 +198,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.12"
 
@@ -594,7 +594,7 @@ jobs:
 
       - name: Upload native closure evidence before simulator interaction
         if: always() && steps.widget-native-audit.outcome != 'skipped'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: widget-native-build-evidence-${{ github.run_id }}
           path: |
@@ -708,7 +708,7 @@ jobs:
 
       - name: Upload Test Results and Logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: expo-runtime-spike-results
           path: |

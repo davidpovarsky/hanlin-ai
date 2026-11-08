@@ -65,7 +65,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout requested revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -88,7 +88,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up pinned host Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: ${{ steps.lock.outputs.node_version }}
 
@@ -196,7 +196,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout requested revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -207,7 +207,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up pinned host Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
 
@@ -296,7 +296,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Restore architecture ccache
         id: cache-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/Library/Caches/HanlinNodeMobile/ccache/${{ matrix.target }}
           key: ${{ steps.cache-key.outputs.base }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -422,7 +422,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Save architecture ccache
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6.1.0
         with:
           path: ~/Library/Caches/HanlinNodeMobile/ccache/${{ matrix.target }}
           key: ${{ steps.cache-key.outputs.base }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -438,7 +438,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload complete slice evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: node-mobile-${{ matrix.artifact_suffix }}-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/node-evidence/${{ matrix.target }}
@@ -457,7 +457,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload completed Node slice
         if: ${{ steps.slice-build.outputs.build_status == '0' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: node-mobile-${{ matrix.artifact_suffix }}-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/node-slices/${{ matrix.target }}
@@ -512,7 +512,7 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
@@ -521,7 +521,7 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
       - name: Live Activity · refresh
@@ -569,7 +569,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Upload Python runtime
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/python-runtime
@@ -603,7 +603,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload Python logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: python-runtime-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/python-logs
@@ -627,7 +627,7 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
@@ -636,7 +636,7 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
           cache: npm
@@ -662,7 +662,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Upload runtime host
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-host
@@ -697,7 +697,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload runtime host logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: runtime-host-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-host-logs
@@ -729,7 +729,7 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
@@ -738,7 +738,7 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: ${{ needs.plan-runtime.outputs.node_version }}
       - name: Live Activity · refresh
@@ -777,7 +777,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download device slice
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: node-mobile-device-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-device
@@ -792,7 +792,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download simulator slice
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: node-mobile-simulator-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-simulator
@@ -807,7 +807,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download Python runtime
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/python
@@ -822,7 +822,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download runtime host
         if: ${{ inputs.reuse_artifacts_run_id == '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/host
@@ -837,7 +837,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download device slice from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: node-mobile-device-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-device
@@ -854,7 +854,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download simulator slice from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: node-mobile-simulator-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/node-simulator
@@ -871,7 +871,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download Python runtime from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/python
@@ -888,7 +888,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download runtime host from reusable run
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-inputs/host
@@ -953,7 +953,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Upload complete runtime bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: hanlin-runtime-bundle-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: |
@@ -1001,7 +1001,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload assembly logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: runtime-assembly-logs-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/runtime-assembly-logs
@@ -1047,7 +1047,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Download assembled runtime artifact
         if: ${{ needs.assemble-runtime-bundle.result == 'success' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         with:
           name: hanlin-runtime-bundle-${{ needs.plan-runtime.outputs.dependency_hash }}
           path: build/final-runtime

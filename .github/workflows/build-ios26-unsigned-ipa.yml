@@ -128,12 +128,12 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.12"
 
@@ -181,7 +181,7 @@ jobs:
           python3 Scripts/CI/plan_affected_validation.py "${args[@]}" --json-output "$GITHUB_WORKSPACE/ci-validation-plan.json"
 
       - name: Upload validation plan artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ci-validation-plan
           path: ci-validation-plan.json
@@ -268,7 +268,7 @@ jobs:
           fi
 
       - name: Check out exact validation commit cleanly
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           clean: true
           fetch-depth: 1
@@ -282,7 +282,7 @@ jobs:
           git rev-parse HEAD
 
       - name: Set up pinned baseline Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
 
@@ -314,7 +314,7 @@ jobs:
       - name: Restore Phase 1 SwiftPM build cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-spm-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: Packages/HanlinPlatform/.build
           key: phase1-spm-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}
@@ -324,7 +324,7 @@ jobs:
       - name: Restore Phase 1 simulator compiler cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-simulator-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/Phase1SimulatorDerivedData/Build
@@ -337,7 +337,7 @@ jobs:
       - name: Restore Phase 1 device compiler cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-device-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/Phase1DeviceDerivedData/Build
@@ -482,7 +482,7 @@ jobs:
 
       - name: Save successful Phase 1 SwiftPM build cache
         if: ${{ success() && !inputs.force_clean_build && steps.phase1-spm-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: Packages/HanlinPlatform/.build
           key: ${{ steps.phase1-spm-cache.outputs.cache-primary-key }}
@@ -542,7 +542,7 @@ jobs:
 
       - name: Save successful Phase 1 simulator compiler cache
         if: ${{ success() && !inputs.force_clean_build && steps.phase1-simulator-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/Phase1SimulatorDerivedData/Build
@@ -601,7 +601,7 @@ jobs:
 
       - name: Save successful Phase 1 device compiler cache
         if: ${{ success() && !inputs.force_clean_build && steps.phase1-device-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/Phase1DeviceDerivedData/Build
@@ -629,7 +629,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Retain Phase 1 validation evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: phase1-validation-${{ github.sha }}
           path: ${{ runner.temp }}/phase1-validation-logs
@@ -677,10 +677,10 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Set up pinned RuntimeCore host Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
           cache: npm
@@ -787,7 +787,7 @@ jobs:
 
       - name: Restore cloned Swift package dependencies
         id: app-sourcepackages-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: build/SourcePackages
           key: ios-sourcepackages-v3-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
@@ -797,7 +797,7 @@ jobs:
       - name: Restore compatible incremental Xcode compiler state
         if: ${{ !inputs.force_clean_build }}
         id: app-deriveddata-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/DerivedData/Build
@@ -1040,7 +1040,7 @@ jobs:
 
       - name: Save validated cloned Swift package dependencies
         if: ${{ success() && steps.app-sourcepackages-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: build/SourcePackages
           key: ${{ steps.app-sourcepackages-cache.outputs.cache-primary-key }}
@@ -1352,7 +1352,7 @@ jobs:
 
       - name: Save successful incremental Xcode compiler state
         if: ${{ success() && !inputs.force_clean_build && steps.app-deriveddata-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/DerivedData/Build
@@ -1431,7 +1431,7 @@ jobs:
           cat "$SUMMARY_FILE"
 
       - name: Upload unsigned IPA artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: AI_Hanlin-iOS26-unsigned-ipa
           path: AI_Hanlin-iOS26-unsigned.ipa
@@ -1440,7 +1440,7 @@ jobs:
 
       - name: Upload build logs artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: AI_Hanlin-iOS26-build-logs
           path: |
@@ -1492,10 +1492,10 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Set up pinned RuntimeCore host Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
           cache: npm
@@ -1592,7 +1592,7 @@ jobs:
 
       - name: Restore simulator cloned Swift package dependencies
         id: simulator-sourcepackages-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: build/SourcePackages
           key: ios-sourcepackages-v3-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
@@ -1602,7 +1602,7 @@ jobs:
       - name: Restore compatible simulator compiler state
         if: ${{ !inputs.force_clean_build }}
         id: simulator-deriveddata-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/SimulatorDerivedData/Build
@@ -1705,7 +1705,7 @@ jobs:
 
       - name: Save validated simulator Swift package dependencies
         if: ${{ success() && steps.simulator-sourcepackages-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: build/SourcePackages
           key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
@@ -1925,7 +1925,7 @@ jobs:
 
       - name: Save successful simulator compiler state
         if: ${{ success() && !inputs.force_clean_build && steps.simulator-deriveddata-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/SimulatorDerivedData/Build
@@ -2652,7 +2652,7 @@ jobs:
 
       - name: Upload simulator smoke evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: AI_Hanlin-iOS26-simulator-smoke-logs
           path: |
@@ -2681,22 +2681,22 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.12"
 
       - name: Download Phase 1 validation logs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:
           name: phase1-validation-${{ github.sha }}
           path: logs/phase1-validation-logs
 
       - name: Download simulator test logs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:
           name: AI_Hanlin-iOS26-simulator-smoke-logs
@@ -2728,7 +2728,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload provider conformance summary artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: provider-conformance-summary
           path: provider-conformance-summary.json
@@ -2736,7 +2736,7 @@ jobs:
           retention-days: 30
 
       - name: Download validation plan
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:
           name: ci-validation-plan
@@ -2759,7 +2759,7 @@ jobs:
 
       - name: Upload CI performance report artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ci-performance-report
           path: ci-performance-report.json

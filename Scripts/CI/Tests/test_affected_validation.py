@@ -519,7 +519,7 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertTrue(plan.step_outputs["run_simulator_unit"])
         self.assertEqual(
             plan.step_outputs["simulator_unit_filter"],
-            "AI_HLYTests/CanonicalAdapterTests,AI_HLYTests/HanlinScriptPackageProductionE2ETests",
+            "AI_HLYTests/CanonicalAdapterTests,AI_HLYTests/HanlinScriptPackageProductionE2ETests,AI_HLYTests/VoiceRecordingLifecycleTests",
         )
         self.assertNotIn("HanlinScriptingProductionCompilerAcceptanceTests", plan.step_outputs["simulator_unit_filter"])
         self.assertNotIn("HanlinScriptPackagePhysicalIPadRegressionTests", plan.step_outputs["simulator_unit_filter"])

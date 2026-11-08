@@ -51,7 +51,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout exact source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           clean: true
           fetch-depth: 1
@@ -87,7 +87,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up pinned Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
 
@@ -577,7 +577,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload signed IPA and verification logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ChavrusaChat-signed-ipa-${{ env.BUILD_NUMBER }}
           path: |

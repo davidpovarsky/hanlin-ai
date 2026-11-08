@@ -16,12 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 1
           persist-credentials: true
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24.5.0'
           cache: npm
@@ -76,7 +76,7 @@ jobs:
           PY
           shasum -a 256 Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         with:
           name: Hanlin-ModularTextSearch-v1.2.0
           path: Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
