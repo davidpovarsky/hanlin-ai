@@ -893,6 +893,57 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("7B-07_ClassicHanlinVisualParity", in: app)
     }
 
+    func testCompactToolsManagementDestinationsPreserveDraft() throws {
+        try verifyToolsManagementDestinations(simulatedWidth: "390")
+    }
+
+    func testWideToolsManagementDestinationsPreserveDraft() throws {
+        try verifyToolsManagementDestinations(simulatedWidth: "1024")
+    }
+
+    private func verifyToolsManagementDestinations(simulatedWidth: String) throws {
+        let app = launchDockAcceptanceApp(simulatedWidth: simulatedWidth)
+        defer { app.terminate() }
+        openChat(in: app)
+        let draft = "Keep this draft while managing tools"
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        tapElement(input)
+        input.typeText(draft)
+
+        let tools = app.buttons["hanlin-composer-tools-direct"].firstMatch
+        XCTAssertTrue(tools.waitForExistence(timeout: 5))
+        tapElement(tools)
+        let routes = [
+            ("skills", "hanlin-tools-open-skills", "hanlin-tools-open-full-skill-center"),
+            ("mcp", "hanlin-tools-open-mcp", "hanlin-tools-open-full-mcp-settings"),
+            ("runtime", "hanlin-tools-open-runtime", "hanlin-tools-open-full-runtime-center")
+        ]
+        for (destination, routeID, linkID) in routes {
+            let route = app.buttons[routeID].firstMatch
+            XCTAssertTrue(route.waitForExistence(timeout: 5))
+            tapElement(route)
+            let fullLink = app.buttons[linkID].firstMatch
+            XCTAssertTrue(fullLink.waitForExistence(timeout: 5))
+            if !fullLink.isHittable {
+                app.descendants(matching: .any)["hanlin-composer-tools-popover"].firstMatch.swipeUp()
+            }
+            tapElement(fullLink)
+            let presented = app.descendants(matching: .any)["hanlin-tools-management-\(destination)"].firstMatch
+            XCTAssertTrue(presented.waitForExistence(timeout: 10), "Full management screen must be presented")
+            let done = app.buttons["hanlin-tools-management-done"].firstMatch
+            XCTAssertTrue(done.waitForExistence(timeout: 5))
+            attachScreenshot("Management_\(simulatedWidth)_\(destination)", in: app)
+            tapElement(done)
+            XCTAssertTrue(presented.waitForNonExistence(timeout: 5))
+            let back = app.buttons["hanlin-tools-subpage-back"].firstMatch
+            XCTAssertTrue(back.waitForExistence(timeout: 5))
+            tapElement(back)
+        }
+        tapElement(tools)
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+    }
+
     func testModelPopoverZoomExpandThenNavigate() throws {
         let app = launchDockAcceptanceApp()
         openChat(in: app)
@@ -919,12 +970,21 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             "Model popover must expand before/during All Models transition (compact: \(compactPopoverFrame.height), expanded: \(expandedPopoverFrame.height))"
         )
         attachScreenshot("7B-08b_ModelPopover_ExpandedAllModels", in: app)
+        let search = app.textFields["hanlin-model-picker-search"].firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
+        XCTAssertTrue(search.isHittable, "Expanded search must be ready for interaction")
+        XCTAssertTrue(modelPopover.frame.contains(search.frame), "Search must not be clipped outside the popover")
 
         // Back button collapses back to compact root
         let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
         XCTAssertTrue(backBtn.waitForExistence(timeout: 5))
         tapElement(backBtn)
         XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+        let collapsed = NSPredicate { _, _ in
+            abs(modelPopover.frame.height - compactPopoverFrame.height) < 8
+        }
+        let collapsedExpectation = expectation(for: collapsed, evaluatedWith: modelPopover)
+        XCTAssertEqual(XCTWaiter.wait(for: [collapsedExpectation], timeout: 5), .completed)
     }
 
     func testDraftAndAttachmentPersistenceAtoBAndFirstSend() throws {

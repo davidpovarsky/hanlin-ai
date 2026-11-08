@@ -821,6 +821,36 @@ struct PendingFirstTurnTests {
 @Suite("7A.7 ModelPopoverZoomOrderTests — Expand First, Push All Models Only On Completion", .serialized)
 struct ModelPopoverZoomOrderTests {
 
+    @Test("A dismissed presentation cannot alter a reopened popover's pending expansion")
+    func staleCompletionCannotEndNewExpansion() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.deferAnimationCompletionsForTesting = true
+        coordinator.toggle(.model)
+        coordinator.pushModelSubroute()
+        coordinator.closeAll()
+        coordinator.toggle(.model)
+        coordinator.pushModelSubroute()
+
+        coordinator.flushPendingAnimationCompletions(firstOnly: true)
+        #expect(coordinator.isModelAnimatingExpand)
+        #expect(coordinator.modelNavigationPath.isEmpty)
+        coordinator.flushPendingAnimationCompletions()
+        #expect(!coordinator.isModelAnimatingExpand)
+        #expect(coordinator.modelNavigationPath == [.allModels])
+    }
+
+    @Test("Popover dimensions remain inside narrow and short measured containers")
+    func popoverFitsSmallContainer() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        let target = CGSize(width: 344, height: 472)
+        #expect(coordinator.responsiveSize(target: target,
+            availableContainerSize: CGSize(width: 220, height: 220)) == CGSize(width: 200, height: 192))
+        #expect(coordinator.responsiveSize(target: target,
+            availableContainerSize: CGSize(width: 500, height: 400)) == CGSize(width: 344, height: 372))
+        #expect(coordinator.responsiveSize(target: target,
+            availableContainerSize: CGSize(width: 1024, height: 768)) == target)
+    }
+
     @Test("7.1 pushModelSubroute(.allModels) expands popover FIRST and appends .allModels ONLY in completion handler")
     func expandFirstThenPushAllModelsInCompletion() {
         let coordinator = HanlinComposerPopupCoordinator()

@@ -108,6 +108,7 @@ struct HanlinModelPickerPopover: View {
                 }
         }
         .frame(width: currentSize.width, height: currentSize.height)
+        .fixedSize()
         .background(
             GlassView(style: .systemUltraThinMaterial)
         )

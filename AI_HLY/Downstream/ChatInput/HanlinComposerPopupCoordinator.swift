@@ -327,8 +327,10 @@ final class HanlinComposerPopupCoordinator {
 
         let completeRoutePush: @MainActor () -> Void = { [weak self] in
             guard let self else { return }
+            // A completion from a dismissed presentation must not clear the
+            // animation flag belonging to a newly opened popover.
+            guard self.modelPresentationGeneration == capturedGeneration else { return }
             guard self.activePopup == .model,
-                  self.modelPresentationGeneration == capturedGeneration,
                   self.modelFrameExpanded,
                   self.modelNavigationPath.isEmpty,
                   !self.modelNavigationPath.contains(route) else {
@@ -363,9 +365,10 @@ final class HanlinComposerPopupCoordinator {
     }
 
     /// Executes any queued animation completions in deterministic unit tests (`ModelPopoverZoomOrderTests`).
-    func flushPendingAnimationCompletions() {
-        let completions = pendingAnimationCompletions
-        pendingAnimationCompletions.removeAll()
+    func flushPendingAnimationCompletions(firstOnly: Bool = false) {
+        let count = firstOnly ? min(1, pendingAnimationCompletions.count) : pendingAnimationCompletions.count
+        let completions = Array(pendingAnimationCompletions.prefix(count))
+        pendingAnimationCompletions.removeFirst(count)
         for completion in completions {
             completion()
         }
@@ -380,9 +383,10 @@ final class HanlinComposerPopupCoordinator {
         verticalMargin: CGFloat = 28
     ) -> CGSize {
         let candidateContainer = availableContainerSize ?? measuredContainerSize
-        if candidateContainer.width > 120 && candidateContainer.height > 120 {
-            let maxWidth = max(240, candidateContainer.width - horizontalMargin)
-            let maxHeight = max(260, candidateContainer.height - verticalMargin)
+        if candidateContainer.width.isFinite && candidateContainer.height.isFinite &&
+            candidateContainer.width > 0 && candidateContainer.height > 0 {
+            let maxWidth = max(1, candidateContainer.width - horizontalMargin)
+            let maxHeight = max(1, candidateContainer.height - verticalMargin)
             return CGSize(
                 width: min(target.width, maxWidth),
                 height: min(target.height, maxHeight)
@@ -400,8 +404,8 @@ final class HanlinComposerPopupCoordinator {
             let insets = window.safeAreaInsets
             let availableWidth = bounds.width - insets.left - insets.right
             let availableHeight = bounds.height - insets.top - insets.bottom
-            let maxWidth = max(240, availableWidth - horizontalMargin)
-            let maxHeight = max(260, availableHeight - verticalMargin)
+            let maxWidth = max(1, availableWidth - horizontalMargin)
+            let maxHeight = max(1, availableHeight - verticalMargin)
             return CGSize(
                 width: min(target.width, maxWidth),
                 height: min(target.height, maxHeight)
