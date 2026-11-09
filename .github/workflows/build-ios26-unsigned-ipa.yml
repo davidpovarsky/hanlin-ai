@@ -121,6 +121,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -207,6 +208,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -467,6 +469,7 @@ jobs:
       - name: Live Activity · refresh
         if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -621,6 +624,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -670,6 +674,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -1279,6 +1284,7 @@ jobs:
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -1364,6 +1370,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -1485,6 +1492,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -1999,6 +2007,7 @@ jobs:
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2094,6 +2103,7 @@ jobs:
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2672,6 +2682,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2759,6 +2770,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2807,6 +2819,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
