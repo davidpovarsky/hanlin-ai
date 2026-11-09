@@ -403,6 +403,7 @@
         "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
         "AI_HLY/Downstream/RuntimeCore/Resources/**",
         "Scripts/Runtime/prepare-runtime-host.sh",
+        "Scripts/Runtime/runtime_host_archive.py",
         "Scripts/Runtime/prepare-runtime-core.sh",
         "Scripts/Runtime/preflight-runtime-core.sh",
         "Scripts/Runtime/run-with-heartbeat.py"

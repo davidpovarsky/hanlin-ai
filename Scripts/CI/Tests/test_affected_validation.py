@@ -35,6 +35,14 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             with self.subTest(selector=selector), self.assertRaises(planner.RoutingError):
                 self.plan_files(["README.md"], exact_test_selector=selector)
 
+    def test_host_archive_prerequisite_supports_focused_sdk_selection(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/embeddedNodeHTTPSRoundTrips()"
+        plan = self.plan_files(["Scripts/Runtime/runtime_host_archive.py"], exact_test_selector=selector)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
     def test_autonomous_runtime_suite_has_an_explicit_narrow_route(self) -> None:
         plan = self.plan_files(["AI_HLYTests/HanlinAutonomousRuntimeTests.swift"])
         self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinAutonomousRuntimeTests")
