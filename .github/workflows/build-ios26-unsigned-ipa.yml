@@ -99,7 +99,7 @@ jobs:
   plan-affected-validation:
     if: ${{ !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
-    runs-on: macos-26
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
       run_full_validation: ${{ steps.plan.outputs.run_full_validation }}
