@@ -59,6 +59,7 @@ actor HanlinRuntimeBroker {
             let tsResult = try await compileAndExecuteTypeScript(
                 source: source,
                 context: context,
+                arguments: arguments,
                 environment: environment,
                 limits: effectiveLimits
             )
@@ -139,6 +140,7 @@ actor HanlinRuntimeBroker {
         context: HanlinHostCallContext,
         fileName: String = "main.ts",
         compileOnly: Bool = false,
+        arguments: [String] = [],
         environment: [String: String] = [:],
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> TypeScriptExecutionResult {
@@ -153,6 +155,7 @@ actor HanlinRuntimeBroker {
 
         let request = RuntimeExecutionRequest(
             source: source,
+            arguments: arguments,
             workspace: try deriveWorkspace(for: context),
             environment: environment,
             limits: limits ?? RuntimeExecutionLimits()

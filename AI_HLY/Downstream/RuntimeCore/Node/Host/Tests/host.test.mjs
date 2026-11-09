@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
@@ -173,6 +174,23 @@ test('host redirects npm state before preview and install modules initialize', a
     });
     assert.equal(execution.stdout, 'שלום\n');
     assert.deepEqual(execution.value, { answer: 42 });
+
+    for (const tracing of [true, false]) {
+      const marker = `warning-scope-${tracing}-${randomUUID()}`;
+      const warningResult = await hostRequest(ready.port, launchToken, '/v1/executions', {
+        executionID: randomUUID(),
+        source: `process.emitWarning(${JSON.stringify(marker)}); await new Promise(resolve => setImmediate(resolve)); export default 42;`,
+        workspace, moduleKind: 'esm', maximumOutputBytes: 4096,
+        environment: tracing ? { HANLIN_NODE_TRACE_WARNINGS: '1' } : {},
+      });
+      assert.equal(warningResult.value, 42);
+      for (let attempt = 0; tracing && attempt < 20 && !stderr.includes(marker); attempt += 1) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+      assert.ok((stderr + warningResult.stderr).includes(marker), JSON.stringify(warningResult) + stderr);
+      const traced = stderr.split('\n').some(line => line.includes('[HANLIN_NODE_WARNING thread=') && line.includes(marker));
+      assert.equal(traced, tracing, stderr);
+    }
 
     const compiled = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
       source: 'const answer: number = 42; console.log(answer);',

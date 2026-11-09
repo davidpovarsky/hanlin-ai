@@ -2175,10 +2175,9 @@ jobs:
             fi
 
             if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}" = "true" ]; then
-              if [ "$downstream_test_status" -ne 0 ]; then
-                echo "Cannot stage UI fixtures: Xcode unit-host installation/execution failed." >&2
-                exit "$downstream_test_status"
-              fi
+              # A failed assertion does not mean the test host was not installed.
+              # The stager validates the actual data container; retain the unit
+              # failure below while collecting independent UI evidence.
               staging_started_at="$(date +%s)"
               python3 Scripts/CI/stage_scriptui_fixtures.py \
                 --simulator-udid "$SIMULATOR_UDID" \
@@ -2779,7 +2778,7 @@ jobs:
       - validate-hanlin-platform-phase1
       - full-app-simulator-smoke
     if: always() && !cancelled() && !inputs.testflight_upload && (needs.plan-affected-validation.outputs.run_phase1 == 'true' || needs.plan-affected-validation.outputs.run_simulator_job == 'true')
-    runs-on: macos-26
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
