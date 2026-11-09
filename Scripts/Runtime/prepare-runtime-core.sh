@@ -102,10 +102,9 @@ ditto "${PAYLOAD_ROOT}/NodeMobile.xcframework" "${node_vendor}/NodeMobile.xcfram
 ditto "${PAYLOAD_ROOT}/Python.xcframework" "${python_vendor}/Python.xcframework"
 cp "${PAYLOAD_ROOT}/Python-VERSIONS" "${python_vendor}/Python-VERSIONS"
 cp "${PAYLOAD_ROOT}/RuntimeHostResources.zip" "${host_resource}"
-(
-  cd "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host"
-  zip -X -q "${host_resource}" ./*.mjs
-)
+# Source-only overlays are valid only while the dependency closure is identical.
+# Exact simulator selectors still need the current Host's required packages.
+python3 "${SCRIPT_DIR}/runtime_host_archive.py" sync "${host_resource}"
 if [[ -d "${REPOSITORY_ROOT}/build/SimulatorDerivedData" ]]; then
   find "${REPOSITORY_ROOT}/build/SimulatorDerivedData" -name "RuntimeHostResources.zip" -path "*/AI_Hanlin.app/*" -delete || true
 fi
