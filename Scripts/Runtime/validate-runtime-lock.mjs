@@ -2,6 +2,7 @@
 
 import { readFile } from 'node:fs/promises';
 import process from 'node:process';
+import { createHash } from 'node:crypto';
 
 const lockPath = process.argv[2] ?? 'RuntimeDependencies.lock.json';
 const allowPending = process.argv.includes('--allow-pending-build');
@@ -17,6 +18,17 @@ assert(/^24\.\d+\.\d+$/.test(lock.node?.version ?? ''), 'node.version must be No
 assert(Array.isArray(lock.node?.exportedSymbols), 'node.exportedSymbols must be an array');
 assert(lock.node.exportedSymbols.length === 1 && lock.node.exportedSymbols[0] === '_node_start', 'node.exportedSymbols must contain only _node_start');
 assertUrlAndHash(lock.node?.sourceArchive, 'node.sourceArchive');
+for (const patch of lock.node.sourcePatches ?? []) {
+  assert(/^Scripts\/Runtime\/Patches\/[A-Za-z0-9._-]+\.json$/.test(patch.path ?? ''), 'Invalid Node source patch path');
+  assert(sha256.test(patch.sha256 ?? ''), 'Invalid Node source patch SHA-256');
+  assert(sha40.test(patch.upstreamCommit ?? ''), 'Invalid Node source patch upstream commit');
+  const bytes = await readFile(new URL(`../../${patch.path}`, import.meta.url));
+  assert(createHash('sha256').update(bytes).digest('hex') === patch.sha256, 'Node source patch checksum mismatch');
+  const manifest = JSON.parse(bytes);
+  assert(manifest.sourceCommit === lock.node.commit, 'Node source patch requires a matching source commit');
+  assert(manifest.upstreamCommit === patch.upstreamCommit, 'Node source patch upstream provenance mismatch');
+}
+
 assertRepository(lock.python?.sourceRepository, 'python.sourceRepository');
 assert(sha40.test(lock.python?.commit ?? ''), 'python.commit must be a lowercase 40-character SHA');
 assert(/^3\.14\.\d+$/.test(lock.python?.version ?? ''), 'python.version must be Python 3.14');

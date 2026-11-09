@@ -350,7 +350,6 @@
         "Scripts/NativeScript/nativescript.config.ts",
         "Scripts/NativeScript/tsconfig.json",
         "Scripts/NativeScript/vite.config.mts"
-
       ],
       "direct_validation_groups": [
         "nativescript_dependencies",
@@ -387,7 +386,12 @@
         "Scripts/Runtime/generate-runtime-manifest.mjs",
         "Scripts/Runtime/update-runtime-dependencies.mjs",
         "Scripts/Runtime/validate-runtime-localization.mjs",
-        ".github/workflows/build-runtime-bundle.yml"
+        ".github/workflows/build-runtime-bundle.yml",
+        "Scripts/Runtime/apply-node-source-patches.py",
+        "Scripts/Runtime/Patches/**",
+        "Scripts/Runtime/Tests/test_node_source_patches.py",
+        "Scripts/Runtime/Tests/node-fd-ownership-probe*.mjs",
+        "Scripts/Runtime/Tests/node-mobile-smoke.mjs"
       ],
       "direct_validation_groups": [
         "runtimecore_bundle"

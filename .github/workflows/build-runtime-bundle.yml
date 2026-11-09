@@ -107,6 +107,8 @@ jobs:
           REUSE_ARTIFACTS_RUN_ID: ${{ inputs.reuse_artifacts_run_id }}
         run: |
           set -euo pipefail
+          python3 -m unittest discover -s Scripts/Runtime/Tests -p test_node_source_patches.py
+          node --jitless --test Scripts/Runtime/Tests/node-fd-ownership-probe.test.mjs
           node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json --allow-pending-build
           dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
           release_tag="runtime-core-v1-${dependency_hash}"
@@ -285,6 +287,7 @@ jobs:
           script_hash="$(shasum -a 256 Scripts/Runtime/build-node-slice.sh Scripts/Runtime/NodeMobile.exports | shasum -a 256 | awk '{print $1}')"
           base="hanlin-node24-ccache-v1-${RUNNER_OS}-${RUNNER_ARCH}-${XCODE_BUILD}-${NODE_COMMIT}-${TARGET}-${lock_hash}-${script_hash}"
           echo "base=$base" >> "$GITHUB_OUTPUT"
+          echo "prefix=hanlin-node24-ccache-v1-${RUNNER_OS}-${RUNNER_ARCH}-${XCODE_BUILD}-${NODE_COMMIT}-${TARGET}-" >> "$GITHUB_OUTPUT"
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -302,6 +305,7 @@ jobs:
           key: ${{ steps.cache-key.outputs.base }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
             ${{ steps.cache-key.outputs.base }}-
+            ${{ steps.cache-key.outputs.prefix }}
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main

@@ -43,6 +43,17 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertFalse(plan.step_outputs["run_full_validation"])
         self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
 
+    def test_native_node_patch_inputs_route_to_the_bundle_pipeline(self) -> None:
+        for file in ("Scripts/Runtime/apply-node-source-patches.py",
+                     "Scripts/Runtime/Patches/v8-std-hash-65ce14d8.json",
+                     "Scripts/Runtime/Tests/test_node_source_patches.py",
+                     "Scripts/Runtime/Tests/node-fd-ownership-probe.mjs",
+                     "Scripts/Runtime/Tests/node-mobile-smoke.mjs"):
+            with self.subTest(file=file):
+                plan = self.plan_files([file])
+                self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+
     def test_autonomous_runtime_suite_has_an_explicit_narrow_route(self) -> None:
         plan = self.plan_files(["AI_HLYTests/HanlinAutonomousRuntimeTests.swift"])
         self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinAutonomousRuntimeTests")

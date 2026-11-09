@@ -54,4 +54,6 @@ if [[ "${actual_version}" != "${NODE_VERSION}" || "${actual_major}" != "24" ]]; 
   exit 1
 fi
 
+python3 "${SCRIPT_DIR}/apply-node-source-patches.py" "${DESTINATION}" "${LOCK_FILE}"
+
 echo "Prepared Node ${actual_version} (${NODE_COMMIT}) at ${DESTINATION}."

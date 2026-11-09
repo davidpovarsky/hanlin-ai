@@ -83,6 +83,12 @@ node -e '
   if (provenance.dependencyHash !== dependencyHash) throw new Error("Runtime provenance dependency hash mismatch");
   if (provenance.nodeXCFrameworkSha256 !== nodeHash) throw new Error("Runtime provenance Node hash mismatch");
   if (nodeRuntime?.bundleHash !== nodeHash) throw new Error("Runtime manifest Node hash mismatch");
+  if (JSON.stringify(provenance.nodeSourcePatches ?? []) !== JSON.stringify(lock.node.sourcePatches ?? [])) {
+    throw new Error("Runtime provenance Node source patches mismatch");
+  }
+  if ((lock.node.sourcePatches?.length ?? 0) > 0 && (!smoke.descriptorOwnership || smoke.fdWarningCount !== 0)) {
+    throw new Error("Patched embedded Node descriptor ownership smoke is incomplete");
+  }
   if (!smoke.ok || smoke.nodeVersion !== nodeVersion || !smoke.workerThreads || !smoke.hostStartup) {
     throw new Error("Embedded Node smoke evidence is incomplete");
   }
