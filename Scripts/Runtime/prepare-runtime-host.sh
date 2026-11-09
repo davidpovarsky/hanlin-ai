@@ -26,7 +26,7 @@ cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
 
 (
   cd "${WORK_ROOT}"
-  npm ci --omit=dev --ignore-scripts --ignore-workspaces --no-audit --no-fund
+  npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund
   npm test
   rm -rf Tests
   find . -type f -print | LC_ALL=C sort | zip -X -q "${OUTPUT_ROOT}/RuntimeHostResources.zip" -@
@@ -48,7 +48,7 @@ node -e '
   const fs = require("node:fs");
   const [file, hash, nodeVersion, sourceInputsHash] = process.argv.slice(1);
   fs.writeFileSync(file, `${JSON.stringify({
-    nodeVersion, archiveSha256: hash, sourceInputsHash, jitlessArchiveSmoke: "passed", npmInstall: "npm ci --omit=dev --ignore-scripts --ignore-workspaces --no-audit --no-fund",
+    nodeVersion, archiveSha256: hash, sourceInputsHash, jitlessArchiveSmoke: "passed", npmInstall: "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
     tests: "passed",
   }, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/host-metadata.json" "${host_sha256}" "$(node --version)" "${SOURCE_INPUTS_HASH}"
