@@ -172,9 +172,12 @@ public final class HanlinSQLiteService: @unchecked Sendable {
         var didBindArguments = false
         while !remaining.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             var statement: OpaquePointer?
-            var tail: UnsafePointer<CChar>?
-            let result = remaining.withCString { pointer in
-                sqlite3_prepare_v2(database, pointer, -1, &statement, &tail)
+            // SQLite's tail points inside the temporary withCString buffer.
+            // Copy it before leaving that closure, not after stepping the statement.
+            let (result, remainingSQL) = remaining.withCString { pointer in
+                var tail: UnsafePointer<CChar>?
+                let result = sqlite3_prepare_v2(database, pointer, -1, &statement, &tail)
+                return (result, tail.map { String(cString: $0) })
             }
             guard result == SQLITE_OK else { throw sqliteError(database) }
             guard let statement else { break }
@@ -191,8 +194,8 @@ public final class HanlinSQLiteService: @unchecked Sendable {
             }
             let step = sqlite3_step(statement)
             guard step == SQLITE_DONE || step == SQLITE_ROW else { throw sqliteError(database) }
-            guard let tail else { break }
-            remaining = String(cString: tail)
+            guard let remainingSQL else { break }
+            remaining = remainingSQL
         }
         if let arguments, !didBindArguments {
             try requireEmptyArguments(arguments)

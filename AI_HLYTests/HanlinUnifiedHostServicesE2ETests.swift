@@ -41,11 +41,16 @@ struct HanlinUnifiedHostServicesE2ETests {
             capabilities: [],
             canPresentUI: false
         )
+        let workspace = try RuntimeFileLayout.default.workspace(client: .executions, identifier: context.runtimeWorkspaceIdentifier)
+        let file = workspace.appendingPathComponent("grantless-probe.txt")
+        let nonce = UUID().uuidString
+        try nonce.write(to: file, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: file) }
         let result = try await HanlinHostServicesBroker.shared.executeRuntime(
-            .shell, source: "printf autonomous-runtime", context: context
+            .shell, source: "cat grantless-probe.txt", context: context
         )
         #expect(result.exitCode == 0)
-        #expect(result.stdout.contains("autonomous-runtime"))
+        #expect(result.stdout == nonce)
     }
 
     @Test func capabilityAuthorityGrantRevokePersists() async throws {

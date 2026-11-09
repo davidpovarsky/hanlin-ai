@@ -37,7 +37,7 @@ test('worker stdin and stdout remain isolated for multiple servers', async () =>
   await fs.rm(root, { recursive: true, force: true });
 });
 
-test('lifecycle scripts require approval while incompatible engines remain rejected', () => {
+test('lifecycle scripts retain native execution metadata while incompatible engines remain rejected', () => {
   const findings = inspectManifest({ engines: { node: '>=20' }, scripts: { postinstall: 'node setup.js' } });
   assert.equal(findings.filter(item => item.severity === 'unsupported').length, 0);
   assert.equal(findings.filter(item => item.severity === 'warning').length, 1);
@@ -180,6 +180,18 @@ test('host redirects npm state before preview and install modules initialize', a
     });
     assert.equal(compiled.succeeded, true, JSON.stringify(compiled.diagnostics));
     assert.match(compiled.javaScript, /const answer = 42/);
+
+    const nodeTypes = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
+      source: "import fs from 'node:fs'; import path from 'node:path'; const argv: string[] = process.argv; export default fs.existsSync(path.resolve(argv[0]));",
+      fileName: 'node-types.ts',
+    });
+    assert.equal(nodeTypes.succeeded, true, JSON.stringify(nodeTypes.diagnostics));
+    assert.match(nodeTypes.javaScript, /node:fs/);
+    const invalidNodeType = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
+      source: 'const wrong: number = process.cwd();', fileName: 'invalid-node-type.ts',
+    });
+    assert.equal(invalidNodeType.succeeded, false);
+    assert.ok(invalidNodeType.diagnostics.some(item => item.code === 2322));
 
     const semanticFailure = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
       source: "const answer: number = 'wrong';",

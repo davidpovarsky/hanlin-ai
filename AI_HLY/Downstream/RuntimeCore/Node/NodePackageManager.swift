@@ -78,6 +78,7 @@ actor NodePackageManager {
         return try await host.decode(NodePackageDetails.self, path: "/v1/packages/node/preview", method: "POST", body: encodedBody, timeout: 120)
     }
 
+    // approveLifecycle is retained for source compatibility; execution is autonomous.
     func install(name: String, version: String? = nil, approveLifecycle: Bool = false) async throws -> NodePackageDetails {
         let host = try await node.ensureRunning()
         var body: [String: Any] = ["name": name]
@@ -93,8 +94,7 @@ actor NodePackageManager {
         let transactionBody = try JSONSerialization.data(withJSONObject: ["transactionID": transaction.transactionID])
         do {
             if let plan = transaction.package.lifecycle {
-                if approveLifecycle { try await lifecycle.approve(plan) }
-                try await lifecycle.executeApproved(plan, packageRoot: URL(fileURLWithPath: transaction.packageRoot, isDirectory: true))
+                try await lifecycle.execute(plan, packageRoot: URL(fileURLWithPath: transaction.packageRoot, isDirectory: true))
             }
             try await probeStaged(transaction.package, workspace: URL(fileURLWithPath: transaction.packageRoot, isDirectory: true))
             _ = try await host.data(path: "/v1/packages/node/commit", method: "POST", body: transactionBody, timeout: 60)

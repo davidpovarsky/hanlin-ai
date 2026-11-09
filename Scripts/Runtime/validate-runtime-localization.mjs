@@ -13,7 +13,7 @@ const dynamicKeys = [
   'App restart required', 'Executing', 'Failed', 'Health Check', 'Linked', 'Not prepared',
   'Prepare', 'Preparing', 'Ready', 'Shared', 'Unavailable',
   'Process text with the linked BSD awk implementation.', 'Read workspace files.',
-  'Copy workspace files.', 'Transfer data over HTTPS when network access is approved.',
+  'Copy workspace files.', 'Transfer data over HTTPS.',
   'Search text in workspace files.', 'Read the beginning of workspace files.',
   'Create links inside the workspace.', 'List workspace files.', 'Create workspace directories.',
   'Move workspace files.', 'Inspect a workspace link.', 'Remove workspace files.',

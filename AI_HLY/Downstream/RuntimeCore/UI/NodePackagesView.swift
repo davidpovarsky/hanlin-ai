@@ -10,7 +10,6 @@ private final class NodePackagesModel {
     var preview: NodePackageDetails?
     var probeOutput: String?
     var message: String?
-    var pendingApproval: NodePackageDetails?
     var isBusy = false
     private var operation: Task<Void, Never>?
 
@@ -21,26 +20,8 @@ private final class NodePackagesModel {
 
     func inspect() { run { self.preview = try await AppRuntimeCore.shared.nodePackages.preview(name: self.packageName, version: self.version.nilIfEmpty) } }
     func install() {
-        run(markCompleted: false) {
-            let inspected = try await AppRuntimeCore.shared.nodePackages.preview(name: self.packageName, version: self.version.nilIfEmpty)
-            self.preview = inspected
-            if inspected.lifecycle?.requiresApproval == true {
-                self.pendingApproval = inspected
-            } else {
-                self.preview = try await AppRuntimeCore.shared.nodePackages.install(name: self.packageName, version: self.version.nilIfEmpty)
-                await self.reload()
-                self.message = RuntimeL10n.string("Completed")
-            }
-        }
-    }
-    func approveAndInstall() {
-        pendingApproval = nil
         run {
-            self.preview = try await AppRuntimeCore.shared.nodePackages.install(
-                name: self.packageName,
-                version: self.version.nilIfEmpty,
-                approveLifecycle: true
-            )
+            self.preview = try await AppRuntimeCore.shared.nodePackages.install(name: self.packageName, version: self.version.nilIfEmpty)
             await self.reload()
         }
     }
@@ -130,24 +111,12 @@ struct NodePackagesView: View {
                 if let probeOutput = model.probeOutput { Text(probeOutput).font(.system(.caption, design: .monospaced)).textSelection(.enabled) }
             }
 
-            Section { Text(RuntimeL10n.string("Packages are installed transactionally with npm lifecycle scripts disabled. Compatibility is reported per package; TypeScript packages with published JavaScript output are supported.")) .font(.caption).foregroundStyle(.secondary) }
+            Section { Text(RuntimeL10n.string("Packages are installed transactionally. Supported setup scripts run automatically.")) .font(.caption).foregroundStyle(.secondary) }
         }
         .navigationTitle(RuntimeL10n.string("Node Packages"))
         .task { await model.reload() }
         .refreshable { await model.reload() }
-        .confirmationDialog(
-            RuntimeL10n.string("Approve lifecycle scripts?"),
-            isPresented: Binding(
-                get: { model.pendingApproval != nil },
-                set: { if !$0 { model.pendingApproval = nil } }
-            ),
-            titleVisibility: .visible
-        ) {
-            Button(RuntimeL10n.string("Approve and Install")) { model.approveAndInstall() }
-            Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.pendingApproval = nil }
-        } message: {
-            Text(RuntimeL10n.string("The exact lifecycle plan will run only through RuntimeCore and will be re-approved if its version, integrity, or script hash changes."))
-        }
+
     }
 }
 
@@ -165,7 +134,7 @@ private struct NodePackageDetailsView: View {
             if !item.dependencies.isEmpty { LabeledContent(RuntimeL10n.string("Dependencies"), value: item.dependencies.joined(separator: ", ")) }
             if let lifecycle = item.lifecycle {
                 LabeledContent(RuntimeL10n.string("Lifecycle scripts"), value: lifecycle.actions.isEmpty ? RuntimeL10n.string("None") : RuntimeL10n.format("%d planned actions", lifecycle.actions.count))
-                if lifecycle.requiresApproval { Text(RuntimeL10n.string("Lifecycle actions require explicit approval and run only through RuntimeCore.")) .font(.caption).foregroundStyle(.orange) }
+                if !lifecycle.actions.isEmpty { Text(RuntimeL10n.string("Supported setup scripts run automatically.")) .font(.caption).foregroundStyle(.secondary) }
             }
             ForEach(item.findings ?? []) { finding in
                 Label(finding.message, systemImage: finding.severity == "unsupported" ? "xmark.octagon" : "exclamationmark.triangle")

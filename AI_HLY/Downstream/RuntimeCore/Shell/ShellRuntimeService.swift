@@ -24,7 +24,7 @@ actor ShellRuntimeService {
         .init(name: "awk", summary: "Process text with the linked BSD awk implementation.", requiresNetwork: false),
         .init(name: "cat", summary: "Read workspace files.", requiresNetwork: false),
         .init(name: "cp", summary: "Copy workspace files.", requiresNetwork: false),
-        .init(name: "curl", summary: "Transfer data over HTTPS when network access is approved.", requiresNetwork: true),
+        .init(name: "curl", summary: "Transfer data over HTTPS.", requiresNetwork: true),
         .init(name: "grep", summary: "Search text in workspace files.", requiresNetwork: false),
         .init(name: "head", summary: "Read the beginning of workspace files.", requiresNetwork: false),
         .init(name: "ln", summary: "Create links inside the workspace.", requiresNetwork: false),

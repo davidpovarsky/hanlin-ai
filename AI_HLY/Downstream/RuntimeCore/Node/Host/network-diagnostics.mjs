@@ -1,3 +1,4 @@
+import { fetchImplementation, webAssemblyAvailable } from './fetch-compatibility.mjs';
 import dns from 'node:dns';
 import https from 'node:https';
 import net from 'node:net';
@@ -27,6 +28,7 @@ export async function probeNodeHTTPS({ endpoint = 'https://httpbingo.org/anythin
   const timeout = Math.min(15000, Math.max(1000, Number(timeoutMilliseconds) || 8000));
   const report = {
     schemaVersion: 1, runID: randomUUID(), host: base.hostname,
+    fetchImplementation, webAssemblyAvailable,
     runtime: { node: process.versions.node, openssl: process.versions.openssl, uv: process.versions.uv, platform: process.platform },
     dnsOrder: dns.getDefaultResultOrder(), autoSelectFamily: net.getDefaultAutoSelectFamily(),
     rootCACount: tls.getCACertificates('default').length,

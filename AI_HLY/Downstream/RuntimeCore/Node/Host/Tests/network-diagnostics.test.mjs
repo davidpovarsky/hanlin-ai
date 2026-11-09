@@ -28,7 +28,7 @@ test('real TLS handshake failures remain failures for both fetch and node:https 
     assert.deepEqual(new Set(report.requests.map(item => item.client)), new Set(['fetch', 'https']));
     assert.ok(report.requests.every(item => item.passed === false && item.error));
     for (const request of report.requests) {
-      if (request.client === 'fetch') assert.match(request.error.cause.code, /^ERR_SSL_/);
+      if (request.client === 'fetch') assert.match(request.error.cause.code, /^(?:ERR_SSL_|EPROTO$)/);
       else assert.match(request.error.code, /^(ERR_SSL_|EPROTO$)/);
     }
     assert.equal(typeof report.rootCACount, 'number');

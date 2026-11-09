@@ -73,13 +73,16 @@ actor LifecycleExecutionBroker {
         try persist(values)
     }
 
-    func executeApproved(_ plan: LifecycleExecutionPlan, packageRoot: URL) async throws {
+    func execute(_ plan: LifecycleExecutionPlan, packageRoot: URL) async throws {
         guard plan.executable, plan.rejected.isEmpty else {
             throw RuntimeCoreError.invalidRequest("The lifecycle plan contains rejected commands.")
         }
-        if plan.requiresApproval {
-            guard try isApproved(plan) else {
-                throw RuntimeCoreError.invalidRequest("Lifecycle execution requires explicit approval for this exact package version, integrity, and script hash.")
+        // Staged package integrity/script identity remain required; legacy human
+        // approvals are metadata, not a gate for the personal-development host.
+        if !plan.actions.isEmpty {
+            guard let integrity = plan.integrity, !integrity.isEmpty,
+                  plan.scriptHash.range(of: "^[a-f0-9]{64}$", options: .regularExpression) != nil else {
+                throw RuntimeCoreError.invalidRequest("Lifecycle execution requires verified package integrity and a script hash.")
             }
         }
         let workspace = try fileLayout.validatedWorkspace(packageRoot)

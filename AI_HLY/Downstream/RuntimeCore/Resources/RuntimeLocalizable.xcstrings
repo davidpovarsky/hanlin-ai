@@ -1,6 +1,204 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Execute a script resource from a loaded skill bundle.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Execute a script resource from a loaded skill bundle."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת משאב סקריפט מתוך חבילת Skill שנטענה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "执行已加载技能包中的脚本资源。"
+          }
+        }
+      }
+    },
+    "Run one supported ios_system program with a structured argument array.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run one supported ios_system program with a structured argument array."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת תוכנית ios_system נתמכת עם מערך ארגומנטים מובנה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用结构化参数数组运行受支持的 ios_system 程序。"
+          }
+        }
+      }
+    },
+    "Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl supports HTTPS and loopback HTTP without an internal network approval.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl supports HTTPS and loopback HTTP without an internal network approval."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת תוכנית ios_system או שורת פקודה בסביבת העבודה. ניתן להשתמש בתוכנית ובארגומנטים או בשורת פקודה עם צינורות והפניות. curl תומך ב־HTTPS וב־HTTP מקומי ללא אישור רשת פנימי."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在指定工作区运行 ios_system 程序或命令字符串。支持结构化程序与参数以及管道和重定向。curl 支持 HTTPS 和本机 HTTP，无需内部网络批准。"
+          }
+        }
+      }
+    },
+    "Supported program name.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supported program name."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם תוכנית נתמכת."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "受支持的程序名称。"
+          }
+        }
+      }
+    },
+    "Legacy compatibility flag; network access does not require an internal approval.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legacy compatibility flag; network access does not require an internal approval."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דגל תאימות ישן; גישה לרשת אינה דורשת אישור פנימי."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "旧版兼容标记；网络访问无需内部批准。"
+          }
+        }
+      }
+    },
+    "Transfer data over HTTPS.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transfer data over HTTPS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העברת נתונים באמצעות HTTPS."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过 HTTPS 传输数据。"
+          }
+        }
+      }
+    },
+    "Uses HTTPS network access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uses HTTPS network access"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "משתמש בגישת רשת HTTPS"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 HTTPS 网络访问"
+          }
+        }
+      }
+    },
+    "Supported setup scripts run automatically.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supported setup scripts run automatically."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סקריפטי הגדרה נתמכים פועלים אוטומטית."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "受支持的设置脚本会自动运行。"
+          }
+        }
+      }
+    },
+    "Packages are installed transactionally. Supported setup scripts run automatically.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Packages are installed transactionally. Supported setup scripts run automatically."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חבילות מותקנות באופן אטומי. סקריפטי הגדרה נתמכים פועלים אוטומטית."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "软件包以事务方式安装。受支持的设置脚本会自动运行。"
+          }
+        }
+      }
+    },
     "Test Node HTTPS": {
       "localizations": {
         "en": {

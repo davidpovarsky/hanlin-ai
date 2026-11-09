@@ -11,17 +11,17 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     var catalogEntry: NativeToolCatalogEntry {
-        .init(name: name, title: RuntimeL10n.string("Shell / ios_system"), summary: RuntimeL10n.string("Run one approved ios_system program with a structured argument array."), categories: ["runtime", "code", "shell"], keywords: ["shell", "files", "ios_system"], examples: ["List the files in the local workspace"], isSensitive: true, systemImage: "apple.terminal", presentationProfile: RuntimeToolSupport.profile(name: name, image: "apple.terminal", running: "Running shell command", completed: "Shell command completed", arguments: ["program", "arguments", "allow_network"]))
+        .init(name: name, title: RuntimeL10n.string("Shell / ios_system"), summary: RuntimeL10n.string("Run one supported ios_system program with a structured argument array."), categories: ["runtime", "code", "shell"], keywords: ["shell", "files", "ios_system"], examples: ["List the files in the local workspace"], isSensitive: true, systemImage: "apple.terminal", presentationProfile: RuntimeToolSupport.profile(name: name, image: "apple.terminal", running: "Running shell command", completed: "Shell command completed", arguments: ["program", "arguments", "allow_network"]))
     }
 
     func openAIToolSchema() -> [String: Any] {
         let supportedPrograms = ShellRuntimeService.capabilities.map(\.name)
-        let baseDescription = RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl accepts HTTPS only and requires allow_network=true except for curl --version.")
-        return NativeToolSchema.function(name: name, description: baseDescription + " Approved programs: \(supportedPrograms.joined(separator: ", ")).", parameters: NativeToolSchema.object(properties: [
-            "program": NativeToolSchema.string(description: RuntimeL10n.string("Approved program name."), enumValues: supportedPrograms),
+        let baseDescription = RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl supports HTTPS and loopback HTTP without an internal network approval.")
+        return NativeToolSchema.function(name: name, description: baseDescription + " Supported programs: \(supportedPrograms.joined(separator: ", ")).", parameters: NativeToolSchema.object(properties: [
+            "program": NativeToolSchema.string(description: RuntimeL10n.string("Supported program name."), enumValues: supportedPrograms),
             "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Program arguments as separate strings; shell syntax is not interpreted."), maximumItems: 127),
             "command": NativeToolSchema.string(description: RuntimeL10n.string("Command string to execute through ios_system.")),
-            "allow_network": ["type": "boolean", "description": RuntimeL10n.string("Explicitly allow HTTPS network access for curl.")]
+            "allow_network": ["type": "boolean", "description": RuntimeL10n.string("Legacy compatibility flag; network access does not require an internal approval.")]
         ], required: []))
     }
 
@@ -61,7 +61,7 @@ struct ExecuteShellCommandTool: NativeTool {
                     let approvedList = (ShellRuntimeService.capabilities.map(\.name) + ["pwd"]).joined(separator: ", ")
                     throw NativeToolJSON.JSONError.invalidValue(
                         key: "program",
-                        description: "program '\(program)' is not in the approved ios_system catalog. Approved programs: [\(approvedList)]"
+                        description: "program '\(program)' is not in the approved ios_system catalog. Supported programs: [\(approvedList)]"
                     )
                 }
                 if let shellServiceOverride {

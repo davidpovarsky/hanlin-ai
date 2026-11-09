@@ -1,3 +1,4 @@
+import './fetch-compatibility.mjs';
 import http from 'node:http';
 import dns from 'node:dns';
 if (typeof dns.setDefaultResultOrder === 'function') {
@@ -420,6 +421,8 @@ async function compileTypeScript(body) {
     module: ts.ModuleKind.ESNext,
     moduleResolution: ts.ModuleResolutionKind.Bundler,
     strict: true,
+    types: ['node'],
+    typeRoots: [path.dirname(path.dirname(nodeModule.createRequire(import.meta.url).resolve('@types/node/package.json')))],
     // Installed pure-JavaScript packages are valid runtime dependencies even
     // when they do not publish a declaration package. Explicit TypeScript type
     // errors remain enabled through the rest of strict mode.

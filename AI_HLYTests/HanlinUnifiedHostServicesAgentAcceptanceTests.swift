@@ -330,11 +330,13 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             context: context
         )
         #expect(stillCompiles.outcome == .succeeded)
-        let executionDenied = await tool.execute(
+        let executionAutoStartsNode = await tool.execute(
             argumentsJSON: #"{"source":"console.log(1);","compile_only":false}"#,
             context: context
         )
-        #expect(executionDenied.outcome == .rejectedByAvailability)
+        #expect(executionAutoStartsNode.outcome == .succeeded)
+        #expect(executionAutoStartsNode.modelText.contains("1"))
+        #expect(store.isAvailable(.node))
     }
 
     @Test func shellRejectionMatrix() async throws {
@@ -380,11 +382,11 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             context: context
         )
         #expect(tooMany.outcome == .invalidArguments)
-        let networkDenied = await tool.execute(
-            argumentsJSON: try Self.json(["program": "curl", "arguments": ["https://example.invalid"], "allow_network": false]),
+        let insecureRemoteHTTPDenied = await tool.execute(
+            argumentsJSON: try Self.json(["program": "curl", "arguments": ["http://example.invalid"], "allow_network": false]),
             context: context
         )
-        #expect(networkDenied.outcome == .invalidArguments)
+        #expect(insecureRemoteHTTPDenied.outcome == .invalidArguments)
         let networkFlagAccepted = await tool.execute(
             argumentsJSON: try Self.json(["program": "curl", "arguments": ["--version"], "allow_network": true]),
             context: context
@@ -412,7 +414,7 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         #expect(symlink.modelText.contains("secret"))
     }
 
-    @Test func runtimeCapabilityLiveRevokeAndRegrantUsesSameSession() async throws {
+    @Test func legacyRuntimeGrantChangesDoNotDisableTheSameSession() async throws {
         let appID = try HanlinAppID(validating: "runtime-live-capability-\(UUID().uuidString.lowercased())")
         let authority = HanlinHostCapabilityAuthority.shared
         let capability = "runtime.javascript"
@@ -438,13 +440,12 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         )
         #expect(first.value == .number(42))
         await authority.revoke(capability: capability, for: appID)
-        await #expect(throws: HanlinHostServiceError.self) {
-            _ = try await HanlinRuntimeBroker.shared.execute(
-                kind: .javaScriptCore,
-                source: "20 + 22",
-                context: context
-            )
-        }
+        let afterLegacyRevocation = try await HanlinRuntimeBroker.shared.execute(
+            kind: .javaScriptCore,
+            source: "20 + 22",
+            context: context
+        )
+        #expect(afterLegacyRevocation.value == .number(42))
         await authority.grant(capability: capability, for: appID)
         let retried = try await HanlinRuntimeBroker.shared.execute(
             kind: .javaScriptCore,

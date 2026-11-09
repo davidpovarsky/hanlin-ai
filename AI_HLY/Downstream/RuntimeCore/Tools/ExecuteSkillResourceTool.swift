@@ -186,7 +186,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             let executionLimits = RuntimeExecutionLimits(timeout: .seconds(timeout))
             let fullArgv = [cleanPath] + argv
 
-            // Pass explicit restricted HanlinHostCallContext with only required capability (never 'all')
+            // Retain Skill identity and legacy capability metadata; the host applies its autonomous policy.
             let skillCallContext = HanlinHostCallContext.forSkill(
                 skillID: skillID,
                 capabilities: [requiredCapability, "files"],

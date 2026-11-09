@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 import HanlinExpoNativeAPI
 import HanlinPlatformContracts
 import Testing
@@ -9,12 +10,14 @@ import Testing
 struct HanlinAutonomousRuntimeTests {
     @Test("Embedded Node performs real TLS GET and POST through fetch and node:https")
     func embeddedNodeHTTPSRoundTrips() async throws {
-        let result = try await AppRuntimeCore.shared.node.networkDiagnostics(rounds: 1)
+        let result = try await AppRuntimeCore.shared.node.networkDiagnostics(rounds: 2)
         print("HANLIN_NODE_HTTPS_DIAGNOSTIC \(result.stdout) \(result.stderr)")
         #expect(result.exitCode == 0, "\(result.stderr)")
         let report = try #require(JSONSerialization.jsonObject(with: Data(result.stdout.utf8)) as? [String: Any])
         let requests = try #require(report["requests"] as? [[String: Any]])
-        #expect(requests.count == 4)
+        #expect(requests.count == 8)
+        let supportsWebAssembly = try #require(report["webAssemblyAvailable"] as? Bool)
+        #expect(report["fetchImplementation"] as? String == (supportsWebAssembly ? "node-undici" : "node-fetch@3.3.2+native-web-api"))
         #expect(report["passed"] as? Bool == true, "\(result.stdout)")
         #expect(requests.allSatisfy { $0["nonceMatched"] as? Bool == true })
     }
@@ -85,6 +88,30 @@ struct HanlinAutonomousRuntimeTests {
         #expect(result.outcome == .succeeded, "\(fileExtension): \(result.modelText)")
         #expect(result.modelText.contains("SKILL_EXECUTED=\(nonce)"))
         #expect(FileManager.default.fileExists(atPath: sentinel.path), "The actual runtime must execute the resource")
+    }
+
+    @Test("Native package setup executes real Node work without an internal approval record")
+    func nativeLifecycleExecutesWithoutApproval() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let nonce = UUID().uuidString.lowercased()
+        let script = "import fs from 'node:fs'; fs.writeFileSync(new URL('./setup-result', import.meta.url), process.argv[2]);"
+        try script.write(to: root.appendingPathComponent("setup.mjs"), atomically: true, encoding: .utf8)
+        let plan = LifecycleExecutionPlan(
+            packageName: "autonomous-setup-\(nonce)", packageVersion: "1.0.0",
+            integrity: "sha512-" + Data(SHA512.hash(data: Data(script.utf8))).base64EncodedString(),
+            scriptHash: SHA256.hash(data: Data(script.utf8)).map { String(format: "%02x", $0) }.joined(),
+            actions: [.init(script: "postinstall", kind: "node", command: nil, arguments: ["setup.mjs", nonce])],
+            rejected: [], requiresApproval: true, executable: true
+        )
+        let broker = AppRuntimeCore.shared.lifecycle
+        let approvedBefore = try await broker.isApproved(plan)
+        #expect(!approvedBefore)
+        try await broker.execute(plan, packageRoot: root)
+        #expect(try String(contentsOf: root.appendingPathComponent("setup-result"), encoding: .utf8) == nonce)
+        let approvedAfter = try await broker.isApproved(plan)
+        #expect(!approvedAfter, "Execution must not invent a persisted human approval")
     }
 
     @Test("Native API remains available for active runtimes without an internal grant, and closes with the session")

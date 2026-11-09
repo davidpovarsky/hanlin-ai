@@ -361,7 +361,7 @@ struct RuntimeToolContractTests {
         let validArgs = "{\"skill_id\": \"unloaded_skill\", \"relative_path\": \"scripts/run.py\"}"
         let result = await tool.execute(argumentsJSON: validArgs, context: contextWithoutSession)
         #expect(result.outcome == .invalidArguments)
-        #expect(result.modelText.contains("session") || result.modelText.contains("Session") || result.modelText.contains("denied") || result.modelText.contains("authorized"))
+        #expect(result.modelText.contains("conversation context") && result.modelText.contains("load_skill"))
 
         // Invalid parameter schema using rejected "resource_path" must fail closed on schema validation
         let invalidArgs = "{\"skill_id\": \"unloaded_skill\", \"resource_path\": \"scripts/run.py\"}"

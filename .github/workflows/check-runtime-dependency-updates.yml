@@ -68,6 +68,7 @@ jobs:
           baseline_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs "$RUNNER_TEMP/baseline-lock.json")"
           echo "baseline_hash=$baseline_hash" >> "$GITHUB_OUTPUT"
 
+          npm ci --ignore-scripts --no-audit --no-fund --prefix "$HOST_ROOT"
           node Scripts/Runtime/update-runtime-dependencies.mjs
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund --prefix "$HOST_ROOT"
           node Scripts/Runtime/update-runtime-dependencies.mjs \

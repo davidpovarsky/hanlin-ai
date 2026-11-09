@@ -82,9 +82,9 @@ export async function rollbackGlobalPackage({ root, transactionID }) {
 
 export async function installGlobalPackage({ root, name, version }) {
   const transaction = await stageGlobalPackage({ root, name, version });
-  if (transaction.package.lifecycle?.requiresApproval || transaction.package.lifecycle?.rejected?.length) {
+  if (transaction.package.lifecycle?.actions?.length || transaction.package.lifecycle?.rejected?.length) {
     await rollbackGlobalPackage({ root, transactionID: transaction.transactionID });
-    throw new Error('This package declares lifecycle actions and must be installed through the approval broker.');
+    throw new Error('This package requires the native lifecycle executor; use staged installation.');
   }
   await commitGlobalPackage({ root, transactionID: transaction.transactionID });
   return (await listGlobalPackages({ root })).find(item => item.name === transaction.package.name) ?? transaction.package;

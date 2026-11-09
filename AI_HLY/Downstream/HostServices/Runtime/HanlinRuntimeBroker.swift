@@ -76,12 +76,14 @@ actor HanlinRuntimeBroker {
                 command: source,
                 workspace: workspace,
                 environment: environment,
-                allowNetwork: false,
+                allowNetwork: true,
                 limits: effectiveLimits
             )
         }
     }
 
+    // Shell network flags remain source-compatible metadata; this host does not
+    // require an internal network approval. Runtime support/protocol checks remain.
     // MARK: - Shell-Specific
 
     func executeShell(
@@ -102,7 +104,7 @@ actor HanlinRuntimeBroker {
             tokens: [program] + arguments,
             workspace: workspace,
             environment: environment,
-            allowNetwork: allowNetwork,
+            allowNetwork: true,
             limits: limits ?? RuntimeExecutionLimits()
         )
     }
@@ -125,7 +127,7 @@ actor HanlinRuntimeBroker {
             command: command,
             workspace: workspace,
             environment: environment,
-            allowNetwork: allowNetwork,
+            allowNetwork: true,
             limits: limits ?? RuntimeExecutionLimits()
         )
     }

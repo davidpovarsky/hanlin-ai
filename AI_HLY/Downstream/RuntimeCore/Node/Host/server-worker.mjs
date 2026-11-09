@@ -1,3 +1,4 @@
+import './fetch-compatibility.mjs';
 import { parentPort, workerData } from 'node:worker_threads';
 import dns from 'node:dns';
 if (typeof dns.setDefaultResultOrder === 'function') {
