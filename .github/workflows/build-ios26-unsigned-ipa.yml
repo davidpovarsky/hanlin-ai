@@ -28,6 +28,11 @@ on:
         required: true
         default: false
         type: boolean
+      runtime_publish_release:
+        description: Publish the verified RuntimeCore release after its build and smoke tests
+        required: true
+        default: true
+        type: boolean
       runtime_reuse_artifacts_run_id:
         description: Reuse completed RuntimeCore input artifacts from an earlier run
         required: false
@@ -92,7 +97,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.testflight_upload && 'testflight' || 'validation' }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation') }}
   cancel-in-progress: true
 
 jobs:
@@ -661,7 +666,7 @@ jobs:
     name: Run split RuntimeCore bundle pipeline
     uses: ./.github/workflows/build-runtime-bundle.yml
     with:
-      publish_release: true
+      publish_release: ${{ inputs.runtime_publish_release }}
       force_rebuild: false
       reuse_artifacts_run_id: ${{ inputs.runtime_reuse_artifacts_run_id }}
     permissions:
