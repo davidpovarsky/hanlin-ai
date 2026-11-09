@@ -4,8 +4,8 @@
     "formatVersion": 1,
     "releaseRepository": "davidpovarsky/hanlin-ai",
     "releaseTagPrefix": "runtime-core-v1-",
-    "sha256": null,
-    "verificationStatus": "pending-build"
+    "sha256": "aa788654a883d8e1bca3f177697e8505168dd6cbabcf712dbfae058bd1e46d8d",
+    "verificationStatus": "verified"
   },
   "node": {
     "sourceRepository": "https://github.com/heylogin/nodejs-mobile",
@@ -19,8 +19,8 @@
       "url": "https://github.com/heylogin/nodejs-mobile/archive/refs/tags/v24.5.0-mobile.tar.gz",
       "sha256": "614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c"
     },
-    "xcframeworkSha256": null,
-    "verificationStatus": "pending-build",
+    "xcframeworkSha256": "2dcd34ce18a8d2a24a597eae2451f98992354cf2628bf97b07e8176936dac6e3",
+    "verificationStatus": "verified",
     "license": "MIT with bundled third-party notices",
     "sourcePatches": [
       {

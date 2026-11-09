@@ -4,8 +4,8 @@
     "formatVersion": 1,
     "releaseRepository": "davidpovarsky/hanlin-ai",
     "releaseTagPrefix": "runtime-core-v1-",
-    "sha256": null,
-    "verificationStatus": "pending-build"
+    "sha256": "aa788654a883d8e1bca3f177697e8505168dd6cbabcf712dbfae058bd1e46d8d",
+    "verificationStatus": "verified"
   },
   "runtimes": [
     {
@@ -14,8 +14,8 @@
       "version": "24.5.0",
       "revision": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
       "license": "MIT with bundled third-party notices",
-      "bundleHash": null,
-      "verificationStatus": "pending-build"
+      "bundleHash": "2dcd34ce18a8d2a24a597eae2451f98992354cf2628bf97b07e8176936dac6e3",
+      "verificationStatus": "verified"
     },
     {
       "id": "python",
