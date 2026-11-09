@@ -134,7 +134,15 @@ final class HanlinModelSizingHost<Content: View>: UIHostingController<HanlinMode
         isResizing = false
         let completion = resizeCompletion
         resizeCompletion = nil
-        if completed { completion?() }
+        if completed, let completion {
+            // An unchanged/clamped size can finish inside updateUIViewController.
+            // Deliver the model mutation after that SwiftUI update, and reject a
+            // newer resize that supersedes this queued delivery.
+            Task { @MainActor [weak self] in
+                guard let self, generation == self.resizeGeneration, !self.isResizing else { return }
+                completion()
+            }
+        }
     }
 }
 

@@ -821,6 +821,27 @@ struct PendingFirstTurnTests {
 @Suite("7A.7 ModelPopoverZoomOrderTests — Expand First, Push All Models Only On Completion", .serialized)
 struct ModelPopoverZoomOrderTests {
 
+    @Test("Native resize callbacks leave the SwiftUI update and reject a superseded delivery")
+    func nativeCallbacksAreDeferredAndSuperseded() async {
+        let host = HanlinModelSizingHost(content: HanlinModelHostedView(
+            content: Text("Model picker"), environment: EnvironmentValues()))
+        var oldCallbacks = 0
+        var currentCallbacks = 0
+        let target = CGSize(width: 344, height: 472)
+        await withCheckedContinuation { (done: CheckedContinuation<Void, Never>) in
+            host.resize(to: CGSize(width: 286, height: 324), animated: false) { oldCallbacks += 1 }
+            host.resize(to: target, animated: false) {
+                currentCallbacks += 1
+                done.resume()
+            }
+            #expect(oldCallbacks == 0)
+            #expect(currentCallbacks == 0)
+        }
+        #expect(host.preferredContentSize == target)
+        #expect(oldCallbacks == 0)
+        #expect(currentCallbacks == 1)
+    }
+
     @Test("Normal navigation waits for the actual native size completion")
     func nativeSizeCompletionOwnsForwardNavigation() {
         let coordinator = HanlinComposerPopupCoordinator()
