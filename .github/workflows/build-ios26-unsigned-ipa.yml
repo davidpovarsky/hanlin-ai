@@ -2203,6 +2203,8 @@ jobs:
               # failure recordings. Scope this capture to the explicitly selected test.
               model_video_pid=""
               if [[ "${SIMULATOR_UI_FILTER:-}" == *"testModelPopover"* ]]; then
+                python3 -c 'import json,time; print(json.dumps({"recording_requested_at": time.time()}))' \
+                  > "$LOG_DIR/model-popover-video-time.json"
                 xcrun simctl io "$SIMULATOR_UDID" recordVideo --codec=h264 "$LOG_DIR/model-popover-motion.mp4" \
                   > "$LOG_DIR/model-popover-video.log" 2>&1 &
                 model_video_pid=$!
@@ -2228,6 +2230,10 @@ jobs:
                 wait "$model_video_pid" || true
               fi
               set -e
+              if [ -n "$model_video_pid" ] && [ ! -s "$LOG_DIR/model-popover-motion.mp4" ]; then
+                echo "Required model animation recording is missing; functional assertions alone are insufficient." >&2
+                exit 1
+              fi
               test_duration_seconds="$(( $(date +%s) - nativescript_e2e_started_at ))"
               echo "$test_duration_seconds" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
               log_window_minutes=$(( (test_duration_seconds + 120) / 60 ))
