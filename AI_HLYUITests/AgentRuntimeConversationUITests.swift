@@ -422,8 +422,6 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "All Models button must exist in model picker popover")
         tapElement(allModelsButton)
 
-        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
-        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models expanded page did not appear")
         let modelSearchField = app.textFields["hanlin-model-picker-search"].firstMatch
         XCTAssertTrue(modelSearchField.waitForExistence(timeout: 5), "Model search textfield did not appear")
         let modelBackBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
@@ -580,9 +578,6 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let allModelsButton = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
         XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "All Models button must exist")
         tapElement(allModelsButton)
-
-        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
-        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models expanded page must appear")
 
         let searchField = app.textFields["hanlin-model-picker-search"].firstMatch
         XCTAssertTrue(searchField.waitForExistence(timeout: 5), "Search field must exist")
@@ -1003,8 +998,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         mark("zoom-from-all-models-button", frame: allModelsBtn.frame)
         tapElement(allModelsBtn)
 
-        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
-        guard allModelsPage.waitForExistence(timeout: 5) else {
+        // SwiftUI can flatten an intermediate page group into its containing
+        // popover. Require the actual destination controls, then its pixels.
+        let search = app.textFields["hanlin-model-picker-search"].firstMatch
+        let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
+        guard search.waitForExistence(timeout: 5), backBtn.waitForExistence(timeout: 5) else {
             attachScreenshot("ModelPopover_TransitionFailure", in: app)
             XCTFail("All Models page must appear after expansion and navigation")
             return
@@ -1020,7 +1018,6 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             "Model popover must expand before/during All Models transition (compact: \(compactPopoverFrame.height), expanded: \(expandedPopoverFrame.height))"
         )
         attachScreenshot("7B-08b_ModelPopover_ExpandedAllModels", in: app)
-        let search = app.textFields["hanlin-model-picker-search"].firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 5))
         XCTAssertTrue(search.isHittable, "Expanded search must be ready for interaction")
         XCTAssertTrue(modelPopover.frame.contains(search.frame), "Search must not be clipped outside the popover")
@@ -1028,7 +1025,6 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         mark("expanded-rendered", frame: modelPopover.frame)
 
         // Back button collapses back to compact root
-        let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
         XCTAssertTrue(backBtn.waitForExistence(timeout: 5))
         mark("zoom-back-to-all-models-button", frame: backBtn.frame)
         tapElement(backBtn)
@@ -1055,7 +1051,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
             mark("double-tap-all-models", frame: allModelsBtn.frame)
             allModelsBtn.doubleTap()
-            XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5))
+            XCTAssertTrue(search.waitForExistence(timeout: 5))
+            XCTAssertTrue(backBtn.waitForExistence(timeout: 5))
             tapElement(backBtn)
             XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5), "Repeated taps must not push duplicate destinations")
             attachScreenshot("ModelPopover_Reopened_Narrow", in: app)
