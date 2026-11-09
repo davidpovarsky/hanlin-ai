@@ -952,9 +952,23 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         try verifyModelPopoverZoom(simulatedWidth: "500", repeatPresentation: true)
     }
 
-    private func verifyModelPopoverZoom(simulatedWidth: String, repeatPresentation: Bool = false) throws {
+    func testModelPopoverZoomWithKeyboardAndDraft() throws {
+        try verifyModelPopoverZoom(simulatedWidth: "500", keyboardOpen: true)
+    }
+
+    private func verifyModelPopoverZoom(
+        simulatedWidth: String, repeatPresentation: Bool = false, keyboardOpen: Bool = false
+    ) throws {
         let app = launchDockAcceptanceApp(simulatedWidth: simulatedWidth)
         openChat(in: app)
+        let draft = "Model picker keeps this draft"
+        if keyboardOpen {
+            let input = chatInputElement(in: app)
+            XCTAssertTrue(input.waitForExistence(timeout: 10))
+            tapElement(input)
+            input.typeText(draft)
+            XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        }
 
         let modelPicker = app.descendants(matching: .any)["hanlin-composer-model-picker"].firstMatch
         XCTAssertTrue(modelPicker.waitForExistence(timeout: 10))
@@ -1026,6 +1040,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.3)).tap()
         XCTAssertTrue(modelPopover.waitForNonExistence(timeout: 5))
         XCTAssertEqual(modelPicker.frame, sourceFrame, "The zoom source must not move when the presentation closes")
+        if keyboardOpen {
+            XCTAssertTrue(app.keyboards.firstMatch.exists, "Opening the picker must not hide the keyboard and move its source")
+            XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        }
         if repeatPresentation {
             mark("reopen-from-model-button", frame: modelPicker.frame)
             tapElement(modelPicker)

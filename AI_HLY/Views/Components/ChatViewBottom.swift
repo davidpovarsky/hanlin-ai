@@ -463,7 +463,9 @@ struct ChatViewBottom: View {
                 showPhotoSourceOptions = isGeneral
             }
             isSourceOptionsVisible = isGeneral
-            if newPopup == .general || newPopup == .tools || newPopup == .model {
+            // Keep the model button anchored while its popover zooms. Resigning
+            // the editor here also animates the keyboard and moves that source.
+            if newPopup == .general || newPopup == .tools {
                 isInputActive.wrappedValue = false
             }
         }
