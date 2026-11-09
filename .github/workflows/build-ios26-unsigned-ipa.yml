@@ -8,6 +8,16 @@ on:
         required: true
         default: false
         type: boolean
+      testflight_existing_build_number:
+        description: Existing uploaded build to distribute without rebuilding (requires testflight_upload)
+        required: false
+        default: ''
+        type: string
+      testflight_audience_source_build:
+        description: Previously installed build whose existing internal groups should receive the existing build
+        required: false
+        default: ''
+        type: string
       runtime_bundle_only:
         description: Validate and publish the pinned RuntimeCore bundle without building the app
         required: true
@@ -2872,4 +2882,6 @@ jobs:
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true
+      existing_build_number: ${{ inputs.testflight_existing_build_number }}
+      audience_source_build: ${{ inputs.testflight_audience_source_build }}
     secrets: inherit

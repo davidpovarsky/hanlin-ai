@@ -6,6 +6,14 @@ on:
       upload_to_testflight:
         required: true
         type: boolean
+      existing_build_number:
+        required: false
+        default: ''
+        type: string
+      audience_source_build:
+        required: false
+        default: ''
+        type: string
   workflow_dispatch:
     inputs:
       upload_to_testflight:
@@ -13,6 +21,16 @@ on:
         required: true
         type: boolean
         default: true
+      existing_build_number:
+        description: Distribute an existing uploaded build without rebuilding
+        required: false
+        default: ''
+        type: string
+      audience_source_build:
+        description: Previous build whose internal groups should receive the existing build
+        required: false
+        default: ''
+        type: string
 
 permissions:
   actions: read
@@ -38,6 +56,7 @@ env:
 
 jobs:
   build-sign-and-upload:
+    if: ${{ inputs.existing_build_number == '' }}
     runs-on: xcode-27
     timeout-minutes: 120
 
@@ -625,3 +644,42 @@ jobs:
           done
           rm -f "${ASC_KEY_PATH:-$RUNNER_TEMP/missing-asc-key}"
           rm -f "$HOME/.private_keys/AuthKey_${ASC_KEY_ID:-missing}.p8"
+
+  distribute-existing-build:
+    if: ${{ inputs.existing_build_number != '' && inputs.upload_to_testflight }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Verify and reuse the previous build's internal audience
+        env:
+          EXISTING_BUILD: ${{ inputs.existing_build_number }}
+          AUDIENCE_SOURCE: ${{ inputs.audience_source_build }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$EXISTING_BUILD" =~ ^[0-9]+$ && "$AUDIENCE_SOURCE" =~ ^[0-9]+$ ]]
+          export ASC_KEY_PATH="$RUNNER_TEMP/testflight-audience-key.p8"
+          export BUILD_DIR="$GITHUB_WORKSPACE/build/testflight-audience"
+          trap 'rm -f "$ASC_KEY_PATH"' EXIT
+          umask 077
+          printf '%s' "$ASC_KEY_P8_B64" | base64 --decode > "$ASC_KEY_PATH"
+          unset ASC_KEY_P8_B64
+          python -m venv "$RUNNER_TEMP/asc-audience-venv"
+          "$RUNNER_TEMP/asc-audience-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          "$RUNNER_TEMP/asc-audience-venv/bin/python" Scripts/CI/verify_testflight_build.py \
+            "$EXISTING_BUILD" --reuse-internal-audience-from "$AUDIENCE_SOURCE"
+      - name: Retain non-secret distribution evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: TestFlight-existing-build-readiness-${{ inputs.existing_build_number }}
+          path: build/testflight-audience/logs/testflight-readiness.json
+          if-no-files-found: warn
+          retention-days: 30
