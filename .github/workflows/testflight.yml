@@ -43,6 +43,7 @@ jobs:
 
     steps:
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -57,6 +58,7 @@ jobs:
           fetch-depth: 1
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -79,6 +81,7 @@ jobs:
           case "$sdk_version" in 27.*) ;; *) echo "ERROR: iOS 27 SDK is required"; exit 1;; esac
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -92,6 +95,7 @@ jobs:
           node-version: 24.5.0
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -109,6 +113,7 @@ jobs:
           echo "Using CFBundleVersion $build_number"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -145,6 +150,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -174,6 +180,7 @@ jobs:
           echo "ASC_KEY_PATH=$key_path" >> "$GITHUB_ENV"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -256,6 +263,7 @@ jobs:
           echo "SIGNING_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -283,6 +291,7 @@ jobs:
           done
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -311,6 +320,7 @@ jobs:
           test "$(plutil -extract MinimumOSVersion raw "$framework/Info.plist")" = 26.0
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -340,6 +350,7 @@ jobs:
           check_target ChavrusaChatNotificationService "$NOTIFICATION_BUNDLE_ID" "$NOTIFICATION_PROFILE_SPECIFIER" ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -364,6 +375,7 @@ jobs:
             | tee "$BUILD_DIR/logs/archive.log"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -412,6 +424,7 @@ jobs:
           shasum -a 256 "$final_ipa" | tee "$final_ipa.sha256"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -524,6 +537,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -537,6 +551,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -550,6 +565,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -568,6 +584,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: always()
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -590,6 +607,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: always()
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
