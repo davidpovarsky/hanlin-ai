@@ -641,7 +641,7 @@ jobs:
               -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDynamicVariantSwitching
               -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIIncompatibleVersionRejection
               -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMalformedPackageRejection
-              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIDeniedPersistedGrant
+              -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIWorksWithoutPersistedGrant
               -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRevokeWhileMounted
               -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIRepeatedLifecycle
             )

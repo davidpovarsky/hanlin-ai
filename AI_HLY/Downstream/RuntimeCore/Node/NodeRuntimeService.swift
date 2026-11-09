@@ -226,6 +226,22 @@ actor NodeRuntimeService {
         )
     }
 
+    func networkDiagnostics(rounds: Int = 2) async throws -> RuntimeExecutionResult {
+        let moduleURL = try prepareHostRuntime().appending(path: "network-diagnostics.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let source = """
+        import { probeNodeHTTPS } from \(module);
+        const report = await probeNodeHTTPS({ rounds: \(max(1, min(5, rounds))) });
+        console.log(JSON.stringify(report));
+        export default report;
+        """
+        return try await executeJavaScript(.init(
+            source: source,
+            workspace: try fileLayout.workspace(client: .tools, identifier: "node-https-diagnostics"),
+            limits: .init(timeout: .seconds(180))
+        ), moduleKind: "esm")
+    }
+
     func cancelExecution(id: UUID) async {
         guard let connection else { return }
         _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/cancel", method: "POST", body: Data("{}".utf8), timeout: 3)

@@ -141,37 +141,6 @@ private struct ScriptingImportPreviewSections: View {
                 }
             }
         }
-        if !preview.requestedCapabilities.isEmpty {
-            Section("Permissions") {
-                ForEach(preview.requestedCapabilities, id: \.capabilityID) { request in
-                    Toggle(
-                        request.capabilityID.rawValue,
-                        isOn: Binding(
-                            get: { platform.approvedCapabilities.contains(request.capabilityID) },
-                            set: { platform.setCapabilityApproved($0, capability: request.capabilityID) }
-                        )
-                    )
-                    .accessibilityIdentifier("hanlin-capability-toggle-\(request.capabilityID.rawValue)")
-                }
-                if !platform.capabilityApprovals.missingRequiredCapabilities.isEmpty {
-                    Button("Approve All Required Capabilities") {
-                        for request in preview.requestedCapabilities where request.required {
-                            platform.setCapabilityApproved(true, capability: request.capabilityID)
-                        }
-                    }
-                    .accessibilityIdentifier("hanlin-approve-all-capabilities")
-                }
-                Text("Required capabilities must be approved explicitly. They remain package-scoped and can be revoked from package details.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                if !platform.capabilityApprovals.missingRequiredCapabilities.isEmpty {
-                    Text("Still required: " + platform.capabilityApprovals.missingRequiredCapabilities
-                        .map(\.rawValue).joined(separator: ", "))
-                        .font(.caption)
-                        .foregroundStyle(.orange)
-                }
-            }
-        }
         if !preview.findings.isEmpty {
             Section("Compatibility") {
                 ForEach(Array(preview.findings.enumerated()), id: \.offset) { _, finding in
@@ -366,35 +335,6 @@ struct ScriptingInstalledPackageDetailView: View {
                             .font(.caption)
                             .foregroundStyle(.red)
                     }
-                }
-            }
-            let capabilities = Set(
-                package.entrypoints
-                    .flatMap(\.requiredCapabilities)
-                    .map(\.capabilityID)
-            )
-            if !capabilities.isEmpty {
-                Section("Permissions") {
-                    ForEach(capabilities.sorted { $0.rawValue < $1.rawValue }, id: \.self) { capability in
-                        Toggle(
-                            capability.rawValue,
-                            isOn: Binding(
-                                get: { package.grantedCapabilities.contains(capability) },
-                                set: { granted in
-                                    Task {
-                                        await platform.setCapabilityGranted(
-                                            granted,
-                                            capability: capability,
-                                            for: packageID
-                                        )
-                                    }
-                                }
-                            )
-                        )
-                    }
-                    Text("Revoking a capability takes effect for new package operations and tool invocations.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
                 }
             }
             if package.availableGenerations.count > 1 {

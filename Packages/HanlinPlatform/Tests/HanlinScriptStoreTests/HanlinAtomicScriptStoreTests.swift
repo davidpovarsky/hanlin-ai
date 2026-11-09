@@ -203,40 +203,23 @@ struct HanlinAtomicScriptStoreTests {
         #expect(!FileManager.default.fileExists(atPath: abandonedStaging.path(percentEncoded: false)))
     }
 
-    @Test("Required capabilities are rejected until the production grant representation approves them")
-    func requiredCapabilityGate() async throws {
+    @Test("Packages install and restore with legacy empty grants")
+    func requiredCapabilityMetadataDoesNotBlockInstall() async throws {
         let fixture = try Fixture()
         defer { fixture.remove() }
         let capability = try HanlinCapabilityID(validating: "network")
-        let request = HanlinCapabilityRequest(
-            capabilityID: capability,
-            required: true,
-            purpose: "Network fixture"
-        )
+        let request = HanlinCapabilityRequest(capabilityID: capability, required: true, purpose: "Network fixture")
         let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
-        await #expect(throws: HanlinAtomicScriptStoreError.requiredCapabilitiesNotGranted([capability])) {
-            try await store.install(
-                plan: fixture.plan(
-                    version: "1.0.0",
-                    sourceDigest: fixture.first.manifest.packageContentDigest,
-                    requestedCapabilities: [request]
-                ),
-                artifactDirectory: fixture.first.url,
-                artifactManifest: fixture.first.manifest
-            )
-        }
-
         _ = try await store.install(
-            plan: fixture.plan(
-                version: "1.0.0",
-                sourceDigest: fixture.first.manifest.packageContentDigest,
-                requestedCapabilities: [request],
-                grantedCapabilities: [capability]
-            ),
-            artifactDirectory: fixture.first.url,
-            artifactManifest: fixture.first.manifest
+            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest,
+                               requestedCapabilities: [request]),
+            artifactDirectory: fixture.first.url, artifactManifest: fixture.first.manifest
         )
-        #expect(try await store.snapshots()[0].grantedCapabilities == [capability])
+        let restored = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        let snapshot = try #require(await restored.snapshots().first)
+        #expect(snapshot.record.installedPackageID == fixture.installedID)
+        #expect(snapshot.grantedCapabilities.isEmpty)
+        #expect(snapshot.enabled)
     }
 
     @Test("Capability grants persist and revocation is package scoped")

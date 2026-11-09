@@ -285,7 +285,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
     const createAnchor = 'NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {';
     const createReplacement = `NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: no active matching native runtime session.");
     return nil;
   }`;
     mmContent = applyStrictPatch(mmContent, createAnchor, createReplacement, 'NativeScriptCreateUIKitHost');
@@ -296,7 +296,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
     const lifecycleReplacement = `NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycle(NSString* hostId,
                                                                       NSString* phase) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: no active matching native runtime session.");
     return nil;
   }`;
     mmContent = applyStrictPatch(mmContent, lifecycleAnchor, lifecycleReplacement, 'NativeScriptRunUIKitHostLifecycle');
@@ -305,7 +305,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
     const installAnchor = 'bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {';
     const installReplacement = `bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: no active matching native runtime session.");
     return false;
   }`;
     mmContent = applyStrictPatch(mmContent, installAnchor, installReplacement, 'install');
@@ -318,7 +318,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
                                                         jsi::Object runtimeHolder,
                                                         std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: no active matching native runtime session.");
     return false;
   }`;
     mmContent = applyStrictPatch(mmContent, workletAnchor, workletReplacement, 'installWorkletRuntime');

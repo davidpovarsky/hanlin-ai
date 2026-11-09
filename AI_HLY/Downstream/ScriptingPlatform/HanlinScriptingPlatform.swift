@@ -463,11 +463,6 @@ final class HanlinScriptingPlatform {
         for id: HanlinInstalledPackageID
     ) async {
         guard let store else { return }
-        if !granted, capability.rawValue == "ios-native-api", activeApplicationID == id {
-            NSLog("[HanlinScriptingPlatform] Capability 'ios-native-api' revoked for active package %@; terminating session immediately before persistence.", id.rawValue)
-            HanlinExpoNativeAPIManager.revokeActiveSession()
-            dismissActiveApplication()
-        }
         do {
             await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
             try await store.setCapabilityGranted(granted, capability: capability, for: id)
@@ -496,11 +491,6 @@ final class HanlinScriptingPlatform {
         }
         guard let entrypoint = package.entrypoints.first(where: { $0.kind == .app }) else {
             activity = .failed("This package does not contain an app entrypoint.")
-            return
-        }
-        let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
-        guard required.isSubset(of: Set(package.grantedCapabilities)) else {
-            activity = .failed("Grant every required capability before launching this package.")
             return
         }
         if entrypoint.runtimeProfile == .hanlinNativeScript {
@@ -574,7 +564,7 @@ final class HanlinScriptingPlatform {
                     sessionID: sessionID
                 )
                 HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
-                let isNativeAPIGranted = package.grantedCapabilities.contains(where: { $0.rawValue == "ios-native-api" })
+                let isNativeAPIGranted = true // Native API access follows the active runtime, not legacy grants.
                 let session = try HanlinExpoSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
                     sessionID: sessionID,
@@ -609,31 +599,22 @@ final class HanlinScriptingPlatform {
             }
             let program = try String(contentsOf: compiledURL, encoding: .utf8)
             dismissActiveApplication()
-            let storageCapability = try HanlinCapabilityID(validating: "storage")
-            let filesCapability = try HanlinCapabilityID(validating: "files")
-            let networkCapability = try HanlinCapabilityID(validating: "network")
-            let locationCapability = try HanlinCapabilityID(validating: "location")
-            let healthCapability = try HanlinCapabilityID(validating: "health")
-            let notificationsCapability = try HanlinCapabilityID(validating: "notifications")
-            let remindersCapability = try HanlinCapabilityID(validating: "reminders")
-            let photosCapability = try HanlinCapabilityID(validating: "photos")
-            let assistantCapability = try HanlinCapabilityID(validating: "assistant")
-            let pasteboardCapability = try HanlinCapabilityID(validating: "pasteboard")
-            let openURLCapability = try HanlinCapabilityID(validating: "open-url")
+
+
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
                 program: program,
                 filename: compiledPath,
-                storageAllowed: package.grantedCapabilities.contains(storageCapability),
-                filesAllowed: package.grantedCapabilities.contains(filesCapability),
-                networkAllowed: package.grantedCapabilities.contains(networkCapability),
+                storageAllowed: true,
+                filesAllowed: true,
+                networkAllowed: true,
                 packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory),
-                locationAllowed: package.grantedCapabilities.contains(locationCapability),
+                locationAllowed: true,
                 locationLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performLocation(request)
                 },
-                healthAllowed: package.grantedCapabilities.contains(healthCapability),
+                healthAllowed: true,
                 healthDataAvailable: HanlinAppleHealthService.isHealthDataAvailable,
                 healthStatisticsLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
@@ -647,20 +628,20 @@ final class HanlinScriptingPlatform {
                     guard let self else { throw CancellationError() }
                     return try await self.performHealthWorkouts(request)
                 },
-                notificationsAllowed: package.grantedCapabilities.contains(notificationsCapability),
+                notificationsAllowed: true,
                 notificationLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performNotification(request, installedPackageID: id)
                 },
-                remindersAllowed: package.grantedCapabilities.contains(remindersCapability),
+                remindersAllowed: true,
                 reminderLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performReminder(request)
                 },
-                photosAllowed: package.grantedCapabilities.contains(photosCapability),
-                pasteboardAllowed: package.grantedCapabilities.contains(pasteboardCapability),
-                openURLAllowed: package.grantedCapabilities.contains(openURLCapability),
-                assistantAllowed: package.grantedCapabilities.contains(assistantCapability),
+                photosAllowed: true,
+                pasteboardAllowed: true,
+                openURLAllowed: true,
+                assistantAllowed: true,
                 assistantLoader: { [weak self] request in
                     guard let self else { throw CancellationError() }
                     return try await self.performAssistant(request)
@@ -737,10 +718,6 @@ final class HanlinScriptingPlatform {
                 && $0.enabled
         }) else {
             throw HanlinMiniAppRequestError.routeNotFound
-        }
-
-        guard package.grantedCapabilities.contains(capability) else {
-            throw HanlinMiniAppRequestError.capabilityMismatch
         }
 
         let descriptor = try package.appDescriptor()
@@ -941,8 +918,7 @@ final class HanlinScriptingPlatform {
 
     func refreshExtensionSnapshot() async throws {
         guard let store, let extensionStore else { return }
-        let storageCapability = try HanlinCapabilityID(validating: "storage")
-        let filesCapability = try HanlinCapabilityID(validating: "files")
+
         var widgets: [HanlinScriptWidgetSnapshot] = []
         var intentEntities: [HanlinScriptIntentEntityRecord] = []
         var translationApps: [HanlinScriptTranslationUISnapshot] = []
@@ -958,8 +934,6 @@ final class HanlinScriptingPlatform {
                 // Translation UI Discovery
                 let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }
                 for entrypoint in translationEntrypoints {
-                    let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
-                    guard required.isSubset(of: granted) else { continue }
                     let fileURL = artifactRoot.appending(path: entrypoint.sourcePath)
                     guard entrypoint.sourcePath.hasSuffix(".json"),
                           let data = try? Data(contentsOf: fileURL),
@@ -1004,11 +978,6 @@ final class HanlinScriptingPlatform {
                 guard !extensionEntrypoints.isEmpty else { continue }
 
                 for entrypoint in extensionEntrypoints {
-                    let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
-                    // Ordinary widgets do not require advance capability approval for extension snapshot publication
-                    if entrypoint.kind != .widget {
-                        guard required.isSubset(of: granted) else { continue }
-                    }
                     let identity = HanlinScriptExtensionIdentity(
                         installedPackageID: package.record.installedPackageID,
                         packageID: package.record.packageID,
@@ -1067,8 +1036,8 @@ final class HanlinScriptingPlatform {
                                                 program: program,
                                                 filename: compiledPath,
                                                 entrypointContext: .widget(family: family),
-                                                storageAllowed: granted.contains(storageCapability),
-                                                filesAllowed: granted.contains(filesCapability),
+                                                storageAllowed: true,
+                                                filesAllowed: true,
                                                 packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
                                             )
                                             defer { session.dispose() }
@@ -1143,8 +1112,8 @@ final class HanlinScriptingPlatform {
                                     program: program,
                                     filename: compiledPath,
                                     entrypointContext: .widget(family: family),
-                                    storageAllowed: granted.contains(storageCapability),
-                                    filesAllowed: granted.contains(filesCapability),
+                                    storageAllowed: true,
+                                    filesAllowed: true,
                                     packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
                                 )
                                 defer { session.dispose() }
@@ -1177,8 +1146,8 @@ final class HanlinScriptingPlatform {
                                 program: program,
                                 filename: compiledPath,
                                 entrypointContext: .appIntentRegistration,
-                                storageAllowed: granted.contains(storageCapability),
-                                filesAllowed: granted.contains(filesCapability),
+                                storageAllowed: true,
+                                filesAllowed: true,
                                 packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
                             )
                             defer { session.dispose() }
@@ -1494,18 +1463,6 @@ final class HanlinScriptingPlatform {
 
                 let requiredCapability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share"))
 
-                let grantedCaps = Set(package.grantedCapabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.rawValue) })
-                let actionCaps = Set(declaredAction.capabilities.map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.rawValue) })
-                let entrypointCaps = Set(entrypoint.requiredCapabilities.filter(\.required).map { HanlinHostCapabilityAuthority.canonicalCapabilityID($0.capabilityID.rawValue) })
-                let allRequired = actionCaps.union(entrypointCaps)
-
-                guard allRequired.isEmpty || allRequired.isSubset(of: grantedCaps) || grantedCaps.contains("all") else {
-                    Self.logger.error("Missing required capabilities for NativeScript action \(actionName, privacy: .public). Required: \(allRequired, privacy: .public), Granted: \(grantedCaps, privacy: .public)")
-                    try? extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                    continue
-                }
-
                 guard let effectiveCapability = requiredCapability else {
                     Self.logger.error("Unable to resolve capability for NativeScript action \(actionName, privacy: .public)")
                     try? extensionStore?.acknowledge(command.id)
@@ -1541,16 +1498,6 @@ final class HanlinScriptingPlatform {
                 continue
             }
 
-            let required = Set(entrypoint.requiredCapabilities.filter(\.required).map(\.capabilityID))
-            let granted = Set(package.grantedCapabilities)
-            guard required.isSubset(of: granted) else {
-                Self.logger.error("Missing required capabilities for AppIntent: \(actionName, privacy: .public)")
-                try? extensionStore?.acknowledge(command.id)
-                pendingResumeCommands.removeAll { $0.id == command.id }
-                continue
-            }
-            let storageCapability = try HanlinCapabilityID(validating: "storage")
-            let filesCapability = try HanlinCapabilityID(validating: "files")
             let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
             let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
             let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
@@ -1562,8 +1509,8 @@ final class HanlinScriptingPlatform {
                         program: program,
                         filename: compiledPath,
                         entrypointContext: .appIntentRegistration,
-                        storageAllowed: granted.contains(storageCapability),
-                        filesAllowed: granted.contains(filesCapability),
+                        storageAllowed: true,
+                        filesAllowed: true,
                         packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
                     )
                     defer { session.dispose() }

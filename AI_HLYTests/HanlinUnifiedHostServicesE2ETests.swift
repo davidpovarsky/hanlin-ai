@@ -34,27 +34,18 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(store.isAvailable(kind))
     }
 
-    @Test func runtimeBrokerRespectsAvailabilityToggle() async throws {
+    @Test func runtimeBrokerExecutesFromAnOrdinaryGrantlessContext() async throws {
         let context = HanlinHostCallContext.forMiniApp(
             appID: try HanlinAppID(validating: "unauthorized.caller"),
             origin: .system,
             capabilities: [],
             canPresentUI: false
         )
-        do {
-            _ = try await HanlinHostServicesBroker.shared.executeRuntime(
-                .shell,
-                source: "echo hello",
-                context: context
-            )
-            Issue.record("Expected capabilityNotGranted error")
-        } catch let error as HanlinHostServiceError {
-            if case .capabilityNotGranted = error {
-                // Expected rejection
-            } else {
-                Issue.record("Unexpected error: \(error)")
-            }
-        }
+        let result = try await HanlinHostServicesBroker.shared.executeRuntime(
+            .shell, source: "printf autonomous-runtime", context: context
+        )
+        #expect(result.exitCode == 0)
+        #expect(result.stdout.contains("autonomous-runtime"))
     }
 
     @Test func capabilityAuthorityGrantRevokePersists() async throws {
@@ -75,7 +66,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         await authority.setGrants(originalGrants, for: appID)
     }
 
-    @Test func packageStoreGrantPrecedenceAndLiveRevocation() async throws {
+    @Test func legacyPackageGrantMetadataDoesNotGateNetwork() async throws {
         let fixture = try HostServicesPackageFixture()
         defer { fixture.remove() }
 
@@ -102,16 +93,14 @@ struct HanlinUnifiedHostServicesE2ETests {
             )
 
             let initial = await authority.authorize(capability: "network", context: context)
-            #expect(initial == .notGranted)
+            #expect(initial == .allowed)
 
             try await store.setCapabilityGranted(true, capability: fixture.networkCapability, for: fixture.installedPackageID)
             try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
 
             // Revoke through the real package store and reuse the exact same context.
             try await store.setCapabilityGranted(false, capability: fixture.networkCapability, for: fixture.installedPackageID)
-            await #expect(throws: HanlinHostServiceError.self) {
-                try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
-            }
+            try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
         } catch {
             await authority.setGrants(originalAppGrants, for: fixture.appID)
             await authority.clearPackageGrantStore()
@@ -187,7 +176,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(String(data: readB ?? Data(), encoding: .utf8) == "Value-B")
     }
 
-    @Test func fileCapabilityRequired() async throws {
+    @Test func fileOperationsWorkWithoutInternalGrants() async throws {
         let appID = try HanlinAppID(validating: "no-file-cap-app")
         let broker = HanlinHostServicesBroker.shared
 
@@ -199,19 +188,14 @@ struct HanlinUnifiedHostServicesE2ETests {
             canPresentUI: true
         )
 
-        do {
-            _ = try await broker.readFile(virtualPath: "test.txt", area: .data, context: ctxWithout)
-            Issue.record("Expected capabilityNotGranted when files capability is absent")
-        } catch let error as HanlinHostServiceError {
-            if case .capabilityNotGranted = error {
-                // Expected
-            } else {
-                Issue.record("Unexpected error: \(error)")
-            }
-        }
+        let path = "autonomy-\(UUID().uuidString.lowercased()).txt"
+        let contents = Data("grantless-file-operation".utf8)
+        try await broker.writeFile(virtualPath: path, area: .data, data: contents, context: ctxWithout)
+        #expect(try await broker.readFile(virtualPath: path, area: .data, context: ctxWithout) == contents)
+        try await broker.deleteFile(virtualPath: path, area: .data, context: ctxWithout)
     }
 
-    @Test func fileScopesOverwriteDeleteSharedGateAndSymlinkProtection() async throws {
+    @Test func fileScopesOverwriteDeleteSharedAccessAndSymlinkProtection() async throws {
         let suffix = UUID().uuidString.lowercased()
         let appID = try HanlinAppID(validating: "file-scope-app-\(suffix)")
         let packageID = try HanlinInstalledPackageID(validating: "file-scope-package-\(suffix)")
@@ -261,9 +245,8 @@ struct HanlinUnifiedHostServicesE2ETests {
         try await broker.deleteFile(virtualPath: path, area: .documents, context: app)
         #expect(try await broker.readFile(virtualPath: path, area: .documents, context: app) == nil)
 
-        await #expect(throws: HanlinHostServiceError.self) {
-            try await broker.writeFile(virtualPath: path, area: .documents, data: Data("DENIED".utf8), context: sharedDenied)
-        }
+        try await broker.writeFile(virtualPath: path, area: .documents, data: Data("GRANTLESS".utf8), context: sharedDenied)
+        #expect(try await broker.readFile(virtualPath: path, area: .documents, context: sharedDenied) == Data("GRANTLESS".utf8))
         try await broker.writeFile(virtualPath: path, area: .documents, data: Data("SHARED".utf8), context: sharedAllowed)
         #expect(String(data: try #require(await broker.readFile(virtualPath: path, area: .documents, context: sharedAllowed)), encoding: .utf8) == "SHARED")
 

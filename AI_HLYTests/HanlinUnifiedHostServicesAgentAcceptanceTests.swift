@@ -53,27 +53,18 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         #expect(store.isAvailable(kind))
     }
 
-    @Test func runtimeBrokerRejectsDisabledRuntime() async throws {
+    @Test func runtimeBrokerRunsPythonWithoutInternalGrants() async throws {
         let context = HanlinHostCallContext.forMiniApp(
             appID: try HanlinAppID(validating: "unauthorized.agent"),
             origin: .system,
             capabilities: [],
             canPresentUI: false
         )
-        do {
-            _ = try await HanlinRuntimeBroker.shared.execute(
-                kind: .localPython,
-                source: "1+1",
-                context: context
-            )
-            Issue.record("Expected capabilityNotGranted error")
-        } catch let error as HanlinHostServiceError {
-            if case .capabilityNotGranted = error {
-                // Expected rejection
-            } else {
-                Issue.record("Unexpected error: \(error)")
-            }
-        }
+        let result = try await HanlinRuntimeBroker.shared.execute(
+            kind: .localPython, source: "print(6 * 7)", context: context
+        )
+        #expect(result.exitCode == 0)
+        #expect(result.stdout.contains("42"))
     }
 
     @Test func agentToolExecutesJavaScriptCore() async {

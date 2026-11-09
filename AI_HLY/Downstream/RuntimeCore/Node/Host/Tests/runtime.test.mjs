@@ -4,10 +4,44 @@ import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
+import http from 'node:http';
+import { randomUUID } from 'node:crypto';
 import ts from 'typescript';
 import { planLifecycle } from '../lifecycle-planner.mjs';
 
 const executionWorkerURL = new URL('../execution-worker.mjs', import.meta.url);
+
+for (const moduleKind of ['commonjs', 'esm']) {
+  test(`${moduleKind} waits for an exported asynchronous network operation before worker teardown`, async () => {
+    const nonce = randomUUID();
+    const server = http.createServer(async (request, response) => {
+      let body = '';
+      for await (const chunk of request) body += chunk;
+      response.setHeader('Content-Type', 'application/json');
+      response.end(JSON.stringify({ nonce, method: request.method, body }));
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-async-network-'));
+    try {
+      const entryPoint = path.join(workspace, moduleKind === 'commonjs' ? 'main.cjs' : 'main.mjs');
+      const url = `http://127.0.0.1:${server.address().port}/echo`;
+      await fs.writeFile(entryPoint, `${moduleKind === 'commonjs' ? 'module.exports =' : 'export default'} (async () => {
+        const response = await fetch(${JSON.stringify(url)}, { method: 'POST', body: 'שלום' });
+        const value = await response.json();
+        console.log('NETWORK_COMPLETED=' + value.nonce);
+        return value;
+      })();`);
+      const result = await runWorker({ entryPoint, moduleKind, maximumOutputBytes: 4096 });
+      assert.equal(result.type, 'completed');
+      assert.deepEqual(result.value, { nonce, method: 'POST', body: 'שלום' });
+      assert.equal(result.stdout, `NETWORK_COMPLETED=${nonce}\n`);
+    } finally {
+      server.closeAllConnections();
+      await new Promise(resolve => server.close(resolve));
+      await fs.rm(workspace, { recursive: true, force: true });
+    }
+  });
+}
 
 test('generic ESM execution captures Hebrew output and a structured value', async () => {
   const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-js-'));

@@ -8,6 +8,11 @@ on:
         required: true
         default: false
         type: boolean
+      test_filter:
+        description: Exact Swift Testing suite/module regex for focused package verification
+        required: true
+        default: HanlinScriptingApplicationRuntimeTests
+        type: string
 
 permissions:
   actions: read
@@ -16,7 +21,7 @@ permissions:
 jobs:
   validate-scripting-runtime:
     name: Compile and test isolated Scripting runtime
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 20
 
     env:
@@ -24,6 +29,7 @@ jobs:
 
     steps:
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -31,23 +37,25 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - name: Select newest stable Xcode 26
+      - name: Select newest stable Xcode 27
         id: toolchain
         shell: bash
         run: |
           set -euo pipefail
-          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_26*.app' -print \
-            | grep -E '/Xcode_26([._][0-9]+)*\.app$' \
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print \
+            | grep -E '/Xcode_27([._][0-9]+)*\.app$' \
             | sort -V \
             | tail -1)"
           test -n "$selected_xcode"
-          sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
           xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
           echo "build=$xcode_build" >> "$GITHUB_OUTPUT"
           xcodebuild -version
           swift --version
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -62,6 +70,7 @@ jobs:
           fetch-depth: 1
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -75,6 +84,7 @@ jobs:
           node-version: 22.17.0
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -103,6 +113,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ !inputs.force_clean_build }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -120,6 +131,7 @@ jobs:
             ${{ runner.os }}-xcode-${{ steps.toolchain.outputs.build }}-scripting-v1-
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -128,6 +140,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Verify generated runtime metadata
+        if: ${{ inputs.test_filter == 'HanlinScriptingApplicationRuntimeTests' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -138,6 +151,7 @@ jobs:
           node Scripts/ScriptingReference/verify-user-provided-projects.mjs
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -146,10 +160,12 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Test JavaScriptCore bootstrap semantics
+        if: ${{ inputs.test_filter == 'HanlinScriptingApplicationRuntimeTests' }}
         shell: bash
         run: node --test Scripts/ScriptingReference/Tests/*.test.mjs
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -162,6 +178,7 @@ jobs:
         run: swift package --package-path "$PACKAGE_PATH" resolve
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -170,6 +187,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Compile runtime and extension renderers only
+        if: ${{ inputs.test_filter == 'HanlinScriptingApplicationRuntimeTests' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -177,6 +195,7 @@ jobs:
           swift build --package-path "$PACKAGE_PATH" --target HanlinScriptExtensions
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -186,6 +205,9 @@ jobs:
           github_token: ${{ github.token }}
       - name: Execute isolated runtime tests
         shell: bash
-        run: >-
-          swift test --package-path "$PACKAGE_PATH"
-          --filter HanlinScriptingApplicationRuntimeTests
+        env:
+          TEST_FILTER: ${{ inputs.test_filter }}
+        run: |
+          set -euo pipefail
+          test -n "$TEST_FILTER"
+          swift test --package-path "$PACKAGE_PATH" --filter "$TEST_FILTER"

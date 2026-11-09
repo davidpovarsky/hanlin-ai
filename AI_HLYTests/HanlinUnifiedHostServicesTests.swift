@@ -16,7 +16,7 @@ struct HanlinUnifiedHostServicesTests {
         #expect(context.canPresentUI == false)
     }
 
-    @Test func miniAppContextScopesCapabilities() throws {
+    @Test func miniAppContextPreservesIdentityWithoutAnInternalApprovalGate() throws {
         let appID = try HanlinAppID(validating: "test-app")
         let caps: Set<String> = ["runtime.node", "files", "network"]
         let context = HanlinHostCallContext.forMiniApp(
@@ -25,10 +25,10 @@ struct HanlinUnifiedHostServicesTests {
             capabilities: caps,
             canPresentUI: true
         )
-        #expect(context.effectiveCapabilities == caps)
+        #expect(context.effectiveCapabilities == caps.union(["all"]))
         #expect(context.appID == appID)
         #expect(context.canPresentUI == true)
-        #expect(!context.effectiveCapabilities.contains("all"))
+        #expect(context.effectiveCapabilities.contains("all"))
     }
 
     @Test func miniAppContextDerivesWorkspaceIdentifier() throws {
@@ -83,7 +83,7 @@ struct HanlinUnifiedHostServicesTests {
         #expect(result == .allowed)
     }
 
-    @Test func capabilityCheckDeniesUngranted() async throws {
+    @Test func capabilityCheckAllowsOrdinaryRuntimeWithoutGrants() async throws {
         let appID = try HanlinAppID(validating: "limited-app")
         let context = HanlinHostCallContext.forMiniApp(
             appID: appID,
@@ -95,10 +95,10 @@ struct HanlinUnifiedHostServicesTests {
             capability: "runtime.node",
             context: context
         )
-        #expect(result == .notGranted)
+        #expect(result == .allowed)
     }
 
-    @Test func liveCapabilityGrantAndRevokeTakesImmediateEffect() async throws {
+    @Test func legacyGrantMetadataDoesNotDisablePersonalRuntime() async throws {
         let appID = try HanlinAppID(validating: "dynamic-perm-app")
         let authority = HanlinHostCapabilityAuthority.shared
         
@@ -112,9 +112,9 @@ struct HanlinUnifiedHostServicesTests {
             canPresentUI: false
         )
         
-        // 1. Initial check: not granted
+        // Legacy metadata starts empty, but it is not a runtime authorization gate.
         let r1 = await authority.authorize(capability: "runtime.node", context: context)
-        #expect(r1 == .notGranted)
+        #expect(r1 == .allowed)
         
         // 2. Grant dynamically at runtime
         await authority.grant(capability: "runtime.node", for: appID)
@@ -126,9 +126,9 @@ struct HanlinUnifiedHostServicesTests {
         // 4. Revoke dynamically at runtime
         await authority.revoke(capability: "runtime.node", for: appID)
         
-        // 5. Same context now immediately denied without recreation!
+        // Removing legacy metadata does not restrict the active personal runtime.
         let r3 = await authority.authorize(capability: "runtime.node", context: context)
-        #expect(r3 == .notGranted)
+        #expect(r3 == .allowed)
     }
 
     // MARK: - Availability Store
@@ -206,7 +206,7 @@ struct HanlinUnifiedHostServicesTests {
 
     // MARK: - Broker Capability Checks
 
-    @Test func brokerRejectsUngrantedCapability() async throws {
+    @Test func brokerAllowsOperationsWithoutExtraGrants() async throws {
         let appID = try HanlinAppID(validating: "no-caps-app")
         let context = HanlinHostCallContext.forMiniApp(
             appID: appID,
@@ -214,16 +214,9 @@ struct HanlinUnifiedHostServicesTests {
             capabilities: [],
             canPresentUI: false
         )
-        do {
-            try await HanlinHostServicesBroker.shared.requireCapability("files", context: context)
-            Issue.record("Expected capabilityNotGranted error")
-        } catch let error as HanlinHostServiceError {
-            if case .capabilityNotGranted = error {
-                // Expected
-            } else {
-                Issue.record("Unexpected error type: \(error)")
-            }
-        }
+        try await HanlinHostServicesBroker.shared.requireCapability("files", context: context)
+        try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
+        try await HanlinHostServicesBroker.shared.requireCapability("runtime.node", context: context)
     }
 
     @Test func brokerAllowsWildcardCapability() async throws {
@@ -269,7 +262,7 @@ struct HanlinUnifiedHostServicesTests {
         let r1 = await authority.authorize(capability: "runtime.javascript", context: context)
         #expect(r1 == .allowed)
         let r2 = await authority.authorize(capability: "runtime.python", context: context)
-        #expect(r2 == .notGranted)
+        #expect(r2 == .allowed)
     }
 
     // MARK: - EXP-01 & EXP-02: Expo Untagged JSON and Date Bridge

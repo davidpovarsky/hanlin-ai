@@ -148,9 +148,9 @@ public struct HanlinCapabilityApprovalState: Codable, Hashable, Sendable {
     }
 
     public var missingRequiredCapabilities: [HanlinCapabilityID] {
-        requiredCapabilities.subtracting(approvedCapabilities).sorted {
-            $0.rawValue < $1.rawValue
-        }
+        // Capabilities describe package usage. Hanlin does not require a
+        // second permission grant in addition to the operating system.
+        []
     }
 
     public var hasApprovedEveryRequiredCapability: Bool {

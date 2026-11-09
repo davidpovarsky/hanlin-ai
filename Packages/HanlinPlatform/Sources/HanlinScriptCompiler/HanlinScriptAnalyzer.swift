@@ -515,13 +515,6 @@ public struct HanlinScriptAnalyzer: Sendable {
                             sourcePath: packageJSONPath,
                             message: "This Hanlin build supports @nativescript/react-native 9.1.2, but the package requires \(version)."
                         ))
-                    } else if !declaredCapabilities.contains(where: { $0.rawValue == "ios-native-api" }) {
-                        findings.append(.init(
-                            state: .unsupported,
-                            severity: .error,
-                            sourcePath: packageJSONPath,
-                            message: "Expo package declaring '@nativescript/react-native' must declare 'ios-native-api' in capabilities."
-                        ))
                     } else {
                         findings.append(.init(
                             state: .supported,
@@ -571,14 +564,6 @@ public struct HanlinScriptAnalyzer: Sendable {
                     ))
                 }
             }
-        }
-        if let deps = packageJSON["dependencies"] as? [String: Any], deps["@nativescript/react-native"] != nil, !declaredCapabilities.contains(where: { $0.rawValue == "ios-native-api" }) {
-            findings.append(.init(
-                state: .unsupported,
-                severity: .error,
-                sourcePath: packageJSONPath,
-                message: "Expo package declaring '@nativescript/react-native' must declare 'ios-native-api' in capabilities."
-            ))
         }
         var declaredUIVersion: String?
         if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@expo/ui"] as? String {

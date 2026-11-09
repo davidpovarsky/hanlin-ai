@@ -31,15 +31,9 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     }
 
     public func hasCapability(_ capability: String) -> Bool {
-        let canonical = HanlinHostCapabilityAuthority.canonicalCapabilityID(capability)
-        let standardCapabilities: Set<String> = [
-            "ios-native-api", "network", "storage", "files", "widget", "appIntent"
-        ]
-        if standardCapabilities.contains(canonical) {
-            return true
-        }
-        return context.effectiveCapabilities.contains(canonical)
-            || context.effectiveCapabilities.contains("all")
+        // Availability is not an internal grant. Native calls still report
+        // unsupported APIs and iOS permission denials from their real provider.
+        true
     }
 
     func executeRuntime(

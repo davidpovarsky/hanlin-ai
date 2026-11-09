@@ -82,8 +82,10 @@ console.error = (...values) => append('stderr', values);
 
 try {
   let value;
-  if (moduleKind === 'commonjs') value = createRequire(import.meta.url)(entryPoint);
-  else value = (await import(`${pathToFileURL(entryPoint).href}?execution=${Date.now()}`)).default;
+  // The export may itself be an asynchronous operation. Posting the Promise
+  // serializes it to {} and causes the host to terminate its network work early.
+  if (moduleKind === 'commonjs') value = await createRequire(import.meta.url)(entryPoint);
+  else value = await (await import(`${pathToFileURL(entryPoint).href}?execution=${Date.now()}`)).default;
   parentPort.postMessage({ type: 'completed', stdout, stderr, value: jsonSafe(value), outputWasTruncated });
 } catch (error) {
   append('stderr', [error]);
