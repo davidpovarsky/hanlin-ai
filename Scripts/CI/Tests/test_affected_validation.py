@@ -67,6 +67,15 @@ class AffectedValidationPlannerTests(unittest.TestCase):
                 self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
                 self.assertFalse(plan.step_outputs["run_full_validation"])
 
+    def test_private_runtime_candidate_source_supports_focused_sdk_selection(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/canonicalSkillResourceReadAndExecute(fileExtension:)"
+        for file in ("Scripts/Runtime/runtime_bundle_source.py", "Scripts/Runtime/Tests/test_runtime_bundle_source.py"):
+            with self.subTest(file=file):
+                plan = self.plan_files([file], exact_test_selector=selector)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
     def test_autonomous_runtime_suite_has_an_explicit_narrow_route(self) -> None:
         plan = self.plan_files(["AI_HLYTests/HanlinAutonomousRuntimeTests.swift"])
         self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinAutonomousRuntimeTests")

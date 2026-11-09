@@ -155,7 +155,7 @@ jobs:
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main

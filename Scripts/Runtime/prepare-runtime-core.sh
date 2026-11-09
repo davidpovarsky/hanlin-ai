@@ -31,10 +31,15 @@ readonly PAYLOAD_ROOT="${WORK_ROOT}/payload"
 
 [[ "${RELEASE_REPOSITORY}" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]
 command -v gh >/dev/null
-gh release download "${RELEASE_TAG}" \
-  --repo "${RELEASE_REPOSITORY}" \
-  --pattern "${BUNDLE_NAME}" \
-  --dir "${WORK_ROOT}"
+if [[ -n "${RUNTIME_CORE_ARTIFACT_RUN_ID:-}" ]]; then
+  python3 "${SCRIPT_DIR}/runtime_bundle_source.py" "${RELEASE_REPOSITORY}" \
+    "${RUNTIME_CORE_ARTIFACT_RUN_ID}" "${DEPENDENCY_HASH}" "${EXPECTED_BUNDLE_SHA256}" "${WORK_ROOT}"
+else
+  gh release download "${RELEASE_TAG}" \
+    --repo "${RELEASE_REPOSITORY}" \
+    --pattern "${BUNDLE_NAME}" \
+    --dir "${WORK_ROOT}"
+fi
 
 actual_bundle_sha256="$(shasum -a 256 "${BUNDLE_ARCHIVE}" | awk '{print $1}')"
 if [[ "${actual_bundle_sha256}" != "${EXPECTED_BUNDLE_SHA256}" ]]; then

@@ -28,6 +28,11 @@ on:
         required: true
         default: false
         type: boolean
+      runtime_bundle_artifact_run_id:
+        description: Validate a completed same-repository Runtime candidate before release publication
+        required: false
+        default: ''
+        type: string
       runtime_publish_release:
         description: Publish the verified RuntimeCore release after its build and smoke tests
         required: true
@@ -904,10 +909,11 @@ jobs:
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/04-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/04-prepare-runtime-core.log"
 
       - name: Verify MCP host on pinned Node 24.5.0
         run: |
@@ -954,8 +960,8 @@ jobs:
       - name: Confirm native RuntimeCore reuse
         run: |
           set -euxo pipefail
-          test "$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" = \
-            "93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269"
+          node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json
+          node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json
           git diff --exit-code -- RuntimeDependencies.lock.json
           if grep -E '(configure|cmake|ninja|make).*(Node|nodejs|V8|Python)' \
             "$LOG_DIR/04-prepare-runtime-core.log" "$LOG_DIR/04-package-runtime-host.log"; then
@@ -1700,10 +1706,11 @@ jobs:
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Package current RuntimeCore host resources
         if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
