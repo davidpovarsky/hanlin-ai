@@ -15,7 +15,7 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 | Compact/wide management | Both navigation/draft-preservation cases passed in `42515491917` | Physical compact iPad acceptance |
 | All Models | `42564203291` at `f60489b5`: all 11 model cases and three UI cases passed; recorded intermediate opening/forward/reverse/reopen frames reviewed without the prior overlap/clipping | Simulator motion accepted; signed physical iPad acceptance remains OPEN |
 | Expo scheduler/lifecycle | Three fixture-staged Expo UI cases passed in `42533011298` at `c423c7f4` | Physical Hermes/lifecycle acceptance |
-| Runtime policy / Node HTTPS | App97a3f9ec: all three canonical Skill cases +12 UI methods passed. Native42687189577: both slices and real embedded128-cycle FD/Host smoke passed with zero FD warnings; actual artifact hashes pinned | Fresh final SDK integration for strict argv/named fs/new binary, then physical iPad HTTPS/suspension/FD acceptance |
+| Runtime policy / Node HTTPS | Native run `42687189577`: both slices and 128-cycle FD/Host smoke passed, zero FD warnings. Final app `42715548913` at `5c656fdb`: eight actual unit methods/two suites (canonical Skill: three cases) and all four selected UI methods passed with the verified new binary | Physical iPad HTTPS/true suspension/FD acceptance remains OPEN; TestFlight 91801 predates Runtime fixes |
 | Native widget engines/actions | Implemented engines and package-level evidence | Actual Home Screen instance/action acceptance remains open |
 | Shared chat / Translation / Shortcuts | Approved subsequent scope | Implementation and acceptance still pending |
 
@@ -307,8 +307,40 @@ Increase the compiler budget to four hours and the job allowance to 270 minutes,
 
 ### Verified native candidate — 2026-11-10
 
-[רוני | QA] [MAIN_SESSION] Run42687189577 at46d1bf1511b2ba778964232ed40f9ef51eabb416 completed SUCCESS: Device2h28m52s, Simulator2h34m24s, assembly/embedded smoke8m39s. The actual archive and its matching inner/outer NodeMobile-smoke.json report descriptorOwnership=true, fdWarningCount=0 and hostStartup=true, with Node24.5.0, fs/crypto/url/fetch/Worker/TLS and Hebrew checks passing. The pinned fixture requires128 sequential tracked UTF-8 open/read/close cycles. This is genuine embedded Simulator evidence, not physical iPad acceptance. Publish-policy job logs explicitly confirm release publication was disabled.
+[רוני | QA] [MAIN_SESSION] [Run 42687189577](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42687189577), source `46d1bf1511b2ba778964232ed40f9ef51eabb416`, completed SUCCESS: Device 2h28m52s, Simulator 2h34m24s, assembly/embedded smoke 8m39s. Matching inner/outer smoke reports show `descriptorOwnership=true`, `fdWarningCount=0` and `hostStartup=true`. The pinned fixture requires 128 sequential tracked UTF-8 open/read/close cycles. This is embedded Simulator evidence; physical iPad acceptance remains open. The publication-policy log explicitly confirms that release publication was disabled.
 
-Actual ZIP SHA256 aa788654a883d8e1bca3f177697e8505168dd6cbabcf712dbfae058bd1e46d8d; Node XCFramework identity2dcd34ce18a8d2a24a597eae2451f98992354cf2628bf97b07e8176936dac6e3. Verify the downloaded ZIP bytes, inner/outer provenance, exact mobile commit/source/patch-manifest hashes, Host archive hash and Python source version/hash before finalizing the Root lock. Native/bundle status and generated app manifest now reflect this verified candidate. Dependency identity remains86a2226aca7ddb5f027d734746bd9aa6af382f5d55292f6d9d6bb44433945621. Lock validation and all seven manifest/link-identity regressions pass (731.698ms). No old native checksum was reused. Evidence: build/runtime-native-42687189577-verification.json and matching final metadata/logs.
+Verified identities:
 
-Final app selection is prepared and locally planned against97a3f9ec: eight unit methods (three strict Skill language cases, named fs, actual HTTPS, lifecycle and Host contracts) plus four focused cross-component UI methods. Only app_unit_tests/simulator_targeted_ui are selected; no device IPA, new native build or release. Consume the exact private candidate via runtime_bundle_artifact_run_id=42687189577. TestFlight91801 still predates all Runtime fixes; physical gates stay open.
+- Downloaded Runtime ZIP: `aa788654a883d8e1bca3f177697e8505168dd6cbabcf712dbfae058bd1e46d8d`.
+- Native XCFramework: `2dcd34ce18a8d2a24a597eae2451f98992354cf2628bf97b07e8176936dac6e3`.
+- Dependency identity: `86a2226aca7ddb5f027d734746bd9aa6af382f5d55292f6d9d6bb44433945621`.
+
+Verify actual ZIP bytes, inner/outer provenance, exact mobile commit/source/patch-manifest hashes, Host archive hash and Python source version/hash before finalizing the Root lock. Native/bundle status and the generated app manifest now reflect this genuine verified candidate. Dependency identity stayed unchanged. Lock validation and all seven manifest/link-identity regressions passed (731.698ms). Evidence: `build/runtime-native-42687189577-verification.json` and matching final metadata/logs.
+
+### Final Runtime SDK acceptance — 2026-11-10
+
+[רוני | QA] [MAIN_SESSION] [Run 42715548913](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42715548913), source `5c656fdb11562422ba526f0a8c97df4f8a33c42e`, completed SUCCESS. The actual Xcode 27.2 iPad Simulator app job took 40m13s; independent provider summary took 16s. Preparation logs record explicit `RUNTIME_CORE_ARTIFACT_RUN_ID=42687189577` and successful checksum-checked private bundle preparation for the dependency identity above. The exact source lock pins the independently verified Runtime ZIP. Only app units/targeted UI were selected; no native rebuild, IPA or distribution job ran.
+
+Swift Testing actually executed all eight selected methods in two suites, with zero failures (107.949s):
+
+- Embedded TLS GET/POST through fetch and node:https: 8.587s.
+- Canonical Skill read-without-execution, then real JS/Python/TS execution: all three exact-argv cases, 11.845s.
+- Named/default/promise Node fs workspace reads: 0.152s.
+- Native lifecycle without an internal approval: 0.109s.
+- Agent Node execution: 0.142s.
+- Agent TypeScript execution: 10.167s.
+- JavaScript backend full contract: 1.833s.
+- TypeScript full contract: 75.098s.
+
+Initial zero-case XCTest shims are not counted. No selected method was replaced by an empty announced suite.
+
+All four selected UI methods actually passed with zero failures/skips (468.469s):
+
+- Native API mount/interaction: 153.862s.
+- Production Expo SwiftUI probe: 118.638s.
+- Real HTTPS before/after brief background, with fresh result IDs: 74.992s.
+- Native npm package installation/persistence/import/uninstall: 120.977s.
+
+The executed class/method set exactly matches the dispatch selection. No unmanaged File Descriptor warning appears in the full 10,664,721-byte job log, complementing the strict embedded ownership smoke with tracking enabled. Evidence: `build/runtime-sdk-42715548913.log`, `build/runtime-42715548913-final.json` and `build/runtime-sdk-42715548913-verification.json`.
+
+Runtime implementation and selected Apple SDK integration are VERIFIED. Unrelated earlier passes retain their actual source identity: app `97a3f9ec` Native API/Expo positives, package 59 at `44bb2657`, and SQLite package regression at `83561474`. Physical iPad HTTPS, long suspension, Native API and FD ownership acceptance remain OPEN. Brief Simulator background does not prove full suspension. TestFlight 91801 predates all Runtime changes; Asana tasks retain their physical gates. No new Runtime TestFlight, main merge or release publication. Shared chat/Translation/Shortcuts remain subsequent approved scope.
