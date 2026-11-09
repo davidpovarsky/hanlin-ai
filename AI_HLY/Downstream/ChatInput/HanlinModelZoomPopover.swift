@@ -30,7 +30,8 @@ struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepr
         controller.update(
             source: HanlinModelHostedView(content: source, environment: context.environment),
             content: HanlinModelHostedView(content: content, environment: context.environment),
-            isPresented: $isPresented, presentationID: presentationID
+            isPresented: $isPresented, presentationID: presentationID,
+            resizeAnimation: context.transaction.disablesAnimations ? nil : context.transaction.animation
         )
     }
 
@@ -63,6 +64,7 @@ struct HanlinModelHostedView<Content: View>: View {
 @MainActor
 final class HanlinModelPopoverContentController<Content: View>: UIViewController {
     private let host: UIHostingController<HanlinModelHostedView<Content>>
+    private var resizeAnimation: Animation?
 
     init(content: HanlinModelHostedView<Content>) {
         host = UIHostingController(rootView: content)
@@ -76,8 +78,10 @@ final class HanlinModelPopoverContentController<Content: View>: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
+        view.clipsToBounds = true
         addChild(host)
         host.view.backgroundColor = .clear
+        host.view.clipsToBounds = true
         host.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(host.view)
         NSLayoutConstraint.activate([
@@ -89,14 +93,28 @@ final class HanlinModelPopoverContentController<Content: View>: UIViewController
         host.didMove(toParent: self)
     }
 
-    func update(_ content: HanlinModelHostedView<Content>) { host.rootView = content }
+    func update(_ content: HanlinModelHostedView<Content>, resizeAnimation: Animation?) {
+        self.resizeAnimation = resizeAnimation
+        host.rootView = content
+    }
     func idealSize(in size: CGSize) -> CGSize { host.sizeThatFits(in: size) }
 
     override func preferredContentSizeDidChange(forChildContentContainer container: any UIContentContainer) {
         super.preferredContentSizeDidChange(forChildContentContainer: container)
         let size = host.preferredContentSize
         if size.width > 0, size.height > 0, size != preferredContentSize {
-            preferredContentSize = size
+            // UIKit's implicit popover resize and SwiftUI's explicit frame
+            // animation must share timing. Otherwise the native mask briefly
+            // clips the header/footer during shrink (42555066166, 192.0s).
+            let changes = {
+                self.preferredContentSize = size
+                self.view.layoutIfNeeded()
+            }
+            if let resizeAnimation {
+                UIView.animate(resizeAnimation, changes: changes)
+            } else {
+                UIView.performWithoutAnimation(changes)
+            }
         }
     }
 }
@@ -148,14 +166,14 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
     func sourceSize(in proposal: CGSize) -> CGSize { sourceHost.sizeThatFits(in: proposal) }
 
     func update(source: HanlinModelHostedView<Source>, content: HanlinModelHostedView<Content>,
-                isPresented: Binding<Bool>, presentationID: Int) {
+                isPresented: Binding<Bool>, presentationID: Int, resizeAnimation: Animation?) {
         sourceHost.rootView = source
         self.content = content
         presentation = isPresented
         requested = isPresented.wrappedValue
         requestID = presentationID
         if requested, presentedID == requestID {
-            popupHost?.update(content)
+            popupHost?.update(content, resizeAnimation: resizeAnimation)
         }
         reconcilePresentation()
     }
