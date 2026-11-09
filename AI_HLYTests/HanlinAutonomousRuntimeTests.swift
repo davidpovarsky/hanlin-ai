@@ -92,6 +92,25 @@ struct HanlinAutonomousRuntimeTests {
         #expect(FileManager.default.fileExists(atPath: sentinel.path), "The actual runtime must execute the resource")
     }
 
+    @Test("Named Node fs and fs/promises imports resolve files in the execution workspace")
+    func namedNodeFileAccessUsesWorkspace() async throws {
+        let nonce = "עברית-" + UUID().uuidString.lowercased()
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "named-fs-" + UUID().uuidString.lowercased())
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        try nonce.write(to: workspace.appendingPathComponent("probe.txt"), atomically: true, encoding: .utf8)
+        let source = """
+        import fs, { readFileSync } from 'node:fs';
+        import { readFile } from 'node:fs/promises';
+        const values = [fs.readFileSync('probe.txt', 'utf8'), readFileSync('probe.txt', 'utf8'), await readFile('probe.txt', 'utf8')];
+        console.log(JSON.stringify(values));
+        export default values;
+        """
+        let result = try await AppRuntimeCore.shared.node.executeJavaScript(.init(source: source, workspace: workspace))
+        #expect(result.exitCode == 0, "\(result.stderr)")
+        let values = try #require(JSONSerialization.jsonObject(with: Data(result.stdout.utf8)) as? [String])
+        #expect(values == [nonce, nonce, nonce])
+    }
+
     @Test("Native package setup executes real Node work without an internal approval record")
     func nativeLifecycleExecutesWithoutApproval() async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)

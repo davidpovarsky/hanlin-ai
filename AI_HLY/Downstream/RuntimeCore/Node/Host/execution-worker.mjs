@@ -5,7 +5,7 @@ if (typeof dns.setDefaultResultOrder === 'function') {
   dns.setDefaultResultOrder('ipv4first');
 }
 import { pathToFileURL } from 'node:url';
-import { createRequire } from 'node:module';
+import { createRequire, syncBuiltinESMExports } from 'node:module';
 import * as nodePath from 'node:path';
 import { inspect } from 'node:util';
 
@@ -44,6 +44,9 @@ if (workspace) {
         }
       }
     }
+    // Updating CommonJS builtin properties does not update named ESM exports.
+    // Keep all import forms on the same per-execution workspace adapters.
+    syncBuiltinESMExports();
   } catch {}
 }
 
