@@ -929,7 +929,6 @@ final class HanlinScriptingPlatform {
             do {
                 let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
                 let displayName = package.manifest?.name ?? package.record.packageID.rawValue
-                let granted = Set(package.grantedCapabilities)
 
                 // Translation UI Discovery
                 let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }

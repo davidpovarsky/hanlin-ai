@@ -380,13 +380,15 @@ public final class HanlinSkillCatalog {
 
     /// Resolves a safe resource URL inside a skill directory, registered resolver, or main bundle.
     public func resolveResourceURL(skillID: HanlinSkillID, relativePath: String) -> URL? {
+        guard let entry = skillEntries[skillID] else { return nil }
+        // The selected source owns both successful and missing resolutions.
+        // Falling through after its resolver returns nil crosses generations or
+        // resurrects an unselected same-ID store resource after package removal.
+        if let resolver = entry.resourceResolver {
+            return resolver(relativePath)
+        }
         if let storeURL = SkillStore.shared.safeResourceURL(for: skillID, relativePath: relativePath) {
             return storeURL
-        }
-        if let entry = skillEntries[skillID], let resolver = entry.resourceResolver {
-            if let url = resolver(relativePath) {
-                return url
-            }
         }
         if let bundleURL = Bundle.main.url(forResource: relativePath, withExtension: nil) {
             return bundleURL

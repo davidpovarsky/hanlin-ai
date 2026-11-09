@@ -619,10 +619,10 @@ def plan_affected_validation(
     if exact_test_selector:
         exact_test_selector = exact_test_selector.strip()
         selectors = list(dict.fromkeys(part.strip() for part in exact_test_selector.split(",")))
-        if any(not re.fullmatch(r"[A-Za-z0-9_]+/[A-Za-z0-9_]+(/[A-Za-z0-9_]+)?", part) for part in selectors):
+        if any(not re.fullmatch(r"[A-Za-z0-9_]+/[A-Za-z0-9_]+(/[A-Za-z0-9_]+(?:\(\))?)?", part) for part in selectors):
             raise RoutingError(
                 f"Invalid exact-test-selector format: '{exact_test_selector}'. "
-                "Expected comma-separated <Bundle>/<Suite>[/<Method>] paths with alphanumeric and underscore characters."
+                "Expected comma-separated <Bundle>/<Suite>[/<Method>] paths, with optional trailing () on a Swift Testing method."
             )
         if full_validation:
             raise RoutingError("Contradictory options: --exact-test-selector cannot be combined with --full-validation")

@@ -17,6 +17,18 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_swift_testing_empty_parentheses_are_preserved_in_method_selectors(self) -> None:
+        selector = "AI_HLYTests/SkillStoreAndImportTests/resourceReadingContract()"
+        plan = self.plan_files(["README.md"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertIn("-only-testing:" + selector, plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_method_parentheses_do_not_admit_arguments_or_shell_syntax(self) -> None:
+        for selector in ("AI_HLYTests/Suite()/method", "AI_HLYTests/Suite/method(1)",
+                         "AI_HLYTests/Suite/method();echo", "AI_HLYTests/Suite/method$(whoami)"):
+            with self.subTest(selector=selector), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], exact_test_selector=selector)
+
     def test_autonomous_runtime_suite_has_an_explicit_narrow_route(self) -> None:
         plan = self.plan_files(["AI_HLYTests/HanlinAutonomousRuntimeTests.swift"])
         self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinAutonomousRuntimeTests")

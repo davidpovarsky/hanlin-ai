@@ -52,9 +52,16 @@ struct HanlinAutonomousRuntimeTests {
             """
         }
         try source.write(to: file, atomically: true, encoding: .utf8)
+        // A stale same-ID store directory must not override the selected package
+        // resolver, or supply a missing file from another source/generation.
+        try SkillStore.shared.saveCustomSkill(id: skillID, title: "Unselected Store Source", description: "Resolver collision", instructions: "Not the selected source")
+        defer { SkillStore.shared.deleteCustomSkill(skillID: skillID) }
+        try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: relativePath, content: "WRONG_STORE_SOURCE")
+        try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: "references/stale.md", content: "WRONG_STALE_SOURCE")
         let catalog = HanlinSkillCatalog()
         catalog.register(
             skill: try HanlinSkillDescriptor(id: skillID, title: "Runtime Probe", summary: "Canonical resource", instructions: .inline("Read, then execute the resource.")),
+            tier: .installedPackage,
             resourceResolver: { path in path == relativePath ? file : nil }
         )
         let session = AssistantCapabilitySession()
@@ -63,6 +70,9 @@ struct HanlinAutonomousRuntimeTests {
         let read = await ReadSkillResourceTool.execute(argumentsJSON: String(decoding: readArguments, as: UTF8.self), session: session, catalog: catalog)
         #expect(read.contains("SKILL_EXECUTED"))
         #expect(!FileManager.default.fileExists(atPath: sentinel.path), "Reading script text must never execute it")
+        let missingArguments = try JSONSerialization.data(withJSONObject: ["skill_id": skillID.rawValue, "relative_path": "references/stale.md"])
+        let missing = await ReadSkillResourceTool.execute(argumentsJSON: String(decoding: missingArguments, as: UTF8.self), session: session, catalog: catalog)
+        #expect(missing.contains("not found"), "A missing selected-source resource must not fall through to a stale store")
 
         let arguments = try JSONSerialization.data(withJSONObject: [
             "skill_id": skillID.rawValue, "relative_path": relativePath,
