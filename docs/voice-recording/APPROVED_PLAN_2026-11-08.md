@@ -13,13 +13,15 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 | Microphone | 22 lifecycle tests passed in `42521723147` at `3182b369` | Fresh signed-device recording; owner failed 89401 |
 | Widget store | Corrected historical reader: 40 Swift + seven JS tests passed in `42528052562` | Owner's existing store/picker error 4 still needs physical acceptance; no data reset |
 | Compact/wide management | Both navigation/draft-preservation cases passed in `42515491917` | Physical compact iPad acceptance |
-| All Models | Coordinator tests passed; old zoom failed UI and was replaced with native stack push | Fresh UI execution of the replacement |
+| All Models | Ordinary popover/push passed functional geometry in `42533011298`; owner correctly rejected removal of the required zoom | Source-linked opening + All Models zoom, intermediate-frame review, back/dismiss/reopen and physical acceptance remain OPEN |
 | Expo scheduler/lifecycle | Source correction compiled; three earlier UI passes retain their run provenance | Fresh fixture-staged UI run and physical Hermes acceptance |
 | Runtime policy / Node HTTPS | Pass 7 read/execute and wire corrections; eight Node error/output tests passed on pinned 24.5.0 | Capability-policy completion, actual device HTTPS/FD diagnosis |
 | Native widget engines/actions | Implemented engines and package-level evidence | Actual Home Screen instance/action acceptance remains open |
 | Shared chat / Translation / Shortcuts | Approved subsequent scope | Implementation and acceptance still pending |
 
-Current scoped simulator run: [42533011298](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42533011298), source and bounded cold-boot preparation at `c423c7f4`. It reached test-suite execution; final results are pending and do not establish an aggregate PASS. No new TestFlight distribution or merge has occurred.
+Completed simulator run [42533011298](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42533011298), source `c423c7f4`: 22 audio cases, five coordinator/Skill cases and seven UI cases passed. This establishes only the exercised functional behavior. It does not establish the requested model zoom, which was missing. Physical gates remain open.
+
+Current model-only candidate: `c21c601f`, [42537241689](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42537241689). Selected: ModelPopoverZoomOrderTests plus wide and narrow/reopen/double-tap model UI cases. Continuous MP4 and source/action timestamps are retained for animation review; no motion PASS claimed yet. Unchanged audio, Skills, Expo and widget tests are not selected again. No new TestFlight distribution or merge has occurred.
 
 ## Execution order
 
@@ -56,6 +58,17 @@ Current scoped simulator run: [42533011298](https://github.com/davidpovarsky/han
 - Model picker: fixed a stale animation completion altering a reopened presentation; corrected minimum-size clamping that exceeded small container bounds; made intrinsic popover sizing explicit and removed the second, outer zoom transition so only All Models navigation owns the matched zoom.
 - Existing two-stage expand/navigation and Reduce Motion behavior remain. Added deterministic tests for stale/reopened presentations and narrow/short containers; strengthened UI search hit-testing, clipping and shrink assertions.
 - Required validation: affected coordinator unit tests, management navigation compact/wide, All Models expand/back/reopen, plus subsequent physical animation review. No physical animation PASS is inferred from state tests.
+
+## Model zoom correction — 2026-11-09
+
+[מיה | UX] [MAIN_SESSION]. The owner explicitly requires the floating picker to grow from the composer model button and All Models to zoom from its own button. A normal popover plus ordinary stack push is not an acceptable replacement. The old functional UI assertion never proved intermediate animation behavior.
+
+- Apple [WWDC24, Enhance your UI animations and transitions](https://developer.apple.com/videos/play/wwdc2024/10145/) explains matched source identity, interruptible zoom navigation, and sheet/full-screen presentations. The readable [navigationTransition discussion](https://developer.apple.com/documentation/swiftui/view/navigationtransition(_:)) places the modifier on the destination outside layout containers; it explicitly documents stacks and sheets, not a guarantee for popovers.
+- Apple [WWDC25, Build a UIKit app with the new design](https://developer.apple.com/videos/play/wwdc2025/284/) separately demonstrates popover morphing from a bar button. The [sourceItem contract](https://developer.apple.com/documentation/uikit/uipopoverpresentationcontroller/sourceitem) explicitly says iOS 26+ popovers animate from and replace that item. This differs from ordinary source-view anchoring; do not infer equivalent behavior merely from successful compilation of a zoom modifier on popover content.
+- Candidate `c21c601f`: separate outer/inner namespaces and rounded source configurations; presentation-owned material/radius; intrinsic fixed sizing; explicitly animated route transaction after the existing expansion completion. No new renderer, data model or dependency.
+- Keyboard follow-up `5f8f4080`: opening `.model` no longer explicitly resigns the composer field while zooming; doing so can move the source button as the keyboard dismisses. A dedicated keyboard/draft UI scenario is added for subsequent serial execution. This does not claim that the system keyboard behavior has already been verified.
+- Motion acceptance: review continuous opening from the actual button rectangle, size expansion followed by All Models zoom, reverse zoom before shrink, outside dismissal, stable source position, narrow/wide layouts, reopen and repeated taps. Reject retained outgoing content, elliptical masks, clipped controls, a centered scale/fade substituted for source-linked zoom, or a single-frame size jump. Continuous MP4 plus action timestamps/source frames accompany the UI assertions. Native Reduce Motion and coordinator generation protections must remain intact.
+- Focused verification: run `42537241689`, five existing coordinator cases and two model UI scenarios. Windows Swift parsing and workflow YAML parsing passed; Apple compilation, UI results and video review are pending. Unchanged audio/Skills/Expo/widget evidence retains its own source/run provenance. Physical acceptance remains open.
 
 ## Embedded Node diagnostic follow-up — 2026-11-09
 
