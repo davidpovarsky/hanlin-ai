@@ -736,6 +736,32 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             with self.subTest(suffix=suffix), self.assertRaises(planner.RoutingError):
                 self.plan_files(["README.md"], exact_test_selector=valid + suffix)
 
+    def test_exact_selectors_reject_modes_that_skip_requested_cases(self) -> None:
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests"
+        ui = "AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomExpandThenNavigate"
+        for selector, mode in [
+            (ui, "fast_validation_only"),
+            (unit + "," + ui, "fast_validation_only"),
+            (unit, "simulator_e2e_only"),
+            (unit + "," + ui, "simulator_e2e_only"),
+            (ui, "nativescript_poc_only"),
+        ]:
+            with self.subTest(selector=selector, mode=mode):
+                with self.assertRaisesRegex(planner.RoutingError, mode):
+                    self.plan_files(["README.md"], exact_test_selector=selector,
+                                    manual_modes={mode: True})
+
+    def test_exact_selectors_allow_compatible_execution_modes(self) -> None:
+        for selector, mode, output in [
+            ("AI_HLYTests/ModelPopoverZoomOrderTests", "fast_validation_only", "run_simulator_unit"),
+            ("AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomExpandThenNavigate",
+             "simulator_e2e_only", "run_simulator_targeted_ui"),
+        ]:
+            with self.subTest(selector=selector, mode=mode):
+                plan = self.plan_files(["README.md"], exact_test_selector=selector,
+                                       manual_modes={mode: True})
+                self.assertTrue(plan.step_outputs[output])
+
     def test_exact_selectors_deduplicate_and_keep_method_boundaries(self) -> None:
         method = "AI_HLYTests/VoiceRecordingLifecycleTests/testVR17_StressFiftyRapidCycles"
         plan = self.plan_files(["README.md"], exact_test_selector=f" {method} , {method} ")

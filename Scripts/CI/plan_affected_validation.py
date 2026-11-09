@@ -637,6 +637,19 @@ def plan_affected_validation(
                 "Must start with 'AI_HLYTests/' or 'AI_HLYUITests/'."
             )
 
+        # These workflow modes gate execution after planning. Accepting an exact
+        # selector they suppress can produce a green run with zero requested cases.
+        for mode, skips_requested_cases in (
+            ("fast_validation_only", is_ui),
+            ("simulator_e2e_only", is_unit),
+            ("nativescript_poc_only", True),
+        ):
+            if manual_modes.get(mode) and skips_requested_cases:
+                raise RoutingError(
+                    f"Contradictory options: {mode}=true skips requested exact-test-selector cases. "
+                    f"Disable {mode} to execute every selected case."
+                )
+
         exact_test_selector = ",".join(selectors)
         explicit_overrides.append(f"exact_test_selector={exact_test_selector}")
         selected_groups.clear()
