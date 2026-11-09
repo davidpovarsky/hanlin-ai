@@ -3,6 +3,11 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
+      scripting_package_test_filter:
+        description: Explicit affected Swift package suite regex; invokes the existing isolated validation workflow
+        required: false
+        default: ''
+        type: string
       testflight_upload:
         description: Build, sign, validate, and upload ChavrusaChat to TestFlight
         required: true
@@ -92,7 +97,7 @@ concurrency:
 
 jobs:
   plan-affected-validation:
-    if: ${{ !inputs.testflight_upload }}
+    if: ${{ !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: macos-26
     timeout-minutes: 15
@@ -2876,6 +2881,14 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+
+  focused-scripting-package-tests:
+    if: ${{ !inputs.testflight_upload && inputs.scripting_package_test_filter != '' }}
+    uses: ./.github/workflows/validate-scripting-runtime.yml
+    with:
+      test_filter: ${{ inputs.scripting_package_test_filter }}
+      force_clean_build: ${{ inputs.force_clean_build }}
+    secrets: inherit
 
   upload-chavrusachat-to-testflight:
     if: ${{ inputs.testflight_upload }}

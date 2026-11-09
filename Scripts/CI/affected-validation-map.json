@@ -245,7 +245,8 @@
         "simulator_targeted_ui"
       ],
       "ui_suites": [
-        "AI_HLYUITests/HanlinExpoProductionE2ETests"
+        "AI_HLYUITests/HanlinExpoProductionE2ETests",
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
       ],
       "consumers": []
     },
@@ -1050,6 +1051,35 @@
       "direct_validation_groups": [
         "device_build",
         "ipa_packaging"
+      ],
+      "consumers": []
+    },
+    "autonomous_runtime_acceptance": {
+      "description": "Autonomous host policy, canonical Skill execution and actual embedded HTTPS acceptance",
+      "patterns": [
+        "AI_HLYTests/HanlinAutonomousRuntimeTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAutonomousRuntimeTests"
+      ],
+      "consumers": []
+    },
+    "expo_native_api_ui_tests": {
+      "description": "Existing native JSI/Fabric integration, grantless install and session lifecycle acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
       ],
       "consumers": []
     }

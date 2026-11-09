@@ -17,6 +17,19 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_autonomous_runtime_suite_has_an_explicit_narrow_route(self) -> None:
+        plan = self.plan_files(["AI_HLYTests/HanlinAutonomousRuntimeTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinAutonomousRuntimeTests")
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_native_api_ui_suite_stages_its_existing_fixtures_without_full_fallback(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
+        plan = self.plan_files(["AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+
     @classmethod
     def setUpClass(cls) -> None:
         with open(MAP_PATH, "r", encoding="utf-8") as f:

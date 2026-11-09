@@ -1,6 +1,15 @@
 name: Validate Scripting Runtime
 
 on:
+  workflow_call:
+    inputs:
+      force_clean_build:
+        required: false
+        default: false
+        type: boolean
+      test_filter:
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       force_clean_build:
