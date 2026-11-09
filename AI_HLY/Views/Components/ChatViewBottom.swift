@@ -1348,7 +1348,11 @@ struct ChatViewBottom: View {
             // Native source-item popover morph is isolated from the inner All Models morph.
             HanlinModelZoomPopover(
                 isPresented: popupCoordinator.binding(for: .model),
-                presentationID: popupCoordinator.modelPresentationGeneration
+                presentationID: popupCoordinator.modelPresentationGeneration,
+                contentSize: popupCoordinator.modelPopoverSize,
+                onResizeCompleted: { generation, size in
+                    popupCoordinator.modelFrameResizeDidComplete(presentationID: generation, size: size)
+                }
             ) {
                 Button {
                     isFeedBack.toggle()

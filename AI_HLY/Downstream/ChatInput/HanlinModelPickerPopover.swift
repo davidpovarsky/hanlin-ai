@@ -24,14 +24,6 @@ struct HanlinModelPickerPopover: View {
     @Namespace private var allModelsZoom
     @State private var searchText: String = ""
 
-    private let compactSize = CGSize(width: 286, height: 324)
-    private let expandedSize = CGSize(width: 344, height: 472)
-
-    private var currentSize: CGSize {
-        let target = coordinator.modelFrameExpanded ? expandedSize : compactSize
-        return coordinator.responsiveSize(target: target)
-    }
-
     private var accentColor: Color {
         temporaryRecord ? .primary : .hlBluefont
     }
@@ -103,20 +95,15 @@ struct HanlinModelPickerPopover: View {
                     .transition(allModelsPageTransition)
             }
         }
-        .frame(width: currentSize.width, height: currentSize.height)
-        .fixedSize()
+        // Fill the native hosting controller's actual bounds. Do not animate a
+        // second fixed SwiftUI frame independently of the popover's native mask.
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .transaction { if reduceMotion { $0.disablesAnimations = true } }
         .onChange(of: coordinator.modelNavigationPath) { _, newPath in
             if !newPath.isEmpty {
                 coordinator.modelDestinationDisappeared = false
                 if !coordinator.modelFrameExpanded {
-                    if reduceMotion {
-                        coordinator.modelFrameExpanded = true
-                    } else {
-                        withAnimation(.easeInOut(duration: 0.24)) {
-                            coordinator.modelFrameExpanded = true
-                        }
-                    }
+                    coordinator.modelFrameExpanded = true
                 }
             } else {
                 coordinator.handleModelNavPathChange(reduceMotion: reduceMotion)
