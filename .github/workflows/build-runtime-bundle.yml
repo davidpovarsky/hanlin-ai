@@ -178,7 +178,9 @@ jobs:
       ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
           inputs.reuse_artifacts_run_id == '' }}
     runs-on: macos-26
-    timeout-minutes: 220
+    # A cold host + target V8 build exceeded three hours while still making progress.
+    # Keep setup and cache/evidence preservation outside the four-hour compiler budget.
+    timeout-minutes: 270
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -365,7 +367,7 @@ jobs:
             --log "$evidence/build.log" \
             --summary "$evidence/heartbeat.log" \
             --object-root "$NODE_SOURCE_ROOT/out" \
-            --timeout 10800 \
+            --timeout 14400 \
             -- bash Scripts/Runtime/build-node-slice.sh "$TARGET"
           status=$?
           set -e
