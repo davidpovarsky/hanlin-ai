@@ -30,8 +30,7 @@ struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepr
         controller.update(
             source: HanlinModelHostedView(content: source, environment: context.environment),
             content: HanlinModelHostedView(content: content, environment: context.environment),
-            isPresented: $isPresented, presentationID: presentationID,
-            resizeAnimation: context.transaction.disablesAnimations ? nil : context.transaction.animation
+            isPresented: $isPresented, presentationID: presentationID
         )
     }
 
@@ -59,72 +58,12 @@ struct HanlinModelHostedView<Content: View>: View {
     }
 }
 
-/// The presented controller is a UIKit container, never the SwiftUI hosting
-/// controller. Inner navigation preferences cannot become its modal transition.
-@MainActor
-final class HanlinModelPopoverContentController<Content: View>: UIViewController {
-    private let host: UIHostingController<HanlinModelHostedView<Content>>
-    private var resizeAnimation: Animation?
-
-    init(content: HanlinModelHostedView<Content>) {
-        host = UIHostingController(rootView: content)
-        super.init(nibName: nil, bundle: nil)
-        host.sizingOptions = .preferredContentSize
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("Use init(content:)") }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .clear
-        view.clipsToBounds = true
-        addChild(host)
-        host.view.backgroundColor = .clear
-        host.view.clipsToBounds = true
-        host.view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(host.view)
-        NSLayoutConstraint.activate([
-            host.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            host.view.topAnchor.constraint(equalTo: view.topAnchor),
-            host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        host.didMove(toParent: self)
-    }
-
-    func update(_ content: HanlinModelHostedView<Content>, resizeAnimation: Animation?) {
-        self.resizeAnimation = resizeAnimation
-        host.rootView = content
-    }
-    func idealSize(in size: CGSize) -> CGSize { host.sizeThatFits(in: size) }
-
-    override func preferredContentSizeDidChange(forChildContentContainer container: any UIContentContainer) {
-        super.preferredContentSizeDidChange(forChildContentContainer: container)
-        let size = host.preferredContentSize
-        if size.width > 0, size.height > 0, size != preferredContentSize {
-            // UIKit's implicit popover resize and SwiftUI's explicit frame
-            // animation must share timing. Otherwise the native mask briefly
-            // clips the header/footer during shrink (42555066166, 192.0s).
-            let changes = {
-                self.preferredContentSize = size
-                self.view.layoutIfNeeded()
-            }
-            if let resizeAnimation {
-                UIView.animate(resizeAnimation, changes: changes)
-            } else {
-                UIView.performWithoutAnimation(changes)
-            }
-        }
-    }
-}
-
 @MainActor
 final class HanlinModelPopoverController<Source: View, Content: View>: UIViewController,
     UIPopoverPresentationControllerDelegate {
     private let sourceHost: UIHostingController<HanlinModelHostedView<Source>>
     private var content: HanlinModelHostedView<Content>
-    private var popupHost: HanlinModelPopoverContentController<Content>?
+    private var popupHost: UIHostingController<HanlinModelHostedView<Content>>?
     private var presentation: Binding<Bool>?
     private var requested = false
     private var requestID = 0
@@ -166,14 +105,14 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
     func sourceSize(in proposal: CGSize) -> CGSize { sourceHost.sizeThatFits(in: proposal) }
 
     func update(source: HanlinModelHostedView<Source>, content: HanlinModelHostedView<Content>,
-                isPresented: Binding<Bool>, presentationID: Int, resizeAnimation: Animation?) {
+                isPresented: Binding<Bool>, presentationID: Int) {
         sourceHost.rootView = source
         self.content = content
         presentation = isPresented
         requested = isPresented.wrappedValue
         requestID = presentationID
         if requested, presentedID == requestID {
-            popupHost?.update(content, resizeAnimation: resizeAnimation)
+            popupHost?.rootView = content
         }
         reconcilePresentation()
     }
@@ -189,10 +128,16 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
             return
         }
         guard requested, isViewLoaded, view.window != nil, presentedViewController == nil else { return }
-        let host = HanlinModelPopoverContentController(content: content)
+        // The inner route is a same-host geometry transition, so it no longer
+        // contributes navigationTransition preferences to modal presentation.
+        // Present the hosting controller directly (Apple WWDC22/10072): its
+        // native sizing integration owns both content and popover resizing.
+        let host = UIHostingController(rootView: content)
+        host.sizingOptions = .preferredContentSize
         host.modalPresentationStyle = .popover
         host.view.backgroundColor = .clear
-        host.preferredContentSize = host.idealSize(in: view.window?.bounds.size ?? view.bounds.size)
+        host.view.clipsToBounds = true
+        host.preferredContentSize = host.sizeThatFits(in: view.window?.bounds.size ?? view.bounds.size)
         guard let popover = host.popoverPresentationController else { return }
         // Public iOS 26+ popover morph. The source contains the actual visible
         // SwiftUI button, rather than a transparent geometry proxy behind it.
@@ -211,7 +156,7 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
         didDismiss(host)
     }
 
-    private func didDismiss(_ host: HanlinModelPopoverContentController<Content>) {
+    private func didDismiss(_ host: UIHostingController<HanlinModelHostedView<Content>>) {
         guard popupHost === host else { return }
         popupHost = nil
         // A late dismissal must not close a newly requested presentation.
