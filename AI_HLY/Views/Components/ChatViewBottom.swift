@@ -1345,7 +1345,7 @@ struct ChatViewBottom: View {
             .disabled(isResponding)
             .sensoryFeedback(.impact, trigger: isFeedBack)
 
-            // Native source-item popover morph is isolated from All Models navigation zoom.
+            // Native source-item popover morph is isolated from the inner All Models morph.
             HanlinModelZoomPopover(
                 isPresented: popupCoordinator.binding(for: .model),
                 presentationID: popupCoordinator.modelPresentationGeneration

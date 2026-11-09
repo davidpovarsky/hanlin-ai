@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-/// UIKit owns the popover's source-item morph; SwiftUI owns navigation inside it.
+/// UIKit owns the popover's source-item morph; SwiftUI owns its inner geometry morph.
 /// A navigationTransition on a SwiftUI popover's root competes with the inner
 /// destination transition (42539502009 rendered an invisible All Models page).
 @MainActor

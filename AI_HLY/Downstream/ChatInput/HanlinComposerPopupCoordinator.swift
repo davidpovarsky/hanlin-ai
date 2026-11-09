@@ -368,6 +368,34 @@ final class HanlinComposerPopupCoordinator {
         }
     }
 
+    /// Reverse the shared-surface zoom before shrinking the native popover.
+    /// View disappearance can begin before a removal transition has finished.
+    func popModelSubroute(reduceMotion: Bool = false) {
+        guard !modelNavigationPath.isEmpty else { return }
+        let capturedGeneration = modelPresentationGeneration
+        modelDestinationDisappeared = false
+        let finish: @MainActor () -> Void = { [weak self] in
+            guard let self,
+                  self.modelPresentationGeneration == capturedGeneration,
+                  self.activePopup == .model,
+                  self.modelNavigationPath.isEmpty else { return }
+            self.markModelDestinationDisappeared(reduceMotion: reduceMotion)
+        }
+        if deferAnimationCompletionsForTesting {
+            modelNavigationPath.removeAll()
+            pendingAnimationCompletions.append(finish)
+        } else if reduceMotion {
+            modelNavigationPath.removeAll()
+            finish()
+        } else {
+            withAnimation(.smooth(duration: 0.32), completionCriteria: .removed) {
+                modelNavigationPath.removeAll()
+            } completion: {
+                Task { @MainActor in finish() }
+            }
+        }
+    }
+
     /// Executes any queued animation completions in deterministic unit tests (`ModelPopoverZoomOrderTests`).
     func flushPendingAnimationCompletions(firstOnly: Bool = false) {
         let count = firstOnly ? min(1, pendingAnimationCompletions.count) : pendingAnimationCompletions.count

@@ -3,7 +3,7 @@
 //  AI_HLY
 //
 //  Compact anchored model picker popover with InteriorOrganizerV3_3 completion-ordered
-//  two-stage size expansion and source-linked zoom navigation into searchable provider-grouped
+//  two-stage size expansion and source-linked geometry morph into searchable provider-grouped
 //  "All Models", styled in Hanlin's original delicate blue glass aesthetic (§4.8).
 //
 
@@ -89,28 +89,23 @@ struct HanlinModelPickerPopover: View {
     }
 
     var body: some View {
-        NavigationStack(path: $coordinator.modelNavigationPath) {
-            compactRootPage
-                .navigationDestination(for: ComposerModelSubroute.self) { route in
-                    Group {
-                        switch route {
-                        case .allModels:
-                            allModelsDestinationPage
-                                .navigationTransition(.zoom(sourceID: "all-models", in: allModelsZoom))
-                        }
-                    }
-                    .onAppear {
-                        coordinator.modelDestinationDisappeared = false
-                    }
-                    .onDisappear {
-                        coordinator.markModelDestinationDisappeared(reduceMotion: reduceMotion)
-                    }
-                }
+        // A navigation-controller zoom inside a resizing popover can retain an
+        // elliptical transition snapshot (42542971973). Morph the button's
+        // surface in this one hosting hierarchy; never stretch the page's text.
+        ZStack {
+            if coordinator.modelNavigationPath.isEmpty {
+                compactRootPage
+                    .transition(rootPageTransition)
+            } else {
+                morphSurface(cornerRadius: 22)
+                    .transition(.identity)
+                allModelsDestinationPage
+                    .transition(allModelsPageTransition)
+            }
         }
         .frame(width: currentSize.width, height: currentSize.height)
         .fixedSize()
-        // The native presentation owns its material and corner radius. A second
-        // clipped blur surface here would be snapshotted by both zoom transitions.
+        .transaction { if reduceMotion { $0.disablesAnimations = true } }
         .onChange(of: coordinator.modelNavigationPath) { _, newPath in
             if !newPath.isEmpty {
                 coordinator.modelDestinationDisappeared = false
@@ -129,6 +124,34 @@ struct HanlinModelPickerPopover: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-popover")
+    }
+
+    private var rootPageTransition: AnyTransition {
+        if reduceMotion { return .identity }
+        return .asymmetric(
+            insertion: .opacity.animation(.easeOut(duration: 0.16).delay(0.16)),
+            removal: .opacity.animation(.easeOut(duration: 0.10))
+        )
+    }
+
+    private var allModelsPageTransition: AnyTransition {
+        if reduceMotion { return .identity }
+        return .asymmetric(
+            insertion: .opacity.combined(with: .scale(scale: 0.96, anchor: .bottom))
+                .animation(.smooth(duration: 0.22).delay(0.10)),
+            removal: .opacity.animation(.easeOut(duration: 0.10))
+        )
+    }
+
+    private func morphSurface(cornerRadius: CGFloat) -> some View {
+        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+            .fill(Color(uiColor: .systemBackground))
+            .overlay {
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
+            }
+            .matchedGeometryEffect(id: "all-models-surface", in: allModelsZoom)
+            .allowsHitTesting(false)
     }
 
     // MARK: - Stage 1: Compact Root Page
@@ -205,16 +228,13 @@ struct HanlinModelPickerPopover: View {
                     .contentShape(.rect(cornerRadius: 12))
                 }
                 .buttonStyle(.plain)
+                .background { morphSurface(cornerRadius: 12) }
                 .disabled(coordinator.isModelAnimatingExpand)
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
-                .matchedTransitionSource(id: "all-models", in: allModelsZoom) { source in
-                    source.clipShape(RoundedRectangle(cornerRadius: 12))
-                }
                 .accessibilityIdentifier("hanlin-model-picker-all-models-button")
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
     }
 
     // MARK: - Stage 2: Expanded All Models Page (Provider Sections)
@@ -223,9 +243,7 @@ struct HanlinModelPickerPopover: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 8) {
                 Button {
-                    if !coordinator.modelNavigationPath.isEmpty {
-                        coordinator.modelNavigationPath.removeLast()
-                    }
+                    coordinator.popModelSubroute(reduceMotion: reduceMotion)
                 } label: {
                     HStack(spacing: 4) {
                         Image(systemName: "chevron.backward")
@@ -302,7 +320,6 @@ struct HanlinModelPickerPopover: View {
                 .padding(.bottom, 10)
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-all-models-page")
     }

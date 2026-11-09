@@ -821,6 +821,41 @@ struct PendingFirstTurnTests {
 @Suite("7A.7 ModelPopoverZoomOrderTests — Expand First, Push All Models Only On Completion", .serialized)
 struct ModelPopoverZoomOrderTests {
 
+    @Test("Reverse morph completes before shrinking the popover frame")
+    func reverseCompletesBeforeShrink() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.deferAnimationCompletionsForTesting = true
+        coordinator.toggle(.model)
+        coordinator.pushModelSubroute()
+        coordinator.flushPendingAnimationCompletions()
+        coordinator.popModelSubroute()
+        #expect(coordinator.modelNavigationPath.isEmpty)
+        #expect(coordinator.modelFrameExpanded)
+        #expect(!coordinator.modelDestinationDisappeared)
+        coordinator.flushPendingAnimationCompletions()
+        #expect(!coordinator.modelFrameExpanded)
+        #expect(coordinator.modelDestinationDisappeared)
+    }
+
+    @Test("A stale reverse completion cannot shrink a newly reopened picker")
+    func staleReverseCannotShrinkNewPresentation() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.deferAnimationCompletionsForTesting = true
+        coordinator.toggle(.model)
+        coordinator.pushModelSubroute()
+        coordinator.flushPendingAnimationCompletions()
+        coordinator.popModelSubroute()
+        coordinator.closeAll()
+        coordinator.toggle(.model)
+        coordinator.pushModelSubroute()
+        coordinator.flushPendingAnimationCompletions(firstOnly: true)
+        #expect(coordinator.modelFrameExpanded)
+        #expect(coordinator.isModelAnimatingExpand)
+        #expect(coordinator.modelNavigationPath.isEmpty)
+        coordinator.flushPendingAnimationCompletions()
+        #expect(coordinator.modelNavigationPath == [.allModels])
+    }
+
     @Test("A dismissed presentation cannot alter a reopened popover's pending expansion")
     func staleCompletionCannotEndNewExpansion() {
         let coordinator = HanlinComposerPopupCoordinator()
@@ -900,8 +935,7 @@ struct ModelPopoverZoomOrderTests {
         #expect(coordinator.modelFrameExpanded)
         #expect(coordinator.modelNavigationPath == [.allModels])
 
-        coordinator.popModelToRoot()
-        coordinator.markModelDestinationDisappeared(reduceMotion: true)
+        coordinator.popModelSubroute(reduceMotion: true)
         #expect(!coordinator.modelFrameExpanded)
         #expect(coordinator.modelNavigationPath.isEmpty)
     }
