@@ -1,4 +1,5 @@
 import './fetch-compatibility.mjs';
+import { traceRuntimeWarnings } from './warning-diagnostics.mjs';
 import http from 'node:http';
 import dns from 'node:dns';
 if (typeof dns.setDefaultResultOrder === 'function') {
@@ -123,7 +124,13 @@ const server = http.createServer(async (request, response) => {
       });
     }
     if (request.method === 'POST' && url.pathname === '/v1/executions') {
-      return json(response, 200, await executeJavaScript(await readJSON(request)));
+      const body = await readJSON(request);
+      const stopTracing = body.environment?.HANLIN_NODE_TRACE_WARNINGS === '1' ? traceRuntimeWarnings() : () => {};
+      try {
+        return json(response, 200, await executeJavaScript(body));
+      } finally {
+        stopTracing();
+      }
     }
     const executionCancel = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/cancel$/i);
     if (request.method === 'POST' && executionCancel) {
@@ -356,7 +363,8 @@ async function executeJavaScript(body) {
   const started = Date.now();
   const state = { worker: null, cancelled: false, terminateWorker: null, finish: null };
   const result = await new Promise(resolve => {
-    const worker = new Worker(executionWorkerURL, {
+    const worker = new Worker(body.environment?.HANLIN_NODE_TRACE_WARNINGS === '1'
+      ? new URL('./diagnostic-worker.mjs', import.meta.url) : executionWorkerURL, {
       workerData: {
         entryPoint,
         workspace,

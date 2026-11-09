@@ -49,7 +49,9 @@ struct HanlinAutonomousRuntimeTests {
             import path from 'node:path';
             const nonce\(annotation) = '\(nonce)';
             if (!process.argv.includes(nonce) || !process.argv.includes('עברית')) throw new Error('Skill argv lost');
-            fs.writeFileSync(path.join(process.env.SKILL_RESOURCE_DIR, 'executed-' + nonce), 'actual-node-execution');
+            const resourceDir = process.env.SKILL_RESOURCE_DIR;
+            if (!resourceDir) throw new Error('Skill resource directory is missing');
+            fs.writeFileSync(path.join(resourceDir, 'executed-' + nonce), 'actual-node-execution');
             console.log('SKILL_EXECUTED=' + nonce);
             export default { nonce };
             """

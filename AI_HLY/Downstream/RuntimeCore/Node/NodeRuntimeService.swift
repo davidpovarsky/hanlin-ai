@@ -238,6 +238,7 @@ actor NodeRuntimeService {
         return try await executeJavaScript(.init(
             source: source,
             workspace: try fileLayout.workspace(client: .tools, identifier: "node-https-diagnostics"),
+            environment: ["HANLIN_NODE_TRACE_WARNINGS": "1"],
             limits: .init(timeout: .seconds(180))
         ), moduleKind: "esm")
     }
