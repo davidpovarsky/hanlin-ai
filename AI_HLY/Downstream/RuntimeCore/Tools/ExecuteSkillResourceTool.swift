@@ -36,7 +36,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                 properties: [
                     "skill_id": NativeToolSchema.string(description: "The unique identifier of the active skill."),
                     "relative_path": NativeToolSchema.string(description: "Relative path to the executable script inside the skill package (e.g. 'scripts/search.py')."),
-                    "arguments": NativeToolSchema.stringArray(description: "Optional command-line arguments passed to the script via sys.argv."),
+                    "arguments": NativeToolSchema.stringArray(description: "Command-line arguments after the script name: sys.argv[1:] in Python and process.argv.slice(2) in Node/TypeScript."),
                     "timeout_seconds": NativeToolSchema.integer(description: "Timeout in seconds (default 30, maximum 300).", minimum: 1, maximum: 300)
                 ],
                 required: ["skill_id", "relative_path"]
@@ -184,7 +184,8 @@ struct ExecuteSkillResourceTool: NativeTool {
             }
 
             let executionLimits = RuntimeExecutionLimits(timeout: .seconds(timeout))
-            let fullArgv = [cleanPath] + argv
+            // Runtime actors supply argv[0] / the Node entry point. Preserve
+            // user arguments exactly, without inserting the logical resource path.
 
             // Retain Skill identity and legacy capability metadata; the host applies its autonomous policy.
             let skillCallContext = HanlinHostCallContext.forSkill(
@@ -197,7 +198,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             let result = try await AgentHostServicesAdapter.executeRuntime(
                 runtimeKind,
                 source: scriptContent,
-                arguments: fullArgv,
+                arguments: argv,
                 environment: scriptEnv,
                 limits: executionLimits,
                 context: skillCallContext

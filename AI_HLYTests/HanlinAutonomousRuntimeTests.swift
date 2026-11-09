@@ -37,7 +37,7 @@ struct HanlinAutonomousRuntimeTests {
         if fileExtension == "py" {
             source = """
             import os, sys
-            assert '\(nonce)' in sys.argv and 'עברית' in sys.argv
+            assert sys.argv[1:] == ['\(nonce)', 'עברית'], repr(sys.argv)
             with open(os.path.join(os.environ['SKILL_RESOURCE_DIR'], 'executed-\(nonce)'), 'w') as f:
                 f.write('actual-python-execution')
             print('SKILL_EXECUTED=\(nonce)')
@@ -48,7 +48,7 @@ struct HanlinAutonomousRuntimeTests {
             import fs from 'node:fs';
             import path from 'node:path';
             const nonce\(annotation) = '\(nonce)';
-            if (!process.argv.includes(nonce) || !process.argv.includes('עברית')) throw new Error('Skill argv lost');
+            if (JSON.stringify(process.argv.slice(2)) !== JSON.stringify([nonce, 'עברית'])) throw new Error('Skill argv changed: ' + JSON.stringify(process.argv));
             const resourceDir = process.env.SKILL_RESOURCE_DIR;
             if (!resourceDir) throw new Error('Skill resource directory is missing');
             fs.writeFileSync(path.join(resourceDir, 'executed-' + nonce), 'actual-node-execution');
