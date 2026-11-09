@@ -615,6 +615,12 @@ def plan_affected_validation(
     selected_groups: Dict[str, List[str]] = collections.defaultdict(list)
     affected_components: Dict[str, List[str]] = collections.defaultdict(list)
 
+    if manual_modes.get("runtime_bundle_only"):
+        if full_validation or exact_test_selector or (target_group and target_group != "runtimecore_bundle"):
+            raise RoutingError("runtime_bundle_only cannot be combined with full validation, exact tests or another target")
+        if any(enabled for name, enabled in manual_modes.items() if name != "runtime_bundle_only"):
+            raise RoutingError("runtime_bundle_only cannot be combined with another manual validation mode")
+
     # EXACT TEST SELECTOR GUARD & ROUTING
     if exact_test_selector:
         exact_test_selector = exact_test_selector.strip()
@@ -887,6 +893,13 @@ def plan_affected_validation(
             if tgt not in ("device_build", "ipa_packaging"):
                 selected_groups.pop("device_build", None)
                 selected_groups.pop("ipa_packaging", None)
+
+    # The bundle-only mode is exclusive: source consumers are reported above,
+    # but app/IPA/SDK jobs must not run before the new native artifact exists.
+    if manual_modes.get("runtime_bundle_only"):
+        selected_groups = collections.defaultdict(list, {
+            "runtimecore_bundle": ["operator override: runtime_bundle_only=true"]
+        })
 
     # 4. Resolve prerequisites of selected validation groups
     prereq_queue = list(selected_groups.keys())

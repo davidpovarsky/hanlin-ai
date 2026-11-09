@@ -43,6 +43,19 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertFalse(plan.step_outputs["run_full_validation"])
         self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
 
+    def test_runtime_bundle_only_does_not_build_app_consumers(self) -> None:
+        plan = self.plan_files(["RuntimeDependencies.lock.json", ".github/workflows/build-ios26-unsigned-ipa.yml"], manual_modes={"runtime_bundle_only": True})
+        self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
+        for name, value in plan.step_outputs.items():
+            if name.startswith("run_") and name != "run_runtimecore_bundle":
+                self.assertFalse(value, name)
+
+    def test_runtime_bundle_only_rejects_conflicting_operator_requests(self) -> None:
+        for kwargs in ({"full_validation": True}, {"exact_test_selector": "AI_HLYTests/Example/test"},
+                       {"target_group": "app_unit_tests"}):
+            with self.subTest(kwargs=kwargs), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], manual_modes={"runtime_bundle_only": True}, **kwargs)
+
     def test_native_node_patch_inputs_route_to_the_bundle_pipeline(self) -> None:
         for file in ("Scripts/Runtime/apply-node-source-patches.py",
                      "Scripts/Runtime/Patches/v8-std-hash-65ce14d8.json",
