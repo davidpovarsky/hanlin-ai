@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -38,9 +39,24 @@ def get(path: str, *, method: str = "GET", data: dict | None = None) -> dict:
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         method=method, data=json.dumps(data).encode() if data is not None else None,
     )
-    with urllib.request.urlopen(request, timeout=45) as response:
-        body = response.read()
-        return json.loads(body) if body else {}
+    try:
+        with urllib.request.urlopen(request, timeout=45) as response:
+            body = response.read()
+            return json.loads(body) if body else {}
+    except urllib.error.HTTPError as error:
+        try:
+            errors = json.loads(error.read()).get("errors", [])
+            details = "; ".join(f"{item.get('code')}: {item.get('detail', item.get('title', ''))}" for item in errors)
+        except (ValueError, TypeError):
+            details = "No JSON error details"
+        raise SystemExit(f"App Store Connect {method} {path.split('?')[0]}: HTTP {error.code}; {details}") from None
+
+
+def groups_for_build(build_id: str) -> list[dict]:
+    # Read the documented build include; there is no GET /builds/{id}/betaGroups route.
+    parameters = urllib.parse.urlencode({"include": "betaGroups", "fields[betaGroups]": "name,isInternalGroup"})
+    response = get(f"/v1/builds/{build_id}?{parameters}")
+    return [resource for resource in response.get("included", []) if resource["type"] == "betaGroups"]
 
 
 app_query = urllib.parse.urlencode({"filter[bundleId]": BUNDLE_ID, "limit": 1})
@@ -71,17 +87,17 @@ for _ in range(40):
                 sources = get(f"/v1/builds?{source_query}").get("data", [])
                 if len(sources) != 1:
                     raise SystemExit("Expected one previous audience build for this app")
-                previous_groups = get(f"/v1/builds/{sources[0]['id']}/betaGroups?limit=200")["data"]
+                previous_groups = groups_for_build(sources[0]["id"])
                 audience_groups = sorted(group["id"] for group in previous_groups
                                          if group["attributes"].get("isInternalGroup") is True)
                 if not audience_groups:
                     raise SystemExit("Previous build has no assigned internal group; no audience changed")
-                current_groups = get(f"/v1/builds/{builds[0]['id']}/betaGroups?limit=200")["data"]
+                current_groups = groups_for_build(builds[0]["id"])
                 missing = sorted(set(audience_groups) - {group["id"] for group in current_groups})
                 if missing:
                     get(f"/v1/builds/{builds[0]['id']}/relationships/betaGroups", method="POST",
                         data={"data": [{"type": "betaGroups", "id": group} for group in missing]})
-                confirmed = get(f"/v1/builds/{builds[0]['id']}/betaGroups?limit=200")["data"]
+                confirmed = groups_for_build(builds[0]["id"])
                 if not set(audience_groups).issubset({group["id"] for group in confirmed}):
                     raise SystemExit("Internal group assignment was not confirmed")
                 print(f"Reused {len(audience_groups)} existing internal groups from build {audience_source}")

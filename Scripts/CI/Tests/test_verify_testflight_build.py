@@ -32,10 +32,10 @@ class TestFlightReadinessTests(unittest.TestCase):
                 self.last_posts.append(payload)
                 assigned.update(group["id"] for group in payload["data"])
                 return io.BytesIO(b"")
-            elif "/previous/betaGroups?" in request.full_url:
-                data = {"data": previous_groups or []}
-            elif "/build/betaGroups?" in request.full_url:
-                data = {"data": [{"id": group} for group in assigned]}
+            elif "/previous?include=betaGroups" in request.full_url:
+                data = {"included": [{"type": "betaGroups", **group} for group in (previous_groups or [])]}
+            elif "/build?include=betaGroups" in request.full_url:
+                data = {"included": [{"id": group, "type": "betaGroups"} for group in assigned]}
             elif request.full_url.endswith("/buildBetaDetail"):
                 data = {"data": {"attributes": {"internalBuildState": internal}}}
             elif urllib.parse.parse_qs(urllib.parse.urlsplit(request.full_url).query).get("filter[version]") == ["89401"]:
@@ -106,10 +106,12 @@ class TestFlightReadinessTests(unittest.TestCase):
     def test_reuses_only_previously_assigned_internal_groups(self):
         groups = [{"id": "owner", "attributes": {"isInternalGroup": True}},
                   {"id": "external", "attributes": {"isInternalGroup": False}}]
-        result, _, _, output = self.run_states(["VALID"], audience="89401", previous_groups=groups)
+        result, calls, _, output = self.run_states(["VALID"], audience="89401", previous_groups=groups)
         self.assertEqual(result, 0)
         self.assertEqual(self.last_posts, [{"data": [{"type": "betaGroups", "id": "owner"}]}])
         self.assertIn('"internalBetaGroupIDs": ["owner"]', output)
+        self.assertTrue(any("/previous?include=betaGroups" in url for url in calls))
+        self.assertFalse(any("/betaGroups?" in url for url in calls))
 
     def test_missing_prior_internal_audience_changes_nothing(self):
         result, _, _, _ = self.run_states(["VALID"], audience="89401")
