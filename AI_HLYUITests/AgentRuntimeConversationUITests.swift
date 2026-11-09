@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
@@ -995,6 +996,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(modelPopover.waitForExistence(timeout: 5), "Model picker popover must appear")
         let compactPopoverFrame = modelPopover.frame
         attachScreenshot("7B-08a_ModelPopover_CompactRoot", in: app)
+        assertModelPopoverIsRendered(in: app, frame: compactPopoverFrame, stage: "compact")
 
         let allModelsBtn = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
         XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
@@ -1022,6 +1024,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(search.waitForExistence(timeout: 5))
         XCTAssertTrue(search.isHittable, "Expanded search must be ready for interaction")
         XCTAssertTrue(modelPopover.frame.contains(search.frame), "Search must not be clipped outside the popover")
+        assertModelPopoverIsRendered(in: app, frame: modelPopover.frame, stage: "all-models")
+        mark("expanded-rendered", frame: modelPopover.frame)
 
         // Back button collapses back to compact root
         let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
@@ -1034,6 +1038,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
         let collapsedExpectation = expectation(for: collapsed, evaluatedWith: modelPopover)
         XCTAssertEqual(XCTWaiter.wait(for: [collapsedExpectation], timeout: 5), .completed)
+        assertModelPopoverIsRendered(in: app, frame: modelPopover.frame, stage: "back")
         mark("compact-after-back", frame: modelPopover.frame)
         // Dismiss outside the popover, then reopen from the same stable source.
         mark("dismiss-to-model-button", frame: sourceFrame)
@@ -1055,6 +1060,45 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5), "Repeated taps must not push duplicate destinations")
             attachScreenshot("ModelPopover_Reopened_Narrow", in: app)
         }
+    }
+
+    /// In 42539502009 AX still reported hittable controls after the entire page
+    /// stopped drawing. The fixture has an empty chat behind this header, so its
+    /// natural blue title/back text must actually occur in the screenshot pixels.
+    private func assertModelPopoverIsRendered(in app: XCUIApplication, frame: CGRect, stage: String) {
+        let screenshot = app.screenshot()
+        guard let image = screenshot.image.cgImage else {
+            XCTFail("Missing model popover screenshot"); return
+        }
+        let scaleX = CGFloat(image.width) / app.frame.width
+        let scaleY = CGFloat(image.height) / app.frame.height
+        let header = CGRect(x: (frame.minX - app.frame.minX) * scaleX,
+                            y: (frame.minY - app.frame.minY) * scaleY,
+                            width: frame.width * scaleX, height: min(80, frame.height) * scaleY)
+            .integral.intersection(CGRect(x: 0, y: 0, width: CGFloat(image.width), height: CGFloat(image.height)))
+        guard let crop = image.cropping(to: header) else {
+            XCTFail("Model header is outside the screenshot"); return
+        }
+        var pixels = [UInt8](repeating: 0, count: crop.width * crop.height * 4)
+        var bluePixels = 0
+        pixels.withUnsafeMutableBytes { bytes in
+            guard let context = CGContext(data: bytes.baseAddress, width: crop.width, height: crop.height,
+                bitsPerComponent: 8, bytesPerRow: crop.width * 4, space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue) else { return }
+            context.draw(crop, in: CGRect(x: 0, y: 0, width: CGFloat(crop.width), height: CGFloat(crop.height)))
+            let data = bytes.bindMemory(to: UInt8.self)
+            for offset in stride(from: 0, to: data.count, by: 4) {
+                let red = Int(data[offset]), green = Int(data[offset + 1]), blue = Int(data[offset + 2])
+                if blue > red + 30, green > red + 10 { bluePixels += 1 }
+            }
+        }
+        if bluePixels <= 30 {
+            let attachment = XCTAttachment(screenshot: screenshot)
+            attachment.name = "ModelPopover_VisualFailure_\(stage)"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
+        XCTAssertGreaterThan(bluePixels, 30, "\(stage): AX presence is insufficient; the model header must actually render")
     }
 
     func testDraftAndAttachmentPersistenceAtoBAndFirstSend() throws {
