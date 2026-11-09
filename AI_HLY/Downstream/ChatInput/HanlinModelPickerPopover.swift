@@ -321,6 +321,7 @@ struct HanlinModelPickerPopover: View {
             }
         }
         .accessibilityElement(children: .contain)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-all-models-page")
     }
 

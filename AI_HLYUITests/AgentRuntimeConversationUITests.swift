@@ -1089,7 +1089,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             let data = bytes.bindMemory(to: UInt8.self)
             for offset in stride(from: 0, to: data.count, by: 4) {
                 let red = Int(data[offset]), green = Int(data[offset + 1]), blue = Int(data[offset + 2])
-                if blue > red + 30, green > red + 10 { bluePixels += 1 }
+                // The decorative 22%-opacity blue border cannot reach this
+                // contrast against the neutral surface; require real glyphs.
+                if blue > red + 70, green > red + 30 { bluePixels += 1 }
             }
         }
         if bluePixels <= 30 {
