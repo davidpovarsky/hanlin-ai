@@ -65,4 +65,50 @@ struct RuntimeAutonomyV3Tests {
         #expect(decoded.snapshots[1].state == .failed)
         #expect(decoded.snapshots[1].lastErrorCode == "startup_failed")
     }
+    @Test func subsequentTurnsCanReadOwnChatResultsWithoutLeakingOtherChats() throws {
+        let chatID = UUID().uuidString
+        let first = AssistantCapabilitySession(chatID: chatID)
+        defer { first.resultStore.clear() }
+        let reference = try #require(first.resultStore.store("persisted across turns שלום"))
+        first.exposeTools(aliases: ["run_scoped_only"])
+        first.finishRun()
+        let second = AssistantCapabilitySession(chatID: chatID)
+        #expect(second.resultStore.fullPayload(for: reference) == "persisted across turns שלום")
+        #expect(!second.isToolExposed("run_scoped_only"))
+        let unrelated = AssistantCapabilitySession(chatID: UUID().uuidString)
+        defer { unrelated.resultStore.clear() }
+        #expect(unrelated.resultStore.fullPayload(for: reference) == nil)
+        let temporary = AssistantCapabilitySession(chatID: chatID, isTemporaryChat: true)
+        defer { temporary.resultStore.clear() }
+        #expect(temporary.resultStore.fullPayload(for: reference) == nil)
+    }
+
+    @Test func journalRetainsCompletedJobsAndMarksUnfinishedOnRestart() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let jobs = RuntimeJobStore(fileLayout: layout)
+        let id = UUID()
+        _ = try await jobs.create(id: id, kind: .localPython)
+        try await jobs.markRunning(id: id, kind: .localPython)
+        let output = "שלום 👋🏽"
+        try Data(output.utf8).write(to: jobs.directory(id: id, kind: .localPython).appending(path: "stdout.log"))
+        let progress = try await jobs.refresh(id: id, kind: .localPython)
+        #expect(progress?.state == .running)
+        #expect(progress?.stdoutBytes == Int64(output.utf8.count))
+        let result = RuntimeExecutionResult(executionID: id, stdout: output, stderr: "", value: nil,
+            exitCode: 0, durationMilliseconds: 1, didTimeOut: false, wasCancelled: false, outputWasTruncated: false)
+        try await jobs.complete(result, kind: .localPython)
+        let unfinished = UUID()
+        _ = try await jobs.create(id: unfinished, kind: .localPython)
+        let reopened = RuntimeJobStore(fileLayout: layout)
+        try await reopened.recoverInterrupted(.localPython)
+        let preserved = try await reopened.snapshot(id: id, kind: .localPython)
+        let interrupted = try await reopened.snapshot(id: unfinished, kind: .localPython)
+        #expect(preserved?.state == .completed && preserved?.result?.stdout == output)
+        #expect(interrupted?.state == .interrupted)
+        #expect(RuntimeExecutionLimits().timeout == nil)
+        #expect(try RuntimeExecutionLimits(timeout: .seconds(600)).timeoutMilliseconds() == 600_000)
+    }
+
 }

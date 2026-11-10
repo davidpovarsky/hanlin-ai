@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 import HanlinPlatformContracts
 
 /// Request-scoped capability session tracking dynamically exposed tools,
@@ -33,7 +34,11 @@ public final class AssistantCapabilitySession {
         self.isTemporaryChat = isTemporaryChat
         let base = isTemporaryChat ? FileManager.default.temporaryDirectory
             : FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? FileManager.default.temporaryDirectory
-        self.resultStore = resultStore ?? ToolResultStore(directory: base.appending(path: "Hanlin/ToolResults/\(id.uuidString)", directoryHint: .isDirectory))
+        let storageKey: String
+        if !isTemporaryChat, let chatID, !chatID.isEmpty {
+            storageKey = "chat-" + SHA256.hash(data: Data(chatID.utf8)).map { String(format: "%02x", $0) }.joined()
+        } else { storageKey = "session-" + id.uuidString }
+        self.resultStore = resultStore ?? ToolResultStore(directory: base.appending(path: "Hanlin/ToolResults/\(storageKey)", directoryHint: .isDirectory))
         self.exposedToolAliases = initialExposedAliases
     }
 

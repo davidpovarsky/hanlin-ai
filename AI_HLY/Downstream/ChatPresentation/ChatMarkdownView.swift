@@ -1,30 +1,95 @@
 import SwiftUI
-import Textual
+import SwiftStreamingMarkdown
+import UIKit
 
-/// One renderer inside the original chat bubble, also used for translated/transcript text.
-/// Textual owns Markdown parsing, inline/block math, streaming layout and native selection.
+/// The shared renderer inside the original message bubble and translated/transcript text.
 struct ChatMarkdownView: View {
     let text: String
-    var savePersonal: (@MainActor @Sendable (String) -> Void)?
+    var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
     var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
+    var onRendered: (@MainActor @Sendable () -> Void)?
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.chatExcerptSource) private var source
+    @Environment(\.chatSourceDestination) private var destination
+    @Environment(\.chatMarkdownDidRender) private var markdownDidRender
+    @State private var listener = ChatMarkdownListener()
 
     var body: some View {
-        StructuredText(markdown: text, syntaxExtensions: [.math])
-            .textual.textSelection(.enabled)
-            .textual.textSelectionActions(selectionActions)
+        let _ = dynamicTypeSize
+        let _ = listener.update(savePersonal: savePersonal, saveKnowledge: saveKnowledge, onRendered: {
+            onRendered?()
+            if let messageID = source?.messageID { markdownDidRender?(messageID) }
+        })
+        MarkdownView(text: text, config: config, listener: listener)
+            .markdownSelectionHighlight(highlight)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var selectionActions: [TextSelectionAction] {
-        var actions: [TextSelectionAction] = []
-        if let savePersonal {
-            actions.append(TextSelectionAction(title: String(localized: "Save for myself"), systemImage: "bookmark", handler: savePersonal))
-        }
-        if let saveKnowledge {
-            actions.append(TextSelectionAction(title: String(localized: "Save to knowledge"), systemImage: "backpack", handler: saveKnowledge))
-        }
-        return actions
+    private var highlight: MarkdownSelectionHighlight? {
+        guard let destination, destination.messageID == source?.messageID,
+              destination.sourceDigest == ChatSavedExcerpt.digest(text),
+              let selection = destination.selection, let blockID = selection.sourceBlockID else { return nil }
+        return MarkdownSelectionHighlight(sourceBlockID: blockID, renderedText: selection.renderedText, range: selection.range)
     }
+
+    private var config: MarkdownRenderConfig {
+        var items: [TextContextMenuItem] = []
+        if savePersonal != nil { items.append(TextContextMenuItem(id: "hanlin.savePersonal", title: String(localized: "Save for myself"), image: UIImage(systemName: "bookmark"))) }
+        if saveKnowledge != nil { items.append(TextContextMenuItem(id: "hanlin.saveKnowledge", title: String(localized: "Save to knowledge"), image: UIImage(systemName: "backpack"))) }
+        func fonts(_ style: UIFont.TextStyle) -> TextFonts {
+            let normal = UIFont.preferredFont(forTextStyle: style)
+            func variant(_ traits: UIFontDescriptor.SymbolicTraits) -> UIFont? {
+                normal.fontDescriptor.withSymbolicTraits(traits).map { UIFont(descriptor: $0, size: 0) }
+            }
+            return TextFonts(normal: normal, italic: variant(.traitItalic), bold: variant(.traitBold),
+                boldItalic: variant([.traitBold, .traitItalic]), preferredLetterSpacing: nil, preferredLineHeight: nil)
+        }
+        let body = MarkdownRenderConfig.MarkdownTextStyle(textFonts: fonts(.body), textColor: .primary)
+        return MarkdownRenderConfig.default
+            .withShouldAnimateText(value: false)
+            .withBlockSpacing(value: 12)
+            .withParagraphStyle(value: body)
+            .withOrderedListStyle(value: body)
+            .withBlockQuoteStyle(value: body)
+            .withHeadingStyle(value: .init(h1Font: fonts(.title), h2Font: fonts(.title2), h3Font: fonts(.title3),
+                h4Font: fonts(.headline), h5Font: fonts(.subheadline), h6Font: fonts(.subheadline), textColor: .primary))
+            .withTextSelectionConfig(value: .init(isEnabled: false))
+            .withTextContextMenu(value: items.isEmpty ? nil : TextContextMenu(menuGroups: [
+                TextContextMenuGroup(title: nil, image: nil, displayInline: true, items: items)
+            ]))
+    }
+}
+
+/// The renderer retains its listener while streaming. Update callbacks without replacing
+/// the native text view, so menu actions always save against the current source snapshot.
+@MainActor
+private final class ChatMarkdownListener: MarkdownListener {
+    private var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
+    private var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
+    private var onRendered: (@MainActor @Sendable () -> Void)?
+
+    func update(savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?,
+                saveKnowledge: (@MainActor @Sendable (String) -> Void)?,
+                onRendered: (@MainActor @Sendable () -> Void)?) {
+        self.savePersonal = savePersonal
+        self.saveKnowledge = saveKnowledge
+        self.onRendered = onRendered
+    }
+    func onRender(markdown: RenderableDocument) async {
+        if markdown != .empty { onRendered?() }
+    }
+    func onTextSelectionAction(id: String, selection: MarkdownTextSelection) async {
+        guard !selection.text.isEmpty else { return }
+        if id == "hanlin.savePersonal" {
+            savePersonal?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
+                range: selection.range, sourceBlockID: selection.sourceBlockID))
+        } else if id == "hanlin.saveKnowledge" { saveKnowledge?(selection.text) }
+    }
+    func onContextMenuAppear(id: String, selectedContent: String) async {}
+    func onContextMenuTap(id: String, selectedContent: String) async {}
+    func onTableCopyTap(content: String) async { UIPasteboard.general.string = content }
+    func onTableDownloadTap(content: String) async { UIPasteboard.general.string = content }
+    func onImageTap(image: MarkdownImage) async {}
 }
 
 /// Web links use the app's existing Safari controller; other URL schemes retain system routing.
@@ -34,10 +99,14 @@ struct ChatLinkPresentation: ViewModifier {
     func body(content: Content) -> some View {
         content
             .environment(\.openURL, OpenURLAction { url in
-                guard ["https", "http"].contains(url.scheme?.lowercased() ?? "") else { return .systemAction }
+                guard Self.isWebURL(url) else { return .systemAction }
                 link = url
                 return .handled
             })
             .sheet(item: $link) { SafariView(url: $0).ignoresSafeArea() }
+    }
+
+    static func isWebURL(_ url: URL) -> Bool {
+        ["https", "http"].contains(url.scheme?.lowercased() ?? "") && url.host?.isEmpty == false
     }
 }

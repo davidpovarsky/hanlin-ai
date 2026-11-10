@@ -742,11 +742,13 @@ final class HanlinAISDKToolAdapter {
             }
         )
 
-        let nativeResult = await preparedTools.execute(
-            alias: alias,
-            argumentsJSON: parsedCall.sanitizedArgumentsJSON,
-            context: nativeContext
-        )
+        let nativeResult = await RuntimeJobProgress.$reporter.withValue({ [weak self] job in
+            guard let self, !self.completedCallIDs.contains(callID) else { return }
+            let message = "Job \(job.executionID.uuidString.prefix(8)) · \(job.state.rawValue) · stdout \(job.stdoutBytes) B · stderr \(job.stderrBytes) B"
+            self.callbacks.onAgentEvent?(.toolExecutionProgress(id: "\(callID):execution", message: message))
+        }) {
+            await preparedTools.execute(alias: alias, argumentsJSON: parsedCall.sanitizedArgumentsJSON, context: nativeContext)
+        }
 
         if alias == "manage_mcp_servers" || alias == "list_tools" {
             await self.refreshPreparedTools()

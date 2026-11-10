@@ -188,7 +188,7 @@ test('host redirects npm state before preview and install modules initialize', a
         await new Promise(resolve => setTimeout(resolve, 50));
       }
       assert.ok((stderr + warningResult.stderr).includes(marker), JSON.stringify(warningResult) + stderr);
-      const traced = stderr.split('\n').some(line => line.includes('[HANLIN_NODE_WARNING thread=') && line.includes(marker));
+      const traced = (stderr + warningResult.stderr).split('\n').some(line => line.includes('[HANLIN_NODE_WARNING thread=') && line.includes(marker));
       assert.equal(traced, tracing, stderr);
     }
 

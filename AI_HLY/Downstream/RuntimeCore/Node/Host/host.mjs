@@ -1,3 +1,4 @@
+import { ExecutionJobs } from './execution-jobs.mjs';
 import './fetch-compatibility.mjs';
 import { traceRuntimeWarnings } from './warning-diagnostics.mjs';
 import http from 'node:http';
@@ -91,7 +92,8 @@ const executionWorkerURL = new URL('./execution-worker.mjs', import.meta.url);
 const servers = new Map();
 const serverRestarts = new Map();
 const serverGenerations = new Map();
-const executions = new Map();
+const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: path.join(root, 'packages', 'node-global', 'node_modules') });
+await executionJobs.initialize();
 const installs = new Map();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
@@ -119,7 +121,7 @@ const server = http.createServer(async (request, response) => {
         protocolVersion: 2,
         modulePolicyHooksAvailable,
         workers: [...servers.values()].map(snapshot),
-        executions: executions.size,
+        executions: executionJobs.activeCount,
         lifecycle: lifecycleDiagnostics(),
       });
     }
@@ -132,32 +134,20 @@ const server = http.createServer(async (request, response) => {
         stopTracing();
       }
     }
+    const executionPage = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/(stdout|stderr)$/i);
+    if (request.method === 'GET' && executionPage) {
+      const page = await executionJobs.readOutput(executionPage[1].toLowerCase(), executionPage[2], Number(url.searchParams.get('offset') ?? 0), Number(url.searchParams.get('limit') ?? 16_384));
+      return json(response, page ? 200 : 404, page ?? { error: 'Execution not found.' });
+    }
+    const executionStatus = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)$/i);
+    if (request.method === 'GET' && executionStatus) {
+      const state = executionJobs.snapshot(executionStatus[1].toLowerCase());
+      return json(response, state ? 200 : 404, state ?? { error: 'Execution not found.' });
+    }
     const executionCancel = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/cancel$/i);
     if (request.method === 'POST' && executionCancel) {
-      const state = executions.get(executionCancel[1].toLowerCase());
-      if (state) {
-        state.cancelled = true;
-        if (state.finish) {
-          state.finish({
-            executionID: executionCancel[1].toLowerCase(),
-            stdout: '',
-            stderr: '',
-            value: null,
-            exitCode: 1,
-            didTimeOut: false,
-            wasCancelled: true,
-            outputWasTruncated: false,
-          });
-        }
-        if (state.terminateWorker) {
-          state.terminateWorker().catch(() => {});
-        } else if (state.worker) {
-          try {
-            state.worker.terminate().catch(() => {});
-          } catch {}
-        }
-      }
-      return json(response, 200, { cancelled: Boolean(state) });
+      const state = await executionJobs.cancel(executionCancel[1].toLowerCase());
+      return json(response, 200, { cancelled: state?.cancellationRequested ?? false });
     }
     if (request.method === 'POST' && url.pathname === '/v1/typescript/compile') {
       return json(response, 200, await compileTypeScript(await readJSON(request)));
@@ -350,71 +340,11 @@ async function executeJavaScript(body) {
     throw error;
   }
   rejectUnsafeSource(body.source);
-  const executionRoot = path.join(workspace, '.hanlin-executions', id);
-  await fs.rm(executionRoot, { recursive: true, force: true });
-  await fs.mkdir(executionRoot, { recursive: true });
-  const globalNodeModules = path.join(root, 'packages', 'node-global', 'node_modules');
-  try { await fs.access(globalNodeModules); await fs.symlink(globalNodeModules, path.join(executionRoot, 'node_modules'), 'dir'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-  const extension = body.moduleKind === 'commonjs' ? 'cjs' : 'mjs';
-  const entryPoint = path.join(executionRoot, `main.${extension}`);
-  await fs.writeFile(entryPoint, body.source, { mode: 0o600 });
-  const maximumOutputBytes = Math.min(Math.max(Number(body.maximumOutputBytes) || 1_048_576, 1024), 8 * 1024 * 1024);
-  const timeoutMilliseconds = Math.min(Math.max(Number(body.timeoutMilliseconds) || 30_000, 1000), 300_000);
-  const started = Date.now();
-  const state = { worker: null, cancelled: false, terminateWorker: null, finish: null };
-  const result = await new Promise(resolve => {
-    const worker = new Worker(body.environment?.HANLIN_NODE_TRACE_WARNINGS === '1'
-      ? new URL('./diagnostic-worker.mjs', import.meta.url) : executionWorkerURL, {
-      workerData: {
-        entryPoint,
-        workspace,
-        moduleKind: body.moduleKind,
-        arguments: Array.isArray(body.arguments) ? body.arguments : [],
-        environment: validatedEnvironment(body.environment),
-        maximumOutputBytes,
-      },
-    });
-    state.worker = worker;
-    let terminated = false;
-    const terminateWorker = async () => {
-      if (terminated) return;
-      terminated = true;
-      try {
-        await Promise.race([worker.terminate(), new Promise(r => setTimeout(r, 1000))]);
-      } catch {}
-    };
-    state.terminateWorker = terminateWorker;
-    executions.set(id, state);
-    let settled = false;
-    const finish = value => { if (!settled) { settled = true; clearTimeout(timer); resolve(value); } };
-    state.finish = finish;
-    const timer = setTimeout(async () => {
-      await terminateWorker();
-      finish({ executionID: id, stdout: '', stderr: 'Execution timed out.\n', value: null, exitCode: null, didTimeOut: true, wasCancelled: false, outputWasTruncated: false });
-    }, timeoutMilliseconds);
-    worker.once('message', message => finish({
-      executionID: id,
-      stdout: message.stdout ?? '',
-      stderr: message.stderr ?? '',
-      value: message.value ?? null,
-      exitCode: message.type === 'completed' ? 0 : 1,
-      didTimeOut: false,
-      wasCancelled: state.cancelled,
-      outputWasTruncated: Boolean(message.outputWasTruncated),
-    }));
-    worker.once('error', error => finish({ executionID: id, stdout: '', stderr: `${redact(error.stack ?? error.message)}\n`, value: null, exitCode: 1, didTimeOut: false, wasCancelled: state.cancelled, outputWasTruncated: false }));
-    worker.once('exit', code => { if (state.cancelled) finish({ executionID: id, stdout: '', stderr: '', value: null, exitCode: code, didTimeOut: false, wasCancelled: true, outputWasTruncated: false }); });
-  });
-  executions.delete(id);
-  // A worker posts its result before Node has necessarily completed module-loader
-  // teardown. Wait for termination before removing the module root so concurrent
-  // filesystem cleanup cannot surface as EBADF/ENOENT from the loader.
-  if (state.terminateWorker) {
-    await state.terminateWorker();
-  }
-  await fs.rm(executionRoot, { recursive: true, force: true }).catch(() => {});
-  result.durationMilliseconds = Date.now() - started;
-  return result;
+  const header = await executionJobs.start({ ...body, workspace, environment: validatedEnvironment(body.environment) });
+  if (body.detached === true) return executionJobs.snapshot(header.executionID);
+  const completed = await executionJobs.wait(header.executionID);
+  if (!completed.result) throw new Error(completed.error ?? 'Execution did not produce a result.');
+  return completed.result;
 }
 
 async function compileTypeScript(body) {

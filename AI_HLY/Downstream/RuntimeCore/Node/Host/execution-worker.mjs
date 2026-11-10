@@ -10,9 +10,6 @@ import * as nodePath from 'node:path';
 import { inspect } from 'node:util';
 
 const { entryPoint, workspace, moduleKind, arguments: argv, environment, maximumOutputBytes } = workerData;
-let stdout = '';
-let stderr = '';
-let outputWasTruncated = false;
 
 const entryDir = workspace || nodePath.dirname(entryPoint);
 try {
@@ -53,47 +50,16 @@ if (workspace) {
 for (const [name, value] of Object.entries(environment ?? {})) process.env[name] = String(value);
 process.argv = ['node', entryPoint, ...(argv ?? []).map(String)];
 
-function append(channel, values) {
-  const rendered = `${values.map(format).join(' ')}\n`;
-  const current = channel === 'stdout' ? stdout : stderr;
-  const remaining = Math.max(0, maximumOutputBytes - Buffer.byteLength(stdout) - Buffer.byteLength(stderr));
-  const encoded = Buffer.from(rendered);
-  let end = Math.min(Math.floor(remaining), encoded.length);
-  // The first excluded byte must begin a code point, not continue one.
-  // Decoding a split sequence inserts U+FFFD and can exceed the byte budget.
-  while (end > 0 && end < encoded.length && (encoded[end] & 0xc0) === 0x80) end -= 1;
-  const accepted = encoded.subarray(0, end).toString('utf8');
-  if (channel === 'stdout') stdout = current + accepted;
-  else stderr = current + accepted;
-  if (Buffer.byteLength(rendered) > Buffer.byteLength(accepted)) outputWasTruncated = true;
-}
-
-function format(value) {
-  if (typeof value === 'string') return value;
-  if (value instanceof Error) {
-    return inspect(value, {
-      depth: 6, maxArrayLength: 8, maxStringLength: 4096,
-      customInspect: false, getters: false, colors: false,
-    });
-  }
-  try { return JSON.stringify(value); } catch { return String(value); }
-}
-
-console.log = (...values) => append('stdout', values);
-console.info = (...values) => append('stdout', values);
-console.warn = (...values) => append('stderr', values);
-console.error = (...values) => append('stderr', values);
-
 try {
   let value;
   // The export may itself be an asynchronous operation. Posting the Promise
   // serializes it to {} and causes the host to terminate its network work early.
   if (moduleKind === 'commonjs') value = await createRequire(import.meta.url)(entryPoint);
   else value = await (await import(`${pathToFileURL(entryPoint).href}?execution=${Date.now()}`)).default;
-  parentPort.postMessage({ type: 'completed', stdout, stderr, value: jsonSafe(value), outputWasTruncated });
+  parentPort.postMessage({ type: 'completed', value: jsonSafe(value) });
 } catch (error) {
-  append('stderr', [error]);
-  parentPort.postMessage({ type: 'failed', stdout, stderr, outputWasTruncated });
+  console.error(inspect(error, { depth: null, maxArrayLength: null, maxStringLength: null, colors: false }));
+  parentPort.postMessage({ type: 'failed' });
 }
 
 function jsonSafe(value) {

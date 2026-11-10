@@ -29,6 +29,7 @@ struct ListView: View {
     @State private var sessionBridge = HanlinActiveComposerSessionBridge()
     @State private var measuredContainerWidth: CGFloat = 0
     @State private var selectedChatRecord: ChatRecords? = nil
+    @State private var savedSourceDestination: ChatSourceDestination?
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
     
     @State private var showSafariGuide: Bool = false
@@ -157,6 +158,13 @@ struct ListView: View {
         }
         .environment(\.hanlinComposerSessionBridge, sessionBridge)
         .sheet(isPresented: $showsSavedMessages) { ChatSavedExcerptsView() }
+        .environment(\.chatSourceDestination, savedSourceDestination)
+        .environment(\.chatOpenSavedSource, { record, destination in
+            savedSourceDestination = destination
+            matchedSnippets[destination.chatRecordID] = (AttributedString(destination.quote), destination.messageID)
+            selectedChatRecord = record
+            if useCompactWorkspace { compactWorkspacePath = [.chat(destination.chatRecordID)] }
+        })
         .onGeometryChange(for: CGFloat.self) { proxy in
             proxy.size.width
         } action: { newWidth in

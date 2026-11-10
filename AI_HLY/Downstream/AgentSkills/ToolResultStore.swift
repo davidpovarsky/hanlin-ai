@@ -46,7 +46,11 @@ public final class ToolResultStore: @unchecked Sendable {
     private let lock = NSLock()
     private var entries: [String: Record] = [:]
     private var totalBytes = 0
-    public private(set) var lastStorageError: String?
+    private var storageError: String?
+    public var lastStorageError: String? {
+        lock.lock(); defer { lock.unlock() }
+        return storageError
+    }
 
     public var currentTotalBytes: Int {
         lock.lock(); defer { lock.unlock() }
@@ -62,13 +66,16 @@ public final class ToolResultStore: @unchecked Sendable {
         do {
             try FileManager.default.createDirectory(at: self.directory, withIntermediateDirectories: true)
             for file in try FileManager.default.contentsOfDirectory(at: self.directory, includingPropertiesForKeys: nil) where file.pathExtension == "json" {
-                let record = try JSONDecoder().decode(Record.self, from: Data(contentsOf: file))
-                guard Self.validReference(record.referenceID),
-                      FileManager.default.fileExists(atPath: payloadURL(record.referenceID).path) else { continue }
-                entries[record.referenceID] = record
-                totalBytes += record.byteCount
+                do {
+                    let record = try JSONDecoder().decode(Record.self, from: Data(contentsOf: file))
+                    guard Self.validReference(record.referenceID), record.byteCount >= 0,
+                          file.deletingPathExtension().lastPathComponent == record.referenceID,
+                          FileManager.default.fileExists(atPath: payloadURL(record.referenceID).path) else { continue }
+                    entries[record.referenceID] = record
+                    totalBytes += record.byteCount
+                } catch { storageError = error.localizedDescription }
             }
-        } catch { lastStorageError = error.localizedDescription }
+        } catch { storageError = error.localizedDescription }
     }
 
     public convenience init(maxStoredBytes: Int) {
@@ -106,10 +113,10 @@ public final class ToolResultStore: @unchecked Sendable {
             }
             entries[reference] = record
             totalBytes += data.count
-            lastStorageError = nil
+            storageError = nil
             return reference
         } catch {
-            lastStorageError = error.localizedDescription
+            storageError = error.localizedDescription
             return nil
         }
     }
@@ -139,14 +146,14 @@ public final class ToolResultStore: @unchecked Sendable {
             }
             guard let text = String(data: data[start..<end], encoding: .utf8) else { return nil }
             return ToolResultSlice(chunk: text, offset: offset + start, totalBytes: record.byteCount, hasMore: offset + end < record.byteCount)
-        } catch { lastStorageError = error.localizedDescription; return nil }
+        } catch { storageError = error.localizedDescription; return nil }
     }
 
     public func fullPayload(for reference: String) -> String? {
         lock.lock(); defer { lock.unlock() }
         guard Self.validReference(reference), entries[reference] != nil else { return nil }
         do { return try String(contentsOf: payloadURL(reference), encoding: .utf8) }
-        catch { lastStorageError = error.localizedDescription; return nil }
+        catch { storageError = error.localizedDescription; return nil }
     }
 
     /// Explicit deletion only. Finishing a run does not delete referenced history.
@@ -157,7 +164,7 @@ public final class ToolResultStore: @unchecked Sendable {
                 try FileManager.default.removeItem(at: metadataURL(reference))
                 try FileManager.default.removeItem(at: payloadURL(reference))
             }
-            entries.removeAll(); totalBytes = 0; lastStorageError = nil
-        } catch { lastStorageError = error.localizedDescription }
+            entries.removeAll(); totalBytes = 0; storageError = nil
+        } catch { storageError = error.localizedDescription }
     }
 }

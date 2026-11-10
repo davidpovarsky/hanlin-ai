@@ -37,7 +37,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                     "skill_id": NativeToolSchema.string(description: "The unique identifier of the active skill."),
                     "relative_path": NativeToolSchema.string(description: "Relative path to the executable script inside the skill package (e.g. 'scripts/search.py')."),
                     "arguments": NativeToolSchema.stringArray(description: "Command-line arguments after the script name: sys.argv[1:] in Python and process.argv.slice(2) in Node/TypeScript."),
-                    "timeout_seconds": NativeToolSchema.integer(description: "Timeout in seconds (default 30, maximum 300).", minimum: 1, maximum: 300)
+                    "timeout_seconds": NativeToolSchema.integer(description: "Optional deadline in seconds. Omit for no deadline; user cancellation and actual errors still stop execution.", minimum: 1)
                 ],
                 required: ["skill_id", "relative_path"]
             )
@@ -53,7 +53,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             let skillIDRaw = try NativeToolJSON.strictRequiredString(arguments, "skill_id")
             let relPath = try NativeToolJSON.strictRequiredString(arguments, "relative_path")
             let argv = try NativeToolJSON.strictStringArray(arguments, "arguments")
-            let timeout = try NativeToolJSON.strictInt(arguments, "timeout_seconds", default: 30, range: 1...300)
+            let executionLimits = try RuntimeToolSupport.limits(arguments)
 
             guard let skillID = try? HanlinSkillID(validating: skillIDRaw) else {
                 return RuntimeToolSupport.failure(
@@ -183,7 +183,6 @@ struct ExecuteSkillResourceTool: NativeTool {
                 }
             }
 
-            let executionLimits = RuntimeExecutionLimits(timeout: .seconds(timeout))
             // Runtime actors supply argv[0] / the Node entry point. Preserve
             // user arguments exactly, without inserting the logical resource path.
 

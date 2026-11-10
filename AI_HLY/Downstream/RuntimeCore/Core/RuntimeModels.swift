@@ -53,12 +53,13 @@ struct RuntimeSnapshot: Codable, Identifiable, Sendable {
 }
 
 struct RuntimeExecutionLimits: Codable, Hashable, Sendable {
-    let timeout: Duration
+    let timeout: Duration?
     let maximumOutputBytes: Int
 
-    init(timeout: Duration = .seconds(30), maximumOutputBytes: Int = 1_048_576) {
-        self.timeout = min(max(timeout, .seconds(1)), .seconds(300))
-        self.maximumOutputBytes = min(max(maximumOutputBytes, 1_024), 8 * 1_024 * 1_024)
+    init(timeout: Duration? = nil, maximumOutputBytes: Int = 1_048_576) {
+        self.timeout = timeout.map { max($0, .milliseconds(1)) }
+        // This is a preview budget. Full output is retained in job stdout/stderr files.
+        self.maximumOutputBytes = max(maximumOutputBytes, 1)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -69,15 +70,25 @@ struct RuntimeExecutionLimits: Codable, Hashable, Sendable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
-            timeout: .milliseconds(try container.decode(Int64.self, forKey: .timeoutMilliseconds)),
+            timeout: try container.decodeIfPresent(Int64.self, forKey: .timeoutMilliseconds).map { .milliseconds($0) },
             maximumOutputBytes: try container.decode(Int.self, forKey: .maximumOutputBytes)
         )
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(timeout.components.seconds * 1_000 + Int64(timeout.components.attoseconds / 1_000_000_000_000_000), forKey: .timeoutMilliseconds)
+        try container.encodeIfPresent(try timeoutMilliseconds(), forKey: .timeoutMilliseconds)
         try container.encode(maximumOutputBytes, forKey: .maximumOutputBytes)
+    }
+
+    func timeoutMilliseconds() throws -> Int64? {
+        guard let timeout else { return nil }
+        let (seconds, overflow) = timeout.components.seconds.multipliedReportingOverflow(by: 1_000)
+        let (milliseconds, extraOverflow) = seconds.addingReportingOverflow(Int64(timeout.components.attoseconds / 1_000_000_000_000_000))
+        guard !overflow, !extraOverflow, milliseconds > 0, milliseconds <= 9_007_199_254_740_991 else {
+            throw RuntimeCoreError.invalidRequest("The explicit deadline cannot be represented by the runtime protocol.")
+        }
+        return milliseconds
     }
 }
 
@@ -116,6 +127,26 @@ struct RuntimeExecutionResult: Codable, Sendable {
     let didTimeOut: Bool
     let wasCancelled: Bool
     let outputWasTruncated: Bool
+    let outputFiles: [String: RuntimeOutputArtifact]?
+
+    init(executionID: UUID, stdout: String, stderr: String, value: RuntimeJSONValue?, exitCode: Int?, durationMilliseconds: Int64, didTimeOut: Bool, wasCancelled: Bool, outputWasTruncated: Bool, outputFiles: [String: RuntimeOutputArtifact]? = nil) {
+        self.executionID = executionID
+        self.stdout = stdout
+        self.stderr = stderr
+        self.value = value
+        self.exitCode = exitCode
+        self.durationMilliseconds = durationMilliseconds
+        self.didTimeOut = didTimeOut
+        self.wasCancelled = wasCancelled
+        self.outputWasTruncated = outputWasTruncated
+        self.outputFiles = outputFiles
+    }
+}
+
+struct RuntimeOutputArtifact: Codable, Sendable {
+    let path: String
+    let bytes: Int64
+    let sha256: String
 }
 
 enum RuntimeJSONValue: Codable, Hashable, Sendable {

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Textual
 import AVFoundation
 import SwiftData
 import UniformTypeIdentifiers
@@ -98,6 +97,13 @@ struct ChatView: View {
     @State private var selectedURLs: [String] = []          // 解析出的 URL 列表
     @State private var isMultiSelectMode: Bool = false      // 是否开启多选模式
     @State private var selectedMessageIDs: Set<UUID> = []   // 选中的消息 ID 集合
+    @Environment(\.chatSourceDestination) private var sourceDestination
+    @State private var pendingSourceScroll: UUID?
+    @State private var revealedSourceRequest: UUID?
+    private var effectiveMatchedMessageID: UUID? {
+        if let sourceDestination, sourceDestination.chatRecordID == chatRecord.id { return sourceDestination.messageID }
+        return matchedMessageID
+    }
     var matchedMessageID: UUID?                             // 匹配的消息 ID
     @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
@@ -178,7 +184,7 @@ struct ChatView: View {
         
         // 根据匹配消息决定加载数量
         let targetCount: Int
-        if let matchedID = matchedMessageID,
+        if let matchedID = effectiveMatchedMessageID,
            let matchedIndex = sortedMessages.firstIndex(where: { $0.id == matchedID }) {
             let matchedFromBottom = sortedMessages.count - matchedIndex
             targetCount = (matchedFromBottom <= 20) ? 20 : ((matchedFromBottom + 9) / 10) * 10
@@ -802,6 +808,29 @@ struct ChatView: View {
         var showImageSize: Bool
     }
     
+    /// Route saved excerpts through this existing chat, preserving its composer/run.
+    /// First reveal the lazy row, then correct its position after Markdown finishes layout.
+    @MainActor
+    private func revealMatchedSource(using proxy: ScrollViewProxy) {
+        guard let id = effectiveMatchedMessageID,
+              let index = allMessages.firstIndex(where: { $0.id == id }) else { return }
+        revealedSourceRequest = sourceDestination?.id
+        pendingAutoFollowTask?.cancel()
+        autoFollowController.updateNearBottom(false)
+        autoFollowController.userInteractionBegan()
+        autoFollowController.userInteractionEnded()
+        let count = allMessages.count - index
+        if count > loadedMessageCount {
+            loadedMessageCount = min(allMessages.count, max(count + 5, loadedMessageCount))
+            chatTemps = Array(allMessages.suffix(loadedMessageCount))
+        }
+        pendingSourceScroll = id
+        Task { @MainActor in
+            await Task.yield()
+            proxy.scrollTo(id, anchor: .center)
+        }
+    }
+
     private var scrollTriggerState: ScrollTriggerState {
         ScrollTriggerState(
             lastID: chatTemps.last?.id,
@@ -854,7 +883,6 @@ struct ChatView: View {
                 .frame(maxWidth: .infinity)
             }
             .defaultScrollAnchor(ifScroll ? .top : .bottom)
-            .textual.textSelectionCoordination()
             .scrollIndicators(.hidden)
             .refreshable {
                 loadMoreMessages()
@@ -876,19 +904,25 @@ struct ChatView: View {
             .onChange(of: ifScroll) {
                 scheduleAutoFollow(using: scrollViewProxy, animated: true)
             }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    if let matchedID = matchedMessageID {
-                        if chatTemps.contains(where: { $0.id == matchedID }) {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                scrollViewProxy.scrollTo(matchedID, anchor: .center)
-                            }
-                        } else {
-                            print("⚠️ matchedMessageID 不在 chatTemps 中，无法滚动")
-                        }
-                    }
+            .task(id: sourceDestination?.id) {
+                revealMatchedSource(using: scrollViewProxy)
+            }
+            .onChange(of: allMessages.count) {
+                if let sourceDestination, revealedSourceRequest != sourceDestination.id {
+                    revealMatchedSource(using: scrollViewProxy)
                 }
             }
+            .task(id: effectiveMatchedMessageID) {
+                revealMatchedSource(using: scrollViewProxy)
+            }
+            .environment(\.chatMarkdownDidRender, { messageID in
+                guard pendingSourceScroll == messageID else { return }
+                pendingSourceScroll = nil
+                Task { @MainActor in
+                    await Task.yield()
+                    scrollViewProxy.scrollTo(messageID, anchor: .center)
+                }
+            })
             .onTapGesture {
                 isInputActive = false
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

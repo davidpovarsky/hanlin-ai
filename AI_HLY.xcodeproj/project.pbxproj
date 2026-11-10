@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-        C60000000000000000000001 /* Textual in Frameworks */ = {isa = PBXBuildFile; productRef = C60000000000000000000002 /* Textual */; };
+        C60000000000000000000001 /* SwiftStreamingMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = C60000000000000000000002 /* SwiftStreamingMarkdown */; };
 		E3A100000000000000000003 /* HanlinExpoWidgetNative in Test Frameworks */ = {isa = PBXBuildFile; productRef = E3A100000000000000000004 /* HanlinExpoWidgetNative */; };
 		E3A100000000000000000001 /* HanlinExpoWidgetNative in Frameworks */ = {isa = PBXBuildFile; productRef = E3A100000000000000000002 /* HanlinExpoWidgetNative */; };
 		A10000000000000000000001 /* MCP in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000011 /* MCP */; };
@@ -269,6 +269,8 @@
 				Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs,
 				Downstream/RuntimeCore/Node/Host/Tests/server-everything.integration.mjs,
 				Downstream/RuntimeCore/Node/Host/execution-worker.mjs,
+				Downstream/RuntimeCore/Node/Host/execution-jobs.mjs,
+				Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs,
 				Downstream/RuntimeCore/Node/Host/global-package-manager.mjs,
 				Downstream/RuntimeCore/Node/Host/host.mjs,
 				Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs,
@@ -370,7 +372,7 @@
 				D7D5EE3F2DD58D0600B89AAD /* RichTextKit in Frameworks */,
 				D7D5EE3C2DD58CF000B89AAD /* CoreXLSX in Frameworks */,
 				D7D5EE4B2DD590A100B89AAD /* MarkdownUI in Frameworks */,
-                C60000000000000000000001 /* Textual in Frameworks */,
+                C60000000000000000000001 /* SwiftStreamingMarkdown in Frameworks */,
 				D7D5EE422DD58D3800B89AAD /* LaTeXSwiftUI in Frameworks */,
 				D786F6B02E63DE70004DAC20 /* LLM in Frameworks */,
 				D7D5EE482DD58D7F00B89AAD /* ZIPFoundation in Frameworks */,
@@ -540,7 +542,7 @@
 				D7D5EE412DD58D3800B89AAD /* LaTeXSwiftUI */,
 				D7D5EE472DD58D7F00B89AAD /* ZIPFoundation */,
 				D7D5EE4A2DD590A100B89AAD /* MarkdownUI */,
-                C60000000000000000000002 /* Textual */,
+                C60000000000000000000002 /* SwiftStreamingMarkdown */,
 				D7D5EE4D2DD590C500B89AAD /* SwiftSoup */,
 				D786F6AF2E63DE70004DAC20 /* LLM */,
 			);
@@ -759,7 +761,7 @@
 				D7D5EE402DD58D3800B89AAD /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
 				D7D5EE462DD58D7F00B89AAD /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				D7D5EE492DD590A100B89AAD /* XCRemoteSwiftPackageReference "MarkdownUI" */,
-                C60000000000000000000003 /* XCRemoteSwiftPackageReference "textual" */,
+                C60000000000000000000003 /* XCRemoteSwiftPackageReference "hanlin-streaming-markdown" */,
 				D7D5EE4C2DD590C500B89AAD /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				D786F6AE2E63DE70004DAC20 /* XCRemoteSwiftPackageReference "LLM" */,
 			);
@@ -1701,10 +1703,10 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-        C60000000000000000000003 /* XCRemoteSwiftPackageReference "textual" */ = {
+        C60000000000000000000003 /* XCRemoteSwiftPackageReference "hanlin-streaming-markdown" */ = {
             isa = XCRemoteSwiftPackageReference;
-            repositoryURL = "https://github.com/PSchmiedmayer/textual";
-            requirement = { kind = revision; revision = 9f4b100e582a8500c1845acc46cd818197296de1; };
+            repositoryURL = "https://github.com/davidpovarsky/hanlin-streaming-markdown";
+            requirement = { kind = revision; revision = 35a43c163ebc2dcda23ce82474c687f39f526281; };
         };
 		A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1789,10 +1791,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-        C60000000000000000000002 /* Textual */ = {
+        C60000000000000000000002 /* SwiftStreamingMarkdown */ = {
             isa = XCSwiftPackageProductDependency;
             package = C60000000000000000000003;
-            productName = Textual;
+            productName = SwiftStreamingMarkdown;
         };
 		E3A100000000000000000004 /* HanlinExpoWidgetNative */ = {isa = XCSwiftPackageProductDependency; package = A10000000000000000000047 /* HanlinExpoRuntime */; productName = HanlinExpoWidgetNative; };
 		E3A100000000000000000002 /* HanlinExpoWidgetNative */ = {

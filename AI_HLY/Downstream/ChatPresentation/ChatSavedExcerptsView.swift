@@ -4,6 +4,7 @@ import SwiftUI
 struct ChatSavedExcerptsView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.chatOpenSavedSource) private var openSource
     @Query(sort: \ChatSavedExcerpt.createdAt, order: .reverse) private var excerpts: [ChatSavedExcerpt]
     @Query private var chats: [ChatRecords]
     @State private var query = ""
@@ -61,12 +62,13 @@ struct ChatSavedExcerptsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 ChatMarkdownView(text: excerpt.quote)
-                if let chat = chats.first(where: { $0.id == excerpt.chatRecordID }),
-                   let messageID = excerpt.messageID,
-                   chat.messages?.contains(where: { $0.id == messageID }) == true {
-                    NavigationLink {
-                        ChatView(chatRecord: chat, matchedMessageID: messageID)
-                            .environment(\.chatHighlightedQuote, excerpt.quote)
+                if let destination = ChatSourceDestination(excerpt: excerpt),
+                   let chat = chats.first(where: { $0.id == destination.chatRecordID }),
+                   chat.messages?.contains(where: { $0.id == destination.messageID }) == true,
+                   let openSource {
+                    Button {
+                        openSource(chat, destination)
+                        dismiss()
                     } label: {
                         Label("Open in conversation", systemImage: "bubble.left.and.text.bubble.right")
                     }

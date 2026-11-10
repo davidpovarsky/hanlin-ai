@@ -12,7 +12,7 @@ struct ExecuteTypeScriptTool: NativeTool {
             "source": NativeToolSchema.string(description: RuntimeL10n.string("TypeScript source code.")),
             "file_name": NativeToolSchema.string(description: RuntimeL10n.string("Virtual TypeScript file name.")),
             "compile_only": ["type": "boolean", "description": RuntimeL10n.string("Return diagnostics and emitted JavaScript without execution.")],
-            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Node execution timeout in whole seconds; defaults to 30 and applies when compile_only is false."), minimum: 1, maximum: 300)
+            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Optional Node execution deadline in whole seconds, used when compile_only is false. Omit for no deadline."), minimum: 1)
         ], required: ["source"]))
     }
 

@@ -578,7 +578,7 @@ struct ChatBubbleView: View {
     }
 
     private var embeddedInteractiveItems: [AgentTranscriptItem] {
-        guard let items = agentRun?.transcriptItems else { return [] }
+        guard showsAgentActivitySummary, let items = agentRun?.transcriptItems else { return [] }
         return items.filter { item in
             item.kind == .userVisibleToolResult
                 && (item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil)
@@ -1755,7 +1755,7 @@ struct ChatBubbleView: View {
             
             if !text.isEmpty {
                 ChatMarkdownView(text: text,
-                    savePersonal: { savePersonalExcerpt($0) },
+                    savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
                     saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
                 .contextMenu {
                     // 复制
@@ -2086,10 +2086,10 @@ struct ChatBubbleView: View {
         return LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
     }
 
-    private func savePersonalExcerpt(_ quote: String, markdown: String? = nil) {
+    private func savePersonalExcerpt(_ quote: String, markdown: String? = nil, selection: ChatTextQuote? = nil) {
         guard let excerptSource, !quote.isEmpty else { return }
         do {
-            try ChatSavedExcerpt.save(source: excerptSource, markdown: markdown ?? text, quote: quote, in: modelContext)
+            try ChatSavedExcerpt.save(source: excerptSource, markdown: markdown ?? text, quote: quote, selection: selection, in: modelContext)
             isPersonallySaved = true
         } catch {
             errorMessage = error.localizedDescription
@@ -2296,7 +2296,7 @@ struct ChatBubbleView: View {
                 
                 if isTranslateExpanded {
                     ChatMarkdownView(text: translatedText,
-                        savePersonal: { savePersonalExcerpt($0, markdown: translatedText) },
+                        savePersonal: { savePersonalExcerpt($0.text, markdown: translatedText, selection: $0) },
                         saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
                     .contextMenu {
                         // 复制内容
@@ -2394,7 +2394,7 @@ struct ChatBubbleView: View {
                 .font(.footnote.monospacedDigit())
                 .lineLimit(1)
             
-            if let url = URL(string: resource.link) {
+            if let url = URL(string: resource.link), ChatLinkPresentation.isWebURL(url) {
                 
                 Button(action: {
                     selectedLink = url

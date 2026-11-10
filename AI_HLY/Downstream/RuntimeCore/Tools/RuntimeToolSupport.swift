@@ -18,16 +18,13 @@ enum RuntimeToolSupport {
     }
 
     static func limits(_ arguments: [String: Any]) throws -> RuntimeExecutionLimits {
-        RuntimeExecutionLimits(
-            timeout: .seconds(
-                try NativeToolJSON.strictInt(
-                    arguments,
-                    "timeout_seconds",
-                    default: 30,
-                    range: 1...300
-                )
-            )
-        )
+        guard arguments["timeout_seconds"] != nil else {
+            return RuntimeExecutionLimits()
+        }
+        let seconds = try NativeToolJSON.strictInt(arguments, "timeout_seconds", default: 1, range: 1...Int.max)
+        let limits = RuntimeExecutionLimits(timeout: .seconds(seconds))
+        _ = try limits.timeoutMilliseconds()
+        return limits
     }
 
     static func result(
@@ -42,6 +39,12 @@ enum RuntimeToolSupport {
         if !result.stdout.isEmpty { sections.append(result.stdout) }
         if !result.stderr.isEmpty { sections.append("stderr:\n\(result.stderr)") }
         if let renderedValue { sections.append("value: \(renderedValue)") }
+        if let files = result.outputFiles, !files.isEmpty {
+            sections.append("Full output retained for job \(result.executionID.uuidString). Use get_runtime_job to inspect status or read output pages.")
+            for name in files.keys.sorted() {
+                if let file = files[name] { sections.append("\(name): \(file.bytes) bytes, SHA256 \(file.sha256)") }
+            }
+        }
         let body = sections.joined(separator: "\n")
         let outcome = outcome(for: result)
         var diagnostics = NativeToolExecutionDiagnostics(

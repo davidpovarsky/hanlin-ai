@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { Worker } from 'node:worker_threads';
+import { ExecutionJobs } from '../execution-jobs.mjs';
 import http from 'node:http';
 import { randomUUID } from 'node:crypto';
 import ts from 'typescript';
@@ -157,12 +157,20 @@ test('console errors preserve cyclic causes within the output budget', async () 
   }
 });
 
-function runWorker(workerData) {
-  return new Promise((resolve, reject) => {
-    const worker = new Worker(executionWorkerURL, { workerData });
-    worker.once('message', message => {
-      worker.terminate().then(() => resolve(message), reject);
+async function runWorker(workerData) {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-runtime-job-test-'));
+  try {
+    const jobs = new ExecutionJobs({ root, workerURL: executionWorkerURL });
+    await jobs.initialize();
+    const header = await jobs.start({
+      ...workerData,
+      source: await fs.readFile(workerData.entryPoint, 'utf8'),
+      workspace: workerData.workspace ?? path.dirname(workerData.entryPoint),
     });
-    worker.once('error', reject);
-  });
+    const job = await jobs.wait(header.executionID);
+    assert.ok(job.result, JSON.stringify(job));
+    return { ...job.result, type: job.state === 'completed' ? 'completed' : 'failed' };
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
 }

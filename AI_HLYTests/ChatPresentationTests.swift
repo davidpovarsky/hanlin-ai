@@ -3,6 +3,7 @@ import SwiftData
 import SwiftUI
 import Testing
 import UIKit
+import SwiftStreamingMarkdown
 @testable import AI_Hanlin
 
 @MainActor
@@ -87,7 +88,7 @@ struct ChatPresentationTests {
     }
 
     @Test(arguments: [320.0, 720.0])
-    func mixedMarkdownMathAndStreamingHaveFiniteLayout(width: Double) {
+    func mixedMarkdownMathAndStreamingHaveFiniteLayout(width: Double) async throws {
         let source = """
         # שלום Markdown
         Mixed **bold** and [a link](https://example.com).
@@ -104,11 +105,58 @@ struct ChatPresentationTests {
         print("👋🏽")
         ```
         """
-        for text in [source, source + "\n\nAn incomplete **stream"] {
-            let controller = UIHostingController(rootView: ChatMarkdownView(text: text))
+        let probe = RenderProbe()
+        let controller = UIHostingController(rootView: ChatMarkdownView(text: source, onRendered: { probe.count += 1 }))
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: width, height: 1000))
+        window.rootViewController = controller
+        window.makeKeyAndVisible()
+        defer { window.isHidden = true }
+        for (index, text) in [source, source + "\n\nAn incomplete **stream"].enumerated() {
+            controller.rootView = ChatMarkdownView(text: text, onRendered: { probe.count += 1 })
+            let deadline = ContinuousClock.now.advanced(by: .seconds(10))
+            while probe.count < index + 1 && ContinuousClock.now < deadline {
+                try await Task.sleep(for: .milliseconds(20))
+            }
+            try #require(probe.count >= index + 1, "The actual Markdown parser must finish before layout is asserted")
+            controller.view.setNeedsLayout()
+            controller.view.layoutIfNeeded()
             let size = controller.sizeThatFits(in: CGSize(width: width, height: 10_000))
             #expect(size.height.isFinite && size.height > 0 && size.height < 10_000)
             #expect(size.width <= width + 1)
         }
     }
+
+    @Test func rendererSelectionRetainsExactGraphemeAndNativeRange() throws {
+        let text = "שלום 👨‍👩‍👧‍👦 e\u{301} end"
+        let emoji = (text as NSString).range(of: "👨‍👩‍👧‍👦")
+        let selection = MarkdownTextSelection(attributedText: NSAttributedString(string: text),
+            selectedRange: NSRange(location: emoji.location + 1, length: 1), sourceBlockID: "2-0")
+        #expect(selection.text == "👨‍👩‍👧‍👦")
+        #expect(selection.range == emoji)
+        #expect(selection.sourceBlockID == "2-0")
+        #expect(MarkdownTextSelection(attributedText: NSAttributedString(string: text),
+            selectedRange: NSRange(location: NSNotFound, length: 0)).text.isEmpty)
+    }
+
+    @Test func renderedRangesDisambiguateIdenticalSavedQuotes() throws {
+        let container = try ModelContainer(for: ChatSavedExcerpt.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))
+        let source = ChatExcerptSource(chatRecordID: UUID(), messageID: UUID(), groupID: nil, runID: nil, title: "Source")
+        let first = ChatTextQuote(text: "hello", renderedText: "hello hello", range: NSRange(location: 0, length: 5), sourceBlockID: "0")
+        let second = ChatTextQuote(text: "hello", renderedText: "hello hello", range: NSRange(location: 6, length: 5), sourceBlockID: "0")
+        let a = try ChatSavedExcerpt.save(source: source, markdown: "**hello** hello", quote: first.text, selection: first, in: container.mainContext)
+        let b = try ChatSavedExcerpt.save(source: source, markdown: "**hello** hello", quote: second.text, selection: second, in: container.mainContext)
+        #expect(a.id != b.id)
+        #expect(ChatSourceDestination(excerpt: b)?.selection == second)
+        #expect(a.utf16Location == nil)
+    }
+
+    @Test func internalBrowserAcceptsOnlyRealWebURLs() throws {
+        #expect(ChatLinkPresentation.isWebURL(try #require(URL(string: "https://example.com/path"))))
+        for value in ["file:///tmp/test", "mailto:test@example.com", "chavrusachat://open", "relative/path", "https:relative"] {
+            #expect(!ChatLinkPresentation.isWebURL(try #require(URL(string: value))))
+        }
+    }
+
+    @MainActor private final class RenderProbe { var count = 0 }
 }

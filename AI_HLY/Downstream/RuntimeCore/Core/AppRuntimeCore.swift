@@ -13,12 +13,15 @@ actor AppRuntimeCore {
     nonisolated let pythonPackages: PythonPackageManager
     nonisolated let diagnostics: RuntimeDiagnostics
     nonisolated let lifecycle: LifecycleExecutionBroker
+    nonisolated let jobs: RuntimeJobStore
 
     private let fileLayout: RuntimeFileLayout
 
     private init(fileLayout: RuntimeFileLayout = .default) {
         self.fileLayout = fileLayout
-        let python = PythonRuntimeService(fileLayout: fileLayout)
+        let jobs = RuntimeJobStore(fileLayout: fileLayout)
+        self.jobs = jobs
+        let python = PythonRuntimeService(fileLayout: fileLayout, jobs: jobs)
         let node = NodeRuntimeService(fileLayout: fileLayout)
         let typeScript = TypeScriptRuntimeService(node: node)
         let shell = ShellRuntimeService(fileLayout: fileLayout)

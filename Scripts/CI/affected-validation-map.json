@@ -429,7 +429,9 @@
         "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift",
         "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
         "AI_HLY/Downstream/RuntimeCore/Python/Native/**",
-        "Scripts/Runtime/prepare-python-runtime.sh"
+        "Scripts/Runtime/prepare-python-runtime.sh",
+        "AI_HLY/Downstream/RuntimeCore/Python/Resources/**",
+        "Scripts/Runtime/Tests/test_python_execution.py"
       ],
       "direct_validation_groups": [
         "python_runtime",

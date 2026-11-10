@@ -2,9 +2,42 @@
 #include <Foundation/Foundation.h>
 #include <Python/Python.h>
 #include <mutex>
+#include <atomic>
+#include <memory>
+#include <string>
+#include <unordered_map>
 
 static std::once_flag initializationFlag;
 static NSString *initializationError = nil;
+static std::mutex cancellationMutex;
+static std::unordered_map<std::string, std::shared_ptr<std::atomic<bool>>> cancellationFlags;
+
+void HanlinPythonRegisterExecution(const char *executionID) {
+    if (!executionID) return;
+    std::lock_guard<std::mutex> guard(cancellationMutex);
+    cancellationFlags.emplace(executionID, std::make_shared<std::atomic<bool>>(false));
+}
+
+void HanlinPythonCancelExecution(const char *executionID) {
+    if (!executionID) return;
+    std::lock_guard<std::mutex> guard(cancellationMutex);
+    auto found = cancellationFlags.find(executionID);
+    if (found != cancellationFlags.end()) found->second->store(true);
+}
+
+void HanlinPythonUnregisterExecution(const char *executionID) {
+    if (!executionID) return;
+    std::lock_guard<std::mutex> guard(cancellationMutex);
+    cancellationFlags.erase(executionID);
+}
+
+static PyObject *CancellationRequested(PyObject *capsule, PyObject *) {
+    auto flag = static_cast<std::atomic<bool> *>(PyCapsule_GetPointer(capsule, "hanlin.job.cancellation"));
+    if (!flag) return nullptr;
+    return PyBool_FromLong(flag->load());
+}
+
+static PyMethodDef cancellationMethod = {"_hanlin_is_cancelled", CancellationRequested, METH_NOARGS, nullptr};
 
 static char *CopyUTF8(NSString *value) {
     const char *utf8 = value.UTF8String ?: "";
@@ -73,82 +106,29 @@ char *HanlinPythonExecute(const char *requestJSON) {
     NSDictionary *request = [NSJSONSerialization JSONObjectWithData:requestData options:0 error:nil];
     if (![request isKindOfClass:NSDictionary.class]) return CopyUTF8(@"{\"error\":\"Invalid Python execution request.\"}");
 
-    NSString *source = [request[@"source"] isKindOfClass:NSString.class] ? request[@"source"] : @"";
-    NSString *workspace = [request[@"workspace"] isKindOfClass:NSString.class] ? request[@"workspace"] : @"";
-    NSString *packages = [request[@"packages"] isKindOfClass:NSString.class] ? request[@"packages"] : @"";
-    NSArray *arguments = [request[@"arguments"] isKindOfClass:NSArray.class] ? request[@"arguments"] : @[];
-    NSDictionary *environment = [request[@"environment"] isKindOfClass:NSDictionary.class] ? request[@"environment"] : @{};
-    double timeout = [request[@"timeoutSeconds"] doubleValue];
-
-    NSData *argumentsData = [NSJSONSerialization dataWithJSONObject:arguments options:0 error:nil];
-    NSData *environmentData = [NSJSONSerialization dataWithJSONObject:environment options:0 error:nil];
-    NSString *source64 = [[source dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
-    NSString *workspace64 = [[workspace dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
-    NSString *packages64 = [[packages dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
-    NSString *arguments64 = [argumentsData base64EncodedStringWithOptions:0];
-    NSString *environment64 = [environmentData base64EncodedStringWithOptions:0];
-
-    NSString *bootstrapFormat = [NSString stringWithUTF8String:R"PY(
-import base64, contextlib, io, json, os, sys, time, traceback
-_hanlin_response = {}
-try:
-    _source = base64.b64decode('%@').decode('utf-8')
-    _workspace = base64.b64decode('%@').decode('utf-8')
-    _packages = base64.b64decode('%@').decode('utf-8')
-    _arguments = json.loads(base64.b64decode('%@'))
-    _environment = json.loads(base64.b64decode('%@'))
-    _deadline = time.monotonic() + %.6f
-    _stdout, _stderr = io.StringIO(), io.StringIO()
-    _old_cwd = os.getcwd()
-    _old_argv = list(sys.argv)
-    _modified_env_keys = []
-    def _hanlin_trace(frame, event, arg):
-        if time.monotonic() > _deadline:
-            raise TimeoutError('Python execution timed out.')
-        return _hanlin_trace
-    try:
-        if _workspace and os.path.isdir(_workspace):
-            os.chdir(_workspace)
-        for _k, _v in _environment.items():
-            _k_str = str(_k)
-            _modified_env_keys.append((_k_str, os.environ.get(_k_str)))
-            os.environ[_k_str] = str(_v)
-        sys.argv = ['<hanlin>', *[str(value) for value in _arguments]]
-        if os.path.isdir(_packages):
-            for _entry in sorted(os.listdir(_packages)):
-                _candidate = os.path.join(_packages, _entry)
-                if os.path.isdir(_candidate) and _candidate not in sys.path:
-                    sys.path.insert(0, _candidate)
-        _globals = {'__name__': '__main__', '__file__': '<hanlin>'}
-        sys.settrace(_hanlin_trace)
-        with contextlib.redirect_stdout(_stdout), contextlib.redirect_stderr(_stderr):
-            exec(compile(_source, '<hanlin>', 'exec'), _globals, _globals)
-        _value = _globals.get('__hanlin_result__')
-        try: json.dumps(_value)
-        except (TypeError, ValueError): _value = str(_value)
-        _hanlin_response = {'stdout': _stdout.getvalue(), 'stderr': _stderr.getvalue(), 'value': _value, 'exitCode': 0, 'didTimeOut': False}
-    except BaseException as _error:
-        _hanlin_response = {'stdout': _stdout.getvalue(), 'stderr': _stderr.getvalue() + traceback.format_exc(), 'value': None, 'exitCode': 1, 'didTimeOut': isinstance(_error, TimeoutError)}
-    finally:
-        sys.settrace(None)
-        try:
-            os.chdir(_old_cwd)
-        except Exception:
-            pass
-        sys.argv[:] = _old_argv
-        for _k_str, _orig_val in _modified_env_keys:
-            if _orig_val is None:
-                os.environ.pop(_k_str, None)
-            else:
-                os.environ[_k_str] = _orig_val
-except BaseException as _outer_error:
-    _hanlin_response = {'stdout': '', 'stderr': traceback.format_exc(), 'value': None, 'exitCode': 1, 'didTimeOut': False}
-_hanlin_response_json = json.dumps(_hanlin_response, ensure_ascii=False)
-)PY"];
-    NSString *bootstrap = [NSString stringWithFormat:bootstrapFormat, source64, workspace64, packages64, arguments64, environment64, MAX(1.0, timeout)];
+    NSString *executionID = [request[@"executionID"] isKindOfClass:NSString.class] ? request[@"executionID"] : @"";
+    if (!executionID.length) return CopyUTF8(@"{\"error\":\"Python execution requires a job ID.\"}");
+    std::shared_ptr<std::atomic<bool>> cancellation;
+    {
+        std::lock_guard<std::mutex> guard(cancellationMutex);
+        auto found = cancellationFlags.find(executionID.UTF8String);
+        if (found != cancellationFlags.end()) cancellation = found->second;
+    }
+    if (!cancellation) return CopyUTF8(@"{\"error\":\"Python job cancellation identity is not registered.\"}");
+    NSURL *bootstrapURL = [NSBundle.mainBundle URLForResource:@"HanlinPythonExecution" withExtension:@"py"];
+    NSString *bootstrap = bootstrapURL ? [NSString stringWithContentsOfURL:bootstrapURL encoding:NSUTF8StringEncoding error:nil] : nil;
+    if (!bootstrap.length) return CopyUTF8(@"{\"error\":\"The embedded Python execution resource is missing.\"}");
 
     PyGILState_STATE gil = PyGILState_Ensure();
     PyObject *globals = PyDict_New();
+    PyObject *capsule = PyCapsule_New(cancellation.get(), "hanlin.job.cancellation", nullptr);
+    PyObject *cancellationFunction = capsule ? PyCFunction_NewEx(&cancellationMethod, capsule, nullptr) : nullptr;
+    if (cancellationFunction) PyDict_SetItemString(globals, "_hanlin_is_cancelled", cancellationFunction);
+    Py_XDECREF(cancellationFunction);
+    Py_XDECREF(capsule);
+    PyObject *requestString = PyUnicode_DecodeUTF8(requestJSON, strlen(requestJSON), "strict");
+    if (requestString) PyDict_SetItemString(globals, "__hanlin_request_json", requestString);
+    Py_XDECREF(requestString);
     PyObject *builtins = PyEval_GetBuiltins();
     if (builtins) {
         PyDict_SetItemString(globals, "__builtins__", builtins);
@@ -166,9 +146,7 @@ _hanlin_response_json = json.dumps(_hanlin_response, ensure_ascii=False)
         PyObject *value = PyDict_GetItemString(globals, "_hanlin_response_json");
         if (value && PyUnicode_Check(value)) result = [NSString stringWithUTF8String:PyUnicode_AsUTF8(value)];
     } else {
-        PyObject *ptype = nullptr, *pvalue = nullptr, *ptraceback = nullptr;
-        PyErr_Fetch(&ptype, &pvalue, &ptraceback);
-        PyErr_NormalizeException(&ptype, &pvalue, &ptraceback);
+        PyObject *pvalue = PyErr_GetRaisedException();
         NSString *errDesc = @"Unknown Python error";
         if (pvalue) {
             PyObject *strObj = PyObject_Str(pvalue);
@@ -178,13 +156,10 @@ _hanlin_response_json = json.dumps(_hanlin_response, ensure_ascii=False)
                 Py_DECREF(strObj);
             }
         }
-        NSLog(@"[HanlinPythonExecute] PyRun_StringFlags failed: %@", errDesc);
         NSDictionary *errDict = @{ @"error": [NSString stringWithFormat:@"Embedded Python execution failed: %@", errDesc] };
         NSData *errData = [NSJSONSerialization dataWithJSONObject:errDict options:0 error:nil];
         if (errData) result = [[NSString alloc] initWithData:errData encoding:NSUTF8StringEncoding];
-        Py_XDECREF(ptype);
         Py_XDECREF(pvalue);
-        Py_XDECREF(ptraceback);
     }
     Py_DECREF(globals);
     PyGILState_Release(gil);

@@ -80,17 +80,6 @@ actor NodeRuntimeService {
     static let expectedNodeVersion = "24.5.0"
     static let hostProtocolVersion = 2
 
-    private struct HostExecutionResponse: Decodable {
-        let executionID: UUID
-        let stdout: String
-        let stderr: String
-        let value: RuntimeJSONValue?
-        let exitCode: Int?
-        let durationMilliseconds: Int64
-        let didTimeOut: Bool
-        let wasCancelled: Bool
-        let outputWasTruncated: Bool
-    }
 
     private let fileLayout: RuntimeFileLayout
     private struct LaunchContext: Sendable {
@@ -190,41 +179,47 @@ actor NodeRuntimeService {
                 snapshotValue.state = .ready
             }
         }
-        let milliseconds = request.limits.timeout.components.seconds * 1_000
-            + Int64(request.limits.timeout.components.attoseconds / 1_000_000_000_000_000)
-        let body = try JSONSerialization.data(withJSONObject: [
+        let milliseconds = try request.limits.timeoutMilliseconds()
+        var payload: [String: Any] = [
             "executionID": request.id.uuidString.lowercased(),
-            "source": request.source,
-            "arguments": request.arguments,
-            "workspace": workspace.path,
-            "environment": request.environment,
-            "moduleKind": resolvedModuleKind,
-            "timeoutMilliseconds": milliseconds,
+            "source": request.source, "arguments": request.arguments,
+            "workspace": workspace.path, "environment": request.environment,
+            "moduleKind": resolvedModuleKind, "detached": true,
             "maximumOutputBytes": request.limits.maximumOutputBytes
-        ])
-        let payload = try await withTaskCancellationHandler {
-            try await host.decode(
-                HostExecutionResponse.self,
-                path: "/v1/executions",
-                method: "POST",
-                body: body,
-                timeout: TimeInterval(max(5, milliseconds / 1_000 + 5))
-            )
+        ]
+        if let milliseconds { payload["timeoutMilliseconds"] = milliseconds }
+        let body = try JSONSerialization.data(withJSONObject: payload)
+        return try await withTaskCancellationHandler {
+            var job: RuntimeJobSnapshot
+            do {
+                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions", method: "POST", body: body)
+            } catch let error as URLError where [.timedOut, .networkConnectionLost].contains(error.code) {
+                // Recover observation of the same ID; never repeat the source after an ambiguous POST.
+                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions/\(request.id.uuidString.lowercased())")
+            }
+            var delayMilliseconds = 25
+            var lastProgress = ""
+            while true {
+                try Task.checkCancellation()
+                let progress = "\(job.state.rawValue):\(job.stdoutBytes):\(job.stderrBytes)"
+                if progress != lastProgress, let observer = RuntimeJobProgress.reporter {
+                    await observer(job)
+                    lastProgress = progress
+                }
+                if let result = job.result { return result }
+                if job.state.isTerminal {
+                    throw RuntimeCoreError.runtimeFailure("Job \(job.executionID): \(job.error ?? job.state.rawValue). Partial output remains available through get_runtime_job.")
+                }
+                try await Task.sleep(for: .milliseconds(delayMilliseconds))
+                delayMilliseconds = min(delayMilliseconds * 2, 1000)
+                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions/\(request.id.uuidString.lowercased())")
+            }
         } onCancel: {
             Task { await self.cancelExecution(id: request.id) }
         }
-        return RuntimeExecutionResult(
-            executionID: payload.executionID,
-            stdout: payload.stdout,
-            stderr: payload.stderr,
-            value: payload.value,
-            exitCode: payload.exitCode,
-            durationMilliseconds: payload.durationMilliseconds,
-            didTimeOut: payload.didTimeOut,
-            wasCancelled: payload.wasCancelled,
-            outputWasTruncated: payload.outputWasTruncated
-        )
     }
+
+    func hasLaunched() -> Bool { launchAttempted }
 
     func networkDiagnostics(rounds: Int = 2) async throws -> RuntimeExecutionResult {
         let moduleURL = try prepareHostRuntime().appending(path: "network-diagnostics.mjs")
