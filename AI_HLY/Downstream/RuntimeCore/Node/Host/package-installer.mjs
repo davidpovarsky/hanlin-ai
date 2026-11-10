@@ -157,6 +157,7 @@ export async function installPackage({
 
     emit('install', { operationID, phase: 'checkingCompatibility', fraction: 0.75 });
     const compatibility = await analyzePackage(packageRoot, extractedManifest, {
+      signal,
       entryPoint: absoluteEntry,
       moduleKind,
       onProgress(stage) {

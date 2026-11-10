@@ -39,8 +39,8 @@ export function inspectManifest(manifest, nodeVersion = '24.5.0') {
 
 export async function inspectArchiveSafety(packageRoot, options = {}) {
   const requestedRoot = path.resolve(packageRoot);
-  const maximumFiles = options.maximumFiles ?? 25_000;
-  const maximumFileBytes = options.maximumFileBytes ?? 256 * 1024 * 1024;
+  const maximumFiles = explicitArchiveBudget(options.maximumFiles);
+  const maximumFileBytes = explicitArchiveBudget(options.maximumFileBytes);
   const directoryConcurrency = boundedConcurrency(options.directoryConcurrency, 32);
   const findings = [];
   const inventory = { nativeAddons: [], nativeBuildManifests: [], typeScriptSources: 0 };
@@ -59,6 +59,7 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
   let directoryIndex = 0;
 
   while (directoryIndex < directories.length) {
+    options.signal?.throwIfAborted();
     const batch = directories.slice(directoryIndex, directoryIndex + directoryConcurrency);
     directoryIndex += batch.length;
     const listings = await Promise.all(batch.map(async directory => ({
@@ -75,18 +76,22 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
         return { findings, treeFileCount: maximumFiles + 1, inventory };
       }
 
-      const inspectedEntries = await Promise.all(entries.map(entry => inspectArchiveEntry({
-        directory,
-        entry,
-        root,
-        maximumFileBytes,
-      })));
-      for (const inspected of inspectedEntries) {
-        findings.push(...inspected.findings);
-        if (inspected.directory) directories.push(inspected.directory);
-        if (inspected.nativeAddon) inventory.nativeAddons.push(inspected.nativeAddon);
-        if (inspected.nativeBuildManifest) inventory.nativeBuildManifests.push(inspected.nativeBuildManifest);
-        inventory.typeScriptSources += inspected.typeScriptSourceCount;
+      // Limit in-flight filesystem operations, not the number of package files.
+      for (let entryIndex = 0; entryIndex < entries.length; entryIndex += 64) {
+        options.signal?.throwIfAborted();
+        const inspectedEntries = await Promise.all(entries.slice(entryIndex, entryIndex + 64).map(entry => inspectArchiveEntry({
+          directory,
+          entry,
+          root,
+          maximumFileBytes,
+        })));
+        for (const inspected of inspectedEntries) {
+          findings.push(...inspected.findings);
+          if (inspected.directory) directories.push(inspected.directory);
+          if (inspected.nativeAddon) inventory.nativeAddons.push(inspected.nativeAddon);
+          if (inspected.nativeBuildManifest) inventory.nativeBuildManifests.push(inspected.nativeBuildManifest);
+          inventory.typeScriptSources += inspected.typeScriptSourceCount;
+        }
       }
     }
   }
@@ -100,6 +105,12 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
     ));
   }
   return { findings, treeFileCount: fileCount, inventory };
+}
+
+function explicitArchiveBudget(value) {
+  if (value == null) return Infinity;
+  if (!Number.isSafeInteger(value) || value < 0) throw new RangeError('An explicit archive budget must be a nonnegative safe integer.');
+  return value;
 }
 
 async function inspectArchiveEntry({ directory, entry, root, maximumFileBytes }) {
