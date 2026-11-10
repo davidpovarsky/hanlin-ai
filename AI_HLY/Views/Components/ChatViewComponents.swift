@@ -2121,7 +2121,7 @@ struct ChatBubbleView: View {
                 .accessibilityIdentifier("hanlin-agent-activity-toggle")
 
                 // Failures remain discoverable when the details are collapsed.
-                if timeline?.status == .failed {
+                if timeline?.status == .failed || timeline?.activities.contains(where: { $0.status == .failed }) == true {
                     Label("Some activity failed", systemImage: "exclamationmark.circle")
                         .font(.caption).foregroundStyle(.red)
                 } else if timeline?.status == .cancelled {
@@ -2161,6 +2161,7 @@ struct ChatBubbleView: View {
                                     Text(activity.status.rawValue.capitalized).font(.caption2).foregroundStyle(.secondary)
                                 }
                             }
+                            .accessibilityElement(children: .contain)
                             .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
                         }
                     } else {

@@ -52,6 +52,7 @@ actor ShellRuntimeService {
     private let jobs: RuntimeJobStore
     private var active: [UUID: Pending] = [:]
     private var stopRequested = false
+    private var stopGeneration: UInt64 = 0
     let fileLayout: RuntimeFileLayout
     let commandDictionaryURL: URL?
     var snapshotValue = RuntimeSnapshot.stopped(.shell)
@@ -150,6 +151,7 @@ actor ShellRuntimeService {
     }
 
     func stop() async -> RuntimeSnapshot {
+        stopGeneration &+= 1
         stopRequested = true
         for id in Array(active.keys) { try? await cancel(id: id) }
         if active.isEmpty { snapshotValue = .stopped(.shell) }
@@ -260,7 +262,12 @@ actor ShellRuntimeService {
             throw RuntimeCoreError.invalidRequest("Linked ios_system commands do not yet support a safe per-command deadline. No timeout is silently ignored.")
         }
         let id = UUID()
+        let generation = stopGeneration
         let initial = try await jobs.create(id: id, kind: .shell)
+        guard generation == stopGeneration else {
+            try await jobs.fail(id: id, kind: .shell, error: CancellationError())
+            throw CancellationError()
+        }
         let directory = jobs.directory(id: id, kind: .shell)
         let pending = Pending()
         active[id] = pending

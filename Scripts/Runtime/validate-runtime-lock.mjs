@@ -12,6 +12,12 @@ const sha40 = /^[a-f0-9]{40}$/;
 
 assert(lock.schemaVersion === 1, 'schemaVersion must be 1');
 assert(lock.runtimeBundle?.formatVersion === 1, 'runtimeBundle.formatVersion must be 1');
+if (lock.runtimeBundle.artifactDependencyHash !== undefined) {
+  assert(sha256.test(lock.runtimeBundle.artifactDependencyHash), 'runtimeBundle.artifactDependencyHash must be SHA-256');
+  assert(sha256.test(lock.runtimeBundle.nativeInputSHA256 ?? ''), 'runtimeBundle.nativeInputSHA256 is required for artifact reuse');
+  assert(sha40.test(lock.runtimeBundle.sourceCommit ?? ''), 'runtimeBundle.sourceCommit is required for artifact reuse');
+}
+
 assertRepository(lock.node?.sourceRepository, 'node.sourceRepository');
 assert(sha40.test(lock.node?.commit ?? ''), 'node.commit must be a lowercase 40-character SHA');
 assert(/^24\.\d+\.\d+$/.test(lock.node?.version ?? ''), 'node.version must be Node 24');

@@ -371,7 +371,7 @@ struct ClassicChatAgentProjection {
                 if let tName = item.toolName, !tName.isEmpty {
                     toolNameByCallID[callID] = tName
                 }
-                statusByCallID[callID] = item.status
+                if item.kind == .toolActivity { statusByCallID[callID] = item.status }
                 if let payload = item.embeddedResultPayload {
                     payloadByCallID[callID] = payload
                 }
@@ -379,10 +379,8 @@ struct ClassicChatAgentProjection {
         }
 
         for step in toolSteps {
-            guard step.status == .completed || step.status == .failed || step.status == .running else { continue }
-            let rawCallID = (step.externalID ?? step.id.uuidString)
-                .replacingOccurrences(of: ":execution", with: "")
-                .replacingOccurrences(of: ":call", with: "")
+            guard step.status == .completed || step.status == .failed || step.status == .running || step.status == .cancelled else { continue }
+            let rawCallID = step.toolCallID ?? step.externalID ?? step.id.uuidString
             let stepTitle = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
             let canonicalToolName = toolNameByCallID[rawCallID]
                 ?? (stepTitle.isEmpty ? "tool" : stepTitle)
@@ -400,10 +398,10 @@ struct ClassicChatAgentProjection {
             let sanitizedOutput = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(rawOutput, isMetaSkillOrDiscoveryTool: isMeta)
             let summary = step.userFacingSummary?.trimmingCharacters(in: .whitespacesAndNewlines)
 
-            guard !sanitizedOutput.isEmpty || (summary?.isEmpty == false) || step.status == .running else { continue }
+            guard !sanitizedOutput.isEmpty || (summary?.isEmpty == false) || step.status == .running || step.status == .cancelled else { continue }
 
             let effectiveOutput = sanitizedOutput.isEmpty ? (summary ?? "") : sanitizedOutput
-            let stepStatus = statusByCallID[rawCallID] ?? step.status
+            let stepStatus: AgentActivityStatus = step.status == .failed ? .failed : statusByCallID[rawCallID] ?? step.status
             let callKey = "\(runID.uuidString):call:\(rawCallID)"
 
             // Identity and deduplication is strictly by callID, NEVER by toolName::output

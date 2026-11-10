@@ -24,6 +24,38 @@ struct ChatPresentationTests {
         #expect(timeline.activities.first(where: { $0.id == "second" })?.errorDescription == "second failed")
     }
 
+    @Test func actualCodeToolLifecycleKeepsOneRowPerCallAndRetainsItsFailureAfterRunCompletion() throws {
+        var accumulator = AgentEventAccumulator(run: AgentRun(groupID: UUID()))
+        let profile = ExecuteLocalPythonTool().catalogEntry.presentationProfile
+        for (id, failed) in [("provider:execution", true), ("recovery", false)] {
+            let call = AgentToolCall.parse(id: id, name: "execute_local_python_code",
+                argumentsJSON: #"{"source":"print('same')"}"#, presentationProfile: profile)
+            accumulator.apply(.toolCallStarted(call))
+            accumulator.apply(.toolCallCompleted(call))
+            accumulator.apply(.toolExecutionStarted(AgentToolExecution(id: id + ":execution", callID: id,
+                name: call.name, startedAt: .now)))
+            accumulator.apply(.toolExecutionCompleted(id: id + ":execution", result: AgentToolResult(
+                modelText: failed ? "Invalid arguments: unexpected" : "ui-tool-ok", userText: failed ? "Invalid arguments: unexpected" : "ui-tool-ok",
+                richResultBlocks: [], hasLegacyPresentationPayload: false, isError: failed,
+                semanticOutcome: failed ? .invalidArguments : .succeeded, duration: 0.01)))
+        }
+        accumulator.apply(.answerSegmentStarted(AgentItemMetadata(id: "answer", title: "Answer", startedAt: .now)))
+        accumulator.apply(.answerSegmentDelta(id: "answer", text: "The first tool failed; recovery succeeded."))
+        accumulator.apply(.answerSegmentEnded(id: "answer", disposition: .final))
+        accumulator.apply(.runCompleted)
+        let run = accumulator.run
+        let calls = AgentActivityComposer.compose(run).activities.filter { $0.id == "provider:execution" || $0.id == "recovery" }
+        #expect(calls.count == 2)
+        #expect(calls.first(where: { $0.id == "provider:execution" })?.status == .failed)
+        #expect(calls.first(where: { $0.id == "provider:execution" })?.errorDescription?.contains("unexpected") == true)
+        #expect(calls.first(where: { $0.id == "recovery" })?.status == .completed)
+        let entries = ClassicChatAgentProjection.projectToolEntries(from: run)
+        #expect(entries.count == 2)
+        let failure = try #require(entries.first(where: { $0.callID == "provider:execution" }))
+        #expect(failure.status == .failed && failure.output.contains("unexpected"))
+        #expect(entries.first(where: { $0.callID == "recovery" })?.output == "ui-tool-ok")
+    }
+
     @Test func personalSaveUsesSelectedQuoteWithoutAddingKnowledge() throws {
         let container = try ModelContainer(for: ChatSavedExcerpt.self, KnowledgeRecords.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))

@@ -221,6 +221,27 @@ actor NodeRuntimeService {
 
     func hasLaunched() -> Bool { launchAttempted }
 
+    /// Uses the same Node job/stdio/journal path. External commands require the
+    /// command broker; built-in portable-shell operations execute in the Worker.
+    func executePortableShell(_ request: RuntimeExecutionRequest) async throws -> RuntimeExecutionResult {
+        let moduleURL = try prepareHostRuntime().appending(path: "portable-shell.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let script = String(decoding: try JSONEncoder().encode(request.source), as: UTF8.self)
+        let args = String(decoding: try JSONEncoder().encode(request.arguments), as: UTF8.self)
+        let source = """
+        import { executePortableShell } from \(module);
+        const exitCode = await executePortableShell(\(script), \(args), {
+            cwd: process.cwd(), environment: process.env,
+            stdin: process.stdin, stdout: process.stdout, stderr: process.stderr
+        });
+        process.exitCode = exitCode;
+        export default { exitCode };
+        """
+        return try await executeJavaScript(RuntimeExecutionRequest(id: request.id, source: source,
+            arguments: request.arguments, workspace: request.workspace, environment: request.environment,
+            limits: request.limits), moduleKind: "esm")
+    }
+
     func networkDiagnostics(rounds: Int = 2) async throws -> RuntimeExecutionResult {
         let moduleURL = try prepareHostRuntime().appending(path: "network-diagnostics.mjs")
         let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)

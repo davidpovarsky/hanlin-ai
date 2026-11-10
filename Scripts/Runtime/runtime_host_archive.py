@@ -49,6 +49,17 @@ def validate_archive(archive: Path, source: Path, *, check_sources: bool = False
                 metadata = json.loads(read(key + "/package.json"))
                 if metadata.get("version") != version:
                     errors.append("Host archive dependency version mismatch: " + name)
+            patch_manifest = source / "host-dependency-patches.json"
+            if patch_manifest.is_file():
+                patches = json.loads(patch_manifest.read_text(encoding="utf-8"))
+                if json.loads(read("host-dependency-patches.json")) != patches:
+                    errors.append("Host dependency patch manifest differs from current source")
+                for patch in patches["files"]:
+                    name = canonical_name(patch["path"])
+                    if not name.startswith("node_modules/"):
+                        raise ValueError("Invalid Host dependency patch path")
+                    if hashlib.sha256(read(name)).hexdigest() != patch["patchedSHA256"]:
+                        errors.append("Host dependency patch digest mismatch: " + name)
             if check_sources:
                 expected = {path.name: path.read_bytes() for path in source.glob("*.mjs")}
                 actual = {name for name in entries if "/" not in name and name.endswith(".mjs")}

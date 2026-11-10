@@ -50,7 +50,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(failedCall.waitForExistence(timeout: 10), "The failed call must remain individually inspectable")
         tapElement(failedCall)
         let expandedToolText = app.descendants(matching: .any)["hanlin-tool-content-expanded-text"].firstMatch
-        XCTAssertTrue(expandedToolText.waitForExistence(timeout: 10), "Expanded tool content text did not appear.")
+        XCTAssertTrue(expandedToolText.waitForExistence(timeout: 10), "Expanded tool content text did not appear: \(app.debugDescription)")
 
         let failedActivity = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier == 'hanlin-tool-content-expanded-text' OR label CONTAINS[c] 'invalid' OR label CONTAINS[c] 'unexpected' OR label CONTAINS[c] '⚠️'")
@@ -300,7 +300,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let link = app.links.matching(NSPredicate(format: "label == 'Example'")).firstMatch
         XCTAssertTrue(link.waitForExistence(timeout: 45), "The actual Markdown link did not render")
         tapElement(link)
-        let done = app.buttons["Done"].firstMatch
+        let done = app.buttons["Close"].firstMatch
         XCTAssertTrue(done.waitForExistence(timeout: 15), "The original in-app Safari controller did not open: \(app.debugDescription)")
         XCTAssertTrue(app.webViews.firstMatch.waitForExistence(timeout: 15), "The internal browser has no web content")
         attachScreenshot("Chat_InternalSafariBrowser", in: app)

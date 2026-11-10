@@ -40,6 +40,23 @@ class RuntimeHostArchiveTests(unittest.TestCase):
     def fail_builder(self):
         self.fail("An unchanged dependency closure must not reinstall/retest packages")
 
+    def test_real_archive_requires_the_actual_audited_dependency_patch_bytes(self):
+        payload = b"actual patched dependency"
+        name = "node_modules/node-fetch/patched.js"
+        patches = {"files": [{"path": name, "patchedSHA256": hashlib.sha256(payload).hexdigest()}]}
+        (self.source / "host-dependency-patches.json").write_text(json.dumps(patches), encoding="utf-8")
+        self.write_archive(self.archive)
+        with zipfile.ZipFile(self.archive, "a") as packed:
+            packed.writestr("host-dependency-patches.json", json.dumps(patches))
+            packed.writestr(name, payload)
+        self.assertEqual(archive_module.validate_archive(self.archive, self.source), [])
+        tampered = self.root / "tampered.zip"
+        with zipfile.ZipFile(self.archive) as old, zipfile.ZipFile(tampered, "w") as updated:
+            for entry in old.infolist():
+                updated.writestr(entry, b"unpatched or tampered" if entry.filename == name else old.read(entry))
+        errors = archive_module.validate_archive(tampered, self.source)
+        self.assertTrue(any("patch digest mismatch" in value for value in errors))
+
     def test_matching_archive_is_reused_without_rebuilding(self):
         self.write_archive(self.archive)
         before = self.archive.read_bytes()

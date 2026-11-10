@@ -412,6 +412,8 @@
         "Scripts/Runtime/preflight-runtime-core.sh",
         "Scripts/Runtime/run-with-heartbeat.py",
         "Scripts/Runtime/runtime_bundle_source.py",
+        "Scripts/Runtime/runtime_native_identity.py",
+        "Scripts/Runtime/Tests/test_runtime_native_identity.py",
         "Scripts/Runtime/Tests/test_runtime_bundle_source.py"
       ],
       "direct_validation_groups": [

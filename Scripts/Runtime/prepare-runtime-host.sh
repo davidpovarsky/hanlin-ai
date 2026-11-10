@@ -21,12 +21,14 @@ cp \
   "${HOST_SOURCE}/package.json" \
   "${HOST_SOURCE}/package-lock.json" \
   "${HOST_SOURCE}/runtime-dependency-overrides.json" \
+  "${HOST_SOURCE}/host-dependency-patches.json" \
   "${WORK_ROOT}/"
 cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
 
 (
   cd "${WORK_ROOT}"
   npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund
+  node apply-host-dependency-patches.mjs
   npm test
   rm -rf Tests
   find . -type f -print | LC_ALL=C sort | zip -X -q "${OUTPUT_ROOT}/RuntimeHostResources.zip" -@

@@ -2184,6 +2184,11 @@ jobs:
                 --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
               fi
+              if ! python3 Scripts/CI/verify_selected_tests.py \
+                --results "$LOG_DIR/08-downstream-unit-test-results.json" \
+                --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}"; then
+                downstream_test_status=65
+              fi
             else
               printf '%s\n' "Downstream unit tests skipped by affected-validation router." > "$LOG_DIR/08-downstream-unit-tests-skipped.txt"
             fi
@@ -2287,6 +2292,11 @@ jobs:
               xcrun xcresulttool get test-results tests \
                 --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
+              if ! python3 Scripts/CI/verify_selected_tests.py \
+                --results "$LOG_DIR/08-nativescript-production-ui-test-results.json" \
+                --selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"; then
+                nativescript_e2e_status=65
+              fi
               if [ "$nativescript_e2e_status" -eq 0 ]; then
                 if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ]; then
                   grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"

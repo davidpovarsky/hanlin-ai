@@ -105,6 +105,20 @@ struct RuntimeAutonomyV3Tests {
         #expect(!FileManager.default.fileExists(atPath: forbidden.path))
     }
 
+    @Test func actualEmbeddedNodeExecutesThePinnedPortableShellWithoutJITOrAnOSSubprocess() async throws {
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "portable-shell-\(UUID().uuidString)")
+        let result = try await AppRuntimeCore.shared.node.executePortableShell(RuntimeExecutionRequest(source: """
+        NAME='שלום'; echo "$NAME" > native-yarn.txt
+        echo native-yarn-error 1>&2
+        false || echo ACTUAL_PORTABLE_SHELL_COMPLETE
+        """, workspace: workspace))
+        #expect(result.exitCode == 0)
+        #expect(result.stdout.contains("ACTUAL_PORTABLE_SHELL_COMPLETE"))
+        #expect(result.stderr.contains("native-yarn-error"))
+        #expect(try String(contentsOf: workspace.appending(path: "native-yarn.txt"), encoding: .utf8) == "שלום\n")
+        #expect(result.outputFiles?["stdout"] != nil)
+    }
+
     @Test func linkedShellRetainsFullOutputBeyondThePreviewAndReopensLosslessPages() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "shell-full-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: root) }

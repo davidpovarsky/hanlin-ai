@@ -31,14 +31,11 @@ enum AgentActivityComposer {
   private static func matchingGroupIndex(
     for step: AgentActivityStep, in groups: [[AgentActivityStep]]
   ) -> Int? {
-    guard step.kind == .toolCall || step.kind == .toolExecution || step.kind == .webSearch else {
-      return nil
-    }
-    let key = lifecycleKey(step)
-    if let exact = groups.lastIndex(where: { group in group.contains { lifecycleKey($0) == key } })
-    {
+    if let callID = step.toolCallID,
+      let exact = groups.lastIndex(where: { group in group.contains { $0.toolCallID == callID } }) {
       return exact
     }
+    guard step.kind == .toolCall || step.kind == .toolExecution || step.kind == .webSearch else { return nil }
 
     // Distinct provider call IDs are distinct operations, even with identical inputs/time.
     // The heuristic below exists solely for historical records without an external ID.
@@ -57,11 +54,7 @@ enum AgentActivityComposer {
   }
 
   private static func lifecycleKey(_ step: AgentActivityStep) -> String {
-    guard var id = step.externalID else { return step.id.uuidString }
-    if id.hasPrefix("call:") { id.removeFirst("call:".count) }
-    if id.hasPrefix("execution:") { id.removeFirst("execution:".count) }
-    if id.hasSuffix(":execution") { id.removeLast(":execution".count) }
-    return id
+    step.toolCallID ?? step.externalID ?? step.id.uuidString
   }
 
   private static func normalizedInput(_ step: AgentActivityStep) -> String? {
@@ -177,7 +170,7 @@ enum AgentActivityComposer {
 
   private static func combinedStatus(_ steps: [AgentActivityStep]) -> AgentActivityStatus {
     if steps.contains(where: { $0.status == .failed }) { return .failed }
-    if let execution = steps.last(where: { $0.kind == .toolExecution }),
+    if let execution = steps.last(where: { $0.isExecutionLifecycleStep }),
       [.completed, .cancelled].contains(execution.status) { return execution.status }
     if steps.contains(where: { $0.status == .running }) { return .running }
     if steps.contains(where: { $0.status == .pending }) { return .pending }
