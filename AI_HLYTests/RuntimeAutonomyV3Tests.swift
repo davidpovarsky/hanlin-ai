@@ -6,6 +6,56 @@ import Testing
 @MainActor
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
+    @Test(.timeLimit(.minutes(1)))
+    func cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "python-queue-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let jobs = RuntimeJobStore(fileLayout: layout)
+        let python = PythonRuntimeService(fileLayout: layout, jobs: jobs)
+        let workspace = try layout.workspace(client: .tools, identifier: "queue-proof")
+        let started = workspace.appending(path: "first-started")
+        let release = workspace.appending(path: "release")
+        let forbidden = workspace.appending(path: "must-not-run")
+        // This fixture watchdog only prevents a broken test from leaving native
+        // execution blocked. Production requests still have no default deadline.
+        let firstRequest = RuntimeExecutionRequest(source: """
+        import pathlib, time
+        pathlib.Path('first-started').touch()
+        end = time.monotonic() + 20
+        while not pathlib.Path('release').exists() and time.monotonic() < end:
+            time.sleep(0.01)
+        """, workspace: workspace)
+        let first = Task { try await python.execute(firstRequest) }
+        defer { try? Data().write(to: release); first.cancel() }
+        let firstDeadline = ContinuousClock.now + .seconds(5)
+        while !FileManager.default.fileExists(atPath: started.path), ContinuousClock.now < firstDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(FileManager.default.fileExists(atPath: started.path))
+        let secondRequest = RuntimeExecutionRequest(source: "from pathlib import Path; Path('must-not-run').touch()", workspace: workspace)
+        let second = Task { try await python.execute(secondRequest) }
+        let queuedDeadline = ContinuousClock.now + .seconds(5)
+        while try await jobs.snapshot(id: secondRequest.id, kind: .localPython) == nil, ContinuousClock.now < queuedDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        second.cancel()
+        do { _ = try await second.value; Issue.record("Queued Python returned success after cancellation") }
+        catch is CancellationError { }
+        let cancelled = try await jobs.snapshot(id: secondRequest.id, kind: .localPython)
+        #expect(cancelled?.state == .cancelled && cancelled?.cancellationRequested == true)
+        #expect(try await jobs.snapshot(id: firstRequest.id, kind: .localPython)?.state == .running)
+        #expect(!FileManager.default.fileExists(atPath: forbidden.path))
+        let empty = try await jobs.output(id: secondRequest.id, kind: .localPython, channel: "stdout", offset: 0, limit: 1024)
+        #expect(empty["totalBytes"] == "0" && empty["base64"] == "")
+        try Data().write(to: release)
+        #expect(try await first.value.exitCode == 0)
+        // The queue has advanced; a fresh job proves the cancelled work item was skipped.
+        let third = try await python.execute(RuntimeExecutionRequest(source: "print('queue-drained')", workspace: workspace))
+        #expect(third.exitCode == 0 && third.stdout.contains("queue-drained"))
+        #expect(!FileManager.default.fileExists(atPath: forbidden.path))
+    }
+
     @Test func linkedShellActuallyAcceptsMoreThan127Arguments() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "shell-argv-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: root) }
@@ -32,6 +82,16 @@ struct RuntimeAutonomyV3Tests {
         let probe = try await manager.probe(record)
         #expect(probe.exitCode == 0)
         #expect(probe.stdout.contains("1.17.0"))
+        let tlsWorkspace = try layout.workspace(client: .tools, identifier: "tls-policy")
+        let tls = try await python.execute(RuntimeExecutionRequest(source: """
+        import ssl
+        context = ssl.create_default_context()
+        assert context.verify_mode == ssl.CERT_REQUIRED
+        assert context.check_hostname
+        assert context.cert_store_stats()['x509_ca'] > 0
+        print('TLS_VERIFICATION_REQUIRED')
+        """, workspace: tlsWorkspace))
+        #expect(tls.exitCode == 0 && tls.stdout.contains("TLS_VERIFICATION_REQUIRED"))
         #expect(!probe.didTimeOut && !probe.wasCancelled)
         print("EMBEDDED_PYPI_INSTALL six=\(record.version) sha256=\(record.sha256) job=\(probe.executionID)")
     }

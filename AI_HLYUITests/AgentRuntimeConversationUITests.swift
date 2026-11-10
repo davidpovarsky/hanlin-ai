@@ -278,11 +278,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("Chat_OriginalOpaquePreview", in: app)
         tapElement(wholeCopy)
 
+        ensureChatListVisible(in: app)
         let saved = app.buttons["hanlin-saved-messages-open"].firstMatch
-        if !saved.isHittable {
-            let sidebar = app.navigationBars.buttons.matching(NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar'")).firstMatch
-            if sidebar.waitForExistence(timeout: 3) { tapElement(sidebar) }
-        }
         XCTAssertTrue(saved.waitForExistence(timeout: 10), "Saved messages entry missing: \(app.debugDescription)")
         tapElement(saved)
         let excerpt = app.staticTexts["hanlin-saved-excerpt-text"].firstMatch
@@ -294,6 +291,22 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(openSource)
         XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "The saved excerpt did not return through the original conversation")
         attachScreenshot("Chat_SelectedExcerptSource", in: app)
+    }
+
+    func testMarkdownLinkOpensAndClosesTheInternalSafariBrowser() throws {
+        let app = launchAcceptanceApp()
+        openChat(in: app)
+        sendPrompt("PROMPT_CHAT_PRESENTATION", in: app)
+        let link = app.links.matching(NSPredicate(format: "label == 'Example'")).firstMatch
+        XCTAssertTrue(link.waitForExistence(timeout: 45), "The actual Markdown link did not render")
+        tapElement(link)
+        let done = app.buttons["Done"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 15), "The original in-app Safari controller did not open: \(app.debugDescription)")
+        XCTAssertTrue(app.webViews.firstMatch.waitForExistence(timeout: 15), "The internal browser has no web content")
+        attachScreenshot("Chat_InternalSafariBrowser", in: app)
+        tapElement(done)
+        let paragraph = app.textViews.matching(NSPredicate(format: "label == 'alpha beta gamma'")).firstMatch
+        XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "Dismissing the browser did not restore the original chat")
     }
 
     func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
@@ -308,7 +321,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI04 reasoning final answer did not render")
 
         let activityToggle = app.descendants(matching: .any)["hanlin-agent-activity-toggle"].firstMatch
-        XCTAssertTrue(activityToggle.waitForExistence(timeout: 10), "Original chat must render one unified activity disclosure")
+        XCTAssertTrue(activityToggle.waitForExistence(timeout: 10), "Original chat must render one unified activity disclosure: \(app.debugDescription)")
         XCTAssertEqual(app.descendants(matching: .any).matching(identifier: "hanlin-agent-activity-toggle").count, 1)
         XCTAssertFalse(activityToggle.label.contains("<think>"))
         tapElement(activityToggle)

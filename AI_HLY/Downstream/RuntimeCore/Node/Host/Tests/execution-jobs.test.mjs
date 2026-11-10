@@ -94,3 +94,23 @@ test('a later nonzero exit cannot be hidden by an earlier successful module expo
   assert.equal(result.state, 'failed');
   assert.equal(result.result.exitCode, 23);
 });
+
+
+test('user worker messages cannot hide the final module result', async t => {
+  const { jobs, body } = await fixture(t);
+  const header = await jobs.start({ ...body, source: `import { parentPort } from 'node:worker_threads'; parentPort.postMessage({ user: 'progress' }); export default 73;` });
+  const result = await jobs.wait(header.executionID);
+  assert.equal(result.state, 'completed');
+  assert.equal(result.result.value, 73);
+});
+
+test('a restored job with no opened streams has an empty lossless output page', async t => {
+  const { jobs, root } = await fixture(t);
+  const id = '10d4d9c5-5cb9-4afb-abc2-2f088de780ac';
+  const directory = path.join(root, 'jobs', id);
+  await fs.mkdir(directory);
+  await fs.writeFile(path.join(directory, 'job.json'), JSON.stringify({ executionID: id, state: 'queued', startedAt: Date.now(), cancellationRequested: true }));
+  await jobs.initialize();
+  assert.equal(jobs.snapshot(id).state, 'interrupted');
+  assert.deepEqual(await jobs.readOutput(id, 'stdout'), { executionID: id, channel: 'stdout', offset: 0, nextOffset: 0, totalBytes: 0, hasMore: false, base64: '' });
+});

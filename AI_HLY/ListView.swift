@@ -307,7 +307,7 @@ struct ListView: View {
             Button { showsSavedMessages = true } label: {
                 Label("Saved messages", systemImage: "bookmark")
             }
-            .accessibilityIdentifier("hanlin-saved-messages-open").accessibilityIdentifier("hanlin-saved-messages")
+            .accessibilityIdentifier("hanlin-saved-messages-open")
         }
         ToolbarItem(placement: .navigationBarTrailing) {
             Button {

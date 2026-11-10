@@ -427,6 +427,7 @@
       "description": "Python iOS runtime slice scripts and downstream Python environment",
       "patterns": [
         "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonQueuedExecution.swift",
         "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
         "AI_HLY/Downstream/RuntimeCore/Python/Native/**",
         "Scripts/Runtime/prepare-python-runtime.sh",

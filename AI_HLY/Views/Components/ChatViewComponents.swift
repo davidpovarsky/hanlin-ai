@@ -603,7 +603,7 @@ struct ChatBubbleView: View {
     // MARK: 文本 & 各类工具输出
     @ViewBuilder
     private func assistantTextSection() -> some View {
-        if !text.isEmpty || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty || hasAssistantRichCards {
+        if !text.isEmpty || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty || hasAssistantRichCards || hasAgentActivity {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
@@ -682,7 +682,7 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func assistantFooter() -> some View {
         if (!operationalState.isEmpty && isLastAssistant)
-            || (text.isEmpty && sanitizedReasoningDisplay.isEmpty && resolvedToolContentForDisplay.isEmpty && images == nil && !hasAssistantRichCards) {
+            || (text.isEmpty && sanitizedReasoningDisplay.isEmpty && resolvedToolContentForDisplay.isEmpty && images == nil && !hasAssistantRichCards && !hasAgentActivity) {
             loadingSection()
         }
         else if isResponding && isLastAssistant {
@@ -2100,15 +2100,18 @@ struct ChatBubbleView: View {
         }
     }
 
+    private var hasAgentActivity: Bool {
+        showsAgentActivitySummary && (agentRun.map(AgentActivityComposer.compose)?.activities.isEmpty == false
+            || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty)
+    }
+
     /// The first original bubble owns the run's activity. Streaming changes the data,
     /// never the user's disclosure state. Rich results keep their original rendering below.
     @ViewBuilder
     private func activityContent() -> some View {
         let timeline = agentRun.map(AgentActivityComposer.compose)
         let entries = ClassicChatAgentProjection.projectToolEntries(from: agentRun)
-        let hasActivity = timeline?.activities.isEmpty == false
-            || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty
-        if hasActivity {
+        if hasAgentActivity {
             VStack(alignment: .leading, spacing: 6) {
                 ToggleButton(
                     title: String(localized: "Thinking & tools"),
@@ -2170,7 +2173,7 @@ struct ChatBubbleView: View {
                     }
                 }
             }
-            .accessibilityIdentifier("hanlin-agent-activity")
+            .accessibilityElement(children: .contain)
         }
     }
 
@@ -2254,6 +2257,7 @@ struct ChatBubbleView: View {
                         .stroke(accent.opacity(0.15), lineWidth: 0.8)
                 )
         )
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-tool-call-row-\(entry.callID)")
     }
     

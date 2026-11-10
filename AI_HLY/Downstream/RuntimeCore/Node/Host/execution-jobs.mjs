@@ -92,7 +92,12 @@ export class ExecutionJobs {
   async readOutput(id, channel, offset = 0, limit = 16_384) {
     if (!this.#jobs.has(id) || !['stdout', 'stderr'].includes(channel)) return null;
     if (!Number.isSafeInteger(offset) || offset < 0 || !Number.isSafeInteger(limit) || limit < 1) throw new Error('Invalid output page.');
-    const file = await fs.open(path.join(this.root, id, channel + '.log'), 'r');
+    let file;
+    try { file = await fs.open(path.join(this.root, id, channel + '.log'), 'r'); }
+    catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      return { executionID: id, channel, offset, nextOffset: offset, totalBytes: 0, hasMore: false, base64: '' };
+    }
     try {
       const total = (await file.stat()).size;
       const buffer = Buffer.alloc(Math.min(limit, 65_536, Math.max(0, total - offset)));
@@ -172,7 +177,9 @@ export class ExecutionJobs {
     const exited = new Promise(resolve => {
       // Module evaluation may finish before timers/stdio. Let Node's actual event loop
       // complete naturally; only an explicit deadline/cancellation terminates a worker.
-      worker.once('message', value => { message = value; });
+      worker.on('message', value => {
+        if (value?.type === 'completed' || value?.type === 'failed') message = value;
+      });
       worker.once('error', error => { workerError = error; });
       worker.once('exit', resolve);
       if (header.cancellationRequested) void job.cancel();

@@ -64,6 +64,15 @@ static void InitializePython(void) {
         setenv("PYTHONHOME", pythonHome.UTF8String, 1);
         setenv("PYTHONDONTWRITEBYTECODE", "1", 1);
         setenv("PYTHONUTF8", "1", 1);
+        // Embedded OpenSSL has no iOS Keychain-backed default CA file. Supply
+        // the pinned, unmodified Mozilla roots; never weaken certificate checks.
+        NSString *certificates = [NSBundle.mainBundle pathForResource:@"HanlinPythonCACertificates" ofType:@"pem"];
+        if (!certificates) {
+            initializationError = @"The embedded Python CA certificate bundle is missing.";
+            return;
+        }
+        setenv("SSL_CERT_FILE", certificates.UTF8String, 0);
+
         if (frameworksPath) {
             setenv("DYLD_FRAMEWORK_PATH", frameworksPath.UTF8String, 1);
             setenv("DYLD_LIBRARY_PATH", frameworksPath.UTF8String, 1);

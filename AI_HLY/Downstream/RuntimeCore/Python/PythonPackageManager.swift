@@ -208,7 +208,9 @@ actor PythonPackageManager {
         __hanlin_result__ = _hanlin_packaging['run'](json.loads(\(requestLiteral)))
         """
         let result = try await python.execute(RuntimeExecutionRequest(source: source, workspace: workspace))
-        guard result.exitCode == 0, !result.wasCancelled, !result.didTimeOut, let value = result.value else {
+        try Task.checkCancellation()
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, !result.didTimeOut, let value = result.value else {
             throw RuntimeCoreError.runtimeFailure("Package operation failed. Full output is retained in job \(result.executionID).\n\(result.stderr)")
         }
         return try JSONDecoder().decode(Resolution.self, from: JSONEncoder().encode(value))

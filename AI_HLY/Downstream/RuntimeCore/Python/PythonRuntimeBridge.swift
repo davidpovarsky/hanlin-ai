@@ -1,5 +1,6 @@
 import Foundation
 import IOSSystemLite
+import Synchronization
 
 @_silgen_name("HanlinPythonVersion")
 private func HanlinPythonVersion() -> UnsafePointer<CChar>?
@@ -19,26 +20,36 @@ private func HanlinPythonUnregisterExecution(_ executionID: UnsafePointer<CChar>
 
 enum PythonRuntimeBridge {
     private static let executionQueue = DispatchQueue(label: "hanlin.python.execution", qos: .userInitiated)
+    private static let pending = Mutex<[UUID: PythonQueuedExecution]>([:])
 
     nonisolated static func cancel(id: UUID) {
         id.uuidString.withCString(HanlinPythonCancelExecution)
+        pending.withLock { $0[id] }?.cancelBeforeStarting()
     }
 
-    static func register(id: UUID) { id.uuidString.withCString(HanlinPythonRegisterExecution) }
-    static func unregister(id: UUID) { id.uuidString.withCString(HanlinPythonUnregisterExecution) }
+    static func register(id: UUID) {
+        id.uuidString.withCString(HanlinPythonRegisterExecution)
+        pending.withLock { $0[id] = PythonQueuedExecution() }
+    }
+    static func unregister(id: UUID) {
+        id.uuidString.withCString(HanlinPythonUnregisterExecution)
+        _ = pending.withLock { $0.removeValue(forKey: id) }
+    }
 
     static func execute(requestJSON: String, id: UUID, onStart: @escaping @Sendable () -> Void) async throws -> Data {
         try Task.checkCancellation()
+        guard let operation = pending.withLock({ $0[id] }) else { throw RuntimeCoreError.invalidIdentifier }
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
+                guard operation.bind(continuation, requestJSON: requestJSON) else { return }
                 executionQueue.async {
-                    onStart()
                     do {
-                        let data = try IOSSystemRunner.withProcessCurrentDirectoryLock {
-                            try execute(requestJSON: requestJSON)
+                        try IOSSystemRunner.withProcessCurrentDirectoryLock {
+                            guard let payload = operation.takeForRunning() else { return }
+                            onStart()
+                            operation.complete(.success(try execute(requestJSON: payload)))
                         }
-                        continuation.resume(returning: data)
-                    } catch { continuation.resume(throwing: error) }
+                    } catch { operation.complete(.failure(error)) }
                 }
             }
         } onCancel: { cancel(id: id) }

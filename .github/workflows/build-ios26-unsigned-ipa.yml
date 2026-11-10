@@ -2155,6 +2155,12 @@ jobs:
                   unit_test_args+=("-only-testing:$suite")
                 fi
               done
+              # Runtime V3 explicitly proves real jobs outlive 300 seconds.
+              # Keep the ordinary suite limit unchanged; scope the larger allowance.
+              unit_time_allowance=300
+              if [[ "${SIMULATOR_UNIT_FILTER:-}" == *"RuntimeAutonomyV3Tests"* ]]; then
+                unit_time_allowance=660
+              fi
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
@@ -2167,7 +2173,7 @@ jobs:
               -skipMacroValidation \
               -parallel-testing-enabled NO \
               -test-timeouts-enabled YES \
-              -maximum-test-execution-time-allowance 300 \
+              -maximum-test-execution-time-allowance "$unit_time_allowance" \
               "${unit_test_args[@]}" \
               2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
               downstream_test_status="${PIPESTATUS[0]}"

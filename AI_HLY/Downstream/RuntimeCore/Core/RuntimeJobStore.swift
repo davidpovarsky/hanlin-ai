@@ -91,6 +91,7 @@ actor RuntimeJobStore {
     func complete(_ result: RuntimeExecutionResult, kind: RuntimeKind) throws {
         guard var record = try snapshot(id: result.executionID, kind: kind) else { throw RuntimeCoreError.invalidIdentifier }
         record.state = result.wasCancelled ? .cancelled : result.didTimeOut || result.exitCode != 0 ? .failed : .completed
+        record.cancellationRequested = record.cancellationRequested || result.wasCancelled
         record.result = result
         record.stdoutBytes = result.outputFiles?["stdout"]?.bytes ?? Int64(result.stdout.utf8.count)
         record.stderrBytes = result.outputFiles?["stderr"]?.bytes ?? Int64(result.stderr.utf8.count)
@@ -101,6 +102,7 @@ actor RuntimeJobStore {
     func fail(id: UUID, kind: RuntimeKind, error: Error) throws {
         guard var record = try snapshot(id: id, kind: kind) else { return }
         record.state = error is CancellationError ? .cancelled : .failed
+        record.cancellationRequested = record.cancellationRequested || error is CancellationError
         record.error = error.localizedDescription
         record.completedAt = Date().timeIntervalSince1970 * 1000
         try write(record, kind: kind)
@@ -118,6 +120,10 @@ actor RuntimeJobStore {
         guard ["stdout", "stderr"].contains(channel), offset >= 0, limit > 0,
               try snapshot(id: id, kind: kind) != nil else { throw RuntimeCoreError.invalidRequest("Invalid job output request.") }
         let url = directory(id: id, kind: kind).appending(path: channel + ".log")
+        // A job cancelled while queued has never opened its output streams.
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            return ["base64": "", "offset": String(offset), "nextOffset": String(offset), "totalBytes": "0", "hasMore": "false"]
+        }
         let file = try FileHandle(forReadingFrom: url)
         defer { try? file.close() }
         let total = try file.seekToEnd()

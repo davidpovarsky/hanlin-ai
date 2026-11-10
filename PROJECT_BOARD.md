@@ -1,5 +1,8 @@
 # Project Board
 
+- **2026-11-10 embedded Python TLS:** Real iOS Simulator PyPI execution failed with `CERTIFICATE_VERIFY_FAILED`; packaged OpenSSL had no usable default roots. Native startup now supplies the pinned, unmodified certifi CA bundle (license/hash provenance adjacent), without disabling certificate/hostname checks. Keep CA updates reproducible and test the embedded engine; a Windows HTTPS pass is insufficient.
+- **2026-11-10 SwiftUI accessibility ownership:** A parent stack identifier replaced its child Thinking & tools button identifier in actual xcresult hierarchies; duplicate saved-toolbar identifiers similarly hid its expected ID. Use explicit child containers and unique identifiers at the actual controls. Inspect retained native hierarchies before treating query failure as missing UI.
+
 This is a living working-memory document for this repository.
 It is intentionally lightweight. Humans and coding agents should update it when useful discoveries, ideas, plans, optimizations, problems, or follow-up work arise during normal development.
 Do not turn this into a duplicate issue tracker or a dump of temporary thoughts.

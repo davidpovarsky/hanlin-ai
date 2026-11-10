@@ -68,6 +68,12 @@ actor PythonRuntimeService {
                 snapshotValue.activeExecutionCount = activeIDs.count
                 snapshotValue.state = activeIDs.isEmpty ? (stopRequested ? .stopped : .ready) : .executing
             }
+            // A status-tool cancellation can race registration while the queued
+            // journal is already visible. Reconcile it after the native slot exists.
+            if let latest = try await jobs.snapshot(id: request.id, kind: .localPython), latest.cancellationRequested {
+                PythonRuntimeBridge.cancel(id: request.id)
+            }
+            try Task.checkCancellation()
             let milliseconds = try request.limits.timeoutMilliseconds()
             var body: [String: Any] = [
                 "executionID": request.id.uuidString, "source": request.source, "arguments": request.arguments,
