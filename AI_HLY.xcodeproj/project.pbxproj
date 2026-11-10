@@ -198,6 +198,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Downstream/RuntimeCore/Node/Host/node_modules,
+				Downstream/RuntimeCore/Node/Host,
 				Downstream/RuntimeCore/README.md,
 				Downstream/MCP/README.md,
 				Downstream/Scripting/README.md,

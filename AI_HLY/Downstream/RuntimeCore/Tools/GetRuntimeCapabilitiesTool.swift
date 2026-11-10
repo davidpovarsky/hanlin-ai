@@ -54,7 +54,14 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             var report = String(decoding: try encoder.encode(contract), as: UTF8.self)
-            if requestedRuntime == "all" || requestedRuntime == "mcp" || requestedRuntime == "node" {
+            if requestedRuntime == "all" || requestedRuntime == "mcp" || requestedRuntime == "node" || requestedRuntime == "typescript" {
+                do {
+                    if let live = try await AppRuntimeCore.shared.node.capabilityReportIfLaunched() {
+                        report += "\nNode live capabilities:\n" + String(decoding: try encoder.encode(live), as: UTF8.self)
+                    }
+                } catch {
+                    report += "\nNode live capability query unavailable: \(error.localizedDescription)"
+                }
                 let provider = MCPRuntimeProvider.shared
                 await provider.loadIfNeeded(startHost: false)
                 report += "\nMCP enabled: \(provider.configuration.isEnabled); host: \(provider.runtimeSnapshot.state.rawValue); workers: \(provider.runtimeSnapshot.activeWorkerCount)"

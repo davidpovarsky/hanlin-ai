@@ -305,6 +305,7 @@ export class ExecutionJobs {
     let worker;
     try { worker = new Worker(cli ? entryPoint : workerURL, {
       workerData: { hanlinManagedExecution: true, launchNodeOptions: this.workerEnvironment.NODE_OPTIONS,
+        executionID:header.executionID,
         entryPoint, executionMode: body.executionMode, workspace: body.workspace, moduleKind: body.moduleKind,
         arguments: body.arguments ?? [], environment: body.environment ?? {}, maximumOutputBytes: previewBytes,
         commandPort: port2, commandDirectory, globalNodeModules, startGate },

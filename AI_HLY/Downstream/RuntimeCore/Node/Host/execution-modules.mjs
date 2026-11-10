@@ -17,6 +17,7 @@ export function configureExecutionModules({entryPoint, workspace, moduleKind, ex
   let resolvingGlobal = false;
   registerHooks({
     resolve(specifier, context, nextResolve) {
+      if(specifier==='hanlin:runtime')return {url:new URL('./native-commands.mjs',import.meta.url).href,format:'module',shortCircuit:true};
       const url = specifier.startsWith('file:') ? new URL(specifier) : null;
       if (url) { url.search = ''; url.hash = ''; }
       if (virtual !== physical && (specifier === entryPoint || url?.href === physical)) {

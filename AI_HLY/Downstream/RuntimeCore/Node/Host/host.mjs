@@ -1,4 +1,5 @@
 import {resolveMCPPackageRoot} from './mcp-package-generations.mjs';
+import {runtimeCapabilities} from './runtime-capabilities.mjs';
 import { verifyLifecyclePlan } from './lifecycle-planner.mjs';
 import { globalNodeModules } from './global-package-state.mjs';
 import {executeLifecycleInJobs} from './lifecycle-executor.mjs';
@@ -117,6 +118,7 @@ const server = http.createServer(async (request, response) => {
   try {
     if (!authorized(request)) return json(response, 401, { error: 'Unauthorized' });
     const url = new URL(request.url, 'http://127.0.0.1');
+    if (request.method === 'GET' && url.pathname === '/v1/runtime/capabilities')return json(response,200,runtimeCapabilities());
     if (request.method === 'GET' && url.pathname === '/health') return json(response, 200, { ok: true, nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable });
     if (request.method === 'GET' && url.pathname === '/v1/runtime') {
       return json(response, 200, {

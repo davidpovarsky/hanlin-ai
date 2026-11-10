@@ -47,6 +47,7 @@ installRegExpUnicodeShim();
 
 nodeModule.registerHooks({
   resolve(specifier, context, nextResolve) {
+      if(specifier==='hanlin:runtime')return {url:new URL('./native-commands.mjs',import.meta.url).href,format:'module',shortCircuit:true};
     const normalized = normalizeBuiltin(specifier);
     if (normalized === 'child_process') {
       parentPort?.postMessage({
@@ -184,6 +185,15 @@ function deny(code, specifier, parentURL, resolvedURL = null, operation = null) 
     parentPath: reportLocation(parentURL),
     resolvedPath: reportLocation(resolvedURL),
     operation,
+    ...(code==='reachable_external_executable'||normalizeBuiltin(specifier)==='cluster'?{
+      integrationRoute:'hanlin:runtime for finite managed-job commands; an explicitly configured owner server for full POSIX/IPC semantics',
+      enforcedBy:'host-compatibility-guard',
+      platformAuthority:'https://developer.apple.com/forums/thread/747499',
+    }:{}),
+    ...(code==='reachable_native_addon'?{
+      integrationRoute:'compatible prelinked native provider or an explicitly configured owner server for the whole execution context',
+      enforcedBy:'host-compatibility-guard',
+    }:{}),
   };
   parentPort?.postMessage(access);
   const location = access.parentPath ?? '<selected entry point>';

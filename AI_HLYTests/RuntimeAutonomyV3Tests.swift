@@ -6,6 +6,45 @@ import Testing
 @MainActor
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
+    @Test(.timeLimit(.minutes(2)))
+    func explicitNativeCommandModuleUsesActualPythonAndLinkedBsdWithFullArtifacts() async throws {
+        let core = AppRuntimeCore.shared
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "native-command-api-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let payload = Data(String(repeating: "שלום🙂\n", count: 900_000).utf8)
+        #expect(payload.count > 10 * 1024 * 1024)
+        try payload.write(to: workspace.appending(path: "input.bin"))
+        try Data("import sys\nsys.stdout.buffer.write(sys.stdin.buffer.read())\nsys.stderr.write('actual Python CLI stderr')\nsys.exit(23)\n".utf8)
+            .write(to: workspace.appending(path: "actual-copy.py"))
+        let source = """
+        import {runCommand,openOutput,capabilities} from 'hanlin:runtime';
+        import {createHash} from 'node:crypto';
+        const python=await runCommand('python3',['actual-copy.py'],{stdinFile:'input.bin'});
+        if(python.exitCode!==23||!python.executionID)throw Error('The actual Python result was not retained');
+        const bsd=await runCommand('cat',[python.stdoutPath]);
+        if(bsd.exitCode!==0||!bsd.executionID)throw Error('The actual linked BSD command failed');
+        const hash=createHash('sha256');let bytes=0;
+        for await(const chunk of openOutput(bsd)){hash.update(chunk);bytes+=chunk.length;}
+        export default {bytes,sha256:hash.digest('hex'),pythonID:python.executionID,bsdID:bsd.executionID,pid:capabilities().pid};
+        """
+        let result = try await core.node.executeJavaScript(.init(source: source, workspace: workspace, limits: .init(timeout: .seconds(80))), moduleKind: "esm")
+        #expect(result.exitCode == 0, "\(result.stderr)")
+        guard case .object(let value)? = result.value else {
+            throw RuntimeCoreError.runtimeFailure("The actual adapter returned no result object: \(result.stderr)")
+        }
+        #expect(value["bytes"] == .number(Double(payload.count)))
+        let digest = SHA256.hash(data: payload).map { String(format: "%02x", $0) }.joined()
+        #expect(value["sha256"] == .string(digest))
+        #expect(value["pid"] == .boolean(false))
+        for field in ["pythonID", "bsdID"] {
+            guard case .string(let text)? = value[field], let actualID = UUID(uuidString: text) else {
+                throw RuntimeCoreError.runtimeFailure("The actual adapter returned no native job ID for \(field)")
+            }
+            let saved = try await core.jobs.snapshot(id: actualID, kind: field == "pythonID" ? .localPython : .shell)
+            #expect(saved?.stdoutBytes == payload.count)
+        }
+    }
+
     @Test func hostOutputPageQueriesPreserveParametersAndTheAuthenticatedOrigin() throws {
         let host = RuntimeHostConnection(baseURL: URL(string: "http://127.0.0.1:8123")!, token: "fixture-token")
         let request = host.request(path: "/v1/executions/fixture/output?channel=stdout&offset=4093&limit=1024")

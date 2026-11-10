@@ -176,6 +176,16 @@ test('host redirects npm state before preview and install modules initialize', a
     assert.equal(execution.stdout, 'שלום\n');
     assert.deepEqual(execution.value, { answer: 42 });
 
+    const liveCapabilitiesResponse=await fetch(`http://127.0.0.1:${ready.port}/v1/runtime/capabilities`,{headers:{Authorization:`Bearer ${launchToken}`}});
+    assert.equal(liveCapabilitiesResponse.status,200);
+    const liveCapabilities=await liveCapabilitiesResponse.json();
+    assert.equal(liveCapabilities.observed.node,process.versions.node);
+    assert.equal(liveCapabilities.observed.platform,process.platform);
+    assert.equal(liveCapabilities.observed.architecture,process.arch);
+    assert.equal(liveCapabilities.finiteCommandAdapter.module,'hanlin:runtime');
+    assert.equal(liveCapabilities.externalExecution.automaticTransfer,false);
+    assert.equal(liveCapabilities.externalExecution.configured,false);
+
     // Real authenticated HTTP interruption, not only an ExecutionJobs unit call.
     const interruptedID = randomUUID();
     await hostRequest(ready.port, launchToken, '/v1/executions', {

@@ -395,6 +395,12 @@ actor NodeRuntimeService {
 
     func hasLaunched() -> Bool { launchAttempted }
 
+    /// Read live facts without starting an engine just to inspect capabilities.
+    func capabilityReportIfLaunched() async throws -> RuntimeJSONValue? {
+        guard let connection else { return nil }
+        return try await connection.decode(RuntimeJSONValue.self, path: "/v1/runtime/capabilities")
+    }
+
     /// Uses the same Node job/stdio/journal path. External commands require the
     /// command broker; built-in portable-shell operations execute in the Worker.
     func executePortableShell(_ request: RuntimeExecutionRequest, lifecycle: RuntimeLifecycleContext? = nil) async throws -> RuntimeExecutionResult {
