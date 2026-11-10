@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       runtime_job_foundation_only:
-        description: Type-check actual background/job sources on iOS SDK and execute their isolated Foundation tests, without native engine builds
+        description: Type-check original job/background/Python bridge sources on iOS SDK and execute isolated Foundation tests, without native engine builds
         required: false
         default: false
         type: boolean
@@ -39,7 +39,7 @@ permissions:
 jobs:
   validate-runtime-job-foundation:
     if: ${{ inputs.runtime_job_foundation_only }}
-    name: Verify Runtime jobs and background SDK contract
+    name: Verify Runtime jobs, background and Python SDK contracts
     runs-on: xcode-27
     timeout-minutes: 10
     steps:

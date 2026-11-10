@@ -28,6 +28,33 @@ xcrun swiftc -typecheck -parse-as-library -swift-version 6 -strict-concurrency=c
   -module-name HanlinRuntimeFoundation -sdk "$SDK" -target "$TARGET" \
   "${core_sources[@]}" "$background" 2>&1 | tee "$EVIDENCE/ios-sdk-typecheck.log"
 
+# Use the exact locked iOS Python framework's real headers for the production
+# Objective-C++ bridge and thread/cancellation owners. This is compile-only:
+# no framework rebuild, engine startup, application archive or upload.
+readonly PYTHON_URL="$(python3 -c 'import json; print(json.load(open("RuntimeDependencies.lock.json"))["python"]["archive"]["url"])')"
+readonly PYTHON_SHA="$(python3 -c 'import json; print(json.load(open("RuntimeDependencies.lock.json"))["python"]["archive"]["sha256"])')"
+readonly PYTHON_VERSION="$(python3 -c 'import json; print(json.load(open("RuntimeDependencies.lock.json"))["python"]["version"])')"
+mkdir -p "$WORK/python-sdk"
+curl --fail --location --retry 3 --retry-all-errors --silent --show-error \
+  --output "$WORK/python-sdk.tar.gz" "$PYTHON_URL"
+readonly ACTUAL_PYTHON_SHA="$(shasum -a 256 "$WORK/python-sdk.tar.gz" | awk '{print $1}')"
+test "$ACTUAL_PYTHON_SHA" = "$PYTHON_SHA"
+tar -xzf "$WORK/python-sdk.tar.gz" -C "$WORK/python-sdk"
+grep -Fq "Python version: $PYTHON_VERSION" "$WORK/python-sdk/VERSIONS"
+readonly PYTHON_FRAMEWORKS="$WORK/python-sdk/Python.xcframework/ios-arm64"
+test -f "$PYTHON_FRAMEWORKS/Python.framework/Headers/Python.h"
+printf '%s\n' "$PYTHON_URL" "$PYTHON_VERSION" "$ACTUAL_PYTHON_SHA" > "$EVIDENCE/python-sdk-inputs.txt"
+shasum -a 256 AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm \
+  AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.h \
+  AI_HLY/Downstream/RuntimeCore/Python/Native/PythonCancellationContext.hpp \
+  AI_HLY/Downstream/RuntimeCore/Python/Native/PythonThreadOwnership.hpp > "$EVIDENCE/python-bridge-source-sha256.txt"
+xcrun clang++ --version > "$EVIDENCE/clang-version.txt"
+xcrun clang++ -fsyntax-only -x objective-c++ -fobjc-arc -std=c++17 -Werror \
+  -target "$TARGET" -isysroot "$SDK" -F "$PYTHON_FRAMEWORKS" \
+  AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm \
+  2>&1 | tee "$EVIDENCE/ios-python-bridge-typecheck.log"
+printf '%s\n' "Actual production Objective-C++ bridge typechecked against locked iOS Python $PYTHON_VERSION headers; execution/linking remain separate obligations."
+
 cat > "$WORK/Package.swift" <<'SWIFT'
 // swift-tools-version: 6.2
 import PackageDescription
