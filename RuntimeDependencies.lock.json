@@ -27,6 +27,11 @@
         "path": "Scripts/Runtime/Patches/v8-std-hash-65ce14d8.json",
         "sha256": "d9cf8808f543f998d4f1a1c69047b67af41eec284be948826b82441e1a50fab6",
         "upstreamCommit": "65ce14d8731e929584344a0d65d6efd2296fa797"
+      },
+      {
+        "path": "Scripts/Runtime/Patches/v8-drumbrake-5c595adf.json",
+        "sha256": "6259c5048010fb8438779ada0b979d5c84343b67a00fdcc96557fffa8063f682",
+        "upstreamCommit": "5c595adf56abcb89251882a2dbf800972500989a"
       }
     ],
     "buildConfiguration": {

@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 
 NATIVE_SCRIPTS = (
@@ -28,7 +29,16 @@ def native_identity(repository: Path, revision: str | None = None) -> str:
     node = {key: value for key, value in lock["node"].items()
             if key not in {"verificationStatus", "xcframeworkSha256"}}
     adapter = node.get("buildConfiguration", {}).get("adapter", {}).get("path")
-    files = sorted(set(NATIVE_SCRIPTS) | {item["path"] for item in node.get("sourcePatches", [])} | ({adapter} if adapter else set()))
+    patch_files = set()
+    for item in node.get("sourcePatches", []):
+        patch_files.add(item["path"])
+        upstream = json.loads(read(item["path"])).get("upstreamPatch")
+        if upstream:
+            name = upstream["path"]
+            if not re.fullmatch(r"Scripts/Runtime/Patches/[A-Za-z0-9._-]+\.patch", name):
+                raise ValueError("Invalid original upstream patch evidence path")
+            patch_files.add(name)
+    files = sorted(set(NATIVE_SCRIPTS) | patch_files | ({adapter} if adapter else set()))
     def input_bytes(name):
         contents = read(name)
         # Git checks these text scripts out as LF on the macOS builder. A

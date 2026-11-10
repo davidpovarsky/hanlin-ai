@@ -40,6 +40,13 @@ for (const patch of lock.node.sourcePatches ?? []) {
   const manifest = JSON.parse(bytes);
   assert(manifest.sourceCommit === lock.node.commit, 'Node source patch requires a matching source commit');
   assert(manifest.upstreamCommit === patch.upstreamCommit, 'Node source patch upstream provenance mismatch');
+  if (manifest.upstreamPatch) {
+    const original = manifest.upstreamPatch;
+    assert(/^Scripts\/Runtime\/Patches\/[A-Za-z0-9._-]+\.patch$/.test(original.path ?? ''), 'Invalid original upstream patch path');
+    assert(sha256.test(original.sha256 ?? ''), 'Invalid original upstream patch SHA-256');
+    const evidence = await readFile(new URL(`../../${original.path}`, import.meta.url));
+    assert(createHash('sha256').update(evidence).digest('hex') === original.sha256, 'Original upstream patch checksum mismatch');
+  }
 }
 
 assertRepository(lock.python?.sourceRepository, 'python.sourceRepository');

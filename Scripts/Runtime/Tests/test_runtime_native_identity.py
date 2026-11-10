@@ -20,6 +20,10 @@ class NativeIdentityTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.lock = json.loads((REPOSITORY / "RuntimeDependencies.lock.json").read_text(encoding="utf-8"))
         files = list(module.NATIVE_SCRIPTS) + [item["path"] for item in self.lock["node"].get("sourcePatches", [])]
+        for patch in self.lock["node"].get("sourcePatches", []):
+            original = json.loads((REPOSITORY / patch["path"]).read_bytes()).get("upstreamPatch")
+            if original:
+                files.append(original["path"])
         adapter = self.lock["node"].get("buildConfiguration", {}).get("adapter", {}).get("path")
         if adapter:
             files.append(adapter)
@@ -57,6 +61,15 @@ class NativeIdentityTests(unittest.TestCase):
         self.lock = json.loads((REPOSITORY / "RuntimeDependencies.lock.json").read_text(encoding="utf-8"))
         self.lock["node"]["commit"] = "c" * 40
         self.write_lock()
+        self.assertNotEqual(module.native_identity(self.root), before)
+
+    def test_original_upstream_evidence_bytes_are_native_inputs(self):
+        before = module.native_identity(self.root)
+        manifest = next(json.loads((self.root / item["path"]).read_bytes())
+            for item in self.lock["node"]["sourcePatches"]
+            if json.loads((self.root / item["path"]).read_bytes()).get("upstreamPatch"))
+        original = self.root / manifest["upstreamPatch"]["path"]
+        original.write_bytes(original.read_bytes() + b"\nmodified upstream evidence\n")
         self.assertNotEqual(module.native_identity(self.root), before)
 
     def test_windows_text_checkout_matches_the_actual_macos_lf_instructions(self):

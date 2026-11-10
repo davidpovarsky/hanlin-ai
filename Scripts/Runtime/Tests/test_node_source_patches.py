@@ -89,3 +89,25 @@ class NodeSourcePatchTests(unittest.TestCase):
         self.save()
         with self.assertRaisesRegex(ValueError, "provenance"):
             self.apply()
+
+    def test_original_upstream_patch_bytes_are_authenticated(self):
+        original = self.manifest.with_suffix(".patch")
+        original.write_bytes(b"original upstream patch evidence")
+        self.data["upstreamPatch"] = {"path": "Scripts/Runtime/Patches/test.patch", "sha256": patcher.digest(original.read_bytes())}
+        self.save()
+        self.apply()
+        self.assertEqual(self.target.read_bytes(), b"new value")
+        self.target.write_bytes(b"old value")
+        original.write_bytes(b"modified evidence")
+        with self.assertRaisesRegex(ValueError, "evidence checksum"):
+            self.apply()
+        self.assertEqual(self.target.read_bytes(), b"old value")
+
+    def test_upstream_evidence_path_cannot_escape_patch_directory(self):
+        original = self.root / "outside.patch"
+        original.write_bytes(b"original")
+        self.data["upstreamPatch"] = {"path": "outside.patch", "sha256": patcher.digest(original.read_bytes())}
+        self.save()
+        with self.assertRaisesRegex(ValueError, "evidence escapes"):
+            self.apply()
+        self.assertEqual(self.target.read_bytes(), b"old value")

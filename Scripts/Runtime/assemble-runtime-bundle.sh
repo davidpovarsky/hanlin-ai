@@ -131,7 +131,7 @@ xcrun simctl install "${device_udid}" "${sample_app}"
 xcrun simctl launch "${device_udid}" nodejsmobile.test --copy-path-for-testing
 sleep 2
 xcrun simctl terminate "${device_udid}" nodejsmobile.test 2>/dev/null || true
-xcrun simctl launch "${device_udid}" nodejsmobile.test --jitless --wasm-jitless ./test/fixtures/hanlin-runtime-host/smoke.mjs
+xcrun simctl launch "${device_udid}" nodejsmobile.test --jitless --wasm-jitless --expose-gc ./test/fixtures/hanlin-runtime-host/smoke.mjs
 
 data_container="$(xcrun simctl get_app_container "${device_udid}" nodejsmobile.test data)"
 smoke_result="${data_container}/Documents/hanlin-node-smoke.json"
@@ -144,7 +144,7 @@ test -f "${smoke_result}"
 cp "${smoke_result}" "${OUTPUT_ROOT}/NodeMobile-smoke.json"
 node -e '
   const result = require(process.argv[1]);
-  if (!result.ok || result.nodeVersion !== "24.5.0" || !result.workerThreads || !result.descriptorOwnership || result.fdWarningCount !== 0 || !result.hostStartup || !result.webAssembly || !result.wasmEvidence?.noJIT || result.wasmEvidence?.mode !== "wasm-jitless") {
+  if (!result.ok || result.nodeVersion !== "24.5.0" || !result.workerThreads || !result.descriptorOwnership || result.fdWarningCount !== 0 || !result.hostStartup || !result.webAssembly || !result.wasmEvidence?.noJIT || !result.wasmEvidence?.externref || !result.wasmEvidence?.gc || result.wasmEvidence?.mode !== "wasm-jitless") {
     throw new Error(`Embedded Node smoke failed: ${JSON.stringify(result)}`);
   }
 ' "${OUTPUT_ROOT}/NodeMobile-smoke.json"

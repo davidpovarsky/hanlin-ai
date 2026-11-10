@@ -28,6 +28,12 @@ def apply_patches(source_root, lock_path, repository_root=None):
             raise ValueError("Node source patch does not match the pinned source commit")
         if manifest["upstreamCommit"] != patch["upstreamCommit"]:
             raise ValueError("Node source patch upstream provenance mismatch")
+        if upstream := manifest.get("upstreamPatch"):
+            original = (repository / upstream["path"]).resolve(strict=True)
+            if not original.is_relative_to(repository / "Scripts/Runtime/Patches"):
+                raise ValueError("Upstream patch evidence escapes the patch directory")
+            if digest(original.read_bytes()) != upstream["sha256"]:
+                raise ValueError("Upstream patch evidence checksum mismatch")
         for change in manifest["files"]:
             target = (source / change["path"]).resolve(strict=True)
             if not target.is_relative_to(source / "deps/v8"):
