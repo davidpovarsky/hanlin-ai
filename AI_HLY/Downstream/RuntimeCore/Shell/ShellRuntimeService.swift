@@ -89,7 +89,7 @@ actor ShellRuntimeService {
             )
             try diagnosticLog.record(
                 "shell_dictionary_validated",
-                message: "The app and IOSSystemLite dictionaries contain the exact approved 23-command catalog."
+                message: "Validated the app and IOSSystemLite command dictionaries; required linked baseline: \(IOSSystemRunner.linkedCommands.count) commands."
             )
             try diagnosticLog.record(
                 "shell_environment_initialized",
@@ -97,12 +97,12 @@ actor ShellRuntimeService {
             )
             try diagnosticLog.record(
                 "shell_commands_discovered",
-                message: "ios_system returned \(report.registeredCommands.count) approved commands.",
+                message: "ios_system returned \(report.registeredCommands.count) registered commands.",
                 missingCommands: report.missingRegisteredCommands
             )
             try diagnosticLog.record(
                 "shell_executable_validation",
-                message: "ios_executable accepted \(report.executableCommands.count) approved commands.",
+                message: "ios_executable accepted \(report.executableCommands.count) linked commands.",
                 missingCommands: report.missingExecutableCommands
             )
 
@@ -126,7 +126,7 @@ actor ShellRuntimeService {
             snapshotValue.state = .ready
             snapshotValue.healthCategory = ShellHealthCategory.ready.rawValue
             snapshotValue.lastErrorCode = nil
-            snapshotValue.lastDiagnostic = "All 23 approved ios_system commands are registered and executable."
+            snapshotValue.lastDiagnostic = "\(report.executableCommands.count) linked ios_system commands are registered and executable."
             snapshotValue.missingCommands = nil
             return snapshotValue
         } catch let error as IOSSystemRegistrationError {

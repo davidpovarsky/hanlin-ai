@@ -377,27 +377,36 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         )
         #expect(argsWithCommand.outcome == .invalidArguments)
 
-        let tooMany = await tool.execute(
-            argumentsJSON: try Self.json(["program": "ls", "arguments": Array(repeating: "x", count: 128)]),
+        let workspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: shellContext.runtimeWorkspaceIdentifier
+        )
+        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
+        let nonce = "native-argv-\(UUID().uuidString)"
+        let input = workspace.appending(path: "many-arguments.txt")
+        try (nonce + "\n").write(to: input, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: input) }
+        let manyArguments = await tool.execute(
+            argumentsJSON: try Self.json(["program": "cat", "arguments": Array(repeating: "many-arguments.txt", count: 128)]),
             context: context
         )
-        #expect(tooMany.outcome == .invalidArguments)
-        let insecureRemoteHTTPDenied = await tool.execute(
-            argumentsJSON: try Self.json(["program": "curl", "arguments": ["http://example.invalid"], "allow_network": false]),
+        #expect(manyArguments.outcome == .succeeded)
+        #expect((manyArguments.userText ?? "").components(separatedBy: nonce).count - 1 == 128)
+        // Port0 cannot host a server. This executes real curl locally, with an
+        // explicit fixture timeout and no inherited proxy/public request. A
+        // transport failure must not become a fabricated argument/permission error.
+        let httpTransportFailure = await tool.execute(
+            argumentsJSON: try Self.json(["program": "curl", "arguments": ["--noproxy", "*", "--max-time", "2", "--connect-timeout", "1", "http://127.0.0.1:0"], "allow_network": false]),
             context: context
         )
-        #expect(insecureRemoteHTTPDenied.outcome == .invalidArguments)
+        #expect(httpTransportFailure.outcome == .failed)
+        #expect(httpTransportFailure.diagnostics.exitCode != nil)
         let networkFlagAccepted = await tool.execute(
             argumentsJSON: try Self.json(["program": "curl", "arguments": ["--version"], "allow_network": true]),
             context: context
         )
         #expect(networkFlagAccepted.outcome == .succeeded)
 
-        let workspace = try RuntimeFileLayout.default.workspace(
-            client: .executions,
-            identifier: shellContext.runtimeWorkspaceIdentifier
-        )
-        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
         let outside = FileManager.default.temporaryDirectory.appending(path: "hanlin-shell-outside-\(UUID().uuidString)")
         let link = workspace.appending(path: "acceptance-escape")
         try Data("secret".utf8).write(to: outside)

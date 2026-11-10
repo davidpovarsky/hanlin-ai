@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -17,6 +18,41 @@ SPEC.loader.exec_module(acceptance_runner)
 
 
 class RuntimeToolingAcceptanceRunnerTests(unittest.TestCase):
+    def test_registered_case_fragments_exist_in_actual_selected_suite_sources(self) -> None:
+        root = SCRIPT_PATH.parents[2]
+        for group in acceptance_runner.GROUPS:
+            names = []
+            for selector in group.selectors:
+                bundle, suite, *_ = selector.split("/")
+                for path in (root / bundle).glob("*.swift"):
+                    source = path.read_text(encoding="utf-8")
+                    if re.search(r"\b(?:struct|class)\s+" + re.escape(suite) + r"\b", source):
+                        names.extend(re.findall(r"\bfunc\s+(\w+)\s*\(", source))
+                        names.extend(re.findall(r'@Test\(\s*"([^"\n]+)"', source))
+            names = [acceptance_runner.normalized(name) for name in names]
+            for case in group.cases:
+                with self.subTest(group=group.name, case=case.case_id):
+                    fragment = acceptance_runner.normalized(case.selector_fragment)
+                    self.assertIn(fragment, names, "Collector names must reference actual tests, not stale comments")
+
+    def test_a_passing_suite_or_zero_case_heading_is_not_executed_evidence(self) -> None:
+        payload = {"testNodes": [{"name": "testFoo", "nodeType": "Test Suite", "result": "Passed", "children": []}]}
+        self.assertEqual(acceptance_runner.test_nodes(payload), [])
+        payload["testNodes"][0]["children"].append({
+            "name": "testFoo()", "nodeType": "Test Case", "nodeIdentifier": "Owner/testFoo()", "result": "Skipped"})
+        nodes = acceptance_runner.test_nodes(payload)
+        self.assertEqual(len(nodes), 1)
+        self.assertEqual(acceptance_runner.node_status(nodes[0]), "skipped")
+
+    def test_case_ownership_rejects_same_named_other_suite_and_missing_identity(self) -> None:
+        selectors = ("AI_HLYTests/ExpectedOwner",)
+        wrong = {"nodeType": "Test Case", "name": "testFoo()", "result": "Passed",
+                 "nodeIdentifier": "AI_HLYTests/AnotherOwner/testFoo()"}
+        self.assertFalse(acceptance_runner.node_belongs_to_selectors(wrong, selectors))
+        self.assertFalse(acceptance_runner.node_belongs_to_selectors({"nodeType": "Test Case", "name": "testFoo()", "result": "Passed"}, selectors))
+        actual = dict(wrong, nodeIdentifierURL="test://bundle/AI_HLYTests/ExpectedOwner/testFoo%28%29")
+        self.assertTrue(acceptance_runner.node_belongs_to_selectors(actual, selectors))
+
     def test_partition_selectors_separates_unit_and_ui(self) -> None:
         unit_sel, ui_sel = acceptance_runner.partition_selectors(acceptance_runner.GROUPS)
         self.assertTrue(len(unit_sel) > 0)
@@ -82,12 +118,12 @@ class RuntimeToolingAcceptanceRunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             out_dir = Path(tmpdir)
             unit_nodes = [
-                {"name": "preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts()", "result": "Passed", "duration": 0.12},
-                {"name": "runtimeToolsRejectMalformedArgumentsSemantically()", "result": "Passed", "duration": 0.05},
-                {"name": "agentToolExecutesPython()", "result": "Passed", "duration": 0.3},
+                {"name": "preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts()", "nodeType": "Test Case", "nodeIdentifier": "RuntimeToolContractTests/preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts()", "result": "Passed", "duration": 0.12},
+                {"name": "runtimeToolsRejectMalformedArgumentsSemantically()", "nodeType": "Test Case", "nodeIdentifier": "RuntimeToolContractTests/runtimeToolsRejectMalformedArgumentsSemantically()", "result": "Passed", "duration": 0.05},
+                {"name": "agentToolExecutesPython()", "nodeType": "Test Case", "nodeIdentifier": "HanlinUnifiedHostServicesAgentAcceptanceTests/agentToolExecutesPython()", "result": "Passed", "duration": 0.3},
             ]
             ui_nodes = [
-                {"name": "testNodePackageManagerUIWorkflowAndSuccess()", "result": "Passed", "duration": 2.5},
+                {"name": "testNodePackageManagerUIWorkflowAndSuccess()", "nodeType": "Test Case", "nodeIdentifier": "HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess()", "result": "Passed", "duration": 2.5},
             ]
 
             unit_phase = acceptance_runner.PhaseExecutionResult(

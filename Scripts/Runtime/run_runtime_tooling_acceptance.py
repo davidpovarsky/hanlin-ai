@@ -14,6 +14,7 @@ import sys
 import time
 from dataclasses import dataclass
 from typing import Any
+from urllib.parse import unquote, urlparse
 
 
 @dataclass(frozen=True)
@@ -51,7 +52,7 @@ GROUPS = (
             AcceptanceCase("host.agent.context", "agentContextCreation"),
             AcceptanceCase("host.agent.adapter-context", "agentAdapterMakesContextWithAllCapabilities"),
             AcceptanceCase("host.agent.session-isolation", "agentContextSessionIDsAreUnique"),
-            AcceptanceCase("runtime.availability.disabled-rejection", "runtimeBrokerRejectsDisabledRuntime", "rejection"),
+            AcceptanceCase("runtime.permissions.python-grantless", "runtimeBrokerRunsPythonWithoutInternalGrants"),
             AcceptanceCase("runtime.jsc.basic", "agentToolExecutesJavaScriptCore"),
             AcceptanceCase("runtime.node.basic", "agentToolExecutesNode"),
             AcceptanceCase("runtime.python.basic", "agentToolExecutesPython"),
@@ -63,7 +64,7 @@ GROUPS = (
             AcceptanceCase("runtime.javascript.backends-full-contract", "javaScriptBackendsFullContract"),
             AcceptanceCase("runtime.typescript.full-contract", "typeScriptFullContract"),
             AcceptanceCase("runtime.shell.rejection-matrix", "shellRejectionMatrix", "rejection"),
-            AcceptanceCase("capability.runtime-live-revoke-regrant", "runtimeCapabilityLiveRevokeAndRegrantUsesSameSession", "rejection"),
+            AcceptanceCase("runtime.permissions.legacy-grant-revocation-does-not-disable", "legacyRuntimeGrantChangesDoNotDisableTheSameSession"),
         ),
     ),
     AcceptanceGroup(
@@ -90,13 +91,13 @@ GROUPS = (
         "files-sqlite-capabilities",
         ("AI_HLYTests/HanlinUnifiedHostServicesE2ETests",),
         (
-            AcceptanceCase("runtime.availability.broker-toggle", "runtimeBrokerRespectsAvailabilityToggle", "rejection"),
+            AcceptanceCase("runtime.availability.broker-auto-start", "runtimeBrokerAutoStartsStoppedRuntime"),
             AcceptanceCase("capability.grant-revoke", "capabilityAuthorityGrantRevokePersists"),
-            AcceptanceCase("capability.package-precedence-live-revoke", "packageStoreGrantPrecedenceAndLiveRevocation"),
+            AcceptanceCase("capability.legacy-package-metadata-grantless-network", "legacyPackageGrantMetadataDoesNotGateNetwork"),
             AcceptanceCase("host.concurrent-callers", "crossCallerConcurrency"),
             AcceptanceCase("files.app-isolation", "storageIsolationBetweenApps"),
-            AcceptanceCase("files.capability-denial", "fileCapabilityRequired", "rejection"),
-            AcceptanceCase("files.scopes-delete-symlink-shared", "fileScopesOverwriteDeleteSharedGateAndSymlinkProtection"),
+            AcceptanceCase("files.ordinary-grantless-access", "fileOperationsWorkWithoutInternalGrants"),
+            AcceptanceCase("files.scopes-delete-symlink-shared", "fileScopesOverwriteDeleteSharedAccessAndSymlinkProtection"),
             AcceptanceCase("sqlite.path-bound-parameters", "sqliteScopeAndTraversalRejection"),
             AcceptanceCase("sqlite.crud-transaction-fk-types-concurrency-scopes", "sqliteTransactionsTypesConcurrencyAndScopeIsolation"),
             AcceptanceCase("engine.nativescript.session-binding", "nativeScriptSessionsResolveExactlyAndTeardownIndependently"),
@@ -107,13 +108,13 @@ GROUPS = (
         "miniapp-engines",
         ("AI_HLYTests/CanonicalMiniAppIntegrationTests",),
         (
-            AcceptanceCase("engine.swift.catalog", "CanonicalcatalogdiscoversSwiftbuiltinparityapp"),
-            AcceptanceCase("engine.scriptui.runtime-bridge", "NativeservicesbridgeexposesPythonversion"),
-            AcceptanceCase("engine.cross-engine.capability", "Inter-apprequestbrokerallowsauthorizedcross-engine"),
-            AcceptanceCase("engine.storage.path-protection", "Privatestoragerejectspathtraversal"),
-            AcceptanceCase("engine.entrypoint.isolation", "Per-entrypointisolationonhybridpackage"),
-            AcceptanceCase("engine.four-providers.registered", "All4compiledminiappprovidersareregistered"),
-            AcceptanceCase("engine.nativescript.active-container", "HanlinNativeServicesBridgeenforcesactivecontainerisolation"),
+            AcceptanceCase("engine.swift.catalog", "catalogEngineGrouping"),
+            AcceptanceCase("engine.scriptui.runtime-bridge", "nativeServicesExecution"),
+            AcceptanceCase("engine.cross-engine.capability", "interAppRequestBrokering"),
+            AcceptanceCase("engine.storage.path-protection", "privateStoragePathTraversalRejected"),
+            AcceptanceCase("engine.entrypoint.isolation", "perEntrypointIsolationHybrid"),
+            AcceptanceCase("engine.four-providers.registered", "allCompiledProvidersRegistered"),
+            AcceptanceCase("engine.nativescript.active-container", "bridgeContainerAndCapabilityGating"),
         ),
     ),
     AcceptanceGroup(
@@ -227,7 +228,9 @@ def test_nodes(payload: Any) -> list[dict[str, Any]]:
     if isinstance(payload, dict):
         name = payload.get("name") or payload.get("testIdentifier") or payload.get("nodeIdentifier")
         status = payload.get("result") or payload.get("testStatus") or payload.get("status")
-        if isinstance(name, str) and status is not None:
+        # Current xcresulttool exports explicit case types. A passing suite or
+        # plan heading, including a zero-case run, is not executed evidence.
+        if isinstance(name, str) and status is not None and payload.get("nodeType") == "Test Case":
             found.append(payload)
         for value in payload.values():
             found.extend(test_nodes(value))
@@ -259,6 +262,25 @@ def node_duration(node: dict[str, Any]) -> float | None:
         return float(raw)
     except (TypeError, ValueError):
         return None
+
+
+def node_belongs_to_selectors(node: dict[str, Any], selectors: tuple[str, ...]) -> bool:
+    """Same-named methods in another suite must never supply acceptance."""
+    if node.get("nodeType") != "Test Case":
+        return False
+    for key in ("nodeIdentifierURL", "nodeIdentifier", "testIdentifier"):
+        identifier = node.get(key)
+        if not isinstance(identifier, str):
+            continue
+        if identifier.startswith("test://"):
+            identifier = urlparse(identifier).path
+        identifier = unquote(identifier).strip("/").removesuffix("()")
+        for selector in selectors:
+            # Some xcresult exports omit the bundle, but retain the actual suite.
+            owner = selector.split("/", 1)[-1].removesuffix("()")
+            if identifier == owner or ("/" + owner + "/") in ("/" + identifier + "/"):
+                return True
+    return False
 
 
 @dataclass(frozen=True)
@@ -439,7 +461,8 @@ def evaluate_acceptance(
             xcresult_json = phase.xcresult_json if phase else output / "missing.json"
 
             needle = normalized(expected.selector_fragment)
-            matches = [node for node in phase_nodes if needle in normalized(node_name(node))]
+            matches = [node for node in phase_nodes if needle in normalized(node_name(node))
+                       and node_belongs_to_selectors(node, group.selectors)]
             selected = select_best_match(matches, expected)
 
             if selected is None and expected.case_id in reused_cases:

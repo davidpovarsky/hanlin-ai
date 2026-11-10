@@ -87,8 +87,8 @@ struct RuntimeToolContractTests {
 
         #expect(parameters["additionalProperties"] as? Bool == false)
         #expect(properties["command"] != nil)
-        #expect(Set(advertised) == Set(ShellRuntimeService.capabilities.map(\.name)))
-        #expect(advertised.count >= 23)
+        #expect(Set(advertised) == Set(ShellRuntimeService.capabilities.map(\.name) + ["pwd"]))
+        #expect(advertised.count >= 24)
         #expect(!advertised.contains("echo"))
         #expect(!advertised.contains("date"))
     }
