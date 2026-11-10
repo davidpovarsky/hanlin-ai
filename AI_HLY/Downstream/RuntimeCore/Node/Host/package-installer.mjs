@@ -12,6 +12,7 @@ import {
   resolveEntryPoint,
 } from './package-compatibility.mjs';
 import { runMCPRuntimeProbe } from './runtime-probe.mjs';
+import {planLifecycleTree} from './lifecycle-planner.mjs';
 
 const NODE_VERSION = '24.5.0';
 const runtimeDependencyOverrides = JSON.parse(await fs.readFile(
@@ -51,6 +52,7 @@ export async function installPackage({
   arguments: serverArguments = [],
   signal,
   emit,
+  executeLifecycle,
 }) {
   validateID(operationID);
   validateID(serverID);
@@ -63,9 +65,12 @@ export async function installPackage({
   const cachePath = path.join(root, 'cache', 'npm');
   await fs.mkdir(stagingRoot, { recursive: true });
   await fs.mkdir(serversRoot, { recursive: true });
-  await fs.rm(operationRoot, { recursive: true, force: true });
-  await fs.rm(backupRoot, { recursive: true, force: true });
+  // Never erase a previous interrupted transaction or its sole old-version backup.
+  try {await fs.access(backupRoot);throw new Error('This installation backup already exists; recover its transaction before retrying.');}
+  catch(error){if(error.code!=='ENOENT')throw error;}
+  await fs.mkdir(operationRoot);
   await fs.mkdir(packageRoot, { recursive: true });
+  let backedUp=false,publishedNew=false;
 
   try {
     checkCancelled(signal);
@@ -123,12 +128,23 @@ export async function installPackage({
       legacyPeerDeps: true,
     });
     const actualTree = await arborist.reify({
-      omit: ['dev', 'optional'],
+      omit: ['dev'],
       ignoreScripts: true,
       signal,
       legacyPeerDeps: true,
     });
     verifyRuntimeDependencyOverrides(actualTree);
+
+    const lifecycle=await planLifecycleTree(actualTree,{includeRoot:true,rootContext:'registry',
+      identity:{...extractedManifest,integrity:resolved.integrity}});
+    const lifecycleRoot=path.join(packageRoot,'.hanlin-runtime');
+    await fs.mkdir(lifecycleRoot,{recursive:true});
+    await fs.writeFile(path.join(lifecycleRoot,'lifecycle-plan.json'),JSON.stringify(lifecycle));
+    if(!lifecycle.executable)throw new Error('Package lifecycle contains invalid portable-shell syntax.');
+    if(lifecycle.actions.length){
+      if(!executeLifecycle)throw new Error('Package installation requires the shared runtime lifecycle executor.');
+      await executeLifecycle({plan:lifecycle,packageRoot,signal});
+    }
 
     checkCancelled(signal);
     const selected = resolveEntryPoint(extractedManifest, entryPointOverride);
@@ -220,25 +236,21 @@ export async function installPackage({
     await fs.writeFile(path.join(metadataRoot, 'compatibility-report.json'), JSON.stringify(compatibility, null, 2));
 
     emit('install', { operationID, phase: 'registering', fraction: 0.9 });
-    try { await fs.access(finalRoot); await fs.rename(finalRoot, backupRoot); } catch (error) {
+    checkCancelled(signal);
+    try { await fs.access(finalRoot); await fs.rename(finalRoot, backupRoot);backedUp=true; } catch (error) {
       if (error.code !== 'ENOENT') throw error;
     }
     await fs.rename(packageRoot, finalRoot);
+    publishedNew=true;
+    checkCancelled(signal);
     await fs.rm(operationRoot, { recursive: true, force: true });
     return descriptor;
   } catch (error) {
     await fs.rm(operationRoot, { recursive: true, force: true });
     try {
-      await fs.access(backupRoot);
-      try {
-        await fs.access(finalRoot);
-      } catch (finalError) {
-        if (finalError.code !== 'ENOENT') throw finalError;
-        await fs.rename(backupRoot, finalRoot);
-      }
-    } catch (restoreError) {
-      if (restoreError.code !== 'ENOENT') throw new AggregateError([error, restoreError], 'Install failed and the prior package could not be restored.');
-    }
+      if(publishedNew)await fs.rm(finalRoot,{recursive:true,force:true});
+      if(backedUp)await fs.rename(backupRoot,finalRoot);
+    } catch(restoreError){throw new AggregateError([error,restoreError],'Install failed and the prior package could not be restored; its backup was retained.');}
     throw error;
   }
 }
@@ -340,10 +352,10 @@ function slug(value) {
 }
 
 function validateArguments(value) {
-  if (!Array.isArray(value) || value.length > 128) throw new Error('Invalid server arguments.');
+  if (!Array.isArray(value)) throw new Error('Invalid server arguments.');
   return value.map(item => {
     const argument = String(item);
-    if (/\0|\r|\n/.test(argument)) throw new Error('Invalid server argument.');
+    if (argument.includes('\0')) throw new Error('Invalid server argument.');
     return argument;
   });
 }

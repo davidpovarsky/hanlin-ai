@@ -319,6 +319,23 @@ actor NodeRuntimeService {
         }
     }
 
+    /// Observe a previously submitted operation without replaying its input.
+    func waitForExecution(id: UUID) async throws -> RuntimeExecutionResult {
+        let host = try await ensureRunning()
+        return try await withTaskCancellationHandler {
+            var delay = 25
+            while true {
+                try Task.checkCancellation()
+                let job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(id.uuidString.lowercased())")
+                if let reporter = RuntimeJobProgress.reporter { await reporter(job) }
+                if let result = job.result { return result }
+                if job.state.isTerminal { throw RuntimeCoreError.runtimeFailure("Job \(id): \(job.error ?? job.state.rawValue). Existing output is retained.") }
+                try await Task.sleep(for: .milliseconds(delay))
+                delay = min(delay * 2, 1000)
+            }
+        } onCancel: { Task { await self.cancelExecution(id: id) } }
+    }
+
     func hasLaunched() -> Bool { launchAttempted }
 
     /// Uses the same Node job/stdio/journal path. External commands require the

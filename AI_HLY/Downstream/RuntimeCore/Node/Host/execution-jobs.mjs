@@ -92,6 +92,68 @@ export class ExecutionJobs {
     return this.snapshot(id);
   }
 
+  /** Host-owned asynchronous operations share the existing job journal,
+   * cancellation/status/output APIs and interruption recovery. No new engine.
+   */
+  async startOperation({executionID,maximumOutputBytes=1_048_576,timeoutMilliseconds},operation) {
+    const id=String(executionID??randomUUID()).toLowerCase();
+    if(!validID(id))throw new Error('Invalid execution ID.');
+    if(this.#jobs.has(id))throw Object.assign(new Error('This execution ID already exists; operations are never replayed implicitly.'),{status:409});
+    if(timeoutMilliseconds!=null)throw new Error('Host package operations support cancellation, not an implicit HTTP deadline.');
+    if(!Number.isSafeInteger(maximumOutputBytes)||maximumOutputBytes<1)throw new Error('Invalid operation preview budget.');
+    const directory=path.join(this.root,id);
+    await fs.mkdir(directory,{mode:0o700});
+    const header={executionID:id,state:'queued',startedAt:Date.now(),cancellationRequested:false,stdoutBytes:0,stderrBytes:0,result:null};
+    const controller=new AbortController();
+    const job={header,cancel:async()=>controller.abort(new Error('Installation cancelled.'))};
+    this.#jobs.set(id,job);
+    await this.#persist(header);
+    job.completion=this.#runOperation(job,controller,operation,maximumOutputBytes).catch(async error=>{
+      header.state='failed';header.result=null;header.memoryOnlyFailure=true;header.error=String(error.message??error);
+      await this.#persist(header).catch(()=>{});
+    }).then(()=>{job.completion=null;job.cancel=null;});
+    return structuredClone(header);
+  }
+
+  async #runOperation(job,controller,operation,maximumOutputBytes) {
+    const {header}=job,directory=path.join(this.root,header.executionID),started=performance.now();
+    await Promise.all(['stdout','stderr'].map(channel=>fs.writeFile(path.join(directory,channel+'.log'),'',{mode:0o600})));
+    header.state='running';await this.#persist(header);
+    let writes=Promise.resolve(),writeError,value,error,failed=false;
+    const emit=progress=>{
+      header.progress=progress;
+      const line=JSON.stringify(progress)+'\n';
+      writes=writes.then(async()=>{
+        await fs.appendFile(path.join(directory,'stdout.log'),line);
+        header.stdoutBytes+=Buffer.byteLength(line);await this.#persist(header);
+      }).catch(cause=>{writeError??=cause;controller.abort(cause);});
+    };
+    try {controller.signal.throwIfAborted();value=await operation({signal:controller.signal,emit});}
+    catch(cause){error=cause;failed=true;}
+    await writes;
+    if(writeError){error=writeError;failed=true;}
+    if(failed)await fs.appendFile(path.join(directory,'stderr.log'),String(error?.stack??error));
+    header.state=header.cancellationRequested?'cancelled':failed?'failed':'completed';
+    header.error=failed?String(error?.message??error):null;header.completedAt=Date.now();
+    const files={},previews={};let remaining=maximumOutputBytes;
+    for(const channel of ['stdout','stderr']){
+      const file=path.join(directory,channel+'.log'),hash=createHash('sha256');let bytes=0;
+      for await(const chunk of createReadStream(file)){hash.update(chunk);bytes+=chunk.length;}
+      header[channel+'Bytes']=bytes;files[channel]={path:file,bytes,sha256:hash.digest('hex')};
+      const descriptor=await fs.open(file,'r');const buffer=Buffer.alloc(Math.min(bytes,remaining));
+      let read;
+      try{read=(await descriptor.read(buffer,0,buffer.length,0)).bytesRead;}finally{await descriptor.close();}
+      let end=read;
+      // Keep a valid UTF-8 prefix when the preview budget ends inside a scalar.
+      while(end&&Buffer.from(buffer.subarray(0,end).toString('utf8')).length>end)end--;
+      previews[channel]=buffer.subarray(0,end).toString('utf8');remaining-=read;
+    }
+    header.result={executionID:header.executionID,stdout:previews.stdout,stderr:previews.stderr,value:value??null,
+      exitCode:header.state==='completed'?0:1,durationMilliseconds:Math.round(performance.now()-started),
+      didTimeOut:false,wasCancelled:header.cancellationRequested,outputWasTruncated:header.stdoutBytes+header.stderrBytes>maximumOutputBytes,outputFiles:files};
+    await this.#persist(header);header.result=null;
+  }
+
   async cancel(id) {
     const job = this.#jobs.get(id);
     if (!job || terminalStates.has(job.header.state)) return job?.header ?? null;

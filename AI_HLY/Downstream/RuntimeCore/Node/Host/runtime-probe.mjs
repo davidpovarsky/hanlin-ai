@@ -53,8 +53,7 @@ async function runMCPRuntimeProbeAttempt(options) {
       },
       argv: validatedArguments(options.arguments),
       env: sanitizedEnvironment(workspace),
-      // The embedded host owns its process-level descriptors across Workers.
-      trackUnmanagedFds: false,
+      // Retain Node's default FD ownership tracking in the actual probe too.
       stdin: true,
       stdout: true,
       stderr: true,

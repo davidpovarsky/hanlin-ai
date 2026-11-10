@@ -25,7 +25,6 @@ test('worker stdin and stdout remain isolated for multiple servers', async () =>
   `);
   const create = () => new Worker(workerURL, {
     workerData: { packageRoot: root, entryPoint: path.join(root, 'server.mjs'), environment:{NODE_OPTIONS:'--not-a-bootstrap-flag',HOME:'/user-home'} },
-    trackUnmanagedFds: false,
     stdin: true, stdout: true, stderr: true,
   });
   const first = create();

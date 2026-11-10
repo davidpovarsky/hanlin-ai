@@ -78,6 +78,61 @@ struct RuntimeAutonomyV3Tests {
         #expect(!FileManager.default.fileExists(atPath: workspace.appending(path: "forbidden.txt").path))
     }
 
+    @Test(.timeLimit(.minutes(2)))
+    func mcpInstallationIsADurableJobAndRunsNativeHooksBeforeTheRealProtocolProbe() async throws {
+        let core = AppRuntimeCore.shared
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "mcp-hook-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let package = workspace.appending(path: "package", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: package, withIntermediateDirectories: true)
+        let manifest: [String: Any] = ["name": "hanlin-native-mcp-hooks", "version": "1.0.0", "type": "module", "bin": ["fixture": "server.mjs"], "scripts": [
+            "install": "VALUE='שלום world' python3 build.py && node verify.cjs",
+            "prepare": "false"
+        ]]
+        try JSONSerialization.data(withJSONObject: manifest).write(to: package.appending(path: "package.json"))
+        try Data("""
+        import os, pathlib
+        assert os.environ['VALUE'] == 'שלום world'
+        assert os.environ['npm_lifecycle_event'] == 'install'
+        pathlib.Path('marker.txt').write_text('READY', encoding='utf8')
+        """.utf8).write(to: package.appending(path: "build.py"))
+        try Data("if(require('node:fs').readFileSync('marker.txt','utf8')!=='READY')throw Error('hook ordering');".utf8).write(to: package.appending(path: "verify.cjs"))
+        try Data("""
+        import {readFileSync} from 'node:fs'; import {createInterface} from 'node:readline';
+        if(readFileSync(new URL('./marker.txt',import.meta.url),'utf8')!=='READY')throw Error('missing lifecycle output');
+        if(process.argv.slice(2).length!==257 || process.argv.at(-1)!=='שלום\\nargument')throw Error('argv transport');
+        createInterface({input:process.stdin}).on('line',line=>{
+          const request=JSON.parse(line);let result;
+          if(request.method==='initialize')result={protocolVersion:request.params.protocolVersion,capabilities:{tools:{}},serverInfo:{name:'hooks',version:'1.0.0'}};
+          if(request.method==='tools/list')result={tools:[{name:'fixture',description:'Native hooks',inputSchema:{type:'object'}}]};
+          if(result)process.stdout.write(JSON.stringify({jsonrpc:'2.0',id:request.id,result})+'\\n');
+        });
+        """.utf8).write(to: package.appending(path: "server.mjs"))
+        let archive = workspace.appending(path: "fixture.tgz")
+        let tar = try await core.shell.execute(tokens: ["tar", "-czf", archive.path, "-C", workspace.path, "package"], workspace: workspace, environment: [:], allowNetwork: false)
+        #expect(tar.exitCode == 0, "\(tar.stderr)")
+        let operationID = UUID(), serverID = UUID()
+        do {
+            let descriptor = try await core.node.installMCPPackage(spec: MCPPackageSpec(localArchive: archive), operationID: operationID,
+                serverID: serverID, entryPointOverride: nil, arguments: (0..<256).map { "argument-\($0)" } + ["שלום\nargument"])
+            #expect(descriptor.compatibility.runtimeProbePassed)
+            let observedJob = try await core.node.existingExecution(id: operationID)
+            let job = try #require(observedJob)
+            #expect(job.state == .completed && job.result?.exitCode == 0)
+            let artifact = try #require(job.result?.outputFiles?["stdout"])
+            #expect(artifact.bytes > 0)
+            let data = try Data(contentsOf: URL(fileURLWithPath: artifact.path))
+            let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+            #expect(digest == artifact.sha256)
+            #expect(String(decoding: data, as: UTF8.self).contains("installingDependencies"))
+            try await core.node.rollbackMCPInstall(operationID: operationID, serverID: serverID)
+        } catch {
+            try? await core.node.cancelMCPInstall(operationID: operationID)
+            try? await core.node.rollbackMCPInstall(operationID: operationID, serverID: serverID)
+            throw error
+        }
+    }
+
     @Test(.timeLimit(.minutes(1)))
     func cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "python-queue-\(UUID().uuidString)")

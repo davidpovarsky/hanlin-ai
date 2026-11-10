@@ -39,12 +39,23 @@ extension NodeRuntimeService {
             "operationID": operationID.uuidString.lowercased(),
             "serverID": serverID.uuidString.lowercased(),
             "source": source,
-            "arguments": arguments
+            "arguments": arguments,
+            "detached": true
         ]
         if let entryPointOverride { body["entryPointOverride"] = entryPointOverride }
         let encodedBody = try JSONSerialization.data(withJSONObject: body)
-        let data = try await host.data(path: "/v1/install", method: "POST", body: encodedBody, timeout: 600)
-        return try JSONDecoder.mcp.decode(MCPServerDescriptor.self, from: data)
+        do {
+            _ = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/install", method: "POST", body: encodedBody)
+        } catch let error as URLError where [.timedOut, .networkConnectionLost].contains(error.code) {
+            // Recover the same operation ID after an ambiguous acknowledgement.
+            // Never repeat installation side effects.
+        }
+        let result = try await waitForExecution(id: operationID)
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure("MCP installation \(operationID) failed. \(result.stderr)")
+        }
+        return try JSONDecoder.mcp.decode(MCPServerDescriptor.self, from: JSONEncoder().encode(value))
     }
 
     func commitMCPInstall(operationID: UUID, serverID: UUID) async throws {
@@ -77,5 +88,9 @@ extension NodeRuntimeService {
             "operationID": operationID.uuidString.lowercased()
         ])
         _ = try await host.data(path: "/v1/install/cancel", method: "POST", body: body)
+        // Cleanup/rollback may only remove staging after the real operation and
+        // any linked native lifecycle command have drained. The caller's own
+        // cancellation must not cancel this ownership handoff.
+        await Task.detached { _ = try? await self.waitForExecution(id: operationID) }.value
     }
 }

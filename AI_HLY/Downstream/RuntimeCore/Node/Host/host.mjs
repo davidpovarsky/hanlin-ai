@@ -1,5 +1,6 @@
 import { verifyLifecyclePlan } from './lifecycle-planner.mjs';
 import { globalNodeModules } from './global-package-state.mjs';
+import {executeLifecycleInJobs} from './lifecycle-executor.mjs';
 import { ExecutionJobs } from './execution-jobs.mjs';
 import './fetch-compatibility.mjs';
 import { traceRuntimeWarnings } from './warning-diagnostics.mjs';
@@ -96,7 +97,6 @@ const serverRestarts = new Map();
 const serverGenerations = new Map();
 const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: () => globalNodeModules(root) });
 await executionJobs.initialize();
-const installs = new Map();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
 const maximumLine = 8 * 1024 * 1024;
@@ -219,7 +219,10 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'GET' && installStatusMatch) {
       const operationID = installStatusMatch[1].toLowerCase();
       if (!validID(operationID)) return json(response, 400, { error: 'Invalid operation ID' });
-      return json(response, 200, { progress: installProgress.get(operationID) ?? null });
+      const job=executionJobs.snapshot(operationID);
+      let progress=installProgress.get(operationID)??job?.progress??null;
+      if(job?.state==='interrupted'&&progress)progress={...progress,terminalError:{code:'interrupted',message:job.error}};
+      return json(response, 200, { progress });
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/preview') {
       const body = await readJSON(request);
@@ -227,14 +230,9 @@ const server = http.createServer(async (request, response) => {
     }
     if (request.method === 'POST' && url.pathname === '/v1/install') {
       const body = await readJSON(request);
-      const controller = new AbortController();
-      installs.set(body.operationID, controller);
-      installProgress.set(body.operationID, {
-        operationID: body.operationID,
-        phase: 'resolving',
-        fraction: 0,
-      });
-      try {
+      const operation = await executionJobs.startOperation({executionID:body.operationID},async({signal,emit})=>{
+        const progress=data=>{installProgress.set(body.operationID,data);emit(data);emitGlobal('install',data);};
+        progress({operationID:body.operationID,phase:'resolving',fraction:0});
         try {
           const descriptor = await installPackage({
             root,
@@ -243,17 +241,21 @@ const server = http.createServer(async (request, response) => {
             source: body.source,
             entryPointOverride: body.entryPointOverride,
             arguments: body.arguments,
-            signal: controller.signal,
+            signal,
+            executeLifecycle: options=>executeLifecycleInJobs({...options,jobs:executionJobs,
+              onProgress: detail=>{
+                progress({operationID:body.operationID,phase:'installingDependencies',fraction:0.68,lifecycle:detail});
+              }}),
             emit: (channel, data) => {
-              if (channel === 'install') installProgress.set(body.operationID, data);
-              emitGlobal(channel, data);
+              if (channel === 'install') progress(data);
+              else emitGlobal(channel, data);
             },
           });
-          return json(response, 200, descriptor);
+          return descriptor;
         } catch (error) {
           error.operationID = body.operationID;
           const prior = installProgress.get(body.operationID);
-          installProgress.set(body.operationID, {
+          progress({
             operationID: body.operationID,
             phase: prior?.phase ?? 'checkingCompatibility',
             fraction: prior?.fraction ?? null,
@@ -265,14 +267,15 @@ const server = http.createServer(async (request, response) => {
           });
           throw error;
         }
-      } finally {
-        installs.delete(body.operationID);
-      }
+      });
+      if(body.detached===true)return json(response,200,operation);
+      const completed=await executionJobs.wait(operation.executionID);
+      if(completed.state!=='completed')throw new Error(completed.error??completed.result?.stderr??'Installation failed.');
+      return json(response,200,completed.result.value);
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/cancel') {
       const body = await readJSON(request);
-      installs.get(body.operationID)?.abort(new Error('Installation cancelled.'));
-      installProgress.delete(body.operationID);
+      await executionJobs.cancel(body.operationID);
       return json(response, 200, { cancelled: true });
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/commit') {
@@ -617,8 +620,7 @@ async function startServer(id, configuration) {
     // Server values are applied after loading the wrapper, never as bootstrap
     // NODE_OPTIONS. The Host's launch identity/configuration stays immutable.
     env: { ...executionJobs.workerEnvironment, HANLIN_MCP_SERVER_ID: id },
-    // The embedded host owns its process-level descriptors across Workers.
-    trackUnmanagedFds: false,
+    // Retain Node's default FD ownership tracking; never conceal regressions.
     stdin: true,
     stdout: true,
     stderr: true,
