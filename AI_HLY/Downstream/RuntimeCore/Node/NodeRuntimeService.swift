@@ -49,6 +49,7 @@ struct RuntimeHostConnection: Sendable {
 }
 
 struct TypeScriptCompilationResult: Codable, Sendable {
+    let compilerVersion: String?
     struct Diagnostic: Codable, Sendable, Identifiable {
         let code: Int
         let category: String?

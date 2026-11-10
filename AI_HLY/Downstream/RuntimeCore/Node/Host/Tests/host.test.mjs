@@ -291,6 +291,7 @@ test('host redirects npm state before preview and install modules initialize', a
       fileName: 'main.ts',
     });
     assert.equal(compiled.succeeded, true, JSON.stringify(compiled.diagnostics));
+    assert.equal(compiled.compilerVersion, (await import('typescript')).version);
     assert.match(compiled.javaScript, /const answer = 42/);
 
     const nodeTypes = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {

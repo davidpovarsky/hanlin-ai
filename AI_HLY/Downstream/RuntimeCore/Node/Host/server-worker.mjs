@@ -8,7 +8,11 @@ import * as nodeModule from 'node:module';
 import { readFileSync, promises as fs } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
-import ts from 'typescript';
+// Pin resolution to the Host before package hooks run, but load the compiler
+// only for a reachable TS module. Plain JS servers need no compiler startup.
+const hostRequire = nodeModule.createRequire(import.meta.url);
+const compilerPath = hostRequire.resolve('typescript');
+let compiler;
 
 for (const [name, value] of Object.entries(workerData.environment ?? {})) process.env[name] = String(value);
 if (workerData.serverID) process.env.HANLIN_MCP_SERVER_ID = workerData.serverID;
@@ -81,6 +85,7 @@ nodeModule.registerHooks({
     if (typeof url === 'string' && url.startsWith('file:') && /\.(?:ts|cts|mts)$/i.test(url)) {
       const file = fileURLToPath(url);
       if (!insidePackage(file)) return nextLoad(url, context);
+      const ts = compiler ??= hostRequire(compilerPath);
       const isCommonJS = /\.cts$/i.test(file);
       const result = ts.transpileModule(sanitizeUnicodePropertyRegexes(readFileSync(file, 'utf8')), {
         fileName: file,

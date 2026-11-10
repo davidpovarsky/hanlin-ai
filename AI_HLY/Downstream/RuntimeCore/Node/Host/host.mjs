@@ -488,7 +488,7 @@ async function compileTypeScript(body) {
     }
   }
   const failed = diagnostics.some(item => item.category === ts.DiagnosticCategory.Error);
-  return { javaScript: failed ? null : javaScript, sourceMap: failed ? null : sourceMap, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
+  return { compilerVersion: ts.version, javaScript: failed ? null : javaScript, sourceMap: failed ? null : sourceMap, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
 }
 
 async function compileTypeScriptProject(body) {

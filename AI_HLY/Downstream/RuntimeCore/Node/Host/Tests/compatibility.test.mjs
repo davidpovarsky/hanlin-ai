@@ -223,6 +223,11 @@ test('runtime probe bounds forced shutdown after MCP protocol success', { timeou
     }));
     await fs.writeFile(entryPoint, `
       import readline from 'node:readline';
+      import {createRequire} from 'node:module';
+      const cache = createRequire(import.meta.url).cache;
+      if (Object.keys(cache).some(file => /[\\\\/]typescript[\\\\/]lib[\\\\/]/.test(file))) {
+        throw new Error('Plain JavaScript server eagerly loaded the TypeScript compiler');
+      }
       setInterval(() => {}, 60_000);
       const lines = readline.createInterface({ input: process.stdin });
       lines.on('line', line => {

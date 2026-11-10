@@ -7,6 +7,54 @@ import Testing
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
     @Test(.timeLimit(.minutes(2)))
+    func stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt() async throws {
+        let core = AppRuntimeCore.shared
+        _ = try await core.ensureStarted(.node)
+        let service = TypeScriptRuntimeService(node: core.node)
+        _ = try await service.healthCheck()
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "typescript-stop-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let request = RuntimeExecutionRequest(source: "", workspace: workspace)
+        let task = Task {
+            try await service.compileAndExecute(
+                source: "console.log('actual TypeScript worker entered'); export default new Promise(resolve => setTimeout(() => resolve(17), 30000));",
+                request: request
+            )
+        }
+        defer { task.cancel() }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(15))
+        var entered = false
+        while ContinuousClock.now < deadline {
+            if let record = try await core.jobs.refresh(id: request.id, kind: .node), record.stdoutBytes > 0 { entered = true; break }
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        try #require(entered, "The actual compiled TypeScript worker did not produce entry bytes")
+        _ = await service.stop()
+        let receipt = try #require(try await task.value.execution)
+        #expect(receipt.wasCancelled && (receipt.outputFiles?["stdout"]?.bytes ?? 0) > 0)
+        #expect(try await core.jobs.snapshot(id: request.id, kind: .node)?.state == .cancelled)
+        #expect(await service.snapshot().state == .stopped)
+    }
+
+    @Test(.timeLimit(.minutes(2)))
+    func typeScriptReportsTheActualCompilerAndItsOwnStoppedState() async throws {
+        let core = AppRuntimeCore.shared
+        _ = try await core.ensureStarted(.node)
+        let service = TypeScriptRuntimeService(node: core.node)
+        let health = try await service.healthCheck()
+        let compiled = try await service.compile(source: "export const actualCompiler: number = 17;")
+        let version = try #require(compiled.compilerVersion)
+        #expect(!version.isEmpty && health.version == version && health.state == .ready)
+        _ = await service.stop()
+        let stopped = await service.snapshot()
+        let node = await core.node.snapshot()
+        #expect(stopped.state == .stopped && stopped.version == version)
+        #expect(node.state == .ready || node.state == .executing)
+        let restarted = try await service.healthCheck()
+        #expect(restarted.state == .ready && restarted.version == version)
+    }
+
+    @Test(.timeLimit(.minutes(2)))
     func explicitNativeCommandModuleUsesActualPythonAndLinkedBsdWithFullArtifacts() async throws {
         let core = AppRuntimeCore.shared
         let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "native-command-api-\(UUID().uuidString)")
