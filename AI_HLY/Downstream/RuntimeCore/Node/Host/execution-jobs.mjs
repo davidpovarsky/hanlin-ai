@@ -184,13 +184,41 @@ export class ExecutionJobs {
   }
 
   async cancel(id) {
+    if (!validID(id)) throw new Error('Invalid execution ID.');
     const job = this.#jobs.get(id);
-    if (!job || terminalStates.has(job.header.state)) return job?.header ?? null;
+    if (!job) return this.#recordNeverStarted(id,'cancelled','Cancelled before this execution was submitted.');
+    if (job.pendingReceipt) { await job.ready; return job.header; }
+    if (terminalStates.has(job.header.state)) { await job.ready; return job.header; }
     job.header.cancellationRequested = true;
     await job.ready;
     await this.#persist(job.header);
     if (job.cancel) await job.cancel();
     return job.header;
+  }
+
+  async #recordNeverStarted(id,state,reason) {
+    const now=Date.now();
+    const header={executionID:id,state:'queued',startedAt:now,
+      cancellationRequested:true,stdoutBytes:0,stderrBytes:0,result:null,error:reason,neverStarted:false,
+      ...(state==='interrupted'?{interruptionReason:reason}:{})};
+    const receipt={header,pendingReceipt:true};
+    // Reserve synchronously. Repeated cancel/interrupt requests wait for the
+    // same durable receipt rather than acknowledging before its write settles.
+    this.#jobs.set(id,receipt);
+    receipt.ready=(async()=>{
+      await fs.mkdir(path.join(this.root,id),{mode:0o700});
+      header.state=state;header.completedAt=now;header.neverStarted=true;
+      await this.#persist(header);
+    })();
+    try {await receipt.ready;}
+    catch(error){
+      // Unknown pre-existing/corrupt journals are not proof of "never started".
+      // Preserve every file and block the ID without overwriting their history.
+      header.neverStarted=false;header.memoryOnlyFailure=true;header.state='interrupted';
+      header.error='Cancellation could not establish a new journal; existing files were preserved. '+String(error.message??error);
+      throw error;
+    } finally {receipt.pendingReceipt=false;}
+    return header;
   }
 
   async interrupt(id, reason) {
@@ -201,18 +229,10 @@ export class ExecutionJobs {
       // An authenticated interruption may arrive before its original POST.
       // Persist a terminal, never-started receipt; later submission cannot run
       // side effects with an ID the original user operation already cancelled.
-      const now=Date.now();
-      const header={executionID:id,state:'interrupted',startedAt:now,completedAt:now,
-        cancellationRequested:true,stdoutBytes:0,stderrBytes:0,result:null,
-        interruptionReason:reason,error:reason,neverStarted:true};
-      const receipt={header};
-      this.#jobs.set(id,receipt);
-      receipt.ready=fs.mkdir(path.join(this.root,id),{recursive:true,mode:0o700});
-      await receipt.ready;
-      await this.#persist(header);
-      return header;
+      return this.#recordNeverStarted(id,'interrupted',reason);
     }
-    if (terminalStates.has(job.header.state)) return job.header;
+    if (job.pendingReceipt) { await job.ready; return job.header; }
+    if (terminalStates.has(job.header.state)) { await job.ready; return job.header; }
     job.header.interruptionReason ??= reason;
     return this.cancel(id);
   }

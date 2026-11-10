@@ -5,6 +5,16 @@ enum RuntimeJobState: String, Codable, Sendable {
     var isTerminal: Bool { [.completed, .failed, .cancelled, .interrupted].contains(self) }
 }
 
+struct RuntimeExecutionInputReceipt: Codable, Sendable {
+    let fileName: String
+    let bytes: Int64?
+    let sha256: String?
+    let verified: Bool
+    let inboxFileName: String?
+    let expectedBytes: Int64?
+    let expectedSha256: String?
+}
+
 struct RuntimeJobSnapshot: Codable, Sendable {
     let executionID: UUID
     var state: RuntimeJobState
@@ -16,6 +26,7 @@ struct RuntimeJobSnapshot: Codable, Sendable {
     var result: RuntimeExecutionResult?
     var error: String?
     var interruptionReason: String?
+    var inputArtifact: RuntimeExecutionInputReceipt? = nil
 }
 
 struct RuntimeJobInterruptionError: LocalizedError, Sendable {

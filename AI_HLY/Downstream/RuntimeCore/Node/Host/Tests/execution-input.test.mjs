@@ -139,3 +139,32 @@ test('actual process termination during preflight recovers the claimed input as 
   await assert.rejects(fs.access(path.join(root,'must-not-run')),error=>error.code==='ENOENT');
   await assert.rejects(reopened.start(input.envelope),error=>error.status===409);
 });
+
+test('ordinary cancellation before POST persists the first cause and prevents delayed file or Host operation side effects',async t=>{
+  const value=await fixture(t),{root,jobs}=value;
+  const input=await writeInput(value,{source:"import {writeFileSync} from 'node:fs';writeFileSync('must-not-run','bad');"});
+  const pending=jobs.cancel(input.id);
+  assert.equal(jobs.snapshot(input.id).state,'queued');
+  assert.equal(jobs.snapshot(input.id).neverStarted,false,'No never-started classification before exclusive directory ownership');
+  const [first,second]=await Promise.all([pending,jobs.cancel(input.id)]);
+  assert.equal(first.state,'cancelled');assert.equal(second.state,'cancelled');assert.equal(first.neverStarted,true);
+  await jobs.interrupt(input.id,'Later system interruption');
+  assert.equal(jobs.snapshot(input.id).state,'cancelled');assert.equal(jobs.snapshot(input.id).interruptionReason,undefined);
+  const reopened=new ExecutionJobs({root:path.join(root,'jobs','node')});await reopened.initialize();
+  assert.equal(reopened.snapshot(input.id).state,'cancelled');
+  await assert.rejects(reopened.start(input.envelope),error=>error.status===409);
+  await assert.rejects(reopened.startOperation({executionID:input.id},async()=>{throw Error('must not execute');}),error=>error.status===409);
+  assert.deepEqual(await fs.readFile(input.file),input.bytes);
+  await assert.rejects(fs.access(path.join(root,'must-not-run')),error=>error.code==='ENOENT');
+});
+
+test('cancelling an unregistered pre-existing journal never overwrites or classifies its history as never-started',async t=>{
+  const {root,jobs}=await fixture(t),id=randomUUID(),directory=path.join(root,'jobs','node',id);
+  await fs.mkdir(directory);await fs.writeFile(path.join(directory,'job.json'),'original unknown journal');
+  await fs.writeFile(path.join(directory,'stdout.log'),'prior output');
+  await assert.rejects(jobs.cancel(id),error=>error.code==='EEXIST');
+  assert.equal(jobs.snapshot(id).neverStarted,false);
+  assert.equal(await fs.readFile(path.join(directory,'job.json'),'utf8'),'original unknown journal');
+  assert.equal(await fs.readFile(path.join(directory,'stdout.log'),'utf8'),'prior output');
+  await assert.rejects(jobs.start({executionID:id,source:'throw Error("must not execute")'}),error=>error.status===409);
+});

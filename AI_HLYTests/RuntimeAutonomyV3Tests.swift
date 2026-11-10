@@ -256,6 +256,9 @@ struct RuntimeAutonomyV3Tests {
         let receipt = try #require(journal["inputArtifact"] as? [String: Any])
         #expect(receipt["bytes"] as? Int == saved.count)
         #expect(receipt["sha256"] as? String == SHA256.hash(data: saved).map { String(format: "%02x", $0) }.joined())
+        let typed = try #require(try await AppRuntimeCore.shared.node.existingExecution(id: id))
+        #expect(typed.inputArtifact?.verified == true && typed.inputArtifact?.bytes == Int64(saved.count))
+        #expect(typed.inputArtifact?.sha256 == receipt["sha256"] as? String)
         #expect(!FileManager.default.fileExists(atPath: RuntimeFileLayout.default.nodeRuntime.appending(path: "requests/\(id.uuidString.lowercased()).json").path))
     }
 

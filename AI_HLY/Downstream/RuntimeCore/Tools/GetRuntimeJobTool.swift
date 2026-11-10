@@ -8,7 +8,7 @@ struct GetRuntimeJobTool: NativeTool {
     }
 
     func openAIToolSchema() -> [String: Any] {
-        NativeToolSchema.function(name: name, description: "Read a retained Node/TypeScript, Python or Shell job, request cancellation, or read lossless stdout/stderr byte pages. Cancellation remains requested until the actual worker/native call stops. A queued Shell command can be cancelled; running linked Shell commands currently must finish naturally. Reading never repeats program side effects.", parameters: NativeToolSchema.object(properties: [
+        NativeToolSchema.function(name: name, description: "Read a retained Node/TypeScript, Python or Shell job, request cancellation, or read lossless stdout/stderr byte pages. Status includes a retained input size/hash receipt when present, without injecting source or environment into the conversation. Cancellation remains requested until the actual worker/native call stops. A queued Shell command can be cancelled; running linked Shell commands currently must finish naturally. Reading never repeats program side effects.", parameters: NativeToolSchema.object(properties: [
             "operation": NativeToolSchema.string(description: "Operation", enumValues: ["status", "read", "cancel"]),
             "runtime": NativeToolSchema.string(description: "Execution engine", enumValues: ["node", "python", "shell"]),
             "job_id": NativeToolSchema.string(description: "UUID returned by runtime execution/progress"),
@@ -59,6 +59,9 @@ struct GetRuntimeJobTool: NativeTool {
                     record.error = "The Node host is not running in this app session. Partial output is retained."
                 }
                 var status: [String: Any] = ["job_id": id.uuidString, "state": record.state.rawValue, "cancellation_requested": record.cancellationRequested, "stdout_bytes": record.stdoutBytes, "stderr_bytes": record.stderrBytes]
+                if let input = record.inputArtifact {
+                    status["input_artifact"] = try JSONSerialization.jsonObject(with: JSONEncoder().encode(input))
+                }
                 if let error = record.error { status["error"] = AgentDiagnosticsRedactor.sanitize(error) }
                 text = String(decoding: try JSONSerialization.data(withJSONObject: status, options: [.sortedKeys]), as: UTF8.self)
             }
