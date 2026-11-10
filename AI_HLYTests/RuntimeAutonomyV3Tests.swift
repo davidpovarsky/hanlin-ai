@@ -133,6 +133,42 @@ struct RuntimeAutonomyV3Tests {
         }
     }
 
+    @Test(.timeLimit(.minutes(2)))
+    func actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations() async throws {
+        let core = AppRuntimeCore.shared
+        let previous = try await core.nodePackages.installed().first { $0.name == "is-number" }
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "npm-generation-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        do {
+            let first = try await core.nodePackages.install(name: "is-number", version: "7.0.0")
+            let firstRoot = try #require(first.packageRoot)
+            let source = """
+            import isNumber from 'is-number';import {fileURLToPath} from 'node:url';
+            if(!isNumber('42') || isNumber('not a number'))throw Error('actual package behavior');
+            console.log(fileURLToPath(import.meta.resolve('is-number')));export default true;
+            """
+            let imported = try await core.node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+            #expect(imported.exitCode == 0 && imported.value == .boolean(true), "\(imported.stderr)")
+            #expect(imported.stdout.contains(firstRoot))
+            let second = try await core.nodePackages.install(name: "is-number", version: "6.0.0")
+            let secondRoot = try #require(second.packageRoot)
+            #expect(secondRoot != firstRoot)
+            #expect(FileManager.default.fileExists(atPath: firstRoot + "/package.json"))
+            let updated = try await core.node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+            #expect(updated.exitCode == 0 && updated.stdout.contains(secondRoot), "\(updated.stderr)")
+            try await core.nodePackages.uninstall(name: "is-number")
+            let remaining = try await core.nodePackages.installed()
+            #expect(!remaining.contains { $0.name == "is-number" })
+            let removed = try await core.node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+            #expect(removed.exitCode != 0 && removed.stderr.contains("is-number"))
+            if let previous { _ = try await core.nodePackages.install(name: previous.name, version: previous.version) }
+        } catch {
+            if let previous { _ = try? await core.nodePackages.install(name: previous.name, version: previous.version) }
+            else { try? await core.nodePackages.uninstall(name: "is-number") }
+            throw error
+        }
+    }
+
     @Test(.timeLimit(.minutes(1)))
     func cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "python-queue-\(UUID().uuidString)")
