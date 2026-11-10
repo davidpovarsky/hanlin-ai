@@ -96,7 +96,8 @@ enum RuntimeToolSupport {
             userText: body.isEmpty ? fallback : body,
             uiBlocks: [block],
             outcome: outcome,
-            diagnostics: diagnostics
+            diagnostics: diagnostics,
+            isStoreEligible: !(result.outputFiles?.isEmpty ?? true)
         )
     }
 

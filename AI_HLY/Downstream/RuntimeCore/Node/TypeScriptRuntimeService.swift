@@ -43,7 +43,7 @@ actor TypeScriptRuntimeService {
         stopGeneration &+= 1
         stopRequested = true
         snapshotValue.state = activeOperations == 0 ? .stopped : .executing
-        snapshotValue.lastDiagnostic = activeOperations == 0 ? nil : "Stop requested. Active compilation must return; managed Node executions receive cancellation and no compiled result starts new work."
+        snapshotValue.lastDiagnostic = activeOperations == 0 ? nil : "Stop requested. Managed compiler and execution Workers receive cancellation; no compiled result starts new work."
         for id in Array(activeExecutions) { await node.cancelExecution(id: id) }
         return snapshotValue
     }
@@ -92,8 +92,11 @@ actor TypeScriptRuntimeService {
     func compile(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil) async throws -> TypeScriptCompilationResult {
         let generation = try begin()
         defer { end() }
+        let compilerID = UUID()
+        activeExecutions.insert(compilerID)
+        defer { activeExecutions.remove(compilerID) }
         do {
-            let result = try await node.compileTypeScript(source: source, fileName: fileName, tsconfig: tsconfig)
+            let result = try await node.compileTypeScript(source: source, fileName: fileName, tsconfig: tsconfig, id: compilerID)
             observed(version: result.compilerVersion)
             try check(generation)
             return result
@@ -104,7 +107,13 @@ actor TypeScriptRuntimeService {
         let generation = try begin()
         defer { end() }
         do {
-            let compilation = try await node.compileTypeScript(source: source, fileName: fileName, tsconfig: tsconfig)
+            let compilerID = UUID()
+            activeExecutions.insert(compilerID)
+            let compilation: TypeScriptCompilationResult
+            do {
+                defer { activeExecutions.remove(compilerID) }
+                compilation = try await node.compileTypeScript(source: source, fileName: fileName, tsconfig: tsconfig, id: compilerID)
+            }
             observed(version: compilation.compilerVersion)
             try check(generation)
             guard compilation.succeeded, let javaScript = compilation.javaScript else { return TypeScriptExecutionResult(compilation: compilation, execution: nil) }
@@ -129,8 +138,11 @@ actor TypeScriptRuntimeService {
     func compileProject(workspace: URL, arguments: [String]) async throws -> TypeScriptProjectCompilationResult {
         let generation = try begin()
         defer { end() }
+        let compilerID = UUID()
+        activeExecutions.insert(compilerID)
+        defer { activeExecutions.remove(compilerID) }
         do {
-            let result = try await node.compileTypeScriptProject(workspace: workspace, arguments: arguments)
+            let result = try await node.compileTypeScriptProject(workspace: workspace, arguments: arguments, id: compilerID)
             observed(version: result.compilerVersion)
             try check(generation)
             return result

@@ -7,6 +7,59 @@ import Testing
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
     @Test(.timeLimit(.minutes(2)))
+    func stoppingAnActualCompilerJobNeverLaunchesItsCompiledSource() async throws {
+        let core = AppRuntimeCore.shared
+        let service = TypeScriptRuntimeService(node: core.node)
+        _ = try await core.ensureStarted(.node)
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "typescript-compiler-stop-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let request = RuntimeExecutionRequest(source: "", workspace: workspace)
+        let source = "/*" + String(repeating: "actual compiler source ", count: 600_000)
+            + "*/\nconsole.log('compiled source must never launch'); export default 17;"
+        var compilerID: UUID?
+        let reporter: RuntimeJobProgress.Reporter = { record in
+            guard record.state == .running, compilerID == nil else { return }
+            compilerID = record.executionID
+            _ = await service.stop()
+        }
+        do {
+            _ = try await RuntimeJobProgress.$reporter.withValue(reporter) {
+                try await service.compileAndExecute(source: source, request: request)
+            }
+            Issue.record("Stopped compiler incorrectly returned a compiled execution")
+        } catch is CancellationError {
+            let id = try #require(compilerID, "The actual compiler job must have entered running state")
+            #expect(try await core.node.existingExecution(id: id)?.state == .cancelled)
+            #expect(try await core.jobs.snapshot(id: request.id, kind: .node) == nil)
+            #expect(await service.snapshot().state == .stopped)
+        }
+    }
+
+    @Test(.timeLimit(.minutes(4)))
+    func actualTypeScriptCompilerUsesLargeDurableInputAndRetrievableFullOutput() async throws {
+        let core = AppRuntimeCore.shared
+        let service = TypeScriptRuntimeService(node: core.node)
+        let comment = String(repeating: "שלום🙂 ", count: 1_100_000)
+        let source = "/*\(comment)*/\nexport const retainedCompilerValue: number = 17;"
+        #expect(source.utf8.count > 10 * 1024 * 1024)
+        let compiled = try await service.compile(source: source, fileName: "מקור.ts", tsconfig: [
+            "compilerOptions": .object(["types": .array([]), "skipLibCheck": .boolean(true)])
+        ])
+        #expect(compiled.succeeded && compiled.javaScript?.contains("retainedCompilerValue") == true)
+        let id = try #require(compiled.executionID)
+        let journal = try #require(try await core.node.existingExecution(id: id))
+        #expect(journal.state == .completed && journal.inputArtifact?.verified == true)
+        #expect((journal.inputArtifact?.bytes ?? 0) > 10 * 1024 * 1024)
+        let artifact = try #require(journal.result?.outputFiles?["stdout"])
+        let bytes = try Data(contentsOf: URL(filePath: artifact.path))
+        #expect(bytes.count > 10 * 1024 * 1024 && Int64(bytes.count) == artifact.bytes)
+        #expect(SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined() == artifact.sha256)
+        let reopened = try JSONDecoder().decode(TypeScriptCompilationResult.self, from: bytes)
+        #expect(reopened.executionID == id && reopened.sourceMap == compiled.sourceMap)
+        #expect(reopened.javaScript == compiled.javaScript && reopened.compilerVersion == compiled.compilerVersion)
+    }
+
+    @Test(.timeLimit(.minutes(2)))
     func stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt() async throws {
         let core = AppRuntimeCore.shared
         _ = try await core.ensureStarted(.node)
@@ -771,6 +824,7 @@ struct RuntimeAutonomyV3Tests {
         let result = RuntimeToolSupport.result(execution, title: "Local Python", systemImage: "terminal", runtimeKind: .localPython, argumentKeys: ["source"])
         #expect(result.modelText.contains(id.uuidString) && result.modelText.contains("get_runtime_job"))
         #expect(result.modelText.contains("SHA256"))
+        #expect(result.isStoreEligible, "Large runtime values must use the existing full result store and read pages")
         #expect(result.userText == "42\n")
         #expect(result.uiBlocks.first?.body == "42\n")
         #expect(result.uiBlocks.first?.subtitle == nil)

@@ -49,6 +49,7 @@ struct RuntimeHostConnection: Sendable {
 }
 
 struct TypeScriptCompilationResult: Codable, Sendable {
+    let executionID: UUID?
     let compilerVersion: String?
     struct Diagnostic: Codable, Sendable, Identifiable {
         let code: Int
@@ -67,6 +68,7 @@ struct TypeScriptCompilationResult: Codable, Sendable {
 }
 
 struct TypeScriptProjectCompilationResult: Codable, Sendable {
+    let executionID: UUID?
     let compilerVersion: String?
     let compilerIntegrity: String?
     let diagnostics: [TypeScriptCompilationResult.Diagnostic]
@@ -564,31 +566,48 @@ actor NodeRuntimeService {
         return try await connection.decode(RuntimeJobSnapshot.self, path: "/v1/executions/\(id.uuidString.lowercased())", timeout: 5)
     }
 
-    func compileTypeScript(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil) async throws -> TypeScriptCompilationResult {
-        let host = try await ensureRunning()
+    func compileTypeScript(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil,
+                           id: UUID = UUID()) async throws -> TypeScriptCompilationResult {
         var body: [String: Any] = ["source": source, "fileName": fileName]
         if let tsconfig {
             let encoded = try JSONEncoder().encode(tsconfig)
             body["tsconfig"] = try JSONSerialization.jsonObject(with: encoded)
         }
-        let encodedBody = try JSONSerialization.data(withJSONObject: body)
-        return try await host.decode(TypeScriptCompilationResult.self, path: "/v1/typescript/compile", method: "POST", body: encodedBody)
+        let workspace = try fileLayout.workspace(client: .tools, identifier: "typescript-compiler")
+        return try await runTypeScriptCompiler(TypeScriptCompilationResult.self, function: "compileTypeScript",
+                                               body: body, workspace: workspace, id: id)
     }
 
-    func compileTypeScriptProject(workspace: URL, arguments: [String]) async throws -> TypeScriptProjectCompilationResult {
+    func compileTypeScriptProject(workspace: URL, arguments: [String], id: UUID = UUID()) async throws -> TypeScriptProjectCompilationResult {
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
-        let host = try await ensureRunning()
-        let body = try JSONSerialization.data(withJSONObject: [
+        return try await runTypeScriptCompiler(TypeScriptProjectCompilationResult.self, function: "compileTypeScriptProject", body: [
             "workspace": scopedWorkspace.path,
             "arguments": arguments
-        ])
-        return try await host.decode(
-            TypeScriptProjectCompilationResult.self,
-            path: "/v1/typescript/project",
-            method: "POST",
-            body: body,
-            timeout: 300
-        )
+        ], workspace: scopedWorkspace, id: id)
+    }
+
+    /// Compilation is a normal cancellable Worker/job. Large source uses the
+    /// same durable file ingress and full-output journal as other Node work;
+    /// the Host HTTP control frame never carries or times the compiler input.
+    private func runTypeScriptCompiler<T: Decodable & Sendable>(_ type: T.Type, function: String,
+                                                               body: [String: Any], workspace: URL, id: UUID) async throws -> T {
+        let module = try prepareHostRuntime().appending(path: "typescript-compiler.mjs")
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let input = String(decoding: try JSONSerialization.data(withJSONObject: body), as: UTF8.self)
+        let source = """
+        import { \(function) } from \(try literal(module.absoluteString));
+        const compiled = await \(function)(\(input), {root: \(try literal(fileLayout.root.path))});
+        const receipt = { ...compiled, executionID: \(try literal(id.uuidString.lowercased())) };
+        console.log(JSON.stringify(receipt));
+        process.exitCode = receipt.succeeded ? 0 : 1;
+        export default receipt;
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(id: id, source: source, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure("TypeScript compiler job \(id) failed. Full output is retained. \(result.stderr)")
+        }
+        return try JSONDecoder().decode(type, from: JSONEncoder().encode(value))
     }
 
     func currentConnection() async throws -> RuntimeHostConnection {
