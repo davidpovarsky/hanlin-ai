@@ -111,7 +111,7 @@
     {
       "path": "deps/v8/src/wasm/wasm-objects.cc",
       "beforeSHA256": "e9e393ef2a52ff9a9d11a41a71db189987a3e78b57ffb7472d90724be15f962e",
-      "afterSHA256": "857c1881f16b852c1edf47369616849d87879d2479e6ca2585ad76b01687884c",
+      "afterSHA256": "7fa4d81d9f6d20718ca85385dc57224fdedd7212eb9bca4de3e14d474f26bd85",
       "replacements": [
         {
           "before": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetOrCreateInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n",
@@ -132,6 +132,11 @@
           "before": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n  CHECK(trusted_data->has_interpreter_object());\n  return direct_handle(trusted_data->interpreter_object(), isolate);\n}",
           "after": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n  CHECK(trusted_data->has_interpreter_object());\n  CHECK_EQ(WasmInterpreterObject::get_wasm_instance(\n                  trusted_data->interpreter_object()), *instance);\n  return direct_handle(trusted_data->interpreter_object(), isolate);\n}",
           "adaptation": "3489a0a7/e0c5b3bc: the older mutable Tuple2 must still point to the original instance before selecting its native handle."
+        },
+        {
+          "before": "#include \"src/wasm/interpreter/wasm-interpreter-inl.h\"",
+          "after": "#include \"src/wasm/interpreter/wasm-interpreter-inl.h\"\n#include \"src/wasm/interpreter/wasm-interpreter-objects-inl.h\"",
+          "adaptation": "The pinned get_wasm_instance accessor is inline in wasm-interpreter-objects-inl.h. Its new ownership checks require this definition in the calling translation unit; keep all release CHECK guards. Native run 42834714295 exposed the missing definition at mksnapshot link."
         }
       ]
     },

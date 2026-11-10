@@ -35,7 +35,7 @@
       },
       {
         "path": "Scripts/Runtime/Patches/v8-drumbrake-hardening-2026.json",
-        "sha256": "396845e39790621623ab5b4da1a0a9fbffa2f08ad834b3da21f4c3b752d2cc73",
+        "sha256": "4278e0bc6687a0e2119594d82b80fb054af4eaea2ad38d981ed0c22842f0a1a4",
         "upstreamCommit": "e0c5b3bc0ba80528e6251dbf3ffa8c2f2781d08b"
       }
     ],
