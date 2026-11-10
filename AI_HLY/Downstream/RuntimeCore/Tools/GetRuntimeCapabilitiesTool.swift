@@ -55,6 +55,11 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             var report = String(decoding: try encoder.encode(contract), as: UTF8.self)
+            if requestedRuntime == "all" || requestedRuntime == "python" {
+                let catalog = try PythonNativeExtensions.snapshot()
+                report += "\nPython linked native extensions (registration/module-initialization observations; not service readiness or signing proof):\n"
+                    + String(decoding: try encoder.encode(catalog), as: UTF8.self)
+            }
             if requestedRuntime == "all" || requestedRuntime == "mcp" || requestedRuntime == "node" || requestedRuntime == "typescript" {
                 do {
                     if let live = try await AppRuntimeCore.shared.node.capabilityReportIfLaunched() {

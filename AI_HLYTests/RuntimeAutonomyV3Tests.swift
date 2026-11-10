@@ -6,6 +6,22 @@ import Testing
 @MainActor
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
+    @Test func linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService() async throws {
+        let core = AppRuntimeCore.shared
+        let before = await core.python.snapshot()
+        let catalog = try PythonNativeExtensions.snapshot()
+        let linked = try #require(catalog.first { $0.module == "_hanlin_native" })
+        #expect(linked.distribution == "hanlin-native" && linked.version == "1.0.0")
+        #expect(linked.pythonMajor == 3 && linked.pythonMinor == 14)
+        #expect(!linked.initializationObserved || linked.registeredInittab)
+        let result = await GetRuntimeCapabilitiesTool().execute(argumentsJSON: #"{"runtime":"python"}"#,
+            context: NativeToolExecutionContext(localeIdentifier: "en"))
+        #expect(result.outcome == .succeeded)
+        #expect(result.modelText.contains(linked.module) && result.modelText.contains("registeredInittab"))
+        let after = await core.python.snapshot()
+        #expect(after.state == before.state && after.version == before.version)
+    }
+
     @Test(.timeLimit(.minutes(2)))
     func actualNodeAndOriginalJavaScriptCoreCoexistWithTheVerifiedLaunchMode() async throws {
         let core = AppRuntimeCore.shared

@@ -25,12 +25,13 @@ for file in AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift A
   core_sources+=("$file")
   cp "$file" "$WORK/Sources/RuntimeJobs/"
 done
+native_catalog="AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift"
 background="AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift"
-shasum -a 256 "${core_sources[@]}" "$background" AI_HLYTests/RuntimeJobInterruptionTests.swift AI_HLYTests/RuntimeUserOperationTests.swift AI_HLYTests/RuntimeExecutionInputArtifactTests.swift AI_HLYTests/RuntimeJavaScriptCoreTests.swift > "$EVIDENCE/source-sha256.txt"
+shasum -a 256 "${core_sources[@]}" "$background" "$native_catalog" AI_HLYTests/RuntimeJobInterruptionTests.swift AI_HLYTests/RuntimeUserOperationTests.swift AI_HLYTests/RuntimeExecutionInputArtifactTests.swift AI_HLYTests/RuntimeJavaScriptCoreTests.swift > "$EVIDENCE/source-sha256.txt"
 plutil -lint AI-HLY-Info.plist | tee "$EVIDENCE/plist-lint.txt"
 xcrun swiftc -typecheck -parse-as-library -swift-version 6 -strict-concurrency=complete -warnings-as-errors \
   -module-name HanlinRuntimeFoundation -sdk "$SDK" -target "$TARGET" \
-  "${core_sources[@]}" "$background" 2>&1 | tee "$EVIDENCE/ios-sdk-typecheck.log"
+  "${core_sources[@]}" "$background" "$native_catalog" 2>&1 | tee "$EVIDENCE/ios-sdk-typecheck.log"
 
 # Use the exact locked iOS Python framework's real headers for the production
 # Objective-C++ bridge and thread/cancellation owners. This is compile-only:
@@ -50,12 +51,14 @@ test -f "$PYTHON_FRAMEWORKS/Python.framework/Headers/Python.h"
 printf '%s\n' "$PYTHON_URL" "$PYTHON_VERSION" "$ACTUAL_PYTHON_SHA" > "$EVIDENCE/python-sdk-inputs.txt"
 shasum -a 256 AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm \
   AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.h \
+  AI_HLY/Downstream/RuntimeCore/Python/Native/HanlinPythonNativeExtensions.mm \
   AI_HLY/Downstream/RuntimeCore/Python/Native/PythonCancellationContext.hpp \
   AI_HLY/Downstream/RuntimeCore/Python/Native/PythonThreadOwnership.hpp > "$EVIDENCE/python-bridge-source-sha256.txt"
 xcrun clang++ --version > "$EVIDENCE/clang-version.txt"
 xcrun clang++ -fsyntax-only -x objective-c++ -fobjc-arc -std=c++17 -Werror \
   -target "$TARGET" -isysroot "$SDK" -F "$PYTHON_FRAMEWORKS" \
   AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm \
+  AI_HLY/Downstream/RuntimeCore/Python/Native/HanlinPythonNativeExtensions.mm \
   2>&1 | tee "$EVIDENCE/ios-python-bridge-typecheck.log"
 printf '%s\n' "Actual production Objective-C++ bridge typechecked against locked iOS Python $PYTHON_VERSION headers; execution/linking remain separate obligations."
 

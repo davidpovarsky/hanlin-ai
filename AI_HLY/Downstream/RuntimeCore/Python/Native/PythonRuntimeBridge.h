@@ -7,6 +7,8 @@ extern "C" {
 
 const char *HanlinPythonVersion(void);
 int HanlinPythonRegisterBundledExtensions(void);
+// Read-only malloc-owned JSON; release with HanlinPythonFree. Never initializes Python.
+char *HanlinPythonNativeExtensionCatalogJSON(void);
 char *HanlinPythonExecute(const char *requestJSON);
 void HanlinPythonFree(char *value);
 void HanlinPythonRegisterExecution(const char *executionID);

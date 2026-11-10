@@ -30,6 +30,18 @@ class AffectedValidationPlannerTests(unittest.TestCase):
                 if suite in ("RuntimeFetchConformanceTests", "RuntimeNativeInterruptionTests"):
                     self.assertTrue(plan.step_outputs["run_runtimecore_host"])
 
+    def test_native_python_catalog_paths_keep_focused_consumers_without_rebuilding_frameworks(self) -> None:
+        selector = "AI_HLYTests/RuntimeAutonomyV3Tests/linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService()"
+        for path in ("AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift",
+                     "Scripts/Runtime/Tests/test_python_native_catalog.py",
+                     "Scripts/Runtime/Tests/python_native_catalog_probe.cpp"):
+            with self.subTest(path=path):
+                plan = self.plan_files([path], exact_test_selector=selector)
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
     def test_native_reuse_and_foundation_sdk_scripts_have_explicit_affected_routes(self) -> None:
         plan = self.plan_files(["Scripts/Runtime/verify-runtime-job-foundation.sh"])
         self.assertTrue(plan.step_outputs["run_ci_router"])
