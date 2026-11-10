@@ -1089,6 +1089,36 @@
         "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
       ],
       "consumers": []
+    },
+    "original_chat_presentation_tests": {
+      "description": "ChatPresentationTests acceptance for original chat and Runtime V3",
+      "patterns": [
+        "AI_HLYTests/ChatPresentationTests.swift",
+        "AI_HLY/Downstream/ChatPresentation/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatPresentationTests"
+      ],
+      "consumers": []
+    },
+    "runtime_autonomy_v3_tests": {
+      "description": "RuntimeAutonomyV3Tests acceptance for original chat and Runtime V3",
+      "patterns": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+        "AI_HLY/Downstream/AgentSkills/ToolResultStore.swift",
+        "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift",
+        "AI_HLY/Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {
