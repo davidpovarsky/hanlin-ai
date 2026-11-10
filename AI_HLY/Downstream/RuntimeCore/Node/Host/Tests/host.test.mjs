@@ -61,26 +61,21 @@ test('multiple package bins are listed and an explicit path preserves its bin na
   assert.deepEqual(resolveEntryPoint(manifest, 'alpha'), { entryPoint: './alpha.mjs', binName: 'alpha' });
 });
 
-test('replacement rollback restores the prior server and commit removes its backup', async () => {
+test('unknown legacy transactions preserve both the installed package and its backup', async t => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-mcp-transaction-'));
+  t.after(() => fs.rm(root, {recursive:true,force:true}));
   const operationID = '11111111-1111-4111-8111-111111111111';
   const serverID = '22222222-2222-4222-8222-222222222222';
-  const servers = path.join(root, 'packages', 'mcp');
-  const staging = path.join(root, 'staging');
-  const finalRoot = path.join(servers, serverID);
-  const backupRoot = path.join(staging, `backup-${operationID}`);
-  await fs.mkdir(finalRoot, { recursive: true });
-  await fs.mkdir(backupRoot, { recursive: true });
+  const finalRoot = path.join(root, 'packages', 'mcp', serverID);
+  const backupRoot = path.join(root, 'staging', `backup-${operationID}`);
+  await fs.mkdir(finalRoot, {recursive:true});
+  await fs.mkdir(backupRoot, {recursive:true});
   await fs.writeFile(path.join(finalRoot, 'version'), 'new');
   await fs.writeFile(path.join(backupRoot, 'version'), 'old');
-
-  await rollbackInstall({ root, operationID, serverID });
-  assert.equal(await fs.readFile(path.join(finalRoot, 'version'), 'utf8'), 'old');
-
-  await fs.mkdir(backupRoot, { recursive: true });
-  await commitInstall({ root, operationID, serverID });
-  await assert.rejects(fs.access(backupRoot), error => error.code === 'ENOENT');
-  await fs.rm(root, { recursive: true, force: true });
+  await assert.rejects(rollbackInstall({root,operationID,serverID}), {code:'ENOENT'});
+  await assert.rejects(commitInstall({root,operationID,serverID}), {code:'ENOENT'});
+  assert.equal(await fs.readFile(path.join(finalRoot,'version'),'utf8'),'new');
+  assert.equal(await fs.readFile(path.join(backupRoot,'version'),'utf8'),'old');
 });
 
 test('host redirects npm state before preview and install modules initialize', async t => {
@@ -161,6 +156,12 @@ test('host redirects npm state before preview and install modules initialize', a
       source: { kind: 'file', path: archive },
     });
     assert.equal(installed.packageName, 'hanlin-mcp-cache-fixture');
+    const startedServer = await hostRequest(ready.port, launchToken, `/v1/servers/${installed.id}/start`, {
+      serverID: installed.id, packageRoot: installed.packageRoot, entryPoint: installed.entryPoint,
+      arguments: [], environment: {},
+    });
+    assert.equal(startedServer.state, 'running');
+    await hostRequest(ready.port, launchToken, `/v1/servers/${installed.id}/stop`, {});
 
     const workspace = path.join(root, 'clients', 'tools', 'host-test');
     await fs.mkdir(workspace, { recursive: true });

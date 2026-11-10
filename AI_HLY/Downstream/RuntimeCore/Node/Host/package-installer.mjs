@@ -1,3 +1,4 @@
+import {mcpGenerationDirectory, publishMCPGeneration, finishMCPGeneration} from './mcp-package-generations.mjs';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import Arborist from '@npmcli/arborist';
@@ -60,7 +61,7 @@ export async function installPackage({
   const serversRoot = path.join(root, 'packages', 'mcp');
   const operationRoot = path.join(stagingRoot, operationID);
   const packageRoot = path.join(operationRoot, 'package');
-  const finalRoot = path.join(serversRoot, serverID);
+  const finalRoot = mcpGenerationDirectory(root, serverID, operationID);
   const backupRoot = path.join(stagingRoot, `backup-${operationID}`);
   const cachePath = path.join(root, 'cache', 'npm');
   await fs.mkdir(stagingRoot, { recursive: true });
@@ -70,7 +71,7 @@ export async function installPackage({
   catch(error){if(error.code!=='ENOENT')throw error;}
   await fs.mkdir(operationRoot);
   await fs.mkdir(packageRoot, { recursive: true });
-  let backedUp=false,publishedNew=false;
+  let publishedNew=false;
 
   try {
     checkCancelled(signal);
@@ -237,10 +238,7 @@ export async function installPackage({
 
     emit('install', { operationID, phase: 'registering', fraction: 0.9 });
     checkCancelled(signal);
-    try { await fs.access(finalRoot); await fs.rename(finalRoot, backupRoot);backedUp=true; } catch (error) {
-      if (error.code !== 'ENOENT') throw error;
-    }
-    await fs.rename(packageRoot, finalRoot);
+    await publishMCPGeneration({root, serverID, operationID, packageRoot});
     publishedNew=true;
     checkCancelled(signal);
     await fs.rm(operationRoot, { recursive: true, force: true });
@@ -248,30 +246,18 @@ export async function installPackage({
   } catch (error) {
     await fs.rm(operationRoot, { recursive: true, force: true });
     try {
-      if(publishedNew)await fs.rm(finalRoot,{recursive:true,force:true});
-      if(backedUp)await fs.rename(backupRoot,finalRoot);
-    } catch(restoreError){throw new AggregateError([error,restoreError],'Install failed and the prior package could not be restored; its backup was retained.');}
+      if(publishedNew)await finishMCPGeneration({root,serverID,operationID,state:'rolledBack'});
+    } catch(restoreError){throw new AggregateError([error,restoreError],'Install failed and its transaction could not be finalized; existing package generations were retained.');}
     throw error;
   }
 }
 
-export async function commitInstall({ root, operationID, serverID }) {
-  validateID(operationID);
-  validateID(serverID);
-  await fs.rm(path.join(root, 'staging', `backup-${operationID}`), { recursive: true, force: true });
+export async function commitInstall(options) {
+  await finishMCPGeneration({...options,state:'committed'});
 }
 
-export async function rollbackInstall({ root, operationID, serverID }) {
-  validateID(operationID);
-  validateID(serverID);
-  const finalRoot = path.join(root, 'packages', 'mcp', serverID);
-  const backupRoot = path.join(root, 'staging', `backup-${operationID}`);
-  await fs.rm(finalRoot, { recursive: true, force: true });
-  try {
-    await fs.rename(backupRoot, finalRoot);
-  } catch (error) {
-    if (error.code !== 'ENOENT') throw error;
-  }
+export async function rollbackInstall(options) {
+  await finishMCPGeneration({...options,state:'rolledBack'});
 }
 
 export function verifyIntegrity(data, integrity) {

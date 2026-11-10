@@ -87,7 +87,7 @@ struct MCPServerPathResolver: Sendable {
 
     func resolve(_ descriptor: MCPServerDescriptor) throws -> MCPResolvedServerPaths {
         try fileLayout.prepareIfNeeded()
-        let packageRoot = fileLayout.serverDirectory(id: descriptor.id).standardizedFileURL
+        let packageRoot = try canonicalPackageRoot(for: descriptor)
         try validatePackageRoot(packageRoot)
         let layoutMigrated = try migrateNestedPackageIfNeeded(at: packageRoot)
         try validatePackageRoot(packageRoot)
@@ -117,7 +117,8 @@ struct MCPServerPathResolver: Sendable {
     }
 
     func diagnostics(for descriptor: MCPServerDescriptor) -> MCPServerPathDiagnostics {
-        let packageRoot = fileLayout.serverDirectory(id: descriptor.id).standardizedFileURL
+        let packageRoot = (try? canonicalPackageRoot(for: descriptor))
+            ?? fileLayout.serverDirectory(id: descriptor.id).standardizedFileURL
         let relative = try? resolveRelativeEntryPoint(
             descriptor: descriptor,
             packageRoot: packageRoot
@@ -282,9 +283,38 @@ struct MCPServerPathResolver: Sendable {
         let id = serverID.uuidString.lowercased()
         guard let idIndex = components.lastIndex(of: id) else { return false }
         let suffix = Array(components.suffix(from: idIndex))
-        guard suffix == [id] || suffix == [id, "package"] else { return false }
+        let generation = suffix.count == 3 && suffix[1] == ".hanlin-generations"
+            && UUID(uuidString: suffix[2]) != nil
+        guard suffix == [id] || suffix == [id, "package"] || generation else { return false }
         guard idIndex > 0 else { return false }
         return ["mcp", "servers"].contains(components[idIndex - 1])
+    }
+
+    /// The descriptor selects a physical immutable generation. Container UUIDs
+    /// can change across installs, so reconstruct only the validated suffix.
+    /// Legacy flat package roots remain untouched for existing active servers.
+    private func canonicalPackageRoot(for descriptor: MCPServerDescriptor) throws -> URL {
+        let legacy = fileLayout.serverDirectory(id: descriptor.id).standardizedFileURL
+        let components = URL(fileURLWithPath: descriptor.packageRoot).standardizedFileURL.pathComponents
+        guard components.contains(".hanlin-generations") else { return legacy }
+        guard storedRootBelongsToServer(descriptor.packageRoot, serverID: descriptor.id),
+              let rawID = components.last, let generation = UUID(uuidString: rawID) else {
+            throw MCPServerPathResolutionError.packageRootInvalid
+        }
+        let root = legacy.appending(path: ".hanlin-generations", directoryHint: .isDirectory)
+            .appending(path: generation.uuidString.lowercased(), directoryHint: .isDirectory)
+        try validatePackageRoot(legacy)
+        try rejectSymbolicLinks(from: legacy, to: root)
+        let marker = root.appending(path: ".hanlin-runtime/installation-transaction.json")
+        guard let data = try? Data(contentsOf: marker),
+              let value = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              value["schemaVersion"] as? Int == 1,
+              value["serverID"] as? String == descriptor.id.uuidString.lowercased(),
+              value["operationID"] as? String == generation.uuidString.lowercased(),
+              let state = value["state"] as? String, ["staged", "committed"].contains(state) else {
+            throw MCPServerPathResolutionError.packageRootInvalid
+        }
+        return root
     }
 
     private func relativePath(entryPoint: String, packageRoot: String) -> String? {

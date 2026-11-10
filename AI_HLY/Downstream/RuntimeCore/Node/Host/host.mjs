@@ -1,3 +1,4 @@
+import {resolveMCPPackageRoot} from './mcp-package-generations.mjs';
 import { verifyLifecyclePlan } from './lifecycle-planner.mjs';
 import { globalNodeModules } from './global-package-state.mjs';
 import {executeLifecycleInJobs} from './lifecycle-executor.mjs';
@@ -575,10 +576,7 @@ async function startServer(id, configuration) {
       reason: 'stale-state-before-start',
     });
   }
-  const requestedPackageRoot = path.resolve(configuration.packageRoot);
-  const allowedRoot = realpathSync(safeServerDirectory(id));
-  const packageRoot = realpathSync(requestedPackageRoot);
-  if (packageRoot !== allowedRoot) throw new Error('Package root is outside the installed server directory.');
+  const packageRoot = await resolveMCPPackageRoot(root, id, configuration.packageRoot);
   const requestedEntryPoint = path.resolve(configuration.entryPoint);
   const entryPoint = realpathSync(requestedEntryPoint);
   if (!isInside(packageRoot, entryPoint)) throw new Error('Entry point is outside package root.');

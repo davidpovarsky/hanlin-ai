@@ -26,7 +26,7 @@ test('pinned server-everything follows only its stdio server execution path', { 
     assert.notEqual(report.verdict, 'unsupported', JSON.stringify(report.findings));
     assert.equal(report.runtimeProbePassed, true);
     assert.ok(report.runtimeProbeToolCount > 0);
-    assert.equal(descriptor.packageRoot, path.join(root, 'packages', 'mcp', serverID));
+    assert.equal(descriptor.packageRoot, path.join(root, 'packages', 'mcp', serverID, '.hanlin-generations', operationID));
     assert.equal(descriptor.entryPointRelativePath, 'dist/index.js');
     assert.equal(descriptor.entryPoint, path.join(descriptor.packageRoot, 'dist', 'index.js'));
     const fastURIManifest = JSON.parse(await fs.readFile(
