@@ -45,11 +45,18 @@ export class ExecutionJobs {
     }
   }
 
-  get activeCount() { return [...this.#jobs.values()].filter(job => !terminalStates.has(job.header.state)).length; }
+  get activeCount() { return [...this.#jobs.values()].filter(job => job.completion || !terminalStates.has(job.header.state)).length; }
   snapshot(id) {
-    const header = this.#jobs.get(id)?.header;
+    const job=this.#jobs.get(id),header=job?.header;
     if (!header) return null;
     if (header.memoryOnlyFailure || header.neverStarted) return structuredClone(header);
+    if(terminalStates.has(header.state)&&job.completion&&!job.terminalPersisted) {
+      // Completion in memory is not a durable receipt. Readers may reopen the
+      // journal as soon as they observe terminal status, so publish it only
+      // after the atomic final rename (including complete result metadata).
+      const pending={...header,state:'running',result:null};delete pending.completedAt;
+      return structuredClone(pending);
+    }
     if (terminalStates.has(header.state) && !header.result) {
       return JSON.parse(readFileSync(path.join(this.root, id, 'job.json'), 'utf8'));
     }
@@ -200,7 +207,7 @@ export class ExecutionJobs {
     header.result={executionID:header.executionID,stdout:previews.stdout,stderr:previews.stderr,value:value??null,
       exitCode:header.state==='completed'?0:1,durationMilliseconds:Math.round(performance.now()-started),
       didTimeOut:false,wasCancelled:header.cancellationRequested,outputWasTruncated:header.stdoutBytes+header.stderrBytes>maximumOutputBytes,outputFiles:files};
-    await this.#persist(header);header.result=null;
+    await this.#persist(header);job.terminalPersisted=true;header.result=null;
   }
 
   async cancel(id) {
@@ -461,6 +468,7 @@ export class ExecutionJobs {
     job.worker = null;
     job.cancel = null;
     await this.#persist(header);
+    job.terminalPersisted=true;
     header.result = null;
     return this.snapshot(header.executionID);
   }
