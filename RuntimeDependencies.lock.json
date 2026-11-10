@@ -32,6 +32,11 @@
         "path": "Scripts/Runtime/Patches/v8-drumbrake-5c595adf.json",
         "sha256": "6259c5048010fb8438779ada0b979d5c84343b67a00fdcc96557fffa8063f682",
         "upstreamCommit": "5c595adf56abcb89251882a2dbf800972500989a"
+      },
+      {
+        "path": "Scripts/Runtime/Patches/v8-drumbrake-hardening-2026.json",
+        "sha256": "396845e39790621623ab5b4da1a0a9fbffa2f08ad834b3da21f4c3b752d2cc73",
+        "upstreamCommit": "e0c5b3bc0ba80528e6251dbf3ffa8c2f2781d08b"
       }
     ],
     "buildConfiguration": {
@@ -40,8 +45,11 @@
       "explicitBoundsChecks": true,
       "adapter": {
         "path": "Scripts/Runtime/configure-node-wasm.py",
-        "sha256": "9b249b3f5d52bee07e7f15acb79bf209e4e4d732431e84d65a60d0c2de41d4a5"
-      }
+        "sha256": "d574019c1173030be7dabeb735667f272179882598c91f717a0d3d2a2c8e02b4"
+      },
+      "pointerCompression": true,
+      "pointerCompressionSharedCage": true,
+      "taggedHeapAddressSpaceBytes": 4294967296
     }
   },
   "python": {

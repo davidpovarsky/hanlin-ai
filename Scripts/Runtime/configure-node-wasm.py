@@ -20,7 +20,7 @@ PREIMAGES = {
 POSTIMAGES = {
     "tools/v8_gypfiles/features.gypi": "90da41738ea9ec84ed3c633b6c3e92281116f5c83e9b79a4fba5771d0af94396",
     "tools/v8_gypfiles/v8.gyp": "d55186e1cf0e015994c34f46d3df40b3ce18e642b17e229440ba4cce97a1532a",
-    "tools/ios_framework_prepare.sh": "9d79e2f46face6c5d79c76bd541551667251f655e57f5e6ee0e51262115230fa",
+    "tools/ios_framework_prepare.sh": "1d08245dd2b0382b5097533b9628eb40e5a36a2dc39adb2753b2539c4953d052",
 }
 INTERPRETER_SOURCES = [
     "src/wasm/interpreter/wasm-interpreter-objects.cc",
@@ -78,7 +78,9 @@ def transform(name: str, text: str) -> str:
         before = "--v8-options=--jitless \\\n"
         if text.count(before) != 3:
             raise ValueError("Unexpected pinned iOS configure commands")
-        return text.replace(before, "--v8-options='--jitless --wasm-jitless' \\\n")
+        return text.replace(before,
+            "--v8-options='--jitless --wasm-jitless' \\\n"
+            "    --experimental-enable-pointer-compression \\\n")
     raise ValueError("Unknown native build adapter target")
 
 def proposed_changes(source: Path) -> list[tuple[Path, bytes, dict]]:
@@ -111,7 +113,8 @@ def main() -> None:
         for target, contents, _ in changes:
             target.write_bytes(contents)
     print(json.dumps({"sourceCommit": SOURCE_COMMIT, "wasmInterpreter": "drumbrake", "jitless": True,
-        "explicitBoundsChecks": True, "files": [item[2] for item in changes]}, sort_keys=True))
+        "explicitBoundsChecks": True, "pointerCompression": True,
+        "files": [item[2] for item in changes]}, sort_keys=True))
 
 if __name__ == "__main__":
     main()

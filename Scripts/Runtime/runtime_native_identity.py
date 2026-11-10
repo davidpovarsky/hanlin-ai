@@ -32,8 +32,9 @@ def native_identity(repository: Path, revision: str | None = None) -> str:
     patch_files = set()
     for item in node.get("sourcePatches", []):
         patch_files.add(item["path"])
-        upstream = json.loads(read(item["path"])).get("upstreamPatch")
-        if upstream:
+        manifest = json.loads(read(item["path"]))
+        originals = ([manifest["upstreamPatch"]] if manifest.get("upstreamPatch") else []) + manifest.get("upstreamPatches", [])
+        for upstream in originals:
             name = upstream["path"]
             if not re.fullmatch(r"Scripts/Runtime/Patches/[A-Za-z0-9._-]+\.patch", name):
                 raise ValueError("Invalid original upstream patch evidence path")

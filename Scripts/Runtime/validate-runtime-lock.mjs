@@ -27,6 +27,7 @@ assertUrlAndHash(lock.node?.sourceArchive, 'node.sourceArchive');
 if (lock.node.buildConfiguration) {
   const config = lock.node.buildConfiguration;
   assert(config.wasmInterpreter === 'drumbrake' && config.jitless === true && config.explicitBoundsChecks === true, 'Node interpreter build must retain JITless execution and explicit bounds checks');
+  assert(config.pointerCompression === true && config.pointerCompressionSharedCage === true && config.taggedHeapAddressSpaceBytes === 4294967296, 'The pinned DrumBrake build requires the actual compressed-pointer shared-cage representation');
   assert(config.adapter?.path === 'Scripts/Runtime/configure-node-wasm.py', 'Invalid downstream Node build adapter path');
   const adapter = await readFile(new URL(`../../${config.adapter.path}`, import.meta.url), 'utf8');
   assert(createHash('sha256').update(adapter.replaceAll('\r\n', '\n')).digest('hex') === config.adapter.sha256, 'Node build adapter checksum mismatch');
@@ -40,8 +41,7 @@ for (const patch of lock.node.sourcePatches ?? []) {
   const manifest = JSON.parse(bytes);
   assert(manifest.sourceCommit === lock.node.commit, 'Node source patch requires a matching source commit');
   assert(manifest.upstreamCommit === patch.upstreamCommit, 'Node source patch upstream provenance mismatch');
-  if (manifest.upstreamPatch) {
-    const original = manifest.upstreamPatch;
+  for (const original of [...(manifest.upstreamPatch ? [manifest.upstreamPatch] : []), ...(manifest.upstreamPatches ?? [])]) {
     assert(/^Scripts\/Runtime\/Patches\/[A-Za-z0-9._-]+\.patch$/.test(original.path ?? ''), 'Invalid original upstream patch path');
     assert(sha256.test(original.sha256 ?? ''), 'Invalid original upstream patch SHA-256');
     const evidence = await readFile(new URL(`../../${original.path}`, import.meta.url));

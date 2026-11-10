@@ -38,6 +38,7 @@ class NodeWasmConfigurationTests(unittest.TestCase):
         self.assertIn("interpreter-builtins-arm64.cc", str(initializers["conditions"]))
         configure = (self.root / "tools/ios_framework_prepare.sh").read_text()
         self.assertEqual(configure.count("--v8-options='--jitless --wasm-jitless'"), 3)
+        self.assertEqual(configure.count("--experimental-enable-pointer-compression"), 3)
         self.assertNotIn("--no-jitless", configure)
         # Repeat preparation keeps the authenticated source outputs unchanged.
         self.assertEqual([data for _, data, _ in adapter.proposed_changes(self.root)], [data for _, data, _ in changes])

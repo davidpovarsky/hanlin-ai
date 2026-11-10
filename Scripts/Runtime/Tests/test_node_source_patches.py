@@ -111,3 +111,39 @@ class NodeSourcePatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "evidence escapes"):
             self.apply()
         self.assertEqual(self.target.read_bytes(), b"old value")
+
+    def add_followup(self, before=b"new value"):
+        manifest = self.manifest.with_name("followup.json")
+        data = {**self.data, "upstreamCommit": "c" * 40, "files": [{
+            "path": self.change["path"], "beforeSHA256": patcher.digest(before),
+            "afterSHA256": patcher.digest(b"final value"),
+            "replacements": [{"before": "new", "after": "final"}]}]}
+        manifest.write_text(json.dumps(data), encoding="utf-8")
+        self.lock_data["node"]["sourcePatches"].append({
+            "path": "Scripts/Runtime/Patches/followup.json", "sha256": patcher.digest(manifest.read_bytes()), "upstreamCommit": "c" * 40})
+        self.lock.write_text(json.dumps(self.lock_data), encoding="utf-8")
+
+    def test_overlapping_authenticated_patches_are_atomic_and_idempotent_from_each_checkpoint(self):
+        self.add_followup()
+        for contents in [b"old value", b"new value", b"final value"]:
+            self.target.write_bytes(contents)
+            self.assertEqual(len(self.apply()), 2)
+            self.assertEqual(self.target.read_bytes(), b"final value")
+
+    def test_discontinuous_patch_chain_is_rejected_without_writing_earlier_changes(self):
+        self.add_followup(before=b"unrelated value")
+        with self.assertRaisesRegex(ValueError, "Discontinuous"):
+            self.apply()
+        self.assertEqual(self.target.read_bytes(), b"old value")
+
+    def test_all_original_evidence_in_an_aggregate_patch_is_authenticated(self):
+        original = self.manifest.with_suffix(".patch")
+        original.write_bytes(b"authenticated additional upstream evidence")
+        self.data["upstreamPatches"] = [{"path": "Scripts/Runtime/Patches/test.patch", "sha256": patcher.digest(original.read_bytes())}]
+        self.save()
+        self.apply()
+        self.target.write_bytes(b"old value")
+        original.write_bytes(b"tampered additional evidence")
+        with self.assertRaisesRegex(ValueError, "evidence checksum"):
+            self.apply()
+        self.assertEqual(self.target.read_bytes(), b"old value")

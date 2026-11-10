@@ -1,0 +1,725 @@
+From e0c5b3bc0ba80528e6251dbf3ffa8c2f2781d08b Mon Sep 17 00:00:00 2001
+From: Paolo Severini <paolosev@microsoft.com>
+Date: Tue, 7 Jul 2026 14:02:59 +0200
+Subject: [PATCH] [wasm interpreter] Sandbox hardening
+
+Under the V8 sandbox threat model (attacker has arbitrary read/write
+inside the sandbox cage), the DrumBrake interpreter trusted several
+in-cage values that an attacker can corrupt, reaching trusted
+(out-of-cage) state without a release-mode check. Harden those paths:
+
+- Source the interpreter's module/native_module from
+  WasmTrustedInstanceData instead of the in-cage
+  WasmInstanceObject::module_object(), so a swapped module_object
+  can no longer drive interpreter metadata.
+
+- Bind the (in-cage) InterpreterHandle to its instance in
+  WasmInterpreterRuntime::InstanceScope by requiring the published
+  instance's trusted module to match the runtime's module. Checks every
+  entry that accesses wasm_trusted_instance_data(), so a corrupted
+  interpreter_object slot can no longer run another instance's handle.
+
+- Validate func_ref in ExecuteCallRef with SBXCHECK(Is<WasmFuncRef>)
+  before the unchecked cast, since the reference stack is
+  attacker-corruptible.
+
+- Add SBXCHECK bounds checks on memory indices and on trusted memory
+  metadata (memory_base/memory_size, InitMemoryAddresses consistency)
+  and on the call_indirect dispatch-table index, and upgrade
+  InterpreterHandle::Execute signature/arity checks from DCHECK to
+  SBXCHECK.
+
+Bug: 527689557
+Bug: 530659174
+Change-Id: I00f7cf2bf314afb5118a8f251705b09368179cdf
+Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/8026164
+Commit-Queue: Paolo Severini <paolosev@microsoft.com>
+Reviewed-by: Daniel Lehmann <dlehmann@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#108497}
+---
+ .../interpreter/wasm-interpreter-objects.cc   |   6 +-
+ .../wasm-interpreter-runtime-inl.h            |  36 ++++--
+ .../interpreter/wasm-interpreter-runtime.cc   | 119 +++++++++++++-----
+ .../interpreter/wasm-interpreter-runtime.h    |  17 ++-
+ src/wasm/wasm-objects-inl.h                   |   9 ++
+ src/wasm/wasm-objects.cc                      |   1 +
+ test/mjsunit/mjsunit.status                   |  14 +++
+ test/mjsunit/sandbox/regress-527689557-1.js   |  85 +++++++++++++
+ test/mjsunit/sandbox/regress-527689557-2.js   |  86 +++++++++++++
+ 9 files changed, 329 insertions(+), 44 deletions(-)
+ create mode 100644 test/mjsunit/sandbox/regress-527689557-1.js
+ create mode 100644 test/mjsunit/sandbox/regress-527689557-2.js
+
+diff --git a/src/wasm/interpreter/wasm-interpreter-objects.cc b/src/wasm/interpreter/wasm-interpreter-objects.cc
+index 2567325e21b5..f227f0f20e0a 100644
+--- a/src/wasm/interpreter/wasm-interpreter-objects.cc
++++ b/src/wasm/interpreter/wasm-interpreter-objects.cc
+@@ -49,7 +49,8 @@ bool WasmInterpreterObject::RunInterpreter(
+ 
+   // Publish the currently-executing instance to the runtime so that
+   // wasm_trusted_instance_data() (and any cross-instance identity checks)
+-  // always see the correct, GC-rooted instance.
++  // always see the correct, GC-rooted instance. The InstanceScope constructor
++  // also binds the (corruptible) handle to {instance} via an SBXCHECK.
+   wasm::WasmInterpreterRuntime::InstanceScope instance_scope(
+       handle->ptr()->interpreter()->GetWasmRuntime(), instance);
+ 
+@@ -75,7 +76,8 @@ bool WasmInterpreterObject::RunInterpreter(
+   DirectHandle<Managed<wasm::InterpreterHandle>> handle =
+       wasm::GetInterpreterHandle(isolate, interpreter_object);
+ 
+-  // See comment in the other RunInterpreter overload above.
++  // See comment in the other RunInterpreter overload above; the InstanceScope
++  // constructor binds the handle to {instance}.
+   wasm::WasmInterpreterRuntime::InstanceScope instance_scope(
+       handle->ptr()->interpreter()->GetWasmRuntime(), instance);
+ 
+diff --git a/src/wasm/interpreter/wasm-interpreter-runtime-inl.h b/src/wasm/interpreter/wasm-interpreter-runtime-inl.h
+index 7b012b664816..33ff18b81a48 100644
+--- a/src/wasm/interpreter/wasm-interpreter-runtime-inl.h
++++ b/src/wasm/interpreter/wasm-interpreter-runtime-inl.h
+@@ -25,6 +25,7 @@ inline Address WasmInterpreterRuntime::EffectiveAddress(uint32_t memory_index,
+                                                         uint64_t index) const {
+   DirectHandle<WasmTrustedInstanceData> trusted_data =
+       wasm_trusted_instance_data();
++  SBXCHECK_LT(memory_index, module_->memories.size());
+   DCHECK_GE(std::numeric_limits<uintptr_t>::max(),
+             trusted_data->memory_size(memory_index));
+   DCHECK_GE(trusted_data->memory_size(memory_index), index);
+@@ -39,6 +40,7 @@ inline bool WasmInterpreterRuntime::BoundsCheckMemRange(
+     Address* out_address) const {
+   DirectHandle<WasmTrustedInstanceData> trusted_data =
+       wasm_trusted_instance_data();
++  SBXCHECK_LT(memory_index, module_->memories.size());
+   DCHECK_GE(std::numeric_limits<uintptr_t>::max(),
+             trusted_data->memory_size(memory_index));
+   if (!base::ClampToBounds<uint64_t>(index, size,
+@@ -94,19 +96,27 @@ inline void WasmInterpreterRuntime::SetGlobalRef(
+ }
+ 
+ inline void WasmInterpreterRuntime::InitMemoryAddresses() {
++  DirectHandle<WasmTrustedInstanceData> trusted_data =
++      wasm_trusted_instance_data();
+   DCHECK_LE(module_->memories.size(), kV8MaxWasmMemories);
+-  memory_start_ = wasm_trusted_instance_data()->memory0_start();
+-  memory_starts_.resize(module_->memories.size());
+-  is_memory64_.resize(module_->memories.size());
+-  for (size_t i = 0; i < module_->memories.size(); ++i) {
+-    memory_starts_[i] =
+-        wasm_trusted_instance_data()->memory_base(static_cast<uint32_t>(i));
++  const uint32_t bases_and_sizes_length =
++      trusted_data->memory_bases_and_sizes()->length().value();
++  SBXCHECK_EQ(bases_and_sizes_length % 2u, 0u);
++  const size_t trusted_memory_count =
++      static_cast<size_t>(bases_and_sizes_length / 2u);
++  SBXCHECK_EQ(trusted_memory_count, module_->memories.size());
++  memory_start_ = trusted_data->memory0_start();
++  memory_starts_.resize(trusted_memory_count);
++  is_memory64_.resize(trusted_memory_count);
++  for (size_t i = 0; i < trusted_memory_count; ++i) {
++    memory_starts_[i] = trusted_data->memory_base(static_cast<uint32_t>(i));
+     is_memory64_[i] = module_->memories[i].is_memory64();
+   }
+ }
+ 
+ inline uint8_t* WasmInterpreterRuntime::GetMemoryStart(
+     uint32_t memory_index) const {
++  SBXCHECK_LT(memory_index, memory_starts_.size());
+   return memory_starts_[memory_index];
+ }
+ 
+@@ -116,16 +126,19 @@ inline uint8_t* WasmInterpreterRuntime::GetMemoryStart() const {
+ 
+ inline uint64_t WasmInterpreterRuntime::MemorySize(
+     uint32_t memory_index) const {
++  SBXCHECK_LT(memory_index, module_->memories.size());
+   return wasm_trusted_instance_data()->memory_size(memory_index) /
+          kWasmPageSize;
+ }
+ 
+ inline bool WasmInterpreterRuntime::IsMemory64(uint32_t memory_index) const {
++  SBXCHECK_LT(memory_index, is_memory64_.size());
+   return is_memory64_[memory_index];
+ }
+ 
+ inline size_t WasmInterpreterRuntime::GetMemorySize(
+     uint32_t memory_index) const {
++  SBXCHECK_LT(memory_index, module_->memories.size());
+   return wasm_trusted_instance_data()->memory_size(memory_index);
+ }
+ 
+@@ -235,10 +248,15 @@ inline bool WasmInterpreterRuntime::WasmStackCheck(
+ 
+ inline DirectHandle<WasmTrustedInstanceData>
+ WasmInterpreterRuntime::wasm_trusted_instance_data() const {
+-  // Must be called from within a WasmInterpreterRuntime::InstanceScope so that
+-  // the GC keeps the instance object alive for this access.
++  // Must be called from within a WasmInterpreterRuntime::InstanceScope, which
++  // publishes {current_instance_} and reads and validates its trusted data once
++  // into {current_trusted_data_}. We deliberately return that stored value
++  // rather than re-loading current_instance_->trusted_data(): re-reading the
++  // in-cage trusted_data_ handle on every call is a sandbox hole (a Wasm-to-JS
++  // callback can same-tag swap it mid-execution).
+   DCHECK(!current_instance_.is_null());
+-  return direct_handle(current_instance_->trusted_data(isolate_), isolate_);
++  DCHECK(!current_trusted_data_.is_null());
++  return current_trusted_data_;
+ }
+ 
+ inline WasmInterpreterThread::State InterpreterHandle::ContinueExecution(
+diff --git a/src/wasm/interpreter/wasm-interpreter-runtime.cc b/src/wasm/interpreter/wasm-interpreter-runtime.cc
+index 51cc7d547831..99773f5a19a0 100644
+--- a/src/wasm/interpreter/wasm-interpreter-runtime.cc
++++ b/src/wasm/interpreter/wasm-interpreter-runtime.cc
+@@ -305,7 +305,8 @@ GetOrCreateInterpreterHandle(Isolate* isolate,
+ // WasmDispatchTable::kInvalidFunctionIndex otherwise.
+ class IndirectFunctionTableEntry {
+  public:
+-  inline IndirectFunctionTableEntry(DirectHandle<WasmInstanceObject>,
++  inline IndirectFunctionTableEntry(Isolate* isolate,
++                                    DirectHandle<WasmTrustedInstanceData>,
+                                     int table_index, int entry_index);
+ 
+   inline Tagged<Object> implicit_arg() const {
+@@ -322,36 +323,82 @@ class IndirectFunctionTableEntry {
+   int const index_;
+ };
+ 
++namespace {
++// Reads the trusted (out-of-cage) WasmDispatchTable for {table_index} from
++// {trusted_data}, bounds-checking {table_index} first. {table_index} comes
++// from module metadata, but the dispatch tables live in trusted space, so a
++// table-count desync must not be able to drive an out-of-bounds read of the
++// trusted dispatch-table array. {trusted_data} is the current, validated
++// trusted data (see wasm_trusted_instance_data()), not a fresh load of the
++// in-cage WasmInstanceObject::trusted_data_ handle.
++DirectHandle<WasmDispatchTable> GetCheckedDispatchTable(
++    Isolate* isolate, DirectHandle<WasmTrustedInstanceData> trusted_data,
++    int table_index) {
++  SBXCHECK_GE(table_index, 0);
++  if (table_index == 0) {
++    return direct_handle(
++        TrustedCast<WasmDispatchTable>(trusted_data->dispatch_table0()),
++        isolate);
++  }
++  auto dispatch_tables = trusted_data->dispatch_tables();
++  SBXCHECK_LT(static_cast<uint32_t>(table_index),
++              dispatch_tables->length().value());
++  return direct_handle(
++      TrustedCast<WasmDispatchTable>(dispatch_tables->get(table_index)),
++      isolate);
++}
++}  // namespace
++
+ IndirectFunctionTableEntry::IndirectFunctionTableEntry(
+-    DirectHandle<WasmInstanceObject> instance, int table_index, int entry_index)
+-    : table_(table_index != 0
+-                 ? direct_handle(TrustedCast<WasmDispatchTable>(
+-                                     instance->trusted_data(Isolate::Current())
+-                                         ->dispatch_tables()
+-                                         ->get(table_index)),
+-                                 Isolate::Current())
+-                 : direct_handle(TrustedCast<WasmDispatchTable>(
+-                                     instance->trusted_data(Isolate::Current())
+-                                         ->dispatch_table0()),
+-                                 Isolate::Current())),
++    Isolate* isolate, DirectHandle<WasmTrustedInstanceData> trusted_data,
++    int table_index, int entry_index)
++    : table_(GetCheckedDispatchTable(isolate, trusted_data, table_index)),
+       index_(entry_index) {
+-  DCHECK_GE(entry_index, 0);
+-  DCHECK_LT(entry_index, table_->length());
++  // Re-check the index against the trusted dispatch table length before reading
++  // from it. This prevents out-of-bounds access if cached and trusted table
++  // sizes ever diverge.
++  SBXCHECK_GE(entry_index, 0);
++  SBXCHECK_LT(entry_index, table_->length());
+ }
+ 
+ WasmInterpreterRuntime::InstanceScope::InstanceScope(
+     WasmInterpreterRuntime* runtime, DirectHandle<WasmInstanceObject> instance)
+-    : runtime_(runtime), previous_(runtime->current_instance_) {
++    : runtime_(runtime),
++      previous_(runtime->current_instance_),
++      previous_trusted_data_(runtime->current_trusted_data_) {
+   DCHECK(!instance.is_null());
++  Isolate* isolate = runtime->isolate_;
+   // Re-handlify into the current HandleScope so that GC keeps the instance
+   // alive for the lifetime of this scope, independent of how the caller
+   // obtained `instance`.
+   runtime->current_instance_ =
+-      IndirectHandle<WasmInstanceObject>(*instance, runtime->isolate_);
++      IndirectHandle<WasmInstanceObject>(*instance, isolate);
++
++  // Read the trusted data exactly once, here at scope entry, and serve every
++  // wasm_trusted_instance_data() access from this off-cage value instead of
++  // re-loading the in-cage WasmInstanceObject::trusted_data_ handle on each
++  // call. The trusted data is rooted in the caller's HandleScope, so it stays
++  // valid and consistent for the lifetime of this scope.
++  Tagged<WasmTrustedInstanceData> trusted_data =
++      instance->trusted_data(isolate);
++  // {runtime} is reached through the in-sandbox {interpreter_object} Tuple2,
++  // whose value2 slot (a Managed<InterpreterHandle>) can be swapped by an
++  // attacker with in-cage writes for another instance's handle -- it carries
++  // the same external-pointer tag, so the cast succeeds. Such a handle owns a
++  // different module, which would let the trusted-data accesses guarded by this
++  // scope run under a mismatched module (signature/type confusion, OOB). This
++  // is the single choke point that publishes an instance before any
++  // wasm_trusted_instance_data() access, so bind the two here: require the
++  // trusted_data's module to match this runtime's module, failing closed on any
++  // handle/instance desync.
++  SBXCHECK_EQ(trusted_data->module(), runtime->module_);
++  runtime->current_trusted_data_ =
++      IndirectHandle<WasmTrustedInstanceData>(trusted_data, isolate);
+ }
+ 
+ WasmInterpreterRuntime::InstanceScope::~InstanceScope() {
+   runtime_->current_instance_ = previous_;
++  runtime_->current_trusted_data_ = previous_trusted_data_;
+ }
+ 
+ WasmInterpreterRuntime::WasmInterpreterRuntime(
+@@ -397,8 +444,8 @@ WasmInterpreterRuntime::WasmInterpreterRuntime(
+ 
+ // static
+ void WasmInterpreterRuntime::UpdateMemoryAddress(
+-    DirectHandle<WasmInstanceObject> instance, uint32_t memory_index) {
+-  Isolate* isolate = Isolate::Current();
++    Isolate* isolate, DirectHandle<WasmInstanceObject> instance,
++    uint32_t memory_index) {
+   DirectHandle<Tuple2> interpreter_object =
+       WasmTrustedInstanceData::GetOrCreateInterpreterObject(instance);
+   DirectHandle<Managed<InterpreterHandle>> handle =
+@@ -488,7 +535,7 @@ void WasmInterpreterRuntime::TableInit(const uint8_t*& current_code,
+ 
+   std::optional<MessageTemplate> msg_template =
+       WasmTrustedInstanceData::InitTableEntries(
+-          Isolate::Current(), trusted_data, trusted_data, table_index,
++          isolate_, trusted_data, trusted_data, table_index,
+           element_segment_index, dst, src, size);
+   // See WasmInstanceObject::InitTableEntries.
+   if (msg_template == MessageTemplate::kWasmTrapTableOutOfBounds) {
+@@ -1925,8 +1972,8 @@ void WasmInterpreterRuntime::ExecuteIndirectCall(
+   if (!table[entry_index]) {
+     HandleScope handle_scope(isolate_);  // Avoid leaking handles.
+ 
+-    IndirectFunctionTableEntry entry(current_instance_, table_index,
+-                                     entry_index);
++    IndirectFunctionTableEntry entry(isolate_, wasm_trusted_instance_data(),
++                                     table_index, entry_index);
+ 
+     DirectHandle<Object> object_implicit_arg(entry.implicit_arg(), isolate_);
+     if (Is<WasmTrustedInstanceData>(*object_implicit_arg)) {
+@@ -2000,8 +2047,8 @@ void WasmInterpreterRuntime::ExecuteIndirectCall(
+         ref_stack_fp_offset);
+ 
+     // TODO(paolosev@microsoft.com): Optimize this code.
+-    IndirectFunctionTableEntry entry(current_instance_, table_index,
+-                                     entry_index);
++    IndirectFunctionTableEntry entry(isolate_, wasm_trusted_instance_data(),
++                                     table_index, entry_index);
+     DirectHandle<Object> object_implicit_arg(entry.implicit_arg(), isolate_);
+ 
+     // The reference stack was populated according to the callsite signature,
+@@ -2079,6 +2126,12 @@ void WasmInterpreterRuntime::ExecuteCallRef(
+     const uint8_t*& current_code, WasmRef func_ref, uint32_t sig_index,
+     uint32_t stack_pos, uint32_t* sp, uint32_t ref_stack_fp_offset,
+     uint32_t slot_offset, uint32_t return_slot_offset, bool is_tail_call) {
++  // {func_ref} is read from the in-cage reference stack and can be replaced by
++  // an attacker with any non-null in-cage object. The cast below is unchecked
++  // in release builds, so verify the type before dereferencing its (trusted-
++  // pointer) internal function. Null is already trapped by the s2s_CallRef /
++  // s2s_ReturnCallRef handlers before we get here.
++  SBXCHECK(Is<WasmFuncRef>(*func_ref));
+   DirectHandle<WasmFuncRef> wasm_func_ref = Cast<WasmFuncRef>(func_ref);
+   Tagged<WasmInternalFunction> internal = wasm_func_ref->internal(isolate_);
+   DirectHandle<Object> object_implicit_arg{internal->implicit_arg(), isolate_};
+@@ -3212,11 +3265,15 @@ void WasmInterpreterRuntime::Trace(const char* format, ...) {
+ #endif  // V8_ENABLE_DRUMBRAKE_TRACING
+ 
+ // static
+-ModuleWireBytes InterpreterHandle::GetBytes(Tagged<Tuple2> interpreter_object) {
++ModuleWireBytes InterpreterHandle::GetBytes(Isolate* isolate,
++                                            Tagged<Tuple2> interpreter_object) {
+   Tagged<WasmInstanceObject> wasm_instance =
+       WasmInterpreterObject::get_wasm_instance(interpreter_object);
+-  Managed<NativeModule>::Ptr native_module =
+-      wasm_instance->module_object()->native_module();
++  Tagged<WasmTrustedInstanceData> trusted_data =
++      wasm_instance->trusted_data(isolate);
++  SBXCHECK(trusted_data->has_instance_object() &&
++           trusted_data->instance_object() == wasm_instance);
++  wasm::NativeModule* native_module = trusted_data->native_module();
+   return ModuleWireBytes{native_module->wire_bytes()};
+ }
+ 
+@@ -3226,7 +3283,7 @@ InterpreterHandle::InterpreterHandle(Isolate* isolate,
+       module_(WasmInterpreterObject::get_wasm_instance(*interpreter_object)
+                   ->trusted_data(isolate)
+                   ->module()),
+-      interpreter_(isolate, module_, GetBytes(*interpreter_object),
++      interpreter_(isolate, module_, GetBytes(isolate, *interpreter_object),
+                    direct_handle(WasmInterpreterObject::get_wasm_instance(
+                                      *interpreter_object),
+                                  isolate)) {}
+@@ -3278,10 +3335,10 @@ V8_EXPORT_PRIVATE bool InterpreterHandle::Execute(
+     WasmInterpreterThread* thread, Address frame_pointer, uint32_t func_index,
+     const std::vector<WasmValue>& argument_values,
+     std::vector<WasmValue>& return_values) {
+-  DCHECK_GT(module()->functions.size(), func_index);
++  SBXCHECK_GT(module()->functions.size(), func_index);
+   const FunctionSig* sig = module()->functions[func_index].sig;
+-  DCHECK_EQ(sig->parameter_count(), argument_values.size());
+-  DCHECK_EQ(sig->return_count(), return_values.size());
++  SBXCHECK_EQ(sig->parameter_count(), argument_values.size());
++  SBXCHECK_EQ(sig->return_count(), return_values.size());
+ 
+   thread->StartExecutionTimer();
+   interpreter_.BeginExecution(thread, func_index, frame_pointer,
+@@ -3316,7 +3373,7 @@ V8_EXPORT_PRIVATE bool InterpreterHandle::Execute(
+ bool InterpreterHandle::Execute(WasmInterpreterThread* thread,
+                                 Address frame_pointer, uint32_t func_index,
+                                 uint8_t* interpreter_fp) {
+-  DCHECK_GT(module()->functions.size(), func_index);
++  SBXCHECK_GT(module()->functions.size(), func_index);
+ 
+   interpreter_.BeginExecution(thread, func_index, frame_pointer,
+                               interpreter_fp);
+diff --git a/src/wasm/interpreter/wasm-interpreter-runtime.h b/src/wasm/interpreter/wasm-interpreter-runtime.h
+index 6c145c29441d..973bc6483327 100644
+--- a/src/wasm/interpreter/wasm-interpreter-runtime.h
++++ b/src/wasm/interpreter/wasm-interpreter-runtime.h
+@@ -53,6 +53,7 @@ class WasmInterpreterRuntime {
+    private:
+     WasmInterpreterRuntime* const runtime_;
+     IndirectHandle<WasmInstanceObject> const previous_;
++    IndirectHandle<WasmTrustedInstanceData> const previous_trusted_data_;
+   };
+ 
+   inline WasmBytecode* GetFunctionBytecode(uint32_t func_index);
+@@ -121,7 +122,8 @@ class WasmInterpreterRuntime {
+       Isolate* isolate, DirectHandle<WasmInstanceObject> instance,
+       uint32_t table_index, uint32_t entry_index);
+ 
+-  static void UpdateMemoryAddress(DirectHandle<WasmInstanceObject> instance,
++  static void UpdateMemoryAddress(Isolate* isolate,
++                                  DirectHandle<WasmInstanceObject> instance,
+                                   uint32_t memory_index);
+ 
+   inline void DataDrop(uint32_t index);
+@@ -383,6 +385,16 @@ class WasmInterpreterRuntime {
+   // runtime never observes it between entries.
+   IndirectHandle<WasmInstanceObject> current_instance_;
+ 
++  // The WasmTrustedInstanceData that belongs to {current_instance_}, read and
++  // validated exactly once when the active InstanceScope is entered and kept
++  // off-cage and GC-rooted. All trusted-data accesses (see
++  // wasm_trusted_instance_data()) use this value instead of re-loading the
++  // in-cage WasmInstanceObject::trusted_data_ IndirectPointerHandle on every
++  // call. This prevents a sandbox attacker from same-tag swapping trusted_data_
++  // to point at another instance's trusted data. It is set/restored together
++  // with {current_instance_} by InstanceScope.
++  IndirectHandle<WasmTrustedInstanceData> current_trusted_data_;
++
+   WasmInterpreter::CodeMap* codemap_;
+ 
+   uint32_t start_function_index_;
+@@ -593,7 +605,8 @@ class V8_EXPORT_PRIVATE InterpreterHandle {
+   InterpreterHandle(const InterpreterHandle&) = delete;
+   InterpreterHandle& operator=(const InterpreterHandle&) = delete;
+ 
+-  static ModuleWireBytes GetBytes(Tagged<Tuple2> interpreter_object);
++  static ModuleWireBytes GetBytes(Isolate* isolate,
++                                  Tagged<Tuple2> interpreter_object);
+ 
+   inline WasmInterpreterThread::State RunExecutionLoop(
+       WasmInterpreterThread* thread, bool called_from_js);
+diff --git a/src/wasm/wasm-objects-inl.h b/src/wasm/wasm-objects-inl.h
+index caad78973f0e..d7ccac4543d5 100644
+--- a/src/wasm/wasm-objects-inl.h
++++ b/src/wasm/wasm-objects-inl.h
+@@ -32,6 +32,7 @@
+ #include "src/objects/trusted-object-inl.h"
+ #include "src/objects/trusted-pointer-inl.h"
+ #include "src/roots/roots.h"
++#include "src/sandbox/check.h"
+ #include "src/sandbox/isolate-inl.h"
+ #include "src/wasm/wasm-code-manager.h"
+ #include "src/wasm/wasm-module.h"
+@@ -407,6 +408,10 @@ Tagged<WasmMemoryObject> WasmTrustedInstanceData::memory_object(
+ }
+ 
+ uint8_t* WasmTrustedInstanceData::memory_base(uint32_t memory_index) const {
++  const uint32_t bases_and_sizes_length =
++      memory_bases_and_sizes()->length().value();
++  SBXCHECK_EQ(bases_and_sizes_length % 2u, 0u);
++  SBXCHECK_LT(memory_index, bases_and_sizes_length / 2u);
+   DCHECK_EQ(memory0_start(),
+             reinterpret_cast<uint8_t*>(memory_bases_and_sizes()->get(0)));
+   return reinterpret_cast<uint8_t*>(
+@@ -414,6 +419,10 @@ uint8_t* WasmTrustedInstanceData::memory_base(uint32_t memory_index) const {
+ }
+ 
+ size_t WasmTrustedInstanceData::memory_size(uint32_t memory_index) const {
++  const uint32_t bases_and_sizes_length =
++      memory_bases_and_sizes()->length().value();
++  SBXCHECK_EQ(bases_and_sizes_length % 2u, 0u);
++  SBXCHECK_LT(memory_index, bases_and_sizes_length / 2u);
+   DCHECK_EQ(memory0_size(), memory_bases_and_sizes()->get(1));
+   return memory_bases_and_sizes()->get(2 * memory_index + 1);
+ }
+diff --git a/src/wasm/wasm-objects.cc b/src/wasm/wasm-objects.cc
+index 521764c2c69f..2a198a33ee12 100644
+--- a/src/wasm/wasm-objects.cc
++++ b/src/wasm/wasm-objects.cc
+@@ -779,6 +779,7 @@ void SetInstanceMemory(Tagged<WasmTrustedInstanceData> trusted_instance_data,
+     Isolate* isolate = Isolate::Current();
+     HandleScope scope(isolate);
+     wasm::WasmInterpreterRuntime::UpdateMemoryAddress(
++        isolate,
+         direct_handle(trusted_instance_data->instance_object(), isolate),
+         memory_index);
+   }
+diff --git a/test/mjsunit/mjsunit.status b/test/mjsunit/mjsunit.status
+index cd4ad82c9e0a..a42eabbf4d24 100644
+--- a/test/mjsunit/mjsunit.status
++++ b/test/mjsunit/mjsunit.status
+@@ -684,6 +684,10 @@
+   # This sandbox regression test forces --wasm-jitless to exercise the DrumBrake
+   # interpreter's JS-to-Wasm wrapper.
+   'sandbox/regress-522294322': [SKIP],
++  # These sandbox regression tests force --wasm-jitless to exercise the
++  # DrumBrake interpreter's InterpreterHandle handling.
++  'sandbox/regress-527689557-1': [SKIP],
++  'sandbox/regress-527689557-2': [SKIP],
+ }],  # not has_wasm_interpreter
+ 
+ ['has_wasm_interpreter and variant == jitless', {
+@@ -876,6 +880,7 @@
+   'regress/wasm/regress-518229528': [SKIP],
+   'regress/wasm/regress-518872404': [SKIP],
+   'regress/wasm/regress-521064735': [SKIP],
++  'regress/wasm/regress-524830496': [SKIP],
+   'wasm/shared-everything/*': [SKIP],
+   'wasm/subtyping-invalid': [SKIP],
+ 
+@@ -939,6 +944,7 @@
+   'regress/wasm/regress-452541294': [SKIP],
+   'regress/wasm/regress-457106696': [SKIP],
+   'regress/wasm/regress-513063392': [SKIP],
++  'regress/wasm/regress-525437482': [SKIP],
+   'wasm/custom-descriptors*': [SKIP],
+   'wasm/exact-types': [SKIP],
+ 
+@@ -951,6 +957,9 @@
+   'regress/wasm/regress-simd-520944504': [SKIP],
+   'wasm/wide-arithmetic': [SKIP],
+ 
++  # --experimental-wasm-imported-strings-utf8
++  'regress/wasm/regress-525472599': [SKIP],
++
+   # --wasm-deopt
+   'regress/wasm/regress-363826217': [SKIP],
+   'regress/wasm/regress-364360260': [SKIP],
+@@ -1024,6 +1033,8 @@
+   'regress/wasm/regress-518697709': [SKIP],
+   'regress/wasm/regress-crbug-1507751': [SKIP],
+   'regress/wasm/regress-simd-518058891': [SKIP],
++  'regress/wasm/regress-simd-526303929': [SKIP],
++  'regress/wasm/regress-simd-528884838': [SKIP],
+   'wasm/bit-shift-right': [SKIP],
+   'wasm/bounds-check-turbofan': [SKIP],
+   'wasm/enter-and-leave-debug-state': [SKIP],
+@@ -1033,6 +1044,9 @@
+   'wasm/nan-constant': [SKIP],
+   'wasm/recognize-imports': [SKIP],
+   'wasm/regress-471363817': [SKIP],
++  'wasm/regress-526041421': [SKIP],
++  'wasm/regress-529842414': [SKIP],
++  'wasm/regress-531123009': [SKIP],
+   'wasm/simd-relaxed-lane-select': [SKIP],
+   'wasm/speculative-inlining': [SKIP],
+   'wasm/stringrefs-regressions': [SKIP],
+diff --git a/test/mjsunit/sandbox/regress-527689557-1.js b/test/mjsunit/sandbox/regress-527689557-1.js
+new file mode 100644
+index 000000000000..5fbe113248fc
+--- /dev/null
++++ b/test/mjsunit/sandbox/regress-527689557-1.js
+@@ -0,0 +1,85 @@
++// Copyright 2026 the V8 project authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++// Flags: --wasm-jitless --sandbox-testing
++
++d8.file.execute('test/mjsunit/wasm/wasm-module-builder.js');
++
++// The DrumBrake interpreter reaches its InterpreterHandle through the in-cage
++// Tuple2 stored in trusted_data->interpreter_object() (map@0, value1@4 =
++// WasmInstanceObject, value2@8 = Managed<InterpreterHandle>). A sandbox
++// attacker can overwrite value2 with another instance's handle -- it carries
++// the same external-pointer tag, so the cast succeeds -- which runs that
++// instance's bytecode while Runtime_WasmRunInterpreter marshals the results
++// using the victim's (mismatched) signature. Here the confused function returns
++// an attacker-controlled i64 that is then marshalled as an externref, giving an
++// out-of-cage read. This must be detected as a sandbox violation and terminate
++// the process rather than dereferencing the attacker-controlled address.
++
++// Instance A returns an externref, so its result is marshalled as a reference.
++// Instance B takes an i64 and returns it unchanged.
++function makeInstance(params, returns, body) {
++  const builder = new WasmModuleBuilder();
++  builder.addFunction('main', makeSig(params, returns))
++      .addBody(body)
++      .exportFunc();
++  return builder.instantiate();
++}
++
++const instanceA =
++    makeInstance([kWasmI64], [kWasmExternRef], [kExprRefNull, kExternRefCode]);
++const instanceB = makeInstance([kWasmI64], [kWasmI64], [kExprLocalGet, 0]);
++
++// Trigger interpretation once so each instance's interpreter Tuple2 exists.
++instanceA.exports.main(0n);
++instanceB.exports.main(0n);
++
++// Sandbox memory-corruption helpers.
++const kHeapObjectTag = 1;
++const kValue2Offset = 8;  // Tuple2::value2 (Managed<InterpreterHandle>).
++const kScanSize = 0x10000;
++
++const memory = new DataView(new Sandbox.MemoryView(0, 0x100000000));
++function read32(addr) {
++  return memory.getUint32(addr, true);
++}
++function write32(addr, value) {
++  memory.setUint32(addr, value, true);
++}
++
++// Each instance's interpreter Tuple2 (map@0, value1@4 = WasmInstanceObject,
++// value2@8 = Managed<InterpreterHandle>) is only referenced from out-of-cage
++// trusted data, so locate it by scanning the cage for a Tuple2 whose value1
++// field (a tagged pointer) points at the instance. All Tuple2s share the same
++// map, so cross-check both instances' candidates by identical map value; this
++// disambiguates unrelated objects without hardcoding the build-specific map.
++function findInterpreterTuples(start, taggedA, taggedB) {
++  const bByMap = new Map();
++  for (let b = start; b < start + kScanSize; b += 4) {
++    if (read32(b + 4) === taggedB) bByMap.set(read32(b), b);
++  }
++  for (let a = start; a < start + kScanSize; a += 4) {
++    if (read32(a + 4) !== taggedA) continue;
++    const map = read32(a);
++    if (bByMap.has(map)) return [a, bByMap.get(map)];
++  }
++  return [0, 0];
++}
++
++const addrA = Sandbox.getAddressOf(instanceA);
++const addrB = Sandbox.getAddressOf(instanceB);
++const start = Math.min(addrA, addrB);
++const taggedA = (addrA + kHeapObjectTag) >>> 0;
++const taggedB = (addrB + kHeapObjectTag) >>> 0;
++const [tupleA, tupleB] = findInterpreterTuples(start, taggedA, taggedB);
++assertTrue(tupleA !== 0 && tupleB !== 0, 'could not locate interpreter Tuple2');
++
++// Swap instance A's interpreter handle for instance B's.
++write32(tupleA + kValue2Offset, read32(tupleB + kValue2Offset));
++
++// A now runs B's body: the i64 operand is returned and then marshalled as an
++// externref, dereferencing an attacker-controlled out-of-cage address.
++instanceA.exports.main(0x414141414141n);
++
++assertUnreachable('Process should have been killed.');
+diff --git a/test/mjsunit/sandbox/regress-527689557-2.js b/test/mjsunit/sandbox/regress-527689557-2.js
+new file mode 100644
+index 000000000000..9b84eab44616
+--- /dev/null
++++ b/test/mjsunit/sandbox/regress-527689557-2.js
+@@ -0,0 +1,86 @@
++// Copyright 2026 the V8 project authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++// Flags: --wasm-jitless --sandbox-testing
++
++d8.file.execute('test/mjsunit/wasm/wasm-module-builder.js');
++
++// The DrumBrake interpreter reaches its InterpreterHandle through the in-cage
++// Tuple2 stored in trusted_data->interpreter_object() (map@0, value1@4 =
++// WasmInstanceObject, value2@8 = Managed<InterpreterHandle>). A sandbox
++// attacker can overwrite value2 with another instance's handle -- it carries
++// the same external-pointer tag, so the cast succeeds -- which runs that
++// instance's bytecode while Runtime_WasmRunInterpreter marshals the results
++// using the victim's (mismatched) signature. Here the confused function returns
++// an externref that is then marshalled as an i64, leaking the object's in-cage
++// address to script. This must be detected as a sandbox violation and terminate
++// the process rather than disclosing the pointer.
++
++// Instance A returns an i64, so its result is marshalled as a raw value.
++// Instance B takes an externref and returns it unchanged.
++function makeInstance(params, returns, body) {
++  const builder = new WasmModuleBuilder();
++  builder.addFunction('main', makeSig(params, returns))
++      .addBody(body)
++      .exportFunc();
++  return builder.instantiate();
++}
++
++const instanceA =
++    makeInstance([kWasmExternRef], [kWasmI64], [kExprI64Const, 0]);
++const instanceB = makeInstance(
++    [kWasmExternRef], [kWasmExternRef], [kExprLocalGet, 0]);
++
++// Trigger interpretation once so each instance's interpreter Tuple2 exists.
++instanceA.exports.main(null);
++instanceB.exports.main(null);
++
++// Sandbox memory-corruption helpers.
++const kHeapObjectTag = 1;
++const kValue2Offset = 8;  // Tuple2::value2 (Managed<InterpreterHandle>).
++const kScanSize = 0x10000;
++
++const memory = new DataView(new Sandbox.MemoryView(0, 0x100000000));
++function read32(addr) {
++  return memory.getUint32(addr, true);
++}
++function write32(addr, value) {
++  memory.setUint32(addr, value, true);
++}
++
++// Each instance's interpreter Tuple2 (map@0, value1@4 = WasmInstanceObject,
++// value2@8 = Managed<InterpreterHandle>) is only referenced from out-of-cage
++// trusted data, so locate it by scanning the cage for a Tuple2 whose value1
++// field (a tagged pointer) points at the instance. All Tuple2s share the same
++// map, so cross-check both instances' candidates by identical map value; this
++// disambiguates unrelated objects without hardcoding the build-specific map.
++function findInterpreterTuples(start, taggedA, taggedB) {
++  const bByMap = new Map();
++  for (let b = start; b < start + kScanSize; b += 4) {
++    if (read32(b + 4) === taggedB) bByMap.set(read32(b), b);
++  }
++  for (let a = start; a < start + kScanSize; a += 4) {
++    if (read32(a + 4) !== taggedA) continue;
++    const map = read32(a);
++    if (bByMap.has(map)) return [a, bByMap.get(map)];
++  }
++  return [0, 0];
++}
++
++const addrA = Sandbox.getAddressOf(instanceA);
++const addrB = Sandbox.getAddressOf(instanceB);
++const start = Math.min(addrA, addrB);
++const taggedA = (addrA + kHeapObjectTag) >>> 0;
++const taggedB = (addrB + kHeapObjectTag) >>> 0;
++const [tupleA, tupleB] = findInterpreterTuples(start, taggedA, taggedB);
++assertTrue(tupleA !== 0 && tupleB !== 0, 'could not locate interpreter Tuple2');
++
++// Swap instance A's interpreter handle for instance B's.
++write32(tupleA + kValue2Offset, read32(tupleB + kValue2Offset));
++
++// A now runs B's body: the externref operand is returned and then marshalled as
++// an i64, disclosing the object's in-cage address to script.
++instanceA.exports.main({});
++
++assertUnreachable('Process should have been killed.');

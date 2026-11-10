@@ -21,8 +21,8 @@ class NativeIdentityTests(unittest.TestCase):
         self.lock = json.loads((REPOSITORY / "RuntimeDependencies.lock.json").read_text(encoding="utf-8"))
         files = list(module.NATIVE_SCRIPTS) + [item["path"] for item in self.lock["node"].get("sourcePatches", [])]
         for patch in self.lock["node"].get("sourcePatches", []):
-            original = json.loads((REPOSITORY / patch["path"]).read_bytes()).get("upstreamPatch")
-            if original:
+            manifest = json.loads((REPOSITORY / patch["path"]).read_bytes())
+            for original in ([manifest["upstreamPatch"]] if manifest.get("upstreamPatch") else []) + manifest.get("upstreamPatches", []):
                 files.append(original["path"])
         adapter = self.lock["node"].get("buildConfiguration", {}).get("adapter", {}).get("path")
         if adapter:
@@ -71,6 +71,23 @@ class NativeIdentityTests(unittest.TestCase):
         original = self.root / manifest["upstreamPatch"]["path"]
         original.write_bytes(original.read_bytes() + b"\nmodified upstream evidence\n")
         self.assertNotEqual(module.native_identity(self.root), before)
+
+    def test_pointer_representation_changes_invalidate_all_old_native_outputs(self):
+        before = module.native_identity(self.root)
+        self.lock["node"]["buildConfiguration"]["pointerCompression"] = not self.lock["node"]["buildConfiguration"]["pointerCompression"]
+        self.write_lock()
+        self.assertNotEqual(module.native_identity(self.root), before)
+
+    def test_each_additional_hardening_evidence_file_invalidates_reuse(self):
+        before = module.native_identity(self.root)
+        for pin in self.lock["node"]["sourcePatches"]:
+            manifest = json.loads((self.root / pin["path"]).read_bytes())
+            for original in manifest.get("upstreamPatches", []):
+                path = self.root / original["path"]
+                data = path.read_bytes()
+                path.write_bytes(data + b"modified extra evidence")
+                self.assertNotEqual(module.native_identity(self.root), before)
+                path.write_bytes(data)
 
     def test_windows_text_checkout_matches_the_actual_macos_lf_instructions(self):
         for name in module.NATIVE_SCRIPTS:

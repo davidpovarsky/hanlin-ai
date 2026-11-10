@@ -144,7 +144,7 @@ test -f "${smoke_result}"
 cp "${smoke_result}" "${OUTPUT_ROOT}/NodeMobile-smoke.json"
 node -e '
   const result = require(process.argv[1]);
-  if (!result.ok || result.nodeVersion !== "24.5.0" || !result.workerThreads || !result.descriptorOwnership || result.fdWarningCount !== 0 || !result.hostStartup || !result.webAssembly || !result.wasmEvidence?.noJIT || !result.wasmEvidence?.externref || !result.wasmEvidence?.gc || result.wasmEvidence?.mode !== "wasm-jitless") {
+  if (!result.ok || result.nodeVersion !== "24.5.0" || !result.workerThreads || !result.descriptorOwnership || result.fdWarningCount !== 0 || !result.hostStartup || !result.webAssembly || !result.wasmEvidence?.noJIT || !result.wasmEvidence?.pointerCompression || !result.wasmEvidence?.externref || !result.wasmEvidence?.refArrayFill || !result.wasmEvidence?.refArrayBounds || !result.wasmEvidence?.multipleInstances || !result.wasmEvidence?.nestedInstances || !result.wasmEvidence?.gc || result.wasmEvidence?.mode !== "wasm-jitless") {
     throw new Error(`Embedded Node smoke failed: ${JSON.stringify(result)}`);
   }
 ' "${OUTPUT_ROOT}/NodeMobile-smoke.json"

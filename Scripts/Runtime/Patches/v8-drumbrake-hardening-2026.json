@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
+  "upstreamCommit": "e0c5b3bc0ba80528e6251dbf3ffa8c2f2781d08b",
+  "upstreamPatch": {
+    "path": "Scripts/Runtime/Patches/v8-interpreter-e0c5b3bc.patch",
+    "sha256": "72021acc24aef277200fccdd6d204ab0aaedbecbc767273abdc261aa078dd847",
+    "upstreamCommit": "e0c5b3bc0ba80528e6251dbf3ffa8c2f2781d08b"
+  },
+  "upstreamPatches": [
+    {
+      "path": "Scripts/Runtime/Patches/v8-trusted-instance-cae0a28d.patch",
+      "sha256": "015e9b2e11c0534b63d294e0ca718ec4f2c774a61355c5adc6db0ceff91e1b2f",
+      "upstreamCommit": "cae0a28d9ede96739be22fff73bb28353346b976"
+    },
+    {
+      "path": "Scripts/Runtime/Patches/v8-interpreter-3489a0a7.patch",
+      "sha256": "b177713f6ddbb5b0037cc919b2dd7d9e59132cdcdc185f2cda492300147374c5",
+      "upstreamCommit": "3489a0a7b242e2006e7e2aec7d99198dd26f1e0b"
+    }
+  ],
+  "note": "Adapted production hardening for the pinned fixed-instance/single-memory interpreter. The pinned Node configuration disables the V8 sandbox, where SBXCHECK expands to DCHECK; use unconditional CHECK for the adapted ownership/bounds guards. This does not enable or claim V8 sandbox isolation. No upstream mjsunit.status skips are applied. Newer InstanceScope, multi-memory vectors, TrustedCast and WasmFuncRef-only ExecuteCallRef API are absent in this source; retain its actual ABI and valid legacy reference-call paths. Runtime/native adversarial acceptance is not inferred from source hashes.",
+  "files": [
+    {
+      "path": "deps/v8/src/wasm/interpreter/wasm-interpreter-runtime.cc",
+      "beforeSHA256": "5c7f4372d551c54419693901e4275de3bf8f9e7e198329ddd58f369fbd2c0796",
+      "afterSHA256": "9819eb7edb4ce3dfe223e57cb723eb125505da765fa1bcc0c109639395cebe10",
+      "replacements": [
+        {
+          "before": "  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n",
+          "after": "  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n",
+          "adaptation": "cae0a28d: same trusted-instance invariant, preserve the older three-argument runtime ABI."
+        },
+        {
+          "before": "  DCHECK_GT(trusted_data->module()->functions.size(), func_index);",
+          "after": "  CHECK_LT(static_cast<uint32_t>(func_index),\n              trusted_data->module()->functions.size());",
+          "adaptation": "cae0a28d: release-mode function bound, including negative signed indices."
+        },
+        {
+          "before": "  InitGlobalAddressCache();",
+          "after": "  ValidateInstance(instance_object);\n  InitGlobalAddressCache();",
+          "adaptation": "e0c5b3bc: validate the trusted module before initializing native caches."
+        },
+        {
+          "before": "void WasmInterpreterRuntime::PurgeIndirectCallCache(uint32_t table_index) {",
+          "after": "void WasmInterpreterRuntime::ValidateInstance(\n    DirectHandle<WasmInstanceObject> instance) const {\n  CHECK_EQ(*instance_object_, *instance);\n  // Also validates the instance backpointer and this runtime's trusted module.\n  USE(wasm_trusted_instance_data());\n}\n\nvoid WasmInterpreterRuntime::PurgeIndirectCallCache(uint32_t table_index) {",
+          "adaptation": "e0c5b3bc: bind a reached InterpreterHandle to its original instance, adapting InstanceScope to the fixed-owner API."
+        },
+        {
+          "before": "V8_EXPORT_PRIVATE InterpreterHandle* GetInterpreterHandle(\n    Isolate* isolate, DirectHandle<Tuple2> interpreter_object) {\n  DirectHandle<Object> handle(\n      WasmInterpreterObject::get_interpreter_handle(*interpreter_object),\n      isolate);\n  CHECK(!IsUndefined(*handle, isolate));\n  return Cast<Managed<InterpreterHandle>>(handle)->raw();",
+          "after": "V8_EXPORT_PRIVATE InterpreterHandle* GetInterpreterHandle(\n    Isolate* isolate, DirectHandle<Tuple2> interpreter_object) {\n  DirectHandle<Object> handle(\n      WasmInterpreterObject::get_interpreter_handle(*interpreter_object),\n      isolate);\n  CHECK(!IsUndefined(*handle, isolate));\n  InterpreterHandle* result = Cast<Managed<InterpreterHandle>>(handle)->raw();\n  result->interpreter()->GetWasmRuntime()->ValidateInstance(\n      direct_handle(WasmInterpreterObject::get_wasm_instance(*interpreter_object), isolate));\n  return result;",
+          "adaptation": "e0c5b3bc: reject a same-tag interpreter handle belonging to a different owning instance."
+        },
+        {
+          "before": "V8_EXPORT_PRIVATE InterpreterHandle* GetOrCreateInterpreterHandle(\n    Isolate* isolate, DirectHandle<Tuple2> interpreter_object) {\n  DirectHandle<Object> handle(\n      WasmInterpreterObject::get_interpreter_handle(*interpreter_object),\n      isolate);\n  if (IsUndefined(*handle, isolate)) {\n    // Use the maximum stack size to estimate the maximum size of the\n    // interpreter. The interpreter keeps its own stack internally, and the size\n    // of the stack should dominate the overall size of the interpreter. We\n    // multiply by '2' to account for the growing strategy for the backing store\n    // of the stack.\n    size_t interpreter_size = v8_flags.stack_size * KB * 2;\n    handle = Managed<InterpreterHandle>::From(\n        isolate, interpreter_size,\n        std::make_shared<InterpreterHandle>(isolate, interpreter_object));\n    WasmInterpreterObject::set_interpreter_handle(*interpreter_object, *handle);\n  }\n\n  return Cast<Managed<InterpreterHandle>>(handle)->raw();",
+          "after": "V8_EXPORT_PRIVATE InterpreterHandle* GetOrCreateInterpreterHandle(\n    Isolate* isolate, DirectHandle<Tuple2> interpreter_object) {\n  DirectHandle<Object> handle(\n      WasmInterpreterObject::get_interpreter_handle(*interpreter_object),\n      isolate);\n  if (IsUndefined(*handle, isolate)) {\n    // Use the maximum stack size to estimate the maximum size of the\n    // interpreter. The interpreter keeps its own stack internally, and the size\n    // of the stack should dominate the overall size of the interpreter. We\n    // multiply by '2' to account for the growing strategy for the backing store\n    // of the stack.\n    size_t interpreter_size = v8_flags.stack_size * KB * 2;\n    handle = Managed<InterpreterHandle>::From(\n        isolate, interpreter_size,\n        std::make_shared<InterpreterHandle>(isolate, interpreter_object));\n    WasmInterpreterObject::set_interpreter_handle(*interpreter_object, *handle);\n  }\n\n  InterpreterHandle* result = Cast<Managed<InterpreterHandle>>(handle)->raw();\n  result->interpreter()->GetWasmRuntime()->ValidateInstance(\n      direct_handle(WasmInterpreterObject::get_wasm_instance(*interpreter_object), isolate));\n  return result;",
+          "adaptation": "e0c5b3bc: reject a same-tag interpreter handle belonging to a different owning instance."
+        },
+        {
+          "before": "void WasmInterpreterRuntime::PurgeIndirectCallCache(uint32_t table_index) {\n  DCHECK_LT(table_index, indirect_call_tables_.size());",
+          "after": "void WasmInterpreterRuntime::PurgeIndirectCallCache(uint32_t table_index) {\n  CHECK_LT(table_index, indirect_call_tables_.size());",
+          "adaptation": "3489a0a7: unconditional indirect-call cache bound."
+        },
+        {
+          "before": "  DCHECK_LT(table_index, wasm_runtime->indirect_call_tables_.size());\n  DCHECK_LT(entry_index,\n            wasm_runtime->indirect_call_tables_[table_index].size());",
+          "after": "  CHECK_LT(table_index, wasm_runtime->indirect_call_tables_.size());\n  CHECK_LT(entry_index,\n              wasm_runtime->indirect_call_tables_[table_index].size());",
+          "adaptation": "3489a0a7: unconditional per-instance cache-vector write bounds."
+        },
+        {
+          "before": "  inline IndirectFunctionTableEntry(DirectHandle<WasmInstanceObject>,\n                                    int table_index, int entry_index);",
+          "after": "  inline IndirectFunctionTableEntry(Isolate*, DirectHandle<WasmTrustedInstanceData>,\n                                    int table_index, int entry_index);",
+          "adaptation": "e0c5b3bc: dispatch lookup takes already-validated trusted data rather than reloading an in-cage instance handle."
+        },
+        {
+          "before": "IndirectFunctionTableEntry::IndirectFunctionTableEntry(\n    DirectHandle<WasmInstanceObject> instance, int table_index, int entry_index)\n    : table_(\n          table_index != 0\n              ? direct_handle(Cast<WasmDispatchTable>(\n                                  instance->trusted_data(instance->GetIsolate())\n                                      ->dispatch_tables()\n                                      ->get(table_index)),\n                              instance->GetIsolate())\n              : direct_handle(Cast<WasmDispatchTable>(\n                                  instance->trusted_data(instance->GetIsolate())\n                                      ->dispatch_table0()),\n                              instance->GetIsolate())),\n      index_(entry_index) {\n  DCHECK_GE(entry_index, 0);\n  DCHECK_LT(entry_index, table_->length());\n}",
+          "after": "namespace {\nDirectHandle<WasmDispatchTable> GetCheckedDispatchTable(\n    Isolate* isolate, DirectHandle<WasmTrustedInstanceData> trusted_data,\n    int table_index) {\n  CHECK_GE(table_index, 0);\n  if (table_index == 0) {\n    return direct_handle(Cast<WasmDispatchTable>(trusted_data->dispatch_table0()), isolate);\n  }\n  auto dispatch_tables = trusted_data->dispatch_tables();\n  CHECK_LT(table_index, dispatch_tables->length());\n  return direct_handle(Cast<WasmDispatchTable>(dispatch_tables->get(table_index)), isolate);\n}\n}  // namespace\n\nIndirectFunctionTableEntry::IndirectFunctionTableEntry(\n    Isolate* isolate, DirectHandle<WasmTrustedInstanceData> trusted_data,\n    int table_index, int entry_index)\n    : table_(GetCheckedDispatchTable(isolate, trusted_data, table_index)),\n      index_(entry_index) {\n  CHECK_GE(entry_index, 0);\n  CHECK_LT(entry_index, table_->length());\n}",
+          "adaptation": "e0c5b3bc: checked trusted dispatch table and entry bounds; pinned API uses Cast and integer length(), not newer TrustedCast/length().value()."
+        },
+        {
+          "before": "IndirectFunctionTableEntry entry(instance_object_, table_index,\n                                     entry_index);\n    const FunctionSig* signature = module_->signature({sig_index});",
+          "after": "IndirectFunctionTableEntry entry(isolate_, wasm_trusted_instance_data(),\n                                     table_index, entry_index);\n    const FunctionSig* signature = module_->signature({sig_index});",
+          "adaptation": "e0c5b3bc: both indirect-call paths use the validated fixed-owner getter."
+        },
+        {
+          "before": "IndirectFunctionTableEntry entry(instance_object_, table_index,\n                                     entry_index);\n    DirectHandle<Object> object_implicit_arg(entry.implicit_arg(), isolate_);",
+          "after": "IndirectFunctionTableEntry entry(isolate_, wasm_trusted_instance_data(),\n                                     table_index, entry_index);\n    DirectHandle<Object> object_implicit_arg(entry.implicit_arg(), isolate_);",
+          "adaptation": "e0c5b3bc: both indirect-call paths use the validated fixed-owner getter."
+        },
+        {
+          "before": "ModuleWireBytes InterpreterHandle::GetBytes(Tagged<Tuple2> interpreter_object) {\n  Tagged<WasmInstanceObject> wasm_instance =\n      WasmInterpreterObject::get_wasm_instance(interpreter_object);\n  NativeModule* native_module = wasm_instance->module_object()->native_module();",
+          "after": "ModuleWireBytes InterpreterHandle::GetBytes(Isolate* isolate, Tagged<Tuple2> interpreter_object) {\n  Tagged<WasmInstanceObject> wasm_instance =\n      WasmInterpreterObject::get_wasm_instance(interpreter_object);\n  Tagged<WasmTrustedInstanceData> trusted_data = wasm_instance->trusted_data(isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == wasm_instance);\n  NativeModule* native_module = trusted_data->native_module();",
+          "adaptation": "e0c5b3bc: source wire bytes from validated trusted native module, preserving the older raw NativeModule pointer API."
+        },
+        {
+          "before": "      module_(WasmInterpreterObject::get_wasm_instance(*interpreter_object)\n                  ->module_object()\n                  ->module()),\n      interpreter_(isolate, module_, GetBytes(*interpreter_object),",
+          "after": "      module_(WasmInterpreterObject::get_wasm_instance(*interpreter_object)\n                  ->trusted_data(isolate)\n                  ->module()),\n      interpreter_(isolate, module_, GetBytes(isolate, *interpreter_object),",
+          "adaptation": "e0c5b3bc: the interpreter module comes from trusted instance data, not mutable module_object."
+        },
+        {
+          "before": "V8_EXPORT_PRIVATE bool InterpreterHandle::Execute(\n    WasmInterpreterThread* thread, Address frame_pointer, uint32_t func_index,\n    const std::vector<WasmValue>& argument_values,\n    std::vector<WasmValue>& return_values) {\n  DCHECK_GT(module()->functions.size(), func_index);\n  const FunctionSig* sig = module()->functions[func_index].sig;\n  DCHECK_EQ(sig->parameter_count(), argument_values.size());\n  DCHECK_EQ(sig->return_count(), return_values.size());\n\n  thread->StartExecutionTimer();\n  interpreter_.BeginExecution(thread, func_index, frame_pointer,\n                              thread->NextFrameAddress(),\n                              thread->NextRefStackOffset(), argument_values);\n\n  WasmInterpreterThread::State state = RunExecutionLoop(thread, true);\n  thread->StopExecutionTimer();\n\n  switch (state) {\n    case WasmInterpreterThread::RUNNING:\n    case WasmInterpreterThread::FINISHED:\n      for (unsigned i = 0; i < sig->return_count(); ++i) {\n        return_values[i] = interpreter_.GetReturnValue(i);\n      }\n      return true;\n\n    case WasmInterpreterThread::TRAPPED:\n      for (unsigned i = 0; i < sig->return_count(); ++i) {\n        return_values[i] = WasmValue(0xDEADBEEF);\n      }\n      return false;\n\n    case WasmInterpreterThread::STOPPED:\n      return false;\n\n    case WasmInterpreterThread::EH_UNWINDING:\n      UNREACHABLE();\n  }\n}",
+          "after": "V8_EXPORT_PRIVATE bool InterpreterHandle::Execute(\n    WasmInterpreterThread* thread, Address frame_pointer, uint32_t func_index,\n    const std::vector<WasmValue>& argument_values,\n    std::vector<WasmValue>& return_values) {\n  CHECK_GT(module()->functions.size(), func_index);\n  const FunctionSig* sig = module()->functions[func_index].sig;\n  CHECK_EQ(sig->parameter_count(), argument_values.size());\n  CHECK_EQ(sig->return_count(), return_values.size());\n\n  thread->StartExecutionTimer();\n  interpreter_.BeginExecution(thread, func_index, frame_pointer,\n                              thread->NextFrameAddress(),\n                              thread->NextRefStackOffset(), argument_values);\n\n  WasmInterpreterThread::State state = RunExecutionLoop(thread, true);\n  thread->StopExecutionTimer();\n\n  switch (state) {\n    case WasmInterpreterThread::RUNNING:\n    case WasmInterpreterThread::FINISHED:\n      for (unsigned i = 0; i < sig->return_count(); ++i) {\n        return_values[i] = interpreter_.GetReturnValue(i);\n      }\n      return true;\n\n    case WasmInterpreterThread::TRAPPED:\n      for (unsigned i = 0; i < sig->return_count(); ++i) {\n        return_values[i] = WasmValue(0xDEADBEEF);\n      }\n      return false;\n\n    case WasmInterpreterThread::STOPPED:\n      return false;\n\n    case WasmInterpreterThread::EH_UNWINDING:\n      UNREACHABLE();\n  }\n}",
+          "adaptation": "e0c5b3bc: release-mode function/signature/argument/result bounds in both actual Execute entry points."
+        },
+        {
+          "before": "bool InterpreterHandle::Execute(WasmInterpreterThread* thread,\n                                Address frame_pointer, uint32_t func_index,\n                                uint8_t* interpreter_fp) {\n  DCHECK_GT(module()->functions.size(), func_index);\n\n  interpreter_.BeginExecution(thread, func_index, frame_pointer,\n                              interpreter_fp);\n  WasmInterpreterThread::State state = RunExecutionLoop(thread, false);\n  return (state == WasmInterpreterThread::RUNNING ||\n          state == WasmInterpreterThread::FINISHED);\n}",
+          "after": "bool InterpreterHandle::Execute(WasmInterpreterThread* thread,\n                                Address frame_pointer, uint32_t func_index,\n                                uint8_t* interpreter_fp) {\n  CHECK_GT(module()->functions.size(), func_index);\n\n  interpreter_.BeginExecution(thread, func_index, frame_pointer,\n                              interpreter_fp);\n  WasmInterpreterThread::State state = RunExecutionLoop(thread, false);\n  return (state == WasmInterpreterThread::RUNNING ||\n          state == WasmInterpreterThread::FINISHED);\n}",
+          "adaptation": "e0c5b3bc: release-mode function/signature/argument/result bounds in both actual Execute entry points."
+        }
+      ]
+    },
+    {
+      "path": "deps/v8/src/wasm/wasm-objects.cc",
+      "beforeSHA256": "e9e393ef2a52ff9a9d11a41a71db189987a3e78b57ffb7472d90724be15f962e",
+      "afterSHA256": "857c1881f16b852c1edf47369616849d87879d2479e6ca2585ad76b01687884c",
+      "replacements": [
+        {
+          "before": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetOrCreateInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n",
+          "after": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetOrCreateInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n",
+          "adaptation": "3489a0a7: re-establish trusted-data ownership at every interpreter-object lookup."
+        },
+        {
+          "before": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n",
+          "after": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n",
+          "adaptation": "3489a0a7: re-establish trusted-data ownership at every interpreter-object lookup."
+        },
+        {
+          "before": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetOrCreateInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n  if (trusted_data->has_interpreter_object()) {\n    return direct_handle(trusted_data->interpreter_object(), isolate);\n  }\n  DirectHandle<Tuple2> new_interpreter = WasmInterpreterObject::New(instance);\n  DCHECK(trusted_data->has_interpreter_object());\n  return new_interpreter;\n}",
+          "after": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetOrCreateInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n  if (trusted_data->has_interpreter_object()) {\n    CHECK_EQ(WasmInterpreterObject::get_wasm_instance(\n                    trusted_data->interpreter_object()), *instance);\n    return direct_handle(trusted_data->interpreter_object(), isolate);\n  }\n  DirectHandle<Tuple2> new_interpreter = WasmInterpreterObject::New(instance);\n  DCHECK(trusted_data->has_interpreter_object());\n  return new_interpreter;\n}",
+          "adaptation": "3489a0a7/e0c5b3bc: the older mutable Tuple2 must still point to the original instance before selecting its native handle."
+        },
+        {
+          "before": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n  CHECK(trusted_data->has_interpreter_object());\n  return direct_handle(trusted_data->interpreter_object(), isolate);\n}",
+          "after": "DirectHandle<Tuple2> WasmTrustedInstanceData::GetInterpreterObject(\n    DirectHandle<WasmInstanceObject> instance) {\n  DCHECK(v8_flags.wasm_jitless);\n  Isolate* isolate = Isolate::Current();\n  DirectHandle<WasmTrustedInstanceData> trusted_data(\n      instance->trusted_data(isolate), isolate);\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance);\n  CHECK(trusted_data->has_interpreter_object());\n  CHECK_EQ(WasmInterpreterObject::get_wasm_instance(\n                  trusted_data->interpreter_object()), *instance);\n  return direct_handle(trusted_data->interpreter_object(), isolate);\n}",
+          "adaptation": "3489a0a7/e0c5b3bc: the older mutable Tuple2 must still point to the original instance before selecting its native handle."
+        }
+      ]
+    },
+    {
+      "path": "deps/v8/src/wasm/interpreter/wasm-interpreter-runtime-inl.h",
+      "beforeSHA256": "f16f83338db02bb180972301ac4454574ab840a9471dec02ca6b6da51a8aa1ba",
+      "afterSHA256": "963b135c5ab68bc343b08f4c33a3fe049c011574ca424cd8509a36a4cbc80819",
+      "replacements": [
+        {
+          "before": "  return direct_handle(instance_object_->trusted_data(isolate_), isolate_);",
+          "after": "  auto trusted_data = direct_handle(instance_object_->trusted_data(isolate_), isolate_);\n  // The older interpreter has one fixed owning instance, not InstanceScope.\n  // Validate every read, including after a Wasm-to-JS callback, before exposing\n  // trusted module/memory metadata to this runtime.\n  CHECK(trusted_data->has_instance_object() &&\n           trusted_data->instance_object() == *instance_object_);\n  CHECK_EQ(trusted_data->module(), module_);\n  return trusted_data;",
+          "adaptation": "e0c5b3bc: older fixed-instance ownership replaces current_instance_/InstanceScope; validate identity+module on each read, never trust a swapped handle after a JS callback."
+        }
+      ]
+    },
+    {
+      "path": "deps/v8/src/wasm/interpreter/wasm-interpreter-runtime.h",
+      "beforeSHA256": "7872759aee6cbe30c528cdb2449bb089e9ed18a45fb37c30c94596bed253bc1b",
+      "afterSHA256": "a5f799c43b5179cb8c2ed32dc27844eb7335a4356aeaf38909bb1775883a85a3",
+      "replacements": [
+        {
+          "before": "  inline Isolate* GetIsolate() const { return isolate_; }",
+          "after": "  inline Isolate* GetIsolate() const { return isolate_; }\n  void ValidateInstance(DirectHandle<WasmInstanceObject> instance) const;",
+          "adaptation": "e0c5b3bc: explicit validation entry for the older per-instance runtime."
+        },
+        {
+          "before": "  static ModuleWireBytes GetBytes(Tagged<Tuple2> interpreter_object);",
+          "after": "  static ModuleWireBytes GetBytes(Isolate* isolate, Tagged<Tuple2> interpreter_object);",
+          "adaptation": "e0c5b3bc: matching trusted-byte helper signature."
+        }
+      ]
+    }
+  ]
+}
