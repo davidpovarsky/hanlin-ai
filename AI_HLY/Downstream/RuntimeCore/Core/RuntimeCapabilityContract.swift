@@ -13,7 +13,7 @@ struct RuntimeCapabilityContract: Codable, Sendable {
         self.snapshots = snapshots
         self.defaultLimits = defaultLimits
         features = [
-            "jobs": "Node/Python/TypeScript have durable job IDs, full stdout/stderr artifacts and optional explicit deadlines. Native Python cancellation is cooperative and may wait for a blocking C call. Interrupted jobs are not replayed automatically.",
+            "jobs": "Node/Python/TypeScript have durable job IDs, full stdout/stderr artifacts and optional explicit deadlines. Serialized Python jobs retain output/cwd/environment until newly created CPython thread states drain, including daemon/raw threads. Cancellation is cooperative; untraced threads and blocking native calls must return naturally. Native libraries that schedule future callbacks after detaching all Python thread states need their own lifetime contract. Interrupted jobs are not replayed automatically.",
             "agentSteps": "No default step cap; an explicit caller budget is optional. Completion, user cancellation and actual errors terminate a run.",
             "authorization": "No per-package Hanlin grants. Real OS permissions, owner disable/stop, session identity, integrity and TLS still apply.",
             "pythonPackages": "Standards-based packaging/resolvelib resolution uses running-interpreter markers and wheel tags, compatible PEP 517 source backends and local sources. Native imports require providers actually registered in the signed app; arbitrary desktop binary compatibility is not implied. Installation commits only after the staged import probe.",

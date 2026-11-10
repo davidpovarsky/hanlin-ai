@@ -7,6 +7,44 @@ import Testing
 @Suite("Actual shared-engine operation interruption", .serialized)
 struct RuntimeNativeInterruptionTests {
     @Test(.timeLimit(.minutes(2)))
+    func actualPythonChildThreadsKeepTheirWorkspaceAndFullOutputUntilCompletion() async throws {
+        let core = AppRuntimeCore.shared
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "python-threads-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let source = #"""
+import os, sys, threading, _thread, time, pathlib
+workspace = os.getcwd()
+def child(label, descendant):
+    time.sleep(0.08)
+    assert os.getcwd() == workspace
+    assert os.environ['HANLIN_THREAD_OWNER_TEST'] == 'owned'
+    assert not sys.stdout.closed
+    print(label, flush=True)
+    pathlib.Path(label).write_text('completed', encoding='utf-8')
+    if descendant:
+        _thread.start_new_thread(child, ('raw-descendant', False))
+threading.Thread(target=child, args=('daemon-child', False), daemon=True).start()
+_thread.start_new_thread(child, ('raw-child', True))
+print('main-finished', flush=True)
+"""#
+        let result = try await core.python.execute(RuntimeExecutionRequest(
+            source: source, workspace: workspace, environment: ["HANLIN_THREAD_OWNER_TEST": "owned"],
+            limits: .init(timeout: .seconds(20))))
+        #expect(result.exitCode == 0 && !result.wasCancelled && !result.didTimeOut)
+        #expect(Set(result.stdout.split(separator: "\n").map(String.init)) ==
+            Set(["main-finished", "daemon-child", "raw-child", "raw-descendant"]))
+        for name in ["daemon-child", "raw-child", "raw-descendant"] {
+            #expect(try String(contentsOf: workspace.appending(path: name), encoding: .utf8) == "completed")
+        }
+        // Execute a second actual job only after the first thread states have
+        // drained. Its environment and artifacts must belong to the new scope.
+        let next = try await core.python.execute(RuntimeExecutionRequest(
+            source: "import os\nassert 'HANLIN_THREAD_OWNER_TEST' not in os.environ\nprint('next-job-owned')",
+            workspace: workspace, limits: .init(timeout: .seconds(20))))
+        #expect(next.exitCode == 0 && next.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "next-job-owned")
+    }
+
+    @Test(.timeLimit(.minutes(2)))
     func actualNodeInterruptionRetainsAuthenticatedJournalAndOutput() async throws {
         try await verify(kind: .node)
     }

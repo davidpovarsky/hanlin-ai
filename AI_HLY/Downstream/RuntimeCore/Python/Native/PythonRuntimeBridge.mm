@@ -2,6 +2,7 @@
 #include <Foundation/Foundation.h>
 #include <Python/Python.h>
 #include "PythonCancellationContext.hpp"
+#include "PythonThreadOwnership.hpp"
 #include <mutex>
 #include <atomic>
 #include <memory>
@@ -126,15 +127,27 @@ char *HanlinPythonExecute(const char *requestJSON) {
     if (!bootstrap.length) return CopyUTF8(@"{\"error\":\"The embedded Python execution resource is missing.\"}");
 
     PyGILState_STATE gil = PyGILState_Ensure();
+    HanlinPythonThreads::Owner threadOwner;
+    try { threadOwner = std::make_shared<HanlinPythonThreads::State>(); }
+    catch (const std::bad_alloc &) {
+        PyGILState_Release(gil);
+        return CopyUTF8(@"{\"error\":\"Unable to allocate Python thread ownership.\"}");
+    }
     PyObject *globals = PyDict_New();
     PyObject *cancellationFunction = HanlinPythonCancellation::makeFunction(cancellation);
-    if (!globals || !cancellationFunction || PyDict_SetItemString(globals, "_hanlin_is_cancelled", cancellationFunction) != 0) {
+    PyObject *threadCounter = HanlinPythonThreads::makeCounter(threadOwner);
+    if (!globals || !cancellationFunction || !threadCounter ||
+        PyDict_SetItemString(globals, "_hanlin_is_cancelled", cancellationFunction) != 0 ||
+        PyDict_SetItemString(globals, "_hanlin_owned_thread_count", threadCounter) != 0) {
+        threadOwner->active.store(false);
+        Py_XDECREF(threadCounter);
         Py_XDECREF(cancellationFunction);
         Py_XDECREF(globals);
         PyErr_Clear();
         PyGILState_Release(gil);
         return CopyUTF8(@"{\"error\":\"Unable to allocate the Python job context.\"}");
     }
+    Py_DECREF(threadCounter);
     Py_DECREF(cancellationFunction);
     PyObject *requestString = PyUnicode_DecodeUTF8(requestJSON, strlen(requestJSON), "strict");
     if (requestString) PyDict_SetItemString(globals, "__hanlin_request_json", requestString);
@@ -171,6 +184,7 @@ char *HanlinPythonExecute(const char *requestJSON) {
         if (errData) result = [[NSString alloc] initWithData:errData encoding:NSUTF8StringEncoding];
         Py_XDECREF(pvalue);
     }
+    threadOwner->active.store(false);
     Py_DECREF(globals);
     PyGILState_Release(gil);
     return CopyUTF8(result ?: @"{\"error\":\"Embedded Python execution failed before producing a result.\"}");

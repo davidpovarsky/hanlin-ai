@@ -1,9 +1,11 @@
 import hashlib
 import json
 import os
+import importlib
 from pathlib import Path
 import runpy
 import sys
+import subprocess
 import tempfile
 import threading
 import time
@@ -14,6 +16,30 @@ RUNNER = Path(__file__).resolve().parents[3] / "AI_HLY/Downstream/RuntimeCore/Py
 
 
 class PythonExecutionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Compile the actual production thread-state owner, not a mocked list of
+        # Thread objects. Raw _thread aliases are an explicit regression case.
+        # Windows keeps a loaded extension DLL mapped until process exit.
+        cls.native_root = tempfile.TemporaryDirectory(prefix="hanlin-thread-capi-", ignore_cleanup_errors=os.name == 'nt')
+        cls.addClassCleanup(cls.native_root.cleanup)
+        root = Path(cls.native_root.name)
+        repository = RUNNER.parents[5]
+        fixture = repository / "Scripts/Runtime/Tests/python_thread_probe.cpp"
+        (root / "probe.cpp").write_bytes(fixture.read_bytes())
+        include = str(RUNNER.parents[1] / "Native")
+        flags = ["/std:c++17"] if os.name == "nt" else ["-std=c++17"]
+        (root / "setup.py").write_text(
+            "from setuptools import setup, Extension\n" +
+            f"setup(name='thread-owner-probe', ext_modules=[Extension('_thread_owner_probe', ['probe.cpp'], include_dirs=[{include!r}], extra_compile_args={flags!r}, language='c++')])\n", encoding="utf-8")
+        result = subprocess.run([sys.executable, "setup.py", "build_ext", "--inplace"], cwd=root,
+                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120)
+        if result.returncode:
+            raise RuntimeError(result.stdout.decode("utf-8", errors="replace"))
+        sys.path.insert(0, str(root))
+        cls.addClassCleanup(lambda: sys.path.remove(str(root)))
+        cls.native = importlib.import_module("_thread_owner_probe")
+
     def execute(self, source, *, timeout=None, preview=1024, cancelled=lambda: False, environment=None, cli=False, stdin=None, files=None):
         root = tempfile.TemporaryDirectory(prefix="hanlin-python-job-")
         self.addCleanup(root.cleanup)
@@ -34,10 +60,105 @@ class PythonExecutionTests(unittest.TestCase):
             request["standardInputPath"] = str(stream)
         if timeout is not None:
             request["timeoutSeconds"] = timeout
-        namespace = runpy.run_path(str(RUNNER), init_globals={"__hanlin_request_json": json.dumps(request), "_hanlin_is_cancelled": cancelled})
+        counter, close = self.native.make()
+        try:
+            namespace = runpy.run_path(str(RUNNER), init_globals={"__hanlin_request_json": json.dumps(request),
+                "_hanlin_is_cancelled": cancelled, "_hanlin_owned_thread_count": counter})
+        finally:
+            close()
         result = json.loads(namespace["_hanlin_response_json"])
         self.assertNotIn("error", result, result)
         return result
+
+    def test_daemon_and_raw_threads_drain_before_output_and_process_state_close(self):
+        # The raw start alias is captured before the runner imports/thread hooks.
+        import _thread
+        import builtins
+        builtins._hanlin_test_raw_start = _thread.start_new_thread
+        self.addCleanup(lambda: delattr(builtins, "_hanlin_test_raw_start"))
+        old_cwd, old_trace = os.getcwd(), threading.gettrace()
+        source = """
+import threading, time, os, pathlib, builtins
+workspace = os.getcwd()
+def child(label, remaining):
+    time.sleep(0.04)
+    assert os.getcwd() == workspace
+    assert os.environ['THREAD_JOB_TEST'] == 'owned'
+    assert not __import__('sys').stdout.closed
+    print(label, flush=True)
+    pathlib.Path(label).write_text('completed', encoding='utf-8')
+    if remaining:
+        builtins._hanlin_test_raw_start(child, ('raw-descendant', False))
+threading.Thread(target=child, args=('daemon-child', False), daemon=True).start()
+builtins._hanlin_test_raw_start(child, ('raw-child', True))
+print('main-finished')
+"""
+        result = self.execute(source, environment={'THREAD_JOB_TEST': 'owned'})
+        self.assertEqual(result['exitCode'], 0, result)
+        text = Path(result['outputFiles']['stdout']['path']).read_text(encoding='utf-8')
+        self.assertEqual(set(text.splitlines()), {'main-finished','daemon-child','raw-child','raw-descendant'})
+        workspace = Path(result['outputFiles']['stdout']['path']).parent.parent
+        for name in ('daemon-child','raw-child','raw-descendant'):
+            self.assertEqual((workspace / name).read_text(), 'completed')
+        self.assertEqual(os.getcwd(), old_cwd)
+        self.assertIs(threading.gettrace(), old_trace)
+        self.assertNotIn('THREAD_JOB_TEST', os.environ)
+
+    def test_worker_cancellation_keeps_scope_until_cooperative_thread_cleanup(self):
+        cancel = threading.Event()
+        timer = threading.Timer(0.08, cancel.set)
+        timer.start()
+        self.addCleanup(timer.cancel)
+        result = self.execute("""
+import threading, sys
+def child():
+    try:
+        print('thread-started', flush=True)
+        while True:
+            pass
+    finally:
+        print('thread-cleaned', flush=True)
+threading.Thread(target=child, daemon=True).start()
+""", cancelled=cancel.is_set)
+        self.assertTrue(result['wasCancelled'], result)
+        self.assertIn('thread-cleaned', Path(result['outputFiles']['stdout']['path']).read_text(), result)
+
+    def test_thread_owner_excludes_prior_threads_and_rejects_retained_or_foreign_calls(self):
+        existing = threading.Event()
+        before = threading.Thread(target=existing.wait)
+        before.start()
+        try:
+            counter, close = self.native.make()
+            self.assertEqual(counter(), 0)
+            failures = []
+            def foreign():
+                try: counter()
+                except RuntimeError as error: failures.append(str(error))
+            child = threading.Thread(target=foreign)
+            child.start(); child.join()
+            self.assertEqual(len(failures), 1)
+            close()
+            with self.assertRaisesRegex(RuntimeError, 'active job executor'):
+                counter()
+        finally:
+            existing.set(); before.join()
+
+    def test_raw_untraced_thread_finishes_before_cancellation_settles(self):
+        cancel = threading.Event()
+        timer = threading.Timer(0.03, cancel.set)
+        timer.start()
+        self.addCleanup(timer.cancel)
+        started = time.perf_counter()
+        result = self.execute("""
+import _thread, time
+def child():
+    time.sleep(0.12)
+    print('actual-raw-thread-late-output', flush=True)
+_thread.start_new_thread(child, ())
+""", cancelled=cancel.is_set)
+        self.assertGreaterEqual(time.perf_counter() - started, 0.12)
+        self.assertTrue(result['wasCancelled'], result)
+        self.assertIn('actual-raw-thread-late-output', Path(result['outputFiles']['stdout']['path']).read_text())
 
     def test_full_output_and_digest_exceed_preview_without_losing_unicode(self):
         text = "שלום 👨‍👩‍👧‍👦\n" * 400_000

@@ -10,6 +10,7 @@ import io
 import runpy
 import os
 import sys
+import threading
 import time
 import traceback
 
@@ -22,7 +23,7 @@ class _HanlinDeadlineExceeded(TimeoutError):
     pass
 
 
-def _run(request, cancelled):
+def _run(request, cancelled, owned_thread_count):
     output_directory = request["outputDirectory"]
     os.makedirs(output_directory, exist_ok=True)
     preview_limit = int(request.get("maximumOutputBytes", 1_048_576))
@@ -34,6 +35,7 @@ def _run(request, cancelled):
     stderr_path = os.path.join(output_directory, "stderr.log")
     old_cwd, old_argv, old_path, old_trace = os.getcwd(), list(sys.argv), list(sys.path), sys.gettrace()
     old_stdin = sys.stdin
+    old_thread_trace = threading.gettrace()
     modified_environment = []
 
     def trace(frame, event, argument):
@@ -77,6 +79,7 @@ def _run(request, cancelled):
                 elif entry_point:
                     sys.stdin = resources.enter_context(io.StringIO())
                 sys.settrace(trace)
+                threading.settrace(trace)
                 try:
                     if entry_point:
                         runpy.run_path(entry_point, run_name="__main__")
@@ -87,6 +90,15 @@ def _run(request, cancelled):
                     trace(None, None, None)
                 finally:
                     sys.settrace(None)
+                    # Preserve stdout/stderr, stdin, argv, cwd and environment
+                    # until actual child thread states have ended. A daemon or
+                    # cached _thread alias is still part of this serialized job.
+                    # Cancellation is cooperative: untraced/native blocking
+                    # threads must finish naturally; never close their files or
+                    # claim the next job can safely begin while they are alive.
+                    while owned_thread_count():
+                        time.sleep(0.01)
+                    trace(None, None, None)
         except BaseException as error:
             sys.settrace(None)
             exit_code = 1
@@ -102,6 +114,7 @@ def _run(request, cancelled):
             else:
                 traceback.print_exc(file=stderr)
         finally:
+            threading.settrace(old_thread_trace)
             sys.stdin = old_stdin
             sys.settrace(old_trace)
             try:
@@ -144,7 +157,7 @@ def _run(request, cancelled):
 
 
 try:
-    _hanlin_response = _run(json.loads(__hanlin_request_json), _hanlin_is_cancelled)
+    _hanlin_response = _run(json.loads(__hanlin_request_json), _hanlin_is_cancelled, _hanlin_owned_thread_count)
 except BaseException:
     _hanlin_response = {"error": traceback.format_exc()}
 _hanlin_response_json = json.dumps(_hanlin_response, ensure_ascii=False, allow_nan=False)
