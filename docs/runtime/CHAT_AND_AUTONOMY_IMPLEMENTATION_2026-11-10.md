@@ -1,6 +1,22 @@
 # Original chat and Runtime Autonomy V3 implementation
 
+## Current acceptance checkpoint — 2026-11-10
+
+The detailed entries below retain their original source/run provenance; an old NOT_RUN label describes that checkpoint, not the latest state. Overall V3 stays **IN_PROGRESS** until its affected native-engine/app gates pass. Physical iPad acceptance remains owner-owned.
+
+| Closure | Current evidence and remaining obligation |
+|---|---|
+| Original chat UX | Actual original UI tests cover internal Safari, unified Thinking/tools disclosure, partial-selection save and opaque preview/source jump; exact earlier sources, xcresults and visual evidence are recorded below. iPad/RTL/multitasking/accessibility acceptance remains OPEN. |
+| Original Host and durable input/cancel | Source `036701a1`:121 PASS/0 FAIL/1 explicit long-case SKIP. Original Host sources and its Python native/job ownership consumers are unchanged through `157b20fa`; these remain their own portable/reference passes, not execution on the pending new embedded engine. |
+| iOS background/Python/input SDK | Source `036701a1`, run42865864949: actual strict iOS SDK/locked CPython header checks and9 Foundation cases PASS. No affected files changed through `157b20fa`; full actual CLI log retained. Physical BG admission/expiry/lock behavior remains OPEN. |
+| SQLite core/KV | Run42873526980/source `e85da9d7`: all7 actual Apple core/KV cases PASS. Core sources unchanged through `157b20fa`; that workflow overall failed in separate new async fixtures, subsequently corrected. |
+| Original JSC/SQLite/files/storage | [42875912815](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42875912815), exact source `157b20fa0b345bd03dae0fc999e7754fa1de7506`: **7 cases/3 suites EXECUTED_PASS**,4.967s, actual Xcode27.2/Swift6.4.2. Includes24 live SQL owners/actual close, full Data/NUL/emptyBLOB/tag collisions/PRAGMA, five17MiB files/full reopen/append/65 exports, hidden-file explicit budgets, move/accounting/data preservation, canonical KV and default21MiB JSON. Original application runtime assertions passed separately in42874913327; no full-suite green claim is made for that failed workflow. |
+| New Node/V8 binary | Run42834714295 failed `mksnapshot` link; corrected inline include in `a1147d25`,25 pinned-source/provenance/identity tests PASS. Native input `d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5`. Run42872596385 attempt1 had three macOS allocation cancellations/zero steps; attempt2 is active. New binary/archive hashes, embedded WASM/FD/Fetch smoke and affected iOS consumers remain **NOT_RUN**. |
+| Deployment scope | Owner explicitly selected local only. Unsupported iOS POSIX/IPC/TTY/arbitrary desktop native addons are reported as limitations. External execution is outside this delivery. No new distribution/merge is authorized by this task. |
+
 ## Entry and authorization
+
+- Owner clarified on 2026-11-10: **local-only execution**, with iOS limitations reported explicitly. External POSIX/IPC/TTY/desktop-addon execution is outside this delivery, rather than blocked on missing server credentials. Do not create a remote route or silently transfer workloads. The original plan below remains historical/verbatim; current implementation acceptance uses this explicit scope clarification.
 
 - Owner authorized implementation of CHATUX-01…08 and Asana `1220369388989551` on the existing branch, using CLI/API only, on 2026-11-10. This explicitly opens the scoped original-chat files previously frozen by the older assignments; it does not authorize a second chat UI, a Split redesign, main merge, or another distribution.
 - Branch: `fix/hanlin-approved-plan-20261108`; clean entry SHA: `2f38a3ec272e2ce498640c7243c1540391d916a4`. Pass 7 ancestor: `507cd0409e722d933e7fd568a24b4221a7a5d346`.
@@ -379,3 +395,8 @@ Before dispatch, record exact impacted tests/source SHA and toolchain. Do not co
 
 - Run [42874913327](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42874913327), source `6613baf5b49d31ab24a643387ff828a0d41afac7`, compiled and executed29 actual Apple package cases. **27 cases EXECUTED_PASS**, including all3 original JSC/SQLite ownership/Data/PRAGMA cases, five17MiB original bridge files with full reopen/append/65 exports, canonical KV and default21MiB native JSON. Actual24 retained C connections close to zero asynchronously on dispose. These are macOS JavaScriptCore/SQLite assertions, not iPad proof.
 - Overall run **FAILED** in the explicit file budget case: new managed-root accounting appended an extra slash to directory URLs that already had one, misclassifying package writes as external. Reused the existing resolver's slash-aware prefix rule. The test retains its hidden-file/excess-export/internal-move assertions; no limits or assertions were weakened. Fresh affected accounting/SQLite validation is required. Actual per-case log: `build/files-apple-42874913327.log`.
+
+### Fresh actual Apple resource acceptance
+
+- [42875912815](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42875912815), exact source `157b20fa0b345bd03dae0fc999e7754fa1de7506`: **SUCCESS**, Xcode27.2/Swift6.4.2. All requested **7 cases/3 suites actually EXECUTED_PASS**,4.967s. Actual CLI log is `build/resources-apple-42875912815.log`; no zero-test or aggregate-suite inference. Explicit hidden-file/storage/export/move accounting assertions pass after the slash correction, together with complete original file/SQL/KV/JSON cases. This is macOS JSC/SQLite evidence; affected iOS/physical gates remain separate.
+- Native42872596385 attempt1 cancelled Node device/simulator and Python preparation while allocating macOS runners (zero executed steps). Retried only failed/unfinished jobs in attempt2, preserving the completed Host artifact. Attempt2 has received a native runner and reached source/cache preparation. Source remains `a1147d25`; no native success or output hash claimed yet. Owner clarified local-only scope; recorded in NATIVE_COMMAND_ADAPTER_CONTRACT.md and Asana without introducing a remote execution path.
