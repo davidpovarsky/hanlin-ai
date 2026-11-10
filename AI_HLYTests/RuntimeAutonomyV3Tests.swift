@@ -208,6 +208,28 @@ struct RuntimeAutonomyV3Tests {
         }
     }
 
+    @Test(.timeLimit(.minutes(2)))
+    func actualCommandOnlyNpmValidationDoesNotRunTheCommandUntilInvoked() async throws {
+        let core = AppRuntimeCore.shared
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "npm-bin-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let root = workspace.appending(path: "node_modules/hanlin-command-only", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try Data(#"{"name":"hanlin-command-only","version":"1.0.0","bin":{"actual":"bin.cjs"}}"#.utf8)
+            .write(to: root.appending(path: "package.json"))
+        let entry = root.appending(path: "bin.cjs")
+        try Data("""
+            require('node:fs').writeFileSync('actual-cli-invocation',process.argv[2]);
+            console.log('actual command שלום');process.exit(23);
+            """.utf8).write(to: entry)
+        let receipt = try await core.node.validatePackage(name: "hanlin-command-only", packageRoot: root, workspace: root)
+        #expect(NodePackageManager.validationStatus(receipt) == "commandFilesVerified", "\(receipt.stderr)")
+        #expect(!FileManager.default.fileExists(atPath: root.appending(path: "actual-cli-invocation").path))
+        let invoked = try await core.node.executeCLI(entryPoint: entry, arguments: ["actual-argument"], workspace: root)
+        #expect(invoked.exitCode == 23 && invoked.stdout.contains("actual command שלום"))
+        #expect(try String(contentsOf: root.appending(path: "actual-cli-invocation"), encoding: .utf8) == "actual-argument")
+    }
+
     @Test(.timeLimit(.minutes(1)))
     func cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "python-queue-\(UUID().uuidString)")

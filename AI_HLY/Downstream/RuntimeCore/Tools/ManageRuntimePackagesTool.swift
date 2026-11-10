@@ -185,15 +185,13 @@ struct ManageRuntimePackagesTool: NativeTool {
                         throw NativeToolJSON.JSONError.missingKey("package")
                     }
                     let record = try await manager.install(name: name, version: version)
-                    let probe = try? await manager.probe(record)
-                    let probeStatus = (probe?.exitCode == 0) ? "importVerified" : "installed"
+                    let probeStatus = record.validationStatus ?? "installed"
                     resultText = """
                     Successfully installed Node package:
                     - Package: `\(record.name)`
                     - Version: \(record.version)
                     - Status: \(probeStatus)
-                    - Entry Point: `\(record.entryPoint)`
-                    - Module Kind: \(record.moduleKind)
+                    - Package Directory: `\(record.packageRoot ?? "unavailable")`
                     """
 
                 case "probe":
@@ -205,7 +203,7 @@ struct ManageRuntimePackagesTool: NativeTool {
                         break
                     }
                     let probe = try await manager.probe(record)
-                    let status = (probe.exitCode == 0) ? "importVerified" : "importFailed"
+                    let status = NodePackageManager.validationStatus(probe)
                     resultText = """
                     Probe result for Node package '\(record.name)':
                     - Status: \(status)

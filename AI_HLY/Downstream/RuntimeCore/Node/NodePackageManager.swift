@@ -64,6 +64,7 @@ struct NodePackageDetails: Codable, Identifiable, Hashable, Sendable {
     let lifecycle: LifecycleExecutionPlan?
     let packageRoot: String?
     let size: Int64?
+    var validationStatus: String? = nil
 
     var entryPoint: String { packageRoot ?? "index.js" }
     var moduleKind: String { "commonjs" }
@@ -131,11 +132,13 @@ actor NodePackageManager {
             if let plan = transaction.package.lifecycle {
                 try await lifecycle.execute(plan, packageRoot: URL(fileURLWithPath: transaction.packageRoot, isDirectory: true))
             }
-            try await probeStaged(transaction.package, workspace: URL(fileURLWithPath: transaction.package.packageRoot ?? transaction.packageRoot, isDirectory: true))
+            let validation = try await probeStaged(transaction.package, workspace: URL(fileURLWithPath: transaction.package.packageRoot ?? transaction.packageRoot, isDirectory: true))
             try Task.checkCancellation()
             _ = try await host.data(path: "/v1/packages/node/commit", method: "POST", body: transactionBody, timeout: 60)
             let packages = try await installed()
-            return packages.first(where: { $0.name == transaction.package.name }) ?? transaction.package
+            var installed = packages.first(where: { $0.name == transaction.package.name }) ?? transaction.package
+            installed.validationStatus = Self.validationStatus(validation)
+            return installed
         } catch {
             _ = try? await host.data(path: "/v1/packages/node/rollback", method: "POST", body: transactionBody, timeout: 30)
             throw error
@@ -174,23 +177,30 @@ actor NodePackageManager {
     }
 
     func probe(_ package: NodePackageDetails) async throws -> RuntimeExecutionResult {
-        let encodedName = try JSONEncoder().encode(package.name)
-        let literal = String(decoding: encodedName, as: UTF8.self)
-        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "node-package-probe")
-        return try await node.executeJavaScript(RuntimeExecutionRequest(
-            source: "const imported = await import(\(literal)); console.log(imported.default?.version ?? imported.version ?? 'import-ok'); export default { imported: true };",
-            workspace: workspace
-        ))
+        guard let root = package.packageRoot else { throw RuntimeCoreError.invalidRequest("The installed package directory is unavailable.") }
+        let directory = URL(fileURLWithPath: root, isDirectory: true)
+        return try await node.validatePackage(name: package.name, packageRoot: directory, workspace: directory)
     }
 
-    private func probeStaged(_ package: NodePackageDetails, workspace: URL) async throws {
-        let literal = String(decoding: try JSONEncoder().encode(package.name), as: UTF8.self)
-        let result = try await node.executeJavaScript(RuntimeExecutionRequest(
-            source: "await import(\(literal)); export default { imported: true };",
-            workspace: workspace
-        ))
+    static func validationStatus(_ result: RuntimeExecutionResult) -> String {
+        guard result.exitCode == 0, !result.didTimeOut, !result.wasCancelled,
+              case .object(let receipt) = result.value,
+              case .string(let mode) = receipt["validationMode"] else { return "validationFailed" }
+        switch mode {
+        case "library-load":
+            return receipt["executed"] == .boolean(true) ? "libraryLoadVerified" : "validationFailed"
+        case "command-entry-files": return "commandFilesVerified"
+        case "package-metadata": return "packageMetadataVerified"
+        default: return "validationFailed"
+        }
+    }
+
+    private func probeStaged(_ package: NodePackageDetails, workspace: URL) async throws -> RuntimeExecutionResult {
+        guard let root = package.packageRoot else { throw RuntimeCoreError.invalidRequest("The staged package directory is unavailable.") }
+        let result = try await node.validatePackage(name: package.name, packageRoot: URL(fileURLWithPath: root, isDirectory: true), workspace: workspace)
         guard result.exitCode == 0, !result.didTimeOut, !result.wasCancelled else {
             throw RuntimeCoreError.runtimeFailure(result.stderr)
         }
+        return result
     }
 }

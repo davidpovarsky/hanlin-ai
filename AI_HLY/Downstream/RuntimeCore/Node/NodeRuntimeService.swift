@@ -403,6 +403,32 @@ actor NodeRuntimeService {
 
     /// Uses the same Node job/stdio/journal path. External commands require the
     /// command broker; built-in portable-shell operations execute in the Worker.
+    func validatePackage(name: String, packageRoot: URL, workspace: URL) async throws -> RuntimeExecutionResult {
+        let moduleURL = try prepareHostRuntime().appending(path: "package-validation.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let packageName = String(decoding: try JSONEncoder().encode(name), as: UTF8.self)
+        let root = String(decoding: try JSONEncoder().encode(packageRoot.path), as: UTF8.self)
+        // Keep import() in the original job source. Moving it inside the Host
+        // helper would resolve from bundled dependencies instead of this stage.
+        return try await executeJavaScript(RuntimeExecutionRequest(source: """
+            import {validateGlobalPackage} from \(module);
+            import {createRequire} from 'node:module';
+            const require = createRequire(import.meta.url);
+            const receipt = await validateGlobalPackage({name: \(packageName), packageRoot: \(root), importLibrary: async () => {
+                try { import.meta.resolve(\(packageName)); }
+                catch (error) {
+                    if (error.code !== 'ERR_PACKAGE_PATH_NOT_EXPORTED') throw error;
+                    require(\(packageName));
+                    return 'require';
+                }
+                await import(\(packageName));
+                return 'import';
+            }});
+            console.log(JSON.stringify(receipt));
+            export default receipt;
+            """, workspace: workspace), moduleKind: "esm")
+    }
+
     func executePortableShell(_ request: RuntimeExecutionRequest, lifecycle: RuntimeLifecycleContext? = nil) async throws -> RuntimeExecutionResult {
         let moduleURL = try prepareHostRuntime().appending(path: "portable-shell.mjs")
         let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
