@@ -2382,16 +2382,17 @@ class APIManager {
         }
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
-            
-            let producerTask = Task(priority: .userInitiated) {
-                guard AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID) else {
-                    continuation.finish()
-                    return
-                }
+            let userOperation = depth == 0 ? RuntimeUserOperation(id: currentRunID) : RuntimeUserOperation.current
+            let producerTask = RuntimeUserOperation.producerTask(operation: userOperation) {
                 defer {
                     if depth == 0 {
+                        if let userOperation { RuntimeBackgroundContinuation.shared.end(userOperation) }
                         AgentRunLifecycleCoordinator.shared.finishRun(runID: currentRunID)
                     }
+                }
+                guard AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID) else {
+                    RuntimeUserOperation.finishStream(continuation)
+                    return
                 }
                 var diagnosticsRoundID: UUID?
                 var diagnosticsRoundFinished = false
@@ -2636,6 +2637,7 @@ class APIManager {
 
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
                        let prepared = preparedAssistantTools {
+                        if depth == 0, let userOperation { RuntimeBackgroundContinuation.shared.begin(userOperation) }
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
                         try await self.processSDKAgentEngine(
                             runID: currentRunID,
@@ -2701,7 +2703,7 @@ class APIManager {
                     // 处理流式响应
                     for try await event in result {
                         if self.isCancelled {
-                            continuation.finish()
+                            RuntimeUserOperation.finishStream(continuation)
                             self.isCancelled = false
                             break
                         }
@@ -2983,12 +2985,14 @@ class APIManager {
                         )
                     }
                     if depth == 0 {
+                        try userOperation?.markSucceeded()
                         await self.agentDiagnosticsRecorder?.complete(status: "completed")
                     }
                     // 流完成
-                    continuation.finish()
+                    RuntimeUserOperation.finishStream(continuation)
                     self.isCancelled = false
                 } catch {
+                    userOperation?.markFailed()
                     if let recorder = self.agentDiagnosticsRecorder,
                        let diagnosticsRoundID,
                        !diagnosticsRoundFinished {
@@ -3001,14 +3005,17 @@ class APIManager {
                     }
                     if depth == 0 {
                         await self.agentDiagnosticsRecorder?.complete(
-                            status: "failed",
-                            error: AgentSafeError(error).message
+                            status: userOperation?.snapshot.reason == nil ? "failed" : "interrupted",
+                            error: userOperation?.snapshot.reason ?? AgentSafeError(error).message
                         )
                     }
-                    continuation.finish(throwing: error)
+                    if let userOperation, let reason = userOperation.snapshot.reason {
+                        continuation.finish(throwing: RuntimeOperationInterruptionError(operationID: userOperation.id, reason: reason))
+                    } else { continuation.finish(throwing: error) }
                 }
             }
             if depth == 0 {
+                userOperation?.bindProducerCancellation { producerTask.cancel() }
                 self.activeAgentProducerTask?.cancel()
                 self.activeAgentProducerTask = producerTask
                 self.activeAgentRunID = currentRunID
@@ -3731,8 +3738,9 @@ class APIManager {
         var currentStepID: UUID?
 
         for try await event in sdkStream {
+            try RuntimeUserOperation.current?.checkInterruption()
             if Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
-                continuation.finish()
+                RuntimeUserOperation.finishStream(continuation)
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
                 return
             }
@@ -3746,6 +3754,7 @@ class APIManager {
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response"))
 
             case .textDelta(let text):
+                RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
                 if self.toolMessage == nil { self.toolMessage = "" }
                 self.toolMessage?.append(text)
                 if let stepID = currentStepID {
@@ -3759,6 +3768,7 @@ class APIManager {
                 continuation.yield(StreamData(content: text))
 
             case .reasoningDelta(let text):
+                RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
                 if self.toolMessageReasoning == nil { self.toolMessageReasoning = "" }
                 self.toolMessageReasoning?.append(text)
                 if let stepID = currentStepID {
@@ -3895,14 +3905,15 @@ class APIManager {
                     let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
                     throw error
                 }
+                try RuntimeUserOperation.current?.markSucceeded()
                 await self.agentDiagnosticsRecorder?.complete(status: "completed")
                 continuation.yield(StreamData(content: "\n\n"))
-                continuation.finish()
+                RuntimeUserOperation.finishStream(continuation)
                 return
 
             case .cancelled:
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
-                continuation.finish()
+                RuntimeUserOperation.finishStream(continuation)
                 return
             }
         }

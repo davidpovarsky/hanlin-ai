@@ -35,7 +35,7 @@ export class ExecutionJobs {
       header.result = null; // Retained on disk; do not load every historical preview into RAM.
       if (!terminalStates.has(header.state)) {
         header.state = 'interrupted';
-        header.error = 'The app process ended before this job completed. Existing output is retained; side effects are not replayed.';
+        header.error = header.interruptionReason ?? 'The app process ended before this job completed. Existing output is retained; side effects are not replayed.';
         await this.#persist(header);
       }
       this.#jobs.set(id, { header });
@@ -46,7 +46,7 @@ export class ExecutionJobs {
   snapshot(id) {
     const header = this.#jobs.get(id)?.header;
     if (!header) return null;
-    if (header.memoryOnlyFailure) return structuredClone(header);
+    if (header.memoryOnlyFailure || header.neverStarted) return structuredClone(header);
     if (terminalStates.has(header.state) && !header.result) {
       return JSON.parse(readFileSync(path.join(this.root, id, 'job.json'), 'utf8'));
     }
@@ -64,10 +64,14 @@ export class ExecutionJobs {
     const previewBytes = body.maximumOutputBytes ?? 1_048_576;
     if (!Number.isSafeInteger(previewBytes) || previewBytes < 1) throw new Error('maximumOutputBytes must be a positive integer preview budget.');
     const directory = path.join(this.root, id);
-    await fs.mkdir(directory, { mode: 0o700 });
     const header = { executionID: id, state: 'queued', startedAt: Date.now(), cancellationRequested: false, stdoutBytes: 0, stderrBytes: 0, result: null };
     const job = { header, startedContinuous: performance.now(), worker: null, completion: null, cancel: null };
+    // Reserve before the first asynchronous filesystem operation. A cancellation
+    // receipt must not disappear in the gap between POST and Worker startup.
     this.#jobs.set(id, job);
+    job.ready = fs.mkdir(directory, { mode: 0o700 });
+    try { await job.ready; }
+    catch (error) { header.state='failed'; header.error=String(error.message??error); header.memoryOnlyFailure=true; throw error; }
     await this.#persist(header);
     job.completion = this.#run(job, body, previewBytes, timeout).catch(async error => {
       await job.commandBroker?.cancel().catch(() => {});
@@ -75,10 +79,10 @@ export class ExecutionJobs {
       await job.commandBroker?.drain().catch(() => {});
       this.#activeBrokers.delete(id);
       for (const stream of Object.values(job.streams ?? {})) stream.destroy();
-      header.state = 'failed';
+      header.state = header.interruptionReason ? 'interrupted' : 'failed';
       header.result = null;
       header.memoryOnlyFailure = true;
-      header.error = String(error.message ?? error);
+      header.error = header.interruptionReason ?? String(error.message ?? error);
       await this.#persist(header).catch(() => {});
       return header;
     }).then(() => { job.completion = null; });
@@ -102,14 +106,16 @@ export class ExecutionJobs {
     if(timeoutMilliseconds!=null)throw new Error('Host package operations support cancellation, not an implicit HTTP deadline.');
     if(!Number.isSafeInteger(maximumOutputBytes)||maximumOutputBytes<1)throw new Error('Invalid operation preview budget.');
     const directory=path.join(this.root,id);
-    await fs.mkdir(directory,{mode:0o700});
     const header={executionID:id,state:'queued',startedAt:Date.now(),cancellationRequested:false,stdoutBytes:0,stderrBytes:0,result:null};
     const controller=new AbortController();
     const job={header,cancel:async()=>controller.abort(new Error('Installation cancelled.'))};
     this.#jobs.set(id,job);
+    job.ready=fs.mkdir(directory,{mode:0o700});
+    try{await job.ready;}
+    catch(error){header.state='failed';header.error=String(error.message??error);header.memoryOnlyFailure=true;throw error;}
     await this.#persist(header);
     job.completion=this.#runOperation(job,controller,operation,maximumOutputBytes).catch(async error=>{
-      header.state='failed';header.result=null;header.memoryOnlyFailure=true;header.error=String(error.message??error);
+      header.state=header.interruptionReason?'interrupted':'failed';header.result=null;header.memoryOnlyFailure=true;header.error=header.interruptionReason??String(error.message??error);
       await this.#persist(header).catch(()=>{});
     }).then(()=>{job.completion=null;job.cancel=null;});
     return structuredClone(header);
@@ -133,8 +139,8 @@ export class ExecutionJobs {
     await writes;
     if(writeError){error=writeError;failed=true;}
     if(failed)await fs.appendFile(path.join(directory,'stderr.log'),String(error?.stack??error));
-    header.state=header.cancellationRequested?'cancelled':failed?'failed':'completed';
-    header.error=failed?String(error?.message??error):null;header.completedAt=Date.now();
+    header.state=header.interruptionReason?'interrupted':header.cancellationRequested?'cancelled':failed?'failed':'completed';
+    header.error=header.interruptionReason??(failed?String(error?.message??error):null);header.completedAt=Date.now();
     const files={},previews={};let remaining=maximumOutputBytes;
     for(const channel of ['stdout','stderr']){
       const file=path.join(directory,channel+'.log'),hash=createHash('sha256');let bytes=0;
@@ -158,9 +164,34 @@ export class ExecutionJobs {
     const job = this.#jobs.get(id);
     if (!job || terminalStates.has(job.header.state)) return job?.header ?? null;
     job.header.cancellationRequested = true;
+    await job.ready;
     await this.#persist(job.header);
     if (job.cancel) await job.cancel();
     return job.header;
+  }
+
+  async interrupt(id, reason) {
+    if (!validID(id)) throw new Error('Invalid execution ID.');
+    if (typeof reason !== 'string' || !reason.trim()) throw new Error('An interruption reason is required.');
+    const job = this.#jobs.get(id);
+    if (!job) {
+      // An authenticated interruption may arrive before its original POST.
+      // Persist a terminal, never-started receipt; later submission cannot run
+      // side effects with an ID the original user operation already cancelled.
+      const now=Date.now();
+      const header={executionID:id,state:'interrupted',startedAt:now,completedAt:now,
+        cancellationRequested:true,stdoutBytes:0,stderrBytes:0,result:null,
+        interruptionReason:reason,error:reason,neverStarted:true};
+      const receipt={header};
+      this.#jobs.set(id,receipt);
+      receipt.ready=fs.mkdir(path.join(this.root,id),{recursive:true,mode:0o700});
+      await receipt.ready;
+      await this.#persist(header);
+      return header;
+    }
+    if (terminalStates.has(job.header.state)) return job.header;
+    job.header.interruptionReason ??= reason;
+    return this.cancel(id);
   }
 
   async waitForCommandRequests(signal) {
@@ -340,8 +371,8 @@ export class ExecutionJobs {
     await Promise.all(Object.values(streams).map(stream => finished(stream)));
     const wasCancelled = header.cancellationRequested;
     const failed = ioError || workerError || message?.type === 'failed' || exitCode !== 0;
-    header.state = wasCancelled ? 'cancelled' : didTimeOut || failed ? 'failed' : 'completed';
-    header.error = ioError?.message ?? workerError?.message ?? (didTimeOut ? 'Execution timed out.' : null);
+    header.state = header.interruptionReason ? 'interrupted' : wasCancelled ? 'cancelled' : didTimeOut || failed ? 'failed' : 'completed';
+    header.error = header.interruptionReason ?? ioError?.message ?? workerError?.message ?? (didTimeOut ? 'Execution timed out.' : null);
     const files = Object.fromEntries(['stdout', 'stderr'].map(channel => [channel, { path: path.join(directory, channel + '.log'), bytes: header[channel + 'Bytes'], sha256: hashes[channel].digest('hex') }]));
     const preview = channel => {
       const bytes = Buffer.concat(previews[channel]);

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { ExecutionJobs } from '../execution-jobs.mjs';
 
 async function fixture(t) {
@@ -13,6 +13,81 @@ async function fixture(t) {
   await jobs.initialize();
   return { jobs, root, body: { workspace: root, moduleKind: 'esm', maximumOutputBytes: 4096 } };
 }
+
+test('actual Worker interruption retains its cause and full output through reopen', async t => {
+  const {jobs,root,body} = await fixture(t);
+  const header = await jobs.start({...body,source:"console.log('שלום partial output'); await new Promise(() => setInterval(() => {}, 1000));"});
+  const deadline = performance.now()+15000;
+  while (!jobs.snapshot(header.executionID).stdoutBytes) {
+    assert.ok(performance.now()<deadline,'The actual Worker never produced its output');
+    await new Promise(resolve=>setTimeout(resolve,10));
+  }
+  const reason = 'Background continuation ended before this job completed.';
+  await jobs.interrupt(header.executionID,reason);
+  const ended = await jobs.wait(header.executionID);
+  assert.equal(ended.state,'interrupted');
+  assert.equal(ended.interruptionReason,reason);
+  assert.equal(ended.error,reason);
+  assert.match(ended.result.stdout,/שלום partial output/);
+  const artifact=ended.result.outputFiles.stdout;
+  const bytes=await fs.readFile(artifact.path);
+  assert.equal(bytes.length,artifact.bytes);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),artifact.sha256);
+  const reopened=new ExecutionJobs({root:path.join(root,'jobs'),workerURL:new URL('../execution-worker.mjs',import.meta.url)});
+  await reopened.initialize();
+  await reopened.interrupt(header.executionID,'A later unrelated cause');
+  assert.equal(reopened.snapshot(header.executionID).interruptionReason,reason);
+  await assert.rejects(reopened.start({...body,executionID:header.executionID,source:"throw Error('must never replay');"}),error=>error.status===409);
+});
+
+test('late Host operation completion cannot erase an already requested system interruption', async t => {
+  const {jobs,body} = await fixture(t);
+  let release;
+  const gate=new Promise(resolve=>release=resolve);
+  let began;
+  const started=new Promise(resolve=>began=resolve);
+  const header=await jobs.startOperation({},async({emit})=>{emit({phase:'actual operation started'});began();await gate;return {lateValue:'retained'};});
+  await started;
+  const reason='The system ended the background continuation.';
+  await jobs.interrupt(header.executionID,reason);
+  release();
+  const ended=await jobs.wait(header.executionID);
+  assert.equal(ended.state,'interrupted');assert.equal(ended.error,reason);
+  assert.deepEqual(ended.result.value,{lateValue:'retained'});
+  assert.equal(ended.result.exitCode,1);
+  assert.ok(ended.result.outputFiles.stdout.bytes>0);
+  const complete=await jobs.start({...body,source:'export default 42;'});
+  await jobs.wait(complete.executionID);
+  await jobs.interrupt(complete.executionID,'Too late');
+  assert.equal(jobs.snapshot(complete.executionID).state,'completed');
+  assert.equal(jobs.snapshot(complete.executionID).interruptionReason,undefined);
+});
+
+test('interruption before POST or during journal creation cannot start or replay side effects', async t => {
+  const {jobs,root,body}=await fixture(t);
+  const beforeID=randomUUID(), reason='Continuation ended before native submission';
+  await jobs.interrupt(beforeID,reason);
+  assert.equal(jobs.snapshot(beforeID).neverStarted,true);
+  await assert.rejects(jobs.start({...body,executionID:beforeID,source:'throw Error("must not execute");'}),error=>error.status===409);
+  const marker=path.join(root,'must-not-exist.txt');
+  const duringID=randomUUID();
+  const starting=jobs.start({...body,executionID:duringID,source:`import fs from 'node:fs';fs.writeFileSync(${JSON.stringify(marker)},'side effect');`});
+  const cancelling=jobs.interrupt(duringID,reason);
+  await Promise.all([starting,cancelling]);
+  const ended=await jobs.wait(duringID);
+  assert.equal(ended.state,'interrupted');
+  assert.equal(ended.interruptionReason,reason);
+  await assert.rejects(fs.stat(marker),error=>error.code==='ENOENT');
+  const operationID=randomUUID(); let ran=false;
+  const staging=jobs.startOperation({executionID:operationID},async()=>{ran=true;return 'must not run';});
+  await Promise.all([staging,jobs.interrupt(operationID,reason)]);
+  assert.equal((await jobs.wait(operationID)).state,'interrupted');
+  assert.equal(ran,false);
+  const reopened=new ExecutionJobs({root:path.join(root,'jobs'),workerURL:new URL('../execution-worker.mjs',import.meta.url)});
+  await reopened.initialize();
+  assert.equal(reopened.snapshot(beforeID).neverStarted,true);
+  await assert.rejects(reopened.start({...body,executionID:beforeID,source:'throw Error("must not replay");'}),error=>error.status===409);
+});
 
 for (const moduleKind of ['esm','commonjs']) {
   test(`${moduleKind} resolves workspace modules and local exports before pinned global packages`, async t => {

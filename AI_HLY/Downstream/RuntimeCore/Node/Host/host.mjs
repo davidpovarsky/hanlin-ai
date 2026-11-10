@@ -175,6 +175,12 @@ const server = http.createServer(async (request, response) => {
       const state = await executionJobs.cancel(executionCancel[1].toLowerCase());
       return json(response, 200, { cancelled: state?.cancellationRequested ?? false });
     }
+    const executionInterrupt = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/interrupt$/i);
+    if (request.method === 'POST' && executionInterrupt) {
+      const body = await readJSON(request);
+      const state = await executionJobs.interrupt(executionInterrupt[1].toLowerCase(), body.reason);
+      return json(response, 200, { interruptionRequested: state?.interruptionReason != null });
+    }
     if (request.method === 'POST' && url.pathname === '/v1/typescript/compile') {
       return json(response, 200, await compileTypeScript(await readJSON(request)));
     }

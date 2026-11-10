@@ -15,6 +15,15 @@ struct RuntimeJobSnapshot: Codable, Sendable {
     var stderrBytes: Int64
     var result: RuntimeExecutionResult?
     var error: String?
+    var interruptionReason: String?
+}
+
+struct RuntimeJobInterruptionError: LocalizedError, Sendable {
+    let executionID: UUID
+    let reason: String
+    var errorDescription: String? {
+        "Job \(executionID.uuidString.lowercased()) was interrupted: \(reason) Partial output is retained; side effects are not replayed automatically."
+    }
 }
 
 enum RuntimeJobProgress {
@@ -43,7 +52,7 @@ actor RuntimeJobStore {
                 guard let id = UUID(uuidString: entry.lastPathComponent),
                       var snapshot = try snapshot(id: id, kind: kind), !snapshot.state.isTerminal else { continue }
                 snapshot.state = .interrupted
-                snapshot.error = "The app process ended before this job completed. Partial output is retained. Side effects are not replayed automatically."
+                snapshot.error = snapshot.interruptionReason ?? "The app process ended before this job completed. Partial output is retained. Side effects are not replayed automatically."
                 try write(snapshot, kind: kind)
             }
         }
@@ -79,6 +88,7 @@ actor RuntimeJobStore {
             if channel == "stdout" { record.stdoutBytes = bytes } else { record.stderrBytes = bytes }
         }
         try write(record, kind: kind)
+        RuntimeUserOperation.current?.recordJobOutput(id: id, stdout: record.stdoutBytes, stderr: record.stderrBytes)
         return record
     }
 
@@ -88,22 +98,38 @@ actor RuntimeJobStore {
         try write(record, kind: kind)
     }
 
-    func complete(_ result: RuntimeExecutionResult, kind: RuntimeKind) throws {
-        guard var record = try snapshot(id: result.executionID, kind: kind) else { throw RuntimeCoreError.invalidIdentifier }
-        record.state = result.wasCancelled ? .cancelled : result.didTimeOut || result.exitCode != 0 ? .failed : .completed
-        record.cancellationRequested = record.cancellationRequested || result.wasCancelled
-        record.result = result
-        record.stdoutBytes = result.outputFiles?["stdout"]?.bytes ?? Int64(result.stdout.utf8.count)
-        record.stderrBytes = result.outputFiles?["stderr"]?.bytes ?? Int64(result.stderr.utf8.count)
-        record.completedAt = Date().timeIntervalSince1970 * 1000
+    func requestInterruption(id: UUID, kind: RuntimeKind, reason: String) throws {
+        guard var record = try snapshot(id: id, kind: kind), !record.state.isTerminal else { return }
+        record.interruptionReason = record.interruptionReason ?? reason
+        record.cancellationRequested = true
         try write(record, kind: kind)
     }
 
+    func complete(_ result: RuntimeExecutionResult, kind: RuntimeKind) throws {
+        guard var record = try refresh(id: result.executionID, kind: kind) else { throw RuntimeCoreError.invalidIdentifier }
+        guard !record.state.isTerminal else {
+            if let reason = record.interruptionReason { throw RuntimeJobInterruptionError(executionID: result.executionID, reason: reason) }
+            return
+        }
+        record.interruptionReason = record.interruptionReason ?? RuntimeUserOperation.current?.snapshot.reason
+        record.state = record.interruptionReason != nil ? .interrupted : result.wasCancelled ? .cancelled : result.didTimeOut || result.exitCode != 0 ? .failed : .completed
+        record.error = record.interruptionReason ?? record.error
+        record.cancellationRequested = record.cancellationRequested || result.wasCancelled
+        record.result = result
+        record.stdoutBytes = max(record.stdoutBytes, result.outputFiles?["stdout"]?.bytes ?? Int64(result.stdout.utf8.count))
+        record.stderrBytes = max(record.stderrBytes, result.outputFiles?["stderr"]?.bytes ?? Int64(result.stderr.utf8.count))
+        record.completedAt = Date().timeIntervalSince1970 * 1000
+        try write(record, kind: kind)
+        if let reason = record.interruptionReason { throw RuntimeJobInterruptionError(executionID: result.executionID, reason: reason) }
+    }
+
     func fail(id: UUID, kind: RuntimeKind, error: Error) throws {
-        guard var record = try snapshot(id: id, kind: kind) else { return }
-        record.state = error is CancellationError ? .cancelled : .failed
+        guard var record = try refresh(id: id, kind: kind) else { return }
+        guard !record.state.isTerminal else { return }
+        record.interruptionReason = record.interruptionReason ?? RuntimeUserOperation.current?.snapshot.reason
+        record.state = record.interruptionReason != nil ? .interrupted : error is CancellationError ? .cancelled : .failed
         record.cancellationRequested = record.cancellationRequested || error is CancellationError
-        record.error = error.localizedDescription
+        record.error = record.interruptionReason.map { "\($0)\n\(error.localizedDescription)" } ?? error.localizedDescription
         record.completedAt = Date().timeIntervalSince1970 * 1000
         try write(record, kind: kind)
     }

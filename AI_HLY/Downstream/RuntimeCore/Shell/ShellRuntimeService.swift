@@ -267,6 +267,12 @@ actor ShellRuntimeService {
         limits: RuntimeExecutionLimits,
         operation: @escaping @Sendable (URL, @escaping @Sendable () throws -> Void) throws -> IOSSystemExecution
     ) async throws -> RuntimeExecutionResult {
+        let userOperation = RuntimeUserOperation.current
+        try userOperation?.checkInterruption()
+        let interruption = userOperation?.registerInterruption { reason in
+            Task { await self.interrupt(id: id, reason: reason) }
+        }
+        defer { if let interruption { userOperation?.unregisterInterruption(interruption) } }
         try Task.checkCancellation()
         guard limits.timeout == nil else {
             throw RuntimeCoreError.invalidRequest("Linked ios_system commands do not yet support a safe per-command deadline. No timeout is silently ignored.")
@@ -290,6 +296,15 @@ actor ShellRuntimeService {
         }
         let observer = RuntimeJobProgress.reporter
         let jobs = self.jobs
+        let progressTask: Task<Void, Never>? = userOperation == nil ? nil : Task {
+            while !Task.isCancelled {
+                do {
+                    try await Task.sleep(for: .milliseconds(500))
+                    if let record = try await jobs.refresh(id: id, kind: .shell), let observer { await observer(record) }
+                } catch { return }
+            }
+        }
+        defer { progressTask?.cancel() }
         if let observer { await observer(initial) }
         if try await jobs.snapshot(id: id, kind: .shell)?.cancellationRequested == true {
             pending.cancelBeforeStarting()
@@ -329,6 +344,8 @@ actor ShellRuntimeService {
                 didTimeOut: false, wasCancelled: false, outputWasTruncated: total > limits.maximumOutputBytes,
                 outputFiles: artifacts)
             if Task.isCancelled { try await jobs.requestCancellation(id: id, kind: .shell) }
+            userOperation?.recordJobOutput(id: id,
+                stdout: artifacts["stdout"]?.bytes ?? 0, stderr: artifacts["stderr"]?.bytes ?? 0)
             try await jobs.complete(result, kind: .shell)
             if let observer, let record = try await jobs.snapshot(id: id, kind: .shell) { await observer(record) }
             return result
@@ -336,6 +353,13 @@ actor ShellRuntimeService {
             try? await jobs.fail(id: id, kind: .shell, error: error)
             throw error
         }
+    }
+
+    private func interrupt(id: UUID, reason: String) async {
+        try? await jobs.requestInterruption(id: id, kind: .shell, reason: reason)
+        // Running linked C commands cannot be killed safely. Keep their journal
+        // nonterminal until the native call returns and retain its actual output.
+        active[id]?.cancelBeforeStarting()
     }
 
     private static func artifact(_ url: URL) throws -> RuntimeOutputArtifact {

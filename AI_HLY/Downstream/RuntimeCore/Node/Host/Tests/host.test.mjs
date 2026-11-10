@@ -176,6 +176,38 @@ test('host redirects npm state before preview and install modules initialize', a
     assert.equal(execution.stdout, 'שלום\n');
     assert.deepEqual(execution.value, { answer: 42 });
 
+    // Real authenticated HTTP interruption, not only an ExecutionJobs unit call.
+    const interruptedID = randomUUID();
+    await hostRequest(ready.port, launchToken, '/v1/executions', {
+      executionID: interruptedID, source: "console.log('retained HTTP partial'); await new Promise(() => setInterval(() => {}, 1000));",
+      workspace, moduleKind: 'esm', detached: true, maximumOutputBytes: 4096,
+    });
+    const readJob = async () => {
+      const response = await fetch(`http://127.0.0.1:${ready.port}/v1/executions/${interruptedID}`, {headers:{Authorization:`Bearer ${launchToken}`}});
+      assert.equal(response.status,200); return response.json();
+    };
+    const interruptionDeadline = performance.now()+15000;
+    let interrupted;
+    do {
+      interrupted = await readJob();
+      assert.ok(performance.now()<interruptionDeadline,'Actual HTTP job never wrote partial output');
+      if (!interrupted.stdoutBytes) await new Promise(resolve=>setTimeout(resolve,10));
+    } while (!interrupted.stdoutBytes);
+    const deniedInterrupt = await fetch(`http://127.0.0.1:${ready.port}/v1/executions/${interruptedID}/interrupt`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({reason:'unauthenticated'}),
+    });
+    assert.equal(deniedInterrupt.status,401);
+    const interruptionReason = 'Background continuation ended by the system or its Cancel control.';
+    await hostRequest(ready.port, launchToken, `/v1/executions/${interruptedID}/interrupt`, {reason:interruptionReason});
+    do {
+      interrupted = await readJob();
+      assert.ok(performance.now()<interruptionDeadline,'Actual HTTP interruption did not settle');
+      if (!interrupted.completedAt) await new Promise(resolve=>setTimeout(resolve,10));
+    } while (!interrupted.completedAt);
+    assert.equal(interrupted.state,'interrupted');
+    assert.equal(interrupted.interruptionReason,interruptionReason);
+    assert.match(await fs.readFile(interrupted.result.outputFiles.stdout.path,'utf8'),/retained HTTP partial/);
+
     const cliEntry = path.join(workspace, 'actual cli.cjs');
     const cliInput = path.join(workspace, 'cli stdin.txt');
     await fs.writeFile(cliInput, 'CLI_INPUT_שלום');

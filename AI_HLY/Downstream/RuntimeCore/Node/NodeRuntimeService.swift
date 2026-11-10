@@ -97,6 +97,7 @@ actor NodeRuntimeService {
     private let commandDispatcher: RuntimeCommandDispatcher
     private var commandPump: Task<Void, Never>?
     private var activeCommands: [String: Task<Void, Never>] = [:]
+    private var userOperations: [UUID: RuntimeUserOperation] = [:]
     private struct LaunchContext: Sendable {
         let readyURL: URL
         let token: String
@@ -199,6 +200,16 @@ actor NodeRuntimeService {
 
     private func executeNodeJob(_ request: RuntimeExecutionRequest, moduleKind: String?,
                                 entryPoint: URL? = nil, standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        let operation = RuntimeUserOperation.current
+        try operation?.checkInterruption()
+        if let operation { userOperations[request.id] = operation }
+        let interruption = operation?.registerInterruption { reason in
+            Task { await self.interruptExecution(id: request.id, reason: reason) }
+        }
+        defer {
+            userOperations.removeValue(forKey: request.id)
+            if let interruption { operation?.unregisterInterruption(interruption) }
+        }
         let environment = try await environmentStore?.resolved(scopes: [.shared, .node, .execution(request.id)], overrides: request.environment)
             ?? RuntimePolicy.validatedEnvironment(request.environment)
         let workspace = try fileLayout.validatedWorkspace(request.workspace)
@@ -225,6 +236,8 @@ actor NodeRuntimeService {
         if let milliseconds { payload["timeoutMilliseconds"] = milliseconds }
         let body = try JSONSerialization.data(withJSONObject: payload)
         return try await withTaskCancellationHandler {
+            try operation?.checkInterruption()
+            try Task.checkCancellation()
             var job: RuntimeJobSnapshot
             do {
                 job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions", method: "POST", body: body)
@@ -235,11 +248,20 @@ actor NodeRuntimeService {
             var delayMilliseconds = 25
             var lastProgress = ""
             while true {
+                if let reason = operation?.snapshot.reason {
+                    await interruptExecution(id: request.id, reason: reason)
+                    throw RuntimeJobInterruptionError(executionID: request.id, reason: reason)
+                }
                 try Task.checkCancellation()
+                operation?.recordJobOutput(id: request.id, stdout: job.stdoutBytes, stderr: job.stderrBytes)
                 let progress = "\(job.state.rawValue):\(job.stdoutBytes):\(job.stderrBytes)"
                 if progress != lastProgress, let observer = RuntimeJobProgress.reporter {
                     await observer(job)
                     lastProgress = progress
+                }
+                if job.state == .interrupted {
+                    throw RuntimeJobInterruptionError(executionID: request.id,
+                        reason: job.interruptionReason ?? job.error ?? "The runtime process was interrupted.")
                 }
                 if let result = job.result { return result }
                 if job.state.isTerminal {
@@ -250,7 +272,10 @@ actor NodeRuntimeService {
                 job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(request.id.uuidString.lowercased())")
             }
         } onCancel: {
-            Task { await self.cancelExecution(id: request.id) }
+            Task {
+                if let reason = operation?.snapshot.reason { await self.interruptExecution(id: request.id, reason: reason) }
+                else { await self.cancelExecution(id: request.id) }
+            }
         }
     }
 
@@ -277,8 +302,16 @@ actor NodeRuntimeService {
                         continue
                     }
                     let dispatcher = commandDispatcher
+                    let operation = userOperations[command.parentExecutionID]
                     activeCommands[command.ownerKey] = Task {
-                        do { try await dispatcher.execute(command, node: self) }
+                        do {
+                            // Inherit only this receipt's explicit operation,
+                            // never another chat's capability or progress locals.
+                            try await RuntimeUserOperation.$current.withValue(operation) {
+                                try operation?.checkInterruption()
+                                try await dispatcher.execute(command, node: self)
+                            }
+                        }
                         catch {
                             let message = error.localizedDescription
                             await Task.detached {
@@ -321,19 +354,43 @@ actor NodeRuntimeService {
 
     /// Observe a previously submitted operation without replaying its input.
     func waitForExecution(id: UUID) async throws -> RuntimeExecutionResult {
+        let operation = RuntimeUserOperation.current
+        try operation?.checkInterruption()
+        if let operation { userOperations[id] = operation }
+        let interruption = operation?.registerInterruption { reason in
+            Task { await self.interruptExecution(id: id, reason: reason) }
+        }
+        defer {
+            userOperations.removeValue(forKey: id)
+            if let interruption { operation?.unregisterInterruption(interruption) }
+        }
         let host = try await ensureRunning()
         return try await withTaskCancellationHandler {
             var delay = 25
             while true {
+                if let reason = operation?.snapshot.reason {
+                    await interruptExecution(id: id, reason: reason)
+                    throw RuntimeJobInterruptionError(executionID: id, reason: reason)
+                }
                 try Task.checkCancellation()
                 let job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(id.uuidString.lowercased())")
+                operation?.recordJobOutput(id: id, stdout: job.stdoutBytes, stderr: job.stderrBytes)
                 if let reporter = RuntimeJobProgress.reporter { await reporter(job) }
+                if job.state == .interrupted {
+                    throw RuntimeJobInterruptionError(executionID: id,
+                        reason: job.interruptionReason ?? job.error ?? "The runtime process was interrupted.")
+                }
                 if let result = job.result { return result }
                 if job.state.isTerminal { throw RuntimeCoreError.runtimeFailure("Job \(id): \(job.error ?? job.state.rawValue). Existing output is retained.") }
                 try await Task.sleep(for: .milliseconds(delay))
                 delay = min(delay * 2, 1000)
             }
-        } onCancel: { Task { await self.cancelExecution(id: id) } }
+        } onCancel: {
+            Task {
+                if let reason = operation?.snapshot.reason { await self.interruptExecution(id: id, reason: reason) }
+                else { await self.cancelExecution(id: id) }
+            }
+        }
     }
 
     func hasLaunched() -> Bool { launchAttempted }
@@ -425,6 +482,12 @@ actor NodeRuntimeService {
     func cancelExecution(id: UUID) async {
         guard let connection else { return }
         _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/cancel", method: "POST", body: Data("{}".utf8), timeout: 3)
+    }
+
+    func interruptExecution(id: UUID, reason: String) async {
+        guard let connection else { return }
+        let body = try? JSONSerialization.data(withJSONObject: ["reason": reason])
+        _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/interrupt", method: "POST", body: body, timeout: 3)
     }
 
     /// Observe an already-running Host without starting an engine or replaying source.

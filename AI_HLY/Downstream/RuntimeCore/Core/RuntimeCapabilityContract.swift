@@ -23,7 +23,7 @@ struct RuntimeCapabilityContract: Codable, Sendable {
             "wasm": "NOT_VERIFIED on the embedded iOS engine; no JIT availability is assumed.",
             "unicodePropertyEscapes": "The current native Node build cannot parse general Unicode property escapes. The pinned Yarn parser uses equivalent Unicode 16 literal character classes; that dependency patch does not add property syntax or ICU to the engine.",
             "fetch": "TLS and native web classes preserved. SRI and custom Undici dispatcher are not yet supported by the current compatibility path.",
-            "background": "iOS may suspend or terminate the app. Uninterrupted background completion is not guaranteed."
+            "background": "Original foreground user-started agent runs request CPU/network BGContinuedProcessingTask continuation. Admission is optional and never gates foreground work. Progress counts actual output with an unknown total. OS expiry or native Cancel interrupts the owning run and its jobs; partial output is retained without side-effect replay. Running linked C calls may finish before cancellation settles. App termination is recovered as interrupted; uninterrupted completion is not guaranteed. Physical background acceptance remains NOT_VERIFIED."
         ]
     }
 }

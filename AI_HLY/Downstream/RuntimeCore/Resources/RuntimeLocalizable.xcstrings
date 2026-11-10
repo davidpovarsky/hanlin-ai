@@ -5505,6 +5505,72 @@
           }
         }
       }
+    },
+    "Working on your request": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Working on your request"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הבקשה שלך בטיפול"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在处理你的请求"
+          }
+        }
+      }
+    },
+    "Progress is saved as work continues": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progress is saved as work continues"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ההתקדמות נשמרת במהלך העבודה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作继续时会保存进度"
+          }
+        }
+      }
+    },
+    "Background continuation ended by the system or its Cancel control.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background continuation ended by the system or its Cancel control."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המשך העבודה ברקע הופסק בידי המערכת או באמצעות כפתור הביטול שלה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "后台继续执行已被系统或其取消控件终止。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

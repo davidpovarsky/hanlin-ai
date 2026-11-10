@@ -63,6 +63,12 @@ actor PythonRuntimeService {
 
     private func executePythonJob(_ request: RuntimeExecutionRequest, entryPoint: URL? = nil,
                                   standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        let operation = RuntimeUserOperation.current
+        try operation?.checkInterruption()
+        let interruption = operation?.registerInterruption { reason in
+            Task { await self.interrupt(id: request.id, reason: reason) }
+        }
+        defer { if let interruption { operation?.unregisterInterruption(interruption) } }
         let environment = try await environmentStore?.resolved(scopes: [.shared, .python, .execution(request.id)], overrides: request.environment)
             ?? RuntimePolicy.validatedEnvironment(request.environment)
         try Task.checkCancellation()
@@ -126,7 +132,9 @@ actor PythonRuntimeService {
                     do {
                         while !Task.isCancelled {
                             try await Task.sleep(for: .milliseconds(500))
-                            if let observer, let record = try await jobs.refresh(id: request.id, kind: .localPython) { await observer(record) }
+                            if let record = try await jobs.refresh(id: request.id, kind: .localPython) {
+                                if let observer { await observer(record) }
+                            }
                         }
                     } catch is CancellationError { return nil }
                     return nil
@@ -144,6 +152,9 @@ actor PythonRuntimeService {
                 didTimeOut: response.didTimeOut ?? false, wasCancelled: response.wasCancelled ?? false,
                 outputWasTruncated: response.outputWasTruncated ?? false, outputFiles: response.outputFiles
             )
+            operation?.recordJobOutput(id: request.id,
+                stdout: result.outputFiles?["stdout"]?.bytes ?? Int64(result.stdout.utf8.count),
+                stderr: result.outputFiles?["stderr"]?.bytes ?? Int64(result.stderr.utf8.count))
             try await jobs.complete(result, kind: .localPython)
             if let observer, let record = try await jobs.snapshot(id: request.id, kind: .localPython) { await observer(record) }
             return result
@@ -151,5 +162,10 @@ actor PythonRuntimeService {
             try? await jobs.fail(id: request.id, kind: .localPython, error: error)
             throw error
         }
+    }
+
+    private func interrupt(id: UUID, reason: String) async {
+        try? await jobs.requestInterruption(id: id, kind: .localPython, reason: reason)
+        PythonRuntimeBridge.cancel(id: id)
     }
 }
