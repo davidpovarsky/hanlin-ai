@@ -214,8 +214,8 @@ actor ShellRuntimeService {
     ) throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
-        guard !tokens.isEmpty, tokens.count <= 128 else {
-            throw RuntimeCoreError.invalidRequest("The command is empty or contains too many arguments.")
+        guard !tokens.isEmpty else {
+            throw RuntimeCoreError.invalidRequest("The command is empty.")
         }
         if tokens.first == "pwd" {
             return RuntimeExecutionResult(
@@ -230,7 +230,7 @@ actor ShellRuntimeService {
                 outputWasTruncated: false
             )
         }
-        guard let name = tokens.first, let capability = Self.capabilities.first(where: { $0.name == name }) else {
+        guard let name = tokens.first, Self.capabilities.contains(where: { $0.name == name }) else {
             throw RuntimeCoreError.invalidRequest("The requested command is not in the verified ios_system catalog.")
         }
         if let commandDictionaryURL {
@@ -250,11 +250,8 @@ actor ShellRuntimeService {
                 throw RuntimeCoreError.invalidRequest("Command '\(name)' is unavailable: \(reason)")
             }
         }
-        let isOfflineCurlVersion = tokens == ["curl", "--version"]
-        if capability.requiresNetwork && !allowNetwork && !isOfflineCurlVersion {
-            throw RuntimeCoreError.invalidRequest("This command requires explicit network permission.")
-        }
-        try validateArguments(tokens.dropFirst(), command: name)
+        // allowNetwork is retained for wire/source compatibility. Ordinary execution
+        // has no second Hanlin network approval; curl keeps its native TLS behavior.
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
         let started = ContinuousClock.now
@@ -340,8 +337,8 @@ actor ShellRuntimeService {
             throw RuntimeCoreError.invalidRequest("The command contains an unterminated quote or escape.")
         }
         if !current.isEmpty { tokens.append(current) }
-        guard !tokens.isEmpty, tokens.count <= 128 else {
-            throw RuntimeCoreError.invalidRequest("The command is empty or contains too many arguments.")
+        guard !tokens.isEmpty else {
+            throw RuntimeCoreError.invalidRequest("The command is empty.")
         }
         return tokens
     }
@@ -372,16 +369,4 @@ actor ShellRuntimeService {
         throw RuntimeCoreError.runtimeFailure(message)
     }
 
-    private func validateArguments(_ arguments: ArraySlice<String>, command: String) throws {
-        for argument in arguments where !argument.hasPrefix("-") {
-            if command == "curl", let url = URL(string: argument), let scheme = url.scheme?.lowercased() {
-                let host = url.host?.lowercased()
-                let isLoopbackHTTP = scheme == "http" && (host == "127.0.0.1" || host == "localhost" || host == "::1")
-                guard (scheme == "https" && host != nil) || isLoopbackHTTP else {
-                    throw RuntimeCoreError.invalidRequest("curl accepts HTTPS URLs only.")
-                }
-                continue
-            }
-        }
-    }
 }

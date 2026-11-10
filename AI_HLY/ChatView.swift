@@ -915,11 +915,11 @@ struct ChatView: View {
                 revealMatchedSource(using: scrollViewProxy)
             }
             .environment(\.chatMarkdownSelectionActivity, { id, active in
-                if active {
+                if active, !nativeSelectionIDs.contains(id) {
                     nativeSelectionIDs.insert(id)
                     pendingAutoFollowTask?.cancel()
                     autoFollowController.pauseFollowing(reason: "textSelection")
-                } else { nativeSelectionIDs.remove(id) }
+                } else if !active, nativeSelectionIDs.contains(id) { nativeSelectionIDs.remove(id) }
             })
             .environment(\.chatMarkdownDidRender, { messageID in
                 guard pendingSourceScroll == messageID else {

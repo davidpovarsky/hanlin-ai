@@ -15,11 +15,11 @@ struct ExecuteShellCommandTool: NativeTool {
     }
 
     func openAIToolSchema() -> [String: Any] {
-        let supportedPrograms = ShellRuntimeService.capabilities.map(\.name)
-        let baseDescription = RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl supports HTTPS and loopback HTTP without an internal network approval.")
+        let supportedPrograms = ShellRuntimeService.capabilities.map(\.name) + ["pwd"]
+        let baseDescription = RuntimeL10n.string("Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). Linked curl uses its normal transport/TLS behavior without a second internal network approval.")
         return NativeToolSchema.function(name: name, description: baseDescription + " Supported programs: \(supportedPrograms.joined(separator: ", ")).", parameters: NativeToolSchema.object(properties: [
             "program": NativeToolSchema.string(description: RuntimeL10n.string("Supported program name."), enumValues: supportedPrograms),
-            "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Program arguments as separate strings; shell syntax is not interpreted."), maximumItems: 127),
+            "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Program arguments as separate strings; shell syntax is not interpreted."), maximumItems: nil),
             "command": NativeToolSchema.string(description: RuntimeL10n.string("Command string to execute through ios_system.")),
             "allow_network": ["type": "boolean", "description": RuntimeL10n.string("Legacy compatibility flag; network access does not require an internal approval.")]
         ], required: []))
@@ -47,12 +47,6 @@ struct ExecuteShellCommandTool: NativeTool {
                 )
             }
             let argv = try NativeToolJSON.strictStringArray(arguments, "arguments")
-            guard argv.count <= 127 else {
-                throw NativeToolJSON.JSONError.invalidValue(
-                    key: "arguments",
-                    description: "at most 127 arguments are permitted"
-                )
-            }
             let allowNetwork = try NativeToolJSON.strictBool(arguments, "allow_network")
             let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .shell])
             let result: RuntimeExecutionResult

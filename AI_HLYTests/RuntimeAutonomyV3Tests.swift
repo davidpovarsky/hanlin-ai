@@ -6,6 +6,36 @@ import Testing
 @MainActor
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
+    @Test func linkedShellActuallyAcceptsMoreThan127Arguments() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "shell-argv-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let workspace = try layout.workspace(client: .tools, identifier: "argv-proof")
+        try Data("שלום\n".utf8).write(to: workspace.appending(path: "one.txt"))
+        let shell = ShellRuntimeService(fileLayout: layout)
+        let result = try await shell.execute(tokens: ["cat"] + Array(repeating: "one.txt", count: 256),
+            workspace: workspace, environment: [:], allowNetwork: false)
+        #expect(result.exitCode == 0)
+        #expect(result.stdout == String(repeating: "שלום\n", count: 256))
+        #expect(!result.outputWasTruncated)
+    }
+
+    @Test func embeddedPythonActuallyDownloadsVerifiesInstallsAndImportsAPureWheel() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "python-pypi-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let python = PythonRuntimeService(fileLayout: layout)
+        let manager = PythonPackageManager(fileLayout: layout, python: python)
+        let record = try await manager.install(name: "six", version: "1.17.0")
+        #expect(record.name == "six" && record.version == "1.17.0")
+        #expect(record.sha256.count == 64)
+        let probe = try await manager.probe(record)
+        #expect(probe.exitCode == 0)
+        #expect(probe.stdout.contains("1.17.0"))
+        #expect(!probe.didTimeOut && !probe.wasCancelled)
+        print("EMBEDDED_PYPI_INSTALL six=\(record.version) sha256=\(record.sha256) job=\(probe.executionID)")
+    }
+
     @Test func bundledNativePythonExtensionInstallsAndExecutesARealNonce() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "native-python-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: root) }

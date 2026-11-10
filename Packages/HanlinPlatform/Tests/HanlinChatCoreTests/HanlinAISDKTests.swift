@@ -571,7 +571,8 @@ struct HanlinAISDKAgentEngineTests {
             return HanlinAISDKToolExecutionOutput(modelText: "operation_\(count)")
         }
         let stream = try await engine.stream(messages: [.init(role: .user, text: "Continue until cancelled")],
-            baseSystemPrompt: "Execute work", tools: [tool])
+            baseSystemPrompt: "Execute work", tools: [tool],
+            prepareStep: { (_: Int) async in HanlinAISDKStepPreparation(activeToolAliases: ["work"]) })
         let consumer = Task { do { for try await _ in stream {} } catch {} }
         defer { consumer.cancel() }
         let readyDeadline = ContinuousClock.now.advanced(by: .seconds(10))
