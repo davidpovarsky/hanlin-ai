@@ -2301,7 +2301,9 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         let checked = url.standardizedFileURL.resolvingSymlinksInPath()
         return [documentsRoot, appGroupRoot, temporaryRoot].contains { root in
             let resolved = root.standardizedFileURL.resolvingSymlinksInPath()
-            return checked == resolved || checked.path(percentEncoded: false).hasPrefix(resolved.path(percentEncoded: false) + "/")
+            let rootPath = resolved.path(percentEncoded: false)
+            let prefix = rootPath.hasSuffix("/") ? rootPath : rootPath + "/"
+            return checked == resolved || checked.path(percentEncoded: false).hasPrefix(prefix)
         }
     }
 
