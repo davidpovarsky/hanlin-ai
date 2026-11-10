@@ -393,7 +393,7 @@ Before dispatch, record exact impacted tests/source SHA and toolchain. Do not co
 
 ### Actual Apple resource proof and accounting correction
 
-- Run [42874913327](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42874913327), source `6613baf5b49d31ab24a643387ff828a0d41afac7`, compiled and executed29 actual Apple package cases. **27 cases EXECUTED_PASS**, including all3 original JSC/SQLite ownership/Data/PRAGMA cases, five17MiB original bridge files with full reopen/append/65 exports, canonical KV and default21MiB native JSON. Actual24 retained C connections close to zero asynchronously on dispose. These are macOS JavaScriptCore/SQLite assertions, not iPad proof.
+- Run [42874913327](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42874913327), source `6613baf5b49d31ab24a643387ff828a0d41afac7`, compiled and executed29 actual Apple package cases. **28 cases EXECUTED_PASS**, including all3 original JSC/SQLite ownership/Data/PRAGMA cases, five17MiB original bridge files with full reopen/append/65 exports, canonical KV and default21MiB native JSON. Actual24 retained C connections close to zero asynchronously on dispose. These are macOS JavaScriptCore/SQLite assertions, not iPad proof.
 - Overall run **FAILED** in the explicit file budget case: new managed-root accounting appended an extra slash to directory URLs that already had one, misclassifying package writes as external. Reused the existing resolver's slash-aware prefix rule. The test retains its hidden-file/excess-export/internal-move assertions; no limits or assertions were weakened. Fresh affected accounting/SQLite validation is required. Actual per-case log: `build/files-apple-42874913327.log`.
 
 ### Fresh actual Apple resource acceptance
