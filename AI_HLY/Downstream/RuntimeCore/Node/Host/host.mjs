@@ -97,7 +97,8 @@ const executionWorkerURL = new URL('./execution-worker.mjs', import.meta.url);
 const servers = new Map();
 const serverRestarts = new Map();
 const serverGenerations = new Map();
-const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: () => globalNodeModules(root) });
+const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: () => globalNodeModules(root),
+  inputInbox:path.join(root,'runtime','node','requests'),validateInput:validateExecutionInput });
 await executionJobs.initialize();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
@@ -332,7 +333,9 @@ const server = http.createServer(async (request, response) => {
     return json(response, 404, { error: 'Not found' });
   } catch (error) {
     diagnostic('request_failed', { path: request.url, message: redact(error.message) });
-    if (!response.headersSent) json(response, error.name === 'AbortError' ? 499 : 400, {
+    const status=Number.isInteger(error.status)&&error.status>=400&&error.status<=599
+      ? error.status:error.name==='AbortError'?499:400;
+    if (!response.headersSent) json(response, status, {
       error: redact(error.message),
       operationID: error.operationID ?? null,
       code: error.code ?? null,
@@ -365,11 +368,19 @@ function authorized(request) {
 }
 
 async function executeJavaScript(body) {
+  const header = await executionJobs.start(body);
+  if (body.detached === true) return executionJobs.snapshot(header.executionID);
+  const completed = await executionJobs.wait(header.executionID);
+  if (!completed.result) throw new Error(completed.error ?? 'Execution did not produce a result.');
+  return completed.result;
+}
+
+async function validateExecutionInput(body) {
   const id = String(body.executionID ?? '').toLowerCase();
   if (!validID(id)) throw new Error('Invalid execution ID.');
   if (body.executionMode != null && !['source', 'cli'].includes(body.executionMode)) throw new Error('Unsupported Node execution mode.');
   const cli = body.executionMode === 'cli';
-  if (!cli && (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody)) throw new Error('JavaScript source is missing or too large.');
+  if (!cli && typeof body.source !== 'string') throw new Error('JavaScript source is missing.');
   if (!['esm', 'commonjs'].includes(body.moduleKind)) throw new Error('Unsupported JavaScript module kind.');
   const workspace = path.resolve(String(body.workspace ?? ''));
   if (!workspace) throw new Error('Execution workspace must be specified.');
@@ -396,11 +407,7 @@ async function executeJavaScript(body) {
       if (!(await fs.stat(body.standardInputPath)).isFile()) throw new Error('CLI stdin must be a regular file.');
     }
   } else rejectUnsafeSource(body.source);
-  const header = await executionJobs.start({ ...body, workspace, environment: validatedEnvironment(body.environment) });
-  if (body.detached === true) return executionJobs.snapshot(header.executionID);
-  const completed = await executionJobs.wait(header.executionID);
-  if (!completed.result) throw new Error(completed.error ?? 'Execution did not produce a result.');
-  return completed.result;
+  return {...body,workspace,environment:validatedEnvironment(body.environment)};
 }
 
 async function compileTypeScript(body) {

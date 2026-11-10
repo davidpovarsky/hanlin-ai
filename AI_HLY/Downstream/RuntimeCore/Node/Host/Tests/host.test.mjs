@@ -349,7 +349,8 @@ test('host redirects npm state before preview and install modules initialize', a
       executionID: '77777777-7777-4777-8777-777777777777', source: 'export default 1;',
       workspace: path.join(sandbox, 'does-not-exist'), moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
     });
-    assert.equal(nonexistentResult.status, 400);
+    assert.equal(nonexistentResult.status, 404);
+    assert.match(nonexistentResult.text, /Execution workspace does not exist/);
 
     const filePath = path.join(sandbox, 'some-file.txt');
     await fs.writeFile(filePath, 'not a dir');

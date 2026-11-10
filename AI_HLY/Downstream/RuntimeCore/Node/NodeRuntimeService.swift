@@ -234,13 +234,17 @@ actor NodeRuntimeService {
         if let entryPoint { payload["entryPoint"] = entryPoint.path; payload["executionMode"] = "cli" }
         if let standardInput { payload["standardInputPath"] = standardInput.path }
         if let milliseconds { payload["timeoutMilliseconds"] = milliseconds }
-        let body = try JSONSerialization.data(withJSONObject: payload)
+        let input = try RuntimeExecutionInputArtifact(body: JSONSerialization.data(withJSONObject: payload),
+            executionID: request.id, layout: fileLayout, traceWarnings: environment["HANLIN_NODE_TRACE_WARNINGS"] == "1")
+        var attemptedSubmission = false
+        defer { if !attemptedSubmission { input.discardBeforeSubmission() } }
         return try await withTaskCancellationHandler {
             try operation?.checkInterruption()
             try Task.checkCancellation()
             var job: RuntimeJobSnapshot
             do {
-                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions", method: "POST", body: body)
+                attemptedSubmission = true
+                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions", method: "POST", body: input.controlBody)
             } catch let error as URLError where [.timedOut, .networkConnectionLost].contains(error.code) {
                 // Recover observation of the same ID; never repeat the source after an ambiguous POST.
                 job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(request.id.uuidString.lowercased())")
@@ -452,12 +456,21 @@ actor NodeRuntimeService {
     }
 
     func verifyLifecyclePlan(_ plan: LifecycleExecutionPlan, workspace: URL) async throws {
-        let host = try await ensureRunning()
-        let body = try JSONSerialization.data(withJSONObject: ["packageRoot": workspace.path,
-            "plan": try JSONSerialization.jsonObject(with: JSONEncoder().encode(plan))])
-        struct Verification: Decodable, Sendable { let verified: Bool }
-        let response = try await host.decode(Verification.self, path: "/v1/packages/lifecycle/verify", method: "POST", body: body)
-        guard response.verified else { throw RuntimeCoreError.invalidRequest("Lifecycle source verification failed.") }
+        let moduleURL = try prepareHostRuntime().appending(path: "lifecycle-planner.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let root = String(decoding: try JSONEncoder().encode(workspace.path), as: UTF8.self)
+        let encodedPlan = String(decoding: try JSONEncoder().encode(plan), as: UTF8.self)
+        // Large plans share the durable, file-backed execution route instead
+        // of inheriting the legacy HTTP control frame's size/lifetime budget.
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: """
+            import {verifyLifecyclePlan} from \(module);
+            export default await verifyLifecyclePlan(\(root), \(encodedPlan));
+            """, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, !result.didTimeOut,
+              case .object(let value) = result.value, value["verified"] == .boolean(true) else {
+            throw RuntimeCoreError.invalidRequest("Lifecycle source verification failed. \(result.stderr)")
+        }
     }
 
     func packageLifecyclePlan(workspace: URL) async throws -> LifecycleExecutionPlan {

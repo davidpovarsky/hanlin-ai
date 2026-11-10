@@ -231,6 +231,35 @@ struct RuntimeAutonomyV3Tests {
     }
 
     @Test(.timeLimit(.minutes(2)))
+    func actualNodeFileInputExceedsTheHTTPFrameWithoutTruncationOrReplay() async throws {
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "native-file-input-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let id = UUID(), nonce = UUID().uuidString
+        let literal = String(decoding: try JSONEncoder().encode(nonce), as: UTF8.self)
+        let source = "/*" + String(repeating: "שלום 👨‍👩‍👧‍👦 ", count: 1_000_000) + """
+            */
+            console.log(\(literal));
+            export default {nonce: \(literal), argument:process.argv[2]};
+            """
+        #expect(source.utf8.count > 32 * 1_024 * 1_024)
+        let result = try await AppRuntimeCore.shared.node.executeJavaScript(RuntimeExecutionRequest(id: id,
+            source: source, arguments: ["actual argument שלום"], workspace: workspace), moduleKind: "esm")
+        #expect(result.exitCode == 0, "\(result.stderr)")
+        guard case .object(let value) = result.value else { Issue.record("Missing actual large-input result"); return }
+        #expect(value["nonce"] == .string(nonce) && value["argument"] == .string("actual argument שלום"))
+        #expect(result.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == nonce)
+        let journalRoot = RuntimeFileLayout.default.root.appending(path: "jobs/node/\(id.uuidString.lowercased())")
+        let saved = try Data(contentsOf: journalRoot.appending(path: "request.json"))
+        let request = try #require(try JSONSerialization.jsonObject(with: saved) as? [String: Any])
+        #expect(request["source"] as? String == source)
+        let journal = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: journalRoot.appending(path: "job.json"))) as? [String: Any])
+        let receipt = try #require(journal["inputArtifact"] as? [String: Any])
+        #expect(receipt["bytes"] as? Int == saved.count)
+        #expect(receipt["sha256"] as? String == SHA256.hash(data: saved).map { String(format: "%02x", $0) }.joined())
+        #expect(!FileManager.default.fileExists(atPath: RuntimeFileLayout.default.nodeRuntime.appending(path: "requests/\(id.uuidString.lowercased()).json").path))
+    }
+
+    @Test(.timeLimit(.minutes(2)))
     func actualOptionalLifecycleFailureKeepsRequiredNativeBuildsAndFailedJobEvidence() async throws {
         let core = AppRuntimeCore.shared
         _ = try await core.node.ensureRunning()

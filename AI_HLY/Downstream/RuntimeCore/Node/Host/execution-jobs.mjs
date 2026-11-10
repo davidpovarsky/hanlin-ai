@@ -5,6 +5,7 @@ import path from 'node:path';
 import { finished } from 'node:stream/promises';
 import { Worker, MessageChannel } from 'node:worker_threads';
 import { RuntimeCommandBroker } from './runtime-command-broker.mjs';
+import {claimExecutionInput,validateExecutionInputReceipt} from './execution-input.mjs';
 
 const terminalStates = new Set(['completed', 'failed', 'cancelled', 'interrupted']);
 const validID = id => typeof id === 'string' && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(id);
@@ -15,11 +16,13 @@ export class ExecutionJobs {
   #writes = new Map();
   #activeBrokers = new Map();
   #commandEvents = new EventEmitter();
-  constructor({ root, workerURL, diagnosticWorkerURL, globalNodeModules }) {
+  constructor({ root, workerURL, diagnosticWorkerURL, globalNodeModules, inputInbox, validateInput }) {
     this.root = root;
     this.workerURL = workerURL;
     this.diagnosticWorkerURL = diagnosticWorkerURL;
     this.globalNodeModules = globalNodeModules;
+    this.inputInbox = inputInbox;
+    this.validateInput = validateInput;
     // Freeze launch environment before another native engine temporarily mutates C environ.
     this.workerEnvironment = Object.freeze({ ...process.env });
   }
@@ -57,12 +60,6 @@ export class ExecutionJobs {
     const id = String(body.executionID ?? randomUUID()).toLowerCase();
     if (!validID(id)) throw new Error('Invalid execution ID.');
     if (this.#jobs.has(id)) throw Object.assign(new Error('This execution ID already exists; jobs are never replayed implicitly.'), { status: 409 });
-    const timeout = body.timeoutMilliseconds;
-    if (timeout != null && (!Number.isSafeInteger(timeout) || timeout <= 0 || !Number.isSafeInteger(Date.now() + timeout))) {
-      throw new Error('timeoutMilliseconds must be a positive representable integer, or omitted for no deadline.');
-    }
-    const previewBytes = body.maximumOutputBytes ?? 1_048_576;
-    if (!Number.isSafeInteger(previewBytes) || previewBytes < 1) throw new Error('maximumOutputBytes must be a positive integer preview budget.');
     const directory = path.join(this.root, id);
     const header = { executionID: id, state: 'queued', startedAt: Date.now(), cancellationRequested: false, stdoutBytes: 0, stderrBytes: 0, result: null };
     const job = { header, startedContinuous: performance.now(), worker: null, completion: null, cancel: null };
@@ -70,8 +67,34 @@ export class ExecutionJobs {
     // receipt must not disappear in the gap between POST and Worker startup.
     this.#jobs.set(id, job);
     job.ready = fs.mkdir(directory, { mode: 0o700 });
-    try { await job.ready; }
-    catch (error) { header.state='failed'; header.error=String(error.message??error); header.memoryOnlyFailure=true; throw error; }
+    let timeout,previewBytes;
+    try {
+      await job.ready;
+      if(body.inputArtifact) {
+        const expected=validateExecutionInputReceipt(body.inputArtifact);
+        header.inputArtifact={fileName:'request.json',inboxFileName:id+'.json',
+          expectedBytes:expected.bytes,expectedSha256:expected.sha256,verified:false};
+      }
+      // The queued identity must survive a process death during file claim,
+      // hashing or asynchronous validation, before any Worker exists.
+      await this.#persist(header);
+      if(body.inputArtifact) {
+        const input=await claimExecutionInput({inbox:this.inputInbox,directory,id,artifact:body.inputArtifact,
+          cancelled:()=>header.cancellationRequested||Boolean(header.interruptionReason)});
+        body=input.body;header.inputArtifact=input.receipt;
+        await this.#persist(header);
+      }
+      if(this.validateInput)body=await this.validateInput(body);
+      timeout=body.timeoutMilliseconds;
+      if(timeout!=null&&(!Number.isSafeInteger(timeout)||timeout<=0||!Number.isSafeInteger(Date.now()+timeout)))
+        throw new Error('timeoutMilliseconds must be a positive representable integer, or omitted for no deadline.');
+      previewBytes=body.maximumOutputBytes??1_048_576;
+      if(!Number.isSafeInteger(previewBytes)||previewBytes<1)throw new Error('maximumOutputBytes must be a positive integer preview budget.');
+    } catch(error) {
+      header.state=header.interruptionReason?'interrupted':header.cancellationRequested?'cancelled':'failed';
+      header.error=header.interruptionReason??String(error.message??error);header.memoryOnlyFailure=true;
+      await this.#persist(header).catch(()=>{});throw error;
+    }
     await this.#persist(header);
     job.completion = this.#run(job, body, previewBytes, timeout).catch(async error => {
       await job.commandBroker?.cancel().catch(() => {});
