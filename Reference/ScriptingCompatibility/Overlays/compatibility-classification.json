@@ -284,9 +284,9 @@
       "hanlinAPIVersion": "hanlin.services/1.0",
       "requiredCapability": "storage",
       "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
-      "behaviorDifferences": ["The live synchronous binding implements JSON and Data get/set, remove, contains, keys and clear in a package-namespaced quota-bounded domain; shared App Group storage is explicitly denied until a provisioned shared container is available."],
+      "behaviorDifferences": ["The live synchronous binding uses canonical Mini App State/KeyValue.sqlite3 through the existing SQLite service, with no default Hanlin KV quota. Explicit shared:true selects a separate host-local durable shared namespace; App Group cross-process sharing is not claimed. Legacy per-installation UserDefaults values migrate transactionally without deleting the source or resurrecting cleared values. Canonical identity persists across reinstallation; synchronous Storage calls still materialize their JSON/Data values in memory."],
       "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
-      "notes": "Connected to installed scripting-jsc app sessions with revocation closing the active session."
+      "notes": "Connected to original application, Widget/Intent and embedded-result sessions with canonical identity. Portable SQLite migration/large-value/concurrency checks passed; fresh Apple JavaScriptCore and physical consumer verification remain pending."
     },
     {
       "symbol": "FileManager",

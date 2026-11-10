@@ -2422,8 +2422,8 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
 }
 
 enum HanlinScriptingNativeJSON {
-    static func decodeObject(_ json: String) throws -> [String: Any] {
-        guard json.utf8.count <= 20 * 1_024 * 1_024,
+    static func decodeObject(_ json: String, maximumBytes: Int? = 20 * 1_024 * 1_024) throws -> [String: Any] {
+        guard maximumBytes.map({ json.utf8.count <= $0 }) ?? true,
               let data = json.data(using: .utf8),
               let object = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw HanlinScriptingNativeError(

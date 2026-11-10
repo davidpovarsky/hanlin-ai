@@ -3,6 +3,7 @@ import CoreFoundation
 import CryptoKit
 import Foundation
 import HanlinPlatformContracts
+import HanlinMiniAppCore
 import HanlinScriptUI
 
 public enum HanlinScriptingEntrypointContext: Equatable, Sendable {
@@ -152,6 +153,7 @@ public final class HanlinScriptingApplicationSession {
 
     public init(
         installedPackageID: HanlinInstalledPackageID,
+        canonicalAppID: HanlinAppID? = nil,
         program: String,
         filename: String,
         entrypointContext: HanlinScriptingEntrypointContext = .application,
@@ -192,7 +194,9 @@ public final class HanlinScriptingApplicationSession {
         self.context = context
         storage = try HanlinScriptingPackageStorage(
             installedPackageID: installedPackageID,
-            allowed: storageAllowed
+            canonicalAppID: canonicalAppID,
+            allowed: storageAllowed,
+            runtimeRoot: runtimeRoot
         )
         fileSystem = try HanlinScriptingPackageFileSystem(
             installedPackageID: installedPackageID.rawValue,
@@ -327,14 +331,7 @@ public final class HanlinScriptingApplicationSession {
         fileSystem.stopAccessingExternalURLs()
         context.exceptionHandler = nil
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeRender" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageSet" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageClear" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageRemove" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageContains" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageKeys" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageGetData" as NSString)
-        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageSetData" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeStorageSync" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeImageJPEG" as NSString)
@@ -369,29 +366,17 @@ public final class HanlinScriptingApplicationSession {
                   let node = try? Self.decodeNode(object, depth: 0) else { return }
             try? self.model.apply(.render(node))
         }
-        let storageGet: @convention(block) (String, Bool) -> String = { [storage] key, shared in
-            storage.response(for: key, shared: shared)
-        }
-        let storageSet: @convention(block) (String, String, Bool) -> Bool = {
-            [storage] key, json, shared in
-            storage.set(json: json, for: key, shared: shared)
-        }
-        let storageClear: @convention(block) () -> Bool = { [storage] in storage.clear() }
-        let storageRemove: @convention(block) (String, Bool) -> Bool = { [storage] key, shared in
-            storage.remove(key: key, shared: shared)
-        }
-        let storageContains: @convention(block) (String, Bool) -> Bool = { [storage] key, shared in
-            storage.contains(key: key, shared: shared)
-        }
-        let storageKeys: @convention(block) (Bool) -> String = { [storage] shared in
-            storage.keysResponse(shared: shared)
-        }
-        let storageGetData: @convention(block) (String, Bool) -> String = { [storage] key, shared in
-            storage.dataResponse(for: key, shared: shared)
-        }
-        let storageSetData: @convention(block) (String, String, Bool) -> Bool = {
-            [storage] key, base64, shared in
-            storage.setData(base64: base64, for: key, shared: shared)
+        let storageSync: @convention(block) (String, String) -> String = { [storage] operation, json in
+            do {
+                let payload = try HanlinScriptingNativeJSON.decodeObject(json, maximumBytes: nil)
+                return HanlinScriptingNativeJSON.success(try storage.perform(operation: operation, payload: payload))
+            } catch let error as HanlinScriptingNativeError {
+                return HanlinScriptingNativeJSON.failure(error)
+            } catch {
+                return HanlinScriptingNativeJSON.failure(HanlinScriptingNativeError(
+                    name: "Error", code: "storage_failure", message: error.localizedDescription
+                ))
+            }
         }
         let fileInfo: @convention(block) () -> String = { [fileSystem] in
             HanlinScriptingNativeJSON.success(fileSystem.publicDirectories)
@@ -508,14 +493,7 @@ public final class HanlinScriptingApplicationSession {
             return true
         }
         context.setObject(render, forKeyedSubscript: "__hanlinNativeRender" as NSString)
-        context.setObject(storageGet, forKeyedSubscript: "__hanlinNativeStorageGet" as NSString)
-        context.setObject(storageSet, forKeyedSubscript: "__hanlinNativeStorageSet" as NSString)
-        context.setObject(storageClear, forKeyedSubscript: "__hanlinNativeStorageClear" as NSString)
-        context.setObject(storageRemove, forKeyedSubscript: "__hanlinNativeStorageRemove" as NSString)
-        context.setObject(storageContains, forKeyedSubscript: "__hanlinNativeStorageContains" as NSString)
-        context.setObject(storageKeys, forKeyedSubscript: "__hanlinNativeStorageKeys" as NSString)
-        context.setObject(storageGetData, forKeyedSubscript: "__hanlinNativeStorageGetData" as NSString)
-        context.setObject(storageSetData, forKeyedSubscript: "__hanlinNativeStorageSetData" as NSString)
+        context.setObject(storageSync, forKeyedSubscript: "__hanlinNativeStorageSync" as NSString)
         context.setObject(fileInfo, forKeyedSubscript: "__hanlinNativeFileInfo" as NSString)
         context.setObject(fileSync, forKeyedSubscript: "__hanlinNativeFileSync" as NSString)
         context.setObject(imageJPEG, forKeyedSubscript: "__hanlinNativeImageJPEG" as NSString)
@@ -1458,132 +1436,6 @@ private final class HanlinScriptingUIEventRouter {
 
     func dispatch(handlerID: String, payload: HanlinValue) {
         session?.dispatch(handlerID: handlerID, payload: payload)
-    }
-}
-
-private final class HanlinScriptingPackageStorage: @unchecked Sendable {
-    private let lock = NSLock()
-    private let defaults: UserDefaults
-    private let suiteName: String
-    private let allowed: Bool
-    private let maximumBytes = 1_048_576
-    private let dataPrefix = "__hanlin_data__:"
-
-    init(installedPackageID: HanlinInstalledPackageID, allowed: Bool) throws {
-        let suiteName = "com.hanlin.scripting.storage.\(installedPackageID.rawValue)"
-        guard let defaults = UserDefaults(suiteName: suiteName) else {
-            throw HanlinScriptingApplicationError.storageInitializationFailed
-        }
-        self.defaults = defaults
-        self.suiteName = suiteName
-        self.allowed = allowed
-    }
-
-    func response(for key: String, shared: Bool) -> String {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed, !shared, Self.valid(key: key) else { return #"{"allowed":false}"# }
-        guard let json = defaults.string(forKey: key) else { return #"{"allowed":true,"found":false}"# }
-        guard let encoded = try? JSONEncoder().encode(json),
-              let literal = String(data: encoded, encoding: .utf8) else {
-            return #"{"allowed":true,"found":false}"#
-        }
-        return #"{"allowed":true,"found":true,"json":\#(literal)}"#
-    }
-
-    func set(json: String, for key: String, shared: Bool) -> Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed, !shared, Self.valid(key: key), json.utf8.count <= maximumBytes,
-              let data = json.data(using: .utf8),
-              (try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])) != nil else {
-            return false
-        }
-        let existingValues = defaults.persistentDomain(forName: suiteName) ?? [:]
-        let existingBytes = existingValues.values.reduce(0) {
-            $0 + (($1 as? String)?.utf8.count ?? ($1 as? Data)?.count ?? 0)
-        }
-        let replacedBytes = defaults.string(forKey: key)?.utf8.count ?? 0
-        guard existingBytes - replacedBytes + json.utf8.count <= maximumBytes else { return false }
-        defaults.removeObject(forKey: dataPrefix + key)
-        defaults.set(json, forKey: key)
-        return true
-    }
-
-    func dataResponse(for key: String, shared: Bool) -> String {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed, !shared, Self.valid(key: key) else { return #"{"allowed":false}"# }
-        guard let data = defaults.data(forKey: dataPrefix + key) else {
-            return #"{"allowed":true,"found":false}"#
-        }
-        guard let encoded = try? JSONEncoder().encode(data.base64EncodedString()),
-              let literal = String(data: encoded, encoding: .utf8) else {
-            return #"{"allowed":true,"found":false}"#
-        }
-        return #"{"allowed":true,"found":true,"base64":\#(literal)}"#
-    }
-
-    func setData(base64: String, for key: String, shared: Bool) -> Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed, !shared, Self.valid(key: key),
-              let data = Data(base64Encoded: base64), data.count <= maximumBytes else { return false }
-        let existingValues = defaults.persistentDomain(forName: suiteName) ?? [:]
-        let existingBytes = existingValues.reduce(0) { result, item in
-            result + ((item.value as? String)?.utf8.count ?? (item.value as? Data)?.count ?? 0)
-        }
-        let dataKey = dataPrefix + key
-        let replacedBytes = defaults.data(forKey: dataKey)?.count
-            ?? defaults.string(forKey: key)?.utf8.count
-            ?? 0
-        guard existingBytes - replacedBytes + data.count <= maximumBytes else { return false }
-        defaults.removeObject(forKey: key)
-        defaults.set(data, forKey: dataKey)
-        return true
-    }
-
-    func remove(key: String, shared: Bool) -> Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed, !shared, Self.valid(key: key) else { return false }
-        defaults.removeObject(forKey: key)
-        defaults.removeObject(forKey: dataPrefix + key)
-        return true
-    }
-
-    func contains(key: String, shared: Bool) -> Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed, !shared, Self.valid(key: key) else { return false }
-        return defaults.object(forKey: key) != nil || defaults.data(forKey: dataPrefix + key) != nil
-    }
-
-    func keysResponse(shared: Bool) -> String {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed, !shared else { return #"{"allowed":false}"# }
-        let domain = defaults.persistentDomain(forName: suiteName) ?? [:]
-        let keys = Set(domain.keys.map { key in
-            key.hasPrefix(dataPrefix) ? String(key.dropFirst(dataPrefix.count)) : key
-        }).sorted()
-        guard let data = try? JSONEncoder().encode(keys),
-              let json = String(data: data, encoding: .utf8) else {
-            return #"{"allowed":true,"keys":[]}"#
-        }
-        return #"{"allowed":true,"keys":\#(json)}"#
-    }
-
-    func clear() -> Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        guard allowed else { return false }
-        defaults.removePersistentDomain(forName: suiteName)
-        return true
-    }
-
-    private static func valid(key: String) -> Bool {
-        !key.isEmpty && key.utf8.count <= 1_024 && !key.contains("\0")
     }
 }
 
@@ -3227,35 +3079,29 @@ private extension HanlinScriptingApplicationSession {
         },
         useDismiss() { return value => { dismissPresentation?.(value); dismissPresentation = null; }; }
       });
+      function storageCall(operation, payload = {}) {
+        return decodeNativeResult(__hanlinNativeStorageSync(operation, JSON.stringify(payload)));
+      }
       const Storage = Object.freeze({
         get(key, options = {}) {
-          const response = JSON.parse(__hanlinNativeStorageGet(String(key), options.shared === true));
-          if (!response.allowed) throw new Error("HANLIN_PERMISSION:storage");
+          const response = storageCall("get", {key:String(key), shared:options.shared === true});
           return response.found ? JSON.parse(response.json) : null;
         },
         set(key, value, options = {}) {
-          if (!__hanlinNativeStorageSet(String(key), JSON.stringify(value), options.shared === true)) throw new Error("HANLIN_STORAGE:write_failed");
-          return true;
+          return storageCall("set", {key:String(key), json:JSON.stringify(value), shared:options.shared === true});
         },
-        remove(key, options = {}) {
-          if (!__hanlinNativeStorageRemove(String(key), options.shared === true)) throw new Error("HANLIN_STORAGE:remove_failed");
-        },
-        contains(key, options = {}) { return __hanlinNativeStorageContains(String(key), options.shared === true); },
-        keys(options = {}) {
-          const response = JSON.parse(__hanlinNativeStorageKeys(options.shared === true));
-          if (!response.allowed) throw new Error("HANLIN_PERMISSION:storage");
-          return response.keys;
-        },
+        remove(key, options = {}) { storageCall("remove", {key:String(key), shared:options.shared === true}); },
+        contains(key, options = {}) { return storageCall("contains", {key:String(key), shared:options.shared === true}); },
+        keys(options = {}) { return storageCall("keys", {shared:options.shared === true}); },
         getData(key, options = {}) {
-          const response = JSON.parse(__hanlinNativeStorageGetData(String(key), options.shared === true));
-          if (!response.allowed) throw new Error("HANLIN_PERMISSION:storage");
+          const response = storageCall("getData", {key:String(key), shared:options.shared === true});
           return response.found ? HanlinData.fromBase64String(response.base64) : null;
         },
         setData(key, value, options = {}) {
           const data = value instanceof HanlinData ? value : new HanlinData(value);
-          if (!__hanlinNativeStorageSetData(String(key), data.toBase64String(), options.shared === true)) throw new Error("HANLIN_STORAGE:write_failed");
+          storageCall("setData", {key:String(key), base64:data.toBase64String(), shared:options.shared === true});
         },
-        clear() { if (!__hanlinNativeStorageClear()) throw new Error("HANLIN_STORAGE:clear_failed"); }
+        clear() { storageCall("clear"); }
       });
       const Assistant = Object.freeze({
         get isAvailable() {

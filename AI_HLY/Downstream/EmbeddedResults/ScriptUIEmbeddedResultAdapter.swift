@@ -56,6 +56,7 @@ public enum ScriptUIEmbeddedResultAdapter {
             // Real ScriptUI application session with independent lifecycle (never overwrites activeApplicationModel)
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: package.record.installedPackageID,
+                canonicalAppID: package.appID,
                 program: program,
                 filename: entrypoint.sourcePath,
                 entrypointContext: .embeddedResult(

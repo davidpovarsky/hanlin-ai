@@ -603,6 +603,7 @@ final class HanlinScriptingPlatform {
 
             let session = try HanlinScriptingApplicationSession(
                 installedPackageID: id,
+                canonicalAppID: package.appID,
                 program: program,
                 filename: compiledPath,
                 storageAllowed: true,
@@ -1032,6 +1033,7 @@ final class HanlinScriptingPlatform {
                                         let presentation = try? {
                                             let session = try HanlinScriptingApplicationSession(
                                                 installedPackageID: package.record.installedPackageID,
+                                                canonicalAppID: package.appID,
                                                 program: program,
                                                 filename: compiledPath,
                                                 entrypointContext: .widget(family: family),
@@ -1108,6 +1110,7 @@ final class HanlinScriptingPlatform {
                             let presentation = try {
                                 let session = try HanlinScriptingApplicationSession(
                                     installedPackageID: package.record.installedPackageID,
+                                    canonicalAppID: package.appID,
                                     program: program,
                                     filename: compiledPath,
                                     entrypointContext: .widget(family: family),
@@ -1142,6 +1145,7 @@ final class HanlinScriptingPlatform {
                         let registrations = try {
                             let session = try HanlinScriptingApplicationSession(
                                 installedPackageID: package.record.installedPackageID,
+                                canonicalAppID: package.appID,
                                 program: program,
                                 filename: compiledPath,
                                 entrypointContext: .appIntentRegistration,
@@ -1505,6 +1509,7 @@ final class HanlinScriptingPlatform {
                 let requestedWidgetReload = try await {
                     let session = try HanlinScriptingApplicationSession(
                         installedPackageID: identity.installedPackageID,
+                        canonicalAppID: package.appID,
                         program: program,
                         filename: compiledPath,
                         entrypointContext: .appIntentRegistration,
