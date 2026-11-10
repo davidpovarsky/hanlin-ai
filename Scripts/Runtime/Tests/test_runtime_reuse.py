@@ -117,6 +117,15 @@ class NativeReuseTests(unittest.TestCase):
         self.jobs.append(clone)
         self.assertEqual(self.verify()["components"]["node-device"]["producerJobID"], 200)
 
+    def test_later_setup_failure_with_a_never_started_build_is_not_an_execution(self):
+        for started_at in (None, "0001-01-01T00:00:00Z"):
+            with self.subTest(started_at=started_at):
+                clone = deepcopy(self.jobs[0])
+                clone.update(id=500, run_attempt=2, conclusion="failure")
+                clone["steps"][0].update(conclusion="skipped", started_at=started_at)
+                self.jobs.append(clone)
+                self.assertEqual(self.verify()["components"]["node-device"]["producerJobID"], 200)
+
     def test_wrong_job_run_sha_or_nonexecuted_step_cannot_pass(self):
         original = deepcopy(self.jobs)
         for kind in ("run", "sha", "step", "timestamp"):

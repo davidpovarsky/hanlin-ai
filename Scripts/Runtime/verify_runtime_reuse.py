@@ -54,6 +54,18 @@ def validate_source(run, repository):
     return run["head_sha"]
 
 
+def actual_step(job, name):
+    for step in job.get("steps", []):
+        if step.get("name") != name or step.get("conclusion") == "skipped":
+            continue
+        try:
+            instant(step.get("started_at", ""))
+        except (ValueError, AttributeError):
+            continue
+        return step
+    return None
+
+
 def verify(run, jobs, artifacts, repository, dependency_hash, producer_identity, current_identity,
            source_dependency_hash=None):
     source_sha = validate_source(run, repository)
@@ -70,19 +82,19 @@ def verify(run, jobs, artifacts, repository, dependency_hash, producer_identity,
     for directory, (prefix, job_name, step_name) in COMPONENTS.items():
         # Reruns may clone successful jobs with zero steps. Those are not new evidence.
         executed = [job for job in jobs if job.get("name", "").split(" / ")[-1] == job_name
-                    and any(step.get("name") == step_name for step in job.get("steps", []))]
+                    and actual_step(job, step_name) is not None]
         require(executed, f"No actual producer execution for {directory}")
         # GitHub also clones old step timestamps into successful rerun jobs. Pick
         # the original attempt for an identical execution interval, never credit
         # the cloned job as another actual build.
         job = max(executed, key=lambda item: (
-            instant(next(step["started_at"] for step in item["steps"] if step.get("name") == step_name)),
+            instant(actual_step(item, step_name)["started_at"]),
             -positive_id(item.get("run_attempt")), -positive_id(item.get("id"))))
         require(job.get("run_id") == run["id"] and job.get("head_sha") == source_sha,
                 f"Wrong producer job source for {directory}")
         require(job.get("status") == "completed" and job.get("conclusion") == "success",
                 f"Latest actual {directory} production did not pass")
-        step = next(step for step in job["steps"] if step.get("name") == step_name)
+        step = actual_step(job, step_name)
         require(step.get("status") == "completed" and step.get("conclusion") == "success",
                 f"Producer step did not pass for {directory}")
         start, finish = instant(step["started_at"]), instant(job["completed_at"])
