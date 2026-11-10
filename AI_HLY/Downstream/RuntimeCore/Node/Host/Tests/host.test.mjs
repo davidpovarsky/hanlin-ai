@@ -234,6 +234,13 @@ test('host redirects npm state before preview and install modules initialize', a
     assert.equal(cli.exitCode, 0, JSON.stringify(cli));
     assert.equal(cli.stdout, 'CLI_INPUT_שלום');
     assert.match(cli.stderr, /CLI_ENV/);
+    const extensionless=path.join(workspace,'extensionless-main');
+    await fs.writeFile(extensionless+'.js',"if(require.main!==module)throw Error('Not main');console.log('actual resolved HTTP main');");
+    const resolvedCLI=await hostRequest(ready.port,launchToken,'/v1/executions',{
+      executionID:randomUUID(),executionMode:'cli',entryPoint:extensionless,workspace,moduleKind:'commonjs',
+    });
+    assert.equal(resolvedCLI.exitCode,0,JSON.stringify(resolvedCLI));
+    assert.equal(resolvedCLI.stdout,'actual resolved HTTP main\n');
     const parentSource = `import {executePortableShell} from ${JSON.stringify(new URL('../portable-shell.mjs',import.meta.url).href)};
       const status=await executePortableShell("echo CLI_PARENT_INPUT | node 'actual cli.cjs' 'arg with spaces'",[],{cwd:process.cwd(),environment:process.env});
       process.exitCode=status; export default status;`;

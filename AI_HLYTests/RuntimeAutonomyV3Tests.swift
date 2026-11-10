@@ -602,6 +602,12 @@ struct RuntimeAutonomyV3Tests {
         #expect(result.exitCode == 0 && result.stdout == "שלום CLI\n")
         #expect(result.stderr.contains("CLI_DELAYED_STDERR"))
         #expect(!result.didTimeOut && !result.wasCancelled)
+        let extensionless = workspace.appending(path: "extensionless")
+        let nonce = UUID().uuidString
+        try Data("if(require.main!==module)throw Error('Not actual main');console.log('\(nonce)');".utf8)
+            .write(to: extensionless.appendingPathExtension("js"))
+        let resolved = try await AppRuntimeCore.shared.node.executeCLI(entryPoint: extensionless, arguments: [], workspace: workspace)
+        #expect(resolved.exitCode == 0 && resolved.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == nonce)
     }
 
     @Test func pythonCLIUsesActualFileArgumentsInputAndStandardExitStatus() async throws {

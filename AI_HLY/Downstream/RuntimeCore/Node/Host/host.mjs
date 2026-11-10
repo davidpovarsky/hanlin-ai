@@ -4,7 +4,7 @@ import {runtimeCapabilities} from './runtime-capabilities.mjs';
 import { verifyLifecyclePlan } from './lifecycle-planner.mjs';
 import { globalNodeModules } from './global-package-state.mjs';
 import {executeLifecycleInJobs} from './lifecycle-executor.mjs';
-import { ExecutionJobs } from './execution-jobs.mjs';
+import { ExecutionJobs, resolveNodeCLIEntryPoint } from './execution-jobs.mjs';
 import {MCPLineFrames} from './mcp-framing.mjs';
 import {StringDecoder} from 'node:string_decoder';
 import './fetch-compatibility.mjs';
@@ -409,8 +409,7 @@ async function validateExecutionInput(body) {
   }
   if (cli) {
     if (typeof body.entryPoint !== 'string' || !path.isAbsolute(body.entryPoint)) throw new Error('CLI entryPoint must be an absolute file path.');
-    body.entryPoint = await fs.realpath(body.entryPoint);
-    if (!(await fs.stat(body.entryPoint)).isFile()) throw new Error('CLI entryPoint must be a regular file.');
+    body.entryPoint = await resolveNodeCLIEntryPoint(body.entryPoint);
     if (body.standardInputPath != null) {
       if (typeof body.standardInputPath !== 'string' || !path.isAbsolute(body.standardInputPath)) throw new Error('CLI stdin must be an absolute file path.');
       body.standardInputPath = await fs.realpath(body.standardInputPath);

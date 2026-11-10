@@ -197,7 +197,10 @@ actor NodeRuntimeService {
     /// Execute the actual entry file as Node's main module, not a synthetic import.
     func executeCLI(entryPoint: URL, arguments: [String], workspace: URL,
                     environment: [String: String] = [:], standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
-        let entry = try fileLayout.validatedReadableFile(entryPoint)
+        guard entryPoint.isFileURL, !entryPoint.path.contains("\0") else { throw RuntimeCoreError.invalidPath }
+        // The authenticated Host resolves the real file using Node's public
+        // resolver, including extensionless CLI entries and directory mains.
+        let entry = entryPoint.standardizedFileURL
         let input = try standardInput.map { try fileLayout.validatedReadableFile($0) }
         return try await executeNodeJob(RuntimeExecutionRequest(source: "", arguments: arguments,
             workspace: workspace, environment: environment), moduleKind: "esm", entryPoint: entry, standardInput: input)

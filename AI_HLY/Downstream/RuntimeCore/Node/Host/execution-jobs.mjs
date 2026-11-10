@@ -1,14 +1,27 @@
 import { EventEmitter } from 'node:events';
 import { createHash, randomUUID } from 'node:crypto';
-import { promises as fs, createWriteStream, createReadStream, readFileSync } from 'node:fs';
+import { promises as fs, createWriteStream, createReadStream, readFileSync, constants as fsConstants } from 'node:fs';
 import path from 'node:path';
 import { finished } from 'node:stream/promises';
 import { Worker, MessageChannel } from 'node:worker_threads';
+import {createRequire} from 'node:module';
 import { RuntimeCommandBroker } from './runtime-command-broker.mjs';
 import {claimExecutionInput,validateExecutionInputReceipt} from './execution-input.mjs';
 
 const terminalStates = new Set(['completed', 'failed', 'cancelled', 'interrupted']);
 const validID = id => typeof id === 'string' && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(id);
+
+export async function resolveNodeCLIEntryPoint(entryPoint) {
+  if(typeof entryPoint!=='string'||!path.isAbsolute(entryPoint)||entryPoint.includes('\0'))
+    throw new Error('CLI entryPoint must be an absolute file path.');
+  // Node CLI accepts e.g. `node scripts/postinstall` when the real file is .js.
+  // Use Node's public resolver rather than guessing extensions or duplicating
+  // package.json/main/index resolution in Swift and JavaScript.
+  const resolved=await fs.realpath(createRequire(import.meta.url).resolve(entryPoint));
+  if(!(await fs.stat(resolved)).isFile())throw new Error('CLI entryPoint must be a regular file.');
+  await fs.access(resolved,fsConstants.R_OK);
+  return resolved;
+}
 
 /** Durable job headers and full stdout/stderr; preview/page budgets never discard log files. */
 export class ExecutionJobs {
@@ -334,7 +347,7 @@ export class ExecutionJobs {
     const directory = path.join(this.root, header.executionID);
     const extension = body.moduleKind === 'commonjs' ? 'cjs' : 'mjs';
     const cli = body.executionMode === 'cli';
-    const entryPoint = cli ? await fs.realpath(body.entryPoint) : path.join(directory, `main.${extension}`);
+    const entryPoint = cli ? await resolveNodeCLIEntryPoint(body.entryPoint) : path.join(directory, `main.${extension}`);
     if (cli) {
       if (!(await fs.stat(entryPoint)).isFile()) throw new Error('The CLI entry must be an existing regular file.');
     } else await fs.writeFile(entryPoint, body.source, { mode: 0o600 });

@@ -162,10 +162,18 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
         if !hostStarted {
             let connection = connection, id = startOperationID
             let recovered = await Task.detached { () -> Int? in
-                guard let job = try? await connection.decode(RuntimeJobSnapshot.self,
-                    path: "/v1/executions/\(id.uuidString.lowercased())", timeout: 5),
-                    let value = job.result?.value else { return nil }
-                return try? JSONDecoder().decode(WorkerIdentity.self, from: JSONEncoder().encode(value)).generation
+                let route = "/v1/executions/\(id.uuidString.lowercased())"
+                _ = try? await connection.data(path: route + "/cancel", method: "POST", body: Data("{}".utf8), timeout: 5)
+                while let job = try? await connection.decode(RuntimeJobSnapshot.self, path: route, timeout: 5) {
+                    if job.state.isTerminal {
+                        guard let value = job.result?.value else { return nil }
+                        return try? JSONDecoder().decode(WorkerIdentity.self, from: JSONEncoder().encode(value)).generation
+                    }
+                    // Completion may be hashing/publishing its receipt after
+                    // startup succeeded. Drain it before generation cleanup.
+                    try? await Task.sleep(for: .milliseconds(25))
+                }
+                return nil
             }.value
             if let recovered { generation = recovered; hostStarted = true }
         }
