@@ -93,7 +93,9 @@ test('npm lifecycle environment retains user values and flattens RFC183 package 
 });
 
 test('actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds',async t=>{
-  const root=await fixture(t),runtime=path.join(root,'runtime');
+  const root=await fixture(t),runtime=path.join(root,'runtime-via-alias'),realRuntime=path.join(root,'real-runtime');
+  await fs.mkdir(realRuntime);
+  await fs.symlink(realRuntime,runtime,process.platform==='win32'?'junction':'dir');
   const archives=new Map(),manifests=new Map();
   const server=http.createServer((request,response)=>{
     const archive=archives.get(request.url);

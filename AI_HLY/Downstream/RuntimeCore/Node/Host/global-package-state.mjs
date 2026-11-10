@@ -35,7 +35,10 @@ export async function prepareGlobalTransaction(root) {
   // Build products of unchanged dependencies remain intact. The old immutable
   // generation stays available to running Workers and retained package handles.
   await fs.rm(path.join(directory,published),{force:true});
-  return {transactionID,directory,baseRevision:base.revision};
+  // Arborist lock locations must use the physical prefix. Otherwise aliases
+  // such as macOS /var -> /private/var create transaction-specific lock keys
+  // and unchanged dependencies appear changed during every subsequent update.
+  return {transactionID,directory:await fs.realpath(directory),baseRevision:base.revision};
 }
 export async function saveGlobalTransaction(root,transaction) {
   await fs.writeFile(path.join(transactionRoot(root,transaction.transactionID),metadata),JSON.stringify(transaction),{mode:0o600});
