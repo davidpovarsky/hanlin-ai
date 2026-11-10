@@ -13,9 +13,10 @@ struct RuntimeCapabilityContract: Codable, Sendable {
         self.snapshots = snapshots
         self.defaultLimits = defaultLimits
         features = [
+            "jobs": "Node/Python/TypeScript have durable job IDs, full stdout/stderr artifacts and optional explicit deadlines. Native Python cancellation is cooperative and may wait for a blocking C call. Interrupted jobs are not replayed automatically.",
             "agentSteps": "No default step cap; an explicit caller budget is optional. Completion, user cancellation and actual errors terminate a run.",
             "authorization": "No per-package Hanlin grants. Real OS permissions, owner disable/stop, session identity, integrity and TLS still apply.",
-            "pythonPackages": "Pure-Python wheels supported by the current embedded installer. Source builds, full PEP resolution and signed native-extension loading are not yet verified.",
+            "pythonPackages": "Standards-based packaging/resolvelib resolution uses running-interpreter markers and wheel tags, compatible PEP 517 source backends and local sources. Native imports require providers actually registered in the signed app; arbitrary desktop binary compatibility is not implied. Installation commits only after the staged import probe.",
             "nodePackages": "Embedded Node. Package compatibility depends on APIs actually used; desktop child_process/cluster/native addon behavior is not implied.",
             "shell": "Structured argv; linked ios_system commands only. Command language, pipes and redirection are not yet advertised as implemented.",
             "wasm": "NOT_VERIFIED on the embedded iOS engine; no JIT availability is assumed.",

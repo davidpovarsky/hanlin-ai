@@ -76,6 +76,15 @@ actor PythonRuntimeService {
                 "maximumOutputBytes": request.limits.maximumOutputBytes
             ]
             if let milliseconds { body["timeoutSeconds"] = Double(milliseconds) / 1000 }
+            let registry = fileLayout.registry.appending(path: "PythonPackages.json")
+            if FileManager.default.fileExists(atPath: registry.path) {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                let installed = try decoder.decode([PythonPackageRecord].self, from: Data(contentsOf: registry))
+                body["packageDirectories"] = try installed.sorted { $0.installedAt > $1.installedAt }.map { item in
+                    try fileLayout.validatedDescendant(fileLayout.pythonPackages.appending(path: "\(item.normalizedName)-\(item.version)"), of: fileLayout.pythonPackages, allowRoot: false).path
+                }
+            }
             let json = String(decoding: try JSONSerialization.data(withJSONObject: body), as: UTF8.self)
             let started = ContinuousClock.now
             let jobs = self.jobs

@@ -22,7 +22,7 @@ struct ChatSavedExcerptsView: View {
                         savedDetail(excerpt)
                     } label: {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text(excerpt.quote).lineLimit(4)
+                            Text(excerpt.quote).lineLimit(4).accessibilityIdentifier("hanlin-saved-excerpt-text")
                             Text(excerpt.sourceTitle).font(.caption).foregroundStyle(.secondary)
                             Text(excerpt.createdAt, style: .date).font(.caption2).foregroundStyle(.tertiary)
                         }
@@ -50,6 +50,7 @@ struct ChatSavedExcerptsView: View {
                 Button("OK", role: .cancel) { error = nil }
             } message: { Text(error ?? "") }
         }
+        .modifier(ChatLinkPresentation())
     }
 
     private func delete(_ excerpt: ChatSavedExcerpt) {
@@ -64,14 +65,20 @@ struct ChatSavedExcerptsView: View {
                 ChatMarkdownView(text: excerpt.quote)
                 if let destination = ChatSourceDestination(excerpt: excerpt),
                    let chat = chats.first(where: { $0.id == destination.chatRecordID }),
-                   chat.messages?.contains(where: { $0.id == destination.messageID }) == true,
+                   let message = chat.messages?.first(where: { $0.id == destination.messageID }),
                    let openSource {
+                    if ChatSavedExcerpt.digest(message.text ?? "") != excerpt.sourceDigest,
+                       ChatSavedExcerpt.digest(message.translatedText ?? "") != excerpt.sourceDigest {
+                        Text("The source message has changed. Your saved text is kept.")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
                     Button {
                         openSource(chat, destination)
                         dismiss()
                     } label: {
                         Label("Open in conversation", systemImage: "bubble.left.and.text.bubble.right")
                     }
+                    .accessibilityIdentifier("hanlin-saved-open-source")
                 } else {
                     Label("The original message is no longer available. Your saved text is kept.", systemImage: "bubble.left.and.exclamationmark.bubble.right")
                         .foregroundStyle(.secondary)

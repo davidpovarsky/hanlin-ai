@@ -98,6 +98,7 @@ struct ChatView: View {
     @State private var isMultiSelectMode: Bool = false      // 是否开启多选模式
     @State private var selectedMessageIDs: Set<UUID> = []   // 选中的消息 ID 集合
     @Environment(\.chatSourceDestination) private var sourceDestination
+    @State private var nativeSelectionIDs: Set<UUID> = []
     @State private var pendingSourceScroll: UUID?
     @State private var revealedSourceRequest: UUID?
     private var effectiveMatchedMessageID: UUID? {
@@ -816,9 +817,7 @@ struct ChatView: View {
               let index = allMessages.firstIndex(where: { $0.id == id }) else { return }
         revealedSourceRequest = sourceDestination?.id
         pendingAutoFollowTask?.cancel()
-        autoFollowController.updateNearBottom(false)
-        autoFollowController.userInteractionBegan()
-        autoFollowController.userInteractionEnded()
+        autoFollowController.pauseFollowing(reason: "savedSource")
         let count = allMessages.count - index
         if count > loadedMessageCount {
             loadedMessageCount = min(allMessages.count, max(count + 5, loadedMessageCount))
@@ -915,8 +914,18 @@ struct ChatView: View {
             .task(id: effectiveMatchedMessageID) {
                 revealMatchedSource(using: scrollViewProxy)
             }
+            .environment(\.chatMarkdownSelectionActivity, { id, active in
+                if active {
+                    nativeSelectionIDs.insert(id)
+                    pendingAutoFollowTask?.cancel()
+                    autoFollowController.pauseFollowing(reason: "textSelection")
+                } else { nativeSelectionIDs.remove(id) }
+            })
             .environment(\.chatMarkdownDidRender, { messageID in
-                guard pendingSourceScroll == messageID else { return }
+                guard pendingSourceScroll == messageID else {
+                    scheduleAutoFollow(using: scrollViewProxy, animated: false)
+                    return
+                }
                 pendingSourceScroll = nil
                 Task { @MainActor in
                     await Task.yield()
@@ -925,7 +934,9 @@ struct ChatView: View {
             })
             .onTapGesture {
                 isInputActive = false
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                if nativeSelectionIDs.isEmpty {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                 showTemperatureSlider = false
                 showTopPSlider = false
                 showMaxTokensSlider = false
@@ -934,7 +945,9 @@ struct ChatView: View {
             .simultaneousGesture(
                 DragGesture().onChanged { _ in
                     isInputActive = false
+                    if nativeSelectionIDs.isEmpty {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                     showTemperatureSlider = false
                     showTopPSlider = false
                     showMaxTokensSlider = false
@@ -993,6 +1006,7 @@ struct ChatView: View {
         animated: Bool,
         force: Bool = false
     ) {
+        guard force || nativeSelectionIDs.isEmpty else { return }
         guard force || autoFollowController.shouldRequestScrollForVisualUpdate() else { return }
         pendingAutoFollowTask?.cancel()
         pendingAutoFollowTask = Task { @MainActor in
@@ -1002,7 +1016,7 @@ struct ChatView: View {
                 return
             }
             guard !Task.isCancelled,
-                  force || autoFollowController.mode == .following else { return }
+                  force || (nativeSelectionIDs.isEmpty && autoFollowController.mode == .following) else { return }
             scrollToLastMessage(using: scrollViewProxy, animated: animated)
         }
     }

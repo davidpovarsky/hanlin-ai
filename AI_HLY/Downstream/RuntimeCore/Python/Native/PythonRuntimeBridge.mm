@@ -54,6 +54,10 @@ static NSString *StatusMessage(PyStatus status) {
 
 static void InitializePython(void) {
     std::call_once(initializationFlag, [] {
+        if (HanlinPythonRegisterBundledExtensions() != 0) {
+            initializationError = @"Failed to register bundled Python native extensions.";
+            return;
+        }
         NSString *resources = NSBundle.mainBundle.resourcePath;
         NSString *pythonHome = [resources stringByAppendingPathComponent:@"python"];
         NSString *frameworksPath = NSBundle.mainBundle.privateFrameworksPath;

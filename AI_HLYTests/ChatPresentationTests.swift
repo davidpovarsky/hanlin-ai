@@ -72,6 +72,49 @@ struct ChatPresentationTests {
         #expect(try reopened.mainContext.fetchCount(FetchDescriptor<ChatSavedExcerpt>()) == 0)
     }
 
+    @Test func addingSavedExcerptsMigratesTheExistingApplicationSchemaWithoutDeletingChat() throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appending(path: "original.store")
+        let chatID = UUID()
+        let messageID = UUID()
+        let legacyTypes: [any PersistentModel.Type] = [ChatMessages.self, APIKeys.self, SearchKeys.self,
+            AllModels.self, ChatRecords.self, UserInfo.self, PromptRepo.self, KnowledgeRecords.self,
+            KnowledgeChunk.self, MemoryArchive.self, TranslationDic.self, ToolKeys.self]
+        do {
+            let legacy = try ModelContainer(for: Schema(legacyTypes),
+                configurations: ModelConfiguration(url: url, cloudKitDatabase: .none))
+            let record = ChatRecords(id: chatID, name: "Existing conversation", type: "chat")
+            let message = ChatMessages(id: messageID, role: "assistant", text: "Preserved שלום 👋🏽")
+            record.messages = [message]
+            legacy.mainContext.insert(record)
+            try legacy.mainContext.save()
+        }
+        let migrated = try ModelContainer(for: Schema(legacyTypes + [ChatSavedExcerpt.self]),
+            configurations: ModelConfiguration(url: url, cloudKitDatabase: .none))
+        let chats = try migrated.mainContext.fetch(FetchDescriptor<ChatRecords>())
+        let record = try #require(chats.first(where: { $0.id == chatID }))
+        let message = try #require(record.messages?.first(where: { $0.id == messageID }))
+        #expect(message.text == "Preserved שלום 👋🏽")
+        let source = ChatExcerptSource(chatRecordID: chatID, messageID: messageID, groupID: nil, runID: nil, title: record.name ?? "")
+        try ChatSavedExcerpt.save(source: source, markdown: message.text ?? "", quote: "שלום 👋🏽", in: migrated.mainContext)
+        #expect(try migrated.mainContext.fetchCount(FetchDescriptor<ChatSavedExcerpt>()) == 1)
+        #expect(try migrated.mainContext.fetchCount(FetchDescriptor<ChatMessages>()) == 1)
+        #expect(try migrated.mainContext.fetchCount(FetchDescriptor<KnowledgeRecords>()) == 0)
+    }
+
+    @Test func nativeSelectionPausesFollowingEvenWhenTheMessageIsNearTheBottom() {
+        let controller = ChatAutoFollowController()
+        controller.updateNearBottom(true)
+        controller.pauseFollowing(reason: "textSelection")
+        #expect(!controller.shouldRequestScrollForVisualUpdate())
+        controller.updateNearBottom(true)
+        #expect(controller.mode == .pausedByUser)
+        controller.resumeFollowing()
+        #expect(controller.shouldRequestScrollForVisualUpdate())
+    }
+
     @Test func selectionSheetCallbacksUseUnicodeSelectedRange() {
         var selection: String?
         let text = "before 👋🏽 שלום after"
@@ -82,6 +125,10 @@ struct ChatPresentationTests {
         view.selectedRange = (text as NSString).range(of: "👋🏽 שלום")
         coordinator.textViewDidChangeSelection(view)
         #expect(selection == "👋🏽 שלום")
+        let emoji = (text as NSString).range(of: "👋🏽")
+        view.selectedRange = NSRange(location: emoji.location + 1, length: 1)
+        coordinator.textViewDidChangeSelection(view)
+        #expect(selection == "👋🏽")
         view.selectedRange = NSRange(location: 0, length: 0)
         coordinator.textViewDidChangeSelection(view)
         #expect(selection == nil)

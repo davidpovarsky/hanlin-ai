@@ -68,9 +68,11 @@ class PythonExecutionTests(unittest.TestCase):
         self.assertIn("BEFORE_CANCEL", Path(result["outputFiles"]["stdout"]["path"]).read_text())
 
     def test_native_blocking_call_does_not_claim_instant_interruption(self):
-        started = time.monotonic()
+        # Windows 3.12 monotonic() may use a ~15ms clock tick; perf_counter()
+        # measures the actual native blocking call without rounding 80ms to 78ms.
+        started = time.perf_counter()
         result = self.execute("import time\ntime.sleep(0.08)", timeout=0.01)
-        self.assertGreaterEqual(time.monotonic() - started, 0.08)
+        self.assertGreaterEqual(time.perf_counter() - started, 0.08)
         self.assertTrue(result["didTimeOut"])
 
     def test_user_timeout_error_is_not_a_runtime_deadline(self):

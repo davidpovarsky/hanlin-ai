@@ -88,6 +88,7 @@ extension EnvironmentValues {
     @Entry var chatExcerptSource: ChatExcerptSource? = nil
     @Entry var chatSourceDestination: ChatSourceDestination? = nil
     @Entry var chatOpenSavedSource: (@MainActor (ChatRecords, ChatSourceDestination) -> Void)? = nil
+    @Entry var chatMarkdownSelectionActivity: (@MainActor @Sendable (UUID, Bool) -> Void)? = nil
     @Entry var chatMarkdownDidRender: (@MainActor @Sendable (UUID) -> Void)? = nil
 }
 

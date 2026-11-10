@@ -1,6 +1,23 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "The source message has changed. Your saved text is kept.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The source message has changed. Your saved text is kept."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הודעת המקור השתנתה. הטקסט ששמרת נשמר."
+          }
+        }
+      }
+    },
     "Saved messages" : {
       "extractionState": "manual",
       "localizations": {

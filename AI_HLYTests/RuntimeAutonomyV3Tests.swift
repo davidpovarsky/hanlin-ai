@@ -6,6 +6,64 @@ import Testing
 @MainActor
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
+    @Test func bundledNativePythonExtensionInstallsAndExecutesARealNonce() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "native-python-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let python = PythonRuntimeService(fileLayout: layout)
+        let manager = PythonPackageManager(fileLayout: layout, python: python)
+        let record = try await manager.install(name: "hanlin-native")
+        #expect(record.importName == "hanlin_native")
+        let nonce = UUID().uuidString
+        let quoted = String(decoding: try JSONEncoder().encode(nonce), as: UTF8.self)
+        let workspace = try layout.workspace(client: .tools, identifier: "native-proof")
+        let result = try await python.execute(RuntimeExecutionRequest(source: """
+        import hanlin_native, sys
+        try:
+            __hanlin_result__ = hanlin_native.challenge(\(quoted))
+            print(hanlin_native.registry())
+        finally:
+            sys.modules.pop('hanlin_native', None)
+        """, workspace: workspace))
+        #expect(result.exitCode == 0)
+        guard case .object(let value) = result.value else { Issue.record("Native extension returned no structured result: \(result.stderr)"); return }
+        #expect(value["nonce"] == .string(nonce))
+        #expect(value["engine"] == .string("cpython-native-extension"))
+        #expect(value["linkage"] == .string("signed-app-builtin"))
+    }
+
+    @Test(.timeLimit(.minutes(10)))
+    func embeddedNodeAndPythonActuallyRunBeyondThreeHundredSeconds() async throws {
+        let layout = RuntimeFileLayout.default
+        let nodeWorkspace = try layout.workspace(client: .tools, identifier: "long-node-\(UUID().uuidString)")
+        let pythonWorkspace = try layout.workspace(client: .tools, identifier: "long-python-\(UUID().uuidString)")
+        let start = ContinuousClock.now
+        async let node = AppRuntimeCore.shared.node.executeJavaScript(RuntimeExecutionRequest(source: """
+        console.log('EMBEDDED_NODE_LONG_START');
+        await new Promise(resolve => setTimeout(resolve, 305000));
+        console.log('EMBEDDED_NODE_LONG_COMPLETE');
+        export default 305;
+        """, workspace: nodeWorkspace), moduleKind: "esm")
+        async let python = AppRuntimeCore.shared.python.execute(RuntimeExecutionRequest(source: """
+        import time
+        print('EMBEDDED_PYTHON_LONG_START', flush=True)
+        time.sleep(305)
+        print('EMBEDDED_PYTHON_LONG_COMPLETE', flush=True)
+        __hanlin_result__ = 305
+        """, workspace: pythonWorkspace))
+        let (nodeResult, pythonResult) = try await (node, python)
+        #expect(start.duration(to: .now) >= .seconds(300))
+        for result in [nodeResult, pythonResult] {
+            #expect(result.exitCode == 0)
+            #expect(!result.didTimeOut && !result.wasCancelled)
+            #expect(result.durationMilliseconds >= 300_000)
+            #expect(result.value == .number(305))
+            #expect(result.outputFiles?["stdout"]?.bytes ?? 0 > 0)
+        }
+        #expect(nodeResult.stdout.contains("EMBEDDED_NODE_LONG_COMPLETE"))
+        #expect(pythonResult.stdout.contains("EMBEDDED_PYTHON_LONG_COMPLETE"))
+        print("EMBEDDED_LONG_JOBS node=\(nodeResult.executionID) ms=\(nodeResult.durationMilliseconds) python=\(pythonResult.executionID) ms=\(pythonResult.durationMilliseconds)")
+    }
     @Test func defaultSchemaExposureDoesNotHideToolsPastOldBudgets() {
         let aliases = (0..<64).map { "tool_\($0)" }
         let sizes = Dictionary(uniqueKeysWithValues: aliases.map { ($0, 1024) })

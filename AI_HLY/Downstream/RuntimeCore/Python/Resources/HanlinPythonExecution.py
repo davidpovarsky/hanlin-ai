@@ -51,11 +51,14 @@ def _run(request, cancelled):
                 modified_environment.append((name, os.environ.get(name)))
                 os.environ[name] = str(setting)
             packages = request.get("packages", "")
-            if os.path.isdir(packages):
-                for entry in sorted(os.listdir(packages)):
-                    candidate = os.path.join(packages, entry)
-                    if os.path.isdir(candidate) and candidate not in sys.path:
-                        sys.path.insert(0, candidate)
+            directories = request.get("packageDirectories")
+            if directories is None:
+                # Preserve pre-registry installations; modern requests use the
+                # canonical registry so stale retained versions cannot shadow updates.
+                directories = [os.path.join(packages, entry) for entry in sorted(os.listdir(packages))] if os.path.isdir(packages) else []
+            for candidate in reversed(directories):
+                if os.path.isdir(candidate) and candidate not in sys.path:
+                    sys.path.insert(0, candidate)
             # The isolated host's bootstrap does not consume user PYTHONPATH. A job does.
             for candidate in reversed(request.get("environment", {}).get("PYTHONPATH", "").split(os.pathsep)):
                 if candidate:

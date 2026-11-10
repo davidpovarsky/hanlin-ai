@@ -431,7 +431,9 @@
         "AI_HLY/Downstream/RuntimeCore/Python/Native/**",
         "Scripts/Runtime/prepare-python-runtime.sh",
         "AI_HLY/Downstream/RuntimeCore/Python/Resources/**",
-        "Scripts/Runtime/Tests/test_python_execution.py"
+        "Scripts/Runtime/Tests/test_python_execution.py",
+        "Scripts/Runtime/Tests/test_python_packaging.py",
+        "Scripts/Runtime/package-python-native-probe.py"
       ],
       "direct_validation_groups": [
         "python_runtime",

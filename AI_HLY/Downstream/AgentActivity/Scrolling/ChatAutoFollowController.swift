@@ -44,6 +44,12 @@ final class ChatAutoFollowController {
         }
     }
 
+    func pauseFollowing(reason: String) {
+        state.mode = .pausedByUser
+        state.isUserInteracting = false
+        trace("autoFollowPausedByUser", fields: ["reason": reason])
+    }
+
     func resumeFollowing(reason: String = "bottomButton") {
         let wasPaused = state.mode == .pausedByUser
         state.mode = .following

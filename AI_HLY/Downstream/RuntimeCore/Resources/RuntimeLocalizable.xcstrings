@@ -5236,6 +5236,91 @@
           }
         }
       }
+    },
+    "Python package or source": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Python package or source"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חבילת Python או מקור"
+          }
+        }
+      }
+    },
+    "Requirement, URL or local path": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requirement, URL or local path"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דרישת חבילה, כתובת או נתיב מקומי"
+          }
+        }
+      }
+    },
+    "Import package or source": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import package or source"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבוא חבילה או מקור"
+          }
+        }
+      }
+    },
+    "Cancellation requested; waiting for the active operation to stop.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancellation requested; waiting for the active operation to stop."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נשלחה בקשת ביטול; ממתינים לעצירת הפעולה הפעילה."
+          }
+        }
+      }
+    },
+    "Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר להתקין חבילות תואמות וקוד מקור, גם מקבצים מקומיים. בניית מקור משתמשת במנועי בנייה תואמים של Python. הרחבות נייטיביות צריכות להיארז ולהיחתם עם האפליקציה."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

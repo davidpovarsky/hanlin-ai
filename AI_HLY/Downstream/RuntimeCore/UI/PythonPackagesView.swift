@@ -1,5 +1,6 @@
 import Observation
 import SwiftUI
+import UniformTypeIdentifiers
 
 @MainActor
 @Observable
@@ -20,35 +21,34 @@ private final class PythonPackagesModel {
     }
 
     func inspect() { run { self.preview = try await AppRuntimeCore.shared.pythonPackages.preview(name: self.packageName, version: self.version.isEmpty ? nil : self.version) } }
-    func install() {
+    func install(sourceURL: URL? = nil) {
+        let name = sourceURL?.path ?? packageName
+        let selectedVersion = sourceURL == nil && !version.isEmpty ? version : nil
         run {
+            let scoped = sourceURL?.startAccessingSecurityScopedResource() ?? false
+            defer { if scoped { sourceURL?.stopAccessingSecurityScopedResource() } }
             _ = try await AppRuntimeCore.shared.pythonPackages.install(
-                name: self.packageName,
-                version: self.version.isEmpty ? nil : self.version
+                name: name,
+                version: selectedVersion
             ) { update in
                 self.installProgress = update
             }
-            if self.preview == nil {
-                self.preview = try? await AppRuntimeCore.shared.pythonPackages.preview(
-                    name: self.packageName,
-                    version: self.version.isEmpty ? nil : self.version
-                )
-            }
+            self.preview = nil
             await self.reload()
         }
     }
-    func update(_ item: PythonPackageRecord) { packageName = item.name; version = ""; install() }
+    func update(_ item: PythonPackageRecord) { packageName = item.sourceRequirement ?? item.name; version = ""; install() }
     func uninstall(_ item: PythonPackageRecord) { run { try await AppRuntimeCore.shared.pythonPackages.uninstall(item); await self.reload() } }
     func probe(_ item: PythonPackageRecord) { run { let result = try await AppRuntimeCore.shared.pythonPackages.probe(item); self.probeOutput = result.stdout + result.stderr } }
-    func cancel() { operation?.cancel(); operation = nil; isBusy = false; message = RuntimeL10n.string("Cancelled") }
+    func cancel() { operation?.cancel(); message = RuntimeL10n.string("Cancellation requested; waiting for the active operation to stop.") }
 
     private func run(_ body: @escaping @MainActor () async throws -> Void) {
-        operation?.cancel()
+        guard !isBusy else { return }
         isBusy = true
         installProgress = nil
         message = nil
         operation = Task {
-            defer { self.isBusy = false }
+            defer { self.isBusy = false; self.operation = nil }
             do { try await body(); self.message = RuntimeL10n.string("Completed") }
             catch is CancellationError { self.message = RuntimeL10n.string("Cancelled") }
             catch { self.message = error.localizedDescription }
@@ -58,11 +58,12 @@ private final class PythonPackagesModel {
 
 struct PythonPackagesView: View {
     @State private var model = PythonPackagesModel()
+    @State private var importsPackage = false
 
     var body: some View {
         List {
-            Section(RuntimeL10n.string("PyPI package")) {
-                TextField(RuntimeL10n.string("Package name"), text: $model.packageName)
+            Section(RuntimeL10n.string("Python package or source")) {
+                TextField(RuntimeL10n.string("Requirement, URL or local path"), text: $model.packageName)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .accessibilityIdentifier("hanlin-python-package-name-field")
@@ -72,9 +73,11 @@ struct PythonPackagesView: View {
                     .accessibilityIdentifier("hanlin-python-version-field")
                 HStack(spacing: 16) {
                     Button(RuntimeL10n.string("Preview")) { model.inspect() }
+                        .disabled(model.isBusy)
                         .buttonStyle(.borderless)
                         .accessibilityIdentifier("hanlin-python-preview-button")
                     Button(RuntimeL10n.string("Install")) { model.install() }
+                        .disabled(model.isBusy)
                         .buttonStyle(.borderless)
                         .accessibilityIdentifier("hanlin-python-install-button")
                     if model.isBusy {
@@ -83,6 +86,10 @@ struct PythonPackagesView: View {
                     }
                 }
                 .buttonStyle(.borderless)
+                Button { importsPackage = true } label: {
+                    Label(RuntimeL10n.string("Import package or source"), systemImage: "square.and.arrow.down")
+                }
+                .disabled(model.isBusy)
                 if model.isBusy {
                     if let progress = model.installProgress {
                         ProgressView(
@@ -144,9 +151,15 @@ struct PythonPackagesView: View {
                 if let probeOutput = model.probeOutput { Text(probeOutput).font(.system(.caption, design: .monospaced)).textSelection(.enabled) }
             }
 
-            Section { Text(RuntimeL10n.string("Universal pure-Python wheels can be installed. Source builds and arbitrary native extensions cannot be installed dynamically on iOS; a future release may add prebundled native modules.")) .font(.caption).foregroundStyle(.secondary) }
+            Section { Text(RuntimeL10n.string("Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app.")) .font(.caption).foregroundStyle(.secondary) }
         }
         .navigationTitle(RuntimeL10n.string("Python Packages"))
+        .fileImporter(isPresented: $importsPackage, allowedContentTypes: [.folder, .data]) { result in
+            switch result {
+            case .success(let url): model.packageName = url.path; model.version = ""; model.install(sourceURL: url)
+            case .failure(let error): model.message = error.localizedDescription
+            }
+        }
         .task { await model.reload() }
         .refreshable { await model.reload() }
     }

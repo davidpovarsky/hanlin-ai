@@ -1757,6 +1757,8 @@ struct ChatBubbleView: View {
                 ChatMarkdownView(text: text,
                     savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
                     saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
+                .padding(.vertical, 4)
+                .contentShape(Rectangle())
                 .contextMenu {
                     // 复制
                     Button(action: {
@@ -1764,6 +1766,7 @@ struct ChatBubbleView: View {
                     }) {
                         Label("复制内容", systemImage: "square.on.square")
                     }
+                    .accessibilityIdentifier("hanlin-message-menu-copy")
                     
                     // 选中文本
                     Button(action: {
@@ -2376,6 +2379,7 @@ struct ChatBubbleView: View {
             }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-reference-materials")
+            .sheet(item: $selectedLink) { url in SafariView(url: url).ignoresSafeArea() }
         }
     }
 
@@ -2405,6 +2409,10 @@ struct ChatBubbleView: View {
                         .lineLimit(1)
                 }
                 
+            } else if let url = URL(string: resource.link), url.scheme != nil {
+                Link(resource.title, destination: url)
+                    .font(.footnote)
+                    .lineLimit(1)
             } else {
                 Button(action: {
                     openKnowledgeRecord(with: resource.title)
@@ -2416,9 +2424,6 @@ struct ChatBubbleView: View {
                 }
             }
             
-        }
-        .sheet(item: $selectedLink) { url in
-            SafariView(url: url).ignoresSafeArea()
         }
     }
 
@@ -3305,12 +3310,17 @@ struct TextSelectionTextView: UIViewRepresentable {
         var parent: TextSelectionTextView
         init(_ parent: TextSelectionTextView) { self.parent = parent }
         func textViewDidChangeSelection(_ view: UITextView) {
-            guard view.selectedRange.length > 0,
-                  let range = Range(view.selectedRange, in: view.text ?? "") else {
+            let text = (view.text ?? "") as NSString
+            let selection = view.selectedRange
+            guard selection.location != NSNotFound, selection.location >= 0,
+                  selection.location <= text.length, selection.length > 0 else {
                 parent.selectedText = nil
                 return
             }
-            parent.selectedText = String(view.text[range])
+            let clamped = NSRange(location: selection.location, length: min(selection.length, text.length - selection.location))
+            guard clamped.length > 0 else { parent.selectedText = nil; return }
+            let composed = text.rangeOfComposedCharacterSequences(for: clamped)
+            parent.selectedText = text.substring(with: composed)
         }
     }
 

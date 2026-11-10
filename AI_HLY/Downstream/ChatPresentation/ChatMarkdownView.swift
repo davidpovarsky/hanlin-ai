@@ -11,7 +11,9 @@ struct ChatMarkdownView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.chatExcerptSource) private var source
     @Environment(\.chatSourceDestination) private var destination
+    @Environment(\.chatMarkdownSelectionActivity) private var selectionActivity
     @Environment(\.chatMarkdownDidRender) private var markdownDidRender
+    @State private var highlightedRequestID: UUID?
     @State private var listener = ChatMarkdownListener()
 
     var body: some View {
@@ -22,11 +24,18 @@ struct ChatMarkdownView: View {
         })
         MarkdownView(text: text, config: config, listener: listener)
             .markdownSelectionHighlight(highlight)
+            .task(id: destination?.id) {
+                highlightedRequestID = destination?.id
+                guard let requestID = destination?.id else { return }
+                do { try await Task.sleep(for: .seconds(4)) } catch { return }
+                if highlightedRequestID == requestID { highlightedRequestID = nil }
+            }
+            .markdownSelectionActivity { id, active in selectionActivity?(id, active) }
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var highlight: MarkdownSelectionHighlight? {
-        guard let destination, destination.messageID == source?.messageID,
+        guard let destination, highlightedRequestID == destination.id, destination.messageID == source?.messageID,
               destination.sourceDigest == ChatSavedExcerpt.digest(text),
               let selection = destination.selection, let blockID = selection.sourceBlockID else { return nil }
         return MarkdownSelectionHighlight(sourceBlockID: blockID, renderedText: selection.renderedText, range: selection.range)
@@ -51,7 +60,7 @@ struct ChatMarkdownView: View {
             .withParagraphStyle(value: body)
             .withOrderedListStyle(value: body)
             .withBlockQuoteStyle(value: body)
-            .withHeadingStyle(value: .init(h1Font: fonts(.title), h2Font: fonts(.title2), h3Font: fonts(.title3),
+            .withHeadingStyle(value: .init(h1Font: fonts(.title1), h2Font: fonts(.title2), h3Font: fonts(.title3),
                 h4Font: fonts(.headline), h5Font: fonts(.subheadline), h6Font: fonts(.subheadline), textColor: .primary))
             .withTextSelectionConfig(value: .init(isEnabled: false))
             .withTextContextMenu(value: items.isEmpty ? nil : TextContextMenu(menuGroups: [

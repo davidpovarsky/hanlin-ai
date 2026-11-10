@@ -378,6 +378,11 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             return
         }
 
+        if bodyString.contains("PROMPT_CHAT_PRESENTATION") {
+            emitFinalAnswer("alpha beta gamma\n\nשלום 👋🏽 **bold** and \\(E=mc^2\\).\n\n[Example](https://example.com)\n\nCHAT_PRESENTATION_READY")
+            return
+        }
+
         // 4. UI-04 Collapsed progress and inspector without raw CoT (must precede 6*7 check)
         if bodyString.contains("PROMPT_UI04_REASONING_INSPECTOR") {
             if bodyString.contains("ui04-progress-1") {

@@ -545,6 +545,51 @@ struct HanlinAISDKAgentEngineTests {
         #expect(answer == "COMPLETED_AFTER_46_TOOLS")
     }
 
+    @Test("Explicit cancellation after 45 actual steps cancels the executing tool")
+    func cancellationAfterFortyStopsTheActualTool() async throws {
+        let requests = ManagedAtomicInt()
+        let executions = ManagedAtomicInt()
+        let cancellations = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let step = requests.increment()
+            let payload: [String: Any] = ["id": "cancel_\(step)", "choices": [["index": 0,
+                "delta": ["tool_calls": [["index": 0, "id": "call_\(step)", "type": "function",
+                    "function": ["name": "work", "arguments": "{}"]]]], "finish_reason": "tool_calls"]]]
+            let data = try JSONSerialization.data(withJSONObject: payload)
+            return Self.makeSSEResponse(chunks: ["data: \(String(decoding: data, as: UTF8.self))\n\n", "data: [DONE]\n\n"], url: request.url!)
+        }
+        let config = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions", credential: "test-only")
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+        let tool = HanlinAISDKToolDefinition(name: "work", description: "Work until the owner cancels",
+            inputSchemaData: Data(#"{"type":"object","properties":{}}"#.utf8)) { _, _ in
+            let count = executions.increment()
+            if count == 45 {
+                do { try await Task.sleep(for: .seconds(60)) }
+                catch is CancellationError { _ = cancellations.increment(); throw CancellationError() }
+            }
+            return HanlinAISDKToolExecutionOutput(modelText: "operation_\(count)")
+        }
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Continue until cancelled")],
+            baseSystemPrompt: "Execute work", tools: [tool])
+        let consumer = Task { do { for try await _ in stream {} } catch {} }
+        defer { consumer.cancel() }
+        let readyDeadline = ContinuousClock.now.advanced(by: .seconds(10))
+        while executions.count < 45 && ContinuousClock.now < readyDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        try #require(executions.count == 45, "The run must actually cross 40 steps before cancellation")
+        consumer.cancel()
+        await consumer.value
+        let cancellationDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while cancellations.count == 0 && ContinuousClock.now < cancellationDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(cancellations.count == 1, "Cancellation must reach the actual executing tool")
+        #expect(executions.count == 45)
+        #expect(requests.count == 45)
+    }
+
     private static func makeSSEResponse(chunks: [String], url: URL) -> FetchResponse {
         let stream = AsyncThrowingStream<Data, Error> { continuation in
             for chunk in chunks {

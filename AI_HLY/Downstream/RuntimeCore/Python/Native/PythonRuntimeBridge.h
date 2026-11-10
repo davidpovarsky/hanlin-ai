@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 const char *HanlinPythonVersion(void);
+int HanlinPythonRegisterBundledExtensions(void);
 char *HanlinPythonExecute(const char *requestJSON);
 void HanlinPythonFree(char *value);
 void HanlinPythonRegisterExecution(const char *executionID);

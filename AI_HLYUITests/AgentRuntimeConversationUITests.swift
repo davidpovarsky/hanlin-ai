@@ -37,7 +37,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(send.waitForExistence(timeout: 10), "The real chat send button did not appear.")
         tapElement(send)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "The deterministic provider's final answer was not rendered.")
@@ -102,14 +102,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(send)
 
         // 3. Final answer renders in the same user turn without extra user nudge
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'LOCAL_PYTHON_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "Final answer LOCAL_PYTHON_COMPLETE was not rendered in the same user turn.")
         XCTAssertTrue(finalAnswer.label.contains("42"), "Calculated result 42 was not rendered.")
 
         // Verify tool activity is present and no remote python was invoked
-        let remoteActivity = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'execute_remote_python_code'")).firstMatch
+        let remoteActivity = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS 'execute_remote_python_code'")).firstMatch
         XCTAssertFalse(remoteActivity.exists, "Remote Python must not be invoked when local python is supported")
 
         // Verify that agent execution prepared Python without a manual switch.
@@ -158,7 +158,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 2.0)
 
         // 5. Assert RUN_A_LATE_GHOST does not exist, RUN_B_COMPLETE exists exactly once in chat bubbles, no stale Stop, no stuck Thinking
-        let runAGhost = app.staticTexts.matching(
+        let runAGhost = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'RUN_A_LATE_GHOST'")
         ).firstMatch
         XCTAssertFalse(runAGhost.exists, "Run A late ghost answer RUN_A_LATE_GHOST must not appear after being cancelled")
@@ -217,7 +217,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         sendPrompt("PROMPT_UI02_CLASSIC_BUBBLES", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI02_CLASSIC_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 30), "UI02 classic bubble final answer did not render")
@@ -243,7 +243,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         sendPrompt("PROMPT_UI03_SEARCH_CITATIONS", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI03_SEARCH_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI03 search final answer did not render")
@@ -258,13 +258,51 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("UI-03_SearchMessageAndDeduplicatedCitations", in: app)
     }
 
+    func testNativePartialSelectionSaveAndOriginalLongPressPreview() throws {
+        let app = launchAcceptanceApp()
+        openChat(in: app)
+        sendPrompt("PROMPT_CHAT_PRESENTATION", in: app)
+        let paragraph = app.textViews.matching(NSPredicate(format: "label == 'alpha beta gamma'")).firstMatch
+        XCTAssertTrue(paragraph.waitForExistence(timeout: 45), "The actual native Markdown paragraph did not render")
+        paragraph.coordinate(withNormalizedOffset: CGVector(dx: 0.04, dy: 0.5)).doubleTap()
+        let save = app.descendants(matching: .any).matching(NSPredicate(format: "label == 'Save for myself'")).firstMatch
+        XCTAssertTrue(save.waitForExistence(timeout: 10), "Native selected-text Save action is missing: \(app.debugDescription)")
+        tapElement(save)
+
+        // The original whole-message context menu remains on the message's padding;
+        // a double tap inside its native paragraph selects text independently.
+        paragraph.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0))
+            .withOffset(CGVector(dx: 0, dy: -2)).press(forDuration: 1)
+        let wholeCopy = app.descendants(matching: .any)["hanlin-message-menu-copy"].firstMatch
+        XCTAssertTrue(wholeCopy.waitForExistence(timeout: 10), "Original whole-message preview/menu was lost: \(app.debugDescription)")
+        attachScreenshot("Chat_OriginalOpaquePreview", in: app)
+        tapElement(wholeCopy)
+
+        let saved = app.buttons["hanlin-saved-messages-open"].firstMatch
+        if !saved.isHittable {
+            let sidebar = app.navigationBars.buttons.matching(NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar'")).firstMatch
+            if sidebar.waitForExistence(timeout: 3) { tapElement(sidebar) }
+        }
+        XCTAssertTrue(saved.waitForExistence(timeout: 10), "Saved messages entry missing: \(app.debugDescription)")
+        tapElement(saved)
+        let excerpt = app.staticTexts["hanlin-saved-excerpt-text"].firstMatch
+        XCTAssertTrue(excerpt.waitForExistence(timeout: 10))
+        XCTAssertEqual(excerpt.label, "alpha", "The selected substring, not the whole paragraph, must reach personal storage")
+        tapElement(excerpt)
+        let openSource = app.buttons["hanlin-saved-open-source"].firstMatch
+        XCTAssertTrue(openSource.waitForExistence(timeout: 5))
+        tapElement(openSource)
+        XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "The saved excerpt did not return through the original conversation")
+        attachScreenshot("Chat_SelectedExcerptSource", in: app)
+    }
+
     func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
         let app = launchAcceptanceApp()
         openChat(in: app)
 
         sendPrompt("PROMPT_UI04_REASONING_INSPECTOR", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI04_REASONING_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI04 reasoning final answer did not render")
@@ -275,7 +313,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(activityToggle.label.contains("<think>"))
         tapElement(activityToggle)
 
-        let rawCoTText = app.staticTexts.matching(
+        let rawCoTText = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS[c] 'Let me think privately' OR label CONTAINS '<think>'")
         ).firstMatch
         XCTAssertFalse(rawCoTText.exists, "Expanded original reasoning/tool sections must never display raw chain-of-thought monologue")
@@ -309,7 +347,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         sendPrompt("PROMPT_UI05_RICH_CONTENT", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI05_RICH_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI05 rich content final answer did not render")
@@ -454,7 +492,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(errorBubble.exists, "Stale error bubble must be removed on retry")
         XCTAssertEqual(assistantBubbles.count, 1, "Assistant bubble must exist exactly once after retry")
         XCTAssertEqual(recoveredAnswers.count, 1, "Retry must produce exactly 1 assistant bubble without duplicates")
-        let userPrompts = app.staticTexts.matching(
+        let userPrompts = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'PROMPT_UI07_FAIL_ONCE'")
         )
         XCTAssertEqual(userPrompts.count, 1, "Retry must not duplicate the user prompt bubble")
@@ -469,7 +507,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // Turn 1: Install local .tgz MCP server via manage_mcp_servers and call mcp__hanlin_echo_mcp__echo_ping in the same turn
         sendPrompt("PROMPT_UI08_MCP_TURN_1", in: app)
 
-        let turn1Answer = app.staticTexts.matching(
+        let turn1Answer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI08_MCP_TURN_1_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(turn1Answer.waitForExistence(timeout: 90), "Turn 1 conversational MCP install + tool call did not complete")
@@ -478,7 +516,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // Turn 2: Reuse the installed MCP server tool in the next turn of the same conversation without reinstalling
         sendPrompt("PROMPT_UI08_MCP_TURN_2", in: app)
 
-        let turn2Answer = app.staticTexts.matching(
+        let turn2Answer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI08_MCP_TURN_2_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(turn2Answer.waitForExistence(timeout: 60), "Turn 2 conversational MCP tool reuse did not complete")
@@ -1410,7 +1448,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
         var seededChat = app.buttons.matching(chatPredicate).firstMatch
         if !seededChat.exists {
-            seededChat = app.staticTexts.matching(chatPredicate).firstMatch
+            seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
         }
         if !seededChat.exists {
             seededChat = app.cells.matching(chatPredicate).firstMatch

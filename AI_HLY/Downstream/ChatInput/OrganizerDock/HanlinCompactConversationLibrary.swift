@@ -71,7 +71,8 @@ struct HanlinCompactConversationLibrary: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button { showsSavedMessages = true } label: {
                     Label("Saved messages", systemImage: "bookmark")
-                }.accessibilityIdentifier("hanlin-saved-messages")
+                }
+                .accessibilityIdentifier("hanlin-saved-messages-open").accessibilityIdentifier("hanlin-saved-messages")
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: onAddNewChat) {
