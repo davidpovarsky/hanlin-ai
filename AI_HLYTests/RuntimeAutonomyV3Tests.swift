@@ -56,6 +56,102 @@ struct RuntimeAutonomyV3Tests {
         #expect(!FileManager.default.fileExists(atPath: forbidden.path))
     }
 
+    @MainActor private final class JobCapture { var id: UUID? }
+
+    @Test(.timeLimit(.minutes(1)))
+    func cancellingShellWhileThePythonDirectoryLockIsBusyNeverRunsTheCommandLater() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "shell-queue-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let jobs = RuntimeJobStore(fileLayout: layout)
+        let python = PythonRuntimeService(fileLayout: layout, jobs: jobs)
+        let shell = ShellRuntimeService(fileLayout: layout, jobs: jobs)
+        _ = try await shell.healthCheck()
+        let workspace = try layout.workspace(client: .tools, identifier: "cross-engine-queue")
+        let started = workspace.appending(path: "python-started")
+        let release = workspace.appending(path: "release")
+        let forbidden = workspace.appending(path: "must-not-run")
+        let firstRequest = RuntimeExecutionRequest(source: """
+        import pathlib, time
+        pathlib.Path('python-started').touch()
+        end = time.monotonic() + 20
+        while not pathlib.Path('release').exists() and time.monotonic() < end:
+            time.sleep(0.01)
+        """, workspace: workspace)
+        let first = Task { try await python.execute(firstRequest) }
+        defer { try? Data().write(to: release); first.cancel() }
+        let deadline = ContinuousClock.now + .seconds(5)
+        while !FileManager.default.fileExists(atPath: started.path), ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(FileManager.default.fileExists(atPath: started.path))
+        let capture = JobCapture()
+        let second = Task {
+            try await RuntimeJobProgress.$reporter.withValue({ record in capture.id = record.executionID }) {
+                try await shell.execute(tokens: ["touch", "must-not-run"], workspace: workspace, environment: [:], allowNetwork: false)
+            }
+        }
+        let queueDeadline = ContinuousClock.now + .seconds(5)
+        while capture.id == nil, ContinuousClock.now < queueDeadline { try await Task.sleep(for: .milliseconds(10)) }
+        let id = try #require(capture.id)
+        second.cancel()
+        do { _ = try await second.value; Issue.record("Queued Shell command returned success after cancellation") }
+        catch is CancellationError { }
+        #expect(try await jobs.snapshot(id: id, kind: .shell)?.state == .cancelled)
+        #expect(try await jobs.snapshot(id: firstRequest.id, kind: .localPython)?.state == .running)
+        try Data().write(to: release)
+        #expect(try await first.value.exitCode == 0)
+        _ = try await shell.execute(tokens: ["pwd"], workspace: workspace, environment: [:], allowNetwork: false)
+        #expect(!FileManager.default.fileExists(atPath: forbidden.path))
+    }
+
+    @Test func linkedShellRetainsFullOutputBeyondThePreviewAndReopensLosslessPages() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "shell-full-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let jobs = RuntimeJobStore(fileLayout: layout)
+        let shell = ShellRuntimeService(fileLayout: layout, jobs: jobs)
+        let workspace = try layout.workspace(client: .tools, identifier: "full-output")
+        let payload = Data(String(repeating: "שלום 👨‍👩‍👧‍👦\n", count: 400_000).utf8)
+        #expect(payload.count > 10 * 1024 * 1024)
+        try payload.write(to: workspace.appending(path: "input.txt"))
+        let result = try await shell.execute(tokens: ["cat", "input.txt"], workspace: workspace,
+            environment: [:], allowNetwork: false, limits: .init(maximumOutputBytes: 17))
+        #expect(result.exitCode == 0 && result.outputWasTruncated)
+        #expect(result.stdout.utf8.count <= 17 && !result.stdout.contains("�"))
+        let artifact = try #require(result.outputFiles?["stdout"])
+        #expect(artifact.bytes == Int64(payload.count))
+        #expect(artifact.sha256 == SHA256.hash(data: payload).map { String(format: "%02x", $0) }.joined())
+        let reopened = RuntimeJobStore(fileLayout: layout)
+        try await reopened.recoverInterrupted(.shell)
+        #expect(try await reopened.snapshot(id: result.executionID, kind: .shell)?.state == .completed)
+        var restored = Data()
+        var offset: Int64 = 0
+        while true {
+            let page = try await reopened.output(id: result.executionID, kind: .shell, channel: "stdout", offset: offset, limit: 65533)
+            restored.append(try #require(Data(base64Encoded: try #require(page["base64"]))))
+            if page["hasMore"] == "false" { break }
+            offset = try #require(Int64(try #require(page["nextOffset"])))
+        }
+        #expect(restored == payload)
+    }
+
+    @Test func linkedShellActuallyPipesAndRedirectsWithinItsWorkspace() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "shell-pipe-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let shell = ShellRuntimeService(fileLayout: layout)
+        let workspace = try layout.workspace(client: .tools, identifier: "pipe-proof")
+        let text = "שלום\nworld\n"
+        try Data(text.utf8).write(to: workspace.appending(path: "input.txt"))
+        let result = try await shell.execute(command: "cat input.txt | wc -c > count.txt", workspace: workspace,
+            environment: [:], allowNetwork: false)
+        #expect(result.exitCode == 0)
+        let count = try String(contentsOf: workspace.appending(path: "count.txt"), encoding: .utf8)
+        #expect(Int(count.trimmingCharacters(in: .whitespacesAndNewlines)) == text.utf8.count)
+        #expect(result.outputFiles?["stdout"] != nil && result.outputFiles?["stderr"] != nil)
+    }
+
     @Test func linkedShellActuallyAcceptsMoreThan127Arguments() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "shell-argv-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: root) }

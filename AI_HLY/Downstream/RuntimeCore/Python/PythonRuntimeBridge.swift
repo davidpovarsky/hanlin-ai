@@ -41,7 +41,7 @@ enum PythonRuntimeBridge {
         guard let operation = pending.withLock({ $0[id] }) else { throw RuntimeCoreError.invalidIdentifier }
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
-                guard operation.bind(continuation, requestJSON: requestJSON) else { return }
+                guard operation.bind(continuation, input: requestJSON) else { return }
                 executionQueue.async {
                     do {
                         try IOSSystemRunner.withProcessCurrentDirectoryLock {

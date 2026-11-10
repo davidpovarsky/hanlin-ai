@@ -24,7 +24,7 @@ actor AppRuntimeCore {
         let python = PythonRuntimeService(fileLayout: fileLayout, jobs: jobs)
         let node = NodeRuntimeService(fileLayout: fileLayout)
         let typeScript = TypeScriptRuntimeService(node: node)
-        let shell = ShellRuntimeService(fileLayout: fileLayout)
+        let shell = ShellRuntimeService(fileLayout: fileLayout, jobs: jobs)
         let lifecycle = LifecycleExecutionBroker(node: node, typeScript: typeScript, python: python, shell: shell, fileLayout: fileLayout)
         self.node = node
         self.typeScript = typeScript

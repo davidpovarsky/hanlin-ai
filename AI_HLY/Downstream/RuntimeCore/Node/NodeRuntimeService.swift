@@ -243,6 +243,12 @@ actor NodeRuntimeService {
         _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/cancel", method: "POST", body: Data("{}".utf8), timeout: 3)
     }
 
+    /// Observe an already-running Host without starting an engine or replaying source.
+    func existingExecution(id: UUID) async throws -> RuntimeJobSnapshot? {
+        guard let connection else { return nil }
+        return try await connection.decode(RuntimeJobSnapshot.self, path: "/v1/executions/\(id.uuidString.lowercased())", timeout: 5)
+    }
+
     func compileTypeScript(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil) async throws -> TypeScriptCompilationResult {
         let host = try await ensureRunning()
         var body: [String: Any] = ["source": source, "fileName": fileName]

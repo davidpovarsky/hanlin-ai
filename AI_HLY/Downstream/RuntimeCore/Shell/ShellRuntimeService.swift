@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import IOSSystemLite
 
@@ -46,13 +47,19 @@ actor ShellRuntimeService {
         .init(name: "wc", summary: "Count lines, words, or bytes.", requiresNetwork: false)
     ]
 
+    private static let executionQueue = DispatchQueue(label: "hanlin.shell.execution", qos: .userInitiated)
+    private typealias Pending = RuntimeQueuedExecution<URL, IOSSystemExecution>
+    private let jobs: RuntimeJobStore
+    private var active: [UUID: Pending] = [:]
+    private var stopRequested = false
     let fileLayout: RuntimeFileLayout
     let commandDictionaryURL: URL?
     var snapshotValue = RuntimeSnapshot.stopped(.shell)
     let diagnosticLog: ShellRuntimeDiagnosticLog
 
-    init(fileLayout: RuntimeFileLayout = .default, commandDictionaryURL: URL? = nil) {
+    init(fileLayout: RuntimeFileLayout = .default, commandDictionaryURL: URL? = nil, jobs: RuntimeJobStore? = nil) {
         self.fileLayout = fileLayout
+        self.jobs = jobs ?? RuntimeJobStore(fileLayout: fileLayout)
         self.commandDictionaryURL = commandDictionaryURL
         diagnosticLog = ShellRuntimeDiagnosticLog(fileLayout: fileLayout)
     }
@@ -142,9 +149,17 @@ actor ShellRuntimeService {
         }
     }
 
-    func stop() -> RuntimeSnapshot {
-        snapshotValue = .stopped(.shell)
+    func stop() async -> RuntimeSnapshot {
+        stopRequested = true
+        for id in Array(active.keys) { try? await cancel(id: id) }
+        if active.isEmpty { snapshotValue = .stopped(.shell) }
+        else { snapshotValue.lastDiagnostic = "Stop requested. Queued commands are skipped; running linked native commands must finish before Shell can stop." }
         return snapshotValue
+    }
+
+    func cancel(id: UUID) async throws {
+        try await jobs.requestCancellation(id: id, kind: .shell)
+        active[id]?.cancelBeforeStarting()
     }
 
     func execute(
@@ -153,54 +168,18 @@ actor ShellRuntimeService {
         environment: [String: String],
         allowNetwork: Bool,
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
-    ) throws -> RuntimeExecutionResult {
+    ) async throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
-        let started = ContinuousClock.now
         if command.trimmingCharacters(in: .whitespacesAndNewlines) == "pwd" {
-            return RuntimeExecutionResult(
-                executionID: UUID(),
-                stdout: scopedWorkspace.path + "\n",
-                stderr: "",
-                value: nil,
-                exitCode: 0,
-                durationMilliseconds: 1,
-                didTimeOut: false,
-                wasCancelled: false,
-                outputWasTruncated: false
-            )
+            return try await execute(tokens: ["pwd"], workspace: scopedWorkspace, environment: environment, allowNetwork: allowNetwork, limits: limits)
         }
-        snapshotValue.state = .executing
-        snapshotValue.activeExecutionCount += 1
-        defer {
-            snapshotValue.activeExecutionCount = max(0, snapshotValue.activeExecutionCount - 1)
-            if snapshotValue.state == .executing { snapshotValue.state = .ready }
-        }
-
-        do {
-            let output = try IOSSystemRunner.executeCommand(
-                command: command,
-                workspace: scopedWorkspace,
-                environment: environment
-            )
-            let duration = started.duration(to: .now)
-            let milliseconds = duration.components.seconds * 1_000
-                + Int64(duration.components.attoseconds / 1_000_000_000_000_000)
-            return RuntimeExecutionResult(
-                executionID: UUID(),
-                stdout: String(decoding: output.stdout.utf8.prefix(limits.maximumOutputBytes), as: UTF8.self),
-                stderr: String(decoding: output.stderr.utf8.prefix(max(0, limits.maximumOutputBytes - min(output.stdout.utf8.count, limits.maximumOutputBytes))), as: UTF8.self),
-                value: nil,
-                exitCode: Int(output.exitCode),
-                durationMilliseconds: milliseconds,
-                didTimeOut: false,
-                wasCancelled: false,
-                outputWasTruncated: (output.stdout.utf8.count + output.stderr.utf8.count) > limits.maximumOutputBytes
-            )
-        } catch {
-            throw error
+        return try await runCaptured(limits: limits) { directory, onStart in
+            try IOSSystemRunner.executeCommand(command: command, workspace: scopedWorkspace,
+                environment: environment, outputDirectory: directory,
+                maximumPreviewBytes: limits.maximumOutputBytes, onStart: onStart)
         }
     }
 
@@ -211,24 +190,27 @@ actor ShellRuntimeService {
         allowNetwork: Bool,
         standardInput: Data = Data(),
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
-    ) throws -> RuntimeExecutionResult {
+    ) async throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
         guard !tokens.isEmpty else {
             throw RuntimeCoreError.invalidRequest("The command is empty.")
         }
         if tokens.first == "pwd" {
-            return RuntimeExecutionResult(
-                executionID: UUID(),
-                stdout: scopedWorkspace.path + "\n",
-                stderr: "",
-                value: nil,
-                exitCode: 0,
-                durationMilliseconds: 1,
-                didTimeOut: false,
-                wasCancelled: false,
-                outputWasTruncated: false
-            )
+            guard tokens.dropFirst().allSatisfy({ $0 == "-L" || $0 == "-P" }) else {
+                throw RuntimeCoreError.invalidRequest("pwd accepts only -L or -P.")
+            }
+            return try await runCaptured(limits: limits) { directory, onStart in
+                try onStart()
+                let stdout = directory.appending(path: "stdout.log")
+                let stderr = directory.appending(path: "stderr.log")
+                try Data((scopedWorkspace.path + "\n").utf8).write(to: stdout)
+                try Data().write(to: stderr)
+                var preview = Data((scopedWorkspace.path + "\n").utf8.prefix(limits.maximumOutputBytes))
+                while String(data: preview, encoding: .utf8) == nil { preview.removeLast() }
+                return IOSSystemExecution(stdout: String(decoding: preview, as: UTF8.self), stderr: "", exitCode: 0,
+                    stdoutFileURL: stdout, stderrFileURL: stderr)
+            }
         }
         guard let name = tokens.first, Self.capabilities.contains(where: { $0.name == name }) else {
             throw RuntimeCoreError.invalidRequest("The requested command is not in the verified ios_system catalog.")
@@ -254,61 +236,103 @@ actor ShellRuntimeService {
         // has no second Hanlin network approval; curl keeps its native TLS behavior.
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
-        let started = ContinuousClock.now
-        snapshotValue.state = .executing
-        snapshotValue.activeExecutionCount += 1
-        defer {
-            snapshotValue.activeExecutionCount = max(0, snapshotValue.activeExecutionCount - 1)
-            if snapshotValue.state == .executing { snapshotValue.state = .ready }
-        }
-
         do {
-            let output = try IOSSystemRunner.execute(
-                tokens: tokens,
-                workspace: scopedWorkspace,
-                environment: environment,
-                standardInput: standardInput
-            )
-            let duration = started.duration(to: .now)
-            let milliseconds = duration.components.seconds * 1_000
-                + Int64(duration.components.attoseconds / 1_000_000_000_000_000)
-            let total = output.stdout.utf8.count + output.stderr.utf8.count
-            if output.exitCode != 0 {
-                try diagnosticLog.record(
-                    "shell_command_failed",
-                    category: ShellHealthCategory.executionSmokeFailure.rawValue,
-                    message: "An approved ios_system command returned a nonzero exit code.",
-                    command: name,
-                    exitCode: Int(output.exitCode)
-                )
+            return try await runCaptured(limits: limits) { directory, onStart in
+                try IOSSystemRunner.execute(tokens: tokens, workspace: scopedWorkspace,
+                    environment: environment, standardInput: standardInput, outputDirectory: directory,
+                    maximumPreviewBytes: limits.maximumOutputBytes, onStart: onStart)
             }
-            return RuntimeExecutionResult(
-                executionID: UUID(),
-                stdout: String(decoding: output.stdout.utf8.prefix(limits.maximumOutputBytes), as: UTF8.self),
-                stderr: String(decoding: output.stderr.utf8.prefix(max(0, limits.maximumOutputBytes - min(output.stdout.utf8.count, limits.maximumOutputBytes))), as: UTF8.self),
-                value: nil,
-                exitCode: Int(output.exitCode),
-                durationMilliseconds: milliseconds,
-                didTimeOut: false,
-                wasCancelled: false,
-                outputWasTruncated: total > limits.maximumOutputBytes
-            )
         } catch {
-            snapshotValue.state = .failed
-            snapshotValue.healthCategory = ShellHealthCategory.executionSmokeFailure.rawValue
-            snapshotValue.lastErrorCode = "command_execution_failed"
-            snapshotValue.lastDiagnostic = error.localizedDescription
-            let nsError = error as NSError
-            try diagnosticLog.record(
-                "shell_command_failed",
-                category: ShellHealthCategory.executionSmokeFailure.rawValue,
-                message: error.localizedDescription,
-                command: name,
-                underlyingErrorDomain: nsError.domain,
-                underlyingErrorCode: nsError.code
-            )
+            if !(error is CancellationError) {
+                snapshotValue.lastErrorCode = "command_execution_failed"
+                snapshotValue.lastDiagnostic = error.localizedDescription
+            }
             throw error
         }
+    }
+
+    private func runCaptured(
+        limits: RuntimeExecutionLimits,
+        operation: @escaping @Sendable (URL, @escaping @Sendable () throws -> Void) throws -> IOSSystemExecution
+    ) async throws -> RuntimeExecutionResult {
+        try Task.checkCancellation()
+        guard limits.timeout == nil else {
+            throw RuntimeCoreError.invalidRequest("Linked ios_system commands do not yet support a safe per-command deadline. No timeout is silently ignored.")
+        }
+        let id = UUID()
+        let initial = try await jobs.create(id: id, kind: .shell)
+        let directory = jobs.directory(id: id, kind: .shell)
+        let pending = Pending()
+        active[id] = pending
+        stopRequested = false
+        snapshotValue.state = .executing
+        snapshotValue.activeExecutionCount = active.count
+        defer {
+            active.removeValue(forKey: id)
+            snapshotValue.activeExecutionCount = active.count
+            if active.isEmpty { snapshotValue.state = stopRequested ? .stopped : .ready }
+        }
+        let observer = RuntimeJobProgress.reporter
+        let jobs = self.jobs
+        if let observer { await observer(initial) }
+        if try await jobs.snapshot(id: id, kind: .shell)?.cancellationRequested == true {
+            pending.cancelBeforeStarting()
+        }
+        let start = ContinuousClock.now
+        do {
+            let output: IOSSystemExecution = try await withTaskCancellationHandler {
+                try await withCheckedThrowingContinuation { continuation in
+                    guard pending.bind(continuation, input: directory) else { return }
+                    Self.executionQueue.async {
+                        do {
+                            let result = try operation(directory) {
+                                guard pending.takeForRunning() != nil else { throw CancellationError() }
+                                Task {
+                                    try? await jobs.markRunning(id: id, kind: .shell)
+                                    if let observer, let record = try? await jobs.snapshot(id: id, kind: .shell) { await observer(record) }
+                                }
+                            }
+                            pending.complete(.success(result))
+                        } catch { pending.complete(.failure(error)) }
+                    }
+                }
+            } onCancel: {
+                pending.cancelBeforeStarting()
+                Task { try? await jobs.requestCancellation(id: id, kind: .shell) }
+            }
+            var artifacts: [String: RuntimeOutputArtifact] = [:]
+            for (channel, url) in [("stdout", output.stdoutFileURL), ("stderr", output.stderrFileURL)] {
+                guard let url else { throw RuntimeCoreError.runtimeFailure("Shell output file is missing.") }
+                artifacts[channel] = try Self.artifact(url)
+            }
+            let duration = start.duration(to: .now)
+            let total = artifacts.values.reduce(Int64(0)) { $0 + $1.bytes }
+            let result = RuntimeExecutionResult(executionID: id, stdout: output.stdout, stderr: output.stderr,
+                value: nil, exitCode: Int(output.exitCode),
+                durationMilliseconds: duration.components.seconds * 1000 + Int64(duration.components.attoseconds / 1_000_000_000_000_000),
+                didTimeOut: false, wasCancelled: false, outputWasTruncated: total > limits.maximumOutputBytes,
+                outputFiles: artifacts)
+            if Task.isCancelled { try await jobs.requestCancellation(id: id, kind: .shell) }
+            try await jobs.complete(result, kind: .shell)
+            if let observer, let record = try await jobs.snapshot(id: id, kind: .shell) { await observer(record) }
+            return result
+        } catch {
+            try? await jobs.fail(id: id, kind: .shell, error: error)
+            throw error
+        }
+    }
+
+    private static func artifact(_ url: URL) throws -> RuntimeOutputArtifact {
+        let stream = try FileHandle(forReadingFrom: url)
+        defer { try? stream.close() }
+        var digest = SHA256()
+        var bytes: Int64 = 0
+        while let data = try stream.read(upToCount: 65_536), !data.isEmpty {
+            digest.update(data: data)
+            bytes += Int64(data.count)
+        }
+        return RuntimeOutputArtifact(path: url.path, bytes: bytes,
+            sha256: digest.finalize().map { String(format: "%02x", $0) }.joined())
     }
 
     static func tokenize(_ command: String) throws -> [String] {
