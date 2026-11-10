@@ -44,157 +44,90 @@ extension ShellRuntimeService {
             try Data(value.utf8).write(to: workspace.appending(path: relativePath), options: .atomic)
         }
 
-        func outputSummary(_ result: RuntimeExecutionResult) -> String {
-            let combined = (result.stdout + result.stderr).trimmingCharacters(in: .whitespacesAndNewlines)
-            if combined.isEmpty { return "exit=\(result.exitCode ?? -1)" }
-            return String(combined.prefix(512))
-        }
-
-        func run(
-            _ command: String,
-            tokens: [String],
-            standardInput: Data = Data(),
-            verify: (RuntimeExecutionResult) throws -> Bool
-        ) async throws {
-            do {
-                let result = try await execute(
-                    tokens: tokens,
-                    workspace: workspace,
-                    environment: [:],
-                    allowNetwork: false,
-                    standardInput: standardInput
-                )
-                let passed: Bool
-                if result.exitCode == 0 {
-                    passed = try verify(result)
-                } else {
-                    passed = false
-                }
-                let failure = passed ? nil : "The command returned unexpected output or filesystem state."
-                commandResults.append(
-                    ShellCommandSmokeResult(
-                        command: command,
-                        exitCode: result.exitCode,
-                        representativeOutput: outputSummary(result),
-                        passed: passed,
-                        failure: failure
-                    )
-                )
-                if !passed {
-                    try diagnosticLog.record(
-                        "shell_command_failed",
-                        category: ShellHealthCategory.executionSmokeFailure.rawValue,
-                        message: failure,
-                        command: command,
-                        exitCode: result.exitCode
-                    )
-                }
-            } catch {
-                commandResults.append(
-                    ShellCommandSmokeResult(
-                        command: command,
-                        exitCode: nil,
-                        representativeOutput: "",
-                        passed: false,
-                        failure: error.localizedDescription
-                    )
-                )
-                let nsError = error as NSError
-                try diagnosticLog.record(
-                    "shell_command_failed",
-                    category: ShellHealthCategory.executionSmokeFailure.rawValue,
-                    message: error.localizedDescription,
-                    command: command,
-                    underlyingErrorDomain: nsError.domain,
-                    underlyingErrorCode: nsError.code
-                )
-            }
-        }
-
         try write("alpha 1\nbeta 2\n", to: "awk-input.txt")
-        try await run("awk", tokens: ["awk", "{ print $2 }", "awk-input.txt"]) {
+        commandResults.append(try await smokeCommand("awk", tokens: ["awk", "{ print $2 }", "awk-input.txt"], workspace: workspace, verify: {
             $0.stdout.contains("1") && $0.stdout.contains("2")
-        }
+        }))
 
         try write("cat-ok\n", to: "cat-input.txt")
-        try await run("cat", tokens: ["cat", "cat-input.txt"]) { $0.stdout == "cat-ok\n" }
+        commandResults.append(try await smokeCommand("cat", tokens: ["cat", "cat-input.txt"], workspace: workspace, verify: { $0.stdout == "cat-ok\n" }))
 
         try write("copy-ok\n", to: "cp-source.txt")
-        try await run("cp", tokens: ["cp", "cp-source.txt", "cp-output.txt"]) { _ in
+        commandResults.append(try await smokeCommand("cp", tokens: ["cp", "cp-source.txt", "cp-output.txt"], workspace: workspace, verify: { _ in
             try Data(contentsOf: workspace.appending(path: "cp-output.txt")) == Data("copy-ok\n".utf8)
-        }
+        }))
 
-        try await run("curl", tokens: ["curl", "--version"]) {
+        commandResults.append(try await smokeCommand("curl", tokens: ["curl", "--version"], workspace: workspace, verify: {
             ($0.stdout + $0.stderr).localizedCaseInsensitiveContains("curl")
-        }
+        }))
 
         try write("alpha\nbeta\ngamma\n", to: "grep-input.txt")
-        try await run("grep", tokens: ["grep", "beta", "grep-input.txt"]) { $0.stdout.contains("beta") }
+        commandResults.append(try await smokeCommand("grep", tokens: ["grep", "beta", "grep-input.txt"], workspace: workspace, verify: { $0.stdout.contains("beta") }))
 
         try write("first\nsecond\n", to: "head-input.txt")
-        try await run("head", tokens: ["head", "-n", "1", "head-input.txt"]) {
+        commandResults.append(try await smokeCommand("head", tokens: ["head", "-n", "1", "head-input.txt"], workspace: workspace, verify: {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "first"
-        }
+        }))
 
         try write("link-target\n", to: "ln-target.txt")
-        try await run("ln", tokens: ["ln", "-s", "ln-target.txt", "ln-output.txt"]) { _ in
-            try manager.destinationOfSymbolicLink(atPath: workspace.appending(path: "ln-output.txt").path) == "ln-target.txt"
-        }
+        commandResults.append(try await smokeCommand("ln", tokens: ["ln", "-s", "ln-target.txt", "ln-output.txt"], workspace: workspace, verify: { _ in
+            try FileManager.default.destinationOfSymbolicLink(atPath: workspace.appending(path: "ln-output.txt").path) == "ln-target.txt"
+        }))
 
         try write("listed\n", to: "ls-visible.txt")
-        try await run("ls", tokens: ["ls", "ls-visible.txt"]) { $0.stdout.contains("ls-visible.txt") }
+        commandResults.append(try await smokeCommand("ls", tokens: ["ls", "ls-visible.txt"], workspace: workspace, verify: { $0.stdout.contains("ls-visible.txt") }))
 
-        try await run("mkdir", tokens: ["mkdir", "created-directory"]) { _ in
+        commandResults.append(try await smokeCommand("mkdir", tokens: ["mkdir", "created-directory"], workspace: workspace, verify: { _ in
             var isDirectory: ObjCBool = false
-            let exists = manager.fileExists(
+            let exists = FileManager.default.fileExists(
                 atPath: workspace.appending(path: "created-directory").path,
                 isDirectory: &isDirectory
             )
             return exists && isDirectory.boolValue
-        }
+        }))
 
         try write("move-ok\n", to: "mv-source.txt")
-        try await run("mv", tokens: ["mv", "mv-source.txt", "mv-output.txt"]) { _ in
-            manager.fileExists(atPath: workspace.appending(path: "mv-output.txt").path)
-                && !manager.fileExists(atPath: workspace.appending(path: "mv-source.txt").path)
-        }
+        commandResults.append(try await smokeCommand("mv", tokens: ["mv", "mv-source.txt", "mv-output.txt"], workspace: workspace, verify: { _ in
+            FileManager.default.fileExists(atPath: workspace.appending(path: "mv-output.txt").path)
+                && !FileManager.default.fileExists(atPath: workspace.appending(path: "mv-source.txt").path)
+        }))
 
         try write("readlink-target\n", to: "readlink-target.txt")
         try manager.createSymbolicLink(
             atPath: workspace.appending(path: "readlink-input.txt").path,
             withDestinationPath: "readlink-target.txt"
         )
-        try await run("readlink", tokens: ["readlink", "readlink-input.txt"]) {
+        commandResults.append(try await smokeCommand("readlink", tokens: ["readlink", "readlink-input.txt"], workspace: workspace, verify: {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "readlink-target.txt"
-        }
+        }))
 
         try write("remove-ok\n", to: "rm-input.txt")
-        try await run("rm", tokens: ["rm", "rm-input.txt"]) { _ in
-            !manager.fileExists(atPath: workspace.appending(path: "rm-input.txt").path)
-        }
+        commandResults.append(try await smokeCommand("rm", tokens: ["rm", "rm-input.txt"], workspace: workspace, verify: { _ in
+            !FileManager.default.fileExists(atPath: workspace.appending(path: "rm-input.txt").path)
+        }))
 
         try manager.createDirectory(at: workspace.appending(path: "rmdir-input"), withIntermediateDirectories: false)
-        try await run("rmdir", tokens: ["rmdir", "rmdir-input"]) { _ in
-            !manager.fileExists(atPath: workspace.appending(path: "rmdir-input").path)
-        }
+        commandResults.append(try await smokeCommand("rmdir", tokens: ["rmdir", "rmdir-input"], workspace: workspace, verify: { _ in
+            !FileManager.default.fileExists(atPath: workspace.appending(path: "rmdir-input").path)
+        }))
 
         try write("first\nsecond\n", to: "sed-input.txt")
-        try await run("sed", tokens: ["sed", "-n", "2p", "sed-input.txt"]) {
+        commandResults.append(try await smokeCommand("sed", tokens: ["sed", "-n", "2p", "sed-input.txt"], workspace: workspace, verify: {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "second"
-        }
+        }))
 
         try write("charlie\nalpha\nbravo\n", to: "sort-input.txt")
-        try await run("sort", tokens: ["sort", "sort-input.txt"]) {
+        commandResults.append(try await smokeCommand("sort", tokens: ["sort", "sort-input.txt"], workspace: workspace, verify: {
             $0.stdout.hasPrefix("alpha\n")
-        }
+        }))
 
         try write("stat-ok\n", to: "stat-input.txt")
-        try await run("stat", tokens: ["stat", "stat-input.txt"]) { _ in true }
+        commandResults.append(try await smokeCommand("stat", tokens: ["stat", "stat-input.txt"], workspace: workspace, verify: { _ in true }))
 
         try write("first\nlast\n", to: "tail-input.txt")
-        try await run("tail", tokens: ["tail", "-n", "1", "tail-input.txt"]) {
+        commandResults.append(try await smokeCommand("tail", tokens: ["tail", "-n", "1", "tail-input.txt"], workspace: workspace, verify: {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "last"
-        }
+        }))
 
         try write("tar-ok\n", to: "tar-input.txt")
         do {
@@ -215,7 +148,7 @@ extension ShellRuntimeService {
                 ShellCommandSmokeResult(
                     command: "tar",
                     exitCode: passed ? 0 : (create.exitCode ?? inspect.exitCode),
-                    representativeOutput: outputSummary(inspect),
+                    representativeOutput: Self.smokeOutputSummary(inspect),
                     passed: passed,
                     failure: passed ? nil : "Archive creation or inspection failed."
                 )
@@ -232,30 +165,29 @@ extension ShellRuntimeService {
             )
         }
 
-        try await run("touch", tokens: ["touch", "touch-output.txt"]) { _ in
-            manager.fileExists(atPath: workspace.appending(path: "touch-output.txt").path)
-        }
+        commandResults.append(try await smokeCommand("touch", tokens: ["touch", "touch-output.txt"], workspace: workspace, verify: { _ in
+            FileManager.default.fileExists(atPath: workspace.appending(path: "touch-output.txt").path)
+        }))
 
-        try await run(
+        commandResults.append(try await smokeCommand(
             "tr",
             tokens: ["tr", "a-z", "A-Z"],
-            standardInput: Data("lower\n".utf8)
-        ) { $0.stdout == "LOWER\n" }
+            standardInput: Data("lower\n".utf8), workspace: workspace, verify: { $0.stdout == "LOWER\n" }))
 
         try write("alpha\nalpha\nbeta\n", to: "uniq-input.txt")
-        try await run("uniq", tokens: ["uniq", "uniq-input.txt"]) {
+        commandResults.append(try await smokeCommand("uniq", tokens: ["uniq", "uniq-input.txt"], workspace: workspace, verify: {
             $0.stdout == "alpha\nbeta\n"
-        }
+        }))
 
         try write("unlink-ok\n", to: "unlink-input.txt")
-        try await run("unlink", tokens: ["unlink", "unlink-input.txt"]) { _ in
-            !manager.fileExists(atPath: workspace.appending(path: "unlink-input.txt").path)
-        }
+        commandResults.append(try await smokeCommand("unlink", tokens: ["unlink", "unlink-input.txt"], workspace: workspace, verify: { _ in
+            !FileManager.default.fileExists(atPath: workspace.appending(path: "unlink-input.txt").path)
+        }))
 
         try write("one\ntwo\n", to: "wc-input.txt")
-        try await run("wc", tokens: ["wc", "-l", "wc-input.txt"]) {
+        commandResults.append(try await smokeCommand("wc", tokens: ["wc", "-l", "wc-input.txt"], workspace: workspace, verify: {
             $0.stdout.contains("2") && $0.stdout.contains("wc-input.txt")
-        }
+        }))
 
         do {
             _ = try await execute(tokens: ["sh"], workspace: workspace, environment: [:], allowNetwork: false)
@@ -328,4 +260,36 @@ extension ShellRuntimeService {
             workspaceEscapeCount: workspaceContained ? 0 : 1
         )
     }
+
+    private nonisolated static func smokeOutputSummary(_ result: RuntimeExecutionResult) -> String {
+        let combined = (result.stdout + result.stderr).trimmingCharacters(in: .whitespacesAndNewlines)
+        return combined.isEmpty ? "exit=\(result.exitCode ?? -1)" : String(combined.prefix(512))
+    }
+
+    // A real actor method retains Shell isolation across suspension. A nested
+    // async function capturing the mutable result array crosses isolation under
+    // the app's Swift compiler; no unchecked Sendable escape is needed.
+    private func smokeCommand(_ command: String, tokens: [String], standardInput: Data = Data(),
+                              workspace: URL, verify: @Sendable (RuntimeExecutionResult) throws -> Bool) async throws -> ShellCommandSmokeResult {
+        do {
+            let result = try await execute(tokens: tokens, workspace: workspace,
+                environment: [:], allowNetwork: false, standardInput: standardInput)
+            let passed = result.exitCode == 0 ? try verify(result) : false
+            let failure = passed ? nil : "The command returned unexpected output or filesystem state."
+            if !passed {
+                try diagnosticLog.record("shell_command_failed", category: ShellHealthCategory.executionSmokeFailure.rawValue,
+                    message: failure, command: command, exitCode: result.exitCode)
+            }
+            return ShellCommandSmokeResult(command: command, exitCode: result.exitCode,
+                representativeOutput: Self.smokeOutputSummary(result), passed: passed, failure: failure)
+        } catch {
+            let native = error as NSError
+            try diagnosticLog.record("shell_command_failed", category: ShellHealthCategory.executionSmokeFailure.rawValue,
+                message: error.localizedDescription, command: command,
+                underlyingErrorDomain: native.domain, underlyingErrorCode: native.code)
+            return ShellCommandSmokeResult(command: command, exitCode: nil, representativeOutput: "",
+                passed: false, failure: error.localizedDescription)
+        }
+    }
+
 }

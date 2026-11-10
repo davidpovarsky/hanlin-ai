@@ -19,20 +19,21 @@ actor AppRuntimeCore {
 
     private init(fileLayout: RuntimeFileLayout = .default) {
         self.fileLayout = fileLayout
+        let environment = RuntimeEnvironmentStore(fileLayout: fileLayout)
+        self.environment = environment
         let jobs = RuntimeJobStore(fileLayout: fileLayout)
         self.jobs = jobs
-        let python = PythonRuntimeService(fileLayout: fileLayout, jobs: jobs)
-        let node = NodeRuntimeService(fileLayout: fileLayout)
+        let python = PythonRuntimeService(fileLayout: fileLayout, jobs: jobs, environment: environment)
+        let node = NodeRuntimeService(fileLayout: fileLayout, environment: environment)
         let typeScript = TypeScriptRuntimeService(node: node)
-        let shell = ShellRuntimeService(fileLayout: fileLayout, jobs: jobs)
+        let shell = ShellRuntimeService(fileLayout: fileLayout, jobs: jobs, environment: environment)
         let lifecycle = LifecycleExecutionBroker(node: node, typeScript: typeScript, python: python, shell: shell, fileLayout: fileLayout)
         self.node = node
         self.typeScript = typeScript
         nodePackages = NodePackageManager(node: node, lifecycle: lifecycle)
         self.python = python
-        javaScriptCore = JavaScriptCoreRuntimeService()
+        javaScriptCore = JavaScriptCoreRuntimeService(environment: environment)
         self.shell = shell
-        environment = RuntimeEnvironmentStore(fileLayout: fileLayout)
         pythonPackages = PythonPackageManager(fileLayout: fileLayout, python: python)
         diagnostics = RuntimeDiagnostics()
         self.lifecycle = lifecycle

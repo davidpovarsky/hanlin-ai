@@ -2,6 +2,8 @@
 import Foundation
 
 actor JavaScriptCoreRuntimeService {
+    private let environmentStore: RuntimeEnvironmentStore?
+    init(environment: RuntimeEnvironmentStore? = nil) { self.environmentStore = environment }
     private var snapshotValue = RuntimeSnapshot.stopped(.javaScriptCore)
 
     func snapshot() -> RuntimeSnapshot { snapshotValue }
@@ -24,11 +26,13 @@ actor JavaScriptCoreRuntimeService {
         return snapshotValue
     }
 
-    func execute(_ request: RuntimeExecutionRequest) throws -> RuntimeExecutionResult {
+    func execute(_ request: RuntimeExecutionRequest) async throws -> RuntimeExecutionResult {
         guard request.source.utf8.count <= 2 * 1_024 * 1_024 else { throw RuntimeCoreError.invalidRequest("JavaScriptCore source exceeds 2 MB.") }
         guard !request.source.contains("while (true)"), !request.source.contains("for (;;)") else {
             throw RuntimeCoreError.invalidRequest("Potentially unbounded loops must run in the cancellable Node worker runtime.")
         }
+        let environment = try await environmentStore?.resolved(scopes: [.shared, .javaScriptCore, .execution(request.id)], overrides: request.environment)
+            ?? RuntimePolicy.validatedEnvironment(request.environment)
         let started = ContinuousClock.now
         guard let context = JSContext() else { throw RuntimeCoreError.runtimeUnavailable(.javaScriptCore) }
         snapshotValue.state = .executing
@@ -52,7 +56,7 @@ actor JavaScriptCoreRuntimeService {
             };
             """)
         context.setObject(request.arguments, forKeyedSubscript: "arguments" as NSString)
-        context.setObject(request.environment, forKeyedSubscript: "environment" as NSString)
+        context.setObject(environment, forKeyedSubscript: "environment" as NSString)
         var exception: String?
         context.exceptionHandler = { _, value in exception = value?.toString() }
         let value = context.evaluateScript(request.source)

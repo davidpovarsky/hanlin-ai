@@ -13,14 +13,16 @@ actor PythonRuntimeService {
         let error: String?
     }
     private let fileLayout: RuntimeFileLayout
+    private let environmentStore: RuntimeEnvironmentStore?
     private let jobs: RuntimeJobStore
     private var snapshotValue = RuntimeSnapshot.stopped(.localPython)
     private var activeIDs: Set<UUID> = []
     private var stopGeneration: UInt64 = 0
     private var stopRequested = false
 
-    init(fileLayout: RuntimeFileLayout = .default, jobs: RuntimeJobStore? = nil) {
+    init(fileLayout: RuntimeFileLayout = .default, jobs: RuntimeJobStore? = nil, environment: RuntimeEnvironmentStore? = nil) {
         self.fileLayout = fileLayout
+        self.environmentStore = environment
         self.jobs = jobs ?? RuntimeJobStore(fileLayout: fileLayout)
     }
     func snapshot() -> RuntimeSnapshot { snapshotValue }
@@ -61,6 +63,8 @@ actor PythonRuntimeService {
 
     private func executePythonJob(_ request: RuntimeExecutionRequest, entryPoint: URL? = nil,
                                   standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        let environment = try await environmentStore?.resolved(scopes: [.shared, .python, .execution(request.id)], overrides: request.environment)
+            ?? RuntimePolicy.validatedEnvironment(request.environment)
         try Task.checkCancellation()
         if snapshotValue.state != .ready && snapshotValue.state != .executing { _ = try prepare() }
         let generation = stopGeneration
@@ -90,7 +94,7 @@ actor PythonRuntimeService {
             let milliseconds = try request.limits.timeoutMilliseconds()
             var body: [String: Any] = [
                 "executionID": request.id.uuidString, "source": request.source, "arguments": request.arguments,
-                "workspace": workspace.path, "packages": fileLayout.pythonPackages.path, "environment": request.environment,
+                "workspace": workspace.path, "packages": fileLayout.pythonPackages.path, "environment": environment,
                 "outputDirectory": jobs.directory(id: request.id, kind: .localPython).path,
                 "maximumOutputBytes": request.limits.maximumOutputBytes
             ]

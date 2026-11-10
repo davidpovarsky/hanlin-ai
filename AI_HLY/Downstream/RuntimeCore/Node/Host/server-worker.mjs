@@ -10,6 +10,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import ts from 'typescript';
 
+for (const [name, value] of Object.entries(workerData.environment ?? {})) process.env[name] = String(value);
+if (workerData.serverID) process.env.HANLIN_MCP_SERVER_ID = workerData.serverID;
+
 const blockedBuiltins = new Set(['cluster']);
 const entryPoint = path.resolve(workerData.entryPoint);
 const packageRoot = path.resolve(workerData.packageRoot);

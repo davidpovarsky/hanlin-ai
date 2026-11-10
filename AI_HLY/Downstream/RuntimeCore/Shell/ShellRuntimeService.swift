@@ -50,6 +50,7 @@ actor ShellRuntimeService {
     private static let executionQueue = DispatchQueue(label: "hanlin.shell.execution", qos: .userInitiated)
     private typealias Pending = RuntimeQueuedExecution<URL, IOSSystemExecution>
     private let jobs: RuntimeJobStore
+    private let environmentStore: RuntimeEnvironmentStore?
     private var active: [UUID: Pending] = [:]
     private var stopRequested = false
     private var stopGeneration: UInt64 = 0
@@ -58,8 +59,9 @@ actor ShellRuntimeService {
     var snapshotValue = RuntimeSnapshot.stopped(.shell)
     let diagnosticLog: ShellRuntimeDiagnosticLog
 
-    init(fileLayout: RuntimeFileLayout = .default, commandDictionaryURL: URL? = nil, jobs: RuntimeJobStore? = nil) {
+    init(fileLayout: RuntimeFileLayout = .default, commandDictionaryURL: URL? = nil, jobs: RuntimeJobStore? = nil, environment: RuntimeEnvironmentStore? = nil) {
         self.fileLayout = fileLayout
+        self.environmentStore = environment
         self.jobs = jobs ?? RuntimeJobStore(fileLayout: fileLayout)
         self.commandDictionaryURL = commandDictionaryURL
         diagnosticLog = ShellRuntimeDiagnosticLog(fileLayout: fileLayout)
@@ -169,16 +171,19 @@ actor ShellRuntimeService {
         workspace: URL,
         environment: [String: String],
         allowNetwork: Bool,
+        id: UUID = UUID(),
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
     ) async throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
+        let environment = try await environmentStore?.resolved(scopes: [.shared, .shell, .execution(id)], overrides: environment)
+            ?? RuntimePolicy.validatedEnvironment(environment)
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
         if command.trimmingCharacters(in: .whitespacesAndNewlines) == "pwd" {
-            return try await execute(tokens: ["pwd"], workspace: scopedWorkspace, environment: environment, allowNetwork: allowNetwork, limits: limits)
+            return try await execute(tokens: ["pwd"], workspace: scopedWorkspace, environment: environment, allowNetwork: allowNetwork, id: id, limits: limits)
         }
-        return try await runCaptured(limits: limits) { directory, onStart in
+        return try await runCaptured(id: id, limits: limits) { directory, onStart in
             try IOSSystemRunner.executeCommand(command: command, workspace: scopedWorkspace,
                 environment: environment, outputDirectory: directory,
                 maximumPreviewBytes: limits.maximumOutputBytes, onStart: onStart)
@@ -191,10 +196,13 @@ actor ShellRuntimeService {
         environment: [String: String],
         allowNetwork: Bool,
         standardInput: Data = Data(),
+        id: UUID = UUID(),
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
     ) async throws -> RuntimeExecutionResult {
         try fileLayout.prepareIfNeeded()
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
+        let environment = try await environmentStore?.resolved(scopes: [.shared, .shell, .execution(id)], overrides: environment)
+            ?? RuntimePolicy.validatedEnvironment(environment)
         guard !tokens.isEmpty else {
             throw RuntimeCoreError.invalidRequest("The command is empty.")
         }
@@ -202,7 +210,7 @@ actor ShellRuntimeService {
             guard tokens.dropFirst().allSatisfy({ $0 == "-L" || $0 == "-P" }) else {
                 throw RuntimeCoreError.invalidRequest("pwd accepts only -L or -P.")
             }
-            return try await runCaptured(limits: limits) { directory, onStart in
+            return try await runCaptured(id: id, limits: limits) { directory, onStart in
                 try onStart()
                 let stdout = directory.appending(path: "stdout.log")
                 let stderr = directory.appending(path: "stderr.log")
@@ -239,7 +247,7 @@ actor ShellRuntimeService {
         for key in environment.keys { _ = try RuntimePolicy.validateEnvironmentName(key) }
 
         do {
-            return try await runCaptured(limits: limits) { directory, onStart in
+            return try await runCaptured(id: id, limits: limits) { directory, onStart in
                 try IOSSystemRunner.execute(tokens: tokens, workspace: scopedWorkspace,
                     environment: environment, standardInput: standardInput, outputDirectory: directory,
                     maximumPreviewBytes: limits.maximumOutputBytes, onStart: onStart)
@@ -254,6 +262,7 @@ actor ShellRuntimeService {
     }
 
     private func runCaptured(
+        id: UUID,
         limits: RuntimeExecutionLimits,
         operation: @escaping @Sendable (URL, @escaping @Sendable () throws -> Void) throws -> IOSSystemExecution
     ) async throws -> RuntimeExecutionResult {
@@ -261,7 +270,6 @@ actor ShellRuntimeService {
         guard limits.timeout == nil else {
             throw RuntimeCoreError.invalidRequest("Linked ios_system commands do not yet support a safe per-command deadline. No timeout is silently ignored.")
         }
-        let id = UUID()
         let generation = stopGeneration
         let initial = try await jobs.create(id: id, kind: .shell)
         guard generation == stopGeneration else {

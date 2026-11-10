@@ -187,3 +187,27 @@ test('CLI cancellation stops the actual main and retains partial output; launch 
   assert.equal(completed.result.wasCancelled,true);
   assert.match(completed.result.stdout,/CLI_STARTED/);
 });
+
+
+test('user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Worker bootstrap', async t => {
+  const { jobs, root, body } = await fixture(t);
+  const environment = {PATH:'/user tools/bin', HOME:'/user-home', NODE_OPTIONS:'--not-a-node-bootstrap-flag', PYTHONHOME:'/user-python'};
+  const assertions = `
+    const assert = require('node:assert/strict');
+    assert.equal(process.env.PATH,'/user tools/bin');
+    assert.equal(process.env.HOME,'/user-home');
+    assert.equal(process.env.NODE_OPTIONS,'--not-a-node-bootstrap-flag');
+    assert.equal(process.env.PYTHONHOME,'/user-python');
+    console.log('JOB_ENV_WITHOUT_BOOTSTRAP_RECONFIGURATION');
+  `;
+  const original = process.env.NODE_OPTIONS;
+  const source = await jobs.start({...body,moduleKind:'commonjs',environment,source:assertions});
+  assert.equal((await jobs.wait(source.executionID)).state,'completed');
+  const entryPoint = path.join(root,'env.cjs');
+  await fs.writeFile(entryPoint,assertions);
+  const cli = await jobs.start({...body,executionMode:'cli',entryPoint,environment});
+  const completed = await jobs.wait(cli.executionID);
+  assert.equal(completed.state,'completed',JSON.stringify(completed));
+  assert.match(completed.result.stdout,/JOB_ENV_WITHOUT_BOOTSTRAP_RECONFIGURATION/);
+  assert.equal(process.env.NODE_OPTIONS,original);
+});

@@ -149,7 +149,9 @@ export class ExecutionJobs {
       streams[channel].on('error', error => { ioError = error; void job.cancel?.(); });
     }
     const workerURL = body.environment?.HANLIN_NODE_TRACE_WARNINGS === '1' && this.diagnosticWorkerURL ? this.diagnosticWorkerURL : this.workerURL;
-    const environment = { ...this.workerEnvironment, ...body.environment };
+    // User values are applied inside the loaded context, not interpreted as
+    // NODE_OPTIONS/PYTHONHOME/etc while bootstrapping the shared runtime.
+    const environment = { ...this.workerEnvironment };
     if (cli) {
       // Internal bootstrap is separate from the CLI's user environment. A job
       // cannot replace the preload needed to establish its virtual cwd.

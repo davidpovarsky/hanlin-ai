@@ -1,19 +1,21 @@
 import Foundation
 
 enum RuntimePolicy {
-    static let reservedEnvironmentNames: Set<String> = [
-        "HOME", "USERPROFILE", "PATH", "TMPDIR", "TMP", "TEMP", "XDG_CACHE_HOME",
-        "NODE_PATH", "NPM_CONFIG_CACHE", "NPM_CONFIG_PREFIX", "PYTHONHOME", "PYTHONPATH"
-    ]
-
     static func validateEnvironmentName(_ name: String) throws -> String {
         guard name.range(of: "^[A-Za-z_][A-Za-z0-9_]*$", options: .regularExpression) != nil else {
             throw RuntimeCoreError.invalidEnvironmentName
         }
-        guard !reservedEnvironmentNames.contains(name.uppercased()) else {
-            throw RuntimeCoreError.reservedEnvironmentName
-        }
         return name
+    }
+
+    static func validatedEnvironment(_ values: [String: String]) throws -> [String: String] {
+        for (name, value) in values {
+            _ = try validateEnvironmentName(name)
+            guard !value.contains("\0") else {
+                throw RuntimeCoreError.invalidRequest("Environment values cannot contain a NUL byte.")
+            }
+        }
+        return values
     }
 
     static func validateRemoteArchiveURL(_ url: URL, requiredExtension: String? = nil) throws -> URL {

@@ -28,7 +28,8 @@ async function runMCPRuntimeProbeAttempt(options) {
   const entryPoint = path.resolve(options.entryPoint);
   const timeoutMilliseconds = Math.min(Math.max(Number(options.timeoutMilliseconds) || 20_000, 1_000), 120_000);
   const maximumOutputBytes = Math.min(Math.max(Number(options.maximumOutputBytes) || 1_048_576, 4_096), 8 * 1024 * 1024);
-  const workspace = path.resolve(options.workspace ?? path.join(path.dirname(packageRoot), 'probe-workspace'));
+  const ownsWorkspace = options.workspace == null;
+  const workspace = ownsWorkspace ? await fs.mkdtemp(path.join(path.dirname(packageRoot), 'probe-workspace-')) : path.resolve(options.workspace);
   await fs.mkdir(workspace, { recursive: true });
 
   const moduleEdges = [];
@@ -48,9 +49,10 @@ async function runMCPRuntimeProbeAttempt(options) {
         entryPoint,
         moduleKind: options.moduleKind,
         runtimeProbe: true,
+        environment: suppliedEnvironment(options.environment),
       },
       argv: validatedArguments(options.arguments),
-      env: sanitizedEnvironment(workspace, options.environment),
+      env: sanitizedEnvironment(workspace),
       // The embedded host owns its process-level descriptors across Workers.
       trackUnmanagedFds: false,
       stdin: true,
@@ -152,7 +154,7 @@ async function runMCPRuntimeProbeAttempt(options) {
       stderr: redact(stderr).slice(0, 16_384),
     };
   } finally {
-    await fs.rm(workspace, { recursive: true, force: true }).catch(() => {});
+    if (ownsWorkspace) await fs.rm(workspace, { recursive: true, force: true }).catch(() => {});
   }
 }
 
@@ -274,7 +276,7 @@ async function stopWorker(worker) {
   return { stopped: Boolean(forcedExit), graceful: false };
 }
 
-function sanitizedEnvironment(workspace, supplied) {
+function sanitizedEnvironment(workspace) {
   const environment = {
     HOME: workspace,
     USERPROFILE: workspace,
@@ -284,22 +286,27 @@ function sanitizedEnvironment(workspace, supplied) {
     NODE_ENV: 'production',
     HANLIN_MCP_RUNTIME_PROBE: '1',
   };
-  if (supplied && typeof supplied === 'object' && !Array.isArray(supplied)) {
-    for (const [name, value] of Object.entries(supplied)) {
-      if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) continue;
-      if (/^(?:HOME|USERPROFILE|PATH|TMPDIR|TMP|TEMP|NODE_OPTIONS|NODE_PATH|NPM_CONFIG_.+|.*(?:TOKEN|SECRET|PASSWORD|API_KEY).*)$/i.test(name)) continue;
-      environment[name] = String(value);
-    }
-  }
   return environment;
+}
+
+function suppliedEnvironment(supplied) {
+  if (supplied == null) return {};
+  if (typeof supplied !== 'object' || Array.isArray(supplied)) throw new Error('Probe environment must be a dictionary.');
+  const result = Object.create(null);
+  for (const [name, value] of Object.entries(supplied)) {
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error('Invalid probe environment name.');
+    const text = String(value);
+    if (text.includes('\0')) throw new Error('Environment values cannot contain a NUL byte.');
+    result[name] = text;
+  }
+  return result;
 }
 
 function validatedArguments(value) {
   if (!Array.isArray(value)) return [];
-  if (value.length > 128) throw new Error('Too many server arguments for the runtime probe.');
   return value.map(item => {
     const argument = String(item);
-    if (/\0|\r|\n/.test(argument)) throw new Error('Invalid server argument for the runtime probe.');
+    if (argument.includes('\0')) throw new Error('Invalid server argument for the runtime probe.');
     return argument;
   });
 }

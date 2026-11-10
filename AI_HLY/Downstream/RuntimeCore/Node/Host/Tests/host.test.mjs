@@ -20,10 +20,11 @@ test('worker stdin and stdout remain isolated for multiple servers', async () =>
   await fs.writeFile(path.join(root, 'package.json'), JSON.stringify({ name: 'fixture', version: '1.0.0', type: 'module' }));
   await fs.writeFile(path.join(root, 'server.mjs'), `
     import { createInterface } from 'node:readline';
+    if(process.env.NODE_OPTIONS!=='--not-a-bootstrap-flag' || process.env.HOME!=='/user-home') throw new Error('MCP user environment not applied after bootstrap');
     createInterface({ input: process.stdin }).on('line', line => process.stdout.write(line + '\\n'));
   `);
   const create = () => new Worker(workerURL, {
-    workerData: { packageRoot: root, entryPoint: path.join(root, 'server.mjs') },
+    workerData: { packageRoot: root, entryPoint: path.join(root, 'server.mjs'), environment:{NODE_OPTIONS:'--not-a-bootstrap-flag',HOME:'/user-home'} },
     trackUnmanagedFds: false,
     stdin: true, stdout: true, stderr: true,
   });

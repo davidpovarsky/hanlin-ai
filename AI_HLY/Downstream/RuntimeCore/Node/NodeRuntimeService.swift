@@ -82,6 +82,7 @@ actor NodeRuntimeService {
 
 
     private let fileLayout: RuntimeFileLayout
+    private let environmentStore: RuntimeEnvironmentStore?
     private struct LaunchContext: Sendable {
         let readyURL: URL
         let token: String
@@ -95,8 +96,9 @@ actor NodeRuntimeService {
     private var launchTask: Task<RuntimeHostConnection, Error>?
     private var verificationTask: Task<RuntimeHostConnection, Error>?
 
-    init(fileLayout: RuntimeFileLayout = .default) {
+    init(fileLayout: RuntimeFileLayout = .default, environment: RuntimeEnvironmentStore? = nil) {
         self.fileLayout = fileLayout
+        self.environmentStore = environment
     }
 
     func snapshot() -> RuntimeSnapshot { snapshotValue }
@@ -182,6 +184,8 @@ actor NodeRuntimeService {
 
     private func executeNodeJob(_ request: RuntimeExecutionRequest, moduleKind: String?,
                                 entryPoint: URL? = nil, standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        let environment = try await environmentStore?.resolved(scopes: [.shared, .node, .execution(request.id)], overrides: request.environment)
+            ?? RuntimePolicy.validatedEnvironment(request.environment)
         let workspace = try fileLayout.validatedWorkspace(request.workspace)
         let resolvedModuleKind = moduleKind ?? Self.inferModuleKind(for: request.source)
         let host = try await ensureRunning()
@@ -197,7 +201,7 @@ actor NodeRuntimeService {
         var payload: [String: Any] = [
             "executionID": request.id.uuidString.lowercased(),
             "source": request.source, "arguments": request.arguments,
-            "workspace": workspace.path, "environment": request.environment,
+            "workspace": workspace.path, "environment": environment,
             "moduleKind": resolvedModuleKind, "detached": true,
             "maximumOutputBytes": request.limits.maximumOutputBytes
         ]

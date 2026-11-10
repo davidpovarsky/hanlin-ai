@@ -105,6 +105,35 @@ struct RuntimeAutonomyV3Tests {
         #expect(result.stderr.isEmpty && !result.didTimeOut && !result.wasCancelled)
     }
 
+    @Test func savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "environment-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let environment = RuntimeEnvironmentStore(fileLayout: layout)
+        let id = UUID()
+        // Save the narrower scope first to prove ordering is independent of UI edits.
+        _ = try await environment.save(name: "PATH", value: "/python/bin", scope: .python, isEnabled: true, isSecret: false)
+        _ = try await environment.save(name: "PATH", value: "/shared/bin", scope: .shared, isEnabled: true, isSecret: false)
+        _ = try await environment.save(name: "HOME", value: "/user-home", scope: .shared, isEnabled: true, isSecret: false)
+        _ = try await environment.save(name: "PATH", value: "/execution/bin", scope: .execution(id), isEnabled: true, isSecret: false)
+        let perEngine = try await environment.resolved(scopes: [.shared, .python])
+        #expect(perEngine["PATH"] == "/python/bin" && perEngine["HOME"] == "/user-home")
+        let perJob = try await environment.resolved(scopes: [.shared, .python, .execution(id)])
+        #expect(perJob["PATH"] == "/execution/bin")
+        let explicit = try await environment.resolved(scopes: [.shared, .python, .execution(id)], overrides: ["PATH": "/explicit/bin"])
+        #expect(explicit["PATH"] == "/explicit/bin")
+        let reopened = RuntimeEnvironmentStore(fileLayout: layout)
+        #expect(try await reopened.resolved(scopes: [.shared, .python]) == perEngine)
+        let workspace = try layout.workspace(client: .tools, identifier: "environment")
+        let python = PythonRuntimeService(fileLayout: layout, environment: reopened)
+        let result = try await python.execute(RuntimeExecutionRequest(source: "import os; print(os.environ['PATH']); print(os.environ['HOME'])", workspace: workspace))
+        #expect(result.exitCode == 0 && result.stdout == "/python/bin\n/user-home\n")
+        do {
+            _ = try await environment.save(name: "BAD_VALUE", value: "before\0after", scope: .shared, isEnabled: true, isSecret: false)
+            Issue.record("An unrepresentable OS environment value was accepted")
+        } catch { }
+    }
+
     @MainActor private final class JobCapture { var id: UUID? }
 
     @Test(.timeLimit(.minutes(1)))

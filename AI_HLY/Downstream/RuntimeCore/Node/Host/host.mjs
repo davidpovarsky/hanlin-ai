@@ -505,12 +505,14 @@ async function compileTypeScriptProject(body) {
 }
 
 function validatedEnvironment(value) {
-  const output = {};
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return output;
+  const output = Object.create(null);
+  if (value == null) return output;
+  if (typeof value !== 'object' || Array.isArray(value)) throw new Error('Environment must be a dictionary.');
   for (const [name, item] of Object.entries(value)) {
     if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid environment name: ${name}`);
-    // R10: Allow environment overrides for personal development without throwing on reserved names
-    output[name] = String(item);
+    const text = String(item);
+    if (text.includes('\0')) throw new Error('Environment values cannot contain a NUL byte.');
+    output[name] = text;
   }
   return output;
 }
@@ -577,9 +579,11 @@ async function startServer(id, configuration) {
     handlers: {},
   };
   const worker = new Worker(workerURL, {
-    workerData: { serverID: id, packageRoot, entryPoint },
+    workerData: { serverID: id, packageRoot, entryPoint, environment: validatedEnvironment(configuration.environment) },
     argv: Array.isArray(configuration.arguments) ? configuration.arguments : [],
-    env: { ...process.env, ...(configuration.environment ?? {}), HANLIN_MCP_SERVER_ID: id },
+    // Server values are applied after loading the wrapper, never as bootstrap
+    // NODE_OPTIONS. The Host's launch identity/configuration stays immutable.
+    env: { ...executionJobs.workerEnvironment, HANLIN_MCP_SERVER_ID: id },
     // The embedded host owns its process-level descriptors across Workers.
     trackUnmanagedFds: false,
     stdin: true,
