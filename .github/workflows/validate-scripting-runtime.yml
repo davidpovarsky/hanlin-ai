@@ -3,6 +3,10 @@ name: Validate Scripting Runtime
 on:
   workflow_call:
     inputs:
+      runtime_job_foundation_only:
+        required: false
+        default: false
+        type: boolean
       force_clean_build:
         required: false
         default: false
@@ -12,6 +16,11 @@ on:
         type: string
   workflow_dispatch:
     inputs:
+      runtime_job_foundation_only:
+        description: Type-check actual background/job sources on iOS SDK and execute their isolated Foundation tests, without native engine builds
+        required: false
+        default: false
+        type: boolean
       force_clean_build:
         description: Ignore the cached SwiftPM build and compile the runtime from scratch
         required: true
@@ -28,7 +37,37 @@ permissions:
   contents: read
 
 jobs:
+  validate-runtime-job-foundation:
+    if: ${{ inputs.runtime_job_foundation_only }}
+    name: Verify Runtime jobs and background SDK contract
+    runs-on: xcode-27
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact validation commit
+        uses: actions/checkout@v7.0.1
+        with:
+          clean: true
+          fetch-depth: 1
+      - name: Select newest stable Xcode 27
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Type-check actual iOS sources and execute Foundation ownership tests
+        shell: bash
+        run: bash Scripts/Runtime/verify-runtime-job-foundation.sh
+      - name: Preserve compiler and executed-test evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: runtime-job-foundation-${{ github.sha }}
+          path: ${{ runner.temp }}/runtime-job-foundation-evidence
+          if-no-files-found: ignore
+
   validate-scripting-runtime:
+    if: ${{ !inputs.runtime_job_foundation_only }}
     name: Compile and test isolated Scripting runtime
     runs-on: xcode-27
     timeout-minutes: 20

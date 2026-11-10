@@ -43,7 +43,7 @@ struct RuntimeUserOperationTests {
 
     @Test @MainActor func producerOwnsOnlyItsOperationAndClearsTheCancellationCycle() async throws {
         var operation: RuntimeUserOperation? = RuntimeUserOperation()
-        weak var weakOperation = operation
+        weak let weakOperation = operation
         let id = try #require(operation?.id)
         var producer: Task<Void, Never>? = RuntimeUserOperation.producerTask(operation: operation) {
             #expect(RuntimeUserOperation.current?.id == id)
