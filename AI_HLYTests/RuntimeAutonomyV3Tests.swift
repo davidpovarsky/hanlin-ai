@@ -7,6 +7,33 @@ import Testing
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
     @Test(.timeLimit(.minutes(2)))
+    func actualNodeAndOriginalJavaScriptCoreCoexistWithTheVerifiedLaunchMode() async throws {
+        let core = AppRuntimeCore.shared
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "native-engine-coexist-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let first = try await core.javaScriptCore.execute(RuntimeExecutionRequest(
+            source: "console.log('actual original JavaScriptCore before Node'); 17;", workspace: workspace))
+        #expect(first.exitCode == 0 && first.stdout.contains("JavaScriptCore before Node"))
+        let node = try await core.node.executeJavaScript(RuntimeExecutionRequest(source: """
+            console.log('actual Node alongside JavaScriptCore');
+            export default {
+                jitless:process.execArgv.includes('--jitless'),
+                wasmJitless:process.execArgv.includes('--wasm-jitless'),
+                pointerCompression:Number(process.config.variables.v8_enable_pointer_compression)===1,
+                sharedCage:Number(process.config.variables.v8_enable_pointer_compression_shared_cage)===1
+            };
+            """, workspace: workspace), moduleKind: "esm")
+        #expect(node.exitCode == 0)
+        guard case .object(let mode) = node.value else { Issue.record("Actual Node mode receipt missing"); return }
+        for key in ["jitless", "wasmJitless", "pointerCompression", "sharedCage"] {
+            #expect(mode[key] == .boolean(true), "Actual embedded launch mode mismatch: \(key)")
+        }
+        let after = try await core.javaScriptCore.execute(RuntimeExecutionRequest(
+            source: "console.log('actual original JavaScriptCore after Node'); 19;", workspace: workspace))
+        #expect(after.exitCode == 0 && after.stdout.contains("JavaScriptCore after Node"))
+    }
+
+    @Test(.timeLimit(.minutes(2)))
     func stoppingAnActualCompilerJobNeverLaunchesItsCompiledSource() async throws {
         let core = AppRuntimeCore.shared
         let service = TypeScriptRuntimeService(node: core.node)

@@ -624,6 +624,8 @@ actor NodeRuntimeService {
         )
         let arguments = [
             "node",
+            "--jitless",
+            "--wasm-jitless",
             hostURL.appending(path: "host.mjs").path,
             fileLayout.root.path,
             context.readyURL.path,

@@ -277,6 +277,7 @@ jobs:
                 grep -Fq CloudKit <<< "$services"
               fi
               test "$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:aps-environment' "$plist")" = production
+              python3 Scripts/CI/verify_runtime_memory_entitlements.py --profile "$plist"
             fi
             cp "$profile" "$HOME/Library/MobileDevice/Provisioning Profiles/$uuid.mobileprovision"
             echo "${env_prefix}_PROFILE_SPECIFIER=$name" >> "$GITHUB_ENV"
@@ -602,6 +603,9 @@ jobs:
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.siri' "$main_entitlements")" = true
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-app' "$main_entitlements")" = true
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.weatherkit' "$main_entitlements")" = true
+          python3 Scripts/CI/verify_runtime_memory_entitlements.py \
+            --profile "$BUILD_DIR/logs/main-embedded-profile.plist" --signed "$main_entitlements" \
+            | tee "$BUILD_DIR/logs/runtime-memory-entitlements.json"
           echo "Signed IPA verification passed for the app and all four extensions"
 
       - name: Live Activity · refresh
