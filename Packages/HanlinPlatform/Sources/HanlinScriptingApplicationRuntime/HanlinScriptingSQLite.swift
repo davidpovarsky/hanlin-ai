@@ -78,7 +78,15 @@ final class HanlinScriptingSQLiteStore: @unchecked Sendable {
         let readonly = configuration["readonly"] as? Bool ?? false
         let foreignKeys = configuration["foreignKeysEnabled"] as? Bool ?? false
         let wal = (configuration["journalMode"] as? String) == "wal"
-        let busy = (configuration["busyMode"] as? NSNumber)?.doubleValue ?? 5.0
+        let busy: Double
+        if let seconds = configuration["busyMode"] as? NSNumber {
+            busy = seconds.doubleValue
+        } else {
+            guard configuration["busyMode"] == nil || configuration["busyMode"] as? String == "immediateError" else {
+                throw invalid("SQLite busyMode must be immediateError or a duration in seconds.")
+            }
+            busy = 0
+        }
         guard busy.isFinite, busy >= 0, busy * 1_000 <= Double(Int32.max) else {
             throw invalid("The SQLite busy duration must fit its nonnegative millisecond ABI.")
         }

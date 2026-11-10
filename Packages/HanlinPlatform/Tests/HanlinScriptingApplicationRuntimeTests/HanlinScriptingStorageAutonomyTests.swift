@@ -61,7 +61,7 @@ struct HanlinScriptingStorageAutonomyTests {
         let data = try JSONSerialization.data(withJSONObject: ["value":String(repeating:"x",count:21*1_024*1_024)])
         let json = String(decoding:data,as:UTF8.self)
         #expect(throws: HanlinScriptingNativeError.self) { try HanlinScriptingNativeJSON.decodeObject(json, maximumBytes: 20*1_024*1_024) }
-        let decoded = try HanlinScriptingNativeJSON.decodeObject(json, maximumBytes:nil)
+        let decoded = try HanlinScriptingNativeJSON.decodeObject(json)
         #expect((decoded["value"] as? String)?.utf8.count == 21*1_024*1_024)
     }
 }

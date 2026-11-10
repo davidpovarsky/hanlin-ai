@@ -11,6 +11,7 @@ struct HanlinScriptingSQLiteOwnershipTests {
         let session = try HanlinScriptingApplicationSession(
             installedPackageID: .init(validating: "sqlite-owner-proof"),
             program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
             globalThis.databases = [];
             (async () => {
               for (let i = 0; i < 24; i++) {
@@ -44,6 +45,7 @@ struct HanlinScriptingSQLiteOwnershipTests {
         let session = try HanlinScriptingApplicationSession(
             installedPackageID: .init(validating: "sqlite-data-proof"),
             program: #"""
+            Navigation.present({ element: createElement(Text, null, "Waiting") });
             (async () => {
               const db = SQLite.openInMemory();
               const binary = Data.fromBase64String("AAH+/w==");
@@ -69,14 +71,14 @@ struct HanlinScriptingSQLiteOwnershipTests {
         let fileSystem = try HanlinScriptingPackageFileSystem(installedPackageID: "sqlite-store", allowed: true, runtimeRoot: root, packageSourceDirectory: nil)
         let store = HanlinScriptingSQLiteStore(fileSystem: fileSystem)
         defer { store.requestStop(); store.closeAll() }
-        func query(_ handle: String, sql: String = "SELECT 17 AS value") throws -> [[String: Any]] {
-            let data = try JSONSerialization.data(withJSONObject: ["handle": handle, "path": ":memory:", "sql": sql])
+        func query(_ handle: String, sql: String = "SELECT 17 AS value", configuration: [String: Any] = [:]) throws -> [[String: Any]] {
+            let data = try JSONSerialization.data(withJSONObject: ["handle": handle, "path": ":memory:", "sql": sql, "configuration": configuration])
             return try #require(store.perform(operation: "sqlite.fetchAll", payloadJSON: String(decoding: data, as: UTF8.self)) as? [[String: Any]])
         }
         #expect(throws: (any Error).self) { try query("invalid", sql: "bad\0sql") }
         #expect(store.openDatabaseCount == 0)
-        _ = try query("first")
-        _ = try query("second")
+        #expect((try query("first", sql: "PRAGMA busy_timeout", configuration: ["busyMode": "immediateError"])[0]["timeout"] as? NSNumber)?.intValue == 0)
+        #expect((try query("second", sql: "PRAGMA busy_timeout", configuration: ["busyMode": 360])[0]["timeout"] as? NSNumber)?.intValue == 360_000)
         store.release(handles: ["first"])
         #expect(store.openDatabaseCount == 1)
         #expect((try query("second")[0]["value"] as? NSNumber)?.intValue == 17)
