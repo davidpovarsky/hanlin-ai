@@ -81,6 +81,7 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
     console,
     queueMicrotask,
     __hanlinNativeRender(json) { rendered = JSON.parse(json); },
+    __hanlinNativeSQLiteOwner() {}, // VM fixture has no native SQLite connections.
     __hanlinNativeStorageSync(operation, json) {
       const payload = JSON.parse(json);
       const jsonValues = payload.shared ? sharedStorage : storage;

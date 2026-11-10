@@ -122,6 +122,9 @@ public final class HanlinScriptingApplicationSession {
     private let fileSystem: HanlinScriptingPackageFileSystem
     private let filesAllowed: Bool
     private let sqliteStore: HanlinScriptingSQLiteStore
+    // Weak JavaScript ownership; never add a managed reference that roots the object.
+    private var sqliteOwners: [String: JSManagedValue] = [:]
+    var openSQLiteDatabaseCount: Int { sqliteStore.openDatabaseCount }
     private let networkAllowed: Bool
     private let networkLoader: HanlinScriptingNetworkLoader
     private let locationAllowed: Bool
@@ -324,6 +327,11 @@ public final class HanlinScriptingApplicationSession {
     public func dispose() {
         guard !disposed else { return }
         disposed = true
+        sqliteStore.requestStop()
+        sqliteOwners.removeAll()
+        let closingSQLiteStore = sqliteStore
+        // A running C query must not block MainActor during disposal.
+        Task.detached { closingSQLiteStore.closeAll() }
         context.evaluateScript("globalThis.__hanlinDispose?.();")
         nativeTasks.values.forEach { $0.cancel() }
         nativeTasks.removeAll(keepingCapacity: false)
@@ -337,6 +345,7 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeImageJPEG" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeCrypto" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAsync" as NSString)
+        context.setObject(nil, forKeyedSubscript: "__hanlinNativeSQLiteOwner" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantAvailable" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeAssistantStart" as NSString)
         context.setObject(nil, forKeyedSubscript: "__hanlinCancelNative" as NSString)
@@ -357,7 +366,21 @@ public final class HanlinScriptingApplicationSession {
         context.setObject(nil, forKeyedSubscript: "__hanlinNativeEmbeddedOwnerID" as NSString)
     }
 
+    private func collectUnusedSQLiteOwners() {
+        let unused = sqliteOwners.compactMap { $0.value.value == nil ? $0.key : nil }
+        guard !unused.isEmpty else { return }
+        for handle in unused { sqliteOwners.removeValue(forKey: handle) }
+        let store = sqliteStore
+        Task.detached { store.release(handles: unused) }
+    }
+
     private func installNativeBridges() {
+        let sqliteOwner: @convention(block) (String, JSValue) -> Void = { [weak self] handle, owner in
+            guard let self, !self.disposed, owner.isObject else { return }
+            self.collectUnusedSQLiteOwners()
+            self.sqliteOwners[handle] = JSManagedValue(value: owner)
+        }
+        context.setObject(sqliteOwner, forKeyedSubscript: "__hanlinNativeSQLiteOwner" as NSString)
         let render: @convention(block) (String) -> Void = { [weak self] json in
             guard let self, !self.disposed,
                   json.utf8.count <= 1_048_576,
@@ -649,6 +672,7 @@ public final class HanlinScriptingApplicationSession {
             }.value
         }
         if operation.hasPrefix("sqlite.") {
+            collectUnusedSQLiteOwners()
             let sqliteStore = sqliteStore
             return await Task.detached(priority: .userInitiated) {
                 do {
@@ -3172,7 +3196,7 @@ private extension HanlinScriptingApplicationSession {
       function sqliteArguments(value) {
         if (value == null) return null;
         if (value instanceof Date) return value.getTime();
-        if (value instanceof HanlinData) return value.toBase64String();
+        if (value instanceof HanlinData) return { __hanlinSQLiteData: value.toBase64String() };
         if (Array.isArray(value)) return value.map(sqliteArguments);
         if (typeof value === "object") {
           const output = {};
@@ -3183,27 +3207,34 @@ private extension HanlinScriptingApplicationSession {
         throw new TypeError("Unsupported SQLite argument type");
       }
       function reviveSQLite(value) {
-        if (Array.isArray(value)) return value.map(reviveSQLite);
-        if (value && typeof value === "object") {
-          if (typeof value.__hanlinSQLiteData === "string") return HanlinData.fromBase64String(value.__hanlinSQLiteData);
-          const output = {};
-          for (const [key, member] of Object.entries(value)) output[key] = reviveSQLite(member);
-          return output;
-        }
-        return value;
+        if (!Array.isArray(value)) return value;
+        // Interpret private binary tags only as column values, never as a row
+        // whose legitimate SQL column name happens to match the tag.
+        return value.map(row => Object.fromEntries(Object.entries(row).map(([key, member]) => [key,
+          member && typeof member === "object" && typeof member.__hanlinSQLiteData === "string"
+            ? HanlinData.fromBase64String(member.__hanlinSQLiteData) : member
+        ])));
       }
       class HanlinSQLiteDatabase {
         constructor(path, configuration) {
           this.path = path;
           this.configuration = configuration;
           this.handle = `sqlite-${++sqliteHandleCursor}`;
+          this._pendingOperations = 0;
+          __hanlinNativeSQLiteOwner(this.handle, this);
         }
         _call(operation, sql, argumentsValue) {
           if (typeof sql !== "string" || sql.length === 0) return Promise.reject(new TypeError("SQL is required"));
-          return nativeCallAsync(operation, {
+          const payload = {
             handle: this.handle, path: this.path, configuration: this.configuration,
             sql, arguments: sqliteArguments(argumentsValue)
-          }).then(reviveSQLite);
+          };
+          this._pendingOperations++;
+          // Both continuations retain the actual owner through the native call.
+          return nativeCallAsync(operation, payload).then(
+            value => { this._pendingOperations--; return reviveSQLite(value); },
+            error => { this._pendingOperations--; throw error; }
+          );
         }
         execute(sql, argumentsValue = null) { return this._call("sqlite.execute", sql, argumentsValue); }
         fetchAll(sql, argumentsValue = null) { return this._call("sqlite.fetchAll", sql, argumentsValue); }

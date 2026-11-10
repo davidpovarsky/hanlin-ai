@@ -1,4 +1,32 @@
 import Foundation
+
+/// Optional, explicit host budgets. The default preserves the caller's entire
+/// query; SQLite's actual ABI/resource limits and errors still apply.
+public struct HanlinSQLiteResourceLimits: Sendable {
+    public let maximumOpenDatabases: Int?
+    public let maximumFetchRows: Int?
+    public let maximumBindParameters: Int?
+    public let maximumStatementBytes: Int?
+
+    public init(maximumOpenDatabases: Int? = nil, maximumFetchRows: Int? = nil,
+                maximumBindParameters: Int? = nil, maximumStatementBytes: Int? = nil) {
+        self.maximumOpenDatabases = maximumOpenDatabases
+        self.maximumFetchRows = maximumFetchRows
+        self.maximumBindParameters = maximumBindParameters
+        self.maximumStatementBytes = maximumStatementBytes
+    }
+
+    public static let legacy = Self(maximumOpenDatabases: 16, maximumFetchRows: 10_000,
+                                    maximumBindParameters: 1_024, maximumStatementBytes: 1_048_576)
+
+    fileprivate func validate() throws {
+        guard [maximumOpenDatabases, maximumFetchRows, maximumBindParameters, maximumStatementBytes]
+            .allSatisfy({ ($0 ?? 0) >= 0 }) else {
+            throw HanlinSQLiteServiceError.invalidArgument("Explicit SQLite resource budgets must be nonnegative.")
+        }
+    }
+}
+
 #if canImport(SQLite3)
 import SQLite3
 
@@ -13,26 +41,70 @@ import SQLite3
 /// `SQLITE_OPEN_FULLMUTEX` for additional safety.
 public final class HanlinSQLiteService: @unchecked Sendable {
     private let lock = NSLock()
+    private let registryLock = NSLock()
     private var databases: [String: OpaquePointer] = [:]
+    private var stopRequested = false
     private let rootURL: URL
+    private let resourceLimits: HanlinSQLiteResourceLimits
 
-    /// Maximum number of open databases per service instance.
+    /// Legacy opt-in budget values; the default resource policy has no such caps.
     public static let maximumOpenDatabases = 16
-    /// Maximum number of rows returned from a single fetchAll.
+    /// Legacy opt-in row budget.
     public static let maximumFetchRows = 10_000
-    /// Maximum bind parameter count per statement.
+    /// Legacy opt-in bind-parameter budget.
     public static let maximumBindParameters = 1_024
-    /// Maximum SQL statement size in bytes.
+    /// Legacy opt-in SQL byte budget.
     public static let maximumStatementBytes = 1_048_576
 
     /// Create a SQLite service scoped to the given root directory.
     /// Database files are created/opened relative to this root.
-    public init(rootURL: URL) {
+    public init(rootURL: URL, resourceLimits: HanlinSQLiteResourceLimits = .init()) {
         self.rootURL = rootURL.standardizedFileURL
+        self.resourceLimits = resourceLimits
     }
 
     deinit {
         for database in databases.values { sqlite3_close_v2(database) }
+    }
+
+    public var openDatabaseCount: Int {
+        registryLock.lock()
+        defer { registryLock.unlock() }
+        return databases.count
+    }
+
+    /// SQLite explicitly permits interruption from another thread. Keep its
+    /// pointers leased under the registry lock so close cannot race this call;
+    /// never wait for a running query's serialization lock to request a stop.
+    public func interruptAll() {
+        registryLock.lock()
+        defer { registryLock.unlock() }
+        for database in databases.values { sqlite3_interrupt(database) }
+    }
+
+    /// End this owner's lifetime, including queries admitted just as disposal
+    /// starts. The progress handler closes SQLite's interrupt-before-step gap.
+    public func requestStop() {
+        registryLock.lock()
+        defer { registryLock.unlock() }
+        stopRequested = true
+        for database in databases.values { sqlite3_interrupt(database) }
+    }
+
+    private var isStopped: Bool {
+        registryLock.lock()
+        defer { registryLock.unlock() }
+        return stopRequested
+    }
+
+    private func ensureActive() throws {
+        if isStopped { throw HanlinSQLiteServiceError.sqliteError("interrupted") }
+    }
+
+    private func database(for handle: String) -> OpaquePointer? {
+        registryLock.lock()
+        defer { registryLock.unlock() }
+        return databases[handle]
     }
 
     // MARK: - Database Lifecycle
@@ -48,14 +120,17 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     ) throws -> String {
         lock.lock()
         defer { lock.unlock() }
+        try resourceLimits.validate()
+        try ensureActive()
+        guard busyTimeoutMs >= 0 else { throw HanlinSQLiteServiceError.invalidArgument("SQLite busy milliseconds must be nonnegative.") }
 
         guard handle.utf8.count <= 128, !handle.isEmpty else {
             throw HanlinSQLiteServiceError.invalidHandle
         }
 
-        if databases[handle] != nil { return handle }
+        if database(for: handle) != nil { return handle }
 
-        guard databases.count < Self.maximumOpenDatabases else {
+        if let maximum = resourceLimits.maximumOpenDatabases, openDatabaseCount >= maximum {
             throw HanlinSQLiteServiceError.tooManyDatabases
         }
 
@@ -94,8 +169,16 @@ public final class HanlinSQLiteService: @unchecked Sendable {
             throw HanlinSQLiteServiceError.openFailed(message)
         }
 
+        registryLock.lock()
+        databases[handle] = database
+        registryLock.unlock()
+        sqlite3_progress_handler(database, 1_000, { pointer in
+            guard let pointer else { return 0 }
+            return Unmanaged<HanlinSQLiteService>.fromOpaque(pointer).takeUnretainedValue().isStopped ? 1 : 0
+        }, Unmanaged.passUnretained(self).toOpaque())
         do {
-            sqlite3_busy_timeout(database, max(0, min(300_000, busyTimeoutMs)))
+            try ensureActive()
+            sqlite3_busy_timeout(database, busyTimeoutMs)
 
             if foreignKeys {
                 try executeRaw(sql: "PRAGMA foreign_keys = ON", database: database)
@@ -104,10 +187,12 @@ public final class HanlinSQLiteService: @unchecked Sendable {
                 try executeRaw(sql: "PRAGMA journal_mode = WAL", database: database)
             }
 
-            databases[handle] = database
             return handle
         } catch {
+            registryLock.lock()
+            databases.removeValue(forKey: handle)
             sqlite3_close_v2(database)
+            registryLock.unlock()
             throw error
         }
     }
@@ -116,6 +201,8 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     public func close(handle: String) {
         lock.lock()
         defer { lock.unlock() }
+        registryLock.lock()
+        defer { registryLock.unlock() }
         if let database = databases.removeValue(forKey: handle) {
             sqlite3_close_v2(database)
         }
@@ -125,11 +212,11 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     public func closeAll() {
         lock.lock()
         defer { lock.unlock() }
+        registryLock.lock()
+        defer { registryLock.unlock() }
         for database in databases.values { sqlite3_close_v2(database) }
         databases.removeAll()
     }
-
-    // MARK: - Execute
 
     // MARK: - Execute
 
@@ -137,12 +224,11 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     public func execute(handle: String, sql: String, arguments: Any? = nil) throws {
         lock.lock()
         defer { lock.unlock() }
-        guard let database = databases[handle] else {
+        try ensureActive()
+        guard let database = database(for: handle) else {
             throw HanlinSQLiteServiceError.noSuchHandle(handle)
         }
-        guard !sql.isEmpty, sql.utf8.count <= Self.maximumStatementBytes else {
-            throw HanlinSQLiteServiceError.statementTooLarge
-        }
+        try validateSQL(sql)
         try executeImpl(sql: sql, arguments: arguments, database: database)
     }
 
@@ -152,16 +238,25 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     public func fetchAll(handle: String, sql: String, arguments: Any? = nil) throws -> [[String: Any]] {
         lock.lock()
         defer { lock.unlock() }
-        guard let database = databases[handle] else {
+        try ensureActive()
+        guard let database = database(for: handle) else {
             throw HanlinSQLiteServiceError.noSuchHandle(handle)
         }
-        guard !sql.isEmpty, sql.utf8.count <= Self.maximumStatementBytes else {
-            throw HanlinSQLiteServiceError.statementTooLarge
-        }
+        try validateSQL(sql)
         return try fetchAllImpl(sql: sql, arguments: arguments, database: database)
     }
 
     // MARK: - Private Implementation
+
+    private func validateSQL(_ sql: String) throws {
+        try resourceLimits.validate()
+        guard !sql.isEmpty, !sql.utf8.contains(0) else {
+            throw HanlinSQLiteServiceError.invalidArgument("SQL must be nonempty and cannot contain a NUL byte.")
+        }
+        if let maximum = resourceLimits.maximumStatementBytes, sql.utf8.count > maximum {
+            throw HanlinSQLiteServiceError.statementTooLarge
+        }
+    }
 
     private func executeRaw(sql: String, database: OpaquePointer) throws {
         try executeImpl(sql: sql, arguments: nil, database: database)
@@ -230,13 +325,13 @@ public final class HanlinSQLiteService: @unchecked Sendable {
             let result = sqlite3_step(statement)
             if result == SQLITE_DONE { break }
             guard result == SQLITE_ROW else { throw sqliteError(database) }
-            guard rows.count < Self.maximumFetchRows else {
+            if let maximum = resourceLimits.maximumFetchRows, rows.count >= maximum {
                 throw HanlinSQLiteServiceError.tooManyRows
             }
             var row: [String: Any] = [:]
             for index in 0 ..< sqlite3_column_count(statement) {
                 let name = String(cString: sqlite3_column_name(statement, index))
-                row[name] = columnValue(statement, index: index)
+                row[name] = try columnValue(statement, index: index)
             }
             rows.append(row)
         }
@@ -246,7 +341,7 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     private func bind(_ arguments: Any?, to statement: OpaquePointer) throws {
         guard let arguments, !(arguments is NSNull) else { return }
         let count = Int(sqlite3_bind_parameter_count(statement))
-        guard count <= Self.maximumBindParameters else {
+        if let maximum = resourceLimits.maximumBindParameters, count > maximum {
             throw HanlinSQLiteServiceError.tooManyParameters
         }
         if let values = arguments as? [Any] {
@@ -275,21 +370,25 @@ public final class HanlinSQLiteService: @unchecked Sendable {
         switch value {
         case is NSNull:
             result = sqlite3_bind_null(statement, index)
-        case let value as Bool:
-            result = sqlite3_bind_int(statement, index, value ? 1 : 0)
         case let value as NSNumber:
             let double = value.doubleValue
             guard double.isFinite else {
                 throw HanlinSQLiteServiceError.invalidArgument("SQLite numbers must be finite")
             }
-            result = double.rounded(.towardZero) == double
-                ? sqlite3_bind_int64(statement, index, value.int64Value)
-                : sqlite3_bind_double(statement, index, double)
+            let type = String(cString: value.objCType)
+            if ["f", "d"].contains(type) {
+                result = sqlite3_bind_double(statement, index, double)
+            } else {
+                if ["Q", "L", "I", "S", "C"].contains(type), value.uint64Value > UInt64(Int64.max) {
+                    throw HanlinSQLiteServiceError.invalidArgument("The SQLite INTEGER type cannot represent this unsigned value.")
+                }
+                result = sqlite3_bind_int64(statement, index, value.int64Value)
+            }
         case let value as String:
-            result = sqlite3_bind_text(statement, index, value, -1, sqliteTransient)
+            result = sqlite3_bind_text64(statement, index, value, UInt64(value.utf8.count), sqliteTransient, UInt8(SQLITE_UTF8))
         case let value as Data:
-            result = value.withUnsafeBytes { bytes in
-                sqlite3_bind_blob(statement, index, bytes.baseAddress, Int32(value.count), sqliteTransient)
+            result = value.isEmpty ? sqlite3_bind_zeroblob(statement, index, 0) : value.withUnsafeBytes { bytes in
+                sqlite3_bind_blob64(statement, index, bytes.baseAddress, UInt64(value.count), sqliteTransient)
             }
         default:
             throw HanlinSQLiteServiceError.invalidArgument("Unsupported SQLite argument type")
@@ -297,17 +396,24 @@ public final class HanlinSQLiteService: @unchecked Sendable {
         guard result == SQLITE_OK else { throw sqliteError(sqlite3_db_handle(statement)) }
     }
 
-    private func columnValue(_ statement: OpaquePointer, index: Int32) -> Any {
+    private func columnValue(_ statement: OpaquePointer, index: Int32) throws -> Any {
         switch sqlite3_column_type(statement, index) {
         case SQLITE_INTEGER:
             return NSNumber(value: sqlite3_column_int64(statement, index))
         case SQLITE_FLOAT:
             return NSNumber(value: sqlite3_column_double(statement, index))
         case SQLITE_TEXT:
-            return sqlite3_column_text(statement, index).map { String(cString: $0) } ?? ""
+            let count = Int(sqlite3_column_bytes(statement, index))
+            guard let text = sqlite3_column_text(statement, index) else {
+                if sqlite3_errcode(sqlite3_db_handle(statement)) == SQLITE_NOMEM { throw sqliteError(sqlite3_db_handle(statement)) }
+                return ""
+            }
+            return String(decoding: UnsafeBufferPointer(start: text, count: count), as: UTF8.self)
         case SQLITE_BLOB:
-            guard let bytes = sqlite3_column_blob(statement, index) else { return NSNull() }
-            let data = Data(bytes: bytes, count: Int(sqlite3_column_bytes(statement, index)))
+            let count = Int(sqlite3_column_bytes(statement, index))
+            if count == 0 { return ["__hanlinSQLiteData": ""] }
+            guard let bytes = sqlite3_column_blob(statement, index) else { throw sqliteError(sqlite3_db_handle(statement)) }
+            let data = Data(bytes: bytes, count: count)
             return ["__hanlinSQLiteData": data.base64EncodedString()]
         default:
             return NSNull()
@@ -328,7 +434,11 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     public static let maximumBindParameters = 1_024
     public static let maximumStatementBytes = 1_048_576
 
-    public init(rootURL: URL) {}
+    public init(rootURL: URL, resourceLimits: HanlinSQLiteResourceLimits = .init()) {}
+
+    public var openDatabaseCount: Int { 0 }
+    public func interruptAll() {}
+    public func requestStop() {}
 
     public func open(
         handle: String,
@@ -377,10 +487,10 @@ public enum HanlinSQLiteServiceError: Error, Equatable, Sendable, LocalizedError
         case .noSuchHandle(let handle): "No open database with handle: \(handle)"
         case .openFailed(let msg): "SQLite open failed: \(msg)"
         case .sqliteError(let msg): "SQLite error: \(msg)"
-        case .tooManyDatabases: "Too many open SQLite databases (limit: \(HanlinSQLiteService.maximumOpenDatabases))"
-        case .tooManyRows: "SQLite result has too many rows (limit: \(HanlinSQLiteService.maximumFetchRows))"
-        case .tooManyParameters: "SQLite statement has too many parameters (limit: \(HanlinSQLiteService.maximumBindParameters))"
-        case .statementTooLarge: "SQLite statement exceeds maximum size"
+        case .tooManyDatabases: "SQLite database handles exceed the explicit resource budget"
+        case .tooManyRows: "SQLite rows exceed the explicit resource budget"
+        case .tooManyParameters: "SQLite parameters exceed the explicit resource budget"
+        case .statementTooLarge: "SQL bytes exceed the explicit resource budget"
         case .argumentCountMismatch(let expected, let got): "SQLite argument count mismatch: expected \(expected), got \(got)"
         case .invalidArgument(let msg): "Invalid SQLite argument: \(msg)"
         }
