@@ -58,3 +58,8 @@ Before dispatch, record exact impacted tests/source SHA and toolchain. Do not co
 
 - Affected final Host fast retry: **62 passed, 0 failed, 1 explicitly skipped long case**, 43.278s. The long case has the separate real 305.143s result above; it is not counted as rerun. Includes the corrected full nested exception causes and the new regression that a nonzero Worker exit (23) cannot be hidden by an earlier successful module export. Raw log/fingerprints `build/runtime-host-jobs-fast-proof.*`.
 - Portable production ToolResultStore recompiled after metadata-isolation/locked-error changes and passed the 64-result / 18,350,080-byte proof again. Native job journal production sources recompiled and passed their state/reopen/interruption/600s checks again. No stale executable is accepted when compilation fails.
+
+### SDK retry after compiler-plugin failure
+
+- Run 42756831868 / source 063f44523b24d8d59dcff5c6768944ce4112761f failed before test execution. Xcode 27.2 compiled `EquatableMacros-t` with `-target arm64-apple-ios27.0-simulator` and iPhoneSimulator SDK, although its SwiftSyntax prebuilt contains macOS host modules only. This is a compiler-plugin build-platform failure, not an executed chat test failure. Raw `build/chat-runtime-42756831868-failed.log`.
+- Narrow CI correction: app build commands use their existing explicit iOS/iOS Simulator destination to select the app SDK, without a global `-sdk` override that forces host compiler tools onto iOS. Package jobs, target destinations, build scope and workflow triggers stay as before. This diagnosis requires fresh Xcode confirmation; it is not yet a PASS. The same exact five selectors will be retried before integrating the next Python packaging batch.
