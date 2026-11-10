@@ -5,7 +5,7 @@ import semver from 'semver';
 const lifecycleNames = ['preinstall', 'install', 'postinstall', 'prepare', 'prepublish'];
 const sourceExtensions = new Set(['.js', '.cjs', '.mjs', '.ts', '.cts', '.mts']);
 
-export function inspectManifest(manifest, nodeVersion = '24.5.0') {
+export function inspectManifest(manifest, nodeVersion = process.versions.node, {platform = process.platform, architecture = process.arch} = {}) {
   const findings = [];
   const requirement = manifest.engines?.node;
   if (requirement && !semver.satisfies(nodeVersion, requirement, { includePrerelease: true })) {
@@ -14,15 +14,15 @@ export function inspectManifest(manifest, nodeVersion = '24.5.0') {
       { code: 'manifest_node_engine', phase: 'manifest' },
     ));
   }
-  if (Array.isArray(manifest.os) && manifest.os.length > 0 && !allows(manifest.os, 'darwin')) {
+  if (Array.isArray(manifest.os) && manifest.os.length > 0 && !allows(manifest.os, platform)) {
     findings.push(unsupported(
-      `Package OS constraint does not allow darwin: ${manifest.os.join(', ')}`,
+      `Package OS constraint does not allow ${platform}: ${manifest.os.join(', ')}`,
       { code: 'manifest_os', phase: 'manifest' },
     ));
   }
-  if (Array.isArray(manifest.cpu) && manifest.cpu.length > 0 && !allows(manifest.cpu, 'arm64')) {
+  if (Array.isArray(manifest.cpu) && manifest.cpu.length > 0 && !allows(manifest.cpu, architecture)) {
     findings.push(unsupported(
-      `Package CPU constraint does not allow arm64: ${manifest.cpu.join(', ')}`,
+      `Package CPU constraint does not allow ${architecture}: ${manifest.cpu.join(', ')}`,
       { code: 'manifest_cpu', phase: 'manifest' },
     ));
   }
@@ -395,6 +395,7 @@ function hasNonliteralResolution(source) {
 }
 
 function allows(values, current) {
+  if (values.length === 1 && values[0] === 'any') return true;
   const positives = values.filter(value => !value.startsWith('!'));
   if (values.includes(`!${current}`)) return false;
   return positives.length === 0 || positives.includes(current);

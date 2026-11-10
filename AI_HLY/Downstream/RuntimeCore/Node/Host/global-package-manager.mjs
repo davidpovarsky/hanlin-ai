@@ -9,7 +9,7 @@ import {prepareOptionalBuildRetry} from './optional-lifecycle.mjs';
 import { currentGlobalState, prepareGlobalTransaction, saveGlobalTransaction, loadGlobalTransaction,
   transactionRoot, publishGlobalTransaction, discardGlobalTransaction } from './global-package-state.mjs';
 
-const NODE_VERSION = '24.5.0';
+const NODE_VERSION = process.versions.node;
 
 export async function previewGlobalPackage({ root, name, version, registry }) {
   const resolved = await resolve(name, version, path.join(root, 'cache', 'npm'),registry);
@@ -48,7 +48,7 @@ export async function stageGlobalPackage({ root, name, version, registry }) {
   const arborist = new Arborist({ path: staging, cache, registry, ignoreScripts: true, audit: false, fund: false });
   const tree=await arborist.reify({ omit: ['dev'], ignoreScripts: true });
   const packageRoot = path.join(staging, 'node_modules', ...resolved.manifest.name.split('/'));
-  const archive = await inspectArchiveSafety(packageRoot, { maximumFiles: 50_000 });
+  const archive = await inspectArchiveSafety(packageRoot);
   const compatibility = mergeCompatibilityReports({
     manifestFindings: inspectManifest(resolved.manifest, NODE_VERSION),
     archive,

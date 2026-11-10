@@ -15,7 +15,7 @@ import {
 import { runMCPRuntimeProbe } from './runtime-probe.mjs';
 import {planLifecycleTree} from './lifecycle-planner.mjs';
 
-const NODE_VERSION = '24.5.0';
+const NODE_VERSION = process.versions.node;
 const runtimeDependencyOverrides = JSON.parse(await fs.readFile(
   new URL('./runtime-dependency-overrides.json', import.meta.url),
   'utf8',
