@@ -4,6 +4,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
 import { applyHostDependencyPatches } from '../apply-host-dependency-patches.mjs';
 
 test('actual published Yarn patch is idempotent and refuses changed bytes or versions', async t => {
@@ -13,6 +14,7 @@ test('actual published Yarn patch is idempotent and refuses changed bytes or ver
   const manifest = JSON.parse(await fs.readFile(new URL('host-dependency-patches.json', source), 'utf8'));
   await fs.writeFile(path.join(root, 'host-dependency-patches.json'), JSON.stringify(manifest));
   const metadata = path.join(root, 'node_modules', manifest.package, 'package.json');
+  const upstreamFiles = new Map();
   await fs.mkdir(path.dirname(metadata), { recursive: true });
   await fs.writeFile(metadata, JSON.stringify({ version: manifest.version }));
   for (const license of manifest.licenses ?? []) {
@@ -25,8 +27,14 @@ test('actual published Yarn patch is idempotent and refuses changed bytes or ver
       await fs.writeFile(file, JSON.stringify({ version: entry.version }));
     }
     let upstream = await fs.readFile(new URL(entry.path, source), 'utf8');
-    for (const { before, after } of [...entry.replacements].reverse()) upstream = upstream.replace(after, () => before);
+    if (entry.generator) {
+      const require = createRequire(path.resolve(process.env.HANLIN_HOST_GRAMMAR_COMPILER_ROOT, 'package.json'));
+      const grammar = await fs.readFile(path.join(root, entry.generator.grammar), 'utf8');
+      upstream = require('pegjs').generate(grammar, { output: 'source', format: 'commonjs' });
+    }
+    for (const { before, after } of [...(entry.replacements ?? [])].reverse()) upstream = upstream.replace(after, () => before);
     assert.equal(createHash('sha256').update(upstream).digest('hex'), entry.upstreamSHA256);
+    upstreamFiles.set(entry.path, upstream);
     const destination = path.join(root, entry.path);
     await fs.mkdir(path.dirname(destination), { recursive: true });
     await fs.writeFile(destination, upstream);
@@ -35,6 +43,16 @@ test('actual published Yarn patch is idempotent and refuses changed bytes or ver
   await applyHostDependencyPatches(root);
   await applyHostDependencyPatches(root); // Repeat preparation never patches twice.
   await applyHostDependencyPatches(root, { checkOnly: true });
+  const generated = manifest.files.find(entry => entry.generator);
+  if (generated) {
+    const compiledPath = path.join(root, generated.path), validCompiled = await fs.readFile(compiledPath);
+    await fs.writeFile(compiledPath, upstreamFiles.get(generated.path));
+    const compilerRoot = path.join(root, 'bad-build-tools');
+    await fs.mkdir(compilerRoot);
+    await fs.writeFile(path.join(compilerRoot, 'package-lock.json'), JSON.stringify({ packages: { 'node_modules/pegjs': { integrity: 'changed' } } }));
+    await assert.rejects(applyHostDependencyPatches(root, { compilerRoot }), /compiler integrity lock mismatch/);
+    await fs.writeFile(compiledPath, validCompiled);
+  }
   const target = path.join(root, manifest.files[0].path);
   const valid = await fs.readFile(target);
   await fs.appendFile(target, '\n// changed dependency\n');

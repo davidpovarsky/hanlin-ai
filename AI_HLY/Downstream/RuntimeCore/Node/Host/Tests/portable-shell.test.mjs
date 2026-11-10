@@ -35,6 +35,30 @@ test('actual Yarn language preserves quoting, Unicode argv, environment and cwd 
   assert.equal(io.environment.NAME, undefined);
 });
 
+test('original multiline shell source retains file redirection and stdout-to-stderr duplication',async t=>{
+  const io=await fixture(t);
+  const source=`NAME='שלום'; echo "$NAME" > native-yarn.txt
+echo native-yarn-error 1>&2
+false || echo ACTUAL_PORTABLE_SHELL_COMPLETE`;
+  const code=await executePortableShell(source,[],io);
+  assert.equal(code,0);assert.match(io.out(),/ACTUAL_PORTABLE_SHELL_COMPLETE/);
+  assert.match(io.err(),/native-yarn-error/);
+  assert.equal(await fs.readFile(path.join(io.cwd,'native-yarn.txt'),'utf8'),'שלום\n');
+});
+
+test('grammar newline boundaries preserve quoted text, comments, CRLF and continued commands',async t=>{
+  const io=await fixture(t);
+  const source=`\n# header\necho 'single\nquoted'\necho "double\nquoted"\necho foo#literal # ignored\necho foo\\\nbar\necho one \\\n two\necho joined &&\n# continuation comment\necho right |\ncat-adapter\n(\n echo subshell\n)\necho "$(\n echo substitution\n)"\n`;
+  const code=await executePortableShell(source,[],{...io,dispatch:async request=>{
+    assert.equal(request.command,'cat-adapter');for await(const chunk of request.stdin)request.stdout.write(chunk);return 0;
+  }});
+  assert.equal(code,0);assert.equal(io.err(),'');
+  assert.equal(io.out(),'single\nquoted\ndouble\nquoted\nfoo#literal\nfoobar\none two\njoined\nright\nsubshell\nsubstitution\n');
+  const windows=await fixture(t);
+  assert.equal(await executePortableShell('echo first\r\necho second\r\n',[],windows),0);
+  assert.equal(windows.out(),'first\nsecond\n');
+});
+
 test('real interpreter pipes stdin and redirects output while retaining exact failing exit status', async t => {
   const io = await fixture(t);
   const code = await executePortableShell(`echo 'שלום 👋🏽' | transform > 'result.txt'; fail 2> 'error.txt'`, [], {

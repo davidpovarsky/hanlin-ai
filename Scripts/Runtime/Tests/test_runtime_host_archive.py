@@ -40,6 +40,12 @@ class RuntimeHostArchiveTests(unittest.TestCase):
     def fail_builder(self):
         self.fail("An unchanged dependency closure must not reinstall/retest packages")
 
+    def test_build_only_grammar_compiler_cannot_leak_into_the_mobile_archive(self):
+        self.write_archive(self.archive)
+        with zipfile.ZipFile(self.archive, "a") as packed:
+            packed.writestr("node_modules/pegjs/package.json", '{"version":"0.10.0"}')
+        self.assertTrue(any("Build-only grammar compiler" in error for error in archive_module.validate_archive(self.archive, self.source)))
+
     def test_real_archive_requires_the_actual_audited_dependency_patch_bytes(self):
         payload = b"actual patched dependency"
         name = "node_modules/node-fetch/patched.js"

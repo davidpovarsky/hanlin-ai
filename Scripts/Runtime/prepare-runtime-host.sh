@@ -6,6 +6,7 @@ readonly REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 readonly HOST_SOURCE="${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host"
 readonly WORK_ROOT="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/hanlin-runtime-host"
 readonly OUTPUT_ROOT="${REPOSITORY_ROOT}/build/runtime-host"
+readonly GRAMMAR_TOOL_ROOT="${WORK_ROOT}-grammar-tools"
 
 readonly NODE_FINGERPRINT="$(node -p 'JSON.stringify({ versions: process.versions, platform: process.platform, arch: process.arch })')"
 readonly SOURCE_INPUTS_HASH="$(python3 "${SCRIPT_DIR}/runtime_host_archive.py" fingerprint --source-root "${HOST_SOURCE}" --node-fingerprint "${NODE_FINGERPRINT}")"
@@ -14,8 +15,11 @@ if python3 "${SCRIPT_DIR}/runtime_host_archive.py" reuse "${OUTPUT_ROOT}" --sour
   exit 0
 fi
 
-rm -rf "${WORK_ROOT}" "${OUTPUT_ROOT}"
-mkdir -p "${WORK_ROOT}" "${OUTPUT_ROOT}"
+rm -rf "${WORK_ROOT}" "${OUTPUT_ROOT}" "${GRAMMAR_TOOL_ROOT}"
+mkdir -p "${WORK_ROOT}" "${OUTPUT_ROOT}" "${GRAMMAR_TOOL_ROOT}"
+cp "${SCRIPT_DIR}/HostGrammarTools/package.json" "${SCRIPT_DIR}/HostGrammarTools/package-lock.json" "${GRAMMAR_TOOL_ROOT}/"
+(cd "${GRAMMAR_TOOL_ROOT}" && npm ci --ignore-scripts --workspaces=false --no-audit --no-fund)
+export HANLIN_HOST_GRAMMAR_COMPILER_ROOT="${GRAMMAR_TOOL_ROOT}"
 cp \
   "${HOST_SOURCE}"/*.mjs \
   "${HOST_SOURCE}/package.json" \
@@ -23,6 +27,7 @@ cp \
   "${HOST_SOURCE}/runtime-dependency-overrides.json" \
   "${HOST_SOURCE}/host-dependency-patches.json" \
   "${HOST_SOURCE}/UNICODE-LICENSE.txt" \
+  "${HOST_SOURCE}/PEGJS-LICENSE.txt" \
   "${WORK_ROOT}/"
 cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
 
@@ -31,6 +36,7 @@ cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
   npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund
   node apply-host-dependency-patches.mjs
   node "${SCRIPT_DIR}/generate-yarn-unicode-patch.mjs" --root "${WORK_ROOT}"
+  node "${SCRIPT_DIR}/generate-yarn-multiline-patch.mjs" --root "${WORK_ROOT}" --compiler-root "${GRAMMAR_TOOL_ROOT}"
   npm test
   rm -rf Tests
   find . -type f -print | LC_ALL=C sort | zip -X -q "${OUTPUT_ROOT}/RuntimeHostResources.zip" -@
@@ -57,5 +63,5 @@ node -e '
   }, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/host-metadata.json" "${host_sha256}" "$(node --version)" "${SOURCE_INPUTS_HASH}"
 
-rm -rf "${WORK_ROOT}"
+rm -rf "${WORK_ROOT}" "${GRAMMAR_TOOL_ROOT}"
 echo "Prepared RuntimeHostResources.zip (${host_sha256})."

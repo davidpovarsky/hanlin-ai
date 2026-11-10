@@ -1,0 +1,7 @@
+{
+  "name": "hanlin-host-grammar-tools",
+  "private": true,
+  "dependencies": {
+    "pegjs": "0.10.0"
+  }
+}

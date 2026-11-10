@@ -37,6 +37,8 @@ def validate_archive(archive: Path, source: Path, *, check_sources: bool = False
                 entries[name] = entry
             def read(name):
                 return packed.read(entries[name])
+            if "node_modules/pegjs" not in lock.get("packages", {}) and any(name.startswith("node_modules/pegjs/") for name in entries):
+                errors.append("Build-only grammar compiler must not ship in the mobile Host archive")
             if json.loads(read("package.json")) != manifest:
                 errors.append("Host package.json differs from current source")
             if json.loads(read("package-lock.json")) != lock:
@@ -120,7 +122,10 @@ def input_hash(source: Path, node_fingerprint: str) -> str:
                 files.append((path.relative_to(source).as_posix(), path))
     files += [("build/prepare-runtime-host.sh", Path(__file__).with_name("prepare-runtime-host.sh")),
               ("build/runtime_host_archive.py", Path(__file__)),
-              ("build/generate-yarn-unicode-patch.mjs", Path(__file__).with_name("generate-yarn-unicode-patch.mjs"))]
+              ("build/generate-yarn-unicode-patch.mjs", Path(__file__).with_name("generate-yarn-unicode-patch.mjs")),
+              ("build/generate-yarn-multiline-patch.mjs", Path(__file__).with_name("generate-yarn-multiline-patch.mjs"))]
+    for name in ("package.json", "package-lock.json"):
+        files.append(("build/HostGrammarTools/" + name, Path(__file__).with_name("HostGrammarTools") / name))
     for name, path in sorted(files):
         digest.update(name.encode() + b"\0" + hashlib.sha256(path.read_bytes()).digest())
     return digest.hexdigest()
