@@ -1,3 +1,4 @@
+import { EventEmitter } from 'node:events';
 import { createHash, randomUUID } from 'node:crypto';
 import { promises as fs, createWriteStream, createReadStream, readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -12,6 +13,8 @@ const validID = id => typeof id === 'string' && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}
 export class ExecutionJobs {
   #jobs = new Map();
   #writes = new Map();
+  #activeBrokers = new Map();
+  #commandEvents = new EventEmitter();
   constructor({ root, workerURL, diagnosticWorkerURL, globalNodeModules }) {
     this.root = root;
     this.workerURL = workerURL;
@@ -70,6 +73,7 @@ export class ExecutionJobs {
       await job.commandBroker?.cancel().catch(() => {});
       await job.worker?.terminate().catch(() => {});
       await job.commandBroker?.drain().catch(() => {});
+      this.#activeBrokers.delete(id);
       for (const stream of Object.values(job.streams ?? {})) stream.destroy();
       header.state = 'failed';
       header.result = null;
@@ -95,6 +99,31 @@ export class ExecutionJobs {
     await this.#persist(job.header);
     if (job.cancel) await job.cancel();
     return job.header;
+  }
+
+  async waitForCommandRequests(signal) {
+    const current = await this.allCommandRequests();
+    if (current.length || signal?.aborted) return current;
+    return new Promise((resolve,reject)=>{
+      let settled=false,timer;
+      const finish=(value,error)=>{
+        if(settled)return;settled=true;
+        clearTimeout(timer);this.#commandEvents.off('available',wake);
+        signal?.removeEventListener('abort',abort);
+        if(error)reject(error);else resolve(value);
+      };
+      const wake=()=>{ void this.allCommandRequests().then(value=>{if(value.length)finish(value);},error=>finish(null,error)); };
+      const abort=()=>finish([]);
+      this.#commandEvents.on('available',wake);
+      signal?.addEventListener('abort',abort,{once:true});
+      // A transport heartbeat, never a deadline or cancellation of an execution.
+      timer=setTimeout(()=>finish([]),25000);timer.unref();
+      if(signal?.aborted)abort();else wake();
+    });
+  }
+
+  async allCommandRequests() {
+    return (await Promise.all([...this.#activeBrokers.values()].map(broker=>broker.requests()))).flat();
   }
 
   async commandRequests(id) {
@@ -146,9 +175,10 @@ export class ExecutionJobs {
     if (cli) {
       if (!(await fs.stat(entryPoint)).isFile()) throw new Error('The CLI entry must be an existing regular file.');
     } else await fs.writeFile(entryPoint, body.source, { mode: 0o600 });
-    if (this.globalNodeModules) {
-      try { await fs.access(this.globalNodeModules); await fs.symlink(this.globalNodeModules, path.join(directory, 'node_modules'), 'dir'); }
-      catch (error) { if (error.code !== 'ENOENT') throw error; }
+    let globalNodeModules = typeof this.globalNodeModules === 'function' ? await this.globalNodeModules() : this.globalNodeModules;
+    if (globalNodeModules) {
+      try { globalNodeModules = await fs.realpath(globalNodeModules); }
+      catch (error) { if (error.code !== 'ENOENT') throw error; globalNodeModules = undefined; }
     }
     const streams = {};
     job.streams = streams;
@@ -175,12 +205,16 @@ export class ExecutionJobs {
     const { port1, port2 } = new MessageChannel();
     const commandDirectory = path.join(directory, 'commands');
     await fs.mkdir(commandDirectory, { mode: 0o700 });
-    const commandBroker = new RuntimeCommandBroker({ directory: commandDirectory, port: port1, parentExecutionID: header.executionID });
+    const commandBroker = new RuntimeCommandBroker({ directory: commandDirectory, port: port1, parentExecutionID: header.executionID, onAvailable:()=>this.#commandEvents.emit('available') });
     job.commandBroker = commandBroker;
+    this.#activeBrokers.set(header.executionID, commandBroker);
     const startGate = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT);
     let worker;
     try { worker = new Worker(cli ? entryPoint : workerURL, {
-      workerData: { entryPoint, workspace: body.workspace, moduleKind: body.moduleKind, arguments: body.arguments ?? [], environment: body.environment ?? {}, maximumOutputBytes: previewBytes, commandPort: port2, commandDirectory, globalNodeModules: this.globalNodeModules, startGate },
+      workerData: { hanlinManagedExecution: true, launchNodeOptions: this.workerEnvironment.NODE_OPTIONS,
+        entryPoint, executionMode: body.executionMode, workspace: body.workspace, moduleKind: body.moduleKind,
+        arguments: body.arguments ?? [], environment: body.environment ?? {}, maximumOutputBytes: previewBytes,
+        commandPort: port2, commandDirectory, globalNodeModules, startGate },
       stdout: true, stderr: true, stdin: cli,
       transferList: [port2],
       env: environment, argv: cli ? (body.arguments ?? []).map(String) : [],
@@ -240,6 +274,7 @@ export class ExecutionJobs {
     await commandBroker.cancel();
     await commandBroker.drain();
     job.commandBroker = null;
+    this.#activeBrokers.delete(header.executionID);
     await Promise.all(Object.values(streams).map(stream => finished(stream)));
     const wasCancelled = header.cancellationRequested;
     const failed = ioError || workerError || message?.type === 'failed' || exitCode !== 0;

@@ -8,11 +8,25 @@ struct NodePackageFinding: Codable, Hashable, Sendable, Identifiable {
 
 struct LifecycleExecutionPlan: Codable, Hashable, Sendable {
     struct Action: Codable, Hashable, Sendable, Identifiable {
-        var id: String { "\(script):\(kind):\(command ?? ""):\(arguments.joined(separator: ":"))" }
+        var id: Self { self }
         let script: String
         let kind: String
         let command: String?
         let arguments: [String]
+        let source: String?
+        let workingDirectory: String?
+        let packageName: String?
+        let packageVersion: String?
+        let packageIntegrity: String?
+        let sourceOrigin: String?
+
+        init(script: String, kind: String, command: String?, arguments: [String], source: String? = nil,
+             workingDirectory: String? = nil, packageName: String? = nil, packageVersion: String? = nil,
+             packageIntegrity: String? = nil, sourceOrigin: String? = nil) {
+            self.script = script; self.kind = kind; self.command = command; self.arguments = arguments
+            self.source = source; self.workingDirectory = workingDirectory; self.packageName = packageName
+            self.packageVersion = packageVersion; self.packageIntegrity = packageIntegrity; self.sourceOrigin = sourceOrigin
+        }
     }
     struct Rejection: Codable, Hashable, Sendable { let script: String; let reason: String }
     let packageName: String
@@ -23,6 +37,18 @@ struct LifecycleExecutionPlan: Codable, Hashable, Sendable {
     let rejected: [Rejection]
     let requiresApproval: Bool
     let executable: Bool
+    let schemaVersion: Int?
+    let context: String?
+
+    init(packageName: String, packageVersion: String, integrity: String?, scriptHash: String,
+         actions: [Action], rejected: [Rejection], requiresApproval: Bool, executable: Bool,
+         schemaVersion: Int? = nil, context: String? = nil) {
+        self.packageName = packageName; self.packageVersion = packageVersion; self.integrity = integrity
+        self.scriptHash = scriptHash; self.actions = actions; self.rejected = rejected
+        self.requiresApproval = requiresApproval; self.executable = executable
+        self.schemaVersion = schemaVersion; self.context = context
+    }
+
 }
 
 struct NodePackageDetails: Codable, Identifiable, Hashable, Sendable {
@@ -59,6 +85,7 @@ actor NodePackageManager {
     private struct PackageList: Decodable { let packages: [NodePackageDetails] }
     private let node: NodeRuntimeService
     private let lifecycle: LifecycleExecutionBroker
+    private var operationTail: Task<Void, Never>?
 
     init(node: NodeRuntimeService, lifecycle: LifecycleExecutionBroker) {
         self.node = node
@@ -80,23 +107,32 @@ actor NodePackageManager {
 
     // approveLifecycle is retained for source compatibility; execution is autonomous.
     func install(name: String, version: String? = nil, approveLifecycle: Bool = false) async throws -> NodePackageDetails {
+        let previous = operationTail
+        let task = Task {
+            if let previous { await previous.value }
+            try Task.checkCancellation()
+            return try await performInstall(name: name, version: version)
+        }
+        operationTail = Task { _ = await task.result }
+        return try await withTaskCancellationHandler { try await task.value } onCancel: { task.cancel() }
+    }
+
+    private func performInstall(name: String, version: String?) async throws -> NodePackageDetails {
         let host = try await node.ensureRunning()
         var body: [String: Any] = ["name": name]
         if let version { body["version"] = version }
         let encodedBody = try JSONSerialization.data(withJSONObject: body)
-        let transaction = try await host.decode(
+        let transaction = try await node.stageNodePackage(
             NodePackageInstallTransaction.self,
-            path: "/v1/packages/node/stage",
-            method: "POST",
-            body: encodedBody,
-            timeout: 600
+            body: encodedBody
         )
         let transactionBody = try JSONSerialization.data(withJSONObject: ["transactionID": transaction.transactionID])
         do {
             if let plan = transaction.package.lifecycle {
                 try await lifecycle.execute(plan, packageRoot: URL(fileURLWithPath: transaction.packageRoot, isDirectory: true))
             }
-            try await probeStaged(transaction.package, workspace: URL(fileURLWithPath: transaction.packageRoot, isDirectory: true))
+            try await probeStaged(transaction.package, workspace: URL(fileURLWithPath: transaction.package.packageRoot ?? transaction.packageRoot, isDirectory: true))
+            try Task.checkCancellation()
             _ = try await host.data(path: "/v1/packages/node/commit", method: "POST", body: transactionBody, timeout: 60)
             let packages = try await installed()
             return packages.first(where: { $0.name == transaction.package.name }) ?? transaction.package
@@ -107,9 +143,34 @@ actor NodePackageManager {
     }
 
     func uninstall(name: String) async throws {
+        let previous = operationTail
+        let task = Task {
+            if let previous { await previous.value }
+            try Task.checkCancellation()
+            try await performUninstall(name: name)
+        }
+        operationTail = Task { _ = await task.result }
+        try await withTaskCancellationHandler { try await task.value } onCancel: { task.cancel() }
+    }
+
+    private func performUninstall(name: String) async throws {
         let host = try await node.ensureRunning()
         let body = try JSONSerialization.data(withJSONObject: ["name": name])
-        _ = try await host.data(path: "/v1/packages/node/uninstall", method: "POST", body: body, timeout: 600)
+        struct Removal: Decodable, Sendable {
+            let transactionID: String
+            let packageRoot: String
+            let lifecycle: LifecycleExecutionPlan
+        }
+        let removal = try await node.stageNodePackage(Removal.self, removing: true, body: body)
+        let transaction = try JSONSerialization.data(withJSONObject: ["transactionID": removal.transactionID])
+        do {
+            try await lifecycle.execute(removal.lifecycle, packageRoot: URL(fileURLWithPath: removal.packageRoot, isDirectory: true))
+            try Task.checkCancellation()
+            _ = try await host.data(path: "/v1/packages/node/commit", method: "POST", body: transaction)
+        } catch {
+            _ = try? await host.data(path: "/v1/packages/node/rollback", method: "POST", body: transaction)
+            throw error
+        }
     }
 
     func probe(_ package: NodePackageDetails) async throws -> RuntimeExecutionResult {

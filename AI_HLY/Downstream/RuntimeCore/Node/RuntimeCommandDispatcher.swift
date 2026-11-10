@@ -11,6 +11,7 @@ struct RuntimeCommandRequest: Decodable, Sendable {
     let cancellationRequested: Bool
     let engine: String?
     let entryPoint: String?
+    var ownerKey: String { parentExecutionID.uuidString + ":" + id.uuidString }
 }
 
 /// Reuses AppRuntimeCore's actors. There is no extra engine, HTTP server, OS
@@ -25,7 +26,7 @@ struct RuntimeCommandDispatcher: Sendable {
         do {
             let directory = try fileLayout.validatedDescendant(directory, of: fileLayout.root)
             let input = try fileLayout.validatedDescendant(directory.appending(path: "stdin"), of: directory)
-            guard input.path == URL(fileURLWithPath: request.standardInputPath).standardizedFileURL.path else { throw RuntimeCoreError.invalidPath }
+            guard input.path == URL(fileURLWithPath: request.standardInputPath).standardizedFileURL.resolvingSymlinksInPath().path else { throw RuntimeCoreError.invalidPath }
             if request.cancellationRequested { throw CancellationError() }
             try Task.checkCancellation()
             let workspace = try fileLayout.validatedWorkspace(URL(fileURLWithPath: request.cwd, isDirectory: true))

@@ -69,22 +69,36 @@ async function executeNpmScript(context, dispatch) {
     context.stderr.write(`Missing npm script: ${target}\n`);
     return 1;
   }
-  const bins = [];
-  for (let directory = context.cwd;; directory = path.dirname(directory)) {
-    bins.push(path.join(directory,'node_modules','.bin'));
-    if (path.dirname(directory) === directory) break;
-  }
-  const environment = { ...context.environment, INIT_CWD: context.environment.INIT_CWD ?? context.cwd,
-    PATH: [...bins,context.environment.PATH ?? ''].join(path.delimiter),
-    npm_package_json: manifestPath, npm_package_name: String(manifest.name ?? ''),
-    npm_package_version: String(manifest.version ?? ''), npm_command:'run-script' };
   for (const event of ['pre'+target,target,'post'+target]) {
     if (scripts[event] == null) continue;
     if (typeof scripts[event] !== 'string') throw new TypeError(`npm script ${event} must be a string.`);
     const status = await executePortableShell(scripts[event], event===target?arguments_:[], {
-      ...context, environment: {...environment,npm_lifecycle_event:event,npm_lifecycle_script:scripts[event]}, dispatch,
+      ...context, environment: await packageLifecycleEnvironment({cwd:context.cwd,environment:context.environment,manifest,event,source:scripts[event],command:'run-script'}), dispatch,
     });
     if (status !== 0) return status;
   }
   return 0;
+}
+
+
+export async function packageLifecycleEnvironment({cwd,environment,manifest,packageName,packageVersion,event,source,initialCwd,command='install'}) {
+  manifest??=JSON.parse(await fs.readFile(path.join(cwd,'package.json'),'utf8'));
+  const bins=[];
+  for(let directory=cwd;;directory=path.dirname(directory)) {
+    bins.push(path.join(directory,'node_modules','.bin'));
+    if(path.dirname(directory)===directory)break;
+  }
+  const packageValues={};
+  const flatten=(key,value)=>{
+    if(value===undefined)return;
+    if(value!==null && typeof value==='object')for(const [child,item] of Object.entries(value))flatten(key+'_'+child,item);
+    else packageValues[key]=value===null||value===false?'':String(value);
+  };
+  // npm RFC 183: lifecycle metadata includes these five package fields only.
+  for(const key of ['name','version','config','engines','bin'])flatten('npm_package_'+key,manifest[key]);
+  return {...environment,...packageValues,INIT_CWD:environment.INIT_CWD??initialCwd??cwd,
+    PATH:[...bins,environment.PATH??''].join(path.delimiter),
+    npm_package_json:path.join(cwd,'package.json'),npm_package_name:String(packageName??manifest.name??''),
+    npm_package_version:String(packageVersion??manifest.version??''),npm_command:command,
+    npm_lifecycle_event:event,npm_lifecycle_script:source};
 }

@@ -13,7 +13,8 @@ export class RuntimeCommandBroker {
   #completing = Promise.resolve();
   #timer;
   #checking = false;
-  constructor({ directory, port, parentExecutionID }) {
+  constructor({ directory, port, parentExecutionID, onAvailable = () => {} }) {
+    this.onAvailable = onAvailable;
     this.directory = directory;
     this.port = port;
     this.parentExecutionID = parentExecutionID;
@@ -36,7 +37,10 @@ export class RuntimeCommandBroker {
     if (this.cancellationRequested) throw new Error('The parent execution was cancelled.');
     if (!validID(message?.id) || typeof message.command !== 'string' || !Array.isArray(message.arguments)
         || !message.arguments.every(item => typeof item === 'string') || typeof message.cwd !== 'string'
-        || !message.environment || typeof message.environment !== 'object' || Array.isArray(message.environment)) {
+        || !message.environment || typeof message.environment !== 'object' || Array.isArray(message.environment)
+        || !Object.entries(message.environment).every(([name,value])=>name.length>0 && !name.includes('=') && !name.includes('\0') && typeof value==='string' && !value.includes('\0'))
+        || (message.engine != null && !['node','python','shell'].includes(message.engine))
+        || (message.entryPoint != null && (typeof message.entryPoint!=='string' || message.entryPoint.includes('\0')))) {
       throw new Error('Malformed runtime command request.');
     }
     const directory = path.join(this.directory, message.id);
@@ -49,6 +53,7 @@ export class RuntimeCommandBroker {
     let release;
     const done = new Promise(resolve => { release = resolve; });
     this.#pending.set(message.id, { record, done, release });
+    this.onAvailable();
   }
   async requests() {
     await this.#writes;

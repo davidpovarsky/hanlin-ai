@@ -79,16 +79,27 @@ actor LifecycleExecutionBroker {
         }
         // Staged package integrity/script identity remain required; legacy human
         // approvals are metadata, not a gate for the personal-development host.
-        if !plan.actions.isEmpty {
+        if plan.schemaVersion != 2, !plan.actions.isEmpty {
             guard let integrity = plan.integrity, !integrity.isEmpty,
                   plan.scriptHash.range(of: "^[a-f0-9]{64}$", options: .regularExpression) != nil else {
                 throw RuntimeCoreError.invalidRequest("Lifecycle execution requires verified package integrity and a script hash.")
             }
         }
         let workspace = try fileLayout.validatedWorkspace(packageRoot)
+        if plan.schemaVersion == 2 { try await node.verifyLifecyclePlan(plan, workspace: workspace) }
         for action in plan.actions {
             try Task.checkCancellation()
             switch action.kind {
+            case "portableShell":
+                guard let source = action.source else { throw RuntimeCoreError.invalidRequest("Lifecycle script source is missing.") }
+                let directory = try fileLayout.validatedDescendant(workspace.appending(path: action.workingDirectory ?? "."), of: workspace, allowRoot: true)
+                let result = try await node.executePortableShell(RuntimeExecutionRequest(source: source, workspace: directory),
+                    lifecycle: RuntimeLifecycleContext(packageName: action.packageName ?? plan.packageName,
+                        packageVersion: action.packageVersion ?? plan.packageVersion, event: action.script, initialCwd: workspace.path))
+                if result.wasCancelled { throw CancellationError() }
+                guard result.exitCode == 0, !result.didTimeOut else {
+                    throw RuntimeCoreError.runtimeFailure("Lifecycle \(action.script) exited with status \(result.exitCode ?? 1). \(result.stderr)")
+                }
             case "node":
                 try await executeNode(action, workspace: workspace)
             case "typescript":

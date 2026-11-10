@@ -1,3 +1,5 @@
+import { verifyLifecyclePlan } from './lifecycle-planner.mjs';
+import { globalNodeModules } from './global-package-state.mjs';
 import { ExecutionJobs } from './execution-jobs.mjs';
 import './fetch-compatibility.mjs';
 import { traceRuntimeWarnings } from './warning-diagnostics.mjs';
@@ -84,7 +86,7 @@ diagnostic('runtime_paths_configured', {
 
 const { commitInstall, installPackage, previewPackage, rollbackInstall } =
   await import('./package-installer.mjs');
-const { commitGlobalPackage, installGlobalPackage, listGlobalPackages, previewGlobalPackage, rollbackGlobalPackage, stageGlobalPackage, uninstallGlobalPackage } =
+const { commitGlobalPackage, installGlobalPackage, listGlobalPackages, previewGlobalPackage, rollbackGlobalPackage, stageGlobalPackage, stageUninstallGlobalPackage, uninstallGlobalPackage } =
   await import('./global-package-manager.mjs');
 
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
@@ -92,7 +94,7 @@ const executionWorkerURL = new URL('./execution-worker.mjs', import.meta.url);
 const servers = new Map();
 const serverRestarts = new Map();
 const serverGenerations = new Map();
-const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: path.join(root, 'packages', 'node-global', 'node_modules') });
+const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: () => globalNodeModules(root) });
 await executionJobs.initialize();
 const installs = new Map();
 const installProgress = new Map();
@@ -134,6 +136,18 @@ const server = http.createServer(async (request, response) => {
         stopTracing();
       }
     }
+    if (request.method === 'GET' && url.pathname === '/v1/commands/wait') {
+      const controller=new AbortController();
+      const close=()=>controller.abort();response.once('close',close);
+      try {
+        const pending=await executionJobs.waitForCommandRequests(controller.signal);
+        if(!response.destroyed)json(response,200,pending);
+      } finally {response.off('close',close);}
+      return;
+    }
+    if (request.method === 'GET' && url.pathname === '/v1/commands') {
+      return json(response, 200, await executionJobs.allCommandRequests());
+    }
     const executionCommandFailure = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/commands\/([0-9a-f-]+)\/fail$/i);
     if (request.method === 'POST' && executionCommandFailure) {
       const body = await readJSON(request);
@@ -173,6 +187,10 @@ const server = http.createServer(async (request, response) => {
       const body = await readJSON(request);
       return json(response, 200, await previewGlobalPackage({ root, name: body.name, version: body.version }));
     }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/lifecycle/verify') {
+      const body = await readJSON(request);
+      return json(response, 200, await verifyLifecyclePlan(body.packageRoot, body.plan));
+    }
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/install') {
       const body = await readJSON(request);
       return json(response, 200, await installGlobalPackage({ root, name: body.name, version: body.version }));
@@ -180,6 +198,10 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/stage') {
       const body = await readJSON(request);
       return json(response, 200, await stageGlobalPackage({ root, name: body.name, version: body.version }));
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/stage-uninstall') {
+      const body = await readJSON(request);
+      return json(response, 200, await stageUninstallGlobalPackage({root,name:body.name}));
     }
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/commit') {
       const body = await readJSON(request);
@@ -389,7 +411,7 @@ async function compileTypeScript(body) {
     noImplicitAny: false,
     allowJs: true,
     checkJs: false,
-    paths: { '*': [path.join(root, 'packages', 'node-global', 'node_modules', '*')] },
+    paths: { '*': [path.join(await globalNodeModules(root), '*')] },
     sourceMap: true,
     inlineSources: true,
   };
@@ -520,7 +542,7 @@ function validatedEnvironment(value) {
   if (value == null) return output;
   if (typeof value !== 'object' || Array.isArray(value)) throw new Error('Environment must be a dictionary.');
   for (const [name, item] of Object.entries(value)) {
-    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid environment name: ${name}`);
+    if ((!name || name.includes('=') || name.includes('\0'))) throw new Error(`Invalid environment name: ${name}`);
     const text = String(item);
     if (text.includes('\0')) throw new Error('Environment values cannot contain a NUL byte.');
     output[name] = text;

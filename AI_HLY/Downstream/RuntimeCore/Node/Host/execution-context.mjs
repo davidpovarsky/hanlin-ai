@@ -1,9 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire, syncBuiltinESMExports } from 'node:module';
+import { configureExecutionModules } from './execution-modules.mjs';
 
 /** Per-Worker context: never change the process-wide C working directory. */
-export function configureExecutionContext({ entryPoint, workspace, arguments: argv, environment, commandPort, startGate }, { setArguments = true } = {}) {
+export function configureExecutionContext(configuration, { setArguments = true } = {}) {
+  const { workspace, arguments: argv, environment, commandPort, startGate } = configuration;
   commandPort?.unref();
   if (startGate) {
     const state = new Int32Array(startGate);
@@ -11,6 +13,7 @@ export function configureExecutionContext({ entryPoint, workspace, arguments: ar
     // then releases user code; an I/O failure cannot run unjournalled side effects.
     while (Atomics.load(state, 0) === 0) Atomics.wait(state, 0, 0);
   }
+  const entryPoint = configureExecutionModules(configuration);
   globalThis.require = createRequire(entryPoint);
   globalThis.__filename = entryPoint;
   globalThis.__dirname = path.dirname(entryPoint);

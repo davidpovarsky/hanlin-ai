@@ -2,7 +2,7 @@ import Foundation
 
 enum RuntimePolicy {
     static func validateEnvironmentName(_ name: String) throws -> String {
-        guard name.range(of: "^[A-Za-z_][A-Za-z0-9_]*$", options: .regularExpression) != nil else {
+        guard !name.isEmpty, !name.contains("="), !name.contains("\0") else {
             throw RuntimeCoreError.invalidEnvironmentName
         }
         return name

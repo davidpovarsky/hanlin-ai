@@ -14,6 +14,78 @@ async function fixture(t) {
   return { jobs, root, body: { workspace: root, moduleKind: 'esm', maximumOutputBytes: 4096 } };
 }
 
+for (const moduleKind of ['esm','commonjs']) {
+  test(`${moduleKind} resolves workspace modules and local exports before pinned global packages`, async t => {
+    const {jobs,root,body} = await fixture(t);
+    const globalModules=path.join(root,'global','node_modules');
+    jobs.globalNodeModules=globalModules;
+    const local=path.join(root,'node_modules','fixture');
+    const global=path.join(globalModules,'fixture');
+    const fallback=path.join(globalModules,'global-only');
+    for(const directory of [local,global,fallback]) await fs.mkdir(directory,{recursive:true});
+    for(const [directory,value] of [[local,'new-staged'],[global,'old-global'],[fallback,'fallback']]) {
+      await fs.writeFile(path.join(directory,'package.json'),JSON.stringify({name:path.basename(directory),version:'1.0.0',
+        exports:{import:'./import.mjs',require:'./require.cjs'}}));
+      await fs.writeFile(path.join(directory,'import.mjs'),`export default ${JSON.stringify(value+'-import')};`);
+      await fs.writeFile(path.join(directory,'require.cjs'),`module.exports=${JSON.stringify(value+'-require')};`);
+    }
+    await fs.writeFile(path.join(root,'sibling.mjs'),"export default 'relative';");
+    await fs.writeFile(path.join(root,'sibling.cjs'),"module.exports='relative';");
+    const source=moduleKind==='esm'
+      ? "import local from 'fixture'; import global from 'global-only'; import sibling from './sibling.mjs'; export default {local,global,sibling,directory: new URL('.',import.meta.url).pathname};"
+      : "module.exports={local:require('fixture'),global:require('global-only'),sibling:require('./sibling.cjs'),directory:__dirname};";
+    const header=await jobs.start({...body,moduleKind,source});
+    const job=await jobs.wait(header.executionID);
+    assert.equal(job.state,'completed',JSON.stringify(job));
+    assert.equal(job.result.value.local,`new-staged-${moduleKind==='esm'?'import':'require'}`);
+    assert.equal(job.result.value.global,`fallback-${moduleKind==='esm'?'import':'require'}`);
+    assert.equal(job.result.value.sibling,'relative');
+    assert.ok(job.result.value.directory.replaceAll('\\','/').includes(path.basename(root)));
+    // A broken local package may not quietly use the old global version.
+    await fs.rm(path.join(local,moduleKind==='esm'?'import.mjs':'require.cjs'));
+    const broken=await jobs.start({...body,moduleKind,source});
+    const failed=await jobs.wait(broken.executionID);
+    assert.equal(failed.state,'failed');
+    assert.doesNotMatch(failed.result.stdout,/old-global/);
+  });
+}
+
+test('managed CLI preload does not configure or leak its private bootstrap into nested Workers',async t=>{
+  const {jobs,root,body}=await fixture(t);
+  const entryPoint=path.join(root,'nested.cjs');
+  await fs.writeFile(entryPoint,`
+    const {Worker}=require('node:worker_threads');
+    if((process.env.NODE_OPTIONS??'').includes('cli-preload'))throw new Error('private bootstrap leaked');
+    const worker=new Worker("require('node:worker_threads').parentPort.postMessage('NESTED_OK')",{eval:true});
+    worker.on('message',value=>console.log(value));
+  `);
+  const header=await jobs.start({...body,executionMode:'cli',entryPoint});
+  const job=await jobs.wait(header.executionID);
+  assert.equal(job.state,'completed',JSON.stringify(job));
+  assert.match(job.result.stdout,/NESTED_OK/);
+});
+
+test('Host command wait wakes for actual requests and aborts without cancelling the execution',async t=>{
+  const {jobs,root,body}=await fixture(t);
+  const aborted=new AbortController();
+  const empty=jobs.waitForCommandRequests(aborted.signal);aborted.abort();
+  assert.deepEqual(await empty,[]);
+  const waiting=jobs.waitForCommandRequests();
+  const source=`import {executePortableShell} from ${JSON.stringify(new URL('../portable-shell.mjs',import.meta.url).href)};
+    await executePortableShell('node fixture.cjs',[],{cwd:process.cwd(),environment:process.env});`;
+  const header=await jobs.start({...body,source});
+  const requests=await waiting;
+  assert.equal(requests.length,1);assert.equal(requests[0].parentExecutionID,header.executionID);
+  assert.equal(jobs.snapshot(header.executionID).state,'running');
+  const response=path.join(path.dirname(requests[0].standardInputPath),'response.json');
+  await fs.writeFile(response,JSON.stringify({exitCode:0}));
+  assert.equal((await jobs.wait(header.executionID)).state,'completed');
+  assert.deepEqual(await jobs.allCommandRequests(),[]);
+  const controller=new AbortController();
+  const next=jobs.waitForCommandRequests(controller.signal);controller.abort();
+  assert.deepEqual(await next,[]);
+});
+
 test('full stdout and stderr survive preview limits and store reopen with verified hashes', async t => {
   const { jobs, root, body } = await fixture(t);
   const text = 'שלום 👨‍👩‍👧‍👦\n'.repeat(400_000);
@@ -191,13 +263,15 @@ test('CLI cancellation stops the actual main and retains partial output; launch 
 
 test('user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Worker bootstrap', async t => {
   const { jobs, root, body } = await fixture(t);
-  const environment = {PATH:'/user tools/bin', HOME:'/user-home', NODE_OPTIONS:'--not-a-node-bootstrap-flag', PYTHONHOME:'/user-python'};
+  const environment = {PATH:'/user tools/bin', HOME:'/user-home', NODE_OPTIONS:'--not-a-node-bootstrap-flag', PYTHONHOME:'/user-python','ProgramFiles(x86)':'/explicit-apps','שם-משתנה':'ערך'};
   const assertions = `
     const assert = require('node:assert/strict');
     assert.equal(process.env.PATH,'/user tools/bin');
     assert.equal(process.env.HOME,'/user-home');
     assert.equal(process.env.NODE_OPTIONS,'--not-a-node-bootstrap-flag');
     assert.equal(process.env.PYTHONHOME,'/user-python');
+    assert.equal(process.env['ProgramFiles(x86)'],'/explicit-apps');
+    assert.equal(process.env['שם-משתנה'],'ערך');
     console.log('JOB_ENV_WITHOUT_BOOTSTRAP_RECONFIGURATION');
   `;
   const original = process.env.NODE_OPTIONS;

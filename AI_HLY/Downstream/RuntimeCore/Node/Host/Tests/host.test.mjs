@@ -192,6 +192,35 @@ test('host redirects npm state before preview and install modules initialize', a
     assert.equal(cli.exitCode, 0, JSON.stringify(cli));
     assert.equal(cli.stdout, 'CLI_INPUT_שלום');
     assert.match(cli.stderr, /CLI_ENV/);
+    const parentSource = `import {executePortableShell} from ${JSON.stringify(new URL('../portable-shell.mjs',import.meta.url).href)};
+      const status=await executePortableShell("echo CLI_PARENT_INPUT | node 'actual cli.cjs' 'arg with spaces'",[],{cwd:process.cwd(),environment:process.env});
+      process.exitCode=status; export default status;`;
+    const parent = await hostRequest(ready.port,launchToken,'/v1/executions',{
+      executionID:randomUUID(),source:parentSource,moduleKind:'esm',workspace,detached:true,environment:{CLI_VALUE:'CLI_ENV'},
+    });
+    const read = async route => {
+      const response=await fetch(`http://127.0.0.1:${ready.port}${route}`,{headers:{Authorization:`Bearer ${launchToken}`}});
+      assert.equal(response.status,200);return response.json();
+    };
+    const deadline=performance.now()+15000;
+    let pending=[];
+    while(!(pending=await read('/v1/commands')).length){assert.ok(performance.now()<deadline);await new Promise(resolve=>setTimeout(resolve,10));}
+    assert.equal(pending.length,1);assert.equal(pending[0].parentExecutionID,parent.executionID);
+    const command=pending[0];
+    const actualChild=await hostRequest(ready.port,launchToken,'/v1/executions',{
+      executionID:randomUUID(),executionMode:'cli',entryPoint:path.resolve(command.cwd,command.arguments[0]),
+      arguments:command.arguments.slice(1),workspace:command.cwd,moduleKind:'commonjs',environment:command.environment,standardInputPath:command.standardInputPath,
+    });
+    await fs.writeFile(path.join(path.dirname(command.standardInputPath),'response.json'),JSON.stringify({
+      exitCode:actualChild.exitCode,stdoutPath:actualChild.outputFiles.stdout.path,stderrPath:actualChild.outputFiles.stderr.path,
+    }));
+    let completed;
+    while((completed=await read('/v1/executions/'+parent.executionID)).state==='running'){
+      assert.ok(performance.now()<deadline);await new Promise(resolve=>setTimeout(resolve,10));
+    }
+    assert.equal(completed.state,'completed',JSON.stringify(completed));
+    assert.equal(completed.result.stdout,'CLI_PARENT_INPUT\n');assert.match(completed.result.stderr,/CLI_ENV/);
+    assert.deepEqual(await read('/v1/commands'),[]);
     const invalidCLI = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
       executionID: randomUUID(), executionMode:'cli', entryPoint: workspace, workspace, moduleKind:'esm',
     });

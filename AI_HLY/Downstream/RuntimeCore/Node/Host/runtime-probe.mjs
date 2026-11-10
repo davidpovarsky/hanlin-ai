@@ -294,7 +294,7 @@ function suppliedEnvironment(supplied) {
   if (typeof supplied !== 'object' || Array.isArray(supplied)) throw new Error('Probe environment must be a dictionary.');
   const result = Object.create(null);
   for (const [name, value] of Object.entries(supplied)) {
-    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error('Invalid probe environment name.');
+    if ((!name || name.includes('=') || name.includes('\0'))) throw new Error('Invalid probe environment name.');
     const text = String(value);
     if (text.includes('\0')) throw new Error('Environment values cannot contain a NUL byte.');
     result[name] = text;

@@ -29,8 +29,8 @@ export function inspectManifest(manifest, nodeVersion = '24.5.0') {
   for (const name of lifecycleNames) {
     if (manifest.scripts?.[name]) {
       findings.push(warning(
-        `Lifecycle script '${name}' is installed with scripts disabled and would require an approved structured execution plan if its output were needed.`,
-        { code: 'lifecycle_approval_required', phase: 'manifest', specifier: name },
+        `Lifecycle script '${name}' executes through the shared runtime before staged installation is published. Compatibility depends on its actual commands.`,
+        { code: 'lifecycle_execution_required', phase: 'manifest', specifier: name },
       ));
     }
   }

@@ -20,7 +20,11 @@ struct RuntimeHostConnection: Sendable {
     }
 
     func request(path: String, method: String = "GET", body: Data? = nil, timeout: TimeInterval = 60) -> URLRequest {
-        var request = URLRequest(url: baseURL.appending(path: path))
+        var endpoint = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
+        let route = URLComponents(string: path)!
+        endpoint.percentEncodedPath = route.percentEncodedPath
+        endpoint.percentEncodedQuery = route.percentEncodedQuery
+        var request = URLRequest(url: endpoint.url!)
         request.httpMethod = method
         request.httpBody = body
         request.timeoutInterval = timeout
@@ -76,6 +80,13 @@ enum NodeHostHealthFailure: String, Sendable {
     case protocolFailure
 }
 
+struct RuntimeLifecycleContext: Encodable, Sendable {
+    let packageName: String
+    let packageVersion: String
+    let event: String
+    let initialCwd: String
+}
+
 actor NodeRuntimeService {
     static let expectedNodeVersion = "24.5.0"
     static let hostProtocolVersion = 2
@@ -84,6 +95,8 @@ actor NodeRuntimeService {
     private let fileLayout: RuntimeFileLayout
     private let environmentStore: RuntimeEnvironmentStore?
     private let commandDispatcher: RuntimeCommandDispatcher
+    private var commandPump: Task<Void, Never>?
+    private var activeCommands: [String: Task<Void, Never>] = [:]
     private struct LaunchContext: Sendable {
         let readyURL: URL
         let token: String
@@ -212,8 +225,6 @@ actor NodeRuntimeService {
         if let milliseconds { payload["timeoutMilliseconds"] = milliseconds }
         let body = try JSONSerialization.data(withJSONObject: payload)
         return try await withTaskCancellationHandler {
-            var commands: [UUID: Task<Void, Never>] = [:]
-            defer { for task in commands.values { task.cancel() } }
             var job: RuntimeJobSnapshot
             do {
                 job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions", method: "POST", body: body)
@@ -225,29 +236,6 @@ actor NodeRuntimeService {
             var lastProgress = ""
             while true {
                 try Task.checkCancellation()
-                let requests = try await observeJob([RuntimeCommandRequest].self, host: host,
-                    path: "/v1/executions/\(request.id.uuidString.lowercased())/commands")
-                for command in requests {
-                    guard command.parentExecutionID == request.id else { throw RuntimeCoreError.invalidIdentifier }
-                    if let active = commands[command.id] {
-                        if command.cancellationRequested { active.cancel() }
-                    } else {
-                        let dispatcher = commandDispatcher
-                        commands[command.id] = Task {
-                            do { try await dispatcher.execute(command, node: self) }
-                            catch {
-                                let message = error.localizedDescription
-                                // No cancelled observer or failed disk write may hide a
-                                // real adapter error or leave its parent waiting forever.
-                                await Task.detached {
-                                    let body = try? JSONSerialization.data(withJSONObject: ["error": message])
-                                    _ = try? await host.data(path: "/v1/executions/\(request.id.uuidString.lowercased())/commands/\(command.id.uuidString.lowercased())/fail", method: "POST", body: body)
-                                }.value
-                            }
-                        }
-                        delayMilliseconds = 25
-                    }
-                }
                 let progress = "\(job.state.rawValue):\(job.stdoutBytes):\(job.stderrBytes)"
                 if progress != lastProgress, let observer = RuntimeJobProgress.reporter {
                     await observer(job)
@@ -266,6 +254,53 @@ actor NodeRuntimeService {
         }
     }
 
+    /// Host-lifetime ownership also serves package operations and survives a
+    /// lost execution observer. It dispatches only authenticated live receipts.
+    private func startCommandPump(_ host: RuntimeHostConnection) {
+        guard commandPump == nil else { return }
+        commandPump = Task.detached { [weak self] in
+            guard let self else { return }
+            await self.runCommandPump(host)
+        }
+    }
+
+    private func runCommandPump(_ host: RuntimeHostConnection) async {
+        defer { commandPump = nil }
+        while !Task.isCancelled && !NodeRuntimeBridge.didExit {
+            do {
+                let requests = try await observeJob([RuntimeCommandRequest].self, host: host, path: "/v1/commands/wait")
+                let pendingIDs = Set(requests.map(\.ownerKey))
+                for id in Array(activeCommands.keys) where !pendingIDs.contains(id) { activeCommands.removeValue(forKey: id) }
+                for command in requests {
+                    if let active = activeCommands[command.ownerKey] {
+                        if command.cancellationRequested { active.cancel() }
+                        continue
+                    }
+                    let dispatcher = commandDispatcher
+                    activeCommands[command.ownerKey] = Task {
+                        do { try await dispatcher.execute(command, node: self) }
+                        catch {
+                            let message = error.localizedDescription
+                            await Task.detached {
+                                let body = try? JSONSerialization.data(withJSONObject: ["error": message])
+                                _ = try? await host.data(path: "/v1/executions/\(command.parentExecutionID.uuidString.lowercased())/commands/\(command.id.uuidString.lowercased())/fail", method: "POST", body: body)
+                            }.value
+                        }
+                    }
+                }
+                try await Task.sleep(for: .milliseconds(requests.isEmpty ? 500 : 25))
+            } catch is CancellationError { break }
+            catch {
+                snapshotValue.healthCategory = NodeHostHealthFailure.protocolFailure.rawValue
+                snapshotValue.lastDiagnostic = "Runtime command observation failed: \(error.localizedDescription)"
+                do { try await Task.sleep(for: .milliseconds(500)) } catch { break }
+            }
+        }
+        for task in activeCommands.values { task.cancel() }
+        activeCommands.removeAll()
+        if NodeRuntimeBridge.didExit { markNodeExited() }
+    }
+
     private func observeJob<T: Decodable & Sendable>(_ type: T.Type, host: RuntimeHostConnection, path: String) async throws -> T {
         var delay = 25
         while true {
@@ -274,6 +309,8 @@ actor NodeRuntimeService {
             catch let error as URLError {
                 guard [.timedOut, .networkConnectionLost, .cannotConnectToHost, .notConnectedToInternet].contains(error.code),
                       !NodeRuntimeBridge.didExit else { throw error }
+                snapshotValue.healthCategory = NodeHostHealthFailure.transient.rawValue
+                snapshotValue.lastDiagnostic = "Reconnecting job observation; existing source and command side effects are retained without replay."
                 // Observation may reconnect; source and command side effects are
                 // never resubmitted. Keep the command owner alive meanwhile.
                 try await Task.sleep(for: .milliseconds(delay))
@@ -286,15 +323,18 @@ actor NodeRuntimeService {
 
     /// Uses the same Node job/stdio/journal path. External commands require the
     /// command broker; built-in portable-shell operations execute in the Worker.
-    func executePortableShell(_ request: RuntimeExecutionRequest) async throws -> RuntimeExecutionResult {
+    func executePortableShell(_ request: RuntimeExecutionRequest, lifecycle: RuntimeLifecycleContext? = nil) async throws -> RuntimeExecutionResult {
         let moduleURL = try prepareHostRuntime().appending(path: "portable-shell.mjs")
         let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
         let script = String(decoding: try JSONEncoder().encode(request.source), as: UTF8.self)
         let args = String(decoding: try JSONEncoder().encode(request.arguments), as: UTF8.self)
+        let lifecycleJSON = String(decoding: try JSONEncoder().encode(lifecycle), as: UTF8.self)
         let source = """
-        import { executePortableShell } from \(module);
+        import { executePortableShell, packageLifecycleEnvironment } from \(module);
+        const lifecycle = \(lifecycleJSON);
+        const environment = lifecycle ? await packageLifecycleEnvironment({ ...lifecycle, cwd: process.cwd(), environment: process.env, source: \(script) }) : process.env;
         const exitCode = await executePortableShell(\(script), \(args), {
-            cwd: process.cwd(), environment: process.env,
+            cwd: process.cwd(), environment,
             stdin: process.stdin, stdout: process.stdout, stderr: process.stderr
         });
         process.exitCode = exitCode;
@@ -303,6 +343,49 @@ actor NodeRuntimeService {
         return try await executeJavaScript(RuntimeExecutionRequest(id: request.id, source: source,
             arguments: request.arguments, workspace: request.workspace, environment: request.environment,
             limits: request.limits), moduleKind: "esm")
+    }
+
+    func verifyLifecyclePlan(_ plan: LifecycleExecutionPlan, workspace: URL) async throws {
+        let host = try await ensureRunning()
+        let body = try JSONSerialization.data(withJSONObject: ["packageRoot": workspace.path,
+            "plan": try JSONSerialization.jsonObject(with: JSONEncoder().encode(plan))])
+        struct Verification: Decodable, Sendable { let verified: Bool }
+        let response = try await host.decode(Verification.self, path: "/v1/packages/lifecycle/verify", method: "POST", body: body)
+        guard response.verified else { throw RuntimeCoreError.invalidRequest("Lifecycle source verification failed.") }
+    }
+
+    func packageLifecyclePlan(workspace: URL) async throws -> LifecycleExecutionPlan {
+        let moduleURL = try prepareHostRuntime().appending(path: "lifecycle-planner.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let source = """
+        import {readFile} from 'node:fs/promises';
+        import {planLifecycle} from \(module);
+        export default planLifecycle(JSON.parse(await readFile('package.json','utf8')));
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+        guard result.exitCode == 0, let value = result.value else { throw RuntimeCoreError.runtimeFailure(result.stderr) }
+        return try JSONDecoder().decode(LifecycleExecutionPlan.self, from: JSONEncoder().encode(value))
+    }
+
+    /// Package extraction/resolution is an ordinary durable Node job, without
+    /// an HTTP installation deadline. Publishing remains atomic in the Host.
+    func stageNodePackage<T: Decodable & Sendable>(_ type: T.Type, removing: Bool = false, body: Data) async throws -> T {
+        let moduleURL = try prepareHostRuntime().appending(path: "global-package-manager.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let root = String(decoding: try JSONEncoder().encode(fileLayout.root.path), as: UTF8.self)
+        _ = try JSONDecoder().decode(RuntimeJSONValue.self, from: body)
+        let function = removing ? "stageUninstallGlobalPackage" : "stageGlobalPackage"
+        let workspace = try fileLayout.workspace(client: .tools, identifier: "npm-operations")
+        let source = """
+        import { \(function) } from \(module);
+        export default await \(function)({ ...\(String(decoding: body, as: UTF8.self)), root: \(root) });
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, !result.didTimeOut, let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure("Package job \(result.executionID) failed. \(result.stderr)")
+        }
+        return try JSONDecoder().decode(type, from: JSONEncoder().encode(value))
     }
 
     func networkDiagnostics(rounds: Int = 2) async throws -> RuntimeExecutionResult {
@@ -431,6 +514,7 @@ actor NodeRuntimeService {
                     _ = try await host.data(path: "/health", timeout: 3)
                     try? FileManager.default.removeItem(at: context.readyURL)
                     connection = host
+                    startCommandPump(host)
                     snapshotValue.state = .ready
                     snapshotValue.version = ready.nodeVersion
                     snapshotValue.source = "heylogin/nodejs-mobile"
@@ -460,6 +544,7 @@ actor NodeRuntimeService {
     }
 
     private func markNodeExited() {
+        commandPump?.cancel()
         connection = nil
         snapshotValue.state = .appRestartRequired
         snapshotValue.healthCategory = NodeHostHealthFailure.unreachable.rawValue
@@ -477,6 +562,7 @@ actor NodeRuntimeService {
             do {
                 _ = try await existing.data(path: "/health", timeout: 3)
                 connection = existing
+                startCommandPump(existing)
                 snapshotValue.state = snapshotValue.activeExecutionCount > 0 ? .executing : .ready
                 snapshotValue.lastHealthCheck = .now
                 snapshotValue.lastErrorCode = nil

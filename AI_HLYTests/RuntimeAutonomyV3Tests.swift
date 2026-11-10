@@ -6,6 +6,78 @@ import Testing
 @MainActor
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
+    @Test func hostOutputPageQueriesPreserveParametersAndTheAuthenticatedOrigin() throws {
+        let host = RuntimeHostConnection(baseURL: URL(string: "http://127.0.0.1:8123")!, token: "fixture-token")
+        let request = host.request(path: "/v1/executions/fixture/output?channel=stdout&offset=4093&limit=1024")
+        let url = try #require(request.url)
+        let components = try #require(URLComponents(url: url, resolvingAgainstBaseURL: false))
+        #expect(components.path == "/v1/executions/fixture/output")
+        #expect(components.queryItems?.first(where: { $0.name == "offset" })?.value == "4093")
+        #expect(request.value(forHTTPHeaderField: "Authorization") == "Bearer fixture-token")
+        let absolute = host.request(path: "https://example.com/route?offset=1")
+        #expect(absolute.url?.host == "127.0.0.1" && absolute.url?.port == 8123)
+    }
+
+    @Test func sourceImportsUseTheActualWorkspaceAndNativePackageExportConditions() async throws {
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "workspace-import-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let package = workspace.appending(path: "node_modules/hanlin-local-fixture", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: package, withIntermediateDirectories: true)
+        try Data(#"{"name":"hanlin-local-fixture","version":"2.0.0","exports":{"import":"./import.mjs","require":"./require.cjs"}}"#.utf8).write(to: package.appending(path: "package.json"))
+        try Data("export default 'local-esm';".utf8).write(to: package.appending(path: "import.mjs"))
+        try Data("module.exports='local-cjs';".utf8).write(to: package.appending(path: "require.cjs"))
+        try Data("export default 'שלום sibling';".utf8).write(to: workspace.appending(path: "sibling.mjs"))
+        for (kind, source) in [
+            ("esm", "import local from 'hanlin-local-fixture'; import sibling from './sibling.mjs'; console.log(local,sibling); export default local;"),
+            ("commonjs", "console.log(require('hanlin-local-fixture')); module.exports=require('hanlin-local-fixture');")
+        ] {
+            let result = try await AppRuntimeCore.shared.node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: kind)
+            #expect(result.exitCode == 0, "\(result.stderr)")
+            #expect(result.stdout.contains(kind == "esm" ? "local-esm שלום sibling" : "local-cjs"))
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func verifiedLifecycleSourceRunsThroughTheActualSharedEnginesAndRejectsStalePlans() async throws {
+        let core = AppRuntimeCore.shared
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "lifecycle-v2-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let manifest: [String: Any] = ["name": "hanlin-lifecycle-fixture", "version": "1.2.3", "scripts": [
+            "preinstall": "echo pre > order.txt",
+            "install": "VALUE='שלום world' python3 build.py && cat built.txt >> order.txt",
+            "postinstall": "node verify.cjs",
+            "prepare": "echo prepared >> order.txt"
+        ]]
+        let manifestURL = workspace.appending(path: "package.json")
+        try JSONSerialization.data(withJSONObject: manifest).write(to: manifestURL)
+        try Data("""
+        import os, pathlib
+        assert os.environ['VALUE'] == 'שלום world'
+        assert os.environ['npm_lifecycle_event'] == 'install'
+        assert os.environ['npm_command'] == 'install'
+        assert os.environ['npm_package_name'] == 'hanlin-lifecycle-fixture'
+        pathlib.Path('built.txt').write_text('built\\n', encoding='utf8')
+        """.utf8).write(to: workspace.appending(path: "build.py"))
+        try Data("""
+        const fs=require('node:fs');
+        if(require.main!==module || fs.readFileSync('order.txt','utf8')!=='pre\\nbuilt\\n')throw Error('lifecycle ordering');
+        fs.appendFileSync('order.txt','post\\n');
+        """.utf8).write(to: workspace.appending(path: "verify.cjs"))
+        let plan = try await core.node.packageLifecyclePlan(workspace: workspace)
+        #expect(plan.schemaVersion == 2 && !plan.requiresApproval && plan.executable)
+        #expect(plan.actions.map(\.script) == ["preinstall", "install", "postinstall", "prepare"])
+        try await core.lifecycle.execute(plan, packageRoot: workspace)
+        #expect(try String(contentsOf: workspace.appending(path: "order.txt"), encoding: .utf8) == "pre\nbuilt\npost\nprepared\n")
+        var changed = manifest
+        changed["scripts"] = ["preinstall": "echo must-not-run > forbidden.txt"]
+        try JSONSerialization.data(withJSONObject: changed).write(to: manifestURL)
+        do {
+            try await core.lifecycle.execute(plan, packageRoot: workspace)
+            Issue.record("A stale lifecycle plan was executed")
+        } catch { }
+        #expect(!FileManager.default.fileExists(atPath: workspace.appending(path: "forbidden.txt").path))
+    }
+
     @Test(.timeLimit(.minutes(1)))
     func cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "python-queue-\(UUID().uuidString)")
@@ -116,6 +188,7 @@ struct RuntimeAutonomyV3Tests {
         _ = try await environment.save(name: "PATH", value: "/shared/bin", scope: .shared, isEnabled: true, isSecret: false)
         _ = try await environment.save(name: "HOME", value: "/user-home", scope: .shared, isEnabled: true, isSecret: false)
         _ = try await environment.save(name: "PATH", value: "/execution/bin", scope: .execution(id), isEnabled: true, isSecret: false)
+        _ = try await environment.save(name: "שם-משתנה", value: "ערך", scope: .shared, isEnabled: true, isSecret: false)
         let perEngine = try await environment.resolved(scopes: [.shared, .python])
         #expect(perEngine["PATH"] == "/python/bin" && perEngine["HOME"] == "/user-home")
         let perJob = try await environment.resolved(scopes: [.shared, .python, .execution(id)])
@@ -126,8 +199,8 @@ struct RuntimeAutonomyV3Tests {
         #expect(try await reopened.resolved(scopes: [.shared, .python]) == perEngine)
         let workspace = try layout.workspace(client: .tools, identifier: "environment")
         let python = PythonRuntimeService(fileLayout: layout, environment: reopened)
-        let result = try await python.execute(RuntimeExecutionRequest(source: "import os; print(os.environ['PATH']); print(os.environ['HOME'])", workspace: workspace))
-        #expect(result.exitCode == 0 && result.stdout == "/python/bin\n/user-home\n")
+        let result = try await python.execute(RuntimeExecutionRequest(source: "import os; print(os.environ['PATH']); print(os.environ['HOME']); print(os.environ['שם-משתנה'])", workspace: workspace))
+        #expect(result.exitCode == 0 && result.stdout == "/python/bin\n/user-home\nערך\n")
         do {
             _ = try await environment.save(name: "BAD_VALUE", value: "before\0after", scope: .shared, isEnabled: true, isSecret: false)
             Issue.record("An unrepresentable OS environment value was accepted")
