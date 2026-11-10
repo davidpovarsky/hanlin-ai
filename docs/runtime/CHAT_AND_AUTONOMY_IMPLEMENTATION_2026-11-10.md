@@ -443,3 +443,12 @@ Before dispatch, record exact impacted tests/source SHA and toolchain. Do not co
 - Actual authenticated GitHub artifact transport/digest/extraction proof downloaded SDK evidence artifact13792249729,4457 bytes: GitHub digest and actual SHA both0da452f9f1398ed1dc982bac6a685162555c38fde05fcca49b13fd60166032d2 (build/runtime-reuse-download-proof/report.json). This proves the actual CLI download/hash path, not native reuse or engine execution. No signed redirect URL is printed or recorded.
 - Additional TypeScript compile-only check at source4f2d9a94: actual production Core/TypeScript service and DTOs pass portable Swift6 strict concurrency/warnings-as-errors with explicit Node transport declarations only (build/typescript-swift-contract-proof.log). It is not an Apple/Node execution proof.
 - Native run42872596385 attempt2 simulator is still actually compiling. Device/Python attempts had zero-step runner-allocation cancellations, not compiler failures. No active compilation is cancelled; rerun remaining components after this run completes. Actual combined reuse/assembly/current app/physical acceptance and native binary/archive hashes remain pending. No release or new automatic trigger is added.
+
+
+## Actual whole-change affected-plan preflight
+
+[נועם | DEV] [MAIN_SESSION]
+
+- Actual planner invocation over the full implementation range from2f38a3ec to current HEAD failed closed on9 unmapped paths:7 new app test suites, the focused Foundation SDK script and native reuse verifier. Previous router unit success alone had not exercised this actual changed-file closure. Added explicit narrow routes: each app test file selects its actual suite; embedded Fetch/interruption retain Host prerequisites; SDK automation routes to CI checks and native reuse verification to the existing Host path. No full-validation fallback or automatic trigger added.
+- Router/cache regression closure124 tests PASS,3.049s (build/runtime-consumer-routing-proof.log). Actual full-range preflight with explicit V3/interruption/Fetch/JSC selectors now succeeds (build/runtime-consumer-preflight-plan.json/.log), selecting app unit execution without a new Node build/device IPA/full-validation fallback. This is planning proof, not executed app acceptance.
+- GitHub's actual failed-device/Python check annotations confirm hosted macOS ARM capacity constraints and no allocated runner (runner_id0/zero steps). Active Simulator compilation remains untouched. Connected-machine inventories expose no identified configured macOS build authority; no other machine is modified.

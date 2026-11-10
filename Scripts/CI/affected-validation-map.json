@@ -41,7 +41,8 @@
         "docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md",
         "docs/hanlin-platform/personal-runtime-completion/*.json",
         "docs/hanlin-platform/contract-audit/**",
-        "docs/hanlin-platform/personal-runtime-completion/evidence/**"
+        "docs/hanlin-platform/personal-runtime-completion/evidence/**",
+        "Scripts/Runtime/verify-runtime-job-foundation.sh"
       ],
       "direct_validation_groups": [
         "ci_router"
@@ -420,7 +421,8 @@
         "Scripts/Runtime/Tests/test_runtime_bundle_source.py",
         "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
         "Scripts/Runtime/generate-yarn-multiline-patch.mjs",
-        "Scripts/Runtime/HostGrammarTools/**"
+        "Scripts/Runtime/HostGrammarTools/**",
+        "Scripts/Runtime/verify_runtime_reuse.py"
       ],
       "direct_validation_groups": [
         "runtimecore_host"
@@ -1154,6 +1156,103 @@
         "node_runtime",
         "ios_system"
       ]
+    },
+    "mcp_package_generation_tests": {
+      "description": "MCPPackageGenerationTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/MCPPackageGenerationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/MCPPackageGenerationTests"
+      ],
+      "consumers": []
+    },
+    "runtime_execution_input_artifact_tests": {
+      "description": "RuntimeExecutionInputArtifactTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeExecutionInputArtifactTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeExecutionInputArtifactTests"
+      ],
+      "consumers": []
+    },
+    "runtime_fetch_conformance_tests": {
+      "description": "RuntimeFetchConformanceTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeFetchConformanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeFetchConformanceTests"
+      ],
+      "consumers": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ]
+    },
+    "runtime_java_script_core_tests": {
+      "description": "RuntimeJavaScriptCoreTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeJavaScriptCoreTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeJavaScriptCoreTests"
+      ],
+      "consumers": []
+    },
+    "runtime_job_interruption_tests": {
+      "description": "RuntimeJobInterruptionTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeJobInterruptionTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeJobInterruptionTests"
+      ],
+      "consumers": []
+    },
+    "runtime_native_interruption_tests": {
+      "description": "RuntimeNativeInterruptionTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeNativeInterruptionTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeNativeInterruptionTests"
+      ],
+      "consumers": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ]
+    },
+    "runtime_user_operation_tests": {
+      "description": "RuntimeUserOperationTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeUserOperationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeUserOperationTests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

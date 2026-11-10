@@ -17,6 +17,29 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_new_runtime_cases_route_to_their_exact_suite_without_full_or_native_rebuild(self) -> None:
+        for suite in ("MCPPackageGenerationTests", "RuntimeExecutionInputArtifactTests", "RuntimeFetchConformanceTests",
+                      "RuntimeJavaScriptCoreTests", "RuntimeJobInterruptionTests", "RuntimeNativeInterruptionTests",
+                      "RuntimeUserOperationTests"):
+            with self.subTest(suite=suite):
+                plan = self.plan_files(["AI_HLYTests/" + suite + ".swift"])
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/" + suite)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                if suite in ("RuntimeFetchConformanceTests", "RuntimeNativeInterruptionTests"):
+                    self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+
+    def test_native_reuse_and_foundation_sdk_scripts_have_explicit_affected_routes(self) -> None:
+        plan = self.plan_files(["Scripts/Runtime/verify-runtime-job-foundation.sh"])
+        self.assertTrue(plan.step_outputs["run_ci_router"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        selector = "AI_HLYTests/RuntimeNativeInterruptionTests"
+        plan = self.plan_files(["Scripts/Runtime/verify_runtime_reuse.py"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+
     def test_swift_testing_empty_parentheses_are_preserved_in_method_selectors(self) -> None:
         selector = "AI_HLYTests/SkillStoreAndImportTests/resourceReadingContract()"
         plan = self.plan_files(["README.md"], exact_test_selector=selector)
