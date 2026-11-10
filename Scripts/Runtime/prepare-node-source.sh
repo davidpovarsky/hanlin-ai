@@ -56,4 +56,9 @@ fi
 
 python3 "${SCRIPT_DIR}/apply-node-source-patches.py" "${DESTINATION}" "${LOCK_FILE}"
 
+if [[ "$(read_lock 'lock.node.buildConfiguration?.wasmInterpreter || ""')" == "drumbrake" ]]; then
+  python3 "${SCRIPT_DIR}/configure-node-wasm.py" "${DESTINATION}" \
+    > "${DESTINATION}/hanlin-node-build-configuration.json"
+fi
+
 echo "Prepared Node ${actual_version} (${NODE_COMMIT}) at ${DESTINATION}."

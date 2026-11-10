@@ -27,12 +27,13 @@ def native_identity(repository: Path, revision: str | None = None) -> str:
     lock = json.loads(read("RuntimeDependencies.lock.json"))
     node = {key: value for key, value in lock["node"].items()
             if key not in {"verificationStatus", "xcframeworkSha256"}}
-    files = sorted(set(NATIVE_SCRIPTS) | {item["path"] for item in node.get("sourcePatches", [])})
+    adapter = node.get("buildConfiguration", {}).get("adapter", {}).get("path")
+    files = sorted(set(NATIVE_SCRIPTS) | {item["path"] for item in node.get("sourcePatches", [])} | ({adapter} if adapter else set()))
     def input_bytes(name):
         contents = read(name)
         # Git checks these text scripts out as LF on the macOS builder. A
         # Windows CRLF checkout must identify those same build instructions.
-        return contents.replace(b"\r\n", b"\n") if name in NATIVE_SCRIPTS else contents
+        return contents.replace(b"\r\n", b"\n") if name in NATIVE_SCRIPTS or name == adapter else contents
 
     identity = {"formatVersion": lock["runtimeBundle"]["formatVersion"],
                 "node": node, "python": lock["python"],

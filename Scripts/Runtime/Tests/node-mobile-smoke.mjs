@@ -3,6 +3,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import tls from 'node:tls';
 import { probeDescriptorOwnership } from './node-fd-ownership-probe.mjs';
+import { probeWasmInterpreter } from './wasm-interpreter-probe.mjs';
 
 const documents = path.join(process.env.HOME, 'Documents');
 const runtimeRoot = path.join(process.env.HOME, 'Library', 'Application Support', 'HanlinRuntime', 'v1');
@@ -22,6 +23,7 @@ const result = {
   fdWarningCount: 0,
   tls: false,
   hostStartup: false,
+  webAssembly: false,
   hebrew: 'שלום',
 };
 
@@ -35,6 +37,8 @@ try {
   result.tls = typeof tls.createSecureContext === 'function' && Boolean(tls.DEFAULT_MIN_VERSION);
   const fetchResponse = await fetch('data:text/plain;charset=utf-8,hanlin');
   result.fetch = fetchResponse.ok && await fetchResponse.text() === 'hanlin';
+  result.wasmEvidence = await probeWasmInterpreter({ requireJitless: true });
+  result.webAssembly = result.wasmEvidence.passed && result.wasmEvidence.noJIT;
 
   const descriptorProbe = await probeDescriptorOwnership(path.join(runtimeRoot, 'runtime', 'fs-smoke.txt'), result.hebrew);
   result.workerThreads = descriptorProbe.answer === 42;
@@ -61,7 +65,7 @@ try {
     }
   }
 
-  if (!Object.entries(result).filter(([key]) => !['nodeVersion', 'hostNodeVersion', 'hostProtocolVersion', 'hebrew', 'fdWarningCount'].includes(key)).every(([, value]) => value === true)) {
+  if (!Object.entries(result).filter(([key]) => !['nodeVersion', 'hostNodeVersion', 'hostProtocolVersion', 'hebrew', 'fdWarningCount', 'wasmEvidence'].includes(key)).every(([, value]) => value === true)) {
     throw new Error(`Incomplete smoke result: ${JSON.stringify(result)}`);
   }
   await fs.writeFile(resultPath, JSON.stringify({ ok: true, ...result }, null, 2));

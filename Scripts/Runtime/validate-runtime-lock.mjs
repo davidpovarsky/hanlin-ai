@@ -24,6 +24,13 @@ assert(/^24\.\d+\.\d+$/.test(lock.node?.version ?? ''), 'node.version must be No
 assert(Array.isArray(lock.node?.exportedSymbols), 'node.exportedSymbols must be an array');
 assert(lock.node.exportedSymbols.length === 1 && lock.node.exportedSymbols[0] === '_node_start', 'node.exportedSymbols must contain only _node_start');
 assertUrlAndHash(lock.node?.sourceArchive, 'node.sourceArchive');
+if (lock.node.buildConfiguration) {
+  const config = lock.node.buildConfiguration;
+  assert(config.wasmInterpreter === 'drumbrake' && config.jitless === true && config.explicitBoundsChecks === true, 'Node interpreter build must retain JITless execution and explicit bounds checks');
+  assert(config.adapter?.path === 'Scripts/Runtime/configure-node-wasm.py', 'Invalid downstream Node build adapter path');
+  const adapter = await readFile(new URL(`../../${config.adapter.path}`, import.meta.url), 'utf8');
+  assert(createHash('sha256').update(adapter.replaceAll('\r\n', '\n')).digest('hex') === config.adapter.sha256, 'Node build adapter checksum mismatch');
+}
 for (const patch of lock.node.sourcePatches ?? []) {
   assert(/^Scripts\/Runtime\/Patches\/[A-Za-z0-9._-]+\.json$/.test(patch.path ?? ''), 'Invalid Node source patch path');
   assert(sha256.test(patch.sha256 ?? ''), 'Invalid Node source patch SHA-256');

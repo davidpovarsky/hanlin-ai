@@ -4,11 +4,8 @@
     "formatVersion": 1,
     "releaseRepository": "davidpovarsky/hanlin-ai",
     "releaseTagPrefix": "runtime-core-v1-",
-    "sha256": "aa788654a883d8e1bca3f177697e8505168dd6cbabcf712dbfae058bd1e46d8d",
-    "verificationStatus": "verified",
-    "artifactDependencyHash": "86a2226aca7ddb5f027d734746bd9aa6af382f5d55292f6d9d6bb44433945621",
-    "nativeInputSHA256": "02ecb86ca9f08406db888e68eb3ee1dc793dfed97b73c2d7f2e828c808ba0bf8",
-    "sourceCommit": "46d1bf1511b2ba778964232ed40f9ef51eabb416"
+    "sha256": null,
+    "verificationStatus": "pending-build"
   },
   "node": {
     "sourceRepository": "https://github.com/heylogin/nodejs-mobile",
@@ -22,8 +19,8 @@
       "url": "https://github.com/heylogin/nodejs-mobile/archive/refs/tags/v24.5.0-mobile.tar.gz",
       "sha256": "614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c"
     },
-    "xcframeworkSha256": "2dcd34ce18a8d2a24a597eae2451f98992354cf2628bf97b07e8176936dac6e3",
-    "verificationStatus": "verified",
+    "xcframeworkSha256": null,
+    "verificationStatus": "pending-build",
     "license": "MIT with bundled third-party notices",
     "sourcePatches": [
       {
@@ -31,7 +28,16 @@
         "sha256": "d9cf8808f543f998d4f1a1c69047b67af41eec284be948826b82441e1a50fab6",
         "upstreamCommit": "65ce14d8731e929584344a0d65d6efd2296fa797"
       }
-    ]
+    ],
+    "buildConfiguration": {
+      "wasmInterpreter": "drumbrake",
+      "jitless": true,
+      "explicitBoundsChecks": true,
+      "adapter": {
+        "path": "Scripts/Runtime/configure-node-wasm.py",
+        "sha256": "9b249b3f5d52bee07e7f15acb79bf209e4e4d732431e84d65a60d0c2de41d4a5"
+      }
+    }
   },
   "python": {
     "sourceRepository": "https://github.com/beeware/Python-Apple-support",

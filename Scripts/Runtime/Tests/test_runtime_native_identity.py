@@ -20,6 +20,9 @@ class NativeIdentityTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.lock = json.loads((REPOSITORY / "RuntimeDependencies.lock.json").read_text(encoding="utf-8"))
         files = list(module.NATIVE_SCRIPTS) + [item["path"] for item in self.lock["node"].get("sourcePatches", [])]
+        adapter = self.lock["node"].get("buildConfiguration", {}).get("adapter", {}).get("path")
+        if adapter:
+            files.append(adapter)
         for name in files:
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
