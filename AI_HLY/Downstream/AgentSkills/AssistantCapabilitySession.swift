@@ -25,13 +25,15 @@ public final class AssistantCapabilitySession {
         id: UUID = UUID(),
         chatID: String? = nil,
         isTemporaryChat: Bool = false,
-        resultStore: ToolResultStore = ToolResultStore(),
+        resultStore: ToolResultStore? = nil,
         initialExposedAliases: Set<String> = []
     ) {
         self.id = id
         self.chatID = chatID
         self.isTemporaryChat = isTemporaryChat
-        self.resultStore = resultStore
+        let base = isTemporaryChat ? FileManager.default.temporaryDirectory
+            : FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? FileManager.default.temporaryDirectory
+        self.resultStore = resultStore ?? ToolResultStore(directory: base.appending(path: "Hanlin/ToolResults/\(id.uuidString)", directoryHint: .isDirectory))
         self.exposedToolAliases = initialExposedAliases
     }
 
@@ -91,18 +93,18 @@ public final class AssistantCapabilitySession {
         exposedToolAliases.contains(alias)
     }
 
-    /// Clears run-scoped state and expires stored large tool results.
+    /// Clears exposed tools/instructions. Referenced results remain available to history.
     public func reset() {
         loadedSkillIDs.removeAll()
         loadedInstructionTexts.removeAll()
         activeSkillToolHints.removeAll()
         exposedToolAliases.removeAll()
         discoveredToolAliases.removeAll()
-        resultStore.clear()
+
     }
 
-    /// Explicitly finishes the current assistant run, clearing temporary stored results.
+    /// Finishing a run retains its full results; clear() is an explicit data-deletion action.
     public func finishRun() {
-        resultStore.clear()
+
     }
 }

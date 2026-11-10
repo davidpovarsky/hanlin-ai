@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Textual
 import AVFoundation
 import SwiftData
 import UniformTypeIdentifiers
@@ -853,6 +854,7 @@ struct ChatView: View {
                 .frame(maxWidth: .infinity)
             }
             .defaultScrollAnchor(ifScroll ? .top : .bottom)
+            .textual.textSelectionCoordination()
             .scrollIndicators(.hidden)
             .refreshable {
                 loadMoreMessages()
@@ -1063,7 +1065,7 @@ struct ChatView: View {
         let activityRun = storedActivityRun
             ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
         let rawMsgText = (msg.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        let fallbackFinalAnswer = splitMarker
+        let fallbackFinalAnswer = splitMarker && !groupMessages.contains(where: { !($0.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             ? (AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? [])?
                 .trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
             : ""
@@ -1097,7 +1099,7 @@ struct ChatView: View {
             knowledgeCard: msg.knowledgeCard,
             nativeUIBlocks: msg.nativeUIBlocks,
             agentRun: activityRun,
-            showsAgentActivitySummary: splitMarker,
+            showsAgentActivitySummary: groupIDs.first == msg.id,
             isAgentTranscriptOwner: false,
             isRenderedByAgentTranscript: false,
             searchEngine: msg.searchEngine,
@@ -1136,6 +1138,10 @@ struct ChatView: View {
                 }
             }
         )
+        .environment(\.chatExcerptSource, ChatExcerptSource(
+            chatRecordID: chatRecord.id, messageID: msg.id, groupID: msg.groupID,
+            runID: activityRun?.id, title: chatRecord.name ?? String(localized: "Conversation")
+        ))
         
         // 2. 多选模式下，只在"用户消息"或"助手中点"显示勾选框
         return AnyView(Group {

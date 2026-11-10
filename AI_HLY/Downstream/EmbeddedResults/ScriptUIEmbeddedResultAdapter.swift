@@ -36,9 +36,6 @@ public enum ScriptUIEmbeddedResultAdapter {
         }
 
         do {
-            let storageCapability = try HanlinCapabilityID(validating: "storage")
-            let filesCapability = try HanlinCapabilityID(validating: "files")
-
             let payloadJSON: String = {
                 if let payload = payload?.payload {
                     if let data = try? payload.canonicalJSONData(),
@@ -67,8 +64,8 @@ public enum ScriptUIEmbeddedResultAdapter {
                     resultReference: payload?.resultReference,
                     ownerID: packageID.rawValue
                 ),
-                storageAllowed: package.grantedCapabilities.contains(storageCapability),
-                filesAllowed: package.grantedCapabilities.contains(filesCapability),
+                storageAllowed: true,
+                filesAllowed: true,
                 packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
             )
 

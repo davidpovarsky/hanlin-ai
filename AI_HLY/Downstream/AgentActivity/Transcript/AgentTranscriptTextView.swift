@@ -1,5 +1,3 @@
-import LaTeXSwiftUI
-import MarkdownUI
 import SwiftUI
 import UIKit
 
@@ -8,13 +6,8 @@ struct AgentTranscriptTextView: View {
     let usesMathRenderer: Bool
 
     var body: some View {
-        Group {
-            if usesMathRenderer {
-                LaTeX(text)
-            } else {
-                Markdown(text)
-            }
-        }
+        ChatMarkdownView(text: text)
+        .modifier(ChatLinkPresentation())
         .frame(maxWidth: .infinity, alignment: .leading)
         .textSelection(.enabled)
         .contextMenu {

@@ -10,6 +10,7 @@ struct ListView: View {
     @Query private var userInfos: [UserInfo]
     
     @State private var searchText: String = ""
+    @State private var showsSavedMessages = false
     @State private var loadHistoryMessages: Bool = false
     @State private var infoDescriptionCache: [UUID: String] = [:]
     @State private var newlyCreatedChat: ChatRecords?
@@ -155,6 +156,7 @@ struct ListView: View {
             }
         }
         .environment(\.hanlinComposerSessionBridge, sessionBridge)
+        .sheet(isPresented: $showsSavedMessages) { ChatSavedExcerptsView() }
         .onGeometryChange(for: CGFloat.self) { proxy in
             proxy.size.width
         } action: { newWidth in
@@ -293,6 +295,11 @@ struct ListView: View {
 
     @ToolbarContentBuilder
     private var commonToolbar: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button { showsSavedMessages = true } label: {
+                Label("Saved messages", systemImage: "bookmark")
+            }.accessibilityIdentifier("hanlin-saved-messages")
+        }
         ToolbarItem(placement: .navigationBarTrailing) {
             Button {
                 addNewChat()

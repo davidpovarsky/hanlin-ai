@@ -42,10 +42,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "The deterministic provider's final answer was not rendered.")
 
-        let toolToggle = app.descendants(matching: .any)["hanlin-tool-content-toggle"].firstMatch
+        let toolToggle = app.descendants(matching: .any)["hanlin-agent-activity-toggle"].firstMatch
         XCTAssertTrue(toolToggle.waitForExistence(timeout: 10), "The completed tool content toggle was not rendered.")
         tapElement(toolToggle)
 
+        let failedCall = app.descendants(matching: .any)["hanlin-agent-activity-ui-python-invalid-call"].firstMatch
+        XCTAssertTrue(failedCall.waitForExistence(timeout: 10), "The failed call must remain individually inspectable")
+        tapElement(failedCall)
         let expandedToolText = app.descendants(matching: .any)["hanlin-tool-content-expanded-text"].firstMatch
         XCTAssertTrue(expandedToolText.waitForExistence(timeout: 10), "Expanded tool content text did not appear.")
 
@@ -266,20 +269,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI04 reasoning final answer did not render")
 
-        let reasoningToggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
-        let toolToggle = app.descendants(matching: .any)["hanlin-tool-content-toggle"].firstMatch
-        XCTAssertTrue(
-            reasoningToggle.waitForExistence(timeout: 10) || toolToggle.waitForExistence(timeout: 10),
-            "Original foldable reasoningView() or toolContentView() toggle did not render"
-        )
-
-        if reasoningToggle.exists {
-            XCTAssertFalse(reasoningToggle.label.contains("<think>"), "Reasoning toggle must never expose <think> tags")
-            tapElement(reasoningToggle)
-        }
-        if toolToggle.exists {
-            tapElement(toolToggle)
-        }
+        let activityToggle = app.descendants(matching: .any)["hanlin-agent-activity-toggle"].firstMatch
+        XCTAssertTrue(activityToggle.waitForExistence(timeout: 10), "Original chat must render one unified activity disclosure")
+        XCTAssertEqual(app.descendants(matching: .any).matching(identifier: "hanlin-agent-activity-toggle").count, 1)
+        XCTAssertFalse(activityToggle.label.contains("<think>"))
+        tapElement(activityToggle)
 
         let rawCoTText = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS[c] 'Let me think privately' OR label CONTAINS '<think>'")

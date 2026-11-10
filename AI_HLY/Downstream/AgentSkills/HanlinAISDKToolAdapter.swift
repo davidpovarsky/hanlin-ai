@@ -42,7 +42,7 @@ final class HanlinAISDKToolAdapter {
     var currentRoundID: UUID?
     var currentStepIndex: Int = 0
     var completedCallIDs: Set<String> = []
-    var maxActiveStepSchemaBytes: Int = 28_000
+    var maxActiveStepSchemaBytes: Int? = nil
 
     static func buildUnknownToolErrorMessage(
         alias: String,
@@ -190,7 +190,7 @@ final class HanlinAISDKToolAdapter {
                 continue
             }
             let toolBytes = sizes[alias] ?? 400
-            if currentBytes + toolBytes > maxActiveStepSchemaBytes && aliases.count > 6 {
+            if let budget = maxActiveStepSchemaBytes, currentBytes + toolBytes > budget && aliases.count > 6 {
                 continue
             }
             aliases.append(alias)
@@ -813,8 +813,9 @@ final class HanlinAISDKToolAdapter {
                 Summary: \(String(result.modelText.prefix(200)))
                 To inspect or paginate this result, call `read_tool_result(reference: "\(ref)", offset: 0, limit: 4096)`.
                 """
-            } else if modelText.isEmpty, let full = result.fullResultPayload {
-                modelText = full
+            } else {
+                // A storage resource error must not silently replace the full result with a summary.
+                modelText = "[Full result could not be persisted: \(session.resultStore.lastStorageError ?? "explicit storage budget exceeded")]\n" + payloadToStore
             }
         }
 

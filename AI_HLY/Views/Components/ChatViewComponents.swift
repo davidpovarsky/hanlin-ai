@@ -71,6 +71,9 @@ struct LoadingGradientText: View {
 struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.chatExcerptSource) private var excerptSource
+    @State private var isActivityExpanded = false
+    @State private var isPersonallySaved = false
     let temporaryRecord: Bool
     let id: UUID
     let text: String               // 回复内容
@@ -123,8 +126,6 @@ struct ChatBubbleView: View {
     
     @State private var isResourcesExpanded: Bool = false  // 资源文本折叠状态
     @State private var isTranslateExpanded: Bool = false  // 翻译文本折叠状态
-    @State private var mathMode: Bool = false             // 科学模式
-    @State private var showMathModeReminder: Bool = false // 科学模式提醒
     @State private var selectedImage: UIImage? // 选中的图片
     @State private var isImageViewerPresented: Bool = false // 是否显示大图
     @State private var showDocumentContent: Bool = false  // 显示解析文本内容
@@ -1694,29 +1695,16 @@ struct ChatBubbleView: View {
                     .transition(.opacity.combined(with: .move(edge: .leading)))
             }
             
-            // 科学模式
-            Button(action: {
-                mathMode.toggle()
-                showMathModeReminder = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    showMathModeReminder = false
-                }
-            }) {
-                Image(systemName: mathMode ? "note.text" : "x.squareroot")
+            Button { savePersonalExcerpt(text) } label: {
+                Image(systemName: isPersonallySaved ? "bookmark.fill" : "bookmark")
                     .font(.system(size: size_16, weight: .medium))
                     .frame(width: size_24, height: size_24)
-                    .foregroundColor(showMathModeReminder ? .hlBluefont : .secondary)
-                    .clipShape(Circle())
+                    .foregroundStyle(isPersonallySaved ? Color.hlBluefont : .secondary)
             }
-            .accessibilityIdentifier("hanlin-action-math")
-            
-            if showMathModeReminder {
-                Text(mathMode ? "科学模式" : "文本模式")
-                    .font(.system(size: size_12, weight: .medium))
-                    .foregroundColor(.hlBluefont)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
+            .disabled(excerptSource == nil)
+            .accessibilityLabel(String(localized: "Save for myself"))
+            .accessibilityIdentifier("hanlin-action-save-personal")
+
             // 背包按钮
             Button(action: {
                 createAndSaveKnowledgeRecord(with: text)
@@ -1755,7 +1743,7 @@ struct ChatBubbleView: View {
         .padding(.leading, 5)
         .animation(
             .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
-            value: [showMathModeReminder, isTranslating, isCopy, tts.isAsking]
+            value: [isPersonallySaved, isTranslating, isCopy, tts.isAsking]
         )
     }
 
@@ -1763,17 +1751,12 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func messageContent() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            reasoningView()
-                .transition(.opacity.combined(with: .move(edge: .top)))
+            if showsAgentActivitySummary { activityContent() }
             
             if !text.isEmpty {
-                Group {
-                    if mathMode {
-                        LaTeX(text)
-                    } else {
-                        Markdown(text)
-                    }
-                }
+                ChatMarkdownView(text: text,
+                    savePersonal: { savePersonalExcerpt($0) },
+                    saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
                 .contextMenu {
                     // 复制
                     Button(action: {
@@ -1822,21 +1805,10 @@ struct ChatBubbleView: View {
                         }
                     }
                     
-                    // 科学模式
-                    Button(action: {
-                        mathMode.toggle()
-                        showMathModeReminder = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            showMathModeReminder = false
-                        }
-                    }) {
-                        if mathMode {
-                            Label("文本模式", systemImage: "note.text")
-                        } else {
-                            Label("科学模式", systemImage: "x.squareroot")
-                        }
+                    Button { savePersonalExcerpt(text) } label: {
+                        Label("Save for myself", systemImage: "bookmark")
                     }
-                    
+
                     // 存为知识
                     Button(action: {
                         createAndSaveKnowledgeRecord(with: text)
@@ -1850,11 +1822,13 @@ struct ChatBubbleView: View {
                     }) {
                         Label("删除消息", systemImage: "trash")
                     }
+                } preview: {
+                    ChatMarkdownView(text: text)
+                        .padding()
+                        .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 16))
+                        .frame(maxWidth: 560)
                 }
             }
-            
-            toolContentView()
-                .transition(.opacity.combined(with: .move(edge: .top)))
             
             audioView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
@@ -1868,6 +1842,7 @@ struct ChatBubbleView: View {
         }
         .padding(.bottom, 6)
         .foregroundColor(.primary)
+        .modifier(ChatLinkPresentation())
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity, alignment: .leading)
         .sheet(isPresented: $isTextSelectionSheetPresented) {
@@ -1879,7 +1854,6 @@ struct ChatBubbleView: View {
         .animation(
             .spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
             value: [
-                mathMode,
                 images == nil,
                 isResponding,
             ]
@@ -2112,105 +2086,88 @@ struct ChatBubbleView: View {
         return LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
     }
 
-    // MARK: - 推理过程区域
-    @ViewBuilder
-    private func reasoningView() -> some View {
-        let displayReasoning = sanitizedReasoningDisplay
-        if !displayReasoning.isEmpty {
-            VStack(alignment: .leading) {
-                
-                ToggleButton(
-                    title: String(localized: "reasoning_chain"),
-                    timeText: reasoningTime ?? "",
-                    isExpanded: $isReasoningExpanded
-                )
-                .accessibilityIdentifier("hanlin-reasoning-toggle")
-                
-                if isReasoningExpanded {
-                    Text(displayReasoning)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, 8)
-                        .transition(.opacity.combined(with: .scale))
-                        .textSelection(.enabled)
-                        .padding(.bottom, 5)
-                        .accessibilityIdentifier("hanlin-reasoning-expanded-text")
-                } else {
-                    if isResponding && isLastAssistantGroup {
-                        VStack(alignment: .leading, spacing: 2) {
-                            ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { idx, line in
-                                Text(line)
-                                    .id(String(line.prefix(1)))
-                                    .font(.system(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
-                                    .lineLimit(1)
-                                    .truncationMode(.head)
-                                    .foregroundColor(idx == 2 ? .hlBluefont : .gray)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .opacity(idx == 0 ? 0.4 : idx == 1 ? 0.7 : 1.0)
-                                    .blur(radius: idx == 0 ? 1 : 0)
-                                    .padding(.horizontal, 5)
-                                    .transition(
-                                        .asymmetric(
-                                            insertion: .move(edge: .bottom).combined(with: .opacity),
-                                            removal:   .move(edge: .top).combined(with: .opacity)
-                                        )
-                                    )
-                            }
-                        }
-                        .padding(.bottom, 5)
-                        .animation(
-                            .spring(response: 0.8, dampingFraction: 0.95, blendDuration: 0.5),
-                            value: displayReasoningLines
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                    }
-                }
-            }
+    private func savePersonalExcerpt(_ quote: String, markdown: String? = nil) {
+        guard let excerptSource, !quote.isEmpty else { return }
+        do {
+            try ChatSavedExcerpt.save(source: excerptSource, markdown: markdown ?? text, quote: quote, in: modelContext)
+            isPersonallySaved = true
+        } catch {
+            errorMessage = error.localizedDescription
+            showErrorAlert = true
         }
     }
-    
-    // MARK: - 工具使用区域
-    @ViewBuilder
-    private func toolContentView() -> some View {
-        let effectiveToolContent = resolvedToolContentForDisplay
-        let structuredEntries = ClassicChatAgentProjection.projectToolEntries(from: agentRun)
-        let hasStructured = !structuredEntries.isEmpty
-        let hasLegacy = !effectiveToolContent.isEmpty
 
-        if hasStructured || hasLegacy {
+    /// The first original bubble owns the run's activity. Streaming changes the data,
+    /// never the user's disclosure state. Rich results keep their original rendering below.
+    @ViewBuilder
+    private func activityContent() -> some View {
+        let timeline = agentRun.map(AgentActivityComposer.compose)
+        let entries = ClassicChatAgentProjection.projectToolEntries(from: agentRun)
+        let hasActivity = timeline?.activities.isEmpty == false
+            || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty
+        if hasActivity {
             VStack(alignment: .leading, spacing: 6) {
                 ToggleButton(
-                    title: String(localized: "tooluse_content"),
-                    timeText: resolvedToolNameForDisplay,
-                    isExpanded: $isToolContentExpanded
+                    title: String(localized: "Thinking & tools"),
+                    timeText: timeline?.summaryTitle ?? reasoningTime ?? "",
+                    isExpanded: $isActivityExpanded
                 )
-                .accessibilityIdentifier("hanlin-tool-content-toggle")
+                .accessibilityIdentifier("hanlin-agent-activity-toggle")
 
-                if isToolContentExpanded {
-                    if hasStructured {
-                        VStack(alignment: .leading, spacing: 8) {
-                            ForEach(structuredEntries) { entry in
-                                toolCallRowView(entry)
+                // Failures remain discoverable when the details are collapsed.
+                if timeline?.status == .failed {
+                    Label("Some activity failed", systemImage: "exclamationmark.circle")
+                        .font(.caption).foregroundStyle(.red)
+                } else if timeline?.status == .cancelled {
+                    Label("Cancelled", systemImage: "stop.circle")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+
+                if isActivityExpanded {
+                    if let timeline, !timeline.activities.isEmpty {
+                        ForEach(timeline.activities) { activity in
+                            DisclosureGroup {
+                                VStack(alignment: .leading, spacing: 6) {
+                                    if let input = activity.inputPreview {
+                                        Text(input).font(.caption.monospaced()).textSelection(.enabled)
+                                    }
+                                    if let output = activity.outputPreview {
+                                        Text(output).font(.footnote).textSelection(.enabled)
+                                    }
+                                    if let error = activity.errorDescription {
+                                        Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled)
+                                    }
+                                    // Match by call identity, never by tool name (parallel calls may share it).
+                                    ForEach(entries.filter { $0.callID == activity.id }) { entry in
+                                        toolCallRowView(entry)
+                                    }
+                                }
+                                .padding(.vertical, 4)
+                            } label: {
+                                HStack(spacing: 8) {
+                                    if activity.status == .running || activity.status == .pending {
+                                        ProgressView().controlSize(.mini)
+                                    } else {
+                                        Image(systemName: activity.status == .failed ? "exclamationmark.circle" : activity.status == .cancelled ? "stop.circle" : "checkmark.circle")
+                                    }
+                                    Text(activity.title).font(.subheadline)
+                                    Spacer()
+                                    Text(activity.status.rawValue.capitalized).font(.caption2).foregroundStyle(.secondary)
+                                }
                             }
+                            .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
                         }
-                        .padding(.horizontal, 8)
-                        .padding(.bottom, 6)
-                        .accessibilityIdentifier("hanlin-tool-content-expanded-text")
                     } else {
-                        // Legacy fallback for stored chats without agentRunJSON
-                        Text(effectiveToolContent)
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal, 8)
-                            .transition(.opacity.combined(with: .scale))
-                            .textSelection(.enabled)
-                            .padding(.bottom, 5)
-                            .accessibilityIdentifier("hanlin-tool-content-expanded-text")
+                        if !sanitizedReasoningDisplay.isEmpty {
+                            Text(sanitizedReasoningDisplay).font(.footnote).textSelection(.enabled)
+                        }
+                        if !resolvedToolContentForDisplay.isEmpty {
+                            Text(resolvedToolContentForDisplay).font(.caption.monospaced()).textSelection(.enabled)
+                        }
                     }
                 }
             }
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("hanlin-tool-content")
+            .accessibilityIdentifier("hanlin-agent-activity")
         }
     }
 
@@ -2265,7 +2222,7 @@ struct ChatBubbleView: View {
             }
 
             if !entry.output.isEmpty {
-                Text(entry.output)
+                Text(AgentDiagnosticsRedactor.sanitize(entry.output))
                     .font(.caption.monospaced())
                     .foregroundColor(.primary)
                     .padding(6)
@@ -2279,7 +2236,7 @@ struct ChatBubbleView: View {
             }
 
             if let errorDesc = entry.errorDescription, !errorDesc.isEmpty {
-                Text("⚠️ \(errorDesc)")
+                Text("⚠️ \(AgentDiagnosticsRedactor.sanitize(errorDesc))")
                     .font(.caption)
                     .foregroundColor(.red)
                     .accessibilityIdentifier("hanlin-tool-content-expanded-text")
@@ -2338,13 +2295,9 @@ struct ChatBubbleView: View {
                 )
                 
                 if isTranslateExpanded {
-                    Group {
-                        if mathMode {
-                            LaTeX(translatedText)
-                        } else {
-                            Markdown(translatedText)
-                        }
-                    }
+                    ChatMarkdownView(text: translatedText,
+                        savePersonal: { savePersonalExcerpt($0, markdown: translatedText) },
+                        saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
                     .contextMenu {
                         // 复制内容
                         Button(action: {
@@ -2382,20 +2335,6 @@ struct ChatBubbleView: View {
                                         .clipShape(Circle())
                                 }
                                 Text(translated ? "删除译文" : (isTranslating ? "翻译中..." : "翻译内容"))
-                            }
-                        }
-                        // 科学模式
-                        Button(action: {
-                            mathMode.toggle()
-                            showMathModeReminder = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                showMathModeReminder = false
-                            }
-                        }) {
-                            if mathMode {
-                                Label("文本模式", systemImage: "note.text")
-                            } else {
-                                Label("科学模式", systemImage: "x.squareroot")
                             }
                         }
                         // 存为知识
@@ -2479,9 +2418,7 @@ struct ChatBubbleView: View {
             
         }
         .sheet(item: $selectedLink) { url in
-            ResourceLinkAlertView(url: url)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
+            SafariView(url: url).ignoresSafeArea()
         }
     }
 
@@ -3042,65 +2979,6 @@ struct MapMessageBubble: View {
 }
 
 // 打开资源警示
-struct ResourceLinkAlertView: View {
-    let url: URL
-    @Environment(\.dismiss) var dismiss
-    @State private var isSuccess = false // 是否需要震动
-    @State private var isFeedBack = false // 是否需要震动
-    
-    var body: some View {
-        VStack(spacing: 24) {
-            Text("⚠️ 这是一个外部链接")
-                .font(.title3)
-                .bold()
-                .multilineTextAlignment(.center)
-            
-            Text("链接包含未知信息\n打开链接将离开AI翰林院")
-                .multilineTextAlignment(.center)
-            
-            Text(url.absoluteString)
-                .font(.footnote)
-                .foregroundColor(.gray)
-                .padding(.horizontal)
-                .lineLimit(2)
-                .truncationMode(.middle)
-            
-            Spacer()
-
-            VStack(spacing: 16) {
-                Button(action: {
-                    UIPasteboard.general.string = url.absoluteString
-                    isSuccess.toggle()
-                    dismiss()
-                }) {
-                    Text("复制链接")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(20)
-                        .foregroundColor(.hlBluefont)
-                }
-                .sensoryFeedback(.success, trigger: isSuccess)
-
-                Button(action: {
-                    isFeedBack.toggle()
-                    UIApplication.shared.open(url)
-                    dismiss()
-                }) {
-                    Text("打开链接")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(.hlBluefont)
-                        .foregroundColor(.white)
-                        .cornerRadius(20)
-                }
-                .sensoryFeedback(.impact, trigger: isFeedBack)
-            }
-        }
-        .padding(50)
-    }
-}
-
 extension URL: @retroactive Identifiable {
     public var id: String { absoluteString }
 }
@@ -3413,10 +3291,34 @@ struct FileContentViewer: View {
 struct TextSelectionTextView: UIViewRepresentable {
     let text: String
     @Binding var shouldSelectAll: Bool
+    @Binding var selectedText: String?
+
+    init(text: String, shouldSelectAll: Binding<Bool>, selectedText: Binding<String?> = .constant(nil)) {
+        self.text = text
+        self._shouldSelectAll = shouldSelectAll
+        self._selectedText = selectedText
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+
+    final class Coordinator: NSObject, UITextViewDelegate {
+        var parent: TextSelectionTextView
+        init(_ parent: TextSelectionTextView) { self.parent = parent }
+        func textViewDidChangeSelection(_ view: UITextView) {
+            guard view.selectedRange.length > 0,
+                  let range = Range(view.selectedRange, in: view.text ?? "") else {
+                parent.selectedText = nil
+                return
+            }
+            parent.selectedText = String(view.text[range])
+        }
+    }
 
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.text = text
+        textView.delegate = context.coordinator
+        textView.adjustsFontForContentSizeCategory = true
         textView.isEditable = false     // 禁止编辑
         textView.isSelectable = true    // 允许选择
         textView.backgroundColor = .clear
@@ -3429,7 +3331,8 @@ struct TextSelectionTextView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
-        uiView.text = text
+        context.coordinator.parent = self
+        if uiView.text != text { uiView.text = text }
         if shouldSelectAll {
             uiView.selectAll(nil)
             DispatchQueue.main.async {
@@ -3669,6 +3572,7 @@ private func highlightPythonCode(_ code: String) -> NSAttributedString {
 // MARK: 选择文本组件（带复制、全选及存为知识操作）
 struct TextSelectionView: View {
     let text: String
+    @State private var selectedText: String?
     @Environment(\.modelContext) private var modelContext
     @State private var isCopy: Bool = false      // 复制按钮状态：true 表示复制成功
     @State private var isSaved: Bool = false       // 存为知识按钮状态：true 表示保存成功
@@ -3687,7 +3591,7 @@ struct TextSelectionView: View {
         ZStack(alignment: .bottomTrailing) {
             NavigationStack {
                 // 使用修改后的 TextSelectionTextView，传入绑定变量
-                TextSelectionTextView(text: text, shouldSelectAll: $shouldSelectAll)
+                TextSelectionTextView(text: text, shouldSelectAll: $shouldSelectAll, selectedText: $selectedText)
             }
             
             // 右下角按钮区域（3个按钮：全选、复制、存为知识）
@@ -3757,7 +3661,7 @@ struct TextSelectionView: View {
     
     // 复制操作：复制后状态切换2秒后恢复
     private func copyToClipboard() {
-        UIPasteboard.general.string = text
+        UIPasteboard.general.string = selectedText ?? text
         isCopy = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             withAnimation {
@@ -3785,7 +3689,7 @@ struct TextSelectionView: View {
         }
         
         let newRecord = KnowledgeRecords()
-        newRecord.content = text
+        newRecord.content = selectedText ?? text
         newRecord.lastEdited = Date()
         newRecord.name = "文本知识_\(makeTimestampID())"
         

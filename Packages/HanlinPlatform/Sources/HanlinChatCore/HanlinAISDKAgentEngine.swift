@@ -120,7 +120,9 @@ public actor HanlinAISDKAgentEngine {
             maxRetries: 2
         )
 
-        let limit = max(maxSteps ?? 40, 1)
+        // nil means run until the model completes, the user cancels or a real error occurs.
+        // An explicitly configured budget remains supported and visible to the caller.
+        let limit = maxSteps.map { max($0, 1) }
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
@@ -133,9 +135,11 @@ public actor HanlinAISDKAgentEngine {
                     var stepOffset = 0
 
                     while true {
-                        let remainingSteps = max(limit - stepOffset, 1)
                         let currentNames = Set(currentDefinitions.map(\.name))
-                        var stopConditions: [StopCondition] = [stepCountIs(remainingSteps)]
+                        var stopConditions: [StopCondition] = []
+                        if let limit {
+                            stopConditions.append(stepCountIs(max(limit - stepOffset, 1)))
+                        }
                         if let dynamicTools {
                             stopConditions.append { _ in
                                 let latest = await dynamicTools()
@@ -222,7 +226,7 @@ public actor HanlinAISDKAgentEngine {
                             case .finish(let reason, let rawReason, let usage):
                                 let nextOffset = offsetSnapshot + max(localStepIndex + 1, 1)
                                 if reason == .toolCalls,
-                                   nextOffset < limit,
+                                   limit.map({ nextOffset < $0 }) ?? true,
                                    let dynamicTools {
                                     let latestDefinitions = await dynamicTools()
                                     if Set(latestDefinitions.map(\.name)) != currentNames {

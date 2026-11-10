@@ -494,6 +494,57 @@ struct HanlinNonEmptyLanguageModelTests {
 @Suite("HanlinAISDKAgentEngine Integration Tests")
 struct HanlinAISDKAgentEngineTests {
 
+    @Test("Default agent continues beyond 40 actual tool steps, including dynamic discovery")
+    func defaultRunContinuesPastFortyWithDiscovery() async throws {
+        let requests = ManagedAtomicInt()
+        let executions = ManagedAtomicInt()
+        let discovered = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let step = requests.increment()
+            let delta: [String: Any]
+            let finish: String
+            if step <= 46 {
+                let name = step == 1 ? "tool_search" : "execute_work"
+                delta = ["tool_calls": [["index": 0, "id": "call_\(step)", "type": "function", "function": ["name": name, "arguments": "{}"]]]]
+                finish = "tool_calls"
+            } else {
+                delta = ["content": "COMPLETED_AFTER_46_TOOLS"]
+                finish = "stop"
+            }
+            let data = try JSONSerialization.data(withJSONObject: ["id": "step_\(step)", "choices": [["index": 0, "delta": delta, "finish_reason": finish]]])
+            return Self.makeSSEResponse(chunks: ["data: \(String(decoding: data, as: UTF8.self))\n\n", "data: [DONE]\n\n"], url: request.url!)
+        }
+        let config = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI", apiType: "openai", endpoint: "https://api.openai.com/v1/chat/completions", credential: "test-only")
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+        let schema = Data(#"{"type":"object","properties":{}}"#.utf8)
+        let discovery = HanlinAISDKToolDefinition(name: "tool_search", description: "Discover the work tool", inputSchemaData: schema) { _, _ in
+            _ = discovered.increment()
+            return HanlinAISDKToolExecutionOutput(modelText: "execute_work is available")
+        }
+        let work = HanlinAISDKToolDefinition(name: "execute_work", description: "Do one operation", inputSchemaData: schema) { _, _ in
+            HanlinAISDKToolExecutionOutput(modelText: "operation_\(executions.increment())")
+        }
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Discover and execute 45 operations")],
+            baseSystemPrompt: "Complete the requested work", tools: [discovery],
+            dynamicTools: { discovered.count > 0 ? [discovery, work] : [discovery] },
+            prepareStep: { (_: Int) async in HanlinAISDKStepPreparation(activeToolAliases: discovered.count > 0 ? ["tool_search", "execute_work"] : ["tool_search"]) }
+        )
+        var steps: [Int] = []
+        var results = 0
+        var answer = ""
+        for try await event in stream {
+            if case .stepFinished(let index, _, _, _) = event { steps.append(index) }
+            if case .toolResult = event { results += 1 }
+            if case .textDelta(let text) = event { answer += text }
+        }
+        #expect(requests.count == 47)
+        #expect(executions.count == 45)
+        #expect(results == 46)
+        #expect(steps == Array(0..<47))
+        #expect(answer == "COMPLETED_AFTER_46_TOOLS")
+    }
+
     private static func makeSSEResponse(chunks: [String], url: URL) -> FetchResponse {
         let stream = AsyncThrowingStream<Data, Error> { continuation in
             for chunk in chunks {
@@ -1248,6 +1299,7 @@ private final class ManagedAtomicArray<T>: @unchecked Sendable {
 }
 
 private final class ManagedAtomicInt: @unchecked Sendable {
+    var count: Int { lock.lock(); defer { lock.unlock() }; return value }
     private var value: Int = 0
     private let lock = NSLock()
 
