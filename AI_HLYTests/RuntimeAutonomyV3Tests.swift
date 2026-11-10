@@ -1,11 +1,75 @@
 import CryptoKit
 import SwiftData
 import Testing
+import MCP
 @testable import AI_Hanlin
 
 @MainActor
 @Suite("Runtime autonomy V3 persistence", .serialized)
 struct RuntimeAutonomyV3Tests {
+    @Test(.timeLimit(.minutes(2)))
+    func actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore() async throws {
+        let id = UUID(), layout = RuntimeFileLayout.default
+        let package = layout.mcpPackages.appending(path: id.uuidString.lowercased(), directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: package, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: package) }
+        try Data(#"{"name":"actual-large-mcp","version":"1.0.0","type":"module"}"#.utf8)
+            .write(to: package.appending(path: "package.json"))
+        let entry = package.appending(path: "server.mjs")
+        try Data("""
+        import {createInterface} from 'node:readline';
+        createInterface({input:process.stdin}).on('line',line=>{
+          const request=JSON.parse(line);let result;
+          if(request.method==='initialize')result={protocolVersion:request.params.protocolVersion,capabilities:{tools:{}},serverInfo:{name:'actual-large-mcp',version:'1'}};
+          if(request.method==='tools/list')result={tools:[{name:'echo_owned',inputSchema:{type:'object',properties:{payload:{type:'string'}}}}]};
+          if(request.method==='tools/call')result={content:[
+            {type:'text',text:request.params.arguments.payload,_meta:{privateSentinel:'CLIENT_PRIVATE_SENTINEL'}},
+            {type:'text',text:'USER_ONLY_SENTINEL',annotations:{audience:['user']}}
+          ],structuredContent:{payload:request.params.arguments.payload,_meta:'USER_DATA_META_MUST_SURVIVE'},_meta:{privateSentinel:'ROOT_PRIVATE_SENTINEL'}};
+          if(result)process.stdout.write(JSON.stringify({jsonrpc:'2.0',id:request.id,result})+'\\n');
+        });
+        """.utf8).write(to: entry)
+        let descriptor = MCPServerDescriptor(id: id, slug: "actual-large-mcp", displayName: "Actual MCP",
+            packageName: "actual-large-mcp", resolvedVersion: "1.0.0", entryPoint: entry.path,
+            packageRoot: package.path, compatibility: .pendingProbe)
+        let configuration = MCPServerConfiguration.make(descriptor: descriptor, resolvedPaths: .init(
+            packageRoot: package, entryPoint: entry, entryPointRelativePath: "server.mjs", requiredMigration: false))
+        let host = try await AppRuntimeCore.shared.node.ensureRunning()
+        let transport = EmbeddedNodeMCPTransport(server: configuration, connection: host)
+        let session = MCPClientSession(server: descriptor, transport: transport)
+        do {
+            #expect(try await session.connect().contains { $0.originalName == "echo_owned" })
+            let text = UUID().uuidString + String(repeating: "שלום 😀\n", count: 800_000)
+            #expect(text.utf8.count > 8 * 1024 * 1024)
+            let arguments = String(decoding: try JSONSerialization.data(withJSONObject: ["payload": text]), as: UTF8.self)
+            let output = try await session.call(name: "echo_owned", argumentsJSON: arguments)
+            let rendered = MCPToolBridge.render(output, title: "Actual MCP")
+            #expect(rendered.outcome == .succeeded && rendered.isStoreEligible)
+            #expect(rendered.modelText.hasPrefix(text))
+            #expect(!rendered.modelText.contains("USER_ONLY_SENTINEL"))
+            let longText = String(repeating: "x", count: 8 * 1024 * 1024 + 123) + UUID().uuidString
+            let plain = MCPToolBridge.render(.init(content: [.text(text: longText, annotations: nil, _meta: nil)], isError: false), title: "Full text")
+            #expect(plain.modelText == longText && plain.isStoreEligible)
+            let payload = try #require(rendered.fullResultPayload)
+            #expect(!payload.contains("CLIENT_PRIVATE_SENTINEL") && !payload.contains("ROOT_PRIVATE_SENTINEL"))
+            #expect(!payload.contains("USER_ONLY_SENTINEL"))
+            let object = try #require(JSONSerialization.jsonObject(with: Data(payload.utf8)) as? [String: Any])
+            let structured = try #require(object["structuredContent"] as? [String: Any])
+            #expect(structured["payload"] as? String == text)
+            #expect(structured["_meta"] as? String == "USER_DATA_META_MUST_SURVIVE")
+            let directory = package.appending(path: "owned-chat-results", directoryHint: .isDirectory)
+            let store = ToolResultStore(directory: directory)
+            let reference = try #require(store.store(payload, mimeType: "application/json"))
+            let reopened = ToolResultStore(directory: directory)
+            let full = try #require(reopened.fullPayload(for: reference))
+            #expect(SHA256.hash(data: Data(full.utf8)) == SHA256.hash(data: Data(payload.utf8)))
+            await session.disconnect()
+        } catch {
+            await session.disconnect()
+            throw error
+        }
+    }
+
     @Test func linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService() async throws {
         let core = AppRuntimeCore.shared
         let before = await core.python.snapshot()

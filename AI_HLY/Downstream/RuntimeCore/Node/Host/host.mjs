@@ -5,6 +5,8 @@ import { verifyLifecyclePlan } from './lifecycle-planner.mjs';
 import { globalNodeModules } from './global-package-state.mjs';
 import {executeLifecycleInJobs} from './lifecycle-executor.mjs';
 import { ExecutionJobs } from './execution-jobs.mjs';
+import {MCPLineFrames} from './mcp-framing.mjs';
+import {StringDecoder} from 'node:string_decoder';
 import './fetch-compatibility.mjs';
 import { traceRuntimeWarnings } from './warning-diagnostics.mjs';
 import http from 'node:http';
@@ -15,12 +17,13 @@ if (typeof dns.setDefaultResultOrder === 'function') {
 import {
   promises as fs,
   createWriteStream,
+  createReadStream,
   realpathSync,
   statSync,
 } from 'node:fs';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
-import { timingSafeEqual } from 'node:crypto';
+import { timingSafeEqual, randomUUID } from 'node:crypto';
 import * as nodeModule from 'node:module';
 
 const [root, readyPath, launchToken, logPath, debugFlag] = process.argv.slice(2);
@@ -96,13 +99,13 @@ const workerURL = new URL('./server-worker.mjs', import.meta.url);
 const executionWorkerURL = new URL('./execution-worker.mjs', import.meta.url);
 const servers = new Map();
 const serverRestarts = new Map();
+const serverStarts = new Map();
 const serverGenerations = new Map();
 const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: () => globalNodeModules(root),
   inputInbox:path.join(root,'runtime','node','requests'),validateInput:validateExecutionInput });
 await executionJobs.initialize();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
-const maximumLine = 8 * 1024 * 1024;
 const gracefulStopTimeoutMilliseconds = 3_000;
 const lifecycleCounters = {
   workerCreationCount: 0,
@@ -238,10 +241,12 @@ const server = http.createServer(async (request, response) => {
       return json(response, 200, await previewPackage(body.source, { root, entryPointOverride: body.entryPointOverride }));
     }
     if (request.method === 'POST' && url.pathname === '/v1/install') {
-      const body = await readJSON(request);
-      const operation = await executionJobs.startOperation({executionID:body.operationID},async({signal,emit})=>{
-        const progress=data=>{installProgress.set(body.operationID,data);emit(data);emitGlobal('install',data);};
-        progress({operationID:body.operationID,phase:'resolving',fraction:0});
+      const control = await readJSON(request);
+      const operation = await executionJobs.startOperation({...control,executionID:control.executionID??control.operationID},async({signal,emit,input:body})=>{
+        body.operationID??=body.executionID;
+        if(body.operationID!==body.executionID)throw new Error('Installation operation ID mismatch.');
+        const progress=data=>{installProgress.set(body.operationID,data);const written=emit(data);emitGlobal('install',data);return written;};
+        await progress({operationID:body.operationID,phase:'resolving',fraction:0});
         try {
           const descriptor = await installPackage({
             root,
@@ -256,7 +261,7 @@ const server = http.createServer(async (request, response) => {
                 progress({operationID:body.operationID,phase:'installingDependencies',fraction:0.68,lifecycle:detail});
               }}),
             emit: (channel, data) => {
-              if (channel === 'install') progress(data);
+              if (channel === 'install') return progress(data);
               else emitGlobal(channel, data);
             },
           });
@@ -277,7 +282,7 @@ const server = http.createServer(async (request, response) => {
           throw error;
         }
       });
-      if(body.detached===true)return json(response,200,operation);
+      if(control.detached===true)return json(response,200,operation);
       const completed=await executionJobs.wait(operation.executionID);
       if(completed.state!=='completed')throw new Error(completed.error??completed.result?.stderr??'Installation failed.');
       return json(response,200,completed.result.value);
@@ -304,19 +309,25 @@ const server = http.createServer(async (request, response) => {
     if (!match || !validID(match[1])) return json(response, 404, { error: 'Not found' });
     const id = match[1].toLowerCase();
     const action = match[2];
-    if (request.method === 'POST' && action === 'start') return json(response, 200, await startServer(id, await readJSON(request)));
-    if (request.method === 'POST' && action === 'stop') return json(response, 200, await stopServer(id));
+    if (request.method === 'POST' && action === 'start') {
+      const body=await readJSON(request);
+      if(body.executionID)return json(response,200,await executionJobs.startOperation(body,
+        ({signal,input})=>startServer(id,input,signal)));
+      return json(response,200,await startServer(id,body));
+    }
+    if (request.method === 'POST' && action === 'stop') {
+      const body=await readJSON(request);
+      assertGeneration(servers.get(id),body.generation);
+      return json(response,200,await stopServer(id));
+    }
     if (request.method === 'POST' && action === 'restart') {
       return json(response, 200, await restartServer(id, await readJSON(request)));
     }
     if (request.method === 'POST' && action === 'stdin') {
       const body = await readJSON(request);
-      const state = servers.get(id);
-      if (!state?.worker.stdin) return json(response, 409, { error: 'Server is not running' });
-      const data = Buffer.from(body.data ?? '', 'base64');
-      if (data.length > maximumLine) return json(response, 413, { error: 'Input is too large' });
-      await new Promise((resolve, reject) => state.worker.stdin.write(data, error => error ? reject(error) : resolve()));
-      return json(response, 200, { accepted: data.length });
+      if(body.executionID)return json(response,200,await executionJobs.startOperation(body,
+        ({signal,input})=>writeServerInput(id,input,signal)));
+      return json(response,200,await writeServerInput(id,body));
     }
     if (request.method === 'GET' && action === 'events') return attachEvents(id, request, response);
     if (request.method === 'GET' && action === 'logs') return sendLogs(id, response);
@@ -427,18 +438,28 @@ function rejectUnsafeSource(_source) {
   // R12: Removed word blocking. String/comments are not API calls.
 }
 
-async function startServer(id, configuration) {
+function startServer(id,configuration,signal) {
+  const pending=serverStarts.get(id);
+  if(pending)return waitForSignal(pending,signal);
+  const operation=startServerImpl(id,configuration,signal);
+  serverStarts.set(id,operation);
+  operation.finally(()=>{if(serverStarts.get(id)===operation)serverStarts.delete(id);}).catch(()=>{});
+  return operation;
+}
+
+async function startServerImpl(id, configuration, signal) {
+  signal?.throwIfAborted();
   if (configuration.serverID?.toLowerCase() !== id) throw new Error('Server ID mismatch.');
   const existing = servers.get(id);
   if (existing) {
     if (existing.state === 'running') return snapshot(existing);
     if (existing.state === 'starting') {
-      await existing.readyPromise;
+      await waitForSignal(existing.readyPromise,signal);
       return snapshot(existing);
     }
     if (existing.state === 'stopping') {
       await existing.stopPromise;
-      return startServer(id, configuration);
+      return startServerImpl(id, configuration,signal);
     }
     await finalizeServerState(existing, {
       state: existing.state === 'failed' ? 'failed' : 'stopped',
@@ -450,6 +471,7 @@ async function startServer(id, configuration) {
   const entryPoint = realpathSync(requestedEntryPoint);
   if (!isInside(packageRoot, entryPoint)) throw new Error('Entry point is outside package root.');
   if (!statSync(entryPoint).isFile()) throw new Error('Entry point is not a regular file.');
+  signal?.throwIfAborted();
 
   const generation = (serverGenerations.get(id) ?? 0) + 1;
   serverGenerations.set(id, generation);
@@ -467,10 +489,13 @@ async function startServer(id, configuration) {
     resolveExit: exited.resolve,
     stopPromise: null,
     clients: new Set(),
-    stdoutBacklog: [],
-    stdoutBacklogBytes: 0,
+    stdoutSpool:path.join(npmTemp,`mcp-output-${id}-${randomUUID()}.ndjson`),
+    stdoutTail:Promise.resolve(),
+    outputAbort:new AbortController(),
+    stdinTail:Promise.resolve(),
     stderr: [],
-    pending: Buffer.alloc(0),
+    frames:new MCPLineFrames(),
+    stderrDecoder:new StringDecoder('utf8'),
     startedAt: new Date().toISOString(),
     moduleEdges: [],
     blockedAccesses: [],
@@ -517,7 +542,7 @@ async function startServer(id, configuration) {
   lifecycleCountersByServer.set(id, serverCounters);
   state.handlers.stdout = chunk => handleStdout(state, chunk);
   state.handlers.stderr = chunk => {
-    const message = redact(chunk.toString('utf8')).slice(0, maximumLine);
+    const message = redact(state.stderrDecoder.write(chunk));
     state.stderr.push(message);
     if (state.stderr.length > 500) state.stderr.shift();
     emit(state, 'stderr', { text: message });
@@ -561,8 +586,12 @@ async function startServer(id, configuration) {
   worker.on('error', state.handlers.error);
   worker.on('exit', state.handlers.exit);
 
+  const abort=()=>{void stopServerState(state,{expectedStop:true});};
+  signal?.addEventListener('abort',abort,{once:true});
+  if(signal?.aborted)abort();
   try {
-    await withTimeout(state.readyPromise, 15_000, 'Server worker startup timed out.');
+    await state.readyPromise;
+    signal?.throwIfAborted();
     return snapshot(state);
   } catch (error) {
     await stopServerState(state, {
@@ -571,7 +600,7 @@ async function startServer(id, configuration) {
       failure: error,
     });
     throw error;
-  }
+  } finally {signal?.removeEventListener('abort',abort);}
 }
 
 async function stopServer(id) {
@@ -583,6 +612,7 @@ async function stopServer(id) {
 function stopServerState(state, options = {}) {
   if (state.stopPromise) return state.stopPromise;
   state.stopPromise = (async () => {
+    state.rejectReady(new Error('Server startup was stopped by its owner.'));
     state.expectedStop ||= options.expectedStop === true;
     state.state = 'stopping';
     emit(state, 'lifecycle', {
@@ -591,6 +621,7 @@ function stopServerState(state, options = {}) {
       reason: options.failure ? redact(options.failure.message) : null,
     });
     finishEventClients(state, 'stopping');
+    state.outputAbort.abort();
     if (!state.stdinEnded) {
       state.stdinEnded = true;
       try { state.worker.stdin?.end(); } catch (error) {
@@ -674,6 +705,7 @@ function restartServer(id, configuration) {
 }
 
 async function handleWorkerExit(state, code) {
+  await state.stdoutTail;
   const expected = state.expectedStop || state.state === 'stopping';
   const resultState = expected ? 'stopped' : (code === 0 ? 'stopped' : 'failed');
   emit(state, 'lifecycle', {
@@ -691,9 +723,9 @@ async function finalizeServerState(state, result) {
   state.state = result.state;
   state.rejectReady(new Error(result.reason ?? `Server worker finalized as ${result.state}.`));
   finishEventClients(state, result.state);
-  state.pending = Buffer.alloc(0);
-  state.stdoutBacklog = [];
-  state.stdoutBacklogBytes = 0;
+  state.outputAbort.abort();
+  await state.stdoutTail;
+  await fs.rm(state.stdoutSpool,{force:true});
   state.stderr = [];
   if (state.handlers.stdout) state.worker.stdout?.off('data', state.handlers.stdout);
   if (state.handlers.stderr) state.worker.stderr?.off('data', state.handlers.stderr);
@@ -720,40 +752,43 @@ async function finalizeServerState(state, result) {
 
 function handleStdout(state, chunk) {
   if (state.finalized) return;
-  state.pending = Buffer.concat([state.pending, chunk]);
-  if (state.pending.length > maximumLine) {
-    emit(state, 'lifecycle', { event: 'error', message: 'stdout line exceeded size limit' });
-    void stopServerState(state, {
-      expectedStop: false,
-      forceImmediately: true,
-      failure: new Error('stdout line exceeded size limit'),
-    });
-    return;
-  }
-  let newline;
-  while ((newline = state.pending.indexOf(0x0a)) >= 0) {
-    const line = state.pending.subarray(0, newline);
-    state.pending = state.pending.subarray(newline + 1);
-    if (!line.length) continue;
-    try {
-      JSON.parse(line.toString('utf8'));
-      emit(state, 'stdout', { data: line.toString('base64') });
-    } catch {
-      emit(state, 'diagnostic', { message: redact(line.toString('utf8')).slice(0, 4096) });
+  state.worker.stdout.pause();
+  state.stdoutTail=state.stdoutTail.then(async()=>{
+    for(const bytes of state.frames.push(chunk)) {
+      try{JSON.parse(bytes.toString('utf8'));}
+      catch{emit(state,'diagnostic',{message:redact(bytes.toString('utf8'))});continue;}
+      const line=JSON.stringify({channel:'stdout',serverID:state.id,generation:state.generation,data:bytes.toString('base64')})+'\n';
+      if(!state.clients.size)await fs.appendFile(state.stdoutSpool,line,{mode:0o600});
+      else {
+        const delivered=await Promise.all([...state.clients].map(response=>writeEvent(response,line,state.outputAbort.signal)));
+        if(!delivered.some(Boolean)&&!state.outputAbort.signal.aborted)await fs.appendFile(state.stdoutSpool,line,{mode:0o600});
+      }
     }
-  }
+  }).catch(error=>{
+    if(!state.outputAbort.signal.aborted)void stopServerState(state,{failure:error,expectedStop:false,forceImmediately:true});
+  }).finally(()=>{if(!state.finalized)state.worker.stdout.resume();});
 }
 
 function attachEvents(id, request, response) {
-  response.writeHead(200, { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
   const state = servers.get(id);
+  const expected=new URL(request.url,'http://127.0.0.1').searchParams.get('generation');
+  assertGeneration(state,expected==null?null:Number(expected));
+  response.writeHead(200, { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
   if (!state) { response.write(`${JSON.stringify({ channel: 'lifecycle', event: 'stopped' })}\n`); return response.end(); }
-  state.clients.add(response);
-  response.write(`${JSON.stringify({ channel: 'lifecycle', event: state.state })}\n`);
-  for (const line of state.stdoutBacklog) response.write(line);
-  state.stdoutBacklog = [];
-  state.stdoutBacklogBytes = 0;
-  request.on('close', () => state.clients.delete(response));
+  response.write(`${JSON.stringify({ channel: 'lifecycle', event: state.state,generation:state.generation })}\n`);
+  // Serialize attachment with stdout. Disconnected output is private temporary
+  // transport storage, never an evicting memory queue or a second runtime.
+  state.stdoutTail=state.stdoutTail.then(async()=>{
+    if(response.destroyed||state.finalized)return;
+    try {
+      for await(const chunk of createReadStream(state.stdoutSpool)) {
+        if(!await writeEvent(response,chunk,state.outputAbort.signal))return;
+      }
+      await fs.rm(state.stdoutSpool,{force:true});
+    } catch(error){if(error.code!=='ENOENT')throw error;}
+    if(!response.destroyed)state.clients.add(response);
+  }).catch(error=>{response.destroy(error);});
+  response.on('close', () => state.clients.delete(response));
 }
 
 function finishEventClients(state, event) {
@@ -774,18 +809,61 @@ function finishEventClients(state, event) {
 
 function emit(state, channel, payload) {
   const line = `${JSON.stringify({ channel, serverID: state.id, timestamp: new Date().toISOString(), ...payload })}\n`;
-  if (channel === 'stdout' && state.clients.size === 0) {
-    state.stdoutBacklog.push(line);
-    state.stdoutBacklogBytes += Buffer.byteLength(line);
-    while (state.stdoutBacklogBytes > maximumLine && state.stdoutBacklog.length > 1) {
-      state.stdoutBacklogBytes -= Buffer.byteLength(state.stdoutBacklog.shift());
-    }
-  }
   for (const response of state.clients) response.write(line);
   if (channel !== 'stdout') diagnostic(`server_${channel}`, { serverID: state.id, ...payload });
 }
 
 function emitGlobal(channel, payload) { diagnostic(channel, payload); }
+
+function assertGeneration(state,generation) {
+  if(generation!=null&&(!Number.isSafeInteger(generation)||state?.generation!==generation))
+    throw Object.assign(new Error('The MCP server generation has changed.'),{status:409});
+}
+
+async function writeServerInput(id,body,signal) {
+  const state=servers.get(id);
+  if(!state?.worker.stdin||state.state!=='running')throw Object.assign(new Error('Server is not running'),{status:409});
+  assertGeneration(state,body.generation);
+  if(typeof body.data!=='string')throw new Error('MCP stdin requires base64 data.');
+  const data=Buffer.from(body.data,'base64');
+  if(data.toString('base64')!==body.data)throw new Error('Invalid base64 MCP input.');
+  // Reserve the stream position before yielding. Cancelling one queued request
+  // never lets a later frame overtake an earlier write or kills another chat.
+  const previous=state.stdinTail;
+  let release;
+  const slot=new Promise(resolve=>{release=resolve;});
+  state.stdinTail=previous.then(()=>slot);
+  try {
+    await waitForSignal(previous,signal);
+    signal?.throwIfAborted();
+    assertGeneration(servers.get(id),state.generation);
+    if(state.stdinEnded)throw new Error('MCP stdin is closed.');
+    await new Promise((resolve,reject)=>state.worker.stdin.write(data,error=>error?reject(error):resolve()));
+    return {accepted:data.length,generation:state.generation};
+  } finally {release();}
+}
+
+function waitForSignal(promise,signal) {
+  if(!signal)return promise;
+  signal.throwIfAborted();
+  let abort;
+  const cancelled=new Promise((_,reject)=>{abort=()=>reject(signal.reason);signal.addEventListener('abort',abort,{once:true});});
+  return Promise.race([promise,cancelled]).finally(()=>signal.removeEventListener('abort',abort));
+}
+
+function writeEvent(response,data,signal) {
+  if(response.destroyed||response.writableEnded||signal.aborted)return Promise.resolve(false);
+  return new Promise(resolve=>{
+    const finish=ok=>{
+      response.off('drain',drained);response.off('close',closed);response.off('error',closed);
+      signal.removeEventListener('abort',closed);resolve(ok);
+    };
+    const drained=()=>finish(true),closed=()=>finish(false);
+    response.once('drain',drained);response.once('close',closed);response.once('error',closed);
+    signal.addEventListener('abort',closed,{once:true});
+    if(response.write(data))finish(true);
+  });
+}
 
 async function sendLogs(id, response) {
   const state = servers.get(id);

@@ -65,3 +65,36 @@ test('a real Host journal failure aborts extraction and exposes failed in-memory
   const output=await jobs.readOutput(id,'stdout');
   assert.match(Buffer.from(output.base64,'base64').toString(),/before-real-disk-failure/);
 });
+
+
+test('Host operation claims real oversized owned inputs before invoking the existing callback and never replays',async t=>{
+  const {root,jobs}=await fixture(t),id=randomUUID(),inbox=path.join(root,'inbox');
+  await fs.mkdir(inbox);jobs.inputInbox=inbox;
+  const text='שלום 👨‍👩‍👧‍👦'.repeat(400_000);
+  const body=Buffer.from(JSON.stringify({executionID:id,data:text}));
+  assert.ok(body.length>10*1024*1024);
+  await fs.writeFile(path.join(inbox,id+'.json'),body);
+  const receipt={bytes:body.length,sha256:createHash('sha256').update(body).digest('hex')};
+  let calls=0;
+  await jobs.startOperation({executionID:id,inputArtifact:receipt},async({input})=>{
+    calls++;assert.equal(input.data,text);return {bytes:Buffer.byteLength(input.data),nonce:id};
+  });
+  const completed=await jobs.wait(id);
+  assert.equal(completed.state,'completed');assert.equal(calls,1);
+  assert.equal(completed.inputArtifact.verified,true);
+  assert.equal(completed.inputArtifact.sha256,receipt.sha256);
+  assert.equal((await fs.readFile(path.join(root,id,'request.json'))).equals(body),true);
+  await assert.rejects(jobs.startOperation({executionID:id,inputArtifact:receipt},()=>{calls++;}),/never replayed/);
+  assert.equal(calls,1);
+});
+
+test('Host operation ingress rejects changed input identity without executing its callback and retains the real bytes',async t=>{
+  const {root,jobs}=await fixture(t),id=randomUUID(),inbox=path.join(root,'inbox');
+  await fs.mkdir(inbox);jobs.inputInbox=inbox;
+  const body=Buffer.from(JSON.stringify({executionID:randomUUID(),data:'must not dispatch'}));
+  await fs.writeFile(path.join(inbox,id+'.json'),body);
+  let executed=false;
+  await assert.rejects(jobs.startOperation({executionID:id,inputArtifact:{bytes:body.length,sha256:createHash('sha256').update(body).digest('hex')}},()=>{executed=true;}),/identity/);
+  assert.equal(executed,false);assert.equal(jobs.snapshot(id).state,'failed');
+  assert.equal((await fs.readFile(path.join(root,id,'request.json'))).equals(body),true);
+});

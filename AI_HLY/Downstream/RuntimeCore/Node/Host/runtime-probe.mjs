@@ -1,6 +1,8 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
+import {StringDecoder} from 'node:string_decoder';
+import {MCPLineFrames} from './mcp-framing.mjs';
 
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
 const protocolVersion = '2025-06-18';
@@ -9,7 +11,9 @@ export async function runMCPRuntimeProbe(options) {
   let totalDurationMilliseconds = 0;
   let result;
   for (let attempt = 1; attempt <= 5; attempt += 1) {
+    options.signal?.throwIfAborted();
     result = await runMCPRuntimeProbeAttempt(options);
+    options.signal?.throwIfAborted();
     totalDurationMilliseconds += result.durationMilliseconds;
     if (!shouldRetryInternalLoaderFailure(result) || attempt === 5) {
       return {
@@ -26,8 +30,13 @@ async function runMCPRuntimeProbeAttempt(options) {
   const started = Date.now();
   const packageRoot = path.resolve(options.packageRoot);
   const entryPoint = path.resolve(options.entryPoint);
-  const timeoutMilliseconds = Math.min(Math.max(Number(options.timeoutMilliseconds) || 20_000, 1_000), 120_000);
-  const maximumOutputBytes = Math.min(Math.max(Number(options.maximumOutputBytes) || 1_048_576, 4_096), 8 * 1024 * 1024);
+  const timeoutMilliseconds = options.timeoutMilliseconds;
+  const maximumOutputBytes = options.maximumOutputBytes;
+  if(timeoutMilliseconds!=null&&(!Number.isSafeInteger(timeoutMilliseconds)||timeoutMilliseconds<=0
+      ||!Number.isSafeInteger(Date.now()+timeoutMilliseconds)))throw new TypeError('Invalid explicit probe timeout.');
+  if(maximumOutputBytes!=null&&(!Number.isSafeInteger(maximumOutputBytes)||maximumOutputBytes<0))
+    throw new TypeError('Invalid explicit probe output budget.');
+  options.signal?.throwIfAborted();
   const ownsWorkspace = options.workspace == null;
   const workspace = ownsWorkspace ? await fs.mkdtemp(path.join(path.dirname(packageRoot), 'probe-workspace-')) : path.resolve(options.workspace);
   await fs.mkdir(workspace, { recursive: true });
@@ -37,7 +46,8 @@ async function runMCPRuntimeProbeAttempt(options) {
   const dynamicModules = new Set();
   let outputBytes = 0;
   let stderr = '';
-  let stdoutBuffer = Buffer.alloc(0);
+  const frames=new MCPLineFrames(),stderrDecoder=new StringDecoder('utf8');
+  let stdoutTail=Promise.resolve(),stderrTail=Promise.resolve(),removeAbort=()=>{};
   let worker;
   let cleanStop = false;
   let stopAttempted = false;
@@ -61,37 +71,41 @@ async function runMCPRuntimeProbeAttempt(options) {
 
     const events = createWorkerEvents(worker, { moduleEdges, blockedAccesses, dynamicModules });
     const responses = createResponseQueue();
-    worker.stdout.on('data', chunk => {
-      outputBytes += chunk.length;
-      if (outputBytes > maximumOutputBytes) {
-        responses.fail(new Error('Runtime probe output exceeded its limit.'));
-        return;
+    const fail=error=>{events.fail(error);responses.fail(error);};
+    const processChunk=async(channel,chunk)=>{
+      outputBytes+=chunk.length;
+      await options.onOutput?.(channel,chunk);
+      if(maximumOutputBytes!=null&&outputBytes>maximumOutputBytes)throw new Error('Runtime probe output exceeded its explicit budget.');
+      if(channel==='stderr')stderr+=stderrDecoder.write(chunk);
+      else for(const bytes of frames.push(chunk)) {
+        const line=bytes.toString('utf8').trim();
+        if(!line)continue;
+        try{responses.push(JSON.parse(line));}catch{/* diagnostic stdout is not MCP traffic */}
       }
-      stdoutBuffer = Buffer.concat([stdoutBuffer, chunk]);
-      let newline;
-      while ((newline = stdoutBuffer.indexOf(0x0a)) >= 0) {
-        const line = stdoutBuffer.subarray(0, newline).toString('utf8').trim();
-        stdoutBuffer = stdoutBuffer.subarray(newline + 1);
-        if (!line) continue;
-        try { responses.push(JSON.parse(line)); } catch { /* diagnostic stdout is not MCP traffic */ }
-      }
+    };
+    worker.stdout.on('data',chunk=>{
+      worker.stdout.pause();
+      stdoutTail=stdoutTail.then(()=>processChunk('stdout',chunk)).catch(fail).finally(()=>worker.stdout.resume());
     });
-    worker.stderr.on('data', chunk => {
-      outputBytes += chunk.length;
-      if (Buffer.byteLength(stderr) < maximumOutputBytes) stderr += chunk.toString('utf8');
-      if (outputBytes > maximumOutputBytes) responses.fail(new Error('Runtime probe output exceeded its limit.'));
+    worker.stderr.on('data',chunk=>{
+      worker.stderr.pause();
+      stderrTail=stderrTail.then(()=>processChunk('stderr',chunk)).catch(fail).finally(()=>worker.stderr.resume());
     });
-    worker.once('error', error => { events.fail(error); responses.fail(error); });
-    worker.once('exit', code => {
-      if (code !== 0) {
-        const diagnostic = redact(stderr).trim().slice(-2_048);
-        const error = new Error(
-          `Server Worker exited during the runtime probe with code ${code}.`
-          + (diagnostic ? ` Worker stderr: ${diagnostic}` : ''),
-        );
-        events.fail(error); responses.fail(error);
-      }
+    worker.once('error',fail);
+    worker.once('exit',code=>{
+      void Promise.all([stdoutTail,stderrTail]).then(()=>{
+        if(stopAttempted)return;
+        const diagnostic=redact(stderr).trim().slice(-2048);
+        fail(Object.assign(new Error(`Server Worker exited during the runtime probe with code ${code}.`
+          +(diagnostic?` Worker stderr: ${diagnostic}`:'')),{exitCode:code}));
+      }).catch(fail);
     });
+    const onAbort=()=>fail(options.signal.reason??new Error('Runtime probe cancelled.'));
+    if(options.signal){
+      options.signal.addEventListener('abort',onAbort,{once:true});
+      removeAbort=()=>options.signal.removeEventListener('abort',onAbort);
+      if(options.signal.aborted)onAbort();
+    }
 
     await withTimeout(events.loaded, timeoutMilliseconds, 'Server Worker startup timed out.');
     writeMessage(worker, {
@@ -116,6 +130,8 @@ async function runMCPRuntimeProbeAttempt(options) {
     if (!stopResult.stopped) {
       throw new Error('Server Worker did not stop within the bounded shutdown deadline.');
     }
+    await Promise.all([stdoutTail,stderrTail]);
+    stderr+=stderrDecoder.end();
     const graph = finalizeGraph(moduleEdges, blockedAccesses, relativePath(packageRoot, entryPoint));
     return {
       passed: true,
@@ -128,14 +144,17 @@ async function runMCPRuntimeProbeAttempt(options) {
       reachableModuleCount: graph.reachableModuleCount,
       resolvedModuleCount: graph.moduleEdges.length,
       dynamicUnresolvedCount: dynamicModules.size,
-      stderr: redact(stderr).slice(0, 16_384),
+      stderr: redact(stderr),
     };
   } catch (error) {
     if (worker && worker.threadId !== -1 && !stopAttempted) {
       stopAttempted = true;
       cleanStop = (await stopWorker(worker)).graceful;
     }
+    await Promise.all([stdoutTail,stderrTail]);
+    stderr+=stderrDecoder.end();
     const graph = finalizeGraph(moduleEdges, blockedAccesses, relativePath(packageRoot, entryPoint));
+    options.signal?.throwIfAborted();
     const message = redact(error?.message ?? String(error));
     return {
       passed: false,
@@ -150,9 +169,10 @@ async function runMCPRuntimeProbeAttempt(options) {
       reachableModuleCount: graph.reachableModuleCount,
       resolvedModuleCount: graph.moduleEdges.length,
       dynamicUnresolvedCount: dynamicModules.size,
-      stderr: redact(stderr).slice(0, 16_384),
+      stderr: redact(stderr),
     };
   } finally {
+    removeAbort();
     if (ownsWorkspace) await fs.rm(workspace, { recursive: true, force: true }).catch(() => {});
   }
 }
@@ -316,11 +336,18 @@ function looksLikeConfigurationFailure(value) {
 }
 
 function withTimeout(promise, milliseconds, message) {
+  if(milliseconds==null)return promise;
+  const deadline=performance.now()+milliseconds;
   let timer;
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(message)), milliseconds); }),
-  ]).finally(() => clearTimeout(timer));
+  const expired=new Promise((_,reject)=>{
+    const tick=()=>{
+      const remaining=deadline-performance.now();
+      if(remaining<=0)reject(new Error(message));
+      else timer=setTimeout(tick,Math.min(remaining,2_147_483_647));
+    };
+    tick();
+  });
+  return Promise.race([promise,expired]).finally(()=>clearTimeout(timer));
 }
 
 function settleWithin(promise, milliseconds) {

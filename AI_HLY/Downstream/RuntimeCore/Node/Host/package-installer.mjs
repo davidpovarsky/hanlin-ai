@@ -174,8 +174,9 @@ export async function installPackage({
         moduleKind,
         arguments: validatedServerArguments,
         workspace: path.join(operationRoot, 'probe-workspace'),
-        timeoutMilliseconds: 30_000,
-        maximumOutputBytes: 1_048_576,
+        signal,
+        onOutput: (channel,bytes) => emit('install',{operationID,phase:'checkingCompatibility',fraction:0.8,
+          probeOutput:{channel,base64:bytes.toString('base64')}}),
       }),
     });
     rejectUnsupported(compatibility.findings);

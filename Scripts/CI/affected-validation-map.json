@@ -463,6 +463,7 @@
         "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
         "AI_HLY/Downstream/RuntimeCore/Node/Native/**",
         "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift",
         "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift",
         "AI_HLY/Downstream/MCP/Core/**",
         "AI_HLY/Downstream/MCP/Diagnostics/**",

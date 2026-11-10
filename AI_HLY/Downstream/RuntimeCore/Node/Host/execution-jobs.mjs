@@ -122,29 +122,48 @@ export class ExecutionJobs {
   /** Host-owned asynchronous operations share the existing job journal,
    * cancellation/status/output APIs and interruption recovery. No new engine.
    */
-  async startOperation({executionID,maximumOutputBytes=1_048_576,timeoutMilliseconds},operation) {
+  async startOperation(body,operation) {
+    const {executionID}=body;
+    let maximumOutputBytes;
     const id=String(executionID??randomUUID()).toLowerCase();
     if(!validID(id))throw new Error('Invalid execution ID.');
     if(this.#jobs.has(id))throw Object.assign(new Error('This execution ID already exists; operations are never replayed implicitly.'),{status:409});
-    if(timeoutMilliseconds!=null)throw new Error('Host package operations support cancellation, not an implicit HTTP deadline.');
-    if(!Number.isSafeInteger(maximumOutputBytes)||maximumOutputBytes<1)throw new Error('Invalid operation preview budget.');
     const directory=path.join(this.root,id);
     const header={executionID:id,state:'queued',startedAt:Date.now(),cancellationRequested:false,stdoutBytes:0,stderrBytes:0,result:null};
     const controller=new AbortController();
-    const job={header,cancel:async()=>controller.abort(new Error('Installation cancelled.'))};
+    const job={header,cancel:async()=>controller.abort(new Error('Runtime operation cancelled.'))};
     this.#jobs.set(id,job);
     job.ready=fs.mkdir(directory,{mode:0o700});
-    try{await job.ready;}
-    catch(error){header.state='failed';header.error=String(error.message??error);header.memoryOnlyFailure=true;throw error;}
-    await this.#persist(header);
-    job.completion=this.#runOperation(job,controller,operation,maximumOutputBytes).catch(async error=>{
+    try {
+      await job.ready;
+      if(body.inputArtifact) {
+        const expected=validateExecutionInputReceipt(body.inputArtifact);
+        header.inputArtifact={fileName:'request.json',inboxFileName:id+'.json',
+          expectedBytes:expected.bytes,expectedSha256:expected.sha256,verified:false};
+      }
+      await this.#persist(header);
+      if(body.inputArtifact) {
+        const claimed=await claimExecutionInput({inbox:this.inputInbox,directory,id,artifact:body.inputArtifact,
+          cancelled:()=>header.cancellationRequested||Boolean(header.interruptionReason)});
+        body=claimed.body;header.inputArtifact=claimed.receipt;
+        await this.#persist(header);
+      }
+      if(body.timeoutMilliseconds!=null)throw new Error('Host operations support cancellation, not an implicit HTTP deadline.');
+      maximumOutputBytes=body.maximumOutputBytes??1_048_576;
+      if(!Number.isSafeInteger(maximumOutputBytes)||maximumOutputBytes<1)throw new Error('Invalid operation preview budget.');
+    } catch(error) {
+      header.state=header.interruptionReason?'interrupted':header.cancellationRequested?'cancelled':'failed';
+      header.error=header.interruptionReason??String(error.message??error);header.memoryOnlyFailure=true;
+      await this.#persist(header).catch(()=>{});throw error;
+    }
+    job.completion=this.#runOperation(job,controller,operation,maximumOutputBytes,body).catch(async error=>{
       header.state=header.interruptionReason?'interrupted':'failed';header.result=null;header.memoryOnlyFailure=true;header.error=header.interruptionReason??String(error.message??error);
       await this.#persist(header).catch(()=>{});
     }).then(()=>{job.completion=null;job.cancel=null;});
     return structuredClone(header);
   }
 
-  async #runOperation(job,controller,operation,maximumOutputBytes) {
+  async #runOperation(job,controller,operation,maximumOutputBytes,input) {
     const {header}=job,directory=path.join(this.root,header.executionID),started=performance.now();
     await Promise.all(['stdout','stderr'].map(channel=>fs.writeFile(path.join(directory,channel+'.log'),'',{mode:0o600})));
     header.state='running';await this.#persist(header);
@@ -156,8 +175,9 @@ export class ExecutionJobs {
         await fs.appendFile(path.join(directory,'stdout.log'),line);
         header.stdoutBytes+=Buffer.byteLength(line);await this.#persist(header);
       }).catch(cause=>{writeError??=cause;controller.abort(cause);});
+      return writes;
     };
-    try {controller.signal.throwIfAborted();value=await operation({signal:controller.signal,emit});}
+    try {controller.signal.throwIfAborted();value=await operation({signal:controller.signal,emit,input});}
     catch(cause){error=cause;failed=true;}
     await writes;
     if(writeError){error=writeError;failed=true;}

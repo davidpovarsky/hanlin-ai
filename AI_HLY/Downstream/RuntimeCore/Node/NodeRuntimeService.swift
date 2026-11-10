@@ -13,10 +13,12 @@ private struct RuntimeHostReadyFile: Codable, Sendable {
 struct RuntimeHostConnection: Sendable {
     let baseURL: URL
     private let token: String
+    let fileLayout: RuntimeFileLayout?
 
-    init(baseURL: URL, token: String) {
+    init(baseURL: URL, token: String, fileLayout: RuntimeFileLayout? = nil) {
         self.baseURL = baseURL
         self.token = token
+        self.fileLayout = fileLayout
     }
 
     func request(path: String, method: String = "GET", body: Data? = nil, timeout: TimeInterval = 60) -> URLRequest {
@@ -679,7 +681,7 @@ actor NodeRuntimeService {
                     guard let url = URL(string: "http://127.0.0.1:\(ready.port)") else {
                         throw RuntimeCoreError.runtimeFailure("Node published an invalid loopback address.")
                     }
-                    let host = RuntimeHostConnection(baseURL: url, token: context.token)
+                    let host = RuntimeHostConnection(baseURL: url, token: context.token, fileLayout: fileLayout)
                     _ = try await host.data(path: "/health", timeout: 3)
                     try? FileManager.default.removeItem(at: context.readyURL)
                     connection = host

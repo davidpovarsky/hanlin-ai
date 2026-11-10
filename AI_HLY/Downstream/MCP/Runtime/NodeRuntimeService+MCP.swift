@@ -37,6 +37,7 @@ extension NodeRuntimeService {
         }
         var body: [String: Any] = [
             "operationID": operationID.uuidString.lowercased(),
+            "executionID": operationID.uuidString.lowercased(),
             "serverID": serverID.uuidString.lowercased(),
             "source": source,
             "arguments": arguments,
@@ -44,13 +45,7 @@ extension NodeRuntimeService {
         ]
         if let entryPointOverride { body["entryPointOverride"] = entryPointOverride }
         let encodedBody = try JSONSerialization.data(withJSONObject: body)
-        do {
-            _ = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/install", method: "POST", body: encodedBody)
-        } catch let error as URLError where [.timedOut, .networkConnectionLost].contains(error.code) {
-            // Recover the same operation ID after an ambiguous acknowledgement.
-            // Never repeat installation side effects.
-        }
-        let result = try await waitForExecution(id: operationID)
+        let result = try await host.performOperation(path: "/v1/install", id: operationID, body: encodedBody)
         if result.wasCancelled { throw CancellationError() }
         guard result.exitCode == 0, let value = result.value else {
             throw RuntimeCoreError.runtimeFailure("MCP installation \(operationID) failed. \(result.stderr)")
