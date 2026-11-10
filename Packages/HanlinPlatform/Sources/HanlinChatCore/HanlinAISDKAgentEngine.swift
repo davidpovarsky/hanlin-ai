@@ -136,7 +136,9 @@ public actor HanlinAISDKAgentEngine {
 
                     while true {
                         let currentNames = Set(currentDefinitions.map(\.name))
-                        var stopConditions: [StopCondition] = []
+                        // The pinned SDK replaces an empty list with stepCountIs(1).
+                        // An explicit never-stop condition preserves the nil-budget contract.
+                        var stopConditions: [StopCondition] = [{ _ in false }]
                         if let limit {
                             stopConditions.append(stepCountIs(max(limit - stepOffset, 1)))
                         }

@@ -1371,9 +1371,9 @@ struct ClassicChatRestorationTests {
 
     // MARK: - 22. build84001SchemaOverheadTokenBudget
 
-    @Test("22. Build 84001 defect 7D: AssistantToolExposurePlanner enforces bounded schema byte budget")
+    @Test("22. Schema transport budgets are explicit and do not silently cap ordinary sessions")
     func build84001SchemaOverheadTokenBudget() throws {
-        #expect(AssistantToolExposurePlanner.defaultSchemaByteBudget == 24_000)
+        #expect(AssistantToolExposurePlanner.defaultSchemaByteBudget == nil)
 
         var oversizedSizes: [String: Int] = [:]
         var names: [String] = []
@@ -1383,14 +1383,18 @@ struct ClassicChatRestorationTests {
             oversizedSizes[name] = 4_000
         }
 
-        let planner = AssistantToolExposurePlanner(maxSchemaBytes: AssistantToolExposurePlanner.defaultSchemaByteBudget)
+        let ordinary = AssistantToolExposurePlanner().plan(candidateAliases: names, schemaSizes: oversizedSizes)
+        #expect(ordinary.exposedAliases == names)
+        #expect(ordinary.deferredAliases.isEmpty)
+        let explicitBudget = 24_000
+        let planner = AssistantToolExposurePlanner(maxSchemaBytes: explicitBudget)
         let decision = planner.plan(
             candidateAliases: names,
             schemaSizes: oversizedSizes,
             currentlyExposedAliases: []
         )
 
-        #expect(decision.totalExposedBytes <= AssistantToolExposurePlanner.defaultSchemaByteBudget)
+        #expect(decision.totalExposedBytes <= explicitBudget)
         #expect(!decision.deferredAliases.isEmpty)
     }
 

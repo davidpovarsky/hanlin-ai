@@ -638,7 +638,7 @@ struct HanlinAISDKAgentEngineTests {
         // Verify captured requests:
         // Request 1: initial user message
         // Request 2: must contain assistant message with tool_calls AND tool message with tool_call_id
-        #expect(interceptedRequests.count == 2)
+        try #require(interceptedRequests.count == 2)
         let step2BodyData = try #require(interceptedRequests.all[1].httpBody)
         let step2JSON = try #require(JSONSerialization.jsonObject(with: step2BodyData) as? [String: Any])
         let step2Messages = try #require(step2JSON["messages"] as? [[String: Any]])
@@ -743,7 +743,7 @@ struct HanlinAISDKAgentEngineTests {
         #expect(toolResults["call_2"] == "Result for call_2")
 
         // Inspect second request messages
-        #expect(interceptedRequests.count == 2)
+        try #require(interceptedRequests.count == 2)
         let step2Body = try #require(interceptedRequests.all[1].httpBody)
         let step2JSON = try #require(JSONSerialization.jsonObject(with: step2Body) as? [String: Any])
         let messages = try #require(step2JSON["messages"] as? [[String: Any]])
@@ -845,7 +845,7 @@ struct HanlinAISDKAgentEngineTests {
             }
         }
 
-        #expect(stepStartedPreparations.count == 2)
+        try #require(stepStartedPreparations.count == 2)
         #expect(stepStartedPreparations[0].activeToolAliases == ["load_skill"])
         #expect(stepStartedPreparations[1].activeToolAliases == ["load_skill", "execute_python"])
         #expect(stepStartedPreparations[1].loadedSkillIDs == ["code"])
