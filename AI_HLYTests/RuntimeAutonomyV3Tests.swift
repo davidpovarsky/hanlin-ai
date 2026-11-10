@@ -264,6 +264,36 @@ struct RuntimeAutonomyV3Tests {
         #expect(pythonResult.stdout.contains("EMBEDDED_PYTHON_LONG_COMPLETE"))
         print("EMBEDDED_LONG_JOBS node=\(nodeResult.executionID) ms=\(nodeResult.durationMilliseconds) python=\(pythonResult.executionID) ms=\(pythonResult.durationMilliseconds)")
     }
+    @Test func retainedNativePythonCancellationCallbackRemainsValidAfterItsJobIsReleased() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "python-capsule-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let python = PythonRuntimeService(fileLayout: layout)
+        let workspace = try layout.workspace(client: .tools, identifier: "capsule-proof")
+        let key = "__hanlin_cancel_probe_" + UUID().uuidString.replacingOccurrences(of: "-", with: "_")
+        let literal = String(decoding: try JSONEncoder().encode(key), as: UTF8.self)
+        let first = try await python.execute(RuntimeExecutionRequest(source: """
+        import builtins, inspect, sys
+        callback = inspect.getclosurevars(sys.gettrace()).nonlocals['cancelled']
+        setattr(builtins, \(literal), callback)
+        """, workspace: workspace))
+        #expect(first.exitCode == 0)
+        // execute() has now unregistered the first job's native cancellation ID.
+        let second = try await python.execute(RuntimeExecutionRequest(source: """
+        import builtins, gc
+        try:
+            gc.collect()
+            callback = getattr(builtins, \(literal))
+            assert all(callback() is False for _ in range(1024))
+            print('RETAINED_NATIVE_CANCELLATION_CONTEXT_VALID')
+        finally:
+            if hasattr(builtins, \(literal)):
+                delattr(builtins, \(literal))
+        """, workspace: workspace))
+        #expect(second.exitCode == 0)
+        #expect(second.stdout.contains("RETAINED_NATIVE_CANCELLATION_CONTEXT_VALID"))
+    }
+
     @Test func runtimeOutputKeepsRetrievalMetadataForTheAgentAndReadableContentForTheUser() throws {
         let id = UUID()
         let execution = RuntimeExecutionResult(executionID: id, stdout: "42\n", stderr: "", value: nil,

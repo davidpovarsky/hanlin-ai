@@ -435,6 +435,8 @@
         "Scripts/Runtime/prepare-python-runtime.sh",
         "AI_HLY/Downstream/RuntimeCore/Python/Resources/**",
         "Scripts/Runtime/Tests/test_python_execution.py",
+        "Scripts/Runtime/Tests/test_python_cancellation_context.py",
+        "Scripts/Runtime/Tests/python_cancellation_probe.cpp",
         "Scripts/Runtime/Tests/test_python_packaging.py",
         "Scripts/Runtime/package-python-native-probe.py"
       ],

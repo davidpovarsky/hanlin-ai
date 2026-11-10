@@ -17,6 +17,7 @@ import sys
 import tarfile
 import tempfile
 import tomllib
+import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
@@ -119,8 +120,17 @@ class Repository:
 
     def json(self, url):
         if url not in self.projects:
-            with urllib.request.urlopen(url) as response:
-                self.projects[url] = json.load(response)
+            try:
+                with urllib.request.urlopen(url) as response:
+                    self.projects[url] = json.load(response)
+            except urllib.error.HTTPError as error:
+                if error.code != 404:
+                    raise
+                # A missing dependency is an empty candidate set. The standards
+                # resolver may choose an older parent instead; transport/TLS and
+                # server failures must still propagate as actual failures.
+                error.close()
+                self.projects[url] = {"releases": {}}
         return self.projects[url]
 
     def download(self, url, digest=None):

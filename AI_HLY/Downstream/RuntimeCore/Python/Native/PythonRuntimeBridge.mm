@@ -1,6 +1,7 @@
 #include "PythonRuntimeBridge.h"
 #include <Foundation/Foundation.h>
 #include <Python/Python.h>
+#include "PythonCancellationContext.hpp"
 #include <mutex>
 #include <atomic>
 #include <memory>
@@ -30,14 +31,6 @@ void HanlinPythonUnregisterExecution(const char *executionID) {
     std::lock_guard<std::mutex> guard(cancellationMutex);
     cancellationFlags.erase(executionID);
 }
-
-static PyObject *CancellationRequested(PyObject *capsule, PyObject *) {
-    auto flag = static_cast<std::atomic<bool> *>(PyCapsule_GetPointer(capsule, "hanlin.job.cancellation"));
-    if (!flag) return nullptr;
-    return PyBool_FromLong(flag->load());
-}
-
-static PyMethodDef cancellationMethod = {"_hanlin_is_cancelled", CancellationRequested, METH_NOARGS, nullptr};
 
 static char *CopyUTF8(NSString *value) {
     const char *utf8 = value.UTF8String ?: "";
@@ -134,11 +127,15 @@ char *HanlinPythonExecute(const char *requestJSON) {
 
     PyGILState_STATE gil = PyGILState_Ensure();
     PyObject *globals = PyDict_New();
-    PyObject *capsule = PyCapsule_New(cancellation.get(), "hanlin.job.cancellation", nullptr);
-    PyObject *cancellationFunction = capsule ? PyCFunction_NewEx(&cancellationMethod, capsule, nullptr) : nullptr;
-    if (cancellationFunction) PyDict_SetItemString(globals, "_hanlin_is_cancelled", cancellationFunction);
-    Py_XDECREF(cancellationFunction);
-    Py_XDECREF(capsule);
+    PyObject *cancellationFunction = HanlinPythonCancellation::makeFunction(cancellation);
+    if (!globals || !cancellationFunction || PyDict_SetItemString(globals, "_hanlin_is_cancelled", cancellationFunction) != 0) {
+        Py_XDECREF(cancellationFunction);
+        Py_XDECREF(globals);
+        PyErr_Clear();
+        PyGILState_Release(gil);
+        return CopyUTF8(@"{\"error\":\"Unable to allocate the Python job context.\"}");
+    }
+    Py_DECREF(cancellationFunction);
     PyObject *requestString = PyUnicode_DecodeUTF8(requestJSON, strlen(requestJSON), "strict");
     if (requestString) PyDict_SetItemString(globals, "__hanlin_request_json", requestString);
     Py_XDECREF(requestString);

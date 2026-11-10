@@ -1,6 +1,9 @@
 import base64
 import csv
 import hashlib
+import functools
+import http.server
+import threading
 import importlib
 import io
 import json
@@ -94,6 +97,43 @@ class PythonPackagingTests(unittest.TestCase):
         self.assertIn("extra-pkg", versions)
         self.assertNotIn("absent", versions)
         self.assertEqual(self.imported_value("adep"), 101)
+
+    def test_real_index_404_backtracks_to_an_installable_older_parent(self):
+        self.project("parentpkg", "1.0", code="VALUE = 'older-but-installable'\n")
+        self.project("parentpkg", "2.0", requires=["missing-project>=1"])
+        class Handler(http.server.SimpleHTTPRequestHandler):
+            missing_status = 404
+            def log_message(self, *arguments):
+                pass
+            def do_GET(self):
+                if self.path == "/pypi/missing-project/json":
+                    self.send_error(self.missing_status)
+                else:
+                    super().do_GET()
+        server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Handler, directory=str(self.index)))
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            request = {"requirement": "parentpkg", "indexURL": f"http://127.0.0.1:{server.server_port}",
+                       "workspace": str(self.root / "workspace"), "destination": str(self.root / "installed"),
+                       "resources": self.resources}
+            result = self.module["run"](request)
+            self.assertEqual(result["root"]["version"], "1.0")
+            self.assertEqual(self.imported_value("parentpkg"), "older-but-installable")
+            # A real server failure is not evidence of an absent project. Never
+            # hide a transport/index outage by choosing a different parent.
+            import urllib.error
+            Handler.missing_status = 503
+            request["destination"] = str(self.root / "not-installed")
+            with self.assertRaises(urllib.error.HTTPError) as caught:
+                self.module["run"](request)
+            self.assertEqual(caught.exception.code, 503)
+            caught.exception.close()
+            self.assertFalse((self.root / "not-installed").exists())
+        finally:
+            server.shutdown()
+            thread.join()
+            server.server_close()
 
     def test_local_wheel_installs_and_inactive_binary_data_does_not_block_it(self):
         wheel = self.project("localpkg", code="VALUE = 'local-wheel'\n", files={
