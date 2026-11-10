@@ -102,6 +102,7 @@ struct ClassicProjectedToolCallEntry: Equatable, Sendable, Identifiable {
 @MainActor
 struct ClassicChatAgentProjection {
     let runID: UUID
+    private var seenToolCallStartEvents: Set<String> = []
     private var seenToolCallKeys: Set<String> = []
     private var seenToolResultKeys: Set<String> = []
     private var seenToolContentBlocks: Set<String> = []
@@ -121,15 +122,15 @@ struct ClassicChatAgentProjection {
             switch event {
             case .toolCallStarted(let call):
                 let key = "\(runID.uuidString):call:\(call.id)"
-                guard seenToolCallKeys.insert(key).inserted else { continue }
+                guard seenToolCallStartEvents.insert(key).inserted else { continue }
                 filtered.append(event)
             case .toolExecutionCompleted(let id, _):
-                let callID = id.replacingOccurrences(of: ":execution", with: "")
+                let callID = id.hasSuffix(":execution") ? String(id.dropLast(":execution".count)) : id
                 let key = "\(runID.uuidString):result:\(callID)"
                 guard seenToolResultKeys.insert(key).inserted else { continue }
                 filtered.append(event)
             case .toolExecutionFailed(let id, _):
-                let callID = id.replacingOccurrences(of: ":execution", with: "")
+                let callID = id.hasSuffix(":execution") ? String(id.dropLast(":execution".count)) : id
                 let key = "\(runID.uuidString):result:\(callID)"
                 guard seenToolResultKeys.insert(key).inserted else { continue }
                 filtered.append(event)
@@ -174,7 +175,10 @@ struct ClassicChatAgentProjection {
 
         // 3. Per-call Tool output -> tracked deterministically by (runID, callID, toolName)
         let incomingToolName = (data.toolName ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        if let toolInfo = data.toolContent, !toolInfo.isEmpty {
+        let alreadyAttributed = !incomingToolName.isEmpty && agentRun.transcriptItems.contains {
+            $0.kind == .toolActivity && $0.toolName == incomingToolName
+        }
+        if let toolInfo = data.toolContent, !toolInfo.isEmpty, !alreadyAttributed {
             let isMeta = ClassicProjectedToolCallEntry.isMetaTool(incomingToolName)
             let sanitizedInfo = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(toolInfo, isMetaSkillOrDiscoveryTool: isMeta)
             if !sanitizedInfo.isEmpty {
@@ -310,12 +314,16 @@ struct ClassicChatAgentProjection {
         seenToolCallKeys: inout Set<String>
     ) {
         var entries: [ClassicProjectedToolCallEntry] = []
+        // A snapshot rebuild must include previously seen calls so status/output
+        // changes replace their old rendering. Event dedup has a separate lifetime.
+        var snapshotKeys = Set<String>()
         syncStructuredToolEntries(
             from: agentRun,
             runID: agentRun.id,
             orderedToolEntries: &entries,
-            seenToolCallKeys: &seenToolCallKeys
+            seenToolCallKeys: &snapshotKeys
         )
+        seenToolCallKeys.formUnion(snapshotKeys)
         if !entries.isEmpty {
             applyFormattedToolProjection(
                 entries: entries,

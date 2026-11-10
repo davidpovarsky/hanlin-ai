@@ -158,4 +158,5 @@ test "$(plutil -extract CFBundlePackageType raw "${python_dylib_plist}")" = FMWK
 test -f "${host_resource}"
 test -f "${manifest_resource}"
 
-echo "Prepared verified RuntimeCore ${ARTIFACT_DEPENDENCY_HASH}: Node ${NODE_VERSION}, Python ${PYTHON_VERSION}."
+echo "Verified native artifact ${ARTIFACT_DEPENDENCY_HASH}; current Host dependency closure ${CURRENT_DEPENDENCY_HASH}."
+echo "Prepared verified RuntimeCore ${CURRENT_DEPENDENCY_HASH}: Node ${NODE_VERSION}, Python ${PYTHON_VERSION}."

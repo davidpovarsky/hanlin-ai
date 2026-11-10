@@ -39,13 +39,17 @@ enum RuntimeToolSupport {
         if !result.stdout.isEmpty { sections.append(result.stdout) }
         if !result.stderr.isEmpty { sections.append("stderr:\n\(result.stderr)") }
         if let renderedValue { sections.append("value: \(renderedValue)") }
+        let outputBody = sections.joined(separator: "\n")
+        var modelSections = sections
         if let files = result.outputFiles, !files.isEmpty {
-            sections.append("Full output retained for job \(result.executionID.uuidString). Use get_runtime_job to inspect status or read output pages.")
+            modelSections.append("Full output retained for job \(result.executionID.uuidString). Use get_runtime_job to inspect status or read output pages.")
             for name in files.keys.sorted() {
-                if let file = files[name] { sections.append("\(name): \(file.bytes) bytes, SHA256 \(file.sha256)") }
+                if let file = files[name] { modelSections.append("\(name): \(file.bytes) bytes, SHA256 \(file.sha256)") }
             }
         }
-        let body = sections.joined(separator: "\n")
+        let body = result.outputWasTruncated
+            ? [outputBody, RuntimeL10n.string("Showing a preview. Full output is saved.")].filter { !$0.isEmpty }.joined(separator: "\n\n")
+            : outputBody
         let outcome = outcome(for: result)
         var diagnostics = NativeToolExecutionDiagnostics(
             backendRoute: "host-services/runtime-broker",
@@ -59,8 +63,8 @@ enum RuntimeToolSupport {
             didTimeOut: result.didTimeOut,
             wasCancelled: result.wasCancelled,
             outputWasTruncated: result.outputWasTruncated,
-            stdoutByteCount: result.stdout.utf8.count,
-            stderrByteCount: result.stderr.utf8.count,
+            stdoutByteCount: Int(clamping: result.outputFiles?["stdout"]?.bytes ?? Int64(result.stdout.utf8.count)),
+            stderrByteCount: Int(clamping: result.outputFiles?["stderr"]?.bytes ?? Int64(result.stderr.utf8.count)),
             valueType: result.value.map(valueType),
             callerIdentity: "agent"
         )
@@ -70,13 +74,14 @@ enum RuntimeToolSupport {
         let block = NativeUIBlock(
             type: outcome.isSuccess ? .card : .error,
             title: RuntimeL10n.string(title),
-            subtitle: result.exitCode.map { RuntimeL10n.format("Exit code: %d", $0) },
+            subtitle: outcome.isSuccess ? nil : result.exitCode.map { RuntimeL10n.format("Exit code: %d", $0) },
             body: body.isEmpty ? fallback : body,
             footnote: RuntimeL10n.format("Duration: %d ms", result.durationMilliseconds),
             systemImage: systemImage,
-            actions: body.isEmpty ? [] : [.init(type: .copyText, title: RuntimeL10n.string("Copy output"), systemImage: "doc.on.doc", text: body)]
+            actions: body.isEmpty ? [] : [.init(type: .copyText, title: result.outputWasTruncated ? RuntimeL10n.string("Copy preview") : RuntimeL10n.string("Copy output"), systemImage: "doc.on.doc", text: body)]
         )
-        let modelText = body.isEmpty ? fallback : body
+        let modelBody = modelSections.joined(separator: "\n")
+        let modelText = modelBody.isEmpty ? fallback : modelBody
         diagnostics.modelResultByteCount = modelText.utf8.count
         diagnostics.userResultByteCount = body.utf8.count
         diagnostics.uiBlockTypes = [outcome.isSuccess ? "card" : "error"]

@@ -56,6 +56,39 @@ struct ChatPresentationTests {
         #expect(entries.first(where: { $0.callID == "recovery" })?.output == "ui-tool-ok")
     }
 
+    @Test func actualStreamProjectionDoesNotLetEventDedupHideCanonicalOutputOrFreezeItsStatus() throws {
+        let runID = UUID()
+        let message = ChatMessages(id: UUID(), role: "assistant", text: "")
+        var coordinator = AgentEventAccumulator(run: AgentRun(id: runID, groupID: UUID()))
+        var projection = ClassicChatAgentProjection(runID: runID)
+        let call = AgentToolCall.parse(id: "real-call", name: "execute_local_python_code",
+            argumentsJSON: #"{"source":"print(42)"}"#, presentationProfile: ExecuteLocalPythonTool().catalogEntry.presentationProfile)
+        let events: [AgentEvent] = [.toolCallStarted(call), .toolCallCompleted(call),
+            .toolExecutionStarted(AgentToolExecution(id: "real-call:execution", callID: call.id, name: call.name, startedAt: .now))]
+        var state = "", description = ""
+        for event in events {
+            let data = StreamData(agentEvents: [event])
+            for filtered in projection.deduplicateEvents(data.agentEvents) { coordinator.apply(filtered) }
+            _ = projection.applyStreamChunk(data, agentRun: coordinator.run, to: message,
+                operationalState: &state, operationalDescription: &description)
+        }
+        #expect(projection.orderedToolEntries.count == 1)
+        let terminal = AgentEvent.toolExecutionFailed(id: "real-call:execution", error: AgentSafeError(message: "actual failure"))
+        for filtered in projection.deduplicateEvents([terminal]) { coordinator.apply(filtered) }
+        _ = projection.applyStreamChunk(StreamData(toolContent: "actual failure", toolName: call.name),
+            agentRun: coordinator.run, to: message, operationalState: &state, operationalDescription: &description)
+        #expect(projection.orderedToolEntries.count == 1)
+        #expect(projection.orderedToolEntries.first?.status == .failed)
+        #expect(projection.orderedToolEntries.first?.callID == call.id)
+        #expect(message.toolContent?.contains("actual failure") == true)
+        var seen = Set<String>()
+        var snapshot = coordinator.run
+        ClassicChatAgentProjection.syncAgentRunProjection(snapshot, into: message, seenToolCallKeys: &seen)
+        snapshot.steps[snapshot.steps.count - 1].errorDescription = "updated failure"
+        ClassicChatAgentProjection.syncAgentRunProjection(snapshot, into: message, seenToolCallKeys: &seen)
+        #expect(message.toolContent?.contains("updated failure") == true)
+    }
+
     @Test func personalSaveUsesSelectedQuoteWithoutAddingKnowledge() throws {
         let container = try ModelContainer(for: ChatSavedExcerpt.self, KnowledgeRecords.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))

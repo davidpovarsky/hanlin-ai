@@ -264,6 +264,19 @@ struct RuntimeAutonomyV3Tests {
         #expect(pythonResult.stdout.contains("EMBEDDED_PYTHON_LONG_COMPLETE"))
         print("EMBEDDED_LONG_JOBS node=\(nodeResult.executionID) ms=\(nodeResult.durationMilliseconds) python=\(pythonResult.executionID) ms=\(pythonResult.durationMilliseconds)")
     }
+    @Test func runtimeOutputKeepsRetrievalMetadataForTheAgentAndReadableContentForTheUser() throws {
+        let id = UUID()
+        let execution = RuntimeExecutionResult(executionID: id, stdout: "42\n", stderr: "", value: nil,
+            exitCode: 0, durationMilliseconds: 3, didTimeOut: false, wasCancelled: false, outputWasTruncated: false,
+            outputFiles: ["stdout": .init(path: "/private/job/stdout.log", bytes: 3, sha256: String(repeating: "a", count: 64))])
+        let result = RuntimeToolSupport.result(execution, title: "Local Python", systemImage: "terminal", runtimeKind: .localPython, argumentKeys: ["source"])
+        #expect(result.modelText.contains(id.uuidString) && result.modelText.contains("get_runtime_job"))
+        #expect(result.modelText.contains("SHA256"))
+        #expect(result.userText == "42\n")
+        #expect(result.uiBlocks.first?.body == "42\n")
+        #expect(result.uiBlocks.first?.subtitle == nil)
+    }
+
     @Test func defaultSchemaExposureDoesNotHideToolsPastOldBudgets() {
         let aliases = (0..<64).map { "tool_\($0)" }
         let sizes = Dictionary(uniqueKeysWithValues: aliases.map { ($0, 1024) })
