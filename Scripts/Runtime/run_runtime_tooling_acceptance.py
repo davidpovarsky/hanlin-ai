@@ -211,7 +211,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--case", help="Filter execution to a single acceptance case by case_id")
     parser.add_argument("--phase-timeout", type=int, default=900, help="Subprocess timeout in seconds per phase (default: 900)")
     parser.add_argument("--max-test-time", type=int, default=300, help="Maximum execution time allowance per test in seconds (default: 300)")
-    parser.add_argument("--reuse-report", help="Path to prior runtime-tooling-acceptance.json report to reuse passing cases")
+    parser.add_argument("--reuse-report", help="Deprecated: an unverified prior JSON report cannot supply test acceptance")
     return parser.parse_args()
 
 
@@ -430,8 +430,9 @@ def select_best_match(matches: list[dict[str, Any]], expected: AcceptanceCase) -
     if len(exact_matches) == 1:
         return exact_matches[0]
     elif len(exact_matches) > 1:
-        first_id = exact_matches[0].get("nodeIdentifier") or exact_matches[0].get("name")
-        if all((m.get("nodeIdentifier") or m.get("name")) == first_id for m in exact_matches):
+        # Only byte-equivalent nodes are harmless duplicates. A shared test ID
+        # with conflicting outcomes/retry evidence must not credit the first PASS.
+        if all(node == exact_matches[0] for node in exact_matches):
             return exact_matches[0]
         return None
 
@@ -443,11 +444,9 @@ def evaluate_acceptance(
     groups: tuple[AcceptanceGroup, ...],
     unit_phase: PhaseExecutionResult | None,
     ui_phase: PhaseExecutionResult | None,
-    reused_cases: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     group_results: list[dict[str, Any]] = []
     all_case_results: list[dict[str, Any]] = []
-    reused_cases = reused_cases or {}
 
     for group in groups:
         case_results: list[dict[str, Any]] = []
@@ -464,21 +463,6 @@ def evaluate_acceptance(
             matches = [node for node in phase_nodes if needle in normalized(node_name(node))
                        and node_belongs_to_selectors(node, group.selectors)]
             selected = select_best_match(matches, expected)
-
-            if selected is None and expected.case_id in reused_cases:
-                prev_c = reused_cases[expected.case_id]
-                case_results.append({
-                    "caseID": expected.case_id,
-                    "group": group.name,
-                    "expectedOutcome": expected.expected_outcome,
-                    "actualOutcome": "reused-verified-pass",
-                    "passed": True,
-                    "reused": True,
-                    "durationSeconds": prev_c.get("durationSeconds"),
-                    "errorCategory": None,
-                    "diagnosticReferences": prev_c.get("diagnosticReferences", []),
-                })
-                continue
 
             status = node_status(selected) if selected else "missing"
             passed = status in {"passed", "success", "succeeded"}
@@ -574,6 +558,10 @@ def main(runner=run_xcodebuild_phase) -> int:
     args = parse_args()
     output = pathlib.Path(args.output_dir)
     output.mkdir(parents=True, exist_ok=True)
+    if getattr(args, "reuse_report", None):
+        sys.stderr.write("Error: --reuse-report cannot verify source, dependency, toolchain or executed-case identity. "
+                         "Use fresh acceptance execution; retain prior reports as historical evidence only.\n")
+        return 2
     started_at = iso_now()
 
     active_groups: list[AcceptanceGroup] = list(GROUPS)
@@ -596,17 +584,6 @@ def main(runner=run_xcodebuild_phase) -> int:
             sys.stderr.write(f"Error: Acceptance case '{target_case}' not found in specified groups.\n")
             return 1
 
-    reused_case_map: dict[str, dict[str, Any]] = {}
-    if getattr(args, "reuse_report", None) and pathlib.Path(args.reuse_report).exists():
-        try:
-            with open(args.reuse_report, "r", encoding="utf-8") as rf:
-                prev_rep = json.load(rf)
-            for c in prev_rep.get("cases", []):
-                if c.get("passed"):
-                    reused_case_map[c["caseID"]] = c
-        except Exception as e:
-            sys.stderr.write(f"Warning: could not parse reuse report: {e}\n")
-
     unit_selectors, ui_selectors = partition_selectors(tuple(active_groups))
     unit_phase: PhaseExecutionResult | None = None
     ui_phase: PhaseExecutionResult | None = None
@@ -621,7 +598,7 @@ def main(runner=run_xcodebuild_phase) -> int:
         ui_phase = runner(args, "ui", ui_selectors, output)
         print(f"Phase 2 (UI) completed with code {ui_phase.returncode} in {ui_phase.duration_seconds:.1f}s", flush=True)
 
-    group_results, cases = evaluate_acceptance(output, tuple(active_groups), unit_phase, ui_phase, reused_case_map)
+    group_results, cases = evaluate_acceptance(output, tuple(active_groups), unit_phase, ui_phase)
     for group_result in group_results:
         print(f"[{group_result['status'].upper()}] {group_result['name']}: {group_result['passedCount']}/{group_result['caseCount']}", flush=True)
 

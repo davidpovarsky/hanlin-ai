@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import io
 import json
 import re
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 SCRIPT_PATH = Path(__file__).parents[1] / "run_runtime_tooling_acceptance.py"
 SPEC = importlib.util.spec_from_file_location("run_runtime_tooling_acceptance", SCRIPT_PATH)
@@ -52,6 +54,22 @@ class RuntimeToolingAcceptanceRunnerTests(unittest.TestCase):
         self.assertFalse(acceptance_runner.node_belongs_to_selectors({"nodeType": "Test Case", "name": "testFoo()", "result": "Passed"}, selectors))
         actual = dict(wrong, nodeIdentifierURL="test://bundle/AI_HLYTests/ExpectedOwner/testFoo%28%29")
         self.assertTrue(acceptance_runner.node_belongs_to_selectors(actual, selectors))
+
+    def test_a_prior_passing_report_cannot_replace_unexecuted_current_cases(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            previous = root / "old-report.json"
+            previous.write_text(json.dumps({"commitSHA": "old-source", "cases": [
+                {"caseID": case.case_id, "passed": True, "actualOutcome": "passed"}
+                for group in acceptance_runner.GROUPS for case in group.cases]}), encoding="utf-8")
+            args = argparse.Namespace(output_dir=str(root / "current"), reuse_report=str(previous))
+            called = []
+            with patch.object(acceptance_runner, "parse_args", return_value=args), patch("sys.stderr", new_callable=io.StringIO) as diagnostic:
+                result = acceptance_runner.main(runner=lambda *args: called.append(args))
+            self.assertEqual(result, 2)
+            self.assertEqual(called, [])
+            self.assertIn("cannot verify source", diagnostic.getvalue())
+            self.assertFalse((root / "current" / "runtime-tooling-acceptance.json").exists())
 
     def test_partition_selectors_separates_unit_and_ui(self) -> None:
         unit_sel, ui_sel = acceptance_runner.partition_selectors(acceptance_runner.GROUPS)
@@ -176,6 +194,14 @@ class RuntimeToolingAcceptanceRunnerTests(unittest.TestCase):
         selected = acceptance_runner.select_best_match(matches, case)
         self.assertIsNotNone(selected)
         self.assertEqual(selected["nodeIdentifier"], "Suite/testFoo()")
+
+    def test_identical_test_ids_cannot_hide_a_conflicting_failed_execution(self) -> None:
+        case = acceptance_runner.AcceptanceCase("test.case", "testFoo")
+        passed = {"nodeIdentifier": "Suite/testFoo()", "name": "testFoo", "result": "Passed"}
+        failed = dict(passed, result="Failed")
+        for matches in ([passed, failed], [failed, passed]):
+            self.assertIsNone(acceptance_runner.select_best_match(matches, case))
+        self.assertEqual(acceptance_runner.select_best_match([passed, dict(passed)], case), passed)
 
     def test_select_best_match_rejects_ambiguous_matches(self) -> None:
         case = acceptance_runner.AcceptanceCase("test.case", "testFoo")
