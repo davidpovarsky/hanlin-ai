@@ -32,7 +32,7 @@ actor AppRuntimeCore {
         self.typeScript = typeScript
         nodePackages = NodePackageManager(node: node, lifecycle: lifecycle)
         self.python = python
-        javaScriptCore = JavaScriptCoreRuntimeService(environment: environment)
+        javaScriptCore = JavaScriptCoreRuntimeService(environment: environment, fileLayout: fileLayout, jobs: jobs)
         self.shell = shell
         pythonPackages = PythonPackageManager(fileLayout: fileLayout, python: python)
         diagnostics = RuntimeDiagnostics()

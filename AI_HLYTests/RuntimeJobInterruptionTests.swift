@@ -4,6 +4,28 @@ import Testing
 
 @Suite("Runtime interruption journal ownership")
 struct RuntimeJobInterruptionTests {
+    @Test func ordinaryCancellationIsSerializedWithNativeCompletionAndRetainsFinalBytes() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "native-cancel-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = RuntimeJobStore(fileLayout: .init(root: root))
+        let id = UUID()
+        _ = try await store.create(id: id, kind: .javaScriptCore)
+        try await store.markRunning(id: id, kind: .javaScriptCore)
+        // This request arrives after the native engine has constructed a clean
+        // result, but before the journal atomically publishes it.
+        let native = RuntimeExecutionResult(executionID: id, stdout: "actual late bytes", stderr: "", value: .number(17),
+            exitCode: 0, durationMilliseconds: 2, didTimeOut: false, wasCancelled: false, outputWasTruncated: false)
+        try await store.requestCancellation(id: id, kind: .javaScriptCore)
+        let completed = try await store.complete(native, kind: .javaScriptCore)
+        #expect(completed.wasCancelled && completed.stdout == native.stdout && completed.value == .number(17))
+        let reopened = RuntimeJobStore(fileLayout: .init(root: root))
+        let record = try await reopened.snapshot(id: id, kind: .javaScriptCore)
+        #expect(record?.state == .cancelled && record?.result?.wasCancelled == true)
+        #expect(record?.stdoutBytes == Int64(native.stdout.utf8.count))
+        let repeated = try await store.complete(native, kind: .javaScriptCore)
+        #expect(repeated.wasCancelled)
+    }
+
     @Test func nativeCompletionReadsRootInterruptionEvenBeforeItsAsyncNotification() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "root-interruption-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: root) }

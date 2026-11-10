@@ -116,13 +116,17 @@ actor RuntimeJobStore {
         try write(record, kind: kind)
     }
 
-    func complete(_ result: RuntimeExecutionResult, kind: RuntimeKind) throws {
+    @discardableResult
+    func complete(_ result: RuntimeExecutionResult, kind: RuntimeKind) throws -> RuntimeExecutionResult {
         guard var record = try refresh(id: result.executionID, kind: kind) else { throw RuntimeCoreError.invalidIdentifier }
         guard !record.state.isTerminal else {
             if let reason = record.interruptionReason { throw RuntimeJobInterruptionError(executionID: result.executionID, reason: reason) }
-            return
+            return record.result ?? result
         }
+        // Serialize ordinary cancellation with completion at the journal owner,
+        // including a request that arrived after the engine's final status read.
         record.interruptionReason = record.interruptionReason ?? RuntimeUserOperation.current?.snapshot.reason
+        let result = result.recordingCancellation(record.cancellationRequested && record.interruptionReason == nil)
         record.state = record.interruptionReason != nil ? .interrupted : result.wasCancelled ? .cancelled : result.didTimeOut || result.exitCode != 0 ? .failed : .completed
         record.error = record.interruptionReason ?? record.error
         record.cancellationRequested = record.cancellationRequested || result.wasCancelled
@@ -132,6 +136,7 @@ actor RuntimeJobStore {
         record.completedAt = Date().timeIntervalSince1970 * 1000
         try write(record, kind: kind)
         if let reason = record.interruptionReason { throw RuntimeJobInterruptionError(executionID: result.executionID, reason: reason) }
+        return result
     }
 
     func fail(id: UUID, kind: RuntimeKind, error: Error) throws {

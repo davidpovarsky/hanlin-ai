@@ -8,9 +8,9 @@ struct GetRuntimeJobTool: NativeTool {
     }
 
     func openAIToolSchema() -> [String: Any] {
-        NativeToolSchema.function(name: name, description: "Read a retained Node/TypeScript, Python or Shell job, request cancellation, or read lossless stdout/stderr byte pages. Status includes a retained input size/hash receipt when present, without injecting source or environment into the conversation. Cancellation remains requested until the actual worker/native call stops. A queued Shell command can be cancelled; running linked Shell commands currently must finish naturally. Reading never repeats program side effects.", parameters: NativeToolSchema.object(properties: [
+        NativeToolSchema.function(name: name, description: "Read a retained Node/TypeScript, Python, Shell or JavaScriptCore job, request cancellation, or read lossless stdout/stderr byte pages. Status includes a retained input size/hash receipt when present, without injecting source or environment into the conversation. Cancellation remains requested until the actual worker/native call stops. Queued Shell and JavaScriptCore calls can be cancelled; running calls must finish naturally. Reading never repeats program side effects.", parameters: NativeToolSchema.object(properties: [
             "operation": NativeToolSchema.string(description: "Operation", enumValues: ["status", "read", "cancel"]),
-            "runtime": NativeToolSchema.string(description: "Execution engine", enumValues: ["node", "python", "shell"]),
+            "runtime": NativeToolSchema.string(description: "Execution engine; running jsc cannot be killed safely and must return naturally", enumValues: ["node", "python", "shell", "jsc"]),
             "job_id": NativeToolSchema.string(description: "UUID returned by runtime execution/progress"),
             "channel": NativeToolSchema.string(description: "Output channel for read", enumValues: ["stdout", "stderr"]),
             "offset": NativeToolSchema.integer(description: "Byte offset; starts at zero", minimum: 0),
@@ -23,9 +23,9 @@ struct GetRuntimeJobTool: NativeTool {
             let arguments = try NativeToolJSON.validatedDictionary(from: argumentsJSON, allowedKeys: ["operation", "runtime", "job_id", "channel", "offset", "limit"])
             let operation = try NativeToolJSON.strictRequiredString(arguments, "operation")
             let runtime = try NativeToolJSON.strictRequiredString(arguments, "runtime")
-            guard ["status", "read", "cancel"].contains(operation), ["node", "python", "shell"].contains(runtime),
+            guard ["status", "read", "cancel"].contains(operation), ["node", "python", "shell", "jsc"].contains(runtime),
                   let id = UUID(uuidString: try NativeToolJSON.strictRequiredString(arguments, "job_id")) else { throw RuntimeCoreError.invalidRequest("Invalid runtime job request.") }
-            let kind: RuntimeKind = runtime == "node" ? .node : runtime == "shell" ? .shell : .localPython
+            let kind: RuntimeKind = runtime == "node" ? .node : runtime == "shell" ? .shell : runtime == "jsc" ? .javaScriptCore : .localPython
             let core = AppRuntimeCore.shared
             if kind != .node { try await core.jobs.recoverInterrupted(kind) }
             guard var record = try await core.jobs.snapshot(id: id, kind: kind) else { throw RuntimeCoreError.invalidRequest("Job not found.") }
@@ -34,6 +34,8 @@ struct GetRuntimeJobTool: NativeTool {
                     await core.node.cancelExecution(id: id)
                 } else if kind == .shell {
                     try await core.shell.cancel(id: id)
+                } else if kind == .javaScriptCore {
+                    try await core.javaScriptCore.cancel(id: id)
                 } else {
                     PythonRuntimeBridge.cancel(id: id)
                     try await core.jobs.requestCancellation(id: id, kind: kind)

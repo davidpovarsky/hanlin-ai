@@ -16,13 +16,17 @@ readonly TARGET="arm64-apple-ios27.0"
 printf '%s\n' "$SDK" "$TARGET" > "$EVIDENCE/sdk-target.txt"
 
 core_sources=()
-for name in RuntimeModels RuntimePolicy RuntimeFileLayout RuntimeJobStore RuntimeUserOperation RuntimeCapabilityContract RuntimeExecutionInputArtifact; do
+for name in RuntimeModels RuntimePolicy RuntimeFileLayout RuntimeJobStore RuntimeUserOperation RuntimeCapabilityContract RuntimeExecutionInputArtifact RuntimeQueuedExecution; do
   file="AI_HLY/Downstream/RuntimeCore/Core/$name.swift"
   core_sources+=("$file")
   cp "$file" "$WORK/Sources/RuntimeJobs/"
 done
+for file in AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreRuntimeService.swift AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreOutputCapture.swift; do
+  core_sources+=("$file")
+  cp "$file" "$WORK/Sources/RuntimeJobs/"
+done
 background="AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift"
-shasum -a 256 "${core_sources[@]}" "$background" AI_HLYTests/RuntimeJobInterruptionTests.swift AI_HLYTests/RuntimeUserOperationTests.swift AI_HLYTests/RuntimeExecutionInputArtifactTests.swift > "$EVIDENCE/source-sha256.txt"
+shasum -a 256 "${core_sources[@]}" "$background" AI_HLYTests/RuntimeJobInterruptionTests.swift AI_HLYTests/RuntimeUserOperationTests.swift AI_HLYTests/RuntimeExecutionInputArtifactTests.swift AI_HLYTests/RuntimeJavaScriptCoreTests.swift > "$EVIDENCE/source-sha256.txt"
 plutil -lint AI-HLY-Info.plist | tee "$EVIDENCE/plist-lint.txt"
 xcrun swiftc -typecheck -parse-as-library -swift-version 6 -strict-concurrency=complete -warnings-as-errors \
   -module-name HanlinRuntimeFoundation -sdk "$SDK" -target "$TARGET" \
@@ -67,18 +71,23 @@ python3 - "$WORK" <<'PYTHON'
 from pathlib import Path
 import sys
 work = Path(sys.argv[1])
-for name in ("RuntimeJobInterruptionTests", "RuntimeUserOperationTests", "RuntimeExecutionInputArtifactTests"):
+for name in ("RuntimeJobInterruptionTests", "RuntimeUserOperationTests", "RuntimeExecutionInputArtifactTests", "RuntimeJavaScriptCoreTests"):
     text = (Path("AI_HLYTests") / (name + ".swift")).read_text(encoding="utf-8")
     assert text.count("@testable import AI_Hanlin") == 1
     (work / "Tests/RuntimeJobTests" / (name + ".swift")).write_text(
         text.replace("@testable import AI_Hanlin", "@testable import RuntimeJobs"), encoding="utf-8")
 PYTHON
-swift test --package-path "$WORK" --filter 'Runtime(JobInterruption|UserOperation|ExecutionInputArtifact)Tests' 2>&1 | tee "$EVIDENCE/executed-tests.log"
+swift test --package-path "$WORK" --filter 'Runtime(JobInterruption|UserOperation|ExecutionInputArtifact|JavaScriptCore)Tests' 2>&1 | tee "$EVIDENCE/executed-tests.log"
 python3 - "$EVIDENCE/executed-tests.log" <<'PYTHON'
 from pathlib import Path
 import re, sys
 text = re.sub(r"\x1b\[[0-9;]*m", "", Path(sys.argv[1]).read_text(encoding="utf-8"))
 required = [
+    "ordinaryCancellationIsSerializedWithNativeCompletionAndRetainsFinalBytes",
+    "largeOriginalSourceAndFullUnicodeOutputSurviveReopenWithoutReplay",
+    "explicitDeadlineFailsBeforeJavaScriptOrOutputFilesAreCreated",
+    "cancelledQueuedJavaScriptCannotExecuteAfterTheActualRunningContextFinishes",
+    "actualRunningJavaScriptRetainsLateBytesAndRootInterruptionUntilNaturalReturn",
     "nativeCompletionReadsRootInterruptionEvenBeforeItsAsyncNotification",
     "lateNativeCompletionPreservesSystemInterruptionAndPartialOutput",
     "completedJobsRejectLateFailureAndInterruptionReclassification",
@@ -92,7 +101,7 @@ required = [
 for name in required:
     if not re.search(r"Test " + re.escape(name) + r"\(\) passed", text):
         raise SystemExit("Required executed Swift Testing case missing or not passed: " + name)
-if not re.search(r"Test run with 9 tests.*passed", text):
-    raise SystemExit("Expected nine actual Swift Testing cases; a green/zero-case XCTest heading is insufficient")
-print("Verified all nine executed Foundation ownership/input tests; iOS SDK typecheck is a separate compile-only proof.")
+if not re.search(r"Test run with 14 tests.*passed", text):
+    raise SystemExit("Expected fourteen actual Swift Testing cases; a green/zero-case XCTest heading is insufficient")
+print("Verified all fourteen executed ownership/input/JSC tests; iOS SDK typecheck is a separate compile-only proof.")
 PYTHON

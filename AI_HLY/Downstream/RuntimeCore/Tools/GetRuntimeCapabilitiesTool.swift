@@ -41,6 +41,7 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        let started = ContinuousClock.now
         do {
             let arguments = try NativeToolJSON.validatedDictionary(from: argumentsJSON, allowedKeys: ["runtime"])
             let requestedRuntime = try NativeToolJSON.strictOptionalString(arguments, "runtime") ?? "all"
@@ -67,13 +68,14 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
                 report += "\nMCP enabled: \(provider.configuration.isEnabled); host: \(provider.runtimeSnapshot.state.rawValue); workers: \(provider.runtimeSnapshot.activeWorkerCount)"
             }
 
+            let elapsed = started.duration(to: .now).components
             let executionResult = RuntimeExecutionResult(
                 executionID: UUID(),
                 stdout: report,
                 stderr: "",
                 value: nil,
                 exitCode: 0,
-                durationMilliseconds: 1,
+                durationMilliseconds: elapsed.seconds * 1_000 + elapsed.attoseconds / 1_000_000_000_000_000,
                 didTimeOut: false,
                 wasCancelled: false,
                 outputWasTruncated: false

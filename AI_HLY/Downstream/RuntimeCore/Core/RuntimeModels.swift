@@ -129,6 +129,13 @@ struct RuntimeExecutionResult: Codable, Sendable {
     let outputWasTruncated: Bool
     let outputFiles: [String: RuntimeOutputArtifact]?
 
+    func recordingCancellation(_ requested: Bool) -> Self {
+        guard requested, !wasCancelled else { return self }
+        return .init(executionID: executionID, stdout: stdout, stderr: stderr, value: value, exitCode: exitCode,
+            durationMilliseconds: durationMilliseconds, didTimeOut: didTimeOut, wasCancelled: true,
+            outputWasTruncated: outputWasTruncated, outputFiles: outputFiles)
+    }
+
     init(executionID: UUID, stdout: String, stderr: String, value: RuntimeJSONValue?, exitCode: Int?, durationMilliseconds: Int64, didTimeOut: Bool, wasCancelled: Bool, outputWasTruncated: Bool, outputFiles: [String: RuntimeOutputArtifact]? = nil) {
         self.executionID = executionID
         self.stdout = stdout

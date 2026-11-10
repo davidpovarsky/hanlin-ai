@@ -346,9 +346,9 @@ actor ShellRuntimeService {
             if Task.isCancelled { try await jobs.requestCancellation(id: id, kind: .shell) }
             userOperation?.recordJobOutput(id: id,
                 stdout: artifacts["stdout"]?.bytes ?? 0, stderr: artifacts["stderr"]?.bytes ?? 0)
-            try await jobs.complete(result, kind: .shell)
+            let completed = try await jobs.complete(result, kind: .shell)
             if let observer, let record = try await jobs.snapshot(id: id, kind: .shell) { await observer(record) }
-            return result
+            return completed
         } catch {
             try? await jobs.fail(id: id, kind: .shell, error: error)
             throw error

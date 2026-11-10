@@ -155,9 +155,9 @@ actor PythonRuntimeService {
             operation?.recordJobOutput(id: request.id,
                 stdout: result.outputFiles?["stdout"]?.bytes ?? Int64(result.stdout.utf8.count),
                 stderr: result.outputFiles?["stderr"]?.bytes ?? Int64(result.stderr.utf8.count))
-            try await jobs.complete(result, kind: .localPython)
+            let completed = try await jobs.complete(result, kind: .localPython)
             if let observer, let record = try await jobs.snapshot(id: request.id, kind: .localPython) { await observer(record) }
-            return result
+            return completed
         } catch {
             try? await jobs.fail(id: request.id, kind: .localPython, error: error)
             throw error
