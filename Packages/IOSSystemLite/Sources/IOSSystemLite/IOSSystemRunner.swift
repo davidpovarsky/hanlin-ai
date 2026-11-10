@@ -605,6 +605,7 @@ public enum IOSSystemRunner {
 
     private static func openInput(_ data: Data, url: URL?) throws -> UnsafeMutablePointer<FILE> {
         if let url {
+            guard url.isFileURL, !url.path.contains("\0") else { throw POSIXError(.EINVAL) }
             guard let input = url.path.withCString({ fopen($0, "rb") }) else {
                 throw POSIXError(.init(rawValue: errno) ?? .EIO)
             }

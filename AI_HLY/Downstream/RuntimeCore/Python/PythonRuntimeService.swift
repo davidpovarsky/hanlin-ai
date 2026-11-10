@@ -55,8 +55,8 @@ actor PythonRuntimeService {
 
     func executeCLI(entryPoint: URL, arguments: [String], workspace: URL,
                     environment: [String: String] = [:], standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
-        let entry = try fileLayout.validatedDescendant(entryPoint, of: fileLayout.root, allowRoot: false)
-        let input = try standardInput.map { try fileLayout.validatedDescendant($0, of: fileLayout.root, allowRoot: false) }
+        let entry = try fileLayout.validatedReadableFile(entryPoint)
+        let input = try standardInput.map { try fileLayout.validatedReadableFile($0) }
         return try await executePythonJob(RuntimeExecutionRequest(source: "", arguments: arguments,
             workspace: workspace, environment: environment), entryPoint: entry, standardInput: input)
     }

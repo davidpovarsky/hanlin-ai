@@ -1128,6 +1128,26 @@
         "AI_HLYTests/RuntimeAutonomyV3Tests"
       ],
       "consumers": []
+    },
+    "runtime_command_bridge": {
+      "description": "Finite Host command receipts dispatch through the existing Node/Python/Shell actors",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "consumers": [
+        "python_runtime",
+        "node_runtime",
+        "ios_system"
+      ]
     }
   },
   "validation_groups": {

@@ -178,8 +178,8 @@ actor NodeRuntimeService {
     /// Execute the actual entry file as Node's main module, not a synthetic import.
     func executeCLI(entryPoint: URL, arguments: [String], workspace: URL,
                     environment: [String: String] = [:], standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
-        let entry = try fileLayout.validatedDescendant(entryPoint, of: fileLayout.root, allowRoot: false)
-        let input = try standardInput.map { try fileLayout.validatedDescendant($0, of: fileLayout.root, allowRoot: false) }
+        let entry = try fileLayout.validatedReadableFile(entryPoint)
+        let input = try standardInput.map { try fileLayout.validatedReadableFile($0) }
         return try await executeNodeJob(RuntimeExecutionRequest(source: "", arguments: arguments,
             workspace: workspace, environment: environment), moduleKind: "esm", entryPoint: entry, standardInput: input)
     }
