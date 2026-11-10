@@ -6,6 +6,8 @@ disk; JSON carries previews and artifact digests, never an unbounded output copy
 import contextlib
 import hashlib
 import json
+import io
+import runpy
 import os
 import sys
 import time
@@ -31,6 +33,7 @@ def _run(request, cancelled):
     stdout_path = os.path.join(output_directory, "stdout.log")
     stderr_path = os.path.join(output_directory, "stderr.log")
     old_cwd, old_argv, old_path, old_trace = os.getcwd(), list(sys.argv), list(sys.path), sys.gettrace()
+    old_stdin = sys.stdin
     modified_environment = []
 
     def trace(frame, event, argument):
@@ -63,13 +66,23 @@ def _run(request, cancelled):
             for candidate in reversed(request.get("environment", {}).get("PYTHONPATH", "").split(os.pathsep)):
                 if candidate:
                     sys.path.insert(0, os.path.abspath(candidate))
-            sys.argv = ["<hanlin>", *map(str, request.get("arguments", []))]
+            entry_point = request.get("entryPoint")
+            sys.argv = [entry_point or "<hanlin>", *map(str, request.get("arguments", []))]
+            if entry_point:
+                sys.path.insert(0, os.path.dirname(entry_point))
             namespace = {"__name__": "__main__", "__file__": "<hanlin>"}
-            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+            with contextlib.ExitStack() as resources, contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                if request.get("standardInputPath"):
+                    sys.stdin = resources.enter_context(open(request["standardInputPath"], "r", encoding="utf-8", errors="surrogateescape"))
+                elif entry_point:
+                    sys.stdin = resources.enter_context(io.StringIO())
                 sys.settrace(trace)
                 try:
-                    exec(compile(request["source"], "<hanlin>", "exec"), namespace, namespace)
-                    value = namespace.get("__hanlin_result__")
+                    if entry_point:
+                        runpy.run_path(entry_point, run_name="__main__")
+                    else:
+                        exec(compile(request["source"], "<hanlin>", "exec"), namespace, namespace)
+                        value = namespace.get("__hanlin_result__")
                     # Native calls may not yield to tracing until they return.
                     trace(None, None, None)
                 finally:
@@ -79,8 +92,17 @@ def _run(request, cancelled):
             exit_code = 1
             did_timeout = isinstance(error, _HanlinDeadlineExceeded)
             was_cancelled = isinstance(error, _HanlinCancelled)
-            traceback.print_exc(file=stderr)
+            if isinstance(error, SystemExit):
+                # Match a CLI exit without treating sys.exit(0) as an exception
+                # failure or swallowing nonzero status/string diagnostics.
+                status = error.code
+                exit_code = 0 if status is None else (status & 255 if isinstance(status, int) else 1)
+                if status is not None and not isinstance(status, int):
+                    print(status, file=stderr)
+            else:
+                traceback.print_exc(file=stderr)
         finally:
+            sys.stdin = old_stdin
             sys.settrace(old_trace)
             try:
                 os.chdir(old_cwd)

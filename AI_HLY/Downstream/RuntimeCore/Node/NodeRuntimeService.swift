@@ -168,6 +168,20 @@ actor NodeRuntimeService {
     }
 
     func executeJavaScript(_ request: RuntimeExecutionRequest, moduleKind: String? = nil) async throws -> RuntimeExecutionResult {
+        try await executeNodeJob(request, moduleKind: moduleKind)
+    }
+
+    /// Execute the actual entry file as Node's main module, not a synthetic import.
+    func executeCLI(entryPoint: URL, arguments: [String], workspace: URL,
+                    environment: [String: String] = [:], standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        let entry = try fileLayout.validatedDescendant(entryPoint, of: fileLayout.root, allowRoot: false)
+        let input = try standardInput.map { try fileLayout.validatedDescendant($0, of: fileLayout.root, allowRoot: false) }
+        return try await executeNodeJob(RuntimeExecutionRequest(source: "", arguments: arguments,
+            workspace: workspace, environment: environment), moduleKind: "esm", entryPoint: entry, standardInput: input)
+    }
+
+    private func executeNodeJob(_ request: RuntimeExecutionRequest, moduleKind: String?,
+                                entryPoint: URL? = nil, standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
         let workspace = try fileLayout.validatedWorkspace(request.workspace)
         let resolvedModuleKind = moduleKind ?? Self.inferModuleKind(for: request.source)
         let host = try await ensureRunning()
@@ -187,6 +201,8 @@ actor NodeRuntimeService {
             "moduleKind": resolvedModuleKind, "detached": true,
             "maximumOutputBytes": request.limits.maximumOutputBytes
         ]
+        if let entryPoint { payload["entryPoint"] = entryPoint.path; payload["executionMode"] = "cli" }
+        if let standardInput { payload["standardInputPath"] = standardInput.path }
         if let milliseconds { payload["timeoutMilliseconds"] = milliseconds }
         let body = try JSONSerialization.data(withJSONObject: payload)
         return try await withTaskCancellationHandler {

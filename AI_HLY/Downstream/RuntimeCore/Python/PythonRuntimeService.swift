@@ -48,6 +48,19 @@ actor PythonRuntimeService {
         return snapshotValue
     }
     func execute(_ request: RuntimeExecutionRequest) async throws -> RuntimeExecutionResult {
+        try await executePythonJob(request)
+    }
+
+    func executeCLI(entryPoint: URL, arguments: [String], workspace: URL,
+                    environment: [String: String] = [:], standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        let entry = try fileLayout.validatedDescendant(entryPoint, of: fileLayout.root, allowRoot: false)
+        let input = try standardInput.map { try fileLayout.validatedDescendant($0, of: fileLayout.root, allowRoot: false) }
+        return try await executePythonJob(RuntimeExecutionRequest(source: "", arguments: arguments,
+            workspace: workspace, environment: environment), entryPoint: entry, standardInput: input)
+    }
+
+    private func executePythonJob(_ request: RuntimeExecutionRequest, entryPoint: URL? = nil,
+                                  standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
         try Task.checkCancellation()
         if snapshotValue.state != .ready && snapshotValue.state != .executing { _ = try prepare() }
         let generation = stopGeneration
@@ -81,6 +94,8 @@ actor PythonRuntimeService {
                 "outputDirectory": jobs.directory(id: request.id, kind: .localPython).path,
                 "maximumOutputBytes": request.limits.maximumOutputBytes
             ]
+            if let entryPoint { body["entryPoint"] = entryPoint.path }
+            if let standardInput { body["standardInputPath"] = standardInput.path }
             if let milliseconds { body["timeoutSeconds"] = Double(milliseconds) / 1000 }
             let registry = fileLayout.registry.appending(path: "PythonPackages.json")
             if FileManager.default.fileExists(atPath: registry.path) {

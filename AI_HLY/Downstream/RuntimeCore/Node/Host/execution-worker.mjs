@@ -5,50 +5,12 @@ if (typeof dns.setDefaultResultOrder === 'function') {
   dns.setDefaultResultOrder('ipv4first');
 }
 import { pathToFileURL } from 'node:url';
-import { createRequire, syncBuiltinESMExports } from 'node:module';
-import * as nodePath from 'node:path';
+import { createRequire } from 'node:module';
 import { inspect } from 'node:util';
+import { configureExecutionContext } from './execution-context.mjs';
 
-const { entryPoint, workspace, moduleKind, arguments: argv, environment, maximumOutputBytes } = workerData;
-
-const entryDir = workspace || nodePath.dirname(entryPoint);
-try {
-  globalThis.require = createRequire(entryPoint);
-  globalThis.__filename = entryPoint;
-  globalThis.__dirname = entryDir;
-} catch {}
-
-if (workspace) {
-  process.cwd = () => workspace;
-  try {
-    const fs = await import('node:fs');
-    const path = await import('node:path');
-    const resolvePath = p => (typeof p === 'string' && !path.isAbsolute(p)) ? path.resolve(workspace, p) : p;
-    for (const mod of [fs.default || fs, fs.promises]) {
-      if (!mod) continue;
-      for (const fn of [
-        'readFile', 'readFileSync', 'writeFile', 'writeFileSync',
-        'appendFile', 'appendFileSync', 'stat', 'statSync',
-        'access', 'accessSync', 'open', 'openSync', 'readdir', 'readdirSync',
-        'unlink', 'unlinkSync', 'rm', 'rmSync', 'mkdir', 'mkdirSync',
-        'existsSync', 'copyFile', 'copyFileSync', 'createReadStream', 'createWriteStream'
-      ]) {
-        const orig = mod[fn];
-        if (typeof orig === 'function') {
-          mod[fn] = function(first, ...args) {
-            return orig.call(this, resolvePath(first), ...args);
-          };
-        }
-      }
-    }
-    // Updating CommonJS builtin properties does not update named ESM exports.
-    // Keep all import forms on the same per-execution workspace adapters.
-    syncBuiltinESMExports();
-  } catch {}
-}
-
-for (const [name, value] of Object.entries(environment ?? {})) process.env[name] = String(value);
-process.argv = ['node', entryPoint, ...(argv ?? []).map(String)];
+const { entryPoint, moduleKind } = workerData;
+configureExecutionContext(workerData);
 
 try {
   let value;

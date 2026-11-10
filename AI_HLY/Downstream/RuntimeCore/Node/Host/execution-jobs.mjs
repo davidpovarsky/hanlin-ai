@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { promises as fs, createWriteStream, readFileSync } from 'node:fs';
+import { promises as fs, createWriteStream, createReadStream, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { finished } from 'node:stream/promises';
 import { Worker } from 'node:worker_threads';
@@ -16,6 +16,8 @@ export class ExecutionJobs {
     this.workerURL = workerURL;
     this.diagnosticWorkerURL = diagnosticWorkerURL;
     this.globalNodeModules = globalNodeModules;
+    // Freeze launch environment before another native engine temporarily mutates C environ.
+    this.workerEnvironment = Object.freeze({ ...process.env });
   }
 
   async initialize() {
@@ -125,8 +127,11 @@ export class ExecutionJobs {
     const { header } = job;
     const directory = path.join(this.root, header.executionID);
     const extension = body.moduleKind === 'commonjs' ? 'cjs' : 'mjs';
-    const entryPoint = path.join(directory, `main.${extension}`);
-    await fs.writeFile(entryPoint, body.source, { mode: 0o600 });
+    const cli = body.executionMode === 'cli';
+    const entryPoint = cli ? await fs.realpath(body.entryPoint) : path.join(directory, `main.${extension}`);
+    if (cli) {
+      if (!(await fs.stat(entryPoint)).isFile()) throw new Error('The CLI entry must be an existing regular file.');
+    } else await fs.writeFile(entryPoint, body.source, { mode: 0o600 });
     if (this.globalNodeModules) {
       try { await fs.access(this.globalNodeModules); await fs.symlink(this.globalNodeModules, path.join(directory, 'node_modules'), 'dir'); }
       catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -144,9 +149,17 @@ export class ExecutionJobs {
       streams[channel].on('error', error => { ioError = error; void job.cancel?.(); });
     }
     const workerURL = body.environment?.HANLIN_NODE_TRACE_WARNINGS === '1' && this.diagnosticWorkerURL ? this.diagnosticWorkerURL : this.workerURL;
-    const worker = new Worker(workerURL, {
+    const environment = { ...this.workerEnvironment, ...body.environment };
+    if (cli) {
+      // Internal bootstrap is separate from the CLI's user environment. A job
+      // cannot replace the preload needed to establish its virtual cwd.
+      environment.NODE_OPTIONS = [this.workerEnvironment.NODE_OPTIONS,
+        '--import ' + new URL('./cli-preload.mjs', import.meta.url).href].filter(Boolean).join(' ');
+    }
+    const worker = new Worker(cli ? entryPoint : workerURL, {
       workerData: { entryPoint, workspace: body.workspace, moduleKind: body.moduleKind, arguments: body.arguments ?? [], environment: body.environment ?? {}, maximumOutputBytes: previewBytes },
-      stdout: true, stderr: true,
+      stdout: true, stderr: true, stdin: cli,
+      env: environment, argv: cli ? (body.arguments ?? []).map(String) : [],
       // Keep Node's FD tracking enabled. Disabling it would conceal ownership regressions.
     });
     job.worker = worker;
@@ -166,6 +179,15 @@ export class ExecutionJobs {
     let didTimeOut = false;
     let message;
     let workerError;
+    if (cli) {
+      worker.stdin.on('error', error => { if (error.code !== 'EPIPE' && error.code !== 'ERR_STREAM_DESTROYED') workerError = error; });
+      if (body.standardInputPath) {
+        const input = createReadStream(body.standardInputPath);
+        input.once('error', error => { workerError = error; void job.cancel?.(); });
+        worker.once('exit', () => input.destroy());
+        input.pipe(worker.stdin);
+      } else worker.stdin.end();
+    }
     job.cancel = async () => { await worker.terminate(); };
     const deadline = timeout == null ? null : job.startedContinuous + timeout;
     const armDeadline = () => {
@@ -178,7 +200,7 @@ export class ExecutionJobs {
       // Module evaluation may finish before timers/stdio. Let Node's actual event loop
       // complete naturally; only an explicit deadline/cancellation terminates a worker.
       worker.on('message', value => {
-        if (value?.type === 'completed' || value?.type === 'failed') message = value;
+        if (!cli && (value?.type === 'completed' || value?.type === 'failed')) message = value;
       });
       worker.once('error', error => { workerError = error; });
       worker.once('exit', resolve);

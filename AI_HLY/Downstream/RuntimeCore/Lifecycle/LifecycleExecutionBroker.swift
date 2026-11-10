@@ -111,14 +111,8 @@ actor LifecycleExecutionBroker {
     private func executeNode(_ action: LifecycleExecutionPlan.Action, workspace: URL) async throws {
         guard let script = action.arguments.first else { throw RuntimeCoreError.invalidRequest("Node lifecycle action is missing a script.") }
         let scriptURL = try containedFile(script, workspace: workspace)
-        let pathLiteral = String(decoding: try JSONEncoder().encode(scriptURL.path), as: UTF8.self)
-        let argumentsLiteral = String(decoding: try JSONEncoder().encode(Array(action.arguments.dropFirst())), as: UTF8.self)
-        let source = """
-        import { pathToFileURL } from 'node:url';
-        process.argv = ['node', \(pathLiteral), ...\(argumentsLiteral)];
-        await import(pathToFileURL(\(pathLiteral)).href);
-        """
-        let result = try await node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace))
+        let result = try await node.executeCLI(entryPoint: scriptURL,
+            arguments: Array(action.arguments.dropFirst()), workspace: workspace)
         guard result.exitCode == 0, !result.didTimeOut, !result.wasCancelled else {
             throw RuntimeCoreError.runtimeFailure(result.stderr)
         }
@@ -127,12 +121,8 @@ actor LifecycleExecutionBroker {
     private func executePython(_ action: LifecycleExecutionPlan.Action, workspace: URL) async throws {
         guard let script = action.arguments.first else { throw RuntimeCoreError.invalidRequest("Python lifecycle action is missing a script.") }
         let scriptURL = try containedFile(script, workspace: workspace)
-        let source = try String(contentsOf: scriptURL, encoding: .utf8)
-        let result = try await python.execute(RuntimeExecutionRequest(
-            source: source,
-            arguments: Array(action.arguments.dropFirst()),
-            workspace: workspace
-        ))
+        let result = try await python.executeCLI(entryPoint: scriptURL,
+            arguments: Array(action.arguments.dropFirst()), workspace: workspace)
         guard result.exitCode == 0, !result.didTimeOut, !result.wasCancelled else {
             throw RuntimeCoreError.runtimeFailure(result.stderr)
         }

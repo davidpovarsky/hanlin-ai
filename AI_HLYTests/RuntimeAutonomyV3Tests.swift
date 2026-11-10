@@ -56,6 +56,55 @@ struct RuntimeAutonomyV3Tests {
         #expect(!FileManager.default.fileExists(atPath: forbidden.path))
     }
 
+    @Test func nodeCLIUsesActualMainModuleAndRetainsItsInputAndDelayedOutput() async throws {
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "cli-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let entry = workspace.appending(path: "main.cjs")
+        let input = workspace.appending(path: "input.txt")
+        try Data("שלום CLI\n".utf8).write(to: input)
+        try Data("""
+        const assert = require('node:assert/strict');
+        assert.equal(require.main, module);
+        assert.deepEqual(process.argv.slice(2), ['argument with spaces', 'עברית']);
+        assert.equal(process.env.CLI_PROOF, 'isolated');
+        const chunks=[];
+        process.stdin.on('data', chunk=>chunks.push(chunk));
+        process.stdin.on('end', ()=>{
+          process.stdout.write(Buffer.concat(chunks));
+          setTimeout(()=>console.error('CLI_DELAYED_STDERR'),30);
+        });
+        """.utf8).write(to: entry)
+        let result = try await AppRuntimeCore.shared.node.executeCLI(entryPoint: entry,
+            arguments: ["argument with spaces", "עברית"], workspace: workspace,
+            environment: ["CLI_PROOF": "isolated"], standardInput: input)
+        #expect(result.exitCode == 0 && result.stdout == "שלום CLI\n")
+        #expect(result.stderr.contains("CLI_DELAYED_STDERR"))
+        #expect(!result.didTimeOut && !result.wasCancelled)
+    }
+
+    @Test func pythonCLIUsesActualFileArgumentsInputAndStandardExitStatus() async throws {
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "python-cli-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let entry = workspace.appending(path: "main.py")
+        let input = workspace.appending(path: "input.txt")
+        try Data("שלום Python CLI\n".utf8).write(to: input)
+        try Data("""
+        import sys, pathlib, os
+        assert __name__ == '__main__'
+        assert pathlib.Path(__file__).name == 'main.py'
+        assert sys.argv[0] == __file__
+        assert sys.argv[1:] == ['argument with spaces', 'עברית']
+        assert os.environ['CLI_PROOF'] == 'isolated'
+        sys.stdout.buffer.write(sys.stdin.buffer.read())
+        sys.exit(23)
+        """.utf8).write(to: entry)
+        let result = try await AppRuntimeCore.shared.python.executeCLI(entryPoint: entry,
+            arguments: ["argument with spaces", "עברית"], workspace: workspace,
+            environment: ["CLI_PROOF": "isolated"], standardInput: input)
+        #expect(result.exitCode == 23 && result.stdout == "שלום Python CLI\n")
+        #expect(result.stderr.isEmpty && !result.didTimeOut && !result.wasCancelled)
+    }
+
     @MainActor private final class JobCapture { var id: UUID? }
 
     @Test(.timeLimit(.minutes(1)))

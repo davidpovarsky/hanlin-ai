@@ -175,6 +175,28 @@ test('host redirects npm state before preview and install modules initialize', a
     assert.equal(execution.stdout, 'שלום\n');
     assert.deepEqual(execution.value, { answer: 42 });
 
+    const cliEntry = path.join(workspace, 'actual cli.cjs');
+    const cliInput = path.join(workspace, 'cli stdin.txt');
+    await fs.writeFile(cliInput, 'CLI_INPUT_שלום');
+    await fs.writeFile(cliEntry, `
+      if(require.main!==module) throw new Error('Not actual main');
+      if(process.argv[2]!=='arg with spaces') throw new Error('Wrong argv');
+      process.stdin.pipe(process.stdout);
+      process.stdin.on('end',()=>setTimeout(()=>console.error(process.env.CLI_VALUE),20));
+    `);
+    const cli = await hostRequest(ready.port, launchToken, '/v1/executions', {
+      executionID: randomUUID(), executionMode:'cli', entryPoint: cliEntry, standardInputPath: cliInput,
+      workspace, moduleKind: 'commonjs', arguments: ['arg with spaces'], environment: {CLI_VALUE:'CLI_ENV'},
+    });
+    assert.equal(cli.exitCode, 0, JSON.stringify(cli));
+    assert.equal(cli.stdout, 'CLI_INPUT_שלום');
+    assert.match(cli.stderr, /CLI_ENV/);
+    const invalidCLI = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
+      executionID: randomUUID(), executionMode:'cli', entryPoint: workspace, workspace, moduleKind:'esm',
+    });
+    assert.equal(invalidCLI.status, 400);
+
+
     for (const tracing of [true, false]) {
       const marker = `warning-scope-${tracing}-${randomUUID()}`;
       const warningResult = await hostRequest(ready.port, launchToken, '/v1/executions', {

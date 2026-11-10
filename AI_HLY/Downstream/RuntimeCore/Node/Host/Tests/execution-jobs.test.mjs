@@ -114,3 +114,76 @@ test('a restored job with no opened streams has an empty lossless output page', 
   assert.equal(jobs.snapshot(id).state, 'interrupted');
   assert.deepEqual(await jobs.readOutput(id, 'stdout'), { executionID: id, channel: 'stdout', offset: 0, nextOffset: 0, totalBytes: 0, hasMore: false, base64: '' });
 });
+
+
+test('actual CommonJS CLI main preserves argv, cwd, environment, binary stdin and late stdout', async t => {
+  const { jobs, root, body } = await fixture(t);
+  const entryPoint = path.join(root, 'cli.cjs');
+  const input = Buffer.from('שלום 👨‍👩‍👧‍👦\n'.repeat(400_000));
+  const standardInputPath = path.join(root, 'stdin.bin');
+  await fs.writeFile(standardInputPath, input);
+  await fs.writeFile(entryPoint, `
+    const assert = require('node:assert/strict');
+    assert.equal(require.main, module);
+    assert.deepEqual(process.argv.slice(2), ['arg with spaces', 'שלום']);
+    assert.equal(process.env.CLI_CUSTOM, 'isolated');
+    assert.equal(process.cwd(), ${JSON.stringify(root)});
+    assert.equal(typeof require('node:fs').realpathSync.native, 'function');
+    const chunks = [];
+    process.stdin.on('data', chunk => chunks.push(chunk));
+    process.stdin.on('end', () => {
+      process.stdout.write(Buffer.concat(chunks));
+      setTimeout(() => process.stderr.write('CLI_LATE_COMPLETE'), 30);
+    });
+  `);
+  const started = await jobs.start({ ...body, executionMode: 'cli', entryPoint, standardInputPath,
+    arguments: ['arg with spaces', 'שלום'], environment: { CLI_CUSTOM: 'isolated' } });
+  const completed = await jobs.wait(started.executionID);
+  assert.equal(completed.state, 'completed', JSON.stringify(completed));
+  assert.ok(input.length > 10 * 1024 * 1024);
+  assert.deepEqual(await fs.readFile(completed.result.outputFiles.stdout.path), input);
+  assert.equal(completed.result.outputFiles.stdout.sha256, createHash('sha256').update(input).digest('hex'));
+  assert.equal(await fs.readFile(completed.result.outputFiles.stderr.path, 'utf8'), 'CLI_LATE_COMPLETE');
+  assert.equal(completed.result.outputWasTruncated, true);
+});
+
+test('actual ESM CLI errors and exit status are retained without interpreting user messages as results', async t => {
+  const { jobs, root, body } = await fixture(t);
+  const entryPoint = path.join(root, 'cli.mjs');
+  await fs.writeFile(entryPoint, `import {parentPort} from 'node:worker_threads'; parentPort.postMessage({type:'completed',value:'misleading'}); console.log('ESM_CLI'); process.exitCode=23;`);
+  let started = await jobs.start({ ...body, executionMode: 'cli', entryPoint });
+  let completed = await jobs.wait(started.executionID);
+  assert.equal(completed.state, 'failed');
+  assert.equal(completed.result.exitCode, 23);
+  assert.equal(completed.result.value, null);
+  assert.match(completed.result.stdout, /ESM_CLI/);
+  await fs.writeFile(entryPoint, "throw new Error('CLI_REAL_FAILURE');");
+  started = await jobs.start({ ...body, executionMode: 'cli', entryPoint });
+  completed = await jobs.wait(started.executionID);
+  assert.equal(completed.state, 'failed');
+  assert.match(completed.result.stderr, /CLI_REAL_FAILURE/);
+});
+
+
+test('CLI cancellation stops the actual main and retains partial output; launch environment is frozen', async t => {
+  const { jobs, root, body } = await fixture(t);
+  const key = 'HANLIN_TEMPORARY_NATIVE_ENV';
+  const previous = process.env[key];
+  // A different native engine may temporarily set C environ after host launch.
+  process.env[key] = 'must-not-leak';
+  t.after(() => { if (previous === undefined) delete process.env[key]; else process.env[key] = previous; });
+  const entryPoint = path.join(root, 'cancel.cjs');
+  await fs.writeFile(entryPoint, `
+    if(process.env.${key}!==undefined) throw new Error('Inherited another engine job environment');
+    console.log('CLI_STARTED'); setInterval(()=>{},1000);
+  `);
+  const started = await jobs.start({ ...body, executionMode: 'cli', entryPoint });
+  const deadline = performance.now()+5000;
+  while(jobs.snapshot(started.executionID).stdoutBytes===0 && performance.now()<deadline) await new Promise(resolve=>setTimeout(resolve,10));
+  assert.ok(jobs.snapshot(started.executionID).stdoutBytes>0, JSON.stringify(jobs.snapshot(started.executionID)));
+  await jobs.cancel(started.executionID);
+  const completed = await jobs.wait(started.executionID);
+  assert.equal(completed.state,'cancelled');
+  assert.equal(completed.result.wasCancelled,true);
+  assert.match(completed.result.stdout,/CLI_STARTED/);
+});

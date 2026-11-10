@@ -322,7 +322,9 @@ function authorized(request) {
 async function executeJavaScript(body) {
   const id = String(body.executionID ?? '').toLowerCase();
   if (!validID(id)) throw new Error('Invalid execution ID.');
-  if (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody) throw new Error('JavaScript source is missing or too large.');
+  if (body.executionMode != null && !['source', 'cli'].includes(body.executionMode)) throw new Error('Unsupported Node execution mode.');
+  const cli = body.executionMode === 'cli';
+  if (!cli && (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody)) throw new Error('JavaScript source is missing or too large.');
   if (!['esm', 'commonjs'].includes(body.moduleKind)) throw new Error('Unsupported JavaScript module kind.');
   const workspace = path.resolve(String(body.workspace ?? ''));
   if (!workspace) throw new Error('Execution workspace must be specified.');
@@ -339,7 +341,16 @@ async function executeJavaScript(body) {
     error.status = 400;
     throw error;
   }
-  rejectUnsafeSource(body.source);
+  if (cli) {
+    if (typeof body.entryPoint !== 'string' || !path.isAbsolute(body.entryPoint)) throw new Error('CLI entryPoint must be an absolute file path.');
+    body.entryPoint = await fs.realpath(body.entryPoint);
+    if (!(await fs.stat(body.entryPoint)).isFile()) throw new Error('CLI entryPoint must be a regular file.');
+    if (body.standardInputPath != null) {
+      if (typeof body.standardInputPath !== 'string' || !path.isAbsolute(body.standardInputPath)) throw new Error('CLI stdin must be an absolute file path.');
+      body.standardInputPath = await fs.realpath(body.standardInputPath);
+      if (!(await fs.stat(body.standardInputPath)).isFile()) throw new Error('CLI stdin must be a regular file.');
+    }
+  } else rejectUnsafeSource(body.source);
   const header = await executionJobs.start({ ...body, workspace, environment: validatedEnvironment(body.environment) });
   if (body.detached === true) return executionJobs.snapshot(header.executionID);
   const completed = await executionJobs.wait(header.executionID);
