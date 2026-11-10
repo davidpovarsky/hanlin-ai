@@ -1,13 +1,15 @@
 import { Readable } from 'node:stream';
 
-// Undici's HTTP/1 parser needs WebAssembly; Node Mobile's JITless iOS build
-// cannot expose it. Select transport once, before user code, without retries
+// Undici's HTTP/1 parser needs WebAssembly. Older mobile bundles lack its
+// interpreter; newer candidates must prove it on the actual engine. Select once
+// before user code, without retries
 // through another runtime. Keep Node's web API classes and stream semantics.
 export const webAssemblyAvailable = typeof WebAssembly !== 'undefined';
 export const fetchImplementation = webAssemblyAvailable ? 'node-undici' : 'node-fetch@3.3.2+native-web-api';
 if (!webAssemblyAvailable) {
   const { default: transportFetch } = await import('node-fetch');
   globalThis.fetch = async function fetch(input, init) {
+    if (init?.dispatcher != null) throw new TypeError('This Fetch transport cannot execute an Undici dispatcher; a verified WASM-enabled native transport is required.');
     const request = new Request(input, init);
     if (request.integrity) throw new TypeError('Fetch integrity validation is unavailable in JITless Node.');
     let response;

@@ -24,6 +24,7 @@ await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 try {
   const get = await fetch(base + '/echo');
+  await assert.rejects(fetch(base + '/echo', {dispatcher:{dispatch(){throw new Error('Unexpected fallback');}}}), /cannot execute an Undici dispatcher/);
   assert.ok(get instanceof Response);
   assert.equal((await get.json()).nonce, nonce);
   const request = new Request(base + '/echo', { method: 'POST', headers: new Headers({ 'x-probe': nonce }), body: 'שלום-' + nonce });

@@ -126,6 +126,10 @@ def input_hash(source: Path, node_fingerprint: str) -> str:
               ("build/generate-yarn-multiline-patch.mjs", Path(__file__).with_name("generate-yarn-multiline-patch.mjs"))]
     for name in ("package.json", "package-lock.json"):
         files.append(("build/HostGrammarTools/" + name, Path(__file__).with_name("HostGrammarTools") / name))
+    fixture_root = REPOSITORY / "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle"
+    for path in sorted(fixture_root.rglob("*")):
+        if path.is_file():
+            files.append(("tests/RuntimeNetworkFixtures/" + path.relative_to(fixture_root).as_posix(), path))
     for name, path in sorted(files):
         digest.update(name.encode() + b"\0" + hashlib.sha256(path.read_bytes()).digest())
     return digest.hexdigest()

@@ -20,6 +20,7 @@ mkdir -p "${WORK_ROOT}" "${OUTPUT_ROOT}" "${GRAMMAR_TOOL_ROOT}"
 cp "${SCRIPT_DIR}/HostGrammarTools/package.json" "${SCRIPT_DIR}/HostGrammarTools/package-lock.json" "${GRAMMAR_TOOL_ROOT}/"
 (cd "${GRAMMAR_TOOL_ROOT}" && npm ci --ignore-scripts --workspaces=false --no-audit --no-fund)
 export HANLIN_HOST_GRAMMAR_COMPILER_ROOT="${GRAMMAR_TOOL_ROOT}"
+export HANLIN_RUNTIME_TEST_FIXTURES="${REPOSITORY_ROOT}/AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle"
 cp \
   "${HOST_SOURCE}"/*.mjs \
   "${HOST_SOURCE}/package.json" \
