@@ -14,7 +14,7 @@ on:
         required: true
         default: false
       reuse_artifacts_run_id:
-        description: Reuse completed Node, Python, and host artifacts from this workflow run
+        description: Verify and reuse completed native components; rebuild the current Host
         type: string
         required: false
         default: ''
@@ -55,6 +55,7 @@ jobs:
       python_url: ${{ steps.plan.outputs.python_url }}
       python_sha256: ${{ steps.plan.outputs.python_sha256 }}
       release_exists: ${{ steps.plan.outputs.release_exists }}
+      reuse_receipt_artifact_id: ${{ steps.reuse-receipt.outputs.artifact-id }}
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -108,6 +109,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m unittest discover -s Scripts/Runtime/Tests -p test_node_source_patches.py
+          python3 -m unittest Scripts.Runtime.Tests.test_runtime_reuse.NativeReuseTests Scripts.Runtime.Tests.test_runtime_native_identity
           node --jitless --test Scripts/Runtime/Tests/node-fd-ownership-probe.test.mjs
           node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json --allow-pending-build
           dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
@@ -115,29 +117,20 @@ jobs:
           release_exists=false
 
           if [[ -n "$REUSE_ARTIFACTS_RUN_ID" ]]; then
-            source_run="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${REUSE_ARTIFACTS_RUN_ID}")"
-            source_repository="$(jq -r '.head_repository.full_name' <<<"$source_run")"
-            test "$source_repository" = "$GITHUB_REPOSITORY" || {
-              echo "Artifact source run belongs to $source_repository, not $GITHUB_REPOSITORY." >&2
-              exit 1
-            }
-
-            required_source_artifacts=(
-              "node-mobile-device-${dependency_hash}"
-              "node-mobile-simulator-${dependency_hash}"
-              "python-runtime-${dependency_hash}"
-              "runtime-host-${dependency_hash}"
-            )
-            source_artifacts="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${REUSE_ARTIFACTS_RUN_ID}/artifacts?per_page=100")"
-            for artifact in "${required_source_artifacts[@]}"; do
-              jq -e --arg name "$artifact" \
-                '.artifacts[] | select(.name == $name and .expired == false)' \
-                <<<"$source_artifacts" >/dev/null || {
-                  echo "Reusable run ${REUSE_ARTIFACTS_RUN_ID} is missing live artifact $artifact." >&2
-                  exit 1
-                }
-            done
-            echo "Verified reusable RuntimeCore inputs from workflow run ${REUSE_ARTIFACTS_RUN_ID}."
+            [[ "$REUSE_ARTIFACTS_RUN_ID" =~ ^[1-9][0-9]*$ ]]
+            mkdir -p build/native-reuse
+            gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${REUSE_ARTIFACTS_RUN_ID}" > build/native-reuse/run.json
+            verifier=(python3 Scripts/Runtime/verify_runtime_reuse.py
+              --source-run build/native-reuse/run.json --repository-name "$GITHUB_REPOSITORY"
+              --receipt build/native-reuse/NativeReuseProvenance.json)
+            source_sha="$("${verifier[@]}" --print-source-sha)"
+            git fetch --no-tags --depth=1 origin "$source_sha"
+            gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs/${REUSE_ARTIFACTS_RUN_ID}/jobs?filter=all&per_page=100" \
+              --jq '.jobs[]' | jq -s '{jobs: .}' > build/native-reuse/jobs.json
+            gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs/${REUSE_ARTIFACTS_RUN_ID}/artifacts?per_page=100" \
+              --jq '.artifacts[]' | jq -s '{artifacts: .}' > build/native-reuse/artifacts.json
+            "${verifier[@]}" --dependency-hash "$dependency_hash" \
+              --source-jobs build/native-reuse/jobs.json --source-artifacts build/native-reuse/artifacts.json
           fi
 
           if gh release view "$release_tag" >/dev/null 2>&1; then
@@ -170,6 +163,16 @@ jobs:
             echo "python_sha256=$(node -p 'require("./RuntimeDependencies.lock.json").python.archive.sha256')"
             echo "release_exists=$release_exists"
           } >> "$GITHUB_OUTPUT"
+
+      - name: Preserve verified native reuse receipt
+        if: ${{ inputs.reuse_artifacts_run_id != '' }}
+        id: reuse-receipt
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: native-reuse-receipt-${{ github.run_attempt }}
+          path: build/native-reuse/NativeReuseProvenance.json
+          if-no-files-found: error
+          retention-days: 14
 
   build-node:
     name: build-node-${{ matrix.artifact_suffix }}
@@ -620,8 +623,7 @@ jobs:
     name: prepare-runtime-host
     needs: plan-runtime
     if: >-
-      ${{ (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
-          inputs.reuse_artifacts_run_id == '' }}
+      ${{ needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -719,11 +721,12 @@ jobs:
       - prepare-runtime-host
     if: >-
       ${{ always() &&
+          needs.plan-runtime.result == 'success' &&
           (needs.plan-runtime.outputs.release_exists != 'true' || inputs.force_rebuild) &&
+          needs.prepare-runtime-host.result == 'success' &&
           (inputs.reuse_artifacts_run_id != '' ||
            (needs.build-node.result == 'success' &&
-            needs.prepare-python-runtime.result == 'success' &&
-            needs.prepare-runtime-host.result == 'success')) }}
+            needs.prepare-python-runtime.result == 'success')) }}
     runs-on: macos-26
     timeout-minutes: 75
     steps:
@@ -827,7 +830,6 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Download runtime host
-        if: ${{ inputs.reuse_artifacts_run_id == '' }}
         uses: actions/download-artifact@v8.0.2
         with:
           name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
@@ -841,74 +843,22 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - name: Download device slice from reusable run
+      - name: Download authenticated native reuse receipt
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
         uses: actions/download-artifact@v8.0.2
         with:
-          name: node-mobile-device-${{ needs.plan-runtime.outputs.dependency_hash }}
-          path: build/runtime-inputs/node-device
-          github-token: ${{ github.token }}
-          run-id: ${{ inputs.reuse_artifacts_run_id }}
-      - name: Live Activity · refresh
+          artifact-ids: ${{ needs.plan-runtime.outputs.reuse_receipt_artifact_id }}
+          path: build/native-reuse
+      - name: Download immutable native archives and verify their actual digests
         if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: davidpovarsky/github-automation/live-refresh@main
-        continue-on-error: true
-        with:
-          event: refresh
-          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
-          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
-          github_token: ${{ github.token }}
-      - name: Download simulator slice from reusable run
-        if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: actions/download-artifact@v8.0.2
-        with:
-          name: node-mobile-simulator-${{ needs.plan-runtime.outputs.dependency_hash }}
-          path: build/runtime-inputs/node-simulator
-          github-token: ${{ github.token }}
-          run-id: ${{ inputs.reuse_artifacts_run_id }}
-      - name: Live Activity · refresh
-        if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: davidpovarsky/github-automation/live-refresh@main
-        continue-on-error: true
-        with:
-          event: refresh
-          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
-          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
-          github_token: ${{ github.token }}
-      - name: Download Python runtime from reusable run
-        if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: actions/download-artifact@v8.0.2
-        with:
-          name: python-runtime-${{ needs.plan-runtime.outputs.dependency_hash }}
-          path: build/runtime-inputs/python
-          github-token: ${{ github.token }}
-          run-id: ${{ inputs.reuse_artifacts_run_id }}
-      - name: Live Activity · refresh
-        if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: davidpovarsky/github-automation/live-refresh@main
-        continue-on-error: true
-        with:
-          event: refresh
-          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
-          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
-          github_token: ${{ github.token }}
-      - name: Download runtime host from reusable run
-        if: ${{ inputs.reuse_artifacts_run_id != '' }}
-        uses: actions/download-artifact@v8.0.2
-        with:
-          name: runtime-host-${{ needs.plan-runtime.outputs.dependency_hash }}
-          path: build/runtime-inputs/host
-          github-token: ${{ github.token }}
-          run-id: ${{ inputs.reuse_artifacts_run_id }}
-      - name: Live Activity · refresh
-        uses: davidpovarsky/github-automation/live-refresh@main
-        continue-on-error: true
-        with:
-          event: refresh
-          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
-          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
-          github_token: ${{ github.token }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 Scripts/Runtime/verify_runtime_reuse.py \
+            --receipt build/native-reuse/NativeReuseProvenance.json --download-to build/runtime-inputs
       - name: Assemble and smoke-test existing slices
+        env:
+          RUNTIME_REUSE_RECEIPT: ${{ inputs.reuse_artifacts_run_id != '' && 'build/native-reuse/NativeReuseProvenance.json' || '' }}
         run: |
           set -o pipefail
           mkdir -p build/runtime-assembly-logs

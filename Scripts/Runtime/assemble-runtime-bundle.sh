@@ -184,6 +184,11 @@ node -e '
   "${simulator_slice_sha256}" "${PYTHON_VERSION}" "${PYTHON_SHA256}" \
   "${python_runtime_sha256}" "${host_sha256}" "${GITHUB_RUN_ID:-}" "${GITHUB_RUN_ATTEMPT:-}" "${LOCK_FILE}"
 
+if [[ -n "${RUNTIME_REUSE_RECEIPT:-}" ]]; then
+  test -f "${RUNTIME_REUSE_RECEIPT}"
+  cp "${RUNTIME_REUSE_RECEIPT}" "${OUTPUT_ROOT}/NativeReuseProvenance.json"
+fi
+
 bundle_name="hanlin-runtime-${DEPENDENCY_HASH}.zip"
 bundle_path="${REPOSITORY_ROOT}/build/${bundle_name}"
 ditto -c -k --sequesterRsrc "${OUTPUT_ROOT}" "${bundle_path}"
