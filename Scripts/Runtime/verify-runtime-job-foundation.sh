@@ -24,7 +24,7 @@ done
 background="AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift"
 shasum -a 256 "${core_sources[@]}" "$background" AI_HLYTests/RuntimeJobInterruptionTests.swift AI_HLYTests/RuntimeUserOperationTests.swift > "$EVIDENCE/source-sha256.txt"
 plutil -lint AI-HLY-Info.plist | tee "$EVIDENCE/plist-lint.txt"
-xcrun swiftc -typecheck -parse-as-library -swift-version 6 -strict-concurrency=complete \
+xcrun swiftc -typecheck -parse-as-library -swift-version 6 -strict-concurrency=complete -warnings-as-errors \
   -module-name HanlinRuntimeFoundation -sdk "$SDK" -target "$TARGET" \
   "${core_sources[@]}" "$background" 2>&1 | tee "$EVIDENCE/ios-sdk-typecheck.log"
 

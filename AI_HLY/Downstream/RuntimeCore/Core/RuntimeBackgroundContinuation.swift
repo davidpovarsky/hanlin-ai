@@ -37,14 +37,36 @@ final class RuntimeBackgroundContinuation {
         }
         guard registered else { return }
         entries[operation.id] = Entry(identifier: identifier, operation: operation)
-        let request = BGContinuedProcessingTaskRequest(
-            identifier: identifier,
-            title: String(localized: "Working on your request", table: "RuntimeLocalizable"),
-            subtitle: String(localized: "Progress is saved as work continues", table: "RuntimeLocalizable")
-        )
-        request.strategy = .fail // Foreground work is already underway; never queue a replay.
-        do { try BGTaskScheduler.shared.submit(request) }
-        catch { entries.removeValue(forKey: operation.id) }
+        let title = String(localized: "Working on your request", table: "RuntimeLocalizable")
+        let subtitle = String(localized: "Progress is saved as work continues", table: "RuntimeLocalizable")
+        // iOS 27 reports submission errors asynchronously. Apple requires the
+        // submission outside the main/performance-critical thread. Build the
+        // non-Sendable request in that same detached context.
+        Task.detached(priority: .userInitiated) { [weak self, weak operation] in
+            guard let operation, !operation.snapshot.finished else { return }
+            let request = BGContinuedProcessingTaskRequest(identifier: identifier, title: title, subtitle: subtitle)
+            request.strategy = .fail // Never queue a second/replayed operation.
+            do {
+                try await BGTaskScheduler.shared.submitTaskRequest(request)
+                await self?.submissionFinished(operation, identifier: identifier, accepted: true)
+            } catch {
+                await self?.submissionFinished(operation, identifier: identifier, accepted: false)
+            }
+        }
+    }
+
+    private func submissionFinished(_ operation: RuntimeUserOperation, identifier: String, accepted: Bool) {
+        guard let entry = entries[operation.id], entry.operation === operation, entry.identifier == identifier else {
+            // The foreground run may finish while OS admission is in flight.
+            if accepted { BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: identifier) }
+            return
+        }
+        if operation.snapshot.finished {
+            end(operation)
+        } else if !accepted && entry.task == nil {
+            // Optional admission denial does not fail the foreground producer.
+            entries.removeValue(forKey: operation.id)
+        }
     }
 
     func end(_ operation: RuntimeUserOperation) {
