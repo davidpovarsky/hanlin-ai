@@ -10,7 +10,17 @@ export async function applyHostDependencyPatches(root = import.meta.dirname, { c
   const manifest = JSON.parse(await fs.readFile(path.join(root, 'host-dependency-patches.json'), 'utf8'));
   const metadata = JSON.parse(await fs.readFile(path.join(root, 'node_modules', manifest.package, 'package.json'), 'utf8'));
   if (metadata.version !== manifest.version) throw new Error('Host dependency patch version mismatch.');
+  for (const license of manifest.licenses ?? []) {
+    const file = path.resolve(root, license.path);
+    if (!file.startsWith(path.resolve(root) + path.sep) || hash(await fs.readFile(file)) !== license.sha256) {
+      throw new Error('Host dependency license digest mismatch.');
+    }
+  }
   for (const entry of manifest.files) {
+    if (entry.package) {
+      const dependency = JSON.parse(await fs.readFile(path.join(root, 'node_modules', entry.package, 'package.json'), 'utf8'));
+      if (dependency.version !== entry.version) throw new Error('Host dependency patch version mismatch.');
+    }
     const target = path.resolve(root, entry.path);
     if (!target.startsWith(path.resolve(root, 'node_modules') + path.sep)) throw new Error('Invalid dependency patch path.');
     const original = await fs.readFile(target);

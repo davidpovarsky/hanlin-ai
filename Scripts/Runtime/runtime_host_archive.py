@@ -54,6 +54,12 @@ def validate_archive(archive: Path, source: Path, *, check_sources: bool = False
                 patches = json.loads(patch_manifest.read_text(encoding="utf-8"))
                 if json.loads(read("host-dependency-patches.json")) != patches:
                     errors.append("Host dependency patch manifest differs from current source")
+                for license in patches.get("licenses", []):
+                    name = canonical_name(license["path"])
+                    if hashlib.sha256((source / name).read_bytes()).hexdigest() != license["sha256"]:
+                        errors.append("Host source license digest mismatch: " + name)
+                    if hashlib.sha256(read(name)).hexdigest() != license["sha256"]:
+                        errors.append("Host archive license digest mismatch: " + name)
                 for patch in patches["files"]:
                     name = canonical_name(patch["path"])
                     if not name.startswith("node_modules/"):
@@ -113,7 +119,8 @@ def input_hash(source: Path, node_fingerprint: str) -> str:
                 path = Path(directory) / name
                 files.append((path.relative_to(source).as_posix(), path))
     files += [("build/prepare-runtime-host.sh", Path(__file__).with_name("prepare-runtime-host.sh")),
-              ("build/runtime_host_archive.py", Path(__file__))]
+              ("build/runtime_host_archive.py", Path(__file__)),
+              ("build/generate-yarn-unicode-patch.mjs", Path(__file__).with_name("generate-yarn-unicode-patch.mjs"))]
     for name, path in sorted(files):
         digest.update(name.encode() + b"\0" + hashlib.sha256(path.read_bytes()).digest())
     return digest.hexdigest()

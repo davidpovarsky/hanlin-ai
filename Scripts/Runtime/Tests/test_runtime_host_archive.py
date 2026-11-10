@@ -57,6 +57,23 @@ class RuntimeHostArchiveTests(unittest.TestCase):
         errors = archive_module.validate_archive(tampered, self.source)
         self.assertTrue(any("patch digest mismatch" in value for value in errors))
 
+    def test_generated_unicode_license_is_retained_and_tampering_fails(self):
+        payload = (archive_module.REPOSITORY / "AI_HLY/Downstream/RuntimeCore/Node/Host/UNICODE-LICENSE.txt").read_bytes()
+        name = "UNICODE-LICENSE.txt"
+        patches = {"files": [], "licenses": [{"path": name, "sha256": hashlib.sha256(payload).hexdigest()}]}
+        (self.source / name).write_bytes(payload)
+        (self.source / "host-dependency-patches.json").write_text(json.dumps(patches), encoding="utf-8")
+        self.write_archive(self.archive)
+        with zipfile.ZipFile(self.archive, "a") as packed:
+            packed.writestr("host-dependency-patches.json", json.dumps(patches))
+            packed.writestr(name, payload)
+        self.assertEqual(archive_module.validate_archive(self.archive, self.source), [])
+        tampered = self.root / "license-tampered.zip"
+        with zipfile.ZipFile(self.archive) as old, zipfile.ZipFile(tampered, "w") as updated:
+            for entry in old.infolist():
+                updated.writestr(entry, b"changed" if entry.filename == name else old.read(entry))
+        self.assertTrue(any("license digest mismatch" in value for value in archive_module.validate_archive(tampered, self.source)))
+
     def test_matching_archive_is_reused_without_rebuilding(self):
         self.write_archive(self.archive)
         before = self.archive.read_bytes()

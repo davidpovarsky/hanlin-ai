@@ -15,7 +15,15 @@ test('actual published Yarn patch is idempotent and refuses changed bytes or ver
   const metadata = path.join(root, 'node_modules', manifest.package, 'package.json');
   await fs.mkdir(path.dirname(metadata), { recursive: true });
   await fs.writeFile(metadata, JSON.stringify({ version: manifest.version }));
+  for (const license of manifest.licenses ?? []) {
+    await fs.copyFile(new URL(license.path, source), path.join(root, license.path));
+  }
   for (const entry of manifest.files) {
+    if (entry.package) {
+      const file = path.join(root, 'node_modules', entry.package, 'package.json');
+      await fs.mkdir(path.dirname(file), { recursive: true });
+      await fs.writeFile(file, JSON.stringify({ version: entry.version }));
+    }
     let upstream = await fs.readFile(new URL(entry.path, source), 'utf8');
     for (const { before, after } of [...entry.replacements].reverse()) upstream = upstream.replace(after, () => before);
     assert.equal(createHash('sha256').update(upstream).digest('hex'), entry.upstreamSHA256);
@@ -34,4 +42,12 @@ test('actual published Yarn patch is idempotent and refuses changed bytes or ver
   await fs.writeFile(target, valid);
   await fs.writeFile(metadata, JSON.stringify({ version: '0.0.0' }));
   await assert.rejects(applyHostDependencyPatches(root), /version mismatch/);
+  await fs.writeFile(metadata, JSON.stringify({ version: manifest.version }));
+  const parser = manifest.files.find(entry => entry.package === '@yarnpkg/parsers');
+  const parserMetadata = path.join(root, 'node_modules', parser.package, 'package.json');
+  await fs.writeFile(parserMetadata, JSON.stringify({ version: '0.0.0' }));
+  await assert.rejects(applyHostDependencyPatches(root), /version mismatch/);
+  await fs.writeFile(parserMetadata, JSON.stringify({ version: parser.version }));
+  await fs.appendFile(path.join(root, manifest.licenses[0].path), 'changed');
+  await assert.rejects(applyHostDependencyPatches(root), /license digest mismatch/);
 });

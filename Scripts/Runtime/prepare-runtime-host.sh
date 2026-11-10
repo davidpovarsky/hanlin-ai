@@ -22,6 +22,7 @@ cp \
   "${HOST_SOURCE}/package-lock.json" \
   "${HOST_SOURCE}/runtime-dependency-overrides.json" \
   "${HOST_SOURCE}/host-dependency-patches.json" \
+  "${HOST_SOURCE}/UNICODE-LICENSE.txt" \
   "${WORK_ROOT}/"
 cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
 
@@ -29,6 +30,7 @@ cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
   cd "${WORK_ROOT}"
   npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund
   node apply-host-dependency-patches.mjs
+  node "${SCRIPT_DIR}/generate-yarn-unicode-patch.mjs" --root "${WORK_ROOT}"
   npm test
   rm -rf Tests
   find . -type f -print | LC_ALL=C sort | zip -X -q "${OUTPUT_ROOT}/RuntimeHostResources.zip" -@

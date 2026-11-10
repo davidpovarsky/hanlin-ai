@@ -21,6 +21,7 @@ struct RuntimeCapabilityContract: Codable, Sendable {
             "cliCommands": "Finite file-backed Node/Python script and verified BSD command adapters use the existing engines and job journals. Portable npm run executes pre/main/post scripts. OS spawn, TTY/IPC and unsupported CLI flags are not emulated; registry dependency lifecycle migration is still incomplete.",
             "shell": "Full stdout/stderr are durable job artifacts with lossless read pages. Structured argv and linked ios_system command strings support native pipes/redirection. Queued commands can be cancelled; running native commands currently finish naturally and do not support per-command deadlines. Full Bash compatibility is not implied.",
             "wasm": "NOT_VERIFIED on the embedded iOS engine; no JIT availability is assumed.",
+            "unicodePropertyEscapes": "The current native Node build cannot parse general Unicode property escapes. The pinned Yarn parser uses equivalent Unicode 16 literal character classes; that dependency patch does not add property syntax or ICU to the engine.",
             "fetch": "TLS and native web classes preserved. SRI and custom Undici dispatcher are not yet supported by the current compatibility path.",
             "background": "iOS may suspend or terminate the app. Uninterrupted background completion is not guaranteed."
         ]

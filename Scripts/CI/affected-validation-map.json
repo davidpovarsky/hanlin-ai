@@ -414,7 +414,8 @@
         "Scripts/Runtime/runtime_bundle_source.py",
         "Scripts/Runtime/runtime_native_identity.py",
         "Scripts/Runtime/Tests/test_runtime_native_identity.py",
-        "Scripts/Runtime/Tests/test_runtime_bundle_source.py"
+        "Scripts/Runtime/Tests/test_runtime_bundle_source.py",
+        "Scripts/Runtime/generate-yarn-unicode-patch.mjs"
       ],
       "direct_validation_groups": [
         "runtimecore_host"
