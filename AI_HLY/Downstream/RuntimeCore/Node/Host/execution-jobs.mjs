@@ -2,7 +2,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import { promises as fs, createWriteStream, createReadStream, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { finished } from 'node:stream/promises';
-import { Worker } from 'node:worker_threads';
+import { Worker, MessageChannel } from 'node:worker_threads';
+import { RuntimeCommandBroker } from './runtime-command-broker.mjs';
 
 const terminalStates = new Set(['completed', 'failed', 'cancelled', 'interrupted']);
 const validID = id => typeof id === 'string' && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(id);
@@ -42,6 +43,7 @@ export class ExecutionJobs {
   snapshot(id) {
     const header = this.#jobs.get(id)?.header;
     if (!header) return null;
+    if (header.memoryOnlyFailure) return structuredClone(header);
     if (terminalStates.has(header.state) && !header.result) {
       return JSON.parse(readFileSync(path.join(this.root, id, 'job.json'), 'utf8'));
     }
@@ -65,9 +67,13 @@ export class ExecutionJobs {
     this.#jobs.set(id, job);
     await this.#persist(header);
     job.completion = this.#run(job, body, previewBytes, timeout).catch(async error => {
+      await job.commandBroker?.cancel().catch(() => {});
       await job.worker?.terminate().catch(() => {});
+      await job.commandBroker?.drain().catch(() => {});
       for (const stream of Object.values(job.streams ?? {})) stream.destroy();
       header.state = 'failed';
+      header.result = null;
+      header.memoryOnlyFailure = true;
       header.error = String(error.message ?? error);
       await this.#persist(header).catch(() => {});
       return header;
@@ -89,6 +95,14 @@ export class ExecutionJobs {
     await this.#persist(job.header);
     if (job.cancel) await job.cancel();
     return job.header;
+  }
+
+  async commandRequests(id) {
+    return await this.#jobs.get(id)?.commandBroker?.requests() ?? [];
+  }
+
+  async failCommand(id, commandID, error) {
+    await this.#jobs.get(id)?.commandBroker?.fail(commandID, error);
   }
 
   async readOutput(id, channel, offset = 0, limit = 16_384) {
@@ -158,12 +172,20 @@ export class ExecutionJobs {
       environment.NODE_OPTIONS = [this.workerEnvironment.NODE_OPTIONS,
         '--import ' + new URL('./cli-preload.mjs', import.meta.url).href].filter(Boolean).join(' ');
     }
-    const worker = new Worker(cli ? entryPoint : workerURL, {
-      workerData: { entryPoint, workspace: body.workspace, moduleKind: body.moduleKind, arguments: body.arguments ?? [], environment: body.environment ?? {}, maximumOutputBytes: previewBytes },
+    const { port1, port2 } = new MessageChannel();
+    const commandDirectory = path.join(directory, 'commands');
+    await fs.mkdir(commandDirectory, { mode: 0o700 });
+    const commandBroker = new RuntimeCommandBroker({ directory: commandDirectory, port: port1, parentExecutionID: header.executionID });
+    job.commandBroker = commandBroker;
+    const startGate = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT);
+    let worker;
+    try { worker = new Worker(cli ? entryPoint : workerURL, {
+      workerData: { entryPoint, workspace: body.workspace, moduleKind: body.moduleKind, arguments: body.arguments ?? [], environment: body.environment ?? {}, maximumOutputBytes: previewBytes, commandPort: port2, commandDirectory, globalNodeModules: this.globalNodeModules, startGate },
       stdout: true, stderr: true, stdin: cli,
+      transferList: [port2],
       env: environment, argv: cli ? (body.arguments ?? []).map(String) : [],
       // Keep Node's FD tracking enabled. Disabling it would conceal ownership regressions.
-    });
+    }); } catch (error) { port2.close(); throw error; }
     job.worker = worker;
     header.state = 'running';
     for (const channel of ['stdout', 'stderr']) {
@@ -190,7 +212,7 @@ export class ExecutionJobs {
         input.pipe(worker.stdin);
       } else worker.stdin.end();
     }
-    job.cancel = async () => { await worker.terminate(); };
+    job.cancel = async () => { await commandBroker.cancel(); await worker.terminate(); };
     const deadline = timeout == null ? null : job.startedContinuous + timeout;
     const armDeadline = () => {
       const remaining = deadline - performance.now();
@@ -209,8 +231,15 @@ export class ExecutionJobs {
       if (header.cancellationRequested) void job.cancel();
     });
     await this.#persist(header);
+    if (header.cancellationRequested || didTimeOut) void job.cancel();
+    else { const state = new Int32Array(startGate); Atomics.store(state, 0, 1); Atomics.notify(state, 0); }
     const exitCode = await exited;
     clearTimeout(timer);
+    // A cancelled parent cannot report completion while a linked native command
+    // is still running. The app writes its durable response even after observer cancellation.
+    await commandBroker.cancel();
+    await commandBroker.drain();
+    job.commandBroker = null;
     await Promise.all(Object.values(streams).map(stream => finished(stream)));
     const wasCancelled = header.cancellationRequested;
     const failed = ioError || workerError || message?.type === 'failed' || exitCode !== 0;

@@ -196,6 +196,7 @@ actor ShellRuntimeService {
         environment: [String: String],
         allowNetwork: Bool,
         standardInput: Data = Data(),
+        standardInputURL: URL? = nil,
         id: UUID = UUID(),
         limits: RuntimeExecutionLimits = RuntimeExecutionLimits()
     ) async throws -> RuntimeExecutionResult {
@@ -249,7 +250,7 @@ actor ShellRuntimeService {
         do {
             return try await runCaptured(id: id, limits: limits) { directory, onStart in
                 try IOSSystemRunner.execute(tokens: tokens, workspace: scopedWorkspace,
-                    environment: environment, standardInput: standardInput, outputDirectory: directory,
+                    environment: environment, standardInput: standardInput, standardInputURL: standardInputURL, outputDirectory: directory,
                     maximumPreviewBytes: limits.maximumOutputBytes, onStart: onStart)
             }
         } catch {

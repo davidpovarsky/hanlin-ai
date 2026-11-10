@@ -134,6 +134,17 @@ const server = http.createServer(async (request, response) => {
         stopTracing();
       }
     }
+    const executionCommandFailure = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/commands\/([0-9a-f-]+)\/fail$/i);
+    if (request.method === 'POST' && executionCommandFailure) {
+      const body = await readJSON(request);
+      if (typeof body.error !== 'string') throw new Error('Missing adapter error.');
+      await executionJobs.failCommand(executionCommandFailure[1].toLowerCase(), executionCommandFailure[2].toLowerCase(), body.error);
+      return json(response, 200, { acknowledged: true });
+    }
+    const executionCommands = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/commands$/i);
+    if (request.method === 'GET' && executionCommands) {
+      return json(response, 200, await executionJobs.commandRequests(executionCommands[1].toLowerCase()));
+    }
     const executionPage = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/(stdout|stderr)$/i);
     if (request.method === 'GET' && executionPage) {
       const page = await executionJobs.readOutput(executionPage[1].toLowerCase(), executionPage[2], Number(url.searchParams.get('offset') ?? 0), Number(url.searchParams.get('limit') ?? 16_384));

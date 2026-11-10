@@ -134,6 +134,31 @@ struct RuntimeAutonomyV3Tests {
         } catch { }
     }
 
+    @Test(.timeLimit(.minutes(1)))
+    func portableShellDispatchesActualPythonNodeAndNativeBSDPipelineWithFullStreams() async throws {
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "mixed-command-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        try Data("""
+        import sys, os
+        assert sys.argv[0].endswith('transform.py')
+        assert sys.argv[1:] == ['argument with spaces', 'עברית']
+        assert os.environ['COMMAND_NAME'] == 'world'
+        sys.stdout.write(sys.stdin.read().replace('שלום', 'hello') + os.environ['COMMAND_NAME'] + '\\n')
+        """.utf8).write(to: workspace.appending(path: "transform.py"))
+        try Data("""
+        const assert = require('node:assert/strict');
+        assert.equal(require.main, module);
+        assert.equal(require('node:fs').readFileSync('result.txt','utf8'), 'hello\\nworld\\n');
+        console.log('ACTUAL_MIXED_COMMAND_PIPELINE_PASSED');
+        """.utf8).write(to: workspace.appending(path: "verify.cjs"))
+        let result = try await AppRuntimeCore.shared.node.executePortableShell(RuntimeExecutionRequest(
+            source: "echo שלום | python3 transform.py 'argument with spaces' עברית | cat > result.txt && node verify.cjs",
+            workspace: workspace, environment: ["COMMAND_NAME": "world"]))
+        #expect(result.exitCode == 0, "\(result.stderr)")
+        #expect(result.stdout.contains("ACTUAL_MIXED_COMMAND_PIPELINE_PASSED"))
+        #expect(try String(contentsOf: workspace.appending(path: "result.txt"), encoding: .utf8) == "hello\nworld\n")
+    }
+
     @MainActor private final class JobCapture { var id: UUID? }
 
     @Test(.timeLimit(.minutes(1)))
@@ -207,8 +232,9 @@ struct RuntimeAutonomyV3Tests {
         let payload = Data(String(repeating: "שלום 👨‍👩‍👧‍👦\n", count: 400_000).utf8)
         #expect(payload.count > 10 * 1024 * 1024)
         try payload.write(to: workspace.appending(path: "input.txt"))
-        let result = try await shell.execute(tokens: ["cat", "input.txt"], workspace: workspace,
-            environment: [:], allowNetwork: false, limits: .init(maximumOutputBytes: 17))
+        let result = try await shell.execute(tokens: ["cat"], workspace: workspace,
+            environment: [:], allowNetwork: false, standardInputURL: workspace.appending(path: "input.txt"),
+            limits: .init(maximumOutputBytes: 17))
         #expect(result.exitCode == 0 && result.outputWasTruncated)
         #expect(result.stdout.utf8.count <= 17 && !result.stdout.contains("�"))
         let artifact = try #require(result.outputFiles?["stdout"])
@@ -221,9 +247,11 @@ struct RuntimeAutonomyV3Tests {
         var offset: Int64 = 0
         while true {
             let page = try await reopened.output(id: result.executionID, kind: .shell, channel: "stdout", offset: offset, limit: 65533)
-            restored.append(try #require(Data(base64Encoded: try #require(page["base64"]))))
+            let base64 = try #require(page["base64"])
+            restored.append(try #require(Data(base64Encoded: base64)))
             if page["hasMore"] == "false" { break }
-            offset = try #require(Int64(try #require(page["nextOffset"])))
+            let nextOffset = try #require(page["nextOffset"])
+            offset = try #require(Int64(nextOffset))
         }
         #expect(restored == payload)
     }

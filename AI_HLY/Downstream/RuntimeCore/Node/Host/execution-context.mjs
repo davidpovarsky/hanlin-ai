@@ -3,7 +3,14 @@ import path from 'node:path';
 import { createRequire, syncBuiltinESMExports } from 'node:module';
 
 /** Per-Worker context: never change the process-wide C working directory. */
-export function configureExecutionContext({ entryPoint, workspace, arguments: argv, environment }, { setArguments = true } = {}) {
+export function configureExecutionContext({ entryPoint, workspace, arguments: argv, environment, commandPort, startGate }, { setArguments = true } = {}) {
+  commandPort?.unref();
+  if (startGate) {
+    const state = new Int32Array(startGate);
+    // Only the Worker waits. The shared Host first commits its running journal,
+    // then releases user code; an I/O failure cannot run unjournalled side effects.
+    while (Atomics.load(state, 0) === 0) Atomics.wait(state, 0, 0);
+  }
   globalThis.require = createRequire(entryPoint);
   globalThis.__filename = entryPoint;
   globalThis.__dirname = path.dirname(entryPoint);

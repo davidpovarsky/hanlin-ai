@@ -83,6 +83,7 @@ actor NodeRuntimeService {
 
     private let fileLayout: RuntimeFileLayout
     private let environmentStore: RuntimeEnvironmentStore?
+    private let commandDispatcher: RuntimeCommandDispatcher
     private struct LaunchContext: Sendable {
         let readyURL: URL
         let token: String
@@ -96,9 +97,10 @@ actor NodeRuntimeService {
     private var launchTask: Task<RuntimeHostConnection, Error>?
     private var verificationTask: Task<RuntimeHostConnection, Error>?
 
-    init(fileLayout: RuntimeFileLayout = .default, environment: RuntimeEnvironmentStore? = nil) {
+    init(fileLayout: RuntimeFileLayout = .default, environment: RuntimeEnvironmentStore? = nil, python: PythonRuntimeService? = nil, shell: ShellRuntimeService? = nil) {
         self.fileLayout = fileLayout
         self.environmentStore = environment
+        self.commandDispatcher = RuntimeCommandDispatcher(fileLayout: fileLayout, python: python, shell: shell)
     }
 
     func snapshot() -> RuntimeSnapshot { snapshotValue }
@@ -210,17 +212,42 @@ actor NodeRuntimeService {
         if let milliseconds { payload["timeoutMilliseconds"] = milliseconds }
         let body = try JSONSerialization.data(withJSONObject: payload)
         return try await withTaskCancellationHandler {
+            var commands: [UUID: Task<Void, Never>] = [:]
+            defer { for task in commands.values { task.cancel() } }
             var job: RuntimeJobSnapshot
             do {
                 job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions", method: "POST", body: body)
             } catch let error as URLError where [.timedOut, .networkConnectionLost].contains(error.code) {
                 // Recover observation of the same ID; never repeat the source after an ambiguous POST.
-                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions/\(request.id.uuidString.lowercased())")
+                job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(request.id.uuidString.lowercased())")
             }
             var delayMilliseconds = 25
             var lastProgress = ""
             while true {
                 try Task.checkCancellation()
+                let requests = try await observeJob([RuntimeCommandRequest].self, host: host,
+                    path: "/v1/executions/\(request.id.uuidString.lowercased())/commands")
+                for command in requests {
+                    guard command.parentExecutionID == request.id else { throw RuntimeCoreError.invalidIdentifier }
+                    if let active = commands[command.id] {
+                        if command.cancellationRequested { active.cancel() }
+                    } else {
+                        let dispatcher = commandDispatcher
+                        commands[command.id] = Task {
+                            do { try await dispatcher.execute(command, node: self) }
+                            catch {
+                                let message = error.localizedDescription
+                                // No cancelled observer or failed disk write may hide a
+                                // real adapter error or leave its parent waiting forever.
+                                await Task.detached {
+                                    let body = try? JSONSerialization.data(withJSONObject: ["error": message])
+                                    _ = try? await host.data(path: "/v1/executions/\(request.id.uuidString.lowercased())/commands/\(command.id.uuidString.lowercased())/fail", method: "POST", body: body)
+                                }.value
+                            }
+                        }
+                        delayMilliseconds = 25
+                    }
+                }
                 let progress = "\(job.state.rawValue):\(job.stdoutBytes):\(job.stderrBytes)"
                 if progress != lastProgress, let observer = RuntimeJobProgress.reporter {
                     await observer(job)
@@ -232,10 +259,26 @@ actor NodeRuntimeService {
                 }
                 try await Task.sleep(for: .milliseconds(delayMilliseconds))
                 delayMilliseconds = min(delayMilliseconds * 2, 1000)
-                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions/\(request.id.uuidString.lowercased())")
+                job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(request.id.uuidString.lowercased())")
             }
         } onCancel: {
             Task { await self.cancelExecution(id: request.id) }
+        }
+    }
+
+    private func observeJob<T: Decodable & Sendable>(_ type: T.Type, host: RuntimeHostConnection, path: String) async throws -> T {
+        var delay = 25
+        while true {
+            try Task.checkCancellation()
+            do { return try await host.decode(type, path: path) }
+            catch let error as URLError {
+                guard [.timedOut, .networkConnectionLost, .cannotConnectToHost, .notConnectedToInternet].contains(error.code),
+                      !NodeRuntimeBridge.didExit else { throw error }
+                // Observation may reconnect; source and command side effects are
+                // never resubmitted. Keep the command owner alive meanwhile.
+                try await Task.sleep(for: .milliseconds(delay))
+                delay = min(delay * 2, 1000)
+            }
         }
     }
 

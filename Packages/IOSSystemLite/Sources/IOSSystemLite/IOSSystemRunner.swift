@@ -285,6 +285,7 @@ public enum IOSSystemRunner {
         workspace: URL,
         environment: [String: String],
         standardInput: Data = Data(),
+        standardInputURL: URL? = nil,
         outputDirectory: URL? = nil,
         maximumPreviewBytes: Int? = nil,
         onStart: @Sendable () throws -> Void = {}
@@ -312,6 +313,7 @@ public enum IOSSystemRunner {
                 workspace: workspace,
                 environment: environment,
                 standardInput: standardInput,
+                standardInputURL: standardInputURL,
                 outputDirectory: outputDirectory,
                 maximumPreviewBytes: maximumPreviewBytes
             )
@@ -323,6 +325,7 @@ public enum IOSSystemRunner {
         workspace: URL,
         environment: [String: String],
         standardInput: Data = Data(),
+        standardInputURL: URL? = nil,
         outputDirectory: URL? = nil,
         maximumPreviewBytes: Int? = nil,
         onStart: @Sendable () throws -> Void = {}
@@ -352,24 +355,8 @@ public enum IOSSystemRunner {
 
             let capture = try OutputCapture(directory: outputDirectory)
             let output = capture.stdout, error = capture.stderr
-            guard let input = tmpfile() else {
-                throw NSError(
-                    domain: "IOSSystemLite",
-                    code: 3,
-                    userInfo: [NSLocalizedDescriptionKey: "Could not allocate command streams."]
-                )
-            }
-            defer {
-                fclose(input)
-            }
-            if !standardInput.isEmpty {
-                standardInput.withUnsafeBytes { bytes in
-                    if let baseAddress = bytes.baseAddress {
-                        fwrite(baseAddress, 1, bytes.count, input)
-                    }
-                }
-                rewind(input)
-            }
+            let input = try openInput(standardInput, url: standardInputURL)
+            defer { fclose(input) }
             hanlin_ios_system_set_streams(input, output, error)
             let status = command.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
             guard fflush(output) == 0, fflush(error) == 0, ferror(output) == 0, ferror(error) == 0 else {
@@ -575,6 +562,7 @@ public enum IOSSystemRunner {
         workspace: URL,
         environment: [String: String],
         standardInput: Data,
+        standardInputURL: URL?,
         outputDirectory: URL?,
         maximumPreviewBytes: Int?
     ) throws -> IOSSystemExecution {
@@ -600,24 +588,8 @@ public enum IOSSystemRunner {
 
         let capture = try OutputCapture(directory: outputDirectory)
         let output = capture.stdout, error = capture.stderr
-        guard let input = tmpfile() else {
-            throw NSError(
-                domain: "IOSSystemLite",
-                code: 3,
-                userInfo: [NSLocalizedDescriptionKey: "Could not allocate command streams."]
-            )
-        }
-        defer {
-            fclose(input)
-        }
-        if !standardInput.isEmpty {
-            standardInput.withUnsafeBytes { bytes in
-                if let baseAddress = bytes.baseAddress {
-                    fwrite(baseAddress, 1, bytes.count, input)
-                }
-            }
-            rewind(input)
-        }
+        let input = try openInput(standardInput, url: standardInputURL)
+        defer { fclose(input) }
         hanlin_ios_system_set_streams(input, output, error)
         let rendered = tokens.map(shellEscape).joined(separator: " ")
         let status = rendered.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
@@ -629,6 +601,25 @@ public enum IOSSystemRunner {
         let stderr = try read(error, maximumBytes: stderrBudget)
         return IOSSystemExecution(stdout: stdout, stderr: stderr, exitCode: Int32(status),
             stdoutFileURL: capture.stdoutURL, stderrFileURL: capture.stderrURL)
+    }
+
+    private static func openInput(_ data: Data, url: URL?) throws -> UnsafeMutablePointer<FILE> {
+        if let url {
+            guard let input = url.path.withCString({ fopen($0, "rb") }) else {
+                throw POSIXError(.init(rawValue: errno) ?? .EIO)
+            }
+            return input
+        }
+        guard let input = tmpfile() else { throw POSIXError(.init(rawValue: errno) ?? .EIO) }
+        do {
+            if !data.isEmpty {
+                let written = data.withUnsafeBytes { bytes in fwrite(bytes.baseAddress, 1, bytes.count, input) }
+                guard written == data.count, ferror(input) == 0, fseek(input, 0, SEEK_SET) == 0 else {
+                    throw POSIXError(.init(rawValue: errno) ?? .EIO)
+                }
+            }
+            return input
+        } catch { fclose(input); throw error }
     }
 
     private static func shellEscape(_ value: String) -> String {
