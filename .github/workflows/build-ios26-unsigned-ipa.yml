@@ -3,6 +3,11 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
+      runtime_job_foundation_only:
+        description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
+        required: false
+        default: false
+        type: boolean
       scripting_package_test_filter:
         description: Explicit affected Swift package suite regex; invokes the existing isolated validation workflow
         required: false
@@ -107,7 +112,7 @@ concurrency:
 
 jobs:
   plan-affected-validation:
-    if: ${{ !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
+    if: ${{ !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -2906,11 +2911,12 @@ jobs:
 
 
   focused-scripting-package-tests:
-    if: ${{ !inputs.testflight_upload && inputs.scripting_package_test_filter != '' }}
+    if: ${{ !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}
     uses: ./.github/workflows/validate-scripting-runtime.yml
     with:
       test_filter: ${{ inputs.scripting_package_test_filter }}
       force_clean_build: ${{ inputs.force_clean_build }}
+      runtime_job_foundation_only: ${{ inputs.runtime_job_foundation_only }}
     secrets: inherit
 
   upload-chavrusachat-to-testflight:
