@@ -14,6 +14,8 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Discoveries & Tips
 
+- **2026-11-10 signed Runtime provenance:** TestFlight 93401 consumes the same checksum-pinned private Runtime run as SDK verification, passed through the parent and signing workflows. Check the exported Node image UUID rather than its entire file hash across signing; separately compare packaged manifest and Host ZIP. Normal upload now reuses the existing internal audience and requires IN_BETA_TESTING, avoiding an availability gap after a successful upload. Signed run 42728397166 passed these checks.
+
 - **2026-11-10 measured native cache reuse:** Run42687189577 restored the exact prior Simulator cache but reused only692/4,758 objects (14.54%), with1,231 local cleanups at a3GB limit. A cache-restoration hit is not evidence that the compile is mostly reused. Profile miss reasons and the active working set before changing cache keys/capacity; preserve compiler/SDK/architecture identity. Both complete native slices passed; this is a future performance opportunity, not a missing functional verification.
 
 - **2026-11-09 cold Node compilation budget:** Native attempt 42656650497 compiled 4,758 host/target objects but hit the heartbeat wrapper's 10,800-second deadline during final linking work. This was a timeout, not a compiler or embedded-smoke failure. The compiler now has four hours within a 270-minute job; retain an independent cleanup margin so failed attempts preserve compiler evidence and compatible content-validated objects. A saved cache is not a completed native slice or proof of FD repair.

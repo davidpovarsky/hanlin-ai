@@ -6,6 +6,8 @@ Owner approved the ordered plan on 2026-11-08, including necessary infrastructur
 Base: `507cd0409e722d933e7fd568a24b4221a7a5d346` (Pass 7).
 Branch: `fix/hanlin-approved-plan-20261108`.
 
+Current signed delivery: **0.7.3 (93401), IN_BETA_TESTING**, including Runtime. [Delivery evidence](TESTFLIGHT_93401_DELIVERY.md). Physical acceptance remains OPEN.
+
 ## Current acceptance state
 
 | Scope | Executed evidence | Remaining acceptance |
@@ -15,7 +17,7 @@ Branch: `fix/hanlin-approved-plan-20261108`.
 | Compact/wide management | Both navigation/draft-preservation cases passed in `42515491917` | Physical compact iPad acceptance |
 | All Models | `42564203291` at `f60489b5`: all 11 model cases and three UI cases passed; recorded intermediate opening/forward/reverse/reopen frames reviewed without the prior overlap/clipping | Simulator motion accepted; signed physical iPad acceptance remains OPEN |
 | Expo scheduler/lifecycle | Three fixture-staged Expo UI cases passed in `42533011298` at `c423c7f4` | Physical Hermes/lifecycle acceptance |
-| Runtime policy / Node HTTPS | Native run `42687189577`: both slices and 128-cycle FD/Host smoke passed, zero FD warnings. Final app `42715548913` at `5c656fdb`: eight actual unit methods/two suites (canonical Skill: three cases) and all four selected UI methods passed with the verified new binary | Physical iPad HTTPS/true suspension/FD acceptance remains OPEN; TestFlight 91801 predates Runtime fixes |
+| Runtime policy / Node HTTPS | Native run `42687189577`: both slices and 128-cycle FD/Host smoke passed, zero FD warnings. Final app `42715548913` at `5c656fdb`: eight actual unit methods/two suites (canonical Skill: three cases) and all four selected UI methods passed with the verified new binary | Physical iPad HTTPS/true suspension/FD acceptance remains OPEN; TestFlight 93401 now includes Runtime |
 | Native widget engines/actions | Implemented engines and package-level evidence | Actual Home Screen instance/action acceptance remains open |
 | Shared chat / Translation / Shortcuts | Approved subsequent scope | Implementation and acceptance still pending |
 
@@ -353,3 +355,6 @@ Runtime implementation and selected Apple SDK integration are VERIFIED. Unrelate
 Propagate the existing optional private Runtime candidate input into the signed workflow, keeping the checksum/provenance checks and verified archive bytes. No native rebuild or separate Runtime release is needed for this delivery. The final exported IPA must match the prepared Node image UUID, Runtime manifest and Host ZIP hash; full-file Mach-O hashes cannot be compared across code signing. Existing app/four-extension signature/profile/App Group/iCloud/privacy checks remain mandatory. Reuse the existing internal audience from build 91801 and verify IN_BETA_TESTING after upload, without adding testers or groups. Existing Apple identity and signing secrets remain unchanged.
 
 Preflight: all 11 existing TestFlight readiness/audience regressions passed (0.505s); workflow YAML/caller input contract, 16 Bash blocks and the inline Python guard parse successfully. Only secret names were inspected. Signed build, Apple processing, final Runtime inclusion and audience readiness remain pending until their actual workflow/API evidence.
+
+
+[תומר | INT] [MAIN_SESSION] Delivery result: [42728397166](https://github.com/davidpovarsky/hanlin-ai/actions/runs/42728397166) at `7fa8fe26` completed SUCCESS (56m17s). **0.7.3 (93401)** is Apple `VALID` / `IN_BETA_TESTING` for the existing internal group copied from 91801. The exported IPA passed app/four-extension signing, App Group/privacy checks, Node UUID identity, exact Runtime manifest and production Host ZIP identity. Source, uploaded IPA SHA and Apple build ID are recorded in [TESTFLIGHT_93401_DELIVERY.md](TESTFLIGHT_93401_DELIVERY.md). This closes delivery, not physical iPad acceptance. No main merge/public release.
