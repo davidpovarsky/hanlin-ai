@@ -52,7 +52,9 @@ export async function planLifecycleTree(tree,{identity,includeRoot=false,rootCon
   const root=await fs.realpath(tree.path);
   const lock=JSON.parse(await fs.readFile(path.join(root,'package-lock.json'),'utf8'));
   const entries=[],seen=new Set();
-  const queue=[...(includeRoot?[tree]:[]),...tree.children.values()];
+  const rootNode=tree.isLink?tree.target:tree;
+  if(!rootNode)throw new Error('The installed tree root link has no target.');
+  const queue=[...(includeRoot?[tree]:[]),...rootNode.children.values()];
   for(let index=0;index<queue.length;index++) {
     const node=queue[index],target=node.isLink?node.target:node;
     if(!target)throw new Error('An installed package link has no target.');

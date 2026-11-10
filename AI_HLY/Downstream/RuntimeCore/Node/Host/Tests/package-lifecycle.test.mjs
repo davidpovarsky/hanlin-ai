@@ -42,6 +42,12 @@ test('actual Arborist tree plans dependency phases, root project phases and skip
     ...Object.keys(rootScripts).map(event=>['project',event]),
   ]);
   assert.deepEqual(await verifyLifecyclePlan(root,plan),{verified:true});
+  const alias=path.join(root,'project-alias');
+  await fs.symlink(root,alias,process.platform==='win32'?'junction':'dir');
+  const linkedTree=await new Arborist({path:alias}).loadActual();
+  assert.equal(linkedTree.isLink,true,'Exercise the real Arborist Link root used by macOS temporary-directory aliases');
+  const linkedPlan=await planLifecycleTree(linkedTree);
+  assert.deepEqual(linkedPlan.actions.map(item=>[item.packageName,item.script]),plan.actions.slice(0,5).map(item=>[item.packageName,item.script]));
   const unchanged=await planLifecycleTree(tree,{previousPackages:packages});
   assert.equal(unchanged.actions.length,0);
   const modified=structuredClone(plan);modified.actions[0].source='echo changed';
