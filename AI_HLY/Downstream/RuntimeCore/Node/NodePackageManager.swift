@@ -19,13 +19,15 @@ struct LifecycleExecutionPlan: Codable, Hashable, Sendable {
         let packageVersion: String?
         let packageIntegrity: String?
         let sourceOrigin: String?
+        let optional: Bool?
 
         init(script: String, kind: String, command: String?, arguments: [String], source: String? = nil,
              workingDirectory: String? = nil, packageName: String? = nil, packageVersion: String? = nil,
-             packageIntegrity: String? = nil, sourceOrigin: String? = nil) {
+             packageIntegrity: String? = nil, sourceOrigin: String? = nil, optional: Bool? = nil) {
             self.script = script; self.kind = kind; self.command = command; self.arguments = arguments
             self.source = source; self.workingDirectory = workingDirectory; self.packageName = packageName
             self.packageVersion = packageVersion; self.packageIntegrity = packageIntegrity; self.sourceOrigin = sourceOrigin
+            self.optional = optional
         }
     }
     struct Rejection: Codable, Hashable, Sendable { let script: String; let reason: String }

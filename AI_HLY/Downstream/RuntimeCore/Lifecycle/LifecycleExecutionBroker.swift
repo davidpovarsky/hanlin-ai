@@ -1,6 +1,13 @@
 import CryptoKit
 import Foundation
 
+struct RuntimeLifecycleCommandFailure: LocalizedError, Sendable {
+    let executionID: UUID
+    let exitCode: Int
+    let diagnostic: String
+    var errorDescription: String? { diagnostic }
+}
+
 struct LifecycleApprovalRecord: Codable, Hashable, Sendable, Identifiable {
     var id: String { approvalKey }
     let packageName: String
@@ -87,34 +94,49 @@ actor LifecycleExecutionBroker {
         }
         let workspace = try fileLayout.validatedWorkspace(packageRoot)
         if plan.schemaVersion == 2 { try await node.verifyLifecyclePlan(plan, workspace: workspace) }
+        var omitted: Set<String> = []
         for action in plan.actions {
+            if let directory = action.workingDirectory, omitted.contains(directory) { continue }
             try Task.checkCancellation()
-            switch action.kind {
-            case "portableShell":
-                guard let source = action.source else { throw RuntimeCoreError.invalidRequest("Lifecycle script source is missing.") }
-                let directory = try fileLayout.validatedDescendant(workspace.appending(path: action.workingDirectory ?? "."), of: workspace, allowRoot: true)
-                let result = try await node.executePortableShell(RuntimeExecutionRequest(source: source, workspace: directory),
-                    lifecycle: RuntimeLifecycleContext(packageName: action.packageName ?? plan.packageName,
-                        packageVersion: action.packageVersion ?? plan.packageVersion, event: action.script, initialCwd: workspace.path))
-                if result.wasCancelled { throw CancellationError() }
-                guard result.exitCode == 0, !result.didTimeOut else {
-                    throw RuntimeCoreError.runtimeFailure("Lifecycle \(action.script) exited with status \(result.exitCode ?? 1). \(result.stderr)")
+            do {
+                switch action.kind {
+                case "portableShell":
+                    guard let source = action.source else { throw RuntimeCoreError.invalidRequest("Lifecycle script source is missing.") }
+                    let directory = try fileLayout.validatedDescendant(workspace.appending(path: action.workingDirectory ?? "."), of: workspace, allowRoot: true)
+                    let result = try await node.executePortableShell(RuntimeExecutionRequest(source: source, workspace: directory),
+                        lifecycle: RuntimeLifecycleContext(packageName: action.packageName ?? plan.packageName,
+                            packageVersion: action.packageVersion ?? plan.packageVersion, event: action.script, initialCwd: workspace.path))
+                    if result.wasCancelled { throw CancellationError() }
+                    guard result.exitCode == 0, !result.didTimeOut else {
+                        guard let code = result.exitCode, code != 0, !result.didTimeOut else {
+                            throw RuntimeCoreError.runtimeFailure(result.stderr)
+                        }
+                        throw RuntimeLifecycleCommandFailure(executionID: result.executionID, exitCode: code,
+                            diagnostic: "Lifecycle \(action.script) exited with status \(code). \(result.stderr)")
+                    }
+                case "node":
+                    try await executeNode(action, workspace: workspace)
+                case "typescript":
+                    let result = try await typeScript.compileProject(workspace: workspace, arguments: action.arguments)
+                    guard result.succeeded else {
+                        throw RuntimeCoreError.runtimeFailure(result.diagnostics.map(\.message).joined(separator: "\n"))
+                    }
+                case "python":
+                    try await executePython(action, workspace: workspace)
+                case "fileUtility":
+                    guard let command = action.command else { throw RuntimeCoreError.invalidRequest("Lifecycle file utility is missing its command.") }
+                    let result = try await shell.execute(tokens: [command] + action.arguments, workspace: workspace, environment: [:], allowNetwork: false)
+                    guard result.exitCode == 0 else { throw RuntimeCoreError.runtimeFailure(result.stderr) }
+                default:
+                    throw RuntimeCoreError.invalidRequest("Unsupported lifecycle action kind: \(action.kind)")
                 }
-            case "node":
-                try await executeNode(action, workspace: workspace)
-            case "typescript":
-                let result = try await typeScript.compileProject(workspace: workspace, arguments: action.arguments)
-                guard result.succeeded else {
-                    throw RuntimeCoreError.runtimeFailure(result.diagnostics.map(\.message).joined(separator: "\n"))
-                }
-            case "python":
-                try await executePython(action, workspace: workspace)
-            case "fileUtility":
-                guard let command = action.command else { throw RuntimeCoreError.invalidRequest("Lifecycle file utility is missing its command.") }
-                let result = try await shell.execute(tokens: [command] + action.arguments, workspace: workspace, environment: [:], allowNetwork: false)
-                guard result.exitCode == 0 else { throw RuntimeCoreError.runtimeFailure(result.stderr) }
-            default:
-                throw RuntimeCoreError.invalidRequest("Unsupported lifecycle action kind: \(action.kind)")
+            } catch {
+                try Task.checkCancellation()
+                if error is CancellationError || error is RuntimeJobInterruptionError { throw error }
+                guard action.optional == true, let failure = error as? RuntimeLifecycleCommandFailure else { throw error }
+                let removed = try await node.pruneOptionalLifecycleFailure(plan, action: action,
+                    workspace: workspace, failure: failure)
+                omitted.formUnion(removed)
             }
         }
     }

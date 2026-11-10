@@ -251,7 +251,7 @@ const server = http.createServer(async (request, response) => {
             entryPointOverride: body.entryPointOverride,
             arguments: body.arguments,
             signal,
-            executeLifecycle: options=>executeLifecycleInJobs({...options,jobs:executionJobs,
+            executeLifecycle: options=>executeLifecycleInJobs({...options,jobs:executionJobs,runtimeRoot:root,
               onProgress: detail=>{
                 progress({operationID:body.operationID,phase:'installingDependencies',fraction:0.68,lifecycle:detail});
               }}),

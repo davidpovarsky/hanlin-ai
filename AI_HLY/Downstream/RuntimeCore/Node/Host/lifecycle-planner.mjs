@@ -7,9 +7,9 @@ const installEvents=['preinstall','install','postinstall'];
 const projectEvents=[...installEvents,'prepublish','preprepare','prepare','postprepare'];
 const eventsFor=context=>context==='project'?projectEvents:context==='link'?['preinstall','prepare','install','postinstall']:installEvents;
 
-function action(manifest,integrity,event,source,directory='.',origin='manifest') {
+function action(manifest,integrity,event,source,directory='.',origin='manifest',optional=false) {
   return {script:event,kind:'portableShell',command:null,arguments:[],source,workingDirectory:directory,
-    packageName:manifest.name,packageVersion:manifest.version,packageIntegrity:integrity??null,sourceOrigin:origin};
+    packageName:manifest.name,packageVersion:manifest.version,packageIntegrity:integrity??null,sourceOrigin:origin,optional};
 }
 function actionsFor(entry,events,rejected) {
   const actions=[];
@@ -18,9 +18,14 @@ function actionsFor(entry,events,rejected) {
     if(source==null)continue;
     if(typeof source!=='string') {rejected.push({script:event,reason:'npm lifecycle scripts must be strings.'});continue;}
     try {validatePortableShell(source);}
-    catch(error){rejected.push({script:event,reason:String(error.message??error)});continue;}
+    catch(error){
+      // npm treats an optional dependency's failed build as an omission. Run
+      // its original source in the same job so the real parser failure/output
+      // is journaled, then use the verified optional graph to prune it.
+      if(entry.optional!==true){rejected.push({script:event,reason:String(error.message??error)});continue;}
+    }
     actions.push(action(entry.manifest,entry.integrity,event,source,entry.directory,
-      entry.implicitInstall&&event==='install'?'node-gyp-default':'manifest'));
+      entry.implicitInstall&&event==='install'?'node-gyp-default':'manifest',entry.optional??false));
   }
   return actions;
 }
@@ -30,7 +35,8 @@ export function lifecycleFingerprint(plan) {
     actions:plan.actions.map(item=>({script:item.script,kind:item.kind,command:item.command??null,
       arguments:item.arguments??[],source:item.source??null,workingDirectory:item.workingDirectory??'.',
       packageName:item.packageName??null,packageVersion:item.packageVersion??null,
-      packageIntegrity:item.packageIntegrity??null,sourceOrigin:item.sourceOrigin??'manifest'}))};
+      packageIntegrity:item.packageIntegrity??null,sourceOrigin:item.sourceOrigin??'manifest',
+      ...(item.optional===undefined||item.optional===null?{}:{optional:item.optional})}))};
   return createHash('sha256').update(JSON.stringify(identity)).digest('hex');
 }
 function finish(manifest,integrity,context,actions,rejected) {
@@ -75,6 +81,7 @@ export async function planLifecycleTree(tree,{identity,includeRoot=false,rootCon
     const unchanged=previousPackages[key] && JSON.stringify(previousPackages[key])===JSON.stringify(lock.packages?.[key]);
     if(!unchanged)entries.push({manifest,scripts,directory:key||'.',integrity:node===tree?identity?.integrity:lock.packages?.[key]?.integrity??null,
       context:node===tree?rootContext:node.isLink?'link':'registry',implicitInstall,root:node===tree,
+      optional:node!==tree&&node.optional===true,
       depth:key.split('/').filter(part=>part==='node_modules').length});
     queue.push(...target.children.values());
   }
@@ -97,6 +104,7 @@ export async function planLifecycleTree(tree,{identity,includeRoot=false,rootCon
 export async function verifyLifecyclePlan(packageRoot,plan) {
   if(plan.schemaVersion!==2||plan.scriptHash!==lifecycleFingerprint(plan))throw new Error('Lifecycle plan identity changed.');
   const root=await fs.realpath(packageRoot);
+  let optionalTree;
   for(const item of plan.actions) {
     if(item.kind!=='portableShell'||typeof item.source!=='string')throw new Error('Unsupported lifecycle plan action.');
     const directory=await fs.realpath(path.resolve(root,item.workingDirectory??'.'));
@@ -107,7 +115,13 @@ export async function verifyLifecyclePlan(packageRoot,plan) {
     if(item.sourceOrigin==='node-gyp-default') {
       if(manifest.scripts?.preinstall||manifest.scripts?.install||item.source!=='node-gyp rebuild'||!(await fs.stat(path.join(directory,'binding.gyp'))).isFile())throw new Error('Native build lifecycle identity changed.');
     } else if(manifest.scripts?.[item.script]!==item.source)throw new Error('Lifecycle script changed after staging.');
-    validatePortableShell(item.source);
+    try {validatePortableShell(item.source);}
+    catch(error) {
+      if(item.optional!==true)throw error;
+      const {default:Arborist}=await import('@npmcli/arborist');
+      optionalTree??=await new Arborist({path:root,ignoreScripts:true}).loadActual();
+      if(![...optionalTree.inventory.values()].some(node=>node.optional===true&&path.resolve(node.realpath)===directory))throw error;
+    }
   }
   return {verified:true};
 }

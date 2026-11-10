@@ -475,6 +475,28 @@ actor NodeRuntimeService {
 
     /// Package extraction/resolution is an ordinary durable Node job, without
     /// an HTTP installation deadline. Publishing remains atomic in the Host.
+    func pruneOptionalLifecycleFailure(_ plan: LifecycleExecutionPlan, action: LifecycleExecutionPlan.Action,
+                                      workspace: URL, failure: RuntimeLifecycleCommandFailure) async throws -> [String] {
+        let moduleURL = try prepareHostRuntime().appending(path: "optional-lifecycle.mjs")
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let encodedPlan = String(decoding: try JSONEncoder().encode(plan), as: UTF8.self)
+        let encodedAction = String(decoding: try JSONEncoder().encode(action), as: UTF8.self)
+        let source = """
+        import {pruneOptionalLifecycleFailure} from \(try literal(moduleURL.absoluteString));
+        const result = await pruneOptionalLifecycleFailure({runtimeRoot: \(try literal(fileLayout.root.path)),
+          packageRoot: \(try literal(workspace.path)), plan: \(encodedPlan), action: \(encodedAction),
+          error: {message: \(try literal(failure.diagnostic)), executionID: \(try literal(failure.executionID.uuidString.lowercased())), exitCode: \(failure.exitCode)}});
+        console.log(JSON.stringify(result.receipt));
+        export default result.omittedDirectories;
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, !result.didTimeOut, let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure(result.stderr)
+        }
+        return try JSONDecoder().decode([String].self, from: JSONEncoder().encode(value))
+    }
+
     func stageNodePackage<T: Decodable & Sendable>(_ type: T.Type, removing: Bool = false, body: Data) async throws -> T {
         let moduleURL = try prepareHostRuntime().appending(path: "global-package-manager.mjs")
         let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)

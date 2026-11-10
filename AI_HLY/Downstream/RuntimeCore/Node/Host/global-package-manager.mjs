@@ -5,6 +5,7 @@ import pacote from 'pacote';
 import semver from 'semver';
 import { inspectArchiveSafety, inspectManifest, mergeCompatibilityReports } from './package-compatibility.mjs';
 import { planLifecycle, planLifecycleTree, verifyLifecyclePlan } from './lifecycle-planner.mjs';
+import {prepareOptionalBuildRetry} from './optional-lifecycle.mjs';
 import { currentGlobalState, prepareGlobalTransaction, saveGlobalTransaction, loadGlobalTransaction,
   transactionRoot, publishGlobalTransaction, discardGlobalTransaction } from './global-package-state.mjs';
 
@@ -41,6 +42,7 @@ export async function stageGlobalPackage({ root, name, version, registry }) {
   try {
   const current = await readManifest(staging);
   const previousPackages=(await readLock(staging)).packages??{};
+  await prepareOptionalBuildRetry(staging,previousPackages);
   const next = { name: 'hanlin-global-packages', private: true, version: '1.0.0', dependencies: { ...(current.dependencies ?? {}), [resolved.manifest.name]: resolved.manifest.version } };
   await fs.writeFile(path.join(staging, 'package.json'), JSON.stringify(next, null, 2));
   const arborist = new Arborist({ path: staging, cache, registry, ignoreScripts: true, audit: false, fund: false });
@@ -88,6 +90,7 @@ export async function stageUninstallGlobalPackage({ root, name }) {
   try {
   const current = await readManifest(staging);
   const previousPackages=(await readLock(staging)).packages??{};
+  await prepareOptionalBuildRetry(staging,previousPackages);
   const dependencies = { ...(current.dependencies ?? {}) };
   delete dependencies[name];
   await fs.writeFile(path.join(staging, 'package.json'), JSON.stringify({ name: 'hanlin-global-packages', private: true, version: '1.0.0', dependencies }, null, 2));

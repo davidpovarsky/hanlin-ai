@@ -230,6 +230,64 @@ struct RuntimeAutonomyV3Tests {
         #expect(try String(contentsOf: root.appending(path: "actual-cli-invocation"), encoding: .utf8) == "actual-argument")
     }
 
+    @Test(.timeLimit(.minutes(2)))
+    func actualOptionalLifecycleFailureKeepsRequiredNativeBuildsAndFailedJobEvidence() async throws {
+        let core = AppRuntimeCore.shared
+        _ = try await core.node.ensureRunning()
+        let id = UUID().uuidString.lowercased()
+        // An isolated private transaction. No copy or publication of the real
+        // npm registry and no second runtime. Its base cannot be committed.
+        let root = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "npm-lifecycle-\(id)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let manifest: [String: Any] = ["name": "native-optional-proof", "version": "1.0.0",
+            "dependencies": ["required": "1.0.0"], "optionalDependencies": ["optional-bad": "1.0.0"]]
+        try JSONSerialization.data(withJSONObject: manifest).write(to: root.appending(path: "package.json"))
+        var packages: [String: Any] = ["": manifest]
+        for (name, script) in [("required", "python3 build.py"), ("optional-bad", "node phase.cjs")] {
+            let directory = root.appending(path: "node_modules/\(name)", directoryHint: .isDirectory)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let package: [String: Any] = ["name": name, "version": "1.0.0", "scripts": ["install": script]]
+            try JSONSerialization.data(withJSONObject: package).write(to: directory.appending(path: "package.json"))
+            packages["node_modules/\(name)"] = package
+        }
+        try Data("console.log('actual optional native output');process.exit(23);".utf8)
+            .write(to: root.appending(path: "node_modules/optional-bad/phase.cjs"))
+        try Data("from pathlib import Path; Path('built.txt').write_text('required native build שלום', encoding='utf-8')".utf8)
+            .write(to: root.appending(path: "node_modules/required/build.py"))
+        try JSONSerialization.data(withJSONObject: ["lockfileVersion": 3, "packages": packages])
+            .write(to: root.appending(path: "package-lock.json"))
+        let archive = try #require(Bundle.main.url(forResource: "RuntimeHostResources", withExtension: "zip"))
+        let digest = SHA256.hash(data: try Data(contentsOf: archive)).map { String(format: "%02x", $0) }.joined()
+        let host = RuntimeFileLayout.default.nodeRuntime.appending(path: "host-\(digest)", directoryHint: .isDirectory)
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let setup = try await core.node.executeJavaScript(RuntimeExecutionRequest(source: """
+            import {createRequire} from 'node:module';
+            import {planLifecycleTree} from \(try literal(host.appending(path: "lifecycle-planner.mjs").absoluteString));
+            const Arborist=createRequire(\(try literal(host.appending(path: "package.json").path)))('@npmcli/arborist');
+            const tree=await new Arborist({path:process.cwd(),ignoreScripts:true}).loadActual();
+            export default await planLifecycleTree(tree);
+            """, workspace: root), moduleKind: "esm")
+        #expect(setup.exitCode == 0, "\(setup.stderr)")
+        let planValue = try #require(setup.value)
+        let planData = try JSONEncoder().encode(planValue)
+        let plan = try JSONDecoder().decode(LifecycleExecutionPlan.self, from: planData)
+        #expect(plan.actions.first { $0.packageName == "optional-bad" }?.optional == true)
+        try JSONSerialization.data(withJSONObject: ["transactionID": id, "directory": root.path,
+            "baseRevision": "non-publishable-native-fixture", "plan": try JSONSerialization.jsonObject(with: planData)])
+            .write(to: root.appending(path: ".hanlin-package-transaction.json"))
+        try await core.lifecycle.execute(plan, packageRoot: root)
+        #expect(!FileManager.default.fileExists(atPath: root.appending(path: "node_modules/optional-bad").path))
+        #expect(try String(contentsOf: root.appending(path: "node_modules/required/built.txt"), encoding: .utf8) == "required native build שלום")
+        let receipt = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: root.appending(path: ".hanlin-optional-build-failures.json"))) as? [String: Any])
+        let failures = try #require(receipt["failures"] as? [[String: Any]])
+        let failedID = try #require(failures.first?["executionID"] as? String)
+        let failedUUID = try #require(UUID(uuidString: failedID))
+        let saved = try await core.node.existingExecution(id: failedUUID)
+        let journal = try #require(saved)
+        #expect(journal.state == .failed && journal.result?.exitCode == 23)
+        #expect(journal.result?.stdout.contains("actual optional native output") == true)
+    }
+
     @Test(.timeLimit(.minutes(1)))
     func cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "python-queue-\(UUID().uuidString)")
