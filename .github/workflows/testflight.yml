@@ -14,6 +14,10 @@ on:
         required: false
         default: ''
         type: string
+      runtime_bundle_artifact_run_id:
+        required: false
+        default: ''
+        type: string
   workflow_dispatch:
     inputs:
       upload_to_testflight:
@@ -27,7 +31,12 @@ on:
         default: ''
         type: string
       audience_source_build:
-        description: Previous build whose internal groups should receive the existing build
+        description: Previous build whose internal groups should receive the uploaded build
+        required: false
+        default: ''
+        type: string
+      runtime_bundle_artifact_run_id:
+        description: Completed verified Runtime candidate to include without release publication
         required: false
         default: ''
         type: string
@@ -144,6 +153,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euo pipefail
           cat > Config.xcconfig <<'EOF'
@@ -453,6 +463,8 @@ jobs:
           github_token: ${{ github.token }}
       - name: Verify archive, signatures, profiles, and entitlements
         shell: bash
+        env:
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -Eeuo pipefail
           verify_dir="$RUNNER_TEMP/verify-ipa"
@@ -542,6 +554,44 @@ jobs:
               ! grep -Eqw 'arm64e|i386|x86_64' <<< "$archs"
             done
 
+          # Signing changes binary bytes, but preserves the linked image UUID.
+          source_node="Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64/NodeMobile.framework/NodeMobile"
+          packaged_node="$app/Frameworks/NodeMobile.framework/NodeMobile"
+          xcrun dwarfdump --uuid "$source_node" | awk '/^UUID:/ {print $2, $3}' > "$BUILD_DIR/logs/node-source-uuid.txt"
+          xcrun dwarfdump --uuid "$packaged_node" | awk '/^UUID:/ {print $2, $3}' > "$BUILD_DIR/logs/node-packaged-uuid.txt"
+          test -s "$BUILD_DIR/logs/node-source-uuid.txt"
+          cmp "$BUILD_DIR/logs/node-source-uuid.txt" "$BUILD_DIR/logs/node-packaged-uuid.txt"
+          python3 - "$app" <<'PY'
+          import hashlib, json, os, sys
+          from pathlib import Path
+          expected = json.loads(Path("AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json").read_text())
+          packaged = json.loads((Path(sys.argv[1]) / "RuntimeManifest.json").read_text())
+          if packaged != expected:
+              raise SystemExit("Packaged Runtime manifest does not match the verified build input")
+          def sha256(path):
+              checksum = hashlib.sha256()
+              with path.open("rb") as stream:
+                  for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                      checksum.update(chunk)
+              return checksum.hexdigest()
+          host_hash = sha256(Path("AI_HLY/RuntimeHostResources.zip"))
+          if sha256(Path(sys.argv[1]) / "RuntimeHostResources.zip") != host_hash:
+              raise SystemExit("Packaged Runtime Host archive does not match the verified build input")
+          lock = json.loads(Path("RuntimeDependencies.lock.json").read_text())
+          logs = Path(os.environ["BUILD_DIR"]) / "logs"
+          evidence = {
+              "sourceSHA": os.environ["GITHUB_SHA"],
+              "runtimeBundleArtifactRunID": os.environ["RUNTIME_CORE_ARTIFACT_RUN_ID"],
+              "runtimeBundleSha256": lock["runtimeBundle"]["sha256"],
+              "nodeXCFrameworkSha256": lock["node"]["xcframeworkSha256"],
+              "nodeImageUUIDs": (logs / "node-packaged-uuid.txt").read_text().splitlines(),
+              "runtimeHostArchiveSha256": host_hash,
+              "packagedManifestMatches": True,
+          }
+          (logs / "runtime-distribution.json").write_text(json.dumps(evidence, indent=2) + "\n")
+          print("Verified packaged Node image UUID and Runtime manifest")
+          PY
+
           main_entitlements="$BUILD_DIR/logs/main-signed-entitlements.plist"
           containers=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-container-identifiers' "$main_entitlements")
           services=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-services' "$main_entitlements")
@@ -595,11 +645,17 @@ jobs:
       - name: Verify uploaded build appears in TestFlight
         if: ${{ inputs.upload_to_testflight }}
         shell: bash
+        env:
+          AUDIENCE_SOURCE: ${{ inputs.audience_source_build }}
         run: |
           set -euo pipefail
           python3 -m venv "$RUNNER_TEMP/asc-venv"
           "$RUNNER_TEMP/asc-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
-          "$RUNNER_TEMP/asc-venv/bin/python" Scripts/CI/verify_testflight_build.py "$BUILD_NUMBER"
+          verify_args=("$BUILD_NUMBER")
+          if [[ -n "$AUDIENCE_SOURCE" ]]; then
+            verify_args+=(--reuse-internal-audience-from "$AUDIENCE_SOURCE")
+          fi
+          "$RUNNER_TEMP/asc-venv/bin/python" Scripts/CI/verify_testflight_build.py "${verify_args[@]}"
 
       - name: Live Activity · refresh
         if: always()

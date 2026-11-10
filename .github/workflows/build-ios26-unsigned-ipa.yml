@@ -19,7 +19,7 @@ on:
         default: ''
         type: string
       testflight_audience_source_build:
-        description: Previously installed build whose existing internal groups should receive the existing build
+        description: Previously installed build whose existing internal groups should receive the uploaded build
         required: false
         default: ''
         type: string
@@ -2908,4 +2908,5 @@ jobs:
       upload_to_testflight: true
       existing_build_number: ${{ inputs.testflight_existing_build_number }}
       audience_source_build: ${{ inputs.testflight_audience_source_build }}
+      runtime_bundle_artifact_run_id: ${{ inputs.runtime_bundle_artifact_run_id }}
     secrets: inherit
