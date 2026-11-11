@@ -1,6 +1,6 @@
 # Local Runtime autonomy: acceptance matrix
 
-[נועם | DEV] [MAIN_SESSION] — Updated2026-11-11 (local). Native candidate42926628418 is authenticated and pinned. Affected app run42929307834 is executing atdc833d93; physical acceptance remains open.
+[נועם | DEV] [MAIN_SESSION] — Updated2026-11-11 (local). Native candidate42926628418 is authenticated and pinned. App acceptance is incomplete:42929307834 failed compilation; latest dispatch42931483281 follows the scoped26afd251 capture fix. Physical acceptance remains open.
 
 Owner scope: **local only**, with explicit iOS limitations. No automatic external transfer or complementary server is configured. Overall **IN_PROGRESS**. This table separates evidence already executed at its recorded source from the outstanding current-engine/consumer gate; it does not turn old results into unverified current-source PASS.
 
@@ -23,13 +23,13 @@ Owner scope: **local only**, with explicit iOS limitations. No automatic externa
 
 ## Current gates and concrete boundaries
 
-- Current consumer manifest:25 actual unit suites,8 UI methods,56 individual required Core cases. Status **RUNNING / execution not yet credited**, run42929307834 atdc833d93, explicitly using verified candidate42926628418 and the existing validated current-Host overlay. Exact252-file affected planning passes without broad full-validation or duplicate native rebuild fallback.
+- Current consumer manifest:25 actual unit suites,8 UI methods,56 individual required Core cases. Status **execution not yet credited**, latest dispatch42931483281 at26afd251 after42929307834 failed compilation, explicitly using verified candidate42926628418 and the existing validated current-Host overlay. Exact252-file affected planning passes without broad full-validation or duplicate native rebuild fallback.
 - Acceptance collection rejects zero-case/suite headings, wrong-suite matches, conflicting pass/fail nodes and raw unverified `--reuse-report` JSON. Current collector/router/cache134 tests PASS. These are local verification-tool checks, not simulated iOS acceptance.
 - V8 reserves an aligned4GiB virtual cage; the main app requests Extended Virtual Addressing. The real93401 provisioning profile/signature lack it. Main capability/profile renewal and final exported-signature checks are prerequisites for the **next authorized signed build**; no account mutation/distribution is part of this implementation task.
 - Node Workers and finite adapters execute in the app process. No fake PID, signals, process isolation, interactive TTY, process IPC or desktop `.node` compatibility is advertised. Persistent MCP servers do not inherit another chat's native command port. General Unicode property escapes/Intl remain an explicit engine limitation; the pinned Yarn parser has its verified Unicode16 literal-class patch.
 
 Exact source/run histories, failed attempts, raw evidence paths and scope are retained in [the implementation ledger](CHAT_AND_AUTONOMY_IMPLEMENTATION_2026-11-10.md). Native reuse and signing boundaries are defined in [reuse](RUNTIME_ARTIFACT_REUSE_CONTRACT.md), [native commands](NATIVE_COMMAND_ADAPTER_CONTRACT.md) and [memory/signing](NATIVE_MEMORY_AND_SIGNING_CONTRACT.md). The original plan remains unchanged.
 
-MCP follow-up: actual4784dd99 Linux Host143 PASS/1 unchanged SKIP, currentb8ef14c2 CLI/HTTP/MCP/journal12 PASS and extracted current production ZIP12 PASS44.396s. Earliera12 packed55 retains its exact source scope. Registry Google Maps now executes real lifecycle hooks and MCP probe, with extensionless CLI entries resolved by Node itself. New original Swift MCP/public-payload/store app execution remains pending in42929307834; native/current-Host assembly has passed. Reference results are not credited as iOS execution.
+MCP follow-up: actual4784dd99 Linux Host143 PASS/1 unchanged SKIP, currentb8ef14c2 CLI/HTTP/MCP/journal12 PASS and extracted current production ZIP12 PASS44.396s. Earliera12 packed55 retains its exact source scope. Registry Google Maps now executes real lifecycle hooks and MCP probe, with extensionless CLI entries resolved by Node itself. New original Swift MCP/public-payload/store app execution remains pending in42931483281; native/current-Host assembly has passed. Reference results are not credited as iOS execution.
 
 Actual native/current-Host candidate42926628418 is verified and pinned. Publication was disabled; app consumers explicitly select this candidate run. The native source identity is unchanged by the small CLI Host overlay, which is separately validated/tested by the existing preparation path. Local/SDK/physical evidence remains scoped separately.
