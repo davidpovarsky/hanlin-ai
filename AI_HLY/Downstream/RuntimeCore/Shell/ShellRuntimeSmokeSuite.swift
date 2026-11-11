@@ -25,7 +25,7 @@ struct ShellRuntimeSmokeReport: Codable, Sendable {
 }
 
 extension ShellRuntimeService {
-    func runSmokeSuite() throws -> ShellRuntimeSmokeReport {
+    func runSmokeSuite() async throws -> ShellRuntimeSmokeReport {
         _ = try healthCheck()
         try diagnosticLog.record("shell_smoke_started")
 
@@ -55,9 +55,9 @@ extension ShellRuntimeService {
             tokens: [String],
             standardInput: Data = Data(),
             verify: (RuntimeExecutionResult) throws -> Bool
-        ) throws {
+        ) async throws {
             do {
-                let result = try execute(
+                let result = try await execute(
                     tokens: tokens,
                     workspace: workspace,
                     environment: [:],
@@ -112,39 +112,39 @@ extension ShellRuntimeService {
         }
 
         try write("alpha 1\nbeta 2\n", to: "awk-input.txt")
-        try run("awk", tokens: ["awk", "{ print $2 }", "awk-input.txt"]) {
+        try await run("awk", tokens: ["awk", "{ print $2 }", "awk-input.txt"]) {
             $0.stdout.contains("1") && $0.stdout.contains("2")
         }
 
         try write("cat-ok\n", to: "cat-input.txt")
-        try run("cat", tokens: ["cat", "cat-input.txt"]) { $0.stdout == "cat-ok\n" }
+        try await run("cat", tokens: ["cat", "cat-input.txt"]) { $0.stdout == "cat-ok\n" }
 
         try write("copy-ok\n", to: "cp-source.txt")
-        try run("cp", tokens: ["cp", "cp-source.txt", "cp-output.txt"]) { _ in
+        try await run("cp", tokens: ["cp", "cp-source.txt", "cp-output.txt"]) { _ in
             try Data(contentsOf: workspace.appending(path: "cp-output.txt")) == Data("copy-ok\n".utf8)
         }
 
-        try run("curl", tokens: ["curl", "--version"]) {
+        try await run("curl", tokens: ["curl", "--version"]) {
             ($0.stdout + $0.stderr).localizedCaseInsensitiveContains("curl")
         }
 
         try write("alpha\nbeta\ngamma\n", to: "grep-input.txt")
-        try run("grep", tokens: ["grep", "beta", "grep-input.txt"]) { $0.stdout.contains("beta") }
+        try await run("grep", tokens: ["grep", "beta", "grep-input.txt"]) { $0.stdout.contains("beta") }
 
         try write("first\nsecond\n", to: "head-input.txt")
-        try run("head", tokens: ["head", "-n", "1", "head-input.txt"]) {
+        try await run("head", tokens: ["head", "-n", "1", "head-input.txt"]) {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "first"
         }
 
         try write("link-target\n", to: "ln-target.txt")
-        try run("ln", tokens: ["ln", "-s", "ln-target.txt", "ln-output.txt"]) { _ in
+        try await run("ln", tokens: ["ln", "-s", "ln-target.txt", "ln-output.txt"]) { _ in
             try manager.destinationOfSymbolicLink(atPath: workspace.appending(path: "ln-output.txt").path) == "ln-target.txt"
         }
 
         try write("listed\n", to: "ls-visible.txt")
-        try run("ls", tokens: ["ls", "ls-visible.txt"]) { $0.stdout.contains("ls-visible.txt") }
+        try await run("ls", tokens: ["ls", "ls-visible.txt"]) { $0.stdout.contains("ls-visible.txt") }
 
-        try run("mkdir", tokens: ["mkdir", "created-directory"]) { _ in
+        try await run("mkdir", tokens: ["mkdir", "created-directory"]) { _ in
             var isDirectory: ObjCBool = false
             let exists = manager.fileExists(
                 atPath: workspace.appending(path: "created-directory").path,
@@ -154,7 +154,7 @@ extension ShellRuntimeService {
         }
 
         try write("move-ok\n", to: "mv-source.txt")
-        try run("mv", tokens: ["mv", "mv-source.txt", "mv-output.txt"]) { _ in
+        try await run("mv", tokens: ["mv", "mv-source.txt", "mv-output.txt"]) { _ in
             manager.fileExists(atPath: workspace.appending(path: "mv-output.txt").path)
                 && !manager.fileExists(atPath: workspace.appending(path: "mv-source.txt").path)
         }
@@ -164,47 +164,47 @@ extension ShellRuntimeService {
             atPath: workspace.appending(path: "readlink-input.txt").path,
             withDestinationPath: "readlink-target.txt"
         )
-        try run("readlink", tokens: ["readlink", "readlink-input.txt"]) {
+        try await run("readlink", tokens: ["readlink", "readlink-input.txt"]) {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "readlink-target.txt"
         }
 
         try write("remove-ok\n", to: "rm-input.txt")
-        try run("rm", tokens: ["rm", "rm-input.txt"]) { _ in
+        try await run("rm", tokens: ["rm", "rm-input.txt"]) { _ in
             !manager.fileExists(atPath: workspace.appending(path: "rm-input.txt").path)
         }
 
         try manager.createDirectory(at: workspace.appending(path: "rmdir-input"), withIntermediateDirectories: false)
-        try run("rmdir", tokens: ["rmdir", "rmdir-input"]) { _ in
+        try await run("rmdir", tokens: ["rmdir", "rmdir-input"]) { _ in
             !manager.fileExists(atPath: workspace.appending(path: "rmdir-input").path)
         }
 
         try write("first\nsecond\n", to: "sed-input.txt")
-        try run("sed", tokens: ["sed", "-n", "2p", "sed-input.txt"]) {
+        try await run("sed", tokens: ["sed", "-n", "2p", "sed-input.txt"]) {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "second"
         }
 
         try write("charlie\nalpha\nbravo\n", to: "sort-input.txt")
-        try run("sort", tokens: ["sort", "sort-input.txt"]) {
+        try await run("sort", tokens: ["sort", "sort-input.txt"]) {
             $0.stdout.hasPrefix("alpha\n")
         }
 
         try write("stat-ok\n", to: "stat-input.txt")
-        try run("stat", tokens: ["stat", "stat-input.txt"]) { _ in true }
+        try await run("stat", tokens: ["stat", "stat-input.txt"]) { _ in true }
 
         try write("first\nlast\n", to: "tail-input.txt")
-        try run("tail", tokens: ["tail", "-n", "1", "tail-input.txt"]) {
+        try await run("tail", tokens: ["tail", "-n", "1", "tail-input.txt"]) {
             $0.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "last"
         }
 
         try write("tar-ok\n", to: "tar-input.txt")
         do {
-            let create = try execute(
+            let create = try await execute(
                 tokens: ["tar", "-cf", "archive.tar", "tar-input.txt"],
                 workspace: workspace,
                 environment: [:],
                 allowNetwork: false
             )
-            let inspect = try execute(
+            let inspect = try await execute(
                 tokens: ["tar", "-tf", "archive.tar"],
                 workspace: workspace,
                 environment: [:],
@@ -232,51 +232,51 @@ extension ShellRuntimeService {
             )
         }
 
-        try run("touch", tokens: ["touch", "touch-output.txt"]) { _ in
+        try await run("touch", tokens: ["touch", "touch-output.txt"]) { _ in
             manager.fileExists(atPath: workspace.appending(path: "touch-output.txt").path)
         }
 
-        try run(
+        try await run(
             "tr",
             tokens: ["tr", "a-z", "A-Z"],
             standardInput: Data("lower\n".utf8)
         ) { $0.stdout == "LOWER\n" }
 
         try write("alpha\nalpha\nbeta\n", to: "uniq-input.txt")
-        try run("uniq", tokens: ["uniq", "uniq-input.txt"]) {
+        try await run("uniq", tokens: ["uniq", "uniq-input.txt"]) {
             $0.stdout == "alpha\nbeta\n"
         }
 
         try write("unlink-ok\n", to: "unlink-input.txt")
-        try run("unlink", tokens: ["unlink", "unlink-input.txt"]) { _ in
+        try await run("unlink", tokens: ["unlink", "unlink-input.txt"]) { _ in
             !manager.fileExists(atPath: workspace.appending(path: "unlink-input.txt").path)
         }
 
         try write("one\ntwo\n", to: "wc-input.txt")
-        try run("wc", tokens: ["wc", "-l", "wc-input.txt"]) {
+        try await run("wc", tokens: ["wc", "-l", "wc-input.txt"]) {
             $0.stdout.contains("2") && $0.stdout.contains("wc-input.txt")
         }
 
-        func expectRejection(_ policy: String, operation: () throws -> Void) {
+        func expectRejection(_ policy: String, operation: () async throws -> Void) async {
             do {
-                try operation()
+                try await operation()
                 policyResults.append(.init(policy: policy, passed: false, detail: "The request was unexpectedly accepted."))
             } catch {
                 policyResults.append(.init(policy: policy, passed: true, detail: error.localizedDescription))
             }
         }
 
-        expectRejection("unknown_command") {
-            _ = try execute(tokens: ["sh"], workspace: workspace, environment: [:], allowNetwork: false)
+        await expectRejection("unknown_command") {
+            _ = try await execute(tokens: ["sh"], workspace: workspace, environment: [:], allowNetwork: false)
         }
-        expectRejection("pipeline") { _ = try Self.tokenize("cat file | grep value") }
-        expectRejection("redirection") { _ = try Self.tokenize("cat file > output") }
-        expectRejection("command_chaining") { _ = try Self.tokenize("ls && rm file") }
-        expectRejection("curl_https_permission") {
-            _ = try execute(tokens: ["curl", "https://example.invalid"], workspace: workspace, environment: [:], allowNetwork: false)
+        await expectRejection("pipeline") { _ = try Self.tokenize("cat file | grep value") }
+        await expectRejection("redirection") { _ = try Self.tokenize("cat file > output") }
+        await expectRejection("command_chaining") { _ = try Self.tokenize("ls && rm file") }
+        await expectRejection("curl_https_permission") {
+            _ = try await execute(tokens: ["curl", "https://example.invalid"], workspace: workspace, environment: [:], allowNetwork: false)
         }
-        expectRejection("curl_http") {
-            _ = try execute(tokens: ["curl", "http://example.invalid"], workspace: workspace, environment: [:], allowNetwork: true)
+        await expectRejection("curl_http") {
+            _ = try await execute(tokens: ["curl", "http://example.invalid"], workspace: workspace, environment: [:], allowNetwork: true)
         }
         let curlVersionPassed = commandResults.first { $0.command == "curl" }?.passed == true
         policyResults.append(
