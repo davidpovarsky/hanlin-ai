@@ -2448,7 +2448,7 @@ class APIManager {
                         continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "处理对话内容" : "Processing"))
                         
                         // 格式化消息
-                        finalFormattedMessages = try await buildFormattedMessages(
+                        finalFormattedMessages = try await self.buildFormattedMessages(
                             from: updatedMessages,
                             modelInfo: modelInfo,
                             currentLanguage: currentLanguage,
@@ -2516,7 +2516,7 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在发送请求" : "Sending request"))
                     
                     // 获取与模型厂商匹配的完整 Provider 配置。
-                    guard let providerConfiguration = getAPIConfiguration(for: modelInfo.company ?? "Unknown"),
+                    guard let providerConfiguration = self.getAPIConfiguration(for: modelInfo.company ?? "Unknown"),
                           let apiKey = providerConfiguration.key,
                           !apiKey.isEmpty else {
                         throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
@@ -2542,15 +2542,15 @@ class APIManager {
                     var tools: [[String: Any]]? = nil
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
                         let legacySources = LegacyToolCanonicalAdapter.sources(
-                            memoryEnabled: isMemoryEnabled(),
-                            mapEnabled: isMapEnabled(),
-                            calendarEnabled: isCalendarEnabled(),
-                            searchEnabled: isSearchEnabled(),
-                            knowledgeEnabled: isKnowledgeEnabled(),
-                            codeEnabled: isCodeEnabled(),
-                            healthEnabled: isHealthEnabled(),
-                            weatherEnabled: isWeatherEnabled(),
-                            canvasEnabled: isCanvasEnabled()
+                            memoryEnabled: self.isMemoryEnabled(),
+                            mapEnabled: self.isMapEnabled(),
+                            calendarEnabled: self.isCalendarEnabled(),
+                            searchEnabled: self.isSearchEnabled(),
+                            knowledgeEnabled: self.isKnowledgeEnabled(),
+                            codeEnabled: self.isCodeEnabled(),
+                            healthEnabled: self.isHealthEnabled(),
+                            weatherEnabled: self.isWeatherEnabled(),
+                            canvasEnabled: self.isCanvasEnabled()
                         )
                         preparedAssistantTools = try await AssistantToolBridge.prepare(
                             scope: assistantToolScope,
@@ -2794,7 +2794,7 @@ class APIManager {
                                                 planning.append(contentText)
                                             } else {
                                                 responseData.content = contentText
-                                                toolMessage?.append(contentText)
+                                                self.toolMessage?.append(contentText)
                                             }
                                         } else {
                                             buffer += contentText
@@ -2810,7 +2810,7 @@ class APIManager {
                                             planning.append(contentText)
                                         } else {
                                             responseData.content = contentText
-                                            toolMessage?.append(contentText)
+                                            self.toolMessage?.append(contentText)
                                         }
                                     }
                                 }
@@ -2828,7 +2828,7 @@ class APIManager {
                                         planning.append(transcript)
                                     } else {
                                         responseData.content = transcript
-                                        toolMessage?.append(transcript)
+                                        self.toolMessage?.append(transcript)
                                     }
                                 }
                             }
