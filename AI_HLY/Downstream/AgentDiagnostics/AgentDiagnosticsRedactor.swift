@@ -27,6 +27,7 @@ enum AgentDiagnosticsRedactor {
         if let dictionary = value as? [String: Any] {
             return dictionary.reduce(into: [String: Any]()) { result, item in
                 let normalizedKey = item.key
+                    .replacingOccurrences(of: "([a-z0-9])([A-Z])", with: "$1_$2", options: .regularExpression)
                     .lowercased()
                     .replacingOccurrences(of: "-", with: "_")
                 result[item.key] = isSecretKey(normalizedKey)
@@ -42,6 +43,8 @@ enum AgentDiagnosticsRedactor {
     private static func isSecretKey(_ normalizedKey: String) -> Bool {
         secretKeyNames.contains(normalizedKey)
             || secretKeySuffixes.contains(where: normalizedKey.hasSuffix)
+            || ["_token", "_secret", "_password", "_credential", "_cookie", "_authorization"].contains(where: normalizedKey.hasSuffix)
+            || ["authorization_", "proxy_authorization_", "access_token_", "refresh_token_", "auth_token_", "bearer_token_"].contains(where: normalizedKey.hasPrefix)
     }
 
     static func sanitize(_ value: String) -> String {

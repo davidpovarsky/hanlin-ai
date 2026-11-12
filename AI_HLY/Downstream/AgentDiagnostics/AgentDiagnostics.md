@@ -18,6 +18,8 @@ Readable per-delta event records refer to `-stage-snapshots.json`; exact per-eve
 
 The central redactor is applied before persistence and again to the readable export. Hidden chain-of-thought is never reconstructed; only provider-visible reasoning content already exposed by the API may be recorded.
 
+NativeToolTraceLogger uses that same structured redactor before stringifying values, including JSON fallback errors. Numeric token counters remain useful; credential keys and nested values are masked. Legacy trace files no longer disappear under a separate silent30-file/20MiB rotation. They are included in the diagnostics storage tally and remain user-manageable through Files.
+
 When the diagnostics screen opens, an incomplete session that has remained `running` without an update for ten minutes is shown as `interrupted`. Its persisted JSON and readable log are preserved unchanged for investigation.
 
 

@@ -6,6 +6,20 @@ import Testing
 
 @Suite("Automatic diagnostic journal")
 struct AgentDiagnosticsJournalTests {
+    @Test func legacyTraceKeepsTokenCountsButRedactsNestedAndCamelCaseCredentials() throws {
+        let fields = NativeToolTraceLogger.redactedFields([
+            "inputTokens": 123, "outputTokens": 456, "reasoningTokens": 789,
+            "authToken": "NEVER_AUTH", "mcpSessionToken": "NEVER_MCP",
+            "request": ["headers": ["Authorization": "Bearer NEVER_HEADER"], "content": "ordinary שלום"],
+            "error": "https://example.invalid/?sig=NEVER_SIGNED Bearer NEVER_TEXT"
+        ])
+        #expect(fields["inputTokens"] == "123" && fields["outputTokens"] == "456" && fields["reasoningTokens"] == "789")
+        #expect(!String(describing: fields).contains("NEVER_"))
+        #expect(fields["request"]?.contains("ordinary שלום") == true)
+        let invalidJSON = NativeToolTraceLogger.shared.redactedJSONString("not JSON; Bearer NEVER_FALLBACK")
+        #expect(!invalidJSON.contains("NEVER_FALLBACK"))
+    }
+
     @Test func splitUTF8TransportRetainsExactEncryptedBytesAndReadableSSE() async throws {
         let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
