@@ -587,3 +587,42 @@ The MCP fixture existed immediately before installation, but the direct Node ins
 The stop/new UI failure was a selector error: the retained native hierarchy contains the completed RUN_B_COMPLETE answer as a UITextView with value, plus a nested TextView label. The test searched only StaticText. It now matches exactly one owning text-view value inside assistant bubbles, preserving the absence-of-ghost/idle assertions. Decompressed hierarchy22569 bytes SHA2564f6eb4ed17b919fd46f0bd1463208318ebbb78e04cb2ad0510a072a331193257. It was recovered from the actual xcresult's Zstandard-compressed Data blob, not reconstructed from expectations. ScriptUI's later details/revoke/regrant assertion was also obsolete under the approved no-internal-grant policy; the test now requires absence of that gate while retaining enabled/disabled launch restrictions and package lifecycle checks.
 
 All new corrections above remain NEEDS_TEST until their focused native rerun. No native engine rebuild, distribution, main merge or physical acceptance is implied.
+# Focused follow-up — 2026-11-12, after b667a281
+
+[נועם | DEV] [MAIN_SESSION]. Authenticated run
+[43255791263](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43255791263)
+finished FAILED atb667a281. Its raw xcresult JSON printed by the job reports
+54 unit leaves:52 Passed/2 Failed;2 UI leaves:1 Passed/1 Failed. JSON was recovered
+from the authenticated job log without interpreting suite headings as cases.
+All5 Journal and4 Export cases now pass at this SHA, including the later redactor
+and legacy trace repair. These are scoped passes, not full CI or device acceptance.
+
+The actual stop/new-run UI case passes. ScriptUI's remaining failure is explicitly
+`exceeded execution time allowance of 5 minutes`, rather than the former network
+toggle assertion. Its event log continues advancing through re-enable operations
+at371s. The nine-phase install/relaunch/disable/re-enable/uninstall obligation is
+retained, with a bounded600s allowance when this lifecycle suite is selected and
+one redundant close/reopen removed between phases7/8. No business assertion was
+deleted. The rerun must still prove the final uninstall/persistence phases.
+
+All23 native Shell commands pass. Chaining failed because the fixture invoked
+printf, which is not in the verified command catalog. The fixture now uses Yarn's
+existing echo builtin, still checking actual `&&`, file overwrite/append and the
+public tool's final cat output. No command was added to the native catalog.
+
+MCP installation advanced past the missing staging directory and exposed a real
+Host issue: `ExecutionJobs.start` generated/reserved a lifecycle child's UUID but
+passed an input body without that UUID to the Host validator. The validator
+correctly rejected the empty ID. A new actual Worker regression failed before
+the fix, then passed after forwarding the same canonical ID into the body. The
+affected reference ExecutionJobs/MCP lifecycle run on pinned Node24.5.0 reports
+20 PASS/1 existing SKIP in18.929s, including actual installation/protocol probing
+and durable receipt reopen. This is reference evidence, not an iOS pass.
+
+The shared Host job change affects Node/TypeScript/compiler/CLI/lifecycle/portable
+Shell consumers, so their relevant native cases require fresh execution. Pure
+Python/JSC/store histories are not silently rerun or promoted to current PASS.
+The original native-engine producer42926628418 is unchanged and must be reused.
+New app Mermaid/Diff hook and scroll coalescing require app compilation/UI tests;
+the unchanged production renderer already passed four isolated WebKit cases in
+43260034743 atf9243d8d (input hashes verified unchanged after1e205b15).

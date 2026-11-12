@@ -208,10 +208,10 @@ extension ShellRuntimeService {
         }
         do {
             let chain = try await node.executePortableShell(RuntimeExecutionRequest(
-                source: "printf first > chain-output.txt && printf second >> chain-output.txt", workspace: workspace))
+                source: "echo first > chain-output.txt && echo second >> chain-output.txt", workspace: workspace))
             let output = try String(contentsOf: workspace.appending(path: "chain-output.txt"), encoding: .utf8)
             policyResults.append(.init(policy: "portable_command_chaining",
-                passed: chain.exitCode == 0 && output == "firstsecond",
+                passed: chain.exitCode == 0 && output == "first\nsecond\n",
                 detail: "exit=\(String(describing: chain.exitCode)); file=\(output.debugDescription); stdout=\(chain.stdout.debugDescription); stderr=\(chain.stderr.debugDescription)"))
         } catch {
             policyResults.append(.init(policy: "portable_command_chaining", passed: false, detail: error.localizedDescription))

@@ -79,6 +79,9 @@ export class ExecutionJobs {
   async start(body) {
     const id = String(body.executionID ?? randomUUID()).toLowerCase();
     if (!validID(id)) throw new Error('Invalid execution ID.');
+    // Host-created lifecycle children omit an ID. Validation and the Worker
+    // must receive the same reserved identity as the durable job header.
+    body = {...body, executionID: id};
     if (this.#jobs.has(id)) throw Object.assign(new Error('This execution ID already exists; jobs are never replayed implicitly.'), { status: 409 });
     const directory = path.join(this.root, id);
     const header = { executionID: id, state: 'queued', startedAt: Date.now(), cancellationRequested: false, stdoutBytes: 0, stderrBytes: 0, result: null };

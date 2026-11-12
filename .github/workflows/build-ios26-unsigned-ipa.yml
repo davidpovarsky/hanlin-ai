@@ -2280,6 +2280,13 @@ jobs:
                 model_video_pid=$!
                 sleep 1
               fi
+              ui_time_allowance=300
+              # The measured nine-phase ScriptUI install/relaunch/disable/uninstall
+              # journey was still advancing at 371s when the old 300s cap killed
+              # it. Keep this longer lifecycle obligation intact and bounded.
+              if [[ "${SIMULATOR_UI_FILTER:-}" == *"HanlinScriptUIProductionE2ETests"* ]] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+                ui_time_allowance=600
+              fi
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
@@ -2291,7 +2298,7 @@ jobs:
               -skipPackagePluginValidation \
               -skipMacroValidation \
               -test-timeouts-enabled YES \
-              -maximum-test-execution-time-allowance 300 \
+              -maximum-test-execution-time-allowance "$ui_time_allowance" \
               "${ui_test_args[@]}" \
               2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
               nativescript_e2e_status="${PIPESTATUS[0]}"

@@ -138,10 +138,10 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         defer { try? FileManager.default.removeItem(at: workspace) }
         let tool = ExecuteShellCommandTool(hostContext: hostContext)
         let result = await tool.execute(argumentsJSON: try Self.json([
-            "command": "printf first > chain-output.txt && printf second >> chain-output.txt && cat chain-output.txt"
+            "command": "echo first > chain-output.txt && echo second >> chain-output.txt && cat chain-output.txt"
         ]), context: NativeToolExecutionContext(localeIdentifier: "en"))
         #expect(result.outcome == .succeeded, "\(result.modelText)")
-        #expect(result.modelText.contains("firstsecond"))
+        #expect(result.modelText.contains("first\nsecond"))
     }
 
     @Test func agentToolRespectsDisabledRuntimeToggle() async {

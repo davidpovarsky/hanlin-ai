@@ -18,6 +18,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     func testProductionScriptUIUserJourneyAndLifecycle() throws {
+        executionTimeAllowance = 600
         openApps()
 
         // 1. Import, Preview & Capabilities Review
@@ -87,10 +88,8 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         openPackageDetails(named: validPackageName)
         XCTAssertFalse(app.switches["network"].firstMatch.exists,
                        "Package Details must not expose the removed internal network approval gate")
-        closeDetails()
 
         // 8. Enable / Disable Lifecycle (app.set_enabled)
-        openPackageDetails(named: validPackageName)
         let enabledToggle = app.switches["Enabled"].firstMatch
         XCTAssertTrue(enabledToggle.waitForExistence(timeout: 10), "Enabled toggle missing in Package Details")
         XCTAssertEqual(enabledToggle.value as? String, "1", "Package was not initially enabled")

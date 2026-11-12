@@ -14,6 +14,28 @@ async function fixture(t) {
   return { jobs, root, body: { workspace: root, moduleKind: 'esm', maximumOutputBytes: 4096 } };
 }
 
+test('Host-generated child job identity reaches input validation and its durable receipt', async t => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-implicit-job-'));
+  t.after(() => fs.rm(root, {recursive: true, force: true}));
+  const validated = [];
+  const jobs = new ExecutionJobs({root: path.join(root, 'jobs'), workerURL: new URL('../execution-worker.mjs', import.meta.url),
+    validateInput: async body => {
+      assert.match(body.executionID ?? '', /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/);
+      validated.push(body.executionID);
+      return body;
+    }});
+  await jobs.initialize();
+  // Lifecycle children are created by the Host, without a Swift-issued UUID.
+  const header = await jobs.start({source: 'export default "implicit-child";', moduleKind: 'esm', workspace: root});
+  const completed = await jobs.wait(header.executionID);
+  assert.deepEqual(validated, [header.executionID]);
+  assert.equal(completed.state, 'completed');
+  assert.equal(completed.result.value, 'implicit-child');
+  const reopened = new ExecutionJobs({root: path.join(root, 'jobs'), workerURL: new URL('../execution-worker.mjs', import.meta.url)});
+  await reopened.initialize();
+  assert.equal(reopened.snapshot(header.executionID).result.value, 'implicit-child');
+});
+
 test('actual Worker interruption retains its cause and full output through reopen', async t => {
   const {jobs,root,body} = await fixture(t);
   const header = await jobs.start({...body,source:"console.log('שלום partial output'); await new Promise(() => setInterval(() => {}, 1000));"});
