@@ -34,10 +34,12 @@ def build() -> dict:
     ref("shareReadOnlyDeclaration", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "func pendingItems()")
     ref("translationSnapshot", "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift", "HanlinExtensionNodeView(")
     ref("extensionIntent", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift", "public func perform()")
-    ref("extensionQueue", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift", "public func enqueue(")
+    ref("extensionQueue", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift", "public func enqueue(")
+    ref("extensionReceipts", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift", "public struct HanlinInvocationReceipt")
+    ref("extensionExecutor", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift", "public actor HanlinInvocationExecutor")
     ref("resume", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "private func processPendingResumeCommands()")
     ref("headless", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "func executeHeadlessAction(")
-    ref("expoIntentRejection", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "EXPO_APP_INTENT_UNSUPPORTED")
+    ref("expoIntentRejection", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "guard entrypoint.runtimeProfile != .hanlinExpo else")
     ref("expoExposureRejection", "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift", "Expo exposure '")
     ref("widgetBundle", "HanlinScriptingWidgets/HanlinScriptingWidgets.swift", "struct HanlinScriptingWidgetBundle")
     ref("widgetCallback", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift", "public static func perform(")
@@ -88,9 +90,9 @@ def build() -> dict:
                          "stop": "Media attachment/category delivery only; no authenticated package event envelope, Host consumer or MiniApp receipt.", "owner": "INT-05"},
         "liveActivity": {"target": "HanlinScriptingWidgets", "refs": ["widgetBundle", "extensionIntent", "extensionQueue"],
                          "stop": "Static ActivityKit presentation is not a canonical Node/TS/Python/JSC/Shell execution path.", "owner": "INT-02/INT-03"},
-        "hostAppIntent": {"target": "AI_Hanlin / HanlinScriptExtensions", "refs": ["extensionIntent", "extensionQueue", "resume", "requestBroker", "headless", "nativeSession", "expoIntentRejection"],
-                          "stop": "NS declared action can dispatch to the foreground handler; global active-session arbitration and durable returned receipts are incomplete. Expo branch rejects and acknowledges.", "owner": "INT-02/INT-03"},
-        "shortcuts": {"target": "HanlinScriptingWidgets / AI_Hanlin", "refs": ["shortcutIntent", "hostShortcuts", "extensionQueue", "resume", "headless", "expoIntentRejection"],
+        "hostAppIntent": {"target": "AI_Hanlin / HanlinScriptExtensions", "refs": ["extensionIntent", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "requestBroker", "headless", "nativeSession", "expoIntentRejection"],
+                          "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session yields needsForeground; Expo yields an explicit unsupported receipt. Generic runtime callbacks, readback to system ingress and presentation-context propagation remain incomplete; native delivery tests pending.", "owner": "INT-02/INT-03"},
+        "shortcuts": {"target": "HanlinScriptingWidgets / AI_Hanlin", "refs": ["shortcutIntent", "hostShortcuts", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "headless", "expoIntentRejection"],
                       "stop": "Generic MiniApp action enqueues foreground continuation. Registered Siri phrases are alarm/notification operations; not an all-runtime MiniApp API.", "owner": "INT-02/INT-03"},
         "foreground": {"target": "AI_Hanlin", "refs": ["nativeBridge", "nativeAdapter", "nativeSession", "expoFacade", "expoModule", "expoAdapter", "runtimeBroker", "callerContext"],
                        "stop": "Source-wired Host calls still require real JS->native->executor->receipt tests; legacy NS strings lose stderr/status/artifacts and generic TS/Shell are absent.", "owner": "INT-03/INT-06/SDK-03/SDK-04"},
@@ -109,6 +111,7 @@ def build() -> dict:
                                     else ["nativeBridge", "nativeAdapter", "runtimeBroker"]) if has_tail else [],
                     "sourcePathReachesCanonicalExecutor": wired,
                     "structuredReceiptReturnedToIngressInSource": structured_receipt,
+                    "durableActionReceiptInSource": surface in ["hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript",
                     "realSurfaceE2E": False, "onDeviceProof": None,
                     "resultBoundary": "Legacy string/error callback" if wired and engine == "hanlinNativeScript" else
                                       "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing" if wired else "No connected canonical-runtime receipt",
@@ -163,7 +166,7 @@ def markdown(value: dict) -> str:
         "- Expo's existing TypeScript facade validates all5 canonical kinds through invoke(runtime.execute). Its native legacy executeRuntime now rejects unknown kinds and propagates failure/cancellation; actual five-backend regressions and complete JS receipt coverage remain pending under INT-06.",
         "- The17 SystemServicesBroker declarations are inventoried separately. They do not prove a public NS/Expo binding, actual OS permission, UI presentation context or device availability. Direct native metadata calls are a separate path.",
         "- ControlWidget/CoreSpotlight names occur in exposure contracts; the source scan does not find an implemented corresponding target/index. They are not added as executable surfaces.",
-        "- Preserve the existing widget instance revision/nonces/callback state and notification media behavior while implementing INT-02's typed durable invocation/inbox/outbox path. Do not automatically launch Host Node/Python/Shell from an extension.", "",
+        "- The existing ResumeQueue now carries delivery metadata, leases, duplicate/TTL/cancel handling and protected durable Receipts. Its host dispatcher retains actual action values; this is not yet a complete generic runtime/attachment/system-ingress result contract. Native queue/executor tests are pending. No new engine or automatic Host Node/Python/Shell launch inside an extension.", "",
         "## Verification", "", "Run the SDK source audit first, then `py -3 Scripts/Audit/audit_miniapp_reachability.py --check`. Both fail on source drift; runtime execution is not part of this audit.",
         "INT-02/03/04/05/06/07 and SDK-02…08 remain open. This is the prerequisite map, not their implementation or final acceptance.", ""]
     return "\n".join(lines)

@@ -1,9 +1,6 @@
 {
-  "sourceCommit": "0ff5952e3f2968aed23b6e2645c3ca469537c1d7",
-  "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-    "Scripts/Audit/audit-miniapp-sdk.mjs"
-  ],
+  "sourceCommit": "1e4ba8c0d8db00b96e9ad6307c98564ae95ac8d6",
+  "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",

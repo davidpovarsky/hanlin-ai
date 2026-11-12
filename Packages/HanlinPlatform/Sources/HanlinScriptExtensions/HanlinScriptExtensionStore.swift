@@ -855,52 +855,6 @@ public struct HanlinScriptExtensionStore: Sendable {
         return result
     }
 
-    public func enqueue(_ command: HanlinScriptResumeCommand) throws {
-        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
-        try FileManager.default.createDirectory(at: commandRoot, withIntermediateDirectories: true)
-        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
-        let existing = try FileManager.default.contentsOfDirectory(
-            at: commandRoot,
-            includingPropertiesForKeys: nil,
-            options: [.skipsHiddenFiles]
-        ).filter { $0.pathExtension == "json" }
-        guard existing.count < 128 else {
-            throw HanlinScriptExtensionStoreError.snapshotTooLarge
-        }
-        let data = try Self.encoded(command)
-        guard data.count <= 256 * 1_024 else {
-            throw HanlinScriptExtensionStoreError.snapshotTooLarge
-        }
-        let targetURL = commandRoot.appending(path: "\(command.id.uuidString.lowercased()).json")
-        try rejectSymlinks(to: targetURL, phase: .actionPerform)
-        try data.write(
-            to: targetURL,
-            options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication]
-        )
-    }
-
-    public func pendingCommands(limit: Int = 64) throws -> [HanlinScriptResumeCommand] {
-        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
-        guard FileManager.default.fileExists(atPath: commandRoot.path(percentEncoded: false)) else { return [] }
-        let urls = try FileManager.default.contentsOfDirectory(
-            at: commandRoot,
-            includingPropertiesForKeys: nil,
-            options: [.skipsHiddenFiles]
-        ).filter { $0.pathExtension == "json" }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-        return try urls.prefix(max(0, limit)).map {
-            try rejectSymlinks(to: $0, phase: .actionPerform)
-            return try Self.decoded(HanlinScriptResumeCommand.self, from: Data(contentsOf: $0))
-        }.sorted { $0.createdAt < $1.createdAt }
-    }
-
-    public func acknowledge(_ commandID: UUID) throws {
-        let url = commandRoot.appending(path: "\(commandID.uuidString.lowercased()).json")
-        try rejectSymlinks(to: url, phase: .actionPerform)
-        if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
-            try FileManager.default.removeItem(at: url)
-        }
-    }
-
     private var snapshotV1URL: URL {
         root.appending(path: "snapshot-v1.json", directoryHint: .notDirectory)
     }
@@ -909,7 +863,7 @@ public struct HanlinScriptExtensionStore: Sendable {
         root.appending(path: "snapshot-v2.json", directoryHint: .notDirectory)
     }
 
-    private var commandRoot: URL {
+    var commandRoot: URL {
         root.appending(path: "ResumeQueue", directoryHint: .isDirectory)
     }
 
@@ -1037,7 +991,7 @@ public struct HanlinScriptExtensionStore: Sendable {
         return raw
     }
 
-    private func rejectSymlinks(
+    func rejectSymlinks(
         to url: URL,
         phase: HanlinWidgetStorageDiagnostic.Phase = .storeLoad
     ) throws {
@@ -1170,7 +1124,7 @@ public struct HanlinScriptExtensionStore: Sendable {
 #endif
     }
 
-    private func withLock<T>(_ operation: () throws -> T) throws -> T {
+    func withLock<T>(_ operation: () throws -> T) throws -> T {
         try rejectSymlinks(to: root, phase: .storeLoad)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         try rejectSymlinks(to: root, phase: .storeLoad)
@@ -1221,14 +1175,14 @@ public struct HanlinScriptExtensionStore: Sendable {
 #endif
     }
 
-    private static func encoded<T: Encodable>(_ value: T) throws -> Data {
+    static func encoded<T: Encodable>(_ value: T) throws -> Data {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .millisecondsSince1970
         encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         return try encoder.encode(value)
     }
 
-    private static func decoded<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
+    static func decoded<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .millisecondsSince1970
         return try decoder.decode(type, from: data)

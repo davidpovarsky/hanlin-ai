@@ -1,0 +1,69 @@
+# Durable delivery on the existing extension queue
+
+[נועם | DEV] [MAIN_SESSION]. Branch `fix/hanlin-approved-plan-20261108`.
+INT-02 implementation checkpoint; full task acceptance remains open.
+
+The previous host acknowledged and deleted both successful and failed commands,
+discarding the returned value. The existing `HanlinScriptExtensionStore` now
+owns one per-invocation record under its original `ResumeQueue`. Active delivery
+and terminal receipt use the same record; completion atomically renames it into
+`ResumeQueue/Receipts`. A historical pending reader cannot replay completed
+outbox files. Existing snapshot, widget state/revision/nonces, lock identity and
+runtime engines are preserved.
+
+The existing command ID, package/install/generation/entrypoint/action and typed
+`HanlinValue` parameters remain authoritative. Optional versioned delivery
+metadata adds canonical app ID, source, expected result, expiry, presentation
+claims and retry metadata. Historical commands decode without inventing an
+app ID or provenance; their TTL is 24 hours from original creation. Incoming
+presentation claims grant no OS permission. New delivery envelopes validate
+their canonical action, finite timestamps, TTL up to24 hours and attempts1…16.
+The original active queue admission128 and ingress256KiB budgets remain explicit
+errors; protected result records allow4MiB plus the original command. There is
+no silent receipt eviction. Large attachments are not inlined into this queue.
+
+Enqueue is idempotent for exactly the same command bytes. Reusing an ID with
+different input fails; a duplicate cannot reset a completed receipt. The existing
+cross-process `.transaction.lock` serializes reads, claims and updates. Leases
+use fresh UUID tokens; an old owner cannot overwrite a replacement owner.
+Unknown completion after process loss yields `deferred/interruptedOutcomeUnknown`,
+never an automatic replay. Recovery requires both incoming idempotency metadata
+and an independently verified installed-action declaration; the host executor
+currently enables no such automatic retry. Running cancellation stays a request
+until the actual async handler drains. Heartbeats renew the lease and propagate
+cancellation/deadline to that handler; uncooperative work is not declared stopped
+early. Actual runtime interruption still depends on the underlying bridge.
+
+The existing host dispatcher now publishes actual compiled-provider, NativeScript
+broker and JSC action values, or typed failure/stale/cancel receipts. NativeScript
+still uses one isolate; another package owning it produces `needsForeground`,
+without starting a second VM. Expo AppIntent dispatch remains explicitly
+unsupported. No arbitrary Error text or runtime stderr is placed in receipts.
+Queue reads enforce UUID filename/record identity, supported schema, bounded
+regular single-link files, no-follow opening and the existing path checks.
+
+Validation plan: new `HanlinInvocationQueueTests` plus affected existing
+`HanlinScriptExtensionStoreTests`, using the existing widget-package manual
+workflow on actual Xcode. New cases cover legacy/binary interchange, outbox
+placement, duplicate identity/result preservation,32 concurrent claims across
+store instances, fenced idempotent recovery, unsafe recovery refusal, TTL,
+queued/running cancellation, malformed/symlink records and two-package durable
+outcomes. The async handler cancellation case uses the real queue/executor and
+cooperative task cancellation, not an embedded engine or physical extension.
+
+Portable Swift6.3.3 strict concurrency/warnings-as-errors accepted the actual
+Foundation contract declarations, including the existing widget-instance types;
+the store extension and resource-loading helper were outside that local check.
+Syntax parsing passed for new queue/executor/host/test source. Apple filesystem,
+full host binding and test execution are **NOT_RUN** at this checkpoint.
+
+Still open: dedicated typed owned attachment references/large-file transactions,
+complete canonical action registration across NS/Expo, caller/UI context
+propagation, system-ingress result readback, deliberate resumption of unstarted
+foreground-deferred work, per-install uninstall/rollback cleanup and retention
+UI, locked-device/physical proof. Parameters/results have App Group Data
+Protection and may contain private application data; this is not a credential
+vault and does not introduce a shared Keychain entitlement or encryption claim.
+Corrupt records currently fail the scan closed, with originals retained; isolating
+a poisoned item while exposing its error without starving healthy items remains
+required. Do not mark INT-02 or any extension/runtime matrix cell verified.

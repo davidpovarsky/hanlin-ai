@@ -55,6 +55,7 @@ final class HanlinScriptingPlatform {
     private var store: HanlinAtomicScriptStore?
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
+    private var invocationExecutor: HanlinInvocationExecutor?
     private var applicationSession: HanlinScriptingApplicationSession?
     private var nativeScriptSession: HanlinNativeScriptSession?
     private var nativeScriptHostServices: NativeScriptHostServicesAdapter?
@@ -122,7 +123,9 @@ final class HanlinScriptingPlatform {
             let installed = platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
             store = try HanlinAtomicScriptStore(root: installed)
             do {
-                extensionStore = try HanlinScriptExtensionStore()
+                let sharedStore = try HanlinScriptExtensionStore()
+                extensionStore = sharedStore
+                invocationExecutor = HanlinInvocationExecutor(store: sharedStore)
             } catch {
                 Self.logger.warning("extension_unavailable: App Group extension store unavailable: \(Self.safeMessage(error), privacy: .public)")
                 extensionStore = nil
@@ -139,7 +142,7 @@ final class HanlinScriptingPlatform {
         do {
             await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
             installedPackages = try await store.restore()
-            pendingResumeCommands = try extensionStore?.pendingCommands() ?? []
+            pendingResumeCommands = try extensionStore?.pendingCommands(limit: 128) ?? []
             try await refreshExtensionSnapshot()
             try await processPendingResumeCommands()
         } catch {
@@ -1403,139 +1406,94 @@ final class HanlinScriptingPlatform {
     }
 
     private func processPendingResumeCommands() async throws {
-        guard let store else { return }
+        guard let invocationExecutor else { return }
         for command in pendingResumeCommands {
-            let identity = command.invocation.identity
-            if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {
-                guard let actionName = command.invocation.entityID,
-                      let expectedInstalledID = try? provider.installedPackageID,
-                      identity.installedPackageID == expectedInstalledID,
-                      identity.generation == 0,
-                      let intentEntrypoint = provider.descriptor.entryPoints.first(where: { $0.kind == .appIntentBridge }),
-                      identity.entrypointID == intentEntrypoint.handler,
-                      provider.intentNames.contains(actionName) else {
-                    Self.logger.error("Rejected invalid compiled AppIntent command \(command.id, privacy: .public): identity=\(identity.packageID.rawValue, privacy: .public)")
-                    try? extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                    continue
-                }
-
-                do {
-                    _ = try await provider.performIntent(actionName, command.invocation.parameters)
-                    try extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                    WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
-                } catch {
-                    Self.logger.error("Failed to execute compiled AppIntent \(actionName, privacy: .public): \(Self.safeMessage(error), privacy: .public)")
-                    try? extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                }
-                continue
-            }
-            guard let package = installedPackages.first(where: {
-                $0.record.installedPackageID == identity.installedPackageID
-                    && $0.record.packageID == identity.packageID
-                    && $0.record.activeGeneration == identity.generation
-                    && $0.enabled
-            }), let entrypoint = package.entrypoints.first(where: {
-                $0.id == identity.entrypointID && $0.kind == .appIntent
-            }), let actionName = command.invocation.entityID else {
-                Self.logger.error("Unknown or disabled package/entrypoint for resume command: \(identity.packageID.rawValue, privacy: .public)")
-                try? extensionStore?.acknowledge(command.id)
-                pendingResumeCommands.removeAll { $0.id == command.id }
-                continue
-            }
-
-            if entrypoint.runtimeProfile == .hanlinNativeScript {
-                let cleanActionName = actionName.components(separatedBy: "::").last ?? actionName
-                guard let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
-                    ?? (try? HanlinAppID(validating: identity.packageID.rawValue)) else {
-                    Self.logger.error("Invalid NativeScript target AppID for package: \(identity.packageID.rawValue, privacy: .public)")
-                    try? extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                    continue
-                }
-                guard let actionID = try? HanlinActionID(validating: cleanActionName),
-                      let descriptor = try? package.appDescriptor(),
-                      let declaredAction = descriptor.actions.first(where: { $0.id == actionID }) else {
-                    Self.logger.error("Invalid NativeScript AppIntent target or action: \(actionName, privacy: .public)")
-                    try? extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                    continue
-                }
-
-                let requiredCapability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share"))
-
-                guard let effectiveCapability = requiredCapability else {
-                    Self.logger.error("Unable to resolve capability for NativeScript action \(actionName, privacy: .public)")
-                    try? extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                    continue
-                }
-
-                do {
-                    let hostCallerID = try HanlinAppID(validating: "hanlin.host")
-                    let payloadValue = command.invocation.parameters
-                    _ = try await HanlinMiniAppHost.shared.requestBroker.request(.init(
-                        caller: hostCallerID,
-                        target: targetID,
-                        action: actionID,
-                        capability: effectiveCapability,
-                        payload: payloadValue
-                    ))
-                    try extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                    WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
-                } catch {
-                    Self.logger.error("Failed to dispatch NativeScript AppIntent \(actionName, privacy: .public): \(Self.safeMessage(error), privacy: .public)")
-                    try? extensionStore?.acknowledge(command.id)
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                }
-                continue
-            }
-
-            if entrypoint.runtimeProfile == .hanlinExpo {
-                Self.logger.error("EXPO_APP_INTENT_UNSUPPORTED: Expo App Intents are not supported in resume command execution for package \(package.record.packageID.rawValue, privacy: .public)")
-                try? extensionStore?.acknowledge(command.id)
-                pendingResumeCommands.removeAll { $0.id == command.id }
-                continue
-            }
-
-            let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
-            let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
-            let compiledURL = artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory)
-            let program = try String(contentsOf: compiledURL, encoding: .utf8)
             do {
-                let requestedWidgetReload = try await {
-                    let session = try HanlinScriptingApplicationSession(
-                        installedPackageID: identity.installedPackageID,
-                        canonicalAppID: package.appID,
-                        program: program,
-                        filename: compiledPath,
-                        entrypointContext: .appIntentRegistration,
-                        storageAllowed: true,
-                        filesAllowed: true,
-                        packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory)
-                    )
-                    defer { session.dispose() }
-                    _ = try await session.invokeAppIntent(
-                        name: actionName,
-                        parameters: command.invocation.parameters
-                    )
-                    return session.requestedWidgetReload
-                }()
-                try extensionStore?.acknowledge(command.id)
-                pendingResumeCommands.removeAll { $0.id == command.id }
-                if requestedWidgetReload {
-                    try await refreshExtensionSnapshot()
-                    WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+                let receipt = try await invocationExecutor.execute(command.id) { [weak self] command in
+                    guard let self else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
+                    return try await self.dispatchResumeCommand(command)
+                }
+                if receipt?.status.isTerminal == true {
+                    pendingResumeCommands.removeAll { $0.id == command.id }
                 }
             } catch {
-                Self.logger.error("Failed to execute JSC AppIntent \(actionName, privacy: .public): \(Self.safeMessage(error), privacy: .public)")
-                try? extensionStore?.acknowledge(command.id)
-                pendingResumeCommands.removeAll { $0.id == command.id }
+                // Keep unresolved records and actual receipts; never acknowledge
+                // a failed write or persist runtime error text in the App Group.
+                Self.logger.error("Invocation delivery failed: \(command.id, privacy: .public)")
             }
         }
+    }
+
+    private func dispatchResumeCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
+        guard let store else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
+        let identity = command.invocation.identity
+        if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {
+            guard let actionName = command.invocation.entityID,
+                  let expectedInstalledID = try? provider.installedPackageID,
+                  identity.installedPackageID == expectedInstalledID,
+                  identity.generation == 0,
+                  let intentEntrypoint = provider.descriptor.entryPoints.first(where: { $0.kind == .appIntentBridge }),
+                  identity.entrypointID == intentEntrypoint.handler,
+                  provider.intentNames.contains(actionName),
+                  command.invocation.delivery == nil || command.invocation.delivery?.appID == provider.descriptor.id else {
+                throw HanlinInvocationDispatchError(.stale, .invalidTarget)
+            }
+            let value = try await provider.performIntent(actionName, command.invocation.parameters)
+            WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+            return value
+        }
+        guard let package = installedPackages.first(where: {
+            $0.record.installedPackageID == identity.installedPackageID && $0.record.packageID == identity.packageID
+        }) else { throw HanlinInvocationDispatchError(.stale, .invalidTarget) }
+        guard package.enabled else { throw HanlinInvocationDispatchError(.stale, .disabledPackage) }
+        guard package.record.activeGeneration == identity.generation else {
+            throw HanlinInvocationDispatchError(.stale, .staleGeneration)
+        }
+        guard command.invocation.delivery == nil || command.invocation.delivery?.appID == package.appID,
+              let entrypoint = package.entrypoints.first(where: { $0.id == identity.entrypointID && $0.kind == .appIntent }),
+              let actionName = command.invocation.entityID else {
+            throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
+        }
+        if entrypoint.runtimeProfile == .hanlinNativeScript {
+            let cleanActionName = actionName.components(separatedBy: "::").last ?? actionName
+            guard let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
+                    ?? (try? HanlinAppID(validating: identity.packageID.rawValue)),
+                  let actionID = try? HanlinActionID(validating: cleanActionName),
+                  let descriptor = try? package.appDescriptor(),
+                  let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),
+                  let capability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share")) else {
+                throw HanlinInvocationDispatchError(.failed, .invalidTarget)
+            }
+            // Preserve the one-isolate invariant. Queue policy must not start a
+            // second NativeScript VM while another package owns the first.
+            guard nativeScriptSession == nil || activeApplicationID == identity.installedPackageID,
+                  !isExecutingHeadlessNativeScriptAction else {
+                throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+            }
+            let response = try await HanlinMiniAppHost.shared.requestBroker.request(.init(
+                id: command.id, caller: try HanlinAppID(validating: "hanlin.host"), target: targetID,
+                action: actionID, capability: capability, payload: command.invocation.parameters))
+            WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+            return response.value
+        }
+        guard entrypoint.runtimeProfile != .hanlinExpo else {
+            throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
+        }
+        let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
+        let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
+        let program = try String(contentsOf: artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory), encoding: .utf8)
+        let session = try HanlinScriptingApplicationSession(
+            installedPackageID: identity.installedPackageID, canonicalAppID: package.appID,
+            program: program, filename: compiledPath, entrypointContext: .appIntentRegistration,
+            storageAllowed: true, filesAllowed: true,
+            packageSourceDirectory: artifactRoot.appending(path: "source", directoryHint: .isDirectory))
+        defer { session.dispose() }
+        let value = try await session.invokeAppIntent(name: actionName, parameters: command.invocation.parameters) ?? .null
+        if session.requestedWidgetReload {
+            try await refreshExtensionSnapshot()
+            WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
+        }
+        return value
     }
 
     private func performSystemOperation(
