@@ -316,6 +316,14 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
     private static func hash(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
 
     static func deviceKey() throws -> SymmetricKey {
+        try loadDeviceKey(createIfMissing: true)
+    }
+
+    static func existingDeviceKey() throws -> SymmetricKey {
+        try loadDeviceKey(createIfMissing: false)
+    }
+
+    private static func loadDeviceKey(createIfMissing: Bool) throws -> SymmetricKey {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: "com.hanlin.agent-diagnostics.raw.v1", kSecAttrAccount as String: "device-key"]
         var result: CFTypeRef?
@@ -323,7 +331,7 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
         lookup[kSecReturnData as String] = true
         let status = SecItemCopyMatching(lookup as CFDictionary, &result)
         if status == errSecSuccess, let bytes = result as? Data, bytes.count == 32 { return SymmetricKey(data: bytes) }
-        guard status == errSecItemNotFound else { throw NSError(domain: NSOSStatusErrorDomain, code: Int(status)) }
+        guard status == errSecItemNotFound, createIfMissing else { throw NSError(domain: NSOSStatusErrorDomain, code: Int(status)) }
         let generated = SymmetricKey(size: .bits256)
         var insert = query
         insert[kSecValueData as String] = generated.withUnsafeBytes { Data($0) }

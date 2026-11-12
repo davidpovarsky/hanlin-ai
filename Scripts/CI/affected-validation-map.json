@@ -1158,6 +1158,23 @@
       ],
       "consumers": []
     },
+    "diagnostics_raw_review_tests": {
+      "description": "Deliberate encrypted capture authentication and response-only local review",
+      "patterns": [
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsExport.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+        "AI_HLYTests/AgentDiagnosticsRawReviewTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentDiagnosticsRawReviewTests"
+      ],
+      "consumers": []
+    },
     "chat_auto_follow_tests": {
       "description": "Original-chat layout-driven scroll coalescing and cancellation ownership",
       "patterns": [

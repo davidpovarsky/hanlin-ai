@@ -31,12 +31,7 @@ enum AgentDiagnosticsExporter {
 
     static func prepare(sessionJSON: URL) throws -> AgentDiagnosticsExport {
         let fm = FileManager.default
-        let source = sessionJSON.deletingPathExtension()
-        guard sessionJSON.pathExtension == "json", source.lastPathComponent.hasPrefix("agent-session-"),
-              source.lastPathComponent.range(of: "^[A-Za-z0-9._-]+$", options: .regularExpression) != nil,
-              !source.lastPathComponent.hasSuffix("-manifest"), !source.lastPathComponent.hasSuffix("-stage-snapshots") else {
-            throw CocoaError(.fileReadInvalidFileName)
-        }
+        let source = try ownedSessionBase(sessionJSON)
         let directory = fm.temporaryDirectory.appending(path: "hanlin-diagnostics-export-" + UUID().uuidString)
         try fm.createDirectory(at: directory, withIntermediateDirectories: false)
         var values = URLResourceValues()
@@ -146,7 +141,17 @@ enum AgentDiagnosticsExporter {
         }
     }
 
-    private static func readOwnedAsset(_ url: URL) throws -> Data {
+    static func ownedSessionBase(_ sessionJSON: URL) throws -> URL {
+        let source = sessionJSON.deletingPathExtension()
+        guard sessionJSON.pathExtension == "json", source.lastPathComponent.hasPrefix("agent-session-"),
+              source.lastPathComponent.range(of: "^[A-Za-z0-9._-]+$", options: .regularExpression) != nil,
+              !source.lastPathComponent.hasSuffix("-manifest"), !source.lastPathComponent.hasSuffix("-stage-snapshots") else {
+            throw CocoaError(.fileReadInvalidFileName)
+        }
+        return source
+    }
+
+    static func readOwnedAsset(_ url: URL) throws -> Data {
         // Keep the opened inode, even if a live recorder atomically replaces
         // its path. O_NOFOLLOW closes the lstat/open symlink substitution race.
         let descriptor = open(url.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK)

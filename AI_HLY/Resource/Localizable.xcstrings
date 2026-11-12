@@ -1,6 +1,236 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+  "Offline replay API format": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Offline replay API format"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "פורמט API לשחזור מקומי"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "离线重放 API 格式"
+        }
+      }
+    }
+  },
+  "Choose the format actually used by the recorded provider. This response-only replay does not recreate the original request or timing.": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Choose the format actually used by the recorded provider. This response-only replay does not recreate the original request or timing."
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "בחר את הפורמט שבו השתמש הספק המוקלט. שחזור זה משחזר רק את התגובה, ללא הבקשה המקורית או התזמון."
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "请选择录制提供方实际使用的格式。此重放仅处理响应，不会重建原始请求或时间。"
+        }
+      }
+    }
+  },
+  "Review encrypted capture": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Review encrypted capture"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "עיין בהקלטה המוצפנת"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "查看加密记录"
+        }
+      }
+    }
+  },
+  "Open encrypted capture locally?": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Open encrypted capture locally?"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "לפתוח את ההקלטה המוצפנת מקומית?"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "在本地打开加密记录？"
+        }
+      }
+    }
+  },
+  "Open local review": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Open local review"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "פתח עיון מקומי"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "打开本地查看"
+        }
+      }
+    }
+  },
+  "The capture could not be authenticated or exceeds the local review budget. The original files remain unchanged.": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "The capture could not be authenticated or exceeds the local review budget. The original files remain unchanged."
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "לא ניתן לאמת את ההקלטה, או שהיא חורגת ממגבלת העיון המקומי. קובצי המקור נשארו ללא שינוי."
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "无法验证记录，或记录超过本地查看限制。原始文件保持不变。"
+        }
+      }
+    }
+  },
+  "Only this run will be decrypted in memory with this device's key. Requests and conversation text may contain private information. Nothing is uploaded or executed. Credentials are masked before review; sharing the reviewed report is optional.": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Only this run will be decrypted in memory with this device's key. Requests and conversation text may contain private information. Nothing is uploaded or executed. Credentials are masked before review; sharing the reviewed report is optional."
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "רק ריצה זו תפוענח בזיכרון באמצעות מפתח המכשיר. הבקשות והשיחה עשויות להכיל מידע פרטי. לא יתבצעו העלאה או הרצת כלים. פרטי הגישה יוסתרו לפני ההצגה; שיתוף הדוח לאחר העיון הוא לבחירתך."
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "仅使用此设备的密钥在内存中解密本次运行。请求和对话可能包含私人信息。不会上传或执行任何内容。凭据会在查看前遮蔽；是否共享查看后的报告由您决定。"
+        }
+      }
+    }
+  },
+  "Preview shows up to 65,536 characters. Sharing includes the full redacted report, not the encrypted source or device key.": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Preview shows up to 65,536 characters. Sharing includes the full redacted report, not the encrypted source or device key."
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "התצוגה המקדימה כוללת עד 65,536 תווים. השיתוף כולל את הדוח המלא לאחר השחרה, ללא המקור המוצפן או מפתח המכשיר."
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "预览最多显示 65,536 个字符。共享包含完整的脱敏报告，不包含加密源文件或设备密钥。"
+        }
+      }
+    }
+  },
+  "Share reviewed report": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Share reviewed report"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "שתף את הדוח לאחר עיון"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "共享已查看的报告"
+        }
+      }
+    }
+  },
+  "Local capture review": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Local capture review"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "עיון מקומי בהקלטה"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "本地记录查看"
+        }
+      }
+    }
+  },
   "Diagram": {
     "extractionState": "manual",
     "localizations": {

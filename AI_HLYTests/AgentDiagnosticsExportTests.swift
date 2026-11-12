@@ -2,7 +2,11 @@ import CryptoKit
 import Foundation
 import Testing
 import ZIPFoundation
+#if canImport(HanlinChatDiagnosticsProof)
+@testable import HanlinChatDiagnosticsProof
+#else
 @testable import AI_Hanlin
+#endif
 
 @Suite("Local diagnostic export privacy and coverage")
 struct AgentDiagnosticsExportTests {

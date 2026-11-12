@@ -1,11 +1,65 @@
 import Foundation
 
 enum AgentDiagnosticsRedactor {
+    /// Secrets actually present in structured requests must also be masked if
+    /// the provider echoes them in a different, ordinary text field.
+    static func credentials(in value: Any) -> Set<String> {
+        var found: Set<String> = []
+        func visit(_ value: Any) {
+            if let object = value as? [String: Any] {
+                for (name, value) in object {
+                    if isSecretKey(normalizedKey(name)), let text = value as? String, !text.isEmpty {
+                        found.insert(text)
+                        if text.lowercased().hasPrefix("bearer "), let token = text.split(whereSeparator: \.isWhitespace).last,
+                           !token.isEmpty { found.insert(String(token)) }
+                        if normalizedKey(name).hasSuffix("cookie") {
+                            for part in text.split(separator: ";") {
+                                let pair = part.split(separator: "=", maxSplits: 1)
+                                guard pair.count == 2 else { continue }
+                                let field = pair[0].trimmingCharacters(in: .whitespaces).lowercased()
+                                if ["path", "domain", "expires", "max-age", "samesite"].contains(field) { continue }
+                                let value = pair[1].trimmingCharacters(in: .whitespaces).trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+                                if !value.isEmpty { found.insert(value) }
+                            }
+                        }
+                    } else { visit(value) }
+                }
+            } else if let values = value as? [Any] { values.forEach(visit) }
+            else if let text = value as? String, let data = text.data(using: .utf8),
+                    let nested = try? JSONSerialization.jsonObject(with: data),
+                    nested is [String: Any] || nested is [Any] { visit(nested) }
+            else if let text = value as? String, let url = URLComponents(string: text), url.scheme != nil {
+                for item in url.queryItems ?? [] {
+                    let name = normalizedKey(item.name)
+                    if isSecretKey(name) || name == "key" || name.hasSuffix("_signature") || name.hasSuffix("_credential"),
+                       let secret = item.value, !secret.isEmpty { found.insert(secret) }
+                }
+                if let password = url.password, !password.isEmpty { found.insert(password) }
+            }
+        }
+        visit(value)
+        return found
+    }
+
+    private static func normalizedKey(_ key: String) -> String {
+        var decoded = key
+        for _ in 0..<2 {
+            guard let next = decoded.removingPercentEncoding, next != decoded else { break }
+            decoded = next
+        }
+        return decoded.replacingOccurrences(of: "([a-z0-9])([A-Z])", with: "$1_$2", options: .regularExpression)
+            .lowercased().replacingOccurrences(of: "-", with: "_")
+    }
     static func redactKnownCredentials(in value: Any, credentials: Set<String>) -> Any {
         if let object = value as? [String: Any] { return object.mapValues { redactKnownCredentials(in: $0, credentials: credentials) } }
         if let array = value as? [Any] { return array.map { redactKnownCredentials(in: $0, credentials: credentials) } }
         if var text = value as? String {
-            for secret in credentials { text = text.replacingOccurrences(of: secret, with: "<redacted>") }
+            for secret in credentials.sorted(by: { $0.count > $1.count }) where !secret.isEmpty {
+                if secret.count < 4 {
+                    text = text.replacingOccurrences(of: "(?<![\\p{L}\\p{N}_])" + NSRegularExpression.escapedPattern(for: secret) + "(?![\\p{L}\\p{N}_])",
+                        with: "<redacted>", options: .regularExpression)
+                } else { text = text.replacingOccurrences(of: secret, with: "<redacted>") }
+            }
             return text
         }
         return value
@@ -26,11 +80,7 @@ enum AgentDiagnosticsRedactor {
     static func sanitizeJSONObject(_ value: Any) -> Any {
         if let dictionary = value as? [String: Any] {
             return dictionary.reduce(into: [String: Any]()) { result, item in
-                let normalizedKey = item.key
-                    .replacingOccurrences(of: "([a-z0-9])([A-Z])", with: "$1_$2", options: .regularExpression)
-                    .lowercased()
-                    .replacingOccurrences(of: "-", with: "_")
-                result[item.key] = isSecretKey(normalizedKey)
+                result[item.key] = isSecretKey(normalizedKey(item.key))
                     ? "<redacted>"
                     : sanitizeJSONObject(item.value)
             }
@@ -55,6 +105,12 @@ enum AgentDiagnosticsRedactor {
         }
         if value.hasPrefix("data:"), value.contains(";base64,") { return "<binary attachment retained in encrypted raw>" }
         var result = value
+        if let pattern = try? NSRegularExpression(pattern: "https?://[^\\s<>\"']+", options: .caseInsensitive) {
+            for match in pattern.matches(in: value, range: NSRange(value.startIndex..., in: value)).reversed() {
+                guard let range = Range(match.range, in: result) else { continue }
+                result.replaceSubrange(range, with: sanitizeURL(String(result[range])))
+            }
+        }
         let replacements = [
             ("(?i)bearer\\s+[a-z0-9._~+/-]+=*", "Bearer <redacted>"),
             ("(?i)(api[_-]?key|authorization|access[_-]?token|refresh[_-]?token|password|secret|cookie)\\s*[:=]\\s*[^\\s,;\\\"}]+", "$1=<redacted>"),
@@ -67,6 +123,23 @@ enum AgentDiagnosticsRedactor {
             result = result.replacingOccurrences(of: pattern, with: replacement, options: .regularExpression)
         }
         return result
+    }
+
+    private static func sanitizeURL(_ value: String) -> String {
+        guard var url = URLComponents(string: value), ["http", "https"].contains(url.scheme?.lowercased() ?? ""),
+              url.host?.isEmpty == false else { return value }
+        var changed = false
+        if url.password != nil { url.user = "<redacted>"; url.password = nil; changed = true }
+        if let query = url.queryItems {
+            let items = query.map { item -> URLQueryItem in
+                let name = normalizedKey(item.name)
+                guard isSecretKey(name) || name == "key" || name.hasSuffix("_signature") || name.hasSuffix("_credential") else { return item }
+                changed = true
+                return URLQueryItem(name: item.name, value: "<redacted>")
+            }
+            if changed { url.queryItems = items }
+        }
+        return changed ? (url.string ?? "<redacted URL>") : value
     }
 
     static func sanitizedJSONString(from object: Any, pretty: Bool = false) -> String {

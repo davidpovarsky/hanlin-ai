@@ -2,7 +2,11 @@ import CryptoKit
 import Foundation
 import HanlinChatCore
 import Testing
+#if canImport(HanlinChatDiagnosticsProof)
+@testable import HanlinChatDiagnosticsProof
+#else
 @testable import AI_Hanlin
+#endif
 
 @Suite("Automatic diagnostic journal")
 struct AgentDiagnosticsJournalTests {

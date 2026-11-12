@@ -152,6 +152,9 @@ private struct AgentDiagnosticsSessionView: View {
     @State private var exportTask: Task<Void, Never>?
     @State private var exportError: String?
     @State private var isExporting = false
+    @State private var showsRawConfirmation = false
+    @State private var replayAPIType = "OpenAI"
+    @State private var rawReview: AgentDiagnosticsRawReview?
 
     var body: some View {
         List {
@@ -181,6 +184,14 @@ private struct AgentDiagnosticsSessionView: View {
                 }
             }
             Section(String(localized: "Files")) {
+                Picker(String(localized: "Offline replay API format"), selection: $replayAPIType) {
+                    ForEach(["OpenAI", "Anthropic", "Gemini"], id: \.self) { Text($0).tag($0) }
+                }
+                Text(String(localized: "Choose the format actually used by the recorded provider. This response-only replay does not recreate the original request or timing."))
+                    .font(.caption).foregroundStyle(.secondary)
+                Button { showsRawConfirmation = true } label: {
+                    Label(String(localized: "Review encrypted capture"), systemImage: "lock.doc")
+                }.disabled(isExporting)
                 Button {
                     let input = file.jsonURL
                     isExporting = true
@@ -215,6 +226,25 @@ private struct AgentDiagnosticsSessionView: View {
         }
         .navigationTitle(file.session.modelID)
         .onDisappear { exportTask?.cancel() }
+        .confirmationDialog(String(localized: "Open encrypted capture locally?"), isPresented: $showsRawConfirmation) {
+            Button(String(localized: "Open local review")) {
+                let input = file.jsonURL, runID = file.session.runID, modelID = file.session.modelID, apiType = replayAPIType
+                isExporting = true
+                exportError = nil
+                exportTask = Task {
+                    defer { isExporting = false }
+                    do {
+                        let review = try await AgentDiagnosticsRawReviewer.reviewLocally(
+                            sessionJSON: input, runID: runID, modelID: modelID, apiType: apiType)
+                        if !Task.isCancelled { rawReview = review }
+                    } catch is CancellationError { } catch {
+                        exportError = String(localized: "The capture could not be authenticated or exceeds the local review budget. The original files remain unchanged.")
+                    }
+                }
+            }
+        } message: {
+            Text(String(localized: "Only this run will be decrypted in memory with this device's key. Requests and conversation text may contain private information. Nothing is uploaded or executed. Credentials are masked before review; sharing the reviewed report is optional."))
+        }
         .sheet(item: $preparedExport, onDismiss: {
             if let exportDirectory { try? FileManager.default.removeItem(at: exportDirectory) }
             exportDirectory = nil
@@ -241,6 +271,24 @@ private struct AgentDiagnosticsSessionView: View {
                 .navigationTitle(String(localized: "Diagnostic export"))
                 .toolbar { ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "Done")) { export.discard(); preparedExport = nil }
+                } }
+            }
+        }
+        .sheet(item: $rawReview) { review in
+            NavigationStack {
+                List {
+                    Section(String(localized: "Review before sharing")) {
+                        Text(String(localized: "Preview shows up to 65,536 characters. Sharing includes the full redacted report, not the encrypted source or device key."))
+                            .font(.caption).foregroundStyle(.secondary)
+                        Text(String(review.text.prefix(65_536))).font(.caption.monospaced()).textSelection(.enabled)
+                    }
+                    ShareLink(item: review.text) {
+                        Label(String(localized: "Share reviewed report"), systemImage: "square.and.arrow.up")
+                    }
+                }
+                .navigationTitle(String(localized: "Local capture review"))
+                .toolbar { ToolbarItem(placement: .confirmationAction) {
+                    Button(String(localized: "Done")) { rawReview = nil }
                 } }
             }
         }
