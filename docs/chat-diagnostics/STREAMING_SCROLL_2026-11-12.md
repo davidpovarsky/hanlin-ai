@@ -37,3 +37,18 @@ of its name. The required 5/20/60 tps, 10k/50k-character same-device benchmark,
 pixel-visible first token, signposts, CPU/memory/FPS, VoiceOver and physical iPad
 acceptance remain open in CHATUX-11. This scheduling correction is not a claim
 that those performance budgets passed.
+
+## Diagnostic processing microcheck
+
+Capture run43268755136 passed15 correctness cases in78.975s wall time with all15
+Swift Testing cases starting concurrently in an isolated iPhone27.0 package.
+Older app run43255791263 used a different iPad27.2/test execution setup. Its
+durations are not a controlled before/after stream-latency comparison.
+
+A same-process Windows Swift6.3.3 `-O` microcheck compiled the actual oldb667a281
+and currentf2e7c584 redactor bodies (only the old enum name was changed to load
+both). For300 identical metadata records including final JSON serialization:
+baseline0.205825s/current0.207314s; byte-count checksum matched. This narrow
+portable check does not explain total Apple journal/disk/queue scheduling time,
+prove responsive streaming, or replace required serial native/device profiling.
+Artifacts: `build/RedactorBenchmark/{Baseline.swift,main.swift,results.txt}`.

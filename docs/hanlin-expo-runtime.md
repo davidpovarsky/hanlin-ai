@@ -2,6 +2,11 @@
 
 This document specifies the architecture, operational contracts, performance metrics, and development guidelines for the **Hanlin Expo / React Native SwiftUI Runtime** (`hanlinExpo`), enabling dynamically installed MiniApps (`.hanlinExpo`) to render Apple SwiftUI components using Expo UI (`@expo/ui/swift-ui`) and Hermes on iOS 27+.
 
+Current source/version and extension-execution boundaries are tracked in the
+[existing SDK authority audit](miniapp-sdk/README.md). A rendered component or
+foreground Host API does not establish Share/Intent/Translation/Notification
+reachability; consult that matrix before advertising a surface as supported.
+
 ---
 
 ## 1. Architectural Overview & Mental Model

@@ -1,0 +1,5659 @@
+{
+  "sourceCommit": "f2e7c58439a0c857ed5a8d3dc7e54a59838df127",
+  "uncommittedSourcePaths": [
+    "Scripts/Audit/audit-miniapp-sdk.mjs"
+  ],
+  "schemaVersion": 1,
+  "auditParser": {
+    "package": "@typescript/typescript6",
+    "version": "6.0.2",
+    "reportedCompilerVersion": "6.0.3",
+    "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "purpose": "syntax/export inventory; not strict typecheck or native availability proof"
+  },
+  "scope": "Existing NativeScript + Expo SDK source only; no Scripting-JSC development",
+  "status": "IN_PROGRESS_SOURCE_AUDIT",
+  "evidenceBoundary": "Exposed declarations and version locks are not a signed binary or per-surface E2E pass. Objective-C records are declarations, not metadata/JS marshalling proof.",
+  "snapshotIdentity": "sourceCommit is the base commit; exact source hashes also cover any listed uncommitted source paths at audit time.",
+  "extensionReachability": "extension-reachability.json (INT-01; separate consumer of this source inventory)",
+  "nativeScript": {
+    "toolingDependencies": {
+      "@nativescript/core": "9.1.0",
+      "@nativescript/swift-ui": "4.0.2"
+    },
+    "toolingDevDependencies": {
+      "@nativescript/ios": "9.1.0",
+      "@nativescript/vite": "8.0.0",
+      "typescript": "5.9.3",
+      "vite": "8.0.0"
+    },
+    "pinnedNativeContract": {
+      "coreVersion": "9.1.0",
+      "iosRuntimeVersion": "9.1.0",
+      "iosSPMRepository": "https://github.com/NativeScript/ios-spm.git",
+      "iosSPMTagRevision": "a8e26efad02d792a62d2d015f0f7a632e336b2d1"
+    },
+    "swiftUI": {
+      "package": "@nativescript/swift-ui",
+      "version": "4.0.2",
+      "registryTarball": "https://registry.npmjs.org/@nativescript/swift-ui/-/swift-ui-4.0.2.tgz",
+      "integrity": "sha512-tPmOnjCmslUpDPe6+ye2gPG+MxamuzvEwL656RFmg+HQFOcnxymmFIrp/X0vpY8nHTKi/rX9+srCN06KGZBLbw==",
+      "shasum": "68e2887fd34efd885b13ee60872a6a0e5d24dd09",
+      "tarballSHA256": "c4eabcd37bba66db5d272b7f5ee6b3d900ea49b8dc8b829deeff8dbf4060e85a",
+      "license": "Apache-2.0",
+      "runtimeFiles": {
+        "index.ios.js": "dd1c048833b06a28b53a2ea73158cd3d64823e032885f0d482e0a37922ad6b94",
+        "index.d.ts": "8f9469bfe25e2defe005af66ccdc063292ecdf24d464f296a829f33371a3d3fc",
+        "index.ios.d.ts": "074922e5419aabae15af9e48ee7f4939bb7fade6c07263d3af29f1a1b85900ed"
+      },
+      "upstreamNativeContract": {
+        "path": "platforms/ios/src/SwiftUIProvider.swift",
+        "sha256": "f6139dd1277b38abcc3b359f3ef7f49688ee492741417b9709d7bc14638e7ee2"
+      },
+      "embeddedProviderClass": "HanlinNativeScriptSwiftUIFixtureProvider"
+    },
+    "hostBridge": {
+      "source": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+      "methods": [
+        {
+          "selector": "dataRootDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)dataRootDirectory;",
+          "line": 11
+        },
+        {
+          "selector": "stateDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)stateDirectory;",
+          "line": 12
+        },
+        {
+          "selector": "documentsDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)documentsDirectory;",
+          "line": 13
+        },
+        {
+          "selector": "cacheDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)cacheDirectory;",
+          "line": 14
+        },
+        {
+          "selector": "executeJavaScript:completion:",
+          "classMethod": false,
+          "signature": "- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 16
+        },
+        {
+          "selector": "executeNode:completion:",
+          "classMethod": false,
+          "signature": "- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 17
+        },
+        {
+          "selector": "nodeHealthCheckWithCompletion:",
+          "classMethod": false,
+          "signature": "- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
+          "line": 18
+        },
+        {
+          "selector": "executePython:completion:",
+          "classMethod": false,
+          "signature": "- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 19
+        },
+        {
+          "selector": "pythonVersion",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)pythonVersion;",
+          "line": 20
+        },
+        {
+          "selector": "fetchURL:completion:",
+          "classMethod": false,
+          "signature": "- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 21
+        },
+        {
+          "selector": "sendRequest:action:capability:payloadJSON:completion:",
+          "classMethod": false,
+          "signature": "- (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 23
+        },
+        {
+          "selector": "registerRequestHandler:capability:handler:",
+          "classMethod": false,
+          "signature": "- (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
+          "line": 29
+        },
+        {
+          "selector": "dataRootDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)dataRootDirectory;",
+          "line": 39
+        },
+        {
+          "selector": "stateDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)stateDirectory;",
+          "line": 40
+        },
+        {
+          "selector": "documentsDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)documentsDirectory;",
+          "line": 41
+        },
+        {
+          "selector": "cacheDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)cacheDirectory;",
+          "line": 42
+        },
+        {
+          "selector": "invalidate",
+          "classMethod": false,
+          "signature": "- (void)invalidate;",
+          "line": 44
+        },
+        {
+          "selector": "executeJavaScript:completion:",
+          "classMethod": false,
+          "signature": "- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 46
+        },
+        {
+          "selector": "executeNode:completion:",
+          "classMethod": false,
+          "signature": "- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 47
+        },
+        {
+          "selector": "nodeHealthCheckWithCompletion:",
+          "classMethod": false,
+          "signature": "- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
+          "line": 48
+        },
+        {
+          "selector": "executePython:completion:",
+          "classMethod": false,
+          "signature": "- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 49
+        },
+        {
+          "selector": "pythonVersion",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)pythonVersion;",
+          "line": 50
+        },
+        {
+          "selector": "fetchURL:completion:",
+          "classMethod": false,
+          "signature": "- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 51
+        },
+        {
+          "selector": "sendRequest:action:capability:payloadJSON:completion:",
+          "classMethod": false,
+          "signature": "- (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 53
+        },
+        {
+          "selector": "registerRequestHandler:capability:handler:",
+          "classMethod": false,
+          "signature": "- (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
+          "line": 59
+        },
+        {
+          "selector": "registerProvider:forSessionID:",
+          "classMethod": true,
+          "signature": "+ (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider forSessionID:(NSString *)sessionID;",
+          "line": 67
+        },
+        {
+          "selector": "unregisterProviderForSessionID:",
+          "classMethod": true,
+          "signature": "+ (void)unregisterProviderForSessionID:(NSString *)sessionID;",
+          "line": 68
+        },
+        {
+          "selector": "providerForSessionID:",
+          "classMethod": true,
+          "signature": "+ (nullable id<HanlinNativeServicesProvider>)providerForSessionID:(NSString *)sessionID;",
+          "line": 69
+        },
+        {
+          "selector": "resetAllSessions",
+          "classMethod": true,
+          "signature": "+ (void)resetAllSessions;",
+          "line": 70
+        },
+        {
+          "selector": "claimSessionBridgeWithToken:",
+          "classMethod": true,
+          "signature": "+ (nullable HanlinNativeServicesSessionBridge *)claimSessionBridgeWithToken:(NSString *)token;",
+          "line": 74
+        },
+        {
+          "selector": "setActiveSessionBridge:forSessionID:",
+          "classMethod": true,
+          "signature": "+ (void)setActiveSessionBridge:(nullable HanlinNativeServicesSessionBridge *)bridge forSessionID:(NSString *)sessionID;",
+          "line": 77
+        },
+        {
+          "selector": "clearActiveSessionBridgeForSessionID:",
+          "classMethod": true,
+          "signature": "+ (void)clearActiveSessionBridgeForSessionID:(NSString *)sessionID;",
+          "line": 78
+        },
+        {
+          "selector": "activeSessionBridge",
+          "classMethod": true,
+          "signature": "+ (nullable HanlinNativeServicesSessionBridge *)activeSessionBridge;",
+          "line": 79
+        },
+        {
+          "selector": "registerProvider:",
+          "classMethod": true,
+          "signature": "+ (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider;",
+          "line": 82
+        },
+        {
+          "selector": "legacyProvider",
+          "classMethod": true,
+          "signature": "+ (nullable id<HanlinNativeServicesProvider>)legacyProvider;",
+          "line": 83
+        },
+        {
+          "selector": "currentProvider",
+          "classMethod": true,
+          "signature": "+ (nullable id<HanlinNativeServicesProvider>)currentProvider;",
+          "line": 84
+        },
+        {
+          "selector": "dataRootDirectory",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)dataRootDirectory;",
+          "line": 87
+        },
+        {
+          "selector": "stateDirectory",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)stateDirectory;",
+          "line": 88
+        },
+        {
+          "selector": "documentsDirectory",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)documentsDirectory;",
+          "line": 89
+        },
+        {
+          "selector": "cacheDirectory",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)cacheDirectory;",
+          "line": 90
+        },
+        {
+          "selector": "executeJavaScript:completion:",
+          "classMethod": true,
+          "signature": "+ (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 92
+        },
+        {
+          "selector": "executeNode:completion:",
+          "classMethod": true,
+          "signature": "+ (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 93
+        },
+        {
+          "selector": "nodeHealthCheckWithCompletion:",
+          "classMethod": true,
+          "signature": "+ (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
+          "line": 94
+        },
+        {
+          "selector": "executePython:completion:",
+          "classMethod": true,
+          "signature": "+ (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 95
+        },
+        {
+          "selector": "pythonVersion",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)pythonVersion;",
+          "line": 96
+        },
+        {
+          "selector": "fetchURL:completion:",
+          "classMethod": true,
+          "signature": "+ (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 97
+        },
+        {
+          "selector": "sendRequest:action:capability:payloadJSON:completion:",
+          "classMethod": true,
+          "signature": "+ (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 99
+        },
+        {
+          "selector": "registerRequestHandler:capability:handler:",
+          "classMethod": true,
+          "signature": "+ (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
+          "line": 105
+        },
+        {
+          "selector": "executeJavaScriptSync:",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)executeJavaScriptSync:(NSString *)source;",
+          "line": 110
+        },
+        {
+          "selector": "executeNodeSync:",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)executeNodeSync:(NSString *)source;",
+          "line": 111
+        },
+        {
+          "selector": "executePythonSync:",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)executePythonSync:(NSString *)source;",
+          "line": 112
+        },
+        {
+          "selector": "fetchURLSync:",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)fetchURLSync:(NSString *)urlString;",
+          "line": 113
+        },
+        {
+          "selector": "sendRequestSync:action:capability:payloadJSON:",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)sendRequestSync:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON;",
+          "line": 114
+        },
+        {
+          "selector": "registerAction:capability:",
+          "classMethod": true,
+          "signature": "+ (void)registerAction:(NSString *)action capability:(NSString *)capability;",
+          "line": 118
+        },
+        {
+          "selector": "roundTripValue:key:",
+          "classMethod": true,
+          "signature": "+ (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;",
+          "line": 119
+        },
+        {
+          "selector": "sharedBridge",
+          "classMethod": true,
+          "signature": "+ (instancetype)sharedBridge;",
+          "line": 121
+        },
+        {
+          "selector": "dataRootDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)dataRootDirectory;",
+          "line": 122
+        },
+        {
+          "selector": "stateDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)stateDirectory;",
+          "line": 123
+        },
+        {
+          "selector": "documentsDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)documentsDirectory;",
+          "line": 124
+        },
+        {
+          "selector": "cacheDirectory",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)cacheDirectory;",
+          "line": 125
+        },
+        {
+          "selector": "executeJavaScript:completion:",
+          "classMethod": false,
+          "signature": "- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 126
+        },
+        {
+          "selector": "executeNode:completion:",
+          "classMethod": false,
+          "signature": "- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 127
+        },
+        {
+          "selector": "nodeHealthCheckWithCompletion:",
+          "classMethod": false,
+          "signature": "- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
+          "line": 128
+        },
+        {
+          "selector": "executePython:completion:",
+          "classMethod": false,
+          "signature": "- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 129
+        },
+        {
+          "selector": "pythonVersion",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)pythonVersion;",
+          "line": 130
+        },
+        {
+          "selector": "fetchURL:completion:",
+          "classMethod": false,
+          "signature": "- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 131
+        },
+        {
+          "selector": "sendRequest:action:capability:payloadJSON:completion:",
+          "classMethod": false,
+          "signature": "- (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 132
+        },
+        {
+          "selector": "registerRequestHandler:capability:handler:",
+          "classMethod": false,
+          "signature": "- (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
+          "line": 137
+        },
+        {
+          "selector": "executeJavaScriptSync:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)executeJavaScriptSync:(NSString *)source;",
+          "line": 140
+        },
+        {
+          "selector": "executeNodeSync:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)executeNodeSync:(NSString *)source;",
+          "line": 141
+        },
+        {
+          "selector": "executePythonSync:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)executePythonSync:(NSString *)source;",
+          "line": 142
+        },
+        {
+          "selector": "fetchURLSync:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)fetchURLSync:(NSString *)urlString;",
+          "line": 143
+        },
+        {
+          "selector": "sendRequestSync:action:capability:payloadJSON:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)sendRequestSync:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON;",
+          "line": 144
+        },
+        {
+          "selector": "registerAction:capability:",
+          "classMethod": false,
+          "signature": "- (void)registerAction:(NSString *)action capability:(NSString *)capability;",
+          "line": 148
+        },
+        {
+          "selector": "roundTripValue:key:",
+          "classMethod": false,
+          "signature": "- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;",
+          "line": 149
+        }
+      ],
+      "status": "partial",
+      "missingGenericRuntimeKinds": [
+        "typeScript",
+        "shell"
+      ],
+      "result": "legacy string/error callbacks, not full RuntimeExecutionResult"
+    }
+  },
+  "expo": {
+    "declaredAndLocked": {
+      "expo": {
+        "declared": "58.0.0",
+        "locked": "58.0.0"
+      },
+      "@expo/ui": {
+        "declared": "58.0.3",
+        "locked": "58.0.3"
+      },
+      "react": {
+        "declared": "19.3.0",
+        "locked": "19.3.0"
+      },
+      "react-native": {
+        "declared": "0.88.0",
+        "locked": "0.88.0"
+      },
+      "expo-modules-core": {
+        "declared": "58.0.3",
+        "locked": "58.0.3"
+      },
+      "expo-modules-jsi": {
+        "declared": "58.0.2",
+        "locked": "58.0.2"
+      },
+      "react-native-worklets": {
+        "declared": "0.13.1",
+        "locked": "0.13.1"
+      },
+      "@nativescript/react-native": {
+        "declared": "9.1.2",
+        "locked": "9.1.2"
+      }
+    },
+    "hanlinUI": {
+      "packageVersion": "1.0.0",
+      "peerDependencies": {
+        "@expo/ui": "58.0.3",
+        "expo": "58.0.0-preview.3",
+        "react": "19.2.3",
+        "react-native": "0.88.0-rc.0"
+      },
+      "generatedBridgeVersion": "3.0.0",
+      "generatedRuntimeContract": "58.0.3",
+      "expoUIVersion": "58.0.3",
+      "upstreamViewCount": 68,
+      "upstreamModifierCount": 157,
+      "reviewedViews": [
+        "Alert",
+        "Button",
+        "ColorPicker",
+        "ConfirmationDialog",
+        "ContentUnavailableView",
+        "DatePicker",
+        "DisclosureGroup",
+        "Divider",
+        "Form",
+        "Gauge",
+        "Group",
+        "Label",
+        "LabeledContent",
+        "List",
+        "Menu",
+        "NavigationLink",
+        "NavigationSplitView",
+        "NavigationStack",
+        "Picker",
+        "Popover",
+        "ProgressView",
+        "ScrollView",
+        "Section",
+        "SecureField",
+        "ShareLink",
+        "Slider",
+        "Stepper",
+        "TabView",
+        "TextField",
+        "Toggle",
+        "Toolbar"
+      ],
+      "reviewedModifiers": [
+        "onAppear",
+        "onDisappear",
+        "onLongPressGesture",
+        "onSubmit",
+        "onTapGesture",
+        "refreshable"
+      ]
+    },
+    "nativeAPIFacade": {
+      "packageVersion": "1.0.0",
+      "peerDependencies": {
+        "@nativescript/react-native": "9.1.2",
+        "react": "*",
+        "react-native": ">=0.88.0",
+        "react-native-worklets": "0.13.1"
+      }
+    },
+    "nativeModule": {
+      "source": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
+      "exports": [
+        "hasCapability",
+        "invoke",
+        "executeRuntime",
+        "executeNode",
+        "executePython",
+        "readFile",
+        "writeFile",
+        "executeSQLite",
+        "fetchURL"
+      ]
+    },
+    "hostInvoke": {
+      "source": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "operations": [
+        "capabilities.has",
+        "runtime.execute",
+        "files.read",
+        "files.write",
+        "files.delete",
+        "files.list",
+        "widgets.publish"
+      ],
+      "facadeOperations": [
+        "runtime.execute",
+        "files.read",
+        "files.write",
+        "files.delete",
+        "files.list",
+        "widgets.publish"
+      ],
+      "status": "partial_source_wiring_not_surface_acceptance"
+    },
+    "publicExports": [
+      {
+        "source": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+        "line": 9,
+        "name": "FACADE_VERSION",
+        "kind": "variable",
+        "literalValue": "1.0.0"
+      },
+      {
+        "source": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+        "line": 10,
+        "name": "CONTRACT_VERSION",
+        "kind": "variable",
+        "literalValue": "1.0.0"
+      },
+      {
+        "source": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+        "line": 11,
+        "name": "UPSTREAM_VERSION",
+        "kind": "variable",
+        "literalValue": "9.1.2"
+      },
+      {
+        "source": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+        "line": 12,
+        "name": "WORKLETS_VERSION",
+        "kind": "variable",
+        "literalValue": "0.13.1"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+        "line": 2,
+        "name": "HANLIN_EXPO_RUNTIME_VERSION",
+        "kind": "variable",
+        "literalValue": "58.0.3"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+        "line": 3,
+        "name": "HANLIN_EXPO_UI_BRIDGE_VERSION",
+        "kind": "variable",
+        "literalValue": "3.0.0"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+        "line": 4,
+        "name": "HANLIN_SWIFTUI_SDK_IDENTITY",
+        "kind": "variable",
+        "literalValue": "xcode-27.0-ios-27.0-arm64e-apple-ios"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+        "line": 5,
+        "name": "HANLIN_SWIFTUI_SYMBOLS",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+        "line": 304,
+        "name": "HanlinSwiftUISymbol",
+        "kind": "TypeAliasDeclaration",
+        "type": "(typeof HANLIN_SWIFTUI_SYMBOLS)[number]"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+        "line": 305,
+        "name": "HANLIN_SWIFTUI_CLASSIFICATIONS",
+        "kind": "variable",
+        "members": [
+          {
+            "name": "'SwiftUI.AsyncImage'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.AutomaticTextEditorStyle.Body'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Button'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ButtonStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ColorPicker'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ContentUnavailableView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ControlGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ControlGroupStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ControlGroupStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DatePicker'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DatePickerStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultButtonLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultDateProgressLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultDocumentGroupLaunchActions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultNewDocumentButtonLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultSettingsLinkLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultShareLinkLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultTabLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultTextFieldStyle._Body'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DefaultWindowVisibilityToggleLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DisclosureGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DisclosureGroupStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DisclosureGroupStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Divider'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.DocumentLaunchView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.EditButton'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.EquatableView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Form'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.FormStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Gauge'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GaugeStyleConfiguration.CurrentValueLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GaugeStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GaugeStyleConfiguration.MarkedValueLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GaugeStyleConfiguration.MaximumValueLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GaugeStyleConfiguration.MinimumValueLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GroupBox'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GroupBoxStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.GroupBoxStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.HSplitView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.HelpLink'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.LabeledContentStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.LabeledContentStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.LabeledControlGroupContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.LabeledToolbarItemGroupContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.LazyHGrid'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.LazyVGrid'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Link'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.List'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Menu'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.MenuButton'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.MenuStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.MenuStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.MultiDatePicker'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.NavigationLink'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.NavigationSplitView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.NavigationStack'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.NavigationView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.NewDocumentButton'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.OutlineSubgroupChildren'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.PasteButton'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Picker'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.PresentedWindowContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.PreviewModifierContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.PrimitiveButtonStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ProgressView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ProgressViewStyleConfiguration.CurrentValueLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ProgressViewStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.RenameButton'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ScrollView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ScrollViewReader'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.SearchUnavailableContent.Actions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.SearchUnavailableContent.Description'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.SearchUnavailableContent.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.SecureField'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.SettingsLink'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ShareLink'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Slider'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Stepper'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.SubscriptionView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.SwiftUICore.SectionConfiguration.Actions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.TabContentBuilder.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.TabView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Table'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.TextEditor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.TextField'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.TextFieldLink'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.Toggle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ToggleStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.VSplitView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ViewThatFits'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.WindowVisibilityToggle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._AsyncImageConditionalContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._CompositorContentBodyAdaptor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._DatePickerStyleLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._DisclosureIndicator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._MenuButtonStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._MenuButtonStyleConfiguration.Label'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._NavigationViewStyleConfiguration.Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._PagingView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._ScrollView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._ScrollView.Main'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._ScrollViewRoot'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._ScrollableLayoutView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._ShadowView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._SymmetricallyScaledText'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._TabContentBodyAdaptor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._TextFieldStyleLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._UIHostingConfigurationBackgroundView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._WKStoryboardContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._cover'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._identified'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._listLinkedGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._navigationDestination'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._onButtonGesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._onEnvironmentChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._prefersDefaultFocus'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._printChanges'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._scrollable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._statusBar'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI._statusBarHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityAction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityActions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityActivationPoint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityAddTraits'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityAdjustableAction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityChartDescriptor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityChildren'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityCustomContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityDefaultFocus'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityDirectTouch'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityDragPoint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityDropPoint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityElement'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityFocused'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityHeading'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityHint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityIdentifier'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityInputLabels'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityLabeledPair'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityLinkedGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityQuickAction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityRemoveTraits'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityRepresentation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityRespondsToUserInteraction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityRotor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityRotorEntry'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityScrollAction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityScrollStatus'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilitySortPriority'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityTextContentType'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityValue'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.accessibilityZoomAction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.actionSheet'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.alert'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.allowsWindowActivationEvents'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.alternatingRowBackgrounds'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.assistiveAccessNavigationIcon'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.asyncImageURLSession'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.autocapitalization'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.autocorrectionDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.backgroundExtensionEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.badge'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.badgeProminence'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.buttonBorderShape'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.buttonRepeatBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.buttonStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.confirmationDialog'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.containerBackground'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.contentMargins'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.contentToolbar'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.contextMenu'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.controlGroupStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.copyable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.cuttable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.datePickerStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.defaultAdaptableTabBarPlacement'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.defaultAppStorage'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.defaultFocus'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.defaultScrollAnchor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.defaultTabBarPlacement'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.defaultWheelPickerItemHeight'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.defersSystemGestures'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.deleteDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dialogIcon'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dialogPreventsAppTermination'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dialogSeverity'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dialogSuppressionToggle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.digitalCrownAccessory'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.digitalCrownRotation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.disableAutocorrection'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.disclosureGroupStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dismissalConfirmationDialog'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.documentBrowserContextMenu'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.documentLaunchSubtitle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.documentLaunchTitle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dragConfiguration'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dragContainer'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dragContainerSelection'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dragPreviewsFormation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.draggable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dropConfiguration'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dropDestination'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.dropPreviewsFormation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.equatable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.exportableToServices'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.exportsItemProviders'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileDialogBrowserOptions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileDialogConfirmationLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileDialogCustomizationID'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileDialogDefaultDirectory'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileDialogImportsUnresolvedAliases'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileDialogMessage'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileDialogURLEnabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileExporter'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileExporterFilenameLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileImporter'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fileMover'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.findDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.findNavigator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.flipsForRightToLeftLayoutDirection'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusEffectDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusScope'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusSection'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focused'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusedObject'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusedSceneObject'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusedSceneValue'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.focusedValue'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.formStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.fullScreenCover'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.gaugeStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.gesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.gridCellAnchor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.gridCellColumns'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.gridCellUnsizedAxes'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.gridColumnAlignment'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.groupBoxStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.handGestureShortcut'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.handlesExternalEvents'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.help'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.hidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.horizontalRadioGroupLayout'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.immersiveEnvironmentPicker'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.importableFromServices'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.importsItemProviders'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.indexViewStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.inspector'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.inspectorColumnWidth'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.interactionActivityTrackingTag'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.interactiveDismissDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.invalidatableContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.itemProvider'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.keyboardShortcut'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.keyboardType'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.labelIconToTitleSpacing'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.labelReservedIconWidth'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.labelStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.labeledContentStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.labelsHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.labelsVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listItemTint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowBackground'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowHoverEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowHoverEffectDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowInsets'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowPlatterColor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowSeparator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowSeparatorTint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listRowSpacing'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listSectionIndexVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listSectionMargins'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listSectionSeparator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listSectionSeparatorTint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listSectionSpacing'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.listStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.matchedTransitionSource'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.menuActionDismissBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.menuButtonStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.menuIndicator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.menuOrder'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.menuStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.modifierKeyAlternate'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.moveDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationBarBackButtonHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationBarHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationBarItems'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationBarTitle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationBarTitleDisplayMode'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationDestination'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationDocument'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationLinkIndicatorVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationSplitViewColumnWidth'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationSplitViewStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationSubtitle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationTitle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationTransition'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.navigationViewStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onContinueUserActivity'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onContinuousHover'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onCopyCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onCutCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onDeleteCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onDrag'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onDragSessionUpdated'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onDrop'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onDropSessionUpdated'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onExitCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onHover'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onInteractiveResizeChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onKeyPress'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onLongPressGesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onLongTouchGesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onModifierKeysChanged'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onMoveCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onOpenURL'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onPasteCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onPencilDoubleTap'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onPencilSqueeze'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onPlayPauseCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onReceive'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onScrollGeometryChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onScrollPhaseChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onScrollTargetVisibilityChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onScrollVisibilityChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onSubmit'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onTapGesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.onVolumeViewpointChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.ornament'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.pageCommand'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.paletteSelectionEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.pasteDestination'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.persistentSystemOverlays'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.pickerStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.pointerVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.popover'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.prefersDefaultFocus'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationBackground'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationBackgroundInteraction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationCompactAdaptation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationContentInteraction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationCornerRadius'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationDetents'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationDragIndicator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationPlacement'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationPreventsAppTermination'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentationSizing'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentedWindowStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.presentedWindowToolbarStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.previewContext'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.previewDevice'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.previewDisplayName'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.previewInterfaceOrientation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.previewLayout'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.progressViewStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.projectionEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.refreshable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.renameAction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.reorderContainer'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.replaceDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.safeAreaBar'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.sceneAccessory'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scenePadding'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollBounceBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollClipDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollContentBackground'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollDismissesKeyboard'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollEdgeEffectHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollEdgeEffectStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollIndicators'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollIndicatorsFlash'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollInputBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollPosition'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollTargetBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollTargetLayout'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.scrollTransition'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchCompletion'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchDictationBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchFocused'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchPresentationToolbarBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchScopes'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchSelection'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchSuggestions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchToolbarBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.searchable'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.sectionActions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.sectionIndexLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.selectionDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.sensoryFeedback'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.sheet'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.sliderThumbVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.springLoadingBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.statusBar'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.statusBarHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.submitLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.submitScope'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.supportedVolumeViewpoints'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.swipeActions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.swipeActionsContainer'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.symbolEffectsRemoved'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabBarMinimizeBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabItem'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabViewBottomAccessory'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabViewCustomization'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabViewSearchActivation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabViewSidebarBottomBar'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabViewSidebarFooter'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabViewSidebarHeader'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tabViewStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tableColumnHeaders'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.tableStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.task'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textContentType'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textEditorStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textFieldStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textInputAutocapitalization'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textInputCompletion'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textInputFormattingControlVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textInputSuggestions'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textSelection'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.textSelectionAffinity'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toggleStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbar'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarBackground'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarBackgroundVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarColorScheme'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarForegroundStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarItemHidden'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarMinimizationBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarMinimizationRestoration'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarMinimizationSafeAreaAdjustment'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarOverflowMenu'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarRole'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarTitleDisplayMode'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarTitleMenu'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.toolbarVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.touchBar'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.touchBarCustomizationLabel'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.touchBarItemPresence'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.touchBarItemPrincipal'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.typeSelectEquivalent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.userActivity'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.windowDismissBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.windowFullScreenBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.windowMinimizeBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.windowResizeAnchor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.windowResizeBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.windowToolbarFullScreenVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.writingToolsAffordanceVisibility'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUI.writingToolsBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.AngularGradient'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.AnyView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.DebugReplaceableView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.EllipticalGradient'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.EmptyView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.GeometryReader'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.GlassEffectContainer'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.GroupElementsOfContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.GroupSectionsOfContent'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.HStack'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.KeyframeAnimator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.LazyHStack'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.LazyVStack'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.LinearGradient'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.PhaseAnimator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.PlaceholderContentView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.RadialGradient'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.Subview'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.TupleView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.VStack'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.ZStack'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._AnimationView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._CALayerView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._DelayedPreferenceView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._DetachedPlaceholder'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._DetachedView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._PreferenceReadingView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._ShapeView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._UnaryViewAdaptor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._VariadicView_Children.Element'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._ViewModifier_Content'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._addingBackgroundGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._addingBackgroundLayer'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._automaticPadding'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._colorMatrix'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._colorMonochrome'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._containerShape'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._defaultContext'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._detached'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._ignoresAutomaticPadding'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._logChanges'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._makeView'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._makeViewList'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._onBindingChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._safeAreaInsets'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._tightPadding'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._trait'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._untagged'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore._viewListCount'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.accentColor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.accessibilityIgnoresInvertColors'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.accessibilityShowsLargeContentViewer'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.alignmentGuide'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.allowedDynamicRange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.allowsHitTesting'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.allowsTightening'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.anchorPreference'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.animation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.aspectRatio'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.attributedTextFormattingDefinition'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.background'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.backgroundPreferenceValue'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.backgroundStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.baselineOffset'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.blendMode'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.blur'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.bold'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.border'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.brightness'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.buttonSizing'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.clipShape'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.clipped'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.colorEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.colorInvert'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.colorMultiply'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.colorScheme'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.compositingGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.containerCornerOffset'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.containerRelativeFrame'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.containerShape'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.containerValue'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.contentCaptureProtected'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.contentShape'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.contentTransition'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.contrast'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.controlSize'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.coordinateSpace'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.cornerRadius'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.defaultHoverEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.disabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.distortionEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.drawingGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.dynamicTypeSize'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.edgesIgnoringSafeArea'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.environment'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.environmentObject'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.fixedSize'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.font'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.fontDesign'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.fontWeight'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.fontWidth'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.foregroundColor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.foregroundStyle'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.frame'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.geometryGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.gesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.glassEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.glassEffectID'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.glassEffectTransition'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.glassEffectUnion'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.grayscale'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.headerProminence'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.highPriorityGesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.hoverEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.hoverEffectDisabled'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.hoverEffectGroup'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.hueRotation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.id'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.ignoresSafeArea'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.imageScale'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.italic'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.kerning'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.keyframeAnimator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.layerEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.layoutDirectionBehavior'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.layoutPriority'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.layoutValue'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.lineHeight'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.lineLimit'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.lineSpacing'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.luminanceToAlpha'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.mask'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.matchedGeometryEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.materialActiveAppearance'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.minimumScaleFactor'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.modifier'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.monospaced'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.monospacedDigit'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.multilineTextAlignment'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.offset'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onAppear'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onDisappear'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onGeometryChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onOpenURL'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onPreferenceChange'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onTapGesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.onWorldRecenter'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.opacity'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.overlay'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.overlayPreferenceValue'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.padding'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.phaseAnimator'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.position'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.preference'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.preferredColorScheme'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.privacySensitive'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.redacted'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.rotation3DEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.rotationEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.safeAreaInset'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.safeAreaPadding'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.saturation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.scaleEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.scaledToFill'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.scaledToFit'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.shadow'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.simultaneousGesture'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.speechAdjustedPitch'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.speechAlwaysIncludesPunctuation'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.speechAnnouncementsQueued'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.speechSpellsOutCharacters'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.strikethrough'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.symbolColorRenderingMode'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.symbolEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.symbolRenderingMode'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.symbolVariableValueMode'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.symbolVariant'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.tag'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.textCase'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.textInputBorderShape'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.textRenderer'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.textScale'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.tint'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.tracking'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.transaction'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.transformAnchorPreference'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.transformEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.transformEnvironment'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.transformPreference'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.transition'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.truncationMode'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.typesettingLanguage'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.underline'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.unredacted'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.visualEffect'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.writingDirection'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "'SwiftUICore.zIndex'",
+            "kind": "PropertyAssignment",
+            "optional": false
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 4,
+        "name": "accessibility",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 7,
+        "name": "accessibilityActivationPoint",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 10,
+        "name": "accessibilityDirectTouch",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 13,
+        "name": "accessibilityDragPoint",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 16,
+        "name": "accessibilityDropPoint",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 19,
+        "name": "accessibilityHeading",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 22,
+        "name": "accessibilityRespondsToUserInteraction",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 25,
+        "name": "accessibilityScrollStatus",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 28,
+        "name": "accessibilitySortPriority",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 31,
+        "name": "allowsWindowActivationEvents",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 34,
+        "name": "assistiveAccessNavigationIcon",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 37,
+        "name": "backgroundExtensionEffect",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 40,
+        "name": "defersSystemGestures",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 43,
+        "name": "disableAutocorrection",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 46,
+        "name": "documentLaunchSubtitle",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 49,
+        "name": "documentLaunchTitle",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 52,
+        "name": "fileDialogBrowserOptions",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 55,
+        "name": "fileDialogConfirmationLabel",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 58,
+        "name": "fileDialogCustomizationID",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 61,
+        "name": "fileDialogImportsUnresolvedAliases",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 64,
+        "name": "fileDialogMessage",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 67,
+        "name": "fileExporterFilenameLabel",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 70,
+        "name": "findDisabled",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 73,
+        "name": "flipsForRightToLeftLayoutDirection",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 76,
+        "name": "focusEffectDisabled",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 79,
+        "name": "focusable",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 82,
+        "name": "help",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 85,
+        "name": "inspectorColumnWidth",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 88,
+        "name": "interactionActivityTrackingTag",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 91,
+        "name": "labelIconToTitleSpacing",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 94,
+        "name": "labelReservedIconWidth",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 97,
+        "name": "labelsVisibility",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 100,
+        "name": "listSectionIndexVisibility",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 103,
+        "name": "listSectionSeparator",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 106,
+        "name": "navigationBarBackButtonHidden",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 109,
+        "name": "navigationBarHidden",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 112,
+        "name": "navigationBarTitle",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 115,
+        "name": "navigationBarTitleDisplayMode",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 118,
+        "name": "navigationLinkIndicatorVisibility",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 121,
+        "name": "navigationSubtitle",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 124,
+        "name": "persistentSystemOverlays",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 127,
+        "name": "presentationCornerRadius",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 130,
+        "name": "previewDisplayName",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 133,
+        "name": "replaceDisabled",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 136,
+        "name": "scenePadding",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 139,
+        "name": "scrollEdgeEffectHidden",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 142,
+        "name": "scrollIndicatorsFlash",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 145,
+        "name": "searchCompletion",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 148,
+        "name": "searchSuggestions",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 151,
+        "name": "sectionIndexLabel",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 154,
+        "name": "selectionDisabled",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 157,
+        "name": "sliderThumbVisibility",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 160,
+        "name": "statusBar",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 163,
+        "name": "statusBarHidden",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 166,
+        "name": "submitScope",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 169,
+        "name": "swipeActionsContainer",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 172,
+        "name": "symbolEffectsRemoved",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 175,
+        "name": "tableColumnHeaders",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 178,
+        "name": "textInputFormattingControlVisibility",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 181,
+        "name": "textSelectionAffinity",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 184,
+        "name": "typeSelectEquivalent",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 187,
+        "name": "writingToolsAffordanceVisibility",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 190,
+        "name": "accessibilityIgnoresInvertColors",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 193,
+        "name": "accessibilityShowsLargeContentViewer",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 196,
+        "name": "allowsHitTesting",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 199,
+        "name": "baselineOffset",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 202,
+        "name": "blendMode",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 205,
+        "name": "colorScheme",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 208,
+        "name": "compositingGroup",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 211,
+        "name": "containerCornerOffset",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 214,
+        "name": "drawingGroup",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 217,
+        "name": "edgesIgnoringSafeArea",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 220,
+        "name": "fontDesign",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 223,
+        "name": "hoverEffectDisabled",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 226,
+        "name": "ignoresSafeArea",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 229,
+        "name": "monospaced",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 232,
+        "name": "onOpenURL",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 235,
+        "name": "position",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 238,
+        "name": "preferredColorScheme",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 241,
+        "name": "safeAreaPadding",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 244,
+        "name": "scaledToFill",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 247,
+        "name": "scaledToFit",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 250,
+        "name": "speechAdjustedPitch",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 253,
+        "name": "speechAlwaysIncludesPunctuation",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 256,
+        "name": "speechAnnouncementsQueued",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 259,
+        "name": "speechSpellsOutCharacters",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+        "line": 262,
+        "name": "tracking",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 10,
+        "name": "DefaultDocumentGroupLaunchActionsProps",
+        "kind": "InterfaceDeclaration",
+        "members": []
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 15,
+        "name": "DefaultDocumentGroupLaunchActions",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 25,
+        "name": "EditButtonProps",
+        "kind": "InterfaceDeclaration",
+        "members": []
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 30,
+        "name": "EditButton",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 40,
+        "name": "GroupBoxProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "content",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "label",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 48,
+        "name": "GroupBox",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 61,
+        "name": "EmptyViewProps",
+        "kind": "InterfaceDeclaration",
+        "members": []
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "line": 66,
+        "name": "EmptyView",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 5,
+        "name": "HanlinRuntimeKind",
+        "kind": "TypeAliasDeclaration",
+        "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 6,
+        "name": "HanlinDataArea",
+        "kind": "TypeAliasDeclaration",
+        "type": "'data' | 'documents' | 'state' | 'cache'"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 8,
+        "name": "RuntimeExecutionLimits",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "timeoutMilliseconds",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          },
+          {
+            "name": "maximumOutputBytes",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 13,
+        "name": "RuntimeExecutionResult",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "executionID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "stdout",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "stderr",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "unknown"
+          },
+          {
+            "name": "exitCode",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "durationMilliseconds",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          },
+          {
+            "name": "didTimeOut",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "wasCancelled",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "outputWasTruncated",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 30,
+        "name": "hostServices",
+        "kind": "variable",
+        "members": [
+          {
+            "name": "hasCapability",
+            "kind": "MethodDeclaration",
+            "optional": false,
+            "type": "Promise<boolean>"
+          },
+          {
+            "name": "executeRuntime",
+            "kind": "MethodDeclaration",
+            "optional": false,
+            "type": "Promise<RuntimeExecutionResult>"
+          },
+          {
+            "name": "readFile",
+            "kind": "MethodDeclaration",
+            "optional": false,
+            "type": "Promise<Uint8Array | null>"
+          },
+          {
+            "name": "writeFile",
+            "kind": "MethodDeclaration",
+            "optional": false,
+            "type": "Promise<{ ok: true }>"
+          },
+          {
+            "name": "deleteFile",
+            "kind": "MethodDeclaration",
+            "optional": false,
+            "type": "Promise<{ ok: true }>"
+          },
+          {
+            "name": "listFiles",
+            "kind": "MethodDeclaration",
+            "optional": false,
+            "type": "Promise<string[]>"
+          },
+          {
+            "name": "publishWidget",
+            "kind": "MethodDeclaration",
+            "optional": false,
+            "type": "Promise<{ ok: true }>"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 22,
+        "name": "TextEditorProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "value",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "defaultValue",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "placeholder",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "isEditable",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "onValueChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: string) => void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 34,
+        "name": "TextEditor",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 45,
+        "name": "GridItem",
+        "kind": "TypeAliasDeclaration",
+        "type": "| { size: 'fixed'; value: number; spacing?: number }\n  | { size: 'flexible'; minimum?: number; maximum?: number; spacing?: number }\n  | { size: 'adaptive'; minimum: number; maximum?: number; spacing?: number }"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 50,
+        "name": "LazyGridProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "tracks",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "GridItem[]"
+          },
+          {
+            "name": "spacing",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "pinnedSectionHeaders",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "pinnedSectionFooters",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 75,
+        "name": "LazyVGrid",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 76,
+        "name": "LazyHGrid",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 78,
+        "name": "ViewThatFitsProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "axes",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "'both' | 'horizontal' | 'vertical'"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 85,
+        "name": "ViewThatFits",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 95,
+        "name": "SearchableProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "value",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "defaultValue",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "isPresented",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "defaultPresented",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "prompt",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "placement",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "'automatic' | 'navigationBar' | 'toolbar'"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "suggestions",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "onValueChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: string) => void"
+          },
+          {
+            "name": "onPresentedChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: boolean) => void"
+          },
+          {
+            "name": "onSubmit",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: string) => void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 121,
+        "name": "Searchable",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 144,
+        "name": "PresentationProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "isPresented",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "defaultPresented",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "presented",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "onPresentedChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: boolean) => void"
+          },
+          {
+            "name": "onDismiss",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "() => void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 186,
+        "name": "Sheet",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 187,
+        "name": "FullScreenCover",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 188,
+        "name": "PopoverPresentation",
+        "kind": "variable"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 190,
+        "name": "InspectorProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "isPresented",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "defaultPresented",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "inspector",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "onPresentedChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: boolean) => void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 205,
+        "name": "Inspector",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 218,
+        "name": "FocusedProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "isFocused",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "defaultFocused",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "onFocusedChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: boolean) => void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 232,
+        "name": "Focused",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 244,
+        "name": "SafeAreaInsetProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "edge",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "'top' | 'bottom' | 'leading' | 'trailing'"
+          },
+          {
+            "name": "spacing",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "inset",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "React.ReactNode"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 257,
+        "name": "SafeAreaInset",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 269,
+        "name": "AsyncImageProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "url",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "scale",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "placeholder",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "failure",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "React.ReactNode"
+          },
+          {
+            "name": "onPhaseChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(phase: 'empty' | 'success' | 'failure') => void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 284,
+        "name": "AsyncImage",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 297,
+        "name": "TableColumn",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "key",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 302,
+        "name": "TableRow",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "id",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "values",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "Record<string, string>"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 307,
+        "name": "TableProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "columns",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "TableColumn[]"
+          },
+          {
+            "name": "rows",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "TableRow[]"
+          },
+          {
+            "name": "selection",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "onSelectionChange",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "(value: string | undefined) => void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 321,
+        "name": "Table",
+        "kind": "FunctionDeclaration"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "line": 338,
+        "name": "getInstalledBridgeMetadata",
+        "kind": "FunctionDeclaration",
+        "type": "BridgeMetadata"
+      }
+    ],
+    "reexports": [
+      {
+        "source": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+        "line": 14,
+        "module": "@nativescript/react-native",
+        "names": [
+          "init",
+          "install",
+          "isAvailable",
+          "isInstalled",
+          "defaultMetadataPath",
+          "getRuntimeBackend",
+          "installGlobals",
+          "runOnUI",
+          "installWorklets",
+          "uiInvoker",
+          "jsInvoker",
+          "runtimeInvoker",
+          "defineUIKitView",
+          "defineUIKitContainer",
+          "defineUIViewController",
+          "createDelegate",
+          "createRetainer",
+          "retain",
+          "release",
+          "getClass",
+          "getProtocol",
+          "isClassAvailable",
+          "isFrameworkLoaded",
+          "loadFramework",
+          "isMainThread",
+          "assertUIKitThread",
+          "warnIfNotUIKitThread",
+          "refreshUIKitHostView",
+          "refreshUIKitHostViewHandle",
+          "loadImage",
+          "nativeViewHandle",
+          "eventBridge",
+          "createEventBridge"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+        "line": 59,
+        "module": "@nativescript/react-native",
+        "names": [
+          "InstallOptions",
+          "NativeScriptWorklets",
+          "UIKitSizingMode",
+          "UIKitLayoutOptions",
+          "UIKitHostReadyEvent",
+          "UIKitViewContext",
+          "NativeScriptImageLoadOptions",
+          "NativeScriptImageLoadCallback",
+          "UIKitDisposeResult",
+          "UIKitViewDefinition",
+          "UIKitViewRef",
+          "UIKitHostViewProps",
+          "UIKitViewComponent",
+          "UIKitContainerResult",
+          "UIKitContainerDefinition",
+          "UIViewControllerDefinition",
+          "NativeScriptCallbackThread",
+          "NativeScriptInvokedCallback",
+          "NativeRetainer",
+          "NativeDelegateOwner",
+          "CreateDelegateOptions",
+          "NativeProtocolReference"
+        ],
+        "typeOnly": true
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/index.ts",
+        "line": 1,
+        "module": "@expo/ui/swift-ui",
+        "names": [
+          "*"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/index.ts",
+        "line": 2,
+        "module": "./manual-components",
+        "names": [
+          "*"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/index.ts",
+        "line": 3,
+        "module": "./generated/bridge-manifest",
+        "names": [
+          "*"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/index.ts",
+        "line": 4,
+        "module": "./generated/views",
+        "names": [
+          "*"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/index.ts",
+        "line": 5,
+        "module": "./host-services",
+        "names": [
+          "*"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/modifiers.ts",
+        "line": 1,
+        "module": "@expo/ui/swift-ui/modifiers",
+        "names": [
+          "*"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/modifiers.ts",
+        "line": 2,
+        "module": "./generated/modifiers",
+        "names": [
+          "*"
+        ],
+        "typeOnly": false
+      }
+    ]
+  },
+  "manifests": [
+    {
+      "family": "script.json",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+      "decoderKnownKeys": [
+        "name",
+        "version",
+        "description",
+        "localizedNames",
+        "localizedDescriptions",
+        "author",
+        "contributors",
+        "icon",
+        "iconImage",
+        "color",
+        "entry",
+        "runInApp",
+        "intentInputTypes",
+        "remoteResource",
+        "hanlinAppID",
+        "hanlinRuntime"
+      ],
+      "unknownFields": "losslessly retained; not executable entrypoints or grants",
+      "status": "partial; engine/package.json/analyzer rules are additional contracts"
+    },
+    {
+      "family": "canonical compiled Hanlin app",
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "rootProperties": [
+        "actions",
+        "apiVersion",
+        "appearance",
+        "authors",
+        "capabilities",
+        "category",
+        "dependencies",
+        "description",
+        "distribution",
+        "entryPoints",
+        "extensions",
+        "icon",
+        "id",
+        "implementation",
+        "integrity",
+        "minimumHostVersion",
+        "name",
+        "routes",
+        "schemaVersion",
+        "skills",
+        "summary",
+        "supportedExposures",
+        "tools",
+        "version"
+      ],
+      "note": "Do not substitute this schema for the NS/Expo script.json and prepared package.json contract."
+    }
+  ],
+  "systemServices": {
+    "source": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+    "declaredMethods": [
+      "fetchContacts",
+      "requestCameraAccess",
+      "requestMicrophoneAccess",
+      "recognizeSpeech",
+      "translateText",
+      "fetchWeather",
+      "readKeychainItem",
+      "authenticateUser",
+      "fetchCloudStatus",
+      "presentShareSheet",
+      "searchMap",
+      "recognizeTextInDocument",
+      "requestCalendarAccess",
+      "requestReminderAccess",
+      "requestHealthAccess",
+      "requestLocationAccess",
+      "requestNotificationAccess"
+    ],
+    "status": "declarations do not prove NS/Expo public bindings, iOS availability, OS permission or canPresentUI"
+  },
+  "gaps": [
+    {
+      "id": "SDK04-PEERS",
+      "owner": "SDK-04",
+      "detail": "HanlinExpoUI peer metadata still names preview Expo/React/RN versions; distinguish it from the stable tooling lock and generated bridge identity."
+    },
+    {
+      "id": "INT06-LEGACY-KIND",
+      "owner": "INT-06",
+      "detail": "Native legacy executeRuntime defaults unknown kind to JSC; facade invoke(runtime.execute) already validates all five enum values."
+    },
+    {
+      "id": "INT06-SHELL-SOURCE",
+      "owner": "INT-06",
+      "detail": "Generic RuntimeKind.shell still uses the linked native string parser; the public command-string tool uses the portable-shell route. Align the documented source semantics without adding another shell engine."
+    },
+    {
+      "id": "INT03-NS-RESULT",
+      "owner": "INT-03",
+      "detail": "NS legacy callbacks discard structured stderr/status/artifacts and omit a generic TS/Shell entrypoint."
+    },
+    {
+      "id": "INT03-SESSION",
+      "owner": "INT-03",
+      "detail": "NativeScript has one active session and process-environment mutation; no concurrent-isolate or process-isolation claim."
+    },
+    {
+      "id": "INT06-CONTEXT",
+      "owner": "INT-02/INT-06",
+      "detail": "MiniApp context factory sets userGesturePresent=false; the NS headless-action path constructs an adapter whose canPresentUI is hardcoded true. Propagate actual invocation presentation context."
+    },
+    {
+      "id": "INT06-AVAILABILITY",
+      "owner": "INT-06",
+      "detail": "hasCapability returns personal-host policy, not OS/service availability. The17 SystemServicesBroker declarations have no generic NS/Expo Host binding in these inspected adapters."
+    },
+    {
+      "id": "SDK01-BINARY",
+      "owner": "SDK-01",
+      "detail": "Installed device Host/bridge versions and signed extension entitlements remain unverified here; source manifests are not IPA evidence."
+    }
+  ],
+  "sources": [
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "sha256": "6374655ca527e5eadaa47abd8fd4f9d0988aa155463716d52348aa38eb38a7a9"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "sha256": "75fef32b1a0c1fecd90422208e3111e3391e4b3f4a51d99d05cd1751336d3817"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
+      "sha256": "a221b4c516c1e3f717eeaca8b5dc8e3fb52a66294b161d12ae893902fdb20766"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+      "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+      "sha256": "c8b63f62896fc0a6835e481d69644d06e72314b58bbe3661f41542de9c9c4a2f"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/package.json",
+      "sha256": "a2b03cb051457fbbb80c7ed058d199e63b06081ea0092dc8bbdbb9433de30b61"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+      "sha256": "322eb6f4c97bcf28de34e95b3aa871a9d9431f8c3cb37d9603a1ee911fcfc0ae"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Package.swift",
+      "sha256": "b842c5a9cfb638c3ed0cbce39fdd1fab83045d52f3847851eb2b33e23e78628f"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
+      "sha256": "5c5da45ded51ab824d71221a58eeba736bbf7f387a251b6b4961630a8172a49a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "sha256": "51e977e2972dfc0fb4bd67bb04a26050146f91b4be080ba6a2326c821dd4aafd"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostServicesBridge.swift",
+      "sha256": "dda5b6bc45ab6939fa97c2b8ed55ada3dae7173d1779fac5f5658a3a7ea34695"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+      "sha256": "f28bfc24e48f478773f729145e31634ad2377ce0c4bfc3130d2ba1dfc2b71109"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
+      "sha256": "82760eab2126410e611b9e369cbdf24f407a0281dc662d0fb183022133a616d1"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/package.json",
+      "sha256": "c9d206481a2cbb375c701ca9aa0e3392b34ec625278547dcc26ebad1ca616ff1"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "sha256": "13e6b22a0c800fe9944b5deab24066daf112227b841588d339e864105d772d8b"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+      "sha256": "6df5c320d64b6014e3094cd5acf3724aa2d6c4215d055384a7e9cdaa15d10e23"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/views.tsx",
+      "sha256": "4eaa99afdce01daf9f7c5c32f18bf2c60ac897025407194e063c64a81e154d68"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "sha256": "ccf2d1b4598ba17f4129eee27f910af983686fdf7629b8b89eb8e3dc14bef2bd"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/index.ts",
+      "sha256": "fea6f582087bbe16fba03304a1e606d02337df220d60b93fd425602224e0cf78"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "sha256": "aca64e3232f72cbb8a09a5a052c66ec73d42bd36c326b726b2fb95d6a31ce47d"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/modifiers.ts",
+      "sha256": "77ed8a18a38510e4e94c191d49f0c3a4bb8beaf5512371ed4797f972a7f7fd45"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
+      "sha256": "56673333e192c974ddeac9bf6f5eeccc62102d26acc37d493e385ad854a4eb08"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
+      "sha256": "f562e84d44ea64e3c172fc4ae5579ae551076a8d4897b76166db8a86edadf425"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "sha256": "4029b44ede74ba01b8304f4f052824f00311605999f7d4dde0c2e25571d7b107"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+      "sha256": "623d1047c3eda55f0db2aa79df37dc2afa376487dffdaa51f7526137076298d4"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "sha256": "aee294b026c5e532705b7036af505704bce6596e3907bd1b42b329e50ed77248"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "sha256": "238a068fb6436153bdabdd70cb7a35edc49eb8a8821738b373ff64c2440b9905"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "sha256": "ccaa6b31587a3d16c48c03cf2df9346622db9cb51c693e9aa47879b5be8356ca"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+      "sha256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac"
+    },
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "sha256": "0b183ff0dac35a9f9418347e64e5f5d37442c2a13a261a2f538bd7aa1de4eb00"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "339deaa8a155ac922d7e5274bbcfc3f8f548f3126b591a6708f790ccbac6253c"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "958644db0225b790f789380b2bf7afa87de9630d1edc469d9277c5cd1c024767"
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "117ae6521cd70fcb6a3edb3756ce4db75edfecbd9a76c9045620c1e8d5c43661"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "sha256": "e5ff996378f887203ece1be170fdb7aaca12aaaa1a3a2cce937aa097c81b88fe"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/configuration.json",
+      "sha256": "eff6879d1f7000b2bd8a78513b55fd9cb8ee4e2602b5a3f45bd40983dae6db33"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/expo-reviewed-capabilities.json",
+      "sha256": "b8b265ad02a0b2f4cac2c7bee4d078442b9b73a4297f79b0a1fc3d542a251a0a"
+    }
+  ]
+}
