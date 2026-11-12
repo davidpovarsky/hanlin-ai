@@ -31,6 +31,7 @@
       "patterns": [
         ".github/**",
         "Scripts/CI/**",
+        "Scripts/Diagnostics/**",
         "Scripts/generate_acceptance_results.mjs",
         "Scripts/Audit/**",
         "Scripts/*.mjs",
