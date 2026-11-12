@@ -8,6 +8,36 @@ import os from 'node:os';
 import {fileURLToPath} from 'node:url';
 import {randomUUID,createHash} from 'node:crypto';
 import {ExecutionJobs} from '../execution-jobs.mjs';
+import {claimExecutionInput} from '../execution-input.mjs';
+
+test('owned UTF-8 input remains strict without ICU TextDecoder, including scalar splits and BOM',async t=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'hanlin-utf8-no-icu-'));
+  t.after(()=>fs.rm(root,{recursive:true,force:true}));
+  const inbox=path.join(root,'inbox');await fs.mkdir(inbox);
+  const original=globalThis.TextDecoder;
+  globalThis.TextDecoder=class {constructor(){throw new Error('ICU TextDecoder must not be used');}};
+  try {
+    for(const offset of [0,1,2,3]) {
+      const id=randomUUID(),directory=path.join(root,id);await fs.mkdir(directory);
+      const body={executionID:id,source:'a'.repeat(65_450+offset)+'🙂שָׁלוֹם中文'.repeat(100)+'\ufffd'};
+      const bytes=Buffer.concat([Buffer.from([0xef,0xbb,0xbf]),Buffer.from(JSON.stringify(body))]);
+      await fs.writeFile(path.join(inbox,id+'.json'),bytes);
+      const result=await claimExecutionInput({inbox,directory,id,artifact:{bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}});
+      assert.deepEqual(result.body,body);assert.equal(result.receipt.verified,true);
+    }
+    for(const invalid of [[0xc0,0xaf],[0xed,0xa0,0x80],[0xf4,0x90,0x80,0x80],[0xe2,0x82],[0x80]]) {
+      const id=randomUUID(),directory=path.join(root,id);await fs.mkdir(directory);
+      const bytes=Buffer.concat([Buffer.from('{"executionID":"'+id+'","source":"'),Buffer.from(invalid),Buffer.from('"}')]);
+      await fs.writeFile(path.join(inbox,id+'.json'),bytes);
+      await assert.rejects(claimExecutionInput({inbox,directory,id,artifact:{bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}}),/UTF-8/);
+      assert.deepEqual(await fs.readFile(path.join(directory,'request.json')),bytes,'Rejected source remains owned, never executed');
+    }
+    const id=randomUUID(),directory=path.join(root,id);await fs.mkdir(directory);
+    const truncated=Buffer.concat([Buffer.from('{"executionID":"'+id+'","source":"'),Buffer.from([0xf0,0x9f,0x99])]);
+    await fs.writeFile(path.join(inbox,id+'.json'),truncated);
+    await assert.rejects(claimExecutionInput({inbox,directory,id,artifact:{bytes:truncated.length,sha256:createHash('sha256').update(truncated).digest('hex')}}),/UTF-8/);
+  } finally {globalThis.TextDecoder=original;}
+});
 
 async function fixture(t) {
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'hanlin-file-input-'));
