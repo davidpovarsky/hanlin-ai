@@ -12,6 +12,10 @@ The manifest checkpoints once per second and at transport/terminal boundaries. I
 
 Validation remains open until focused journal/transport tests, current Apple compilation, signed physical iPad default-install/upgrade, force-quit/relaunch and stream-latency checks actually pass. This document describes implementation, not physical acceptance.
 
+Readable per-delta event records refer to `-stage-snapshots.json`; exact per-event content remains encrypted. Complete content/reasoning snapshots are coalesced before credential redaction, rather than publishing fragments of a key across multiple SSE records. Snapshots retain up to32MiB of stage text with explicit loss reporting at the budget. Request credentials are additionally masked if echoed in later content. The existing JSON/TXT snapshot redactor receives the same known credentials. These companions are included in retention/deletion as one session.
+
+`py -3 Scripts/Diagnostics/compare_chat_stages.py <session-manifest.json>` compares eligible OpenAI-shaped source/SDK/StreamData snapshots without executing code, calling tools or uploading content. Output contains hashes and offsets, not the conversation. It refuses ambiguous multi-attempt round correlation, unknown provider mappings and incomplete capture. Comparisons are redacted; exact encrypted-source inspection and actual UI rendering remain separate acceptance obligations.
+
 The central redactor is applied before persistence and again to the readable export. Hidden chain-of-thought is never reconstructed; only provider-visible reasoning content already exposed by the API may be recorded.
 
 When the diagnostics screen opens, an incomplete session that has remained `running` without an update for ten minutes is shown as `interrupted`. Its persisted JSON and readable log are preserved unchanged for investigation.
