@@ -31,7 +31,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         // Assert exact preview metadata from production UI
         let installButton = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button did not appear in preview")
-        XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
+        XCTAssertTrue(installButton.isEnabled, "A valid package must install without a redundant Hanlin capability approval")
 
         let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin ScriptUI Valid' OR value CONTAINS 'Hanlin ScriptUI Valid'")
         XCTAssertTrue(app.descendants(matching: .any).matching(titlePredicate).firstMatch.waitForExistence(timeout: 10), "Preview title missing")
@@ -40,27 +40,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         let entrypointPredicate = NSPredicate(format: "label CONTAINS 'index.tsx' OR value CONTAINS 'index.tsx'")
         XCTAssertTrue(app.descendants(matching: .any).matching(entrypointPredicate).firstMatch.waitForExistence(timeout: 5), "Preview entrypoint missing")
 
-        // Mandatory network capability check: 'fetch' in index.tsx requests 'network'
-        // Test MUST fail if approval UI is absent.
-        var networkToggle = app.switches["network"].firstMatch
-        if !networkToggle.waitForExistence(timeout: 3) {
-            app.swipeUp()
-            networkToggle = app.switches["network"].firstMatch
-        }
-        XCTAssertTrue(networkToggle.waitForExistence(timeout: 10), "Network capability approval toggle was not rendered in preview")
-
-        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
-            approveAllButton.tap()
-        } else {
-            toggleSwitch(networkToggle, targetValue: "1")
-        }
-        _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
-        if !installButton.exists || !installButton.isHittable {
-            app.swipeDown()
-        }
-        XCTAssertTrue(installButton.waitForExistence(timeout: 5), "Install button did not reappear after scrolling")
-        XCTAssertTrue(waitUntil(timeout: 8) { installButton.isEnabled }, "Install button remained disabled after approving capability")
+        // The owner-approved policy grants declared/inferred Hanlin capabilities
+        // during installation. OS privacy permissions and package validation
+        // retain their own acceptance checks; no internal approval tap is required.
+        XCTAssertTrue(installButton.isEnabled, "Valid preview unexpectedly requires an internal grant")
 
         // 2. Install
         if !installButton.exists || !installButton.isHittable {

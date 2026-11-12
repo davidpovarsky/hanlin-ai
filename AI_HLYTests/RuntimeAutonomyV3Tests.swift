@@ -356,8 +356,9 @@ struct RuntimeAutonomyV3Tests {
         });
         """.utf8).write(to: package.appending(path: "server.mjs"))
         let archive = workspace.appending(path: "fixture.tgz")
-        let tar = try await core.shell.execute(tokens: ["tar", "-czf", archive.path, "-C", workspace.path, "package"], workspace: workspace, environment: [:], allowNetwork: false)
+        let tar = try await core.shell.execute(tokens: ["tar", "-czf", "fixture.tgz", "package"], workspace: workspace, environment: [:], allowNetwork: false)
         #expect(tar.exitCode == 0, "\(tar.stderr)")
+        try #require(FileManager.default.fileExists(atPath: archive.path), "Actual native tar did not produce the fixture: exit=\(tar.exitCode); stdout=\(tar.stdout); stderr=\(tar.stderr)")
         let operationID = UUID(), serverID = UUID()
         do {
             let descriptor = try await core.node.installMCPPackage(spec: MCPPackageSpec(localArchive: archive), operationID: operationID,

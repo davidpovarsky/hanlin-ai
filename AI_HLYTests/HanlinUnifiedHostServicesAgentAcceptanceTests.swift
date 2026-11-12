@@ -127,9 +127,11 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         #expect(report.testedCommands.count == 23)
         #expect(report.commandResults.allSatisfy { $0.passed })
         #expect(report.policyResults.allSatisfy { $0.passed })
-        #expect(report.policyResults.contains { $0.policy == "unknown_command" && $0.passed })
-        #expect(report.policyResults.contains { $0.policy == "pipeline" && $0.passed })
-        #expect(report.policyResults.contains { $0.policy == "command_chaining" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "verified_command_catalog" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "native_pipeline_and_redirection" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "native_command_chaining" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "curl_http_native_dispatch" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "curl_https_native_dispatch" && $0.passed })
     }
 
     @Test func agentToolRespectsDisabledRuntimeToggle() async {

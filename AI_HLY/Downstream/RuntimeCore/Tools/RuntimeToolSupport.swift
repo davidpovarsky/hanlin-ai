@@ -87,7 +87,9 @@ enum RuntimeToolSupport {
             actions: body.isEmpty ? [] : [.init(type: .copyText, title: result.outputWasTruncated ? RuntimeL10n.string("Copy preview") : RuntimeL10n.string("Copy output"), systemImage: "doc.on.doc", text: body)]
         )
         let modelBody = modelSections.joined(separator: "\n")
-        let modelText = modelBody.isEmpty ? fallback : modelBody
+        let modelText = outputBody.isEmpty
+            ? [fallback, modelBody].filter { !$0.isEmpty }.joined(separator: "\n")
+            : modelBody
         diagnostics.modelResultByteCount = modelText.utf8.count
         diagnostics.userResultByteCount = body.utf8.count
         diagnostics.uiBlockTypes = [outcome.isSuccess ? "card" : "error"]

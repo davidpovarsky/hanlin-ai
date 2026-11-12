@@ -147,7 +147,9 @@ print('main-finished', flush=True)
             }
             let file = FileHandle(fileDescriptor: descriptor, closeOnDealloc: true)
             defer { try? file.close() }
-            try file.write(contentsOf: Data("native started\n".utf8))
+            // Fill the real C stdio buffer so output is observable before EOF;
+            // a short buffered line cannot be the trigger for closing its FIFO.
+            try file.write(contentsOf: Data(String(repeating: "native started\n", count: 2048).utf8))
             while operation.snapshot.reason == nil {
                 try #require(ContinuousClock.now < deadline, "Actual native output never triggered interruption")
                 try await Task.sleep(for: .milliseconds(10))

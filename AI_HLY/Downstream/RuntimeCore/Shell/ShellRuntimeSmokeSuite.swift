@@ -206,6 +206,16 @@ extension ShellRuntimeService {
         } catch {
             policyResults.append(.init(policy: "native_pipeline_and_redirection", passed: false, detail: error.localizedDescription))
         }
+        do {
+            let chain = try await execute(command: "printf first > chain-output.txt && printf second >> chain-output.txt",
+                workspace: workspace, environment: [:], allowNetwork: false)
+            let output = try String(contentsOf: workspace.appending(path: "chain-output.txt"), encoding: .utf8)
+            policyResults.append(.init(policy: "native_command_chaining",
+                passed: chain.exitCode == 0 && output == "firstsecond",
+                detail: "Both original native commands and append redirection completed in order."))
+        } catch {
+            policyResults.append(.init(policy: "native_command_chaining", passed: false, detail: error.localizedDescription))
+        }
         // --version exits without connecting. URL arguments must reach curl rather
         // than an obsolete second Hanlin network or HTTP-scheme permission gate.
         for scheme in ["http", "https"] {

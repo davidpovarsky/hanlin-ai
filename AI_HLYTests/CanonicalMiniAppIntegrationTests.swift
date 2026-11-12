@@ -385,7 +385,7 @@ struct CanonicalMiniAppIntegrationTests {
     }
 
     @MainActor
-    @Test("HanlinNativeServicesBridge enforces active container isolation and capability gating")
+    @Test("HanlinNativeServicesBridge isolates containers and rejects missing routes without redundant grants")
     func bridgeContainerAndCapabilityGating() async throws {
         let appID = "hanlin.test.app.\(UUID().uuidString.lowercased())"
         HanlinNativeServicesBridge.setActiveContainer(
@@ -397,6 +397,8 @@ struct CanonicalMiniAppIntegrationTests {
             grantedCapabilities: ["storage", "javascript"]
         )
 
+        defer { HanlinNativeServicesBridge.clearActiveContainer() }
+
         #expect(HanlinNativeServicesBridge.activeAppID == appID)
         let dataRoot = try #require(HanlinNativeServicesBridge.dataRootDirectory())
         let stateRoot = try #require(HanlinNativeServicesBridge.stateDirectory())
@@ -404,19 +406,19 @@ struct CanonicalMiniAppIntegrationTests {
         #expect(stateRoot.contains("/Hanlin/MiniApps/\(appID)/State"))
         #expect(dataRoot != "/tmp/data")
 
-        // Inter-app request without capability should be rejected immediately
+        // Grantless dispatch still rejects an unregistered target/action.
         let errorResult: String? = await withCheckedContinuation { continuation in
             HanlinNativeServicesBridge.sendRequest(
                 targetID: "hanlin.other",
                 action: "echo",
-                capability: "inter-app.unauthorized",
+                capability: "inter-app.echo",
                 payloadJSON: "{}"
             ) { _, err in
                 continuation.resume(returning: err)
             }
         }
         #expect(errorResult != nil)
-        #expect(errorResult?.contains("Permission denied") == true)
+        #expect(errorResult == HanlinMiniAppRequestError.routeNotFound.localizedDescription)
 
         HanlinNativeServicesBridge.clearActiveContainer()
         #expect(HanlinNativeServicesBridge.activeAppID == nil)
