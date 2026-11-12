@@ -1111,6 +1111,49 @@
       ],
       "consumers": []
     },
+    "chat_diagnostics_journal_tests": {
+      "description": "Automatic chat capture, encryption and redaction acceptance",
+      "patterns": [
+        "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentDiagnosticsJournalTests"
+      ],
+      "consumers": []
+    },
+    "chat_round_presentation_tests": {
+      "description": "Actual provider-round ownership and legacy unattributed activities",
+      "patterns": [
+        "AI_HLYTests/AgentRoundPresentationTests.swift",
+        "AI_HLY/Downstream/AgentActivity/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRoundPresentationTests"
+      ],
+      "consumers": []
+    },
+    "provider_model_catalog_tests": {
+      "description": "Authoritative provider prices, modalities, freshness and provenance",
+      "patterns": [
+        "AI_HLYTests/ProviderModelCatalogTests.swift",
+        "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+        "AI_HLY/Services/APIServices/ModelRefreshService.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ProviderModelCatalogTests"
+      ],
+      "consumers": []
+    },
     "original_chat_presentation_tests": {
       "description": "ChatPresentationTests acceptance for original chat and Runtime V3",
       "patterns": [
