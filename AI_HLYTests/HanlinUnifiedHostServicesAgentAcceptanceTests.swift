@@ -123,7 +123,8 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
 
     @Test func shellAllApprovedCommandsAndPolicies() async throws {
         let report = try await AppRuntimeCore.shared.shell.runSmokeSuite(node: AppRuntimeCore.shared.node)
-        #expect(report.passed, "\(String(decoding: try JSONEncoder().encode(report), as: UTF8.self))")
+        let reportDetails = String(decoding: try JSONEncoder().encode(report), as: UTF8.self)
+        #expect(report.passed, "\(reportDetails)")
         #expect(report.testedCommands.count == 23)
         #expect(report.commandResults.allSatisfy { $0.passed })
         #expect(report.policyResults.allSatisfy { $0.passed })
