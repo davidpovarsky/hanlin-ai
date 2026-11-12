@@ -65,6 +65,7 @@ jobs:
             -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsExportTests \
             -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsJournalTests \
             -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsRawReviewTests \
+            -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsSessionPersistenceTests \
             -skipMacroValidation CODE_SIGNING_ALLOWED=NO 2>&1 | tee ../diagnostics-evidence/xcodebuild.log
           test_status="${PIPESTATUS[0]}"
           set -e
@@ -102,7 +103,11 @@ jobs:
               'duplicatedAndReorderedAuthenticatedRecordsAreRejected',
               'incompleteCrashTailIsExplicitAndCompleteMalformedRecordsFailClosed',
               'unknownReplayFormatFailsInsteadOfGuessingAProvider',
-              'encodedURLKeysAndEchoedCookieValuesAreRedactedWithoutChangingOrdinaryUnicode'}
+              'encodedURLKeysAndEchoedCookieValuesAreRedactedWithoutChangingOrdinaryUnicode',
+              'numericLatencyMetricsSurviveRedactionAndTypedSessionReopen',
+              'oldRedactedLatenciesRecoverWithoutRewritingTheSourceFile',
+              'legacyRepairDoesNotAcceptOtherCorruptFieldsOrGuessedNumericStrings',
+              'latencyNamesDoNotAllowCredentialStringsOrOrdinaryTokensThrough'}
           found = {}
           def visit(node):
               if isinstance(node, dict):
@@ -116,7 +121,7 @@ jobs:
           visit(json.load(open('../diagnostics-evidence/tests.json')))
           if set(found) != expected or any(results != ['Passed'] for results in found.values()):
               raise SystemExit(f'Missing, duplicate or nonpassing required case: {found}')
-          print('EXECUTED_PASS: all fifteen production diagnostics cases')
+          print('EXECUTED_PASS: all nineteen production diagnostics cases')
           PY
           exit "$test_status"
       - uses: actions/cache/save@v6.1.0

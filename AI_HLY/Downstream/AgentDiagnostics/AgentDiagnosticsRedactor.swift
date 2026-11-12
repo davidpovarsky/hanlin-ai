@@ -1,6 +1,7 @@
 import Foundation
 
 enum AgentDiagnosticsRedactor {
+    private static let latencyMetricKeys: Set<String> = ["time_to_first_token", "time_to_first_answer_token"]
     /// Secrets actually present in structured requests must also be masked if
     /// the provider echoes them in a different, ordinary text field.
     static func credentials(in value: Any) -> Set<String> {
@@ -80,7 +81,14 @@ enum AgentDiagnosticsRedactor {
     static func sanitizeJSONObject(_ value: Any) -> Any {
         if let dictionary = value as? [String: Any] {
             return dictionary.reduce(into: [String: Any]()) { result, item in
-                result[item.key] = isSecretKey(normalizedKey(item.key))
+                let name = normalizedKey(item.key)
+                // These are typed latency measurements, not credentials. The
+                // generic *_token rule otherwise replaces Double with String
+                // and makes completed session files undecodable. String values
+                // under these names still follow the conservative secret rule.
+                let isLatency = latencyMetricKeys.contains(name)
+                    && (item.value as? NSNumber).map { !["c", "B"].contains(String(cString: $0.objCType)) } == true
+                result[item.key] = isSecretKey(name) && !isLatency
                     ? "<redacted>"
                     : sanitizeJSONObject(item.value)
             }

@@ -109,15 +109,13 @@ struct AgentDiagnosticsView: View {
             sessions = []
             return
         }
-        let decoder = JSONDecoder()
         storageBytes = urls.reduce(0) { sum, url in
             sum + Int64((try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0)
         }
-        decoder.dateDecodingStrategy = .iso8601
         sessions = urls.filter { $0.lastPathComponent.hasPrefix("agent-session-") && $0.pathExtension == "json" }
             .compactMap { url in
                 guard let data = try? Data(contentsOf: url),
-                      var session = try? decoder.decode(AgentDiagnosticsSession.self, from: data) else { return nil }
+                      var session = try? AgentDiagnosticsSession.decodeStoredFile(data) else { return nil }
                 if !session.isComplete,
                    session.status == "running",
                    Date().timeIntervalSince(session.lastUpdatedAt) > Self.interruptedSessionThreshold {

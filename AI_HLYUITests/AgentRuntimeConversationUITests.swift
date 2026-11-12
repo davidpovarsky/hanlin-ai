@@ -14,9 +14,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
         openChat(in: app)
-        sendPrompt("START_RUN_B", in: app)
-        let answer = app.descendants(matching: .any).matching(NSPredicate(format: "value == %@ OR label == %@", "RUN_B_COMPLETE", "RUN_B_COMPLETE")).firstMatch
-        XCTAssertTrue(answer.waitForExistence(timeout: 30))
+        let marker = "DIAGNOSTIC_CAPTURE_" + UUID().uuidString
+        let expected = "CAPTURED_" + marker
+        sendPrompt(marker, in: app)
+        let answer = app.descendants(matching: .any).matching(NSPredicate(format: "value == %@ OR label == %@", expected, expected)).firstMatch
+        XCTAssertTrue(answer.waitForExistence(timeout: 60), "A fresh uniquely identified ordinary turn did not complete")
         openSettings(in: app)
         let diagnostics = app.descendants(matching: .any)["hanlin-agent-diagnostics-link"].firstMatch
         for _ in 0..<8 where !diagnostics.isHittable { app.swipeUp() }
@@ -46,6 +48,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(reportExists, "Actual device-key lookup/decryption/offline replay did not produce a review")
         let text = report.label + (report.value as? String ?? "")
         XCTAssertTrue(text.contains("Authenticated records") && text.contains("not an exact raw export"))
+        XCTAssertTrue(text.contains(expected) && text.contains("SDK content:"), "The review did not replay the actual newly captured response")
+        XCTAssertFalse(text.contains("NOT_CAPTURED: no transport request or response records are available."))
         XCTAssertFalse(text.contains("acceptance-only"), "The actual captured synthetic Authorization credential leaked into the preview")
         let share = app.descendants(matching: .any)["hanlin-diagnostics-share-reviewed-report"].firstMatch
         XCTAssertTrue(share.waitForExistence(timeout: 10) && share.isEnabled)

@@ -326,6 +326,16 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let bodyData = Self.extractBodyData(from: request)
         let bodyString = String(decoding: bodyData, as: UTF8.self)
 
+        // Match only the current user turn; old markers can remain in history.
+        let body = (try? JSONSerialization.jsonObject(with: bodyData)) as? [String: Any]
+        let messages = body?["messages"] as? [[String: Any]]
+        let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
+        let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
+        if let marker = currentText.range(of: "DIAGNOSTIC_CAPTURE_[0-9A-F-]{36}", options: .regularExpression) {
+            emitFinalAnswer("CAPTURED_" + String(currentText[marker]))
+            return
+        }
+
         if bodyString.contains("RENDER_CODE_FENCES") {
             emitFinalAnswer("""
             Local renderer acceptance

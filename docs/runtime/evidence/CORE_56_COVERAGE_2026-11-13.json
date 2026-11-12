@@ -1,0 +1,717 @@
+{
+  "schemaVersion": 1,
+  "scope": "Runtime autonomy 56 individual Core obligations; not full project CI, full tooling collector or UI/device acceptance",
+  "policy": "CORE_ACCEPTANCE_EVIDENCE_POLICY_2026-11-13.md",
+  "analysisTargetSHA": "1b168d91cc218a6648fc771e41ab9487d8cdd4c8",
+  "status": "OPEN",
+  "requiredCaseCount": 56,
+  "counts": {
+    "REUSE_CANDIDATE_NOT_ACCEPTED": 19,
+    "NEEDS_EXECUTION": 37
+  },
+  "sourceAudit": {
+    "originSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+    "entireRangeChecked": true,
+    "checkedBackendScopes": [
+      "AI_HLY/Downstream/RuntimeCore",
+      "AI_HLY/Downstream/MCP",
+      "Packages/IOSSystemLite",
+      "Scripts/Runtime",
+      "RuntimeDependencies.lock.json",
+      "AI_HLY.xcodeproj",
+      "AI-HLY-Info.plist",
+      "AI_HLY/AI_HLY.entitlements",
+      "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "AI_HLYTests/RuntimeNativeInterruptionTests.swift",
+      "AI_HLYTests/RuntimeFetchConformanceTests.swift"
+    ],
+    "changedBackendPaths": [],
+    "allChangedPaths": [
+      ".github/workflows/build-ios26-unsigned-ipa.yml",
+      ".github/workflows/validate-chat-diagnostics.yml",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnostics.md",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsExport.swift",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsView.swift",
+      "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceView.swift",
+      "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "AI_HLY/Resource/Localizable.xcstrings",
+      "AI_HLY/SettingsView.swift",
+      "AI_HLYTests/AgentDiagnosticsExportTests.swift",
+      "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
+      "AI_HLYTests/AgentDiagnosticsRawReviewTests.swift",
+      "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+      "AI_HLYTests/HanlinUnifiedHostServicesTests.swift",
+      "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "Packages/HanlinExpoUI/package.json",
+      "Packages/HanlinExpoUI/src/host-services.ts",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+      "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "Scripts/Audit/audit_miniapp_reachability.py",
+      "Scripts/CI/affected-validation-map.json",
+      "Scripts/CI/stage_chat_diagnostics_proof.py",
+      "Scripts/Expo/package-lock.json",
+      "docs/chat-diagnostics/LOCAL_CODE_FENCE_RENDERING_2026-11-12.md",
+      "docs/chat-diagnostics/STREAMING_SCROLL_2026-11-12.md",
+      "docs/hanlin-expo-runtime.md",
+      "docs/hanlin-nativescript-guide.md",
+      "docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+      "docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "docs/miniapp-sdk/README.md",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json",
+      "docs/runtime/CHAT_AND_AUTONOMY_IMPLEMENTATION_2026-11-10.md",
+      "docs/runtime/RUNTIME_AUTONOMY_ACCEPTANCE_MATRIX_2026-11-10.md"
+    ],
+    "caveat": "Broader logger/catalog/renderer consumers are excluded from this isolated-backend reuse candidate set. No candidate counts as acceptance until final environment/native/code input proof is recorded."
+  },
+  "originEvidence": {
+    "runID": 43267408632,
+    "overallConclusion": "failure",
+    "unitCaseResultFileSHA256": "f9dff6f66c013ca6248eca20d81ab4a33069068c93b46015409634cc89b51d96",
+    "simulatorDevices": [
+      {
+        "architecture": "arm64",
+        "deviceId": "4DF1AA75-A2F8-4E1A-AF15-154F8671CBBC",
+        "deviceName": "iPad mini (A20 Pro)",
+        "modelName": "iPad mini (A20 Pro)",
+        "osBuildNumber": "24B8117",
+        "osVersion": "27.2",
+        "platform": "iOS Simulator"
+      }
+    ],
+    "artifactID": 13969728885,
+    "artifactBytes": 96538183,
+    "githubArtifactDigest": "sha256:3121cfe5dc1537b75184e5f87c0a7adfc4eabe3ab6801e898b770bd5d690c99c",
+    "requiredNativeCandidateRunID": 42926628418
+  },
+  "cases": [
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualNodeAndOriginalJavaScriptCoreCoexistWithTheVerifiedLaunchMode()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualNodeAndOriginalJavaScriptCoreCoexistWithTheVerifiedLaunchMode()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/stoppingAnActualCompilerJobNeverLaunchesItsCompiledSource()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/stoppingAnActualCompilerJobNeverLaunchesItsCompiledSource()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualTypeScriptCompilerUsesLargeDurableInputAndRetrievableFullOutput()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualTypeScriptCompilerUsesLargeDurableInputAndRetrievableFullOutput()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/typeScriptReportsTheActualCompilerAndItsOwnStoppedState()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/typeScriptReportsTheActualCompilerAndItsOwnStoppedState()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/explicitNativeCommandModuleUsesActualPythonAndLinkedBsdWithFullArtifacts()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/explicitNativeCommandModuleUsesActualPythonAndLinkedBsdWithFullArtifacts()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/hostOutputPageQueriesPreserveParametersAndTheAuthenticatedOrigin()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/hostOutputPageQueriesPreserveParametersAndTheAuthenticatedOrigin()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/sourceImportsUseTheActualWorkspaceAndNativePackageExportConditions()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/sourceImportsUseTheActualWorkspaceAndNativePackageExportConditions()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/verifiedLifecycleSourceRunsThroughTheActualSharedEnginesAndRejectsStalePlans()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/verifiedLifecycleSourceRunsThroughTheActualSharedEnginesAndRejectsStalePlans()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/mcpInstallationIsADurableJobAndRunsNativeHooksBeforeTheRealProtocolProbe()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/mcpInstallationIsADurableJobAndRunsNativeHooksBeforeTheRealProtocolProbe()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualCommandOnlyNpmValidationDoesNotRunTheCommandUntilInvoked()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualCommandOnlyNpmValidationDoesNotRunTheCommandUntilInvoked()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualNodeFileInputExceedsTheHTTPFrameWithoutTruncationOrReplay()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualNodeFileInputExceedsTheHTTPFrameWithoutTruncationOrReplay()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualOptionalLifecycleFailureKeepsRequiredNativeBuildsAndFailedJobEvidence()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualOptionalLifecycleFailureKeepsRequiredNativeBuildsAndFailedJobEvidence()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/nodeCLIUsesActualMainModuleAndRetainsItsInputAndDelayedOutput()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/nodeCLIUsesActualMainModuleAndRetainsItsInputAndDelayedOutput()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/pythonCLIUsesActualFileArgumentsInputAndStandardExitStatus()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/pythonCLIUsesActualFileArgumentsInputAndStandardExitStatus()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/portableShellDispatchesActualPythonNodeAndNativeBSDPipelineWithFullStreams()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/portableShellDispatchesActualPythonNodeAndNativeBSDPipelineWithFullStreams()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/cancellingShellWhileThePythonDirectoryLockIsBusyNeverRunsTheCommandLater()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/cancellingShellWhileThePythonDirectoryLockIsBusyNeverRunsTheCommandLater()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualEmbeddedNodeExecutesThePinnedPortableShellWithoutJITOrAnOSSubprocess()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/actualEmbeddedNodeExecutesThePinnedPortableShellWithoutJITOrAnOSSubprocess()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedShellRetainsFullOutputBeyondThePreviewAndReopensLosslessPages()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedShellRetainsFullOutputBeyondThePreviewAndReopensLosslessPages()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedShellActuallyPipesAndRedirectsWithinItsWorkspace()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedShellActuallyPipesAndRedirectsWithinItsWorkspace()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedShellActuallyAcceptsMoreThan127Arguments()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedShellActuallyAcceptsMoreThan127Arguments()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/embeddedPythonActuallyDownloadsVerifiesInstallsAndImportsAPureWheel()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/embeddedPythonActuallyDownloadsVerifiesInstallsAndImportsAPureWheel()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/bundledNativePythonExtensionInstallsAndExecutesARealNonce()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/bundledNativePythonExtensionInstallsAndExecutesARealNonce()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/embeddedNodeAndPythonActuallyRunBeyondThreeHundredSeconds()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/embeddedNodeAndPythonActuallyRunBeyondThreeHundredSeconds()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/retainedNativePythonCancellationCallbackRemainsValidAfterItsJobIsReleased()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/retainedNativePythonCancellationCallbackRemainsValidAfterItsJobIsReleased()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/runtimeOutputKeepsRetrievalMetadataForTheAgentAndReadableContentForTheUser()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/runtimeOutputKeepsRetrievalMetadataForTheAgentAndReadableContentForTheUser()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/defaultSchemaExposureDoesNotHideToolsPastOldBudgets()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/defaultSchemaExposureDoesNotHideToolsPastOldBudgets()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/fullResultsExceedOldCountAndByteCapsAndSurviveReopen()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/fullResultsExceedOldCountAndByteCapsAndSurviveReopen()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/finishingRunKeepsHistoryReferencesButNotExposedSchemas()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/finishingRunKeepsHistoryReferencesButNotExposedSchemas()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/capabilityReportNeverPromotesStoppedOrFailedEnginesToReady()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/capabilityReportNeverPromotesStoppedOrFailedEnginesToReady()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/subsequentTurnsCanReadOwnChatResultsWithoutLeakingOtherChats()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/subsequentTurnsCanReadOwnChatResultsWithoutLeakingOtherChats()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/journalRetainsCompletedJobsAndMarksUnfinishedOnRestart()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeAutonomyV3Tests/journalRetainsCompletedJobsAndMarksUnfinishedOnRestart()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/actualPythonChildThreadsKeepTheirWorkspaceAndFullOutputUntilCompletion()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeNativeInterruptionTests/actualPythonChildThreadsKeepTheirWorkspaceAndFullOutputUntilCompletion()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/actualNodeInterruptionRetainsAuthenticatedJournalAndOutput()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeNativeInterruptionTests/actualNodeInterruptionRetainsAuthenticatedJournalAndOutput()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/actualPythonInterruptionRetainsCooperativeNativeOutput()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeNativeInterruptionTests/actualPythonInterruptionRetainsCooperativeNativeOutput()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/linkedShellCompletionCannotHideAnEarlierRootInterruption()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Failed",
+        "nodeIdentifier": "RuntimeNativeInterruptionTests/linkedShellCompletionCannotHideAnEarlierRootInterruption()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeFetchConformanceTests/nativeTLSIntegrityProxyAndStreams()",
+      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "latestAuthenticExecution": {
+        "runID": 43267408632,
+        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeFetchConformanceTests/nativeTLSIntegrityProxyAndStreams()"
+      },
+      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/largeOriginalSourceAndFullUnicodeOutputSurviveReopenWithoutReplay()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJavaScriptCoreTests/largeOriginalSourceAndFullUnicodeOutputSurviveReopenWithoutReplay()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/explicitDeadlineFailsBeforeJavaScriptOrOutputFilesAreCreated()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJavaScriptCoreTests/explicitDeadlineFailsBeforeJavaScriptOrOutputFilesAreCreated()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/cancelledQueuedJavaScriptCannotExecuteAfterTheActualRunningContextFinishes()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJavaScriptCoreTests/cancelledQueuedJavaScriptCannotExecuteAfterTheActualRunningContextFinishes()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/actualRunningJavaScriptRetainsLateBytesAndRootInterruptionUntilNaturalReturn()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJavaScriptCoreTests/actualRunningJavaScriptRetainsLateBytesAndRootInterruptionUntilNaturalReturn()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJobInterruptionTests/ordinaryCancellationIsSerializedWithNativeCompletionAndRetainsFinalBytes()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJobInterruptionTests/ordinaryCancellationIsSerializedWithNativeCompletionAndRetainsFinalBytes()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJobInterruptionTests/nativeCompletionReadsRootInterruptionEvenBeforeItsAsyncNotification()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJobInterruptionTests/nativeCompletionReadsRootInterruptionEvenBeforeItsAsyncNotification()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJobInterruptionTests/lateNativeCompletionPreservesSystemInterruptionAndPartialOutput()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJobInterruptionTests/lateNativeCompletionPreservesSystemInterruptionAndPartialOutput()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeJobInterruptionTests/completedJobsRejectLateFailureAndInterruptionReclassification()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeJobInterruptionTests/completedJobsRejectLateFailureAndInterruptionReclassification()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeUserOperationTests/interruptionIsFirstCauseAndCallbacksMayReenterWithoutDeadlock()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeUserOperationTests/interruptionIsFirstCauseAndCallbacksMayReenterWithoutDeadlock()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeUserOperationTests/actualProgressUsesJournalHighWaterMarksWithoutPollInflation()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeUserOperationTests/actualProgressUsesJournalHighWaterMarksWithoutPollInflation()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeUserOperationTests/producerOwnsOnlyItsOperationAndClearsTheCancellationCycle()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeUserOperationTests/producerOwnsOnlyItsOperationAndClearsTheCancellationCycle()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeUserOperationTests/interruptedOriginalStreamNeverFinishesAsSuccessfulEOF()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeUserOperationTests/interruptedOriginalStreamNeverFinishesAsSuccessfulEOF()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeExecutionInputArtifactTests/smallControlInputStaysInlineWithoutCreatingAnInbox()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeExecutionInputArtifactTests/smallControlInputStaysInlineWithoutCreatingAnInbox()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeExecutionInputArtifactTests/largeInputKeepsExactBytesAndDigestAndRejectsAnotherOwnerBeforeSubmission()",
+      "status": "NEEDS_EXECUTION",
+      "latestAuthenticExecution": {
+        "runID": 43149824545,
+        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "caseResult": "Passed",
+        "nodeIdentifier": "RuntimeExecutionInputArtifactTests/largeInputKeepsExactBytesAndDigestAndRejectsAnotherOwnerBeforeSubmission()"
+      },
+      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+    }
+  ]
+}

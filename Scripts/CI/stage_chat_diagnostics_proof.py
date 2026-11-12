@@ -14,14 +14,14 @@ def stage(root: Path) -> None:
     tests.mkdir(parents=True, exist_ok=True)
     evidence = []
     for name in ["AgentDiagnosticsConfiguration", "AgentDiagnosticsExport", "AgentDiagnosticsJournal",
-                 "AgentDiagnosticsRawReview", "AgentDiagnosticsRedactor"]:
+                 "AgentDiagnosticsRawReview", "AgentDiagnosticsRedactor", "AgentDiagnosticsSession", "AgentTokenUsage"]:
         source = root / f"AI_HLY/Downstream/AgentDiagnostics/{name}.swift"
         shutil.copy2(source, sources / source.name)
         evidence.append(source)
     logger = root / "AI_HLY/NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift"
     shutil.copy2(logger, sources / logger.name)
     evidence.append(logger)
-    for name in ["AgentDiagnosticsExportTests", "AgentDiagnosticsJournalTests", "AgentDiagnosticsRawReviewTests"]:
+    for name in ["AgentDiagnosticsExportTests", "AgentDiagnosticsJournalTests", "AgentDiagnosticsRawReviewTests", "AgentDiagnosticsSessionPersistenceTests"]:
         source = root / f"AI_HLYTests/{name}.swift"
         shutil.copy2(source, tests / source.name)
         evidence.append(source)

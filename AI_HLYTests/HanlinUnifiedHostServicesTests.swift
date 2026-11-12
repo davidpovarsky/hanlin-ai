@@ -44,6 +44,7 @@ struct HanlinUnifiedHostServicesTests {
 
     // MARK: - Capability Authority
 
+    @MainActor
     @Test func headlessNativeScriptProviderCannotPresentAShareSheet() async throws {
         let appID = try HanlinAppID(validating: "headless-context-test")
         let installedID = try HanlinInstalledPackageID(validating: "installed.headless-test")

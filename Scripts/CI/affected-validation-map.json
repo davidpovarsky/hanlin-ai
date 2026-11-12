@@ -1117,6 +1117,8 @@
       "description": "Automatic chat capture, encryption and redaction acceptance",
       "patterns": [
         "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
+        "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests.swift",
+        "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests.swift",
         "AI_HLY/Downstream/AgentDiagnostics/**",
         "AI_HLYTests/AgentDiagnosticsExportTests.swift"
       ],
@@ -1125,6 +1127,8 @@
       ],
       "unit_suites": [
         "AI_HLYTests/AgentDiagnosticsJournalTests",
+        "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests",
+        "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests",
         "AI_HLYTests/AgentDiagnosticsExportTests"
       ],
       "consumers": []

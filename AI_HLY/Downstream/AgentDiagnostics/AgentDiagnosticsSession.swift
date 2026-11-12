@@ -25,6 +25,41 @@ struct AgentDiagnosticsSession: Codable, Identifiable, Sendable, Equatable {
     var rounds: [AgentDiagnosticsRound]
     var totals: AgentTokenUsage
     var efficiency: AgentEfficiencyReport
+
+    /// Read files produced by the short-lived numeric-latency redaction bug.
+    /// Only its exact placeholders at these two known paths can be omitted.
+    /// Preserve the original file and never invent a missing measurement.
+    static func decodeStoredFile(_ data: Data) throws -> Self {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        do { return try decoder.decode(Self.self, from: data) }
+        catch {
+            let originalError = error
+            guard var object = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  object["schemaVersion"] as? Int == currentSchemaVersion else { throw originalError }
+            var repaired = false
+            if var efficiency = object["efficiency"] as? [String: Any],
+               efficiency["timeToFirstAnswerToken"] as? String == "<redacted>" {
+                efficiency.removeValue(forKey: "timeToFirstAnswerToken")
+                object["efficiency"] = efficiency; repaired = true
+            }
+            if var rounds = object["rounds"] as? [[String: Any]] {
+                for index in rounds.indices {
+                    if var response = rounds[index]["response"] as? [String: Any],
+                       response["timeToFirstToken"] as? String == "<redacted>" {
+                        response.removeValue(forKey: "timeToFirstToken")
+                        rounds[index]["response"] = response; repaired = true
+                    }
+                }
+                object["rounds"] = rounds
+            }
+            guard repaired else { throw originalError }
+            var session = try decoder.decode(Self.self, from: JSONSerialization.data(withJSONObject: object))
+            let warning = "Timing unavailable in this older log: latency values were previously redacted. Original files are unchanged."
+            if !session.efficiency.warnings.contains(warning) { session.efficiency.warnings.append(warning) }
+            return session
+        }
+    }
 }
 
 struct AgentDiagnosticsRound: Codable, Identifiable, Sendable, Equatable {
