@@ -39,7 +39,8 @@ struct AgentDiagnosticsJournalTests {
         for line in raw.split(separator: 0x0A) {
             let frame = try #require(try JSONSerialization.jsonObject(with: Data(line)) as? [String: Any])
             let aad = try #require(frame["aad"] as? String)
-            let combined = try #require(Data(base64Encoded: try #require(frame["combined"] as? String)))
+            let encoded = try #require(frame["combined"] as? String)
+            let combined = try #require(Data(base64Encoded: encoded))
             let box = try AES.GCM.SealedBox(combined: combined)
             let plaintext = try AES.GCM.open(box, using: key, authenticating: Data(aad.utf8))
             if aad.hasSuffix("|response_chunk") { restored.append(plaintext) }

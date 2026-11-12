@@ -42,7 +42,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "The deterministic provider's final answer was not rendered.")
 
-        let toolToggle = app.descendants(matching: .any)["hanlin-agent-activity-toggle"].firstMatch
+        let toolToggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
         XCTAssertTrue(toolToggle.waitForExistence(timeout: 10), "The completed tool content toggle was not rendered.")
         tapElement(toolToggle)
 
@@ -320,7 +320,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI04 reasoning final answer did not render")
 
-        let activityToggle = app.descendants(matching: .any)["hanlin-agent-activity-toggle"].firstMatch
+        let activityToggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
         XCTAssertTrue(activityToggle.waitForExistence(timeout: 10), "Original chat must render one unified activity disclosure: \(app.debugDescription)")
         XCTAssertEqual(app.descendants(matching: .any).matching(identifier: "hanlin-agent-activity-toggle").count, 1)
         XCTAssertFalse(activityToggle.label.contains("<think>"))
