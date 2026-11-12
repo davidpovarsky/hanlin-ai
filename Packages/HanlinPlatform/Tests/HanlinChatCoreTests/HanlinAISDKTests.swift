@@ -393,8 +393,8 @@ struct HanlinNonEmptyLanguageModelTests {
         #expect(mock.callCount == 1)
     }
 
-    @Test("E09: reasoning-only nonempty -> no retry")
-    func testE09ReasoningOnlyNonEmptyNoRetry() async throws {
+    @Test("E09: reasoning-only stop retries once, preserves reasoning and never emits a successful finish")
+    func testE09ReasoningOnlyStopFailsAfterBoundedRetry() async throws {
         let mock = MockLanguageModelV3 { _ in
             AsyncThrowingStream { continuation in
                 continuation.yield(.reasoningStart(id: "r1", providerMetadata: nil))
@@ -408,13 +408,41 @@ struct HanlinNonEmptyLanguageModelTests {
         let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
 
         var reasonings: [String] = []
-        for try await part in streamResult.stream {
-            if case .reasoningDelta(_, let text, _) = part {
-                reasonings.append(text)
+        var finishCount = 0
+        var failed = false
+        do {
+            for try await part in streamResult.stream {
+                if case .reasoningDelta(_, let text, _) = part { reasonings.append(text) }
+                if case .finish = part { finishCount += 1 }
+            }
+        } catch HanlinAISDKError.emptyProviderResponse(let attempts) {
+            #expect(attempts == 2)
+            failed = true
+        }
+        #expect(failed && finishCount == 0)
+        #expect(reasonings == ["Deep reasoning step", "Deep reasoning step"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("Reasoning-only length is incomplete and never automatically repeats a token-limited request")
+    func reasoningOnlyLengthDoesNotRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.reasoningDelta(id: "r", delta: "Only reasoning", providerMetadata: nil))
+                continuation.yield(Self.mockFinish(reason: .length))
+                continuation.finish()
             }
         }
-        #expect(reasonings == ["Deep reasoning step"])
-        #expect(mock.callCount == 1)
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        var failed = false
+        do {
+            let result = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+            for try await part in result.stream { if case .finish = part { Issue.record("False successful finish") } }
+        } catch HanlinAISDKError.incompleteProviderResponse(let reason) {
+            #expect(reason == "length")
+            failed = true
+        }
+        #expect(failed && mock.callCount == 1)
     }
 
     @Test("E10: valid tool call -> no retry")

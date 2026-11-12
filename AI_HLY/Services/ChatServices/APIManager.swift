@@ -3738,6 +3738,8 @@ class APIManager {
         )
 
         var currentStepID: UUID?
+        var visibleFinalCharacters = 0
+        var hasCompletedToolAction = false
 
         for try await event in sdkStream {
             self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.event", round: currentStepID, text: String(describing: event))
@@ -3754,9 +3756,11 @@ class APIManager {
 
             case .stepStarted(let index, let prep):
                 currentStepID = toolAdapter.currentRoundID
+                visibleFinalCharacters = 0
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response"))
 
             case .textDelta(let text):
+                visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                 RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
                 if self.toolMessage == nil { self.toolMessage = "" }
                 self.toolMessage?.append(text)
@@ -3827,6 +3831,7 @@ class APIManager {
                 break
 
             case .toolResult(let callID, let name, let modelText, let resultRef, let isError):
+                if !isError { hasCompletedToolAction = true }
                 if !toolAdapter.completedCallIDs.contains(callID) {
                     let profile = preparedAssistantTools.presentationProfile(for: name)
                         ?? ToolPresentationProfileRegistry.resolve(toolName: name)
@@ -3903,6 +3908,11 @@ class APIManager {
                 }
 
             case .finished(let reason, let usage):
+                guard visibleFinalCharacters > 0 || hasCompletedToolAction else {
+                    let error = HanlinAISDKError.incompleteProviderResponse(reason: reason)
+                    await self.agentDiagnosticsRecorder?.complete(status: "failed", error: error.localizedDescription)
+                    throw error
+                }
                 if reason == "other" || reason == "error" || reason == "failed" || reason == "unknown" || reason.isEmpty {
                     await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event: \(reason)")
                     let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
@@ -3910,7 +3920,7 @@ class APIManager {
                 }
                 try RuntimeUserOperation.current?.markSucceeded()
                 await self.agentDiagnosticsRecorder?.complete(status: "completed")
-                continuation.yield(StreamData(content: "\n\n"))
+                if reason == "length" { continuation.yield(StreamData(errorInfo: "length")) }
                 RuntimeUserOperation.finishStream(continuation)
                 return
 

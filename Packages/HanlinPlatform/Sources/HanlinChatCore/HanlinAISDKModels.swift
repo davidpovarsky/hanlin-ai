@@ -145,6 +145,7 @@ public enum HanlinAISDKError: LocalizedError, Sendable {
     case invalidToolSchema(name: String)
     case invalidConversation(String)
     case emptyProviderResponse(attempts: Int)
+    case incompleteProviderResponse(reason: String)
 
     public var errorDescription: String? {
         switch self {
@@ -154,6 +155,8 @@ public enum HanlinAISDKError: LocalizedError, Sendable {
             return "Invalid SDK conversation: \(detail)"
         case .emptyProviderResponse(let attempts):
             return "The provider returned an empty successful response after \(attempts) attempt(s)."
+        case .incompleteProviderResponse(let reason):
+            return "The provider ended without a visible answer (\(reason)). Retry or continue the conversation."
         }
     }
 }

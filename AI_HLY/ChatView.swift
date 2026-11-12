@@ -1529,6 +1529,7 @@ struct ChatView: View {
                 )
                 
                 // 接受流式数据
+                var warningKinds = Set<String>()
                 for try await data in stream {
                     let rawAgentEvents = eventAdapter.events(from: data)
                     await MainActor.run {
@@ -1774,7 +1775,7 @@ struct ChatView: View {
                         }
                         
                         // 异常提醒
-                        if let error = data.errorInfo, !error.isEmpty {
+                        if let error = data.errorInfo, !error.isEmpty, warningKinds.insert(error).inserted {
                             var errorMessage = ""
                             if error == "length" {
                                 errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
