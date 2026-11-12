@@ -36,13 +36,20 @@ enum AgentDiagnosticsRedactor {
     }
 
     static func sanitize(_ value: String) -> String {
+        if let data = value.data(using: .utf8),
+           let object = try? JSONSerialization.jsonObject(with: data),
+           object is [String: Any] || object is [Any] {
+            return sanitizedJSONString(from: object)
+        }
+        if value.hasPrefix("data:"), value.contains(";base64,") { return "<binary attachment retained in encrypted raw>" }
         var result = value
         let replacements = [
             ("(?i)bearer\\s+[a-z0-9._~+/-]+=*", "Bearer <redacted>"),
             ("(?i)(api[_-]?key|authorization|access[_-]?token|refresh[_-]?token|password|secret|cookie)\\s*[:=]\\s*[^\\s,;\\\"}]+", "$1=<redacted>"),
             ("(?i)sk-[a-z0-9_-]{12,}", "<redacted>"),
             ("-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\\s\\S]*?-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----", "<redacted>"),
-            ("(?i)([?&](?:signature|sig|token|key|credential)=)[^&\\s]+", "$1<redacted>")
+            ("(?i)([?&](?:signature|sig|token|key|credential|x-amz-signature|x-amz-credential|x-amz-security-token|x-goog-signature|x-goog-credential)=)[^&\\s]+", "$1<redacted>"),
+            ("(?i)(https?://)[^/@\\s]+:[^/@\\s]+@", "$1<redacted>@")
         ]
         for (pattern, replacement) in replacements {
             result = result.replacingOccurrences(of: pattern, with: replacement, options: .regularExpression)
@@ -55,6 +62,6 @@ enum AgentDiagnosticsRedactor {
         guard JSONSerialization.isValidJSONObject(sanitized),
               let data = try? JSONSerialization.data(withJSONObject: sanitized, options: pretty ? [.prettyPrinted, .sortedKeys] : [.sortedKeys]),
               let string = String(data: data, encoding: .utf8) else { return "{}" }
-        return sanitize(string)
+        return string
     }
 }

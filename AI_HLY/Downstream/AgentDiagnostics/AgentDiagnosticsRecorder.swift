@@ -1,25 +1,47 @@
 import CryptoKit
 import Foundation
 
-private actor AgentDiagnosticsRegistry {
+private final class AgentDiagnosticsRegistry: @unchecked Sendable {
     static let shared = AgentDiagnosticsRegistry()
+    private let lock = NSLock()
     private var recentRecorders: [UUID: AgentDiagnosticsRecorder] = [:]
+    private var lastSnapshotAt: [UUID: TimeInterval] = [:]
 
     func register(_ recorder: AgentDiagnosticsRecorder, for runID: UUID) {
+        lock.lock()
+        defer { lock.unlock() }
         recentRecorders[runID] = recorder
         if recentRecorders.count > 50 {
-            recentRecorders.remove(at: recentRecorders.startIndex)
+            let removed = recentRecorders.remove(at: recentRecorders.startIndex)
+            lastSnapshotAt.removeValue(forKey: removed.key)
         }
     }
 
     func recorder(for runID: UUID) -> AgentDiagnosticsRecorder? {
-        recentRecorders[runID]
+        lock.lock()
+        defer { lock.unlock() }
+        return recentRecorders[runID]
+    }
+
+    func acceptsSnapshot(for runID: UUID) -> Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        let now = ProcessInfo.processInfo.systemUptime
+        guard now - (lastSnapshotAt[runID] ?? 0) >= 0.25 else { return false }
+        lastSnapshotAt[runID] = now
+        return true
     }
 }
 
 actor AgentDiagnosticsRecorder {
     static func current(runID: UUID) async -> AgentDiagnosticsRecorder? {
-        await AgentDiagnosticsRegistry.shared.recorder(for: runID)
+        AgentDiagnosticsRegistry.shared.recorder(for: runID)
+    }
+
+    nonisolated static func trace(runID: UUID, stage: String, text: @autoclosure () -> String, fields: [String: String] = [:]) {
+        guard let journal = AgentDiagnosticsRegistry.shared.recorder(for: runID)?.journal else { return }
+        if stage.hasSuffix("snapshot"), !AgentDiagnosticsRegistry.shared.acceptsSnapshot(for: runID) { return }
+        journal.stage(stage, text: text(), fields: fields)
     }
 
     private(set) var session: AgentDiagnosticsSession
@@ -27,6 +49,8 @@ actor AgentDiagnosticsRecorder {
     private let jsonURL: URL
     private let textURL: URL
     private let encoder: JSONEncoder
+    nonisolated let journal: AgentDiagnosticsJournal
+    private var lastStreamCheckpoint = Date.distantPast
 
     static func start(
         runID: UUID,
@@ -46,8 +70,9 @@ actor AgentDiagnosticsRecorder {
             directoryURL: directory,
             level: AgentDiagnosticsConfiguration.level
         )
-        await AgentDiagnosticsRegistry.shared.register(recorder, for: runID)
+        AgentDiagnosticsRegistry.shared.register(recorder, for: runID)
         await recorder.persist()
+        await recorder.journal.checkpoint(status: "running")
         await recorder.cleanupRetention()
         let sessionPath = (await recorder.fileURLs()).json.path
         NativeToolTraceLogger.shared.log(
@@ -94,6 +119,8 @@ actor AgentDiagnosticsRecorder {
         let base = "agent-session-\(stamp)-\(shortID)"
         jsonURL = directoryURL.appendingPathComponent(base).appendingPathExtension("json")
         textURL = directoryURL.appendingPathComponent(base).appendingPathExtension("txt")
+        journal = AgentDiagnosticsJournal(baseURL: directoryURL.appendingPathComponent(base),
+            runID: runID, groupID: groupID, full: level == .fullLocalDebug)
         encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         encoder.dateEncodingStrategy = .iso8601
@@ -150,6 +177,8 @@ actor AgentDiagnosticsRecorder {
             meaningfulStreamEventCount: 0
         )
         session.rounds.append(round)
+        journal.setRound(round.id)
+        journal.stage("model.request.prepared", round: round.id, text: requestText ?? "")
         updateDerivedValues()
         await persist()
         var traceFields: [String: Any] = [
@@ -209,6 +238,8 @@ actor AgentDiagnosticsRecorder {
         updateRound(roundID) { round in
             round.request = request
         }
+        journal.setRound(roundID)
+        journal.stage("model.request.effective", round: roundID, text: requestText ?? "")
         await persist()
 
         trace("ModelRequestPrepared", roundID: roundID, fields: [
@@ -237,12 +268,14 @@ actor AgentDiagnosticsRecorder {
         visibleContent: String?,
         visibleReasoningSummary: String?,
         isMeaningful: Bool = true
-    ) {
+    ) async {
         if session.isComplete {
             trace("LateMutationAttemptedAfterTerminal", roundID: roundID, fields: ["operation": "recordStreamEvent"])
             return
         }
         let shouldStoreFullContent = session.level == .fullLocalDebug
+        if let visibleContent { journal.stage("StreamData.content", round: roundID, text: visibleContent) }
+        if let visibleReasoningSummary { journal.stage("StreamData.reasoning", round: roundID, text: visibleReasoningSummary) }
 
         updateRound(roundID) { round in
             round.response.streamEventCount += 1
@@ -259,6 +292,10 @@ actor AgentDiagnosticsRecorder {
                 round.response.visibleReasoningSummary =
                     (round.response.visibleReasoningSummary ?? "") + visibleReasoningSummary
             }
+        }
+        if Date().timeIntervalSince(lastStreamCheckpoint) >= 1 {
+            lastStreamCheckpoint = Date()
+            await persist()
         }
     }
 
@@ -490,6 +527,7 @@ actor AgentDiagnosticsRecorder {
         default: eventName = "AgentRun\(normalizedStatus.capitalized)"
         }
         trace(eventName)
+        await journal.checkpoint(status: normalizedStatus)
     }
 
     func fileURLs() -> (json: URL, text: URL) { (jsonURL, textURL) }
@@ -552,7 +590,9 @@ actor AgentDiagnosticsRecorder {
 
         do {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-            let data = try encoder.encode(snapshot)
+            let raw = try encoder.encode(snapshot)
+            let object = try JSONSerialization.jsonObject(with: raw)
+            let data = try JSONSerialization.data(withJSONObject: AgentDiagnosticsRedactor.sanitizeJSONObject(object), options: [.prettyPrinted, .sortedKeys])
             try data.write(to: jsonURL, options: [.atomic, .completeFileProtectionUnlessOpen])
             let readable = Self.readableText(snapshot)
             try Data(readable.utf8).write(to: textURL, options: [.atomic, .completeFileProtectionUnlessOpen])
@@ -569,15 +609,24 @@ actor AgentDiagnosticsRecorder {
                 includingPropertiesForKeys: [.contentModificationDateKey],
                 options: [.skipsHiddenFiles]
               ) else { return }
-        let sessionJSON = files.filter { $0.lastPathComponent.hasPrefix("agent-session-") && $0.pathExtension == "json" }
+        let sessionJSON = files.filter { $0.lastPathComponent.hasPrefix("agent-session-") && $0.pathExtension == "json" && !$0.lastPathComponent.hasSuffix("-manifest.json") }
             .sorted {
                 let lhs = (try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
                 let rhs = (try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
                 return lhs > rhs
             }
         for oldJSON in sessionJSON.dropFirst(limit) {
-            try? FileManager.default.removeItem(at: oldJSON)
-            try? FileManager.default.removeItem(at: oldJSON.deletingPathExtension().appendingPathExtension("txt"))
+            Self.deleteSessionFiles(jsonURL: oldJSON)
+        }
+    }
+
+    nonisolated static func deleteSessionFiles(jsonURL: URL) {
+        let base = jsonURL.deletingPathExtension().lastPathComponent
+        guard let files = try? FileManager.default.contentsOfDirectory(at: jsonURL.deletingLastPathComponent(), includingPropertiesForKeys: [.isRegularFileKey]) else { return }
+        for file in files where file.lastPathComponent.hasPrefix(base + ".") || file.lastPathComponent.hasPrefix(base + "-") {
+            if (try? file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile) == true {
+                try? FileManager.default.removeItem(at: file)
+            }
         }
     }
 

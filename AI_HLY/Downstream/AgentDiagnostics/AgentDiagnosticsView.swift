@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 
 struct AgentDiagnosticsView: View {
-    @AppStorage(AgentDiagnosticsConfiguration.levelKey) private var levelRaw = AgentDiagnosticsLevel.metadataOnly.rawValue
+    @AppStorage(AgentDiagnosticsConfiguration.levelKey) private var levelRaw = AgentDiagnosticsLevel.fullLocalDebug.rawValue
     @AppStorage(AgentDiagnosticsConfiguration.retentionKey) private var retention = 50
     @State private var sessions: [AgentDiagnosticsSessionFile] = []
     @State private var confirmsDeleteAll = false
@@ -18,7 +18,7 @@ struct AgentDiagnosticsView: View {
                     Text(String(localized: "Metadata only")).tag(AgentDiagnosticsLevel.metadataOnly.rawValue)
                     Text(String(localized: "Full detailed logs")).tag(AgentDiagnosticsLevel.fullLocalDebug.rawValue)
                 }
-                Text(String(localized: "Detailed diagnostics may include conversation text, prompts, tool inputs and tool outputs. Sensitive credentials are always redacted. Logs remain on this device until deleted."))
+                Text(String(localized: "Complete chat diagnostics are saved automatically on this device, including after upgrading. Readable logs include conversation text, prompts and tool content with credentials redacted. Exact source bytes are encrypted with a device-only key. Nothing is uploaded automatically. You can reduce or turn off recording here."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -73,7 +73,7 @@ struct AgentDiagnosticsView: View {
             }
         }
         .navigationTitle(String(localized: "Agent Diagnostics"))
-        .task { reload() }
+        .task { _ = AgentDiagnosticsConfiguration.level; reload() }
         .confirmationDialog(
             String(localized: "Delete all detailed agent logs?"),
             isPresented: $confirmsDeleteAll,
@@ -106,8 +106,7 @@ struct AgentDiagnosticsView: View {
     }
 
     private func delete(_ file: AgentDiagnosticsSessionFile) {
-        try? FileManager.default.removeItem(at: file.jsonURL)
-        try? FileManager.default.removeItem(at: file.textURL)
+        AgentDiagnosticsRecorder.deleteSessionFiles(jsonURL: file.jsonURL)
         reload()
     }
 

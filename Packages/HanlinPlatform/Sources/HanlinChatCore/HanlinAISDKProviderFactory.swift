@@ -181,14 +181,25 @@ extension HanlinAISDKProviderFactory {
     public static func makeFetch(
         sessionConfiguration: URLSessionConfiguration,
         onRequest: (@Sendable (URLRequest) async -> Void)? = nil,
-        onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil
+        onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil,
+        transportObserver: HanlinChatTransportObserver? = nil
     ) -> FetchFunction {
         let session = URLSession(configuration: sessionConfiguration)
         return { request in
             await onRequest?(request)
+            let traceID = UUID()
+            transportObserver?(.request(id: traceID, request: request))
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
-            let (bytes, response) = try await session.bytes(for: request)
+            let bytes: URLSession.AsyncBytes
+            let response: URLResponse
+            do {
+                (bytes, response) = try await session.bytes(for: request)
+            } catch {
+                transportObserver?(.end(id: traceID, error: String(describing: error)))
+                throw error
+            }
             if let httpResponse = response as? HTTPURLResponse {
+                transportObserver?(.response(id: traceID, response: httpResponse))
                 await onResponse?(request, httpResponse)
             }
             let stream = AsyncThrowingStream<Data, Error> { continuation in
@@ -199,15 +210,22 @@ extension HanlinAISDKProviderFactory {
                         for try await byte in bytes {
                             buffer.append(byte)
                             if byte == 0x0A || buffer.count >= 1024 {
+                                transportObserver?(.bytes(id: traceID, data: buffer))
                                 continuation.yield(buffer)
                                 buffer.removeAll(keepingCapacity: true)
                             }
                         }
                         if !buffer.isEmpty {
+                            transportObserver?(.bytes(id: traceID, data: buffer))
                             continuation.yield(buffer)
                         }
+                        transportObserver?(.end(id: traceID, error: nil))
                         continuation.finish()
                     } catch {
+                        if !buffer.isEmpty {
+                            transportObserver?(.bytes(id: traceID, data: buffer))
+                        }
+                        transportObserver?(.end(id: traceID, error: String(describing: error)))
                         continuation.finish(throwing: error)
                     }
                 }
@@ -218,13 +236,18 @@ extension HanlinAISDKProviderFactory {
             return try await withCheckedThrowingContinuation { continuation in
                 let task = session.dataTask(with: request) { data, response, error in
                     if let error {
+                        transportObserver?(.end(id: traceID, error: String(describing: error)))
                         continuation.resume(throwing: error)
                     } else if let response {
                         if let httpResponse = response as? HTTPURLResponse {
+                            transportObserver?(.response(id: traceID, response: httpResponse))
                             Task { await onResponse?(request, httpResponse) }
                         }
+                        transportObserver?(.bytes(id: traceID, data: data ?? Data()))
+                        transportObserver?(.end(id: traceID, error: nil))
                         continuation.resume(returning: FetchResponse(body: .data(data ?? Data()), urlResponse: response))
                     } else {
+                        transportObserver?(.end(id: traceID, error: "missing_response"))
                         continuation.resume(throwing: URLError(.unknown))
                     }
                 }

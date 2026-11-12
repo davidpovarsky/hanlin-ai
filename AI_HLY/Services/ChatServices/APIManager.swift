@@ -2684,7 +2684,8 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "等待模型响应" : "Waiting for model response"))
                     
                     let chatEngine = self.chatEngineFactory()
-                    let result = await chatEngine.stream(request: request, configuration: chatConfig)
+                    let result = await chatEngine.stream(request: request, configuration: chatConfig,
+                        transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver)
                     
                     // 定义变量保存所有分片累计的 tool_calls
                     var accumulatedToolCalls: [[String: Any]] = []
@@ -3718,7 +3719,8 @@ class APIManager {
                     let reqID = response.allHeaderFields["x-request-id"] as? String
                     await recorder.responseStarted(roundID: roundID, httpStatus: response.statusCode, providerRequestID: reqID)
                 }
-            }
+            },
+            transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver
         )
         let agentEngine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
 
@@ -3738,6 +3740,7 @@ class APIManager {
         var currentStepID: UUID?
 
         for try await event in sdkStream {
+            self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.event", round: currentStepID, text: String(describing: event))
             try RuntimeUserOperation.current?.checkInterruption()
             if Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
                 RuntimeUserOperation.finishStream(continuation)

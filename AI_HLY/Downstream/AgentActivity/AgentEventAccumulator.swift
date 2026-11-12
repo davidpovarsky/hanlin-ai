@@ -30,6 +30,7 @@ struct AgentEventAccumulator {
   }
 
   mutating func apply(_ event: AgentEvent) {
+    AgentDiagnosticsRecorder.trace(runID: run.id, stage: "AgentEventAccumulator.input", text: String(describing: event))
     if case .runStarted = event {
       // Allow initial runStarted while status is .running
     } else if run.status != .running && run.status != .pending {

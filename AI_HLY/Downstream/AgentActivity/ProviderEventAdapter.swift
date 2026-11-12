@@ -32,6 +32,7 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
     }
 
     mutating func events(from data: StreamData) -> [AgentEvent] {
+        AgentDiagnosticsRecorder.trace(runID: runID, stage: "ProviderEventAdapter.input", text: String(describing: data))
         var events: [AgentEvent] = []
 
         if data.agentEvents.contains(where: isActivityBoundary) {

@@ -314,6 +314,9 @@ struct ClassicChatAgentProjection {
         seenToolCallKeys: inout Set<String>
     ) {
         var entries: [ClassicProjectedToolCallEntry] = []
+        AgentDiagnosticsRecorder.trace(runID: agentRun.id, stage: "ClassicChatAgentProjection.snapshot",
+            text: agentRun.transcriptItems.compactMap(\.text).joined(separator: "\n"),
+            fields: ["messageID": String(describing: assistantMessage.id)])
         // A snapshot rebuild must include previously seen calls so status/output
         // changes replace their old rendering. Event dedup has a separate lifetime.
         var snapshotKeys = Set<String>()
