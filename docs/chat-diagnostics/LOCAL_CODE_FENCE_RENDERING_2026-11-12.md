@@ -66,10 +66,14 @@ counts, digest and elapsed time, without source content.
 - **EXECUTED_PASS:** portable Swift syntax parse of new files; 91 existing affected
   CI-routing tests after adding native/JS ownership. A portable parse does not
   typecheck Apple APIs.
-- **NOT_RUN at authoring:** actual production WebKit tests. The focused manual
-  workflow stages byte-identical production sources/resources/test cases into
-  an isolated iOS package, retains every input hash and requires four exact
-  passing xcresult leaves. It neither builds native engines nor publishes an app.
+- **EXECUTED_PASS:** [43260034743](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43260034743)
+  at app SHA `f9243d8d`, Xcode 27.2/27B52: all four actual production WebKit cases
+  passed (seven Mermaid families/cache, full unified/split Diff, tampered assets
+  and script-disabled visible WebKit, cancellation). The focused manual workflow
+  staged byte-identical production sources/resources/test cases into an isolated
+  iOS package and retained every input hash and raw xcresult leaf. Job duration
+  8m4s; this neither rebuilt native engines nor published an app. It does not
+  replace the original-bubble UI journey or physical-device profiling.
 - **NOT_RUN:** full app hook compilation after this integration; original bubble
   UI journey with diagrams; VoiceOver/selection/rotation/multitasking, performance
   and memory profiling on a physical iPad; final CHATUX-08/09/10 acceptance.

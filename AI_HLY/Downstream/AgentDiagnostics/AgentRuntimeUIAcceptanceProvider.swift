@@ -326,6 +326,26 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let bodyData = Self.extractBodyData(from: request)
         let bodyString = String(decoding: bodyData, as: UTF8.self)
 
+        if bodyString.contains("RENDER_CODE_FENCES") {
+            emitFinalAnswer("""
+            Local renderer acceptance
+
+            ```mermaid
+            flowchart LR
+            A["שלום🙂"] --> B["OAuth"]
+            ```
+
+            ```diff
+            --- a/auth.ts
+            +++ b/auth.ts
+            @@ -1 +1 @@
+            -old("שלום")
+            +updated("שלום🙂")
+            ```
+            """)
+            return
+        }
+
         // 1. Run B immediately completes (must precede START_DELAYED_RUN_A since Run A remains in conversation history)
         if bodyString.contains("START_RUN_B") {
             emitFinalAnswer("RUN_B_COMPLETE")

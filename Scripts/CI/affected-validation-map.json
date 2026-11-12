@@ -1158,6 +1158,20 @@
       ],
       "consumers": []
     },
+    "chat_auto_follow_tests": {
+      "description": "Original-chat layout-driven scroll coalescing and cancellation ownership",
+      "patterns": [
+        "AI_HLY/Downstream/AgentActivity/Scrolling/**",
+        "AI_HLYTests/ChatAutoFollowTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatAutoFollowTests"
+      ],
+      "consumers": []
+    },
     "chat_code_fence_tests": {
       "description": "Pinned local Mermaid/Diff assets, native WebKit renderer and original Markdown hook",
       "patterns": [

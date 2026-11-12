@@ -3,6 +3,45 @@ import UIKit
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
+    func testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launch()
+        openChat(in: app)
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 20))
+        tapElement(input)
+        input.typeText("RENDER_CODE_FENCES")
+        tapElement(app.buttons["hanlin-chat-send"].firstMatch)
+
+        let diagram = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-mermaid-")
+        ).firstMatch
+        let comparison = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-diff-")
+        ).firstMatch
+        XCTAssertTrue(diagram.waitForExistence(timeout: 30), "The original parsed Markdown hook did not produce a diagram block")
+        XCTAssertTrue(comparison.waitForExistence(timeout: 30), "The original parsed Markdown hook did not produce a Diff block")
+        let diagramPreview = diagram.descendants(matching: .webView).firstMatch
+        XCTAssertTrue(diagramPreview.waitForExistence(timeout: 60), "Actual local Mermaid WebKit output did not reach the original bubble")
+        XCTAssertTrue(comparison.descendants(matching: .webView).firstMatch.waitForExistence(timeout: 30),
+                      "Actual local Diff WebKit output did not reach the original bubble")
+        let sourceToggle = diagram.buttons["Show code"].firstMatch
+        XCTAssertTrue(sourceToggle.waitForExistence(timeout: 10))
+        tapElement(sourceToggle)
+        let source = diagram.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", "flowchart LR", "flowchart LR")
+        ).firstMatch
+        XCTAssertTrue(source.waitForExistence(timeout: 10), "Showing source must preserve the original Mermaid input")
+        tapElement(diagram.buttons["Code block actions"].firstMatch)
+        tapElement(app.buttons["Expand"].firstMatch)
+        XCTAssertTrue(app.navigationBars["Diagram"].waitForExistence(timeout: 10))
+        tapElement(app.buttons["Done"].firstMatch)
+        XCTAssertTrue(diagram.waitForExistence(timeout: 10), "Closing the expanded view must retain the original bubble")
+    }
+
     func testRealChatUISendsPromptShowsToolActivityAndFinalAnswer() throws {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]

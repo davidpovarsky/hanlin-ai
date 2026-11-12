@@ -110,7 +110,6 @@ struct ChatView: View {
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
     @State private var ifScroll = false                     // 控制滚动相关状态
     @State private var autoFollowController = ChatAutoFollowController()
-    @State private var pendingAutoFollowTask: Task<Void, Never>?
     @State private var measuredComposerHeight: CGFloat = 0
     @State private var chatContainerWidth: CGFloat = 0
 
@@ -816,7 +815,7 @@ struct ChatView: View {
         guard let id = effectiveMatchedMessageID,
               let index = allMessages.firstIndex(where: { $0.id == id }) else { return }
         revealedSourceRequest = sourceDestination?.id
-        pendingAutoFollowTask?.cancel()
+        autoFollowController.cancelPendingScroll()
         autoFollowController.pauseFollowing(reason: "savedSource")
         let count = allMessages.count - index
         if count > loadedMessageCount {
@@ -886,22 +885,9 @@ struct ChatView: View {
             .refreshable {
                 loadMoreMessages()
             }
-            .onChange(of: scrollTriggerState) {
-                scheduleAutoFollow(using: scrollViewProxy, animated: true)
-            }
-            .onChange(of: activeAgentRun?.scrollFingerprint) { previous, current in
-                guard let current else { return }
-                scheduleAutoFollow(
-                    using: scrollViewProxy,
-                    animated: current.isStructuralChange(comparedTo: previous)
-                )
-            }
             .onChange(of: needScrollToBottomButton) {
                 autoFollowController.resumeFollowing()
                 scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
-            }
-            .onChange(of: ifScroll) {
-                scheduleAutoFollow(using: scrollViewProxy, animated: true)
             }
             .task(id: sourceDestination?.id) {
                 revealMatchedSource(using: scrollViewProxy)
@@ -917,15 +903,11 @@ struct ChatView: View {
             .environment(\.chatMarkdownSelectionActivity, { id, active in
                 if active, !nativeSelectionIDs.contains(id) {
                     nativeSelectionIDs.insert(id)
-                    pendingAutoFollowTask?.cancel()
                     autoFollowController.pauseFollowing(reason: "textSelection")
                 } else if !active, nativeSelectionIDs.contains(id) { nativeSelectionIDs.remove(id) }
             })
             .environment(\.chatMarkdownDidRender, { messageID in
-                guard pendingSourceScroll == messageID else {
-                    scheduleAutoFollow(using: scrollViewProxy, animated: false)
-                    return
-                }
+                guard pendingSourceScroll == messageID else { return }
                 pendingSourceScroll = nil
                 Task { @MainActor in
                     await Task.yield()
@@ -972,6 +954,13 @@ struct ChatView: View {
                     showScrollToBottomButton = !isScrolledToBottom
                 }
             }
+            .onScrollGeometryChange(for: ChatAutoFollowLayout.self) { geometry in
+                ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
+                    viewportHeight: Double(geometry.containerSize.height).rounded(),
+                    bottomInset: Double(geometry.contentInsets.bottom).rounded())
+            } action: { _, _ in
+                scheduleAutoFollow(using: scrollViewProxy, animated: false)
+            }
             .onScrollPhaseChange { _, newPhase in
                 switch newPhase {
                 case .tracking, .interacting, .decelerating:
@@ -985,8 +974,7 @@ struct ChatView: View {
                 }
             }
             .onDisappear {
-                pendingAutoFollowTask?.cancel()
-                pendingAutoFollowTask = nil
+                autoFollowController.cancelPendingScroll()
             }
     }
     
@@ -1007,17 +995,9 @@ struct ChatView: View {
         force: Bool = false
     ) {
         guard force || nativeSelectionIDs.isEmpty else { return }
-        guard force || autoFollowController.shouldRequestScrollForVisualUpdate() else { return }
-        pendingAutoFollowTask?.cancel()
-        pendingAutoFollowTask = Task { @MainActor in
-            do {
-                try await Task.sleep(for: .milliseconds(80))
-            } catch {
-                return
-            }
-            guard !Task.isCancelled,
-                  force || (nativeSelectionIDs.isEmpty && autoFollowController.mode == .following) else { return }
-            scrollToLastMessage(using: scrollViewProxy, animated: animated)
+        autoFollowController.scheduleScroll(animated: animated, force: force) { animate in
+            guard force || nativeSelectionIDs.isEmpty else { return }
+            scrollToLastMessage(using: scrollViewProxy, animated: animate)
         }
     }
 
@@ -1440,7 +1420,6 @@ struct ChatView: View {
         isObserving = ifObservingMode
         isResponding = true
         respondIndex = ifObservingMode ? 2 : 1
-        pendingAutoFollowTask?.cancel()
         autoFollowController.beginRun()
         
         // 传输数据准备
@@ -1998,8 +1977,7 @@ struct ChatView: View {
         }
         activeAgentCoordinator = nil
         autoFollowController.runEnded()
-        pendingAutoFollowTask?.cancel()
-        pendingAutoFollowTask = nil
+        autoFollowController.cancelPendingScroll()
         activeAgentMessage = nil
         
         isObserving = false
