@@ -42,6 +42,7 @@ struct HanlinTransportTraceTests {
         let response = try await fetch(URLRequest(url: URL(string: "https://trace.invalid/chat")!))
         var consumed = Data()
         switch response.body {
+        case .none: Issue.record("Production fetch returned no body for the SSE fixture")
         case .data(let data): consumed.append(data)
         case .stream(let stream): for try await data in stream { consumed.append(data) }
         }
