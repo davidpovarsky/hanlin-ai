@@ -51,6 +51,7 @@ actor AgentDiagnosticsRecorder {
     private let encoder: JSONEncoder
     nonisolated let journal: AgentDiagnosticsJournal
     private var lastStreamCheckpoint = Date.distantPast
+    private var knownCredentials: Set<String> = []
 
     static func start(
         runID: UUID,
@@ -212,6 +213,10 @@ actor AgentDiagnosticsRecorder {
             return
         }
         guard !requestData.isEmpty else { return }
+        for (name, value) in httpHeaders ?? [:] where name.lowercased().contains("authorization") || name.lowercased().contains("api-key") {
+            let secret = value.hasPrefix("Bearer ") ? String(value.dropFirst(7)) : value
+            if secret.count >= 4 { knownCredentials.insert(secret) }
+        }
 
         let requestObject = (try? JSONSerialization.jsonObject(with: requestData)) ?? [:]
         let sanitizedJSON = AgentDiagnosticsRedactor.sanitizedJSONString(from: requestObject, pretty: true)
@@ -592,9 +597,10 @@ actor AgentDiagnosticsRecorder {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
             let raw = try encoder.encode(snapshot)
             let object = try JSONSerialization.jsonObject(with: raw)
-            let data = try JSONSerialization.data(withJSONObject: AgentDiagnosticsRedactor.sanitizeJSONObject(object), options: [.prettyPrinted, .sortedKeys])
+            let safe = AgentDiagnosticsRedactor.redactKnownCredentials(in: AgentDiagnosticsRedactor.sanitizeJSONObject(object), credentials: knownCredentials)
+            let data = try JSONSerialization.data(withJSONObject: safe, options: [.prettyPrinted, .sortedKeys])
             try data.write(to: jsonURL, options: [.atomic, .completeFileProtectionUnlessOpen])
-            let readable = Self.readableText(snapshot)
+            let readable = AgentDiagnosticsRedactor.redactKnownCredentials(in: Self.readableText(snapshot), credentials: knownCredentials) as? String ?? ""
             try Data(readable.utf8).write(to: textURL, options: [.atomic, .completeFileProtectionUnlessOpen])
         } catch {
             NativeToolTraceLogger.shared.logError("AgentDiagnosticsWriteFailed", error: error)
@@ -609,7 +615,7 @@ actor AgentDiagnosticsRecorder {
                 includingPropertiesForKeys: [.contentModificationDateKey],
                 options: [.skipsHiddenFiles]
               ) else { return }
-        let sessionJSON = files.filter { $0.lastPathComponent.hasPrefix("agent-session-") && $0.pathExtension == "json" && !$0.lastPathComponent.hasSuffix("-manifest.json") }
+        let sessionJSON = files.filter { $0.lastPathComponent.hasPrefix("agent-session-") && $0.pathExtension == "json" && !$0.lastPathComponent.hasSuffix("-manifest.json") && !$0.lastPathComponent.hasSuffix("-stage-snapshots.json") }
             .sorted {
                 let lhs = (try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
                 let rhs = (try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast

@@ -27,7 +27,8 @@ struct AgentDiagnosticsJournalTests {
         let eventsURL = URL(filePath: base.path + "-stage-events.jsonl")
         let readable = try String(contentsOf: eventsURL, encoding: .utf8)
         #expect(!readable.contains("HEADER_SECRET") && !readable.contains("BODY_SECRET") && !readable.contains("URL_SECRET"))
-        #expect(readable.contains("שָׁלוֹם🙂مرحبا中文"))
+        let snapshots = try String(contentsOf: URL(filePath: base.path + "-stage-snapshots.json"), encoding: .utf8)
+        #expect(snapshots.contains("שָׁלוֹם🙂مرحبا中文"))
         #expect(!readable.contains("�"))
         let events = try readable.split(separator: "\n").map { try #require(try JSONSerialization.jsonObject(with: Data($0.utf8)) as? [String: Any]) }
         #expect(events.compactMap { $0["roundID"] as? String }.allSatisfy { $0 == round.uuidString })
@@ -79,5 +80,28 @@ struct AgentDiagnosticsJournalTests {
         #expect(safe.contains("ordinary private conversation שלום"))
         #expect(!safe.contains("UNSAFE_"))
         #expect(try JSONSerialization.jsonObject(with: Data(safe.utf8)) is [String: Any])
+    }
+
+    @Test func credentialsSplitAcrossSSEEventsRemainOnlyInTheEncryptedSource() async throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let base = directory.appending(path: "agent-session-split-secret")
+        let key = SymmetricKey(size: .bits256)
+        let journal = AgentDiagnosticsJournal(baseURL: base, runID: UUID(), groupID: UUID(), full: true, keyProvider: { key })
+        let secret = "sk-project_PRIVATE_CREDENTIAL_12345678"
+        var request = URLRequest(url: URL(string: "https://example.invalid")!)
+        request.setValue("Bearer " + secret, forHTTPHeaderField: "Authorization")
+        let id = UUID()
+        journal.transportObserver(.request(id: id, request: request))
+        for piece in ["sk-pro", "ject_PRIVATE_", "CREDENTIAL_12345678"] {
+            let data = try JSONSerialization.data(withJSONObject: ["choices": [["delta": ["content": piece]]]])
+            journal.transportObserver(.bytes(id: id, data: Data("data: ".utf8) + data + Data("\n\n".utf8)))
+        }
+        journal.transportObserver(.end(id: id, error: nil))
+        await journal.checkpoint(status: "completed")
+        for url in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil) {
+            let text = try String(contentsOf: url, encoding: .utf8)
+            #expect(!text.contains("PRIVATE_") && !text.contains("CREDENTIAL_12345678"))
+        }
     }
 }

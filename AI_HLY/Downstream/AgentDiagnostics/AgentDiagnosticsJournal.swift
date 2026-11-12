@@ -26,6 +26,9 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
     private var lastCheckpoint = Date.distantPast
     private var initialized = false
     private var terminalStatus: String?
+    private var readableSnapshots: [String: String] = [:]
+    private var credentials: Set<String> = []
+    private var snapshotBytes = 0
     private let queueBudget = 16 * 1024 * 1024
     private let diskBudget = 256 * 1024 * 1024
 
@@ -56,7 +59,17 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
         enqueue(bytes: text.utf8.count) {
             self.encrypted(Data(text.utf8), request: round ?? self.runID, kind: "stage_" + name)
             var record: [String: Any] = fields
-            record["text"] = self.full ? AgentDiagnosticsRedactor.sanitize(text) : nil
+            let snapshotKey = "\(round?.uuidString ?? "run").\(name)"
+            if self.full && (name.hasSuffix(".content") || name.hasSuffix(".reasoning")) {
+                self.updateSnapshot(snapshotKey, text: text)
+            } else if self.full && name.hasSuffix("snapshot") {
+                self.updateSnapshot(snapshotKey, text: text, replace: true)
+            }
+            // Individual deltas can split a credential across events. Exact
+            // events stay encrypted; readable content uses coalesced snapshots
+            // so redaction sees the complete string before publishing it.
+            record["snapshotFile"] = self.baseURL.lastPathComponent + "-stage-snapshots.json"
+            record["text"] = self.full && name.contains("request") ? AgentDiagnosticsRedactor.sanitize(text) : nil
             record["byteCount"] = text.utf8.count
             record["unicodeScalars"] = text.unicodeScalars.count
             record["sha256"] = Self.hash(Data(text.utf8))
@@ -122,6 +135,10 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
             requests[id] = (roundID, 0, 0, Data())
             let body = request.httpBody ?? Data()
             let rawHeaders = request.allHTTPHeaderFields ?? [:]
+            for (name, value) in rawHeaders where name.lowercased().contains("authorization") || name.lowercased().contains("api-key") {
+                let secret = value.hasPrefix("Bearer ") ? String(value.dropFirst(7)) : value
+                if secret.count >= 4 { credentials.insert(secret) }
+            }
             let raw: [String: Any] = ["url": request.url?.absoluteString ?? "", "headers": rawHeaders,
                                       "method": request.httpMethod ?? "", "bodyBase64": body.base64EncodedString()]
             if let data = try? JSONSerialization.data(withJSONObject: raw) { encrypted(data, request: id, kind: "request") }
@@ -177,13 +194,39 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
         let text = valid ?? String(decoding: bytes, as: UTF8.self)
         let payload = text.hasPrefix("data:") ? String(text.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines) : text
         let object = payload.data(using: .utf8).flatMap { try? JSONSerialization.jsonObject(with: $0) }
+        let safePayload = object.map { snapshotSSE($0, request: request, path: "response") }
         event("SSE.line", request: request, fields: [
-            "text": object.map { "data: " + AgentDiagnosticsRedactor.sanitizedJSONString(from: $0) }
-                ?? AgentDiagnosticsRedactor.sanitize(text),
-            "payload": object.map(AgentDiagnosticsRedactor.sanitizeJSONObject) ?? AgentDiagnosticsRedactor.sanitize(payload),
+            "payload": safePayload ?? (payload == "[DONE]" ? "[DONE]" : "<exact unparsed source in encrypted raw>"),
             "rawSHA256": Self.hash(bytes), "validUTF8": valid != nil,
             "containsReplacementCharacter": text.contains("\u{FFFD}"), "partialAtEOF": partial
         ])
+    }
+
+    private func snapshotSSE(_ object: Any, request: UUID, path: String) -> Any {
+        if let values = object as? [String: Any] {
+            return values.reduce(into: [String: Any]()) { result, entry in
+                let key = "\(request.uuidString).\(path).\(entry.key)"
+                if let text = entry.value as? String,
+                   ["content", "text", "reasoning", "reasoning_content", "thinking", "arguments", "partial_json"].contains(entry.key) {
+                    updateSnapshot(key, text: text)
+                    result[entry.key] = "<see stage-snapshots.json: \(key)>"
+                } else { result[entry.key] = snapshotSSE(entry.value, request: request, path: path + "." + entry.key) }
+            }
+        }
+        if let values = object as? [Any] {
+            return values.enumerated().map { snapshotSSE($0.element, request: request, path: path + "." + String($0.offset)) }
+        }
+        return AgentDiagnosticsRedactor.sanitizeJSONObject(object)
+    }
+
+    private func updateSnapshot(_ key: String, text: String, replace: Bool = false) {
+        let previous = replace ? readableSnapshots[key]?.utf8.count ?? 0 : 0
+        guard snapshotBytes - previous + text.utf8.count <= 32 * 1024 * 1024 else {
+            droppedBytes += text.utf8.count
+            return
+        }
+        snapshotBytes += text.utf8.count - previous
+        if replace { readableSnapshots[key] = text } else { readableSnapshots[key, default: ""] += text }
     }
 
     private func encrypted(_ bytes: Data, request: UUID, kind: String) {
@@ -236,6 +279,8 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
     }
 
     private func manifest(status: String) {
+        var digestState = rawHasher
+        let rawDigest = digestState.finalize().map { String(format: "%02x", $0) }.joined()
         lock.lock()
         let rejected = rejectedBytes
         lock.unlock()
@@ -245,11 +290,22 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
             "captureError": writeError ?? "", "encryptedRaw": full,
             "rawFile": baseURL.lastPathComponent + ".raw.enc",
             "eventsFile": baseURL.lastPathComponent + "-stage-events.jsonl",
-            "rawFileSHA256": rawHasher.finalize().map { String(format: "%02x", $0) }.joined(),
+            "snapshotsFile": baseURL.lastPathComponent + "-stage-snapshots.json",
+            "rawFileSHA256": rawDigest,
             "encryption": "AES-256-GCM, per-record nonce and authenticated aad; device-only Keychain key",
             "sharing": "Local only. Raw decryption/sharing requires deliberate user action.",
             "diskBudgetBytes": diskBudget, "queueBudgetBytes": queueBudget]
         do {
+            if full {
+                var snapshots = readableSnapshots.mapValues(AgentDiagnosticsRedactor.sanitize)
+                for (name, value) in snapshots {
+                    var safe = value
+                    for credential in credentials { safe = safe.replacingOccurrences(of: credential, with: "<redacted>") }
+                    snapshots[name] = safe
+                }
+                let snapshotData = try JSONSerialization.data(withJSONObject: snapshots, options: [.prettyPrinted, .sortedKeys])
+                try snapshotData.write(to: URL(filePath: baseURL.path + "-stage-snapshots.json"), options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
+            }
             let data = try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys])
             try data.write(to: URL(filePath: baseURL.path + "-manifest.json"), options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
         } catch { writeError = "manifest_failed_\((error as NSError).code)" }

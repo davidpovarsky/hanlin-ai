@@ -1,6 +1,15 @@
 import Foundation
 
 enum AgentDiagnosticsRedactor {
+    static func redactKnownCredentials(in value: Any, credentials: Set<String>) -> Any {
+        if let object = value as? [String: Any] { return object.mapValues { redactKnownCredentials(in: $0, credentials: credentials) } }
+        if let array = value as? [Any] { return array.map { redactKnownCredentials(in: $0, credentials: credentials) } }
+        if var text = value as? String {
+            for secret in credentials { text = text.replacingOccurrences(of: secret, with: "<redacted>") }
+            return text
+        }
+        return value
+    }
     private static let secretKeyNames: Set<String> = [
         "access_token", "accesstoken", "refresh_token", "refreshtoken",
         "api_key", "apikey", "x_api_key", "authorization", "proxy_authorization",
@@ -46,7 +55,7 @@ enum AgentDiagnosticsRedactor {
         let replacements = [
             ("(?i)bearer\\s+[a-z0-9._~+/-]+=*", "Bearer <redacted>"),
             ("(?i)(api[_-]?key|authorization|access[_-]?token|refresh[_-]?token|password|secret|cookie)\\s*[:=]\\s*[^\\s,;\\\"}]+", "$1=<redacted>"),
-            ("(?i)sk-[a-z0-9_-]{12,}", "<redacted>"),
+            ("(?i)sk-[a-z0-9_-]*", "<redacted>"),
             ("-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\\s\\S]*?-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----", "<redacted>"),
             ("(?i)([?&](?:signature|sig|token|key|credential|x-amz-signature|x-amz-credential|x-amz-security-token|x-goog-signature|x-goog-credential)=)[^&\\s]+", "$1<redacted>"),
             ("(?i)(https?://)[^/@\\s]+:[^/@\\s]+@", "$1<redacted>@")

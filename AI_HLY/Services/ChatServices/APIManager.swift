@@ -2679,6 +2679,9 @@ class APIManager {
                             trigger: depth == 0 ? "initialUserRequest" : "continueAfterToolResult",
                             requestData: requestData
                         )
+                        if let roundID = diagnosticsRoundID {
+                            await recorder.recordModelRequest(roundID: roundID, requestData: requestData, httpHeaders: request.allHTTPHeaderFields)
+                        }
                     }
                     
                     // 推送请求状态
@@ -3764,6 +3767,7 @@ class APIManager {
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response", modelRoundID: currentStepID))
 
             case .textDelta(let text):
+                self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.content", round: currentStepID, text: text)
                 visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                 RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
                 if self.toolMessage == nil { self.toolMessage = "" }
@@ -3779,6 +3783,7 @@ class APIManager {
                 continuation.yield(StreamData(content: text))
 
             case .reasoningDelta(let text):
+                self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.reasoning", round: currentStepID, text: text)
                 RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
                 if self.toolMessageReasoning == nil { self.toolMessageReasoning = "" }
                 self.toolMessageReasoning?.append(text)
