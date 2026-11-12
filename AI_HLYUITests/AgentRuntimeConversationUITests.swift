@@ -4,6 +4,7 @@ import UIKit
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
     func testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions() throws {
+        continueAfterFailure = false
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
@@ -28,13 +29,27 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(diagramPreview.waitForExistence(timeout: 60), "Actual local Mermaid WebKit output did not reach the original bubble")
         XCTAssertTrue(comparison.descendants(matching: .webView).firstMatch.waitForExistence(timeout: 30),
                       "Actual local Diff WebKit output did not reach the original bubble")
-        let sourceToggle = diagram.buttons["Show code"].firstMatch
-        XCTAssertTrue(sourceToggle.waitForExistence(timeout: 10))
+        // Toggle retains native accessibility semantics even with .button style;
+        // locate the actual control by its stable ID rather than assuming UIButton.
+        let sourceToggle = diagram.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-source-toggle-")
+        ).firstMatch
+        let sourceControlExists = sourceToggle.waitForExistence(timeout: 10)
+        if !sourceControlExists {
+            let state = XCTAttachment(string: app.debugDescription)
+            state.name = "Original code-fence source control hierarchy"
+            state.lifetime = .keepAlways
+            add(state)
+        }
+        XCTAssertTrue(sourceControlExists)
         tapElement(sourceToggle)
         let source = diagram.descendants(matching: .any).matching(
-            NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", "flowchart LR", "flowchart LR")
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-source-text-")
         ).firstMatch
         XCTAssertTrue(source.waitForExistence(timeout: 10), "Showing source must preserve the original Mermaid input")
+        let shownSource = source.label + (source.value as? String ?? "")
+        XCTAssertTrue(shownSource.contains("flowchart LR") && shownSource.contains("שלום🙂"),
+                      "The source toggle must expose the actual complete Unicode diagram input")
         tapElement(diagram.buttons["Code block actions"].firstMatch)
         tapElement(app.buttons["Expand"].firstMatch)
         XCTAssertTrue(app.navigationBars["Diagram"].waitForExistence(timeout: 10))

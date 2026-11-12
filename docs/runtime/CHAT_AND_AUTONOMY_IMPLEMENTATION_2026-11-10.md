@@ -626,3 +626,33 @@ The original native-engine producer42926628418 is unchanged and must be reused.
 New app Mermaid/Diff hook and scroll coalescing require app compilation/UI tests;
 the unchanged production renderer already passed four isolated WebKit cases in
 43260034743 atf9243d8d (input hashes verified unchanged after1e205b15).
+# Actual focused consumers — 43267408632 / 67e42a74
+
+[נועם | DEV] [MAIN_SESSION],2026-11-12. The app/test targets compiled after the
+separate UIKit caption1 correction67e42a74. Actual raw xcresult leaves show
+**56 selected unit cases PASS in8 suites**,580.406s Swift Testing wall time.
+These56 selections are **not** the independent56 required Core-case manifest.
+Native engines were reused from42926628418. In particular:
+
+- Actual MCP installation/native lifecycle/protocol probe: PASS1s after the
+  generated child-ID correction21d5fcfe.
+- All23 approved linked Shell commands and actual portable&&/overwrite/append/
+  public-tool readback: PASS7s with the corrected echo fixture.
+- Affected original Node/TS/compiler/CLI/large-input/lifecycle/fetch and
+  interruption consumers: actual selected cases PASS, including305s Node+Python.
+- Four new gate-controlled scroll coalescing/cancellation tests: PASS.
+- UI stop/new/no ghost: PASS78s. Complete ScriptUI install/relaunch/disable/
+  re-enable/uninstall/relaunch journey: PASS9m21s under its measured600s cap.
+
+Overall run remains FAILED because one of3 selected UI cases failed. Both
+Mermaid/Diff WebViews were present inside the original bubble. Retained native
+hierarchies (`build/code-fence-43267408632-hierarchy-0.txt`,50552bytes) show
+Switch/Show code/value0 within `hanlin-code-fence-mermaid-1`; the test queried
+Button. Stable Toggle/source-text identifiers and a type-independent scoped
+query are prepared; the actual source/Unicode/expand assertions remain intact.
+
+Run: https://github.com/davidpovarsky/hanlin-ai/actions/runs/43267408632
+Artifact13969728885,96,538,183bytes, authenticated raw unit/UI JSON inspected.
+No case is promoted from declaration/suite headings or from a different source
+to full current acceptance. The remaining Core impact/reuse audit, code-fence UI
+rerun, new diagnostics SwiftUI binding and physical gates remain separate.

@@ -24,7 +24,9 @@ or horizontally interacting with a code preview does not remove this policy.
 Four deterministic gate-controlled unit cases cover sustained coalescing,
 animation merging, touch cancellation/stale ownership, selection/explicit resume,
 and replacement by a new run. They do not use wall-clock timing assertions.
-Native execution and the app UI journey are still pending at authoring.
+All four actual scroll cases passed in app run43267408632 at67e42a74. The actual
+stop/new-run UI case also passed (78s). The overall run failed on the separately
+documented code-fence source-toggle query; it is not a full UI/performance pass.
 
 ## Renderer API audit
 

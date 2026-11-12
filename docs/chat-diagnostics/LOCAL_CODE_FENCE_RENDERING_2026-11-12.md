@@ -74,8 +74,16 @@ counts, digest and elapsed time, without source content.
   iOS package and retained every input hash and raw xcresult leaf. Job duration
   8m4s; this neither rebuilt native engines nor published an app. It does not
   replace the original-bubble UI journey or physical-device profiling.
-- **NOT_RUN:** full app hook compilation after this integration; original bubble
-  UI journey with diagrams; VoiceOver/selection/rotation/multitasking, performance
+- **EXECUTED_PASS compilation / FAILED UI case:** full app at67e42a74 in
+  [43267408632](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43267408632)
+  compiled the actual Markdown hook/resources and ran the original-bubble UI
+  journey. Both actual Mermaid and Diff WebViews appeared. The case failed when
+  its query assumed the native Show code Toggle was a Button. Retained hierarchy
+  instead shows a Switch labeled Show code/value0 inside each original block.
+  Stable control/source-text IDs and a type-independent query now preserve
+  native semantics; source Unicode/toggle/expand assertions remain required on
+  the next focused rerun. No UI PASS is substituted for the failed case.
+- **NOT_RUN:** VoiceOver/selection/rotation/multitasking, performance
   and memory profiling on a physical iPad; final CHATUX-08/09/10 acceptance.
 
 Keep these statuses separate when updating task acceptance. Existing Runtime

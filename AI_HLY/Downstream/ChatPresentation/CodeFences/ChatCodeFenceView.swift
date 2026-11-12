@@ -37,6 +37,7 @@ struct ChatCodeFenceView: View {
                     .font(.caption.weight(.semibold))
                 Spacer()
                 Toggle(String(localized: "Show code"), isOn: $showsSource).toggleStyle(.button).font(.caption)
+                    .accessibilityIdentifier("hanlin-code-fence-source-toggle-\(blockID)")
                 Menu {
                     Button(String(localized: "Copy source"), systemImage: "doc.on.doc") { UIPasteboard.general.string = source }
                     ShareLink(item: source) { Label(String(localized: "Share source"), systemImage: "square.and.arrow.up") }
@@ -127,6 +128,7 @@ struct ChatCodeFenceView: View {
     private var sourcePreview: some View {
         ScrollView([.horizontal, .vertical]) {
             Text(source).font(.system(.callout, design: .monospaced)).textSelection(.enabled)
+                .accessibilityIdentifier("hanlin-code-fence-source-text-\(blockID)")
                 .fixedSize(horizontal: true, vertical: true).padding(8)
         }
         .frame(height: 200)
