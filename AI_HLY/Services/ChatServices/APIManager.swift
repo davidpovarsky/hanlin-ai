@@ -112,6 +112,7 @@ class APIManager {
     private var isCancelled = false              // 请求取消标记
     private var activeAgentProducerTask: Task<Void, Never>?
     private var activeAgentRunID: UUID?
+    private var initializingRunID: UUID?
     
     init(
         context: ModelContext,
@@ -1361,6 +1362,7 @@ class APIManager {
     
     // MARK: - 任务取消
     func cancelCurrentRequest() {
+        let cancelledRunID = initializingRunID ?? activeAgentRunID
         isCancelled = true
         activeLocalLLMDriver?.stop()
         activeLocalLLMDriver = nil
@@ -1369,13 +1371,14 @@ class APIManager {
         activeAgentProducerTask?.cancel()
         activeAgentProducerTask = nil
         activeAgentRunID = nil
-        AgentRunLifecycleCoordinator.shared.cancelRun()
+        initializingRunID = nil
+        if let cancelledRunID { AgentRunLifecycleCoordinator.shared.cancelRun(runID: cancelledRunID) }
     }
 
     func completeAgentDiagnostics(status: String, error: Error? = nil) async {
         guard let recorder = agentDiagnosticsRecorder else { return }
         await recorder.complete(status: status, error: error.map { AgentSafeError($0).message })
-        agentDiagnosticsRecorder = nil
+        if agentDiagnosticsRecorder === recorder { agentDiagnosticsRecorder = nil }
     }
     
     // MARK: - 本地模型处理相关
@@ -3503,7 +3506,10 @@ class APIManager {
                            imageReversePrompt: String
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
+        initializingRunID = runID
         await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
+        try Task.checkCancellation()
+        guard AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) else { throw HanlinChatError.cancelled }
         currentTask?.cancel()
         currentTask = nil
         isCancelled = false
@@ -3520,13 +3526,18 @@ class APIManager {
             throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无法获取模型信息"])
         }
 
-        agentDiagnosticsRecorder = await AgentDiagnosticsRecorder.start(
+        let recorder = await AgentDiagnosticsRecorder.start(
             runID: runID,
             groupID: groupID,
             providerID: modelInfo.company ?? "Unknown",
             modelID: modelInfo.name ?? modelName
         )
-        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
+        guard !isCancelled, !Task.isCancelled,
+              AgentRunLifecycleCoordinator.shared.attachRecorder(recorder, for: runID) else {
+            await recorder?.complete(status: "cancelled")
+            throw HanlinChatError.cancelled
+        }
+        agentDiagnosticsRecorder = recorder
         agentDiagnosticsRecorder?.journal.stage("model.catalog", text: modelInfo.catalogMetadataJSON ?? "unknown",
             fields: ["requestedModelID": modelName, "priceTier": String(modelInfo.catalogPriceTier),
                      "imageOutputVerified": String(modelInfo.hasVerifiedImageOutput)])

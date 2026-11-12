@@ -11,20 +11,24 @@ final class AgentRunLifecycleCoordinator {
     private(set) var activeRunID: UUID?
     private var activeProducerTask: Task<Void, Never>?
     private var activeRecorder: AgentDiagnosticsRecorder?
+    private let completeCancelledRecorder: @Sendable (AgentDiagnosticsRecorder) async -> Void
 
-    init() {}
+    init(completeCancelledRecorder: @escaping @Sendable (AgentDiagnosticsRecorder) async -> Void = {
+        await $0.complete(status: "cancelled")
+    }) { self.completeCancelledRecorder = completeCancelledRecorder }
 
     /// Begins a new Agent run, cancelling and superseding any existing run.
     func beginRun(runID: UUID, recorder: AgentDiagnosticsRecorder?) async {
+        let oldRecorder = activeRecorder
         if let oldTask = activeProducerTask {
             oldTask.cancel()
             activeProducerTask = nil
         }
-        if let oldRecorder = activeRecorder, oldRecorder !== recorder {
-            await oldRecorder.complete(status: "cancelled")
-        }
         activeRunID = runID
         activeRecorder = recorder
+        if let oldRecorder, oldRecorder !== recorder {
+            await completeCancelledRecorder(oldRecorder)
+        }
     }
 
     /// Synchronous overload for beginRun.
@@ -35,11 +39,20 @@ final class AgentRunLifecycleCoordinator {
         }
         if let oldRecorder = activeRecorder, oldRecorder !== recorder {
             Task {
-                await oldRecorder.complete(status: "cancelled")
+                await completeCancelledRecorder(oldRecorder)
             }
         }
         activeRunID = runID
         activeRecorder = recorder
+    }
+
+    /// Recorder creation can suspend. A late initialization belongs only to its
+    /// original run and cannot begin that cancelled run a second time.
+    @discardableResult
+    func attachRecorder(_ recorder: AgentDiagnosticsRecorder?, for runID: UUID) -> Bool {
+        guard activeRunID == runID else { return false }
+        activeRecorder = recorder
+        return true
     }
 
     /// Attaches the root producer task for the active run.
@@ -58,11 +71,10 @@ final class AgentRunLifecycleCoordinator {
         }
         activeProducerTask?.cancel()
         activeProducerTask = nil
-        if let recorder = activeRecorder {
-            await recorder.complete(status: "cancelled")
-        }
+        let recorder = activeRecorder
         activeRunID = nil
         activeRecorder = nil
+        if let recorder { await completeCancelledRecorder(recorder) }
     }
 
     /// Cancels the specified run, or the currently active run if runID is nil (sync).
@@ -74,7 +86,7 @@ final class AgentRunLifecycleCoordinator {
         activeProducerTask = nil
         if let recorder = activeRecorder {
             Task {
-                await recorder.complete(status: "cancelled")
+                await completeCancelledRecorder(recorder)
             }
         }
         activeRunID = nil

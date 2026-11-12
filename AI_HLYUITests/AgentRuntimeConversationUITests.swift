@@ -152,7 +152,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let runBAnswer = assistantBubbles.descendants(matching: .staticText).matching(
             NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
         ).firstMatch
-        XCTAssertTrue(runBAnswer.waitForExistence(timeout: 30), "Run B did not complete with RUN_B_COMPLETE")
+        let runBCompleted = runBAnswer.waitForExistence(timeout: 30)
+        if !runBCompleted {
+            let state = XCTAttachment(string: app.debugDescription)
+            state.name = "Stop then new run UI state"
+            state.lifetime = .keepAlways
+            add(state)
+        }
+        XCTAssertTrue(runBCompleted, "Run B did not complete with RUN_B_COMPLETE")
 
         // 4. Wait beyond deterministic Run A delay interval (~1.5s)
         Thread.sleep(forTimeInterval: 2.0)

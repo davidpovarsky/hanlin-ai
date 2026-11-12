@@ -1494,7 +1494,8 @@ struct ChatView: View {
         activeAgentMessage = groupBeginMessage
         
         // 进行API请求
-        self.apiManager = APIManager(context: context)
+        let requestAPIManager = APIManager(context: context)
+        self.apiManager = requestAPIManager
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         
@@ -1509,7 +1510,8 @@ struct ChatView: View {
                     chatID: effectiveChatSessionID,
                     temporary: TemporaryRecord
                 )
-                let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await apiManager!.sendStreamRequest(
+                guard activeAgentCoordinator === agentCoordinator, !Task.isCancelled else { return }
+                let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await requestAPIManager.sendStreamRequest(
                     messages: messagesToSend,
                     modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
                     groupID: thisGroupID,
@@ -1852,7 +1854,7 @@ struct ChatView: View {
                             })
                         if textContent.isEmpty && reasoningContent.isEmpty && !hasRichContent {
                             agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
-                            Task { await apiManager?.completeAgentDiagnostics(status: "failed") }
+                            Task { await requestAPIManager.completeAgentDiagnostics(status: "failed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
                             operationalState = ""
                             operationalDescription = ""
@@ -1864,7 +1866,7 @@ struct ChatView: View {
                             try? context.save()
                         } else {
                             agentCoordinator.complete()
-                            Task { await apiManager?.completeAgentDiagnostics(status: "completed") }
+                            Task { await requestAPIManager.completeAgentDiagnostics(status: "completed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
                             
                             // 一切正常，进行数据库保存操作
@@ -1939,7 +1941,7 @@ struct ChatView: View {
                 await MainActor.run {
                     guard activeAgentCoordinator === agentCoordinator else { return }
                     agentCoordinator.fail(error)
-                    Task { await apiManager?.completeAgentDiagnostics(status: "failed", error: error) }
+                    Task { await requestAPIManager.completeAgentDiagnostics(status: "failed", error: error) }
                     groupBeginMessage.agentRun = agentCoordinator.run
                     context.insert(groupBeginMessage)
                     try? context.save()
@@ -1974,8 +1976,9 @@ struct ChatView: View {
         isFeedBack.toggle()
         isCancelled = true
         
-        apiManager?.cancelCurrentRequest()
-        Task { await apiManager?.completeAgentDiagnostics(status: "cancelled") }
+        let cancelledAPIManager = apiManager
+        cancelledAPIManager?.cancelCurrentRequest()
+        Task { await cancelledAPIManager?.completeAgentDiagnostics(status: "cancelled") }
         activeAgentCoordinator?.cancel()
         if let coordinator = activeAgentCoordinator {
             activeAgentRun = coordinator.run
