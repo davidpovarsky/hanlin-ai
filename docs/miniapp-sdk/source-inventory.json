@@ -1,6 +1,9 @@
 {
-  "sourceCommit": "1e4ba8c0d8db00b96e9ad6307c98564ae95ac8d6",
-  "uncommittedSourcePaths": [],
+  "sourceCommit": "604412848f81f96a32d68c84ddfc35f174df4cb6",
+  "uncommittedSourcePaths": [
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "Scripts/Audit/audit-miniapp-sdk.mjs"
+  ],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",
@@ -5491,7 +5494,7 @@
     {
       "id": "INT06-CONTEXT",
       "owner": "INT-02/INT-06",
-      "detail": "MiniApp context factory sets userGesturePresent=false; the NS headless-action path constructs an adapter whose canPresentUI is hardcoded true. Propagate actual invocation presentation context."
+      "detail": "NS headless-action provider now explicitly sets canPresentUI=false; foreground default remains true. Actual share-sheet rejection regression is pending. MiniApp context still uses userGesturePresent=false; full invocation context and all OS-prompt services require separate validation."
     },
     {
       "id": "INT06-AVAILABILITY",
@@ -5511,7 +5514,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "75fef32b1a0c1fecd90422208e3111e3391e4b3f4a51d99d05cd1751336d3817"
+      "sha256": "ca1748aefbb4735ae71005d6d3dcb4ef90d1f11700c7c30cf3a7459efabfcd74"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -5627,7 +5630,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "0b4e9aa535954562b18abfe40d3e56226dcffc34a360e61d64908e895abb5ba5"
+      "sha256": "b45e865619c2f3cea8a5d40d3bfc08633d211b8cffab41cae4020c4797bc3971"
     },
     {
       "path": "Scripts/Expo/package-lock.json",

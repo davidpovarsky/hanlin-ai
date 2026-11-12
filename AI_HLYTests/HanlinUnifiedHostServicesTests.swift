@@ -44,6 +44,24 @@ struct HanlinUnifiedHostServicesTests {
 
     // MARK: - Capability Authority
 
+    @Test func headlessNativeScriptProviderCannotPresentAShareSheet() async throws {
+        let appID = try HanlinAppID(validating: "headless-context-test")
+        let installedID = try HanlinInstalledPackageID(validating: "installed.headless-test")
+        let adapter = NativeScriptHostServicesAdapter(appID: appID, installedPackageID: installedID,
+            grantedCapabilities: [], canPresentUI: false)
+        #expect(!adapter.context.canPresentUI && !adapter.context.userGesturePresent)
+        #expect(adapter.context.appID == appID && adapter.context.installedPackageID == installedID)
+        #expect(adapter.context.storageScope == .package(installedID))
+        do {
+            try await HanlinSystemServicesBroker().presentShareSheet(items: ["MUST_NOT_PRESENT"], context: adapter.context)
+            Issue.record("A headless provider presented system UI")
+        } catch let error as HanlinHostServiceError {
+            guard case .invalidCallerContext = error else { throw error }
+        }
+        // The foreground provider's existing session behavior is preserved.
+        #expect(NativeScriptHostServicesAdapter(appID: appID, grantedCapabilities: []).context.canPresentUI)
+    }
+
     @Test func legacyAliasResolution() {
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("node") == "runtime.node")
         #expect(HanlinHostCapabilityAuthority.canonicalCapabilityID("python") == "runtime.python")

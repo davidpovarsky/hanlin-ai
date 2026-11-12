@@ -29,7 +29,8 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         appID: HanlinAppID,
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
-        sessionID: String = UUID().uuidString.lowercased()
+        sessionID: String = UUID().uuidString.lowercased(),
+        canPresentUI: Bool = true
     ) {
         self.sessionID = sessionID
         let appSession = try! HanlinAppSessionID(validating: sessionID)
@@ -39,7 +40,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             origin: .nativeModule,
             capabilities: grantedCapabilities,
             sessionID: appSession,
-            canPresentUI: true
+            canPresentUI: canPresentUI
         )
         super.init()
     }

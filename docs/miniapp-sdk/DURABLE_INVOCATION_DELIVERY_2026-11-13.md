@@ -39,6 +39,9 @@ broker and JSC action values, or typed failure/stale/cancel receipts. NativeScri
 still uses one isolate; another package owning it produces `needsForeground`,
 without starting a second VM. Expo AppIntent dispatch remains explicitly
 unsupported. No arbitrary Error text or runtime stderr is placed in receipts.
+The headless NativeScript provider explicitly carries `canPresentUI=false`;
+its existing share-sheet broker must reject before looking for a scene. This
+does not prove all OS permission services enforce the same presentation rule.
 Queue reads enforce UUID filename/record identity, supported schema, bounded
 regular single-link files, no-follow opening and the existing path checks.
 

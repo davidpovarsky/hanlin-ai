@@ -167,7 +167,7 @@ const inventory = {
     {id: 'INT06-SHELL-SOURCE', owner: 'INT-06', detail: 'Generic RuntimeKind.shell still uses the linked native string parser; the public command-string tool uses the portable-shell route. Align the documented source semantics without adding another shell engine.'},
     {id: 'INT03-NS-RESULT', owner: 'INT-03', detail: 'NS legacy callbacks discard structured stderr/status/artifacts and omit a generic TS/Shell entrypoint.'},
     {id: 'INT03-SESSION', owner: 'INT-03', detail: 'NativeScript has one active session and process-environment mutation; no concurrent-isolate or process-isolation claim.'},
-    {id: 'INT06-CONTEXT', owner: 'INT-02/INT-06', detail: 'MiniApp context factory sets userGesturePresent=false; the NS headless-action path constructs an adapter whose canPresentUI is hardcoded true. Propagate actual invocation presentation context.'},
+    {id: 'INT06-CONTEXT', owner: 'INT-02/INT-06', detail: 'NS headless-action provider now explicitly sets canPresentUI=false; foreground default remains true. Actual share-sheet rejection regression is pending. MiniApp context still uses userGesturePresent=false; full invocation context and all OS-prompt services require separate validation.'},
     {id: 'INT06-AVAILABILITY', owner: 'INT-06', detail: 'hasCapability returns personal-host policy, not OS/service availability. The17 SystemServicesBroker declarations have no generic NS/Expo Host binding in these inspected adapters.'},
     {id: 'SDK01-BINARY', owner: 'SDK-01', detail: 'Installed device Host/bridge versions and signed extension entitlements remain unverified here; source manifests are not IPA evidence.'},
   ],

@@ -790,7 +790,8 @@ final class HanlinScriptingPlatform {
             appID: appID,
             installedPackageID: package.record.installedPackageID,
             grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
-            sessionID: session.sessionID
+            sessionID: session.sessionID,
+            canPresentUI: false
         )
 
         isExecutingHeadlessNativeScriptAction = true

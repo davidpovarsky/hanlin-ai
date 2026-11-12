@@ -1,12 +1,10 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1e4ba8c0d8db00b96e9ad6307c98564ae95ac8d6",
+  "sourceCommit": "604412848f81f96a32d68c84ddfc35f174df4cb6",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
     "Scripts/Audit/audit_miniapp_reachability.py"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -18,7 +16,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "75fef32b1a0c1fecd90422208e3111e3391e4b3f4a51d99d05cd1751336d3817"
+      "sha256": "ca1748aefbb4735ae71005d6d3dcb4ef90d1f11700c7c30cf3a7459efabfcd74"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -134,7 +132,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "0b4e9aa535954562b18abfe40d3e56226dcffc34a360e61d64908e895abb5ba5"
+      "sha256": "b45e865619c2f3cea8a5d40d3bfc08633d211b8cffab41cae4020c4797bc3971"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -296,21 +294,21 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1408,
+      "line": 1409,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "1902c139bb610036963ebc73fead898105309e031d5e114aaac248f392728a94"
+      "sha256": "0bda182e3cce8c5eee2b75acda02aa13dec31c7ee4858478bbc630c75d635fd8"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 709,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "1902c139bb610036963ebc73fead898105309e031d5e114aaac248f392728a94"
+      "sha256": "0bda182e3cce8c5eee2b75acda02aa13dec31c7ee4858478bbc630c75d635fd8"
     },
     "expoIntentRejection": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1479,
+      "line": 1480,
       "anchor": "guard entrypoint.runtimeProfile != .hanlinExpo else",
-      "sha256": "1902c139bb610036963ebc73fead898105309e031d5e114aaac248f392728a94"
+      "sha256": "0bda182e3cce8c5eee2b75acda02aa13dec31c7ee4858478bbc630c75d635fd8"
     },
     "expoExposureRejection": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
@@ -368,9 +366,9 @@
     },
     "nativeAdapter": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "line": 94,
+      "line": 95,
       "anchor": "public func executeJavaScript(",
-      "sha256": "75fef32b1a0c1fecd90422208e3111e3391e4b3f4a51d99d05cd1751336d3817"
+      "sha256": "ca1748aefbb4735ae71005d6d3dcb4ef90d1f11700c7c30cf3a7459efabfcd74"
     },
     "nativeSession": {
       "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
@@ -430,7 +428,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "4f4ee784297806b0656965e275ee8399b2dde7bcf78b41412684e7eaee0b2ac3"
+      "sha256": "eeb5fde0be80cc962a388317a3f7478271c1db452bb33d8b784859e2c2de533f"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
@@ -2059,9 +2057,9 @@
       "resultBoundary": "Legacy string/error callback",
       "callerContext": {
         "hostAdapterReachable": true,
-        "canPresentUI": true,
+        "canPresentUI": false,
         "userGesturePresent": false,
-        "note": "NS headless path currently inherits the adapter's hardcoded canPresentUI=true; actual invocation context must be propagated"
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2115,9 +2113,9 @@
       "resultBoundary": "Legacy string/error callback",
       "callerContext": {
         "hostAdapterReachable": true,
-        "canPresentUI": true,
+        "canPresentUI": false,
         "userGesturePresent": false,
-        "note": "NS headless path currently inherits the adapter's hardcoded canPresentUI=true; actual invocation context must be propagated"
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2145,9 +2143,9 @@
       "resultBoundary": "Legacy string/error callback",
       "callerContext": {
         "hostAdapterReachable": true,
-        "canPresentUI": true,
+        "canPresentUI": false,
         "userGesturePresent": false,
-        "note": "NS headless path currently inherits the adapter's hardcoded canPresentUI=true; actual invocation context must be propagated"
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2356,9 +2354,9 @@
       "resultBoundary": "Legacy string/error callback",
       "callerContext": {
         "hostAdapterReachable": true,
-        "canPresentUI": true,
+        "canPresentUI": false,
         "userGesturePresent": false,
-        "note": "NS headless path currently inherits the adapter's hardcoded canPresentUI=true; actual invocation context must be propagated"
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2412,9 +2410,9 @@
       "resultBoundary": "Legacy string/error callback",
       "callerContext": {
         "hostAdapterReachable": true,
-        "canPresentUI": true,
+        "canPresentUI": false,
         "userGesturePresent": false,
-        "note": "NS headless path currently inherits the adapter's hardcoded canPresentUI=true; actual invocation context must be propagated"
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2442,9 +2440,9 @@
       "resultBoundary": "Legacy string/error callback",
       "callerContext": {
         "hostAdapterReachable": true,
-        "canPresentUI": true,
+        "canPresentUI": false,
         "userGesturePresent": false,
-        "note": "NS headless path currently inherits the adapter's hardcoded canPresentUI=true; actual invocation context must be propagated"
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [

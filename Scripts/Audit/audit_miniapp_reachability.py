@@ -115,9 +115,9 @@ def build() -> dict:
                     "realSurfaceE2E": False, "onDeviceProof": None,
                     "resultBoundary": "Legacy string/error callback" if wired and engine == "hanlinNativeScript" else
                                       "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing" if wired else "No connected canonical-runtime receipt",
-                    "callerContext": {"hostAdapterReachable": wired, "canPresentUI": True if wired else None,
+                    "callerContext": {"hostAdapterReachable": wired, "canPresentUI": (False if engine == "hanlinNativeScript" and surface != "foreground" else True) if wired else None,
                         "userGesturePresent": False if wired else None,
-                        "note": "NS headless path currently inherits the adapter's hardcoded canPresentUI=true; actual invocation context must be propagated" if wired and surface != "foreground" else
+                        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation" if wired and surface != "foreground" else
                                 "Host-bound package/session identity" if wired else "No canonical Host call context is connected from this ingress"},
                     "engineVersionSource": "source-inventory.json#/" + ("expo" if engine == "hanlinExpo" else "nativeScript"),
                     "permissions": ["Declared App Group is not exported-signature proof", "Actual service OS permission/availability still required"],
