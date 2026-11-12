@@ -1116,13 +1116,15 @@
       "description": "Automatic chat capture, encryption and redaction acceptance",
       "patterns": [
         "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
-        "AI_HLY/Downstream/AgentDiagnostics/**"
+        "AI_HLY/Downstream/AgentDiagnostics/**",
+        "AI_HLYTests/AgentDiagnosticsExportTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
       ],
       "unit_suites": [
-        "AI_HLYTests/AgentDiagnosticsJournalTests"
+        "AI_HLYTests/AgentDiagnosticsJournalTests",
+        "AI_HLYTests/AgentDiagnosticsExportTests"
       ],
       "consumers": []
     },

@@ -12,6 +12,7 @@ enum AgentDiagnosticsConfiguration {
     static let levelKey = "agentDiagnosticsLevel"
     static let retentionKey = "agentDiagnosticsRetention"
     static let automaticCaptureMigrationKey = "agentDiagnosticsAutomaticCaptureMigrationV1"
+    static let automaticRetentionMigrationKey = "agentDiagnosticsUserManagedRetentionV1"
     private static let migrationLock = NSLock()
 
     static var level: AgentDiagnosticsLevel {
@@ -27,7 +28,18 @@ enum AgentDiagnosticsConfiguration {
 
     /// Zero means that user-accessible session files are retained until manually deleted.
     static var retentionLimit: Int {
-        guard UserDefaults.standard.object(forKey: retentionKey) != nil else { return 50 }
-        return UserDefaults.standard.integer(forKey: retentionKey)
+        retentionLimit(in: .standard)
+    }
+
+    static func retentionLimit(in defaults: UserDefaults) -> Int {
+        migrationLock.lock()
+        defer { migrationLock.unlock() }
+        // The former default silently removed sessions after 50. Upgrade once
+        // to user-managed retention; a subsequent explicit choice is respected.
+        if !defaults.bool(forKey: automaticRetentionMigrationKey) {
+            defaults.set(0, forKey: retentionKey)
+            defaults.set(true, forKey: automaticRetentionMigrationKey)
+        }
+        return max(0, defaults.integer(forKey: retentionKey))
     }
 }

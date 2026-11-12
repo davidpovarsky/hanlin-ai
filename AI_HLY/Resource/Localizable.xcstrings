@@ -1,6 +1,351 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+      "Prepare sanitized ZIP": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Prepare sanitized ZIP"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הכן ZIP מושחר"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "准备脱敏 ZIP"
+            }
+          }
+        }
+      },
+      "Review before sharing": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Review before sharing"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "סקירה לפני שיתוף"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "分享前检查"
+            }
+          }
+        }
+      },
+      "Conversation preview": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Conversation preview"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "תצוגה מקדימה של השיחה"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "对话预览"
+            }
+          }
+        }
+      },
+      "Share reviewed archive": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Share reviewed archive"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "שתף את הארכיון שנבדק"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "分享已检查的归档"
+            }
+          }
+        }
+      },
+      "Diagnostic export": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Diagnostic export"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "ייצוא אבחון"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "诊断导出"
+            }
+          }
+        }
+      },
+      "Storage used": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Storage used"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "שטח אחסון בשימוש"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "已用存储空间"
+            }
+          }
+        }
+      },
+      "No automatic deletion": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "No automatic deletion"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "ללא מחיקה אוטומטית"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "不自动删除"
+            }
+          }
+        }
+      },
+      "Automatically delete older diagnostic sessions?": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Automatically delete older diagnostic sessions?"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "למחוק אוטומטית רישומי אבחון ישנים?"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "自动删除较早的诊断记录？"
+            }
+          }
+        }
+      },
+      "Enable automatic deletion": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Enable automatic deletion"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הפעל מחיקה אוטומטית"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "启用自动删除"
+            }
+          }
+        }
+      },
+      "Diagnostic files use substantial storage. Review and delete sessions you no longer need.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Diagnostic files use substantial storage. Review and delete sessions you no longer need."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "קובצי האבחון תופסים שטח אחסון רב. מומלץ לבדוק ולמחוק רישומים שאינם נחוצים עוד."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "诊断文件占用了较多存储空间。请检查并删除不再需要的记录。"
+            }
+          }
+        }
+      },
+      "Sessions are kept until you delete them. Choosing a session limit automatically deletes older sessions and all their companion files when a new session starts.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Sessions are kept until you delete them. Choosing a session limit automatically deletes older sessions and all their companion files when a new session starts."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "כברירת מחדל הרישומים נשמרים עד למחיקה יזומה. בחירת מגבלה תמחק אוטומטית רישומים ישנים ואת כל הקבצים הנלווים עם תחילת רישום חדש."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "默认保留记录，直到你手动删除。选择记录数量限制后，开始新记录时会自动删除较早的记录及其所有附属文件。"
+            }
+          }
+        }
+      },
+      "This deletes older conversations and their encrypted source files when the selected session limit is exceeded. Export anything you want to keep first.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "This deletes older conversations and their encrypted source files when the selected session limit is exceeded. Export anything you want to keep first."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "לאחר חריגה מהמגבלה שנבחרה יימחקו שיחות ישנות וקובצי המקור המוצפנים שלהן. יש לייצא תחילה כל מה שרוצים לשמור."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "超过所选数量限制后，将删除较早的对话及其加密源文件。请先导出需要保留的内容。"
+            }
+          }
+        }
+      },
+      "The local archive could not be created. No files were shared. Check available storage and try again after the session finishes.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "The local archive could not be created. No files were shared. Check available storage and try again after the session finishes."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "לא ניתן ליצור את הארכיון המקומי. לא שותפו קבצים. יש לבדוק את שטח האחסון הפנוי ולנסות שוב לאחר סיום השיחה."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "无法创建本地归档，未分享任何文件。请检查可用存储空间，并在对话结束后重试。"
+            }
+          }
+        }
+      },
+      "Preview shows up to 65,536 characters from the readable log. The archive may contain additional conversation content.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Preview shows up to 65,536 characters from the readable log. The archive may contain additional conversation content."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "התצוגה המקדימה כוללת עד 65,536 תווים מהיומן הקריא. הארכיון עשוי לכלול תוכן נוסף מהשיחה."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "预览最多显示可读日志中的 65,536 个字符。归档可能包含更多对话内容。"
+            }
+          }
+        }
+      },
+      "Complete chat diagnostics are saved automatically on this device, including after upgrading. Readable logs include conversation text, prompts and tool content with credentials redacted. Exact source bytes are encrypted with a device-only key. Nothing is uploaded automatically. You can reduce or turn off recording here.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Complete chat diagnostics are saved automatically on this device, including after upgrading. Readable logs include conversation text, prompts and tool content with credentials redacted. Exact source bytes are encrypted with a device-only key. Nothing is uploaded automatically. You can reduce or turn off recording here."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "אבחון מלא של כל שיחה נשמר אוטומטית במכשיר, גם לאחר שדרוג. היומנים הקריאים כוללים טקסט שיחה, הנחיות ותוכן כלים עם השחרת פרטי גישה. בתי המקור המדויקים מוצפנים במפתח מקומי למכשיר. שום דבר אינו מועלה אוטומטית. ניתן לצמצם או לכבות כאן את הרישום."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "完整对话诊断会自动保存在此设备上，升级后也一样。可读日志包含对话、提示和工具内容，并隐藏凭据。精确源字节使用仅限本机的密钥加密。不会自动上传任何内容。你可以在此减少或关闭记录。"
+            }
+          }
+        }
+      },
     "Price unknown": {
       "extractionState": "manual",
       "localizations": {

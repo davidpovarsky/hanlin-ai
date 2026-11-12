@@ -256,7 +256,8 @@ final class AgentDiagnosticsJournal: @unchecked Sendable {
         record["attemptID"] = request?.uuidString
         record["timestamp"] = Date().timeIntervalSince1970
         record["monotonic"] = ProcessInfo.processInfo.systemUptime
-        if var line = try? JSONSerialization.data(withJSONObject: AgentDiagnosticsRedactor.sanitizeJSONObject(record), options: [.sortedKeys, .fragmentsAllowed]) {
+        let safe = AgentDiagnosticsRedactor.redactKnownCredentials(in: AgentDiagnosticsRedactor.sanitizeJSONObject(record), credentials: credentials)
+        if var line = try? JSONSerialization.data(withJSONObject: safe, options: [.sortedKeys, .fragmentsAllowed]) {
             line.append(0x0A)
             _ = append(line, suffix: "-stage-events.jsonl")
         }

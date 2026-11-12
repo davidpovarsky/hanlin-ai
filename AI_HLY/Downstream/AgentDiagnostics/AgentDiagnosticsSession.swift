@@ -16,6 +16,8 @@ struct AgentDiagnosticsSession: Codable, Identifiable, Sendable, Equatable {
     var agentEngineKind: String = "swift_ai_sdk"
     var appVersion: String?
     var buildNumber: String?
+    var buildProvenanceJSON: String? = nil
+    var captureEnvironment: [String: String]? = nil
     var status: String
     var isComplete: Bool
     var error: String? = nil
