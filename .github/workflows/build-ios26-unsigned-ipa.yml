@@ -13,6 +13,11 @@ on:
         required: false
         default: false
         type: boolean
+      code_fence_webkit_validation_only:
+        description: Execute the production local Mermaid and Diff renderer in iOS WebKit without building the app or runtimes
+        required: false
+        default: false
+        type: boolean
       scripting_package_test_filter:
         description: Explicit affected Swift package suite regex; invokes the existing isolated validation workflow
         required: false
@@ -112,12 +117,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation') }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation')) }}
   cancel-in-progress: true
 
 jobs:
   plan-affected-validation:
-    if: ${{ !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
+    if: ${{ !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -2930,6 +2935,10 @@ jobs:
   focused-markdown-renderer-tests:
     if: ${{ !inputs.testflight_upload && inputs.markdown_renderer_validation_only }}
     uses: ./.github/workflows/validate-chat-markdown.yml
+
+  focused-code-fence-webkit-tests:
+    if: ${{ !inputs.testflight_upload && inputs.code_fence_webkit_validation_only }}
+    uses: ./.github/workflows/validate-chat-code-fences.yml
 
   focused-scripting-package-tests:
     if: ${{ !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}

@@ -23,6 +23,17 @@ struct ChatMarkdownView: View {
             if let messageID = source?.messageID { markdownDidRender?(messageID) }
         })
         MarkdownView(text: text, config: config, listener: listener)
+            .markdownCodeBlockRenderer { block in
+                guard block.isFenceClosed == true else { return nil }
+                let language = block.language?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+                let kind: String
+                switch language {
+                case "mermaid": kind = "mermaid"
+                case "diff", "patch": kind = "diff"
+                default: return nil
+                }
+                return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code))
+            }
             .markdownSelectionHighlight(highlight)
             .task(id: destination?.id) {
                 highlightedRequestID = destination?.id
@@ -54,10 +65,15 @@ struct ChatMarkdownView: View {
                 boldItalic: variant([.traitBold, .traitItalic]), preferredLetterSpacing: nil, preferredLineHeight: nil)
         }
         let body = MarkdownRenderConfig.MarkdownTextStyle(textFonts: fonts(.body), textColor: .primary)
+        let codeStyle = CodeBlockConfig.default
+        let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .regular),
+            italic: nil, bold: nil, boldItalic: nil, preferredLetterSpacing: nil, preferredLineHeight: nil)
         return MarkdownRenderConfig.default
             .withShouldAnimateText(value: false)
             .withBlockSpacing(value: 12)
             .withParagraphStyle(value: body)
+            .withCodeBlockConfig(value: .init(theme: codeStyle.theme, backgroundColor: codeStyle.backgroundColor,
+                foregroundColor: codeStyle.foregroundColor, codeTextFonts: codeFonts, chromeTextFonts: fonts(.caption)))
             .withOrderedListStyle(value: body)
             .withBlockQuoteStyle(value: body)
             .withHeadingStyle(value: .init(h1Font: fonts(.title1), h2Font: fonts(.title2), h3Font: fonts(.title3),

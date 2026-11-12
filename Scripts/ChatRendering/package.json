@@ -1,0 +1,17 @@
+{
+  "name": "hanlin-local-code-fence-renderer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test renderer.test.mjs"
+  },
+  "dependencies": {
+    "diff2html": "3.4.56",
+    "mermaid": "12.3.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "playwright-core": "1.65.0"
+  }
+}

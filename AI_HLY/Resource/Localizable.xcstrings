@@ -1,6 +1,305 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+  "Diagram": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Diagram"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "תרשים"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "图表"
+        }
+      }
+    }
+  },
+  "Code comparison": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Code comparison"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "השוואת קוד"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "代码比较"
+        }
+      }
+    }
+  },
+  "Show code": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Show code"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "הצג קוד"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "显示代码"
+        }
+      }
+    }
+  },
+  "Copy source": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Copy source"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "העתק מקור"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "复制源代码"
+        }
+      }
+    }
+  },
+  "Share source": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Share source"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "שתף מקור"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "共享源代码"
+        }
+      }
+    }
+  },
+  "Code block actions": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Code block actions"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "פעולות לבלוק קוד"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "代码块操作"
+        }
+      }
+    }
+  },
+  "Comparison layout": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Comparison layout"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "פריסת השוואה"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "比较布局"
+        }
+      }
+    }
+  },
+  "Unified": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Unified"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "מאוחד"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "统一"
+        }
+      }
+    }
+  },
+  "Side by side": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Side by side"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "זה לצד זה"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "并排"
+        }
+      }
+    }
+  },
+  "Rendering preview": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Rendering preview"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "מכין תצוגה מקדימה"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "正在生成预览"
+        }
+      }
+    }
+  },
+  "The preview stopped responding. Reopen the app to try again. You can still read or share the source.": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "The preview stopped responding. Reopen the app to try again. You can still read or share the source."
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "התצוגה המקדימה הפסיקה להגיב. פתח מחדש את האפליקציה כדי לנסות שוב. עדיין ניתן לקרוא או לשתף את המקור."
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "预览停止响应。请重新打开应用后重试。您仍可阅读或共享源代码。"
+        }
+      }
+    }
+  },
+  "Preview is unavailable. The complete source remains available to copy, share or expand.": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Preview is unavailable. The complete source remains available to copy, share or expand."
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "התצוגה המקדימה אינה זמינה. המקור המלא זמין להעתקה, לשיתוף או להרחבה."
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "预览不可用。完整源代码仍可复制、共享或展开。"
+        }
+      }
+    }
+  },
+  "Retry preview": {
+    "extractionState": "manual",
+    "localizations": {
+      "en": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "Retry preview"
+        }
+      },
+      "he": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "נסה שוב להציג"
+        }
+      },
+      "zh-Hans": {
+        "stringUnit": {
+          "state": "translated",
+          "value": "重试预览"
+        }
+      }
+    }
+  },
       "Prepare sanitized ZIP": {
         "extractionState": "manual",
         "localizations": {

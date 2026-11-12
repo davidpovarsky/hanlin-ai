@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "mermaid": "12.3.0",
+  "diff2html": "3.4.56",
+  "source": "Pinned npm packages with package-lock integrity; no remote runtime code",
+  "files": [
+    {
+      "name": "HanlinCodeFenceRenderer.css",
+      "bytes": 18118,
+      "sha256": "e6804c928b954fe3d2945c45b6c45c1c57b631712914c203974f9933216b1648"
+    },
+    {
+      "name": "HanlinCodeFenceRenderer.js",
+      "bytes": 5413583,
+      "sha256": "4a07872b5b1f65ac9003185bd48d258b0a4a0d9590a208bf0efb38bfcba6052e"
+    },
+    {
+      "name": "HanlinCodeFenceRenderer.js.LEGAL.txt",
+      "bytes": 1811,
+      "sha256": "722c5c4b2a604b4fb9a53cf03bed346136f00e4e26d8f0972a2e27538482798e"
+    },
+    {
+      "name": "HanlinCodeFenceThirdPartyLicenses.txt",
+      "bytes": 233740,
+      "sha256": "f399606a509628e5e55c41ddbc5464ccf3b648b358c8aa18f13935b24107ec45"
+    }
+  ]
+}

@@ -32,6 +32,7 @@
         ".github/**",
         "Scripts/CI/**",
         "Scripts/Diagnostics/**",
+        "Scripts/ChatRendering/**",
         "Scripts/generate_acceptance_results.mjs",
         "Scripts/Audit/**",
         "Scripts/*.mjs",
@@ -1154,6 +1155,22 @@
       ],
       "unit_suites": [
         "AI_HLYTests/ProviderModelCatalogTests"
+      ],
+      "consumers": []
+    },
+    "chat_code_fence_tests": {
+      "description": "Pinned local Mermaid/Diff assets, native WebKit renderer and original Markdown hook",
+      "patterns": [
+        "AI_HLY/Downstream/ChatPresentation/CodeFences/**",
+        "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+        "AI_HLYTests/ChatCodeFenceTests.swift",
+        "Scripts/ChatRendering/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatCodeFenceTests"
       ],
       "consumers": []
     },
