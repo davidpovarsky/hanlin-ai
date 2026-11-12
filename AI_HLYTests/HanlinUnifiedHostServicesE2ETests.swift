@@ -12,6 +12,38 @@ import HanlinNativeScriptCoreSupport
 
 @Suite("Unified Host Services E2E", .serialized)
 struct HanlinUnifiedHostServicesE2ETests {
+    @Test func expoLegacyUnknownRuntimeRejectsInsteadOfExecutingJavaScriptCore() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-unknown-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        do {
+            _ = try await adapter.executeRuntime(kind: "unrecognized-runtime", source: "'SHOULD_NEVER_EXECUTE'")
+            Issue.record("An unknown runtime must not execute through a JavaScriptCore fallback")
+        } catch let error as HanlinHostServiceError {
+            guard case .invalidRequest(let message) = error else { throw error }
+            #expect(message.contains("Unknown runtime kind"))
+        }
+    }
+
+    @Test func expoLegacyRuntimeNamesReachAllFiveActualBackends() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-backends-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        #expect(try await adapter.executeRuntime(kind: "node", source: "console.log('NODE_NATIVE_42')") == "NODE_NATIVE_42")
+        #expect(try await adapter.executeRuntime(kind: "localPython", source: "print('PY_NATIVE_42')") == "PY_NATIVE_42")
+        #expect(try await adapter.executeRuntime(kind: "javaScriptCore", source: "6 * 7") == "42")
+        #expect(try await adapter.executeRuntime(kind: "typeScript", source: "const value: number = 6 * 7; console.log('TS_NATIVE_' + value)") == "TS_NATIVE_42")
+        let shell = try await adapter.executeRuntime(kind: "shell", source: "pwd")
+        #expect(shell.hasPrefix("/"), "The actual linked Shell must return its assigned absolute workspace")
+    }
+
+    @Test func expoLegacyPythonFailureDoesNotBecomeOKOrExposeStderrToModuleLogging() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-failure-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        do {
+            _ = try await adapter.executeRuntime(kind: "python", source: "import sys; sys.stderr.write('PRIVATE_LEGACY_STDERR'); sys.exit(23)")
+            Issue.record("A failed legacy execution must not resolve to OK")
+        } catch let error as RuntimeCoreError {
+            guard case .runtimeFailure(let message) = error else { throw error }
+            #expect(message.contains("23") && message.contains("job"))
+            #expect(!message.contains("PRIVATE_LEGACY_STDERR"))
+        }
+    }
 
     @Test func runtimeBrokerAutoStartsStoppedRuntime() async throws {
         let store = RuntimeAvailabilityStore.shared

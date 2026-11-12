@@ -72,6 +72,7 @@ struct AgentDiagnosticsView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .accessibilityIdentifier("hanlin-diagnostics-session-\(file.session.runID.uuidString)")
                     .swipeActions {
                         Button(role: .destructive) { delete(file) } label: {
                             Label(String(localized: "Delete"), systemImage: "trash")
@@ -191,7 +192,9 @@ private struct AgentDiagnosticsSessionView: View {
                     .font(.caption).foregroundStyle(.secondary)
                 Button { showsRawConfirmation = true } label: {
                     Label(String(localized: "Review encrypted capture"), systemImage: "lock.doc")
-                }.disabled(isExporting)
+                }
+                .accessibilityIdentifier("hanlin-diagnostics-review-encrypted")
+                .disabled(isExporting)
                 Button {
                     let input = file.jsonURL
                     isExporting = true
@@ -212,7 +215,9 @@ private struct AgentDiagnosticsSessionView: View {
                 }
                 .disabled(isExporting)
                 if isExporting { ProgressView() }
-                if let exportError { Text(exportError).foregroundStyle(.red) }
+                if let exportError {
+                    Text(exportError).foregroundStyle(.red).accessibilityIdentifier("hanlin-diagnostics-export-error")
+                }
                 ShareLink(item: file.jsonURL) { Label(String(localized: "Open JSON"), systemImage: "curlybraces") }
                 ShareLink(item: file.textURL) { Label(String(localized: "Open readable log"), systemImage: "doc.text") }
             }
@@ -242,6 +247,7 @@ private struct AgentDiagnosticsSessionView: View {
                     }
                 }
             }
+            .accessibilityIdentifier("hanlin-diagnostics-confirm-local-review")
         } message: {
             Text(String(localized: "Only this run will be decrypted in memory with this device's key. Requests and conversation text may contain private information. Nothing is uploaded or executed. Credentials are masked before review; sharing the reviewed report is optional."))
         }
@@ -281,10 +287,12 @@ private struct AgentDiagnosticsSessionView: View {
                         Text(String(localized: "Preview shows up to 65,536 characters. Sharing includes the full redacted report, not the encrypted source or device key."))
                             .font(.caption).foregroundStyle(.secondary)
                         Text(String(review.text.prefix(65_536))).font(.caption.monospaced()).textSelection(.enabled)
+                            .accessibilityIdentifier("hanlin-diagnostics-local-review-text")
                     }
                     ShareLink(item: review.text) {
                         Label(String(localized: "Share reviewed report"), systemImage: "square.and.arrow.up")
                     }
+                    .accessibilityIdentifier("hanlin-diagnostics-share-reviewed-report")
                 }
                 .navigationTitle(String(localized: "Local capture review"))
                 .toolbar { ToolbarItem(placement: .confirmationAction) {

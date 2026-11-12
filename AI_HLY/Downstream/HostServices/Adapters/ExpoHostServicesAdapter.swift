@@ -155,16 +155,25 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     // MARK: - HanlinExpoHostServicesProvider Conformance
 
     public func executeRuntime(kind: String, source: String) async throws -> String {
-        let runtimeKind: RuntimeKind = switch kind.lowercased() {
-        case "node": .node
-        case "python": .localPython
-        default: .javaScriptCore
+        let normalized = kind.lowercased()
+        // Preserve the old explicit Python alias, while validating all five
+        // canonical kinds before starting any engine or creating its workspace.
+        guard let runtimeKind = normalized == "python" ? RuntimeKind.localPython :
+                RuntimeKind.allCases.first(where: { $0.rawValue.lowercased() == normalized }) else {
+            throw HanlinHostServiceError.invalidRequest("Unknown runtime kind. Expected node, typeScript, localPython, javaScriptCore or shell.")
         }
         let result = try await HanlinRuntimeBroker.shared.execute(
             kind: runtimeKind,
             source: source,
             context: context
         )
+        if result.wasCancelled { throw CancellationError() }
+        guard !result.didTimeOut, result.exitCode == nil || result.exitCode == 0 else {
+            // Legacy Expo module logging prints thrown errors. Do not put raw
+            // stderr or user source into that OSLog path; the typed facade and
+            // original durable job retain complete stdout/stderr/status.
+            throw RuntimeCoreError.runtimeFailure("Runtime execution failed (exitCode=\(result.exitCode.map(String.init) ?? "unavailable"), timedOut=\(result.didTimeOut)); job \(result.executionID). Use the structured runtime.execute result for full details.")
+        }
         let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
         if output.isEmpty, let val = result.value {
             switch val {

@@ -163,7 +163,7 @@ const inventory = {
     status: 'declarations do not prove NS/Expo public bindings, iOS availability, OS permission or canPresentUI'},
   gaps: [
     {id: 'SDK04-PEERS', owner: 'SDK-04', detail: 'HanlinExpoUI peer metadata still names preview Expo/React/RN versions; distinguish it from the stable tooling lock and generated bridge identity.'},
-    {id: 'INT06-LEGACY-KIND', owner: 'INT-06', detail: 'Native legacy executeRuntime defaults unknown kind to JSC; facade invoke(runtime.execute) already validates all five enum values.'},
+    {id: 'INT06-LEGACY-ACCEPTANCE', owner: 'INT-06', detail: 'Native legacy executeRuntime now validates all five canonical kinds (plus the explicit Python alias) and propagates cancellation/nonzero exit/timeout; actual backend regression tests are pending. Full JS-to-native structured receipt coverage remains open.'},
     {id: 'INT06-SHELL-SOURCE', owner: 'INT-06', detail: 'Generic RuntimeKind.shell still uses the linked native string parser; the public command-string tool uses the portable-shell route. Align the documented source semantics without adding another shell engine.'},
     {id: 'INT03-NS-RESULT', owner: 'INT-03', detail: 'NS legacy callbacks discard structured stderr/status/artifacts and omit a generic TS/Shell entrypoint.'},
     {id: 'INT03-SESSION', owner: 'INT-03', detail: 'NativeScript has one active session and process-environment mutation; no concurrent-isolate or process-isolation claim.'},

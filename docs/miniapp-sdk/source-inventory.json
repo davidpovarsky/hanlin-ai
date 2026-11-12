@@ -1,6 +1,7 @@
 {
-  "sourceCommit": "f2e7c58439a0c857ed5a8d3dc7e54a59838df127",
+  "sourceCommit": "0ff5952e3f2968aed23b6e2645c3ca469537c1d7",
   "uncommittedSourcePaths": [
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
     "Scripts/Audit/audit-miniapp-sdk.mjs"
   ],
   "schemaVersion": 1,
@@ -5471,9 +5472,9 @@
       "detail": "HanlinExpoUI peer metadata still names preview Expo/React/RN versions; distinguish it from the stable tooling lock and generated bridge identity."
     },
     {
-      "id": "INT06-LEGACY-KIND",
+      "id": "INT06-LEGACY-ACCEPTANCE",
       "owner": "INT-06",
-      "detail": "Native legacy executeRuntime defaults unknown kind to JSC; facade invoke(runtime.execute) already validates all five enum values."
+      "detail": "Native legacy executeRuntime now validates all five canonical kinds (plus the explicit Python alias) and propagates cancellation/nonzero exit/timeout; actual backend regression tests are pending. Full JS-to-native structured receipt coverage remains open."
     },
     {
       "id": "INT06-SHELL-SOURCE",
@@ -5509,7 +5510,7 @@
   "sources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "6374655ca527e5eadaa47abd8fd4f9d0988aa155463716d52348aa38eb38a7a9"
+      "sha256": "fadea2454a233d0fcdd1012d18780103289e796da5c8c1eceecf5879d733dde6"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -5629,7 +5630,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "0b183ff0dac35a9f9418347e64e5f5d37442c2a13a261a2f538bd7aa1de4eb00"
+      "sha256": "0b4e9aa535954562b18abfe40d3e56226dcffc34a360e61d64908e895abb5ba5"
     },
     {
       "path": "Scripts/Expo/package-lock.json",

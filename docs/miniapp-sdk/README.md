@@ -63,7 +63,8 @@ runtime execution is performed by either check.
 
 Current gaps include the unconsumed Share inbox/temporary attachment URLs,
 Expo non-widget exposure/intent rejection, NS single-active-session arbitration,
-missing generic NS TS/Shell/structured receipts, legacy Expo unknown-kind→JSC
-fallback, differing generic Shell source semantics and unpublished SystemServicesBroker bindings. The recorded17 system
+missing generic NS TS/Shell/structured receipts, legacy Expo backend/receipt
+acceptance, differing generic Shell source semantics and unpublished SystemServicesBroker bindings. The legacy native
+Expo adapter now validates runtime names and propagates cancellation/nonzero exit/timeout; native regression execution remains pending. The recorded17 system
 method declarations and permissive capability metadata are not iOS availability
 or OS permission proof. INT-02…07 and SDK-02…08 remain open.

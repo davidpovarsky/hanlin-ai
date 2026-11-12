@@ -3,6 +3,56 @@ import UIKit
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
+    func testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        // This case verifies the screen/key/replay binding, with a known capture
+        // level supplied through the process argument domain. It is not the
+        // separate new-install/default-migration acceptance test.
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-agentDiagnosticsLevel", "fullLocalDebug"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launch()
+        openChat(in: app)
+        sendPrompt("START_RUN_B", in: app)
+        let answer = app.descendants(matching: .any).matching(NSPredicate(format: "value == %@ OR label == %@", "RUN_B_COMPLETE", "RUN_B_COMPLETE")).firstMatch
+        XCTAssertTrue(answer.waitForExistence(timeout: 30))
+        openSettings(in: app)
+        let diagnostics = app.descendants(matching: .any)["hanlin-agent-diagnostics-link"].firstMatch
+        for _ in 0..<8 where !diagnostics.isHittable { app.swipeUp() }
+        XCTAssertTrue(diagnostics.waitForExistence(timeout: 10))
+        tapElement(diagnostics)
+        let session = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-diagnostics-session-")
+        ).firstMatch
+        for _ in 0..<6 where !session.isHittable { app.swipeUp() }
+        XCTAssertTrue(session.waitForExistence(timeout: 10), "The completed ordinary turn did not automatically produce a session")
+        tapElement(session)
+        let reviewButton = app.descendants(matching: .any)["hanlin-diagnostics-review-encrypted"].firstMatch
+        for _ in 0..<6 where !reviewButton.isHittable { app.swipeUp() }
+        XCTAssertTrue(reviewButton.waitForExistence(timeout: 10))
+        tapElement(reviewButton)
+        let confirm = app.descendants(matching: .any)["hanlin-diagnostics-confirm-local-review"].firstMatch
+        XCTAssertTrue(confirm.waitForExistence(timeout: 10), "Encrypted capture must require a separate deliberate confirmation")
+        tapElement(confirm)
+        let report = app.descendants(matching: .any)["hanlin-diagnostics-local-review-text"].firstMatch
+        let reportExists = report.waitForExistence(timeout: 60)
+        if !reportExists {
+            let state = XCTAttachment(string: app.debugDescription)
+            state.name = "Local encrypted review binding state"
+            state.lifetime = .keepAlways
+            add(state)
+        }
+        XCTAssertTrue(reportExists, "Actual device-key lookup/decryption/offline replay did not produce a review")
+        let text = report.label + (report.value as? String ?? "")
+        XCTAssertTrue(text.contains("Authenticated records") && text.contains("not an exact raw export"))
+        XCTAssertFalse(text.contains("acceptance-only"), "The actual captured synthetic Authorization credential leaked into the preview")
+        let share = app.descendants(matching: .any)["hanlin-diagnostics-share-reviewed-report"].firstMatch
+        XCTAssertTrue(share.waitForExistence(timeout: 10) && share.isEnabled)
+        // Sharing stays a separate owner action; do not open an external app.
+        tapElement(app.navigationBars["Local capture review"].buttons["Done"].firstMatch)
+    }
+
     func testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions() throws {
         continueAfterFailure = false
         let app = XCUIApplication()

@@ -1,8 +1,9 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f2e7c58439a0c857ed5a8d3dc7e54a59838df127",
+  "sourceCommit": "0ff5952e3f2968aed23b6e2645c3ca469537c1d7",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
     "Scripts/Audit/audit_miniapp_reachability.py"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -10,7 +11,7 @@
   "sdkSources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "6374655ca527e5eadaa47abd8fd4f9d0988aa155463716d52348aa38eb38a7a9"
+      "sha256": "fadea2454a233d0fcdd1012d18780103289e796da5c8c1eceecf5879d733dde6"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -130,7 +131,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "0b183ff0dac35a9f9418347e64e5f5d37442c2a13a261a2f538bd7aa1de4eb00"
+      "sha256": "0b4e9aa535954562b18abfe40d3e56226dcffc34a360e61d64908e895abb5ba5"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -378,7 +379,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
       "line": 63,
       "anchor": "case \"runtime.execute\":",
-      "sha256": "6374655ca527e5eadaa47abd8fd4f9d0988aa155463716d52348aa38eb38a7a9"
+      "sha256": "fadea2454a233d0fcdd1012d18780103289e796da5c8c1eceecf5879d733dde6"
     },
     "runtimeBroker": {
       "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
@@ -414,7 +415,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "b7b206d478793fc5fd7b5f118f7d8a5d4778b724ed76cd1f55a4e2ab21d44a59"
+      "sha256": "e38b8208cb23df4e6b1c54e6941ded47fd0ff88d61d0e846daf6d973fe9d4dbb"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
