@@ -73,7 +73,7 @@ struct ChatMarkdownView: View {
             .withBlockSpacing(value: 12)
             .withParagraphStyle(value: body)
             .withCodeBlockConfig(value: .init(theme: codeStyle.theme, backgroundColor: codeStyle.backgroundColor,
-                foregroundColor: codeStyle.foregroundColor, codeTextFonts: codeFonts, chromeTextFonts: fonts(.caption)))
+                foregroundColor: codeStyle.foregroundColor, codeTextFonts: codeFonts, chromeTextFonts: fonts(.caption1)))
             .withOrderedListStyle(value: body)
             .withBlockQuoteStyle(value: body)
             .withHeadingStyle(value: .init(h1Font: fonts(.title1), h2Font: fonts(.title2), h3Font: fonts(.title3),
