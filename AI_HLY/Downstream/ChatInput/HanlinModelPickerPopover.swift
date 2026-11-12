@@ -8,9 +8,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @MainActor
 struct HanlinModelPickerPopover: View {
+    @Environment(\.modelContext) private var modelContext
     @Bindable var coordinator: HanlinComposerPopupCoordinator
     let models: [AllModels]
     @Binding var selectedModelIndex: Int
@@ -111,6 +113,7 @@ struct HanlinModelPickerPopover: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-popover")
+        .task { await ModelRefreshService.refreshOpenRouterMetadata(in: modelContext) }
     }
 
     private var rootPageTransition: AnyTransition {
@@ -383,7 +386,7 @@ struct HanlinModelPickerPopover: View {
             if model.supportsReasoning {
                 badgePill(String(localized: "Thinking"), color: ifThink ? .hlPurple : .secondary)
             }
-            if model.supportsImageGen {
+            if model.hasVerifiedImageOutput {
                 badgePill(String(localized: "Image"), color: .hlGreen)
             }
             if model.supportsVoiceGen {
@@ -392,8 +395,10 @@ struct HanlinModelPickerPopover: View {
             if model.company?.uppercased() == "LOCAL" {
                 badgePill(String(localized: "On-Device"), color: .hlOrange)
             }
-            if model.price == 0 {
+            if model.catalogPriceTier == 0 {
                 badgePill(String(localized: "Free"), color: .green)
+            } else if model.catalogPriceTier < 0 {
+                badgePill(String(localized: "Price unknown"), color: .secondary)
             }
         }
     }

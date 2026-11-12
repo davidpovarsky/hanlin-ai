@@ -3524,6 +3524,9 @@ class APIManager {
             modelID: modelInfo.name ?? modelName
         )
         await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
+        agentDiagnosticsRecorder?.journal.stage("model.catalog", text: modelInfo.catalogMetadataJSON ?? "unknown",
+            fields: ["requestedModelID": modelName, "priceTier": String(modelInfo.catalogPriceTier),
+                     "imageOutputVerified": String(modelInfo.hasVerifiedImageOutput)])
         
         let company = modelInfo.company?.uppercased()
         let executionRoute = Self.resolveModelExecutionRoute(

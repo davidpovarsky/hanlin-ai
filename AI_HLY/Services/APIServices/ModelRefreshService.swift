@@ -15,6 +15,17 @@ struct APIModelResponse: Codable {
     let object: String?
     let created: Int?
     let owned_by: String?
+    var architecture: ProviderModelArchitecture? = nil
+    var pricing: [String: String]? = nil
+    var supported_parameters: [String]? = nil
+    var canonical_slug: String? = nil
+    var catalogSource: String? = nil
+
+    var catalogMetadata: ProviderModelCatalogMetadata? {
+        guard let catalogSource, URL(string: catalogSource)?.host == "openrouter.ai" else { return nil }
+        return ProviderModelCatalogMetadata(modelID: id, canonicalSlug: canonical_slug, source: catalogSource,
+            pricing: pricing, architecture: architecture, parameters: supported_parameters)
+    }
 }
 
 struct ModelCapabilities: Equatable {
@@ -124,6 +135,32 @@ struct AnthropicModelsResponse: Codable {
 
 // MARK: - 模型刷新服务
 class ModelRefreshService {
+    @MainActor private static var lastCatalogAttempt: Date?
+
+    @MainActor static func refreshOpenRouterMetadata(in context: ModelContext) async {
+        guard lastCatalogAttempt.map({ Date().timeIntervalSince($0) < 300 }) != true,
+              let models = try? context.fetch(FetchDescriptor<AllModels>()) else { return }
+        let targets = models.filter { $0.company?.uppercased() == "OPENROUTER" }
+        guard !targets.isEmpty, targets.contains(where: { $0.catalogMetadata?.isFresh != true }) else { return }
+        lastCatalogAttempt = Date()
+        do {
+            let url = URL(string: "https://openrouter.ai/api/v1/models?output_modalities=all")!
+            var request = URLRequest(url: url)
+            request.timeoutInterval = 15
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard (response as? HTTPURLResponse)?.statusCode == 200 else { return }
+            let entries = try JSONDecoder().decode(OpenAIModelsResponse.self, from: data).data
+            for var entry in entries {
+                entry.catalogSource = url.absoluteString
+                if let metadata = entry.catalogMetadata {
+                    for model in targets { applyCatalogMetadata(metadata, to: model) }
+                }
+            }
+            try context.save()
+        } catch {
+            NativeToolTraceLogger.shared.log("ModelCatalogRefreshFailed", ["errorCode": (error as NSError).code])
+        }
+    }
 
     private static var isZhLanguage: Bool {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
@@ -169,7 +206,7 @@ class ModelRefreshService {
             throw ModelFetchError.invalidURL
         }
 
-        let modelsURL = "\(baseURL)/v1/models"
+        let modelsURL = "\(baseURL)/v1/models" + (company == "OPENROUTER" ? "?output_modalities=all" : "")
         guard let url = URL(string: modelsURL) else {
             throw ModelFetchError.invalidURL
         }
@@ -192,7 +229,11 @@ class ModelRefreshService {
 
         let decoder = JSONDecoder()
         let modelsResponse = try decoder.decode(OpenAIModelsResponse.self, from: data)
-        return modelsResponse.data
+        return modelsResponse.data.map { model in
+            var model = model
+            if company == "OPENROUTER", url.host == "openrouter.ai" { model.catalogSource = url.absoluteString }
+            return model
+        }
     }
 
     // MARK: Anthropic 接口
@@ -264,6 +305,8 @@ class ModelRefreshService {
     // MARK: 获取默认 Base URL
     private static func getDefaultBaseURL(for company: String) -> String {
         switch company {
+        case "OPENROUTER":
+            return "https://openrouter.ai/api"
         case "OPENAI":
             return "https://api.openai.com"
         case "DEEPSEEK":
@@ -432,7 +475,7 @@ class ModelRefreshService {
             resolved.supportsMultimodal = resolved.supportsMultimodal || existing.supportsMultimodal
             resolved.supportsReasoning = resolved.supportsReasoning || existing.supportsReasoning
             resolved.supportReasoningChange = resolved.supportReasoningChange || existing.supportReasoningChange
-            resolved.supportsImageGen = resolved.supportsImageGen || existing.supportsImageGen
+            // Historical booleans are not proof that a new image probe worked.
             resolved.supportsVoiceGen = resolved.supportsVoiceGen || existing.supportsVoiceGen
             resolved.supportsToolUse = resolved.supportsToolUse || existing.supportsToolUse
             return resolved
@@ -979,7 +1022,22 @@ class ModelRefreshService {
         request.httpMethod = "POST"
         request.timeoutInterval = 30
         request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
-        return await performRequest(request: request)
+        switch await performRequestWithData(request: request) {
+        case .success(let data):
+            guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let images = object["data"] as? [[String: Any]],
+                  images.contains(where: { image in
+                      if let encoded = image["b64_json"] as? String, let bytes = Data(base64Encoded: encoded) {
+                          return UIImage(data: bytes) != nil
+                      }
+                      if let value = image["url"] as? String, let url = URL(string: value) {
+                          return url.scheme == "https" && url.host != nil
+                      }
+                      return false
+                  }) else { return .failure("No usable output image in provider response") }
+            return .success
+        case .failure(let error): return .failure(error)
+        }
     }
 
     private static func probeVoiceGen(baseName: String, company: String, requestURL: String, apiKey: String) async -> ModelCapabilityProbeResult {
@@ -1168,7 +1226,8 @@ class ModelRefreshService {
         displayName: String,
         company: String,
         context: ModelContext,
-        capabilities: ModelCapabilities? = nil
+        capabilities: ModelCapabilities? = nil,
+        catalogMetadata: ProviderModelCatalogMetadata? = nil
     ) throws {
         // 检查是否已存在
         let targetName = modelId + "_repeat_" + company
@@ -1205,7 +1264,7 @@ class ModelRefreshService {
             identity: "model",
             position: nextPosition,
             company: company,
-            price: 2, // 默认适中价格
+            price: -1, // Unknown until an authoritative catalog or explicit override supplies a price.
             isHidden: false,
             supportsSearch: false,
             supportsTextGen: resolvedCapabilities.supportsTextGen,
@@ -1219,7 +1278,27 @@ class ModelRefreshService {
         )
 
         context.insert(newModel)
+        if let catalogMetadata { applyCatalogMetadata(catalogMetadata, to: newModel) }
         try context.save()
+    }
+
+    static func applyCatalogMetadata(_ metadata: ProviderModelCatalogMetadata, to model: AllModels) {
+        guard model.company?.uppercased() == metadata.provider,
+              model.name == metadata.modelID || model.name == metadata.modelID + "_repeat_" + (model.company ?? "") else { return }
+        guard let data = try? JSONEncoder().encode(metadata), let json = String(data: data, encoding: .utf8) else { return }
+        model.catalogMetadataJSON = json
+        model.price = metadata.priceStatus == .free ? 0 : metadata.priceStatus == .paid ? 4 : -1
+        if let outputs = metadata.outputModalities {
+            model.supportsTextGen = outputs.contains("text")
+            model.supportsImageGen = outputs.contains("image")
+            model.supportsVoiceGen = outputs.contains("audio")
+        }
+        if let inputs = metadata.inputModalities { model.supportsMultimodal = inputs.contains("image") }
+        if let parameters = metadata.supportedParameters {
+            model.supportsToolUse = parameters.contains("tools")
+            model.supportsReasoning = parameters.contains("reasoning") || parameters.contains("include_reasoning")
+            model.supportReasoningChange = parameters.contains("reasoning")
+        }
     }
 
     // MARK: 从数据库删除模型
