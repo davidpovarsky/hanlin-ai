@@ -12,6 +12,23 @@ import HanlinNativeScriptCoreSupport
 
 @Suite("Unified Host Services E2E", .serialized)
 struct HanlinUnifiedHostServicesE2ETests {
+    @Test func expoFileWirePreservesEmptyBinaryAndMissingFiles() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-files-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        let bytes = Data([0, 255, 128, 10])
+        for (path, data) in [("empty.dat", Data()), ("binary.dat", bytes)] {
+            let request = try JSONSerialization.data(withJSONObject: ["path": path, "area": "documents", "base64": data.base64EncodedString()])
+            _ = try await adapter.invoke(operation: "files.write", payloadJSON: String(decoding: request, as: UTF8.self))
+            let read = try await adapter.invoke(operation: "files.read", payloadJSON: "{\"path\":\"\(path)\",\"area\":\"documents\"}")
+            let payload = try #require(try JSONSerialization.jsonObject(with: Data(read.utf8)) as? [String: Any])
+            let base64 = try #require(payload["base64"] as? String)
+            #expect(Data(base64Encoded: base64) == data)
+            _ = try await adapter.invoke(operation: "files.delete", payloadJSON: "{\"path\":\"\(path)\",\"area\":\"documents\"}")
+        }
+        let missing = try await adapter.invoke(operation: "files.read", payloadJSON: "{\"path\":\"missing.dat\",\"area\":\"documents\"}")
+        let payload = try #require(try JSONSerialization.jsonObject(with: Data(missing.utf8)) as? [String: Any])
+        #expect(payload["base64"] == nil || payload["base64"] is NSNull)
+    }
+
     @Test func expoLegacyUnknownRuntimeRejectsInsteadOfExecutingJavaScriptCore() async throws {
         let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-unknown-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
         do {

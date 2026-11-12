@@ -1425,7 +1425,7 @@ final class HanlinScriptingPlatform {
         }
     }
 
-    private func dispatchResumeCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
+    func dispatchResumeCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
         guard let store else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
         let identity = command.invocation.identity
         if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {

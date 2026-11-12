@@ -19,9 +19,9 @@ wiring do not establish execution through every extension or a signed device.
 NativeScript Core/iOS are pinned to9.1.0, with the separately embedded SwiftUI
 provider contract4.0.2. Expo tooling locks Expo58.0.0, ExpoUI58.0.3, React19.3.0,
 RN0.88.0 and Worklets0.13.1. `@hanlin/expo-ui` package version1.0.0 differs from
-its generated bridge version3.0.0. Its peer dependencies still reference preview
-Expo/React/RN versions and require SDK-04 reconciliation, rather than an implicit
-runtime upgrade. The optional native-api facade1.0.0 re-exports upstream9.1.2.
+its generated bridge version3.0.0. Its peer dependencies now match the pinned
+Expo/React/RN versions; no resolved dependency identity changed during that
+metadata correction. The optional native-api facade1.0.0 re-exports upstream9.1.2.
 These are source/lock contracts; installed Host/Hermes/metadata and signed binary
 observations remain separate obligations.
 
