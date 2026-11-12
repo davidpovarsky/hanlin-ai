@@ -1,10 +1,9 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "91f8c0d40fd9ea115880bd27c1c997bbbd555bfe",
+  "sourceCommit": "cbb0d8e397b86f2d41361554ded8419583e680e6",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-    "Packages/HanlinExpoUI/src/host-services.ts"
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
@@ -118,12 +117,20 @@
       "sha256": "aee294b026c5e532705b7036af505704bce6596e3907bd1b42b329e50ed77248"
     },
     {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "sha256": "216b6cdb6f78791a0c8022672c5452d3edaafbb6eec328b566ebbd112019f33f"
+    },
+    {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
       "sha256": "238a068fb6436153bdabdd70cb7a35edc49eb8a8821738b373ff64c2440b9905"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "ccaa6b31587a3d16c48c03cf2df9346622db9cb51c693e9aa47879b5be8356ca"
+      "sha256": "2acd3aa14163c2bc06b3b4411a1b7674014a1c089b45b539b1b74166c0bb7721"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
+      "sha256": "09969f5f4cc93bc3a265b0389a3af7a85ef5f8df0a705163a27beeacbad275ea"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
@@ -131,7 +138,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "8187493fe8bebca223312bee2365acbc9f9a2cfea4647b58949ecc14eb07b326"
+      "sha256": "bb5e769819e90ba4bc5e10c130163efc79acd804d40f54e095cbf018f9e57a84"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -311,9 +318,9 @@
     },
     "expoExposureRejection": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "line": 443,
+      "line": 434,
       "anchor": "Expo exposure '",
-      "sha256": "ccaa6b31587a3d16c48c03cf2df9346622db9cb51c693e9aa47879b5be8356ca"
+      "sha256": "2acd3aa14163c2bc06b3b4411a1b7674014a1c089b45b539b1b74166c0bb7721"
     },
     "widgetBundle": {
       "file": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",

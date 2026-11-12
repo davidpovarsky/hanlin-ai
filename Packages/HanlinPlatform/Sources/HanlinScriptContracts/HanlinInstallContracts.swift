@@ -84,6 +84,9 @@ public struct HanlinCompatibilityFinding: Codable, Hashable, Sendable {
     public let sourcePath: String?
     public let message: String
     public let rationale: String?
+    /// Stable machine-readable contract diagnostic when available. Legacy
+    /// findings decode without it; human explanations remain unchanged.
+    public let code: String?
 
     public init(
         state: HanlinCompatibilityState,
@@ -91,7 +94,8 @@ public struct HanlinCompatibilityFinding: Codable, Hashable, Sendable {
         symbol: String? = nil,
         sourcePath: String? = nil,
         message: String,
-        rationale: String? = nil
+        rationale: String? = nil,
+        code: String? = nil
     ) {
         self.state = state
         self.severity = severity
@@ -99,6 +103,7 @@ public struct HanlinCompatibilityFinding: Codable, Hashable, Sendable {
         self.sourcePath = sourcePath
         self.message = message
         self.rationale = rationale
+        self.code = code
     }
 }
 

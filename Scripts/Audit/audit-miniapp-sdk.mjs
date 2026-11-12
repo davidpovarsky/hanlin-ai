@@ -120,7 +120,15 @@ for (const file of [
   'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift',
   'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift',
   'Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift',
+  'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift',
+  'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift',
 ]) await source(file);
+
+const analyzer = await source('Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift');
+const preparedVersions = Object.fromEntries([...analyzer.text.matchAll(/private static let (nativeScriptRuntimeVersion|nativeScriptSwiftUIVersion|expoSDKVersion|expoUIVersion|expoUIBridgeVersion) = "([^"]+)"/g)].map(m => [m[1], m[2]]));
+if (Object.keys(preparedVersions).length !== 5 || !analyzer.text.includes('stableRequiredVersion')) {
+  throw new Error('Prepared runtime version validation changed; audit the installed contract.');
+}
 
 const wanted = ['expo', '@expo/ui', 'react', 'react-native', 'expo-modules-core', 'expo-modules-jsi', 'react-native-worklets', '@nativescript/react-native'];
 const nativeNames = [...nativeModule.text.matchAll(/AsyncFunction\("([^"]+)"\)/g)].map(m => m[1]);
@@ -140,6 +148,10 @@ const inventory = {
   evidenceBoundary: 'Exposed declarations and version locks are not a signed binary or per-surface E2E pass. Objective-C records are declarations, not metadata/JS marshalling proof.',
   snapshotIdentity: 'sourceCommit is the base commit; exact source hashes also cover any listed uncommitted source paths at audit time.',
   extensionReachability: 'extension-reachability.json (INT-01; separate consumer of this source inventory)',
+  preparedRuntimeContract: {source: analyzer.path, versions: preparedVersions,
+    policy: 'Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. Widget runtime/plugin exact pins remain authoritative.',
+    stableDiagnosticCodes: [...new Set([...analyzer.text.matchAll(/code: "(MINIAPP_[A-Z_]+)"/g)].map(m => m[1]))].sort(),
+    status: 'source contract; analyzer regressions, complete schemas and installed Host acceptance are separate gates'},
   nativeScript: {toolingDependencies: nsPackage.dependencies ?? {}, toolingDevDependencies: nsPackage.devDependencies ?? {}, pinnedNativeContract: nsLock.nativeScript, swiftUI: nsLock.swiftUI,
     hostBridge: {source: header.path, methods: objcMethods, status: 'partial', missingGenericRuntimeKinds: ['typeScript', 'shell'], result: 'legacy string/error callbacks, not full RuntimeExecutionResult'}},
   expo: {
