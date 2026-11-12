@@ -133,6 +133,8 @@ public actor HanlinAISDKAgentEngine {
                     var currentDefinitions = definitions
                     var currentTools = initialTools
                     var stepOffset = 0
+                    var finalVisibleCharacters = 0
+                    var hasSuccessfulToolAction = false
 
                     while true {
                         let currentNames = Set(currentDefinitions.map(\.name))
@@ -188,7 +190,9 @@ public actor HanlinAISDKAgentEngine {
                             case .startStep:
                                 localStepIndex += 1
                                 meaningfulEventCount = 0
+                                finalVisibleCharacters = 0
                             case .textDelta(_, let text, _):
+                                finalVisibleCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                                 if !text.isEmpty {
                                     meaningfulEventCount += 1
                                     continuation.yield(.textDelta(text))
@@ -210,6 +214,7 @@ public actor HanlinAISDKAgentEngine {
                             case .toolResult(let result):
                                 meaningfulEventCount += 1
                                 let projected = Self.toolResult(from: result)
+                                if !projected.isError { hasSuccessfulToolAction = true }
                                 continuation.yield(.toolResult(
                                     callID: result.toolCallId,
                                     name: result.toolName,
@@ -249,6 +254,9 @@ public actor HanlinAISDKAgentEngine {
                                         shouldReloadToolsAndContinue = true
                                         break
                                     }
+                                }
+                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction else {
+                                    throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)
                                 }
                                 continuation.yield(.finished(
                                     reason: rawReason ?? reason.rawValue,

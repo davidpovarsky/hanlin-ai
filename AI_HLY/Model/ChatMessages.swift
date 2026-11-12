@@ -101,6 +101,8 @@ struct KnowledgeCard: Identifiable, Codable, Hashable {
 
 @Model
 class ChatMessages {
+    /// Optional for lightweight migration of existing conversations.
+    var modelFinishReason: String? = nil
     var id: UUID = UUID()
     var role: String? = "system"
     var text: String? = nil

@@ -222,6 +222,8 @@ final class HanlinAISDKToolAdapter {
                 modelVisibleSchemaBytes: prep.visibleSchemaBytes
             )
             currentRoundID = stepID
+        } else {
+            currentRoundID = UUID()
         }
         return prep
     }

@@ -45,6 +45,8 @@ struct AgentEventAccumulator {
     }
 
     switch event {
+    case .modelRoundStarted(let id):
+      transcript.setModelRound(id)
     case .runStarted(let metadata):
       guard metadata.id == run.id else { return }
       run.startedAt = metadata.startedAt

@@ -1167,6 +1167,10 @@ struct ChatView: View {
             operationalState: operationalState,
             operationalDescription: operationalDescription,
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
+            onContinue: msg.role == "assistant" && msg.modelFinishReason == "length" ? {
+                guard !isResponding else { return }
+                handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Continue from where the answer stopped. Preserve the previous answer and do not repeat completed actions or tool calls."))
+            } : nil,
             onDelete: {
                 // 如果是助手组消息，删除整组，否则删除单条
                 if msg.role == "assistant" {
@@ -1383,7 +1387,7 @@ struct ChatView: View {
     }
     
     // 处理消息发送
-    private func handleMessageSending(ifObservingMode: Bool) {
+    private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil) {
         
         isFeedBack.toggle()
         var userMessage: ChatMessages?
@@ -1398,16 +1402,16 @@ struct ChatView: View {
                 // 新消息建立
                 userMessage = ChatMessages(
                     role: "user",
-                    text: message,
-                    images: selectedImages,
+                    text: continuationText ?? message,
+                    images: continuationText == nil ? selectedImages : [],
                     reasoning: "",
-                    documents: selectedDocumentURLs.map { $0.absoluteString },
+                    documents: continuationText == nil ? selectedDocumentURLs.map { $0.absoluteString } : [],
                     modelName: modelTemp[selectedModelIndex].name,
                     modelDisplayName: modelTemp[selectedModelIndex].displayName,
                     timestamp: Date(),
                     record: chatRecord
                 )
-                if !selectedPrompts.isEmpty {
+                if continuationText == nil && !selectedPrompts.isEmpty {
                     let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无内容") }
                     userMessage?.promptUse = promptCards
                 }
@@ -1418,10 +1422,12 @@ struct ChatView: View {
                     // 异步自动命名（不阻塞主对话）
                     autoGenerateTitleIfNeeded()
                 }
-                message = ""
-                selectedImages.removeAll()
-                selectedDocumentURLs = []
-                isInputActive = false
+                if continuationText == nil {
+                    message = ""
+                    selectedImages.removeAll()
+                    selectedDocumentURLs = []
+                    isInputActive = false
+                }
             }
         } else {
             message = ""
@@ -1776,9 +1782,10 @@ struct ChatView: View {
                         
                         // 异常提醒
                         if let error = data.errorInfo, !error.isEmpty, warningKinds.insert(error).inserted {
+                            if error == "length" { assistantMessage.modelFinishReason = "length" }
                             var errorMessage = ""
                             if error == "length" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
+                                errorMessage = String(localized: "The answer reached the configured output limit. The partial answer is saved. Choose Continue to keep going.")
                             } else if error == "sensitive" {
                                 errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
                             } else {

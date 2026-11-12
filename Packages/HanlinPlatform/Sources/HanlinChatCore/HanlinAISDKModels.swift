@@ -155,8 +155,8 @@ public enum HanlinAISDKError: LocalizedError, Sendable {
             return "Invalid SDK conversation: \(detail)"
         case .emptyProviderResponse(let attempts):
             return "The provider returned an empty successful response after \(attempts) attempt(s)."
-        case .incompleteProviderResponse(let reason):
-            return "The provider ended without a visible answer (\(reason)). Retry or continue the conversation."
+        case .incompleteProviderResponse:
+            return String(localized: "The model returned no visible answer. Please retry.")
         }
     }
 }

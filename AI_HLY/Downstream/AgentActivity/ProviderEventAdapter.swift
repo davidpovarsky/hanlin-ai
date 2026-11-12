@@ -26,6 +26,7 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
     private var lastSemanticEventKind: SemanticEventKind?
     private var searchSequence = 0
     private var activeSearchID: String?
+    private var modelRoundID: UUID?
 
     init(runID: UUID) {
         self.runID = runID
@@ -34,6 +35,12 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
     mutating func events(from data: StreamData) -> [AgentEvent] {
         AgentDiagnosticsRecorder.trace(runID: runID, stage: "ProviderEventAdapter.input", text: String(describing: data))
         var events: [AgentEvent] = []
+        if let roundID = data.modelRoundID, roundID != modelRoundID {
+            endActiveAnswerSegment(as: .interim, into: &events)
+            endActiveReasoning(into: &events)
+            modelRoundID = roundID
+            events.append(.modelRoundStarted(id: roundID.uuidString))
+        }
 
         if data.agentEvents.contains(where: isActivityBoundary) {
             endActiveAnswerSegment(as: .interim, into: &events)
@@ -144,7 +151,7 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
              .toolExecutionCompleted, .toolExecutionFailed,
              .searchStarted, .searchCompleted:
             return true
-        case .runStarted, .answerSegmentStarted, .answerSegmentDelta,
+        case .runStarted, .modelRoundStarted, .answerSegmentStarted, .answerSegmentDelta,
              .answerSegmentEnded, .runCompleted, .runFailed, .runCancelled:
             return false
         }

@@ -1,6 +1,98 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המשך"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续"
+          }
+        }
+      }
+    },
+    "Continue from where the answer stopped. Preserve the previous answer and do not repeat completed actions or tool calls.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue from where the answer stopped. Preserve the previous answer and do not repeat completed actions or tool calls."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המשך מהנקודה שבה התשובה נעצרה. שמור על התשובה הקודמת ואל תחזור על פעולות או קריאות כלים שכבר הושלמו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请从回答中断的位置继续，保留之前的回答，不要重复已经完成的操作或工具调用。"
+          }
+        }
+      }
+    },
+    "The answer reached the configured output limit. The partial answer is saved. Choose Continue to keep going.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The answer reached the configured output limit. The partial answer is saved. Choose Continue to keep going."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התשובה הגיעה למגבלת הפלט שהוגדרה. התשובה החלקית נשמרה. אפשר לבחור ״המשך״ כדי להמשיך."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答已达到配置的输出限制。已保留部分回答，请选择继续。"
+          }
+        }
+      }
+    },
+    "The model returned no visible answer. Please retry.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The model returned no visible answer. Please retry."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המודל סיים בלי תשובה גלויה. אפשר לנסות שוב."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "模型未返回可显示的回答，请重试。"
+          }
+        }
+      }
+    },
     "The source message has changed. Your saved text is kept.": {
       "extractionState": "manual",
       "localizations": {

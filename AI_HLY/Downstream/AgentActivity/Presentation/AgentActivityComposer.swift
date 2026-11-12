@@ -35,22 +35,9 @@ enum AgentActivityComposer {
       let exact = groups.lastIndex(where: { group in group.contains { $0.toolCallID == callID } }) {
       return exact
     }
-    guard step.kind == .toolCall || step.kind == .toolExecution || step.kind == .webSearch else { return nil }
-
-    // Distinct provider call IDs are distinct operations, even with identical inputs/time.
-    // The heuristic below exists solely for historical records without an external ID.
-    guard step.externalID == nil else { return nil }
-
-    guard let tool = AgentActivityDeduplicator.normalized(step.subtitle),
-      let index = groups.lastIndex(where: { group in
-        guard let last = group.last, last.externalID == nil,
-          abs(last.startedAt.timeIntervalSince(step.startedAt)) < 8
-        else { return false }
-        return AgentActivityDeduplicator.normalized(last.subtitle) == tool
-          && normalizedInput(last) == normalizedInput(step)
-      })
-    else { return nil }
-    return index
+    // Historical records without correlation remain separate. Equal names,
+    // arguments and nearby timestamps do not establish operation ownership.
+    return nil
   }
 
   private static func lifecycleKey(_ step: AgentActivityStep) -> String {

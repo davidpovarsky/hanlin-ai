@@ -23,6 +23,7 @@ import HanlinPlatformContracts
 
 
 struct LoadingGradientText: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let text: String
     var textColor: Color = .gray
     var gradientColors: [Color] = [
@@ -38,6 +39,9 @@ struct LoadingGradientText: View {
     var animationSpeed: Double = 2
 
     var body: some View {
+        if reduceMotion {
+            Text(text).font(font).foregroundStyle(textColor)
+        } else {
         Text(text)
             .font(font)
             .foregroundColor(textColor)
@@ -64,6 +68,7 @@ struct LoadingGradientText: View {
                 }
             )
             .frame(height: 24)
+        }
     }
 }
 
@@ -72,7 +77,6 @@ struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
     @Environment(\.chatExcerptSource) private var excerptSource
-    @State private var isActivityExpanded = false
     @State private var isPersonallySaved = false
     let temporaryRecord: Bool
     let id: UUID
@@ -119,6 +123,7 @@ struct ChatBubbleView: View {
     let operationalState: String
     let operationalDescription: String
     let onRetry: (() -> Void)?     // 重新请求回调
+    let onContinue: (() -> Void)?
     let onDelete: (() -> Void)?    // 新增：删除回调
     let screenHeight = UIScreen.main.bounds.height
     
@@ -209,6 +214,7 @@ struct ChatBubbleView: View {
         operationalState: String,
         operationalDescription: String,
         onRetry: (() -> Void)?,
+        onContinue: (() -> Void)? = nil,
         onDelete: (() -> Void)?
     ) {
         self.temporaryRecord = temporaryRecord
@@ -257,6 +263,7 @@ struct ChatBubbleView: View {
         self.operationalState = operationalState
         self.operationalDescription = operationalDescription
         self.onRetry = onRetry
+        self.onContinue = onContinue
         self.onDelete = onDelete
     }
 
@@ -755,10 +762,6 @@ struct ChatBubbleView: View {
             }
         }
         .padding(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.hlBluefont.opacity(0.3), lineWidth: 1)
-        )
         .cornerRadius(20)
         .animation(.spring(response: 0.8, dampingFraction: 0.95),
                    value: operationalDescription)
@@ -1725,6 +1728,13 @@ struct ChatBubbleView: View {
                 }
             }
             
+            if let onContinue {
+                Button(String(localized: "Continue"), systemImage: "arrow.right") { onContinue() }
+                    .font(.caption)
+                    .disabled(isResponding)
+                    .accessibilityIdentifier("hanlin-action-continue")
+            }
+
             // 重新请求
             if let retryAction = onRetry {
                 Button(action: retryAction) {
@@ -2114,11 +2124,26 @@ struct ChatBubbleView: View {
         if hasAgentActivity {
             VStack(alignment: .leading, spacing: 6) {
                 ToggleButton(
-                    title: String(localized: "Thinking & tools"),
-                    timeText: timeline?.summaryTitle ?? reasoningTime ?? "",
-                    isExpanded: $isActivityExpanded
+                    title: String(localized: "Thinking"),
+                    timeText: reasoningTime ?? timeline?.summaryTitle ?? "",
+                    isExpanded: $isReasoningExpanded,
+                    isActive: isResponding && isLastAssistantGroup
                 )
-                .accessibilityIdentifier("hanlin-agent-activity-toggle")
+                .accessibilityIdentifier("hanlin-reasoning-toggle")
+
+                if !isReasoningExpanded && isResponding && isLastAssistantGroup {
+                    VStack(alignment: .leading, spacing: 2) {
+                        ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { index, line in
+                            Text(line)
+                                .font(.system(size: index == 2 ? 10 : index == 1 ? 9 : 8))
+                                .lineLimit(1).truncationMode(.head)
+                                .foregroundStyle(index == 2 ? Color.hlBluefont : .gray)
+                                .opacity(index == 0 ? 0.4 : index == 1 ? 0.7 : 1)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    .padding(.horizontal, 5)
+                }
 
                 // Failures remain discoverable when the details are collapsed.
                 if timeline?.status == .failed || timeline?.activities.contains(where: { $0.status == .failed }) == true {
@@ -2129,40 +2154,25 @@ struct ChatBubbleView: View {
                         .font(.caption).foregroundStyle(.secondary)
                 }
 
-                if isActivityExpanded {
-                    if let timeline, !timeline.activities.isEmpty {
-                        ForEach(timeline.activities) { activity in
-                            DisclosureGroup {
-                                VStack(alignment: .leading, spacing: 6) {
-                                    if let input = activity.inputPreview {
-                                        Text(input).font(.caption.monospaced()).textSelection(.enabled)
-                                    }
-                                    if let output = activity.outputPreview {
-                                        Text(output).font(.footnote).textSelection(.enabled)
-                                    }
-                                    if let error = activity.errorDescription {
-                                        Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled)
-                                    }
-                                    // Match by call identity, never by tool name (parallel calls may share it).
-                                    ForEach(entries.filter { $0.callID == activity.id }) { entry in
-                                        toolCallRowView(entry)
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            } label: {
-                                HStack(spacing: 8) {
-                                    if activity.status == .running || activity.status == .pending {
-                                        ProgressView().controlSize(.mini)
+                if isReasoningExpanded {
+                    if let timeline, let agentRun, !timeline.activities.isEmpty {
+                        ForEach(AgentActivityComposer.rounds(for: agentRun, timeline: timeline)) { round in
+                            VStack(alignment: .leading, spacing: 6) {
+                                ForEach(round.activities) { activity in
+                                    if activity.kind == .reasoning {
+                                        let stepIDs = Set(activity.sourceStepIDs)
+                                        let reasoning = agentRun.transcriptItems.filter {
+                                            $0.kind == .reasoning && $0.activityStepID.map(stepIDs.contains) == true
+                                        }.compactMap(\.text).joined(separator: "\n")
+                                        Text(AgentDiagnosticsRedactor.sanitize(reasoning.isEmpty ? activity.outputPreview ?? "" : reasoning))
+                                            .font(.footnote).foregroundStyle(.secondary)
+                                            .textSelection(.enabled).padding(.horizontal, 8)
+                                            .accessibilityIdentifier("hanlin-reasoning-expanded-text")
                                     } else {
-                                        Image(systemName: activity.status == .failed ? "exclamationmark.circle" : activity.status == .cancelled ? "stop.circle" : "checkmark.circle")
+                                        activityDisclosure(activity, entries: entries)
                                     }
-                                    Text(activity.title).font(.subheadline)
-                                    Spacer()
-                                    Text(activity.status.rawValue.capitalized).font(.caption2).foregroundStyle(.secondary)
                                 }
                             }
-                            .accessibilityElement(children: .contain)
-                            .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
                         }
                     } else {
                         if !sanitizedReasoningDisplay.isEmpty {
@@ -2175,7 +2185,32 @@ struct ChatBubbleView: View {
                 }
             }
             .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-agent-activity-toggle")
         }
+    }
+
+    private func activityDisclosure(_ activity: AgentDisplayActivity, entries: [ClassicProjectedToolCallEntry]) -> some View {
+        DisclosureGroup {
+            VStack(alignment: .leading, spacing: 6) {
+                if let input = activity.inputPreview { Text(input).font(.caption.monospaced()).textSelection(.enabled) }
+                if let error = activity.errorDescription { Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
+                let matching = entries.filter { $0.callID == activity.id }
+                if matching.isEmpty, let output = activity.outputPreview { Text(output).font(.footnote).textSelection(.enabled) }
+                ForEach(matching) { entry in toolCallRowView(entry) }
+            }
+            .padding(.vertical, 4)
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: activity.systemImage ?? (activity.status == .failed ? "exclamationmark.circle" : "wrench.and.screwdriver"))
+                if activity.status == .running || activity.status == .pending {
+                    LoadingGradientText(text: activity.title, font: .subheadline)
+                } else { Text(activity.title).font(.subheadline) }
+                Spacer()
+                Text(activity.status.rawValue.capitalized).font(.caption2).foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
     }
 
     @ViewBuilder
@@ -2520,15 +2555,18 @@ struct ChatBubbleView: View {
         let title: String
         let timeText: String
         @Binding var isExpanded: Bool
+        var isActive = false
         
         var body: some View {
             Button(action: {
                 withAnimation { isExpanded.toggle() }
             }) {
                 HStack {
-                    Text(title)
-                        .font(.caption)
-                        .foregroundColor(Color(.systemGray))
+                    if isActive {
+                        LoadingGradientText(text: title, font: .caption)
+                    } else {
+                        Text(title).font(.caption).foregroundColor(Color(.systemGray))
+                    }
                     Spacer()
                     if !timeText.isEmpty {
                         ForEach([timeText], id: \.self) { text in

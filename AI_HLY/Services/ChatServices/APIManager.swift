@@ -49,6 +49,7 @@ struct StreamData {
     var splitMarkers: splitMarkerGroup? // 分割标记组
     var canvas_info: CanvasData?    // 画布数据
     var agentEvents: [AgentEvent] = [] // Provider-neutral activity events
+    var modelRoundID: UUID? = nil
 }
 
 struct RequestMessage {
@@ -3757,7 +3758,7 @@ class APIManager {
             case .stepStarted(let index, let prep):
                 currentStepID = toolAdapter.currentRoundID
                 visibleFinalCharacters = 0
-                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response"))
+                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response", modelRoundID: currentStepID))
 
             case .textDelta(let text):
                 visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
