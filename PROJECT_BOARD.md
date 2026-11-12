@@ -1,5 +1,7 @@
 # Project Board
 
+- **2026-11-12 Xcode resolved provenance:** The checked-in app Package.resolved predates its actual pinned SDK/Markdown references. Generate diagnostic build identity only after Xcode resolves dependencies, validate requested exact repository revisions against that resulting lock, and retain its hash. Reading the old lock before resolution falsely describes the binary even when the app builds successfully.
+
 - **2026-11-12 embedded Node ICU:** The pinned mobile Node intentionally omits ICU; fatal TextDecoder throws even for valid UTF-8 input. File-backed execution input now uses node:buffer isUtf8 (native simdutf) plus bounded scalar carry. Keep strict malformed/overlong/surrogate rejection and preserve original owned bytes; desktop Node UTF-8 success alone cannot certify the embedded path.
 
 - **2026-11-10 V8 cage vs physical memory:** The pinned compressed-pointer allocator reserves4GiB with4GiB alignment and aborts on reservation failure; JSC/WebKit share the process VA. Main-app Extended Virtual Addressing is now requested and checked against profile/exported signature. Actual93401 main profile/signature lacked it; renew the existing main profile before the next authorized signed build. Measure both cold engine orders on physical iPad; physical footprint/os_proc_available_memory alone do not prove sufficient virtual address space. See NATIVE_MEMORY_AND_SIGNING_CONTRACT.md.

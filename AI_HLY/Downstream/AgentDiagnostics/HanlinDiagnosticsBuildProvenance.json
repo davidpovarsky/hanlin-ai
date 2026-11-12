@@ -2,5 +2,5 @@
   "schemaVersion": 1,
   "sourceCommit": "unavailable: local build without provenance generation",
   "dependencyPins": [],
-  "instructions": "CI generates this resource from the actual checkout and Package.resolved. Local builders may run Scripts/CI/write_diagnostics_build_provenance.py before building."
+  "instructions": "CI generates this resource from the actual checkout and Package.resolved. Local builders may run Scripts/CI/write_diagnostics_build_provenance.py after resolving Xcode packages and before building."
 }

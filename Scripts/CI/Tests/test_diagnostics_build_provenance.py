@@ -40,6 +40,22 @@ class DiagnosticProvenanceTests(unittest.TestCase):
             self.assertNotEqual(changed["packageResolvedSHA256"], value["packageResolvedSHA256"])
             self.assertEqual(changed["dependencyPins"][0]["state"]["revision"], "b" * 40)
 
+    def test_stale_lock_cannot_claim_the_requested_fork_revision(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            project = root / "AI_HLY.xcodeproj/project.pbxproj"
+            project.parent.mkdir(parents=True)
+            project.write_text('repositoryURL = "https://github.com/owner/renderer"; requirement = { kind = revision; revision = ' + "a" * 40 + '; };')
+            lock = project.parent / "project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+            lock.parent.mkdir(parents=True)
+            lock.write_text(json.dumps({"pins": [{"identity": "old-renderer", "location": "https://github.com/other/renderer", "state": {"revision": "b" * 40}}]}))
+            output = root / "AI_HLY/Downstream/AgentDiagnostics/HanlinDiagnosticsBuildProvenance.json"
+            output.parent.mkdir(parents=True)
+            output.write_text("{}"); before = output.read_bytes()
+            with self.assertRaisesRegex(ValueError, "resolve Xcode packages"):
+                module.write_provenance(root)
+            self.assertEqual(output.read_bytes(), before)
+
 
 if __name__ == "__main__":
     unittest.main()
