@@ -38,7 +38,9 @@ struct RuntimeJobInterruptionError: LocalizedError, Sendable {
 }
 
 enum RuntimeJobProgress {
-    typealias Reporter = @MainActor @Sendable (RuntimeJobSnapshot) -> Void
+    // Await observers before advancing the owning job. Cancellation observers
+    // must finish their actor hop before a compiler result can launch new work.
+    typealias Reporter = @MainActor @Sendable (RuntimeJobSnapshot) async -> Void
     @TaskLocal static var reporter: Reporter?
 }
 

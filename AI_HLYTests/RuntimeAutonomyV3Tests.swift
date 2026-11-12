@@ -248,8 +248,8 @@ struct RuntimeAutonomyV3Tests {
             guard case .string(let text)? = value[field], let actualID = UUID(uuidString: text) else {
                 throw RuntimeCoreError.runtimeFailure("The actual adapter returned no native job ID for \(field)")
             }
-            let saved = try await core.jobs.snapshot(id: actualID, kind: field == "pythonID" ? .localPython : .shell)
-            #expect(saved?.stdoutBytes == payload.count)
+            let saved = try #require(try await core.jobs.snapshot(id: actualID, kind: field == "pythonID" ? .localPython : .shell))
+            #expect(saved.stdoutBytes == Int64(payload.count))
         }
     }
 
