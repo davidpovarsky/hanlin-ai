@@ -31,7 +31,7 @@ struct HanlinInvocationQueueTests {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let file = directory.appending(path: "\(legacy.id.uuidString.lowercased()).json")
         try encoder.encode(legacy).write(to: file)
-        let claim = try #require(store.claim(legacy.id))
+        let claim = try #require(try store.claim(legacy.id))
         #expect(claim.command.invocation.parameters == legacy.invocation.parameters)
         try store.complete(claim, status: .succeeded, value: legacy.invocation.parameters)
         #expect(try HanlinScriptExtensionStore(root: root).receipt(for: legacy.id)?.value == legacy.invocation.parameters)
@@ -48,7 +48,7 @@ struct HanlinInvocationQueueTests {
         let store = HanlinScriptExtensionStore(root: root), now = Date(timeIntervalSince1970: 1_000)
         let input = try command(at: now)
         try store.enqueue(input)
-        let claim = try #require(store.claim(input.id, now: now))
+        let claim = try #require(try store.claim(input.id, now: now))
         try store.complete(claim, status: .succeeded, value: .integer(42), now: now)
         try store.enqueue(input)
         #expect(try store.receipt(for: input.id)?.value == .integer(42))
@@ -76,10 +76,10 @@ struct HanlinInvocationQueueTests {
         let now = Date(timeIntervalSince1970: 1_000), store = HanlinScriptExtensionStore(root: root)
         let input = try command(at: now, idempotent: true, maximumAttempts: 2)
         try store.enqueue(input)
-        _ = try #require(store.claim(input.id, now: now, leaseSeconds: 1))
+        _ = try #require(try store.claim(input.id, now: now, leaseSeconds: 1))
         // Even a forged incoming idempotency flag cannot authorize recovery.
         #expect(try store.claim(input.id, now: now.addingTimeInterval(2)) == nil)
-        let receipt = try #require(store.receipt(for: input.id))
+        let receipt = try #require(try store.receipt(for: input.id))
         #expect(receipt.status == .deferred && receipt.failure == .interruptedOutcomeUnknown && receipt.attempt == 1)
     }
 
@@ -88,8 +88,8 @@ struct HanlinInvocationQueueTests {
         let now = Date(timeIntervalSince1970: 1_000), store = HanlinScriptExtensionStore(root: root)
         let input = try command(at: now, idempotent: true, maximumAttempts: 2)
         try store.enqueue(input)
-        let old = try #require(store.claim(input.id, now: now, leaseSeconds: 1))
-        let fresh = try #require(store.claim(input.id, now: now.addingTimeInterval(2), registeredActionIsIdempotent: true))
+        let old = try #require(try store.claim(input.id, now: now, leaseSeconds: 1))
+        let fresh = try #require(try store.claim(input.id, now: now.addingTimeInterval(2), registeredActionIsIdempotent: true))
         #expect(old.leaseID != fresh.leaseID)
         #expect(throws: HanlinInvocationQueueError.staleLease) {
             try store.complete(old, status: .succeeded, value: .string("stale"), now: now.addingTimeInterval(2))
@@ -114,11 +114,11 @@ struct HanlinInvocationQueueTests {
         let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
         let store = HanlinScriptExtensionStore(root: root), input = try command()
         try store.enqueue(input)
-        let claim = try #require(store.claim(input.id))
+        let claim = try #require(try store.claim(input.id))
         let requested = try store.requestCancellation(input.id)
         #expect(requested.status == .running && requested.cancellationRequested)
         try store.complete(claim, status: .succeeded, value: .string("completed before cancellation"))
-        let receipt = try #require(store.receipt(for: input.id))
+        let receipt = try #require(try store.receipt(for: input.id))
         #expect(receipt.status == .succeeded && receipt.cancellationRequested)
     }
 
@@ -127,7 +127,7 @@ struct HanlinInvocationQueueTests {
         let store = HanlinScriptExtensionStore(root: root), input = try command()
         try store.enqueue(input)
         let file = root.appending(path: "ResumeQueue/\(input.id.uuidString.lowercased()).json")
-        var json = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: file)) as? [String: Any])
+        var json = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: file)) as? [String: Any])
         json["deliverySchemaVersion"] = 999
         try JSONSerialization.data(withJSONObject: json).write(to: file, options: .atomic)
         #expect(throws: HanlinInvocationQueueError.invalidEnvelope) { try store.receipt(for: input.id) }
