@@ -25,6 +25,7 @@ extension NodeRuntimeService {
         arguments: [String] = [],
         fileLayout: MCPFileLayout = .default
     ) async throws -> MCPServerDescriptor {
+        try fileLayout.prepareIfNeeded()
         let host = try await ensureRunning()
         var source = spec.hostPayload
         if case .localArchive(let inputURL) = spec.source {

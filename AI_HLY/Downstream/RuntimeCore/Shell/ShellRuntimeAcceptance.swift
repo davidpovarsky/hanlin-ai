@@ -22,7 +22,7 @@ enum ShellRuntimeAcceptance {
         let result: ShellRuntimeAcceptanceResult
         do {
             try await core.prepareStorage()
-            let smoke = try await core.shell.runSmokeSuite()
+            let smoke = try await core.shell.runSmokeSuite(node: core.node)
             let snapshot = await core.shell.snapshot()
             let registration = try IOSSystemRunner.registrationReport()
             let canonicalShadow = await canonicalShadowReport(snapshot: snapshot)

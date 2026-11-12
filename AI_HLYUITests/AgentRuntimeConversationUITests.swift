@@ -149,8 +149,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         // 3. Run B finishes cleanly
         let assistantBubbles = app.otherElements.matching(identifier: "hanlin-assistant-bubble")
-        let runBAnswer = assistantBubbles.descendants(matching: .staticText).matching(
-            NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
+        // Native Markdown exposes a UITextView with value plus a nested text
+        // accessibility element. Match the owning value, not sidebar labels
+        // or StaticText-only descendants, and count that answer exactly once.
+        let runBAnswer = assistantBubbles.descendants(matching: .textView).matching(
+            NSPredicate(format: "value == %@", "RUN_B_COMPLETE")
         ).firstMatch
         let runBCompleted = runBAnswer.waitForExistence(timeout: 30)
         if !runBCompleted {
@@ -170,8 +173,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         ).firstMatch
         XCTAssertFalse(runAGhost.exists, "Run A late ghost answer RUN_A_LATE_GHOST must not appear after being cancelled")
 
-        let runBMatches = assistantBubbles.descendants(matching: .staticText).matching(
-            NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
+        let runBMatches = assistantBubbles.descendants(matching: .textView).matching(
+            NSPredicate(format: "value == %@", "RUN_B_COMPLETE")
         )
         XCTAssertEqual(runBMatches.count, 1, "RUN_B_COMPLETE must exist exactly once")
 

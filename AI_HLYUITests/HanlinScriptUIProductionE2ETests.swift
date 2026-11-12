@@ -83,29 +83,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25), "ScriptUI did not initialize cleanly on reopen after restart")
         closeScriptApp()
 
-        // 7. Capability Grant / Revoke Lifecycle (app.set_capability_granted)
+        // 7. Declared capabilities must not add an internal grant/revoke gate.
         openPackageDetails(named: validPackageName)
-        let networkPermission = app.switches["network"].firstMatch
-        XCTAssertTrue(networkPermission.waitForExistence(timeout: 10), "Network capability toggle missing in Package Details")
-        XCTAssertEqual(networkPermission.value as? String, "1", "Network capability was not granted")
-
-        // Revoke network capability
-        toggleSwitch(networkPermission, targetValue: "0")
-        XCTAssertTrue(waitUntil(timeout: 5) { (networkPermission.value as? String) == "0" }, "Failed to revoke network capability")
-        closeDetails()
-
-        // Launch must be guarded when required capability is missing
-        let packageCardWithoutCap = findPackageCard(named: validPackageName)
-        tapPackageCard(packageCardWithoutCap)
-        let closeBtnAfterDenied = app.buttons["hanlin-script-app-close"].firstMatch
-        XCTAssertFalse(closeBtnAfterDenied.waitForExistence(timeout: 3), "Package unexpectedly launched with revoked required capability")
-
-        // Re-grant network capability
-        openPackageDetails(named: validPackageName)
-        let regrantToggle = app.switches["network"].firstMatch
-        XCTAssertTrue(regrantToggle.waitForExistence(timeout: 10))
-        toggleSwitch(regrantToggle, targetValue: "1")
-        XCTAssertTrue(waitUntil(timeout: 5) { (regrantToggle.value as? String) == "1" }, "Failed to re-grant network capability")
+        XCTAssertFalse(app.switches["network"].firstMatch.exists,
+                       "Package Details must not expose the removed internal network approval gate")
         closeDetails()
 
         // 8. Enable / Disable Lifecycle (app.set_enabled)

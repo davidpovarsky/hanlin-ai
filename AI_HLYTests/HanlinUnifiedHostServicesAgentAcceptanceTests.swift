@@ -122,16 +122,25 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
     }
 
     @Test func shellAllApprovedCommandsAndPolicies() async throws {
-        let report = try await AppRuntimeCore.shared.shell.runSmokeSuite()
-        #expect(report.passed)
+        let report = try await AppRuntimeCore.shared.shell.runSmokeSuite(node: AppRuntimeCore.shared.node)
+        #expect(report.passed, "\(String(decoding: try JSONEncoder().encode(report), as: UTF8.self))")
         #expect(report.testedCommands.count == 23)
         #expect(report.commandResults.allSatisfy { $0.passed })
         #expect(report.policyResults.allSatisfy { $0.passed })
         #expect(report.policyResults.contains { $0.policy == "verified_command_catalog" && $0.passed })
         #expect(report.policyResults.contains { $0.policy == "native_pipeline_and_redirection" && $0.passed })
-        #expect(report.policyResults.contains { $0.policy == "native_command_chaining" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "portable_command_chaining" && $0.passed })
         #expect(report.policyResults.contains { $0.policy == "curl_http_native_dispatch" && $0.passed })
         #expect(report.policyResults.contains { $0.policy == "curl_https_native_dispatch" && $0.passed })
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let workspace = try RuntimeFileLayout.default.workspace(client: .executions, identifier: hostContext.runtimeWorkspaceIdentifier)
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let tool = ExecuteShellCommandTool(hostContext: hostContext)
+        let result = await tool.execute(argumentsJSON: try Self.json([
+            "command": "printf first > chain-output.txt && printf second >> chain-output.txt && cat chain-output.txt"
+        ]), context: NativeToolExecutionContext(localeIdentifier: "en"))
+        #expect(result.outcome == .succeeded, "\(result.modelText)")
+        #expect(result.modelText.contains("firstsecond"))
     }
 
     @Test func agentToolRespectsDisabledRuntimeToggle() async {

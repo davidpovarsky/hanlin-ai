@@ -1,6 +1,29 @@
 {
   "sourceLanguage": "en",
   "strings": {
+      "Run a structured native program or a command string in the assigned workspace. Command strings use the existing local portable shell for chaining, pipes and redirection; external commands use the shared runtime broker. Linked curl keeps its normal TLS behavior without a second internal network approval.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Run a structured native program or a command string in the assigned workspace. Command strings use the existing local portable shell for chaining, pipes and redirection; external commands use the shared runtime broker. Linked curl keeps its normal TLS behavior without a second internal network approval."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הרץ תוכנית נייטיבית עם ארגומנטים מובנים או מחרוזת פקודה בסביבת העבודה שהוקצתה. מחרוזות פקודה משתמשות במפרש המקומי הקיים לשרשור, צינורות והפניות פלט; פקודות חיצוניות מנותבות דרך מתווך ההרצה המשותף. curl הנייטיבי שומר על התנהגות TLS הרגילה ללא אישור רשת פנימי נוסף."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "在分配的工作区中运行结构化原生程序或命令字符串。命令字符串使用现有本地可移植 shell 进行串联、管道和重定向；外部命令通过共享运行时代理调度。原生 curl 保持正常 TLS 行为，无需额外的内部网络授权。"
+            }
+          }
+        }
+      },
     "Optional Node execution deadline in whole seconds, used when compile_only is false. Omit for no deadline.": {
       "localizations": {
         "en": {

@@ -110,7 +110,8 @@ actor HanlinRuntimeBroker {
         )
     }
 
-    /// Compatibility route for persisted calls that predate the structured shell schema.
+    /// Command strings use the existing portable shell and shared command broker;
+    /// structured argv remains on the direct linked ios_system route.
     func executeLegacyShell(
         command: String,
         context: HanlinHostCallContext,
@@ -123,14 +124,10 @@ actor HanlinRuntimeBroker {
         RuntimeAvailabilityStore.shared.setAvailable(true, for: .shell)
 
         let workspace = try deriveWorkspace(for: context)
-
-        return try await core.shell.execute(
-            command: command,
-            workspace: workspace,
-            environment: environment,
-            allowNetwork: true,
-            limits: limits ?? RuntimeExecutionLimits()
-        )
+        _ = try await core.ensureStarted(.node)
+        return try await core.node.executePortableShell(RuntimeExecutionRequest(
+            source: command, workspace: workspace, environment: environment,
+            limits: limits ?? RuntimeExecutionLimits()))
     }
 
     // MARK: - TypeScript Compilation Only

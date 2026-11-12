@@ -25,7 +25,7 @@ struct ShellRuntimeSmokeReport: Codable, Sendable {
 }
 
 extension ShellRuntimeService {
-    func runSmokeSuite() async throws -> ShellRuntimeSmokeReport {
+    func runSmokeSuite(node: NodeRuntimeService) async throws -> ShellRuntimeSmokeReport {
         _ = try healthCheck()
         try diagnosticLog.record("shell_smoke_started")
 
@@ -207,14 +207,14 @@ extension ShellRuntimeService {
             policyResults.append(.init(policy: "native_pipeline_and_redirection", passed: false, detail: error.localizedDescription))
         }
         do {
-            let chain = try await execute(command: "printf first > chain-output.txt && printf second >> chain-output.txt",
-                workspace: workspace, environment: [:], allowNetwork: false)
+            let chain = try await node.executePortableShell(RuntimeExecutionRequest(
+                source: "printf first > chain-output.txt && printf second >> chain-output.txt", workspace: workspace))
             let output = try String(contentsOf: workspace.appending(path: "chain-output.txt"), encoding: .utf8)
-            policyResults.append(.init(policy: "native_command_chaining",
+            policyResults.append(.init(policy: "portable_command_chaining",
                 passed: chain.exitCode == 0 && output == "firstsecond",
-                detail: "Both original native commands and append redirection completed in order."))
+                detail: "exit=\(String(describing: chain.exitCode)); file=\(output.debugDescription); stdout=\(chain.stdout.debugDescription); stderr=\(chain.stderr.debugDescription)"))
         } catch {
-            policyResults.append(.init(policy: "native_command_chaining", passed: false, detail: error.localizedDescription))
+            policyResults.append(.init(policy: "portable_command_chaining", passed: false, detail: error.localizedDescription))
         }
         // --version exits without connecting. URL arguments must reach curl rather
         // than an obsolete second Hanlin network or HTTP-scheme permission gate.
