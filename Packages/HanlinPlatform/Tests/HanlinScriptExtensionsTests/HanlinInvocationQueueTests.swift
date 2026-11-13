@@ -5,6 +5,56 @@ import Testing
 
 @Suite("Durable invocation delivery")
 struct HanlinInvocationQueueTests {
+    @Test func damagedItemsDoNotBlockHealthyDeliveryOrEraseTheirOriginalBytes() async throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root), first = try command()
+        try store.enqueue(first)
+        let directory = store.root.appending(path: "ResumeQueue", directoryHint: .isDirectory)
+        let brokenID = UUID(), linkedID = UUID()
+        let broken = directory.appending(path: "\(brokenID.uuidString.lowercased()).json")
+        let unknown = directory.appending(path: "PRIVATE_UNTRUSTED_FILENAME.json")
+        let brokenBytes = Data("{\"PRIVATE_UNTRUSTED_PAYLOAD\":".utf8)
+        try brokenBytes.write(to: broken); try brokenBytes.write(to: unknown)
+        let outside = root.deletingLastPathComponent().appending(path: "outside-\(UUID().uuidString).json")
+        defer { try? FileManager.default.removeItem(at: outside) }
+        let outsideBytes = Data("PRIVATE_OUTSIDE".utf8); try outsideBytes.write(to: outside)
+        try FileManager.default.createSymbolicLink(at: directory.appending(path: "\(linkedID.uuidString.lowercased()).json"), withDestinationURL: outside)
+        let second = try command()
+        try store.enqueue(second)
+        let scan = try store.scanPendingCommands(limit: 128)
+        #expect(Set(scan.commands.map(\.id)) == [first.id, second.id])
+        #expect(scan.rejections.count == 3 && scan.rejections.allSatisfy { $0.failure == .invalidEnvelope })
+        #expect(Set(scan.rejections.compactMap(\.invocationID)) == [brokenID, linkedID])
+        #expect(scan.rejections.filter { $0.invocationID == nil }.count == 1)
+        #expect(throws: (any Error).self) { _ = try store.pendingCommands() }
+        let executor = HanlinInvocationExecutor(store: store)
+        let receipt = try await executor.execute(first.id) { _ in .string("ACTUAL_HEALTHY_VALUE") }
+        #expect(receipt?.status == .succeeded && receipt?.value == .string("ACTUAL_HEALTHY_VALUE"))
+        let reopened = try HanlinScriptExtensionStore(root: root).scanPendingCommands(limit: 128)
+        #expect(reopened.commands.map(\.id) == [second.id] && reopened.rejections.count == 3)
+        let retainedBroken = try Data(contentsOf: broken), retainedUnknown = try Data(contentsOf: unknown)
+        #expect(retainedBroken == brokenBytes && retainedUnknown == brokenBytes)
+        #expect(try Data(contentsOf: outside) == outsideBytes)
+    }
+
+    @Test func unreadableRecordsStillConsumeAdmissionCapacityUntilExplicitRecovery() async throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root), healthy = try command()
+        try store.enqueue(healthy)
+        for _ in 0..<127 {
+            let file = store.root.appending(path: "ResumeQueue/\(UUID().uuidString.lowercased()).json")
+            try Data("malformed".utf8).write(to: file)
+        }
+        let next = try command()
+        #expect(throws: HanlinInvocationQueueError.queueFull) { try store.enqueue(next) }
+        let executor = HanlinInvocationExecutor(store: store)
+        let receipt = try await executor.execute(healthy.id) { _ in .integer(42) }
+        #expect(receipt?.status == .succeeded)
+        try store.enqueue(next)
+        let scan = try store.scanPendingCommands(limit: 128)
+        #expect(scan.commands.map(\.id) == [next.id] && scan.rejections.count == 127)
+    }
+
     private func temporaryRoot() -> URL {
         FileManager.default.temporaryDirectory.appending(path: "hanlin-invocations-\(UUID().uuidString)", directoryHint: .isDirectory)
     }

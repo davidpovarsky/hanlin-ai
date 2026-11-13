@@ -1,9 +1,6 @@
 {
-  "sourceCommit": "f9c1b62f80d5c0b2095e05ac670426249bd139e4",
-  "uncommittedSourcePaths": [
-    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
-  ],
+  "sourceCommit": "feea6f6bb9748247edca71dfe2327b56c45d7e3f",
+  "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",

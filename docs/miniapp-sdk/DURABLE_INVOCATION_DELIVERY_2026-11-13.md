@@ -80,3 +80,21 @@ vault and does not introduce a shared Keychain entitlement or encryption claim.
 Corrupt records currently fail the scan closed, with originals retained; isolating
 a poisoned item while exposing its error without starving healthy items remains
 required. Do not mark INT-02 or any extension/runtime matrix cell verified.
+
+## Per-record rejection without queue-wide failure
+
+A corrupt/unsupported/symlinked record previously made the strict pending read
+and all subsequent enqueues fail. The Host now uses scanPendingCommands: it
+returns healthy commands plus typed per-item invalidEnvelope rejections under
+the same transaction lock and original safe reader. Root/lock/list failures
+still throw. Invalid sources are neither executed nor deleted/rewritten; no
+target/action or terminal receipt is invented for unreadable metadata. Only
+validated UUIDs and counts enter the existing trace logger, never raw filenames
+or content. The existing package center shows a native queued-action warning.
+
+Unresolved unreadable entries still consume the explicit128 admission slots;
+they cannot bypass the queue budget. The strict pendingCommands API retains its
+previous fail-closed semantics for other callers. Two new tests combine malformed
+JSON, unknown filename and an outside symlink with actual executor completion/
+reopen, and verify admission capacity is only freed by completing a healthy
+record. Native queue-suite execution and Host compilation remain required.

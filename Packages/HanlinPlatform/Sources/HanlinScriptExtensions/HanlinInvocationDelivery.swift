@@ -67,6 +67,18 @@ public enum HanlinInvocationQueueError: Error, Equatable, Sendable {
     case duplicateIdentity, invalidEnvelope, missingCommand, staleLease, invalidTransition, queueFull
 }
 
+/// Unreadable records remain unchanged. Without a validated command identity
+/// this is a scan rejection, never a fabricated action failure/success receipt.
+public struct HanlinInvocationQueueRejection: Sendable, Equatable {
+    public let invocationID: UUID?
+    public let failure: HanlinInvocationReceipt.Failure
+}
+
+public struct HanlinInvocationQueueScan: Sendable {
+    public let commands: [HanlinScriptResumeCommand]
+    public let rejections: [HanlinInvocationQueueRejection]
+}
+
 // The same record moves from ResumeQueue into its Receipts directory after
 // completion. Historical pending readers cannot replay completed outbox files.
 struct HanlinInvocationRecord: Codable {

@@ -168,7 +168,9 @@ extension HanlinUnifiedHostServicesE2ETests {
         #expect(!HanlinNativeServicesHostProvider.shared.cancelRuntime(id))
         #expect(bridge.cancelRuntime(id))
         do {
-            let json = try #require(try await reply.stream.first(where: { _ in true }))
+            var replies = reply.stream.makeAsyncIterator()
+            let observed = try await replies.next()
+            let json = try #require(observed)
             let receipt = try JSONDecoder().decode(RuntimeExecutionResult.self, from: Data(json.utf8))
             #expect(receipt.wasCancelled)
         } catch { #expect(error.localizedDescription.contains("cancelled")) }

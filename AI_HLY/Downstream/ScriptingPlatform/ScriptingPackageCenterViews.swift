@@ -27,6 +27,15 @@ struct ScriptingPackageImportView: View {
     var body: some View {
         @Bindable var platform = platform
         List {
+            if !platform.resumeCommandRejections.isEmpty {
+                Section("Queued Actions") {
+                    Label("Some saved actions couldn’t be read.", systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.orange)
+                        .accessibilityIdentifier("hanlin-pending-action-warning")
+                    Text("Other actions can still run. The unreadable items were kept for recovery.")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+            }
             if case let .failed(message) = platform.activity {
                 Section {
                     Label(message, systemImage: "exclamationmark.triangle")

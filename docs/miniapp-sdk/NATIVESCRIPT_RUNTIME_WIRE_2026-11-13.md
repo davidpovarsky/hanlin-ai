@@ -59,3 +59,11 @@ primary suite; no second Suite annotation is added. Official source:
 https://github.com/swiftlang/swift-testing/blob/main/Sources/Testing/Test%2BMacro.swift
 The in-flight f9c1b62f run retains its original top-level selector; the next
 focused run must use the new exact parent-suite method identities.
+
+Second native attempt43391695133/f9c1b62f compiled the production files but
+failed test-build before any selected case executed. Swift6.4 rejected the
+MainActor AsyncSequence.first predicate transferred inside #require. The reply
+now awaits a stream iterator first, then checks the Optional synchronously;
+no assertion or cancellation condition is removed. Portable Swift6.3 strict
+concurrency typechecking of that iterator boundary passes, without claiming
+Swift Testing or Apple native execution. The next corrected app run is needed.

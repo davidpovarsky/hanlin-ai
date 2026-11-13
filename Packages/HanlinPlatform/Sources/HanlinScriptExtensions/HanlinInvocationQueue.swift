@@ -20,7 +20,9 @@ extension HanlinScriptExtensionStore {
                 return // A repeated delivery cannot clear a lease or receipt.
             }
             let active = try commandURLs().reduce(0) { count, url in
-                count + ((try readCommandURL(url)).currentReceipt.status.isTerminal ? 0 : 1)
+                // An unreadable item still occupies ingress capacity. It must
+                // neither block every healthy enqueue nor bypass the bound.
+                count + ((try? readCommandURL(url).currentReceipt.status.isTerminal) == true ? 0 : 1)
             }
             guard active < 128 else { throw HanlinInvocationQueueError.queueFull }
             try writeCommand(.init(command))
@@ -34,6 +36,25 @@ extension HanlinScriptExtensionStore {
                 .map(\.command).sorted {
                     $0.createdAt == $1.createdAt ? $0.id.uuidString < $1.id.uuidString : $0.createdAt < $1.createdAt
                 }.prefix(max(0, limit)).map { $0 }
+        }
+    }
+
+    /// The Host can continue healthy commands while surfacing per-item damage.
+    /// Root/lock/listing failures still throw; no source is deleted or rewritten.
+    public func scanPendingCommands(limit: Int = 64) throws -> HanlinInvocationQueueScan {
+        try withLock {
+            var commands: [HanlinScriptResumeCommand] = []
+            var rejections: [HanlinInvocationQueueRejection] = []
+            for url in try commandURLs().sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) {
+                do {
+                    let record = try readCommandURL(url)
+                    if !record.currentReceipt.status.isTerminal { commands.append(record.command) }
+                } catch {
+                    rejections.append(.init(invocationID: UUID(uuidString: url.deletingPathExtension().lastPathComponent), failure: .invalidEnvelope))
+                }
+            }
+            commands.sort { $0.createdAt == $1.createdAt ? $0.id.uuidString < $1.id.uuidString : $0.createdAt < $1.createdAt }
+            return .init(commands: Array(commands.prefix(max(0, limit))), rejections: rejections)
         }
     }
 

@@ -1,9 +1,11 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f9c1b62f80d5c0b2095e05ac670426249bd139e4",
+  "sourceCommit": "feea6f6bb9748247edca71dfe2327b56c45d7e3f",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
@@ -324,13 +326,13 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
       "line": 13,
       "anchor": "public func enqueue(",
-      "sha256": "de63d8340651033bab9c94ab510a134b93bee0b61d8c4c76a101fce650c21aac"
+      "sha256": "4fa9c79cb5118d286b0984b3e3d457457bec2c199e0b22576a13352087a02fe9"
     },
     "extensionReceipts": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
       "line": 36,
       "anchor": "public struct HanlinInvocationReceipt",
-      "sha256": "1170d94f3409be8644e2fd9e7d94c5c2309b08b2a9ac4dce484fad49c11131d2"
+      "sha256": "a5bfb9b1aa24952538ab1a5c790e2d1b2eafbf412265e337dfb56ab726e495f0"
     },
     "extensionExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
@@ -340,21 +342,21 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1409,
+      "line": 1418,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "ddc635bc95ee7b8099df2e7855ce7b576e8805612cacd96fdb38628ea8e763cc"
+      "sha256": "8f7e1a43ba8bb2acf59ad4dd5798311be4f54a97ae57ba6c40620d0b43047028"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 709,
+      "line": 718,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "ddc635bc95ee7b8099df2e7855ce7b576e8805612cacd96fdb38628ea8e763cc"
+      "sha256": "8f7e1a43ba8bb2acf59ad4dd5798311be4f54a97ae57ba6c40620d0b43047028"
     },
     "expoIntentRejection": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1480,
+      "line": 1489,
       "anchor": "guard entrypoint.runtimeProfile != .hanlinExpo else",
-      "sha256": "ddc635bc95ee7b8099df2e7855ce7b576e8805612cacd96fdb38628ea8e763cc"
+      "sha256": "8f7e1a43ba8bb2acf59ad4dd5798311be4f54a97ae57ba6c40620d0b43047028"
     },
     "expoExposureRejection": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",

@@ -38,6 +38,7 @@ final class HanlinScriptingPlatform {
     private(set) var installedPackages: [HanlinStoredPackageSnapshot] = []
     private(set) var bootstrapError: String?
     private(set) var pendingResumeCommands: [HanlinScriptResumeCommand] = []
+    private(set) var resumeCommandRejections: [HanlinInvocationQueueRejection] = []
     private(set) var capabilityApprovals = HanlinCapabilityApprovalState(requests: [])
     var approvedCapabilities: Set<HanlinCapabilityID> { capabilityApprovals.approvedCapabilities }
     private(set) var activeApplicationID: HanlinInstalledPackageID?
@@ -142,7 +143,15 @@ final class HanlinScriptingPlatform {
         do {
             await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
             installedPackages = try await store.restore()
-            pendingResumeCommands = try extensionStore?.pendingCommands(limit: 128) ?? []
+            let scan = try extensionStore?.scanPendingCommands(limit: 128)
+            pendingResumeCommands = scan?.commands ?? []
+            resumeCommandRejections = scan?.rejections ?? []
+            if !resumeCommandRejections.isEmpty {
+                NativeToolTraceLogger.shared.log("miniapp.invocation.records_unreadable", [
+                    "count": resumeCommandRejections.count,
+                    "invocationIDs": resumeCommandRejections.compactMap { $0.invocationID?.uuidString }
+                ])
+            }
             try await refreshExtensionSnapshot()
             try await processPendingResumeCommands()
         } catch {
