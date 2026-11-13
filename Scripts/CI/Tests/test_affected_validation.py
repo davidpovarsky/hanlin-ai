@@ -25,7 +25,7 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
 
     def test_nativescript_generic_wire_paths_accept_exact_native_selection_without_engine_rebuild(self) -> None:
-        selector = "AI_HLYTests/NativeScriptRuntimeWireTests"
+        selector = "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()"
         for changed in ("AI_HLYTests/NativeScriptRuntimeWireTests.swift", "Scripts/NativeScript/host-services.ts",
                         "Scripts/NativeScript/build-host-services.mjs"):
             with self.subTest(path=changed):

@@ -50,3 +50,12 @@ and completion. Existing legacy string methods remain unchanged. New regressions
 require this explicit rejection and prohibit cancelling a bound handle through
 the legacy singleton. Full native execution and failed diagnostics UI still
 need a corrected run; no test pass is attributed to the compile-only failure.
+
+The new methods are in a separate source file extending the existing
+HanlinUnifiedHostServicesE2ETests serialized suite. A separate top-level
+serialized suite would still race that suite's process-wide NativeScript registry
+resets/VM lifetime in broader acceptance. Test members in extensions share the
+primary suite; no second Suite annotation is added. Official source:
+https://github.com/swiftlang/swift-testing/blob/main/Sources/Testing/Test%2BMacro.swift
+The in-flight f9c1b62f run retains its original top-level selector; the next
+focused run must use the new exact parent-suite method identities.

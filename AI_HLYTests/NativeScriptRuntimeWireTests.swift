@@ -6,9 +6,11 @@ import HanlinPlatformContracts
 import Testing
 @testable import AI_Hanlin
 
-@Suite("NativeScript canonical runtime wire", .serialized)
 @MainActor
-struct NativeScriptRuntimeWireTests {
+extension HanlinUnifiedHostServicesE2ETests {
+    // Share the existing suite's .serialized scope with its legacy NS tests.
+    // Separate top-level suites can otherwise reset the process-wide NS VM or
+    // provider registry while another suite has an actual callback in flight.
     @Test func expoStructuredInvokeUsesTheSharedReceiptBoundaryAndRejectsUnknownKinds() async throws {
         let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-wire-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
         for (kind, source) in [("node", "console.log('EXPO_WIRE_NODE')"),
