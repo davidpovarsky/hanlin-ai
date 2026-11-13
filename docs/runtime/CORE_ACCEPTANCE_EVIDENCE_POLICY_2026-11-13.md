@@ -72,3 +72,26 @@ original metadata/integrity response was not retained for positive equivalence.
 Do not promote it by assuming external-state stability. Execute only this case
 with a necessary native follow-up; other55 cases need no routine final rerun.
 The complete56 gate and all separate UI/Tooling/signing/physical gates remain open.
+
+## Audited56/56 Core checkpoint atf9d264af
+
+Run43394275453 actually executed the remaining external npm generation case,
+passing in14.507s. Its authenticated101,686,582-byte artifact14023364972 has
+SHA256 f9c0ee745bf95835847cd50ba71c3ffb5cd52408e991ac3c320bcb286035dcd1;
+the original unit result JSON hash is
+cb1d30a0ead25d8060a9cd5c15d8c082ea1bd245f0074d4d456e960f71eb1f8e.
+Actual compiler/SDK/device/OS/package pins and verified native/Host identity
+match the ledger. The overall run FAILED two separate NS fixture cases and
+the independently executed diagnostics UI case;19/21 unit leaves passed.
+
+At that exact target, the versioned56 Core obligations aggregate38 executed
+passes from the two recent runs and18 verified older backend passes. Each
+case retains its own execution SHA; the ledger separately checks the complete
+cbb0d8e3→f9d264af dependency range for37 cases and67e42a74→f9d264af for18.
+The unchanged305s obligation was not rerun. No case or assertion was removed.
+
+This closes only the56-case Core coverage checkpoint atf9d264af. Later direct
+NS/Expo session minimum-version consumers still require native verification;
+the ledger is not automatically promoted to newer SHAs. Full Runtime Tooling,
+consumer/UI, physical iPad, background admission and signed EVA profile gates
+remain open. No overall CI success, current TestFlight or release is claimed.

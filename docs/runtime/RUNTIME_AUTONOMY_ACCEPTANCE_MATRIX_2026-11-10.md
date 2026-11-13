@@ -35,3 +35,13 @@ Exact source/run histories, failed attempts, raw evidence paths and scope are re
 MCP follow-up: actual4784dd99 Linux Host143 PASS/1 unchanged SKIP, currentb8ef14c2 CLI/HTTP/MCP/journal12 PASS and extracted current production ZIP12 PASS44.396s. Earliera12 packed55 retains its exact source scope. Registry Google Maps now executes real lifecycle hooks and MCP probe, with extensionless CLI entries resolved by Node itself. New original Swift MCP/public-payload/store app execution remains pending in42931483281; native/current-Host assembly has passed. Reference results are not credited as iOS execution.
 
 Actual native/current-Host candidate42926628418 is verified and pinned. Publication was disabled; app consumers explicitly select this candidate run. The native source identity is unchanged by the small CLI Host overlay, which is separately validated/tested by the existing preparation path. Local/SDK/physical evidence remains scoped separately.
+
+2026-11-13 checkpoint: the versioned56 individual Core obligations are covered
+atf9d264af:38 actual executions from43325255401/43394275453 plus18 verified
+older backend passes from43267408632. Actual external npm generation passed
+14.507s in43394275453; the unchanged305s case was reused, not executed again.
+Both recent workflows have separately failed consumer/UI cases, so this is
+not overall CI/Tooling/device acceptance. Original SHA/run/artifact hashes and
+complete per-case source ranges are in
+[the Core contract](CORE_ACCEPTANCE_EVIDENCE_POLICY_2026-11-13.md) and its linked
+ledger. Later SDK session changes require their own consumer validation.
