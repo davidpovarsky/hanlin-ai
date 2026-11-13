@@ -67,3 +67,18 @@ now awaits a stream iterator first, then checks the Optional synchronously;
 no assertion or cancellation condition is removed. Portable Swift6.3 strict
 concurrency typechecking of that iterator boundary passes, without claiming
 Swift Testing or Apple native execution. The next corrected app run is needed.
+
+Atf9d264af, run43394275453 compiled both production app and test host and
+executed21 unit methods:19 passed,2 failed (68.824s total). Actual passes include
+11 existing NS lifetime/registry/real launch cases,4 new wire methods (Expo five
+engines, full output SHA/argv/env, invalidation, cross-session cancellation),
+3 Expo entry constructor methods and1 real npm generation method. This is not
+overall run success. The new VM fixture omitted type:module, selecting the CJS
+entry resolver rather than its bundle.mjs; add the same ESM declaration used by
+existing prepared fixtures. The bound bridge test incorrectly used
+String.contains("") to assert the JSC case's empty stdout; it now requires empty
+stdout explicitly and retains the exact structured Unicode value assertion.
+Both failed cases must execute again. The shared minimum-version session change
+at65415324 also requires4 new constructor methods and affected real launch cases;
+unaffected passing cases are retained with their own evidence SHA, not rerun
+solely because the workflow had other failures.

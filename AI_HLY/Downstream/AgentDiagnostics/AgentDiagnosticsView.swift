@@ -287,15 +287,19 @@ private struct AgentDiagnosticsSessionView: View {
                         Text(String(review.text.prefix(65_536))).font(.caption.monospaced()).textSelection(.enabled)
                             .accessibilityIdentifier("hanlin-diagnostics-local-review-text")
                     }
-                    ShareLink(item: review.text) {
-                        Label(String(localized: "Share reviewed report"), systemImage: "square.and.arrow.up")
-                    }
-                    .accessibilityIdentifier("hanlin-diagnostics-share-reviewed-report")
                 }
                 .navigationTitle(String(localized: "Local capture review"))
-                .toolbar { ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "Done")) { rawReview = nil }
-                } }
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        ShareLink(item: review.text) {
+                            Label(String(localized: "Share reviewed report"), systemImage: "square.and.arrow.up")
+                        }
+                        .accessibilityIdentifier("hanlin-diagnostics-share-reviewed-report")
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(String(localized: "Done")) { rawReview = nil }
+                    }
+                }
             }
         }
     }

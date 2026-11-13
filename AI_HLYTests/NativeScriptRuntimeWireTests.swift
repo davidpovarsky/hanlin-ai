@@ -33,7 +33,7 @@ extension HanlinUnifiedHostServicesE2ETests {
         let app = directory.appending(path: "app", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: app, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
-        try Data(#"{"name":"ns-wire-vm","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.0"}}"#.utf8).write(to: app.appending(path: "package.json"))
+        try Data(#"{"name":"ns-wire-vm","type":"module","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.0"}}"#.utf8).write(to: app.appending(path: "package.json"))
         let key = "HanlinNativeWire_" + UUID().uuidString
         UserDefaults.standard.removeObject(forKey: key)
         defer { UserDefaults.standard.removeObject(forKey: key) }
@@ -91,7 +91,8 @@ extension HanlinUnifiedHostServicesE2ETests {
         for (kind, source, expected) in cases {
             let result = try await execute(bridge, kind: kind.rawValue, source: source)
             #expect(!result.wasCancelled && !result.didTimeOut && result.exitCode == 0)
-            #expect(result.stdout.contains(expected))
+            if expected.isEmpty { #expect(result.stdout.isEmpty) }
+            else { #expect(result.stdout.contains(expected)) }
             if kind == .javaScriptCore {
                 #expect(result.value == .object(["answer": .number(42), "text": .string("שלום🙂")]))
             }

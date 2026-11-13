@@ -100,3 +100,10 @@ The prior Core parser and all existing PlatformContracts definitions are
 unchanged; this additive helper is used by importer/direct-session consumers,
 not the original direct RuntimeCore tests. No Node/Python native source, lock
 or runtime engine is rebuilt.
+
+At65415324, run43398132558 executed8/8 methods on Xcode27.2/27B52:
+5 affected analyzer methods in0.109s and3 shared contract methods in0.005s.
+Downloaded artifact14024570184 (3474B), GitHub SHA256
+ec68d4c3cc872a9740d28a652a93e5f4392fb5ba49b97a02d4a06b6627cb3092.
+These are two focused macOS package invocations. Direct iOS constructor methods
+and affected VM execution still require their own native app evidence.

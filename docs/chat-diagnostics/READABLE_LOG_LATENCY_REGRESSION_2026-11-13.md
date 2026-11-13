@@ -89,6 +89,15 @@ and verifies each actual leaf; unknown filters fail instead of running zero case
 Native response-ordering verification at88518328: run43388284038
 executed7/7 selected RawReview cases/1 suite in69.758s, including the new
 large-request preview case17.214s. Workflow10m42s, Xcode27.2/27B52.
+
+Run43394275453 atf9d264af passed the UI's actual fresh-marker response, device-key
+decryption, authenticated record and offline SDK replay assertions. The UI case
+then failed at line61: the share action after the65,536-character List row was
+not instantiated in the visible hierarchy. This is a failed UI case, not a UI
+pass. Move the existing ShareLink into the native navigation toolbar so sharing
+the complete redacted report remains available while reading any preview
+position. The same strict UI case must execute again; no sharing is activated
+by the test and the encrypted source/key remain excluded.
 Downloaded artifact14019563661 (223671B), GitHub SHA256
 050427772514b733c0573df390963e9a5d7eea6be101b7f189e33cc3555d7855.
 The failed real UI is separately pending in43389506393 with only the new
