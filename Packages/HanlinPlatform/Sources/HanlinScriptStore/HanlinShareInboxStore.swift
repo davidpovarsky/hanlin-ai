@@ -146,14 +146,20 @@ public struct HanlinShareInboxStore: Sendable {
 
     public func ownedFile(batchID: UUID, itemID: UUID) throws -> URL {
         let root = try batchDirectory(batchID)
-        try Self.requireDirectory(root)
-        let batch = try JSONDecoder().decode(HanlinShareBatch.self, from: Self.readRegularFile(root.appending(path: "batch.json")))
-        guard batch.id == batchID else { throw HanlinShareInboxError.invalidBatch }
-        try validate(batch, at: root, verifyFiles: false)
+        let batch = try self.batch(batchID)
         guard let item = batch.items.first(where: { $0.id == itemID && $0.content == .file }) else {
             throw HanlinShareInboxError.invalidFile
         }
         return try verify(item, at: root)
+    }
+
+    public func batch(_ id: UUID) throws -> HanlinShareBatch {
+        let root = try batchDirectory(id)
+        try Self.requireDirectory(root)
+        let batch = try JSONDecoder().decode(HanlinShareBatch.self, from: Self.readRegularFile(root.appending(path: "batch.json")))
+        guard batch.id == id else { throw HanlinShareInboxError.invalidBatch }
+        try validate(batch, at: root, verifyFiles: false)
+        return batch
     }
 
     private func validate(_ batch: HanlinShareBatch, at root: URL, verifyFiles: Bool) throws {

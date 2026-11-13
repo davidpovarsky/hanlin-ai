@@ -5,6 +5,39 @@ import Testing
 
 @Suite("Durable invocation delivery")
 struct HanlinInvocationQueueTests {
+    @Test func busyAdmissionCanQueueAgainOnlyBeforeActionExecutionAndWithoutConsumingAnAttempt() async throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root), input = try command()
+        try store.enqueue(input)
+        let executor = HanlinInvocationExecutor(store: store)
+        let waiting = try await executor.execute(input.id) { _ in throw HanlinInvocationNotStarted() }
+        #expect(waiting?.status == .queued && waiting?.attempt == 0 && waiting?.value == nil && waiting?.leaseID == nil)
+        #expect(try store.pendingCommands().map(\.id) == [input.id])
+        #expect(try store.command(for: input.id)?.invocation.parameters == input.invocation.parameters)
+        let actual = try await executor.execute(input.id) { _ in .string("ACTUALLY_EXECUTED_ONCE") }
+        #expect(actual?.status == .succeeded && actual?.attempt == 1 && actual?.value == .string("ACTUALLY_EXECUTED_ONCE"))
+        let duplicate = try await executor.execute(input.id) { _ in Issue.record("Completed action replayed"); return .null }
+        #expect(duplicate == actual)
+    }
+
+    @Test func unstartedReleaseRetainsCancellationExpiryAndFencesOldLeases() throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root), at = Date()
+        let cancelled = try command(at: at), expired = try command(at: at), replaced = try command(at: at, idempotent: true, maximumAttempts: 2)
+        for input in [cancelled, expired, replaced] { try store.enqueue(input) }
+        let cancelClaim = try #require(try store.claim(cancelled.id, now: at))
+        _ = try store.requestCancellation(cancelled.id, now: at.addingTimeInterval(1))
+        try store.releaseUnstarted(cancelClaim, now: at.addingTimeInterval(2))
+        #expect(try store.receipt(for: cancelled.id)?.status == .cancelled)
+        let expiryClaim = try #require(try store.claim(expired.id, now: at))
+        try store.releaseUnstarted(expiryClaim, now: at.addingTimeInterval(601))
+        #expect(try store.receipt(for: expired.id)?.status == .expired)
+        let old = try #require(try store.claim(replaced.id, now: at, leaseSeconds: 1, registeredActionIsIdempotent: true))
+        let newer = try #require(try store.claim(replaced.id, now: at.addingTimeInterval(2), registeredActionIsIdempotent: true))
+        #expect(throws: HanlinInvocationQueueError.staleLease) { try store.releaseUnstarted(old, now: at.addingTimeInterval(2)) }
+        #expect(try store.receipt(for: replaced.id)?.leaseID == newer.leaseID)
+    }
+
     @Test func damagedItemsDoNotBlockHealthyDeliveryOrEraseTheirOriginalBytes() async throws {
         let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
         let store = HanlinScriptExtensionStore(root: root), first = try command()

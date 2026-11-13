@@ -9,6 +9,12 @@ public struct HanlinInvocationDispatchError: Error, Sendable {
     }
 }
 
+/// Trusted Host admission only: the handler has not called package/user code
+/// or performed an action side effect. Never use this after execution starts.
+public struct HanlinInvocationNotStarted: Error, Sendable {
+    public init() {}
+}
+
 /// Delivery ownership around the existing host action dispatcher. This actor
 /// creates no engine and does not execute code inside an extension process.
 public actor HanlinInvocationExecutor {
@@ -48,6 +54,8 @@ public actor HanlinInvocationExecutor {
                 try store.complete(claim, status: .succeeded, value: value)
             } catch is CancellationError {
                 try store.complete(claim, status: .cancelled)
+            } catch is HanlinInvocationNotStarted {
+                try store.releaseUnstarted(claim)
             } catch let error as HanlinInvocationDispatchError {
                 try store.complete(claim, status: error.status, failure: error.failure)
             } catch {

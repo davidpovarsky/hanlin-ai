@@ -58,6 +58,18 @@ artifact14027341379 (3242B), GitHub SHA256
 This is actual macOS Foundation/provider execution. The iOS App Group method,
 Share extension linking/Host UI, delivery and physical gates remain separate.
 
+Delivery foundation follow-up: HanlinShareInvocation now builds a deterministic
+ResumeQueue command using the immutable batch UUID, installed identity/generation,
+entrypoint and action. The envelope contains only a batch reference, so full
+text/large attachments do not consume the256KiB queue budget. After target
+validation, payload resolution reads the original text/order/errors and verifies
+each owned file before handing its URI/size/SHA to the action. The existing
+receipt/executor retains actual return values, TTL and cancellation. Three new
+production tests exercise large input/actual result/reopen/dedup/target changes,
+tampering and expired/cancelled refusal. These tests and the affected queue/store
+tests still require native execution. Host chooser/dispatch linkage remains to
+be implemented; this factory alone is not an end-to-end Share action route.
+
 Apple documents the temporary-file lifetime explicitly:
 https://developer.apple.com/documentation/foundation/nsitemprovider/loadfilerepresentation%28fortypeidentifier%3Acompletionhandler%3A%29 .
 String/URL loading uses the current loadObject bridge instead of the loadItem

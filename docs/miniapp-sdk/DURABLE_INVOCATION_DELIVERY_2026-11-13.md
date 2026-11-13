@@ -1,5 +1,14 @@
 # Durable delivery on the existing extension queue
 
+Unstarted admission follow-up: trusted Host code can now throw
+HanlinInvocationNotStarted only before package/user code or side effects run.
+The executor releases that same fenced lease back to queued without consuming
+an execution attempt. A concurrent cancellation/expiry stays terminal; an old
+lease cannot release a replacement owner's command. Interrupted/unknown actions
+retain their existing no-automatic-replay behavior. New actual queue tests cover
+this boundary; native execution is still pending for the follow-up. The queue
+also exposes read-only original command lookup for ingress target/receipt UI.
+
 [נועם | DEV] [MAIN_SESSION]. Branch `fix/hanlin-approved-plan-20261108`.
 INT-02 implementation checkpoint; full task acceptance remains open.
 

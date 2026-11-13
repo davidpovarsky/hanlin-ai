@@ -62,6 +62,26 @@ extension HanlinScriptExtensionStore {
         try withLock { try readCommand(invocationID)?.currentReceipt }
     }
 
+    public func command(for invocationID: UUID) throws -> HanlinScriptResumeCommand? {
+        try withLock { try readCommand(invocationID)?.command }
+    }
+
+    /// Return a fenced admission to queued only when trusted Host code proves
+    /// no action started. An interrupted/unknown action still cannot replay.
+    public func releaseUnstarted(_ claim: HanlinInvocationClaim, now: Date = .now) throws {
+        try withLock {
+            var record = try ownedRecord(claim, now: now, requireLiveLease: false)
+            var receipt = record.currentReceipt
+            guard receipt.attempt > 0 else { throw HanlinInvocationQueueError.invalidTransition }
+            let expiry = record.invocation.delivery?.expiresAt ?? record.createdAt.addingTimeInterval(86_400)
+            receipt.status = receipt.cancellationRequested ? .cancelled : expiry <= now ? .expired : .queued
+            receipt.updatedAt = now; receipt.attempt -= 1
+            receipt.leaseID = nil; receipt.leaseExpiresAt = nil; receipt.failure = nil; receipt.value = nil
+            record.receipt = receipt
+            try writeCommand(record)
+        }
+    }
+
     /// Claim and completion use the same per-ID record and existing App Group
     /// transaction lock. A stale process cannot overwrite a new owner's result.
     public func claim(_ invocationID: UUID, now: Date = .now, leaseSeconds: TimeInterval = 30,

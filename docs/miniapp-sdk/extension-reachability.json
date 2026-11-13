@@ -1,9 +1,11 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "302e4f3829fece3df03e4393f1af72cc5ecea1c6",
+  "sourceCommit": "a146d430b53f5d28e02e7e7e75f7aa738ecd05a3",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift"
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
@@ -314,7 +316,7 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift",
       "line": 43,
       "anchor": "public struct HanlinShareInboxStore",
-      "sha256": "3be885a7350a1586d45aac604674d101e0dc77169528650bc190fbcc4e70acf8"
+      "sha256": "da88d7abcdae5d35786c88acd499866e82506c3baeb8e458befe0b849aa27ab2"
     },
     "shareProviderCopy": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift",
@@ -350,7 +352,7 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
       "line": 13,
       "anchor": "public func enqueue(",
-      "sha256": "4fa9c79cb5118d286b0984b3e3d457457bec2c199e0b22576a13352087a02fe9"
+      "sha256": "4c33d0a844776704be92fb298ec857699c2c7ec3bc6507ba41bebe4cacbfd59f"
     },
     "extensionReceipts": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
@@ -360,9 +362,9 @@
     },
     "extensionExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
-      "line": 14,
+      "line": 20,
       "anchor": "public actor HanlinInvocationExecutor",
-      "sha256": "63e37141798cf748f78dd0d96a73dc0168dd1f0b8eb90fff98c3454b5a55b5c4"
+      "sha256": "4fe357b75af2ebd3ee3f7689e2efbdf40201cadf06935af191e02f781d8f6c4f"
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
