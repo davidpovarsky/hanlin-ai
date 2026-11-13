@@ -12,6 +12,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(name: "HanlinPlatform", path: "../HanlinPlatform"),
         .package(
             url: "https://github.com/NativeScript/ios-spm.git",
             exact: "9.1.0"
@@ -33,7 +34,7 @@ let package = Package(
         ),
         .target(
             name: "HanlinNativeScriptRuntime",
-            dependencies: ["HanlinNativeScriptCoreSupport"],
+            dependencies: ["HanlinNativeScriptCoreSupport", .product(name: "HanlinPlatformContracts", package: "HanlinPlatform")],
             path: "Sources/HanlinNativeScriptRuntime",
             resources: [
                 .copy("Resources/NativeScriptSharedRuntime")

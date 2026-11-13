@@ -126,6 +126,8 @@ for (const file of [
   'Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift',
   'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift',
   'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift',
+  'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift',
+  'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift',
   'AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift',
   'Scripts/NativeScript/build-host-services.mjs',
   'Scripts/NativeScript/Fixtures/HostServices/valid.ts',
@@ -138,8 +140,20 @@ for (const file of [
 
 const analyzer = await source('Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift');
 const preparedVersions = Object.fromEntries([...analyzer.text.matchAll(/private static let (nativeScriptRuntimeVersion|nativeScriptSwiftUIVersion|expoSDKVersion|expoUIVersion|expoUIBridgeVersion) = "([^"]+)"/g)].map(m => [m[1], m[2]]));
-if (Object.keys(preparedVersions).length !== 5 || !analyzer.text.includes('stableRequiredVersion')) {
+if (Object.keys(preparedVersions).length !== 5 || !analyzer.text.includes('HanlinPreparedRuntimeVersion.supportsMinimum')) {
   throw new Error('Prepared runtime version validation changed; audit the installed contract.');
+}
+const nativeSessionSource = await source('Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift');
+const nativeSessionVersion = name => nativeSessionSource.text.match(new RegExp(`private static let ${name} = "([^"]+)"`))?.[1];
+if (nativeSessionVersion('supportedRuntimeVersion') !== preparedVersions.nativeScriptRuntimeVersion ||
+    nativeSessionVersion('supportedSwiftUIVersion') !== preparedVersions.nativeScriptSwiftUIVersion ||
+    nsLock.nativeScript.coreVersion !== preparedVersions.nativeScriptRuntimeVersion ||
+    nsLock.nativeScript.iosRuntimeVersion !== preparedVersions.nativeScriptRuntimeVersion ||
+    nsLock.swiftUI.version !== preparedVersions.nativeScriptSwiftUIVersion ||
+    bridge.runtimeVersion !== preparedVersions.expoSDKVersion ||
+    bridge.expoUIVersion !== preparedVersions.expoUIVersion ||
+    bridge.bridgeVersion !== preparedVersions.expoUIBridgeVersion) {
+  throw new Error('Importer, direct session and pinned/generated runtime versions disagree.');
 }
 
 const wanted = ['expo', '@expo/ui', 'react', 'react-native', 'expo-modules-core', 'expo-modules-jsi', 'react-native-worklets', '@nativescript/react-native'];
@@ -161,9 +175,10 @@ const inventory = {
   snapshotIdentity: 'sourceCommit is the base commit; exact source hashes also cover any listed uncommitted source paths at audit time.',
   extensionReachability: 'extension-reachability.json (INT-01; separate consumer of this source inventory)',
   preparedRuntimeContract: {source: analyzer.path, versions: preparedVersions,
+    minimumVersionSource: 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift',
     policy: 'Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. Widget runtime/plugin exact pins remain authoritative.',
     stableDiagnosticCodes: [...new Set([...analyzer.text.matchAll(/code: "(MINIAPP_[A-Z_]+)"/g)].map(m => m[1]))].sort(),
-    status: 'source contract; analyzer regressions, complete schemas and installed Host acceptance are separate gates'},
+    status: 'shared importer/direct-session minimum policy; numeric build precedence ignores build labels. Source pin consistency checked; full schemas and installed Host acceptance remain separate gates'},
   nativeScript: {toolingDependencies: nsPackage.dependencies ?? {}, toolingDevDependencies: nsPackage.devDependencies ?? {}, pinnedNativeContract: nsLock.nativeScript, swiftUI: nsLock.swiftUI,
     publicExports: nativeScriptExports,
     hostBridge: {source: header.path, methods: objcMethods, status: 'generic_source_wired_native_acceptance_pending', missingGenericRuntimeKinds: [], result: 'generic async callback returns canonical RuntimeExecutionResult JSON; legacy string callbacks remain compatible',

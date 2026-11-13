@@ -395,9 +395,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isCoreVersionCompatible(_ versionString: String) -> Bool {
-        guard let required = stableRequiredVersion(versionString),
-              let installed = HanlinPackageVersion(rawValue: nativeScriptRuntimeVersion) else { return false }
-        return required.major == installed.major && required <= installed
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: nativeScriptRuntimeVersion)
     }
 
     private static func validatePreparedExpoApplication(
@@ -612,24 +610,11 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isExpoVersionCompatible(_ versionString: String) -> Bool {
-        guard let required = stableRequiredVersion(versionString),
-              let installed = HanlinPackageVersion(rawValue: expoSDKVersion) else { return false }
-        return required.major == installed.major && required <= installed
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: expoSDKVersion)
     }
 
     private static func isVersion(_ required: String, atMost installed: String) -> Bool {
-        guard let required = stableRequiredVersion(required),
-              let installed = HanlinPackageVersion(rawValue: installed) else { return false }
-        return required <= installed
-    }
-
-    private static func stableRequiredVersion(_ value: String) -> HanlinPackageVersion? {
-        var value = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        // Retain the historical minimum-version metadata shorthand. This does
-        // not resolve npm ranges; bundlers still use the actual pinned lock.
-        if let first = value.first, ["^", "~", "=", "v"].contains(first) { value.removeFirst() }
-        guard let version = HanlinPackageVersion(rawValue: value), version.prerelease.isEmpty else { return nil }
-        return version
+        HanlinPreparedRuntimeVersion.supportsMinimum(required, installed: installed, requireSameMajor: false)
     }
 
     private static func validatePreparedDependencyTypes(_ package: [String: Any], sourcePath: String,

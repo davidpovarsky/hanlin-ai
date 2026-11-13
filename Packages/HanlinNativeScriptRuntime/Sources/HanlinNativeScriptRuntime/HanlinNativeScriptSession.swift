@@ -1,5 +1,6 @@
 import Foundation
 import HanlinNativeScriptCoreSupport
+import HanlinPlatformContracts
 import UIKit
 
 @MainActor
@@ -201,27 +202,19 @@ public final class HanlinNativeScriptSession {
     }
 
     public static func isCoreVersionCompatible(_ versionString: String) -> Bool {
-        let trimmed = versionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.isEmpty || trimmed == "*" || trimmed == "latest" {
-            return true
-        }
-        var cleaned = trimmed
-        if cleaned.hasPrefix("^") || cleaned.hasPrefix("~") || cleaned.hasPrefix("=") || cleaned.hasPrefix("v") {
-            cleaned = String(cleaned.dropFirst())
-        }
-        if cleaned.hasPrefix("9.1") {
-            return true
-        }
-        if trimmed.hasPrefix("^9.") {
-            return true
-        }
-        return false
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: supportedRuntimeVersion)
     }
 
     private static func validateCoreRequirements(packageJSONURL: URL) throws {
         let data = try Data(contentsOf: packageJSONURL)
         guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             return
+        }
+        for key in ["dependencies", "devDependencies"] {
+            guard let supplied = root[key] else { continue }
+            guard let map = supplied as? [String: Any], map.values.allSatisfy({ $0 is String }) else {
+                throw HanlinNativeScriptError.unsupportedCoreVersion("Prepared dependencies must map module names to version strings.")
+            }
         }
         var declaredCoreVersion: String?
         if let deps = root["dependencies"] as? [String: Any], let version = deps["@nativescript/core"] as? String {

@@ -4,6 +4,7 @@ import ExpoModulesCore
 import ExpoUI
 import HanlinExpoNativeAPI
 import HanlinExpoNativeAPICore
+import HanlinPlatformContracts
 import ObjectiveC
 import React
 @_implementationOnly import React_RCTAppDelegate
@@ -165,12 +166,18 @@ public final class HanlinExpoSession {
             throw HanlinExpoError.unsupportedRuntimeVersion("package.json does not declare hanlinRuntime: hanlin-expo")
         }
 
-        if let contract = packageJSON["hanlinExpo"] as? [String: Any],
-           let requiredBridgeVersion = contract["bridgeVersion"] as? String,
-           !HanlinExpoBridgeMetadata.supports(requiredBridgeVersion: requiredBridgeVersion) {
-            throw HanlinExpoError.unsupportedRuntimeVersion(
-                "This package requires Hanlin Expo UI bridge \(requiredBridgeVersion), but the host provides \(HanlinExpoBridgeMetadata.bridgeVersion)."
-            )
+        if let supplied = packageJSON["hanlinExpo"] {
+            guard let contract = supplied as? [String: Any],
+                  let runtimeVersion = contract["runtimeVersion"] as? String,
+                  contract["plugins"] is [String: Any],
+                  HanlinPreparedRuntimeVersion.supportsMinimum(runtimeVersion, installed: HanlinExpoBridgeMetadata.runtimeVersion) else {
+                throw HanlinExpoError.unsupportedRuntimeVersion("hanlinExpo must declare a supported runtimeVersion and plugins object.")
+            }
+            if let bridge = contract["bridgeVersion"] {
+                guard let version = bridge as? String, HanlinExpoBridgeMetadata.supports(requiredBridgeVersion: version) else {
+                    throw HanlinExpoError.unsupportedRuntimeVersion("hanlinExpo bridgeVersion is malformed or newer than the installed bridge.")
+                }
+            }
         }
 
         let entryFileName: String

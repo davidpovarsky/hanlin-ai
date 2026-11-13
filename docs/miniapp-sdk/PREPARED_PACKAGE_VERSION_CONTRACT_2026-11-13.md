@@ -70,3 +70,33 @@ in0.181s, including main/mismatch negatives0.073s; job3m39s. Downloaded
 artifact14020818672 (3181B), GitHub SHA256
 059feb87c4ca1866814397bf9abad10b6d1c1b01adadbf27d6459851eb563405.
 Direct constructor3-case native execution remains pending in43394275453.
+
+## One minimum-version implementation for import and direct sessions
+
+The importer, direct NativeScript Core check and direct Expo bridge check now
+call HanlinPreparedRuntimeVersion in the existing lean PlatformContracts target.
+NS/Expo packages add a dependency on that existing product, not another SDK.
+Their exact plugin/widget pins and the package version type's total ordering
+are unchanged. Released positive-major three-component requirements are compared
+numerically, allowing the historical one-prefix minimum shorthand. Wildcards,
+latest, malformed components, prereleases and future versions are rejected.
+Bridge1.x/2.x minimum metadata remains supported explicitly; this is not every
+old bridge API or physical ABI acceptance. Build labels do not raise precedence,
+as specified by https://semver.org/#spec-item-10 .
+
+Direct NS dependency maps now reject non-string values rather than bypassing
+Core validation. A supplied direct Expo hanlinExpo contract must contain a
+supported runtimeVersion/plugins object; bridgeVersion must have the correct
+type and complete released version. Missing optional contracts retain the
+existing default behavior; full direct plugin feature validation remains open.
+Source audit fails if importer, direct NS session, pinned NS locks or generated
+Expo runtime/UI/bridge versions disagree, keeping npm package versions separate.
+
+Actual portable Swift6.3.3 Foundation proof:3/3 new production contract methods
+passed in0.003s with byte-identical PlatformContracts sources/resources; no
+Apple-only types or VM execution are inferred. Four new direct NS/Expo
+constructor methods and affected importer methods require focused Apple runs.
+The prior Core parser and all existing PlatformContracts definitions are
+unchanged; this additive helper is used by importer/direct-session consumers,
+not the original direct RuntimeCore tests. No Node/Python native source, lock
+or runtime engine is rebuilt.

@@ -1,6 +1,13 @@
 {
-  "sourceCommit": "f9d264af0c4f5a3193f2794358e90be482c40211",
+  "sourceCommit": "d7b64fe65ff9ea3e32ee64cd209a6203cce671d8",
   "uncommittedSourcePaths": [
+    "Packages/HanlinExpoRuntime/Package.swift",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+    "Packages/HanlinNativeScriptRuntime/Package.swift",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
     "Scripts/Audit/audit-miniapp-sdk.mjs"
   ],
   "schemaVersion": 1,
@@ -25,6 +32,7 @@
       "expoUIVersion": "58.0.3",
       "expoUIBridgeVersion": "3.0.0"
     },
+    "minimumVersionSource": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
     "policy": "Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. Widget runtime/plugin exact pins remain authoritative.",
     "stableDiagnosticCodes": [
       "MINIAPP_BRIDGE_VERSION_INVALID",
@@ -34,7 +42,7 @@
       "MINIAPP_ENTRYPOINT_INVALID",
       "MINIAPP_EXPO_VERSION_MISMATCH"
     ],
-    "status": "source contract; analyzer regressions, complete schemas and installed Host acceptance are separate gates"
+    "status": "shared importer/direct-session minimum policy; numeric build precedence ignores build labels. Source pin consistency checked; full schemas and installed Host acceptance remain separate gates"
   },
   "nativeScript": {
     "toolingDependencies": {
@@ -5841,7 +5849,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Package.swift",
-      "sha256": "b842c5a9cfb638c3ed0cbce39fdd1fab83045d52f3847851eb2b33e23e78628f"
+      "sha256": "3c63a7cc0751b86e445e4048413c61553269e0d0fd087d01544c24dccb8f379c"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
@@ -5852,12 +5860,16 @@
       "sha256": "51e977e2972dfc0fb4bd67bb04a26050146f91b4be080ba6a2326c821dd4aafd"
     },
     {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
+      "sha256": "b889bee2edf76b6a364e6c6c03f92b830e27e992878c64621117fc8efc41c6d5"
+    },
+    {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostServicesBridge.swift",
       "sha256": "dda5b6bc45ab6939fa97c2b8ed55ada3dae7173d1779fac5f5658a3a7ea34695"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-      "sha256": "465b971e36155883ef6d61036207aedf5ba50b6b9c56628c4a8d80b5e3003d5c"
+      "sha256": "2eb1553e20dce0f9424cf99720c4f004c36ac14219f29fe7375b38c4b15659c8"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
@@ -5897,7 +5909,7 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
-      "sha256": "56673333e192c974ddeac9bf6f5eeccc62102d26acc37d493e385ad854a4eb08"
+      "sha256": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
@@ -5913,7 +5925,7 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
-      "sha256": "aee294b026c5e532705b7036af505704bce6596e3907bd1b42b329e50ed77248"
+      "sha256": "e86d6edad8cba01c4d71c79b1bda93027e30e1e722b6546670c64dbf7e51574b"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
@@ -5928,6 +5940,10 @@
       "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
     },
     {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "sha256": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c"
+    },
+    {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
       "sha256": "216b6cdb6f78791a0c8022672c5452d3edaafbb6eec328b566ebbd112019f33f"
     },
@@ -5937,7 +5953,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "095a99bbd9a44c823f6b629f9aec9173752b7e457b79427e2788a11ca45083fa"
+      "sha256": "1ac08ead84fcf05c00e348ad3cbfff1ea76accec5d44a9707c4805ddc4219fb2"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
@@ -5949,7 +5965,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "1436eb72f33cb6210335a9e9f6d1779d8adee812cd52c37985e4c5b39e3189e7"
+      "sha256": "64e241bc243c5e5155a87a2b34c9c4bb1608cb31a149e70a94e85902f44364a7"
     },
     {
       "path": "Scripts/Expo/package-lock.json",

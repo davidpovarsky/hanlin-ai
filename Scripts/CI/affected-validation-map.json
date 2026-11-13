@@ -1373,6 +1373,19 @@
         "AI_HLYTests/RuntimeUserOperationTests"
       ],
       "consumers": []
+    },
+    "prepared_runtime_version_gate_tests": {
+      "description": "Direct NativeScript/Expo version contract constructor gates without starting either VM",
+      "patterns": [
+        "AI_HLYTests/PreparedRuntimeVersionGateTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/PreparedRuntimeVersionGateTests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

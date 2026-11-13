@@ -17,6 +17,13 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_prepared_runtime_version_constructor_cases_have_a_focused_unit_route(self) -> None:
+        selector = "AI_HLYTests/PreparedRuntimeVersionGateTests"
+        plan = self.plan_files(["AI_HLYTests/PreparedRuntimeVersionGateTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
     def test_expo_constructor_boundary_routes_exact_unit_tests_without_full_acceptance(self) -> None:
         selector = "AI_HLYTests/ExpoPreparedEntrypointTests"
         plan = self.plan_files(["AI_HLYTests/ExpoPreparedEntrypointTests.swift"])
