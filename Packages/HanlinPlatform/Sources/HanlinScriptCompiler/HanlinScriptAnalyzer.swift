@@ -449,6 +449,20 @@ public struct HanlinScriptAnalyzer: Sendable {
             ))
             return
         }
+        if !appEntrypoints.isEmpty {
+            let main = packageJSON["main"] as? String ?? (packageJSON["main"] == nil ? "bundle.js" : "")
+            let parts = main.split(separator: "/", omittingEmptySubsequences: false)
+            let safe = !main.isEmpty && !main.contains("\\") && !main.contains(":") && !main.contains("\0") &&
+                parts.allSatisfy { !$0.isEmpty && $0 != "." && $0 != ".." }
+            let packageDirectory = packageJSONPath.split(separator: "/").dropLast().joined(separator: "/")
+            let resolvedMain = packageDirectory.isEmpty ? main : packageDirectory + "/" + main
+            if !safe || resolvedMain != entrypoint.sourcePath || files[resolvedMain] == nil {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                    message: "Expo package.json main must name the same prepared file as the declared foreground entrypoint.",
+                    rationale: "Use a relative file path within this prepared package, matching script.json entry; bundle.js remains the default when main is omitted.",
+                    code: "MINIAPP_ENTRYPOINT_INVALID"))
+            }
+        }
         if !widgetEntrypoints.isEmpty, packageJSON["hanlinExpo"] == nil {
             findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
                 message: "Expo widgets require an explicit hanlinExpo runtimeVersion/plugins contract."))

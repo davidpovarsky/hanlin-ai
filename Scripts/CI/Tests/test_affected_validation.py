@@ -17,6 +17,13 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_expo_constructor_boundary_routes_exact_unit_tests_without_full_acceptance(self) -> None:
+        selector = "AI_HLYTests/ExpoPreparedEntrypointTests"
+        plan = self.plan_files(["AI_HLYTests/ExpoPreparedEntrypointTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
     def test_nativescript_generic_wire_paths_accept_exact_native_selection_without_engine_rebuild(self) -> None:
         selector = "AI_HLYTests/NativeScriptRuntimeWireTests"
         for changed in ("AI_HLYTests/NativeScriptRuntimeWireTests.swift", "Scripts/NativeScript/host-services.ts",

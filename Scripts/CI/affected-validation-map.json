@@ -235,6 +235,19 @@
       ],
       "consumers": []
     },
+    "expo_prepared_entry_tests": {
+      "description": "Prepared Expo constructor entry validation before runtime creation",
+      "patterns": [
+        "AI_HLYTests/ExpoPreparedEntrypointTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [],
+      "unit_suites": [
+        "AI_HLYTests/ExpoPreparedEntrypointTests"
+      ]
+    },
     "expo_runtime": {
       "description": "Hanlin Expo dynamic runtime and fixtures",
       "patterns": [
@@ -252,7 +265,9 @@
         "AI_HLYUITests/HanlinExpoProductionE2ETests",
         "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
       ],
-      "consumers": []
+      "consumers": [
+        "expo_prepared_entry_tests"
+      ]
     },
     "swiftui_bridge_generator": {
       "description": "SwiftUI Bridge Generator, tools, and HanlinExpoUI package",

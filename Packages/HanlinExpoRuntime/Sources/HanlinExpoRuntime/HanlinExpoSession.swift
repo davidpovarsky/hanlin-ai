@@ -151,7 +151,8 @@ public final class HanlinExpoSession {
         }
 
         let packageJSONURL = root.appending(path: "package.json", directoryHint: .notDirectory)
-        guard FileManager.default.fileExists(atPath: packageJSONURL.path(percentEncoded: false)) else {
+        guard let metadata = try? packageJSONURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey]),
+              metadata.isRegularFile == true, metadata.isSymbolicLink != true else {
             throw HanlinExpoError.missingPreparedFile("package.json")
         }
 
@@ -172,10 +173,26 @@ public final class HanlinExpoSession {
             )
         }
 
-        let entryFileName = (packageJSON["main"] as? String) ?? "bundle.js"
-        let resolvedBundleURL = root.appending(path: entryFileName, directoryHint: .notDirectory)
-        guard FileManager.default.fileExists(atPath: resolvedBundleURL.path(percentEncoded: false)) else {
-            throw HanlinExpoError.missingPreparedFile(entryFileName)
+        let entryFileName: String
+        if let main = packageJSON["main"] {
+            guard let name = main as? String else {
+                throw HanlinExpoError.invalidApplicationRoot("package.json main must be a relative file path string")
+            }
+            entryFileName = name
+        } else { entryFileName = "bundle.js" }
+        let components = entryFileName.split(separator: "/", omittingEmptySubsequences: false)
+        guard !entryFileName.isEmpty, !entryFileName.contains("\\"), !entryFileName.contains(":"), !entryFileName.contains("\0"),
+              components.allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." }) else {
+            throw HanlinExpoError.invalidApplicationRoot("package.json main must stay within the prepared package")
+        }
+        var resolvedBundleURL = root
+        for (index, component) in components.enumerated() {
+            resolvedBundleURL.append(path: String(component))
+            guard let values = try? resolvedBundleURL.resourceValues(forKeys: [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey]),
+                  values.isSymbolicLink != true,
+                  index == components.count - 1 ? values.isRegularFile == true : values.isDirectory == true else {
+                throw HanlinExpoError.missingPreparedFile(entryFileName)
+            }
         }
 
         self.sessionID = sessionID

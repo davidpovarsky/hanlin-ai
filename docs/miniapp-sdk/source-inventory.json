@@ -1,8 +1,8 @@
 {
-  "sourceCommit": "d9e3b9bfb0e51d1d894205e802a775b55bcbf660",
+  "sourceCommit": "f9c1b62f80d5c0b2095e05ac670426249bd139e4",
   "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
-    "Scripts/Audit/audit-miniapp-sdk.mjs"
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -32,6 +32,7 @@
       "MINIAPP_BRIDGE_VERSION_MISMATCH",
       "MINIAPP_CORE_VERSION_MISMATCH",
       "MINIAPP_DEPENDENCY_VERSION_INVALID",
+      "MINIAPP_ENTRYPOINT_INVALID",
       "MINIAPP_EXPO_VERSION_MISMATCH"
     ],
     "status": "source contract; analyzer regressions, complete schemas and installed Host acceptance are separate gates"
@@ -5857,7 +5858,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-      "sha256": "f28bfc24e48f478773f729145e31634ad2377ce0c4bfc3130d2ba1dfc2b71109"
+      "sha256": "465b971e36155883ef6d61036207aedf5ba50b6b9c56628c4a8d80b5e3003d5c"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
@@ -5937,7 +5938,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "2acd3aa14163c2bc06b3b4411a1b7674014a1c089b45b539b1b74166c0bb7721"
+      "sha256": "095a99bbd9a44c823f6b629f9aec9173752b7e457b79427e2788a11ca45083fa"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",

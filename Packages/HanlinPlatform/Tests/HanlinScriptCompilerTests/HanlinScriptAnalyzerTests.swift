@@ -6,6 +6,30 @@ import Testing
 
 @Suite("Static Scripting analyzer")
 struct HanlinScriptAnalyzerTests {
+    @Test("Expo import main matches the manifest entry and cannot redirect launch elsewhere")
+    func expoMainMustMatchTheInspectedForegroundEntrypoint() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for main: Any in ["different.js", "../outside.js", "/absolute.js", "dir\\entry.js", "", 42, NSNull(), true] {
+            let prepared = try JSONSerialization.data(withJSONObject: ["name": "fixture", "main": main, "hanlinRuntime": "hanlin-expo"])
+            let fixture = try package(files: [
+                "script.json": #"{"name":"Expo Main Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+                "expo/app/bundle.js": "console.log('inspected')", "expo/app/different.js": "console.log('uninspected')",
+                "expo/app/package.json": String(decoding: prepared, as: UTF8.self)])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(!preview.canInstall)
+            #expect(preview.findings.contains { $0.code == "MINIAPP_ENTRYPOINT_INVALID" && $0.sourcePath == "expo/app/package.json" })
+        }
+        // Preserve the existing direct-launch default rather than inventing a
+        // new requirement for packages which omit main and use bundle.js.
+        let fixture = try package(files: [
+            "script.json": #"{"name":"Expo Default Main","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "expo/app/bundle.js": "console.log('default')",
+            "expo/app/package.json": #"{"name":"fixture","hanlinRuntime":"hanlin-expo"}"#])
+        defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+        #expect(try analyzer.analyze(fixture).canInstall)
+    }
+
     @Test("Prepared runtimes reject malformed, wildcard and future required versions")
     func preparedRuntimeVersionsUseTheActualReleasedSemverBoundary() throws {
         let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
