@@ -1,15 +1,8 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "660f5b45fe41af70d259eb3818de4da956e6c4bc",
+  "sourceCommit": "0f64aaff3490a886f5bc1ed4be6a8f34aafd1ac6",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
-    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
-    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
-    "Scripts/Audit/audit_miniapp_reachability.py"
-  ],
+  "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
@@ -203,7 +196,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "aa2ac69644a0a56761e48bfc2831ee9ea89f41d2b630a8127884dd2a4e5d7953"
+      "sha256": "f48101f4fae5c197ee4fe64a351cd64773048aa781c93f568cfbcd36e564c566"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",

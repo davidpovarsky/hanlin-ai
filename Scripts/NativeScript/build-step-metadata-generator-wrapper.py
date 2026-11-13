@@ -2,7 +2,10 @@
 # HANLIN_METADATA_WRAPPER_V1
 
 import os
+import hashlib
+import json
 from pathlib import Path
+import shlex
 import shutil
 import subprocess
 import sys
@@ -42,20 +45,6 @@ def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) ->
         if swift_header_root.is_dir():
             headers.extend(sorted(swift_header_root.rglob("*-Swift.h")))
 
-    src_root = Path(required_env("SRCROOT"))
-    core_support_dir = (
-        src_root
-        / "Packages"
-        / "HanlinNativeScriptRuntime"
-        / "Sources"
-        / "HanlinNativeScriptCoreSupport"
-        / "include"
-    )
-    for header_name in ["HanlinNativeScriptCompatibility.h", "HanlinNativeServicesBridge.h"]:
-        h = core_support_dir / header_name
-        if h.is_file():
-            headers.append(h)
-
     unique_headers = []
     seen = set()
     for header in headers:
@@ -69,6 +58,48 @@ def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) ->
     lines.extend(["  export *", "}", ""])
     module_map.write_text("\n".join(lines), encoding="utf-8")
     return unique_headers
+
+
+def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path) -> str:
+    # Each ObjC header keeps its existing module owner. Listing those headers
+    # again in the generated Swift module can make clang's findModuleForHeader
+    # ambiguous. The upstream generator silently skips unknown module owners.
+    imports = module_root / "HanlinMetadataImports.h"
+    imports.write_text("@import HanlinNativeServicesBridge;\n"
+                       "@import HanlinNativeScriptCompatibility;\n"
+                       "@import hanlinnativescriptswiftsupport;\n", encoding="utf-8")
+    return shlex.join([f"-fmodule-map-file={core_support_dir / 'module.modulemap'}",
+                       f"-fmodule-map-file={module_map}", "-include", str(imports)])
+
+
+def retain_and_check_metadata(arch: str, platform: str) -> bool:
+    products = Path(required_env("CONFIGURATION_BUILD_DIR"))
+    evidence = Path(required_env("SRCROOT")) / "build/acceptance/nativescript-metadata" / f"{platform}-{arch}"
+    evidence.mkdir(parents=True, exist_ok=True)
+    paths = [products / f"metadata-generation-stderr-{arch}.txt",
+             products / f"umbrella-{arch}.h", products / f"metadata-{arch}.bin"]
+    hashes = {}
+    for path in paths:
+        if path.is_file():
+            data = path.read_bytes()
+            (evidence / path.name).write_bytes(data)
+            hashes[path.name] = hashlib.sha256(data).hexdigest()
+    binary = paths[2].read_bytes() if paths[2].is_file() else b""
+    required = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge", "HanlinNativeScriptCompatibility", "UIView", "NSObject"]
+    symbols = {name: name.encode("utf-8") + b"\0" in binary for name in required}
+    (evidence / "visibility.json").write_text(json.dumps({"schemaVersion": 1,
+        "platform": platform, "architecture": arch, "sha256": hashes,
+        "requiredMetadataStringsPresent": symbols,
+        "boundary": "Build-time completeness check; actual VM tests still required."}, indent=2) + "\n", encoding="utf-8")
+    if not all(symbols.values()):
+        print("Hanlin NativeScript metadata is incomplete: " + ", ".join(name for name, found in symbols.items() if not found), flush=True)
+        if paths[0].is_file():
+            diagnostics = [line for line in paths[0].read_text(encoding="utf-8", errors="replace").splitlines()
+                           if "error:" in line or "HanlinNativeServices" in line or "Unknown module" in line]
+            print("\n".join(diagnostics[:40]), flush=True)
+        return False
+    print("Hanlin metadata required strings present; actual JS visibility remains an execution gate.", flush=True)
+    return True
 
 
 def main() -> int:
@@ -100,11 +131,10 @@ def main() -> int:
     module_root.mkdir(parents=True)
 
     try:
-        unique_headers = write_swift_module_map(module_map, runtime_header, arch)
+        write_swift_module_map(module_map, runtime_header, arch)
         environment = os.environ.copy()
-        module_flag = f'-fmodule-map-file="{module_map}"'
-        include_flags = " ".join(f'-include "{h}"' for h in unique_headers)
-        extra_flags = f"{module_flag} {include_flags}".strip()
+        core_support_dir = Path(required_env("SRCROOT")) / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
+        extra_flags = metadata_flags(module_root, module_map, core_support_dir)
         environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {extra_flags}'.strip()
         completed = subprocess.run(
             [sys.executable, str(upstream_generator), *sys.argv[1:]],
@@ -112,7 +142,8 @@ def main() -> int:
             env=environment,
             check=False,
         )
-        return completed.returncode
+        complete = retain_and_check_metadata(arch, platform_name)
+        return completed.returncode if completed.returncode else (0 if complete else 1)
     finally:
         shutil.rmtree(module_root, ignore_errors=True)
 

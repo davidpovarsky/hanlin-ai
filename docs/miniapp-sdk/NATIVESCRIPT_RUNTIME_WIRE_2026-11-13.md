@@ -147,3 +147,33 @@ fixture now also requires the actual generated bridge class and bound session,
 so its environment-path fallback cannot hide missing Host metadata. Real facade,
 lifecycle/environment, direct constructors, App Group and compiled-intent receipt
 cases are selected for the next focused app run. Node/Python artifacts unchanged.
+
+## Actual metadata follow-up43411873747
+
+At a0fcbb3b,9 actual cases executed in2.699s:7 PASS,2 FAIL. The new exact
+started-session environment restoration and failed-bootstrap rollback passed
+(0.374s/0.313s); three prepared constructors, AppGroup provider reader0.193s and
+compiled-intent durable result0.126s passed. The strengthened actual NS launch
+and generated-facade VM both fail because the Host bridge class is unavailable.
+The explicit Config.MetadataPtr change alone is insufficient. No real facade
+five-engine execution has passed yet. Job28m25s; Xcode27.2/27B52, arm64
+Simulator iPad mini(A20Pro), iOS27.2/24B8117.
+
+Actual authenticated artifact14031607216/28693880B ZIP SHA256
+38f4fb4261aa3905100b255c8292e1428d91e0c2afab3f8088f2b7f724602808;
+raw result JSON SHA25621abf217b0f6d128897bd12ac6dd5065930f852c81246228e16f2dbe7e79a5b3.
+
+The pinned NativeScript/ios v9.1.0 source5d4569c197810cdd4c1e02e7c16d42a01a77d5c0
+MetaFactory requires a known module for each declaration; unknown ownership is
+silently skipped. Its main.cpp also ignores runToolOnCodeWithArgs failure, so a
+zero generator exit alone cannot prove complete metadata. Our wrapper declared
+already-owned ObjC headers in a second generated Swift module. This is a concrete
+ownership conflict and a candidate cause, not yet an executed root-cause proof.
+The follow-up keeps ObjC headers in their existing modules and explicitly imports
+them; only generated Swift headers belong to the generated Swift module. It
+retains exact metadata binary/stderr/umbrella hashes under build/acceptance and
+fails before app execution when required bridge/UIKit strings are absent. String
+presence is only a build completeness guard; the strict VM tests remain required.
+Two wrapper regressions plus4 existing parity checks PASS6/6 locally0.104s,
+including upstream exit0 with missing bridge metadata now producing failure and
+retaining the original diagnostic bytes. No Apple compiler pass is inferred.

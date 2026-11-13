@@ -29,6 +29,8 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Discoveries & Tips
 
+- **2026-11-13 NativeScript generator success is insufficient:** pinned v9.1.0 ignores the clang tooling Boolean return and silently skips declarations with unknown module ownership. Preserve one module owner per native header and retain the actual generated metadata/stderr/umbrella. A zero exit or a metadata section alone cannot certify Host bridge globals; require actual VM visibility/receipt tests. Run43411873747 proves the metadata-pointer change alone did not solve missing globals.
+
 - **2026-11-13 redaction must preserve metric types:** Generic `*_token` secret filtering masked numeric `timeToFirstToken`/`timeToFirstAnswerToken`, making completed session JSON fail its typed decoder and disappear from the diagnostics list. Preserve only numeric values at those explicit metric keys; credentials and metric-shaped strings remain masked. Reopen exact legacy placeholders in memory with unavailable-timing warnings, preserving original files. Verify numeric0/1 versus JSON Boolean storage types and a full typed session round trip; a redactor-only string assertion misses this failure.
 
 - **2026-11-10 explicit command-module boundary:** `hanlin:runtime` exposes actual finite command receipts/file streams to managed source/CLI/lifecycle jobs. Persistent MCP Workers deliberately have no inherited chat command port; a real Worker test verifies that namespace inspection works and execution fails explicitly. Before enabling server-side child commands, bind them to an actual request/owner lifetime rather than borrowing the first chat's TaskLocals. Full POSIX/IPC/TTY requires an explicitly configured owner server; none is configured for this task.
