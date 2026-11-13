@@ -1,10 +1,8 @@
 {
-  "sourceCommit": "2647ee1d43e1b7b776801db699c49ea1aa1d69a8",
+  "sourceCommit": "d9e3b9bfb0e51d1d894205e802a775b55bcbf660",
   "uncommittedSourcePaths": [
-    "Scripts/Audit/audit-miniapp-sdk.mjs",
-    "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
-    "Scripts/NativeScript/Fixtures/HostServices/valid.ts",
-    "Scripts/NativeScript/build-host-services.mjs"
+    "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+    "Scripts/Audit/audit-miniapp-sdk.mjs"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -5826,6 +5824,10 @@
       "sha256": "c8b63f62896fc0a6835e481d69644d06e72314b58bbe3661f41542de9c9c4a2f"
     },
     {
+      "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+      "sha256": "07dd6bf358f8d94cd9333fb4c5400478505d29a874380800eb5e7e4141e4e2ad"
+    },
+    {
       "path": "Packages/HanlinExpoNativeAPI/Package.swift",
       "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
     },
@@ -5947,7 +5949,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "e5bd787b84c4200f85b8fd3ef639ac04d5771981705dba12f4d2c6595ae5abe8"
+      "sha256": "bded6d0f13e9aea0b72497a3bf9e0b2ceee6997f4abc91266179fc72c0c5dd60"
     },
     {
       "path": "Scripts/Expo/package-lock.json",

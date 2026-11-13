@@ -136,6 +136,9 @@ struct NativeScriptRuntimeWireTests {
             rejected = result == nil && error?.contains("no longer active") == true
         }
         #expect(handle == nil && rejected)
+        var legacyError: String?
+        let legacyHandle = HanlinNativeServicesHostProvider.shared.executeRuntime(#"{"kind":"javaScriptCore","source":"1+1"}"#) { _, error in legacyError = error }
+        #expect(legacyHandle == nil && legacyError?.contains("bound NativeScript session") == true)
     }
 
     @Test func cancellationHandlesCannotCrossSessionBoundaries() async throws {
@@ -160,6 +163,7 @@ struct NativeScriptRuntimeWireTests {
             try await Task.sleep(for: .milliseconds(25))
         }
         #expect(!otherBridge.cancelRuntime(id))
+        #expect(!HanlinNativeServicesHostProvider.shared.cancelRuntime(id))
         #expect(bridge.cancelRuntime(id))
         do {
             let json = try #require(try await reply.stream.first(where: { _ in true }))

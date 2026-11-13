@@ -120,6 +120,23 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
 
     // MARK: - HanlinNativeServicesProvider Conformance
 
+    // The new API requires a captured session bridge. Forwarding it through
+    // this mutable legacy singleton could switch caller/cancellation ownership
+    // between admission and completion. Existing string APIs remain compatible.
+    @objc(executeRuntime:completion:)
+    public func executeRuntime(_ payloadJSON: String, completion: @escaping (String?, String?) -> Void) -> String? {
+        completion(nil, "Generic runtime execution requires a bound NativeScript session bridge.")
+        return nil
+    }
+
+    @objc(cancelRuntime:)
+    public func cancelRuntime(_ requestID: String) -> Bool { false }
+
+    @objc(invalidateRuntimeRequests)
+    public func invalidateRuntimeRequests() {
+        // This compatibility provider owns no generic request handles.
+    }
+
     public func dataRootDirectory() -> String? {
         lock.lock()
         let override = overrideDirs?.data

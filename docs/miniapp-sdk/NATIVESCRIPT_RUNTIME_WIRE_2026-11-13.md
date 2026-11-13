@@ -39,3 +39,14 @@ Single-active-NativeScript-session guard remains; safe queued cross-package
 action scheduling, full system-ingress readback and physical iPad acceptance
 are still required. OS availability/permission and all prompt context gates
 remain separate. No new Hanlin permission gate is introduced.
+
+First native attempt43389506393/2647ee1d failed app compilation before any
+selected test executed: the old HanlinNativeServicesHostProvider also conforms
+to the expanded protocol. It now explicitly rejects generic execution/cancel
+through its mutable singleton; modern provider-bound adapters implement the API.
+It owns no generic requests to invalidate. Forwarding a new handle through a
+mutable legacy provider would allow caller/ownership changes between admission
+and completion. Existing legacy string methods remain unchanged. New regressions
+require this explicit rejection and prohibit cancelling a bound handle through
+the legacy singleton. Full native execution and failed diagnostics UI still
+need a corrected run; no test pass is attributed to the compile-only failure.

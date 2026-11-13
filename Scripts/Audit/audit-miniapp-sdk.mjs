@@ -115,6 +115,7 @@ for (const file of [
   'Scripts/Audit/audit-miniapp-sdk.mjs', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinExpoRuntime/Package.swift',
   'Packages/HanlinExpoNativeAPI/Package.swift', 'AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m',
+  'AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift',
   'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostServicesBridge.swift',
