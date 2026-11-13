@@ -222,7 +222,13 @@ public struct HanlinShareInboxStore: Sendable {
     }
 
     private static func createDirectory(_ url: URL) throws {
-        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: false, attributes: protection)
+        do {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: false, attributes: protection)
+        } catch let error as NSError where error.domain == NSCocoaErrorDomain && error.code == CocoaError.fileWriteFileExists.rawValue {
+            // Reopen/concurrent initialization is expected. Only the exact
+            // already-exists error is tolerated, followed by the same no-link
+            // real-directory check; other filesystem failures still propagate.
+        }
         try requireDirectory(url)
     }
 

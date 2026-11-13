@@ -1,8 +1,9 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "7e43ba76f9eed57670a6b4c357c5c3eaa1c88008",
+  "sourceCommit": "ea06606ac080ef3b9ef71d3cf04acb25f55a9168",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift",
     "Scripts/Audit/audit_miniapp_reachability.py"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -314,7 +315,7 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift",
       "line": 43,
       "anchor": "public struct HanlinShareInboxStore",
-      "sha256": "6f3ab96132dffe14f73c59306238d0f2bb88245cc22da9516165b0d8c371e943"
+      "sha256": "3be885a7350a1586d45aac604674d101e0dc77169528650bc190fbcc4e70acf8"
     },
     "shareProviderCopy": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift",
@@ -512,7 +513,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "b26012ffdcb85d33ef79e6f175b93b2881476e53e95956bfb181653be980f114"
+      "sha256": "00c3dbf6a1eb63192f21214b5bc9c6092dba19f98a22b555421dbf212bbe6f69"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",

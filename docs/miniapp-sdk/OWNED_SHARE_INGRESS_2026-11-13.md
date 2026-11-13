@@ -28,13 +28,27 @@ now reads these actual batches through Shared Items in its package screen,
 previews verified owned files through Quick Look, and preserves historical
 records. This is ingress review, not installed-action routing or execution.
 
-Five focused production tests cover large Unicode files after provider deletion,
+Six focused production tests cover large Unicode files after provider deletion,
 whole-batch publication,24 simultaneous writers, historical data preservation,
 abort, corrupt/symlink isolation, path/byte tampering, and actual NSItemProvider
 file/text/URL/error loading. Syntax parse passed on Windows; actual macOS package
 execution, iOS extension/application compilation and physical device evidence
 are still required. Apple SDK lookup43403995138 succeeded; it is declaration
 evidence, not compilation or executed ingress tests.
+
+First native run43404507991 at7e43ba76 compiled the actual sources on
+Xcode27.2/27B52 Swift6.4.2 and executed5 methods:3 PASS,2 FAIL in0.056s.
+The real NSItemProvider file/text/URL/error case passed0.056s, as did abort/
+corrupt isolation and path/byte tampering. Reopen and24-writer cases exposed
+FileManager.createDirectory's existing-directory error. Initialization now
+tolerates only that exact error, then requires the existing path to be a real
+non-symlink directory. A sixth regression rejects existing files/symlinks.
+All6 affected methods require another execution. Downloaded artifact14026413368
+(3712B), GitHub SHA256
+bbea3a87b1dd60f3a811dd7cf596eb88bdf42910ee3e3dfb29f8a58c950637f6.
+One additional iOS app method exercises the actual App Group provider batch
+through ChavrusaShareInbox.shared after source deletion; it is not a physical
+Share sheet, signed entitlement or action dispatch acceptance test.
 
 Apple documents the temporary-file lifetime explicitly:
 https://developer.apple.com/documentation/foundation/nsitemprovider/loadfilerepresentation%28fortypeidentifier%3Acompletionhandler%3A%29 .

@@ -1386,6 +1386,19 @@
         "AI_HLYTests/PreparedRuntimeVersionGateTests"
       ],
       "consumers": []
+    },
+    "share_inbox_host_tests": {
+      "description": "Actual owned provider batch through the Host App Group reader; not physical system-sheet acceptance",
+      "patterns": [
+        "AI_HLYTests/ShareInboxHostIntegrationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ShareInboxHostIntegrationTests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

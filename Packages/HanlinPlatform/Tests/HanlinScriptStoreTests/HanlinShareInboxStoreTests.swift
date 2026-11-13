@@ -58,6 +58,20 @@ struct HanlinShareInboxStoreTests {
         #expect(try Data(contentsOf: historical) == historicalBytes)
     }
 
+    @Test func existingInboxPathsMustBeRealDirectoriesWhenReopened() throws {
+        let root = try fixture()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let inbox = root.appending(path: "ShareInbox"), outside = root.appending(path: "outside")
+        try Data("preserve".utf8).write(to: inbox)
+        #expect(throws: (any Error).self) { _ = try HanlinShareInboxStore(container: root) }
+        #expect(try Data(contentsOf: inbox) == Data("preserve".utf8))
+        try FileManager.default.removeItem(at: inbox)
+        try FileManager.default.createDirectory(at: outside, withIntermediateDirectories: false)
+        try FileManager.default.createSymbolicLink(at: inbox, withDestinationURL: outside)
+        #expect(throws: (any Error).self) { _ = try HanlinShareInboxStore(container: root) }
+        #expect(try FileManager.default.contentsOfDirectory(at: outside, includingPropertiesForKeys: nil).isEmpty)
+    }
+
     @Test func cancelledStagingAndCorruptBatchesCannotRemoveOrStarveHealthyItems() throws {
         let root = try fixture()
         defer { try? FileManager.default.removeItem(at: root) }

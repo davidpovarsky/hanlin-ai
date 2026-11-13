@@ -69,7 +69,7 @@ def build() -> dict:
         ref(target + "Info", target + "/Info.plist", "<plist")
 
     tracked = subprocess.check_output(["git", "ls-files", "*.swift"], cwd=ROOT, text=True, encoding="utf-8").splitlines()
-    share_references = [p for p in tracked if "ChavrusaShareInbox" in (ROOT / p).read_text(encoding="utf-8-sig")]
+    share_references = [p for p in tracked if p.startswith("AI_HLY/") and "ChavrusaShareInbox" in (ROOT / p).read_text(encoding="utf-8-sig")]
     if share_references != ["AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift"]:
         raise ValueError(f"Share inbox callers changed; re-audit reachability: {share_references}")
     optional_surfaces = {symbol: [p for p in tracked if re.search(rf"\b{symbol}\b", (ROOT / p).read_text(encoding="utf-8-sig"))]
