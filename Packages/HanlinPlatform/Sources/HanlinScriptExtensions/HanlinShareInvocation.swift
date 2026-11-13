@@ -25,7 +25,7 @@ public enum HanlinShareInvocation {
         }
         let batch = try inbox.batch(command.id)
         let items: [HanlinValue] = try batch.items.map { item in
-            var value: [String: HanlinValue] = ["id": .string(item.id.uuidString.lowercased()),
+            var value: HanlinObject<HanlinValue> = ["id": .string(item.id.uuidString.lowercased()),
                 "ordinal": .integer(Int64(item.ordinal)), "kind": .string(item.content.rawValue),
                 "typeIdentifier": .string(item.typeIdentifier)]
             if let name = item.name { value["name"] = .string(name) }

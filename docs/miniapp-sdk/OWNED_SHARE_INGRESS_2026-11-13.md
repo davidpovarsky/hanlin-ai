@@ -70,6 +70,15 @@ tampering and expired/cancelled refusal. These tests and the affected queue/stor
 tests still require native execution. Host chooser/dispatch linkage remains to
 be implemented; this factory alone is not an end-to-end Share action route.
 
+First delivery attempt43409282098/d29d1455 failed compilation before any
+selected case ran: dynamic object construction used a Swift Dictionary where
+the canonical HanlinValue requires HanlinObject. The builder now uses the
+existing exact-UTF8-key HanlinObject type directly, preserving its canonical
+contract. Artifact14028427998/4904B, GitHub SHA256
+f50e8045878193fa8205fff277966b31f9a11df455830fba25a55daa75dacb0f.
+All23 selected affected queue/store/delivery cases still require execution;
+zero passes are credited to the compile failure.
+
 Apple documents the temporary-file lifetime explicitly:
 https://developer.apple.com/documentation/foundation/nsitemprovider/loadfilerepresentation%28fortypeidentifier%3Acompletionhandler%3A%29 .
 String/URL loading uses the current loadObject bridge instead of the loadItem
