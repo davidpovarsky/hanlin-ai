@@ -299,13 +299,16 @@ public struct HanlinScriptAnalyzer: Sendable {
             .relativePath
         guard let packageJSONData = files[packageJSONPath],
               let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
-              packageJSON["main"] as? String == URL(filePath: entrypoint.sourcePath).lastPathComponent,
+              URL(filePath: entrypoint.sourcePath).lastPathComponent == "bundle.mjs",
+              packageJSON["main"] as? String == "bundle.mjs",
               packageJSON["hanlinRuntime"] as? String == HanlinRuntimeProfile.hanlinNativeScript.rawValue else {
             findings.append(.init(
                 state: .unsupported,
                 severity: .error,
                 sourcePath: packageJSONPath,
-                message: "NativeScript requires a prepared app package.json with matching main and hanlinRuntime fields."
+                message: "NativeScript requires a prepared bundle.mjs entry and package.json with main: bundle.mjs and hanlinRuntime: hanlin-nativescript.",
+                rationale: "Use the canonical prepared entry for every session; alternate main names are not a supported Host contract.",
+                code: "MINIAPP_ENTRYPOINT_INVALID"
             ))
             return
         }

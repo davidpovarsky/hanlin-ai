@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ea06606ac080ef3b9ef71d3cf04acb25f55a9168",
+  "sourceCommit": "5b04ee5f759e9981d4704b89243f1d947dcbb617",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift",
-    "Scripts/Audit/audit_miniapp_reachability.py"
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
@@ -127,7 +127,7 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
-      "sha256": "e86d6edad8cba01c4d71c79b1bda93027e30e1e722b6546670c64dbf7e51574b"
+      "sha256": "860858787eb564f9e32a492291497ffe06eab1f25baf6b4f33eccf5321af5f68"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
@@ -155,7 +155,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "1ac08ead84fcf05c00e348ad3cbfff1ea76accec5d44a9707c4805ddc4219fb2"
+      "sha256": "e685a45b93d6b0b4804ec6b13f0ada720ec2426a629a23a180ce28d1b64ce822"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
@@ -385,9 +385,9 @@
     },
     "expoExposureRejection": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "line": 432,
+      "line": 435,
       "anchor": "Expo exposure '",
-      "sha256": "1ac08ead84fcf05c00e348ad3cbfff1ea76accec5d44a9707c4805ddc4219fb2"
+      "sha256": "e685a45b93d6b0b4804ec6b13f0ada720ec2426a629a23a180ce28d1b64ce822"
     },
     "widgetBundle": {
       "file": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
@@ -457,9 +457,9 @@
     },
     "nativeSession": {
       "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
-      "line": 85,
+      "line": 90,
       "anchor": "guard Self.activeSession == nil",
-      "sha256": "e86d6edad8cba01c4d71c79b1bda93027e30e1e722b6546670c64dbf7e51574b"
+      "sha256": "860858787eb564f9e32a492291497ffe06eab1f25baf6b4f33eccf5321af5f68"
     },
     "expoFacade": {
       "file": "Packages/HanlinExpoUI/src/host-services.ts",

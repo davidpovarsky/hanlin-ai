@@ -50,6 +50,14 @@ One additional iOS app method exercises the actual App Group provider batch
 through ChavrusaShareInbox.shared after source deletion; it is not a physical
 Share sheet, signed entitlement or action dispatch acceptance test.
 
+Corrected run43405370019 at5b04ee5f executed6/6 PASS in0.073s on
+Xcode27.2/27B52 Swift6.4.2 arm64macOS27.0; job2m34s. Actual provider
+case0.073s,24-writer case0.035s, reopen/Unicode file case0.032s. Downloaded
+artifact14027341379 (3242B), GitHub SHA256
+0127bf3000d10c949605de61dfb51e88702518a9cf5452ab911334adff018042.
+This is actual macOS Foundation/provider execution. The iOS App Group method,
+Share extension linking/Host UI, delivery and physical gates remain separate.
+
 Apple documents the temporary-file lifetime explicitly:
 https://developer.apple.com/documentation/foundation/nsitemprovider/loadfilerepresentation%28fortypeidentifier%3Acompletionhandler%3A%29 .
 String/URL loading uses the current loadObject bridge instead of the loadItem

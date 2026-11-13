@@ -107,3 +107,22 @@ Downloaded artifact14024570184 (3474B), GitHub SHA256
 ec68d4c3cc872a9740d28a652a93e5f4392fb5ba49b97a02d4a06b6627cb3092.
 These are two focused macOS package invocations. Direct iOS constructor methods
 and affected VM execution still require their own native app evidence.
+
+At86ef18ed, app run43402191132 actually executed all4 direct NS/Expo constructor
+methods PASS (suite0.069s), the3 affected Expo entry methods PASS0.040s and the
+existing actual NS launch/teardown method PASS0.463s. Xcode27.2/27B52,
+iPad mini(A20Pro) arm64 iOS27.2/24B8117. Overall run failed only the separate
+new NS facade VM entry-loading method;9/10 unit methods and the diagnostics UI
+passed. Shared minimum-version import/direct-session behavior is now natively
+verified within this scope; full schemas/features/plugins/device acceptance
+remains open. NS facade VM loading requires its own correction and rerun.
+
+Prepared NativeScript now requires main exactly bundle.mjs in both importer
+and direct constructor, matching the file already required by that constructor
+and all8 current prepared source packages. Invalid/missing/alternate main or
+runtime declarations fail before VM creation (MINIAPP_ENTRYPOINT_INVALID on
+import). This explicit boundary avoids the pinned SDK's process-global cached
+main crossing canonical prepared sessions; it does not repair or advertise
+arbitrary NativeScript application-config switching. See the wire investigation
+for source and failed-run evidence. New importer/constructor negatives and the
+corrected two-session/facade VM methods need their own execution.

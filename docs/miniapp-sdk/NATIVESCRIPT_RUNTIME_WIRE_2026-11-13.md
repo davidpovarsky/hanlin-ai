@@ -73,12 +73,40 @@ executed21 unit methods:19 passed,2 failed (68.824s total). Actual passes includ
 11 existing NS lifetime/registry/real launch cases,4 new wire methods (Expo five
 engines, full output SHA/argv/env, invalidation, cross-session cancellation),
 3 Expo entry constructor methods and1 real npm generation method. This is not
-overall run success. The new VM fixture omitted type:module, selecting the CJS
-entry resolver rather than its bundle.mjs; add the same ESM declaration used by
-existing prepared fixtures. The bound bridge test incorrectly used
+overall run success. Missing type:module in the new VM fixture was an initial
+suspect; adding it did not fix the entry failure in the next native run.
+The bound bridge test incorrectly used
 String.contains("") to assert the JSC case's empty stdout; it now requires empty
 stdout explicitly and retains the exact structured Unicode value assertion.
 Both failed cases must execute again. The shared minimum-version session change
 at65415324 also requires4 new constructor methods and affected real launch cases;
 unaffected passing cases are retained with their own evidence SHA, not rerun
 solely because the workflow had other failures.
+
+Run43402191132/86ef18ed executed10 unit methods:9 PASS,1 FAIL in29.673s,
+plus the actual diagnostics UI PASS109.431s. Bound ObjC five-engine/full-value/
+exit23 receipts now PASS29.005s. All4 version constructors PASS0.069s,
+3 Expo entry methods PASS0.040s, existing real NS launch/teardown PASS0.463s.
+The facade VM still fails before executing its module: the SDK requests
+bundle.js.js even though this package declares bundle.mjs.
+Authenticated artifact14026324215 (70694376B), downloaded SHA256
+6ab6c165db2ef4964c73cd171e69a868b9cc8e2ebfdb3da09cace7e9d85e6575.
+This remains an overall FAILED run; no facade VM pass is inferred.
+
+NativeScript9.1.0 upstream source Runtime.mm retains process-global
+AppPackageJson/AppConfigCache after runtime destruction; ModuleInternal.mm's
+ResolveMainEntryFromPackageJson uses the cached main. The earlier lifecycle
+fixture declared bundle.js, poisoning subsequent bundle.mjs selection.
+Sources at the pinned SDK release:
+https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/runtime/Runtime.mm
+and https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/runtime/ModuleInternal.mm .
+No private cache hook or unsupported native symbol is used. Hanlin already
+requires a prepared bundle.mjs file; all8 prepared source packages declare it.
+Import and direct launch now explicitly require that exact main/runtime pair.
+Alternate main names are rejected with remediation before VM creation. The
+lifecycle fixture keeps its original two-session/data-isolation assertions but
+uses the canonical ESM entry, without a duplicate bundle.js fallback. New import
+and constructor negatives cover other/malformed/escaping/missing entries.
+The unchanged native SDK still has its general config-cache limitation; arbitrary
+cross-package app config/main support is not claimed. Corrected real VM and
+two-session tests must execute again under this explicit prepared contract.

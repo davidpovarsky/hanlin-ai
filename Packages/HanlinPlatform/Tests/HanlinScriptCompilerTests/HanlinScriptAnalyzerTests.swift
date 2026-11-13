@@ -190,6 +190,23 @@ struct HanlinScriptAnalyzerTests {
         #expect(ordinaryPreview.entrypoints.first?.runtimeProfile == .scriptingJSC)
     }
 
+    @Test("Prepared NativeScript entry metadata uses the canonical bundle across sessions")
+    func nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle() throws {
+        for main: Any in [NSNull(), 1, "bundle.js", "other.mjs", "../bundle.mjs", "/bundle.mjs"] {
+            let metadata = try JSONSerialization.data(withJSONObject: ["name": "fixture", "main": main, "hanlinRuntime": "hanlin-nativescript"])
+            let fixture = try package(files: [
+                "script.json": #"{"name":"NativeScript Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
+                "nativescript/app/bundle.mjs": "console.log('prepared')",
+                "nativescript/app/other.mjs": "throw new Error('wrong entry must not run')",
+                "nativescript/app/package.json": String(decoding: metadata, as: UTF8.self)
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: [])).analyze(fixture)
+            #expect(!preview.canInstall)
+            #expect(preview.findings.contains { $0.code == "MINIAPP_ENTRYPOINT_INVALID" && $0.sourcePath == "nativescript/app/package.json" })
+        }
+    }
+
     @Test("Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting")
     func nativeScriptSwiftUIContract() throws {
         let supported = try package(files: [

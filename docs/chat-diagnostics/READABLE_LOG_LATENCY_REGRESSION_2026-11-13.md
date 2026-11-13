@@ -98,6 +98,15 @@ pass. Move the existing ShareLink into the native navigation toolbar so sharing
 the complete redacted report remains available while reading any preview
 position. The same strict UI case must execute again; no sharing is activated
 by the test and the encrypted source/key remain excluded.
+
+Corrected run43402191132 at86ef18ed actually PASSED the exact diagnostics UI
+case in109.431s. The fresh uniquely identified ordinary turn, confirmation,
+actual device-key lookup/decryption/authenticated records, parser/SDK replay,
+credential masking, visible share action and dismissal all passed. The test
+did not activate external sharing. The overall run FAILED a separate NS VM
+entry-loading method (9/10 unit methods passed); do not report overall CI green.
+Physical new/upgraded defaults, Files visibility, crash/cancel recovery, complete
+cross-layer/provider comparison and stream performance remain separate gates.
 Downloaded artifact14019563661 (223671B), GitHub SHA256
 050427772514b733c0573df390963e9a5d7eea6be101b7f189e33cc3555d7855.
 The failed real UI is separately pending in43389506393 with only the new

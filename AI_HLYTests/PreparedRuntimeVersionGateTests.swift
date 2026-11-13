@@ -6,6 +6,20 @@ import Testing
 @Suite("Direct prepared runtime version gates", .serialized)
 @MainActor
 struct PreparedRuntimeVersionGateTests {
+    @Test func nativeScriptConstructorRejectsNoncanonicalOrMissingMainBeforeCreatingAVM() throws {
+        let root = try fixture(bundle: "bundle.mjs")
+        defer { try? FileManager.default.removeItem(at: root) }
+        try Data("throw new Error('must not run')".utf8).write(to: root.appending(path: "bundle.js"))
+        for main: Any in [NSNull(), 1, "", "bundle.js", "nested/bundle.mjs", "../bundle.mjs", "/bundle.mjs"] {
+            try write(root, object: ["name": "fixture", "main": main, "hanlinRuntime": "hanlin-nativescript"])
+            #expect(throws: (any Error).self) { _ = try HanlinNativeScriptSession(applicationRoot: root) }
+        }
+        try write(root, object: ["name": "fixture", "hanlinRuntime": "hanlin-nativescript"])
+        #expect(throws: (any Error).self) { _ = try HanlinNativeScriptSession(applicationRoot: root) }
+        try write(root, object: ["name": "fixture", "main": "bundle.mjs", "hanlinRuntime": "wrong"])
+        #expect(throws: (any Error).self) { _ = try HanlinNativeScriptSession(applicationRoot: root) }
+    }
+
     @Test func nativeScriptConstructorUsesTheSameReleasedCoreMinimumAsImport() throws {
         let root = try fixture(bundle: "bundle.mjs")
         defer { try? FileManager.default.removeItem(at: root) }

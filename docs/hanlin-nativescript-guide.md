@@ -10,6 +10,13 @@
 באפליקציית Hanlin AI מוטמע **NativeScript iOS Runtime 9.1.0**, עם גשר metadata למחלקות Objective-C הזמינות בבנייה. מפת המקורות, הגרסאות וגבולות החיבור להרחבות נמצאת ב[מיפוי ה-SDK הקיים](miniapp-sdk/README.md). המיפוי מפריד בין הצהרת API, חיבור בקוד והוכחת הרצה במכשיר.
 
 קיימות שתי דרכי כתיבה שניתן לשלב, בהתאם לממשקים שה-Host כולל:
+
+בחבילה מוכנה, קובץ הכניסה הוא `nativescript/app/bundle.mjs`, ולצדו
+`package.json` עם `"main":"bundle.mjs"` ו־`"hanlinRuntime":"hanlin-nativescript"`.
+שמות כניסה חלופיים נדחים במפורש בייבוא ובהפעלת סשן. מנוע 9.1.0 שומר מטמון
+תהליכי של הגדרות החבילה; אין כאן הבטחת החלפה חופשית של `main` או של כלל
+הגדרות NativeScript בין חבילות. [ממצא המקור והבדיקות](miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md).
+
 1. **גישה ישירה מול גשר ה-iOS של ה-Runtime (Direct Native Metadata Bridge):**
    * קוד JavaScript/TypeScript ניגש למחלקות ולחתימות החשופות לגשר Objective-C של ה-Runtime. רכיבי SwiftUI משתמשים בספק SwiftUI המוטמע ובחוזה הגשר שלו.
    * ללא צורך בספריות נוספות, ביצועי Native מלאים ואינטגרציה ישירה עם פקדי מערכת ההפעלה.

@@ -71,6 +71,11 @@ public final class HanlinNativeScriptSession {
             }
         }
         let packageJSONURL = root.appending(path: "package.json", directoryHint: .notDirectory)
+        let metadata = try JSONSerialization.jsonObject(with: Data(contentsOf: packageJSONURL)) as? [String: Any]
+        guard metadata?["main"] as? String == "bundle.mjs",
+              metadata?["hanlinRuntime"] as? String == "hanlin-nativescript" else {
+            throw HanlinNativeScriptError.invalidApplicationRoot("Prepared NativeScript requires main: bundle.mjs and hanlinRuntime: hanlin-nativescript.")
+        }
         try Self.validateNativePluginRequirements(packageJSONURL: packageJSONURL)
         try Self.validateCoreRequirements(packageJSONURL: packageJSONURL)
         self.applicationRoot = root

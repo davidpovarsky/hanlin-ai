@@ -903,7 +903,8 @@ struct HanlinUnifiedHostServicesE2ETests {
         {
           "name": "ns-fixture-app",
           "version": "1.0.0",
-          "main": "bundle.js",
+          "type": "module",
+          "main": "bundle.mjs",
           "hanlinRuntime": "hanlin-nativescript",
           "dependencies": {
             "@nativescript/core": "9.1.0"
@@ -973,7 +974,6 @@ struct HanlinUnifiedHostServicesE2ETests {
         NSUserDefaults.standardUserDefaults.synchronize();
         console.log('HANLIN_NS_BRIDGE_CALL_OK data=' + dataDir);
         """
-        try Data(bundleJS.utf8).write(to: appDir.appending(path: "bundle.js"))
         try Data(bundleJS.utf8).write(to: appDir.appending(path: "bundle.mjs"))
 
         UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")
