@@ -2,12 +2,13 @@
   "schemaVersion": 1,
   "scope": "Runtime autonomy 56 individual Core obligations; not full project CI, full tooling collector or UI/device acceptance",
   "policy": "CORE_ACCEPTANCE_EVIDENCE_POLICY_2026-11-13.md",
-  "analysisTargetSHA": "1b168d91cc218a6648fc771e41ab9487d8cdd4c8",
-  "status": "OPEN",
+  "analysisTargetSHA": "2647ee1d43e1b7b776801db699c49ea1aa1d69a8",
+  "status": "OPEN_ONE_REMOTE_REGISTRY_CASE_AND_SEPARATE_ACCEPTANCE_GATES",
   "requiredCaseCount": 56,
   "counts": {
-    "REUSE_CANDIDATE_NOT_ACCEPTED": 19,
-    "NEEDS_EXECUTION": 37
+    "EXECUTED_PASS": 37,
+    "REUSED_VERIFIED_PASS": 18,
+    "NEEDS_EXECUTION": 1
   },
   "sourceAudit": {
     "originSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
@@ -23,7 +24,10 @@
       "AI_HLY/AI_HLY.entitlements",
       "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
       "AI_HLYTests/RuntimeNativeInterruptionTests.swift",
-      "AI_HLYTests/RuntimeFetchConformanceTests.swift"
+      "AI_HLYTests/RuntimeFetchConformanceTests.swift",
+      "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle",
+      "Packages/HanlinPlatform/Package.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts"
     ],
     "changedBackendPaths": [],
     "allChangedPaths": [
@@ -34,47 +38,72 @@
       "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
       "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift",
       "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift",
       "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsView.swift",
+      "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
       "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceView.swift",
       "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
       "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
       "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "AI_HLY/Resource/Localizable.xcstrings",
       "AI_HLY/SettingsView.swift",
       "AI_HLYTests/AgentDiagnosticsExportTests.swift",
       "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
       "AI_HLYTests/AgentDiagnosticsRawReviewTests.swift",
+      "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests.swift",
+      "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests.swift",
       "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
       "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
       "AI_HLYTests/HanlinUnifiedHostServicesTests.swift",
+      "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
       "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "PROJECT_BOARD.md",
       "Packages/HanlinExpoUI/package.json",
       "Packages/HanlinExpoUI/src/host-services.ts",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
       "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
       "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
       "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
       "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
       "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+      "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
       "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift",
       "Scripts/Audit/audit-miniapp-sdk.mjs",
       "Scripts/Audit/audit_miniapp_reachability.py",
+      "Scripts/CI/Tests/test_affected_validation.py",
       "Scripts/CI/affected-validation-map.json",
       "Scripts/CI/stage_chat_diagnostics_proof.py",
       "Scripts/Expo/package-lock.json",
+      "Scripts/NativeScript/build-host-services.mjs",
+      "Scripts/NativeScript/host-services.ts",
+      "Scripts/NativeScript/package.json",
+      "Scripts/NativeScript/prepare-ios-dependencies.mjs",
       "docs/chat-diagnostics/LOCAL_CODE_FENCE_RENDERING_2026-11-12.md",
+      "docs/chat-diagnostics/READABLE_LOG_LATENCY_REGRESSION_2026-11-13.md",
       "docs/chat-diagnostics/STREAMING_SCROLL_2026-11-12.md",
       "docs/hanlin-expo-runtime.md",
       "docs/hanlin-nativescript-guide.md",
       "docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
       "docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md",
+      "docs/miniapp-sdk/PREPARED_PACKAGE_VERSION_CONTRACT_2026-11-13.md",
       "docs/miniapp-sdk/README.md",
       "docs/miniapp-sdk/extension-reachability.json",
       "docs/miniapp-sdk/extension-reachability.md",
       "docs/miniapp-sdk/source-inventory.json",
       "docs/runtime/CHAT_AND_AUTONOMY_IMPLEMENTATION_2026-11-10.md",
-      "docs/runtime/RUNTIME_AUTONOMY_ACCEPTANCE_MATRIX_2026-11-10.md"
+      "docs/runtime/CORE_ACCEPTANCE_EVIDENCE_POLICY_2026-11-13.md",
+      "docs/runtime/RUNTIME_AUTONOMY_ACCEPTANCE_MATRIX_2026-11-10.md",
+      "docs/runtime/evidence/CORE_56_COVERAGE_2026-11-13.json"
     ],
-    "caveat": "Broader logger/catalog/renderer consumers are excluded from this isolated-backend reuse candidate set. No candidate counts as acceptance until final environment/native/code input proof is recorded."
+    "caveat": "18 isolated-backend passes verified; one external npm fixture remains unaccepted and requires fresh execution. Broader Runtime Tooling/UI/physical/signing gates are separate."
   },
   "originEvidence": {
     "runID": 43267408632,
@@ -99,619 +128,659 @@
   "cases": [
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43267408632,
-        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualNodeAndOriginalJavaScriptCoreCoexistWithTheVerifiedLaunchMode()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualNodeAndOriginalJavaScriptCoreCoexistWithTheVerifiedLaunchMode()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/stoppingAnActualCompilerJobNeverLaunchesItsCompiledSource()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/stoppingAnActualCompilerJobNeverLaunchesItsCompiledSource()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualTypeScriptCompilerUsesLargeDurableInputAndRetrievableFullOutput()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualTypeScriptCompilerUsesLargeDurableInputAndRetrievableFullOutput()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/typeScriptReportsTheActualCompilerAndItsOwnStoppedState()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/typeScriptReportsTheActualCompilerAndItsOwnStoppedState()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/explicitNativeCommandModuleUsesActualPythonAndLinkedBsdWithFullArtifacts()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/explicitNativeCommandModuleUsesActualPythonAndLinkedBsdWithFullArtifacts()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/hostOutputPageQueriesPreserveParametersAndTheAuthenticatedOrigin()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/hostOutputPageQueriesPreserveParametersAndTheAuthenticatedOrigin()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/sourceImportsUseTheActualWorkspaceAndNativePackageExportConditions()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/sourceImportsUseTheActualWorkspaceAndNativePackageExportConditions()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/verifiedLifecycleSourceRunsThroughTheActualSharedEnginesAndRejectsStalePlans()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/verifiedLifecycleSourceRunsThroughTheActualSharedEnginesAndRejectsStalePlans()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/mcpInstallationIsADurableJobAndRunsNativeHooksBeforeTheRealProtocolProbe()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/mcpInstallationIsADurableJobAndRunsNativeHooksBeforeTheRealProtocolProbe()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "NEEDS_EXECUTION",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Exact is-number7.0.0/6.0.0 installs fetch external registry metadata; original remote response/integrity provenance was not retained for positive runtime-input equivalence. Conservatively rerun this one case, without repeating unchanged long-job/backend cases."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualCommandOnlyNpmValidationDoesNotRunTheCommandUntilInvoked()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualCommandOnlyNpmValidationDoesNotRunTheCommandUntilInvoked()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualNodeFileInputExceedsTheHTTPFrameWithoutTruncationOrReplay()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualNodeFileInputExceedsTheHTTPFrameWithoutTruncationOrReplay()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualOptionalLifecycleFailureKeepsRequiredNativeBuildsAndFailedJobEvidence()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualOptionalLifecycleFailureKeepsRequiredNativeBuildsAndFailedJobEvidence()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/nodeCLIUsesActualMainModuleAndRetainsItsInputAndDelayedOutput()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/nodeCLIUsesActualMainModuleAndRetainsItsInputAndDelayedOutput()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/pythonCLIUsesActualFileArgumentsInputAndStandardExitStatus()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/pythonCLIUsesActualFileArgumentsInputAndStandardExitStatus()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/portableShellDispatchesActualPythonNodeAndNativeBSDPipelineWithFullStreams()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/portableShellDispatchesActualPythonNodeAndNativeBSDPipelineWithFullStreams()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/cancellingShellWhileThePythonDirectoryLockIsBusyNeverRunsTheCommandLater()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/cancellingShellWhileThePythonDirectoryLockIsBusyNeverRunsTheCommandLater()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualEmbeddedNodeExecutesThePinnedPortableShellWithoutJITOrAnOSSubprocess()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/actualEmbeddedNodeExecutesThePinnedPortableShellWithoutJITOrAnOSSubprocess()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedShellRetainsFullOutputBeyondThePreviewAndReopensLosslessPages()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedShellRetainsFullOutputBeyondThePreviewAndReopensLosslessPages()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedShellActuallyPipesAndRedirectsWithinItsWorkspace()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedShellActuallyPipesAndRedirectsWithinItsWorkspace()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/linkedShellActuallyAcceptsMoreThan127Arguments()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/linkedShellActuallyAcceptsMoreThan127Arguments()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/embeddedPythonActuallyDownloadsVerifiesInstallsAndImportsAPureWheel()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/embeddedPythonActuallyDownloadsVerifiesInstallsAndImportsAPureWheel()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/bundledNativePythonExtensionInstallsAndExecutesARealNonce()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/bundledNativePythonExtensionInstallsAndExecutesARealNonce()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/embeddedNodeAndPythonActuallyRunBeyondThreeHundredSeconds()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/embeddedNodeAndPythonActuallyRunBeyondThreeHundredSeconds()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/retainedNativePythonCancellationCallbackRemainsValidAfterItsJobIsReleased()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/retainedNativePythonCancellationCallbackRemainsValidAfterItsJobIsReleased()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/runtimeOutputKeepsRetrievalMetadataForTheAgentAndReadableContentForTheUser()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/runtimeOutputKeepsRetrievalMetadataForTheAgentAndReadableContentForTheUser()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/defaultSchemaExposureDoesNotHideToolsPastOldBudgets()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/defaultSchemaExposureDoesNotHideToolsPastOldBudgets()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/fullResultsExceedOldCountAndByteCapsAndSurviveReopen()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/fullResultsExceedOldCountAndByteCapsAndSurviveReopen()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/finishingRunKeepsHistoryReferencesButNotExposedSchemas()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/finishingRunKeepsHistoryReferencesButNotExposedSchemas()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/capabilityReportNeverPromotesStoppedOrFailedEnginesToReady()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43267408632,
-        "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/capabilityReportNeverPromotesStoppedOrFailedEnginesToReady()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/subsequentTurnsCanReadOwnChatResultsWithoutLeakingOtherChats()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/subsequentTurnsCanReadOwnChatResultsWithoutLeakingOtherChats()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/journalRetainsCompletedJobsAndMarksUnfinishedOnRestart()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeAutonomyV3Tests/journalRetainsCompletedJobsAndMarksUnfinishedOnRestart()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/actualPythonChildThreadsKeepTheirWorkspaceAndFullOutputUntilCompletion()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeNativeInterruptionTests/actualPythonChildThreadsKeepTheirWorkspaceAndFullOutputUntilCompletion()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/actualNodeInterruptionRetainsAuthenticatedJournalAndOutput()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeNativeInterruptionTests/actualNodeInterruptionRetainsAuthenticatedJournalAndOutput()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/actualPythonInterruptionRetainsCooperativeNativeOutput()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeNativeInterruptionTests/actualPythonInterruptionRetainsCooperativeNativeOutput()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeNativeInterruptionTests/linkedShellCompletionCannotHideAnEarlierRootInterruption()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
-        "caseResult": "Failed",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
+        "caseResult": "Passed",
         "nodeIdentifier": "RuntimeNativeInterruptionTests/linkedShellCompletionCannotHideAnEarlierRootInterruption()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeFetchConformanceTests/nativeTLSIntegrityProxyAndStreams()",
-      "status": "REUSE_CANDIDATE_NOT_ACCEPTED",
+      "status": "REUSED_VERIFIED_PASS",
       "latestAuthenticExecution": {
         "runID": 43267408632,
         "sourceSHA": "67e42a74cba8e71e897f260fcb57029e47a42558",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeFetchConformanceTests/nativeTLSIntegrityProxyAndStreams()"
       },
-      "reason": "Direct existing runtime backend/fixture bytes unchanged across the complete origin-to-target range; pending final environment/native-input comparison."
+      "reason": "Original actual Passed leaf retained; complete source/helper/fixture/backend/Host/lock/contract range unchanged through analysisTargetSHA. Matching actual simulator model/OS build/architecture, Xcode/SDK, resolved pins and verified native/Host dependency identity. Original execution was not repeated."
     },
     {
       "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/largeOriginalSourceAndFullUnicodeOutputSurviveReopenWithoutReplay()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJavaScriptCoreTests/largeOriginalSourceAndFullUnicodeOutputSurviveReopenWithoutReplay()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/explicitDeadlineFailsBeforeJavaScriptOrOutputFilesAreCreated()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJavaScriptCoreTests/explicitDeadlineFailsBeforeJavaScriptOrOutputFilesAreCreated()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/cancelledQueuedJavaScriptCannotExecuteAfterTheActualRunningContextFinishes()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJavaScriptCoreTests/cancelledQueuedJavaScriptCannotExecuteAfterTheActualRunningContextFinishes()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeJavaScriptCoreTests/actualRunningJavaScriptRetainsLateBytesAndRootInterruptionUntilNaturalReturn()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJavaScriptCoreTests/actualRunningJavaScriptRetainsLateBytesAndRootInterruptionUntilNaturalReturn()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeJobInterruptionTests/ordinaryCancellationIsSerializedWithNativeCompletionAndRetainsFinalBytes()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJobInterruptionTests/ordinaryCancellationIsSerializedWithNativeCompletionAndRetainsFinalBytes()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeJobInterruptionTests/nativeCompletionReadsRootInterruptionEvenBeforeItsAsyncNotification()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJobInterruptionTests/nativeCompletionReadsRootInterruptionEvenBeforeItsAsyncNotification()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeJobInterruptionTests/lateNativeCompletionPreservesSystemInterruptionAndPartialOutput()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJobInterruptionTests/lateNativeCompletionPreservesSystemInterruptionAndPartialOutput()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeJobInterruptionTests/completedJobsRejectLateFailureAndInterruptionReclassification()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeJobInterruptionTests/completedJobsRejectLateFailureAndInterruptionReclassification()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeUserOperationTests/interruptionIsFirstCauseAndCallbacksMayReenterWithoutDeadlock()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeUserOperationTests/interruptionIsFirstCauseAndCallbacksMayReenterWithoutDeadlock()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeUserOperationTests/actualProgressUsesJournalHighWaterMarksWithoutPollInflation()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeUserOperationTests/actualProgressUsesJournalHighWaterMarksWithoutPollInflation()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeUserOperationTests/producerOwnsOnlyItsOperationAndClearsTheCancellationCycle()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeUserOperationTests/producerOwnsOnlyItsOperationAndClearsTheCancellationCycle()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeUserOperationTests/interruptedOriginalStreamNeverFinishesAsSuccessfulEOF()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeUserOperationTests/interruptedOriginalStreamNeverFinishesAsSuccessfulEOF()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeExecutionInputArtifactTests/smallControlInputStaysInlineWithoutCreatingAnInbox()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeExecutionInputArtifactTests/smallControlInputStaysInlineWithoutCreatingAnInbox()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     },
     {
       "selector": "AI_HLYTests/RuntimeExecutionInputArtifactTests/largeInputKeepsExactBytesAndDigestAndRejectsAnotherOwnerBeforeSubmission()",
-      "status": "NEEDS_EXECUTION",
+      "status": "EXECUTED_PASS",
       "latestAuthenticExecution": {
-        "runID": 43149824545,
-        "sourceSHA": "63c17b92aab86fbe10dc75f1d5f83ec839019594",
+        "runID": 43325255401,
+        "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
         "caseResult": "Passed",
         "nodeIdentifier": "RuntimeExecutionInputArtifactTests/largeInputKeepsExactBytesAndDigestAndRejectsAnotherOwnerBeforeSubmission()"
       },
-      "reason": "Failed/missing, changed logging/catalog/renderer closure, or older source closure not positively verified; rerun exact case."
+      "reason": "Executed in the authentic41-case unit result at cbb0d8e3. Separate UI failed; overall workflow is not claimed successful."
     }
-  ]
+  ],
+  "freshEvidence": {
+    "runID": 43325255401,
+    "sourceSHA": "cbb0d8e397b86f2d41361554ded8419583e680e6",
+    "overallConclusion": "failure",
+    "unitCaseCount": 41,
+    "unitCaseResult": "41 actual Passed leaves",
+    "coreCaseCount": 37,
+    "unitCaseResultFileSHA256": "37128285c9cce22d7a8cbffbb6754053d87a29695e488f7129efdd57fb2d9311",
+    "artifactID": 13995225808,
+    "artifactBytes": 65565832,
+    "downloadedArtifactSHA256": "2e8d3716451a393aa0414e288d5db5fd0ab0f8732b0dbb80678a33def9271dd6",
+    "simulatorDevices": [
+      {
+        "architecture": "arm64",
+        "deviceId": "4DF1AA75-A2F8-4E1A-AF15-154F8671CBBC",
+        "deviceName": "iPad mini (A20 Pro)",
+        "modelName": "iPad mini (A20 Pro)",
+        "osBuildNumber": "24B8117",
+        "osVersion": "27.2",
+        "platform": "iOS Simulator"
+      }
+    ]
+  },
+  "verifiedReuseEnvironment": {
+    "originRunID": 43267408632,
+    "comparisonRunID": 43325255401,
+    "xcode": "27.2",
+    "xcodeBuild": "27B52",
+    "compilerAuthority": "Xcode27.2 default toolchain in actual compiler commands, same installed SDK/build; not Windows Swift",
+    "sdk": "iPhoneSimulator27.2.sdk",
+    "configuration": "Debug",
+    "resolvedPackageSHA256": "82ec65133abe666ade68bc3306715eabdff610509cdffd3dc5e4b999cc35be68",
+    "resolvedPinsSHA256": "52525ed50e9f608fe3e424e9f0c519c0886df2a69493b3aeb5b05eefdaa2beba",
+    "nativeCandidateRunID": 42926628418,
+    "verifiedNativeAndHostDependencyIdentity": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "hostCodeProof": "Actual preparation validated current Host module source and locked dependency/patch closure; complete source range unchanged. ZIP container mtime/compression identity is not asserted.",
+    "sourceRange": "67e42a74cba8e71e897f260fcb57029e47a42558..2647ee1d43e1b7b776801db699c49ea1aa1d69a8",
+    "closureChangedPaths": [],
+    "freshnessBoundary": "Mutable external npm registry case requires execution; unchanged305s embedded backend case is reused, not rerun."
+  }
 }

@@ -127,6 +127,8 @@ for (const file of [
   'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift',
   'AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift',
   'Scripts/NativeScript/build-host-services.mjs',
+  'Scripts/NativeScript/Fixtures/HostServices/valid.ts',
+  'Scripts/NativeScript/Fixtures/HostServices/invalid.ts',
   'Scripts/NativeScript/prepare-ios-dependencies.mjs',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts',

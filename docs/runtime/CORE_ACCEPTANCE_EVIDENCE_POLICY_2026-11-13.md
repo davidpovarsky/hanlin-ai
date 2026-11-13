@@ -47,3 +47,28 @@ run. `FAILED`, `NOT_RUN`/`NEEDS_EXECUTION`, `BLOCKED`, and unaccepted candidates
 remain distinct. Any missing required case leaves Core coverage open. Do not feed
 this ledger to the old collector's rejected `--reuse-report` option or turn a red
 workflow into a green overall report.
+
+## Audited55/56 checkpoint
+
+At analysis target2647ee1d, the actual fresh41-case unit result from
+run43325255401/cbb0d8e3 supplies37 individual Core EXECUTED_PASS cases.
+The independent UI failed, leaving the overall workflow FAILED.
+
+18 original backend passes from43267408632/67e42a74 are now
+REUSED_VERIFIED_PASS: original Passed leaves, unchanged complete dependency/
+fixture range, identical resolved package pins, Xcode27.2/27B52,
+iPhoneSimulator27.2 SDK and actual arm64 iPad mini(A20Pro) iOS27.2/24B8117.
+Both authenticated native preparation logs verify candidate42926628418 and
+native/Host dependency identity2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.
+Actual preparation verifies current Host module source and locked dependencies/
+patches; ZIP mtime/compression byte identity is not asserted. Full source ranges
+include all Runtime/MCP/IOSSystemLite/preparation inputs, project settings, three
+test suites, real TLS fixtures and shared PlatformContracts. No changed path
+exists in that closure. The authentic305s case did not execute again.
+
+The remaining npm global install/update/import/removal case is conservatively
+NEEDS_EXECUTION. It fetches remote is-number7.0.0/6.0.0 registry inputs whose
+original metadata/integrity response was not retained for positive equivalence.
+Do not promote it by assuming external-state stability. Execute only this case
+with a necessary native follow-up; other55 cases need no routine final rerun.
+The complete56 gate and all separate UI/Tooling/signing/physical gates remain open.

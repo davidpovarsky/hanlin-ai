@@ -85,3 +85,11 @@ Only the affected seven-case RawReview suite and failed UI need execution;
 unchanged schema/export/journal cases retain their original individual evidence.
 The workflow now accepts the existing exact selector for that seven-case suite
 and verifies each actual leaf; unknown filters fail instead of running zero cases.
+
+Native response-ordering verification at88518328: run43388284038
+executed7/7 selected RawReview cases/1 suite in69.758s, including the new
+large-request preview case17.214s. Workflow10m42s, Xcode27.2/27B52.
+Downloaded artifact14019563661 (223671B), GitHub SHA256
+050427772514b733c0573df390963e9a5d7eea6be101b7f189e33cc3555d7855.
+The failed real UI is separately pending in43389506393 with only the new
+NativeScript wire suite, without repeating unchanged41 unit cases.

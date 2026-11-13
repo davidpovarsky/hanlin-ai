@@ -1,15 +1,8 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8851832830f5ae0d2467ebb171e5dc8c988587d3",
+  "sourceCommit": "2647ee1d43e1b7b776801db699c49ea1aa1d69a8",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-    "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
-    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
-    "Scripts/Audit/audit_miniapp_reachability.py",
-    "Scripts/NativeScript/host-services.ts"
-  ],
+  "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
@@ -159,7 +152,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "1c00483947b7a0fcbe9812cbe9381dfabb2346a5ee1d08e1e6b94294755b7abc"
+      "sha256": "e5bd787b84c4200f85b8fd3ef639ac04d5771981705dba12f4d2c6595ae5abe8"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -170,8 +163,16 @@
       "sha256": "958644db0225b790f789380b2bf7afa87de9630d1edc469d9277c5cd1c024767"
     },
     {
+      "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
+      "sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d"
+    },
+    {
+      "path": "Scripts/NativeScript/Fixtures/HostServices/valid.ts",
+      "sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466"
+    },
+    {
       "path": "Scripts/NativeScript/build-host-services.mjs",
-      "sha256": "6460bca8633410418b516309bafba23457b0646e94893108100f02dc884ecff9"
+      "sha256": "f74356b5bebb6677548ceaf1cca971627da295ad0fb1b744787025fc665ad343"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",

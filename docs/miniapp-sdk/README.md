@@ -63,8 +63,12 @@ runtime execution is performed by either check.
 
 Current gaps include the unconsumed Share inbox/temporary attachment URLs,
 Expo non-widget exposure/intent rejection, NS single-active-session arbitration,
-missing generic NS TS/Shell/structured receipts, legacy Expo backend/receipt
-acceptance, differing generic Shell source semantics and unpublished SystemServicesBroker bindings. The legacy native
-Expo adapter now validates runtime names and propagates cancellation/nonzero exit/timeout; native regression execution remains pending. The recorded17 system
+full per-surface NS/Expo receipt acceptance, differing generic Shell source
+semantics and unpublished SystemServicesBroker bindings. The new
+[NS runtime facade](NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md) exposes all five
+canonical engines, full receipts and session-owned cancellation in source;
+native VM/metadata execution remains pending. Legacy Expo backend/name/failure
+cases actually passed in43315911311; these are native adapter tests, not every
+JS-module/system-ingress consumer. The recorded17 system
 method declarations and permissive capability metadata are not iOS availability
 or OS permission proof. INT-02…07 and SDK-02…08 remain open.
