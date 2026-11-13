@@ -34,3 +34,10 @@ locally with Swift6; this is not full analyzer execution. The affected native
 HanlinScriptAnalyzerTests suite must execute on the existing focused package
 workflow. Complete engine schemas, Host version/features, CLI remediation,
 plugin/archive negatives and physical Host gates remain separate obligations.
+
+Native execution evidence at0d9b67ec: run43328396255 executed14/14 analyzer
+cases in0.163s, Xcode27.2/27B52 Swift6.4.2 arm64macOS27.0 (job2m54s).
+Downloaded artifact13994196293, GitHub SHA256
+79b3625dfdc6d9c55750fc86a84579e199e82b7661682817cd6c0b227df39523.
+This proves import analyzer behavior, not direct Runtime session validation or
+the complete SDK-02 schema/Host/device contract.

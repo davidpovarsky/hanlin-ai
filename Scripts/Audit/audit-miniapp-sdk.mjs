@@ -85,6 +85,9 @@ async function inspectTS(file) {
 await inspectTS('Packages/HanlinExpoUI/src/index.ts');
 await inspectTS('Packages/HanlinExpoUI/src/modifiers.ts');
 await inspectTS('Packages/HanlinExpoNativeAPIJS/src/index.ts');
+const expoExports = [...exports];
+await inspectTS('Scripts/NativeScript/host-services.ts');
+const nativeScriptExports = exports.slice(expoExports.length);
 const tooling = await json('Scripts/Expo/package.json');
 const lock = await json('Scripts/Expo/package-lock.json');
 const nsLock = await json('Scripts/NativeScript/dependency-lock.json');
@@ -122,6 +125,12 @@ for (const file of [
   'Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift',
   'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift',
   'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift',
+  'AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift',
+  'Scripts/NativeScript/build-host-services.mjs',
+  'Scripts/NativeScript/prepare-ios-dependencies.mjs',
+  'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs',
+  'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts',
+  'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json',
 ]) await source(file);
 
 const analyzer = await source('Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift');
@@ -153,7 +162,9 @@ const inventory = {
     stableDiagnosticCodes: [...new Set([...analyzer.text.matchAll(/code: "(MINIAPP_[A-Z_]+)"/g)].map(m => m[1]))].sort(),
     status: 'source contract; analyzer regressions, complete schemas and installed Host acceptance are separate gates'},
   nativeScript: {toolingDependencies: nsPackage.dependencies ?? {}, toolingDevDependencies: nsPackage.devDependencies ?? {}, pinnedNativeContract: nsLock.nativeScript, swiftUI: nsLock.swiftUI,
-    hostBridge: {source: header.path, methods: objcMethods, status: 'partial', missingGenericRuntimeKinds: ['typeScript', 'shell'], result: 'legacy string/error callbacks, not full RuntimeExecutionResult'}},
+    publicExports: nativeScriptExports,
+    hostBridge: {source: header.path, methods: objcMethods, status: 'generic_source_wired_native_acceptance_pending', missingGenericRuntimeKinds: [], result: 'generic async callback returns canonical RuntimeExecutionResult JSON; legacy string callbacks remain compatible',
+      cancellation: 'host-issued handle scoped to captured session; cooperative cancellation and invalidation; no second NS isolate'}},
   expo: {
     declaredAndLocked: Object.fromEntries(wanted.map(name => [name, {declared: tooling.dependencies[name], locked: lock.packages?.['node_modules/' + name]?.version ?? null}])),
     hanlinUI: {packageVersion: uiPackage.version, peerDependencies: uiPackage.peerDependencies, generatedBridgeVersion: bridge.bridgeVersion,
@@ -163,7 +174,7 @@ const inventory = {
     nativeAPIFacade: {packageVersion: nativeAPIPackage.version, peerDependencies: nativeAPIPackage.peerDependencies},
     nativeModule: {source: nativeModule.path, exports: nativeNames},
     hostInvoke: {source: adapter.path, operations, facadeOperations, status: 'partial_source_wiring_not_surface_acceptance'},
-    publicExports: exports.sort((a, b) => compare(a.source, b.source) || a.line - b.line || compare(a.name, b.name)),
+    publicExports: expoExports.sort((a, b) => compare(a.source, b.source) || a.line - b.line || compare(a.name, b.name)),
     reexports: reexports.sort((a, b) => compare(a.source, b.source) || a.line - b.line),
   },
   manifests: [
@@ -177,7 +188,7 @@ const inventory = {
     {id: 'SDK04-API-ACCEPTANCE', owner: 'SDK-04', detail: 'HanlinExpoUI peers now match the existing stable tooling pins, with no resolved dependency changes. File empty/missing distinction and runtime deadline/artifact typings are source-corrected; actual JS->module->native per-API and Metro/device coverage remain required.'},
     {id: 'INT06-LEGACY-ACCEPTANCE', owner: 'INT-06', detail: 'Native legacy executeRuntime now validates all five canonical kinds (plus the explicit Python alias) and propagates cancellation/nonzero exit/timeout; actual backend regression tests are pending. Full JS-to-native structured receipt coverage remains open.'},
     {id: 'INT06-SHELL-SOURCE', owner: 'INT-06', detail: 'Generic RuntimeKind.shell still uses the linked native string parser; the public command-string tool uses the portable-shell route. Align the documented source semantics without adding another shell engine.'},
-    {id: 'INT03-NS-RESULT', owner: 'INT-03', detail: 'NS legacy callbacks discard structured stderr/status/artifacts and omit a generic TS/Shell entrypoint.'},
+    {id: 'INT03-NS-RESULT', owner: 'INT-03', detail: 'Generic NS executeRuntime now uses the same JSON request/full receipt boundary as Expo, with typed generated facade and session-owned cooperative cancellation. Actual VM/metadata/backend acceptance is pending; legacy callbacks retain string semantics.'},
     {id: 'INT03-SESSION', owner: 'INT-03', detail: 'NativeScript has one active session and process-environment mutation; no concurrent-isolate or process-isolation claim.'},
     {id: 'INT06-CONTEXT', owner: 'INT-02/INT-06', detail: 'NS headless-action provider now explicitly sets canPresentUI=false; foreground default remains true. Actual share-sheet rejection regression is pending. MiniApp context still uses userGesturePresent=false; full invocation context and all OS-prompt services require separate validation.'},
     {id: 'INT06-AVAILABILITY', owner: 'INT-06', detail: 'hasCapability returns personal-host policy, not OS/service availability. The17 SystemServicesBroker declarations have no generic NS/Expo Host binding in these inspected adapters.'},

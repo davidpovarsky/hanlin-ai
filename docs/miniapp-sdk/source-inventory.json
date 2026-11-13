@@ -1,9 +1,19 @@
 {
-  "sourceCommit": "cbb0d8e397b86f2d41361554ded8419583e680e6",
+  "sourceCommit": "8851832830f5ae0d2467ebb171e5dc8c988587d3",
   "uncommittedSourcePaths": [
-    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
-    "Scripts/Audit/audit-miniapp-sdk.mjs"
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+    "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "Scripts/NativeScript/build-host-services.mjs",
+    "Scripts/NativeScript/host-services.ts",
+    "Scripts/NativeScript/package.json",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -73,466 +83,706 @@
       },
       "embeddedProviderClass": "HanlinNativeScriptSwiftUIFixtureProvider"
     },
+    "publicExports": [
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 2,
+        "name": "HanlinRuntimeKind",
+        "kind": "TypeAliasDeclaration",
+        "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 3,
+        "name": "RuntimeJSONValue",
+        "kind": "TypeAliasDeclaration",
+        "type": "null | boolean | number | string | RuntimeJSONValue[] | { [key: string]: RuntimeJSONValue }"
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 4,
+        "name": "RuntimeExecutionLimits",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "timeoutMilliseconds",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "maximumOutputBytes",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 9,
+        "name": "RuntimeOutputArtifact",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "path",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "bytes",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          },
+          {
+            "name": "sha256",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 10,
+        "name": "RuntimeExecutionResult",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "executionID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "stdout",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "stderr",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "RuntimeJSONValue"
+          },
+          {
+            "name": "exitCode",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "durationMilliseconds",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          },
+          {
+            "name": "didTimeOut",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "wasCancelled",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "outputWasTruncated",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "outputFiles",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "Record<string, RuntimeOutputArtifact>"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 22,
+        "name": "RuntimeExecutionOptions",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "arguments",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string[]"
+          },
+          {
+            "name": "environment",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "Record<string, string>"
+          },
+          {
+            "name": "limits",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "RuntimeExecutionLimits"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 27,
+        "name": "RuntimeRequestHandle",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "requestID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string | null"
+          },
+          {
+            "name": "result",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "Promise<RuntimeExecutionResult>"
+          },
+          {
+            "name": "cancel",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 44,
+        "name": "createHostServices",
+        "kind": "FunctionDeclaration"
+      }
+    ],
     "hostBridge": {
       "source": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
       "methods": [
         {
+          "selector": "executeRuntime:completion:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 13
+        },
+        {
+          "selector": "cancelRuntime:",
+          "classMethod": false,
+          "signature": "- (BOOL)cancelRuntime:(NSString *)requestID;",
+          "line": 14
+        },
+        {
+          "selector": "invalidateRuntimeRequests",
+          "classMethod": false,
+          "signature": "- (void)invalidateRuntimeRequests;",
+          "line": 15
+        },
+        {
           "selector": "dataRootDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)dataRootDirectory;",
-          "line": 11
+          "line": 17
         },
         {
           "selector": "stateDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)stateDirectory;",
-          "line": 12
+          "line": 18
         },
         {
           "selector": "documentsDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)documentsDirectory;",
-          "line": 13
+          "line": 19
         },
         {
           "selector": "cacheDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)cacheDirectory;",
-          "line": 14
+          "line": 20
         },
         {
           "selector": "executeJavaScript:completion:",
           "classMethod": false,
           "signature": "- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 16
+          "line": 22
         },
         {
           "selector": "executeNode:completion:",
           "classMethod": false,
           "signature": "- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 17
+          "line": 23
         },
         {
           "selector": "nodeHealthCheckWithCompletion:",
           "classMethod": false,
           "signature": "- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
-          "line": 18
+          "line": 24
         },
         {
           "selector": "executePython:completion:",
           "classMethod": false,
           "signature": "- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 19
+          "line": 25
         },
         {
           "selector": "pythonVersion",
           "classMethod": false,
           "signature": "- (nullable NSString *)pythonVersion;",
-          "line": 20
+          "line": 26
         },
         {
           "selector": "fetchURL:completion:",
           "classMethod": false,
           "signature": "- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 21
+          "line": 27
         },
         {
           "selector": "sendRequest:action:capability:payloadJSON:completion:",
           "classMethod": false,
           "signature": "- (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 23
+          "line": 29
         },
         {
           "selector": "registerRequestHandler:capability:handler:",
           "classMethod": false,
           "signature": "- (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
-          "line": 29
+          "line": 35
+        },
+        {
+          "selector": "executeRuntime:completion:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 45
+        },
+        {
+          "selector": "cancelRuntime:",
+          "classMethod": false,
+          "signature": "- (BOOL)cancelRuntime:(NSString *)requestID;",
+          "line": 46
         },
         {
           "selector": "dataRootDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)dataRootDirectory;",
-          "line": 39
+          "line": 48
         },
         {
           "selector": "stateDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)stateDirectory;",
-          "line": 40
+          "line": 49
         },
         {
           "selector": "documentsDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)documentsDirectory;",
-          "line": 41
+          "line": 50
         },
         {
           "selector": "cacheDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)cacheDirectory;",
-          "line": 42
+          "line": 51
         },
         {
           "selector": "invalidate",
           "classMethod": false,
           "signature": "- (void)invalidate;",
-          "line": 44
+          "line": 53
         },
         {
           "selector": "executeJavaScript:completion:",
           "classMethod": false,
           "signature": "- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 46
+          "line": 55
         },
         {
           "selector": "executeNode:completion:",
           "classMethod": false,
           "signature": "- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 47
+          "line": 56
         },
         {
           "selector": "nodeHealthCheckWithCompletion:",
           "classMethod": false,
           "signature": "- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
-          "line": 48
+          "line": 57
         },
         {
           "selector": "executePython:completion:",
           "classMethod": false,
           "signature": "- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 49
+          "line": 58
         },
         {
           "selector": "pythonVersion",
           "classMethod": false,
           "signature": "- (nullable NSString *)pythonVersion;",
-          "line": 50
+          "line": 59
         },
         {
           "selector": "fetchURL:completion:",
           "classMethod": false,
           "signature": "- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 51
+          "line": 60
         },
         {
           "selector": "sendRequest:action:capability:payloadJSON:completion:",
           "classMethod": false,
           "signature": "- (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 53
+          "line": 62
         },
         {
           "selector": "registerRequestHandler:capability:handler:",
           "classMethod": false,
           "signature": "- (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
-          "line": 59
+          "line": 68
         },
         {
           "selector": "registerProvider:forSessionID:",
           "classMethod": true,
           "signature": "+ (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider forSessionID:(NSString *)sessionID;",
-          "line": 67
+          "line": 76
         },
         {
           "selector": "unregisterProviderForSessionID:",
           "classMethod": true,
           "signature": "+ (void)unregisterProviderForSessionID:(NSString *)sessionID;",
-          "line": 68
+          "line": 77
         },
         {
           "selector": "providerForSessionID:",
           "classMethod": true,
           "signature": "+ (nullable id<HanlinNativeServicesProvider>)providerForSessionID:(NSString *)sessionID;",
-          "line": 69
+          "line": 78
         },
         {
           "selector": "resetAllSessions",
           "classMethod": true,
           "signature": "+ (void)resetAllSessions;",
-          "line": 70
+          "line": 79
         },
         {
           "selector": "claimSessionBridgeWithToken:",
           "classMethod": true,
           "signature": "+ (nullable HanlinNativeServicesSessionBridge *)claimSessionBridgeWithToken:(NSString *)token;",
-          "line": 74
+          "line": 83
         },
         {
           "selector": "setActiveSessionBridge:forSessionID:",
           "classMethod": true,
           "signature": "+ (void)setActiveSessionBridge:(nullable HanlinNativeServicesSessionBridge *)bridge forSessionID:(NSString *)sessionID;",
-          "line": 77
+          "line": 86
         },
         {
           "selector": "clearActiveSessionBridgeForSessionID:",
           "classMethod": true,
           "signature": "+ (void)clearActiveSessionBridgeForSessionID:(NSString *)sessionID;",
-          "line": 78
+          "line": 87
         },
         {
           "selector": "activeSessionBridge",
           "classMethod": true,
           "signature": "+ (nullable HanlinNativeServicesSessionBridge *)activeSessionBridge;",
-          "line": 79
+          "line": 88
         },
         {
           "selector": "registerProvider:",
           "classMethod": true,
           "signature": "+ (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider;",
-          "line": 82
+          "line": 91
         },
         {
           "selector": "legacyProvider",
           "classMethod": true,
           "signature": "+ (nullable id<HanlinNativeServicesProvider>)legacyProvider;",
-          "line": 83
+          "line": 92
         },
         {
           "selector": "currentProvider",
           "classMethod": true,
           "signature": "+ (nullable id<HanlinNativeServicesProvider>)currentProvider;",
-          "line": 84
+          "line": 93
+        },
+        {
+          "selector": "executeRuntime:completion:",
+          "classMethod": true,
+          "signature": "+ (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 96
+        },
+        {
+          "selector": "cancelRuntime:",
+          "classMethod": true,
+          "signature": "+ (BOOL)cancelRuntime:(NSString *)requestID;",
+          "line": 97
         },
         {
           "selector": "dataRootDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)dataRootDirectory;",
-          "line": 87
+          "line": 98
         },
         {
           "selector": "stateDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)stateDirectory;",
-          "line": 88
+          "line": 99
         },
         {
           "selector": "documentsDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)documentsDirectory;",
-          "line": 89
+          "line": 100
         },
         {
           "selector": "cacheDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)cacheDirectory;",
-          "line": 90
+          "line": 101
         },
         {
           "selector": "executeJavaScript:completion:",
           "classMethod": true,
           "signature": "+ (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 92
+          "line": 103
         },
         {
           "selector": "executeNode:completion:",
           "classMethod": true,
           "signature": "+ (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 93
+          "line": 104
         },
         {
           "selector": "nodeHealthCheckWithCompletion:",
           "classMethod": true,
           "signature": "+ (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
-          "line": 94
+          "line": 105
         },
         {
           "selector": "executePython:completion:",
           "classMethod": true,
           "signature": "+ (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 95
+          "line": 106
         },
         {
           "selector": "pythonVersion",
           "classMethod": true,
           "signature": "+ (nullable NSString *)pythonVersion;",
-          "line": 96
+          "line": 107
         },
         {
           "selector": "fetchURL:completion:",
           "classMethod": true,
           "signature": "+ (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 97
+          "line": 108
         },
         {
           "selector": "sendRequest:action:capability:payloadJSON:completion:",
           "classMethod": true,
           "signature": "+ (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 99
+          "line": 110
         },
         {
           "selector": "registerRequestHandler:capability:handler:",
           "classMethod": true,
           "signature": "+ (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
-          "line": 105
+          "line": 116
         },
         {
           "selector": "executeJavaScriptSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)executeJavaScriptSync:(NSString *)source;",
-          "line": 110
+          "line": 121
         },
         {
           "selector": "executeNodeSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)executeNodeSync:(NSString *)source;",
-          "line": 111
+          "line": 122
         },
         {
           "selector": "executePythonSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)executePythonSync:(NSString *)source;",
-          "line": 112
+          "line": 123
         },
         {
           "selector": "fetchURLSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)fetchURLSync:(NSString *)urlString;",
-          "line": 113
+          "line": 124
         },
         {
           "selector": "sendRequestSync:action:capability:payloadJSON:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)sendRequestSync:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON;",
-          "line": 114
+          "line": 125
         },
         {
           "selector": "registerAction:capability:",
           "classMethod": true,
           "signature": "+ (void)registerAction:(NSString *)action capability:(NSString *)capability;",
-          "line": 118
+          "line": 129
         },
         {
           "selector": "roundTripValue:key:",
           "classMethod": true,
           "signature": "+ (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;",
-          "line": 119
+          "line": 130
         },
         {
           "selector": "sharedBridge",
           "classMethod": true,
           "signature": "+ (instancetype)sharedBridge;",
-          "line": 121
+          "line": 132
+        },
+        {
+          "selector": "executeRuntime:completion:",
+          "classMethod": false,
+          "signature": "- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
+          "line": 133
+        },
+        {
+          "selector": "cancelRuntime:",
+          "classMethod": false,
+          "signature": "- (BOOL)cancelRuntime:(NSString *)requestID;",
+          "line": 134
         },
         {
           "selector": "dataRootDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)dataRootDirectory;",
-          "line": 122
+          "line": 135
         },
         {
           "selector": "stateDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)stateDirectory;",
-          "line": 123
+          "line": 136
         },
         {
           "selector": "documentsDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)documentsDirectory;",
-          "line": 124
+          "line": 137
         },
         {
           "selector": "cacheDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)cacheDirectory;",
-          "line": 125
+          "line": 138
         },
         {
           "selector": "executeJavaScript:completion:",
           "classMethod": false,
           "signature": "- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 126
+          "line": 139
         },
         {
           "selector": "executeNode:completion:",
           "classMethod": false,
           "signature": "- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 127
+          "line": 140
         },
         {
           "selector": "nodeHealthCheckWithCompletion:",
           "classMethod": false,
           "signature": "- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
-          "line": 128
+          "line": 141
         },
         {
           "selector": "executePython:completion:",
           "classMethod": false,
           "signature": "- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 129
+          "line": 142
         },
         {
           "selector": "pythonVersion",
           "classMethod": false,
           "signature": "- (nullable NSString *)pythonVersion;",
-          "line": 130
+          "line": 143
         },
         {
           "selector": "fetchURL:completion:",
           "classMethod": false,
           "signature": "- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 131
+          "line": 144
         },
         {
           "selector": "sendRequest:action:capability:payloadJSON:completion:",
           "classMethod": false,
           "signature": "- (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 132
+          "line": 145
         },
         {
           "selector": "registerRequestHandler:capability:handler:",
           "classMethod": false,
           "signature": "- (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
-          "line": 137
+          "line": 150
         },
         {
           "selector": "executeJavaScriptSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)executeJavaScriptSync:(NSString *)source;",
-          "line": 140
+          "line": 153
         },
         {
           "selector": "executeNodeSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)executeNodeSync:(NSString *)source;",
-          "line": 141
+          "line": 154
         },
         {
           "selector": "executePythonSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)executePythonSync:(NSString *)source;",
-          "line": 142
+          "line": 155
         },
         {
           "selector": "fetchURLSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)fetchURLSync:(NSString *)urlString;",
-          "line": 143
+          "line": 156
         },
         {
           "selector": "sendRequestSync:action:capability:payloadJSON:",
           "classMethod": false,
           "signature": "- (nullable NSString *)sendRequestSync:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON;",
-          "line": 144
+          "line": 157
         },
         {
           "selector": "registerAction:capability:",
           "classMethod": false,
           "signature": "- (void)registerAction:(NSString *)action capability:(NSString *)capability;",
-          "line": 148
+          "line": 161
         },
         {
           "selector": "roundTripValue:key:",
           "classMethod": false,
           "signature": "- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;",
-          "line": 149
+          "line": 162
         }
       ],
-      "status": "partial",
-      "missingGenericRuntimeKinds": [
-        "typeScript",
-        "shell"
-      ],
-      "result": "legacy string/error callbacks, not full RuntimeExecutionResult"
+      "status": "generic_source_wired_native_acceptance_pending",
+      "missingGenericRuntimeKinds": [],
+      "result": "generic async callback returns canonical RuntimeExecutionResult JSON; legacy string callbacks remain compatible",
+      "cancellation": "host-issued handle scoped to captured session; cooperative cancellation and invalidation; no second NS isolate"
     }
   },
   "expo": {
@@ -5536,7 +5786,7 @@
     {
       "id": "INT03-NS-RESULT",
       "owner": "INT-03",
-      "detail": "NS legacy callbacks discard structured stderr/status/artifacts and omit a generic TS/Shell entrypoint."
+      "detail": "Generic NS executeRuntime now uses the same JSON request/full receipt boundary as Expo, with typed generated facade and session-owned cooperative cancellation. Actual VM/metadata/backend acceptance is pending; legacy callbacks retain string semantics."
     },
     {
       "id": "INT03-SESSION",
@@ -5562,11 +5812,11 @@
   "sources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "fadea2454a233d0fcdd1012d18780103289e796da5c8c1eceecf5879d733dde6"
+      "sha256": "dec2911594fcefdfc6ba0b6e543f9d7302d72a946c439a921dc9c6cc1cb0f09f"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "ca1748aefbb4735ae71005d6d3dcb4ef90d1f11700c7c30cf3a7459efabfcd74"
+      "sha256": "b390126099916d8dace62ef20d58158905ae1a2972cf719476f5cabf39746005"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -5575,6 +5825,10 @@
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
       "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+      "sha256": "38ea9cf373f082c93701f58fa801bde577ed4d278134970e524877a2862bb515"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
@@ -5658,15 +5912,27 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
-      "sha256": "4029b44ede74ba01b8304f4f052824f00311605999f7d4dde0c2e25571d7b107"
+      "sha256": "0759b1466eae7382d0d89506b32d5e174266793cd3419e424df7bc82989534f9"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
-      "sha256": "623d1047c3eda55f0db2aa79df37dc2afa376487dffdaa51f7526137076298d4"
+      "sha256": "ace01e583be673a0ae4f021b1bb4e31ab5ef18ea2655802fb21c56c7b17b9f3b"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
       "sha256": "aee294b026c5e532705b7036af505704bce6596e3907bd1b42b329e50ed77248"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "sha256": "bdfbd9aaafdc2b9b8b37b0e33a268f8b6143bdc807fa741ae699fd89ff259564"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "sha256": "5c139e30f598ea2da90464bb840684dd3a302d157ffa4102195021944efbb85c"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
@@ -5690,7 +5956,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "bb5e769819e90ba4bc5e10c130163efc79acd804d40f54e095cbf018f9e57a84"
+      "sha256": "1c00483947b7a0fcbe9812cbe9381dfabb2346a5ee1d08e1e6b94294755b7abc"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -5701,12 +5967,24 @@
       "sha256": "958644db0225b790f789380b2bf7afa87de9630d1edc469d9277c5cd1c024767"
     },
     {
+      "path": "Scripts/NativeScript/build-host-services.mjs",
+      "sha256": "6460bca8633410418b516309bafba23457b0646e94893108100f02dc884ecff9"
+    },
+    {
       "path": "Scripts/NativeScript/dependency-lock.json",
       "sha256": "117ae6521cd70fcb6a3edb3756ce4db75edfecbd9a76c9045620c1e8d5c43661"
     },
     {
+      "path": "Scripts/NativeScript/host-services.ts",
+      "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
+    },
+    {
       "path": "Scripts/NativeScript/package.json",
-      "sha256": "e5ff996378f887203ece1be170fdb7aaca12aaaa1a3a2cce937aa097c81b88fe"
+      "sha256": "97c1400f8bce0072a89793e44d32006c4ad8f4cb166c878fe13677a78eadb6a5"
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "a074412c19f4ac85c4a76eb7dfa20d30efab68674a1928cce0a3c3a0ffe99348"
     },
     {
       "path": "Tools/SwiftUIBridge/configuration.json",

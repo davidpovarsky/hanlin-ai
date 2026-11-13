@@ -5,6 +5,7 @@
   "type": "module",
   "main": "Fixtures/Source/app.ts",
   "scripts": {
+    "check:host-services": "node build-host-services.mjs --check",
     "check:fixture": "tsc --noEmit",
     "prepare:fixture": "npm run check:fixture && vite build --mode production -- --env.ios",
     "prepare:ios-dependencies": "node prepare-ios-dependencies.mjs",

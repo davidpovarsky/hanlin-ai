@@ -61,18 +61,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             return try Self.encode(["value": hasCapability(request.capability)])
 
         case "runtime.execute":
-            let request = try JSONDecoder().decode(RuntimeRequest.self, from: payloadData)
-            guard let kind = RuntimeKind(rawValue: request.kind) else {
-                throw HanlinHostServiceError.invalidRequest("Unknown runtime kind: \(request.kind)")
-            }
-            let result = try await executeRuntime(
-                kind,
-                source: request.source,
-                arguments: request.arguments ?? [],
-                environment: request.environment ?? [:],
-                limits: request.limits
-            )
-            return try Self.encode(result)
+            return try await HanlinRuntimeWireProtocol.execute(payloadJSON, context: context)
 
         case "files.read":
             let request = try JSONDecoder().decode(FileRequest.self, from: payloadData)
@@ -262,14 +251,6 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
 
 private struct CapabilityRequest: Decodable {
     let capability: String
-}
-
-private struct RuntimeRequest: Decodable {
-    let kind: String
-    let source: String
-    let arguments: [String]?
-    let environment: [String: String]?
-    let limits: RuntimeExecutionLimits?
 }
 
 private struct FileRequest: Decodable {

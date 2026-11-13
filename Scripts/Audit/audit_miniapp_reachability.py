@@ -49,7 +49,9 @@ def build() -> dict:
     ref("notification", "ChavrusaChatNotificationService/NotificationService.swift", "override func didReceive(")
     ref("requestBroker", "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift", "public func request(")
     ref("nativeBridge", "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h", "@protocol HanlinNativeServicesProvider")
-    ref("nativeAdapter", "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift", "public func executeJavaScript(")
+    ref("nativeAdapter", "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift", "public func executeRuntime(")
+    ref("nativeFacade", "Scripts/NativeScript/host-services.ts", "export function createHostServices()")
+    ref("runtimeWire", "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift", "enum HanlinRuntimeWireProtocol")
     ref("nativeSession", "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift", "guard Self.activeSession == nil")
     ref("expoFacade", "Packages/HanlinExpoUI/src/host-services.ts", "executeRuntime(")
     ref("expoModule", "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift", 'AsyncFunction("invoke")')
@@ -95,26 +97,26 @@ def build() -> dict:
         "shortcuts": {"target": "HanlinScriptingWidgets / AI_Hanlin", "refs": ["shortcutIntent", "hostShortcuts", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "headless", "expoIntentRejection"],
                       "stop": "Generic MiniApp action enqueues foreground continuation. Registered Siri phrases are alarm/notification operations; not an all-runtime MiniApp API.", "owner": "INT-02/INT-03"},
         "foreground": {"target": "AI_Hanlin", "refs": ["nativeBridge", "nativeAdapter", "nativeSession", "expoFacade", "expoModule", "expoAdapter", "runtimeBroker", "callerContext"],
-                       "stop": "Source-wired Host calls still require real JS->native->executor->receipt tests; legacy NS strings lose stderr/status/artifacts and generic TS/Shell are absent.", "owner": "INT-03/INT-06/SDK-03/SDK-04"},
+                       "stop": "NS generic async facade and Expo use the same canonical JSON/full-receipt route. NS captures its bound bridge, with session-owned cancel handles and teardown cancellation. Actual VM/metadata/backend tests are pending; legacy NS strings keep their historical result boundary.", "owner": "INT-03/INT-06/SDK-03/SDK-04"},
     }
     rows = []
     for surface, route in paths.items():
         for engine in ENGINES:
             for runtime in RUNTIMES:
-                has_tail = engine == "hanlinExpo" or runtime in ["node", "localPython", "javaScriptCore"]
+                has_tail = True
                 connected_source = surface == "foreground" or (surface in ["hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript")
                 wired = has_tail and connected_source
-                structured_receipt = wired and surface == "foreground" and engine == "hanlinExpo"
+                structured_receipt = wired and surface == "foreground"
                 rows.append({"surface": surface, "engine": engine, "runtime": runtime,
                     "status": "not-tested" if structured_receipt else "partially-wired" if wired else "disconnected", "path": surface,
                     "runtimeTail": (["expoFacade", "expoModule", "expoAdapter", "runtimeBroker"] if engine == "hanlinExpo"
-                                    else ["nativeBridge", "nativeAdapter", "runtimeBroker"]) if has_tail else [],
+                                    else ["nativeFacade", "nativeBridge", "nativeAdapter", "runtimeWire", "runtimeBroker"]) if has_tail else [],
                     "sourcePathReachesCanonicalExecutor": wired,
                     "structuredReceiptReturnedToIngressInSource": structured_receipt,
                     "durableActionReceiptInSource": surface in ["hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript",
                     "realSurfaceE2E": False, "onDeviceProof": None,
-                    "resultBoundary": "Legacy string/error callback" if wired and engine == "hanlinNativeScript" else
-                                      "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing" if wired else "No connected canonical-runtime receipt",
+                    "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing" if structured_receipt else
+                                      "Durable action receipt; runtime receipt readback to ingress incomplete" if wired else "No connected canonical-runtime receipt",
                     "callerContext": {"hostAdapterReachable": wired, "canPresentUI": (False if engine == "hanlinNativeScript" and surface != "foreground" else True) if wired else None,
                         "userGesturePresent": False if wired else None,
                         "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation" if wired and surface != "foreground" else

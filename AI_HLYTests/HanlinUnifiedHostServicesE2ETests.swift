@@ -790,6 +790,9 @@ struct HanlinUnifiedHostServicesE2ETests {
         defer { HanlinNativeServicesBridge.resetAllSessions() }
 
         final class SlowMockProvider: NSObject, HanlinNativeServicesProvider {
+            func executeRuntime(_ payloadJSON: String, completion: HanlinBridgeStringResultBlock? = nil) -> String? { completion?(nil, "Unsupported test provider"); return nil }
+            func cancelRuntime(_ requestID: String) -> Bool { false }
+            func invalidateRuntimeRequests() {}
             func dataRootDirectory() -> String? { nil }
             func stateDirectory() -> String? { nil }
             func documentsDirectory() -> String? { nil }

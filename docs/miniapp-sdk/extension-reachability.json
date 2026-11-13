@@ -1,20 +1,25 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "cbb0d8e397b86f2d41361554ded8419583e680e6",
+  "sourceCommit": "8851832830f5ae0d2467ebb171e5dc8c988587d3",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+    "Scripts/Audit/audit_miniapp_reachability.py",
+    "Scripts/NativeScript/host-services.ts"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "fadea2454a233d0fcdd1012d18780103289e796da5c8c1eceecf5879d733dde6"
+      "sha256": "dec2911594fcefdfc6ba0b6e543f9d7302d72a946c439a921dc9c6cc1cb0f09f"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "ca1748aefbb4735ae71005d6d3dcb4ef90d1f11700c7c30cf3a7459efabfcd74"
+      "sha256": "b390126099916d8dace62ef20d58158905ae1a2972cf719476f5cabf39746005"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -23,6 +28,10 @@
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
       "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+      "sha256": "38ea9cf373f082c93701f58fa801bde577ed4d278134970e524877a2862bb515"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
@@ -106,15 +115,27 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
-      "sha256": "4029b44ede74ba01b8304f4f052824f00311605999f7d4dde0c2e25571d7b107"
+      "sha256": "0759b1466eae7382d0d89506b32d5e174266793cd3419e424df7bc82989534f9"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
-      "sha256": "623d1047c3eda55f0db2aa79df37dc2afa376487dffdaa51f7526137076298d4"
+      "sha256": "ace01e583be673a0ae4f021b1bb4e31ab5ef18ea2655802fb21c56c7b17b9f3b"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
       "sha256": "aee294b026c5e532705b7036af505704bce6596e3907bd1b42b329e50ed77248"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "sha256": "bdfbd9aaafdc2b9b8b37b0e33a268f8b6143bdc807fa741ae699fd89ff259564"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "sha256": "5c139e30f598ea2da90464bb840684dd3a302d157ffa4102195021944efbb85c"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
@@ -138,7 +159,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "bb5e769819e90ba4bc5e10c130163efc79acd804d40f54e095cbf018f9e57a84"
+      "sha256": "1c00483947b7a0fcbe9812cbe9381dfabb2346a5ee1d08e1e6b94294755b7abc"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -149,12 +170,24 @@
       "sha256": "958644db0225b790f789380b2bf7afa87de9630d1edc469d9277c5cd1c024767"
     },
     {
+      "path": "Scripts/NativeScript/build-host-services.mjs",
+      "sha256": "6460bca8633410418b516309bafba23457b0646e94893108100f02dc884ecff9"
+    },
+    {
       "path": "Scripts/NativeScript/dependency-lock.json",
       "sha256": "117ae6521cd70fcb6a3edb3756ce4db75edfecbd9a76c9045620c1e8d5c43661"
     },
     {
+      "path": "Scripts/NativeScript/host-services.ts",
+      "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
+    },
+    {
       "path": "Scripts/NativeScript/package.json",
-      "sha256": "e5ff996378f887203ece1be170fdb7aaca12aaaa1a3a2cce937aa097c81b88fe"
+      "sha256": "97c1400f8bce0072a89793e44d32006c4ad8f4cb166c878fe13677a78eadb6a5"
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "a074412c19f4ac85c4a76eb7dfa20d30efab68674a1928cce0a3c3a0ffe99348"
     },
     {
       "path": "Tools/SwiftUIBridge/configuration.json",
@@ -368,13 +401,25 @@
       "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
       "line": 9,
       "anchor": "@protocol HanlinNativeServicesProvider",
-      "sha256": "623d1047c3eda55f0db2aa79df37dc2afa376487dffdaa51f7526137076298d4"
+      "sha256": "ace01e583be673a0ae4f021b1bb4e31ab5ef18ea2655802fb21c56c7b17b9f3b"
     },
     "nativeAdapter": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "line": 95,
-      "anchor": "public func executeJavaScript(",
-      "sha256": "ca1748aefbb4735ae71005d6d3dcb4ef90d1f11700c7c30cf3a7459efabfcd74"
+      "line": 100,
+      "anchor": "public func executeRuntime(",
+      "sha256": "b390126099916d8dace62ef20d58158905ae1a2972cf719476f5cabf39746005"
+    },
+    "nativeFacade": {
+      "file": "Scripts/NativeScript/host-services.ts",
+      "line": 44,
+      "anchor": "export function createHostServices()",
+      "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
+    },
+    "runtimeWire": {
+      "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+      "line": 5,
+      "anchor": "enum HanlinRuntimeWireProtocol",
+      "sha256": "38ea9cf373f082c93701f58fa801bde577ed4d278134970e524877a2862bb515"
     },
     "nativeSession": {
       "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
@@ -398,7 +443,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
       "line": 63,
       "anchor": "case \"runtime.execute\":",
-      "sha256": "fadea2454a233d0fcdd1012d18780103289e796da5c8c1eceecf5879d733dde6"
+      "sha256": "dec2911594fcefdfc6ba0b6e543f9d7302d72a946c439a921dc9c6cc1cb0f09f"
     },
     "runtimeBroker": {
       "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
@@ -434,7 +479,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "eeb5fde0be80cc962a388317a3f7478271c1db452bb33d8b784859e2c2de533f"
+      "sha256": "b212ab45e83d52afe3461a4e427b0fabfe9dbbb39ef546e46e712b15ad0ac43f"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
@@ -554,7 +599,7 @@
         "runtimeBroker",
         "callerContext"
       ],
-      "stop": "Source-wired Host calls still require real JS->native->executor->receipt tests; legacy NS strings lose stderr/status/artifacts and generic TS/Shell are absent.",
+      "stop": "NS generic async facade and Expo use the same canonical JSON/full-receipt route. NS captures its bound bridge, with session-owned cancel handles and teardown cancellation. Actual VM/metadata/backend tests are pending; legacy NS strings keep their historical result boundary.",
       "owner": "INT-03/INT-06/SDK-03/SDK-04"
     }
   },
@@ -566,8 +611,10 @@
       "status": "disconnected",
       "path": "share",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -595,7 +642,13 @@
       "runtime": "typeScript",
       "status": "disconnected",
       "path": "share",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -622,8 +675,10 @@
       "status": "disconnected",
       "path": "share",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -652,8 +707,10 @@
       "status": "disconnected",
       "path": "share",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -681,7 +738,13 @@
       "runtime": "shell",
       "status": "disconnected",
       "path": "share",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -863,8 +926,10 @@
       "status": "disconnected",
       "path": "translation",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -892,7 +957,13 @@
       "runtime": "typeScript",
       "status": "disconnected",
       "path": "translation",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -919,8 +990,10 @@
       "status": "disconnected",
       "path": "translation",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -949,8 +1022,10 @@
       "status": "disconnected",
       "path": "translation",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -978,7 +1053,13 @@
       "runtime": "shell",
       "status": "disconnected",
       "path": "translation",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -1160,8 +1241,10 @@
       "status": "disconnected",
       "path": "widget",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1189,7 +1272,13 @@
       "runtime": "typeScript",
       "status": "disconnected",
       "path": "widget",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -1216,8 +1305,10 @@
       "status": "disconnected",
       "path": "widget",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1246,8 +1337,10 @@
       "status": "disconnected",
       "path": "widget",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1275,7 +1368,13 @@
       "runtime": "shell",
       "status": "disconnected",
       "path": "widget",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -1457,8 +1556,10 @@
       "status": "disconnected",
       "path": "notification",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1486,7 +1587,13 @@
       "runtime": "typeScript",
       "status": "disconnected",
       "path": "notification",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -1513,8 +1620,10 @@
       "status": "disconnected",
       "path": "notification",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1543,8 +1652,10 @@
       "status": "disconnected",
       "path": "notification",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1572,7 +1683,13 @@
       "runtime": "shell",
       "status": "disconnected",
       "path": "notification",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -1754,8 +1871,10 @@
       "status": "disconnected",
       "path": "liveActivity",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1783,7 +1902,13 @@
       "runtime": "typeScript",
       "status": "disconnected",
       "path": "liveActivity",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -1810,8 +1935,10 @@
       "status": "disconnected",
       "path": "liveActivity",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1840,8 +1967,10 @@
       "status": "disconnected",
       "path": "liveActivity",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": false,
@@ -1869,7 +1998,13 @@
       "runtime": "shell",
       "status": "disconnected",
       "path": "liveActivity",
-      "runtimeTail": [],
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
       "sourcePathReachesCanonicalExecutor": false,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": false,
@@ -2051,8 +2186,10 @@
       "status": "partially-wired",
       "path": "hostAppIntent",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
@@ -2060,7 +2197,7 @@
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": false,
@@ -2078,20 +2215,26 @@
       "surface": "hostAppIntent",
       "engine": "hanlinNativeScript",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "hostAppIntent",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2107,8 +2250,10 @@
       "status": "partially-wired",
       "path": "hostAppIntent",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
@@ -2116,7 +2261,7 @@
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": false,
@@ -2137,8 +2282,10 @@
       "status": "partially-wired",
       "path": "hostAppIntent",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
@@ -2146,7 +2293,7 @@
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": false,
@@ -2164,20 +2311,26 @@
       "surface": "hostAppIntent",
       "engine": "hanlinNativeScript",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "hostAppIntent",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2348,8 +2501,10 @@
       "status": "partially-wired",
       "path": "shortcuts",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
@@ -2357,7 +2512,7 @@
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": false,
@@ -2375,20 +2530,26 @@
       "surface": "shortcuts",
       "engine": "hanlinNativeScript",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "shortcuts",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2404,8 +2565,10 @@
       "status": "partially-wired",
       "path": "shortcuts",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
@@ -2413,7 +2576,7 @@
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": false,
@@ -2434,8 +2597,10 @@
       "status": "partially-wired",
       "path": "shortcuts",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
@@ -2443,7 +2608,7 @@
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": false,
@@ -2461,20 +2626,26 @@
       "surface": "shortcuts",
       "engine": "hanlinNativeScript",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "shortcuts",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2642,19 +2813,21 @@
       "surface": "foreground",
       "engine": "hanlinNativeScript",
       "runtime": "node",
-      "status": "partially-wired",
+      "status": "not-tested",
       "path": "foreground",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
-      "structuredReceiptReturnedToIngressInSource": false,
+      "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
@@ -2672,20 +2845,26 @@
       "surface": "foreground",
       "engine": "hanlinNativeScript",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "not-tested",
       "path": "foreground",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
-      "structuredReceiptReturnedToIngressInSource": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2698,19 +2877,21 @@
       "surface": "foreground",
       "engine": "hanlinNativeScript",
       "runtime": "localPython",
-      "status": "partially-wired",
+      "status": "not-tested",
       "path": "foreground",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
-      "structuredReceiptReturnedToIngressInSource": false,
+      "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
@@ -2728,19 +2909,21 @@
       "surface": "foreground",
       "engine": "hanlinNativeScript",
       "runtime": "javaScriptCore",
-      "status": "partially-wired",
+      "status": "not-tested",
       "path": "foreground",
       "runtimeTail": [
+        "nativeFacade",
         "nativeBridge",
         "nativeAdapter",
+        "runtimeWire",
         "runtimeBroker"
       ],
       "sourcePathReachesCanonicalExecutor": true,
-      "structuredReceiptReturnedToIngressInSource": false,
+      "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Legacy string/error callback",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
@@ -2758,20 +2941,26 @@
       "surface": "foreground",
       "engine": "hanlinNativeScript",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "not-tested",
       "path": "foreground",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
-      "structuredReceiptReturnedToIngressInSource": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2797,7 +2986,7 @@
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
@@ -2828,7 +3017,7 @@
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
@@ -2859,7 +3048,7 @@
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
@@ -2890,7 +3079,7 @@
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
@@ -2921,7 +3110,7 @@
       "durableActionReceiptInSource": false,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "Typed RuntimeExecutionResult in foreground facade; per-surface E2E missing",
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
       "callerContext": {
         "hostAdapterReachable": true,
         "canPresentUI": true,
