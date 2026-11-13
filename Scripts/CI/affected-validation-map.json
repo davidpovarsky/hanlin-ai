@@ -227,7 +227,8 @@
       "description": "Unified Host Services layer",
       "patterns": [
         "AI_HLY/Downstream/HostServices/**",
-        "AI_HLYTests/HanlinUnifiedHostServices*"
+        "AI_HLYTests/HanlinUnifiedHostServices*",
+        "AI_HLYTests/NativeScriptRuntimeWireTests.swift"
       ],
       "direct_validation_groups": [
         "unified_host_services"
@@ -330,7 +331,9 @@
         "Scripts/NativeScript/prepare-ios-dependencies.mjs",
         "Scripts/NativeScript/preflight-ios-dependencies.mjs",
         "Scripts/NativeScript/hanlin-nsld.sh",
-        "Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
+        "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+        "Scripts/NativeScript/host-services.ts",
+        "Scripts/NativeScript/build-host-services.mjs"
       ],
       "direct_validation_groups": [
         "nativescript_dependencies"
@@ -1378,7 +1381,7 @@
       "workflow_outputs": {
         "run_simulator_job": true,
         "run_simulator_unit": true,
-        "simulator_unit_filter": "AI_HLYTests/HanlinUnifiedHostServicesTests,AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests,AI_HLYTests/HanlinUnifiedHostServicesE2ETests"
+        "simulator_unit_filter": "AI_HLYTests/HanlinUnifiedHostServicesTests,AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests,AI_HLYTests/HanlinUnifiedHostServicesE2ETests,AI_HLYTests/NativeScriptRuntimeWireTests"
       }
     },
     "ci_router": {
