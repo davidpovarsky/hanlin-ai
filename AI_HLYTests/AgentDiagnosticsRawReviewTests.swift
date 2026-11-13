@@ -10,6 +10,29 @@ import Testing
 
 @Suite("Deliberate encrypted capture review")
 struct AgentDiagnosticsRawReviewTests {
+    @Test func responseComparisonPrecedesLargeRequestInTheBoundedReviewPreview() async throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let base = directory.appending(path: "agent-session-long-request"), run = UUID(), attempt = UUID()
+        let key = SymmetricKey(size: .bits256)
+        let journal = AgentDiagnosticsJournal(baseURL: base, runID: run, groupID: UUID(), full: true, keyProvider: { key })
+        var request = URLRequest(url: URL(string: "https://example.invalid/chat")!)
+        let largeHistory = String(repeating: "ACTUAL_SYSTEM_HISTORY ", count: 4000)
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["messages": [["role": "system", "content": largeHistory]]])
+        journal.transportObserver(.request(id: attempt, request: request))
+        journal.transportObserver(.bytes(id: attempt, data: Data("data: {\"choices\":[{\"delta\":{\"content\":\"UNIQUE_CAPTURED_RESPONSE\"}}]}\n\ndata: {\"choices\":[{\"delta\":{},\"finish_reason\":\"stop\"}]}\n\ndata: [DONE]\n\n".utf8)))
+        journal.transportObserver(.end(id: attempt, error: nil))
+        await journal.checkpoint(status: "completed")
+        let raw = try Data(contentsOf: URL(filePath: base.path + ".raw.enc"))
+        let capture = try AgentDiagnosticsRawReviewer.decode(raw, runID: run, key: key)
+        let report = try await AgentDiagnosticsRawReviewer.report(capture, apiType: "OpenAI", modelID: "fixture")
+        let preview = String(report.text.prefix(65_536))
+        #expect(preview.contains("Direct content:\nUNIQUE_CAPTURED_RESPONSE"))
+        #expect(preview.contains("SDK content:\nUNIQUE_CAPTURED_RESPONSE"))
+        #expect(report.text.contains(largeHistory), "Reordering must preserve the complete request")
+        #expect(report.text.count > 65_536)
+    }
+
     @Test func actualJournalBytesReplayLocallyAndMaskCredentialsAfterCoalescing() async throws {
         let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }

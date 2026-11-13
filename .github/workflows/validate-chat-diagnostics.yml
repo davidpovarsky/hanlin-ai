@@ -2,6 +2,11 @@ name: Validate production encrypted chat diagnostics
 
 on:
   workflow_call:
+    inputs:
+      test_suite:
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -54,18 +59,22 @@ jobs:
       - name: Execute actual encrypted capture, replay, redaction and ZIP tests
         working-directory: build/ChatDiagnosticsProof
         shell: bash
+        env:
+          DIAGNOSTICS_TEST_SUITE: ${{ inputs.test_suite }}
         run: |
           set -euo pipefail
+          case "$DIAGNOSTICS_TEST_SUITE" in
+            '') test_args=(-only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsExportTests -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsJournalTests -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsRawReviewTests -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsSessionPersistenceTests) ;;
+            AI_HLYTests/AgentDiagnosticsRawReviewTests) test_args=(-only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsRawReviewTests) ;;
+            *) echo 'Unsupported diagnostics suite filter' >&2; exit 2 ;;
+          esac
           set +e
           xcodebuild test -scheme HanlinChatDiagnosticsProof \
             -destination 'platform=iOS Simulator,id=${{ steps.toolchain.outputs.device }}' \
             -clonedSourcePackagesDirPath "$GITHUB_WORKSPACE/build/DiagnosticsSourcePackages" \
             -derivedDataPath "$RUNNER_TEMP/DiagnosticsDerivedData" \
             -resultBundlePath "$GITHUB_WORKSPACE/build/diagnostics-evidence/Capture.xcresult" \
-            -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsExportTests \
-            -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsJournalTests \
-            -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsRawReviewTests \
-            -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsSessionPersistenceTests \
+            "${test_args[@]}" \
             -skipMacroValidation CODE_SIGNING_ALLOWED=NO 2>&1 | tee ../diagnostics-evidence/xcodebuild.log
           test_status="${PIPESTATUS[0]}"
           set -e
@@ -87,7 +96,7 @@ jobs:
                   raise SystemExit('The resolved ZIPFoundation version differs from production')
           PY
           python3 - <<'PY'
-          import json
+          import json, os
           expected = {
               'archiveRedactsAgainExcludesRawAndAuthenticatesExportedBytes',
               'symlinksAndOversizedAssetsFailInsteadOfEscapingOrTruncating',
@@ -99,6 +108,7 @@ jobs:
               'redactionPreservesOrdinaryConversationAndMasksNestedSecrets',
               'credentialsSplitAcrossSSEEventsRemainOnlyInTheEncryptedSource',
               'actualJournalBytesReplayLocallyAndMaskCredentialsAfterCoalescing',
+              'responseComparisonPrecedesLargeRequestInTheBoundedReviewPreview',
               'wrongKeyRunOrTamperedEnvelopeNeverProducesAReview',
               'duplicatedAndReorderedAuthenticatedRecordsAreRejected',
               'incompleteCrashTailIsExplicitAndCompleteMalformedRecordsFailClosed',
@@ -108,6 +118,15 @@ jobs:
               'oldRedactedLatenciesRecoverWithoutRewritingTheSourceFile',
               'legacyRepairDoesNotAcceptOtherCorruptFieldsOrGuessedNumericStrings',
               'latencyNamesDoNotAllowCredentialStringsOrOrdinaryTokensThrough'}
+          if os.environ['DIAGNOSTICS_TEST_SUITE']:
+              expected &= {
+                  'actualJournalBytesReplayLocallyAndMaskCredentialsAfterCoalescing',
+                  'responseComparisonPrecedesLargeRequestInTheBoundedReviewPreview',
+                  'wrongKeyRunOrTamperedEnvelopeNeverProducesAReview',
+                  'duplicatedAndReorderedAuthenticatedRecordsAreRejected',
+                  'incompleteCrashTailIsExplicitAndCompleteMalformedRecordsFailClosed',
+                  'unknownReplayFormatFailsInsteadOfGuessingAProvider',
+                  'encodedURLKeysAndEchoedCookieValuesAreRedactedWithoutChangingOrdinaryUnicode'}
           found = {}
           def visit(node):
               if isinstance(node, dict):
@@ -121,7 +140,7 @@ jobs:
           visit(json.load(open('../diagnostics-evidence/tests.json')))
           if set(found) != expected or any(results != ['Passed'] for results in found.values()):
               raise SystemExit(f'Missing, duplicate or nonpassing required case: {found}')
-          print('EXECUTED_PASS: all nineteen production diagnostics cases')
+          print(f'EXECUTED_PASS: {len(expected)} selected production diagnostics cases')
           PY
           exit "$test_status"
       - uses: actions/cache/save@v6.1.0

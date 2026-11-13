@@ -47,6 +47,12 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
         XCTAssertTrue(reportExists, "Actual device-key lookup/decryption/offline replay did not produce a review")
         let text = report.label + (report.value as? String ?? "")
+        if !text.contains(expected) || !text.contains("SDK content:") {
+            let state = XCTAttachment(string: text)
+            state.name = "Actual bounded encrypted review preview"
+            state.lifetime = .keepAlways
+            add(state)
+        }
         XCTAssertTrue(text.contains("Authenticated records") && text.contains("not an exact raw export"))
         XCTAssertTrue(text.contains(expected) && text.contains("SDK content:"), "The review did not replay the actual newly captured response")
         XCTAssertFalse(text.contains("NOT_CAPTURED: no transport request or response records are available."))

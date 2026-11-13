@@ -55,3 +55,33 @@ optional refresh69s, test phase972s. The latter includes test-host compilation
 before the3 actual unit cases and2 UI cases; it is not39s of tests described as
 16min of native execution. Keep exact filters and compatible caches; no native
 engine rebuild, full project validation or publication is needed for this fix.
+
+## Authenticated native results and next UI failure
+
+At cbb0d8e3, isolated iOS run43325302797 executed all19 actual cases
+in23.895s (4 suites), Xcode27.2/27B52 Swift6.4.2 on arm64 iPhone18Pro
+iOS27.0/24A434. Artifact13993570421 (244032B) was downloaded; GitHub
+SHA256 f83150186c496a9b8efdea31c80e678eb4d4f1aef71f8905c7c114c614860d88.
+
+Full-app run43325255401 executed41/41 selected unit cases in37.429s,
+including actual Recorder/device-Keychain/capture/review, compiled intent
+delivery, Expo file boundaries and37 Core obligations. Its separate diagnostics
+UI failed at line51, so the overall workflow FAILED. Artifact13995225808
+(65,565,832B) was downloaded and actual ZIP SHA256 verified as
+2e8d3716451a393aa0414e288d5db5fd0ab0f8732b0dbb80678a33def9271dd6.
+
+The actual retained native UI hierarchy shows authenticated26 records/21 stages
+and a valid review. The request's system history/tool schemas consumed the
+entire65,536-character visible prefix before response comparison or SDK content.
+The visible request contains the fresh unique user marker, but neither the
+expected CAPTURED response nor SDK content appears in that prefix. This is
+a review ordering defect; it does not establish a transport/capture failure.
+
+The report now puts all response comparisons before full requests; no request
+is truncated from the full report. A new actual journal/replay regression uses
+a request larger than the UI budget and requires both actual parser/SDK
+responses in the preview plus the entire history in the complete report.
+Only the affected seven-case RawReview suite and failed UI need execution;
+unchanged schema/export/journal cases retain their original individual evidence.
+The workflow now accepts the existing exact selector for that seven-case suite
+and verifies each actual leaf; unknown filters fail instead of running zero cases.

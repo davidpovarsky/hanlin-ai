@@ -111,10 +111,12 @@ enum AgentDiagnosticsRawReviewer {
         No network or tool side effects. This is not APIManager, accumulator or rendered-bubble parity.
         This report is redacted and is not an exact raw export. The device key and encrypted source are excluded.
         """]
+        var requestSections: [String] = []
         if capture.attempts.isEmpty { sections.append("NOT_CAPTURED: no transport request or response records are available.") }
         for attempt in capture.attempts {
             try Task.checkCancellation()
-            sections.append("Attempt \(attempt.id.uuidString)\nRequest:\n\(requests[attempt.id] ?? "NOT_CAPTURED")")
+            sections.append("Attempt \(attempt.id.uuidString)")
+            requestSections.append("Attempt \(attempt.id.uuidString) request:\n\(requests[attempt.id] ?? "NOT_CAPTURED")")
             let configuration = HanlinChatModelConfiguration(modelID: modelID, company: apiType, apiType: apiType,
                 endpoint: "https://offline-replay.invalid/v1/chat/completions", credential: "offline-placeholder")
             let result = try await HanlinCapturedStreamReplay.replay(
@@ -137,6 +139,10 @@ enum AgentDiagnosticsRawReviewer {
             Coverage warnings: \(result.warnings.joined(separator: "; "))
             """)
         }
+        // Full tool schemas/system histories can exceed the bounded UI preview
+        // before even the first response is reached. Keep every request intact
+        // in the report, after the response comparisons from all attempts.
+        sections.append(contentsOf: requestSections)
         let text = sections.joined(separator: "\n\n")
         guard text.utf8.count <= 16 * 1024 * 1024 else { throw CocoaError(.fileReadTooLarge) }
         let safe = AgentDiagnosticsRedactor.redactKnownCredentials(in: AgentDiagnosticsRedactor.sanitize(text), credentials: credentials)

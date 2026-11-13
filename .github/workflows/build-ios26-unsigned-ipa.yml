@@ -2955,6 +2955,8 @@ jobs:
   focused-diagnostics-capture-tests:
     if: ${{ !inputs.testflight_upload && inputs.diagnostics_capture_validation_only }}
     uses: ./.github/workflows/validate-chat-diagnostics.yml
+    with:
+      test_suite: ${{ inputs.exact_test_selector }}
 
   focused-scripting-package-tests:
     if: ${{ !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}
