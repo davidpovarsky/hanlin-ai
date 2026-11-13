@@ -1,9 +1,14 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a0fcbb3b40462ec399b75db58bf604e1e20348e1",
+  "sourceCommit": "660f5b45fe41af70d259eb3818de4da956e6c4bc",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift"
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+    "Scripts/Audit/audit_miniapp_reachability.py"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
@@ -14,7 +19,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "b390126099916d8dace62ef20d58158905ae1a2972cf719476f5cabf39746005"
+      "sha256": "5b7c7a3361f5645d89792908f63a3c101f57ceb965220f9a8dbf9e51e6693dd2"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -34,7 +39,7 @@
     },
     {
       "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-      "sha256": "9a321bc3be683652559f635ec18c5a5ab474d3ced2878804f501b628de4c0ffe"
+      "sha256": "c9440f793065d74e617d67fa5b0efaae81008618f4b9389ce8309632799ce899"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
@@ -336,15 +341,21 @@
     },
     "shareRead": {
       "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
-      "line": 27,
+      "line": 44,
       "anchor": "func pendingBatches()",
-      "sha256": "c914a30a0b5a5df7d45ea8672dd7bc3fad42d554167d453a44c85144f46c7972"
+      "sha256": "e245ee24d7e28c26a54bf675ff28e0c7d0514e25a98df5014357bbfb056e3d7b"
     },
     "shareReview": {
       "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
-      "line": 5,
+      "line": 6,
       "anchor": "struct ChavrusaShareInboxView",
-      "sha256": "79178b48b9d373ad808badf04491a7564207c9e57a174f8d480998e3fff4778c"
+      "sha256": "c17925e6be38369da566491e226f4115e5c1ae1cd1eeb182a6a1ecd22cdba27b"
+    },
+    "shareSelection": {
+      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+      "line": 17,
+      "anchor": "var shareActionTargets:",
+      "sha256": "beca15b259140eb97630b40f71ff1f6ce41ec637b90fb638486d6f0b8e6ba86e"
     },
     "translationSnapshot": {
       "file": "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift",
@@ -378,21 +389,21 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1418,
+      "line": 1472,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "8f7e1a43ba8bb2acf59ad4dd5798311be4f54a97ae57ba6c40620d0b43047028"
+      "sha256": "728ef71dbe5223a94c1cdb92088314d0eaba6145c58c48281355cc2e56d22617"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 718,
+      "line": 756,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "8f7e1a43ba8bb2acf59ad4dd5798311be4f54a97ae57ba6c40620d0b43047028"
+      "sha256": "728ef71dbe5223a94c1cdb92088314d0eaba6145c58c48281355cc2e56d22617"
     },
     "expoIntentRejection": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1489,
+      "line": 1589,
       "anchor": "guard entrypoint.runtimeProfile != .hanlinExpo else",
-      "sha256": "8f7e1a43ba8bb2acf59ad4dd5798311be4f54a97ae57ba6c40620d0b43047028"
+      "sha256": "728ef71dbe5223a94c1cdb92088314d0eaba6145c58c48281355cc2e56d22617"
     },
     "expoExposureRejection": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
@@ -452,7 +463,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
       "line": 100,
       "anchor": "public func executeRuntime(",
-      "sha256": "b390126099916d8dace62ef20d58158905ae1a2972cf719476f5cabf39746005"
+      "sha256": "5b7c7a3361f5645d89792908f63a3c101f57ceb965220f9a8dbf9e51e6693dd2"
     },
     "nativeFacade": {
       "file": "Scripts/NativeScript/host-services.ts",
@@ -524,7 +535,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "00c3dbf6a1eb63192f21214b5bc9c6092dba19f98a22b555421dbf212bbe6f69"
+      "sha256": "2e487d5e0c9d6cdce6f9fed8317e63658e60e52a9d46e56808f53390288bff9f"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
@@ -559,9 +570,14 @@
         "shareOwnedStore",
         "shareProviderCopy",
         "shareRead",
-        "shareReview"
+        "shareReview",
+        "shareSelection",
+        "extensionQueue",
+        "extensionReceipts",
+        "resume",
+        "headless"
       ],
-      "stop": "Owned atomic batches copy files during provider callbacks and feed Host ingress review. Installed target/action selection, INT-02 dispatch, expiry and execution receipt readback remain unconnected; historical share-inbox.json is retained.",
+      "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review. Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.",
       "owner": "INT-04"
     },
     "translation": {
@@ -617,7 +633,7 @@
         "nativeSession",
         "expoIntentRejection"
       ],
-      "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session yields needsForeground; Expo yields an explicit unsupported receipt. Native queue/executor cases and real compiled-intent result passed; actual NS/Expo system ingress readback, full context and attachment acceptance remain open.",
+      "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session leaves unstarted work queued; Expo yields an explicit unsupported receipt. Native queue/executor cases and real compiled-intent result passed; actual NS/Expo system ingress readback, full context and attachment acceptance remain open.",
       "owner": "INT-02/INT-03"
     },
     "shortcuts": {
@@ -656,7 +672,7 @@
       "surface": "share",
       "engine": "hanlinNativeScript",
       "runtime": "node",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "share",
       "runtimeTail": [
         "nativeFacade",
@@ -665,17 +681,17 @@
         "runtimeWire",
         "runtimeBroker"
       ],
-      "sourcePathReachesCanonicalExecutor": false,
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
+      "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -688,7 +704,7 @@
       "surface": "share",
       "engine": "hanlinNativeScript",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "share",
       "runtimeTail": [
         "nativeFacade",
@@ -697,17 +713,17 @@
         "runtimeWire",
         "runtimeBroker"
       ],
-      "sourcePathReachesCanonicalExecutor": false,
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
+      "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -720,7 +736,7 @@
       "surface": "share",
       "engine": "hanlinNativeScript",
       "runtime": "localPython",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "share",
       "runtimeTail": [
         "nativeFacade",
@@ -729,17 +745,17 @@
         "runtimeWire",
         "runtimeBroker"
       ],
-      "sourcePathReachesCanonicalExecutor": false,
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
+      "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -752,7 +768,7 @@
       "surface": "share",
       "engine": "hanlinNativeScript",
       "runtime": "javaScriptCore",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "share",
       "runtimeTail": [
         "nativeFacade",
@@ -761,17 +777,17 @@
         "runtimeWire",
         "runtimeBroker"
       ],
-      "sourcePathReachesCanonicalExecutor": false,
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
+      "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -784,7 +800,7 @@
       "surface": "share",
       "engine": "hanlinNativeScript",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "share",
       "runtimeTail": [
         "nativeFacade",
@@ -793,17 +809,17 @@
         "runtimeWire",
         "runtimeBroker"
       ],
-      "sourcePathReachesCanonicalExecutor": false,
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
+      "durableActionReceiptInSource": true,
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [

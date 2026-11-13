@@ -396,21 +396,10 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 invoke: safeHandler
             )
         }
-        if let appID = context.appID {
-            Task { [weak self] in
-                guard let self else { return }
-                let broker = await MainActor.run { HanlinMiniAppHost.shared.requestBroker }
-                await broker.register(target: appID, action: actionID, capability: capabilityID) { [weak self] req in
-                    guard let self else { throw HanlinMiniAppRequestError.routeNotFound }
-                    return try await self.invokeRegisteredAction(
-                        req.action,
-                        capability: req.capability,
-                        caller: req.caller,
-                        payload: req.payload
-                    )
-                }
-            }
-        }
+        // Keep the Host's installed-action route authoritative. Replacing it
+        // with a session closure bypasses future generation/admission checks
+        // and leaves a dead route after the headless VM is destroyed. Local
+        // self-calls and Host dispatch invoke this session dictionary directly.
     }
 
     public func hasRegisteredAction(_ action: HanlinActionID) -> Bool {

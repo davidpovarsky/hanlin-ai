@@ -1,5 +1,7 @@
 import Foundation
 import HanlinScriptStore
+import HanlinScriptExtensions
+import HanlinPlatformContracts
 
 struct ChavrusaSharedItem: Codable, Identifiable, Sendable {
     let id: UUID
@@ -14,6 +16,21 @@ actor ChavrusaShareInbox {
 
     private let groupID = "group.com.itorah.chavrusachat"
     private let fileName = "share-inbox.json"
+
+    func batch(_ id: UUID) throws -> HanlinShareBatch {
+        try ownedStore().batch(id)
+    }
+
+    func actionPayload(_ command: HanlinScriptResumeCommand) throws -> HanlinValue {
+        try HanlinShareInvocation.payload(for: command, inbox: ownedStore())
+    }
+
+    private func ownedStore() throws -> HanlinShareInboxStore {
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: groupID
+        ) else { throw HanlinShareInboxError.invalidPath }
+        return try HanlinShareInboxStore(container: container)
+    }
 
     func pendingItems() throws -> [ChavrusaSharedItem] {
         guard let container = FileManager.default.containerURL(

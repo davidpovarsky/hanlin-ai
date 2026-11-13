@@ -1,9 +1,8 @@
 {
-  "sourceCommit": "a0fcbb3b40462ec399b75db58bf604e1e20348e1",
+  "sourceCommit": "660f5b45fe41af70d259eb3818de4da956e6c4bc",
   "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
-    "Scripts/Audit/audit-miniapp-sdk.mjs"
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -5808,7 +5807,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "b390126099916d8dace62ef20d58158905ae1a2972cf719476f5cabf39746005"
+      "sha256": "5b7c7a3361f5645d89792908f63a3c101f57ceb965220f9a8dbf9e51e6693dd2"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -5828,7 +5827,7 @@
     },
     {
       "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-      "sha256": "9a321bc3be683652559f635ec18c5a5ab474d3ced2878804f501b628de4c0ffe"
+      "sha256": "c9440f793065d74e617d67fa5b0efaae81008618f4b9389ce8309632799ce899"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",

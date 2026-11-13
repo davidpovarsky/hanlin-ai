@@ -228,7 +228,8 @@
       "patterns": [
         "AI_HLY/Downstream/HostServices/**",
         "AI_HLYTests/HanlinUnifiedHostServices*",
-        "AI_HLYTests/NativeScriptRuntimeWireTests.swift"
+        "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+        "AI_HLYTests/NativeScriptShareDeliveryTests.swift"
       ],
       "direct_validation_groups": [
         "unified_host_services"

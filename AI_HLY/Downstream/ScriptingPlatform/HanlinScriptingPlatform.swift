@@ -63,6 +63,9 @@ final class HanlinScriptingPlatform {
     private var expoSession: HanlinExpoSession?
     private var isLaunching = false
     private var isExecutingHeadlessNativeScriptAction = false
+    private var isProcessingResumeCommands = false
+    private var resumeDrainRequested = false
+    private var queuedNativeScriptAdmissions: Set<UUID> = []
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var modelContext: ModelContext?
     private let locationService = HanlinAppleLocationService()
@@ -163,6 +166,33 @@ final class HanlinScriptingPlatform {
         guard let installedRoot else { return nil }
         return installedRoot
             .appending(path: "packages/\(package.record.installedPackageID.rawValue)/generations/\(package.record.activeGeneration)", directoryHint: .isDirectory)
+    }
+
+    func submitResumeCommand(_ command: HanlinScriptResumeCommand) throws {
+        guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
+        try extensionStore.enqueue(command)
+        try reloadPendingResumeCommands()
+        Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
+    }
+
+    func resumeReceipt(_ id: UUID) throws -> HanlinInvocationReceipt? {
+        try extensionStore?.receipt(for: id)
+    }
+
+    func submittedResumeCommand(_ id: UUID) throws -> HanlinScriptResumeCommand? {
+        try extensionStore?.command(for: id)
+    }
+
+    func cancelResumeCommand(_ id: UUID) throws {
+        guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
+        _ = try extensionStore.requestCancellation(id)
+        try reloadPendingResumeCommands()
+    }
+
+    private func reloadPendingResumeCommands() throws {
+        let scan = try extensionStore?.scanPendingCommands(limit: 128)
+        pendingResumeCommands = scan?.commands ?? []
+        resumeCommandRejections = scan?.rejections ?? []
     }
 
     func configure(modelContext: ModelContext) {
@@ -489,7 +519,10 @@ final class HanlinScriptingPlatform {
         guard !isLaunching else { return }
         if activeApplicationID == id { return }
         isLaunching = true
-        defer { isLaunching = false }
+        defer {
+            isLaunching = false
+            Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
+        }
 
         guard let store,
               let package = installedPackages.first(where: { $0.record.installedPackageID == id }) else {
@@ -506,6 +539,10 @@ final class HanlinScriptingPlatform {
             return
         }
         if entrypoint.runtimeProfile == .hanlinNativeScript {
+            guard !isExecutingHeadlessNativeScriptAction else {
+                activity = .failed("A MiniApp action is still running. Try opening this app after it finishes.")
+                return
+            }
             do {
                 let artifactRoot = try await store.activeArtifactURL(for: id)
                 let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
@@ -713,6 +750,7 @@ final class HanlinScriptingPlatform {
         activeApplicationModel = nil
         activeNativeScriptController = nil
         activeExpoController = nil
+        Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
     }
 
     func executeHeadlessAction(
@@ -720,7 +758,8 @@ final class HanlinScriptingPlatform {
         targetAppID: HanlinAppID,
         action: HanlinActionID,
         capability: HanlinCapabilityID,
-        payload: HanlinValue
+        payload: HanlinValue,
+        invocationID: UUID? = nil
     ) async throws -> HanlinValue {
         guard let store else {
             throw HanlinMiniAppRequestError.routeNotFound
@@ -752,9 +791,20 @@ final class HanlinScriptingPlatform {
             )
         }
 
-        guard nativeScriptSession == nil, !isExecutingHeadlessNativeScriptAction else {
+        guard nativeScriptSession == nil, !isExecutingHeadlessNativeScriptAction, !isLaunching else {
             // NativeScript iOS currently supports one runtime isolate per process.
+            if let invocationID, queuedNativeScriptAdmissions.contains(invocationID) {
+                throw HanlinInvocationNotStarted()
+            }
             throw HanlinMiniAppRequestError.unauthorized
+        }
+
+        // Reserve admission before the first suspension point. A second caller
+        // cannot observe a free VM while this caller resolves its owned files.
+        isExecutingHeadlessNativeScriptAction = true
+        defer {
+            isExecutingHeadlessNativeScriptAction = false
+            Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
         }
 
         let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
@@ -778,6 +828,12 @@ final class HanlinScriptingPlatform {
         let stateDirStr = container.state.path(percentEncoded: false)
         let docsDirStr = container.documents.path(percentEncoded: false)
         let cacheDirStr = container.cache.path(percentEncoded: false)
+
+        let currentPackages = try await store.snapshots()
+        guard let current = currentPackages.first(where: { $0.record.installedPackageID == package.record.installedPackageID }),
+              current.enabled, current.record.activeGeneration == package.record.activeGeneration else {
+            throw HanlinInvocationDispatchError(.stale, .staleGeneration)
+        }
 
         let env: [String: String] = [
             "HANLIN_APP_ID": appID.rawValue,
@@ -803,12 +859,10 @@ final class HanlinScriptingPlatform {
             canPresentUI: false
         )
 
-        isExecutingHeadlessNativeScriptAction = true
         HanlinNativeServicesBridge.register(adapter, forSessionID: session.sessionID)
         defer {
             session.shutdown()
             HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
-            isExecutingHeadlessNativeScriptAction = false
         }
 
         try session.start()
@@ -1417,25 +1471,49 @@ final class HanlinScriptingPlatform {
 
     private func processPendingResumeCommands() async throws {
         guard let invocationExecutor else { return }
-        for command in pendingResumeCommands {
-            do {
-                let receipt = try await invocationExecutor.execute(command.id) { [weak self] command in
-                    guard let self else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
-                    return try await self.dispatchResumeCommand(command)
-                }
-                if receipt?.status.isTerminal == true {
-                    pendingResumeCommands.removeAll { $0.id == command.id }
-                }
-            } catch {
-                // Keep unresolved records and actual receipts; never acknowledge
-                // a failed write or persist runtime error text in the App Group.
-                Self.logger.error("Invocation delivery failed: \(command.id, privacy: .public)")
-            }
+        guard !isProcessingResumeCommands else {
+            resumeDrainRequested = true
+            return
         }
+        isProcessingResumeCommands = true
+        defer { isProcessingResumeCommands = false }
+        repeat {
+            resumeDrainRequested = false
+            for command in pendingResumeCommands {
+                let expiresAt = command.invocation.delivery?.expiresAt
+                    ?? command.createdAt.addingTimeInterval(86_400)
+                // Leave unstarted work queued while the only NS VM is owned.
+                // Expired records still reach the queue's terminal transition.
+                if expiresAt > .now,
+                   let package = installedPackages.first(where: {
+                       $0.record.installedPackageID == command.invocation.identity.installedPackageID
+                   }), package.entrypoints.contains(where: {
+                       $0.id == command.invocation.identity.entrypointID && $0.runtimeProfile == .hanlinNativeScript
+                   }), isExecutingHeadlessNativeScriptAction || (nativeScriptSession != nil
+                       && (command.invocation.delivery?.source == .share || activeApplicationID != package.record.installedPackageID)) {
+                    continue
+                }
+                do {
+                    let receipt = try await invocationExecutor.execute(command.id) { [weak self] command in
+                        guard let self else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
+                        return try await self.dispatchResumeCommand(command)
+                    }
+                    if receipt?.status.isTerminal == true {
+                        pendingResumeCommands.removeAll { $0.id == command.id }
+                    }
+                } catch {
+                    // Keep unresolved records and actual receipts; never acknowledge
+                    // a failed write or persist runtime error text in the App Group.
+                    Self.logger.error("Invocation delivery failed: \(command.id, privacy: .public)")
+                }
+            }
+            if resumeDrainRequested { try reloadPendingResumeCommands() }
+        } while resumeDrainRequested
     }
 
     func dispatchResumeCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
         guard let store else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
+        installedPackages = try await store.restore()
         let identity = command.invocation.identity
         if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {
             guard let actionName = command.invocation.entityID,
@@ -1460,7 +1538,10 @@ final class HanlinScriptingPlatform {
             throw HanlinInvocationDispatchError(.stale, .staleGeneration)
         }
         guard command.invocation.delivery == nil || command.invocation.delivery?.appID == package.appID,
-              let entrypoint = package.entrypoints.first(where: { $0.id == identity.entrypointID && $0.kind == .appIntent }),
+              let entrypoint = package.entrypoints.first(where: {
+                  $0.id == identity.entrypointID && (command.invocation.delivery?.source == .share
+                      ? ($0.kind == .app || $0.kind == .share) : $0.kind == .appIntent)
+              }),
               let actionName = command.invocation.entityID else {
             throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
         }
@@ -1474,15 +1555,34 @@ final class HanlinScriptingPlatform {
                   let capability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share")) else {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
             }
+            let parameters: HanlinValue
+            let requestCapability: HanlinCapabilityID
+            if command.invocation.delivery?.source == .share {
+                guard declaredAction.handler == entrypoint.sourcePath,
+                      let shareCapability = declaredAction.capabilities.first(where: { $0.rawValue == "inter-app.share" }) else {
+                    throw HanlinInvocationDispatchError(.failed, .invalidTarget)
+                }
+                requestCapability = shareCapability
+                parameters = try await ChavrusaShareInbox.shared.actionPayload(command)
+            } else {
+                requestCapability = capability
+                parameters = command.invocation.parameters
+            }
             // Preserve the one-isolate invariant. Queue policy must not start a
             // second NativeScript VM while another package owns the first.
             guard nativeScriptSession == nil || activeApplicationID == identity.installedPackageID,
                   !isExecutingHeadlessNativeScriptAction else {
-                throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+                throw HanlinInvocationNotStarted()
             }
+            if command.invocation.delivery?.source == .share, nativeScriptSession != nil {
+                throw HanlinInvocationNotStarted()
+            }
+            await HanlinMiniAppHost.shared.refresh(installedPackages: installedPackages)
+            queuedNativeScriptAdmissions.insert(command.id)
+            defer { queuedNativeScriptAdmissions.remove(command.id) }
             let response = try await HanlinMiniAppHost.shared.requestBroker.request(.init(
                 id: command.id, caller: try HanlinAppID(validating: "hanlin.host"), target: targetID,
-                action: actionID, capability: capability, payload: command.invocation.parameters))
+                action: actionID, capability: requestCapability, payload: parameters))
             WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
             return response.value
         }

@@ -28,7 +28,7 @@ struct ScriptingPackageImportView: View {
         @Bindable var platform = platform
         List {
             Section {
-                NavigationLink { ChavrusaShareInboxView() } label: {
+                NavigationLink { ChavrusaShareInboxView(platform: platform) } label: {
                     Label("Shared Items", systemImage: "tray.and.arrow.down")
                 }
                 .accessibilityIdentifier("hanlin-share-inbox-link")

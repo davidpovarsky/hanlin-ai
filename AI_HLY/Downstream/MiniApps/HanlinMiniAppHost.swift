@@ -112,7 +112,8 @@ final class HanlinMiniAppHost {
                             targetAppID: targetID,
                             action: actionID,
                             capability: cap,
-                            payload: request.payload
+                            payload: request.payload,
+                            invocationID: request.id
                         )
                     }
                 }

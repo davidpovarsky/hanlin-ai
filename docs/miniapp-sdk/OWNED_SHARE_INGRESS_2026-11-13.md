@@ -107,3 +107,32 @@ physical iPad/iPhone multi-image/PDF/large-file/cancel/offline/cold-Host matrix 
 actual signed App Group entitlements. No extension/runtime matrix cell is marked
 verified by this checkpoint. Immutable ingress intentionally has no automatic
 expiry/deletion policy until delivery references and user cancellation are bound.
+
+## Host selection and delivery implementation (not yet executed)
+
+The Host Shared Items screen now offers a native Menu of enabled installed
+NativeScript actions whose declared inter-app.share handler equals an actual
+app entrypoint. Selection binds installed ID, generation, app ID, entrypoint and
+action to the original batch UUID. No Expo or undeclared action is offered.
+The existing durable queue carries only the batch reference; dispatch restores
+installed state before validating target/generation, then resolves and verifies
+the immutable owned content. The screen reads actual queued/running/terminal
+receipts and returned values, supports cancellation, and never clears a batch.
+
+Share actions wait for the foreground NS VM to close. Other-package NS commands
+also stay unstarted instead of spending an attempt or publishing a false terminal
+failure. Headless admission is reserved before async file/container lookups;
+foreground launch cannot create a second VM while headless work owns admission.
+Generation is checked again after container resolution before starting user code.
+The installed Host broker route remains authoritative: session registration no
+longer replaces it with a stale session closure. One VM/active-session guards stay.
+This does not yet solve every foreground-action teardown/cancellation boundary.
+
+A new serialized actual-NS integration case imports/installs a unique package,
+loads actual provider text into the App Group, selects the production target,
+asserts queued/zero-attempt while foreground owns the VM, closes it, and requires
+actual registered JS action receipts for all five engines across two sessions.
+It checks full Unicode input, durable reopen, duplicate/no second execution, and
+stale selection rejection after disabling the target. This is NOT_RUN until the
+native workflow executes it; no system share-sheet/Menu activation, signed-device,
+Expo parity or physical matrix pass is inferred from source or syntax checks.

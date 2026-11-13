@@ -35,6 +35,7 @@ def build() -> dict:
     ref("shareProviderCopy", "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift", "return provider.loadFileRepresentation(")
     ref("shareRead", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "func pendingBatches()")
     ref("shareReview", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift", "struct ChavrusaShareInboxView")
+    ref("shareSelection", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift", "var shareActionTargets:")
     ref("translationSnapshot", "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift", "HanlinExtensionNodeView(")
     ref("extensionIntent", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift", "public func perform()")
     ref("extensionQueue", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift", "public func enqueue(")
@@ -70,7 +71,7 @@ def build() -> dict:
 
     tracked = subprocess.check_output(["git", "ls-files", "*.swift"], cwd=ROOT, text=True, encoding="utf-8").splitlines()
     share_references = [p for p in tracked if p.startswith("AI_HLY/") and "ChavrusaShareInbox" in (ROOT / p).read_text(encoding="utf-8-sig")]
-    if share_references != ["AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift"]:
+    if share_references != ["AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift"]:
         raise ValueError(f"Share inbox callers changed; re-audit reachability: {share_references}")
     optional_surfaces = {symbol: [p for p in tracked if re.search(rf"\b{symbol}\b", (ROOT / p).read_text(encoding="utf-8-sig"))]
                          for symbol in ["ControlWidget", "CSSearchableIndex", "CoreSpotlight"]}
@@ -85,8 +86,8 @@ def build() -> dict:
         entitlements[file] = {"declared": plistlib.loads(data), "sha256": hashlib.sha256(data).hexdigest(),
                               "exportedSignatureVerified": False}
     paths = {
-        "share": {"target": "ChavrusaChatShare", "refs": ["shareWrite", "shareOwnedStore", "shareProviderCopy", "shareRead", "shareReview"],
-                  "stop": "Owned atomic batches copy files during provider callbacks and feed Host ingress review. Installed target/action selection, INT-02 dispatch, expiry and execution receipt readback remain unconnected; historical share-inbox.json is retained.", "owner": "INT-04"},
+        "share": {"target": "ChavrusaChatShare", "refs": ["shareWrite", "shareOwnedStore", "shareProviderCopy", "shareRead", "shareReview", "shareSelection", "extensionQueue", "extensionReceipts", "resume", "headless"],
+                  "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review. Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.", "owner": "INT-04"},
         "translation": {"target": "ChavrusaChatTranslationProvider", "refs": ["translationSnapshot", "extensionIntent", "extensionQueue", "resume", "expoExposureRejection"],
                         "stop": "Declarative snapshot/action continuation is not an NS/Expo runtime route. Resume requires an appIntent entrypoint; Expo non-widget exposure is rejected.", "owner": "INT-02/INT-03"},
         "widget": {"target": "HanlinScriptingWidgets", "refs": ["widgetBundle", "widgetIntent", "widgetCallback"],
@@ -96,7 +97,7 @@ def build() -> dict:
         "liveActivity": {"target": "HanlinScriptingWidgets", "refs": ["widgetBundle", "extensionIntent", "extensionQueue"],
                          "stop": "Static ActivityKit presentation is not a canonical Node/TS/Python/JSC/Shell execution path.", "owner": "INT-02/INT-03"},
         "hostAppIntent": {"target": "AI_Hanlin / HanlinScriptExtensions", "refs": ["extensionIntent", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "requestBroker", "headless", "nativeSession", "expoIntentRejection"],
-                          "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session yields needsForeground; Expo yields an explicit unsupported receipt. Native queue/executor cases and real compiled-intent result passed; actual NS/Expo system ingress readback, full context and attachment acceptance remain open.", "owner": "INT-02/INT-03"},
+                          "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session leaves unstarted work queued; Expo yields an explicit unsupported receipt. Native queue/executor cases and real compiled-intent result passed; actual NS/Expo system ingress readback, full context and attachment acceptance remain open.", "owner": "INT-02/INT-03"},
         "shortcuts": {"target": "HanlinScriptingWidgets / AI_Hanlin", "refs": ["shortcutIntent", "hostShortcuts", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "headless", "expoIntentRejection"],
                       "stop": "Generic MiniApp action enqueues foreground continuation. Registered Siri phrases are alarm/notification operations; not an all-runtime MiniApp API.", "owner": "INT-02/INT-03"},
         "foreground": {"target": "AI_Hanlin", "refs": ["nativeBridge", "nativeAdapter", "nativeSession", "expoFacade", "expoModule", "expoAdapter", "runtimeBroker", "callerContext"],
@@ -107,7 +108,7 @@ def build() -> dict:
         for engine in ENGINES:
             for runtime in RUNTIMES:
                 has_tail = True
-                connected_source = surface == "foreground" or (surface in ["hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript")
+                connected_source = surface == "foreground" or (surface in ["share", "hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript")
                 wired = has_tail and connected_source
                 structured_receipt = wired and surface == "foreground"
                 rows.append({"surface": surface, "engine": engine, "runtime": runtime,
@@ -116,7 +117,7 @@ def build() -> dict:
                                     else ["nativeFacade", "nativeBridge", "nativeAdapter", "runtimeWire", "runtimeBroker"]) if has_tail else [],
                     "sourcePathReachesCanonicalExecutor": wired,
                     "structuredReceiptReturnedToIngressInSource": structured_receipt,
-                    "durableActionReceiptInSource": surface in ["hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript",
+                    "durableActionReceiptInSource": surface in ["share", "hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript",
                     "realSurfaceE2E": False, "onDeviceProof": None,
                     "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing" if structured_receipt else
                                       "Durable action receipt; runtime receipt readback to ingress incomplete" if wired else "No connected canonical-runtime receipt",
