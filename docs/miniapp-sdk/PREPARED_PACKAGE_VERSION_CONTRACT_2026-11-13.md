@@ -64,3 +64,9 @@ symlinked metadata/file/intermediate directory, missing/directory entry, and
 positive default/nested files. Source parse and focused router regression passed;
 actual affected analyzer and native constructor execution are still required.
 This does not close the separate direct-session version-validator drift.
+
+At9e26a7d2, run43392709018 executed exactly5 affected Expo analyzer methods
+in0.181s, including main/mismatch negatives0.073s; job3m39s. Downloaded
+artifact14020818672 (3181B), GitHub SHA256
+059feb87c4ca1866814397bf9abad10b6d1c1b01adadbf27d6459851eb563405.
+Direct constructor3-case native execution remains pending in43394275453.

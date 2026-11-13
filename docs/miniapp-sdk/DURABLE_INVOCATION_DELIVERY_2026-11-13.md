@@ -98,3 +98,11 @@ previous fail-closed semantics for other callers. Two new tests combine malforme
 JSON, unknown filename and an outside symlink with actual executor completion/
 reopen, and verify admission capacity is only freed by completing a healthy
 record. Native queue-suite execution and Host compilation remain required.
+
+Native queue isolation evidence atf9d264af: run43394176076 executed12/12
+HanlinInvocationQueueTests methods in1.127s, including actual damaged-item
+continuation/reopen0.114s and capacity isolation0.151s. Workflow3m53s.
+Downloaded artifact14022550581 (3469B), GitHub SHA256
+34a07e4a3c1ffb228ccfc29de5788d744811a3beb9af523e10833a5a971dbf86.
+This Darwin package proof does not claim actual Host restore UI, locked AppGroup
+or physical iPad ingress acceptance. Those remain separate native/device gates.

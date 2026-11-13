@@ -1,11 +1,9 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "feea6f6bb9748247edca71dfe2327b56c45d7e3f",
+  "sourceCommit": "f9d264af0c4f5a3193f2794358e90be482c40211",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift"
+    "Scripts/Audit/audit_miniapp_reachability.py"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
@@ -160,7 +158,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "bded6d0f13e9aea0b72497a3bf9e0b2ceee6997f4abc91266179fc72c0c5dd60"
+      "sha256": "1436eb72f33cb6210335a9e9f6d1779d8adee812cd52c37985e4c5b39e3189e7"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -488,7 +486,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "b212ab45e83d52afe3461a4e427b0fabfe9dbbb39ef546e46e712b15ad0ac43f"
+      "sha256": "1a0df6f972487771f5119592162a6c4c554d1aad5bfd1aae49596d626875aef2"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
@@ -578,7 +576,7 @@
         "nativeSession",
         "expoIntentRejection"
       ],
-      "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session yields needsForeground; Expo yields an explicit unsupported receipt. Generic runtime callbacks, readback to system ingress and presentation-context propagation remain incomplete; native delivery tests pending.",
+      "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session yields needsForeground; Expo yields an explicit unsupported receipt. Native queue/executor cases and real compiled-intent result passed; actual NS/Expo system ingress readback, full context and attachment acceptance remain open.",
       "owner": "INT-02/INT-03"
     },
     "shortcuts": {

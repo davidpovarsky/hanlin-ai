@@ -1,6 +1,8 @@
 {
-  "sourceCommit": "feea6f6bb9748247edca71dfe2327b56c45d7e3f",
-  "uncommittedSourcePaths": [],
+  "sourceCommit": "f9d264af0c4f5a3193f2794358e90be482c40211",
+  "uncommittedSourcePaths": [
+    "Scripts/Audit/audit-miniapp-sdk.mjs"
+  ],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",
@@ -5763,7 +5765,7 @@
     {
       "id": "INT06-LEGACY-ACCEPTANCE",
       "owner": "INT-06",
-      "detail": "Native legacy executeRuntime now validates all five canonical kinds (plus the explicit Python alias) and propagates cancellation/nonzero exit/timeout; actual backend regression tests are pending. Full JS-to-native structured receipt coverage remains open."
+      "detail": "Native legacy backend/name/failure cases passed at1e4ba8c0/run43315911311. The generic structured boundary is now shared with NS; complete actual JS-to-module/per-surface receipt coverage remains open."
     },
     {
       "id": "INT06-SHELL-SOURCE",
@@ -5783,7 +5785,7 @@
     {
       "id": "INT06-CONTEXT",
       "owner": "INT-02/INT-06",
-      "detail": "NS headless-action provider now explicitly sets canPresentUI=false; foreground default remains true. Actual share-sheet rejection regression is pending. MiniApp context still uses userGesturePresent=false; full invocation context and all OS-prompt services require separate validation."
+      "detail": "Actual headless NS share-sheet rejection passed atcbb0d8e3/run43325255401; foreground default remains true. MiniApp context still uses userGesturePresent=false; full invocation context and all OS-prompt services require separate validation."
     },
     {
       "id": "INT06-AVAILABILITY",
@@ -5947,7 +5949,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "bded6d0f13e9aea0b72497a3bf9e0b2ceee6997f4abc91266179fc72c0c5dd60"
+      "sha256": "1436eb72f33cb6210335a9e9f6d1779d8adee812cd52c37985e4c5b39e3189e7"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
