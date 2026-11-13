@@ -1399,6 +1399,20 @@
         "AI_HLYTests/ShareInboxHostIntegrationTests"
       ],
       "consumers": []
+    },
+    "nativescript_environment_unit_tests": {
+      "description": "Actual NS VM environment ownership and failed-start rollback in the existing serialized NS suite",
+      "patterns": [
+        "AI_HLYTests/NativeScriptEnvironmentOwnershipTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/onlyTheStartedNativeScriptSessionRestoresItsExactPreviousEnvironment()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/failedNativeScriptBootstrapRollsBackEnvironmentWithoutKeepingAFalseOwner()"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

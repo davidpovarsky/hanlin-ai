@@ -1,8 +1,7 @@
 {
-  "sourceCommit": "5b04ee5f759e9981d4704b89243f1d947dcbb617",
+  "sourceCommit": "302e4f3829fece3df03e4393f1af72cc5ecea1c6",
   "uncommittedSourcePaths": [
-    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -5919,7 +5918,7 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
-      "sha256": "860858787eb564f9e32a492291497ffe06eab1f25baf6b4f33eccf5321af5f68"
+      "sha256": "f699d60a220d6142f139435d5ceaa245de6eb7da066af3afe878407b0f268695"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",

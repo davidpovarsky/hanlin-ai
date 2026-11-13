@@ -110,3 +110,14 @@ and constructor negatives cover other/malformed/escaping/missing entries.
 The unchanged native SDK still has its general config-cache limitation; arbitrary
 cross-package app config/main support is not claimed. Corrected real VM and
 two-session tests must execute again under this explicit prepared contract.
+
+Environment ownership correction: shutdown previously unset every declared key,
+even for a session that never started, and discarded pre-existing Host values.
+Start now validates POSIX key/value representation before mutation, snapshots
+the exact previous C bytes and records only successfully installed keys. Teardown
+restores them after the VM shuts down; failed start rolls back, and dormant or
+repeated shutdown cannot alter another owner. Two new actual-VM methods in the
+existing serialized suite cover active/dormant/rejected second session, Unicode
+previous values, new-key removal, idempotent shutdown, bootstrap failure and
+invalid environment. Native execution is pending. Process environment is still
+shared with other engines; this does not claim process or concurrent-env isolation.

@@ -126,3 +126,12 @@ main crossing canonical prepared sessions; it does not repair or advertise
 arbitrary NativeScript application-config switching. See the wire investigation
 for source and failed-run evidence. New importer/constructor negatives and the
 corrected two-session/facade VM methods need their own execution.
+
+At302e4f38, run43407010236 executed6/6 affected importer methods PASS
+in0.084s (suite0.083s), Xcode27.2/27B52 Swift6.4.2, job3m31s.
+This includes canonical-entry negatives, ordinary/profile handling, embedded
+SwiftUI/Core contracts, released versions and malformed dependency maps.
+Downloaded artifact14027952368 (3377B), GitHub SHA256
+f518dcf38022eba2c80eded3be611e93354c89d815929369e9f903dc11b40ba2.
+Actual direct canonical-entry/VM and iOS Share App Group follow-up remains
+separate in43407005634; package importer evidence does not promote those cases.
