@@ -27,6 +27,12 @@ struct ScriptingPackageImportView: View {
     var body: some View {
         @Bindable var platform = platform
         List {
+            Section {
+                NavigationLink { ChavrusaShareInboxView() } label: {
+                    Label("Shared Items", systemImage: "tray.and.arrow.down")
+                }
+                .accessibilityIdentifier("hanlin-share-inbox-link")
+            }
             if !platform.resumeCommandRejections.isEmpty {
                 Section("Queued Actions") {
                     Label("Some saved actions couldn’t be read.", systemImage: "exclamationmark.triangle")

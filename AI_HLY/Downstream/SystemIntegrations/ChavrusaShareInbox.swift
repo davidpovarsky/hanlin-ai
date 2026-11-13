@@ -1,4 +1,5 @@
 import Foundation
+import HanlinScriptStore
 
 struct ChavrusaSharedItem: Codable, Identifiable, Sendable {
     let id: UUID
@@ -23,13 +24,17 @@ actor ChavrusaShareInbox {
         return try JSONDecoder().decode([ChavrusaSharedItem].self, from: Data(contentsOf: url))
     }
 
-    func clear() throws {
+    func pendingBatches() throws -> (batches: [HanlinShareBatch], rejected: [UUID?]) {
         guard let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
-        ) else { return }
-        let url = container.appending(path: fileName)
-        if FileManager.default.fileExists(atPath: url.path) {
-            try FileManager.default.removeItem(at: url)
-        }
+        ) else { throw HanlinShareInboxError.invalidPath }
+        return try HanlinShareInboxStore(container: container).scan()
+    }
+
+    func ownedFile(batchID: UUID, itemID: UUID) throws -> URL {
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: groupID
+        ) else { throw HanlinShareInboxError.invalidPath }
+        return try HanlinShareInboxStore(container: container).ownedFile(batchID: batchID, itemID: itemID)
     }
 }
