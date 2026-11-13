@@ -55,7 +55,7 @@ final class HanlinMiniAppHost {
         self.defaults = defaults
         authorization = HanlinMiniAppAuthorizationPolicy()
         let policy = authorization
-        requestBroker = HanlinMiniAppRequestBroker { request in
+        requestBroker = HanlinMiniAppRequestBroker(limits: .personalHost) { request in
             await policy.authorize(request)
         }
         do {

@@ -1,8 +1,10 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "ed3b05eaee47e083cbb0f038046f79d6d5e8af69",
+  "sourceCommit": "a0fcbb3b40462ec399b75db58bf604e1e20348e1",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [],
+  "uncommittedSourcePaths": [
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift"
+  ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
@@ -29,6 +31,10 @@
     {
       "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
       "sha256": "c8b63f62896fc0a6835e481d69644d06e72314b58bbe3661f41542de9c9c4a2f"
+    },
+    {
+      "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "sha256": "9a321bc3be683652559f635ec18c5a5ab474d3ced2878804f501b628de4c0ffe"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
@@ -139,6 +145,10 @@
       "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
     },
     {
+      "path": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+      "sha256": "7a344d2f428cf8bdef9cdb74b4754f5da16890538799309e84d733c9abc73e06"
+    },
+    {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
       "sha256": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c"
     },
@@ -164,7 +174,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "61bbc85104f9b91a7983f87114f48e3994b861f5660da19f8faaf649a8e699d6"
+      "sha256": "48a652bd840707c67a59fd3cbe4a0bff6801d75ba716880ebe648b1ba55f8a8e"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -428,9 +438,9 @@
     },
     "requestBroker": {
       "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
-      "line": 143,
+      "line": 147,
       "anchor": "public func request(",
-      "sha256": "0a3672bf356a955276e930a0be66c49261e47f3d6175cdf9da98bc2747038bde"
+      "sha256": "7a344d2f428cf8bdef9cdb74b4754f5da16890538799309e84d733c9abc73e06"
     },
     "nativeBridge": {
       "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
