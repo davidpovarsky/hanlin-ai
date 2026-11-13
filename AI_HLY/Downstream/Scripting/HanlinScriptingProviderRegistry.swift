@@ -164,9 +164,9 @@ actor HanlinScriptingProviderRegistry {
     }
 
     private var providers: [HanlinProviderInstanceID: Provider] = [:]
-    private var authorizer: Authorizer = { _, _, tool in
-        tool.requiredCapabilities.isEmpty && !tool.requiresApproval
-    }
+    // Capabilities/approval fields are legacy descriptor metadata. Package
+    // loading, runtime state and system authorization remain independently checked.
+    private var authorizer: Authorizer = { _, _, _ in true }
 
     func setAuthorizer(_ authorizer: @escaping Authorizer) {
         self.authorizer = authorizer

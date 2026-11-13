@@ -6,6 +6,18 @@ on:
       upload_to_testflight:
         required: true
         type: boolean
+      existing_build_number:
+        required: false
+        default: ''
+        type: string
+      audience_source_build:
+        required: false
+        default: ''
+        type: string
+      runtime_bundle_artifact_run_id:
+        required: false
+        default: ''
+        type: string
   workflow_dispatch:
     inputs:
       upload_to_testflight:
@@ -13,6 +25,21 @@ on:
         required: true
         type: boolean
         default: true
+      existing_build_number:
+        description: Distribute an existing uploaded build without rebuilding
+        required: false
+        default: ''
+        type: string
+      audience_source_build:
+        description: Previous build whose internal groups should receive the uploaded build
+        required: false
+        default: ''
+        type: string
+      runtime_bundle_artifact_run_id:
+        description: Completed verified Runtime candidate to include without release publication
+        required: false
+        default: ''
+        type: string
 
 permissions:
   actions: read
@@ -38,11 +65,13 @@ env:
 
 jobs:
   build-sign-and-upload:
+    if: ${{ inputs.existing_build_number == '' }}
     runs-on: xcode-27
     timeout-minutes: 120
 
     steps:
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -51,12 +80,13 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout exact source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           clean: true
           fetch-depth: 1
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -79,6 +109,7 @@ jobs:
           case "$sdk_version" in 27.*) ;; *) echo "ERROR: iOS 27 SDK is required"; exit 1;; esac
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -87,11 +118,12 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up pinned Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -109,6 +141,7 @@ jobs:
           echo "Using CFBundleVersion $build_number"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -120,6 +153,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euo pipefail
           cat > Config.xcconfig <<'EOF'
@@ -145,6 +179,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -174,6 +209,7 @@ jobs:
           echo "ASC_KEY_PATH=$key_path" >> "$GITHUB_ENV"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -241,6 +277,7 @@ jobs:
                 grep -Fq CloudKit <<< "$services"
               fi
               test "$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:aps-environment' "$plist")" = production
+              python3 Scripts/CI/verify_runtime_memory_entitlements.py --profile "$plist"
             fi
             cp "$profile" "$HOME/Library/MobileDevice/Provisioning Profiles/$uuid.mobileprovision"
             echo "${env_prefix}_PROFILE_SPECIFIER=$name" >> "$GITHUB_ENV"
@@ -256,6 +293,7 @@ jobs:
           echo "SIGNING_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -283,6 +321,7 @@ jobs:
           done
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -311,6 +350,7 @@ jobs:
           test "$(plutil -extract MinimumOSVersion raw "$framework/Info.plist")" = 26.0
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -340,6 +380,7 @@ jobs:
           check_target ChavrusaChatNotificationService "$NOTIFICATION_BUNDLE_ID" "$NOTIFICATION_PROFILE_SPECIFIER" ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -364,6 +405,7 @@ jobs:
             | tee "$BUILD_DIR/logs/archive.log"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -412,6 +454,7 @@ jobs:
           shasum -a 256 "$final_ipa" | tee "$final_ipa.sha256"
 
       - name: Live Activity · refresh
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -421,6 +464,8 @@ jobs:
           github_token: ${{ github.token }}
       - name: Verify archive, signatures, profiles, and entitlements
         shell: bash
+        env:
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -Eeuo pipefail
           verify_dir="$RUNNER_TEMP/verify-ipa"
@@ -510,6 +555,44 @@ jobs:
               ! grep -Eqw 'arm64e|i386|x86_64' <<< "$archs"
             done
 
+          # Signing changes binary bytes, but preserves the linked image UUID.
+          source_node="Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64/NodeMobile.framework/NodeMobile"
+          packaged_node="$app/Frameworks/NodeMobile.framework/NodeMobile"
+          xcrun dwarfdump --uuid "$source_node" | awk '/^UUID:/ {print $2, $3}' > "$BUILD_DIR/logs/node-source-uuid.txt"
+          xcrun dwarfdump --uuid "$packaged_node" | awk '/^UUID:/ {print $2, $3}' > "$BUILD_DIR/logs/node-packaged-uuid.txt"
+          test -s "$BUILD_DIR/logs/node-source-uuid.txt"
+          cmp "$BUILD_DIR/logs/node-source-uuid.txt" "$BUILD_DIR/logs/node-packaged-uuid.txt"
+          python3 - "$app" <<'PY'
+          import hashlib, json, os, sys
+          from pathlib import Path
+          expected = json.loads(Path("AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json").read_text())
+          packaged = json.loads((Path(sys.argv[1]) / "RuntimeManifest.json").read_text())
+          if packaged != expected:
+              raise SystemExit("Packaged Runtime manifest does not match the verified build input")
+          def sha256(path):
+              checksum = hashlib.sha256()
+              with path.open("rb") as stream:
+                  for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                      checksum.update(chunk)
+              return checksum.hexdigest()
+          host_hash = sha256(Path("AI_HLY/RuntimeHostResources.zip"))
+          if sha256(Path(sys.argv[1]) / "RuntimeHostResources.zip") != host_hash:
+              raise SystemExit("Packaged Runtime Host archive does not match the verified build input")
+          lock = json.loads(Path("RuntimeDependencies.lock.json").read_text())
+          logs = Path(os.environ["BUILD_DIR"]) / "logs"
+          evidence = {
+              "sourceSHA": os.environ["GITHUB_SHA"],
+              "runtimeBundleArtifactRunID": os.environ["RUNTIME_CORE_ARTIFACT_RUN_ID"],
+              "runtimeBundleSha256": lock["runtimeBundle"]["sha256"],
+              "nodeXCFrameworkSha256": lock["node"]["xcframeworkSha256"],
+              "nodeImageUUIDs": (logs / "node-packaged-uuid.txt").read_text().splitlines(),
+              "runtimeHostArchiveSha256": host_hash,
+              "packagedManifestMatches": True,
+          }
+          (logs / "runtime-distribution.json").write_text(json.dumps(evidence, indent=2) + "\n")
+          print("Verified packaged Node image UUID and Runtime manifest")
+          PY
+
           main_entitlements="$BUILD_DIR/logs/main-signed-entitlements.plist"
           containers=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-container-identifiers' "$main_entitlements")
           services=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-services' "$main_entitlements")
@@ -520,10 +603,14 @@ jobs:
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.siri' "$main_entitlements")" = true
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-app' "$main_entitlements")" = true
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.weatherkit' "$main_entitlements")" = true
+          python3 Scripts/CI/verify_runtime_memory_entitlements.py \
+            --profile "$BUILD_DIR/logs/main-embedded-profile.plist" --signed "$main_entitlements" \
+            | tee "$BUILD_DIR/logs/runtime-memory-entitlements.json"
           echo "Signed IPA verification passed for the app and all four extensions"
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -537,6 +624,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -550,6 +638,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -560,14 +649,21 @@ jobs:
       - name: Verify uploaded build appears in TestFlight
         if: ${{ inputs.upload_to_testflight }}
         shell: bash
+        env:
+          AUDIENCE_SOURCE: ${{ inputs.audience_source_build }}
         run: |
           set -euo pipefail
           python3 -m venv "$RUNNER_TEMP/asc-venv"
           "$RUNNER_TEMP/asc-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
-          "$RUNNER_TEMP/asc-venv/bin/python" Scripts/CI/verify_testflight_build.py "$BUILD_NUMBER"
+          verify_args=("$BUILD_NUMBER")
+          if [[ -n "$AUDIENCE_SOURCE" ]]; then
+            verify_args+=(--reuse-internal-audience-from "$AUDIENCE_SOURCE")
+          fi
+          "$RUNNER_TEMP/asc-venv/bin/python" Scripts/CI/verify_testflight_build.py "${verify_args[@]}"
 
       - name: Live Activity · refresh
         if: always()
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -577,7 +673,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload signed IPA and verification logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ChavrusaChat-signed-ipa-${{ env.BUILD_NUMBER }}
           path: |
@@ -590,6 +686,7 @@ jobs:
 
       - name: Live Activity · refresh
         if: always()
+        timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
         continue-on-error: true
         with:
@@ -607,3 +704,42 @@ jobs:
           done
           rm -f "${ASC_KEY_PATH:-$RUNNER_TEMP/missing-asc-key}"
           rm -f "$HOME/.private_keys/AuthKey_${ASC_KEY_ID:-missing}.p8"
+
+  distribute-existing-build:
+    if: ${{ inputs.existing_build_number != '' && inputs.upload_to_testflight }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Verify and reuse the previous build's internal audience
+        env:
+          EXISTING_BUILD: ${{ inputs.existing_build_number }}
+          AUDIENCE_SOURCE: ${{ inputs.audience_source_build }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$EXISTING_BUILD" =~ ^[0-9]+$ && "$AUDIENCE_SOURCE" =~ ^[0-9]+$ ]]
+          export ASC_KEY_PATH="$RUNNER_TEMP/testflight-audience-key.p8"
+          export BUILD_DIR="$GITHUB_WORKSPACE/build/testflight-audience"
+          trap 'rm -f "$ASC_KEY_PATH"' EXIT
+          umask 077
+          printf '%s' "$ASC_KEY_P8_B64" | base64 --decode > "$ASC_KEY_PATH"
+          unset ASC_KEY_P8_B64
+          python -m venv "$RUNNER_TEMP/asc-audience-venv"
+          "$RUNNER_TEMP/asc-audience-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          "$RUNNER_TEMP/asc-audience-venv/bin/python" Scripts/CI/verify_testflight_build.py \
+            "$EXISTING_BUILD" --reuse-internal-audience-from "$AUDIENCE_SOURCE"
+      - name: Retain non-secret distribution evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: TestFlight-existing-build-readiness-${{ inputs.existing_build_number }}
+          path: build/testflight-audience/logs/testflight-readiness.json
+          if-no-files-found: warn
+          retention-days: 30

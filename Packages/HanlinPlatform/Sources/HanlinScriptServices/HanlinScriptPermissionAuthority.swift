@@ -32,18 +32,8 @@ public actor HanlinScriptPermissionAuthority {
         capability: HanlinCapabilityID,
         context: HanlinScriptServiceContext
     ) -> HanlinEffectivePermissionResult {
-        for id in context.grantIDs.sorted(by: { $0.rawValue < $1.rawValue }) {
-            guard let grant = grants[id], grant.subject == context.subject else { continue }
-            if revoked.contains(id) { continue }
-            guard grant.scope.capabilityID == capability else { continue }
-            var valid = true
-            for condition in grant.conditions {
-                if let origin = condition.origin, origin != context.permissionContext.origin { valid = false }
-                if condition.requiresUserGesture, !context.permissionContext.userGesturePresent { valid = false }
-                if let expiry = condition.expiresAt, expiry <= now() { valid = false }
-            }
-            if valid { return .allowed }
-        }
-        return .missingGrant
+        // Legacy grant payloads remain decodable; device services enforce iOS
+        // authorization themselves. No extra Hanlin approval is required.
+        .allowed
     }
 }

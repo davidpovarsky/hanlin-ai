@@ -17,6 +17,137 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_prepared_runtime_version_constructor_cases_have_a_focused_unit_route(self) -> None:
+        selector = "AI_HLYTests/PreparedRuntimeVersionGateTests"
+        plan = self.plan_files(["AI_HLYTests/PreparedRuntimeVersionGateTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_expo_constructor_boundary_routes_exact_unit_tests_without_full_acceptance(self) -> None:
+        selector = "AI_HLYTests/ExpoPreparedEntrypointTests"
+        plan = self.plan_files(["AI_HLYTests/ExpoPreparedEntrypointTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_nativescript_generic_wire_paths_accept_exact_native_selection_without_engine_rebuild(self) -> None:
+        selector = "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()"
+        for changed in ("AI_HLYTests/NativeScriptRuntimeWireTests.swift", "Scripts/NativeScript/host-services.ts",
+                        "Scripts/NativeScript/build-host-services.mjs"):
+            with self.subTest(path=changed):
+                plan = self.plan_files([changed], exact_test_selector=selector)
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_new_runtime_cases_route_to_their_exact_suite_without_full_or_native_rebuild(self) -> None:
+        for suite in ("MCPPackageGenerationTests", "RuntimeExecutionInputArtifactTests", "RuntimeFetchConformanceTests",
+                      "RuntimeJavaScriptCoreTests", "RuntimeJobInterruptionTests", "RuntimeNativeInterruptionTests",
+                      "RuntimeUserOperationTests"):
+            with self.subTest(suite=suite):
+                plan = self.plan_files(["AI_HLYTests/" + suite + ".swift"])
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/" + suite)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                if suite in ("RuntimeFetchConformanceTests", "RuntimeNativeInterruptionTests"):
+                    self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+
+    def test_native_python_catalog_paths_keep_focused_consumers_without_rebuilding_frameworks(self) -> None:
+        selector = "AI_HLYTests/RuntimeAutonomyV3Tests/linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService()"
+        for path in ("AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift",
+                     "Scripts/Runtime/Tests/test_python_native_catalog.py",
+                     "Scripts/Runtime/Tests/python_native_catalog_probe.cpp"):
+            with self.subTest(path=path):
+                plan = self.plan_files([path], exact_test_selector=selector)
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_native_reuse_and_foundation_sdk_scripts_have_explicit_affected_routes(self) -> None:
+        plan = self.plan_files(["Scripts/Runtime/verify-runtime-job-foundation.sh"])
+        self.assertTrue(plan.step_outputs["run_ci_router"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        selector = "AI_HLYTests/RuntimeNativeInterruptionTests"
+        plan = self.plan_files(["Scripts/Runtime/verify_runtime_reuse.py"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+
+    def test_swift_testing_empty_parentheses_are_preserved_in_method_selectors(self) -> None:
+        selector = "AI_HLYTests/SkillStoreAndImportTests/resourceReadingContract()"
+        plan = self.plan_files(["README.md"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertIn("-only-testing:" + selector, plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_swift_testing_parameter_labels_are_preserved_without_argument_values(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/canonicalSkillResourceReadAndExecute(fileExtension:)"
+        plan = self.plan_files(["README.md"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertIn("-only-testing:" + selector, plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_method_parentheses_do_not_admit_arguments_or_shell_syntax(self) -> None:
+        for selector in ("AI_HLYTests/Suite()/method", "AI_HLYTests/Suite/method(1)",
+                         "AI_HLYTests/Suite/method();echo", "AI_HLYTests/Suite/method$(whoami)"):
+            with self.subTest(selector=selector), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], exact_test_selector=selector)
+
+    def test_host_archive_prerequisite_supports_focused_sdk_selection(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/embeddedNodeHTTPSRoundTrips()"
+        plan = self.plan_files(["Scripts/Runtime/runtime_host_archive.py"], exact_test_selector=selector)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_runtime_bundle_only_does_not_build_app_consumers(self) -> None:
+        plan = self.plan_files(["RuntimeDependencies.lock.json", ".github/workflows/build-ios26-unsigned-ipa.yml"], manual_modes={"runtime_bundle_only": True})
+        self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
+        for name, value in plan.step_outputs.items():
+            if name.startswith("run_") and name != "run_runtimecore_bundle":
+                self.assertFalse(value, name)
+
+    def test_runtime_bundle_only_rejects_conflicting_operator_requests(self) -> None:
+        for kwargs in ({"full_validation": True}, {"exact_test_selector": "AI_HLYTests/Example/test"},
+                       {"target_group": "app_unit_tests"}):
+            with self.subTest(kwargs=kwargs), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], manual_modes={"runtime_bundle_only": True}, **kwargs)
+
+    def test_native_node_patch_inputs_route_to_the_bundle_pipeline(self) -> None:
+        for file in ("Scripts/Runtime/apply-node-source-patches.py",
+                     "Scripts/Runtime/Patches/v8-std-hash-65ce14d8.json",
+                     "Scripts/Runtime/Tests/test_node_source_patches.py",
+                     "Scripts/Runtime/Tests/node-fd-ownership-probe.mjs",
+                     "Scripts/Runtime/Tests/node-mobile-smoke.mjs"):
+            with self.subTest(file=file):
+                plan = self.plan_files([file])
+                self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+
+    def test_private_runtime_candidate_source_supports_focused_sdk_selection(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/canonicalSkillResourceReadAndExecute(fileExtension:)"
+        for file in ("Scripts/Runtime/runtime_bundle_source.py", "Scripts/Runtime/Tests/test_runtime_bundle_source.py"):
+            with self.subTest(file=file):
+                plan = self.plan_files([file], exact_test_selector=selector)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_autonomous_runtime_suite_has_an_explicit_narrow_route(self) -> None:
+        plan = self.plan_files(["AI_HLYTests/HanlinAutonomousRuntimeTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinAutonomousRuntimeTests")
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_native_api_ui_suite_stages_its_existing_fixtures_without_full_fallback(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
+        plan = self.plan_files(["AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+
     @classmethod
     def setUpClass(cls) -> None:
         with open(MAP_PATH, "r", encoding="utf-8") as f:
@@ -28,6 +159,7 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         full_validation: bool = False,
         target_group: str | None = None,
         manual_modes: dict[str, bool] | None = None,
+        exact_test_selector: str | None = None,
     ):
         return planner.plan_affected_validation(
             mapping_config=self.mapping_config,
@@ -38,6 +170,7 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             full_validation=full_validation,
             target_group=target_group,
             manual_modes=manual_modes,
+            exact_test_selector=exact_test_selector,
         )
 
     # 1. docs-only change -> no simulator/device/IPA
@@ -519,7 +652,7 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertTrue(plan.step_outputs["run_simulator_unit"])
         self.assertEqual(
             plan.step_outputs["simulator_unit_filter"],
-            "AI_HLYTests/CanonicalAdapterTests,AI_HLYTests/HanlinScriptPackageProductionE2ETests",
+            "AI_HLYTests/CanonicalAdapterTests,AI_HLYTests/HanlinScriptPackageProductionE2ETests,AI_HLYTests/VoiceRecordingLifecycleTests",
         )
         self.assertNotIn("HanlinScriptingProductionCompilerAcceptanceTests", plan.step_outputs["simulator_unit_filter"])
         self.assertNotIn("HanlinScriptPackagePhysicalIPadRegressionTests", plan.step_outputs["simulator_unit_filter"])
@@ -702,6 +835,69 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
         self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
         self.assertNotIn("-configuration", plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_native_api_bridge_changes_require_expo_runtime_validation(self) -> None:
+        plan = self.plan_files([
+            "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/Runtime/HanlinExpoRuntimeScheduler.mm",
+            "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+        ])
+        self.assertIn("expo_runtime", plan.affected_components)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertIn("AI_HLYUITests/HanlinExpoProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+
+    def test_exact_selectors_mix_unit_and_ui_without_broadening(self) -> None:
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests"
+        ui = "AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft"
+        plan = self.plan_files(["README.md"], exact_test_selector=unit + "," + ui)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], unit)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], ui)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"],
+                         f"-only-testing:{unit} -only-testing:{ui}")
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertNotIn("AI_HLYUITests/AgentRuntimeConversationUITests", plan.not_required_tests)
+
+    def test_exact_selectors_reject_invalid_members(self) -> None:
+        valid = "AI_HLYTests/VoiceRecordingLifecycleTests"
+        for suffix in [",", ",OtherBundle/Suite", ",AI_HLYUITests/Suite;echo"]:
+            # Surrounding whitespace is accepted, but a missing path, unknown
+            # bundle or shell syntax must never reach xcodebuild.
+            with self.subTest(suffix=suffix), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], exact_test_selector=valid + suffix)
+
+    def test_exact_selectors_reject_modes_that_skip_requested_cases(self) -> None:
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests"
+        ui = "AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomExpandThenNavigate"
+        for selector, mode in [
+            (ui, "fast_validation_only"),
+            (unit + "," + ui, "fast_validation_only"),
+            (unit, "simulator_e2e_only"),
+            (unit + "," + ui, "simulator_e2e_only"),
+            (ui, "nativescript_poc_only"),
+        ]:
+            with self.subTest(selector=selector, mode=mode):
+                with self.assertRaisesRegex(planner.RoutingError, mode):
+                    self.plan_files(["README.md"], exact_test_selector=selector,
+                                    manual_modes={mode: True})
+
+    def test_exact_selectors_allow_compatible_execution_modes(self) -> None:
+        for selector, mode, output in [
+            ("AI_HLYTests/ModelPopoverZoomOrderTests", "fast_validation_only", "run_simulator_unit"),
+            ("AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomExpandThenNavigate",
+             "simulator_e2e_only", "run_simulator_targeted_ui"),
+        ]:
+            with self.subTest(selector=selector, mode=mode):
+                plan = self.plan_files(["README.md"], exact_test_selector=selector,
+                                       manual_modes={mode: True})
+                self.assertTrue(plan.step_outputs[output])
+
+    def test_exact_selectors_deduplicate_and_keep_method_boundaries(self) -> None:
+        method = "AI_HLYTests/VoiceRecordingLifecycleTests/testVR17_StressFiftyRapidCycles"
+        plan = self.plan_files(["README.md"], exact_test_selector=f" {method} , {method} ")
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], method)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{method}")
 
     def test_exact_test_selector_rejects_malformed_input(self) -> None:
         with self.assertRaises(planner.RoutingError) as ctx:
@@ -998,7 +1194,7 @@ class ComprehensiveValidationInfrastructureTests(unittest.TestCase):
     def test_i_bounded_diagnostics_timeout(self) -> None:
         workflow_text = (self.repo_root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
         self.assertIn("timeout-minutes: 2", workflow_text)
-        self.assertIn("head -n 5000", workflow_text)
+        self.assertIn("output.splitlines()[-5000:]", workflow_text)
 
     # Test J: Deterministic failure handling: never masquerades as PASS
     def test_j_deterministic_failure_handling(self) -> None:

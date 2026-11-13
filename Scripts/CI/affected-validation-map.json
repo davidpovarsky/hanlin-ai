@@ -31,6 +31,8 @@
       "patterns": [
         ".github/**",
         "Scripts/CI/**",
+        "Scripts/Diagnostics/**",
+        "Scripts/ChatRendering/**",
         "Scripts/generate_acceptance_results.mjs",
         "Scripts/Audit/**",
         "Scripts/*.mjs",
@@ -41,7 +43,8 @@
         "docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md",
         "docs/hanlin-platform/personal-runtime-completion/*.json",
         "docs/hanlin-platform/contract-audit/**",
-        "docs/hanlin-platform/personal-runtime-completion/evidence/**"
+        "docs/hanlin-platform/personal-runtime-completion/evidence/**",
+        "Scripts/Runtime/verify-runtime-job-foundation.sh"
       ],
       "direct_validation_groups": [
         "ci_router"
@@ -224,17 +227,34 @@
       "description": "Unified Host Services layer",
       "patterns": [
         "AI_HLY/Downstream/HostServices/**",
-        "AI_HLYTests/HanlinUnifiedHostServices*"
+        "AI_HLYTests/HanlinUnifiedHostServices*",
+        "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+        "AI_HLYTests/NativeScriptShareDeliveryTests.swift"
       ],
       "direct_validation_groups": [
         "unified_host_services"
       ],
       "consumers": []
     },
+    "expo_prepared_entry_tests": {
+      "description": "Prepared Expo constructor entry validation before runtime creation",
+      "patterns": [
+        "AI_HLYTests/ExpoPreparedEntrypointTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [],
+      "unit_suites": [
+        "AI_HLYTests/ExpoPreparedEntrypointTests"
+      ]
+    },
     "expo_runtime": {
       "description": "Hanlin Expo dynamic runtime and fixtures",
       "patterns": [
         "Packages/HanlinExpoRuntime/**",
+        "Packages/HanlinExpoNativeAPI/**",
+        "Scripts/ExpoNativeAPI/**",
         "Fixtures/ExpoSwiftUIProbe/**",
         "Scripts/Expo/**",
         "AI_HLYUITests/HanlinExpoProductionE2ETests.swift"
@@ -243,9 +263,12 @@
         "simulator_targeted_ui"
       ],
       "ui_suites": [
-        "AI_HLYUITests/HanlinExpoProductionE2ETests"
+        "AI_HLYUITests/HanlinExpoProductionE2ETests",
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
       ],
-      "consumers": []
+      "consumers": [
+        "expo_prepared_entry_tests"
+      ]
     },
     "swiftui_bridge_generator": {
       "description": "SwiftUI Bridge Generator, tools, and HanlinExpoUI package",
@@ -324,7 +347,9 @@
         "Scripts/NativeScript/prepare-ios-dependencies.mjs",
         "Scripts/NativeScript/preflight-ios-dependencies.mjs",
         "Scripts/NativeScript/hanlin-nsld.sh",
-        "Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
+        "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+        "Scripts/NativeScript/host-services.ts",
+        "Scripts/NativeScript/build-host-services.mjs"
       ],
       "direct_validation_groups": [
         "nativescript_dependencies"
@@ -347,7 +372,6 @@
         "Scripts/NativeScript/nativescript.config.ts",
         "Scripts/NativeScript/tsconfig.json",
         "Scripts/NativeScript/vite.config.mts"
-
       ],
       "direct_validation_groups": [
         "nativescript_dependencies",
@@ -384,7 +408,15 @@
         "Scripts/Runtime/generate-runtime-manifest.mjs",
         "Scripts/Runtime/update-runtime-dependencies.mjs",
         "Scripts/Runtime/validate-runtime-localization.mjs",
-        ".github/workflows/build-runtime-bundle.yml"
+        ".github/workflows/build-runtime-bundle.yml",
+        "Scripts/Runtime/apply-node-source-patches.py",
+        "Scripts/Runtime/configure-node-wasm.py",
+        "Scripts/Runtime/Tests/test_node_wasm_configuration.py",
+        "Scripts/Runtime/Tests/wasm-interpreter-probe.mjs",
+        "Scripts/Runtime/Patches/**",
+        "Scripts/Runtime/Tests/test_node_source_patches.py",
+        "Scripts/Runtime/Tests/node-fd-ownership-probe*.mjs",
+        "Scripts/Runtime/Tests/node-mobile-smoke.mjs"
       ],
       "direct_validation_groups": [
         "runtimecore_bundle"
@@ -400,9 +432,18 @@
         "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
         "AI_HLY/Downstream/RuntimeCore/Resources/**",
         "Scripts/Runtime/prepare-runtime-host.sh",
+        "Scripts/Runtime/runtime_host_archive.py",
         "Scripts/Runtime/prepare-runtime-core.sh",
         "Scripts/Runtime/preflight-runtime-core.sh",
-        "Scripts/Runtime/run-with-heartbeat.py"
+        "Scripts/Runtime/run-with-heartbeat.py",
+        "Scripts/Runtime/runtime_bundle_source.py",
+        "Scripts/Runtime/runtime_native_identity.py",
+        "Scripts/Runtime/Tests/test_runtime_native_identity.py",
+        "Scripts/Runtime/Tests/test_runtime_bundle_source.py",
+        "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
+        "Scripts/Runtime/generate-yarn-multiline-patch.mjs",
+        "Scripts/Runtime/HostGrammarTools/**",
+        "Scripts/Runtime/verify_runtime_reuse.py"
       ],
       "direct_validation_groups": [
         "runtimecore_host"
@@ -417,9 +458,19 @@
       "description": "Python iOS runtime slice scripts and downstream Python environment",
       "patterns": [
         "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonQueuedExecution.swift",
         "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift",
         "AI_HLY/Downstream/RuntimeCore/Python/Native/**",
-        "Scripts/Runtime/prepare-python-runtime.sh"
+        "Scripts/Runtime/prepare-python-runtime.sh",
+        "AI_HLY/Downstream/RuntimeCore/Python/Resources/**",
+        "Scripts/Runtime/Tests/test_python_execution.py",
+        "Scripts/Runtime/Tests/test_python_cancellation_context.py",
+        "Scripts/Runtime/Tests/test_python_native_catalog.py",
+        "Scripts/Runtime/Tests/python_native_catalog_probe.cpp",
+        "Scripts/Runtime/Tests/python_cancellation_probe.cpp",
+        "Scripts/Runtime/Tests/test_python_packaging.py",
+        "Scripts/Runtime/package-python-native-probe.py"
       ],
       "direct_validation_groups": [
         "python_runtime",
@@ -433,6 +484,7 @@
         "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
         "AI_HLY/Downstream/RuntimeCore/Node/Native/**",
         "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift",
         "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift",
         "AI_HLY/Downstream/MCP/Core/**",
         "AI_HLY/Downstream/MCP/Diagnostics/**",
@@ -1048,6 +1100,318 @@
       "direct_validation_groups": [
         "device_build",
         "ipa_packaging"
+      ],
+      "consumers": []
+    },
+    "autonomous_runtime_acceptance": {
+      "description": "Autonomous host policy, canonical Skill execution and actual embedded HTTPS acceptance",
+      "patterns": [
+        "AI_HLYTests/HanlinAutonomousRuntimeTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAutonomousRuntimeTests"
+      ],
+      "consumers": []
+    },
+    "expo_native_api_ui_tests": {
+      "description": "Existing native JSI/Fabric integration, grantless install and session lifecycle acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
+      ],
+      "consumers": []
+    },
+    "chat_diagnostics_journal_tests": {
+      "description": "Automatic chat capture, encryption and redaction acceptance",
+      "patterns": [
+        "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
+        "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests.swift",
+        "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/**",
+        "AI_HLYTests/AgentDiagnosticsExportTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentDiagnosticsJournalTests",
+        "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests",
+        "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests",
+        "AI_HLYTests/AgentDiagnosticsExportTests"
+      ],
+      "consumers": []
+    },
+    "chat_round_presentation_tests": {
+      "description": "Actual provider-round ownership and legacy unattributed activities",
+      "patterns": [
+        "AI_HLYTests/AgentRoundPresentationTests.swift",
+        "AI_HLY/Downstream/AgentActivity/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRoundPresentationTests"
+      ],
+      "consumers": []
+    },
+    "provider_model_catalog_tests": {
+      "description": "Authoritative provider prices, modalities, freshness and provenance",
+      "patterns": [
+        "AI_HLYTests/ProviderModelCatalogTests.swift",
+        "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+        "AI_HLY/Services/APIServices/ModelRefreshService.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ProviderModelCatalogTests"
+      ],
+      "consumers": []
+    },
+    "diagnostics_raw_review_tests": {
+      "description": "Deliberate encrypted capture authentication and response-only local review",
+      "patterns": [
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsExport.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+        "AI_HLYTests/AgentDiagnosticsRawReviewTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentDiagnosticsRawReviewTests"
+      ],
+      "consumers": []
+    },
+    "chat_auto_follow_tests": {
+      "description": "Original-chat layout-driven scroll coalescing and cancellation ownership",
+      "patterns": [
+        "AI_HLY/Downstream/AgentActivity/Scrolling/**",
+        "AI_HLYTests/ChatAutoFollowTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatAutoFollowTests"
+      ],
+      "consumers": []
+    },
+    "chat_code_fence_tests": {
+      "description": "Pinned local Mermaid/Diff assets, native WebKit renderer and original Markdown hook",
+      "patterns": [
+        "AI_HLY/Downstream/ChatPresentation/CodeFences/**",
+        "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+        "AI_HLYTests/ChatCodeFenceTests.swift",
+        "Scripts/ChatRendering/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatCodeFenceTests"
+      ],
+      "consumers": []
+    },
+    "original_chat_presentation_tests": {
+      "description": "ChatPresentationTests acceptance for original chat and Runtime V3",
+      "patterns": [
+        "AI_HLYTests/ChatPresentationTests.swift",
+        "AI_HLY/Downstream/ChatPresentation/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatPresentationTests"
+      ],
+      "consumers": []
+    },
+    "runtime_autonomy_v3_tests": {
+      "description": "RuntimeAutonomyV3Tests acceptance for original chat and Runtime V3",
+      "patterns": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+        "AI_HLY/Downstream/AgentSkills/ToolResultStore.swift",
+        "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift",
+        "AI_HLY/Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests"
+      ],
+      "consumers": []
+    },
+    "runtime_command_bridge": {
+      "description": "Finite Host command receipts dispatch through the existing Node/Python/Shell actors",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "consumers": [
+        "python_runtime",
+        "node_runtime",
+        "ios_system"
+      ]
+    },
+    "mcp_package_generation_tests": {
+      "description": "MCPPackageGenerationTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/MCPPackageGenerationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/MCPPackageGenerationTests"
+      ],
+      "consumers": []
+    },
+    "runtime_execution_input_artifact_tests": {
+      "description": "RuntimeExecutionInputArtifactTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeExecutionInputArtifactTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeExecutionInputArtifactTests"
+      ],
+      "consumers": []
+    },
+    "runtime_fetch_conformance_tests": {
+      "description": "RuntimeFetchConformanceTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeFetchConformanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeFetchConformanceTests"
+      ],
+      "consumers": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ]
+    },
+    "runtime_java_script_core_tests": {
+      "description": "RuntimeJavaScriptCoreTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeJavaScriptCoreTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeJavaScriptCoreTests"
+      ],
+      "consumers": []
+    },
+    "runtime_job_interruption_tests": {
+      "description": "RuntimeJobInterruptionTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeJobInterruptionTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeJobInterruptionTests"
+      ],
+      "consumers": []
+    },
+    "runtime_native_interruption_tests": {
+      "description": "RuntimeNativeInterruptionTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeNativeInterruptionTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeNativeInterruptionTests"
+      ],
+      "consumers": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ]
+    },
+    "runtime_user_operation_tests": {
+      "description": "RuntimeUserOperationTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeUserOperationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeUserOperationTests"
+      ],
+      "consumers": []
+    },
+    "prepared_runtime_version_gate_tests": {
+      "description": "Direct NativeScript/Expo version contract constructor gates without starting either VM",
+      "patterns": [
+        "AI_HLYTests/PreparedRuntimeVersionGateTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/PreparedRuntimeVersionGateTests"
+      ],
+      "consumers": []
+    },
+    "share_inbox_host_tests": {
+      "description": "Actual owned provider batch through the Host App Group reader; not physical system-sheet acceptance",
+      "patterns": [
+        "AI_HLYTests/ShareInboxHostIntegrationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ShareInboxHostIntegrationTests"
+      ],
+      "consumers": []
+    },
+    "nativescript_environment_unit_tests": {
+      "description": "Actual NS VM environment ownership and failed-start rollback in the existing serialized NS suite",
+      "patterns": [
+        "AI_HLYTests/NativeScriptEnvironmentOwnershipTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/onlyTheStartedNativeScriptSessionRestoresItsExactPreviousEnvironment()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/failedNativeScriptBootstrapRollsBackEnvironmentWithoutKeepingAFalseOwner()"
       ],
       "consumers": []
     }

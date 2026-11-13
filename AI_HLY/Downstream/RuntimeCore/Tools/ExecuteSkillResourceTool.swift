@@ -2,17 +2,18 @@ import Foundation
 import HanlinPlatformContracts
 
 struct ExecuteSkillResourceTool: NativeTool {
-    let name: String
+    let name = "execute_skill_resource"
+    private let catalog: HanlinSkillCatalog?
 
-    init(name: String = "execute_skill_resource") {
-        self.name = name
+    init(catalog: HanlinSkillCatalog? = nil) {
+        self.catalog = catalog
     }
 
     var catalogEntry: NativeToolCatalogEntry {
         .init(
             name: name,
             title: RuntimeL10n.string("Execute Skill Resource"),
-            summary: RuntimeL10n.string("Execute an approved script resource from a loaded skill bundle."),
+            summary: RuntimeL10n.string("Execute a script resource from a loaded skill bundle."),
             categories: ["runtime", "skills", "code"],
             keywords: ["skill", "script", "resource", "execute", "python", "js"],
             examples: ["Run skill script", "הרץ סקריפט מתוך ה-Skill"],
@@ -35,8 +36,8 @@ struct ExecuteSkillResourceTool: NativeTool {
                 properties: [
                     "skill_id": NativeToolSchema.string(description: "The unique identifier of the active skill."),
                     "relative_path": NativeToolSchema.string(description: "Relative path to the executable script inside the skill package (e.g. 'scripts/search.py')."),
-                    "arguments": NativeToolSchema.stringArray(description: "Optional command-line arguments passed to the script via sys.argv."),
-                    "timeout_seconds": NativeToolSchema.integer(description: "Timeout in seconds (default 30, maximum 300).", minimum: 1, maximum: 300)
+                    "arguments": NativeToolSchema.stringArray(description: "Command-line arguments after the script name: sys.argv[1:] in Python and process.argv.slice(2) in Node/TypeScript."),
+                    "timeout_seconds": NativeToolSchema.integer(description: "Optional deadline in seconds. Omit for no deadline; user cancellation and actual errors still stop execution.", minimum: 1)
                 ],
                 required: ["skill_id", "relative_path"]
             )
@@ -52,7 +53,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             let skillIDRaw = try NativeToolJSON.strictRequiredString(arguments, "skill_id")
             let relPath = try NativeToolJSON.strictRequiredString(arguments, "relative_path")
             let argv = try NativeToolJSON.strictStringArray(arguments, "arguments")
-            let timeout = try NativeToolJSON.strictInt(arguments, "timeout_seconds", default: 30, range: 1...300)
+            let executionLimits = try RuntimeToolSupport.limits(arguments)
 
             guard let skillID = try? HanlinSkillID(validating: skillIDRaw) else {
                 return RuntimeToolSupport.failure(
@@ -61,11 +62,11 @@ struct ExecuteSkillResourceTool: NativeTool {
                 )
             }
 
-            // Require loaded and enabled Skill within the current active session context
+            // Use the loaded Skill context; this is not an additional permission grant.
             guard let session = context.capabilitySession else {
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.systemAuthorizationDenied("Skill execution requires an active authorized session context."),
-                    title: "Authorization Denied"
+                    HanlinHostServiceError.invalidRequest("Skill execution requires an active conversation context. Call load_skill first."),
+                    title: "Missing Skill Context"
                 )
             }
 
@@ -102,9 +103,12 @@ struct ExecuteSkillResourceTool: NativeTool {
                 )
             }
 
-            // Resolve file strictly inside the skill store (never bundle fallback for execution!)
+            // Use the same catalog/source resolver as read_skill_resource, including
+            // installed package generations. A loaded instruction is not a second file store.
             guard let resourceURL = await MainActor.run(body: {
-                SkillStore.shared.safeResourceURL(for: skillID, relativePath: cleanPath)
+                let activeCatalog = catalog ?? HanlinSkillCatalog.shared
+                guard activeCatalog.resolve(id: skillID) != nil else { return nil as URL? }
+                return activeCatalog.resolveResourceURL(skillID: skillID, relativePath: cleanPath)
             }) else {
                 return RuntimeToolSupport.failure(
                     HanlinHostServiceError.invalidRequest("Script '\(cleanPath)' not found in skill '\(skillIDRaw)' or path is outside package root."),
@@ -157,8 +161,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             }
 
             // Build isolated per-session/per-run workspace with automatic cleanup
-            let sessionID = session.id.uuidString
-            let runID = context.toolCallID ?? UUID().uuidString
+            let runID = UUID().uuidString.lowercased()
             let workspaceID = "skill-\(skillIDRaw)-\(runID)"
             let workspaceURL = FileManager.default.temporaryDirectory.appendingPathComponent(workspaceID)
             try FileManager.default.createDirectory(at: workspaceURL, withIntermediateDirectories: true)
@@ -180,20 +183,21 @@ struct ExecuteSkillResourceTool: NativeTool {
                 }
             }
 
-            let executionLimits = RuntimeExecutionLimits(timeout: .seconds(timeout))
-            let fullArgv = [cleanPath] + argv
+            // Runtime actors supply argv[0] / the Node entry point. Preserve
+            // user arguments exactly, without inserting the logical resource path.
 
-            // Pass explicit restricted HanlinHostCallContext with only required capability (never 'all')
+            // Retain Skill identity and legacy capability metadata; the host applies its autonomous policy.
             let skillCallContext = HanlinHostCallContext.forSkill(
                 skillID: skillID,
                 capabilities: [requiredCapability, "files"],
-                workspaceIdentifier: workspaceID
+                workspaceIdentifier: workspaceID,
+                sessionID: try HanlinAppSessionID(validating: session.id.uuidString.lowercased())
             )
 
             let result = try await AgentHostServicesAdapter.executeRuntime(
                 runtimeKind,
                 source: scriptContent,
-                arguments: fullArgv,
+                arguments: argv,
                 environment: scriptEnv,
                 limits: executionLimits,
                 context: skillCallContext

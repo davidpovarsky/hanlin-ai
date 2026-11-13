@@ -2,6 +2,7 @@
 
 import { readFile } from 'node:fs/promises';
 import process from 'node:process';
+import { createHash } from 'node:crypto';
 
 const lockPath = process.argv[2] ?? 'RuntimeDependencies.lock.json';
 const allowPending = process.argv.includes('--allow-pending-build');
@@ -11,12 +12,43 @@ const sha40 = /^[a-f0-9]{40}$/;
 
 assert(lock.schemaVersion === 1, 'schemaVersion must be 1');
 assert(lock.runtimeBundle?.formatVersion === 1, 'runtimeBundle.formatVersion must be 1');
+if (lock.runtimeBundle.artifactDependencyHash !== undefined) {
+  assert(sha256.test(lock.runtimeBundle.artifactDependencyHash), 'runtimeBundle.artifactDependencyHash must be SHA-256');
+  assert(sha256.test(lock.runtimeBundle.nativeInputSHA256 ?? ''), 'runtimeBundle.nativeInputSHA256 is required for artifact reuse');
+  assert(sha40.test(lock.runtimeBundle.sourceCommit ?? ''), 'runtimeBundle.sourceCommit is required for artifact reuse');
+}
+
 assertRepository(lock.node?.sourceRepository, 'node.sourceRepository');
 assert(sha40.test(lock.node?.commit ?? ''), 'node.commit must be a lowercase 40-character SHA');
 assert(/^24\.\d+\.\d+$/.test(lock.node?.version ?? ''), 'node.version must be Node 24');
 assert(Array.isArray(lock.node?.exportedSymbols), 'node.exportedSymbols must be an array');
 assert(lock.node.exportedSymbols.length === 1 && lock.node.exportedSymbols[0] === '_node_start', 'node.exportedSymbols must contain only _node_start');
 assertUrlAndHash(lock.node?.sourceArchive, 'node.sourceArchive');
+if (lock.node.buildConfiguration) {
+  const config = lock.node.buildConfiguration;
+  assert(config.wasmInterpreter === 'drumbrake' && config.jitless === true && config.explicitBoundsChecks === true, 'Node interpreter build must retain JITless execution and explicit bounds checks');
+  assert(config.pointerCompression === true && config.pointerCompressionSharedCage === true && config.taggedHeapAddressSpaceBytes === 4294967296, 'The pinned DrumBrake build requires the actual compressed-pointer shared-cage representation');
+  assert(config.adapter?.path === 'Scripts/Runtime/configure-node-wasm.py', 'Invalid downstream Node build adapter path');
+  const adapter = await readFile(new URL(`../../${config.adapter.path}`, import.meta.url), 'utf8');
+  assert(createHash('sha256').update(adapter.replaceAll('\r\n', '\n')).digest('hex') === config.adapter.sha256, 'Node build adapter checksum mismatch');
+}
+for (const patch of lock.node.sourcePatches ?? []) {
+  assert(/^Scripts\/Runtime\/Patches\/[A-Za-z0-9._-]+\.json$/.test(patch.path ?? ''), 'Invalid Node source patch path');
+  assert(sha256.test(patch.sha256 ?? ''), 'Invalid Node source patch SHA-256');
+  assert(sha40.test(patch.upstreamCommit ?? ''), 'Invalid Node source patch upstream commit');
+  const bytes = await readFile(new URL(`../../${patch.path}`, import.meta.url));
+  assert(createHash('sha256').update(bytes).digest('hex') === patch.sha256, 'Node source patch checksum mismatch');
+  const manifest = JSON.parse(bytes);
+  assert(manifest.sourceCommit === lock.node.commit, 'Node source patch requires a matching source commit');
+  assert(manifest.upstreamCommit === patch.upstreamCommit, 'Node source patch upstream provenance mismatch');
+  for (const original of [...(manifest.upstreamPatch ? [manifest.upstreamPatch] : []), ...(manifest.upstreamPatches ?? [])]) {
+    assert(/^Scripts\/Runtime\/Patches\/[A-Za-z0-9._-]+\.patch$/.test(original.path ?? ''), 'Invalid original upstream patch path');
+    assert(sha256.test(original.sha256 ?? ''), 'Invalid original upstream patch SHA-256');
+    const evidence = await readFile(new URL(`../../${original.path}`, import.meta.url));
+    assert(createHash('sha256').update(evidence).digest('hex') === original.sha256, 'Original upstream patch checksum mismatch');
+  }
+}
+
 assertRepository(lock.python?.sourceRepository, 'python.sourceRepository');
 assert(sha40.test(lock.python?.commit ?? ''), 'python.commit must be a lowercase 40-character SHA');
 assert(/^3\.14\.\d+$/.test(lock.python?.version ?? ''), 'python.version must be Python 3.14');

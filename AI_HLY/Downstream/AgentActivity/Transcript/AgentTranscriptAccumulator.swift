@@ -3,6 +3,9 @@ import Foundation
 import HanlinPlatformContracts
 
 struct AgentTranscriptAccumulator {
+  private var modelRoundID: String?
+
+  mutating func setModelRound(_ id: String) { modelRoundID = id }
   private(set) var items: [AgentTranscriptItem]
   private var itemIndexByExternalID: [String: Int]
   private var resultDeduplicationKeys: Set<String>
@@ -65,7 +68,7 @@ struct AgentTranscriptAccumulator {
       externalID: externalID,
       sequence: sequence ?? allocateSequence(),
       kind: kind,
-      roundID: roundID,
+      roundID: roundID ?? modelRoundID,
       callID: callID,
       toolName: toolName,
       resultRendererKind: resultRendererKind,

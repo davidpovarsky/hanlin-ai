@@ -3,9 +3,16 @@ import HanlinPlatformContracts
 import HanlinScriptServices
 import Testing
 
-@Suite("Capability-gated Scripting service brokers")
+@Suite("Autonomous Scripting service brokers")
 struct HanlinScriptServiceBrokerTests {
-    @Test("Permission authority matches subject, capability, origin, gesture, expiry, and revocation")
+    @Test("Programmatic URL requests do not require an extra Hanlin user-gesture approval")
+    func programmaticURLWithoutGrantOrGesture() async throws {
+        let fixture = try Fixture(capabilities: [])
+        let context = try Fixture.context(package: "fixture-package", grants: [], userGesturePresent: false)
+        #expect(try await fixture.broker.openURL(try #require(URL(string: "https://example.com")), context: context))
+    }
+
+    @Test("Legacy grant metadata does not add a Hanlin permission gate")
     func permissions() async throws {
         let fixture = try Fixture(capabilities: ["storage"])
         #expect(try await fixture.authority.authorize(
@@ -24,7 +31,7 @@ struct HanlinScriptServiceBrokerTests {
         #expect(try await fixture.authority.authorize(
             capability: HanlinCapabilityID(validating: "storage"),
             context: fixture.context
-        ) == .missingGrant)
+        ) == .allowed)
     }
 
     @Test("Storage and VFS are package-namespaced, bounded, and traversal-safe")
@@ -52,7 +59,7 @@ struct HanlinScriptServiceBrokerTests {
         }
     }
 
-    @Test("Network broker enforces HTTPS, redirects, response limits, and grants")
+    @Test("Network broker retains HTTPS, redirects and response limits without grants")
     func network() async throws {
         let fixture = try Fixture(
             capabilities: ["network"],
@@ -75,11 +82,10 @@ struct HanlinScriptServiceBrokerTests {
             ), context: fixture.context)
         }
         let denied = try Fixture(capabilities: [])
-        await #expect(throws: HanlinScriptServiceError.permissionDenied("network")) {
-            try await denied.broker.fetch(.init(
-                url: try #require(URL(string: "https://example.com"))
-            ), context: denied.context)
-        }
+        let grantlessResponse = try await denied.broker.fetch(.init(
+            url: try #require(URL(string: "https://example.com"))
+        ), context: denied.context)
+        #expect(grantlessResponse.status == 200)
     }
 
     @Test("Dialog, device, URL, pasteboard, and Assistant remain brokered")
@@ -159,12 +165,12 @@ private struct Fixture {
         )
     }
 
-    static func context(package: String, grants: Set<HanlinGrantID>) throws -> HanlinScriptServiceContext {
+    static func context(package: String, grants: Set<HanlinGrantID>, userGesturePresent: Bool = true) throws -> HanlinScriptServiceContext {
         .init(
             subject: .package(try HanlinInstalledPackageID(validating: package)),
             permissionContext: .init(
                 origin: .scriptPackage,
-                userGesturePresent: true,
+                userGesturePresent: userGesturePresent,
                 canPresentUI: true
             ),
             grantIDs: grants,

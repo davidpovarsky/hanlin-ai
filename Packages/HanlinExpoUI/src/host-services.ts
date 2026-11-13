@@ -6,8 +6,16 @@ export type HanlinRuntimeKind = 'node' | 'typeScript' | 'localPython' | 'javaScr
 export type HanlinDataArea = 'data' | 'documents' | 'state' | 'cache';
 
 export interface RuntimeExecutionLimits {
-  timeoutMilliseconds: number;
+  /** Omit for no explicit deadline; this is not a default timeout. */
+  timeoutMilliseconds?: number;
+  /** Preview budget; full output remains in the runtime job artifacts. */
   maximumOutputBytes: number;
+}
+
+export interface RuntimeOutputArtifact {
+  path: string;
+  bytes: number;
+  sha256: string;
 }
 
 export interface RuntimeExecutionResult {
@@ -20,6 +28,7 @@ export interface RuntimeExecutionResult {
   didTimeOut: boolean;
   wasCancelled: boolean;
   outputWasTruncated: boolean;
+  outputFiles?: Record<string, RuntimeOutputArtifact>;
 }
 
 async function invoke<T>(operation: string, payload: unknown): Promise<T> {
@@ -45,8 +54,8 @@ export const hostServices = {
   },
 
   async readFile(path: string, area: HanlinDataArea = 'data'): Promise<Uint8Array | null> {
-    const { base64 } = await invoke<{ base64?: string }>('files.read', { path, area });
-    if (!base64) return null;
+    const { base64 } = await invoke<{ base64?: string | null }>('files.read', { path, area });
+    if (base64 == null) return null;
     const binary = globalThis.atob(base64);
     return Uint8Array.from(binary, (character) => character.charCodeAt(0));
   },

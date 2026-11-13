@@ -237,7 +237,7 @@ struct HanlinScriptingProductionCompilerAcceptanceTests {
 @Suite("Script Package production installation E2E", .serialized)
 struct HanlinScriptPackageProductionE2ETests {
     @MainActor
-    @Test("Exports, imports, approves, installs, restores, launches, and renders through production")
+    @Test("Exports, imports, installs without redundant grants, restores, launches, and renders through production")
     func productionPackageFlow() async throws {
         let root = FileManager.default.temporaryDirectory.appending(
             path: "hanlin-production-package-e2e-\(UUID().uuidString.lowercased())",
@@ -264,12 +264,9 @@ struct HanlinScriptPackageProductionE2ETests {
         #expect(preview.requestedCapabilities.map(\.capabilityID).contains(storage))
 
         await platform.installPreview()
-        #expect(platform.activity == .failed("Approve every required capability before installing this package."))
-        platform.setCapabilityApproved(true, capability: storage)
-        await platform.installPreview()
         #expect(platform.activity == .idle)
         let installed = try #require(platform.installedPackages.first)
-        #expect(installed.grantedCapabilities == [storage])
+        #expect(Set(installed.grantedCapabilities) == Set(preview.requestedCapabilities.map(\.capabilityID)).union(preview.manifest?.declaredCapabilities ?? []))
 
         await platform.launch(installed.record.installedPackageID)
         #expect(platform.activeApplicationModel?.root.properties["text"] == .string("Production Package E2E Passed"))
@@ -295,7 +292,6 @@ struct HanlinScriptPackageProductionE2ETests {
         let secondArchive = root.appending(path: "production-e2e-second.scripting", directoryHint: .notDirectory)
         try HanlinScriptingPackageExporter().exportPackage(at: secondSource, to: secondArchive)
         await platform.importPackage(from: secondArchive)
-        platform.setCapabilityApproved(true, capability: storage)
         await platform.installPreview()
         #expect(platform.activity == .idle)
         #expect(platform.installedPackages.count == 2)

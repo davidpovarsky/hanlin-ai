@@ -4,6 +4,7 @@ import MCP
 struct MCPToolCallOutput: Sendable {
     var content: [Tool.Content]
     var isError: Bool
+    var structuredContent: Value? = nil
 }
 
 actor MCPClientSession {
@@ -55,8 +56,29 @@ actor MCPClientSession {
             }
             arguments = object
         }
-        let response = try await client.callTool(name: name, arguments: arguments)
-        return MCPToolCallOutput(content: response.content, isError: response.isError ?? false)
+        // The pinned SDK's async convenience returns a tuple that discards
+        // structuredContent. Its public RequestContext preserves the full result.
+        let owner = RuntimeUserOperation.current
+        try owner?.checkInterruption()
+        try Task.checkCancellation()
+        let context: RequestContext<CallTool.Result> = try await client.callTool(name: name, arguments: arguments)
+        let client = client
+        let interruption = owner?.registerInterruption { reason in
+            Task.detached { try? await client.cancelRequest(context.requestID, reason: reason) }
+        }
+        defer { if let interruption { owner?.unregisterInterruption(interruption) } }
+        let response = try await withTaskCancellationHandler {
+            try owner?.checkInterruption()
+            try Task.checkCancellation()
+            let value = try await context.value
+            try owner?.checkInterruption()
+            try Task.checkCancellation()
+            return value
+        } onCancel: {
+            Task.detached { try? await client.cancelRequest(context.requestID, reason: "The owning operation was cancelled.") }
+        }
+        return MCPToolCallOutput(content: response.content, isError: response.isError ?? false,
+                                 structuredContent: response.structuredContent)
     }
 
     func disconnect() async {

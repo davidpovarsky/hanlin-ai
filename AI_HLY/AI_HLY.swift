@@ -47,6 +47,7 @@ class AppDataManager: ObservableObject {
             let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: isTesting ? .none : .automatic)
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
+                ChatSavedExcerpt.self,
                 APIKeys.self,
                 SearchKeys.self,
                 AllModels.self,

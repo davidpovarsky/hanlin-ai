@@ -1,10 +1,36 @@
 #import "HanlinNativeScriptCoreSupport.h"
 #import "NativeScriptEmbedder.h"
 #import <NativeScript/NativeScript.h>
+#import <mach-o/dyld.h>
+#import <mach-o/getsect.h>
 #import <exception>
 #import <string>
 
 extern "C" NSString * _Nullable HanlinNativeServicesPrepareSessionBootstrap(NSString *sessionID);
+
+// SwiftPM can link this support code in a dynamic product, while the app's
+// generated metadata lives in its executable or Xcode debug dylib. Only inspect
+// direct images of the main bundle; never select SDK/framework metadata.
+static void *HanlinHostMetadataPointer() {
+    NSString *bundlePath = NSBundle.mainBundle.bundlePath.stringByResolvingSymlinksInPath;
+    void *result = nullptr;
+    for (uint32_t index = 0; index < _dyld_image_count(); index++) {
+        const char *imageName = _dyld_get_image_name(index);
+        const struct mach_header *header = _dyld_get_image_header(index);
+        if (!imageName || !header || header->magic != MH_MAGIC_64) { continue; }
+        NSString *imagePath = [NSString stringWithUTF8String:imageName];
+        if (!imagePath || ![imagePath.stringByResolvingSymlinksInPath.stringByDeletingLastPathComponent isEqualToString:bundlePath]) {
+            continue;
+        }
+        unsigned long size = 0;
+        uint8_t *bytes = getsectiondata(reinterpret_cast<const struct mach_header_64 *>(header), "__DATA", "__TNSMetadata", &size);
+        if (bytes && size > 0) {
+            if (result && result != bytes) { return nullptr; }
+            result = bytes;
+        }
+    }
+    return result;
+}
 
 namespace tns {
 class __attribute__((visibility("default"))) NativeScriptException {
@@ -61,6 +87,15 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
         return nil;
     }
 
+    void *hostMetadata = HanlinHostMetadataPointer();
+    if (!hostMetadata) {
+        if (error) {
+            *error = HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorInvalidConfiguration,
+                @"The Host application must contain one nonempty generated NativeScript metadata section.");
+        }
+        return nil;
+    }
+
     self = [super init];
     if (!self) { return nil; }
 
@@ -69,6 +104,7 @@ static NSError *HanlinNativeScriptError(HanlinNativeScriptRuntimeErrorCode code,
             Config *config = [[Config alloc] init];
             config.BaseDir = baseDirectory;
             config.ApplicationPath = applicationPath;
+            config.MetadataPtr = hostMetadata;
             config.IsDebug = NO;
             config.LogToSystemConsole = YES;
             self.runtime = [[NativeScript alloc] initWithConfig:config];

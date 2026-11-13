@@ -1,6 +1,13 @@
 import CryptoKit
 import Foundation
 
+struct RuntimeLifecycleCommandFailure: LocalizedError, Sendable {
+    let executionID: UUID
+    let exitCode: Int
+    let diagnostic: String
+    var errorDescription: String? { diagnostic }
+}
+
 struct LifecycleApprovalRecord: Codable, Hashable, Sendable, Identifiable {
     var id: String { approvalKey }
     let packageName: String
@@ -73,34 +80,63 @@ actor LifecycleExecutionBroker {
         try persist(values)
     }
 
-    func executeApproved(_ plan: LifecycleExecutionPlan, packageRoot: URL) async throws {
+    func execute(_ plan: LifecycleExecutionPlan, packageRoot: URL) async throws {
         guard plan.executable, plan.rejected.isEmpty else {
             throw RuntimeCoreError.invalidRequest("The lifecycle plan contains rejected commands.")
         }
-        if plan.requiresApproval {
-            guard try isApproved(plan) else {
-                throw RuntimeCoreError.invalidRequest("Lifecycle execution requires explicit approval for this exact package version, integrity, and script hash.")
+        // Staged package integrity/script identity remain required; legacy human
+        // approvals are metadata, not a gate for the personal-development host.
+        if plan.schemaVersion != 2, !plan.actions.isEmpty {
+            guard let integrity = plan.integrity, !integrity.isEmpty,
+                  plan.scriptHash.range(of: "^[a-f0-9]{64}$", options: .regularExpression) != nil else {
+                throw RuntimeCoreError.invalidRequest("Lifecycle execution requires verified package integrity and a script hash.")
             }
         }
         let workspace = try fileLayout.validatedWorkspace(packageRoot)
+        if plan.schemaVersion == 2 { try await node.verifyLifecyclePlan(plan, workspace: workspace) }
+        var omitted: Set<String> = []
         for action in plan.actions {
+            if let directory = action.workingDirectory, omitted.contains(directory) { continue }
             try Task.checkCancellation()
-            switch action.kind {
-            case "node":
-                try await executeNode(action, workspace: workspace)
-            case "typescript":
-                let result = try await typeScript.compileProject(workspace: workspace, arguments: action.arguments)
-                guard result.succeeded else {
-                    throw RuntimeCoreError.runtimeFailure(result.diagnostics.map(\.message).joined(separator: "\n"))
+            do {
+                switch action.kind {
+                case "portableShell":
+                    guard let source = action.source else { throw RuntimeCoreError.invalidRequest("Lifecycle script source is missing.") }
+                    let directory = try fileLayout.validatedDescendant(workspace.appending(path: action.workingDirectory ?? "."), of: workspace, allowRoot: true)
+                    let result = try await node.executePortableShell(RuntimeExecutionRequest(source: source, workspace: directory),
+                        lifecycle: RuntimeLifecycleContext(packageName: action.packageName ?? plan.packageName,
+                            packageVersion: action.packageVersion ?? plan.packageVersion, event: action.script, initialCwd: workspace.path))
+                    if result.wasCancelled { throw CancellationError() }
+                    guard result.exitCode == 0, !result.didTimeOut else {
+                        guard let code = result.exitCode, code != 0, !result.didTimeOut else {
+                            throw RuntimeCoreError.runtimeFailure(result.stderr)
+                        }
+                        throw RuntimeLifecycleCommandFailure(executionID: result.executionID, exitCode: code,
+                            diagnostic: "Lifecycle \(action.script) exited with status \(code). \(result.stderr)")
+                    }
+                case "node":
+                    try await executeNode(action, workspace: workspace)
+                case "typescript":
+                    let result = try await typeScript.compileProject(workspace: workspace, arguments: action.arguments)
+                    guard result.succeeded else {
+                        throw RuntimeCoreError.runtimeFailure(result.diagnostics.map(\.message).joined(separator: "\n"))
+                    }
+                case "python":
+                    try await executePython(action, workspace: workspace)
+                case "fileUtility":
+                    guard let command = action.command else { throw RuntimeCoreError.invalidRequest("Lifecycle file utility is missing its command.") }
+                    let result = try await shell.execute(tokens: [command] + action.arguments, workspace: workspace, environment: [:], allowNetwork: false)
+                    guard result.exitCode == 0 else { throw RuntimeCoreError.runtimeFailure(result.stderr) }
+                default:
+                    throw RuntimeCoreError.invalidRequest("Unsupported lifecycle action kind: \(action.kind)")
                 }
-            case "python":
-                try await executePython(action, workspace: workspace)
-            case "fileUtility":
-                guard let command = action.command else { throw RuntimeCoreError.invalidRequest("Lifecycle file utility is missing its command.") }
-                let result = try await shell.execute(tokens: [command] + action.arguments, workspace: workspace, environment: [:], allowNetwork: false)
-                guard result.exitCode == 0 else { throw RuntimeCoreError.runtimeFailure(result.stderr) }
-            default:
-                throw RuntimeCoreError.invalidRequest("Unsupported lifecycle action kind: \(action.kind)")
+            } catch {
+                try Task.checkCancellation()
+                if error is CancellationError || error is RuntimeJobInterruptionError { throw error }
+                guard action.optional == true, let failure = error as? RuntimeLifecycleCommandFailure else { throw error }
+                let removed = try await node.pruneOptionalLifecycleFailure(plan, action: action,
+                    workspace: workspace, failure: failure)
+                omitted.formUnion(removed)
             }
         }
     }
@@ -108,14 +144,8 @@ actor LifecycleExecutionBroker {
     private func executeNode(_ action: LifecycleExecutionPlan.Action, workspace: URL) async throws {
         guard let script = action.arguments.first else { throw RuntimeCoreError.invalidRequest("Node lifecycle action is missing a script.") }
         let scriptURL = try containedFile(script, workspace: workspace)
-        let pathLiteral = String(decoding: try JSONEncoder().encode(scriptURL.path), as: UTF8.self)
-        let argumentsLiteral = String(decoding: try JSONEncoder().encode(Array(action.arguments.dropFirst())), as: UTF8.self)
-        let source = """
-        import { pathToFileURL } from 'node:url';
-        process.argv = ['node', \(pathLiteral), ...\(argumentsLiteral)];
-        await import(pathToFileURL(\(pathLiteral)).href);
-        """
-        let result = try await node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace))
+        let result = try await node.executeCLI(entryPoint: scriptURL,
+            arguments: Array(action.arguments.dropFirst()), workspace: workspace)
         guard result.exitCode == 0, !result.didTimeOut, !result.wasCancelled else {
             throw RuntimeCoreError.runtimeFailure(result.stderr)
         }
@@ -124,12 +154,8 @@ actor LifecycleExecutionBroker {
     private func executePython(_ action: LifecycleExecutionPlan.Action, workspace: URL) async throws {
         guard let script = action.arguments.first else { throw RuntimeCoreError.invalidRequest("Python lifecycle action is missing a script.") }
         let scriptURL = try containedFile(script, workspace: workspace)
-        let source = try String(contentsOf: scriptURL, encoding: .utf8)
-        let result = try await python.execute(RuntimeExecutionRequest(
-            source: source,
-            arguments: Array(action.arguments.dropFirst()),
-            workspace: workspace
-        ))
+        let result = try await python.executeCLI(entryPoint: scriptURL,
+            arguments: Array(action.arguments.dropFirst()), workspace: workspace)
         guard result.exitCode == 0, !result.didTimeOut, !result.wasCancelled else {
             throw RuntimeCoreError.runtimeFailure(result.stderr)
         }

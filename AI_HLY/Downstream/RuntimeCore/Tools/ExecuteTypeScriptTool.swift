@@ -12,7 +12,7 @@ struct ExecuteTypeScriptTool: NativeTool {
             "source": NativeToolSchema.string(description: RuntimeL10n.string("TypeScript source code.")),
             "file_name": NativeToolSchema.string(description: RuntimeL10n.string("Virtual TypeScript file name.")),
             "compile_only": ["type": "boolean", "description": RuntimeL10n.string("Return diagnostics and emitted JavaScript without execution.")],
-            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Node execution timeout in whole seconds; defaults to 30 and applies when compile_only is false."), minimum: 1, maximum: 300)
+            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Optional Node execution deadline in whole seconds, used when compile_only is false. Omit for no deadline."), minimum: 1)
         ], required: ["source"]))
     }
 
@@ -51,8 +51,11 @@ struct ExecuteTypeScriptTool: NativeTool {
             let diagnostics = result.compilation.diagnostics.map { "TS\($0.code): \($0.message)" }.joined(separator: "\n")
             let emitted = result.compilation.javaScript ?? ""
             let body = [diagnostics, emitted].filter { !$0.isEmpty }.joined(separator: "\n\n")
+            let compilationReference = result.compilation.executionID.map {
+                "Full compiler result retained as JSON. Use get_runtime_job with runtime=node, job_id=\($0.uuidString) to inspect status or read output pages."
+            }
             return NativeToolResult(
-                modelText: body,
+                modelText: [body, compilationReference].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: "\n\n"),
                 userText: body,
                 uiBlocks: [.init(type: result.compilation.succeeded ? .card : .error, title: RuntimeL10n.string("TypeScript compilation"), body: body, systemImage: "t.square")],
                 outcome: result.compilation.succeeded ? .succeeded : .failed,
@@ -65,7 +68,8 @@ struct ExecuteTypeScriptTool: NativeTool {
                     capabilityDecision: "allowed",
                     availabilityDecision: "allowed",
                     callerIdentity: "agent"
-                )
+                ),
+                isStoreEligible: true
             )
         } catch { return RuntimeToolSupport.failure(error, title: "TypeScript failed", runtimeKind: .typeScript) }
     }

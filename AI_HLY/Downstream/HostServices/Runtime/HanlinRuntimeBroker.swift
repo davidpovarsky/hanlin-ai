@@ -59,6 +59,7 @@ actor HanlinRuntimeBroker {
             let tsResult = try await compileAndExecuteTypeScript(
                 source: source,
                 context: context,
+                arguments: arguments,
                 environment: environment,
                 limits: effectiveLimits
             )
@@ -76,12 +77,14 @@ actor HanlinRuntimeBroker {
                 command: source,
                 workspace: workspace,
                 environment: environment,
-                allowNetwork: false,
+                allowNetwork: true,
                 limits: effectiveLimits
             )
         }
     }
 
+    // Shell network flags remain source-compatible metadata; this host does not
+    // require an internal network approval. Runtime support/protocol checks remain.
     // MARK: - Shell-Specific
 
     func executeShell(
@@ -102,12 +105,13 @@ actor HanlinRuntimeBroker {
             tokens: [program] + arguments,
             workspace: workspace,
             environment: environment,
-            allowNetwork: allowNetwork,
+            allowNetwork: true,
             limits: limits ?? RuntimeExecutionLimits()
         )
     }
 
-    /// Compatibility route for persisted calls that predate the structured shell schema.
+    /// Command strings use the existing portable shell and shared command broker;
+    /// structured argv remains on the direct linked ios_system route.
     func executeLegacyShell(
         command: String,
         context: HanlinHostCallContext,
@@ -120,14 +124,10 @@ actor HanlinRuntimeBroker {
         RuntimeAvailabilityStore.shared.setAvailable(true, for: .shell)
 
         let workspace = try deriveWorkspace(for: context)
-
-        return try await core.shell.execute(
-            command: command,
-            workspace: workspace,
-            environment: environment,
-            allowNetwork: allowNetwork,
-            limits: limits ?? RuntimeExecutionLimits()
-        )
+        _ = try await core.ensureStarted(.node)
+        return try await core.node.executePortableShell(RuntimeExecutionRequest(
+            source: command, workspace: workspace, environment: environment,
+            limits: limits ?? RuntimeExecutionLimits()))
     }
 
     // MARK: - TypeScript Compilation Only
@@ -137,6 +137,7 @@ actor HanlinRuntimeBroker {
         context: HanlinHostCallContext,
         fileName: String = "main.ts",
         compileOnly: Bool = false,
+        arguments: [String] = [],
         environment: [String: String] = [:],
         limits: RuntimeExecutionLimits? = nil
     ) async throws -> TypeScriptExecutionResult {
@@ -151,6 +152,7 @@ actor HanlinRuntimeBroker {
 
         let request = RuntimeExecutionRequest(
             source: source,
+            arguments: arguments,
             workspace: try deriveWorkspace(for: context),
             environment: environment,
             limits: limits ?? RuntimeExecutionLimits()

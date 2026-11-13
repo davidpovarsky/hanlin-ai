@@ -5,7 +5,7 @@ import semver from 'semver';
 const lifecycleNames = ['preinstall', 'install', 'postinstall', 'prepare', 'prepublish'];
 const sourceExtensions = new Set(['.js', '.cjs', '.mjs', '.ts', '.cts', '.mts']);
 
-export function inspectManifest(manifest, nodeVersion = '24.5.0') {
+export function inspectManifest(manifest, nodeVersion = process.versions.node, {platform = process.platform, architecture = process.arch} = {}) {
   const findings = [];
   const requirement = manifest.engines?.node;
   if (requirement && !semver.satisfies(nodeVersion, requirement, { includePrerelease: true })) {
@@ -14,23 +14,23 @@ export function inspectManifest(manifest, nodeVersion = '24.5.0') {
       { code: 'manifest_node_engine', phase: 'manifest' },
     ));
   }
-  if (Array.isArray(manifest.os) && manifest.os.length > 0 && !allows(manifest.os, 'darwin')) {
+  if (Array.isArray(manifest.os) && manifest.os.length > 0 && !allows(manifest.os, platform)) {
     findings.push(unsupported(
-      `Package OS constraint does not allow darwin: ${manifest.os.join(', ')}`,
+      `Package OS constraint does not allow ${platform}: ${manifest.os.join(', ')}`,
       { code: 'manifest_os', phase: 'manifest' },
     ));
   }
-  if (Array.isArray(manifest.cpu) && manifest.cpu.length > 0 && !allows(manifest.cpu, 'arm64')) {
+  if (Array.isArray(manifest.cpu) && manifest.cpu.length > 0 && !allows(manifest.cpu, architecture)) {
     findings.push(unsupported(
-      `Package CPU constraint does not allow arm64: ${manifest.cpu.join(', ')}`,
+      `Package CPU constraint does not allow ${architecture}: ${manifest.cpu.join(', ')}`,
       { code: 'manifest_cpu', phase: 'manifest' },
     ));
   }
   for (const name of lifecycleNames) {
     if (manifest.scripts?.[name]) {
       findings.push(warning(
-        `Lifecycle script '${name}' is installed with scripts disabled and would require an approved structured execution plan if its output were needed.`,
-        { code: 'lifecycle_approval_required', phase: 'manifest', specifier: name },
+        `Lifecycle script '${name}' executes through the shared runtime before staged installation is published. Compatibility depends on its actual commands.`,
+        { code: 'lifecycle_execution_required', phase: 'manifest', specifier: name },
       ));
     }
   }
@@ -39,8 +39,8 @@ export function inspectManifest(manifest, nodeVersion = '24.5.0') {
 
 export async function inspectArchiveSafety(packageRoot, options = {}) {
   const requestedRoot = path.resolve(packageRoot);
-  const maximumFiles = options.maximumFiles ?? 25_000;
-  const maximumFileBytes = options.maximumFileBytes ?? 256 * 1024 * 1024;
+  const maximumFiles = explicitArchiveBudget(options.maximumFiles);
+  const maximumFileBytes = explicitArchiveBudget(options.maximumFileBytes);
   const directoryConcurrency = boundedConcurrency(options.directoryConcurrency, 32);
   const findings = [];
   const inventory = { nativeAddons: [], nativeBuildManifests: [], typeScriptSources: 0 };
@@ -59,6 +59,7 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
   let directoryIndex = 0;
 
   while (directoryIndex < directories.length) {
+    options.signal?.throwIfAborted();
     const batch = directories.slice(directoryIndex, directoryIndex + directoryConcurrency);
     directoryIndex += batch.length;
     const listings = await Promise.all(batch.map(async directory => ({
@@ -75,18 +76,22 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
         return { findings, treeFileCount: maximumFiles + 1, inventory };
       }
 
-      const inspectedEntries = await Promise.all(entries.map(entry => inspectArchiveEntry({
-        directory,
-        entry,
-        root,
-        maximumFileBytes,
-      })));
-      for (const inspected of inspectedEntries) {
-        findings.push(...inspected.findings);
-        if (inspected.directory) directories.push(inspected.directory);
-        if (inspected.nativeAddon) inventory.nativeAddons.push(inspected.nativeAddon);
-        if (inspected.nativeBuildManifest) inventory.nativeBuildManifests.push(inspected.nativeBuildManifest);
-        inventory.typeScriptSources += inspected.typeScriptSourceCount;
+      // Limit in-flight filesystem operations, not the number of package files.
+      for (let entryIndex = 0; entryIndex < entries.length; entryIndex += 64) {
+        options.signal?.throwIfAborted();
+        const inspectedEntries = await Promise.all(entries.slice(entryIndex, entryIndex + 64).map(entry => inspectArchiveEntry({
+          directory,
+          entry,
+          root,
+          maximumFileBytes,
+        })));
+        for (const inspected of inspectedEntries) {
+          findings.push(...inspected.findings);
+          if (inspected.directory) directories.push(inspected.directory);
+          if (inspected.nativeAddon) inventory.nativeAddons.push(inspected.nativeAddon);
+          if (inspected.nativeBuildManifest) inventory.nativeBuildManifests.push(inspected.nativeBuildManifest);
+          inventory.typeScriptSources += inspected.typeScriptSourceCount;
+        }
       }
     }
   }
@@ -100,6 +105,12 @@ export async function inspectArchiveSafety(packageRoot, options = {}) {
     ));
   }
   return { findings, treeFileCount: fileCount, inventory };
+}
+
+function explicitArchiveBudget(value) {
+  if (value == null) return Infinity;
+  if (!Number.isSafeInteger(value) || value < 0) throw new RangeError('An explicit archive budget must be a nonnegative safe integer.');
+  return value;
 }
 
 async function inspectArchiveEntry({ directory, entry, root, maximumFileBytes }) {
@@ -384,6 +395,7 @@ function hasNonliteralResolution(source) {
 }
 
 function allows(values, current) {
+  if (values.length === 1 && values[0] === 'any') return true;
   const positives = values.filter(value => !value.startsWith('!'));
   if (values.includes(`!${current}`)) return false;
   return positives.length === 0 || positives.includes(current);

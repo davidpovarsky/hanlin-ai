@@ -12,6 +12,55 @@ import HanlinNativeScriptCoreSupport
 
 @Suite("Unified Host Services E2E", .serialized)
 struct HanlinUnifiedHostServicesE2ETests {
+    @Test func expoFileWirePreservesEmptyBinaryAndMissingFiles() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-files-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        let bytes = Data([0, 255, 128, 10])
+        for (path, data) in [("empty.dat", Data()), ("binary.dat", bytes)] {
+            let request = try JSONSerialization.data(withJSONObject: ["path": path, "area": "documents", "base64": data.base64EncodedString()])
+            _ = try await adapter.invoke(operation: "files.write", payloadJSON: String(decoding: request, as: UTF8.self))
+            let read = try await adapter.invoke(operation: "files.read", payloadJSON: "{\"path\":\"\(path)\",\"area\":\"documents\"}")
+            let payload = try #require(try JSONSerialization.jsonObject(with: Data(read.utf8)) as? [String: Any])
+            let base64 = try #require(payload["base64"] as? String)
+            #expect(Data(base64Encoded: base64) == data)
+            _ = try await adapter.invoke(operation: "files.delete", payloadJSON: "{\"path\":\"\(path)\",\"area\":\"documents\"}")
+        }
+        let missing = try await adapter.invoke(operation: "files.read", payloadJSON: "{\"path\":\"missing.dat\",\"area\":\"documents\"}")
+        let payload = try #require(try JSONSerialization.jsonObject(with: Data(missing.utf8)) as? [String: Any])
+        #expect(payload["base64"] == nil || payload["base64"] is NSNull)
+    }
+
+    @Test func expoLegacyUnknownRuntimeRejectsInsteadOfExecutingJavaScriptCore() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-unknown-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        do {
+            _ = try await adapter.executeRuntime(kind: "unrecognized-runtime", source: "'SHOULD_NEVER_EXECUTE'")
+            Issue.record("An unknown runtime must not execute through a JavaScriptCore fallback")
+        } catch let error as HanlinHostServiceError {
+            guard case .invalidRequest(let message) = error else { throw error }
+            #expect(message.contains("Unknown runtime kind"))
+        }
+    }
+
+    @Test func expoLegacyRuntimeNamesReachAllFiveActualBackends() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-backends-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        #expect(try await adapter.executeRuntime(kind: "node", source: "console.log('NODE_NATIVE_42')") == "NODE_NATIVE_42")
+        #expect(try await adapter.executeRuntime(kind: "localPython", source: "print('PY_NATIVE_42')") == "PY_NATIVE_42")
+        #expect(try await adapter.executeRuntime(kind: "javaScriptCore", source: "6 * 7") == "42")
+        #expect(try await adapter.executeRuntime(kind: "typeScript", source: "const value: number = 6 * 7; console.log('TS_NATIVE_' + value)") == "TS_NATIVE_42")
+        let shell = try await adapter.executeRuntime(kind: "shell", source: "pwd")
+        #expect(shell.hasPrefix("/"), "The actual linked Shell must return its assigned absolute workspace")
+    }
+
+    @Test func expoLegacyPythonFailureDoesNotBecomeOKOrExposeStderrToModuleLogging() async throws {
+        let adapter = ExpoHostServicesAdapter(appID: try HanlinAppID(validating: "expo-failure-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
+        do {
+            _ = try await adapter.executeRuntime(kind: "python", source: "import sys; sys.stderr.write('PRIVATE_LEGACY_STDERR'); sys.exit(23)")
+            Issue.record("A failed legacy execution must not resolve to OK")
+        } catch let error as RuntimeCoreError {
+            guard case .runtimeFailure(let message) = error else { throw error }
+            #expect(message.contains("23") && message.contains("job"))
+            #expect(!message.contains("PRIVATE_LEGACY_STDERR"))
+        }
+    }
 
     @Test func runtimeBrokerAutoStartsStoppedRuntime() async throws {
         let store = RuntimeAvailabilityStore.shared
@@ -34,27 +83,23 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(store.isAvailable(kind))
     }
 
-    @Test func runtimeBrokerRespectsAvailabilityToggle() async throws {
+    @Test func runtimeBrokerExecutesFromAnOrdinaryGrantlessContext() async throws {
         let context = HanlinHostCallContext.forMiniApp(
             appID: try HanlinAppID(validating: "unauthorized.caller"),
             origin: .system,
             capabilities: [],
             canPresentUI: false
         )
-        do {
-            _ = try await HanlinHostServicesBroker.shared.executeRuntime(
-                .shell,
-                source: "echo hello",
-                context: context
-            )
-            Issue.record("Expected capabilityNotGranted error")
-        } catch let error as HanlinHostServiceError {
-            if case .capabilityNotGranted = error {
-                // Expected rejection
-            } else {
-                Issue.record("Unexpected error: \(error)")
-            }
-        }
+        let workspace = try RuntimeFileLayout.default.workspace(client: .executions, identifier: context.runtimeWorkspaceIdentifier)
+        let file = workspace.appendingPathComponent("grantless-probe.txt")
+        let nonce = UUID().uuidString
+        try nonce.write(to: file, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: file) }
+        let result = try await HanlinHostServicesBroker.shared.executeRuntime(
+            .shell, source: "cat grantless-probe.txt", context: context
+        )
+        #expect(result.exitCode == 0)
+        #expect(result.stdout == nonce)
     }
 
     @Test func capabilityAuthorityGrantRevokePersists() async throws {
@@ -75,7 +120,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         await authority.setGrants(originalGrants, for: appID)
     }
 
-    @Test func packageStoreGrantPrecedenceAndLiveRevocation() async throws {
+    @Test func legacyPackageGrantMetadataDoesNotGateNetwork() async throws {
         let fixture = try HostServicesPackageFixture()
         defer { fixture.remove() }
 
@@ -102,16 +147,14 @@ struct HanlinUnifiedHostServicesE2ETests {
             )
 
             let initial = await authority.authorize(capability: "network", context: context)
-            #expect(initial == .notGranted)
+            #expect(initial == .allowed)
 
             try await store.setCapabilityGranted(true, capability: fixture.networkCapability, for: fixture.installedPackageID)
             try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
 
             // Revoke through the real package store and reuse the exact same context.
             try await store.setCapabilityGranted(false, capability: fixture.networkCapability, for: fixture.installedPackageID)
-            await #expect(throws: HanlinHostServiceError.self) {
-                try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
-            }
+            try await HanlinHostServicesBroker.shared.requireCapability("network", context: context)
         } catch {
             await authority.setGrants(originalAppGrants, for: fixture.appID)
             await authority.clearPackageGrantStore()
@@ -187,7 +230,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         #expect(String(data: readB ?? Data(), encoding: .utf8) == "Value-B")
     }
 
-    @Test func fileCapabilityRequired() async throws {
+    @Test func fileOperationsWorkWithoutInternalGrants() async throws {
         let appID = try HanlinAppID(validating: "no-file-cap-app")
         let broker = HanlinHostServicesBroker.shared
 
@@ -199,19 +242,14 @@ struct HanlinUnifiedHostServicesE2ETests {
             canPresentUI: true
         )
 
-        do {
-            _ = try await broker.readFile(virtualPath: "test.txt", area: .data, context: ctxWithout)
-            Issue.record("Expected capabilityNotGranted when files capability is absent")
-        } catch let error as HanlinHostServiceError {
-            if case .capabilityNotGranted = error {
-                // Expected
-            } else {
-                Issue.record("Unexpected error: \(error)")
-            }
-        }
+        let path = "autonomy-\(UUID().uuidString.lowercased()).txt"
+        let contents = Data("grantless-file-operation".utf8)
+        try await broker.writeFile(virtualPath: path, area: .data, data: contents, context: ctxWithout)
+        #expect(try await broker.readFile(virtualPath: path, area: .data, context: ctxWithout) == contents)
+        try await broker.deleteFile(virtualPath: path, area: .data, context: ctxWithout)
     }
 
-    @Test func fileScopesOverwriteDeleteSharedGateAndSymlinkProtection() async throws {
+    @Test func fileScopesOverwriteDeleteSharedAccessAndSymlinkProtection() async throws {
         let suffix = UUID().uuidString.lowercased()
         let appID = try HanlinAppID(validating: "file-scope-app-\(suffix)")
         let packageID = try HanlinInstalledPackageID(validating: "file-scope-package-\(suffix)")
@@ -261,9 +299,8 @@ struct HanlinUnifiedHostServicesE2ETests {
         try await broker.deleteFile(virtualPath: path, area: .documents, context: app)
         #expect(try await broker.readFile(virtualPath: path, area: .documents, context: app) == nil)
 
-        await #expect(throws: HanlinHostServiceError.self) {
-            try await broker.writeFile(virtualPath: path, area: .documents, data: Data("DENIED".utf8), context: sharedDenied)
-        }
+        try await broker.writeFile(virtualPath: path, area: .documents, data: Data("GRANTLESS".utf8), context: sharedDenied)
+        #expect(try await broker.readFile(virtualPath: path, area: .documents, context: sharedDenied) == Data("GRANTLESS".utf8))
         try await broker.writeFile(virtualPath: path, area: .documents, data: Data("SHARED".utf8), context: sharedAllowed)
         #expect(String(data: try #require(await broker.readFile(virtualPath: path, area: .documents, context: sharedAllowed)), encoding: .utf8) == "SHARED")
 
@@ -753,6 +790,9 @@ struct HanlinUnifiedHostServicesE2ETests {
         defer { HanlinNativeServicesBridge.resetAllSessions() }
 
         final class SlowMockProvider: NSObject, HanlinNativeServicesProvider {
+            func executeRuntime(_ payloadJSON: String, completion: HanlinBridgeStringResultBlock? = nil) -> String? { completion?(nil, "Unsupported test provider"); return nil }
+            func cancelRuntime(_ requestID: String) -> Bool { false }
+            func invalidateRuntimeRequests() {}
             func dataRootDirectory() -> String? { nil }
             func stateDirectory() -> String? { nil }
             func documentsDirectory() -> String? { nil }
@@ -863,7 +903,8 @@ struct HanlinUnifiedHostServicesE2ETests {
         {
           "name": "ns-fixture-app",
           "version": "1.0.0",
-          "main": "bundle.js",
+          "type": "module",
+          "main": "bundle.mjs",
           "hanlinRuntime": "hanlin-nativescript",
           "dependencies": {
             "@nativescript/core": "9.1.0"
@@ -873,6 +914,12 @@ struct HanlinUnifiedHostServicesE2ETests {
         try Data(packageJSON.utf8).write(to: appDir.appending(path: "package.json"))
 
         let bundleJS = """
+        if (typeof HanlinNativeServicesBridge === 'undefined' || typeof HanlinNativeServicesBridge.activeSessionBridge !== 'function') {
+            throw new Error('Generated Host Services metadata must be available to the actual NativeScript VM');
+        }
+        if (!HanlinNativeServicesBridge.activeSessionBridge()) {
+            throw new Error('Actual NativeScript metadata has no bound Host session');
+        }
         var compat = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeScriptCompatibility') : (globalThis.HanlinNativeScriptCompatibility || null);
         var bridge = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeServicesBridge') : (globalThis.HanlinNativeServicesBridge || null);
         var dataDir = null;
@@ -933,7 +980,6 @@ struct HanlinUnifiedHostServicesE2ETests {
         NSUserDefaults.standardUserDefaults.synchronize();
         console.log('HANLIN_NS_BRIDGE_CALL_OK data=' + dataDir);
         """
-        try Data(bundleJS.utf8).write(to: appDir.appending(path: "bundle.js"))
         try Data(bundleJS.utf8).write(to: appDir.appending(path: "bundle.mjs"))
 
         UserDefaults.standard.removeObject(forKey: "HanlinNS_Test_DataRoot")

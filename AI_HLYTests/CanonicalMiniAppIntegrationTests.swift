@@ -7,11 +7,42 @@ import HanlinParityMiniApp
 import HanlinPlatformContracts
 import HanlinScriptContracts
 import HanlinScriptStore
+import HanlinScriptExtensions
 import Testing
 @testable import AI_Hanlin
 
 @Suite("Canonical Mini App production integration", .serialized)
 struct CanonicalMiniAppIntegrationTests {
+    @MainActor
+    @Test("Existing compiled intent returns its real value through durable host delivery")
+    func compiledIntentPublishesItsActualDurableResultAndRejectsStaleIdentity() async throws {
+        let provider = try #require(CompiledMiniAppExposureRegistry.all.first)
+        let entrypoint = try #require(provider.descriptor.entryPoints.first(where: { $0.kind == .appIntentBridge }))
+        let identity = try provider.identity(entrypoint: entrypoint)
+        let root = FileManager.default.temporaryDirectory.appending(path: "compiled-delivery-\(UUID().uuidString)", directoryHint: .isDirectory)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let queue = HanlinScriptExtensionStore(root: root)
+        let executor = HanlinInvocationExecutor(store: queue)
+        let command = HanlinScriptResumeCommand(invocation: .init(identity: identity, entityID: provider.intentNames[0]))
+        try queue.enqueue(command)
+        let receipt = try await executor.execute(command.id) {
+            try await HanlinScriptingPlatform.shared.dispatchResumeCommand($0)
+        }
+        #expect(receipt?.status == .succeeded)
+        guard case .object(let value) = receipt?.value else {
+            Issue.record("The real compiled action value was lost before its durable receipt"); return
+        }
+        #expect(value["appID"] == .string(provider.descriptor.id.rawValue))
+        #expect(try HanlinScriptExtensionStore(root: root).receipt(for: command.id)?.value == receipt?.value)
+        let stale = HanlinScriptResumeCommand(invocation: .init(identity: .init(
+            installedPackageID: identity.installedPackageID, packageID: identity.packageID,
+            generation: 99, entrypointID: identity.entrypointID), entityID: provider.intentNames[0]))
+        try queue.enqueue(stale)
+        let rejected = try await executor.execute(stale.id) {
+            try await HanlinScriptingPlatform.shared.dispatchResumeCommand($0)
+        }
+        #expect(rejected?.status == .stale && rejected?.failure == .invalidTarget && rejected?.value == nil)
+    }
 
     @MainActor
     @Test("Compiled package exposure registry derives Widget and App Intent from canonical descriptor")
@@ -385,7 +416,7 @@ struct CanonicalMiniAppIntegrationTests {
     }
 
     @MainActor
-    @Test("HanlinNativeServicesBridge enforces active container isolation and capability gating")
+    @Test("HanlinNativeServicesBridge isolates containers and rejects missing routes without redundant grants")
     func bridgeContainerAndCapabilityGating() async throws {
         let appID = "hanlin.test.app.\(UUID().uuidString.lowercased())"
         HanlinNativeServicesBridge.setActiveContainer(
@@ -397,6 +428,8 @@ struct CanonicalMiniAppIntegrationTests {
             grantedCapabilities: ["storage", "javascript"]
         )
 
+        defer { HanlinNativeServicesBridge.clearActiveContainer() }
+
         #expect(HanlinNativeServicesBridge.activeAppID == appID)
         let dataRoot = try #require(HanlinNativeServicesBridge.dataRootDirectory())
         let stateRoot = try #require(HanlinNativeServicesBridge.stateDirectory())
@@ -404,19 +437,19 @@ struct CanonicalMiniAppIntegrationTests {
         #expect(stateRoot.contains("/Hanlin/MiniApps/\(appID)/State"))
         #expect(dataRoot != "/tmp/data")
 
-        // Inter-app request without capability should be rejected immediately
+        // Grantless dispatch still rejects an unregistered target/action.
         let errorResult: String? = await withCheckedContinuation { continuation in
             HanlinNativeServicesBridge.sendRequest(
                 targetID: "hanlin.other",
                 action: "echo",
-                capability: "inter-app.unauthorized",
+                capability: "inter-app.echo",
                 payloadJSON: "{}"
             ) { _, err in
                 continuation.resume(returning: err)
             }
         }
         #expect(errorResult != nil)
-        #expect(errorResult?.contains("Permission denied") == true)
+        #expect(errorResult == HanlinMiniAppRequestError.routeNotFound.localizedDescription)
 
         HanlinNativeServicesBridge.clearActiveContainer()
         #expect(HanlinNativeServicesBridge.activeAppID == nil)

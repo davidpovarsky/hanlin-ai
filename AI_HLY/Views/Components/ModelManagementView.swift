@@ -352,6 +352,8 @@ struct ModelManagementView: View {
     }
 
     private func priceText(for price: Int16) -> String {
+        if price < 0 { return String(localized: "Price unknown") }
+        if price == 4 { return String(localized: "Paid") }
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         if currentLanguage.hasPrefix("zh") {
             switch price {
@@ -371,6 +373,7 @@ struct ModelManagementView: View {
     }
 
     private func priceColor(for price: Int16) -> Color {
+        if price < 0 { return .secondary }
         switch price {
         case 0: return .green
         case 1: return .yellow
@@ -394,6 +397,13 @@ struct ModelManagementView: View {
 
         do {
             apiModels = try await ModelRefreshService.fetchModelsFromAPI(apiKey: apiKey)
+            let existing = (try? modelContext.fetch(FetchDescriptor<AllModels>())) ?? []
+            for entry in apiModels {
+                if let metadata = entry.catalogMetadata {
+                    for model in existing { ModelRefreshService.applyCatalogMetadata(metadata, to: model) }
+                }
+            }
+            try modelContext.save()
             // 按字母顺序排序
             apiModels.sort { $0.id < $1.id }
         } catch {
@@ -412,7 +422,7 @@ struct ModelManagementView: View {
             return
         }
 
-        if apiKey.autoProbeCapabilities {
+        if apiKey.autoProbeCapabilities && company.uppercased() != "OPENROUTER" {
             showProbeSheet = true
             probeItems = ModelCapabilityProbeStep.allCases.map { step in
                 CapabilityProbeItem(step: step, status: .pending, message: nil)
@@ -431,7 +441,8 @@ struct ModelManagementView: View {
                     displayName: model.id,
                     company: company,
                     context: modelContext,
-                    capabilities: result.capabilities
+                    capabilities: result.capabilities,
+                    catalogMetadata: model.catalogMetadata
                 )
             } catch {
                 errorMessage = "添加失败: \(error.localizedDescription)"
@@ -443,7 +454,8 @@ struct ModelManagementView: View {
                     modelId: model.id,
                     displayName: model.id,
                     company: company,
-                    context: modelContext
+                    context: modelContext,
+                    catalogMetadata: model.catalogMetadata
                 )
             } catch {
                 errorMessage = "添加失败: \(error.localizedDescription)"

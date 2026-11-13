@@ -97,6 +97,40 @@ struct HanlinArchivePolicyTests {
         #expect(result.findings.contains { $0.code == .caseCollision })
     }
 
+    @Test("Autonomous Skills accept large resources while explicit budgets remain enforceable")
+    func autonomousSkillResources() {
+        let entries = [entry("SKILL.md"), HanlinArchiveEntryMetadata(
+            path: "resources/model.bin", kind: .file,
+            compressedBytes: 300_000_000, uncompressedBytes: 600_000_000)]
+        let autonomous = HanlinArchivePolicy(limits: .autonomousSkillImport).inspectSkillArchive(
+            entries: entries, centralDirectoryEntryCount: entries.count, archiveBytes: 300_000_100)
+        #expect(autonomous.isInstallable)
+        #expect(autonomous.uncompressedBytes == 600_000_010)
+        let bounded = HanlinArchivePolicy().inspectSkillArchive(
+            entries: entries, centralDirectoryEntryCount: entries.count, archiveBytes: 300_000_100)
+        #expect(!bounded.isInstallable)
+        #expect(bounded.findings.contains { $0.code == .compressedSizeLimit })
+    }
+
+    @Test("Autonomous Skills still reject invalid sizes, overflow, escaping paths and collisions")
+    func autonomousSkillIntegrity() {
+        let invalidSets: [[HanlinArchiveEntryMetadata]] = [
+            [entry("SKILL.md"), .init(path: "bad.bin", kind: .file, compressedBytes: -1, uncompressedBytes: 0)],
+            [entry("SKILL.md"), .init(path: "bad.bin", kind: .file, compressedBytes: .max, uncompressedBytes: .max)],
+            [entry("SKILL.md"), entry("../escape.py")],
+            [entry("SKILL.md"), entry("É.py"), entry("É.py")]
+        ]
+        let policy = HanlinArchivePolicy(limits: .autonomousSkillImport)
+        for entries in invalidSets {
+            let result = policy.inspectSkillArchive(entries: entries,
+                centralDirectoryEntryCount: entries.count, archiveBytes: 100)
+            #expect(!result.isInstallable)
+        }
+        let negative = policy.inspectSkillArchive(entries: [entry("SKILL.md")],
+            centralDirectoryEntryCount: 1, archiveBytes: -1)
+        #expect(negative.findings.contains { $0.code == .malformedArchive })
+    }
+
     private func entry(
         _ path: String,
         kind: HanlinArchiveEntryKind = .file

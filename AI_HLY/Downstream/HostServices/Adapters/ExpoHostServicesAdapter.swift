@@ -31,15 +31,9 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     }
 
     public func hasCapability(_ capability: String) -> Bool {
-        let canonical = HanlinHostCapabilityAuthority.canonicalCapabilityID(capability)
-        let standardCapabilities: Set<String> = [
-            "ios-native-api", "network", "storage", "files", "widget", "appIntent"
-        ]
-        if standardCapabilities.contains(canonical) {
-            return true
-        }
-        return context.effectiveCapabilities.contains(canonical)
-            || context.effectiveCapabilities.contains("all")
+        // Availability is not an internal grant. Native calls still report
+        // unsupported APIs and iOS permission denials from their real provider.
+        true
     }
 
     func executeRuntime(
@@ -67,18 +61,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             return try Self.encode(["value": hasCapability(request.capability)])
 
         case "runtime.execute":
-            let request = try JSONDecoder().decode(RuntimeRequest.self, from: payloadData)
-            guard let kind = RuntimeKind(rawValue: request.kind) else {
-                throw HanlinHostServiceError.invalidRequest("Unknown runtime kind: \(request.kind)")
-            }
-            let result = try await executeRuntime(
-                kind,
-                source: request.source,
-                arguments: request.arguments ?? [],
-                environment: request.environment ?? [:],
-                limits: request.limits
-            )
-            return try Self.encode(result)
+            return try await HanlinRuntimeWireProtocol.execute(payloadJSON, context: context)
 
         case "files.read":
             let request = try JSONDecoder().decode(FileRequest.self, from: payloadData)
@@ -161,16 +144,25 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     // MARK: - HanlinExpoHostServicesProvider Conformance
 
     public func executeRuntime(kind: String, source: String) async throws -> String {
-        let runtimeKind: RuntimeKind = switch kind.lowercased() {
-        case "node": .node
-        case "python": .localPython
-        default: .javaScriptCore
+        let normalized = kind.lowercased()
+        // Preserve the old explicit Python alias, while validating all five
+        // canonical kinds before starting any engine or creating its workspace.
+        guard let runtimeKind = normalized == "python" ? RuntimeKind.localPython :
+                RuntimeKind.allCases.first(where: { $0.rawValue.lowercased() == normalized }) else {
+            throw HanlinHostServiceError.invalidRequest("Unknown runtime kind. Expected node, typeScript, localPython, javaScriptCore or shell.")
         }
         let result = try await HanlinRuntimeBroker.shared.execute(
             kind: runtimeKind,
             source: source,
             context: context
         )
+        if result.wasCancelled { throw CancellationError() }
+        guard !result.didTimeOut, result.exitCode == nil || result.exitCode == 0 else {
+            // Legacy Expo module logging prints thrown errors. Do not put raw
+            // stderr or user source into that OSLog path; the typed facade and
+            // original durable job retain complete stdout/stderr/status.
+            throw RuntimeCoreError.runtimeFailure("Runtime execution failed (exitCode=\(result.exitCode.map(String.init) ?? "unavailable"), timedOut=\(result.didTimeOut)); job \(result.executionID). Use the structured runtime.execute result for full details.")
+        }
         let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
         if output.isEmpty, let val = result.value {
             switch val {
@@ -259,14 +251,6 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
 
 private struct CapabilityRequest: Decodable {
     let capability: String
-}
-
-private struct RuntimeRequest: Decodable {
-    let kind: String
-    let source: String
-    let arguments: [String]?
-    let environment: [String: String]?
-    let limits: RuntimeExecutionLimits?
 }
 
 private struct FileRequest: Decodable {

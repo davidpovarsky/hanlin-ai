@@ -8,6 +8,16 @@ public struct IOSSystemExecution: Sendable {
     public let stdout: String
     public let stderr: String
     public let exitCode: Int32
+    public var stdoutFileURL: URL? = nil
+    public var stderrFileURL: URL? = nil
+
+    public init(stdout: String, stderr: String, exitCode: Int32, stdoutFileURL: URL? = nil, stderrFileURL: URL? = nil) {
+        self.stdout = stdout
+        self.stderr = stderr
+        self.exitCode = exitCode
+        self.stdoutFileURL = stdoutFileURL
+        self.stderrFileURL = stderrFileURL
+    }
 }
 
 public enum IOSSystemRegistrationFailureCategory: String, Codable, Sendable {
@@ -274,7 +284,11 @@ public enum IOSSystemRunner {
         tokens: [String],
         workspace: URL,
         environment: [String: String],
-        standardInput: Data = Data()
+        standardInput: Data = Data(),
+        standardInputURL: URL? = nil,
+        outputDirectory: URL? = nil,
+        maximumPreviewBytes: Int? = nil,
+        onStart: @Sendable () throws -> Void = {}
     ) throws -> IOSSystemExecution {
         guard let command = tokens.first, !tokens.isEmpty else {
             throw NSError(
@@ -293,11 +307,15 @@ public enum IOSSystemRunner {
         }
         _ = try availableCommands()
         return try withProcessCurrentDirectoryLock {
-            try executeLocked(
+            try onStart()
+            return try executeLocked(
                 tokens: tokens,
                 workspace: workspace,
                 environment: environment,
-                standardInput: standardInput
+                standardInput: standardInput,
+                standardInputURL: standardInputURL,
+                outputDirectory: outputDirectory,
+                maximumPreviewBytes: maximumPreviewBytes
             )
         }
     }
@@ -306,10 +324,15 @@ public enum IOSSystemRunner {
         command: String,
         workspace: URL,
         environment: [String: String],
-        standardInput: Data = Data()
+        standardInput: Data = Data(),
+        standardInputURL: URL? = nil,
+        outputDirectory: URL? = nil,
+        maximumPreviewBytes: Int? = nil,
+        onStart: @Sendable () throws -> Void = {}
     ) throws -> IOSSystemExecution {
         _ = try availableCommands()
         return try withProcessCurrentDirectoryLock {
+            try onStart()
             let previousDirectory = FileManager.default.currentDirectoryPath
             defer {
                 _ = FileManager.default.changeCurrentDirectoryPath(previousDirectory)
@@ -330,31 +353,20 @@ public enum IOSSystemRunner {
                 for (name, value) in oldEnvironment where environment[name] != nil { setenv(name, value, 1) }
             }
 
-            guard let input = tmpfile(), let output = tmpfile(), let error = tmpfile() else {
-                throw NSError(
-                    domain: "IOSSystemLite",
-                    code: 3,
-                    userInfo: [NSLocalizedDescriptionKey: "Could not allocate command streams."]
-                )
-            }
-            defer {
-                fclose(input)
-                fclose(output)
-                fclose(error)
-            }
-            if !standardInput.isEmpty {
-                standardInput.withUnsafeBytes { bytes in
-                    if let baseAddress = bytes.baseAddress {
-                        fwrite(baseAddress, 1, bytes.count, input)
-                    }
-                }
-                rewind(input)
-            }
+            let capture = try OutputCapture(directory: outputDirectory)
+            let output = capture.stdout, error = capture.stderr
+            let input = try openInput(standardInput, url: standardInputURL)
+            defer { fclose(input) }
             hanlin_ios_system_set_streams(input, output, error)
             let status = command.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
-            fflush(output)
-            fflush(error)
-            return IOSSystemExecution(stdout: read(output), stderr: read(error), exitCode: Int32(status))
+            guard fflush(output) == 0, fflush(error) == 0, ferror(output) == 0, ferror(error) == 0 else {
+                throw POSIXError(.init(rawValue: errno) ?? .EIO)
+            }
+            let stdout = try read(output, maximumBytes: maximumPreviewBytes)
+            let stderrBudget = maximumPreviewBytes.map { max(0, $0 - stdout.utf8.count) }
+            let stderr = try read(error, maximumBytes: stderrBudget)
+            return IOSSystemExecution(stdout: stdout, stderr: stderr, exitCode: Int32(status),
+                stdoutFileURL: capture.stdoutURL, stderrFileURL: capture.stderrURL)
         }
     }
 
@@ -549,7 +561,10 @@ public enum IOSSystemRunner {
         tokens: [String],
         workspace: URL,
         environment: [String: String],
-        standardInput: Data
+        standardInput: Data,
+        standardInputURL: URL?,
+        outputDirectory: URL?,
+        maximumPreviewBytes: Int?
     ) throws -> IOSSystemExecution {
         let previousDirectory = FileManager.default.currentDirectoryPath
         defer {
@@ -571,47 +586,96 @@ public enum IOSSystemRunner {
             for (name, value) in oldEnvironment where environment[name] != nil { setenv(name, value, 1) }
         }
 
-        guard let input = tmpfile(), let output = tmpfile(), let error = tmpfile() else {
-            throw NSError(
-                domain: "IOSSystemLite",
-                code: 3,
-                userInfo: [NSLocalizedDescriptionKey: "Could not allocate command streams."]
-            )
-        }
-        defer {
-            fclose(input)
-            fclose(output)
-            fclose(error)
-        }
-        if !standardInput.isEmpty {
-            standardInput.withUnsafeBytes { bytes in
-                if let baseAddress = bytes.baseAddress {
-                    fwrite(baseAddress, 1, bytes.count, input)
-                }
-            }
-            rewind(input)
-        }
+        let capture = try OutputCapture(directory: outputDirectory)
+        let output = capture.stdout, error = capture.stderr
+        let input = try openInput(standardInput, url: standardInputURL)
+        defer { fclose(input) }
         hanlin_ios_system_set_streams(input, output, error)
         let rendered = tokens.map(shellEscape).joined(separator: " ")
         let status = rendered.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
-        fflush(output)
-        fflush(error)
-        return IOSSystemExecution(stdout: read(output), stderr: read(error), exitCode: Int32(status))
+        guard fflush(output) == 0, fflush(error) == 0, ferror(output) == 0, ferror(error) == 0 else {
+            throw POSIXError(.init(rawValue: errno) ?? .EIO)
+        }
+        let stdout = try read(output, maximumBytes: maximumPreviewBytes)
+        let stderrBudget = maximumPreviewBytes.map { max(0, $0 - stdout.utf8.count) }
+        let stderr = try read(error, maximumBytes: stderrBudget)
+        return IOSSystemExecution(stdout: stdout, stderr: stderr, exitCode: Int32(status),
+            stdoutFileURL: capture.stdoutURL, stderrFileURL: capture.stderrURL)
+    }
+
+    private static func openInput(_ data: Data, url: URL?) throws -> UnsafeMutablePointer<FILE> {
+        if let url {
+            guard url.isFileURL, !url.path.contains("\0") else { throw POSIXError(.EINVAL) }
+            guard let input = url.path.withCString({ fopen($0, "rb") }) else {
+                throw POSIXError(.init(rawValue: errno) ?? .EIO)
+            }
+            return input
+        }
+        guard let input = tmpfile() else { throw POSIXError(.init(rawValue: errno) ?? .EIO) }
+        do {
+            if !data.isEmpty {
+                let written = data.withUnsafeBytes { bytes in fwrite(bytes.baseAddress, 1, bytes.count, input) }
+                guard written == data.count, ferror(input) == 0, fseek(input, 0, SEEK_SET) == 0 else {
+                    throw POSIXError(.init(rawValue: errno) ?? .EIO)
+                }
+            }
+            return input
+        } catch { fclose(input); throw error }
     }
 
     private static func shellEscape(_ value: String) -> String {
         "'" + value.replacingOccurrences(of: "'", with: "'\\''") + "'"
     }
 
-    private static func read(_ file: UnsafeMutablePointer<FILE>) -> String {
+    private static func read(_ file: UnsafeMutablePointer<FILE>, maximumBytes: Int? = nil) throws -> String {
         rewind(file)
         var bytes: [UInt8] = []
         var buffer = [UInt8](repeating: 0, count: 4096)
         while true {
-            let count = fread(&buffer, 1, buffer.count, file)
+            let allowance = maximumBytes.map { min(buffer.count, max(0, $0 - bytes.count)) } ?? buffer.count
+            if allowance == 0 { break }
+            let count = fread(&buffer, 1, allowance, file)
             if count == 0 { break }
             bytes.append(contentsOf: buffer.prefix(count))
         }
+        guard ferror(file) == 0 else { throw POSIXError(.init(rawValue: errno) ?? .EIO) }
+        // A preview may end inside a UTF-8 scalar. Full binary bytes remain in
+        // the log; avoid manufacturing a replacement character at the cut.
+        if maximumBytes != nil, !bytes.isEmpty {
+            var start = bytes.count - 1
+            while start > 0 && bytes[start] & 0xc0 == 0x80 { start -= 1 }
+            let lead = bytes[start]
+            let width = lead >= 0xf0 ? 4 : lead >= 0xe0 ? 3 : lead >= 0xc0 ? 2 : 1
+            if bytes.count - start < width { bytes.removeSubrange(start...) }
+        }
         return String(decoding: bytes, as: UTF8.self)
+    }
+
+    /// Named streams retain full output even if native execution fails or the
+    /// process ends. Each descriptor is closed on all allocation/error paths.
+    private final class OutputCapture {
+        let stdout: UnsafeMutablePointer<FILE>
+        let stderr: UnsafeMutablePointer<FILE>
+        let stdoutURL: URL?
+        let stderrURL: URL?
+
+        init(directory: URL?) throws {
+            if let directory { try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+            stdoutURL = directory?.appending(path: "stdout.log")
+            stderrURL = directory?.appending(path: "stderr.log")
+            func open(_ url: URL?) -> UnsafeMutablePointer<FILE>? {
+                if let url { return url.path.withCString { fopen($0, "w+b") } }
+                return tmpfile()
+            }
+            guard let output = open(stdoutURL) else { throw POSIXError(.init(rawValue: errno) ?? .EIO) }
+            guard let error = open(stderrURL) else {
+                let code = errno
+                fclose(output)
+                throw POSIXError(.init(rawValue: code) ?? .EIO)
+            }
+            stdout = output
+            stderr = error
+        }
+        deinit { fclose(stdout); fclose(stderr) }
     }
 }

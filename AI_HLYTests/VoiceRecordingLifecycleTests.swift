@@ -632,6 +632,88 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         XCTAssertEqual(recognizer.phase, .idle)
     }
 
+    func testVR22_OwnRecordingCategoryChangeDoesNotStopMicrophone() throws {
+        let category = SendableBox<AVAudioSession.Category>(.record)
+        let deactivations = SendableBox<Int>(0)
+        let recognizer = SpeechRecognizer(
+            speechAuthChecker: { .authorized },
+            micAuthChecker: { .granted },
+            audioSessionConfigurator: { _, _, _ in },
+            audioSessionActivator: { active, _ in
+                if !active { deactivations.mutate { $0 += 1 } }
+            },
+            audioSessionCategoryProvider: { category.current },
+            audioInputUIDsProvider: { ["microphone.test"] },
+            audioFormatProvider: { VoiceRecordingLifecycleTests.makeSyntheticAudioFormat() },
+            audioTapInstaller: { _, _ in },
+            audioTapRemover: {},
+            audioEngineStarter: {},
+            audioEngineStopper: {},
+            recognitionTaskStarter: { _, _, _ in nil }
+        )
+        recognizer.viewDidAppear()
+        let recordingURL = try XCTUnwrap(recognizer.recordedAudioURL)
+        defer { try? FileManager.default.removeItem(at: recordingURL) }
+        XCTAssertTrue(recognizer.isRecording)
+
+        recognizer.handleAudioRouteChange(reason: .categoryChange)
+        XCTAssertTrue(recognizer.isRecording, "Our own category activation must not cancel recording")
+        XCTAssertNil(recognizer.errorMessage)
+
+        category.set(.playAndRecord)
+        recognizer.handleAudioRouteChange(reason: .categoryChange)
+        XCTAssertFalse(recognizer.isRecording, "A competing audio category must stop this recording")
+        XCTAssertNotNil(recognizer.errorMessage)
+        XCTAssertFalse(recognizer.testHasRecordingResources)
+        XCTAssertEqual(deactivations.current, 0, "Do not deactivate another owner's play-and-record session")
+        recognizer.viewDidDisappear()
+    }
+
+    func testVR23_OutputChangesPreserveInputButInputOrFormatLossStopsRecording() throws {
+        let initialFormat = VoiceRecordingLifecycleTests.makeSyntheticAudioFormat()
+        let changedFormat = try XCTUnwrap(AVAudioFormat(
+            standardFormatWithSampleRate: initialFormat.sampleRate / 2,
+            channels: initialFormat.channelCount
+        ))
+        for change in ["microphone", "format", "no-input"] {
+            let inputUIDs = SendableBox<Set<String>>(["microphone.builtin"])
+            let format = SendableBox<AVAudioFormat>(initialFormat)
+            let recognizer = SpeechRecognizer(
+                speechAuthChecker: { .authorized },
+                micAuthChecker: { .granted },
+                audioSessionConfigurator: { _, _, _ in },
+                audioSessionActivator: { _, _ in },
+                audioSessionCategoryProvider: { .record },
+                audioInputUIDsProvider: { inputUIDs.current },
+                audioFormatProvider: { format.current },
+                audioTapInstaller: { _, _ in },
+                audioTapRemover: {},
+                audioEngineStarter: {},
+                audioEngineStopper: {},
+                recognitionTaskStarter: { _, _, _ in nil }
+            )
+            recognizer.viewDidAppear()
+            let recordingURL = try XCTUnwrap(recognizer.recordedAudioURL)
+            defer { try? FileManager.default.removeItem(at: recordingURL) }
+            XCTAssertTrue(recognizer.isRecording)
+            for reason: AVAudioSession.RouteChangeReason in [.oldDeviceUnavailable, .newDeviceAvailable, .routeConfigurationChange] {
+                recognizer.handleAudioRouteChange(reason: reason)
+                XCTAssertTrue(recognizer.isRecording, "Output-only changes must preserve the active microphone")
+            }
+
+            if change == "microphone" { inputUIDs.set(["microphone.usb"]) }
+            if change == "format" { format.set(changedFormat) }
+            recognizer.handleAudioRouteChange(reason: change == "no-input" ? .noSuitableRouteForCategory : .routeConfigurationChange)
+            XCTAssertFalse(recognizer.isRecording, "Stop safely after \(change) changes the owned input")
+            XCTAssertNotNil(recognizer.errorMessage)
+            XCTAssertFalse(recognizer.testHasRecordingResources)
+            XCTAssertFalse(recognizer.audioSessionActivated)
+            XCTAssertEqual(recognizer.recordedAudioURL, recordingURL)
+            XCTAssertTrue(FileManager.default.fileExists(atPath: recordingURL.path), "Preserve the recording for saving after input loss")
+            recognizer.viewDidDisappear()
+        }
+    }
+
     // MARK: - VR-19: AudioTapSink file-write pool branch with real AVAudioFile across various frame sizes
     func testVR19_AudioTapSink_RealFilePoolBranchExecution_VariousFrameSizes() async throws {
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("vr19-test-\(UUID().uuidString).caf")
@@ -669,10 +751,14 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
         // Assert all valid within-capacity sizes were accepted with zero drops
         XCTAssertEqual(sink.testDroppedWritesCount, 0, "All frame sizes up to 8192 must be accepted without drops")
 
-        // Wait for async writer queue to process and return buffers
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await sink.waitForPendingTestWrites()
 
         XCTAssertEqual(sink.testPoolCount, 16, "All 16 pooled buffers must be returned to pool after write")
+        let recordedFile = try AVAudioFile(forReading: tempURL)
+        XCTAssertEqual(recordedFile.length, AVAudioFramePosition(testSizes.reduce(0, +)))
+        let recorded = try XCTUnwrap(AVAudioPCMBuffer(pcmFormat: recordedFile.processingFormat, frameCapacity: 1))
+        try recordedFile.read(into: recorded, frameCount: 1)
+        XCTAssertEqual(try XCTUnwrap(recorded.floatChannelData)[0][0], 0.25, accuracy: 0.0001)
         sink.close()
     }
 
@@ -703,7 +789,7 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             return
         }
         oversizeBuf.frameLength = oversizedCount
-        let ptr = oversizeBuf.floatChannelData![0]
+        let ptr = try XCTUnwrap(oversizeBuf.floatChannelData)[0]
         for i in 0..<Int(oversizedCount) {
             ptr[i] = 0.3
         }
@@ -719,6 +805,9 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             return
         }
         stereoBuf.frameLength = 1024
+        for channel in 0..<2 {
+            try XCTUnwrap(stereoBuf.floatChannelData)[channel].initialize(repeating: 0, count: 1024)
+        }
         sink.processBuffer(stereoBuf)
         XCTAssertEqual(sink.testDroppedWritesCount, 2, "Incompatible channel format must be safely dropped")
         XCTAssertEqual(sink.testPoolCount, 16, "Pool buffer must not be leaked on format mismatch")
@@ -729,11 +818,14 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             return
         }
         validBuf.frameLength = 1024
+        try XCTUnwrap(validBuf.floatChannelData)[0].initialize(repeating: 0.5, count: 1024)
         sink.processBuffer(validBuf)
         XCTAssertEqual(sink.testDroppedWritesCount, 2, "Subsequent valid buffer must be accepted")
 
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await sink.waitForPendingTestWrites()
         XCTAssertEqual(sink.testPoolCount, 16, "Pool must remain intact")
+        XCTAssertEqual(try AVAudioFile(forReading: tempURL).length, 1024,
+                       "Only compatible frames may reach the recording file")
         sink.close()
     }
 
@@ -748,17 +840,21 @@ final class VoiceRecordingLifecycleTests: XCTestCase {
             audioTapInstaller: { _, _ in },
             audioTapRemover: {},
             audioEngineStarter: {},
-            audioEngineStopper: {}
+            audioEngineStopper: {},
+            recognitionTaskStarter: { _, _, _ in nil }
         )
         recognizer.viewDidAppear()
 
         for _ in 0..<50 {
             recognizer.startRecording()
             XCTAssertTrue(recognizer.isRecording)
+            XCTAssertTrue(recognizer.testHasRecordingResources)
+            let recordingURL = try XCTUnwrap(recognizer.recordedAudioURL)
+            XCTAssertTrue(FileManager.default.fileExists(atPath: recordingURL.path))
             recognizer.stopRecording()
             XCTAssertFalse(recognizer.isRecording)
-            XCTAssertNil(recognizer.audioFile)
-            XCTAssertNil(recognizer.audioSink)
+            XCTAssertFalse(recognizer.testHasRecordingResources)
+            try FileManager.default.removeItem(at: recordingURL)
         }
 
         XCTAssertEqual(recognizer.phase, .idle)

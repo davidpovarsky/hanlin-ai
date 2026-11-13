@@ -87,6 +87,8 @@ smoke_host="${node_source}/test/fixtures/hanlin-runtime-host"
 mkdir -p "${smoke_host}"
 ditto -x -k "${OUTPUT_ROOT}/RuntimeHostResources.zip" "${smoke_host}"
 cp "${SCRIPT_DIR}/Tests/node-mobile-smoke.mjs" "${smoke_host}/smoke.mjs"
+cp "${SCRIPT_DIR}/Tests/node-fd-ownership-probe.mjs" "${smoke_host}/node-fd-ownership-probe.mjs"
+cp "${SCRIPT_DIR}/Tests/wasm-interpreter-probe.mjs" "${smoke_host}/wasm-interpreter-probe.mjs"
 
 sample_project="${node_source}/tools/mobile-test/ios/testnode/testnode.xcodeproj"
 sample_derived="${WORK_ROOT}/sample-derived"
@@ -129,7 +131,7 @@ xcrun simctl install "${device_udid}" "${sample_app}"
 xcrun simctl launch "${device_udid}" nodejsmobile.test --copy-path-for-testing
 sleep 2
 xcrun simctl terminate "${device_udid}" nodejsmobile.test 2>/dev/null || true
-xcrun simctl launch "${device_udid}" nodejsmobile.test ./test/fixtures/hanlin-runtime-host/smoke.mjs
+xcrun simctl launch "${device_udid}" nodejsmobile.test --jitless --wasm-jitless --expose-gc ./test/fixtures/hanlin-runtime-host/smoke.mjs
 
 data_container="$(xcrun simctl get_app_container "${device_udid}" nodejsmobile.test data)"
 smoke_result="${data_container}/Documents/hanlin-node-smoke.json"
@@ -142,7 +144,7 @@ test -f "${smoke_result}"
 cp "${smoke_result}" "${OUTPUT_ROOT}/NodeMobile-smoke.json"
 node -e '
   const result = require(process.argv[1]);
-  if (!result.ok || result.nodeVersion !== "24.5.0" || !result.workerThreads || !result.hostStartup) {
+  if (!result.ok || result.nodeVersion !== "24.5.0" || !result.workerThreads || !result.descriptorOwnership || result.fdWarningCount !== 0 || !result.hostStartup || !result.webAssembly || !result.wasmEvidence?.noJIT || !result.wasmEvidence?.pointerCompression || !result.wasmEvidence?.externref || !result.wasmEvidence?.refArrayFill || !result.wasmEvidence?.refArrayBounds || !result.wasmEvidence?.multipleInstances || !result.wasmEvidence?.nestedInstances || !result.wasmEvidence?.gc || result.wasmEvidence?.mode !== "wasm-jitless") {
     throw new Error(`Embedded Node smoke failed: ${JSON.stringify(result)}`);
   }
 ' "${OUTPUT_ROOT}/NodeMobile-smoke.json"
@@ -174,11 +176,18 @@ node -e '
     pythonArchiveSha256: pythonSourceHash, pythonRuntimeSha256: pythonRuntimeHash,
     runtimeHostSha256: hostHash, workflowRunID: runID || null,
     workflowRunAttempt: runAttempt ? Number(runAttempt) : null,
+    nodeSourcePatches: JSON.parse(fs.readFileSync(process.argv.at(-1), "utf8")).node.sourcePatches ?? [],
+    nodeBuildConfiguration: JSON.parse(fs.readFileSync(process.argv.at(-1), "utf8")).node.buildConfiguration ?? null,
   }, null, 2)}\n`);
 ' "${OUTPUT_ROOT}/RuntimeProvenance.json" "${DEPENDENCY_HASH}" "${NODE_COMMIT}" "${NODE_VERSION}" \
   "${NODE_SOURCE_SHA256}" "${node_xcframework_sha256}" "${device_slice_sha256}" \
   "${simulator_slice_sha256}" "${PYTHON_VERSION}" "${PYTHON_SHA256}" \
-  "${python_runtime_sha256}" "${host_sha256}" "${GITHUB_RUN_ID:-}" "${GITHUB_RUN_ATTEMPT:-}"
+  "${python_runtime_sha256}" "${host_sha256}" "${GITHUB_RUN_ID:-}" "${GITHUB_RUN_ATTEMPT:-}" "${LOCK_FILE}"
+
+if [[ -n "${RUNTIME_REUSE_RECEIPT:-}" ]]; then
+  test -f "${RUNTIME_REUSE_RECEIPT}"
+  cp "${RUNTIME_REUSE_RECEIPT}" "${OUTPUT_ROOT}/NativeReuseProvenance.json"
+fi
 
 bundle_name="hanlin-runtime-${DEPENDENCY_HASH}.zip"
 bundle_path="${REPOSITORY_ROOT}/build/${bundle_name}"

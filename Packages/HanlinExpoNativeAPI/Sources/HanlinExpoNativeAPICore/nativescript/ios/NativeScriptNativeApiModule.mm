@@ -304,7 +304,7 @@ NSDictionary<NSString*, NSString*>* runUIKitHostFunction(NSString* hostId, NSStr
 
 NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: no active matching native runtime session.");
     return nil;
   }
   return runUIKitHostFunction(hostId, nil, "__nativeScriptCreateUIKitHostFromNative", "create");
@@ -313,7 +313,7 @@ NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId
 NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycle(NSString* hostId,
                                                                       NSString* phase) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: no active matching native runtime session.");
     return nil;
   }
   return runUIKitHostFunction(hostId, phase, "__nativeScriptRunUIKitHostLifecycleFromNative",
@@ -327,7 +327,7 @@ NativeScriptNativeApiModule::NativeScriptNativeApiModule(std::shared_ptr<CallInv
 
 bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: no active matching native runtime session.");
     return false;
   }
   writeSmokeMarkerIfRequested("install:resolve-metadata");
@@ -350,7 +350,7 @@ bool NativeScriptNativeApiModule::installWorkletRuntime(jsi::Runtime& runtime,
                                                         jsi::Object runtimeHolder,
                                                         std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: no active matching native runtime session.");
     return false;
   }
   writeSmokeMarkerIfRequested("installWorkletRuntime:headers");

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import {referenceMCPLifecycle} from './Fixtures/mcp-reference-lifecycle.mjs';
 import {
   commitInstall,
   installPackage,
@@ -24,6 +25,7 @@ test('pinned CabLate Google Maps MCP is judged by executed capabilities', { time
       arguments: ['--stdio'],
       signal: new AbortController().signal,
       emit: () => {},
+      executeLifecycle: await referenceMCPLifecycle(root),
     });
     assert.equal(descriptor.packageName, packageName);
     assert.equal(descriptor.resolvedVersion, packageVersion);

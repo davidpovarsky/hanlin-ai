@@ -1468,7 +1468,7 @@ struct BaseModelCardView: View {
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
-                    if model.supportsImageGen {
+                    if model.hasVerifiedImageOutput {
                         Text(String(localized: "生图"))
                             .font(.caption)
                             .foregroundColor(.hlGreen)

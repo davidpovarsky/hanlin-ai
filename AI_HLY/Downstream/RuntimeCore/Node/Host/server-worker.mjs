@@ -1,3 +1,4 @@
+import './fetch-compatibility.mjs';
 import { parentPort, workerData } from 'node:worker_threads';
 import dns from 'node:dns';
 if (typeof dns.setDefaultResultOrder === 'function') {
@@ -7,7 +8,14 @@ import * as nodeModule from 'node:module';
 import { readFileSync, promises as fs } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
-import ts from 'typescript';
+// Pin resolution to the Host before package hooks run, but load the compiler
+// only for a reachable TS module. Plain JS servers need no compiler startup.
+const hostRequire = nodeModule.createRequire(import.meta.url);
+const compilerPath = hostRequire.resolve('typescript');
+let compiler;
+
+for (const [name, value] of Object.entries(workerData.environment ?? {})) process.env[name] = String(value);
+if (workerData.serverID) process.env.HANLIN_MCP_SERVER_ID = workerData.serverID;
 
 const blockedBuiltins = new Set(['cluster']);
 const entryPoint = path.resolve(workerData.entryPoint);
@@ -43,6 +51,7 @@ installRegExpUnicodeShim();
 
 nodeModule.registerHooks({
   resolve(specifier, context, nextResolve) {
+      if(specifier==='hanlin:runtime')return {url:new URL('./native-commands.mjs',import.meta.url).href,format:'module',shortCircuit:true};
     const normalized = normalizeBuiltin(specifier);
     if (normalized === 'child_process') {
       parentPort?.postMessage({
@@ -76,6 +85,7 @@ nodeModule.registerHooks({
     if (typeof url === 'string' && url.startsWith('file:') && /\.(?:ts|cts|mts)$/i.test(url)) {
       const file = fileURLToPath(url);
       if (!insidePackage(file)) return nextLoad(url, context);
+      const ts = compiler ??= hostRequire(compilerPath);
       const isCommonJS = /\.cts$/i.test(file);
       const result = ts.transpileModule(sanitizeUnicodePropertyRegexes(readFileSync(file, 'utf8')), {
         fileName: file,
@@ -180,6 +190,15 @@ function deny(code, specifier, parentURL, resolvedURL = null, operation = null) 
     parentPath: reportLocation(parentURL),
     resolvedPath: reportLocation(resolvedURL),
     operation,
+    ...(code==='reachable_external_executable'||normalizeBuiltin(specifier)==='cluster'?{
+      integrationRoute:'hanlin:runtime for finite managed-job commands; an explicitly configured owner server for full POSIX/IPC semantics',
+      enforcedBy:'host-compatibility-guard',
+      platformAuthority:'https://developer.apple.com/forums/thread/747499',
+    }:{}),
+    ...(code==='reachable_native_addon'?{
+      integrationRoute:'compatible prelinked native provider or an explicitly configured owner server for the whole execution context',
+      enforcedBy:'host-compatibility-guard',
+    }:{}),
   };
   parentPort?.postMessage(access);
   const location = access.parentPath ?? '<selected entry point>';

@@ -12,7 +12,7 @@ struct ExecuteJavaScriptTool: NativeTool {
             "source": NativeToolSchema.string(description: RuntimeL10n.string("JavaScript source code.")),
             "runtime": NativeToolSchema.string(description: RuntimeL10n.string("Runtime selection; defaults to auto."), enumValues: ["auto", "jscore", "node"]),
             "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Arguments exposed to the selected runtime.")),
-            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Node execution timeout in whole seconds. Supplying it with auto selects Node; explicit jscore rejects it because JavaScriptCore cannot be interrupted truthfully."), minimum: 1, maximum: 300)
+            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Node execution timeout in whole seconds. Supplying it with auto selects Node; explicit jscore rejects it because JavaScriptCore cannot be interrupted truthfully."), minimum: 1)
         ], required: ["source"]))
     }
 

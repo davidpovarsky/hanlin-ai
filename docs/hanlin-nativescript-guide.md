@@ -7,11 +7,18 @@
 
 ## 1. מבוא ומודל עבודה (Mental Model)
 
-באפליקציית Hanlin AI מוטמע מנוע ריצה מקורי של **NativeScript iOS Runtime** (הכתוב ב-C++ ו-Objective-C ומבוסס על מנוע JavaScriptCore / V8).
+באפליקציית Hanlin AI מוטמע **NativeScript iOS Runtime 9.1.0**, עם גשר metadata למחלקות Objective-C הזמינות בבנייה. מפת המקורות, הגרסאות וגבולות החיבור להרחבות נמצאת ב[מיפוי ה-SDK הקיים](miniapp-sdk/README.md). המיפוי מפריד בין הצהרת API, חיבור בקוד והוכחת הרצה במכשיר.
 
-קיימות שתי דרכים עקרוניות לכתוב קוד NativeScript (ושניהן נתמכות במלואן ב-Hanlin AI וניתנות לשילוב):
+קיימות שתי דרכי כתיבה שניתן לשלב, בהתאם לממשקים שה-Host כולל:
+
+בחבילה מוכנה, קובץ הכניסה הוא `nativescript/app/bundle.mjs`, ולצדו
+`package.json` עם `"main":"bundle.mjs"` ו־`"hanlinRuntime":"hanlin-nativescript"`.
+שמות כניסה חלופיים נדחים במפורש בייבוא ובהפעלת סשן. מנוע 9.1.0 שומר מטמון
+תהליכי של הגדרות החבילה; אין כאן הבטחת החלפה חופשית של `main` או של כלל
+הגדרות NativeScript בין חבילות. [ממצא המקור והבדיקות](miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md).
+
 1. **גישה ישירה מול גשר ה-iOS של ה-Runtime (Direct Native Metadata Bridge):**
-   * קוד ה-JavaScript/TypeScript מדבר **ישירות** עם כל מחלקות ה-SDK של אפל (`UIKit`, `Foundation`, `CoreGraphics`, `SwiftUI`).
+   * קוד JavaScript/TypeScript ניגש למחלקות ולחתימות החשופות לגשר Objective-C של ה-Runtime. רכיבי SwiftUI משתמשים בספק SwiftUI המוטמע ובחוזה הגשר שלו.
    * ללא צורך בספריות נוספות, ביצועי Native מלאים ואינטגרציה ישירה עם פקדי מערכת ההפעלה.
 2. **מעטפת `@nativescript/core` (Cross-Platform / NativeScript Core APIs):**
    * שימוש במחלקות הרשמיות של `@nativescript/core` כגון `Application`, `Page`, `Frame`, `StackLayout`, `Button`, `Label`, `Http` וכו'.
@@ -22,7 +29,7 @@
 
 ## 2. כללי התחביר של גשר ה-iOS (Syntax & Marshalling Rules)
 
-מנוע ה-Runtime סורק את כל ה-Metadata של ה-SDK של אפל וממפה אותו לשפת JavaScript/TypeScript ביחס של 1:1.
+מנוע ה-Runtime משתמש בהצהרות שנכללו ב-metadata של הבנייה. זמינות מחלקה וחתימה מסוימת נבדקת מול ה-Host המותקן; הרשאות מערכת והקשר ההרצה נשארים תנאי להפעלתה.
 
 ### א. יצירת אובייקטים (Class Instantiation)
 כל מחלקת Objective-C / Swift עם `@objc` זמינה כמשתנה גלובלי:

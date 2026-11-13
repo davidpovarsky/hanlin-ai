@@ -3,14 +3,16 @@
 //  AI_HLY
 //
 //  Compact anchored model picker popover with InteriorOrganizerV3_3 completion-ordered
-//  two-stage size expansion and matched zoom navigation into searchable provider-grouped
+//  two-stage size expansion and source-linked geometry morph into searchable provider-grouped
 //  "All Models", styled in Hanlin's original delicate blue glass aesthetic (§4.8).
 //
 
 import SwiftUI
+import SwiftData
 
 @MainActor
 struct HanlinModelPickerPopover: View {
+    @Environment(\.modelContext) private var modelContext
     @Bindable var coordinator: HanlinComposerPopupCoordinator
     let models: [AllModels]
     @Binding var selectedModelIndex: Int
@@ -21,16 +23,8 @@ struct HanlinModelPickerPopover: View {
     let ifAudio: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Namespace private var zoomNamespace
+    @Namespace private var allModelsZoom
     @State private var searchText: String = ""
-
-    private let compactSize = CGSize(width: 286, height: 324)
-    private let expandedSize = CGSize(width: 344, height: 472)
-
-    private var currentSize: CGSize {
-        let target = coordinator.modelFrameExpanded ? expandedSize : compactSize
-        return coordinator.responsiveSize(target: target)
-    }
 
     private var accentColor: Color {
         temporaryRecord ? .primary : .hlBluefont
@@ -89,45 +83,29 @@ struct HanlinModelPickerPopover: View {
     }
 
     var body: some View {
-        NavigationStack(path: $coordinator.modelNavigationPath) {
-            compactRootPage
-                .navigationDestination(for: ComposerModelSubroute.self) { route in
-                    Group {
-                        switch route {
-                        case .allModels:
-                            allModelsDestinationPage
-                                .navigationTransition(.zoom(sourceID: "all-models", in: zoomNamespace))
-                        }
-                    }
-                    .onAppear {
-                        coordinator.modelDestinationDisappeared = false
-                    }
-                    .onDisappear {
-                        coordinator.markModelDestinationDisappeared(reduceMotion: reduceMotion)
-                    }
-                }
+        // A navigation-controller zoom inside a resizing popover can retain an
+        // elliptical transition snapshot (42542971973). Morph the button's
+        // surface in this one hosting hierarchy; never stretch the page's text.
+        ZStack {
+            if coordinator.modelNavigationPath.isEmpty {
+                compactRootPage
+                    .transition(rootPageTransition)
+            } else {
+                morphSurface(cornerRadius: 22)
+                    .transition(.identity)
+                allModelsDestinationPage
+                    .transition(allModelsPageTransition)
+            }
         }
-        .frame(width: currentSize.width, height: currentSize.height)
-        .background(
-            GlassView(style: .systemUltraThinMaterial)
-        )
-        .clipShape(.rect(cornerRadius: 22, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
-                .allowsHitTesting(false)
-        )
+        // Fill the native hosting controller's actual bounds. Do not animate a
+        // second fixed SwiftUI frame independently of the popover's native mask.
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .transaction { if reduceMotion { $0.disablesAnimations = true } }
         .onChange(of: coordinator.modelNavigationPath) { _, newPath in
             if !newPath.isEmpty {
                 coordinator.modelDestinationDisappeared = false
                 if !coordinator.modelFrameExpanded {
-                    if reduceMotion {
-                        coordinator.modelFrameExpanded = true
-                    } else {
-                        withAnimation(.easeInOut(duration: 0.24)) {
-                            coordinator.modelFrameExpanded = true
-                        }
-                    }
+                    coordinator.modelFrameExpanded = true
                 }
             } else {
                 coordinator.handleModelNavPathChange(reduceMotion: reduceMotion)
@@ -135,6 +113,35 @@ struct HanlinModelPickerPopover: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-popover")
+        .task { await ModelRefreshService.refreshOpenRouterMetadata(in: modelContext) }
+    }
+
+    private var rootPageTransition: AnyTransition {
+        if reduceMotion { return .identity }
+        return .asymmetric(
+            insertion: .opacity.animation(.easeOut(duration: 0.16).delay(0.16)),
+            removal: .opacity.animation(.easeOut(duration: 0.10))
+        )
+    }
+
+    private var allModelsPageTransition: AnyTransition {
+        if reduceMotion { return .identity }
+        return .asymmetric(
+            insertion: .opacity.combined(with: .scale(scale: 0.96, anchor: .bottom))
+                .animation(.smooth(duration: 0.22).delay(0.10)),
+            removal: .opacity.animation(.easeOut(duration: 0.10))
+        )
+    }
+
+    private func morphSurface(cornerRadius: CGFloat) -> some View {
+        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+            .fill(Color(uiColor: .systemBackground))
+            .overlay {
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
+            }
+            .matchedGeometryEffect(id: "all-models-surface", in: allModelsZoom)
+            .allowsHitTesting(false)
     }
 
     // MARK: - Stage 1: Compact Root Page
@@ -211,14 +218,13 @@ struct HanlinModelPickerPopover: View {
                     .contentShape(.rect(cornerRadius: 12))
                 }
                 .buttonStyle(.plain)
+                .background { morphSurface(cornerRadius: 12) }
                 .disabled(coordinator.isModelAnimatingExpand)
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
-                .matchedTransitionSource(id: "all-models", in: zoomNamespace)
                 .accessibilityIdentifier("hanlin-model-picker-all-models-button")
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
     }
 
     // MARK: - Stage 2: Expanded All Models Page (Provider Sections)
@@ -227,9 +233,7 @@ struct HanlinModelPickerPopover: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 8) {
                 Button {
-                    if !coordinator.modelNavigationPath.isEmpty {
-                        coordinator.modelNavigationPath.removeLast()
-                    }
+                    coordinator.popModelSubroute(reduceMotion: reduceMotion)
                 } label: {
                     HStack(spacing: 4) {
                         Image(systemName: "chevron.backward")
@@ -306,7 +310,7 @@ struct HanlinModelPickerPopover: View {
                 .padding(.bottom, 10)
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .accessibilityElement(children: .contain)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-all-models-page")
     }
@@ -382,7 +386,7 @@ struct HanlinModelPickerPopover: View {
             if model.supportsReasoning {
                 badgePill(String(localized: "Thinking"), color: ifThink ? .hlPurple : .secondary)
             }
-            if model.supportsImageGen {
+            if model.hasVerifiedImageOutput {
                 badgePill(String(localized: "Image"), color: .hlGreen)
             }
             if model.supportsVoiceGen {
@@ -391,8 +395,10 @@ struct HanlinModelPickerPopover: View {
             if model.company?.uppercased() == "LOCAL" {
                 badgePill(String(localized: "On-Device"), color: .hlOrange)
             }
-            if model.price == 0 {
+            if model.catalogPriceTier == 0 {
                 badgePill(String(localized: "Free"), color: .green)
+            } else if model.catalogPriceTier < 0 {
+                badgePill(String(localized: "Price unknown"), color: .secondary)
             }
         }
     }

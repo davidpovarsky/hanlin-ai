@@ -1,0 +1,116 @@
+name: Validate pinned chat Markdown renderer
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  code-block-renderer:
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Read the app's exact renderer revision
+        id: renderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          revision="$(python3 - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'Scripts/CI')
+          from write_diagnostics_build_provenance import requested_revision_pins
+          revision = requested_revision_pins(Path('.')).get('github.com/davidpovarsky/hanlin-streaming-markdown')
+          if revision is None:
+              raise SystemExit('The app must pin an exact renderer revision')
+          print(revision)
+          PY
+          )"
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v7.0.1
+        with:
+          repository: davidpovarsky/hanlin-streaming-markdown
+          ref: ${{ steps.renderer.outputs.revision }}
+          path: build/MarkdownRenderer
+          persist-credentials: false
+      - name: Select the installed stable Xcode and iPhone runtime
+        id: toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode*.app' ! -name '*_beta*' -print | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          xcodebuild -version
+          echo "build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+          major="$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)"
+          xcrun simctl list devices available -j > build/markdown-devices.json
+          device="$(python3 - "$major" <<'PY'
+          import json, sys
+          data = json.load(open('build/markdown-devices.json'))
+          devices = [d for runtime, entries in data['devices'].items() if f'iOS-{sys.argv[1]}-' in runtime
+                     for d in entries if d.get('isAvailable') and d['name'].startswith('iPhone')]
+          if not devices:
+              raise SystemExit('No available iPhone matches the selected stable SDK')
+          print(devices[0]['udid'])
+          PY
+          )"
+          echo "device=$device" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@v6.1.0
+        id: packages
+        with:
+          path: build/MarkdownSourcePackages
+          key: chat-markdown-spm-v1-${{ runner.arch }}-${{ steps.toolchain.outputs.build }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'build/MarkdownRenderer/Package.swift', 'build/MarkdownRenderer/Package.resolved') }}
+      - name: Compile the real package and execute affected code-block tests
+        working-directory: build/MarkdownRenderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ../markdown-evidence
+          git rev-parse HEAD > ../markdown-evidence/renderer-sha.txt
+          xcodebuild test -scheme SwiftStreamingMarkdown \
+            -destination 'platform=iOS Simulator,id=${{ steps.toolchain.outputs.device }}' \
+            -clonedSourcePackagesDirPath "$GITHUB_WORKSPACE/build/MarkdownSourcePackages" \
+            -derivedDataPath "$RUNNER_TEMP/MarkdownDerivedData" \
+            -resultBundlePath "$GITHUB_WORKSPACE/build/markdown-evidence/CodeBlocks.xcresult" \
+            -only-testing:SwiftStreamingMarkdownTests/CodeBlockRendererTests \
+            -only-testing:SwiftStreamingMarkdownTests/CodeBlockConfigTests \
+            -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee ../markdown-evidence/xcodebuild.log
+          xcrun xcresulttool get test-results tests --path ../markdown-evidence/CodeBlocks.xcresult --format json > ../markdown-evidence/tests.json
+          python3 - <<'PY'
+          import json
+          expected = {'testDefaultRendererRemainsOptIn', 'testParsedBlocksKeepLiteralSourceAndStableSelectionIdentity',
+                      'testViewHookReceivesTheExistingParsedBlock', 'testCustomTextFontsAreStoredForRendering',
+                      'testDefaultTextFontsPreserveBundledTypography', 'testOriginalInitializerFunctionTypeRemainsSourceCompatible'}
+          found = {}
+          def visit(node):
+              if isinstance(node, dict):
+                  if node.get('nodeType') == 'Test Case':
+                      name = node.get('name', '').split('(')[0]
+                      if name in expected:
+                          found.setdefault(name, []).append(node.get('result'))
+                  for value in node.values(): visit(value)
+              elif isinstance(node, list):
+                  for value in node: visit(value)
+          visit(json.load(open('../markdown-evidence/tests.json')))
+          if set(found) != expected or any(results != ['Passed'] for results in found.values()):
+              raise SystemExit(f'Missing, duplicate or nonpassing required case: {found}')
+          print('EXECUTED_PASS: all six exact code-block cases')
+          PY
+      - uses: actions/cache/save@v6.1.0
+        if: ${{ success() && steps.packages.outputs.cache-hit != 'true' }}
+        with:
+          path: build/MarkdownSourcePackages
+          key: ${{ steps.packages.outputs.cache-primary-key }}
+      - uses: actions/upload-artifact@v7.0.0
+        if: always()
+        with:
+          name: chat-markdown-renderer-evidence
+          path: build/markdown-evidence
+          retention-days: 30

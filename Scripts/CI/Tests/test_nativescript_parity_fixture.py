@@ -47,7 +47,7 @@ class NativeScriptParityFixtureTests(unittest.TestCase):
         self.assertNotIn('"HANLIN_STATE_DIR"', bundle)
         self.assertNotIn('"HANLIN_DATA_ROOT"', bundle)
         self.assertIn('"share.value", "inter-app.share"', bundle)
-        self.assertIn('"HanlinNativeServicesBridge.h"', metadata_wrapper)
+        self.assertIn('@import HanlinNativeServicesBridge;', metadata_wrapper)
 
     def test_bundle_contains_no_synthetic_fallbacks_or_literal_successes(self) -> None:
         bundle = (SOURCE_ROOT / "nativescript" / "app" / "bundle.mjs").read_text(encoding="utf-8")

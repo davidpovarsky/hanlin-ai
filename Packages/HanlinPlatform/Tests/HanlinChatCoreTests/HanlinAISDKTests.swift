@@ -393,8 +393,8 @@ struct HanlinNonEmptyLanguageModelTests {
         #expect(mock.callCount == 1)
     }
 
-    @Test("E09: reasoning-only nonempty -> no retry")
-    func testE09ReasoningOnlyNonEmptyNoRetry() async throws {
+    @Test("E09: reasoning-only stop retries once, preserves reasoning and never emits a successful finish")
+    func testE09ReasoningOnlyStopFailsAfterBoundedRetry() async throws {
         let mock = MockLanguageModelV3 { _ in
             AsyncThrowingStream { continuation in
                 continuation.yield(.reasoningStart(id: "r1", providerMetadata: nil))
@@ -408,13 +408,41 @@ struct HanlinNonEmptyLanguageModelTests {
         let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
 
         var reasonings: [String] = []
-        for try await part in streamResult.stream {
-            if case .reasoningDelta(_, let text, _) = part {
-                reasonings.append(text)
+        var finishCount = 0
+        var failed = false
+        do {
+            for try await part in streamResult.stream {
+                if case .reasoningDelta(_, let text, _) = part { reasonings.append(text) }
+                if case .finish = part { finishCount += 1 }
+            }
+        } catch HanlinAISDKError.emptyProviderResponse(let attempts) {
+            #expect(attempts == 2)
+            failed = true
+        }
+        #expect(failed && finishCount == 0)
+        #expect(reasonings == ["Deep reasoning step", "Deep reasoning step"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("Reasoning-only length is incomplete and never automatically repeats a token-limited request")
+    func reasoningOnlyLengthDoesNotRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.reasoningDelta(id: "r", delta: "Only reasoning", providerMetadata: nil))
+                continuation.yield(Self.mockFinish(reason: .length))
+                continuation.finish()
             }
         }
-        #expect(reasonings == ["Deep reasoning step"])
-        #expect(mock.callCount == 1)
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        var failed = false
+        do {
+            let result = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+            for try await part in result.stream { if case .finish = part { Issue.record("False successful finish") } }
+        } catch HanlinAISDKError.incompleteProviderResponse(let reason) {
+            #expect(reason == "length")
+            failed = true
+        }
+        #expect(failed && mock.callCount == 1)
     }
 
     @Test("E10: valid tool call -> no retry")
@@ -493,6 +521,103 @@ struct HanlinNonEmptyLanguageModelTests {
 
 @Suite("HanlinAISDKAgentEngine Integration Tests")
 struct HanlinAISDKAgentEngineTests {
+
+    @Test("Default agent continues beyond 40 actual tool steps, including dynamic discovery")
+    func defaultRunContinuesPastFortyWithDiscovery() async throws {
+        let requests = ManagedAtomicInt()
+        let executions = ManagedAtomicInt()
+        let discovered = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let step = requests.increment()
+            let delta: [String: Any]
+            let finish: String
+            if step <= 46 {
+                let name = step == 1 ? "tool_search" : "execute_work"
+                delta = ["tool_calls": [["index": 0, "id": "call_\(step)", "type": "function", "function": ["name": name, "arguments": "{}"]]]]
+                finish = "tool_calls"
+            } else {
+                delta = ["content": "COMPLETED_AFTER_46_TOOLS"]
+                finish = "stop"
+            }
+            let data = try JSONSerialization.data(withJSONObject: ["id": "step_\(step)", "choices": [["index": 0, "delta": delta, "finish_reason": finish]]])
+            return Self.makeSSEResponse(chunks: ["data: \(String(decoding: data, as: UTF8.self))\n\n", "data: [DONE]\n\n"], url: request.url!)
+        }
+        let config = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI", apiType: "openai", endpoint: "https://api.openai.com/v1/chat/completions", credential: "test-only")
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+        let schema = Data(#"{"type":"object","properties":{}}"#.utf8)
+        let discovery = HanlinAISDKToolDefinition(name: "tool_search", description: "Discover the work tool", inputSchemaData: schema) { _, _ in
+            _ = discovered.increment()
+            return HanlinAISDKToolExecutionOutput(modelText: "execute_work is available")
+        }
+        let work = HanlinAISDKToolDefinition(name: "execute_work", description: "Do one operation", inputSchemaData: schema) { _, _ in
+            HanlinAISDKToolExecutionOutput(modelText: "operation_\(executions.increment())")
+        }
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Discover and execute 45 operations")],
+            baseSystemPrompt: "Complete the requested work", tools: [discovery],
+            dynamicTools: { discovered.count > 0 ? [discovery, work] : [discovery] },
+            prepareStep: { (_: Int) async in HanlinAISDKStepPreparation(activeToolAliases: discovered.count > 0 ? ["tool_search", "execute_work"] : ["tool_search"]) }
+        )
+        var steps: [Int] = []
+        var results = 0
+        var answer = ""
+        for try await event in stream {
+            if case .stepFinished(let index, _, _, _) = event { steps.append(index) }
+            if case .toolResult = event { results += 1 }
+            if case .textDelta(let text) = event { answer += text }
+        }
+        #expect(requests.count == 47)
+        #expect(executions.count == 45)
+        #expect(results == 46)
+        #expect(steps == Array(0..<47))
+        #expect(answer == "COMPLETED_AFTER_46_TOOLS")
+    }
+
+    @Test("Explicit cancellation after 45 actual steps cancels the executing tool")
+    func cancellationAfterFortyStopsTheActualTool() async throws {
+        let requests = ManagedAtomicInt()
+        let executions = ManagedAtomicInt()
+        let cancellations = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let step = requests.increment()
+            let payload: [String: Any] = ["id": "cancel_\(step)", "choices": [["index": 0,
+                "delta": ["tool_calls": [["index": 0, "id": "call_\(step)", "type": "function",
+                    "function": ["name": "work", "arguments": "{}"]]]], "finish_reason": "tool_calls"]]]
+            let data = try JSONSerialization.data(withJSONObject: payload)
+            return Self.makeSSEResponse(chunks: ["data: \(String(decoding: data, as: UTF8.self))\n\n", "data: [DONE]\n\n"], url: request.url!)
+        }
+        let config = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions", credential: "test-only")
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+        let tool = HanlinAISDKToolDefinition(name: "work", description: "Work until the owner cancels",
+            inputSchemaData: Data(#"{"type":"object","properties":{}}"#.utf8)) { _, _ in
+            let count = executions.increment()
+            if count == 45 {
+                do { try await Task.sleep(for: .seconds(60)) }
+                catch is CancellationError { _ = cancellations.increment(); throw CancellationError() }
+            }
+            return HanlinAISDKToolExecutionOutput(modelText: "operation_\(count)")
+        }
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Continue until cancelled")],
+            baseSystemPrompt: "Execute work", tools: [tool],
+            prepareStep: { (_: Int) async in HanlinAISDKStepPreparation(activeToolAliases: ["work"]) })
+        let consumer = Task { do { for try await _ in stream {} } catch {} }
+        defer { consumer.cancel() }
+        let readyDeadline = ContinuousClock.now.advanced(by: .seconds(10))
+        while executions.count < 45 && ContinuousClock.now < readyDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        try #require(executions.count == 45, "The run must actually cross 40 steps before cancellation")
+        consumer.cancel()
+        await consumer.value
+        let cancellationDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while cancellations.count == 0 && ContinuousClock.now < cancellationDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(cancellations.count == 1, "Cancellation must reach the actual executing tool")
+        #expect(executions.count == 45)
+        #expect(requests.count == 45)
+    }
 
     private static func makeSSEResponse(chunks: [String], url: URL) -> FetchResponse {
         let stream = AsyncThrowingStream<Data, Error> { continuation in
@@ -587,7 +712,7 @@ struct HanlinAISDKAgentEngineTests {
         // Verify captured requests:
         // Request 1: initial user message
         // Request 2: must contain assistant message with tool_calls AND tool message with tool_call_id
-        #expect(interceptedRequests.count == 2)
+        try #require(interceptedRequests.count == 2)
         let step2BodyData = try #require(interceptedRequests.all[1].httpBody)
         let step2JSON = try #require(JSONSerialization.jsonObject(with: step2BodyData) as? [String: Any])
         let step2Messages = try #require(step2JSON["messages"] as? [[String: Any]])
@@ -692,7 +817,7 @@ struct HanlinAISDKAgentEngineTests {
         #expect(toolResults["call_2"] == "Result for call_2")
 
         // Inspect second request messages
-        #expect(interceptedRequests.count == 2)
+        try #require(interceptedRequests.count == 2)
         let step2Body = try #require(interceptedRequests.all[1].httpBody)
         let step2JSON = try #require(JSONSerialization.jsonObject(with: step2Body) as? [String: Any])
         let messages = try #require(step2JSON["messages"] as? [[String: Any]])
@@ -794,7 +919,7 @@ struct HanlinAISDKAgentEngineTests {
             }
         }
 
-        #expect(stepStartedPreparations.count == 2)
+        try #require(stepStartedPreparations.count == 2)
         #expect(stepStartedPreparations[0].activeToolAliases == ["load_skill"])
         #expect(stepStartedPreparations[1].activeToolAliases == ["load_skill", "execute_python"])
         #expect(stepStartedPreparations[1].loadedSkillIDs == ["code"])
@@ -1248,6 +1373,7 @@ private final class ManagedAtomicArray<T>: @unchecked Sendable {
 }
 
 private final class ManagedAtomicInt: @unchecked Sendable {
+    var count: Int { lock.lock(); defer { lock.unlock() }; return value }
     private var value: Int = 0
     private let lock = NSLock()
 

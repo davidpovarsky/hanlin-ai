@@ -55,6 +55,18 @@ fs.writeFileSync(projectPath, project);
 NODE
 
 cd "${NODE_SOURCE_ROOT}"
+if [[ "$(node -e 'process.stdout.write(require(process.argv[1]).node.buildConfiguration?.wasmInterpreter || "")' "${LOCK_FILE}")" == "drumbrake" ]]; then
+  test -f "${NODE_SOURCE_ROOT}/hanlin-node-build-configuration.json"
+  node - "${NODE_SOURCE_ROOT}/hanlin-node-build-configuration.json" "${LOCK_FILE}" <<'NODE'
+const fs = require('node:fs');
+const actual = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+const lock = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
+if (actual.sourceCommit !== lock.node.commit || actual.wasmInterpreter !== 'drumbrake' || !actual.jitless || !actual.explicitBoundsChecks) {
+  throw new Error('The native source build adapter did not establish the required interpreter configuration.');
+}
+NODE
+  cp "${NODE_SOURCE_ROOT}/hanlin-node-build-configuration.json" "${OUTPUT_ROOT}/node-build-configuration.json"
+fi
 ./tools/ios_framework_prepare.sh "${TARGET}"
 
 test -d "${SOURCE_FRAMEWORK}"

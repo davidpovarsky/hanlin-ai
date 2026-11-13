@@ -21,6 +21,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from typing import Dict, List, Optional
 
@@ -38,6 +39,13 @@ FIXTURE_NAMES = [
     "hanlin-script-parity.hanlinNativeScript",
 ]
 
+# A cold install of the full host exceeded 60 seconds on the macOS arm64 runner.
+# Keep both staging consumers bounded without treating that install as a failure.
+INSTALL_TIMEOUT_SECONDS = 180.0
+APP_CONTAINER_TIMEOUT_SECONDS = 20.0
+# Cold iPadOS migration exceeded the previous 90-second allowance in CI.
+BOOT_TIMEOUT_SECONDS = 300.0
+
 
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
@@ -52,23 +60,31 @@ def run_bounded(
     timeout_seconds: float = 30.0,
     check: bool = False,
 ) -> subprocess.CompletedProcess[str]:
-    """Execute command with strict timeout and output capture."""
-    try:
-        return subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            timeout=timeout_seconds,
-            check=check,
-        )
-    except subprocess.TimeoutExpired:
-        print(f"[stage_simulator_fixtures] Command timed out after {timeout_seconds}s: {' '.join(cmd)}", file=sys.stderr)
-        return subprocess.CompletedProcess(
-            args=cmd,
-            returncode=124,
-            stdout="",
-            stderr=f"Timed out after {timeout_seconds}s",
-        )
+    """Wait for the command, not EOF from a descendant that inherited its output."""
+    with tempfile.TemporaryFile(mode="w+t", encoding="utf-8", errors="replace") as out, \
+            tempfile.TemporaryFile(mode="w+t", encoding="utf-8", errors="replace") as err:
+        timed_out = False
+        try:
+            result = subprocess.run(
+                cmd,
+                stdout=out,
+                stderr=err,
+                timeout=timeout_seconds,
+                check=False,
+            )
+            returncode = result.returncode
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            returncode = 124
+            print(f"[stage_simulator_fixtures] Command execution timed out after {timeout_seconds}s: {' '.join(cmd)}", file=sys.stderr)
+        out.seek(0)
+        err.seek(0)
+        stdout, stderr = out.read(), err.read()
+        if timed_out:
+            stderr += f"\nTimed out after {timeout_seconds}s"
+        elif check and returncode:
+            raise subprocess.CalledProcessError(returncode, cmd, output=stdout, stderr=stderr)
+        return subprocess.CompletedProcess(cmd, returncode, stdout, stderr)
 
 
 def stage_simulator_fixtures(
@@ -90,7 +106,7 @@ def stage_simulator_fixtures(
     # 1. Boot simulator if needed and verify bootstatus
     print(f"[stage_simulator_fixtures] Verifying simulator boot state for {simulator_udid}...")
     runner(["xcrun", "simctl", "boot", simulator_udid], timeout_seconds=15.0)
-    bootstatus_res = runner(["xcrun", "simctl", "bootstatus", simulator_udid, "-b"], timeout_seconds=45.0)
+    bootstatus_res = runner(["xcrun", "simctl", "bootstatus", simulator_udid, "-b"], timeout_seconds=BOOT_TIMEOUT_SECONDS)
     logs.append(f"Bootstatus exit: {bootstatus_res.returncode}")
     if bootstatus_res.returncode != 0:
         err_msg = f"Fatal: Simulator bootstatus failed with code {bootstatus_res.returncode}: {bootstatus_res.stderr.strip()}"
@@ -121,7 +137,7 @@ def stage_simulator_fixtures(
                 "logs": logs,
             }
         print(f"[stage_simulator_fixtures] Installing {app_path.name}...")
-        install_res = runner(["xcrun", "simctl", "install", simulator_udid, str(app_path)], timeout_seconds=60.0)
+        install_res = runner(["xcrun", "simctl", "install", simulator_udid, str(app_path)], timeout_seconds=INSTALL_TIMEOUT_SECONDS)
         logs.append(f"Install exit: {install_res.returncode}")
         if install_res.returncode != 0:
             err_msg = f"Fatal: simctl install failed with code {install_res.returncode}: {install_res.stderr.strip()}"
@@ -142,7 +158,7 @@ def stage_simulator_fixtures(
     app_container_path: Optional[Path] = None
     container_res = runner(
         ["xcrun", "simctl", "get_app_container", simulator_udid, bundle_id, "data"],
-        timeout_seconds=20.0,
+        timeout_seconds=APP_CONTAINER_TIMEOUT_SECONDS,
     )
     if container_res.returncode == 0 and container_res.stdout.strip():
         app_container_path = Path(container_res.stdout.strip())

@@ -631,12 +631,17 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(toolResult.modelText.contains("HANLIN_OK"))
         #expect(toolResult.modelText.contains("42"))
 
-        // 3. Verify negative policy checks: network disabled & non-loopback HTTP forbidden
-        let deniedNoNetwork = await tool.execute(
-            argumentsJSON: #"{"program":"curl","arguments":["\#(okURL2)"],"allow_network":false}"#,
+        // 3. Legacy network=false does not introduce a Hanlin approval gate.
+        let nonce = UUID().uuidString
+        let server3 = try LoopbackHTTPFixtureServer(responseBody: "{\"nonce\":\"\(nonce)\"}")
+        defer { server3.stop() }
+        let okURL3 = "http://127.0.0.1:\(server3.port)/ok.json"
+        let withoutNetworkGrant = await tool.execute(
+            argumentsJSON: #"{"program":"curl","arguments":["-sS","\#(okURL3)"],"allow_network":false}"#,
             context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
-        #expect(deniedNoNetwork.isError)
+        #expect(!withoutNetworkGrant.isError)
+        #expect(withoutNetworkGrant.modelText.contains(nonce))
 
         let deniedRemoteHTTP = await tool.execute(
             argumentsJSON: #"{"program":"curl","arguments":["http://example.invalid/ok.json"],"allow_network":true}"#,

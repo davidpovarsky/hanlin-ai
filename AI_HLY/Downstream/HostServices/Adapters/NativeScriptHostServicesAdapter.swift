@@ -24,12 +24,15 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     private let lock = NSLock()
     private var registeredActionIDs: Set<HanlinActionID> = []
     private var registeredActionHandlers: [HanlinActionID: RegisteredActionHandler] = [:]
+    private var runtimeRequests: [String: Task<Void, Never>] = [:]
+    private var runtimeRequestsInvalidated = false
 
     public init(
         appID: HanlinAppID,
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
-        sessionID: String = UUID().uuidString.lowercased()
+        sessionID: String = UUID().uuidString.lowercased(),
+        canPresentUI: Bool = true
     ) {
         self.sessionID = sessionID
         let appSession = try! HanlinAppSessionID(validating: sessionID)
@@ -39,7 +42,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             origin: .nativeModule,
             capabilities: grantedCapabilities,
             sessionID: appSession,
-            canPresentUI: true
+            canPresentUI: canPresentUI
         )
         super.init()
     }
@@ -90,6 +93,49 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     }
 
     // MARK: - Runtime Execution
+
+    /// Returns a host-issued cancellation handle, not a caller-selected job or
+    /// workspace identity. The callback carries the entire canonical receipt.
+    @objc(executeRuntime:completion:)
+    public func executeRuntime(_ payloadJSON: String, completion: @escaping (String?, String?) -> Void) -> String? {
+        nonisolated(unsafe) let safeCompletion = completion
+        let requestID = UUID().uuidString.lowercased()
+        let accepted = lock.withLock {
+            guard !runtimeRequestsInvalidated else { return false }
+            runtimeRequests[requestID] = Task { [self] in
+                defer { _ = lock.withLock { runtimeRequests.removeValue(forKey: requestID) } }
+                do {
+                    let result = try await HanlinRuntimeWireProtocol.execute(payloadJSON, context: context)
+                    await MainActor.run { safeCompletion(result, nil) }
+                } catch is CancellationError {
+                    await MainActor.run { safeCompletion(nil, "Runtime request cancelled.") }
+                } catch {
+                    // Tool/source/stderr diagnostics belong to the structured
+                    // receipt. Do not copy arbitrary backend errors to JS logs.
+                    await MainActor.run { safeCompletion(nil, "Runtime request failed; inspect the runtime job diagnostics.") }
+                }
+            }
+            return true
+        }
+        if !accepted { completion(nil, "NativeScript Host Services session is no longer active.") }
+        return accepted ? requestID : nil
+    }
+
+    @objc(cancelRuntime:)
+    public func cancelRuntime(_ requestID: String) -> Bool {
+        let task = lock.withLock { runtimeRequests[requestID] }
+        task?.cancel()
+        return task != nil
+    }
+
+    @objc(invalidateRuntimeRequests)
+    public func invalidateRuntimeRequests() {
+        let tasks = lock.withLock {
+            runtimeRequestsInvalidated = true
+            return Array(runtimeRequests.values)
+        }
+        for task in tasks { task.cancel() }
+    }
 
     public func executeJavaScript(
         _ source: String,
@@ -350,21 +396,10 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
                 invoke: safeHandler
             )
         }
-        if let appID = context.appID {
-            Task { [weak self] in
-                guard let self else { return }
-                let broker = await MainActor.run { HanlinMiniAppHost.shared.requestBroker }
-                await broker.register(target: appID, action: actionID, capability: capabilityID) { [weak self] req in
-                    guard let self else { throw HanlinMiniAppRequestError.routeNotFound }
-                    return try await self.invokeRegisteredAction(
-                        req.action,
-                        capability: req.capability,
-                        caller: req.caller,
-                        payload: req.payload
-                    )
-                }
-            }
-        }
+        // Keep the Host's installed-action route authoritative. Replacing it
+        // with a session closure bypasses future generation/admission checks
+        // and leaves a dead route after the headless VM is destroyed. Local
+        // self-calls and Host dispatch invoke this session dictionary directly.
     }
 
     public func hasRegisteredAction(_ action: HanlinActionID) -> Bool {

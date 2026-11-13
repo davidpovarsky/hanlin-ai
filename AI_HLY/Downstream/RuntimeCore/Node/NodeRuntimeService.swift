@@ -13,14 +13,20 @@ private struct RuntimeHostReadyFile: Codable, Sendable {
 struct RuntimeHostConnection: Sendable {
     let baseURL: URL
     private let token: String
+    let fileLayout: RuntimeFileLayout?
 
-    init(baseURL: URL, token: String) {
+    init(baseURL: URL, token: String, fileLayout: RuntimeFileLayout? = nil) {
         self.baseURL = baseURL
         self.token = token
+        self.fileLayout = fileLayout
     }
 
     func request(path: String, method: String = "GET", body: Data? = nil, timeout: TimeInterval = 60) -> URLRequest {
-        var request = URLRequest(url: baseURL.appending(path: path))
+        var endpoint = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
+        let route = URLComponents(string: path)!
+        endpoint.percentEncodedPath = route.percentEncodedPath
+        endpoint.percentEncodedQuery = route.percentEncodedQuery
+        var request = URLRequest(url: endpoint.url!)
         request.httpMethod = method
         request.httpBody = body
         request.timeoutInterval = timeout
@@ -45,6 +51,8 @@ struct RuntimeHostConnection: Sendable {
 }
 
 struct TypeScriptCompilationResult: Codable, Sendable {
+    let executionID: UUID?
+    let compilerVersion: String?
     struct Diagnostic: Codable, Sendable, Identifiable {
         let code: Int
         let category: String?
@@ -62,6 +70,7 @@ struct TypeScriptCompilationResult: Codable, Sendable {
 }
 
 struct TypeScriptProjectCompilationResult: Codable, Sendable {
+    let executionID: UUID?
     let compilerVersion: String?
     let compilerIntegrity: String?
     let diagnostics: [TypeScriptCompilationResult.Diagnostic]
@@ -76,23 +85,24 @@ enum NodeHostHealthFailure: String, Sendable {
     case protocolFailure
 }
 
+struct RuntimeLifecycleContext: Encodable, Sendable {
+    let packageName: String
+    let packageVersion: String
+    let event: String
+    let initialCwd: String
+}
+
 actor NodeRuntimeService {
     static let expectedNodeVersion = "24.5.0"
     static let hostProtocolVersion = 2
 
-    private struct HostExecutionResponse: Decodable {
-        let executionID: UUID
-        let stdout: String
-        let stderr: String
-        let value: RuntimeJSONValue?
-        let exitCode: Int?
-        let durationMilliseconds: Int64
-        let didTimeOut: Bool
-        let wasCancelled: Bool
-        let outputWasTruncated: Bool
-    }
 
     private let fileLayout: RuntimeFileLayout
+    private let environmentStore: RuntimeEnvironmentStore?
+    private let commandDispatcher: RuntimeCommandDispatcher
+    private var commandPump: Task<Void, Never>?
+    private var activeCommands: [String: Task<Void, Never>] = [:]
+    private var userOperations: [UUID: RuntimeUserOperation] = [:]
     private struct LaunchContext: Sendable {
         let readyURL: URL
         let token: String
@@ -106,8 +116,10 @@ actor NodeRuntimeService {
     private var launchTask: Task<RuntimeHostConnection, Error>?
     private var verificationTask: Task<RuntimeHostConnection, Error>?
 
-    init(fileLayout: RuntimeFileLayout = .default) {
+    init(fileLayout: RuntimeFileLayout = .default, environment: RuntimeEnvironmentStore? = nil, python: PythonRuntimeService? = nil, shell: ShellRuntimeService? = nil) {
         self.fileLayout = fileLayout
+        self.environmentStore = environment
+        self.commandDispatcher = RuntimeCommandDispatcher(fileLayout: fileLayout, python: python, shell: shell)
     }
 
     func snapshot() -> RuntimeSnapshot { snapshotValue }
@@ -179,6 +191,35 @@ actor NodeRuntimeService {
     }
 
     func executeJavaScript(_ request: RuntimeExecutionRequest, moduleKind: String? = nil) async throws -> RuntimeExecutionResult {
+        try await executeNodeJob(request, moduleKind: moduleKind)
+    }
+
+    /// Execute the actual entry file as Node's main module, not a synthetic import.
+    func executeCLI(entryPoint: URL, arguments: [String], workspace: URL,
+                    environment: [String: String] = [:], standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        guard entryPoint.isFileURL, !entryPoint.path.contains("\0") else { throw RuntimeCoreError.invalidPath }
+        // The authenticated Host resolves the real file using Node's public
+        // resolver, including extensionless CLI entries and directory mains.
+        let entry = entryPoint.standardizedFileURL
+        let input = try standardInput.map { try fileLayout.validatedReadableFile($0) }
+        return try await executeNodeJob(RuntimeExecutionRequest(source: "", arguments: arguments,
+            workspace: workspace, environment: environment), moduleKind: "esm", entryPoint: entry, standardInput: input)
+    }
+
+    private func executeNodeJob(_ request: RuntimeExecutionRequest, moduleKind: String?,
+                                entryPoint: URL? = nil, standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+        let operation = RuntimeUserOperation.current
+        try operation?.checkInterruption()
+        if let operation { userOperations[request.id] = operation }
+        let interruption = operation?.registerInterruption { reason in
+            Task { await self.interruptExecution(id: request.id, reason: reason) }
+        }
+        defer {
+            userOperations.removeValue(forKey: request.id)
+            if let interruption { operation?.unregisterInterruption(interruption) }
+        }
+        let environment = try await environmentStore?.resolved(scopes: [.shared, .node, .execution(request.id)], overrides: request.environment)
+            ?? RuntimePolicy.validatedEnvironment(request.environment)
         let workspace = try fileLayout.validatedWorkspace(request.workspace)
         let resolvedModuleKind = moduleKind ?? Self.inferModuleKind(for: request.source)
         let host = try await ensureRunning()
@@ -190,40 +231,327 @@ actor NodeRuntimeService {
                 snapshotValue.state = .ready
             }
         }
-        let milliseconds = request.limits.timeout.components.seconds * 1_000
-            + Int64(request.limits.timeout.components.attoseconds / 1_000_000_000_000_000)
-        let body = try JSONSerialization.data(withJSONObject: [
+        let milliseconds = try request.limits.timeoutMilliseconds()
+        var payload: [String: Any] = [
             "executionID": request.id.uuidString.lowercased(),
-            "source": request.source,
-            "arguments": request.arguments,
-            "workspace": workspace.path,
-            "environment": request.environment,
-            "moduleKind": resolvedModuleKind,
-            "timeoutMilliseconds": milliseconds,
+            "source": request.source, "arguments": request.arguments,
+            "workspace": workspace.path, "environment": environment,
+            "moduleKind": resolvedModuleKind, "detached": true,
             "maximumOutputBytes": request.limits.maximumOutputBytes
-        ])
-        let payload = try await withTaskCancellationHandler {
-            try await host.decode(
-                HostExecutionResponse.self,
-                path: "/v1/executions",
-                method: "POST",
-                body: body,
-                timeout: TimeInterval(max(5, milliseconds / 1_000 + 5))
-            )
+        ]
+        if let entryPoint { payload["entryPoint"] = entryPoint.path; payload["executionMode"] = "cli" }
+        if let standardInput { payload["standardInputPath"] = standardInput.path }
+        if let milliseconds { payload["timeoutMilliseconds"] = milliseconds }
+        let input = try RuntimeExecutionInputArtifact(body: JSONSerialization.data(withJSONObject: payload),
+            executionID: request.id, layout: fileLayout, traceWarnings: environment["HANLIN_NODE_TRACE_WARNINGS"] == "1")
+        var attemptedSubmission = false
+        defer { if !attemptedSubmission { input.discardBeforeSubmission() } }
+        return try await withTaskCancellationHandler {
+            try operation?.checkInterruption()
+            try Task.checkCancellation()
+            var job: RuntimeJobSnapshot
+            do {
+                attemptedSubmission = true
+                job = try await host.decode(RuntimeJobSnapshot.self, path: "/v1/executions", method: "POST", body: input.controlBody)
+            } catch let error as URLError where [.timedOut, .networkConnectionLost].contains(error.code) {
+                // Recover observation of the same ID; never repeat the source after an ambiguous POST.
+                job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(request.id.uuidString.lowercased())")
+            }
+            var delayMilliseconds = 25
+            var lastProgress = ""
+            while true {
+                if let reason = operation?.snapshot.reason {
+                    await interruptExecution(id: request.id, reason: reason)
+                    throw RuntimeJobInterruptionError(executionID: request.id, reason: reason)
+                }
+                try Task.checkCancellation()
+                operation?.recordJobOutput(id: request.id, stdout: job.stdoutBytes, stderr: job.stderrBytes)
+                let progress = "\(job.state.rawValue):\(job.stdoutBytes):\(job.stderrBytes)"
+                if progress != lastProgress, let observer = RuntimeJobProgress.reporter {
+                    await observer(job)
+                    lastProgress = progress
+                }
+                if job.state == .interrupted {
+                    throw RuntimeJobInterruptionError(executionID: request.id,
+                        reason: job.interruptionReason ?? job.error ?? "The runtime process was interrupted.")
+                }
+                if let result = job.result { return result }
+                if job.state.isTerminal {
+                    throw RuntimeCoreError.runtimeFailure("Job \(job.executionID): \(job.error ?? job.state.rawValue). Partial output remains available through get_runtime_job.")
+                }
+                try await Task.sleep(for: .milliseconds(delayMilliseconds))
+                delayMilliseconds = min(delayMilliseconds * 2, 1000)
+                job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(request.id.uuidString.lowercased())")
+            }
         } onCancel: {
-            Task { await self.cancelExecution(id: request.id) }
+            Task {
+                if let reason = operation?.snapshot.reason { await self.interruptExecution(id: request.id, reason: reason) }
+                else { await self.cancelExecution(id: request.id) }
+            }
         }
-        return RuntimeExecutionResult(
-            executionID: payload.executionID,
-            stdout: payload.stdout,
-            stderr: payload.stderr,
-            value: payload.value,
-            exitCode: payload.exitCode,
-            durationMilliseconds: payload.durationMilliseconds,
-            didTimeOut: payload.didTimeOut,
-            wasCancelled: payload.wasCancelled,
-            outputWasTruncated: payload.outputWasTruncated
-        )
+    }
+
+    /// Host-lifetime ownership also serves package operations and survives a
+    /// lost execution observer. It dispatches only authenticated live receipts.
+    private func startCommandPump(_ host: RuntimeHostConnection) {
+        guard commandPump == nil else { return }
+        commandPump = Task.detached { [weak self] in
+            guard let self else { return }
+            await self.runCommandPump(host)
+        }
+    }
+
+    private func runCommandPump(_ host: RuntimeHostConnection) async {
+        defer { commandPump = nil }
+        while !Task.isCancelled && !NodeRuntimeBridge.didExit {
+            do {
+                let requests = try await observeJob([RuntimeCommandRequest].self, host: host, path: "/v1/commands/wait")
+                let pendingIDs = Set(requests.map(\.ownerKey))
+                for id in Array(activeCommands.keys) where !pendingIDs.contains(id) { activeCommands.removeValue(forKey: id) }
+                for command in requests {
+                    if let active = activeCommands[command.ownerKey] {
+                        if command.cancellationRequested { active.cancel() }
+                        continue
+                    }
+                    let dispatcher = commandDispatcher
+                    let operation = userOperations[command.parentExecutionID]
+                    activeCommands[command.ownerKey] = Task {
+                        do {
+                            // Inherit only this receipt's explicit operation,
+                            // never another chat's capability or progress locals.
+                            try await RuntimeUserOperation.$current.withValue(operation) {
+                                try operation?.checkInterruption()
+                                try await dispatcher.execute(command, node: self)
+                            }
+                        }
+                        catch {
+                            let message = error.localizedDescription
+                            await Task.detached {
+                                let body = try? JSONSerialization.data(withJSONObject: ["error": message])
+                                _ = try? await host.data(path: "/v1/executions/\(command.parentExecutionID.uuidString.lowercased())/commands/\(command.id.uuidString.lowercased())/fail", method: "POST", body: body)
+                            }.value
+                        }
+                    }
+                }
+                try await Task.sleep(for: .milliseconds(requests.isEmpty ? 500 : 25))
+            } catch is CancellationError { break }
+            catch {
+                snapshotValue.healthCategory = NodeHostHealthFailure.protocolFailure.rawValue
+                snapshotValue.lastDiagnostic = "Runtime command observation failed: \(error.localizedDescription)"
+                do { try await Task.sleep(for: .milliseconds(500)) } catch { break }
+            }
+        }
+        for task in activeCommands.values { task.cancel() }
+        activeCommands.removeAll()
+        if NodeRuntimeBridge.didExit { markNodeExited() }
+    }
+
+    private func observeJob<T: Decodable & Sendable>(_ type: T.Type, host: RuntimeHostConnection, path: String) async throws -> T {
+        var delay = 25
+        while true {
+            try Task.checkCancellation()
+            do { return try await host.decode(type, path: path) }
+            catch let error as URLError {
+                guard [.timedOut, .networkConnectionLost, .cannotConnectToHost, .notConnectedToInternet].contains(error.code),
+                      !NodeRuntimeBridge.didExit else { throw error }
+                snapshotValue.healthCategory = NodeHostHealthFailure.transient.rawValue
+                snapshotValue.lastDiagnostic = "Reconnecting job observation; existing source and command side effects are retained without replay."
+                // Observation may reconnect; source and command side effects are
+                // never resubmitted. Keep the command owner alive meanwhile.
+                try await Task.sleep(for: .milliseconds(delay))
+                delay = min(delay * 2, 1000)
+            }
+        }
+    }
+
+    /// Observe a previously submitted operation without replaying its input.
+    func waitForExecution(id: UUID) async throws -> RuntimeExecutionResult {
+        let operation = RuntimeUserOperation.current
+        try operation?.checkInterruption()
+        if let operation { userOperations[id] = operation }
+        let interruption = operation?.registerInterruption { reason in
+            Task { await self.interruptExecution(id: id, reason: reason) }
+        }
+        defer {
+            userOperations.removeValue(forKey: id)
+            if let interruption { operation?.unregisterInterruption(interruption) }
+        }
+        let host = try await ensureRunning()
+        return try await withTaskCancellationHandler {
+            var delay = 25
+            while true {
+                if let reason = operation?.snapshot.reason {
+                    await interruptExecution(id: id, reason: reason)
+                    throw RuntimeJobInterruptionError(executionID: id, reason: reason)
+                }
+                try Task.checkCancellation()
+                let job = try await observeJob(RuntimeJobSnapshot.self, host: host, path: "/v1/executions/\(id.uuidString.lowercased())")
+                operation?.recordJobOutput(id: id, stdout: job.stdoutBytes, stderr: job.stderrBytes)
+                if let reporter = RuntimeJobProgress.reporter { await reporter(job) }
+                if job.state == .interrupted {
+                    throw RuntimeJobInterruptionError(executionID: id,
+                        reason: job.interruptionReason ?? job.error ?? "The runtime process was interrupted.")
+                }
+                if let result = job.result { return result }
+                if job.state.isTerminal { throw RuntimeCoreError.runtimeFailure("Job \(id): \(job.error ?? job.state.rawValue). Existing output is retained.") }
+                try await Task.sleep(for: .milliseconds(delay))
+                delay = min(delay * 2, 1000)
+            }
+        } onCancel: {
+            Task {
+                if let reason = operation?.snapshot.reason { await self.interruptExecution(id: id, reason: reason) }
+                else { await self.cancelExecution(id: id) }
+            }
+        }
+    }
+
+    func hasLaunched() -> Bool { launchAttempted }
+
+    /// Read live facts without starting an engine just to inspect capabilities.
+    func capabilityReportIfLaunched() async throws -> RuntimeJSONValue? {
+        guard let connection else { return nil }
+        return try await connection.decode(RuntimeJSONValue.self, path: "/v1/runtime/capabilities")
+    }
+
+    /// Uses the same Node job/stdio/journal path. External commands require the
+    /// command broker; built-in portable-shell operations execute in the Worker.
+    func validatePackage(name: String, packageRoot: URL, workspace: URL) async throws -> RuntimeExecutionResult {
+        let moduleURL = try prepareHostRuntime().appending(path: "package-validation.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let packageName = String(decoding: try JSONEncoder().encode(name), as: UTF8.self)
+        let root = String(decoding: try JSONEncoder().encode(packageRoot.path), as: UTF8.self)
+        // Keep import() in the original job source. Moving it inside the Host
+        // helper would resolve from bundled dependencies instead of this stage.
+        return try await executeJavaScript(RuntimeExecutionRequest(source: """
+            import {validateGlobalPackage} from \(module);
+            import {createRequire} from 'node:module';
+            const require = createRequire(import.meta.url);
+            const receipt = await validateGlobalPackage({name: \(packageName), packageRoot: \(root), importLibrary: async () => {
+                try { import.meta.resolve(\(packageName)); }
+                catch (error) {
+                    if (error.code !== 'ERR_PACKAGE_PATH_NOT_EXPORTED') throw error;
+                    require(\(packageName));
+                    return 'require';
+                }
+                await import(\(packageName));
+                return 'import';
+            }});
+            console.log(JSON.stringify(receipt));
+            export default receipt;
+            """, workspace: workspace), moduleKind: "esm")
+    }
+
+    func executePortableShell(_ request: RuntimeExecutionRequest, lifecycle: RuntimeLifecycleContext? = nil) async throws -> RuntimeExecutionResult {
+        let moduleURL = try prepareHostRuntime().appending(path: "portable-shell.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let script = String(decoding: try JSONEncoder().encode(request.source), as: UTF8.self)
+        let args = String(decoding: try JSONEncoder().encode(request.arguments), as: UTF8.self)
+        let lifecycleJSON = String(decoding: try JSONEncoder().encode(lifecycle), as: UTF8.self)
+        let source = """
+        import { executePortableShell, packageLifecycleEnvironment } from \(module);
+        const lifecycle = \(lifecycleJSON);
+        const environment = lifecycle ? await packageLifecycleEnvironment({ ...lifecycle, cwd: process.cwd(), environment: process.env, source: \(script) }) : process.env;
+        const exitCode = await executePortableShell(\(script), \(args), {
+            cwd: process.cwd(), environment,
+            stdin: process.stdin, stdout: process.stdout, stderr: process.stderr
+        });
+        process.exitCode = exitCode;
+        export default { exitCode };
+        """
+        return try await executeJavaScript(RuntimeExecutionRequest(id: request.id, source: source,
+            arguments: request.arguments, workspace: request.workspace, environment: request.environment,
+            limits: request.limits), moduleKind: "esm")
+    }
+
+    func verifyLifecyclePlan(_ plan: LifecycleExecutionPlan, workspace: URL) async throws {
+        let moduleURL = try prepareHostRuntime().appending(path: "lifecycle-planner.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let root = String(decoding: try JSONEncoder().encode(workspace.path), as: UTF8.self)
+        let encodedPlan = String(decoding: try JSONEncoder().encode(plan), as: UTF8.self)
+        // Large plans share the durable, file-backed execution route instead
+        // of inheriting the legacy HTTP control frame's size/lifetime budget.
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: """
+            import {verifyLifecyclePlan} from \(module);
+            export default await verifyLifecyclePlan(\(root), \(encodedPlan));
+            """, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, !result.didTimeOut,
+              case .object(let value) = result.value, value["verified"] == .boolean(true) else {
+            throw RuntimeCoreError.invalidRequest("Lifecycle source verification failed. \(result.stderr)")
+        }
+    }
+
+    func packageLifecyclePlan(workspace: URL) async throws -> LifecycleExecutionPlan {
+        let moduleURL = try prepareHostRuntime().appending(path: "lifecycle-planner.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let source = """
+        import {readFile} from 'node:fs/promises';
+        import {planLifecycle} from \(module);
+        export default planLifecycle(JSON.parse(await readFile('package.json','utf8')));
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+        guard result.exitCode == 0, let value = result.value else { throw RuntimeCoreError.runtimeFailure(result.stderr) }
+        return try JSONDecoder().decode(LifecycleExecutionPlan.self, from: JSONEncoder().encode(value))
+    }
+
+    /// Package extraction/resolution is an ordinary durable Node job, without
+    /// an HTTP installation deadline. Publishing remains atomic in the Host.
+    func pruneOptionalLifecycleFailure(_ plan: LifecycleExecutionPlan, action: LifecycleExecutionPlan.Action,
+                                      workspace: URL, failure: RuntimeLifecycleCommandFailure) async throws -> [String] {
+        let moduleURL = try prepareHostRuntime().appending(path: "optional-lifecycle.mjs")
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let encodedPlan = String(decoding: try JSONEncoder().encode(plan), as: UTF8.self)
+        let encodedAction = String(decoding: try JSONEncoder().encode(action), as: UTF8.self)
+        let source = """
+        import {pruneOptionalLifecycleFailure} from \(try literal(moduleURL.absoluteString));
+        const result = await pruneOptionalLifecycleFailure({runtimeRoot: \(try literal(fileLayout.root.path)),
+          packageRoot: \(try literal(workspace.path)), plan: \(encodedPlan), action: \(encodedAction),
+          error: {message: \(try literal(failure.diagnostic)), executionID: \(try literal(failure.executionID.uuidString.lowercased())), exitCode: \(failure.exitCode)}});
+        console.log(JSON.stringify(result.receipt));
+        export default result.omittedDirectories;
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, !result.didTimeOut, let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure(result.stderr)
+        }
+        return try JSONDecoder().decode([String].self, from: JSONEncoder().encode(value))
+    }
+
+    func stageNodePackage<T: Decodable & Sendable>(_ type: T.Type, removing: Bool = false, body: Data) async throws -> T {
+        let moduleURL = try prepareHostRuntime().appending(path: "global-package-manager.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let root = String(decoding: try JSONEncoder().encode(fileLayout.root.path), as: UTF8.self)
+        _ = try JSONDecoder().decode(RuntimeJSONValue.self, from: body)
+        let function = removing ? "stageUninstallGlobalPackage" : "stageGlobalPackage"
+        let workspace = try fileLayout.workspace(client: .tools, identifier: "npm-operations")
+        let source = """
+        import { \(function) } from \(module);
+        export default await \(function)({ ...\(String(decoding: body, as: UTF8.self)), root: \(root) });
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, !result.didTimeOut, let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure("Package job \(result.executionID) failed. \(result.stderr)")
+        }
+        return try JSONDecoder().decode(type, from: JSONEncoder().encode(value))
+    }
+
+    func networkDiagnostics(rounds: Int = 2) async throws -> RuntimeExecutionResult {
+        let moduleURL = try prepareHostRuntime().appending(path: "network-diagnostics.mjs")
+        let module = String(decoding: try JSONEncoder().encode(moduleURL.absoluteString), as: UTF8.self)
+        let source = """
+        import { probeNodeHTTPS } from \(module);
+        const report = await probeNodeHTTPS({ rounds: \(max(1, min(5, rounds))) });
+        console.log(JSON.stringify(report));
+        export default report;
+        """
+        return try await executeJavaScript(.init(
+            source: source,
+            workspace: try fileLayout.workspace(client: .tools, identifier: "node-https-diagnostics"),
+            environment: ["HANLIN_NODE_TRACE_WARNINGS": "1"],
+            limits: .init(timeout: .seconds(180))
+        ), moduleKind: "esm")
     }
 
     func cancelExecution(id: UUID) async {
@@ -231,31 +559,60 @@ actor NodeRuntimeService {
         _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/cancel", method: "POST", body: Data("{}".utf8), timeout: 3)
     }
 
-    func compileTypeScript(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil) async throws -> TypeScriptCompilationResult {
-        let host = try await ensureRunning()
+    func interruptExecution(id: UUID, reason: String) async {
+        guard let connection else { return }
+        let body = try? JSONSerialization.data(withJSONObject: ["reason": reason])
+        _ = try? await connection.data(path: "/v1/executions/\(id.uuidString.lowercased())/interrupt", method: "POST", body: body, timeout: 3)
+    }
+
+    /// Observe an already-running Host without starting an engine or replaying source.
+    func existingExecution(id: UUID) async throws -> RuntimeJobSnapshot? {
+        guard let connection else { return nil }
+        return try await connection.decode(RuntimeJobSnapshot.self, path: "/v1/executions/\(id.uuidString.lowercased())", timeout: 5)
+    }
+
+    func compileTypeScript(source: String, fileName: String = "main.ts", tsconfig: [String: RuntimeJSONValue]? = nil,
+                           id: UUID = UUID()) async throws -> TypeScriptCompilationResult {
         var body: [String: Any] = ["source": source, "fileName": fileName]
         if let tsconfig {
             let encoded = try JSONEncoder().encode(tsconfig)
             body["tsconfig"] = try JSONSerialization.jsonObject(with: encoded)
         }
-        let encodedBody = try JSONSerialization.data(withJSONObject: body)
-        return try await host.decode(TypeScriptCompilationResult.self, path: "/v1/typescript/compile", method: "POST", body: encodedBody)
+        let workspace = try fileLayout.workspace(client: .tools, identifier: "typescript-compiler")
+        return try await runTypeScriptCompiler(TypeScriptCompilationResult.self, function: "compileTypeScript",
+                                               body: body, workspace: workspace, id: id)
     }
 
-    func compileTypeScriptProject(workspace: URL, arguments: [String]) async throws -> TypeScriptProjectCompilationResult {
+    func compileTypeScriptProject(workspace: URL, arguments: [String], id: UUID = UUID()) async throws -> TypeScriptProjectCompilationResult {
         let scopedWorkspace = try fileLayout.validatedWorkspace(workspace)
-        let host = try await ensureRunning()
-        let body = try JSONSerialization.data(withJSONObject: [
+        return try await runTypeScriptCompiler(TypeScriptProjectCompilationResult.self, function: "compileTypeScriptProject", body: [
             "workspace": scopedWorkspace.path,
             "arguments": arguments
-        ])
-        return try await host.decode(
-            TypeScriptProjectCompilationResult.self,
-            path: "/v1/typescript/project",
-            method: "POST",
-            body: body,
-            timeout: 300
-        )
+        ], workspace: scopedWorkspace, id: id)
+    }
+
+    /// Compilation is a normal cancellable Worker/job. Large source uses the
+    /// same durable file ingress and full-output journal as other Node work;
+    /// the Host HTTP control frame never carries or times the compiler input.
+    private func runTypeScriptCompiler<T: Decodable & Sendable>(_ type: T.Type, function: String,
+                                                               body: [String: Any], workspace: URL, id: UUID) async throws -> T {
+        let module = try prepareHostRuntime().appending(path: "typescript-compiler.mjs")
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let input = String(decoding: try JSONSerialization.data(withJSONObject: body), as: UTF8.self)
+        let source = """
+        import { \(function) } from \(try literal(module.absoluteString));
+        const compiled = await \(function)(\(input), {root: \(try literal(fileLayout.root.path))});
+        const receipt = { ...compiled, executionID: \(try literal(id.uuidString.lowercased())) };
+        console.log(JSON.stringify(receipt));
+        process.exitCode = receipt.succeeded ? 0 : 1;
+        export default receipt;
+        """
+        let result = try await executeJavaScript(RuntimeExecutionRequest(id: id, source: source, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure("TypeScript compiler job \(id) failed. Full output is retained. \(result.stderr)")
+        }
+        return try JSONDecoder().decode(type, from: JSONEncoder().encode(value))
     }
 
     func currentConnection() async throws -> RuntimeHostConnection {
@@ -272,6 +629,8 @@ actor NodeRuntimeService {
         )
         let arguments = [
             "node",
+            "--jitless",
+            "--wasm-jitless",
             hostURL.appending(path: "host.mjs").path,
             fileLayout.root.path,
             context.readyURL.path,
@@ -325,10 +684,11 @@ actor NodeRuntimeService {
                     guard let url = URL(string: "http://127.0.0.1:\(ready.port)") else {
                         throw RuntimeCoreError.runtimeFailure("Node published an invalid loopback address.")
                     }
-                    let host = RuntimeHostConnection(baseURL: url, token: context.token)
+                    let host = RuntimeHostConnection(baseURL: url, token: context.token, fileLayout: fileLayout)
                     _ = try await host.data(path: "/health", timeout: 3)
                     try? FileManager.default.removeItem(at: context.readyURL)
                     connection = host
+                    startCommandPump(host)
                     snapshotValue.state = .ready
                     snapshotValue.version = ready.nodeVersion
                     snapshotValue.source = "heylogin/nodejs-mobile"
@@ -358,6 +718,7 @@ actor NodeRuntimeService {
     }
 
     private func markNodeExited() {
+        commandPump?.cancel()
         connection = nil
         snapshotValue.state = .appRestartRequired
         snapshotValue.healthCategory = NodeHostHealthFailure.unreachable.rawValue
@@ -375,6 +736,7 @@ actor NodeRuntimeService {
             do {
                 _ = try await existing.data(path: "/health", timeout: 3)
                 connection = existing
+                startCommandPump(existing)
                 snapshotValue.state = snapshotValue.activeExecutionCount > 0 ? .executing : .ready
                 snapshotValue.lastHealthCheck = .now
                 snapshotValue.lastErrorCode = nil

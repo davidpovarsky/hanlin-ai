@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "extensions": [
+    {
+      "distribution": "hanlin-native",
+      "version": "1.0.0",
+      "module": "_hanlin_native",
+      "importName": "hanlin_native",
+      "wheel": "hanlin_native-1.0.0-py3-none-any.whl",
+      "sha256": "68409abd5b784732c6edf856aff2c63df6a5f96373ccd21fa0170b32cddc98b5",
+      "linkage": "signed-app-builtin",
+      "source": "Python/Native/HanlinPythonNativeExtensions.mm"
+    }
+  ]
+}

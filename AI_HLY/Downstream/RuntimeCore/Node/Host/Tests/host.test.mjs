@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
@@ -19,11 +20,11 @@ test('worker stdin and stdout remain isolated for multiple servers', async () =>
   await fs.writeFile(path.join(root, 'package.json'), JSON.stringify({ name: 'fixture', version: '1.0.0', type: 'module' }));
   await fs.writeFile(path.join(root, 'server.mjs'), `
     import { createInterface } from 'node:readline';
+    if(process.env.NODE_OPTIONS!=='--not-a-bootstrap-flag' || process.env.HOME!=='/user-home') throw new Error('MCP user environment not applied after bootstrap');
     createInterface({ input: process.stdin }).on('line', line => process.stdout.write(line + '\\n'));
   `);
   const create = () => new Worker(workerURL, {
-    workerData: { packageRoot: root, entryPoint: path.join(root, 'server.mjs') },
-    trackUnmanagedFds: false,
+    workerData: { packageRoot: root, entryPoint: path.join(root, 'server.mjs'), environment:{NODE_OPTIONS:'--not-a-bootstrap-flag',HOME:'/user-home'} },
     stdin: true, stdout: true, stderr: true,
   });
   const first = create();
@@ -37,7 +38,7 @@ test('worker stdin and stdout remain isolated for multiple servers', async () =>
   await fs.rm(root, { recursive: true, force: true });
 });
 
-test('lifecycle scripts require approval while incompatible engines remain rejected', () => {
+test('lifecycle scripts retain native execution metadata while incompatible engines remain rejected', () => {
   const findings = inspectManifest({ engines: { node: '>=20' }, scripts: { postinstall: 'node setup.js' } });
   assert.equal(findings.filter(item => item.severity === 'unsupported').length, 0);
   assert.equal(findings.filter(item => item.severity === 'warning').length, 1);
@@ -60,26 +61,21 @@ test('multiple package bins are listed and an explicit path preserves its bin na
   assert.deepEqual(resolveEntryPoint(manifest, 'alpha'), { entryPoint: './alpha.mjs', binName: 'alpha' });
 });
 
-test('replacement rollback restores the prior server and commit removes its backup', async () => {
+test('unknown legacy transactions preserve both the installed package and its backup', async t => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-mcp-transaction-'));
+  t.after(() => fs.rm(root, {recursive:true,force:true}));
   const operationID = '11111111-1111-4111-8111-111111111111';
   const serverID = '22222222-2222-4222-8222-222222222222';
-  const servers = path.join(root, 'packages', 'mcp');
-  const staging = path.join(root, 'staging');
-  const finalRoot = path.join(servers, serverID);
-  const backupRoot = path.join(staging, `backup-${operationID}`);
-  await fs.mkdir(finalRoot, { recursive: true });
-  await fs.mkdir(backupRoot, { recursive: true });
+  const finalRoot = path.join(root, 'packages', 'mcp', serverID);
+  const backupRoot = path.join(root, 'staging', `backup-${operationID}`);
+  await fs.mkdir(finalRoot, {recursive:true});
+  await fs.mkdir(backupRoot, {recursive:true});
   await fs.writeFile(path.join(finalRoot, 'version'), 'new');
   await fs.writeFile(path.join(backupRoot, 'version'), 'old');
-
-  await rollbackInstall({ root, operationID, serverID });
-  assert.equal(await fs.readFile(path.join(finalRoot, 'version'), 'utf8'), 'old');
-
-  await fs.mkdir(backupRoot, { recursive: true });
-  await commitInstall({ root, operationID, serverID });
-  await assert.rejects(fs.access(backupRoot), error => error.code === 'ENOENT');
-  await fs.rm(root, { recursive: true, force: true });
+  await assert.rejects(rollbackInstall({root,operationID,serverID}), {code:'ENOENT'});
+  await assert.rejects(commitInstall({root,operationID,serverID}), {code:'ENOENT'});
+  assert.equal(await fs.readFile(path.join(finalRoot,'version'),'utf8'),'new');
+  assert.equal(await fs.readFile(path.join(backupRoot,'version'),'utf8'),'old');
 });
 
 test('host redirects npm state before preview and install modules initialize', async t => {
@@ -160,6 +156,12 @@ test('host redirects npm state before preview and install modules initialize', a
       source: { kind: 'file', path: archive },
     });
     assert.equal(installed.packageName, 'hanlin-mcp-cache-fixture');
+    const startedServer = await hostRequest(ready.port, launchToken, `/v1/servers/${installed.id}/start`, {
+      serverID: installed.id, packageRoot: installed.packageRoot, entryPoint: installed.entryPoint,
+      arguments: [], environment: {},
+    });
+    assert.equal(startedServer.state, 'running');
+    await hostRequest(ready.port, launchToken, `/v1/servers/${installed.id}/stop`, {});
 
     const workspace = path.join(root, 'clients', 'tools', 'host-test');
     await fs.mkdir(workspace, { recursive: true });
@@ -174,12 +176,142 @@ test('host redirects npm state before preview and install modules initialize', a
     assert.equal(execution.stdout, 'שלום\n');
     assert.deepEqual(execution.value, { answer: 42 });
 
+    const liveCapabilitiesResponse=await fetch(`http://127.0.0.1:${ready.port}/v1/runtime/capabilities`,{headers:{Authorization:`Bearer ${launchToken}`}});
+    assert.equal(liveCapabilitiesResponse.status,200);
+    const liveCapabilities=await liveCapabilitiesResponse.json();
+    assert.equal(liveCapabilities.observed.node,process.versions.node);
+    assert.equal(liveCapabilities.observed.platform,process.platform);
+    assert.equal(liveCapabilities.observed.architecture,process.arch);
+    assert.equal(liveCapabilities.finiteCommandAdapter.module,'hanlin:runtime');
+    assert.equal(liveCapabilities.externalExecution.automaticTransfer,false);
+    assert.equal(liveCapabilities.externalExecution.configured,false);
+
+    // Real authenticated HTTP interruption, not only an ExecutionJobs unit call.
+    const interruptedID = randomUUID();
+    await hostRequest(ready.port, launchToken, '/v1/executions', {
+      executionID: interruptedID, source: "console.log('retained HTTP partial'); await new Promise(() => setInterval(() => {}, 1000));",
+      workspace, moduleKind: 'esm', detached: true, maximumOutputBytes: 4096,
+    });
+    const readJob = async () => {
+      const response = await fetch(`http://127.0.0.1:${ready.port}/v1/executions/${interruptedID}`, {headers:{Authorization:`Bearer ${launchToken}`}});
+      assert.equal(response.status,200); return response.json();
+    };
+    const interruptionDeadline = performance.now()+15000;
+    let interrupted;
+    do {
+      interrupted = await readJob();
+      assert.ok(performance.now()<interruptionDeadline,'Actual HTTP job never wrote partial output');
+      if (!interrupted.stdoutBytes) await new Promise(resolve=>setTimeout(resolve,10));
+    } while (!interrupted.stdoutBytes);
+    const deniedInterrupt = await fetch(`http://127.0.0.1:${ready.port}/v1/executions/${interruptedID}/interrupt`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({reason:'unauthenticated'}),
+    });
+    assert.equal(deniedInterrupt.status,401);
+    const interruptionReason = 'Background continuation ended by the system or its Cancel control.';
+    await hostRequest(ready.port, launchToken, `/v1/executions/${interruptedID}/interrupt`, {reason:interruptionReason});
+    do {
+      interrupted = await readJob();
+      assert.ok(performance.now()<interruptionDeadline,'Actual HTTP interruption did not settle');
+      if (!interrupted.completedAt) await new Promise(resolve=>setTimeout(resolve,10));
+    } while (!interrupted.completedAt);
+    assert.equal(interrupted.state,'interrupted');
+    assert.equal(interrupted.interruptionReason,interruptionReason);
+    assert.match(await fs.readFile(interrupted.result.outputFiles.stdout.path,'utf8'),/retained HTTP partial/);
+
+    const cliEntry = path.join(workspace, 'actual cli.cjs');
+    const cliInput = path.join(workspace, 'cli stdin.txt');
+    await fs.writeFile(cliInput, 'CLI_INPUT_שלום');
+    await fs.writeFile(cliEntry, `
+      if(require.main!==module) throw new Error('Not actual main');
+      if(process.argv[2]!=='arg with spaces') throw new Error('Wrong argv');
+      process.stdin.pipe(process.stdout);
+      process.stdin.on('end',()=>setTimeout(()=>console.error(process.env.CLI_VALUE),20));
+    `);
+    const cli = await hostRequest(ready.port, launchToken, '/v1/executions', {
+      executionID: randomUUID(), executionMode:'cli', entryPoint: cliEntry, standardInputPath: cliInput,
+      workspace, moduleKind: 'commonjs', arguments: ['arg with spaces'], environment: {CLI_VALUE:'CLI_ENV'},
+    });
+    assert.equal(cli.exitCode, 0, JSON.stringify(cli));
+    assert.equal(cli.stdout, 'CLI_INPUT_שלום');
+    assert.match(cli.stderr, /CLI_ENV/);
+    const extensionless=path.join(workspace,'extensionless-main');
+    await fs.writeFile(extensionless+'.js',"if(require.main!==module)throw Error('Not main');console.log('actual resolved HTTP main');");
+    const resolvedCLI=await hostRequest(ready.port,launchToken,'/v1/executions',{
+      executionID:randomUUID(),executionMode:'cli',entryPoint:extensionless,workspace,moduleKind:'commonjs',
+    });
+    assert.equal(resolvedCLI.exitCode,0,JSON.stringify(resolvedCLI));
+    assert.equal(resolvedCLI.stdout,'actual resolved HTTP main\n');
+    const parentSource = `import {executePortableShell} from ${JSON.stringify(new URL('../portable-shell.mjs',import.meta.url).href)};
+      const status=await executePortableShell("echo CLI_PARENT_INPUT | node 'actual cli.cjs' 'arg with spaces'",[],{cwd:process.cwd(),environment:process.env});
+      process.exitCode=status; export default status;`;
+    const parent = await hostRequest(ready.port,launchToken,'/v1/executions',{
+      executionID:randomUUID(),source:parentSource,moduleKind:'esm',workspace,detached:true,environment:{CLI_VALUE:'CLI_ENV'},
+    });
+    const read = async route => {
+      const response=await fetch(`http://127.0.0.1:${ready.port}${route}`,{headers:{Authorization:`Bearer ${launchToken}`}});
+      assert.equal(response.status,200);return response.json();
+    };
+    const deadline=performance.now()+15000;
+    let pending=[];
+    while(!(pending=await read('/v1/commands')).length){assert.ok(performance.now()<deadline);await new Promise(resolve=>setTimeout(resolve,10));}
+    assert.equal(pending.length,1);assert.equal(pending[0].parentExecutionID,parent.executionID);
+    const command=pending[0];
+    const actualChild=await hostRequest(ready.port,launchToken,'/v1/executions',{
+      executionID:randomUUID(),executionMode:'cli',entryPoint:path.resolve(command.cwd,command.arguments[0]),
+      arguments:command.arguments.slice(1),workspace:command.cwd,moduleKind:'commonjs',environment:command.environment,standardInputPath:command.standardInputPath,
+    });
+    await fs.writeFile(path.join(path.dirname(command.standardInputPath),'response.json'),JSON.stringify({
+      exitCode:actualChild.exitCode,stdoutPath:actualChild.outputFiles.stdout.path,stderrPath:actualChild.outputFiles.stderr.path,
+    }));
+    let completed;
+    while((completed=await read('/v1/executions/'+parent.executionID)).state==='running'){
+      assert.ok(performance.now()<deadline);await new Promise(resolve=>setTimeout(resolve,10));
+    }
+    assert.equal(completed.state,'completed',JSON.stringify(completed));
+    assert.equal(completed.result.stdout,'CLI_PARENT_INPUT\n');assert.match(completed.result.stderr,/CLI_ENV/);
+    assert.deepEqual(await read('/v1/commands'),[]);
+    const invalidCLI = await hostRequestStatus(ready.port, launchToken, '/v1/executions', {
+      executionID: randomUUID(), executionMode:'cli', entryPoint: workspace, workspace, moduleKind:'esm',
+    });
+    assert.equal(invalidCLI.status, 400);
+
+
+    for (const tracing of [true, false]) {
+      const marker = `warning-scope-${tracing}-${randomUUID()}`;
+      const warningResult = await hostRequest(ready.port, launchToken, '/v1/executions', {
+        executionID: randomUUID(),
+        source: `process.emitWarning(${JSON.stringify(marker)}); await new Promise(resolve => setImmediate(resolve)); export default 42;`,
+        workspace, moduleKind: 'esm', maximumOutputBytes: 4096,
+        environment: tracing ? { HANLIN_NODE_TRACE_WARNINGS: '1' } : {},
+      });
+      assert.equal(warningResult.value, 42);
+      for (let attempt = 0; tracing && attempt < 20 && !stderr.includes(marker); attempt += 1) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+      assert.ok((stderr + warningResult.stderr).includes(marker), JSON.stringify(warningResult) + stderr);
+      const traced = (stderr + warningResult.stderr).split('\n').some(line => line.includes('[HANLIN_NODE_WARNING thread=') && line.includes(marker));
+      assert.equal(traced, tracing, stderr);
+    }
+
     const compiled = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
       source: 'const answer: number = 42; console.log(answer);',
       fileName: 'main.ts',
     });
     assert.equal(compiled.succeeded, true, JSON.stringify(compiled.diagnostics));
+    assert.equal(compiled.compilerVersion, (await import('typescript')).version);
     assert.match(compiled.javaScript, /const answer = 42/);
+
+    const nodeTypes = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
+      source: "import fs from 'node:fs'; import path from 'node:path'; const argv: string[] = process.argv; export default fs.existsSync(path.resolve(argv[0]));",
+      fileName: 'node-types.ts',
+    });
+    assert.equal(nodeTypes.succeeded, true, JSON.stringify(nodeTypes.diagnostics));
+    assert.match(nodeTypes.javaScript, /node:fs/);
+    const invalidNodeType = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
+      source: 'const wrong: number = process.cwd();', fileName: 'invalid-node-type.ts',
+    });
+    assert.equal(invalidNodeType.succeeded, false);
+    assert.ok(invalidNodeType.diagnostics.some(item => item.code === 2322));
 
     const semanticFailure = await hostRequest(ready.port, launchToken, '/v1/typescript/compile', {
       source: "const answer: number = 'wrong';",
@@ -225,7 +357,8 @@ test('host redirects npm state before preview and install modules initialize', a
       executionID: '77777777-7777-4777-8777-777777777777', source: 'export default 1;',
       workspace: path.join(sandbox, 'does-not-exist'), moduleKind: 'esm', timeoutMilliseconds: 1000, maximumOutputBytes: 4096,
     });
-    assert.equal(nonexistentResult.status, 400);
+    assert.equal(nonexistentResult.status, 404);
+    assert.match(nonexistentResult.text, /Execution workspace does not exist/);
 
     const filePath = path.join(sandbox, 'some-file.txt');
     await fs.writeFile(filePath, 'not a dir');

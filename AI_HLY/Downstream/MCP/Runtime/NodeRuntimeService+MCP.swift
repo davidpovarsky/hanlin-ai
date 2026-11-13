@@ -25,6 +25,7 @@ extension NodeRuntimeService {
         arguments: [String] = [],
         fileLayout: MCPFileLayout = .default
     ) async throws -> MCPServerDescriptor {
+        try fileLayout.prepareIfNeeded()
         let host = try await ensureRunning()
         var source = spec.hostPayload
         if case .localArchive(let inputURL) = spec.source {
@@ -37,14 +38,20 @@ extension NodeRuntimeService {
         }
         var body: [String: Any] = [
             "operationID": operationID.uuidString.lowercased(),
+            "executionID": operationID.uuidString.lowercased(),
             "serverID": serverID.uuidString.lowercased(),
             "source": source,
-            "arguments": arguments
+            "arguments": arguments,
+            "detached": true
         ]
         if let entryPointOverride { body["entryPointOverride"] = entryPointOverride }
         let encodedBody = try JSONSerialization.data(withJSONObject: body)
-        let data = try await host.data(path: "/v1/install", method: "POST", body: encodedBody, timeout: 600)
-        return try JSONDecoder.mcp.decode(MCPServerDescriptor.self, from: data)
+        let result = try await host.performOperation(path: "/v1/install", id: operationID, body: encodedBody)
+        if result.wasCancelled { throw CancellationError() }
+        guard result.exitCode == 0, let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure("MCP installation \(operationID) failed. \(result.stderr)")
+        }
+        return try JSONDecoder.mcp.decode(MCPServerDescriptor.self, from: JSONEncoder().encode(value))
     }
 
     func commitMCPInstall(operationID: UUID, serverID: UUID) async throws {
@@ -77,5 +84,9 @@ extension NodeRuntimeService {
             "operationID": operationID.uuidString.lowercased()
         ])
         _ = try await host.data(path: "/v1/install/cancel", method: "POST", body: body)
+        // Cleanup/rollback may only remove staging after the real operation and
+        // any linked native lifecycle command have drained. The caller's own
+        // cancellation must not cancel this ownership handoff.
+        await Task.detached { _ = try? await self.waitForExecution(id: operationID) }.value
     }
 }

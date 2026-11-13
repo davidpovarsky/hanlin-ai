@@ -14,6 +14,7 @@ import sys
 import time
 from dataclasses import dataclass
 from typing import Any
+from urllib.parse import unquote, urlparse
 
 
 @dataclass(frozen=True)
@@ -51,7 +52,7 @@ GROUPS = (
             AcceptanceCase("host.agent.context", "agentContextCreation"),
             AcceptanceCase("host.agent.adapter-context", "agentAdapterMakesContextWithAllCapabilities"),
             AcceptanceCase("host.agent.session-isolation", "agentContextSessionIDsAreUnique"),
-            AcceptanceCase("runtime.availability.disabled-rejection", "runtimeBrokerRejectsDisabledRuntime", "rejection"),
+            AcceptanceCase("runtime.permissions.python-grantless", "runtimeBrokerRunsPythonWithoutInternalGrants"),
             AcceptanceCase("runtime.jsc.basic", "agentToolExecutesJavaScriptCore"),
             AcceptanceCase("runtime.node.basic", "agentToolExecutesNode"),
             AcceptanceCase("runtime.python.basic", "agentToolExecutesPython"),
@@ -63,7 +64,7 @@ GROUPS = (
             AcceptanceCase("runtime.javascript.backends-full-contract", "javaScriptBackendsFullContract"),
             AcceptanceCase("runtime.typescript.full-contract", "typeScriptFullContract"),
             AcceptanceCase("runtime.shell.rejection-matrix", "shellRejectionMatrix", "rejection"),
-            AcceptanceCase("capability.runtime-live-revoke-regrant", "runtimeCapabilityLiveRevokeAndRegrantUsesSameSession", "rejection"),
+            AcceptanceCase("runtime.permissions.legacy-grant-revocation-does-not-disable", "legacyRuntimeGrantChangesDoNotDisableTheSameSession"),
         ),
     ),
     AcceptanceGroup(
@@ -90,13 +91,13 @@ GROUPS = (
         "files-sqlite-capabilities",
         ("AI_HLYTests/HanlinUnifiedHostServicesE2ETests",),
         (
-            AcceptanceCase("runtime.availability.broker-toggle", "runtimeBrokerRespectsAvailabilityToggle", "rejection"),
+            AcceptanceCase("runtime.availability.broker-auto-start", "runtimeBrokerAutoStartsStoppedRuntime"),
             AcceptanceCase("capability.grant-revoke", "capabilityAuthorityGrantRevokePersists"),
-            AcceptanceCase("capability.package-precedence-live-revoke", "packageStoreGrantPrecedenceAndLiveRevocation"),
+            AcceptanceCase("capability.legacy-package-metadata-grantless-network", "legacyPackageGrantMetadataDoesNotGateNetwork"),
             AcceptanceCase("host.concurrent-callers", "crossCallerConcurrency"),
             AcceptanceCase("files.app-isolation", "storageIsolationBetweenApps"),
-            AcceptanceCase("files.capability-denial", "fileCapabilityRequired", "rejection"),
-            AcceptanceCase("files.scopes-delete-symlink-shared", "fileScopesOverwriteDeleteSharedGateAndSymlinkProtection"),
+            AcceptanceCase("files.ordinary-grantless-access", "fileOperationsWorkWithoutInternalGrants"),
+            AcceptanceCase("files.scopes-delete-symlink-shared", "fileScopesOverwriteDeleteSharedAccessAndSymlinkProtection"),
             AcceptanceCase("sqlite.path-bound-parameters", "sqliteScopeAndTraversalRejection"),
             AcceptanceCase("sqlite.crud-transaction-fk-types-concurrency-scopes", "sqliteTransactionsTypesConcurrencyAndScopeIsolation"),
             AcceptanceCase("engine.nativescript.session-binding", "nativeScriptSessionsResolveExactlyAndTeardownIndependently"),
@@ -107,13 +108,13 @@ GROUPS = (
         "miniapp-engines",
         ("AI_HLYTests/CanonicalMiniAppIntegrationTests",),
         (
-            AcceptanceCase("engine.swift.catalog", "CanonicalcatalogdiscoversSwiftbuiltinparityapp"),
-            AcceptanceCase("engine.scriptui.runtime-bridge", "NativeservicesbridgeexposesPythonversion"),
-            AcceptanceCase("engine.cross-engine.capability", "Inter-apprequestbrokerallowsauthorizedcross-engine"),
-            AcceptanceCase("engine.storage.path-protection", "Privatestoragerejectspathtraversal"),
-            AcceptanceCase("engine.entrypoint.isolation", "Per-entrypointisolationonhybridpackage"),
-            AcceptanceCase("engine.four-providers.registered", "All4compiledminiappprovidersareregistered"),
-            AcceptanceCase("engine.nativescript.active-container", "HanlinNativeServicesBridgeenforcesactivecontainerisolation"),
+            AcceptanceCase("engine.swift.catalog", "catalogEngineGrouping"),
+            AcceptanceCase("engine.scriptui.runtime-bridge", "nativeServicesExecution"),
+            AcceptanceCase("engine.cross-engine.capability", "interAppRequestBrokering"),
+            AcceptanceCase("engine.storage.path-protection", "privateStoragePathTraversalRejected"),
+            AcceptanceCase("engine.entrypoint.isolation", "perEntrypointIsolationHybrid"),
+            AcceptanceCase("engine.four-providers.registered", "allCompiledProvidersRegistered"),
+            AcceptanceCase("engine.nativescript.active-container", "bridgeContainerAndCapabilityGating"),
         ),
     ),
     AcceptanceGroup(
@@ -210,7 +211,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--case", help="Filter execution to a single acceptance case by case_id")
     parser.add_argument("--phase-timeout", type=int, default=900, help="Subprocess timeout in seconds per phase (default: 900)")
     parser.add_argument("--max-test-time", type=int, default=300, help="Maximum execution time allowance per test in seconds (default: 300)")
-    parser.add_argument("--reuse-report", help="Path to prior runtime-tooling-acceptance.json report to reuse passing cases")
+    parser.add_argument("--reuse-report", help="Deprecated: an unverified prior JSON report cannot supply test acceptance")
     return parser.parse_args()
 
 
@@ -227,7 +228,9 @@ def test_nodes(payload: Any) -> list[dict[str, Any]]:
     if isinstance(payload, dict):
         name = payload.get("name") or payload.get("testIdentifier") or payload.get("nodeIdentifier")
         status = payload.get("result") or payload.get("testStatus") or payload.get("status")
-        if isinstance(name, str) and status is not None:
+        # Current xcresulttool exports explicit case types. A passing suite or
+        # plan heading, including a zero-case run, is not executed evidence.
+        if isinstance(name, str) and status is not None and payload.get("nodeType") == "Test Case":
             found.append(payload)
         for value in payload.values():
             found.extend(test_nodes(value))
@@ -259,6 +262,25 @@ def node_duration(node: dict[str, Any]) -> float | None:
         return float(raw)
     except (TypeError, ValueError):
         return None
+
+
+def node_belongs_to_selectors(node: dict[str, Any], selectors: tuple[str, ...]) -> bool:
+    """Same-named methods in another suite must never supply acceptance."""
+    if node.get("nodeType") != "Test Case":
+        return False
+    for key in ("nodeIdentifierURL", "nodeIdentifier", "testIdentifier"):
+        identifier = node.get(key)
+        if not isinstance(identifier, str):
+            continue
+        if identifier.startswith("test://"):
+            identifier = urlparse(identifier).path
+        identifier = unquote(identifier).strip("/").removesuffix("()")
+        for selector in selectors:
+            # Some xcresult exports omit the bundle, but retain the actual suite.
+            owner = selector.split("/", 1)[-1].removesuffix("()")
+            if identifier == owner or ("/" + owner + "/") in ("/" + identifier + "/"):
+                return True
+    return False
 
 
 @dataclass(frozen=True)
@@ -408,8 +430,9 @@ def select_best_match(matches: list[dict[str, Any]], expected: AcceptanceCase) -
     if len(exact_matches) == 1:
         return exact_matches[0]
     elif len(exact_matches) > 1:
-        first_id = exact_matches[0].get("nodeIdentifier") or exact_matches[0].get("name")
-        if all((m.get("nodeIdentifier") or m.get("name")) == first_id for m in exact_matches):
+        # Only byte-equivalent nodes are harmless duplicates. A shared test ID
+        # with conflicting outcomes/retry evidence must not credit the first PASS.
+        if all(node == exact_matches[0] for node in exact_matches):
             return exact_matches[0]
         return None
 
@@ -421,11 +444,9 @@ def evaluate_acceptance(
     groups: tuple[AcceptanceGroup, ...],
     unit_phase: PhaseExecutionResult | None,
     ui_phase: PhaseExecutionResult | None,
-    reused_cases: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     group_results: list[dict[str, Any]] = []
     all_case_results: list[dict[str, Any]] = []
-    reused_cases = reused_cases or {}
 
     for group in groups:
         case_results: list[dict[str, Any]] = []
@@ -439,23 +460,9 @@ def evaluate_acceptance(
             xcresult_json = phase.xcresult_json if phase else output / "missing.json"
 
             needle = normalized(expected.selector_fragment)
-            matches = [node for node in phase_nodes if needle in normalized(node_name(node))]
+            matches = [node for node in phase_nodes if needle in normalized(node_name(node))
+                       and node_belongs_to_selectors(node, group.selectors)]
             selected = select_best_match(matches, expected)
-
-            if selected is None and expected.case_id in reused_cases:
-                prev_c = reused_cases[expected.case_id]
-                case_results.append({
-                    "caseID": expected.case_id,
-                    "group": group.name,
-                    "expectedOutcome": expected.expected_outcome,
-                    "actualOutcome": "reused-verified-pass",
-                    "passed": True,
-                    "reused": True,
-                    "durationSeconds": prev_c.get("durationSeconds"),
-                    "errorCategory": None,
-                    "diagnosticReferences": prev_c.get("diagnosticReferences", []),
-                })
-                continue
 
             status = node_status(selected) if selected else "missing"
             passed = status in {"passed", "success", "succeeded"}
@@ -551,6 +558,10 @@ def main(runner=run_xcodebuild_phase) -> int:
     args = parse_args()
     output = pathlib.Path(args.output_dir)
     output.mkdir(parents=True, exist_ok=True)
+    if getattr(args, "reuse_report", None):
+        sys.stderr.write("Error: --reuse-report cannot verify source, dependency, toolchain or executed-case identity. "
+                         "Use fresh acceptance execution; retain prior reports as historical evidence only.\n")
+        return 2
     started_at = iso_now()
 
     active_groups: list[AcceptanceGroup] = list(GROUPS)
@@ -573,17 +584,6 @@ def main(runner=run_xcodebuild_phase) -> int:
             sys.stderr.write(f"Error: Acceptance case '{target_case}' not found in specified groups.\n")
             return 1
 
-    reused_case_map: dict[str, dict[str, Any]] = {}
-    if getattr(args, "reuse_report", None) and pathlib.Path(args.reuse_report).exists():
-        try:
-            with open(args.reuse_report, "r", encoding="utf-8") as rf:
-                prev_rep = json.load(rf)
-            for c in prev_rep.get("cases", []):
-                if c.get("passed"):
-                    reused_case_map[c["caseID"]] = c
-        except Exception as e:
-            sys.stderr.write(f"Warning: could not parse reuse report: {e}\n")
-
     unit_selectors, ui_selectors = partition_selectors(tuple(active_groups))
     unit_phase: PhaseExecutionResult | None = None
     ui_phase: PhaseExecutionResult | None = None
@@ -598,7 +598,7 @@ def main(runner=run_xcodebuild_phase) -> int:
         ui_phase = runner(args, "ui", ui_selectors, output)
         print(f"Phase 2 (UI) completed with code {ui_phase.returncode} in {ui_phase.duration_seconds:.1f}s", flush=True)
 
-    group_results, cases = evaluate_acceptance(output, tuple(active_groups), unit_phase, ui_phase, reused_case_map)
+    group_results, cases = evaluate_acceptance(output, tuple(active_groups), unit_phase, ui_phase)
     for group_result in group_results:
         print(f"[{group_result['status'].upper()}] {group_result['name']}: {group_result['passedCount']}/{group_result['caseCount']}", flush=True)
 

@@ -20,7 +20,8 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
 
     private let server: MCPServerConfiguration
     private let connection: RuntimeHostConnection
-    private let maximumMessageBytes = 8 * 1_024 * 1_024
+    private let startOperationID = UUID()
+    private var generation: Int?
     private let messageStream: AsyncThrowingStream<Data, Swift.Error>
     private let continuation: AsyncThrowingStream<Data, Swift.Error>.Continuation
     private let terminationContinuation: AsyncStream<MCPTransportTermination>.Continuation
@@ -88,7 +89,9 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
                 if let disconnectTask { await disconnectTask.value }
                 return
             case .connecting:
+                connectTask?.cancel()
                 if let connectTask { _ = try? await connectTask.value }
+                if state == .connecting { state = .disconnected }
             case .connected, .disconnected:
                 state = .disconnecting
                 let task = Task<Void, Never> { [weak self] in
@@ -106,32 +109,39 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
         guard state == .connected else {
             throw MCPError.runtimeUnavailable("The server transport is disconnected.")
         }
-        guard data.count <= maximumMessageBytes else { throw MCPError.resultTooLarge }
+        guard let generation else { throw MCPError.invalidHostResponse }
         var framed = data
         framed.append(0x0A)
-        let body = try JSONSerialization.data(withJSONObject: ["data": framed.base64EncodedString()])
-        _ = try await connection.data(
+        let id = UUID()
+        let body = try JSONSerialization.data(withJSONObject: ["data": framed.base64EncodedString(),
+            "generation": generation, "executionID": id.uuidString.lowercased(), "detached": true])
+        _ = try await connection.performOperation(
             path: "/v1/servers/\(server.serverID.uuidString.lowercased())/stdin",
-            method: "POST",
-            body: body,
-            timeout: 30
+            id: id, body: body
         )
     }
 
     func receive() -> AsyncThrowingStream<Data, Swift.Error> { messageStream }
 
     private func performConnect() async throws {
-        let body = try JSONEncoder.mcp.encode(server)
-        _ = try await connection.data(
+        let encoded = try JSONEncoder.mcp.encode(server)
+        guard var configuration = try JSONSerialization.jsonObject(with: encoded) as? [String: Any] else {
+            throw MCPError.invalidHostResponse
+        }
+        configuration["executionID"] = startOperationID.uuidString.lowercased()
+        configuration["detached"] = true
+        let body = try JSONSerialization.data(withJSONObject: configuration)
+        let result = try await connection.performOperation(
             path: "/v1/servers/\(server.serverID.uuidString.lowercased())/start",
-            method: "POST",
-            body: body,
-            timeout: 20
+            id: startOperationID, body: body
         )
+        guard let value = result.value else { throw MCPError.invalidHostResponse }
+        let identity = try JSONDecoder().decode(WorkerIdentity.self, from: JSONEncoder().encode(value))
+        generation = identity.generation
         hostStarted = true
         guard state == .connecting else { throw CancellationError() }
         let request = connection.request(
-            path: "/v1/servers/\(server.serverID.uuidString.lowercased())/events",
+            path: "/v1/servers/\(server.serverID.uuidString.lowercased())/events?generation=\(identity.generation)",
             timeout: 86_400
         )
         eventTask = Task { [weak self, request] in
@@ -147,14 +157,37 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
         task?.cancel()
         if let task { await task.value }
 
-        if hostStarted {
+        // A cancelled observer may miss the successful startup receipt. Recover
+        // its exact generation before cleanup, never stop a newer connection.
+        if !hostStarted {
+            let connection = connection, id = startOperationID
+            let recovered = await Task.detached { () -> Int? in
+                let route = "/v1/executions/\(id.uuidString.lowercased())"
+                _ = try? await connection.data(path: route + "/cancel", method: "POST", body: Data("{}".utf8), timeout: 5)
+                while let job = try? await connection.decode(RuntimeJobSnapshot.self, path: route, timeout: 5) {
+                    if job.state.isTerminal {
+                        guard let value = job.result?.value else { return nil }
+                        return try? JSONDecoder().decode(WorkerIdentity.self, from: JSONEncoder().encode(value)).generation
+                    }
+                    // Completion may be hashing/publishing its receipt after
+                    // startup succeeded. Drain it before generation cleanup.
+                    try? await Task.sleep(for: .milliseconds(25))
+                }
+                return nil
+            }.value
+            if let recovered { generation = recovered; hostStarted = true }
+        }
+        if hostStarted, let generation {
             hostStarted = false
-            _ = try? await connection.data(
-                path: "/v1/servers/\(server.serverID.uuidString.lowercased())/stop",
-                method: "POST",
-                body: Data("{}".utf8),
-                timeout: 10
-            )
+            let connection = connection, serverID = server.serverID
+            // Cleanup must survive cancellation of the connecting owner.
+            await Task.detached {
+                _ = try? await connection.data(
+                    path: "/v1/servers/\(serverID.uuidString.lowercased())/stop",
+                    method: "POST",
+                    body: try? JSONSerialization.data(withJSONObject: ["generation": generation]),
+                    timeout: 10)
+            }.value
         }
         finishContinuation()
         finishTerminationEvents()
@@ -171,14 +204,12 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
             }
             for try await line in bytes.lines {
                 if Task.isCancelled { break }
-                guard line.utf8.count <= maximumMessageBytes,
-                      let data = line.data(using: .utf8),
+                guard let data = line.data(using: .utf8),
                       let event = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                       let channel = event["channel"] as? String else { continue }
                 if channel == "stdout",
                    let encoded = event["data"] as? String,
-                   let message = Data(base64Encoded: encoded),
-                   message.count <= maximumMessageBytes {
+                   let message = Data(base64Encoded: encoded) {
                     continuation.yield(message)
                 } else if channel == "lifecycle",
                           let eventName = event["event"] as? String,
@@ -221,4 +252,6 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
         terminationFinished = true
         terminationContinuation.finish()
     }
+
+    private struct WorkerIdentity: Decodable { let generation: Int }
 }

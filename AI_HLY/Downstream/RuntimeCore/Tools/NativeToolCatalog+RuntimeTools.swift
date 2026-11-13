@@ -6,6 +6,7 @@ extension NativeToolCatalog {
         register(ExecuteShellCommandTool())
         register(ListToolsTool())
         register(GetRuntimeCapabilitiesTool())
+        register(GetRuntimeJobTool())
         register(ManageRuntimePackagesTool())
         register(ManageMCPServersTool())
         register(ExecuteSkillResourceTool())

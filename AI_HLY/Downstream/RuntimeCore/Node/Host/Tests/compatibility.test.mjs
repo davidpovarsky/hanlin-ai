@@ -223,6 +223,11 @@ test('runtime probe bounds forced shutdown after MCP protocol success', { timeou
     }));
     await fs.writeFile(entryPoint, `
       import readline from 'node:readline';
+      import {createRequire} from 'node:module';
+      const cache = createRequire(import.meta.url).cache;
+      if (Object.keys(cache).some(file => /[\\\\/]typescript[\\\\/]lib[\\\\/]/.test(file))) {
+        throw new Error('Plain JavaScript server eagerly loaded the TypeScript compiler');
+      }
       setInterval(() => {}, 60_000);
       const lines = readline.createInterface({ input: process.stdin });
       lines.on('line', line => {
@@ -293,6 +298,42 @@ test('the production installer rejects executed child_process and preserves the 
   } finally {
     await fs.rm(root, { recursive: true, force: true });
   }
+});
+
+test('MCP probe forwards explicitly supplied paths and credentials after bootstrap without argv caps', async t => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-probe-environment-'));
+  t.after(() => fs.rm(root, {recursive:true,force:true}));
+  const entryPoint = path.join(root,'server.mjs');
+  await fs.writeFile(path.join(root,'package.json'), JSON.stringify({name:'probe-environment',version:'1.0.0',type:'module'}));
+  await fs.writeFile(entryPoint, `
+    import assert from 'node:assert/strict';
+    import {createInterface} from 'node:readline';
+    assert.equal(process.env.HOME,'/explicit-home');
+    assert.equal(process.env.PATH,'/explicit/bin');
+    assert.equal(process.env.NODE_OPTIONS,'--not-a-bootstrap-flag');
+    assert.equal(process.env.EXPLICIT_API_KEY,'fixture-only-value');
+    assert.equal(process.argv.length, 259);
+    assert.equal(process.argv.at(-1),'line\\nbreak');
+    createInterface({input:process.stdin}).on('line',line=>{
+      const request=JSON.parse(line);
+      if(!('id' in request)) return;
+      const result=request.method==='initialize'?{protocolVersion:request.params.protocolVersion,capabilities:{tools:{}},serverInfo:{name:'probe-env',version:'1.0'}}:{tools:[]};
+      console.log(JSON.stringify({jsonrpc:'2.0',id:request.id,result}));
+    });
+  `);
+  const workspace = path.join(root,'user-workspace');
+  await fs.mkdir(workspace); await fs.writeFile(path.join(workspace,'existing-data'),'preserved');
+  const probe = await runMCPRuntimeProbe({packageRoot:root,entryPoint,workspace,moduleKind:'esm',timeoutMilliseconds:5000,
+    arguments:[...Array.from({length:256},(_,i)=>String(i)),'line\nbreak'],
+    environment:{HOME:'/explicit-home',PATH:'/explicit/bin',NODE_OPTIONS:'--not-a-bootstrap-flag',EXPLICIT_API_KEY:'fixture-only-value'}});
+  assert.equal(probe.passed,true,JSON.stringify(probe));
+  assert.equal(await fs.readFile(path.join(workspace,'existing-data'),'utf8'),'preserved');
+  await fs.writeFile(entryPoint,"throw new Error('PROBE_FAILURE_WITH_EXISTING_DATA');");
+  const failed = await runMCPRuntimeProbe({packageRoot:root,entryPoint,workspace,moduleKind:'esm',timeoutMilliseconds:5000});
+  assert.equal(failed.passed,false);
+  assert.match(failed.message,/PROBE_FAILURE_WITH_EXISTING_DATA/);
+  assert.equal(await fs.readFile(path.join(workspace,'existing-data'),'utf8'),'preserved');
+
 });
 
 async function analyzeFixture(name) {

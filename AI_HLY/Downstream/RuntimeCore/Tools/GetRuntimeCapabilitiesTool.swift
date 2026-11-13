@@ -41,99 +41,46 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        let started = ContinuousClock.now
         do {
-            let arguments = try? NativeToolJSON.validatedDictionary(
-                from: argumentsJSON,
-                allowedKeys: ["runtime"]
-            )
-            let requestedRuntime = (try? NativeToolJSON.strictOptionalString(arguments ?? [:], "runtime")) ?? "all"
-
-            var sections: [String] = []
-
-            // 1. Python
+            let arguments = try NativeToolJSON.validatedDictionary(from: argumentsJSON, allowedKeys: ["runtime"])
+            let requestedRuntime = try NativeToolJSON.strictOptionalString(arguments, "runtime") ?? "all"
+            let kinds: [String: RuntimeKind] = ["node": .node, "typescript": .typeScript, "python": .localPython, "jsc": .javaScriptCore, "shell": .shell]
+            guard requestedRuntime == "all" || requestedRuntime == "mcp" || kinds[requestedRuntime] != nil else {
+                throw RuntimeCoreError.invalidRequest("Unknown runtime: \(requestedRuntime)")
+            }
+            let snapshots = await AppRuntimeCore.shared.snapshots()
+            let selected = requestedRuntime == "all" ? snapshots : snapshots.filter { $0.kind == kinds[requestedRuntime] }
+            let contract = RuntimeCapabilityContract(snapshots: selected)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            var report = String(decoding: try encoder.encode(contract), as: UTF8.self)
             if requestedRuntime == "all" || requestedRuntime == "python" {
-                let pyPackages = (try? await AppRuntimeCore.shared.pythonPackages.installed()) ?? []
-                let pyPackageNames = pyPackages.map { "\($0.name) (\($0.version))" }.joined(separator: ", ")
-                let pySection = """
-                ### Python Runtime (Embedded CPython 3.14.6)
-                - State: Ready (local offline execution)
-                - Version: 3.14.6 (CPython embedded)
-                - Package Support: Pure-Python wheels (.whl) via PyPI or local packages
-                - Installed Packages (\(pyPackages.count)): \(pyPackageNames.isEmpty ? "None" : pyPackageNames)
-                - Effective Limits: Max 500 MB wheel size, 300s max timeout, 8 MB output
-                - Workspace: Sandbox app storage
-                """
-                sections.append(pySection)
+                let catalog = try PythonNativeExtensions.snapshot()
+                report += "\nPython linked native extensions (registration/module-initialization observations; not service readiness or signing proof):\n"
+                    + String(decoding: try encoder.encode(catalog), as: UTF8.self)
+            }
+            if requestedRuntime == "all" || requestedRuntime == "mcp" || requestedRuntime == "node" || requestedRuntime == "typescript" {
+                do {
+                    if let live = try await AppRuntimeCore.shared.node.capabilityReportIfLaunched() {
+                        report += "\nNode live capabilities:\n" + String(decoding: try encoder.encode(live), as: UTF8.self)
+                    }
+                } catch {
+                    report += "\nNode live capability query unavailable: \(error.localizedDescription)"
+                }
+                let provider = MCPRuntimeProvider.shared
+                await provider.loadIfNeeded(startHost: false)
+                report += "\nMCP enabled: \(provider.configuration.isEnabled); host: \(provider.runtimeSnapshot.state.rawValue); workers: \(provider.runtimeSnapshot.activeWorkerCount)"
             }
 
-            // 2. Node / TypeScript
-            if requestedRuntime == "all" || requestedRuntime == "node" || requestedRuntime == "typescript" {
-                let nodePackages = (try? await AppRuntimeCore.shared.nodePackages.installed()) ?? []
-                let nodePackageNames = nodePackages.map { "\($0.name) (\($0.version))" }.joined(separator: ", ")
-                let nodeSection = """
-                ### Node & TypeScript Runtime (NodeMobile / Host Worker)
-                - State: Ready
-                - Node Version: 24.5.0
-                - TypeScript Version: 6.0.3
-                - Execution Modes: ESM (.mjs) and CommonJS (.cjs)
-                - Module Hooks: Policy-guarded worker execution with dynamic import support
-                - Installed Global Packages (\(nodePackages.count)): \(nodePackageNames.isEmpty ? "None" : nodePackageNames)
-                - Effective Limits: 8 MB output, 300s max timeout
-                """
-                sections.append(nodeSection)
-            }
-
-            // 3. JavaScriptCore
-            if requestedRuntime == "all" || requestedRuntime == "jsc" {
-                let jscSection = """
-                ### JavaScriptCore (Native System JSC)
-                - State: Ready (lightweight fast local JS evaluation)
-                - Execution: Synchronous/Promise ES2022
-                - Async Timers: Forwarded to Node when Node timers/event loop are requested
-                """
-                sections.append(jscSection)
-            }
-
-            // 4. Shell / ios_system
-            if requestedRuntime == "all" || requestedRuntime == "shell" {
-                let shellCommands = (try? IOSSystemRunner.availableCommands()) ?? Array(IOSSystemRunner.linkedCommands)
-                let shellSection = """
-                ### Shell Runtime (ios_system BSD commands)
-                - State: Ready
-                - Commands Discovered (\(shellCommands.count)): \(shellCommands.sorted().joined(separator: ", "))
-                - Modes Supported:
-                  1. Structured argv mode (`program` + `arguments` array)
-                  2. Command line string mode (`command` with pipes and redirection)
-                - Network: HTTPS curl supported when `allow_network` is true or for `--version`
-                """
-                sections.append(shellSection)
-            }
-
-            // 5. MCP (Model Context Protocol) Runtime
-            if requestedRuntime == "all" || requestedRuntime == "mcp" || requestedRuntime == "node" {
-                let mcpProvider = MCPRuntimeProvider.shared
-                await mcpProvider.loadIfNeeded(startHost: false)
-                let installedNames = mcpProvider.servers.map { "\($0.slug) (\($0.packageName)@\($0.resolvedVersion))" }.joined(separator: ", ")
-                let mcpSection = """
-                ### MCP (Model Context Protocol) Host Runtime
-                - Feature Globally Enabled: \(mcpProvider.configuration.isEnabled)
-                - Host State: \(mcpProvider.runtimeSnapshot.state.rawValue)
-                - Active Worker Count: \(mcpProvider.runtimeSnapshot.activeWorkerCount)
-                - Installed MCP Servers (\(mcpProvider.servers.count)): \(installedNames.isEmpty ? "None" : installedNames)
-                - Management Tool: `manage_mcp_servers` (supports `status`, `list`, `preview`, `install`, `enable`, `disable`, `select_for_chat`, `start`, `stop`, `restart`, `list_tools`, `uninstall`)
-                """
-                sections.append(mcpSection)
-            }
-
-            let report = sections.joined(separator: "\n\n")
-
+            let elapsed = started.duration(to: .now).components
             let executionResult = RuntimeExecutionResult(
                 executionID: UUID(),
                 stdout: report,
                 stderr: "",
                 value: nil,
                 exitCode: 0,
-                durationMilliseconds: 1,
+                durationMilliseconds: elapsed.seconds * 1_000 + elapsed.attoseconds / 1_000_000_000_000_000,
                 didTimeOut: false,
                 wasCancelled: false,
                 outputWasTruncated: false
@@ -144,7 +91,7 @@ struct GetRuntimeCapabilitiesTool: NativeTool {
                 title: "Runtime Capabilities",
                 systemImage: "cpu",
                 runtimeKind: .shell,
-                argumentKeys: Array((arguments ?? [:]).keys)
+                argumentKeys: Array(arguments.keys)
             )
         } catch {
             return RuntimeToolSupport.failure(error, title: "Get Runtime Capabilities Failed", runtimeKind: .shell)

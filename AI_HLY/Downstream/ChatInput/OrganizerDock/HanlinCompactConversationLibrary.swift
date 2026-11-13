@@ -14,6 +14,7 @@ import SwiftData
 
 @MainActor
 struct HanlinCompactConversationLibrary: View {
+    @State private var showsSavedMessages = false
     let chatRecords: [ChatRecords]
     @Binding var searchText: String
     let matchedSnippets: [UUID: (AttributedString, UUID)]
@@ -67,6 +68,12 @@ struct HanlinCompactConversationLibrary: View {
             onRefresh()
         }
         .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showsSavedMessages = true } label: {
+                    Label("Saved messages", systemImage: "bookmark")
+                }
+                .accessibilityIdentifier("hanlin-saved-messages-open")
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: onAddNewChat) {
                     Image(systemName: "plus.bubble")
@@ -74,6 +81,7 @@ struct HanlinCompactConversationLibrary: View {
                 .accessibilityIdentifier("hanlin-new-chat-button")
             }
         }
+        .sheet(isPresented: $showsSavedMessages) { ChatSavedExcerptsView() }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-compact-conversation-library")
     }

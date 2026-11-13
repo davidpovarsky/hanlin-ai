@@ -1,5 +1,6 @@
 import Foundation
 import HanlinNativeScriptCoreSupport
+import HanlinPlatformContracts
 import UIKit
 
 @MainActor
@@ -47,6 +48,8 @@ public final class HanlinNativeScriptSession {
     private var runtime: HanlinNativeScriptRuntimeHost?
     private(set) public var isActive = false
     private var createdSymlinks: Set<URL> = []
+    private var previousEnvironment: [String: [CChar]] = [:]
+    private var installedEnvironmentKeys: [String] = []
     public let environment: [String: String]
 
     public init(
@@ -70,6 +73,11 @@ public final class HanlinNativeScriptSession {
             }
         }
         let packageJSONURL = root.appending(path: "package.json", directoryHint: .notDirectory)
+        let metadata = try JSONSerialization.jsonObject(with: Data(contentsOf: packageJSONURL)) as? [String: Any]
+        guard metadata?["main"] as? String == "bundle.mjs",
+              metadata?["hanlinRuntime"] as? String == "hanlin-nativescript" else {
+            throw HanlinNativeScriptError.invalidApplicationRoot("Prepared NativeScript requires main: bundle.mjs and hanlinRuntime: hanlin-nativescript.")
+        }
         try Self.validateNativePluginRequirements(packageJSONURL: packageJSONURL)
         try Self.validateCoreRequirements(packageJSONURL: packageJSONURL)
         self.applicationRoot = root
@@ -87,9 +95,7 @@ public final class HanlinNativeScriptSession {
 
         presenter.install()
         do {
-            for (key, value) in environment {
-                setenv(key, value, 1)
-            }
+            try installEnvironment()
             try linkSharedRuntimeIfNeeded()
             let host = try HanlinNativeScriptRuntimeHost(
                 baseDirectory: applicationRoot.deletingLastPathComponent().path(percentEncoded: false),
@@ -109,9 +115,9 @@ public final class HanlinNativeScriptSession {
     }
 
     public func shutdown() {
-        for key in environment.keys {
-            unsetenv(key)
-        }
+        // The VM owns its environment until teardown has drained. A dormant
+        // session must never unset another session's or the Host's values.
+        defer { restoreEnvironment() }
         guard isActive || runtime != nil else {
             unlinkSharedRuntime()
             presenter.detach()
@@ -123,6 +129,35 @@ public final class HanlinNativeScriptSession {
         isActive = false
         unlinkSharedRuntime()
         if Self.activeSession === self { Self.activeSession = nil }
+    }
+
+    private func installEnvironment() throws {
+        guard environment.allSatisfy({ key, value in
+            !key.isEmpty && !key.contains("=") && !key.contains("\0") && !value.contains("\0")
+        }) else { throw HanlinNativeScriptError.invalidApplicationRoot("The execution environment contains an invalid key or NUL value.") }
+        for (key, value) in environment.sorted(by: { $0.key < $1.key }) {
+            if let old = getenv(key) {
+                // Preserve original bytes, including values not representable
+                // as Swift UTF-8 strings; do not lossy-decode process state.
+                previousEnvironment[key] = Array(UnsafeBufferPointer(start: old, count: Int(strlen(old)) + 1))
+            }
+            guard setenv(key, value, 1) == 0 else {
+                throw HanlinNativeScriptError.invalidApplicationRoot("The execution environment could not be installed.")
+            }
+            installedEnvironmentKeys.append(key)
+        }
+    }
+
+    private func restoreEnvironment() {
+        for key in installedEnvironmentKeys.reversed() {
+            if let original = previousEnvironment[key] {
+                original.withUnsafeBufferPointer { buffer in
+                    if let bytes = buffer.baseAddress { _ = setenv(key, bytes, 1) }
+                }
+            } else { unsetenv(key) }
+        }
+        installedEnvironmentKeys.removeAll()
+        previousEnvironment.removeAll()
     }
 
     deinit {
@@ -201,27 +236,19 @@ public final class HanlinNativeScriptSession {
     }
 
     public static func isCoreVersionCompatible(_ versionString: String) -> Bool {
-        let trimmed = versionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.isEmpty || trimmed == "*" || trimmed == "latest" {
-            return true
-        }
-        var cleaned = trimmed
-        if cleaned.hasPrefix("^") || cleaned.hasPrefix("~") || cleaned.hasPrefix("=") || cleaned.hasPrefix("v") {
-            cleaned = String(cleaned.dropFirst())
-        }
-        if cleaned.hasPrefix("9.1") {
-            return true
-        }
-        if trimmed.hasPrefix("^9.") {
-            return true
-        }
-        return false
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: supportedRuntimeVersion)
     }
 
     private static func validateCoreRequirements(packageJSONURL: URL) throws {
         let data = try Data(contentsOf: packageJSONURL)
         guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             return
+        }
+        for key in ["dependencies", "devDependencies"] {
+            guard let supplied = root[key] else { continue }
+            guard let map = supplied as? [String: Any], map.values.allSatisfy({ $0 is String }) else {
+                throw HanlinNativeScriptError.unsupportedCoreVersion("Prepared dependencies must map module names to version strings.")
+            }
         }
         var declaredCoreVersion: String?
         if let deps = root["dependencies"] as? [String: Any], let version = deps["@nativescript/core"] as? String {

@@ -37,8 +37,10 @@ AssistantTool.registerExecuteTool(async parameters => ({
 Input is a canonical `HanlinValue`. Output contains `success: boolean`,
 `message: string`, and may contain a canonical structured `data` value.
 Invocation resolves the package, installed-package identity, entrypoint, and
-tool ID before execution. A package-scoped authorizer checks approval and every
-declared capability; the default policy denies privileged calls. Cancellation
+tool ID before execution. Under the owner-approved personal-development policy
+(2026-10-29; Runtime policy v2 recorded 2026-11-09), capabilities and approval
+fields are compatibility metadata. Default execution needs no additional Hanlin
+approval; actual runtime identity, package lifecycle and iOS authorization remain. Cancellation
 propagates into the owning runtime session. Dynamic module loading and binary
 values remain unsupported in this legacy ABI; the versioned runtime v2 lane
 owns the broader Scripting service protocol.

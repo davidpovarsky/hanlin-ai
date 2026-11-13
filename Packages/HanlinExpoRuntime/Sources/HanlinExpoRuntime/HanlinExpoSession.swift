@@ -3,6 +3,8 @@ import ExpoBrownfield
 import ExpoModulesCore
 import ExpoUI
 import HanlinExpoNativeAPI
+import HanlinExpoNativeAPICore
+import HanlinPlatformContracts
 import ObjectiveC
 import React
 @_implementationOnly import React_RCTAppDelegate
@@ -30,7 +32,7 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
         let sel = NSSelectorFromString("host:didInitializeRuntime:")
         let fn: @convention(c) (AnyObject, Selector, AnyObject, UnsafeMutableRawPointer) -> Void = hostDidInitRuntimeCallback
         let imp = unsafeBitCast(fn, to: IMP.self)
-        let types = "v@:@@"
+        let types = "v@:@^v"
         if !class_addMethod(HanlinExpoReactNativeFactoryDelegate.self, sel, imp, types) {
             if let method = class_getInstanceMethod(HanlinExpoReactNativeFactoryDelegate.self, sel) {
                 method_setImplementation(method, imp)
@@ -63,7 +65,10 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
 
     nonisolated fileprivate func handleHostDidInitializeRuntime(_ runtime: UnsafeMutableRawPointer) {
         NSLog("%@", "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=\(runtime)")
-        appContext.setRuntime(runtime, scheduler: nil, dispatch: nil)
+        guard HanlinExpoInstallScheduledRuntime(runtime, appContext) else {
+            NSLog("%@", "HANLIN_EXPO_BOOTSTRAP_FAILED: React runtime scheduler is missing")
+            return
+        }
         NSLog("%@", "HANLIN_EXPO_SET_RUNTIME_DONE")
         let moduleNames = appContext.getModuleNames()
         NSLog("%@", "HANLIN_EXPO_REGISTERED_MODULES=\(moduleNames.joined(separator: ", "))")
@@ -147,7 +152,8 @@ public final class HanlinExpoSession {
         }
 
         let packageJSONURL = root.appending(path: "package.json", directoryHint: .notDirectory)
-        guard FileManager.default.fileExists(atPath: packageJSONURL.path(percentEncoded: false)) else {
+        guard let metadata = try? packageJSONURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey]),
+              metadata.isRegularFile == true, metadata.isSymbolicLink != true else {
             throw HanlinExpoError.missingPreparedFile("package.json")
         }
 
@@ -160,18 +166,40 @@ public final class HanlinExpoSession {
             throw HanlinExpoError.unsupportedRuntimeVersion("package.json does not declare hanlinRuntime: hanlin-expo")
         }
 
-        if let contract = packageJSON["hanlinExpo"] as? [String: Any],
-           let requiredBridgeVersion = contract["bridgeVersion"] as? String,
-           !HanlinExpoBridgeMetadata.supports(requiredBridgeVersion: requiredBridgeVersion) {
-            throw HanlinExpoError.unsupportedRuntimeVersion(
-                "This package requires Hanlin Expo UI bridge \(requiredBridgeVersion), but the host provides \(HanlinExpoBridgeMetadata.bridgeVersion)."
-            )
+        if let supplied = packageJSON["hanlinExpo"] {
+            guard let contract = supplied as? [String: Any],
+                  let runtimeVersion = contract["runtimeVersion"] as? String,
+                  contract["plugins"] is [String: Any],
+                  HanlinPreparedRuntimeVersion.supportsMinimum(runtimeVersion, installed: HanlinExpoBridgeMetadata.runtimeVersion) else {
+                throw HanlinExpoError.unsupportedRuntimeVersion("hanlinExpo must declare a supported runtimeVersion and plugins object.")
+            }
+            if let bridge = contract["bridgeVersion"] {
+                guard let version = bridge as? String, HanlinExpoBridgeMetadata.supports(requiredBridgeVersion: version) else {
+                    throw HanlinExpoError.unsupportedRuntimeVersion("hanlinExpo bridgeVersion is malformed or newer than the installed bridge.")
+                }
+            }
         }
 
-        let entryFileName = (packageJSON["main"] as? String) ?? "bundle.js"
-        let resolvedBundleURL = root.appending(path: entryFileName, directoryHint: .notDirectory)
-        guard FileManager.default.fileExists(atPath: resolvedBundleURL.path(percentEncoded: false)) else {
-            throw HanlinExpoError.missingPreparedFile(entryFileName)
+        let entryFileName: String
+        if let main = packageJSON["main"] {
+            guard let name = main as? String else {
+                throw HanlinExpoError.invalidApplicationRoot("package.json main must be a relative file path string")
+            }
+            entryFileName = name
+        } else { entryFileName = "bundle.js" }
+        let components = entryFileName.split(separator: "/", omittingEmptySubsequences: false)
+        guard !entryFileName.isEmpty, !entryFileName.contains("\\"), !entryFileName.contains(":"), !entryFileName.contains("\0"),
+              components.allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." }) else {
+            throw HanlinExpoError.invalidApplicationRoot("package.json main must stay within the prepared package")
+        }
+        var resolvedBundleURL = root
+        for (index, component) in components.enumerated() {
+            resolvedBundleURL.append(path: String(component))
+            guard let values = try? resolvedBundleURL.resourceValues(forKeys: [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey]),
+                  values.isSymbolicLink != true,
+                  index == components.count - 1 ? values.isRegularFile == true : values.isDirectory == true else {
+                throw HanlinExpoError.missingPreparedFile(entryFileName)
+            }
         }
 
         self.sessionID = sessionID
@@ -267,8 +295,9 @@ public final class HanlinExpoSession {
         if let appContext {
             HanlinExpoHostServicesBridge.unbind(appContext: appContext)
             NSLog("%@", "HANLIN_EXPO_UNBOUND")
-            appContext.destroy()
-            NSLog("%@", "HANLIN_EXPO_APPCONTEXT_DESTROYED")
+            // Expo's native state owns destroy() and executes it on the JS
+            // thread when React tears down the runtime. Calling it here on
+            // MainActor races queued JSI callbacks and releases live JS values.
         }
         appContext = nil
         isActive = false

@@ -27,6 +27,21 @@ struct ScriptingPackageImportView: View {
     var body: some View {
         @Bindable var platform = platform
         List {
+            Section {
+                NavigationLink { ChavrusaShareInboxView(platform: platform) } label: {
+                    Label("Shared Items", systemImage: "tray.and.arrow.down")
+                }
+                .accessibilityIdentifier("hanlin-share-inbox-link")
+            }
+            if !platform.resumeCommandRejections.isEmpty {
+                Section("Queued Actions") {
+                    Label("Some saved actions couldn’t be read.", systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.orange)
+                        .accessibilityIdentifier("hanlin-pending-action-warning")
+                    Text("Other actions can still run. The unreadable items were kept for recovery.")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+            }
             if case let .failed(message) = platform.activity {
                 Section {
                     Label(message, systemImage: "exclamationmark.triangle")
@@ -141,37 +156,6 @@ private struct ScriptingImportPreviewSections: View {
                 }
             }
         }
-        if !preview.requestedCapabilities.isEmpty {
-            Section("Permissions") {
-                ForEach(preview.requestedCapabilities, id: \.capabilityID) { request in
-                    Toggle(
-                        request.capabilityID.rawValue,
-                        isOn: Binding(
-                            get: { platform.approvedCapabilities.contains(request.capabilityID) },
-                            set: { platform.setCapabilityApproved($0, capability: request.capabilityID) }
-                        )
-                    )
-                    .accessibilityIdentifier("hanlin-capability-toggle-\(request.capabilityID.rawValue)")
-                }
-                if !platform.capabilityApprovals.missingRequiredCapabilities.isEmpty {
-                    Button("Approve All Required Capabilities") {
-                        for request in preview.requestedCapabilities where request.required {
-                            platform.setCapabilityApproved(true, capability: request.capabilityID)
-                        }
-                    }
-                    .accessibilityIdentifier("hanlin-approve-all-capabilities")
-                }
-                Text("Required capabilities must be approved explicitly. They remain package-scoped and can be revoked from package details.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                if !platform.capabilityApprovals.missingRequiredCapabilities.isEmpty {
-                    Text("Still required: " + platform.capabilityApprovals.missingRequiredCapabilities
-                        .map(\.rawValue).joined(separator: ", "))
-                        .font(.caption)
-                        .foregroundStyle(.orange)
-                }
-            }
-        }
         if !preview.findings.isEmpty {
             Section("Compatibility") {
                 ForEach(Array(preview.findings.enumerated()), id: \.offset) { _, finding in
@@ -208,6 +192,8 @@ struct ScriptingInstalledPackageDetailView: View {
     @State private var storageDiagnostic: HanlinWidgetStorageDiagnostic?
     @State private var isRetryingPublication = false
     @State private var didAttemptAutoRepublish = false
+    @State private var showsWidgetStatus = false
+    @State private var widgetStatusText = ""
 
     var body: some View {
         Group {
@@ -231,12 +217,32 @@ struct ScriptingInstalledPackageDetailView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                if let package, hasNativeWidget(package) {
+                    Button {
+                        let report = platform.storageConsistencyReport()?.redactedReportString ?? ""
+                        let diagnostic = (storageDiagnostic ?? platform.widgetPublicationDiagnostic(for: packageID))?.redactedReportString ?? ""
+                        widgetStatusText = [report, diagnostic].filter { !$0.isEmpty }.joined(separator: "\n\n")
+                        showsWidgetStatus = true
+                    } label: {
+                        Label(String(localized: "Widget status"), systemImage: "waveform.path.ecg")
+                    }
+                    .accessibilityIdentifier("hanlin-widget-status")
+                }
+            }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") {
                     dismiss()
                 }
                 .accessibilityIdentifier("hanlin-package-details-done")
             }
+        }
+        .alert(String(localized: "Widget status"), isPresented: $showsWidgetStatus) {
+            Button(String(localized: "Copy Diagnostic")) { UIPasteboard.general.string = widgetStatusText }
+                .accessibilityIdentifier("hanlin-widget-status-copy")
+            Button(String(localized: "Done"), role: .cancel) {}
+        } message: {
+            Text(widgetStatusText)
         }
     }
 
@@ -344,35 +350,6 @@ struct ScriptingInstalledPackageDetailView: View {
                             .font(.caption)
                             .foregroundStyle(.red)
                     }
-                }
-            }
-            let capabilities = Set(
-                package.entrypoints
-                    .flatMap(\.requiredCapabilities)
-                    .map(\.capabilityID)
-            )
-            if !capabilities.isEmpty {
-                Section("Permissions") {
-                    ForEach(capabilities.sorted { $0.rawValue < $1.rawValue }, id: \.self) { capability in
-                        Toggle(
-                            capability.rawValue,
-                            isOn: Binding(
-                                get: { package.grantedCapabilities.contains(capability) },
-                                set: { granted in
-                                    Task {
-                                        await platform.setCapabilityGranted(
-                                            granted,
-                                            capability: capability,
-                                            for: packageID
-                                        )
-                                    }
-                                }
-                            )
-                        )
-                    }
-                    Text("Revoking a capability takes effect for new package operations and tool invocations.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
                 }
             }
             if package.availableGenerations.count > 1 {

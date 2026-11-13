@@ -3,15 +3,60 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
+      runtime_job_foundation_only:
+        description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
+        required: false
+        default: false
+        type: boolean
+      markdown_renderer_validation_only:
+        description: Compile the app-pinned Markdown fork and execute its six affected code-block cases without building the app or runtimes
+        required: false
+        default: false
+        type: boolean
+      code_fence_webkit_validation_only:
+        description: Execute the production local Mermaid and Diff renderer in iOS WebKit without building the app or runtimes
+        required: false
+        default: false
+        type: boolean
+      diagnostics_capture_validation_only:
+        description: Execute production encrypted-capture, redaction and ZIP tests in an isolated iOS package, without app or runtime build
+        required: false
+        default: false
+        type: boolean
+      scripting_package_test_filter:
+        description: Explicit affected Swift package suite regex; invokes the existing isolated validation workflow
+        required: false
+        default: ''
+        type: string
       testflight_upload:
         description: Build, sign, validate, and upload ChavrusaChat to TestFlight
         required: true
         default: false
         type: boolean
+      testflight_existing_build_number:
+        description: Existing uploaded build to distribute without rebuilding (requires testflight_upload)
+        required: false
+        default: ''
+        type: string
+      testflight_audience_source_build:
+        description: Previously installed build whose existing internal groups should receive the uploaded build
+        required: false
+        default: ''
+        type: string
       runtime_bundle_only:
         description: Validate and publish the pinned RuntimeCore bundle without building the app
         required: true
         default: false
+        type: boolean
+      runtime_bundle_artifact_run_id:
+        description: Validate a completed same-repository Runtime candidate before release publication
+        required: false
+        default: ''
+        type: string
+      runtime_publish_release:
+        description: Publish the verified RuntimeCore release after its build and smoke tests
+        required: true
+        default: true
         type: boolean
       runtime_reuse_artifacts_run_id:
         description: Reuse completed RuntimeCore input artifacts from an earlier run
@@ -64,7 +109,7 @@ on:
         default: ''
         type: string
       exact_test_selector:
-        description: Explicitly run a single exact XCTest method or suite selector (e.g. AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime)
+        description: Comma-separated exact XCTest methods or suites, including mixed unit and UI selectors
         required: false
         default: ''
         type: string
@@ -77,14 +122,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.testflight_upload && 'testflight' || 'validation' }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
   plan-affected-validation:
-    if: ${{ !inputs.testflight_upload }}
+    if: ${{ !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
-    runs-on: macos-26
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
       run_full_validation: ${{ steps.plan.outputs.run_full_validation }}
@@ -121,6 +166,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -128,12 +174,12 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.12"
 
@@ -181,7 +227,7 @@ jobs:
           python3 Scripts/CI/plan_affected_validation.py "${args[@]}" --json-output "$GITHUB_WORKSPACE/ci-validation-plan.json"
 
       - name: Upload validation plan artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ci-validation-plan
           path: ci-validation-plan.json
@@ -207,6 +253,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -268,7 +315,7 @@ jobs:
           fi
 
       - name: Check out exact validation commit cleanly
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           clean: true
           fetch-depth: 1
@@ -282,7 +329,7 @@ jobs:
           git rev-parse HEAD
 
       - name: Set up pinned baseline Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
 
@@ -314,7 +361,7 @@ jobs:
       - name: Restore Phase 1 SwiftPM build cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-spm-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: Packages/HanlinPlatform/.build
           key: phase1-spm-v2-${{ runner.os }}-${{ steps.phase1-toolchain.outputs.runner-arch }}-${{ steps.phase1-toolchain.outputs.xcode-build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift') }}
@@ -324,7 +371,7 @@ jobs:
       - name: Restore Phase 1 simulator compiler cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-simulator-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/Phase1SimulatorDerivedData/Build
@@ -337,7 +384,7 @@ jobs:
       - name: Restore Phase 1 device compiler cache
         if: ${{ !inputs.force_clean_build && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
         id: phase1-device-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/Phase1DeviceDerivedData/Build
@@ -467,6 +514,7 @@ jobs:
       - name: Live Activity · refresh
         if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -482,7 +530,7 @@ jobs:
 
       - name: Save successful Phase 1 SwiftPM build cache
         if: ${{ success() && !inputs.force_clean_build && steps.phase1-spm-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: Packages/HanlinPlatform/.build
           key: ${{ steps.phase1-spm-cache.outputs.cache-primary-key }}
@@ -542,7 +590,7 @@ jobs:
 
       - name: Save successful Phase 1 simulator compiler cache
         if: ${{ success() && !inputs.force_clean_build && steps.phase1-simulator-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/Phase1SimulatorDerivedData/Build
@@ -601,7 +649,7 @@ jobs:
 
       - name: Save successful Phase 1 device compiler cache
         if: ${{ success() && !inputs.force_clean_build && steps.phase1-device-cache.outputs.cache-hit != 'true' && (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/Phase1DeviceDerivedData/Build
@@ -621,6 +669,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -629,7 +678,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Retain Phase 1 validation evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: phase1-validation-${{ github.sha }}
           path: ${{ runner.temp }}/phase1-validation-logs
@@ -642,7 +691,7 @@ jobs:
     name: Run split RuntimeCore bundle pipeline
     uses: ./.github/workflows/build-runtime-bundle.yml
     with:
-      publish_release: true
+      publish_release: ${{ inputs.runtime_publish_release }}
       force_rebuild: false
       reuse_artifacts_run_id: ${{ inputs.runtime_reuse_artifacts_run_id }}
     permissions:
@@ -670,6 +719,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -677,10 +727,10 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Set up pinned RuntimeCore host Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
           cache: npm
@@ -787,7 +837,7 @@ jobs:
 
       - name: Restore cloned Swift package dependencies
         id: app-sourcepackages-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: build/SourcePackages
           key: ios-sourcepackages-v3-${{ runner.os }}-${{ steps.app-toolchain.outputs.runner-arch }}-${{ steps.app-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
@@ -797,7 +847,7 @@ jobs:
       - name: Restore compatible incremental Xcode compiler state
         if: ${{ !inputs.force_clean_build }}
         id: app-deriveddata-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/DerivedData/Build
@@ -879,10 +929,11 @@ jobs:
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/04-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/04-prepare-runtime-core.log"
 
       - name: Verify MCP host on pinned Node 24.5.0
         run: |
@@ -929,8 +980,8 @@ jobs:
       - name: Confirm native RuntimeCore reuse
         run: |
           set -euxo pipefail
-          test "$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" = \
-            "93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269"
+          node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json
+          node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json
           git diff --exit-code -- RuntimeDependencies.lock.json
           if grep -E '(configure|cmake|ninja|make).*(Node|nodejs|V8|Python)' \
             "$LOG_DIR/04-prepare-runtime-core.log" "$LOG_DIR/04-package-runtime-host.log"; then
@@ -1038,9 +1089,15 @@ jobs:
             echo "Swift Package dependency resolution completed."
           } 2>&1 | tee "$LOG_DIR/06-resolve-packages.log"
 
+      - name: Record resolved diagnostics build provenance
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/write_diagnostics_build_provenance.py
+          cp AI_HLY/Downstream/AgentDiagnostics/HanlinDiagnosticsBuildProvenance.json "$LOG_DIR/06-diagnostics-build-provenance.json"
+
       - name: Save validated cloned Swift package dependencies
         if: ${{ success() && steps.app-sourcepackages-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: build/SourcePackages
           key: ${{ steps.app-sourcepackages-cache.outputs.cache-primary-key }}
@@ -1110,7 +1167,6 @@ jobs:
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
               -configuration "$CONFIGURATION" \
-              -sdk iphoneos \
               -destination "generic/platform=iOS" \
               -derivedDataPath "$DERIVED_DATA_PATH" \
               -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
@@ -1153,7 +1209,6 @@ jobs:
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
             -configuration "$CONFIGURATION" \
-            -sdk iphoneos \
             -destination "generic/platform=iOS" \
             -derivedDataPath "$DERIVED_DATA_PATH" \
             -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
@@ -1279,6 +1334,7 @@ jobs:
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -1352,7 +1408,7 @@ jobs:
 
       - name: Save successful incremental Xcode compiler state
         if: ${{ success() && !inputs.force_clean_build && steps.app-deriveddata-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/DerivedData/Build
@@ -1364,6 +1420,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -1431,7 +1488,7 @@ jobs:
           cat "$SUMMARY_FILE"
 
       - name: Upload unsigned IPA artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: AI_Hanlin-iOS26-unsigned-ipa
           path: AI_Hanlin-iOS26-unsigned.ipa
@@ -1440,7 +1497,7 @@ jobs:
 
       - name: Upload build logs artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: AI_Hanlin-iOS26-build-logs
           path: |
@@ -1485,6 +1542,7 @@ jobs:
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -1492,10 +1550,10 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Set up pinned RuntimeCore host Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
           cache: npm
@@ -1592,7 +1650,7 @@ jobs:
 
       - name: Restore simulator cloned Swift package dependencies
         id: simulator-sourcepackages-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: build/SourcePackages
           key: ios-sourcepackages-v3-${{ runner.os }}-${{ steps.simulator-toolchain.outputs.runner-arch }}-${{ steps.simulator-toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
@@ -1602,7 +1660,7 @@ jobs:
       - name: Restore compatible simulator compiler state
         if: ${{ !inputs.force_clean_build }}
         id: simulator-deriveddata-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/SimulatorDerivedData/Build
@@ -1672,10 +1730,11 @@ jobs:
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Package current RuntimeCore host resources
         if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
@@ -1703,9 +1762,15 @@ jobs:
             -skipMacroValidation \
             2>&1 | tee "$LOG_DIR/05-resolve-packages.log"
 
+      - name: Record resolved diagnostics build provenance
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/write_diagnostics_build_provenance.py
+          cp AI_HLY/Downstream/AgentDiagnostics/HanlinDiagnosticsBuildProvenance.json "$LOG_DIR/06-diagnostics-build-provenance.json"
+
       - name: Save validated simulator Swift package dependencies
         if: ${{ success() && steps.simulator-sourcepackages-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: build/SourcePackages
           key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
@@ -1820,7 +1885,6 @@ jobs:
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
             -configuration "$CONFIGURATION" \
-            -sdk iphonesimulator \
             -destination "generic/platform=iOS Simulator" \
             -derivedDataPath "$DERIVED_DATA_PATH" \
             -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
@@ -1860,6 +1924,14 @@ jobs:
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/Testing.framework
           rm -rf build/SimulatorRuntimeApp/AI_Hanlin.app/Frameworks/lib_Testing*
           test ! -e build/SimulatorRuntimeApp/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest
+          # Removing sealed test resources invalidates the copied app's signature.
+          # Re-seal only this simulator copy, retaining its Xcode entitlements.
+          codesign --force --sign - --timestamp=none \
+            --preserve-metadata=identifier,entitlements,flags --generate-entitlement-der \
+            build/SimulatorRuntimeApp/AI_Hanlin.app \
+            > "$LOG_DIR/07-simulator-runtime-signature.log" 2>&1
+          codesign --verify --deep --strict --verbose=2 build/SimulatorRuntimeApp/AI_Hanlin.app \
+            >> "$LOG_DIR/07-simulator-runtime-signature.log" 2>&1
 
       - name: Measure same-run simulator no-op rebuild
         if: ${{ inputs.measure_warm_rebuild }}
@@ -1895,7 +1967,6 @@ jobs:
             -project "$PROJECT_PATH" \
             -scheme "$SCHEME_NAME" \
             -configuration "$CONFIGURATION" \
-            -sdk iphonesimulator \
             -destination "generic/platform=iOS Simulator" \
             -derivedDataPath "$DERIVED_DATA_PATH" \
             -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
@@ -1925,7 +1996,7 @@ jobs:
 
       - name: Save successful simulator compiler state
         if: ${{ success() && !inputs.force_clean_build && steps.simulator-deriveddata-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             build/SimulatorDerivedData/Build
@@ -1991,6 +2062,7 @@ jobs:
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2011,6 +2083,7 @@ jobs:
           payload = json.loads(subprocess.check_output(
               ["xcrun", "simctl", "list", "devices", "available", "--json"],
               text=True,
+              timeout=15,
           ))
           candidates = []
           for runtime, devices in payload.get("devices", {}).items():
@@ -2035,8 +2108,21 @@ jobs:
           printf '%s\n' "$BUNDLE_ID" > "$LOG_DIR/bundle-id.txt"
           printf '%s\n' "$APP_EXECUTABLE" > "$LOG_DIR/app-executable.txt"
 
-          xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
-          xcrun simctl bootstatus "$SIMULATOR_UDID" -b 2>&1 | tee "$LOG_DIR/08-bootstatus.log"
+          python3 - "$SIMULATOR_UDID" <<'PY'
+          import os
+          from pathlib import Path
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import BOOT_TIMEOUT_SECONDS, run_bounded
+
+          simulator = sys.argv[1]
+          run_bounded(["xcrun", "simctl", "boot", simulator], timeout_seconds=15.0)
+          result = run_bounded(["xcrun", "simctl", "bootstatus", simulator, "-b"], timeout_seconds=BOOT_TIMEOUT_SECONDS)
+          output = result.stdout + result.stderr
+          Path(os.environ["LOG_DIR"], "08-bootstatus.log").write_text(output, encoding="utf-8")
+          print(output, flush=True)
+          if result.returncode:
+              raise SystemExit(f"Simulator boot failed or timed out: {result.returncode}")
+          PY
           if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
             python3 Scripts/CI/stage_simulator_fixtures.py \
               --simulator-udid "$SIMULATOR_UDID" \
@@ -2049,11 +2135,22 @@ jobs:
           fi
 
           if [ "$STAGE_SCRIPTUI_FIXTURES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinScriptUIProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinExpoProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]]; then
-            python3 Scripts/CI/stage_scriptui_fixtures.py \
-              --simulator-udid "$SIMULATOR_UDID" \
-              --app-path "$APP_PATH" \
-              --bundle-id "$BUNDLE_ID" \
-              --log-file "$LOG_DIR/08-scriptui-files-staging.log"
+            if [ "$RUN_SIMULATOR_UNIT" = "true" ] && [ -n "${SIMULATOR_UNIT_FILTER:-}" ] \
+              && [ "$SIMULATOR_E2E_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ] \
+              && [ "$RUN_FULL_VALIDATION" != "true" ] && [ "$RUN_NATIVESCRIPT_DEPENDENCIES" != "true" ]; then
+              # Xcode installs the exact build-for-testing host for unit execution.
+              # Seed its Documents afterwards instead of first installing a different,
+              # pruned runtime copy and then replacing it during test-without-building.
+              echo "STAGE_SCRIPTUI_AFTER_UNIT=true" >> "$GITHUB_ENV"
+              printf '%s\n' "ScriptUI fixtures deferred until successful Xcode unit-host installation." \
+                > "$LOG_DIR/08-scriptui-files-staging-deferred.txt"
+            else
+              python3 Scripts/CI/stage_scriptui_fixtures.py \
+                --simulator-udid "$SIMULATOR_UDID" \
+                --app-path "$APP_PATH" \
+                --bundle-id "$BUNDLE_ID" \
+                --log-file "$LOG_DIR/08-scriptui-files-staging.log"
+            fi
           else
             printf '%s\n' "ScriptUI fixture staging skipped (ScriptUI not affected)." > "$LOG_DIR/08-scriptui-files-staging-skipped.txt"
           fi
@@ -2061,6 +2158,7 @@ jobs:
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2089,6 +2187,9 @@ jobs:
                   unit_test_args+=("-only-testing:$suite")
                 fi
               done
+              # Runtime V3 explicitly proves real jobs outlive 300 seconds.
+              # Keep the ordinary suite limit unchanged; scope the larger allowance.
+              unit_time_allowance="$(python3 Scripts/CI/simulator_test_allowance.py --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}")"
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
@@ -2101,7 +2202,7 @@ jobs:
               -skipMacroValidation \
               -parallel-testing-enabled NO \
               -test-timeouts-enabled YES \
-              -maximum-test-execution-time-allowance 300 \
+              -maximum-test-execution-time-allowance "$unit_time_allowance" \
               "${unit_test_args[@]}" \
               2>&1 | tee "$LOG_DIR/08-downstream-unit-tests.log"
               downstream_test_status="${PIPESTATUS[0]}"
@@ -2112,8 +2213,25 @@ jobs:
                 --path "$LOG_DIR/DownstreamTestsResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-downstream-unit-test-results.json" || true
               fi
+              if ! python3 Scripts/CI/verify_selected_tests.py \
+                --results "$LOG_DIR/08-downstream-unit-test-results.json" \
+                --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}"; then
+                downstream_test_status=65
+              fi
             else
               printf '%s\n' "Downstream unit tests skipped by affected-validation router." > "$LOG_DIR/08-downstream-unit-tests-skipped.txt"
+            fi
+
+            if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}" = "true" ]; then
+              # A failed assertion does not mean the test host was not installed.
+              # The stager validates the actual data container; retain the unit
+              # failure below while collecting independent UI evidence.
+              staging_started_at="$(date +%s)"
+              python3 Scripts/CI/stage_scriptui_fixtures.py \
+                --simulator-udid "$SIMULATOR_UDID" \
+                --bundle-id "$(cat "$LOG_DIR/bundle-id.txt")" \
+                --log-file "$LOG_DIR/08-scriptui-files-staging.log"
+              echo "$(( $(date +%s) - staging_started_at ))" > "$LOG_DIR/08-scriptui-staging-duration-seconds.txt"
             fi
 
             if [ "$SIMULATOR_E2E_ONLY" != "true" ] && { [ "$RUN_SIMULATOR_SCRIPTING_ACCEPTANCE" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; }; then
@@ -2153,6 +2271,24 @@ jobs:
                   ui_test_args+=("-only-testing:$suite")
                 fi
               done
+              # Preserve successful model motion evidence too, not just XCTest
+              # failure recordings. Scope this capture to the explicitly selected test.
+              model_video_pid=""
+              if [[ "${SIMULATOR_UI_FILTER:-}" == *"testModelPopover"* ]]; then
+                python3 -c 'import json,time; print(json.dumps({"recording_requested_at": time.time()}))' \
+                  > "$LOG_DIR/model-popover-video-time.json"
+                xcrun simctl io "$SIMULATOR_UDID" recordVideo --codec=h264 "$LOG_DIR/model-popover-motion.mp4" \
+                  > "$LOG_DIR/model-popover-video.log" 2>&1 &
+                model_video_pid=$!
+                sleep 1
+              fi
+              ui_time_allowance=300
+              # The measured nine-phase ScriptUI install/relaunch/disable/uninstall
+              # journey was still advancing at 371s when the old 300s cap killed
+              # it. Keep this longer lifecycle obligation intact and bounded.
+              if [[ "${SIMULATOR_UI_FILTER:-}" == *"HanlinScriptUIProductionE2ETests"* ]] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+                ui_time_allowance=600
+              fi
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
@@ -2164,11 +2300,19 @@ jobs:
               -skipPackagePluginValidation \
               -skipMacroValidation \
               -test-timeouts-enabled YES \
-              -maximum-test-execution-time-allowance 300 \
+              -maximum-test-execution-time-allowance "$ui_time_allowance" \
               "${ui_test_args[@]}" \
               2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
               nativescript_e2e_status="${PIPESTATUS[0]}"
+              if [ -n "$model_video_pid" ]; then
+                kill -INT "$model_video_pid" 2>/dev/null || true
+                wait "$model_video_pid" || true
+              fi
               set -e
+              if [ -n "$model_video_pid" ] && [ ! -s "$LOG_DIR/model-popover-motion.mp4" ]; then
+                echo "Required model animation recording is missing; functional assertions alone are insufficient." >&2
+                exit 1
+              fi
               test_duration_seconds="$(( $(date +%s) - nativescript_e2e_started_at ))"
               echo "$test_duration_seconds" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
               log_window_minutes=$(( (test_duration_seconds + 120) / 60 ))
@@ -2184,6 +2328,11 @@ jobs:
               xcrun xcresulttool get test-results tests \
                 --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
+              if ! python3 Scripts/CI/verify_selected_tests.py \
+                --results "$LOG_DIR/08-nativescript-production-ui-test-results.json" \
+                --selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"; then
+                nativescript_e2e_status=65
+              fi
               if [ "$nativescript_e2e_status" -eq 0 ]; then
                 if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ]; then
                   grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
@@ -2607,6 +2756,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2618,13 +2768,33 @@ jobs:
         timeout-minutes: 2
         run: |
           set +e
+          {
+            df -h .
+            vm_stat
+            ps -axo pid,ppid,%cpu,%mem,etime,comm
+          } > "$LOG_DIR/09-host-resources.log" 2>&1
           if [ -f "$LOG_DIR/simulator-udid.txt" ]; then
             SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
-            xcrun simctl spawn "$SIMULATOR_UDID" log show --style compact --last 5m \
-              | head -n 5000 > "$LOG_DIR/09-simulator-system.log" 2>&1 || true
+            python3 - "$SIMULATOR_UDID" <<'PY'
+          import os
+          from pathlib import Path
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import run_bounded
+          predicate = 'process == "installd" OR process == "installcoordinationd" OR subsystem CONTAINS[c] "install" OR eventMessage CONTAINS[c] "com.itorah.chavrusachat"'
+          result = run_bounded(["xcrun", "simctl", "spawn", sys.argv[1], "log", "show", "--style", "compact", "--last", "5m", "--predicate", predicate], timeout_seconds=20.0)
+          output = result.stdout + result.stderr
+          Path(os.environ["LOG_DIR"], "09-simulator-system.log").write_text("\n".join(output.splitlines()[-5000:]) + "\n", encoding="utf-8")
+          PY
             if [ -f "$LOG_DIR/bundle-id.txt" ]; then
               BUNDLE_ID="$(cat "$LOG_DIR/bundle-id.txt")"
-              DATA_CONTAINER="$(xcrun simctl get_app_container "$SIMULATOR_UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
+              DATA_CONTAINER="$(python3 - "$SIMULATOR_UDID" "$BUNDLE_ID" <<'PY'
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import run_bounded
+          result = run_bounded(["xcrun", "simctl", "get_app_container", sys.argv[1], sys.argv[2], "data"], timeout_seconds=20.0)
+          if result.returncode == 0:
+              print(result.stdout.strip())
+          PY
+              )"
               if [ -n "$DATA_CONTAINER" ]; then
                 cp "$DATA_CONTAINER/Library/Application Support/HanlinRuntime/v1/logs/shell-acceptance.json" \
                   "$LOG_DIR/shell-acceptance.json" 2>/dev/null || true
@@ -2652,7 +2822,7 @@ jobs:
 
       - name: Upload simulator smoke evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: AI_Hanlin-iOS26-simulator-smoke-logs
           path: |
@@ -2668,12 +2838,13 @@ jobs:
       - validate-hanlin-platform-phase1
       - full-app-simulator-smoke
     if: always() && !cancelled() && !inputs.testflight_upload && (needs.plan-affected-validation.outputs.run_phase1 == 'true' || needs.plan-affected-validation.outputs.run_simulator_job == 'true')
-    runs-on: macos-26
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2681,22 +2852,24 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.12"
 
       - name: Download Phase 1 validation logs
-        uses: actions/download-artifact@v4
+        if: ${{ needs.plan-affected-validation.outputs.run_phase1 == 'true' }}
+        uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:
           name: phase1-validation-${{ github.sha }}
           path: logs/phase1-validation-logs
 
       - name: Download simulator test logs
-        uses: actions/download-artifact@v4
+        if: ${{ needs.plan-affected-validation.outputs.run_simulator_job == 'true' }}
+        uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:
           name: AI_Hanlin-iOS26-simulator-smoke-logs
@@ -2720,6 +2893,7 @@ jobs:
       - name: Live Activity · refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
+        timeout-minutes: 1
         continue-on-error: true
         with:
           event: refresh
@@ -2728,7 +2902,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Upload provider conformance summary artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: provider-conformance-summary
           path: provider-conformance-summary.json
@@ -2736,7 +2910,7 @@ jobs:
           retention-days: 30
 
       - name: Download validation plan
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8.0.2
         continue-on-error: true
         with:
           name: ci-validation-plan
@@ -2759,7 +2933,7 @@ jobs:
 
       - name: Upload CI performance report artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ci-performance-report
           path: ci-performance-report.json
@@ -2767,9 +2941,35 @@ jobs:
           retention-days: 30
 
 
+  focused-markdown-renderer-tests:
+    if: ${{ !inputs.testflight_upload && inputs.markdown_renderer_validation_only }}
+    uses: ./.github/workflows/validate-chat-markdown.yml
+
+  focused-code-fence-webkit-tests:
+    if: ${{ !inputs.testflight_upload && inputs.code_fence_webkit_validation_only }}
+    uses: ./.github/workflows/validate-chat-code-fences.yml
+
+  focused-diagnostics-capture-tests:
+    if: ${{ !inputs.testflight_upload && inputs.diagnostics_capture_validation_only }}
+    uses: ./.github/workflows/validate-chat-diagnostics.yml
+    with:
+      test_suite: ${{ inputs.exact_test_selector }}
+
+  focused-scripting-package-tests:
+    if: ${{ !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}
+    uses: ./.github/workflows/validate-scripting-runtime.yml
+    with:
+      test_filter: ${{ inputs.scripting_package_test_filter }}
+      force_clean_build: ${{ inputs.force_clean_build }}
+      runtime_job_foundation_only: ${{ inputs.runtime_job_foundation_only }}
+    secrets: inherit
+
   upload-chavrusachat-to-testflight:
     if: ${{ inputs.testflight_upload }}
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true
+      existing_build_number: ${{ inputs.testflight_existing_build_number }}
+      audience_source_build: ${{ inputs.testflight_audience_source_build }}
+      runtime_bundle_artifact_run_id: ${{ inputs.runtime_bundle_artifact_run_id }}
     secrets: inherit

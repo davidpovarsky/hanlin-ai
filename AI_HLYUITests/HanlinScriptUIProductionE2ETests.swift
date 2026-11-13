@@ -18,6 +18,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
     }
 
     func testProductionScriptUIUserJourneyAndLifecycle() throws {
+        executionTimeAllowance = 600
         openApps()
 
         // 1. Import, Preview & Capabilities Review
@@ -31,7 +32,7 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         // Assert exact preview metadata from production UI
         let installButton = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 20), "Install button did not appear in preview")
-        XCTAssertFalse(installButton.isEnabled, "Install button was prematurely enabled before capability approval")
+        XCTAssertTrue(installButton.isEnabled, "A valid package must install without a redundant Hanlin capability approval")
 
         let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin ScriptUI Valid' OR value CONTAINS 'Hanlin ScriptUI Valid'")
         XCTAssertTrue(app.descendants(matching: .any).matching(titlePredicate).firstMatch.waitForExistence(timeout: 10), "Preview title missing")
@@ -40,27 +41,10 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         let entrypointPredicate = NSPredicate(format: "label CONTAINS 'index.tsx' OR value CONTAINS 'index.tsx'")
         XCTAssertTrue(app.descendants(matching: .any).matching(entrypointPredicate).firstMatch.waitForExistence(timeout: 5), "Preview entrypoint missing")
 
-        // Mandatory network capability check: 'fetch' in index.tsx requests 'network'
-        // Test MUST fail if approval UI is absent.
-        var networkToggle = app.switches["network"].firstMatch
-        if !networkToggle.waitForExistence(timeout: 3) {
-            app.swipeUp()
-            networkToggle = app.switches["network"].firstMatch
-        }
-        XCTAssertTrue(networkToggle.waitForExistence(timeout: 10), "Network capability approval toggle was not rendered in preview")
-
-        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        if approveAllButton.waitForExistence(timeout: 3) && approveAllButton.isHittable {
-            approveAllButton.tap()
-        } else {
-            toggleSwitch(networkToggle, targetValue: "1")
-        }
-        _ = waitUntil(timeout: 5) { (networkToggle.value as? String) == "1" }
-        if !installButton.exists || !installButton.isHittable {
-            app.swipeDown()
-        }
-        XCTAssertTrue(installButton.waitForExistence(timeout: 5), "Install button did not reappear after scrolling")
-        XCTAssertTrue(waitUntil(timeout: 8) { installButton.isEnabled }, "Install button remained disabled after approving capability")
+        // The owner-approved policy grants declared/inferred Hanlin capabilities
+        // during installation. OS privacy permissions and package validation
+        // retain their own acceptance checks; no internal approval tap is required.
+        XCTAssertTrue(installButton.isEnabled, "Valid preview unexpectedly requires an internal grant")
 
         // 2. Install
         if !installButton.exists || !installButton.isHittable {
@@ -100,33 +84,12 @@ final class HanlinScriptUIProductionE2ETests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Count 0"].firstMatch.waitForExistence(timeout: 25), "ScriptUI did not initialize cleanly on reopen after restart")
         closeScriptApp()
 
-        // 7. Capability Grant / Revoke Lifecycle (app.set_capability_granted)
+        // 7. Declared capabilities must not add an internal grant/revoke gate.
         openPackageDetails(named: validPackageName)
-        let networkPermission = app.switches["network"].firstMatch
-        XCTAssertTrue(networkPermission.waitForExistence(timeout: 10), "Network capability toggle missing in Package Details")
-        XCTAssertEqual(networkPermission.value as? String, "1", "Network capability was not granted")
-
-        // Revoke network capability
-        toggleSwitch(networkPermission, targetValue: "0")
-        XCTAssertTrue(waitUntil(timeout: 5) { (networkPermission.value as? String) == "0" }, "Failed to revoke network capability")
-        closeDetails()
-
-        // Launch must be guarded when required capability is missing
-        let packageCardWithoutCap = findPackageCard(named: validPackageName)
-        tapPackageCard(packageCardWithoutCap)
-        let closeBtnAfterDenied = app.buttons["hanlin-script-app-close"].firstMatch
-        XCTAssertFalse(closeBtnAfterDenied.waitForExistence(timeout: 3), "Package unexpectedly launched with revoked required capability")
-
-        // Re-grant network capability
-        openPackageDetails(named: validPackageName)
-        let regrantToggle = app.switches["network"].firstMatch
-        XCTAssertTrue(regrantToggle.waitForExistence(timeout: 10))
-        toggleSwitch(regrantToggle, targetValue: "1")
-        XCTAssertTrue(waitUntil(timeout: 5) { (regrantToggle.value as? String) == "1" }, "Failed to re-grant network capability")
-        closeDetails()
+        XCTAssertFalse(app.switches["network"].firstMatch.exists,
+                       "Package Details must not expose the removed internal network approval gate")
 
         // 8. Enable / Disable Lifecycle (app.set_enabled)
-        openPackageDetails(named: validPackageName)
         let enabledToggle = app.switches["Enabled"].firstMatch
         XCTAssertTrue(enabledToggle.waitForExistence(timeout: 10), "Enabled toggle missing in Package Details")
         XCTAssertEqual(enabledToggle.value as? String, "1", "Package was not initially enabled")

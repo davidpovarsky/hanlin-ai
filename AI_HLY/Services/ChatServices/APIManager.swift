@@ -49,6 +49,7 @@ struct StreamData {
     var splitMarkers: splitMarkerGroup? // 分割标记组
     var canvas_info: CanvasData?    // 画布数据
     var agentEvents: [AgentEvent] = [] // Provider-neutral activity events
+    var modelRoundID: UUID? = nil
 }
 
 struct RequestMessage {
@@ -111,6 +112,7 @@ class APIManager {
     private var isCancelled = false              // 请求取消标记
     private var activeAgentProducerTask: Task<Void, Never>?
     private var activeAgentRunID: UUID?
+    private var initializingRunID: UUID?
     
     init(
         context: ModelContext,
@@ -1360,6 +1362,7 @@ class APIManager {
     
     // MARK: - 任务取消
     func cancelCurrentRequest() {
+        let cancelledRunID = initializingRunID ?? activeAgentRunID
         isCancelled = true
         activeLocalLLMDriver?.stop()
         activeLocalLLMDriver = nil
@@ -1368,13 +1371,14 @@ class APIManager {
         activeAgentProducerTask?.cancel()
         activeAgentProducerTask = nil
         activeAgentRunID = nil
-        AgentRunLifecycleCoordinator.shared.cancelRun()
+        initializingRunID = nil
+        if let cancelledRunID { AgentRunLifecycleCoordinator.shared.cancelRun(runID: cancelledRunID) }
     }
 
     func completeAgentDiagnostics(status: String, error: Error? = nil) async {
         guard let recorder = agentDiagnosticsRecorder else { return }
         await recorder.complete(status: status, error: error.map { AgentSafeError($0).message })
-        agentDiagnosticsRecorder = nil
+        if agentDiagnosticsRecorder === recorder { agentDiagnosticsRecorder = nil }
     }
     
     // MARK: - 本地模型处理相关
@@ -2382,16 +2386,17 @@ class APIManager {
         }
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
-            
-            let producerTask = Task(priority: .userInitiated) {
-                guard AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID) else {
-                    continuation.finish()
-                    return
-                }
+            let userOperation = depth == 0 ? RuntimeUserOperation(id: currentRunID) : RuntimeUserOperation.current
+            let producerTask = RuntimeUserOperation.producerTask(operation: userOperation) {
                 defer {
                     if depth == 0 {
+                        if let userOperation { RuntimeBackgroundContinuation.shared.end(userOperation) }
                         AgentRunLifecycleCoordinator.shared.finishRun(runID: currentRunID)
                     }
+                }
+                guard AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID) else {
+                    RuntimeUserOperation.finishStream(continuation)
+                    return
                 }
                 var diagnosticsRoundID: UUID?
                 var diagnosticsRoundFinished = false
@@ -2447,7 +2452,7 @@ class APIManager {
                         continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "处理对话内容" : "Processing"))
                         
                         // 格式化消息
-                        finalFormattedMessages = try await buildFormattedMessages(
+                        finalFormattedMessages = try await self.buildFormattedMessages(
                             from: updatedMessages,
                             modelInfo: modelInfo,
                             currentLanguage: currentLanguage,
@@ -2515,7 +2520,7 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在发送请求" : "Sending request"))
                     
                     // 获取与模型厂商匹配的完整 Provider 配置。
-                    guard let providerConfiguration = getAPIConfiguration(for: modelInfo.company ?? "Unknown"),
+                    guard let providerConfiguration = self.getAPIConfiguration(for: modelInfo.company ?? "Unknown"),
                           let apiKey = providerConfiguration.key,
                           !apiKey.isEmpty else {
                         throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
@@ -2541,15 +2546,15 @@ class APIManager {
                     var tools: [[String: Any]]? = nil
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
                         let legacySources = LegacyToolCanonicalAdapter.sources(
-                            memoryEnabled: isMemoryEnabled(),
-                            mapEnabled: isMapEnabled(),
-                            calendarEnabled: isCalendarEnabled(),
-                            searchEnabled: isSearchEnabled(),
-                            knowledgeEnabled: isKnowledgeEnabled(),
-                            codeEnabled: isCodeEnabled(),
-                            healthEnabled: isHealthEnabled(),
-                            weatherEnabled: isWeatherEnabled(),
-                            canvasEnabled: isCanvasEnabled()
+                            memoryEnabled: self.isMemoryEnabled(),
+                            mapEnabled: self.isMapEnabled(),
+                            calendarEnabled: self.isCalendarEnabled(),
+                            searchEnabled: self.isSearchEnabled(),
+                            knowledgeEnabled: self.isKnowledgeEnabled(),
+                            codeEnabled: self.isCodeEnabled(),
+                            healthEnabled: self.isHealthEnabled(),
+                            weatherEnabled: self.isWeatherEnabled(),
+                            canvasEnabled: self.isCanvasEnabled()
                         )
                         preparedAssistantTools = try await AssistantToolBridge.prepare(
                             scope: assistantToolScope,
@@ -2636,6 +2641,7 @@ class APIManager {
 
                     if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
                        let prepared = preparedAssistantTools {
+                        if depth == 0, let userOperation { RuntimeBackgroundContinuation.shared.begin(userOperation) }
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
                         try await self.processSDKAgentEngine(
                             runID: currentRunID,
@@ -2676,13 +2682,17 @@ class APIManager {
                             trigger: depth == 0 ? "initialUserRequest" : "continueAfterToolResult",
                             requestData: requestData
                         )
+                        if let roundID = diagnosticsRoundID {
+                            await recorder.recordModelRequest(roundID: roundID, requestData: requestData, httpHeaders: request.allHTTPHeaderFields)
+                        }
                     }
                     
                     // 推送请求状态
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "等待模型响应" : "Waiting for model response"))
                     
                     let chatEngine = self.chatEngineFactory()
-                    let result = await chatEngine.stream(request: request, configuration: chatConfig)
+                    let result = await chatEngine.stream(request: request, configuration: chatConfig,
+                        transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver)
                     
                     // 定义变量保存所有分片累计的 tool_calls
                     var accumulatedToolCalls: [[String: Any]] = []
@@ -2701,7 +2711,7 @@ class APIManager {
                     // 处理流式响应
                     for try await event in result {
                         if self.isCancelled {
-                            continuation.finish()
+                            RuntimeUserOperation.finishStream(continuation)
                             self.isCancelled = false
                             break
                         }
@@ -2792,7 +2802,7 @@ class APIManager {
                                                 planning.append(contentText)
                                             } else {
                                                 responseData.content = contentText
-                                                toolMessage?.append(contentText)
+                                                self.toolMessage?.append(contentText)
                                             }
                                         } else {
                                             buffer += contentText
@@ -2808,7 +2818,7 @@ class APIManager {
                                             planning.append(contentText)
                                         } else {
                                             responseData.content = contentText
-                                            toolMessage?.append(contentText)
+                                            self.toolMessage?.append(contentText)
                                         }
                                     }
                                 }
@@ -2826,7 +2836,7 @@ class APIManager {
                                         planning.append(transcript)
                                     } else {
                                         responseData.content = transcript
-                                        toolMessage?.append(transcript)
+                                        self.toolMessage?.append(transcript)
                                     }
                                 }
                             }
@@ -2983,12 +2993,14 @@ class APIManager {
                         )
                     }
                     if depth == 0 {
+                        try userOperation?.markSucceeded()
                         await self.agentDiagnosticsRecorder?.complete(status: "completed")
                     }
                     // 流完成
-                    continuation.finish()
+                    RuntimeUserOperation.finishStream(continuation)
                     self.isCancelled = false
                 } catch {
+                    userOperation?.markFailed()
                     if let recorder = self.agentDiagnosticsRecorder,
                        let diagnosticsRoundID,
                        !diagnosticsRoundFinished {
@@ -3001,14 +3013,17 @@ class APIManager {
                     }
                     if depth == 0 {
                         await self.agentDiagnosticsRecorder?.complete(
-                            status: "failed",
-                            error: AgentSafeError(error).message
+                            status: userOperation?.snapshot.reason == nil ? "failed" : "interrupted",
+                            error: userOperation?.snapshot.reason ?? AgentSafeError(error).message
                         )
                     }
-                    continuation.finish(throwing: error)
+                    if let userOperation, let reason = userOperation.snapshot.reason {
+                        continuation.finish(throwing: RuntimeOperationInterruptionError(operationID: userOperation.id, reason: reason))
+                    } else { continuation.finish(throwing: error) }
                 }
             }
             if depth == 0 {
+                userOperation?.bindProducerCancellation { producerTask.cancel() }
                 self.activeAgentProducerTask?.cancel()
                 self.activeAgentProducerTask = producerTask
                 self.activeAgentRunID = currentRunID
@@ -3491,7 +3506,10 @@ class APIManager {
                            imageReversePrompt: String
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
+        initializingRunID = runID
         await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
+        try Task.checkCancellation()
+        guard AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) else { throw HanlinChatError.cancelled }
         currentTask?.cancel()
         currentTask = nil
         isCancelled = false
@@ -3508,13 +3526,21 @@ class APIManager {
             throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无法获取模型信息"])
         }
 
-        agentDiagnosticsRecorder = await AgentDiagnosticsRecorder.start(
+        let recorder = await AgentDiagnosticsRecorder.start(
             runID: runID,
             groupID: groupID,
             providerID: modelInfo.company ?? "Unknown",
             modelID: modelInfo.name ?? modelName
         )
-        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: agentDiagnosticsRecorder)
+        guard !isCancelled, !Task.isCancelled,
+              AgentRunLifecycleCoordinator.shared.attachRecorder(recorder, for: runID) else {
+            await recorder?.complete(status: "cancelled")
+            throw HanlinChatError.cancelled
+        }
+        agentDiagnosticsRecorder = recorder
+        agentDiagnosticsRecorder?.journal.stage("model.catalog", text: modelInfo.catalogMetadataJSON ?? "unknown",
+            fields: ["requestedModelID": modelName, "priceTier": String(modelInfo.catalogPriceTier),
+                     "imageOutputVerified": String(modelInfo.hasVerifiedImageOutput)])
         
         let company = modelInfo.company?.uppercased()
         let executionRoute = Self.resolveModelExecutionRoute(
@@ -3711,7 +3737,8 @@ class APIManager {
                     let reqID = response.allHeaderFields["x-request-id"] as? String
                     await recorder.responseStarted(roundID: roundID, httpStatus: response.statusCode, providerRequestID: reqID)
                 }
-            }
+            },
+            transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver
         )
         let agentEngine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
 
@@ -3729,10 +3756,14 @@ class APIManager {
         )
 
         var currentStepID: UUID?
+        var visibleFinalCharacters = 0
+        var hasCompletedToolAction = false
 
         for try await event in sdkStream {
+            self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.event", round: currentStepID, text: String(describing: event))
+            try RuntimeUserOperation.current?.checkInterruption()
             if Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
-                continuation.finish()
+                RuntimeUserOperation.finishStream(continuation)
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
                 return
             }
@@ -3743,9 +3774,13 @@ class APIManager {
 
             case .stepStarted(let index, let prep):
                 currentStepID = toolAdapter.currentRoundID
-                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response"))
+                visibleFinalCharacters = 0
+                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response", modelRoundID: currentStepID))
 
             case .textDelta(let text):
+                self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.content", round: currentStepID, text: text)
+                visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
+                RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
                 if self.toolMessage == nil { self.toolMessage = "" }
                 self.toolMessage?.append(text)
                 if let stepID = currentStepID {
@@ -3759,6 +3794,8 @@ class APIManager {
                 continuation.yield(StreamData(content: text))
 
             case .reasoningDelta(let text):
+                self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.reasoning", round: currentStepID, text: text)
+                RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
                 if self.toolMessageReasoning == nil { self.toolMessageReasoning = "" }
                 self.toolMessageReasoning?.append(text)
                 if let stepID = currentStepID {
@@ -3814,6 +3851,7 @@ class APIManager {
                 break
 
             case .toolResult(let callID, let name, let modelText, let resultRef, let isError):
+                if !isError { hasCompletedToolAction = true }
                 if !toolAdapter.completedCallIDs.contains(callID) {
                     let profile = preparedAssistantTools.presentationProfile(for: name)
                         ?? ToolPresentationProfileRegistry.resolve(toolName: name)
@@ -3890,19 +3928,25 @@ class APIManager {
                 }
 
             case .finished(let reason, let usage):
+                guard visibleFinalCharacters > 0 || hasCompletedToolAction else {
+                    let error = HanlinAISDKError.incompleteProviderResponse(reason: reason)
+                    await self.agentDiagnosticsRecorder?.complete(status: "failed", error: error.localizedDescription)
+                    throw error
+                }
                 if reason == "other" || reason == "error" || reason == "failed" || reason == "unknown" || reason.isEmpty {
                     await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event: \(reason)")
                     let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
                     throw error
                 }
+                try RuntimeUserOperation.current?.markSucceeded()
                 await self.agentDiagnosticsRecorder?.complete(status: "completed")
-                continuation.yield(StreamData(content: "\n\n"))
-                continuation.finish()
+                if reason == "length" { continuation.yield(StreamData(errorInfo: "length")) }
+                RuntimeUserOperation.finishStream(continuation)
                 return
 
             case .cancelled:
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
-                continuation.finish()
+                RuntimeUserOperation.finishStream(continuation)
                 return
             }
         }

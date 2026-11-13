@@ -1,0 +1,171 @@
+From cae0a28d9ede96739be22fff73bb28353346b976 Mon Sep 17 00:00:00 2001
+From: Paolo Severini <paolosev@microsoft.com>
+Date: Thu, 18 Jun 2026 21:02:24 +0200
+Subject: [PATCH] [wasm-interpreter] Validate instance trusted data in
+ WasmRunInterpreter
+
+The JS-to-Wasm interpreter wrapper sizes its on-stack argument and
+return buffers from the trusted signature of the called function,
+obtained via WasmExportedFunctionData. Runtime_WasmRunInterpreter,
+however, re-derives the signature from the in-cage WasmInstanceObject by
+reading WasmInstanceObject::trusted_data_, an indirect pointer that an
+in-sandbox attacker can same-tag swap to point at a different instance's
+WasmTrustedInstanceData. The trusted-pointer table only validates the
+tag, not identity, so the runtime could read a mismatched module
+signature and read/write parameter and return values past the fixed-size
+native-stack buffers.
+
+Re-establish the invariant that the trusted data actually belongs to the
+passed-in instance before trusting its module/signature, and bound the
+function index against the (now consistent) module, with SBXCHECKs.
+Add a --sandbox-testing regression test.
+
+Bug: 522294322
+Change-Id: If39f80431bb10f4069d204d20874de44785586ec
+Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/7963640
+Commit-Queue: Paolo Severini <paolosev@microsoft.com>
+Reviewed-by: Michael Lippautz <mlippautz@chromium.org>
+Reviewed-by: Daniel Lehmann <dlehmann@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#108151}
+---
+ src/sandbox/testing.cc                        |  2 +
+ .../interpreter/wasm-interpreter-runtime.cc   | 13 +++-
+ test/mjsunit/mjsunit.status                   |  7 ++
+ test/mjsunit/sandbox/regress-522294322.js     | 66 +++++++++++++++++++
+ 4 files changed, 87 insertions(+), 1 deletion(-)
+ create mode 100644 test/mjsunit/sandbox/regress-522294322.js
+
+diff --git a/src/sandbox/testing.cc b/src/sandbox/testing.cc
+index 175c30ea9acc..de469f15d58e 100644
+--- a/src/sandbox/testing.cc
++++ b/src/sandbox/testing.cc
+@@ -1511,6 +1511,8 @@ SandboxTesting::FieldOffsetMap& SandboxTesting::GetFieldOffsetMap() {
+         offsetof(WasmModuleObject, script_);
+     fields[WASM_INSTANCE_OBJECT_TYPE]["module_object"] =
+         offsetof(WasmInstanceObject, module_object_);
++    fields[WASM_INSTANCE_OBJECT_TYPE]["trusted_data"] =
++        offsetof(WasmInstanceObject, trusted_data_);
+     fields[WASM_FUNC_REF_TYPE]["trusted_internal"] =
+         offsetof(WasmFuncRef, trusted_internal_);
+     fields[WASM_TABLE_OBJECT_TYPE]["entries"] =
+diff --git a/src/wasm/interpreter/wasm-interpreter-runtime.cc b/src/wasm/interpreter/wasm-interpreter-runtime.cc
+index 31fc2dc1a578..6fb780a32390 100644
+--- a/src/wasm/interpreter/wasm-interpreter-runtime.cc
++++ b/src/wasm/interpreter/wasm-interpreter-runtime.cc
+@@ -77,6 +77,16 @@ RUNTIME_FUNCTION(Runtime_WasmRunInterpreter) {
+   DirectHandle<WasmInstanceObject> instance = args.at<WasmInstanceObject>(0);
+   DirectHandle<WasmTrustedInstanceData> trusted_data(
+       instance->trusted_data(isolate), isolate);
++  // The JS-to-Wasm interpreter wrapper sizes the on-stack argument and return
++  // buffers from the trusted (out-of-cage) signature of the target function,
++  // but reaches this runtime through the in-cage WasmInstanceObject. A sandbox
++  // attacker could same-tag swap WasmInstanceObject::trusted_data_ to point at
++  // another instance's trusted data, which would make us read a mismatched
++  // signature below and read/write past those fixed-size buffers. Re-establish
++  // the invariant that the trusted data actually belongs to {instance} before
++  // trusting its module and signature.
++  SBXCHECK(trusted_data->has_instance_object() &&
++           trusted_data->instance_object() == *instance);
+   DirectHandle<Object> ref_param_array_obj = args.at(1);
+   int32_t func_index = NumberToInt32(args[2]);
+   DirectHandle<Object> arg_buffer_obj = args.at(3);
+@@ -101,7 +111,8 @@ RUNTIME_FUNCTION(Runtime_WasmRunInterpreter) {
+            IsFixedArray(*ref_param_array_obj));
+ 
+   // Reserve buffers for argument and return values.
+-  DCHECK_GT(trusted_data->module()->functions.size(), func_index);
++  SBXCHECK_LT(static_cast<uint32_t>(func_index),
++              trusted_data->module()->functions.size());
+   const wasm::FunctionSig* sig =
+       trusted_data->module()->functions[func_index].sig;
+   DCHECK_GE(kMaxInt, sig->parameter_count());
+diff --git a/test/mjsunit/mjsunit.status b/test/mjsunit/mjsunit.status
+index d6925207619e..b8b0e7f50957 100644
+--- a/test/mjsunit/mjsunit.status
++++ b/test/mjsunit/mjsunit.status
+@@ -664,6 +664,13 @@
+   'shared-memory/wasm/*': [SKIP],
+ }],  # not has_wasm_interpreter and variant == jitless
+ 
++##############################################################################
++['not has_wasm_interpreter', {
++  # This sandbox regression test forces --wasm-jitless to exercise the DrumBrake
++  # interpreter's JS-to-Wasm wrapper.
++  'sandbox/regress-522294322': [SKIP],
++}],  # not has_wasm_interpreter
++
+ ['has_wasm_interpreter and variant == jitless', {
+   # Skip tests that require Wasm experimental features not supported by the
+   # Wasm interpreter, or that explicitly require compilation.
+diff --git a/test/mjsunit/sandbox/regress-522294322.js b/test/mjsunit/sandbox/regress-522294322.js
+new file mode 100644
+index 000000000000..624c806ec740
+--- /dev/null
++++ b/test/mjsunit/sandbox/regress-522294322.js
+@@ -0,0 +1,66 @@
++// Copyright 2026 the V8 project authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++// Flags: --wasm-jitless --sandbox-testing
++
++d8.file.execute('test/mjsunit/wasm/wasm-module-builder.js');
++
++// The JS->Wasm wrapper sizes the on-stack argument and return buffers from the
++// trusted (out-of-cage) signature of the called function, but reaches
++// Runtime_WasmRunInterpreter through the in-cage WasmInstanceObject. A
++// sandbox attacker can same-tag swap WasmInstanceObject::trusted_data_ to point
++// at another instance's trusted data, so the runtime would read a mismatched
++// signature and read/write its values past the fixed-size native-stack buffers.
++
++// Module A exports a function with a single i64 return value. The interpreter
++// wrapper therefore sizes its return buffer for one return value.
++const builderA = new WasmModuleBuilder();
++builderA.addFunction('f0', makeSig([], [kWasmI64]))
++    .addBody([...wasmI64Const(0)])
++    .exportFunc();
++const instanceA = builderA.instantiate();
++
++// Module B exports a function at the same index with many i64 return values.
++const kNumReturns = 8;
++const builderB = new WasmModuleBuilder();
++const returns = new Array(kNumReturns).fill(kWasmI64);
++let bodyB = [];
++for (let i = 0; i < kNumReturns; ++i) {
++  bodyB = bodyB.concat(wasmI64Const(0x4142434445464748n));
++}
++builderB.addFunction('f0', makeSig([], returns)).addBody(bodyB).exportFunc();
++const instanceB = builderB.instantiate();
++
++// Sandbox memory-corruption helpers.
++const kHeapObjectTag = 1;
++const kWasmInstanceObjectType =
++    Sandbox.getInstanceTypeIdFor('WASM_INSTANCE_OBJECT_TYPE');
++const kTrustedDataOffset =
++    Sandbox.getFieldOffset(kWasmInstanceObjectType, 'trusted_data');
++
++const memory = new DataView(new Sandbox.MemoryView(0, 0x100000000));
++function getPtr(obj) {
++  return Sandbox.getAddressOf(obj) + kHeapObjectTag;
++}
++function getField(obj, offset) {
++  return memory.getUint32(obj + offset - kHeapObjectTag, true);
++}
++function setField(obj, offset, value) {
++  memory.setUint32(obj + offset - kHeapObjectTag, value, true);
++}
++
++// Same-tag swap: point instanceA's trusted_data indirect-pointer handle at
++// instanceB's trusted data. Both handles carry the same trusted-pointer tag,
++// so the trusted-pointer table tag check does not catch the swap.
++const instA = getPtr(instanceA);
++const instB = getPtr(instanceB);
++setField(instA, kTrustedDataOffset, getField(instB, kTrustedDataOffset));
++
++// Calling A's single-return export now resolves the swapped (module B's)
++// signature inside Runtime_WasmRunInterpreter. This must be detected as a
++// sandbox violation and kill the process rather than writing module B's return
++// values past module A's return buffer on the native stack.
++instanceA.exports.f0();
++
++assertUnreachable("Process should have been killed.");

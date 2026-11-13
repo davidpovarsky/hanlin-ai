@@ -120,7 +120,9 @@ public actor HanlinAISDKAgentEngine {
             maxRetries: 2
         )
 
-        let limit = max(maxSteps ?? 40, 1)
+        // nil means run until the model completes, the user cancels or a real error occurs.
+        // An explicitly configured budget remains supported and visible to the caller.
+        let limit = maxSteps.map { max($0, 1) }
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
@@ -131,11 +133,17 @@ public actor HanlinAISDKAgentEngine {
                     var currentDefinitions = definitions
                     var currentTools = initialTools
                     var stepOffset = 0
+                    var finalVisibleCharacters = 0
+                    var hasSuccessfulToolAction = false
 
                     while true {
-                        let remainingSteps = max(limit - stepOffset, 1)
                         let currentNames = Set(currentDefinitions.map(\.name))
-                        var stopConditions: [StopCondition] = [stepCountIs(remainingSteps)]
+                        // The pinned SDK replaces an empty list with stepCountIs(1).
+                        // An explicit never-stop condition preserves the nil-budget contract.
+                        var stopConditions: [StopCondition] = [{ _ in false }]
+                        if let limit {
+                            stopConditions.append(stepCountIs(max(limit - stepOffset, 1)))
+                        }
                         if let dynamicTools {
                             stopConditions.append { _ in
                                 let latest = await dynamicTools()
@@ -182,7 +190,9 @@ public actor HanlinAISDKAgentEngine {
                             case .startStep:
                                 localStepIndex += 1
                                 meaningfulEventCount = 0
+                                finalVisibleCharacters = 0
                             case .textDelta(_, let text, _):
+                                finalVisibleCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                                 if !text.isEmpty {
                                     meaningfulEventCount += 1
                                     continuation.yield(.textDelta(text))
@@ -204,6 +214,7 @@ public actor HanlinAISDKAgentEngine {
                             case .toolResult(let result):
                                 meaningfulEventCount += 1
                                 let projected = Self.toolResult(from: result)
+                                if !projected.isError { hasSuccessfulToolAction = true }
                                 continuation.yield(.toolResult(
                                     callID: result.toolCallId,
                                     name: result.toolName,
@@ -222,7 +233,7 @@ public actor HanlinAISDKAgentEngine {
                             case .finish(let reason, let rawReason, let usage):
                                 let nextOffset = offsetSnapshot + max(localStepIndex + 1, 1)
                                 if reason == .toolCalls,
-                                   nextOffset < limit,
+                                   limit.map({ nextOffset < $0 }) ?? true,
                                    let dynamicTools {
                                     let latestDefinitions = await dynamicTools()
                                     if Set(latestDefinitions.map(\.name)) != currentNames {
@@ -243,6 +254,9 @@ public actor HanlinAISDKAgentEngine {
                                         shouldReloadToolsAndContinue = true
                                         break
                                     }
+                                }
+                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction else {
+                                    throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)
                                 }
                                 continuation.yield(.finished(
                                     reason: rawReason ?? reason.rawValue,

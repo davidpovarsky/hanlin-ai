@@ -8,6 +8,12 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 
 @protocol HanlinNativeServicesProvider <NSObject>
 
+/// Async canonical runtime.execute JSON. Completion returns the complete
+/// RuntimeExecutionResult JSON; the return value is a session-owned cancel handle.
+- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;
+- (BOOL)cancelRuntime:(NSString *)requestID;
+- (void)invalidateRuntimeRequests;
+
 - (nullable NSString *)dataRootDirectory;
 - (nullable NSString *)stateDirectory;
 - (nullable NSString *)documentsDirectory;
@@ -35,6 +41,9 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 /// A provider-bound bridge object installed into one NativeScript global
 /// object before untrusted application JavaScript starts executing.
 @interface HanlinNativeServicesSessionBridge : NSObject
+
+- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;
+- (BOOL)cancelRuntime:(NSString *)requestID;
 
 - (nullable NSString *)dataRootDirectory;
 - (nullable NSString *)stateDirectory;
@@ -84,6 +93,8 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 + (nullable id<HanlinNativeServicesProvider>)currentProvider;
 
 // Class methods callable directly from JavaScript / Objective-C
++ (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;
++ (BOOL)cancelRuntime:(NSString *)requestID;
 + (nullable NSString *)dataRootDirectory;
 + (nullable NSString *)stateDirectory;
 + (nullable NSString *)documentsDirectory;
@@ -119,6 +130,8 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;
 
 + (instancetype)sharedBridge;
+- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;
+- (BOOL)cancelRuntime:(NSString *)requestID;
 - (nullable NSString *)dataRootDirectory;
 - (nullable NSString *)stateDirectory;
 - (nullable NSString *)documentsDirectory;

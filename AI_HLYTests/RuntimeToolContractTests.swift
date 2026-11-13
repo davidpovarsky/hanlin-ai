@@ -87,8 +87,8 @@ struct RuntimeToolContractTests {
 
         #expect(parameters["additionalProperties"] as? Bool == false)
         #expect(properties["command"] != nil)
-        #expect(Set(advertised) == Set(ShellRuntimeService.capabilities.map(\.name)))
-        #expect(advertised.count >= 23)
+        #expect(Set(advertised) == Set(ShellRuntimeService.capabilities.map(\.name) + ["pwd"]))
+        #expect(advertised.count >= 24)
         #expect(!advertised.contains("echo"))
         #expect(!advertised.contains("date"))
     }
@@ -346,7 +346,7 @@ struct RuntimeToolContractTests {
         #expect(executeTool is ExecuteSkillResourceTool, "execute_skill_resource must resolve to ExecuteSkillResourceTool")
     }
 
-    @Test func executeSkillResourceRequiresActiveSessionAndFailsClosed() async {
+    @Test func executeSkillResourceRequiresLoadedContextAndValidArguments() async {
         let tool = ExecuteSkillResourceTool()
         let contextWithoutSession = NativeToolExecutionContext(
             localeIdentifier: "en_US",
@@ -357,11 +357,11 @@ struct RuntimeToolContractTests {
             capabilitySession: nil
         )
 
-        // Valid parameter schema using "relative_path" per specification: fails on missing authorization
+        // Valid parameter schema using "relative_path" per specification: reports missing conversation/loaded-Skill context
         let validArgs = "{\"skill_id\": \"unloaded_skill\", \"relative_path\": \"scripts/run.py\"}"
         let result = await tool.execute(argumentsJSON: validArgs, context: contextWithoutSession)
-        #expect(result.outcome == .rejectedByCapability)
-        #expect(result.modelText.contains("session") || result.modelText.contains("Session") || result.modelText.contains("denied") || result.modelText.contains("authorized"))
+        #expect(result.outcome == .invalidArguments)
+        #expect(result.modelText.contains("conversation context") && result.modelText.contains("load_skill"))
 
         // Invalid parameter schema using rejected "resource_path" must fail closed on schema validation
         let invalidArgs = "{\"skill_id\": \"unloaded_skill\", \"resource_path\": \"scripts/run.py\"}"

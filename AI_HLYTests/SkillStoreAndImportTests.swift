@@ -11,12 +11,14 @@ private final class MockDownloaderURLProtocol: URLProtocol, @unchecked Sendable 
         let headers: [String: String]
         let chunks: [Data]
         let redirectURL: URL?
+        let finishes: Bool
 
-        init(statusCode: Int, headers: [String: String] = [:], chunks: [Data] = [], redirectURL: URL? = nil) {
+        init(statusCode: Int, headers: [String: String] = [:], chunks: [Data] = [], redirectURL: URL? = nil, finishes: Bool = true) {
             self.statusCode = statusCode
             self.headers = headers
             self.chunks = chunks
             self.redirectURL = redirectURL
+            self.finishes = finishes
         }
     }
 
@@ -73,7 +75,7 @@ private final class MockDownloaderURLProtocol: URLProtocol, @unchecked Sendable 
         for chunk in mock.chunks {
             client?.urlProtocol(self, didLoad: chunk)
         }
-        client?.urlProtocolDidFinishLoading(self)
+        if mock.finishes { client?.urlProtocolDidFinishLoading(self) }
     }
 
     override func stopLoading() {}
@@ -667,10 +669,78 @@ struct SkillStoreAndImportTests {
         #expect(!FileManager.default.fileExists(atPath: sentinelURL.path))
     }
 
-    @Test("BoundedStreamDownloader enforces network limits and rejects non-HTTPS or oversize payloads")
+    @Test("Background Skill staging streams a real compressed resource without truncation")
+    func backgroundLargeSkillArchive() async throws {
+        let zip = FileManager.default.temporaryDirectory.appendingPathComponent("large-skill-\(UUID().uuidString).zip")
+        defer { try? FileManager.default.removeItem(at: zip) }
+        let archive = try Archive(url: zip, accessMode: .create)
+        let manifest = Data("---\nname: large-resource-skill\ndescription: Full compressed resource fixture\n---\n\n# Resource\n".utf8)
+        try archive.addEntry(with: "SKILL.md", type: .file, uncompressedSize: UInt32(manifest.count)) { position, size in
+            manifest.subdata(in: position..<(position + size))
+        }
+        let byteCount: UInt32 = 32 * 1_048_576
+        try archive.addEntry(with: "resources/full.bin", type: .file, uncompressedSize: byteCount,
+            compressionMethod: .deflate) { position, size in
+                Data((position..<(position + size)).map { UInt8(truncatingIfNeeded: $0) })
+            }
+        let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: zip)
+        defer { staged.cleanup() }
+        #expect(staged.resources.contains { $0.relativePath == "resources/full.bin" && $0.byteCount == Int64(byteCount) })
+        let handle = try FileHandle(forReadingFrom: staged.skillRootDirectoryURL.appendingPathComponent("resources/full.bin"))
+        defer { try? handle.close() }
+        var offset = 0
+        while let data = try handle.read(upToCount: 65_536), !data.isEmpty {
+            #expect(data == Data((offset..<(offset + data.count)).map { UInt8(truncatingIfNeeded: $0) }))
+            offset += data.count
+        }
+        #expect(offset == Int(byteCount))
+    }
+
+    @Test("Downloads beyond the former cap preserve every byte and cancellation remains reusable")
+    func fileBackedDownloadAndCancellation() async throws {
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MockDownloaderURLProtocol.self]
+        let url = URL(string: "https://mock.acceptance.test/large-\(UUID().uuidString)")!
+        let chunk = Data((0..<65_536).map { UInt8(truncatingIfNeeded: $0) })
+        MockDownloaderURLProtocol.register(url: url, response: .init(statusCode: 200,
+            chunks: Array(repeating: chunk, count: 512)))
+        let downloader = BoundedStreamDownloader(sessionConfiguration: config)
+        let (file, _) = try await downloader.download(from: url)
+        defer { try? FileManager.default.removeItem(at: file) }
+        let handle = try FileHandle(forReadingFrom: file)
+        defer { try? handle.close() }
+        var total = 0
+        while let actual = try handle.read(upToCount: chunk.count), !actual.isEmpty {
+            #expect(actual == chunk)
+            total += actual.count
+        }
+        #expect(total == 32 * 1_048_576)
+
+        let waiting = URL(string: "https://mock.acceptance.test/waiting-\(UUID().uuidString)")!
+        MockDownloaderURLProtocol.register(url: waiting, response: .init(statusCode: 200,
+            chunks: [chunk], finishes: false))
+        let (updates, continuation) = AsyncStream<Int64>.makeStream()
+        defer { continuation.finish() }
+        let cancellable = BoundedStreamDownloader(sessionConfiguration: config,
+            progress: { continuation.yield($0.receivedBytes) })
+        let task = Task { try await cancellable.download(from: waiting) }
+        for await bytes in updates where bytes > 0 { task.cancel(); break }
+        do {
+            let (unexpected, _) = try await task.value
+            try? FileManager.default.removeItem(at: unexpected)
+            Issue.record("Active cancellation returned a completed download")
+        } catch is CancellationError {
+            // The transport never finishes this request; cancellation must resume it.
+        }
+        let (reused, _) = try await cancellable.download(from: url)
+        defer { try? FileManager.default.removeItem(at: reused) }
+        let size = try reused.resourceValues(forKeys: [.fileSizeKey]).fileSize
+        #expect(size == 32 * 1_048_576)
+    }
+
+    @Test("File-backed downloader enforces an explicit budget and rejects non-HTTPS redirects")
     func boundedDownloaderEnforcesNetworkLimits() async throws {
-        // Assert production max download constant is exactly 25 MiB
-        #expect(SkillImporter.maxDownloadBytes == 25 * 1024 * 1024)
+        #expect(BoundedStreamDownloader().maxBytes == nil)
 
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockDownloaderURLProtocol.self]
@@ -684,8 +754,9 @@ struct SkillStoreAndImportTests {
             url: okURL,
             response: .init(statusCode: 200, headers: ["Content-Length": "50"], chunks: [okData])
         )
-        let (downloadedData, resp) = try await downloader.download(from: okURL)
-        #expect(downloadedData == okData)
+        let (downloadedFile, resp) = try await downloader.download(from: okURL)
+        defer { try? FileManager.default.removeItem(at: downloadedFile) }
+        #expect(try Data(contentsOf: downloadedFile) == okData)
         #expect(resp.statusCode == 200)
 
         // 2. HTTP rejected

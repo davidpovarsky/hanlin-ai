@@ -41,7 +41,8 @@ public struct HanlinHostCallContext: Sendable {
         self.installedPackageID = installedPackageID
         self.appSessionID = appSessionID
         self.runtimeSessionID = runtimeSessionID
-        self.effectiveCapabilities = effectiveCapabilities
+        // Preserve declared metadata while using the personal-host capability policy.
+        self.effectiveCapabilities = effectiveCapabilities.union(["all"])
         self.storageScope = storageScope
         self.runtimeWorkspaceIdentifier = runtimeWorkspaceIdentifier
         self.userGesturePresent = userGesturePresent

@@ -1,0 +1,3200 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "0f64aaff3490a886f5bc1ed4be6a8f34aafd1ac6",
+  "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
+  "uncommittedSourcePaths": [],
+  "status": "IN_PROGRESS_SOURCE_AUDIT",
+  "sdkAuthority": "source-inventory.json",
+  "sdkSources": [
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "sha256": "dec2911594fcefdfc6ba0b6e543f9d7302d72a946c439a921dc9c6cc1cb0f09f"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "sha256": "5b7c7a3361f5645d89792908f63a3c101f57ceb965220f9a8dbf9e51e6693dd2"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
+      "sha256": "a221b4c516c1e3f717eeaca8b5dc8e3fb52a66294b161d12ae893902fdb20766"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+      "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+      "sha256": "38ea9cf373f082c93701f58fa801bde577ed4d278134970e524877a2862bb515"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+      "sha256": "c8b63f62896fc0a6835e481d69644d06e72314b58bbe3661f41542de9c9c4a2f"
+    },
+    {
+      "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "sha256": "c9440f793065d74e617d67fa5b0efaae81008618f4b9389ce8309632799ce899"
+    },
+    {
+      "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+      "sha256": "07dd6bf358f8d94cd9333fb4c5400478505d29a874380800eb5e7e4141e4e2ad"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/package.json",
+      "sha256": "a2b03cb051457fbbb80c7ed058d199e63b06081ea0092dc8bbdbb9433de30b61"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+      "sha256": "322eb6f4c97bcf28de34e95b3aa871a9d9431f8c3cb37d9603a1ee911fcfc0ae"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Package.swift",
+      "sha256": "3c63a7cc0751b86e445e4048413c61553269e0d0fd087d01544c24dccb8f379c"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
+      "sha256": "5c5da45ded51ab824d71221a58eeba736bbf7f387a251b6b4961630a8172a49a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "sha256": "51e977e2972dfc0fb4bd67bb04a26050146f91b4be080ba6a2326c821dd4aafd"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
+      "sha256": "b889bee2edf76b6a364e6c6c03f92b830e27e992878c64621117fc8efc41c6d5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostServicesBridge.swift",
+      "sha256": "dda5b6bc45ab6939fa97c2b8ed55ada3dae7173d1779fac5f5658a3a7ea34695"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+      "sha256": "2eb1553e20dce0f9424cf99720c4f004c36ac14219f29fe7375b38c4b15659c8"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
+      "sha256": "82760eab2126410e611b9e369cbdf24f407a0281dc662d0fb183022133a616d1"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/package.json",
+      "sha256": "1f7a95effe1a120e9c59277f35751fa966ec552ff7c8359bdc031addf8deefa1"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "sha256": "13e6b22a0c800fe9944b5deab24066daf112227b841588d339e864105d772d8b"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+      "sha256": "6df5c320d64b6014e3094cd5acf3724aa2d6c4215d055384a7e9cdaa15d10e23"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/views.tsx",
+      "sha256": "4eaa99afdce01daf9f7c5c32f18bf2c60ac897025407194e063c64a81e154d68"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "sha256": "3bb2a1352a544c435415464ef4fe2d870a62e0d9069fcb76f21c7d86c05e8ab8"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/index.ts",
+      "sha256": "fea6f582087bbe16fba03304a1e606d02337df220d60b93fd425602224e0cf78"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "sha256": "aca64e3232f72cbb8a09a5a052c66ec73d42bd36c326b726b2fb95d6a31ce47d"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/modifiers.ts",
+      "sha256": "77ed8a18a38510e4e94c191d49f0c3a4bb8beaf5512371ed4797f972a7f7fd45"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
+      "sha256": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
+      "sha256": "84ccdc1560eb3798f4d0af5475b53992ed5e56456c4eb3151d9ea43ba12b9199"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "sha256": "0759b1466eae7382d0d89506b32d5e174266793cd3419e424df7bc82989534f9"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+      "sha256": "ace01e583be673a0ae4f021b1bb4e31ab5ef18ea2655802fb21c56c7b17b9f3b"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "sha256": "f699d60a220d6142f139435d5ceaa245de6eb7da066af3afe878407b0f268695"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "sha256": "bdfbd9aaafdc2b9b8b37b0e33a268f8b6143bdc807fa741ae699fd89ff259564"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "sha256": "5c139e30f598ea2da90464bb840684dd3a302d157ffa4102195021944efbb85c"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+      "sha256": "7a344d2f428cf8bdef9cdb74b4754f5da16890538799309e84d733c9abc73e06"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "sha256": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "sha256": "216b6cdb6f78791a0c8022672c5452d3edaafbb6eec328b566ebbd112019f33f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "sha256": "238a068fb6436153bdabdd70cb7a35edc49eb8a8821738b373ff64c2440b9905"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "sha256": "e685a45b93d6b0b4804ec6b13f0ada720ec2426a629a23a180ce28d1b64ce822"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
+      "sha256": "09969f5f4cc93bc3a265b0389a3af7a85ef5f8df0a705163a27beeacbad275ea"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+      "sha256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac"
+    },
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "sha256": "48a652bd840707c67a59fd3cbe4a0bff6801d75ba716880ebe648b1ba55f8a8e"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "822e67fb91840a07b1642c97d114fcf8d1d413eb6bf31b494d0e5944ed51c3b1"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "958644db0225b790f789380b2bf7afa87de9630d1edc469d9277c5cd1c024767"
+    },
+    {
+      "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
+      "sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d"
+    },
+    {
+      "path": "Scripts/NativeScript/Fixtures/HostServices/valid.ts",
+      "sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466"
+    },
+    {
+      "path": "Scripts/NativeScript/build-host-services.mjs",
+      "sha256": "f74356b5bebb6677548ceaf1cca971627da295ad0fb1b744787025fc665ad343"
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "f48101f4fae5c197ee4fe64a351cd64773048aa781c93f568cfbcd36e564c566"
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "117ae6521cd70fcb6a3edb3756ce4db75edfecbd9a76c9045620c1e8d5c43661"
+    },
+    {
+      "path": "Scripts/NativeScript/host-services.ts",
+      "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "sha256": "97c1400f8bce0072a89793e44d32006c4ad8f4cb166c878fe13677a78eadb6a5"
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "a074412c19f4ac85c4a76eb7dfa20d30efab68674a1928cce0a3c3a0ffe99348"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/configuration.json",
+      "sha256": "eff6879d1f7000b2bd8a78513b55fd9cb8ee4e2602b5a3f45bd40983dae6db33"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/expo-reviewed-capabilities.json",
+      "sha256": "b8b265ad02a0b2f4cac2c7bee4d078442b9b73a4297f79b0a1fc3d542a251a0a"
+    }
+  ],
+  "history": {
+    "ownerTestFlightBuild": "93401",
+    "source": "7fa8fe26",
+    "boundary": "Historical owner delivery only; not current branch/signature/matrix acceptance"
+  },
+  "targetsDeclaredInProject": [
+    "AI_HLYTests",
+    "AI_HLYUITests",
+    "AI_Hanlin",
+    "ChavrusaChatNotificationService",
+    "ChavrusaChatShare",
+    "ChavrusaChatTranslationProvider",
+    "HanlinScriptingWidgets"
+  ],
+  "entitlements": {
+    "AI_HLY/AI_HLY.entitlements": {
+      "declared": {
+        "aps-environment": "$(APS_ENVIRONMENT)",
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.itorah.chavrusachat"
+        ],
+        "com.apple.developer.icloud-services": [
+          "CloudKit",
+          "CloudDocuments"
+        ],
+        "com.apple.developer.ubiquity-kvstore-identifier": "$(TeamIdentifierPrefix)com.itorah.chavrusachat",
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.kernel.extended-virtual-addressing": true,
+        "com.apple.developer.siri": true,
+        "com.apple.developer.translation-app": true,
+        "com.apple.developer.usernotifications.time-sensitive": true,
+        "com.apple.developer.weatherkit": true,
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "sha256": "54292b691e208ba5a53cfc4f6b4cd44dc39c237b87f06df0c2c287dac4b73c01",
+      "exportedSignatureVerified": false
+    },
+    "ChavrusaChatShare/ChavrusaChatShare.entitlements": {
+      "declared": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "sha256": "32dc00c09d958f6bfb86e1c59c0703d6dbe754510a508fbf7dcc170895ec932a",
+      "exportedSignatureVerified": false
+    },
+    "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements": {
+      "declared": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "sha256": "32dc00c09d958f6bfb86e1c59c0703d6dbe754510a508fbf7dcc170895ec932a",
+      "exportedSignatureVerified": false
+    },
+    "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements": {
+      "declared": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "sha256": "32dc00c09d958f6bfb86e1c59c0703d6dbe754510a508fbf7dcc170895ec932a",
+      "exportedSignatureVerified": false
+    },
+    "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements": {
+      "declared": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "sha256": "32dc00c09d958f6bfb86e1c59c0703d6dbe754510a508fbf7dcc170895ec932a",
+      "exportedSignatureVerified": false
+    }
+  },
+  "optionalSurfaceSymbolScan": {
+    "ControlWidget": [
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift"
+    ],
+    "CSSearchableIndex": [],
+    "CoreSpotlight": [
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift"
+    ]
+  },
+  "sourceRefs": {
+    "shareWrite": {
+      "file": "ChavrusaChatShare/ShareViewController.swift",
+      "line": 59,
+      "anchor": "store.commit(batchID, items: items)",
+      "sha256": "6b71a2df3b98c8257e2d5663b0818c5c6f0d0d6eaedf5e56c4b4b628cad610bb"
+    },
+    "shareOwnedStore": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift",
+      "line": 43,
+      "anchor": "public struct HanlinShareInboxStore",
+      "sha256": "da88d7abcdae5d35786c88acd499866e82506c3baeb8e458befe0b849aa27ab2"
+    },
+    "shareProviderCopy": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift",
+      "line": 17,
+      "anchor": "return provider.loadFileRepresentation(",
+      "sha256": "6d7869a438638e5b3208ab9b82c140716680c21213652e289bde4fa984f0e100"
+    },
+    "shareRead": {
+      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+      "line": 44,
+      "anchor": "func pendingBatches()",
+      "sha256": "e245ee24d7e28c26a54bf675ff28e0c7d0514e25a98df5014357bbfb056e3d7b"
+    },
+    "shareReview": {
+      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+      "line": 6,
+      "anchor": "struct ChavrusaShareInboxView",
+      "sha256": "c17925e6be38369da566491e226f4115e5c1ae1cd1eeb182a6a1ecd22cdba27b"
+    },
+    "shareSelection": {
+      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+      "line": 17,
+      "anchor": "var shareActionTargets:",
+      "sha256": "beca15b259140eb97630b40f71ff1f6ce41ec637b90fb638486d6f0b8e6ba86e"
+    },
+    "translationSnapshot": {
+      "file": "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift",
+      "line": 41,
+      "anchor": "HanlinExtensionNodeView(",
+      "sha256": "add08ffc4d1f3e928d09ccd5eba32c6519952c0a566759762e0408e18ecbb7d3"
+    },
+    "extensionIntent": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift",
+      "line": 51,
+      "anchor": "public func perform()",
+      "sha256": "6353ac170353d0b17a805d844283c8bad5362f3bd6219ae8f65d1aaee99f7eae"
+    },
+    "extensionQueue": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "line": 13,
+      "anchor": "public func enqueue(",
+      "sha256": "4c33d0a844776704be92fb298ec857699c2c7ec3bc6507ba41bebe4cacbfd59f"
+    },
+    "extensionReceipts": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "line": 36,
+      "anchor": "public struct HanlinInvocationReceipt",
+      "sha256": "a5bfb9b1aa24952538ab1a5c790e2d1b2eafbf412265e337dfb56ab726e495f0"
+    },
+    "extensionExecutor": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
+      "line": 20,
+      "anchor": "public actor HanlinInvocationExecutor",
+      "sha256": "4fe357b75af2ebd3ee3f7689e2efbdf40201cadf06935af191e02f781d8f6c4f"
+    },
+    "resume": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 1472,
+      "anchor": "private func processPendingResumeCommands()",
+      "sha256": "728ef71dbe5223a94c1cdb92088314d0eaba6145c58c48281355cc2e56d22617"
+    },
+    "headless": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 756,
+      "anchor": "func executeHeadlessAction(",
+      "sha256": "728ef71dbe5223a94c1cdb92088314d0eaba6145c58c48281355cc2e56d22617"
+    },
+    "expoIntentRejection": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 1589,
+      "anchor": "guard entrypoint.runtimeProfile != .hanlinExpo else",
+      "sha256": "728ef71dbe5223a94c1cdb92088314d0eaba6145c58c48281355cc2e56d22617"
+    },
+    "expoExposureRejection": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "line": 435,
+      "anchor": "Expo exposure '",
+      "sha256": "e685a45b93d6b0b4804ec6b13f0ada720ec2426a629a23a180ce28d1b64ce822"
+    },
+    "widgetBundle": {
+      "file": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+      "line": 11,
+      "anchor": "struct HanlinScriptingWidgetBundle",
+      "sha256": "82cd32bf4bb35b4b4ee17be6d977f31ba30e178ce394c2f906685a302f6b2858"
+    },
+    "widgetCallback": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift",
+      "line": 45,
+      "anchor": "public static func perform(",
+      "sha256": "daf54d80424ced8598f19f95c37d5c27b373c566577a41d09984ecba424d40b5"
+    },
+    "widgetIntent": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinGenericWidgetActionIntent.swift",
+      "line": 14,
+      "anchor": "public func perform()",
+      "sha256": "b215a93a3919388f0751547a87de358aa049675a1844afe8b42b4b0e84c621d0"
+    },
+    "shortcutIntent": {
+      "file": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+      "line": 58,
+      "anchor": "struct HanlinRunScriptActionIntent",
+      "sha256": "df9e37a271bec215247ab0824397d2aa093cbd50b163980c1ca8d20c33241f10"
+    },
+    "hostShortcuts": {
+      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+      "line": 92,
+      "anchor": "struct ChavrusaChatShortcuts",
+      "sha256": "404e9383cfea56b86c973138f53e4ca8c75bdf89670359e623420919a4272ebe"
+    },
+    "notification": {
+      "file": "ChavrusaChatNotificationService/NotificationService.swift",
+      "line": 9,
+      "anchor": "override func didReceive(",
+      "sha256": "b5adb917e9e053c9fbdbc1acab8f0c220696e90aa43d87ef9fbc7230dcf467d5"
+    },
+    "requestBroker": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+      "line": 147,
+      "anchor": "public func request(",
+      "sha256": "7a344d2f428cf8bdef9cdb74b4754f5da16890538799309e84d733c9abc73e06"
+    },
+    "nativeBridge": {
+      "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+      "line": 9,
+      "anchor": "@protocol HanlinNativeServicesProvider",
+      "sha256": "ace01e583be673a0ae4f021b1bb4e31ab5ef18ea2655802fb21c56c7b17b9f3b"
+    },
+    "nativeAdapter": {
+      "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "line": 100,
+      "anchor": "public func executeRuntime(",
+      "sha256": "5b7c7a3361f5645d89792908f63a3c101f57ceb965220f9a8dbf9e51e6693dd2"
+    },
+    "nativeFacade": {
+      "file": "Scripts/NativeScript/host-services.ts",
+      "line": 44,
+      "anchor": "export function createHostServices()",
+      "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
+    },
+    "runtimeWire": {
+      "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+      "line": 5,
+      "anchor": "enum HanlinRuntimeWireProtocol",
+      "sha256": "38ea9cf373f082c93701f58fa801bde577ed4d278134970e524877a2862bb515"
+    },
+    "nativeSession": {
+      "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "line": 92,
+      "anchor": "guard Self.activeSession == nil",
+      "sha256": "f699d60a220d6142f139435d5ceaa245de6eb7da066af3afe878407b0f268695"
+    },
+    "expoFacade": {
+      "file": "Packages/HanlinExpoUI/src/host-services.ts",
+      "line": 44,
+      "anchor": "executeRuntime(",
+      "sha256": "3bb2a1352a544c435415464ef4fe2d870a62e0d9069fcb76f21c7d86c05e8ab8"
+    },
+    "expoModule": {
+      "file": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
+      "line": 27,
+      "anchor": "AsyncFunction(\"invoke\")",
+      "sha256": "82760eab2126410e611b9e369cbdf24f407a0281dc662d0fb183022133a616d1"
+    },
+    "expoAdapter": {
+      "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "line": 63,
+      "anchor": "case \"runtime.execute\":",
+      "sha256": "dec2911594fcefdfc6ba0b6e543f9d7302d72a946c439a921dc9c6cc1cb0f09f"
+    },
+    "runtimeBroker": {
+      "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+      "line": 18,
+      "anchor": "func execute(",
+      "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+    },
+    "callerContext": {
+      "file": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
+      "line": 12,
+      "anchor": "public struct HanlinHostCallContext",
+      "sha256": "a221b4c516c1e3f717eeaca8b5dc8e3fb52a66294b161d12ae893902fdb20766"
+    },
+    "systemBroker": {
+      "file": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+      "line": 17,
+      "anchor": "public actor HanlinSystemServicesBroker",
+      "sha256": "c8b63f62896fc0a6835e481d69644d06e72314b58bbe3661f41542de9c9c4a2f"
+    },
+    "appBootstrap": {
+      "file": "AI_HLY/AI_HLY.swift",
+      "line": 85,
+      "anchor": "@main",
+      "sha256": "e1359657174727bc9ae0f714502ef7e68df903f3339463594e4d73e7904e5f5e"
+    },
+    "projectTargets": {
+      "file": "AI_HLY.xcodeproj/project.pbxproj",
+      "line": 494,
+      "anchor": "/* Begin PBXNativeTarget section */",
+      "sha256": "586731884bd7aa41f797947541a91f179bf8917759ac5de2064619584b6d14ad"
+    },
+    "audit": {
+      "file": "Scripts/Audit/audit_miniapp_reachability.py",
+      "line": 2,
+      "anchor": "Curated source-backed extension matrix",
+      "sha256": "2e487d5e0c9d6cdce6f9fed8317e63658e60e52a9d46e56808f53390288bff9f"
+    },
+    "ChavrusaChatShareInfo": {
+      "file": "ChavrusaChatShare/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "17fdd464d14ace71c15e77e75e5b3500bcf81165ae40532c783ddad34848ef00"
+    },
+    "ChavrusaChatTranslationProviderInfo": {
+      "file": "ChavrusaChatTranslationProvider/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "35b59748d7d5facf4a54d05e4099c40022c3ced607fbac6674793041d846373d"
+    },
+    "HanlinScriptingWidgetsInfo": {
+      "file": "HanlinScriptingWidgets/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "17e9605d8abcbfba2d9161f6686451cd423f0d80f24cd60d86db059098e22425"
+    },
+    "ChavrusaChatNotificationServiceInfo": {
+      "file": "ChavrusaChatNotificationService/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "05b2c4c47e1cf52bdb23a97d7b71f970536db19a7fd2548282ae8f963dec30b1"
+    }
+  },
+  "paths": {
+    "share": {
+      "target": "ChavrusaChatShare",
+      "refs": [
+        "shareWrite",
+        "shareOwnedStore",
+        "shareProviderCopy",
+        "shareRead",
+        "shareReview",
+        "shareSelection",
+        "extensionQueue",
+        "extensionReceipts",
+        "resume",
+        "headless"
+      ],
+      "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review. Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.",
+      "owner": "INT-04"
+    },
+    "translation": {
+      "target": "ChavrusaChatTranslationProvider",
+      "refs": [
+        "translationSnapshot",
+        "extensionIntent",
+        "extensionQueue",
+        "resume",
+        "expoExposureRejection"
+      ],
+      "stop": "Declarative snapshot/action continuation is not an NS/Expo runtime route. Resume requires an appIntent entrypoint; Expo non-widget exposure is rejected.",
+      "owner": "INT-02/INT-03"
+    },
+    "widget": {
+      "target": "HanlinScriptingWidgets",
+      "refs": [
+        "widgetBundle",
+        "widgetIntent",
+        "widgetCallback"
+      ],
+      "stop": "Existing Expo/ScriptWidget callbacks commit revision/nonces in the widget-specific runtime. They do not expose the five canonical Host runtimes or an NS foreground VM.",
+      "owner": "INT-02/INT-03"
+    },
+    "notification": {
+      "target": "ChavrusaChatNotificationService",
+      "refs": [
+        "notification"
+      ],
+      "stop": "Media attachment/category delivery only; no authenticated package event envelope, Host consumer or MiniApp receipt.",
+      "owner": "INT-05"
+    },
+    "liveActivity": {
+      "target": "HanlinScriptingWidgets",
+      "refs": [
+        "widgetBundle",
+        "extensionIntent",
+        "extensionQueue"
+      ],
+      "stop": "Static ActivityKit presentation is not a canonical Node/TS/Python/JSC/Shell execution path.",
+      "owner": "INT-02/INT-03"
+    },
+    "hostAppIntent": {
+      "target": "AI_Hanlin / HanlinScriptExtensions",
+      "refs": [
+        "extensionIntent",
+        "extensionQueue",
+        "extensionReceipts",
+        "extensionExecutor",
+        "resume",
+        "requestBroker",
+        "headless",
+        "nativeSession",
+        "expoIntentRejection"
+      ],
+      "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session leaves unstarted work queued; Expo yields an explicit unsupported receipt. Native queue/executor cases and real compiled-intent result passed; actual NS/Expo system ingress readback, full context and attachment acceptance remain open.",
+      "owner": "INT-02/INT-03"
+    },
+    "shortcuts": {
+      "target": "HanlinScriptingWidgets / AI_Hanlin",
+      "refs": [
+        "shortcutIntent",
+        "hostShortcuts",
+        "extensionQueue",
+        "extensionReceipts",
+        "extensionExecutor",
+        "resume",
+        "headless",
+        "expoIntentRejection"
+      ],
+      "stop": "Generic MiniApp action enqueues foreground continuation. Registered Siri phrases are alarm/notification operations; not an all-runtime MiniApp API.",
+      "owner": "INT-02/INT-03"
+    },
+    "foreground": {
+      "target": "AI_Hanlin",
+      "refs": [
+        "nativeBridge",
+        "nativeAdapter",
+        "nativeSession",
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker",
+        "callerContext"
+      ],
+      "stop": "NS generic async facade and Expo use the same canonical JSON/full-receipt route. NS captures its bound bridge, with session-owned cancel handles and teardown cancellation. Actual VM/metadata/backend tests are pending; legacy NS strings keep their historical result boundary.",
+      "owner": "INT-03/INT-06/SDK-03/SDK-04"
+    }
+  },
+  "matrix": [
+    {
+      "surface": "share",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "share",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "share",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "share",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "share",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "share",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "share",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "share",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "share",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "share",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "share",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "share",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-04"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "translation",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "translation",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "widget",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "widget",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "notification",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "notification",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-05"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "liveActivity",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "liveActivity",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "hostAppIntent",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "hostAppIntent",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": false,
+        "userGesturePresent": false,
+        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "disconnected",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "disconnected",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "disconnected",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "disconnected",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "shortcuts",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "disconnected",
+      "path": "shortcuts",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": false,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "No connected canonical-runtime receipt",
+      "callerContext": {
+        "hostAdapterReachable": false,
+        "canPresentUI": null,
+        "userGesturePresent": null,
+        "note": "No canonical Host call context is connected from this ingress"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    },
+    {
+      "surface": "foreground",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "not-tested",
+      "path": "foreground",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": true,
+      "durableActionReceiptInSource": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Declared App Group is not exported-signature proof",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-03/INT-06/SDK-03/SDK-04"
+    }
+  ],
+  "systemServices": {
+    "authority": "source-inventory.json#/systemServices",
+    "publicBindingStatus": {
+      "hanlinNativeScript": "No generic SystemServicesBroker binding in the inspected Host bridge; direct native metadata APIs are a separate, unverified path",
+      "hanlinExpo": "No generic SystemServicesBroker binding in the inspected Host bridge; direct native metadata APIs are a separate, unverified path"
+    },
+    "availabilityIsNotGrantMetadata": true,
+    "devicePermissionChecksExecuted": false
+  },
+  "acceptance": {
+    "fourExtensionsByTwoEnginesByFiveRuntimes": 40,
+    "additionalSurfaceCells": 40,
+    "executedSurfaceE2EPasses": 0,
+    "signedPhysicalAcceptance": "NOT_RUN"
+  }
+}

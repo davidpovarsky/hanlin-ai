@@ -1,6 +1,403 @@
 {
   "sourceLanguage": "en",
   "strings": {
+      "Run a structured native program or a command string in the assigned workspace. Command strings use the existing local portable shell for chaining, pipes and redirection; external commands use the shared runtime broker. Linked curl keeps its normal TLS behavior without a second internal network approval.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Run a structured native program or a command string in the assigned workspace. Command strings use the existing local portable shell for chaining, pipes and redirection; external commands use the shared runtime broker. Linked curl keeps its normal TLS behavior without a second internal network approval."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הרץ תוכנית נייטיבית עם ארגומנטים מובנים או מחרוזת פקודה בסביבת העבודה שהוקצתה. מחרוזות פקודה משתמשות במפרש המקומי הקיים לשרשור, צינורות והפניות פלט; פקודות חיצוניות מנותבות דרך מתווך ההרצה המשותף. curl הנייטיבי שומר על התנהגות TLS הרגילה ללא אישור רשת פנימי נוסף."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "在分配的工作区中运行结构化原生程序或命令字符串。命令字符串使用现有本地可移植 shell 进行串联、管道和重定向；外部命令通过共享运行时代理调度。原生 curl 保持正常 TLS 行为，无需额外的内部网络授权。"
+            }
+          }
+        }
+      },
+    "Optional Node execution deadline in whole seconds, used when compile_only is false. Omit for no deadline.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional Node execution deadline in whole seconds, used when compile_only is false. Omit for no deadline."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "זמן סיום מרבי אופציונלי להרצת Node בשניות שלמות, כאשר compile_only הוא false. השמטה מאפשרת הרצה ללא מועד סיום מוגדר."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可选的 Node 执行期限，以整秒计，仅在 compile_only 为 false 时生效。省略则不设期限。"
+          }
+        }
+      }
+    },
+    "Optional execution deadline in whole seconds. Omit to run until completion, cancellation or an actual error.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional execution deadline in whole seconds. Omit to run until completion, cancellation or an actual error."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "זמן סיום מרבי אופציונלי בשניות שלמות. השמטה מאפשרת הרצה עד להשלמה, ביטול או שגיאה בפועל."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可选的执行期限，以整秒计。省略后运行至完成、取消或发生实际错误。"
+          }
+        }
+      }
+    },
+    "Package requirement/specifier, local path or direct source URL (e.g. 'requests[socks]>=2', '/path/package.whl', 'yocto-queue'). Required for preview, install, uninstall, probe.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Package requirement/specifier, local path or direct source URL (e.g. 'requests[socks]>=2', '/path/package.whl', 'yocto-queue'). Required for preview, install, uninstall, probe."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דרישת חבילה או מפרט גרסה, נתיב מקומי או כתובת ישירה לקוד המקור, למשל requests[socks]>=2 או ‎/path/package.whl. נדרש לתצוגה מקדימה, התקנה, הסרה ובדיקת הפעלה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "软件包要求或版本限定、本地路径或直接源码 URL，例如 requests[socks]>=2、/path/package.whl 或 yocto-queue。预览、安装、卸载和探测均需提供。"
+          }
+        }
+      }
+    },
+    "Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). Linked curl uses its normal transport/TLS behavior without a second internal network approval.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). Linked curl uses its normal transport/TLS behavior without a second internal network approval."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת תוכנית ios_system או שורת פקודה בסביבת העבודה שהוקצתה. תומך בתוכנית עם מערך ארגומנטים ובשורת פקודה עם צינורות והפניות. curl המקושר משתמש בהתנהגות הרשת ו־TLS הרגילה שלו, ללא אישור רשת פנימי נוסף."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在指定工作区运行 ios_system 程序或命令字符串。支持程序加参数数组及带管道、重定向的命令行。已链接的 curl 使用正常网络与 TLS 行为，无需额外内部网络授权。"
+          }
+        }
+      }
+    },
+    "Run normal Python source with embedded CPython 3.14.6 on this device. It works offline and does not use the remote Piston service. Script arguments become sys.argv entries. Packages installed by Hanlin's local package manager are available, including compatible wheels and source builds. Native imports require a registered extension linked and signed with the app; arbitrary desktop binaries cannot become iOS extensions.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run normal Python source with embedded CPython 3.14.6 on this device. It works offline and does not use the remote Piston service. Script arguments become sys.argv entries. Packages installed by Hanlin's local package manager are available, including compatible wheels and source builds. Native imports require a registered extension linked and signed with the app; arbitrary desktop binaries cannot become iOS extensions."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת קוד Python רגיל במכשיר באמצעות CPython 3.14.6 המוטמע. עובד גם ללא רשת, ללא שירות Piston המרוחק. ארגומנטים זמינים דרך sys.argv. חבילות שהותקנו במנהל החבילות המקומי זמינות להרצה, כולל wheel תואמים ובניות מקוד מקור. טעינה נייטיבית מחייבת הרחבה רשומה המקושרת והחתומה עם האפליקציה; קבצים בינאריים שרירותיים למחשב אינם הופכים להרחבות iOS."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用设备内嵌的 CPython 3.14.6 运行普通 Python 源码，可离线运行，不使用远程 Piston 服务。脚本参数写入 sys.argv。Hanlin 本地包管理器安装的兼容 wheel 和源码构建包均可使用。原生导入需要已注册且随应用链接、签名的扩展；桌面二进制文件不能直接作为 iOS 扩展。"
+          }
+        }
+      }
+    },
+    "Showing a preview. Full output is saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Showing a preview. Full output is saved."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מוצגת תצוגה מקדימה. הפלט המלא נשמר."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当前显示预览，完整输出已保存。"
+          }
+        }
+      }
+    },
+    "Copy preview": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy preview"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתקת התצוגה המקדימה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复制预览"
+          }
+        }
+      }
+    },
+    "Execute a script resource from a loaded skill bundle.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Execute a script resource from a loaded skill bundle."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת משאב סקריפט מתוך חבילת Skill שנטענה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "执行已加载技能包中的脚本资源。"
+          }
+        }
+      }
+    },
+    "Run one supported ios_system program with a structured argument array.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run one supported ios_system program with a structured argument array."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת תוכנית ios_system נתמכת עם מערך ארגומנטים מובנה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用结构化参数数组运行受支持的 ios_system 程序。"
+          }
+        }
+      }
+    },
+    "Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl supports HTTPS and loopback HTTP without an internal network approval.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run an ios_system program or command string in the assigned workspace. Supports structured program + arguments mode (argv) and command line string mode (pipes/redirection). curl supports HTTPS and loopback HTTP without an internal network approval."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת תוכנית ios_system או שורת פקודה בסביבת העבודה. ניתן להשתמש בתוכנית ובארגומנטים או בשורת פקודה עם צינורות והפניות. curl תומך ב־HTTPS וב־HTTP מקומי ללא אישור רשת פנימי."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在指定工作区运行 ios_system 程序或命令字符串。支持结构化程序与参数以及管道和重定向。curl 支持 HTTPS 和本机 HTTP，无需内部网络批准。"
+          }
+        }
+      }
+    },
+    "Supported program name.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supported program name."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם תוכנית נתמכת."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "受支持的程序名称。"
+          }
+        }
+      }
+    },
+    "Legacy compatibility flag; network access does not require an internal approval.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legacy compatibility flag; network access does not require an internal approval."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דגל תאימות ישן; גישה לרשת אינה דורשת אישור פנימי."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "旧版兼容标记；网络访问无需内部批准。"
+          }
+        }
+      }
+    },
+    "Transfer data over HTTPS.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transfer data over HTTPS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העברת נתונים באמצעות HTTPS."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过 HTTPS 传输数据。"
+          }
+        }
+      }
+    },
+    "Uses HTTPS network access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uses HTTPS network access"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "משתמש בגישת רשת HTTPS"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 HTTPS 网络访问"
+          }
+        }
+      }
+    },
+    "Supported setup scripts run automatically.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supported setup scripts run automatically."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סקריפטי הגדרה נתמכים פועלים אוטומטית."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "受支持的设置脚本会自动运行。"
+          }
+        }
+      }
+    },
+    "Packages are installed transactionally. Supported setup scripts run automatically.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Packages are installed transactionally. Supported setup scripts run automatically."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חבילות מותקנות באופן אטומי. סקריפטי הגדרה נתמכים פועלים אוטומטית."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "软件包以事务方式安装。受支持的设置脚本会自动运行。"
+          }
+        }
+      }
+    },
+    "Test Node HTTPS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test Node HTTPS"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת HTTPS ב־Node"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "测试 Node HTTPS"
+          }
+        }
+      }
+    },
     "Action to perform on MCP servers.": {
       "localizations": {
         "en": {
@@ -5013,6 +5410,187 @@
           "stringUnit": {
             "state": "translated",
             "value": "工具权限"
+          }
+        }
+      }
+    },
+    "Python package or source": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Python package or source"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חבילת Python או מקור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Python 软件包或源代码"
+          }
+        }
+      }
+    },
+    "Requirement, URL or local path": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requirement, URL or local path"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דרישת חבילה, כתובת או נתיב מקומי"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "软件包要求、URL 或本地路径"
+          }
+        }
+      }
+    },
+    "Import package or source": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import package or source"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבוא חבילה או מקור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入软件包或源代码"
+          }
+        }
+      }
+    },
+    "Cancellation requested; waiting for the active operation to stop.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancellation requested; waiting for the active operation to stop."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נשלחה בקשת ביטול; ממתינים לעצירת הפעולה הפעילה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已请求取消，正在等待当前操作停止。"
+          }
+        }
+      }
+    },
+    "Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשר להתקין חבילות תואמות וקוד מקור, גם מקבצים מקומיים. בניית מקור משתמשת במנועי בנייה תואמים של Python. הרחבות נייטיביות צריכות להיארז ולהיחתם עם האפליקציה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安装兼容的 wheel、本地软件包和源码分发包。源码构建使用兼容的 Python 构建后端。原生扩展必须随此应用打包并签名。"
+          }
+        }
+      }
+    },
+    "Working on your request": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Working on your request"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הבקשה שלך בטיפול"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在处理你的请求"
+          }
+        }
+      }
+    },
+    "Progress is saved as work continues": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progress is saved as work continues"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ההתקדמות נשמרת במהלך העבודה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作继续时会保存进度"
+          }
+        }
+      }
+    },
+    "Background continuation ended by the system or its Cancel control.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background continuation ended by the system or its Cancel control."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המשך העבודה ברקע הופסק בידי המערכת או באמצעות כפתור הביטול שלה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "后台继续执行已被系统或其取消控件终止。"
           }
         }
       }

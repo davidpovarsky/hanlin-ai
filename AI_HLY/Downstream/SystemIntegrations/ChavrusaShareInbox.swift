@@ -1,4 +1,7 @@
 import Foundation
+import HanlinScriptStore
+import HanlinScriptExtensions
+import HanlinPlatformContracts
 
 struct ChavrusaSharedItem: Codable, Identifiable, Sendable {
     let id: UUID
@@ -14,6 +17,21 @@ actor ChavrusaShareInbox {
     private let groupID = "group.com.itorah.chavrusachat"
     private let fileName = "share-inbox.json"
 
+    func batch(_ id: UUID) throws -> HanlinShareBatch {
+        try ownedStore().batch(id)
+    }
+
+    func actionPayload(_ command: HanlinScriptResumeCommand) throws -> HanlinValue {
+        try HanlinShareInvocation.payload(for: command, inbox: ownedStore())
+    }
+
+    private func ownedStore() throws -> HanlinShareInboxStore {
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: groupID
+        ) else { throw HanlinShareInboxError.invalidPath }
+        return try HanlinShareInboxStore(container: container)
+    }
+
     func pendingItems() throws -> [ChavrusaSharedItem] {
         guard let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
@@ -23,13 +41,17 @@ actor ChavrusaShareInbox {
         return try JSONDecoder().decode([ChavrusaSharedItem].self, from: Data(contentsOf: url))
     }
 
-    func clear() throws {
+    func pendingBatches() throws -> (batches: [HanlinShareBatch], rejected: [UUID?]) {
         guard let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
-        ) else { return }
-        let url = container.appending(path: fileName)
-        if FileManager.default.fileExists(atPath: url.path) {
-            try FileManager.default.removeItem(at: url)
-        }
+        ) else { throw HanlinShareInboxError.invalidPath }
+        return try HanlinShareInboxStore(container: container).scan()
+    }
+
+    func ownedFile(batchID: UUID, itemID: UUID) throws -> URL {
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: groupID
+        ) else { throw HanlinShareInboxError.invalidPath }
+        return try HanlinShareInboxStore(container: container).ownedFile(batchID: batchID, itemID: itemID)
     }
 }

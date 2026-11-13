@@ -107,6 +107,27 @@ struct AgentActivityStep: Codable, Hashable, Identifiable {
   var canonicalExecutionPresentation: HanlinToolExecutionPresentationDescriptor?
   var canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor?
 
+  /// Presentation kind (code/search/document/etc.) is independent of the call's
+  /// lifecycle identity. Strip only our transport prefixes/suffix, never IDs
+  /// embedded in the middle of a provider's actual call ID.
+  var toolCallID: String? {
+    guard var value = externalID else { return nil }
+    if value.hasPrefix("call:") { return String(value.dropFirst(5)) }
+    if value.hasPrefix("execution:") {
+      value.removeFirst("execution:".count)
+      if value.hasSuffix(":execution") { value.removeLast(":execution".count) }
+      return value
+    }
+    if kind == .toolExecution, value.hasSuffix(":execution") {
+      return String(value.dropLast(":execution".count))
+    }
+    return [.toolCall, .toolExecution, .webSearch].contains(kind) ? value : nil
+  }
+
+  var isExecutionLifecycleStep: Bool {
+    kind == .toolExecution || externalID?.hasPrefix("execution:") == true
+  }
+
   init(
     id: UUID = UUID(),
     externalID: String? = nil,

@@ -168,6 +168,7 @@ struct SettingsView: View {
                     } label: {
                         Label(String(localized: "Agent Diagnostics"), systemImage: "stethoscope")
                     }
+                    .accessibilityIdentifier("hanlin-agent-diagnostics-link")
                 }
                 Section(header: Text(String(localized: "帮助"))) {
                     Button(action: {

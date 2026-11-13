@@ -68,6 +68,14 @@ GitHub Actions caches are immutable: attempting to overwrite an existing key fai
 
 ## 4. How to Add a Test Without Breaking the Cache
 
+`simulator_test_allowance.py` reserves the660-second unit driver allowance for
+the actual `embeddedNodeAndPythonActuallyRunBeyondThreeHundredSeconds` method,
+its entire RuntimeAutonomyV3Tests suite, or the full AI_HLYTests bundle. Selecting
+another method in that suite (for example npm generation validation) retains
+the normal300-second allowance. This is a test-driver budget; Runtime API
+execution limits are unchanged. Four focused regressions cover exact selectors,
+suite/bundle selection and similar-name negatives.
+
 1. Add your test method to the appropriate test target (e.g. `AI_HLYTests` or `AI_HLYUITests`).
 2. If your test validates a specific runtime tool, provider, or subsystem:
    - Check `Scripts/CI/affected-validation-map.json`.

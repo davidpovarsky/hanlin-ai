@@ -53,27 +53,18 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         #expect(store.isAvailable(kind))
     }
 
-    @Test func runtimeBrokerRejectsDisabledRuntime() async throws {
+    @Test func runtimeBrokerRunsPythonWithoutInternalGrants() async throws {
         let context = HanlinHostCallContext.forMiniApp(
             appID: try HanlinAppID(validating: "unauthorized.agent"),
             origin: .system,
             capabilities: [],
             canPresentUI: false
         )
-        do {
-            _ = try await HanlinRuntimeBroker.shared.execute(
-                kind: .localPython,
-                source: "1+1",
-                context: context
-            )
-            Issue.record("Expected capabilityNotGranted error")
-        } catch let error as HanlinHostServiceError {
-            if case .capabilityNotGranted = error {
-                // Expected rejection
-            } else {
-                Issue.record("Unexpected error: \(error)")
-            }
-        }
+        let result = try await HanlinRuntimeBroker.shared.execute(
+            kind: .localPython, source: "print(6 * 7)", context: context
+        )
+        #expect(result.exitCode == 0)
+        #expect(result.stdout.contains("42"))
     }
 
     @Test func agentToolExecutesJavaScriptCore() async {
@@ -131,14 +122,26 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
     }
 
     @Test func shellAllApprovedCommandsAndPolicies() async throws {
-        let report = try await AppRuntimeCore.shared.shell.runSmokeSuite()
-        #expect(report.passed)
+        let report = try await AppRuntimeCore.shared.shell.runSmokeSuite(node: AppRuntimeCore.shared.node)
+        let reportDetails = String(decoding: try JSONEncoder().encode(report), as: UTF8.self)
+        #expect(report.passed, "\(reportDetails)")
         #expect(report.testedCommands.count == 23)
         #expect(report.commandResults.allSatisfy { $0.passed })
         #expect(report.policyResults.allSatisfy { $0.passed })
-        #expect(report.policyResults.contains { $0.policy == "unknown_command" && $0.passed })
-        #expect(report.policyResults.contains { $0.policy == "pipeline" && $0.passed })
-        #expect(report.policyResults.contains { $0.policy == "command_chaining" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "verified_command_catalog" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "native_pipeline_and_redirection" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "portable_command_chaining" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "curl_http_native_dispatch" && $0.passed })
+        #expect(report.policyResults.contains { $0.policy == "curl_https_native_dispatch" && $0.passed })
+        let hostContext = AgentHostServicesAdapter.makeContext()
+        let workspace = try RuntimeFileLayout.default.workspace(client: .executions, identifier: hostContext.runtimeWorkspaceIdentifier)
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let tool = ExecuteShellCommandTool(hostContext: hostContext)
+        let result = await tool.execute(argumentsJSON: try Self.json([
+            "command": "echo first > chain-output.txt && echo second >> chain-output.txt && cat chain-output.txt"
+        ]), context: NativeToolExecutionContext(localeIdentifier: "en"))
+        #expect(result.outcome == .succeeded, "\(result.modelText)")
+        #expect(result.modelText.contains("first\nsecond"))
     }
 
     @Test func agentToolRespectsDisabledRuntimeToggle() async {
@@ -339,11 +342,13 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
             context: context
         )
         #expect(stillCompiles.outcome == .succeeded)
-        let executionDenied = await tool.execute(
+        let executionAutoStartsNode = await tool.execute(
             argumentsJSON: #"{"source":"console.log(1);","compile_only":false}"#,
             context: context
         )
-        #expect(executionDenied.outcome == .rejectedByAvailability)
+        #expect(executionAutoStartsNode.outcome == .succeeded)
+        #expect(executionAutoStartsNode.modelText.contains("1"))
+        #expect(store.isAvailable(.node))
     }
 
     @Test func shellRejectionMatrix() async throws {
@@ -384,27 +389,36 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         )
         #expect(argsWithCommand.outcome == .invalidArguments)
 
-        let tooMany = await tool.execute(
-            argumentsJSON: try Self.json(["program": "ls", "arguments": Array(repeating: "x", count: 128)]),
+        let workspace = try RuntimeFileLayout.default.workspace(
+            client: .executions,
+            identifier: shellContext.runtimeWorkspaceIdentifier
+        )
+        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
+        let nonce = "native-argv-\(UUID().uuidString)"
+        let input = workspace.appending(path: "many-arguments.txt")
+        try (nonce + "\n").write(to: input, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: input) }
+        let manyArguments = await tool.execute(
+            argumentsJSON: try Self.json(["program": "cat", "arguments": Array(repeating: "many-arguments.txt", count: 128)]),
             context: context
         )
-        #expect(tooMany.outcome == .invalidArguments)
-        let networkDenied = await tool.execute(
-            argumentsJSON: try Self.json(["program": "curl", "arguments": ["https://example.invalid"], "allow_network": false]),
+        #expect(manyArguments.outcome == .succeeded)
+        #expect((manyArguments.userText ?? "").components(separatedBy: nonce).count - 1 == 128)
+        // Port0 cannot host a server. This executes real curl locally, with an
+        // explicit fixture timeout and no inherited proxy/public request. A
+        // transport failure must not become a fabricated argument/permission error.
+        let httpTransportFailure = await tool.execute(
+            argumentsJSON: try Self.json(["program": "curl", "arguments": ["--noproxy", "*", "--max-time", "2", "--connect-timeout", "1", "http://127.0.0.1:0"], "allow_network": false]),
             context: context
         )
-        #expect(networkDenied.outcome == .invalidArguments)
+        #expect(httpTransportFailure.outcome == .failed)
+        #expect(httpTransportFailure.diagnostics.exitCode != nil)
         let networkFlagAccepted = await tool.execute(
             argumentsJSON: try Self.json(["program": "curl", "arguments": ["--version"], "allow_network": true]),
             context: context
         )
         #expect(networkFlagAccepted.outcome == .succeeded)
 
-        let workspace = try RuntimeFileLayout.default.workspace(
-            client: .executions,
-            identifier: shellContext.runtimeWorkspaceIdentifier
-        )
-        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
         let outside = FileManager.default.temporaryDirectory.appending(path: "hanlin-shell-outside-\(UUID().uuidString)")
         let link = workspace.appending(path: "acceptance-escape")
         try Data("secret".utf8).write(to: outside)
@@ -421,7 +435,7 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         #expect(symlink.modelText.contains("secret"))
     }
 
-    @Test func runtimeCapabilityLiveRevokeAndRegrantUsesSameSession() async throws {
+    @Test func legacyRuntimeGrantChangesDoNotDisableTheSameSession() async throws {
         let appID = try HanlinAppID(validating: "runtime-live-capability-\(UUID().uuidString.lowercased())")
         let authority = HanlinHostCapabilityAuthority.shared
         let capability = "runtime.javascript"
@@ -447,13 +461,12 @@ struct HanlinUnifiedHostServicesAgentAcceptanceTests {
         )
         #expect(first.value == .number(42))
         await authority.revoke(capability: capability, for: appID)
-        await #expect(throws: HanlinHostServiceError.self) {
-            _ = try await HanlinRuntimeBroker.shared.execute(
-                kind: .javaScriptCore,
-                source: "20 + 22",
-                context: context
-            )
-        }
+        let afterLegacyRevocation = try await HanlinRuntimeBroker.shared.execute(
+            kind: .javaScriptCore,
+            source: "20 + 22",
+            context: context
+        )
+        #expect(afterLegacyRevocation.value == .number(42))
         await authority.grant(capability: capability, for: appID)
         let retried = try await HanlinRuntimeBroker.shared.execute(
             kind: .javaScriptCore,

@@ -105,6 +105,14 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         openPackageDetails(named: "ScriptWidget Actions")
 
+        let status = app.buttons["hanlin-widget-status"].firstMatch
+        XCTAssertTrue(status.waitForExistence(timeout: 5), "Widget status must be accessible even without an error banner")
+        status.tap()
+        let statusAlert = app.alerts["Widget status"].firstMatch
+        XCTAssertTrue(statusAlert.waitForExistence(timeout: 5))
+        XCTAssertTrue(statusAlert.staticTexts.matching(NSPredicate(format: "label CONTAINS 'commitPresent'" )).firstMatch.exists)
+        statusAlert.buttons["Done"].tap()
+
         let defaultInstance = app.staticTexts["Default"].firstMatch
         XCTAssertTrue(defaultInstance.waitForExistence(timeout: 10), "Expected Default widget instance in Package Information")
         XCTAssertFalse(app.staticTexts["invalidArtifactReference"].exists, "Raw invalidArtifactReference error must never appear")

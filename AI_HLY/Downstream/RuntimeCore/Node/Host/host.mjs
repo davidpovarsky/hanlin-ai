@@ -1,3 +1,14 @@
+import {compileTypeScript, compileTypeScriptProject} from './typescript-compiler.mjs';
+import {resolveMCPPackageRoot} from './mcp-package-generations.mjs';
+import {runtimeCapabilities} from './runtime-capabilities.mjs';
+import { verifyLifecyclePlan } from './lifecycle-planner.mjs';
+import { globalNodeModules } from './global-package-state.mjs';
+import {executeLifecycleInJobs} from './lifecycle-executor.mjs';
+import { ExecutionJobs, resolveNodeCLIEntryPoint } from './execution-jobs.mjs';
+import {MCPLineFrames} from './mcp-framing.mjs';
+import {StringDecoder} from 'node:string_decoder';
+import './fetch-compatibility.mjs';
+import { traceRuntimeWarnings } from './warning-diagnostics.mjs';
 import http from 'node:http';
 import dns from 'node:dns';
 if (typeof dns.setDefaultResultOrder === 'function') {
@@ -6,13 +17,13 @@ if (typeof dns.setDefaultResultOrder === 'function') {
 import {
   promises as fs,
   createWriteStream,
-  mkdirSync,
+  createReadStream,
   realpathSync,
   statSync,
 } from 'node:fs';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
-import { timingSafeEqual } from 'node:crypto';
+import { timingSafeEqual, randomUUID } from 'node:crypto';
 import * as nodeModule from 'node:module';
 
 const [root, readyPath, launchToken, logPath, debugFlag] = process.argv.slice(2);
@@ -81,20 +92,20 @@ diagnostic('runtime_paths_configured', {
 
 const { commitInstall, installPackage, previewPackage, rollbackInstall } =
   await import('./package-installer.mjs');
-const { commitGlobalPackage, installGlobalPackage, listGlobalPackages, previewGlobalPackage, rollbackGlobalPackage, stageGlobalPackage, uninstallGlobalPackage } =
+const { commitGlobalPackage, installGlobalPackage, listGlobalPackages, previewGlobalPackage, rollbackGlobalPackage, stageGlobalPackage, stageUninstallGlobalPackage, uninstallGlobalPackage } =
   await import('./global-package-manager.mjs');
 
 const workerURL = new URL('./server-worker.mjs', import.meta.url);
 const executionWorkerURL = new URL('./execution-worker.mjs', import.meta.url);
 const servers = new Map();
 const serverRestarts = new Map();
+const serverStarts = new Map();
 const serverGenerations = new Map();
-const executions = new Map();
-const installs = new Map();
+const executionJobs = new ExecutionJobs({ root: path.join(root, 'jobs', 'node'), workerURL: executionWorkerURL, diagnosticWorkerURL: new URL('./diagnostic-worker.mjs', import.meta.url), globalNodeModules: () => globalNodeModules(root),
+  inputInbox:path.join(root,'runtime','node','requests'),validateInput:validateExecutionInput });
+await executionJobs.initialize();
 const installProgress = new Map();
 const maximumBody = 10 * 1024 * 1024;
-const maximumLine = 8 * 1024 * 1024;
-const typescriptCompilerIntegrity = 'sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==';
 const gracefulStopTimeoutMilliseconds = 3_000;
 const lifecycleCounters = {
   workerCreationCount: 0,
@@ -110,6 +121,7 @@ const server = http.createServer(async (request, response) => {
   try {
     if (!authorized(request)) return json(response, 401, { error: 'Unauthorized' });
     const url = new URL(request.url, 'http://127.0.0.1');
+    if (request.method === 'GET' && url.pathname === '/v1/runtime/capabilities')return json(response,200,runtimeCapabilities());
     if (request.method === 'GET' && url.pathname === '/health') return json(response, 200, { ok: true, nodeVersion: process.versions.node, protocolVersion: 2, modulePolicyHooksAvailable });
     if (request.method === 'GET' && url.pathname === '/v1/runtime') {
       return json(response, 200, {
@@ -117,42 +129,65 @@ const server = http.createServer(async (request, response) => {
         protocolVersion: 2,
         modulePolicyHooksAvailable,
         workers: [...servers.values()].map(snapshot),
-        executions: executions.size,
+        executions: executionJobs.activeCount,
         lifecycle: lifecycleDiagnostics(),
       });
     }
     if (request.method === 'POST' && url.pathname === '/v1/executions') {
-      return json(response, 200, await executeJavaScript(await readJSON(request)));
+      const body = await readJSON(request);
+      const stopTracing = body.environment?.HANLIN_NODE_TRACE_WARNINGS === '1' ? traceRuntimeWarnings() : () => {};
+      try {
+        return json(response, 200, await executeJavaScript(body));
+      } finally {
+        stopTracing();
+      }
+    }
+    if (request.method === 'GET' && url.pathname === '/v1/commands/wait') {
+      const controller=new AbortController();
+      const close=()=>controller.abort();response.once('close',close);
+      try {
+        const pending=await executionJobs.waitForCommandRequests(controller.signal);
+        if(!response.destroyed)json(response,200,pending);
+      } finally {response.off('close',close);}
+      return;
+    }
+    if (request.method === 'GET' && url.pathname === '/v1/commands') {
+      return json(response, 200, await executionJobs.allCommandRequests());
+    }
+    const executionCommandFailure = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/commands\/([0-9a-f-]+)\/fail$/i);
+    if (request.method === 'POST' && executionCommandFailure) {
+      const body = await readJSON(request);
+      if (typeof body.error !== 'string') throw new Error('Missing adapter error.');
+      await executionJobs.failCommand(executionCommandFailure[1].toLowerCase(), executionCommandFailure[2].toLowerCase(), body.error);
+      return json(response, 200, { acknowledged: true });
+    }
+    const executionCommands = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/commands$/i);
+    if (request.method === 'GET' && executionCommands) {
+      return json(response, 200, await executionJobs.commandRequests(executionCommands[1].toLowerCase()));
+    }
+    const executionPage = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/(stdout|stderr)$/i);
+    if (request.method === 'GET' && executionPage) {
+      const page = await executionJobs.readOutput(executionPage[1].toLowerCase(), executionPage[2], Number(url.searchParams.get('offset') ?? 0), Number(url.searchParams.get('limit') ?? 16_384));
+      return json(response, page ? 200 : 404, page ?? { error: 'Execution not found.' });
+    }
+    const executionStatus = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)$/i);
+    if (request.method === 'GET' && executionStatus) {
+      const state = executionJobs.snapshot(executionStatus[1].toLowerCase());
+      return json(response, state ? 200 : 404, state ?? { error: 'Execution not found.' });
     }
     const executionCancel = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/cancel$/i);
     if (request.method === 'POST' && executionCancel) {
-      const state = executions.get(executionCancel[1].toLowerCase());
-      if (state) {
-        state.cancelled = true;
-        if (state.finish) {
-          state.finish({
-            executionID: executionCancel[1].toLowerCase(),
-            stdout: '',
-            stderr: '',
-            value: null,
-            exitCode: 1,
-            didTimeOut: false,
-            wasCancelled: true,
-            outputWasTruncated: false,
-          });
-        }
-        if (state.terminateWorker) {
-          state.terminateWorker().catch(() => {});
-        } else if (state.worker) {
-          try {
-            state.worker.terminate().catch(() => {});
-          } catch {}
-        }
-      }
-      return json(response, 200, { cancelled: Boolean(state) });
+      const state = await executionJobs.cancel(executionCancel[1].toLowerCase());
+      return json(response, 200, { cancelled: state?.cancellationRequested ?? false });
+    }
+    const executionInterrupt = url.pathname.match(/^\/v1\/executions\/([0-9a-f-]+)\/interrupt$/i);
+    if (request.method === 'POST' && executionInterrupt) {
+      const body = await readJSON(request);
+      const state = await executionJobs.interrupt(executionInterrupt[1].toLowerCase(), body.reason);
+      return json(response, 200, { interruptionRequested: state?.interruptionReason != null });
     }
     if (request.method === 'POST' && url.pathname === '/v1/typescript/compile') {
-      return json(response, 200, await compileTypeScript(await readJSON(request)));
+      return json(response, 200, await compileTypeScript(await readJSON(request), {root}));
     }
     if (request.method === 'POST' && url.pathname === '/v1/typescript/project') {
       return json(response, 200, await compileTypeScriptProject(await readJSON(request)));
@@ -164,6 +199,10 @@ const server = http.createServer(async (request, response) => {
       const body = await readJSON(request);
       return json(response, 200, await previewGlobalPackage({ root, name: body.name, version: body.version }));
     }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/lifecycle/verify') {
+      const body = await readJSON(request);
+      return json(response, 200, await verifyLifecyclePlan(body.packageRoot, body.plan));
+    }
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/install') {
       const body = await readJSON(request);
       return json(response, 200, await installGlobalPackage({ root, name: body.name, version: body.version }));
@@ -171,6 +210,10 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/stage') {
       const body = await readJSON(request);
       return json(response, 200, await stageGlobalPackage({ root, name: body.name, version: body.version }));
+    }
+    if (request.method === 'POST' && url.pathname === '/v1/packages/node/stage-uninstall') {
+      const body = await readJSON(request);
+      return json(response, 200, await stageUninstallGlobalPackage({root,name:body.name}));
     }
     if (request.method === 'POST' && url.pathname === '/v1/packages/node/commit') {
       const body = await readJSON(request);
@@ -188,22 +231,22 @@ const server = http.createServer(async (request, response) => {
     if (request.method === 'GET' && installStatusMatch) {
       const operationID = installStatusMatch[1].toLowerCase();
       if (!validID(operationID)) return json(response, 400, { error: 'Invalid operation ID' });
-      return json(response, 200, { progress: installProgress.get(operationID) ?? null });
+      const job=executionJobs.snapshot(operationID);
+      let progress=installProgress.get(operationID)??job?.progress??null;
+      if(job?.state==='interrupted'&&progress)progress={...progress,terminalError:{code:'interrupted',message:job.error}};
+      return json(response, 200, { progress });
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/preview') {
       const body = await readJSON(request);
       return json(response, 200, await previewPackage(body.source, { root, entryPointOverride: body.entryPointOverride }));
     }
     if (request.method === 'POST' && url.pathname === '/v1/install') {
-      const body = await readJSON(request);
-      const controller = new AbortController();
-      installs.set(body.operationID, controller);
-      installProgress.set(body.operationID, {
-        operationID: body.operationID,
-        phase: 'resolving',
-        fraction: 0,
-      });
-      try {
+      const control = await readJSON(request);
+      const operation = await executionJobs.startOperation({...control,executionID:control.executionID??control.operationID},async({signal,emit,input:body})=>{
+        body.operationID??=body.executionID;
+        if(body.operationID!==body.executionID)throw new Error('Installation operation ID mismatch.');
+        const progress=data=>{installProgress.set(body.operationID,data);const written=emit(data);emitGlobal('install',data);return written;};
+        await progress({operationID:body.operationID,phase:'resolving',fraction:0});
         try {
           const descriptor = await installPackage({
             root,
@@ -212,17 +255,21 @@ const server = http.createServer(async (request, response) => {
             source: body.source,
             entryPointOverride: body.entryPointOverride,
             arguments: body.arguments,
-            signal: controller.signal,
+            signal,
+            executeLifecycle: options=>executeLifecycleInJobs({...options,jobs:executionJobs,runtimeRoot:root,
+              onProgress: detail=>{
+                progress({operationID:body.operationID,phase:'installingDependencies',fraction:0.68,lifecycle:detail});
+              }}),
             emit: (channel, data) => {
-              if (channel === 'install') installProgress.set(body.operationID, data);
-              emitGlobal(channel, data);
+              if (channel === 'install') return progress(data);
+              else emitGlobal(channel, data);
             },
           });
-          return json(response, 200, descriptor);
+          return descriptor;
         } catch (error) {
           error.operationID = body.operationID;
           const prior = installProgress.get(body.operationID);
-          installProgress.set(body.operationID, {
+          progress({
             operationID: body.operationID,
             phase: prior?.phase ?? 'checkingCompatibility',
             fraction: prior?.fraction ?? null,
@@ -234,14 +281,15 @@ const server = http.createServer(async (request, response) => {
           });
           throw error;
         }
-      } finally {
-        installs.delete(body.operationID);
-      }
+      });
+      if(control.detached===true)return json(response,200,operation);
+      const completed=await executionJobs.wait(operation.executionID);
+      if(completed.state!=='completed')throw new Error(completed.error??completed.result?.stderr??'Installation failed.');
+      return json(response,200,completed.result.value);
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/cancel') {
       const body = await readJSON(request);
-      installs.get(body.operationID)?.abort(new Error('Installation cancelled.'));
-      installProgress.delete(body.operationID);
+      await executionJobs.cancel(body.operationID);
       return json(response, 200, { cancelled: true });
     }
     if (request.method === 'POST' && url.pathname === '/v1/install/commit') {
@@ -261,19 +309,25 @@ const server = http.createServer(async (request, response) => {
     if (!match || !validID(match[1])) return json(response, 404, { error: 'Not found' });
     const id = match[1].toLowerCase();
     const action = match[2];
-    if (request.method === 'POST' && action === 'start') return json(response, 200, await startServer(id, await readJSON(request)));
-    if (request.method === 'POST' && action === 'stop') return json(response, 200, await stopServer(id));
+    if (request.method === 'POST' && action === 'start') {
+      const body=await readJSON(request);
+      if(body.executionID)return json(response,200,await executionJobs.startOperation(body,
+        ({signal,input})=>startServer(id,input,signal)));
+      return json(response,200,await startServer(id,body));
+    }
+    if (request.method === 'POST' && action === 'stop') {
+      const body=await readJSON(request);
+      assertGeneration(servers.get(id),body.generation);
+      return json(response,200,await stopServer(id));
+    }
     if (request.method === 'POST' && action === 'restart') {
       return json(response, 200, await restartServer(id, await readJSON(request)));
     }
     if (request.method === 'POST' && action === 'stdin') {
       const body = await readJSON(request);
-      const state = servers.get(id);
-      if (!state?.worker.stdin) return json(response, 409, { error: 'Server is not running' });
-      const data = Buffer.from(body.data ?? '', 'base64');
-      if (data.length > maximumLine) return json(response, 413, { error: 'Input is too large' });
-      await new Promise((resolve, reject) => state.worker.stdin.write(data, error => error ? reject(error) : resolve()));
-      return json(response, 200, { accepted: data.length });
+      if(body.executionID)return json(response,200,await executionJobs.startOperation(body,
+        ({signal,input})=>writeServerInput(id,input,signal)));
+      return json(response,200,await writeServerInput(id,body));
     }
     if (request.method === 'GET' && action === 'events') return attachEvents(id, request, response);
     if (request.method === 'GET' && action === 'logs') return sendLogs(id, response);
@@ -289,7 +343,9 @@ const server = http.createServer(async (request, response) => {
     return json(response, 404, { error: 'Not found' });
   } catch (error) {
     diagnostic('request_failed', { path: request.url, message: redact(error.message) });
-    if (!response.headersSent) json(response, error.name === 'AbortError' ? 499 : 400, {
+    const status=Number.isInteger(error.status)&&error.status>=400&&error.status<=599
+      ? error.status:error.name==='AbortError'?499:400;
+    if (!response.headersSent) json(response, status, {
       error: redact(error.message),
       operationID: error.operationID ?? null,
       code: error.code ?? null,
@@ -322,9 +378,19 @@ function authorized(request) {
 }
 
 async function executeJavaScript(body) {
+  const header = await executionJobs.start(body);
+  if (body.detached === true) return executionJobs.snapshot(header.executionID);
+  const completed = await executionJobs.wait(header.executionID);
+  if (!completed.result) throw new Error(completed.error ?? 'Execution did not produce a result.');
+  return completed.result;
+}
+
+async function validateExecutionInput(body) {
   const id = String(body.executionID ?? '').toLowerCase();
   if (!validID(id)) throw new Error('Invalid execution ID.');
-  if (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody) throw new Error('JavaScript source is missing or too large.');
+  if (body.executionMode != null && !['source', 'cli'].includes(body.executionMode)) throw new Error('Unsupported Node execution mode.');
+  const cli = body.executionMode === 'cli';
+  if (!cli && typeof body.source !== 'string') throw new Error('JavaScript source is missing.');
   if (!['esm', 'commonjs'].includes(body.moduleKind)) throw new Error('Unsupported JavaScript module kind.');
   const workspace = path.resolve(String(body.workspace ?? ''));
   if (!workspace) throw new Error('Execution workspace must be specified.');
@@ -341,224 +407,28 @@ async function executeJavaScript(body) {
     error.status = 400;
     throw error;
   }
-  rejectUnsafeSource(body.source);
-  const executionRoot = path.join(workspace, '.hanlin-executions', id);
-  await fs.rm(executionRoot, { recursive: true, force: true });
-  await fs.mkdir(executionRoot, { recursive: true });
-  const globalNodeModules = path.join(root, 'packages', 'node-global', 'node_modules');
-  try { await fs.access(globalNodeModules); await fs.symlink(globalNodeModules, path.join(executionRoot, 'node_modules'), 'dir'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-  const extension = body.moduleKind === 'commonjs' ? 'cjs' : 'mjs';
-  const entryPoint = path.join(executionRoot, `main.${extension}`);
-  await fs.writeFile(entryPoint, body.source, { mode: 0o600 });
-  const maximumOutputBytes = Math.min(Math.max(Number(body.maximumOutputBytes) || 1_048_576, 1024), 8 * 1024 * 1024);
-  const timeoutMilliseconds = Math.min(Math.max(Number(body.timeoutMilliseconds) || 30_000, 1000), 300_000);
-  const started = Date.now();
-  const state = { worker: null, cancelled: false, terminateWorker: null, finish: null };
-  const result = await new Promise(resolve => {
-    const worker = new Worker(executionWorkerURL, {
-      workerData: {
-        entryPoint,
-        workspace,
-        moduleKind: body.moduleKind,
-        arguments: Array.isArray(body.arguments) ? body.arguments : [],
-        environment: validatedEnvironment(body.environment),
-        maximumOutputBytes,
-      },
-    });
-    state.worker = worker;
-    let terminated = false;
-    const terminateWorker = async () => {
-      if (terminated) return;
-      terminated = true;
-      try {
-        await Promise.race([worker.terminate(), new Promise(r => setTimeout(r, 1000))]);
-      } catch {}
-    };
-    state.terminateWorker = terminateWorker;
-    executions.set(id, state);
-    let settled = false;
-    const finish = value => { if (!settled) { settled = true; clearTimeout(timer); resolve(value); } };
-    state.finish = finish;
-    const timer = setTimeout(async () => {
-      await terminateWorker();
-      finish({ executionID: id, stdout: '', stderr: 'Execution timed out.\n', value: null, exitCode: null, didTimeOut: true, wasCancelled: false, outputWasTruncated: false });
-    }, timeoutMilliseconds);
-    worker.once('message', message => finish({
-      executionID: id,
-      stdout: message.stdout ?? '',
-      stderr: message.stderr ?? '',
-      value: message.value ?? null,
-      exitCode: message.type === 'completed' ? 0 : 1,
-      didTimeOut: false,
-      wasCancelled: state.cancelled,
-      outputWasTruncated: Boolean(message.outputWasTruncated),
-    }));
-    worker.once('error', error => finish({ executionID: id, stdout: '', stderr: `${redact(error.stack ?? error.message)}\n`, value: null, exitCode: 1, didTimeOut: false, wasCancelled: state.cancelled, outputWasTruncated: false }));
-    worker.once('exit', code => { if (state.cancelled) finish({ executionID: id, stdout: '', stderr: '', value: null, exitCode: code, didTimeOut: false, wasCancelled: true, outputWasTruncated: false }); });
-  });
-  executions.delete(id);
-  // A worker posts its result before Node has necessarily completed module-loader
-  // teardown. Wait for termination before removing the module root so concurrent
-  // filesystem cleanup cannot surface as EBADF/ENOENT from the loader.
-  if (state.terminateWorker) {
-    await state.terminateWorker();
-  }
-  await fs.rm(executionRoot, { recursive: true, force: true }).catch(() => {});
-  result.durationMilliseconds = Date.now() - started;
-  return result;
+  if (cli) {
+    if (typeof body.entryPoint !== 'string' || !path.isAbsolute(body.entryPoint)) throw new Error('CLI entryPoint must be an absolute file path.');
+    body.entryPoint = await resolveNodeCLIEntryPoint(body.entryPoint);
+    if (body.standardInputPath != null) {
+      if (typeof body.standardInputPath !== 'string' || !path.isAbsolute(body.standardInputPath)) throw new Error('CLI stdin must be an absolute file path.');
+      body.standardInputPath = await fs.realpath(body.standardInputPath);
+      if (!(await fs.stat(body.standardInputPath)).isFile()) throw new Error('CLI stdin must be a regular file.');
+    }
+  } else rejectUnsafeSource(body.source);
+  return {...body,workspace,environment:validatedEnvironment(body.environment)};
 }
 
-async function compileTypeScript(body) {
-  if (typeof body.source !== 'string' || Buffer.byteLength(body.source) > maximumBody) throw new Error('TypeScript source is missing or too large.');
-  const ts = await import('typescript');
-  const requestedFileName = typeof body.fileName === 'string' ? body.fileName : 'main.ts';
-  if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}\.tsx?$/.test(requestedFileName)) throw new Error('TypeScript fileName must be a safe .ts or .tsx basename.');
-  const virtualRoot = path.join(clientsRoot, 'typescript-compile');
-  const virtualFileName = path.join(virtualRoot, requestedFileName);
-  const baseOptions = {
-    target: ts.ScriptTarget.ES2022,
-    module: ts.ModuleKind.ESNext,
-    moduleResolution: ts.ModuleResolutionKind.Bundler,
-    strict: true,
-    // Installed pure-JavaScript packages are valid runtime dependencies even
-    // when they do not publish a declaration package. Explicit TypeScript type
-    // errors remain enabled through the rest of strict mode.
-    noImplicitAny: false,
-    allowJs: true,
-    checkJs: false,
-    paths: { '*': [path.join(root, 'packages', 'node-global', 'node_modules', '*')] },
-    sourceMap: true,
-    inlineSources: true,
-  };
-  const converted = ts.convertCompilerOptionsFromJson(body.tsconfig?.compilerOptions ?? {}, '.');
-  const compilerOptions = { ...baseOptions, ...converted.options };
-  const sourceFile = ts.createSourceFile(
-    virtualFileName,
-    body.source,
-    compilerOptions.target ?? ts.ScriptTarget.ES2022,
-    true,
-    requestedFileName.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
-  );
-  const compilerHost = ts.createCompilerHost(compilerOptions);
-  const originalGetSourceFile = compilerHost.getSourceFile.bind(compilerHost);
-  const originalFileExists = compilerHost.fileExists.bind(compilerHost);
-  const originalReadFile = compilerHost.readFile.bind(compilerHost);
-  let javaScript = null;
-  let sourceMap = null;
-  const isVirtual = fileName => path.basename(fileName) === requestedFileName || path.resolve(fileName) === virtualFileName || fileName === virtualFileName;
-  compilerHost.getSourceFile = (fileName, languageVersion, onError, shouldCreateNewSourceFile) =>
-    isVirtual(fileName)
-      ? sourceFile
-      : originalGetSourceFile(fileName, languageVersion, onError, shouldCreateNewSourceFile);
-  compilerHost.fileExists = fileName => isVirtual(fileName) || originalFileExists(fileName);
-  compilerHost.readFile = fileName => isVirtual(fileName) ? body.source : originalReadFile(fileName);
-  compilerHost.writeFile = (fileName, data) => {
-    if (fileName.endsWith('.js')) javaScript = data;
-    else if (fileName.endsWith('.js.map')) sourceMap = data;
-  };
-  const program = ts.createProgram([virtualFileName], compilerOptions, compilerHost);
-  const rawDiagnostics = [
-    ...(converted.errors ?? []),
-    ...ts.getPreEmitDiagnostics(program, sourceFile),
-    ...program.getSemanticDiagnostics(sourceFile),
-    ...program.getSyntacticDiagnostics(sourceFile),
-  ];
-  if (!rawDiagnostics.some(item => item.category === ts.DiagnosticCategory.Error)) {
-    rawDiagnostics.push(...program.emit().diagnostics);
-  }
-  const seen = new Set();
-  const diagnostics = [];
-  for (const diagnostic of rawDiagnostics) {
-    const position = diagnostic.file && typeof diagnostic.start === 'number' ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start) : null;
-    const key = `${diagnostic.code}:${position?.line}:${position?.character}:${diagnostic.messageText}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      diagnostics.push({
-        code: diagnostic.code,
-        category: diagnostic.category,
-        message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
-        file: diagnostic.file?.fileName ? path.basename(diagnostic.file.fileName) : null,
-        line: position ? position.line + 1 : null,
-        column: position ? position.character + 1 : null,
-      });
-    }
-  }
-  const failed = diagnostics.some(item => item.category === ts.DiagnosticCategory.Error);
-  return { javaScript: failed ? null : javaScript, sourceMap: failed ? null : sourceMap, diagnostics: diagnostics.map(({ category, ...item }) => item), succeeded: !failed };
-}
-
-async function compileTypeScriptProject(body) {
-  const workspace = path.resolve(String(body.workspace ?? ''));
-  if (!workspace) throw new Error('TypeScript lifecycle workspace must be specified.');
-  let stat;
-  try {
-    stat = await fs.stat(workspace);
-  } catch (err) {
-    const error = new Error(`TypeScript lifecycle workspace does not exist: ${err.message}`);
-    error.status = 404;
-    throw error;
-  }
-  if (!stat.isDirectory()) {
-    const error = new Error('TypeScript lifecycle workspace must be a directory.');
-    error.status = 400;
-    throw error;
-  }
-  const args = Array.isArray(body.arguments) ? body.arguments.map(String) : [];
-  if (args.length > 128 || args.some(argument => /[\0\r\n]/.test(argument))) throw new Error('Invalid TypeScript lifecycle arguments.');
-  const ts = await import('typescript');
-  const commandLine = ts.parseCommandLine(args);
-  const diagnostics = [...commandLine.errors];
-  const requestedProject = commandLine.options.project;
-  const configPath = requestedProject
-    ? path.resolve(workspace, requestedProject)
-    : ts.findConfigFile(workspace, ts.sys.fileExists, 'tsconfig.json');
-  if (!configPath || !isInside(workspace, configPath)) throw new Error('A tsconfig.json inside the package workspace is required.');
-  const config = ts.readConfigFile(configPath, ts.sys.readFile);
-  if (config.error) diagnostics.push(config.error);
-  const parsed = ts.parseJsonConfigFileContent(config.config ?? {}, ts.sys, path.dirname(configPath), commandLine.options, configPath);
-  diagnostics.push(...parsed.errors);
-  const emittedFiles = [];
-  if (!diagnostics.some(item => item.category === ts.DiagnosticCategory.Error)) {
-    const program = ts.createProgram({ rootNames: parsed.fileNames, options: parsed.options, projectReferences: parsed.projectReferences });
-    diagnostics.push(...ts.getPreEmitDiagnostics(program));
-    if (!diagnostics.some(item => item.category === ts.DiagnosticCategory.Error)) {
-      const emit = program.emit(undefined, (fileName, data, writeByteOrderMark) => {
-        const destination = path.resolve(fileName);
-        if (!isInside(workspace, destination)) throw new Error(`TypeScript output escapes the package workspace: ${fileName}`);
-        mkdirSync(path.dirname(destination), { recursive: true });
-        ts.sys.writeFile(destination, data, writeByteOrderMark);
-        emittedFiles.push(path.relative(workspace, destination));
-      });
-      diagnostics.push(...emit.diagnostics);
-    }
-  }
-  const normalized = diagnostics.map(diagnostic => {
-    const position = diagnostic.file && typeof diagnostic.start === 'number' ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start) : null;
-    return {
-      code: diagnostic.code,
-      category: ts.DiagnosticCategory[diagnostic.category]?.toLowerCase() ?? 'error',
-      message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
-      file: diagnostic.file?.fileName ? path.relative(workspace, diagnostic.file.fileName) : null,
-      line: position ? position.line + 1 : null,
-      column: position ? position.character + 1 : null,
-    };
-  });
-  return {
-    compilerVersion: ts.version,
-    compilerIntegrity: typescriptCompilerIntegrity,
-    diagnostics: normalized,
-    emittedFiles: emittedFiles.sort(),
-    succeeded: !diagnostics.some(item => item.category === ts.DiagnosticCategory.Error),
-  };
-}
 
 function validatedEnvironment(value) {
-  const output = {};
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return output;
+  const output = Object.create(null);
+  if (value == null) return output;
+  if (typeof value !== 'object' || Array.isArray(value)) throw new Error('Environment must be a dictionary.');
   for (const [name, item] of Object.entries(value)) {
-    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid environment name: ${name}`);
-    // R10: Allow environment overrides for personal development without throwing on reserved names
-    output[name] = String(item);
+    if ((!name || name.includes('=') || name.includes('\0'))) throw new Error(`Invalid environment name: ${name}`);
+    const text = String(item);
+    if (text.includes('\0')) throw new Error('Environment values cannot contain a NUL byte.');
+    output[name] = text;
   }
   return output;
 }
@@ -567,32 +437,40 @@ function rejectUnsafeSource(_source) {
   // R12: Removed word blocking. String/comments are not API calls.
 }
 
-async function startServer(id, configuration) {
+function startServer(id,configuration,signal) {
+  const pending=serverStarts.get(id);
+  if(pending)return waitForSignal(pending,signal);
+  const operation=startServerImpl(id,configuration,signal);
+  serverStarts.set(id,operation);
+  operation.finally(()=>{if(serverStarts.get(id)===operation)serverStarts.delete(id);}).catch(()=>{});
+  return operation;
+}
+
+async function startServerImpl(id, configuration, signal) {
+  signal?.throwIfAborted();
   if (configuration.serverID?.toLowerCase() !== id) throw new Error('Server ID mismatch.');
   const existing = servers.get(id);
   if (existing) {
     if (existing.state === 'running') return snapshot(existing);
     if (existing.state === 'starting') {
-      await existing.readyPromise;
+      await waitForSignal(existing.readyPromise,signal);
       return snapshot(existing);
     }
     if (existing.state === 'stopping') {
       await existing.stopPromise;
-      return startServer(id, configuration);
+      return startServerImpl(id, configuration,signal);
     }
     await finalizeServerState(existing, {
       state: existing.state === 'failed' ? 'failed' : 'stopped',
       reason: 'stale-state-before-start',
     });
   }
-  const requestedPackageRoot = path.resolve(configuration.packageRoot);
-  const allowedRoot = realpathSync(safeServerDirectory(id));
-  const packageRoot = realpathSync(requestedPackageRoot);
-  if (packageRoot !== allowedRoot) throw new Error('Package root is outside the installed server directory.');
+  const packageRoot = await resolveMCPPackageRoot(root, id, configuration.packageRoot);
   const requestedEntryPoint = path.resolve(configuration.entryPoint);
   const entryPoint = realpathSync(requestedEntryPoint);
   if (!isInside(packageRoot, entryPoint)) throw new Error('Entry point is outside package root.');
   if (!statSync(entryPoint).isFile()) throw new Error('Entry point is not a regular file.');
+  signal?.throwIfAborted();
 
   const generation = (serverGenerations.get(id) ?? 0) + 1;
   serverGenerations.set(id, generation);
@@ -610,10 +488,13 @@ async function startServer(id, configuration) {
     resolveExit: exited.resolve,
     stopPromise: null,
     clients: new Set(),
-    stdoutBacklog: [],
-    stdoutBacklogBytes: 0,
+    stdoutSpool:path.join(npmTemp,`mcp-output-${id}-${randomUUID()}.ndjson`),
+    stdoutTail:Promise.resolve(),
+    outputAbort:new AbortController(),
+    stdinTail:Promise.resolve(),
     stderr: [],
-    pending: Buffer.alloc(0),
+    frames:new MCPLineFrames(),
+    stderrDecoder:new StringDecoder('utf8'),
     startedAt: new Date().toISOString(),
     moduleEdges: [],
     blockedAccesses: [],
@@ -625,11 +506,12 @@ async function startServer(id, configuration) {
     handlers: {},
   };
   const worker = new Worker(workerURL, {
-    workerData: { serverID: id, packageRoot, entryPoint },
+    workerData: { serverID: id, packageRoot, entryPoint, environment: validatedEnvironment(configuration.environment) },
     argv: Array.isArray(configuration.arguments) ? configuration.arguments : [],
-    env: { ...process.env, ...(configuration.environment ?? {}), HANLIN_MCP_SERVER_ID: id },
-    // The embedded host owns its process-level descriptors across Workers.
-    trackUnmanagedFds: false,
+    // Server values are applied after loading the wrapper, never as bootstrap
+    // NODE_OPTIONS. The Host's launch identity/configuration stays immutable.
+    env: { ...executionJobs.workerEnvironment, HANLIN_MCP_SERVER_ID: id },
+    // Retain Node's default FD ownership tracking; never conceal regressions.
     stdin: true,
     stdout: true,
     stderr: true,
@@ -659,7 +541,7 @@ async function startServer(id, configuration) {
   lifecycleCountersByServer.set(id, serverCounters);
   state.handlers.stdout = chunk => handleStdout(state, chunk);
   state.handlers.stderr = chunk => {
-    const message = redact(chunk.toString('utf8')).slice(0, maximumLine);
+    const message = redact(state.stderrDecoder.write(chunk));
     state.stderr.push(message);
     if (state.stderr.length > 500) state.stderr.shift();
     emit(state, 'stderr', { text: message });
@@ -703,8 +585,12 @@ async function startServer(id, configuration) {
   worker.on('error', state.handlers.error);
   worker.on('exit', state.handlers.exit);
 
+  const abort=()=>{void stopServerState(state,{expectedStop:true});};
+  signal?.addEventListener('abort',abort,{once:true});
+  if(signal?.aborted)abort();
   try {
-    await withTimeout(state.readyPromise, 15_000, 'Server worker startup timed out.');
+    await state.readyPromise;
+    signal?.throwIfAborted();
     return snapshot(state);
   } catch (error) {
     await stopServerState(state, {
@@ -713,7 +599,7 @@ async function startServer(id, configuration) {
       failure: error,
     });
     throw error;
-  }
+  } finally {signal?.removeEventListener('abort',abort);}
 }
 
 async function stopServer(id) {
@@ -725,6 +611,7 @@ async function stopServer(id) {
 function stopServerState(state, options = {}) {
   if (state.stopPromise) return state.stopPromise;
   state.stopPromise = (async () => {
+    state.rejectReady(new Error('Server startup was stopped by its owner.'));
     state.expectedStop ||= options.expectedStop === true;
     state.state = 'stopping';
     emit(state, 'lifecycle', {
@@ -733,6 +620,7 @@ function stopServerState(state, options = {}) {
       reason: options.failure ? redact(options.failure.message) : null,
     });
     finishEventClients(state, 'stopping');
+    state.outputAbort.abort();
     if (!state.stdinEnded) {
       state.stdinEnded = true;
       try { state.worker.stdin?.end(); } catch (error) {
@@ -816,6 +704,7 @@ function restartServer(id, configuration) {
 }
 
 async function handleWorkerExit(state, code) {
+  await state.stdoutTail;
   const expected = state.expectedStop || state.state === 'stopping';
   const resultState = expected ? 'stopped' : (code === 0 ? 'stopped' : 'failed');
   emit(state, 'lifecycle', {
@@ -833,9 +722,9 @@ async function finalizeServerState(state, result) {
   state.state = result.state;
   state.rejectReady(new Error(result.reason ?? `Server worker finalized as ${result.state}.`));
   finishEventClients(state, result.state);
-  state.pending = Buffer.alloc(0);
-  state.stdoutBacklog = [];
-  state.stdoutBacklogBytes = 0;
+  state.outputAbort.abort();
+  await state.stdoutTail;
+  await fs.rm(state.stdoutSpool,{force:true});
   state.stderr = [];
   if (state.handlers.stdout) state.worker.stdout?.off('data', state.handlers.stdout);
   if (state.handlers.stderr) state.worker.stderr?.off('data', state.handlers.stderr);
@@ -862,40 +751,43 @@ async function finalizeServerState(state, result) {
 
 function handleStdout(state, chunk) {
   if (state.finalized) return;
-  state.pending = Buffer.concat([state.pending, chunk]);
-  if (state.pending.length > maximumLine) {
-    emit(state, 'lifecycle', { event: 'error', message: 'stdout line exceeded size limit' });
-    void stopServerState(state, {
-      expectedStop: false,
-      forceImmediately: true,
-      failure: new Error('stdout line exceeded size limit'),
-    });
-    return;
-  }
-  let newline;
-  while ((newline = state.pending.indexOf(0x0a)) >= 0) {
-    const line = state.pending.subarray(0, newline);
-    state.pending = state.pending.subarray(newline + 1);
-    if (!line.length) continue;
-    try {
-      JSON.parse(line.toString('utf8'));
-      emit(state, 'stdout', { data: line.toString('base64') });
-    } catch {
-      emit(state, 'diagnostic', { message: redact(line.toString('utf8')).slice(0, 4096) });
+  state.worker.stdout.pause();
+  state.stdoutTail=state.stdoutTail.then(async()=>{
+    for(const bytes of state.frames.push(chunk)) {
+      try{JSON.parse(bytes.toString('utf8'));}
+      catch{emit(state,'diagnostic',{message:redact(bytes.toString('utf8'))});continue;}
+      const line=JSON.stringify({channel:'stdout',serverID:state.id,generation:state.generation,data:bytes.toString('base64')})+'\n';
+      if(!state.clients.size)await fs.appendFile(state.stdoutSpool,line,{mode:0o600});
+      else {
+        const delivered=await Promise.all([...state.clients].map(response=>writeEvent(response,line,state.outputAbort.signal)));
+        if(!delivered.some(Boolean)&&!state.outputAbort.signal.aborted)await fs.appendFile(state.stdoutSpool,line,{mode:0o600});
+      }
     }
-  }
+  }).catch(error=>{
+    if(!state.outputAbort.signal.aborted)void stopServerState(state,{failure:error,expectedStop:false,forceImmediately:true});
+  }).finally(()=>{if(!state.finalized)state.worker.stdout.resume();});
 }
 
 function attachEvents(id, request, response) {
-  response.writeHead(200, { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
   const state = servers.get(id);
+  const expected=new URL(request.url,'http://127.0.0.1').searchParams.get('generation');
+  assertGeneration(state,expected==null?null:Number(expected));
+  response.writeHead(200, { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
   if (!state) { response.write(`${JSON.stringify({ channel: 'lifecycle', event: 'stopped' })}\n`); return response.end(); }
-  state.clients.add(response);
-  response.write(`${JSON.stringify({ channel: 'lifecycle', event: state.state })}\n`);
-  for (const line of state.stdoutBacklog) response.write(line);
-  state.stdoutBacklog = [];
-  state.stdoutBacklogBytes = 0;
-  request.on('close', () => state.clients.delete(response));
+  response.write(`${JSON.stringify({ channel: 'lifecycle', event: state.state,generation:state.generation })}\n`);
+  // Serialize attachment with stdout. Disconnected output is private temporary
+  // transport storage, never an evicting memory queue or a second runtime.
+  state.stdoutTail=state.stdoutTail.then(async()=>{
+    if(response.destroyed||state.finalized)return;
+    try {
+      for await(const chunk of createReadStream(state.stdoutSpool)) {
+        if(!await writeEvent(response,chunk,state.outputAbort.signal))return;
+      }
+      await fs.rm(state.stdoutSpool,{force:true});
+    } catch(error){if(error.code!=='ENOENT')throw error;}
+    if(!response.destroyed)state.clients.add(response);
+  }).catch(error=>{response.destroy(error);});
+  response.on('close', () => state.clients.delete(response));
 }
 
 function finishEventClients(state, event) {
@@ -916,18 +808,61 @@ function finishEventClients(state, event) {
 
 function emit(state, channel, payload) {
   const line = `${JSON.stringify({ channel, serverID: state.id, timestamp: new Date().toISOString(), ...payload })}\n`;
-  if (channel === 'stdout' && state.clients.size === 0) {
-    state.stdoutBacklog.push(line);
-    state.stdoutBacklogBytes += Buffer.byteLength(line);
-    while (state.stdoutBacklogBytes > maximumLine && state.stdoutBacklog.length > 1) {
-      state.stdoutBacklogBytes -= Buffer.byteLength(state.stdoutBacklog.shift());
-    }
-  }
   for (const response of state.clients) response.write(line);
   if (channel !== 'stdout') diagnostic(`server_${channel}`, { serverID: state.id, ...payload });
 }
 
 function emitGlobal(channel, payload) { diagnostic(channel, payload); }
+
+function assertGeneration(state,generation) {
+  if(generation!=null&&(!Number.isSafeInteger(generation)||state?.generation!==generation))
+    throw Object.assign(new Error('The MCP server generation has changed.'),{status:409});
+}
+
+async function writeServerInput(id,body,signal) {
+  const state=servers.get(id);
+  if(!state?.worker.stdin||state.state!=='running')throw Object.assign(new Error('Server is not running'),{status:409});
+  assertGeneration(state,body.generation);
+  if(typeof body.data!=='string')throw new Error('MCP stdin requires base64 data.');
+  const data=Buffer.from(body.data,'base64');
+  if(data.toString('base64')!==body.data)throw new Error('Invalid base64 MCP input.');
+  // Reserve the stream position before yielding. Cancelling one queued request
+  // never lets a later frame overtake an earlier write or kills another chat.
+  const previous=state.stdinTail;
+  let release;
+  const slot=new Promise(resolve=>{release=resolve;});
+  state.stdinTail=previous.then(()=>slot);
+  try {
+    await waitForSignal(previous,signal);
+    signal?.throwIfAborted();
+    assertGeneration(servers.get(id),state.generation);
+    if(state.stdinEnded)throw new Error('MCP stdin is closed.');
+    await new Promise((resolve,reject)=>state.worker.stdin.write(data,error=>error?reject(error):resolve()));
+    return {accepted:data.length,generation:state.generation};
+  } finally {release();}
+}
+
+function waitForSignal(promise,signal) {
+  if(!signal)return promise;
+  signal.throwIfAborted();
+  let abort;
+  const cancelled=new Promise((_,reject)=>{abort=()=>reject(signal.reason);signal.addEventListener('abort',abort,{once:true});});
+  return Promise.race([promise,cancelled]).finally(()=>signal.removeEventListener('abort',abort));
+}
+
+function writeEvent(response,data,signal) {
+  if(response.destroyed||response.writableEnded||signal.aborted)return Promise.resolve(false);
+  return new Promise(resolve=>{
+    const finish=ok=>{
+      response.off('drain',drained);response.off('close',closed);response.off('error',closed);
+      signal.removeEventListener('abort',closed);resolve(ok);
+    };
+    const drained=()=>finish(true),closed=()=>finish(false);
+    response.once('drain',drained);response.once('close',closed);response.once('error',closed);
+    signal.addEventListener('abort',closed,{once:true});
+    if(response.write(data))finish(true);
+  });
+}
 
 async function sendLogs(id, response) {
   const state = servers.get(id);

@@ -1794,8 +1794,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
     private let scriptsRoot: URL
     private let bookmarksURL: URL
     private let allowed: Bool
-    private let maximumBytes = 64 * 1_024 * 1_024
-    private let maximumReadBytes = 16 * 1_024 * 1_024
+    private let resourceLimits: HanlinScriptingFileResourceLimits
     private var externalRoots: [ExternalRoot] = []
     private var bookmarks: [String: Data]
 
@@ -1803,8 +1802,11 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         installedPackageID: String,
         allowed: Bool,
         runtimeRoot: URL?,
-        packageSourceDirectory: URL?
+        packageSourceDirectory: URL?,
+        resourceLimits: HanlinScriptingFileResourceLimits = .init()
     ) throws {
+        try resourceLimits.validate()
+        self.resourceLimits = resourceLimits
         let baseRoot: URL
         if let runtimeRoot {
             baseRoot = runtimeRoot
@@ -1929,11 +1931,11 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
     func stageExportFiles(_ files: [(name: String, data: Data)]) throws -> (directory: URL, urls: [URL]) {
         try lock.withLock {
             guard allowed else { throw permissionDenied() }
-            guard !files.isEmpty, files.count <= 64 else {
-                throw invalid("DocumentPicker export requires from one through 64 files.")
+            guard !files.isEmpty else {
+                throw invalid("DocumentPicker export requires at least one file.")
             }
             let totalBytes = files.reduce(0) { $0 + $1.data.count }
-            guard totalBytes <= maximumReadBytes else { throw quota() }
+            try resourceLimits.validateRead(totalBytes)
             let directory = temporaryRoot
                 .appending(path: ".exports", directoryHint: .isDirectory)
                 .appending(path: UUID().uuidString.lowercased(), directoryHint: .isDirectory)
@@ -1945,6 +1947,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
                         throw invalid("Every exported file requires a unique safe name.")
                     }
                     let url = directory.appending(path: name, directoryHint: .notDirectory)
+                    try checkQuota(replacing: url, withByteCount: file.data.count)
                     try file.data.write(to: url, options: .atomic)
                     return url
                 }
@@ -2062,26 +2065,27 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         case "file.writeData":
             let target = try writable(payload, "path")
             guard let base64 = payload["base64"] as? String,
-                  let data = Data(base64Encoded: base64), data.count <= maximumReadBytes else {
-                throw invalid("The file data is invalid or too large.")
+                  let data = Data(base64Encoded: base64) else {
+                throw invalid("The file data is invalid.")
             }
+            try resourceLimits.validateRead(data.count)
             try checkQuota(replacing: target.url, withByteCount: data.count)
             try data.write(to: target.url, options: .atomic)
             return NSNull()
         case "file.appendData":
             let target = try writable(payload, "path")
             guard let base64 = payload["base64"] as? String,
-                  let data = Data(base64Encoded: base64), data.count <= maximumReadBytes else {
-                throw invalid("The file data is invalid or too large.")
+                  let data = Data(base64Encoded: base64) else {
+                throw invalid("The file data is invalid.")
             }
+            try resourceLimits.validateRead(data.count)
             try fileManager.createDirectory(
                 at: target.url.deletingLastPathComponent(),
                 withIntermediateDirectories: true
             )
-            let previous = (try? Data(contentsOf: target.url, options: .mappedIfSafe)) ?? Data()
-            guard previous.count + data.count <= maximumReadBytes else {
-                throw quota()
-            }
+            let previous = fileManager.fileExists(atPath: target.url.path(percentEncoded: false))
+                ? try Data(contentsOf: target.url, options: .mappedIfSafe) : Data()
+            try resourceLimits.validateRead(previous.count + data.count)
             try checkQuota(replacing: target.url, withByteCount: previous.count + data.count)
             var combined = previous
             combined.append(data)
@@ -2096,12 +2100,17 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         case "file.copy":
             let source = try readable(payload, "path")
             let destination = try writable(payload, "newPath")
-            try checkQuota(replacing: destination.url, withByteCount: try recursiveSize(source.url))
+            if resourceLimits.maximumStorageBytes != nil {
+                try checkQuota(replacing: destination.url, withByteCount: try recursiveSize(source.url))
+            }
             try fileManager.copyItem(at: source.url, to: destination.url)
             return NSNull()
         case "file.rename":
             let source = try writable(payload, "path")
             let destination = try writable(payload, "newPath")
+            if resourceLimits.maximumStorageBytes != nil {
+                try checkQuota(replacing: destination.url, withByteCount: try recursiveSize(source.url), removing: source.url)
+            }
             try fileManager.moveItem(at: source.url, to: destination.url)
             return NSNull()
         case "file.mimeType":
@@ -2119,9 +2128,9 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
 
     private func readData(_ payload: [String: Any]) throws -> Data {
         let target = try readable(payload, "path")
-        let attributes = try fileManager.attributesOfItem(atPath: target.url.path(percentEncoded: false))
-        guard (attributes[.size] as? NSNumber)?.intValue ?? 0 <= maximumReadBytes else {
-            throw quota()
+        if resourceLimits.maximumReadBytes != nil {
+            let attributes = try fileManager.attributesOfItem(atPath: target.url.path(percentEncoded: false))
+            try resourceLimits.validateRead((attributes[.size] as? NSNumber)?.intValue ?? 0)
         }
         return try Data(contentsOf: target.url, options: .mappedIfSafe)
     }
@@ -2274,14 +2283,34 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         return try fileManager.attributesOfItem(atPath: target.url.path(percentEncoded: false))[.type] as? FileAttributeType
     }
 
-    private func checkQuota(replacing target: URL, withByteCount byteCount: Int) throws {
-        let existing = (try? recursiveSize(target)) ?? 0
-        let total = try recursiveSize(documentsRoot)
-            + recursiveSize(appGroupRoot)
-            + recursiveSize(temporaryRoot)
-            - existing
-            + byteCount
+    private func checkQuota(replacing target: URL, withByteCount byteCount: Int, removing source: URL? = nil) throws {
+        guard let maximumBytes = resourceLimits.maximumStorageBytes else { return }
+        guard isManagedFile(target) else { return }
+        let existing = try recursiveSize(target)
+        var total = 0
+        for root in [documentsRoot, appGroupRoot, temporaryRoot] {
+            total = try addingBytes(total, recursiveSize(root))
+        }
+        total -= existing
+        if let source, source != target, isManagedFile(source) { total -= try recursiveSize(source) }
+        total = try addingBytes(total, byteCount)
         guard total <= maximumBytes else { throw quota() }
+    }
+
+    private func isManagedFile(_ url: URL) -> Bool {
+        let checked = url.standardizedFileURL.resolvingSymlinksInPath()
+        return [documentsRoot, appGroupRoot, temporaryRoot].contains { root in
+            let resolved = root.standardizedFileURL.resolvingSymlinksInPath()
+            let rootPath = resolved.path(percentEncoded: false)
+            let prefix = rootPath.hasSuffix("/") ? rootPath : rootPath + "/"
+            return checked == resolved || checked.path(percentEncoded: false).hasPrefix(prefix)
+        }
+    }
+
+    private func addingBytes(_ first: Int, _ second: Int) throws -> Int {
+        let result = first.addingReportingOverflow(second)
+        guard !result.overflow else { throw quota() }
+        return result.partialValue
     }
 
     private func recursiveSize(_ url: URL) throws -> Int {
@@ -2293,7 +2322,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         guard let enumerator = fileManager.enumerator(
             at: url,
             includingPropertiesForKeys: [.isRegularFileKey, .fileSizeKey, .isSymbolicLinkKey],
-            options: [.skipsHiddenFiles]
+            options: []
         ) else { return 0 }
         var total = 0
         for case let item as URL in enumerator {
@@ -2303,7 +2332,7 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
                 .isSymbolicLinkKey,
             ])
             if values.isSymbolicLink == true { enumerator.skipDescendants() }
-            if values.isRegularFile == true { total += values.fileSize ?? 0 }
+            if values.isRegularFile == true { total = try addingBytes(total, values.fileSize ?? 0) }
         }
         return total
     }
@@ -2417,13 +2446,13 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
     }
 
     private func quota() -> HanlinScriptingNativeError {
-        .init(name: "Error", code: "quota_exceeded", message: "The package file quota was exceeded.")
+        .init(name: "Error", code: "quota_exceeded", message: "Package file bytes exceed the explicit resource budget.")
     }
 }
 
 enum HanlinScriptingNativeJSON {
-    static func decodeObject(_ json: String) throws -> [String: Any] {
-        guard json.utf8.count <= 20 * 1_024 * 1_024,
+    static func decodeObject(_ json: String, maximumBytes: Int? = nil) throws -> [String: Any] {
+        guard maximumBytes.map({ json.utf8.count <= $0 }) ?? true,
               let data = json.data(using: .utf8),
               let object = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw HanlinScriptingNativeError(
