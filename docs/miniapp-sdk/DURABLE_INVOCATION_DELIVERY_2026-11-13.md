@@ -9,6 +9,15 @@ retain their existing no-automatic-replay behavior. New actual queue tests cover
 this boundary; native execution is still pending for the follow-up. The queue
 also exposes read-only original command lookup for ingress target/receipt UI.
 
+Native follow-up43409794095/ed3b05ea executed all14 affected queue cases plus
+3 Share delivery cases PASS1.201s; a separate6-case owned ingress invocation
+passed0.171s. Both new unstarted-admission cases passed (busy/requeue0.232s,
+cancel/expiry/fencing0.168s). Xcode27.2/27B52 Swift6.4.2. Authenticated package
+artifact14029067721/4236B, GitHub SHA256
+8fb1972773c164ad7a2b1030c0aa565a52f0c4427ab853f03f4e35bdda01b411.
+The original interrupted/unknown action replay prohibition remains tested.
+Host dispatch integration and physical ingress acceptance are still open.
+
 [נועם | DEV] [MAIN_SESSION]. Branch `fix/hanlin-approved-plan-20261108`.
 INT-02 implementation checkpoint; full task acceptance remains open.
 

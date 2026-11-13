@@ -1,7 +1,8 @@
 {
-  "sourceCommit": "302e4f3829fece3df03e4393f1af72cc5ecea1c6",
+  "sourceCommit": "ed3b05eaee47e083cbb0f038046f79d6d5e8af69",
   "uncommittedSourcePaths": [
-    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift"
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
+    "Scripts/Audit/audit-miniapp-sdk.mjs"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -5906,7 +5907,7 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
-      "sha256": "f562e84d44ea64e3c172fc4ae5579ae551076a8d4897b76166db8a86edadf425"
+      "sha256": "84ccdc1560eb3798f4d0af5475b53992ed5e56456c4eb3151d9ea43ba12b9199"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
@@ -5958,7 +5959,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "64e241bc243c5e5155a87a2b34c9c4bb1608cb31a149e70a94e85902f44364a7"
+      "sha256": "61bbc85104f9b91a7983f87114f48e3994b861f5660da19f8faaf649a8e699d6"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
@@ -5979,6 +5980,10 @@
     {
       "path": "Scripts/NativeScript/build-host-services.mjs",
       "sha256": "f74356b5bebb6677548ceaf1cca971627da295ad0fb1b744787025fc665ad343"
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "aa2ac69644a0a56761e48bfc2831ee9ea89f41d2b630a8127884dd2a4e5d7953"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",

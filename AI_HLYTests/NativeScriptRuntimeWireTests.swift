@@ -45,7 +45,15 @@ extension HanlinUnifiedHostServicesE2ETests {
             ['typeScript', "const n: number = 42; console.log('NS_VM_TS_' + n)"],
             ['localPython', "print('NS_VM_PYTHON')"], ['javaScriptCore', '21 * 2'], ['shell', 'pwd']];
           const results = [];
-          for (const [kind, source] of cases) results.push(await host.executeRuntime(kind, source));
+          for (const [kind, source] of cases) {
+            const receipt = await host.executeRuntime(kind, source);
+            if (typeof receipt.executionID !== 'string' || typeof receipt.durationMilliseconds !== 'number' ||
+                typeof receipt.wasCancelled !== 'boolean' || typeof receipt.outputWasTruncated !== 'boolean') {
+              throw new Error('Native runtime receipt did not match its public TypeScript field types');
+            }
+            if (kind === 'javaScriptCore' && receipt.value !== 42) throw new Error('Runtime JSON value was not a plain JavaScript number');
+            results.push(receipt);
+          }
           NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify({results}), '\(key)');
         })().catch(error => {
           NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify({error: String(error)}), '\(key)');

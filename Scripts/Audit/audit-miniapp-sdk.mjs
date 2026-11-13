@@ -133,6 +133,8 @@ for (const file of [
   'Scripts/NativeScript/Fixtures/HostServices/valid.ts',
   'Scripts/NativeScript/Fixtures/HostServices/invalid.ts',
   'Scripts/NativeScript/prepare-ios-dependencies.mjs',
+  'Scripts/NativeScript/build-step-metadata-generator-wrapper.py',
+  'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json',

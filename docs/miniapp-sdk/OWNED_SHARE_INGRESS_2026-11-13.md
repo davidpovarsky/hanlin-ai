@@ -79,6 +79,22 @@ f50e8045878193fa8205fff277966b31f9a11df455830fba25a55daa75dacb0f.
 All23 selected affected queue/store/delivery cases still require execution;
 zero passes are credited to the compile failure.
 
+Corrected43409794095/ed3b05ea executed23/23 PASS in two focused invocations:
+6 owned ingress/provider cases0.171s and17 queue/delivery cases1.201s (14 queue,
+3 new Share receipt methods), Xcode27.2/27B52 Swift6.4.2; job4m25s. Full large
+input, file hash, actual return value, reopen/dedup, target change rejection,
+TTL/cancel, unstarted admission and fenced lease cases passed. Downloaded
+artifact14029067721 (4236B), GitHub SHA256
+8fb1972773c164ad7a2b1030c0aa565a52f0c4427ab853f03f4e35bdda01b411.
+
+App run43407005634/302e4f38 also executed the actual NSItemProvider→App Group→
+ChavrusaShareInbox.shared readback case PASS0.150s on arm64 iPad mini(A20Pro)
+iOS27.2/24B8117. It compiled the Share extension and Host review UI. Overall run
+FAILED an unrelated NS metadata/facade case (5/6 units PASS); no Share sheet UI,
+installed-action routing, signed entitlement or physical acceptance is inferred.
+Authenticated artifact14029126824/29313160B SHA256
+23d66bb2a34846d8e030cf4a181fec10559d0aad4a413ddf0cacd334cc3af056.
+
 Apple documents the temporary-file lifetime explicitly:
 https://developer.apple.com/documentation/foundation/nsitemprovider/loadfilerepresentation%28fortypeidentifier%3Acompletionhandler%3A%29 .
 String/URL loading uses the current loadObject bridge instead of the loadItem

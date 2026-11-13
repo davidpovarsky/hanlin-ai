@@ -121,3 +121,29 @@ existing serialized suite cover active/dormant/rejected second session, Unicode
 previous values, new-key removal, idempotent shutdown, bootstrap failure and
 invalid environment. Native execution is pending. Process environment is still
 shared with other engines; this does not claim process or concurrent-env isolation.
+
+At302e4f38, run43407005634 executed6 methods:5 PASS,1 FAIL in0.816s.
+Canonical2-session launch PASS0.511s,3 direct NS constructor gates PASS0.076s,
+actual provider→App Group→ChavrusaShareInbox reader PASS0.150s. The facade
+now loads bundle.mjs correctly but fails before an engine call: generated
+HanlinNativeServicesBridge metadata is unavailable. Overall run FAILED.
+Authenticated downloaded artifact14029126824 (29313160B), SHA256
+23d66bb2a34846d8e030cf4a181fec10559d0aad4a413ddf0cacd334cc3af056;
+unit leaf JSON a2912883878501abc7c62dcfbca510979bd634ebdd67941e966d6de4e51df4ee.
+
+Investigation: the actual build generated Host metadata including both bridge
+headers and linked it into AI_Hanlin.debug.dylib, while SwiftPM linked the NS
+support in a separate dynamic product. Config.MetadataPtr was nil, delegating
+selection to the SDK's own section reference. The Host now explicitly supplies
+its generated metadata through that public SDK property. Public dyld image
+enumeration/getsectiondata selects the single nonempty __DATA,__TNSMetadata
+section from direct main-bundle images (release executable or debug dylib),
+excluding Frameworks. Missing/ambiguous Host metadata fails before VM creation.
+Apple's getsectiondata implementation adjusts the mapped address for ASLR:
+https://github.com/apple-oss-distributions/cctools/blob/main/libmacho/getsecbyname.c .
+This binding correction still requires actual native verification; no fallback
+JavaScript class or fabricated callback is installed. The existing lifecycle
+fixture now also requires the actual generated bridge class and bound session,
+so its environment-path fallback cannot hide missing Host metadata. Real facade,
+lifecycle/environment, direct constructors, App Group and compiled-intent receipt
+cases are selected for the next focused app run. Node/Python artifacts unchanged.

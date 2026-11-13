@@ -914,6 +914,12 @@ struct HanlinUnifiedHostServicesE2ETests {
         try Data(packageJSON.utf8).write(to: appDir.appending(path: "package.json"))
 
         let bundleJS = """
+        if (typeof HanlinNativeServicesBridge === 'undefined' || typeof HanlinNativeServicesBridge.activeSessionBridge !== 'function') {
+            throw new Error('Generated Host Services metadata must be available to the actual NativeScript VM');
+        }
+        if (!HanlinNativeServicesBridge.activeSessionBridge()) {
+            throw new Error('Actual NativeScript metadata has no bound Host session');
+        }
         var compat = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeScriptCompatibility') : (globalThis.HanlinNativeScriptCompatibility || null);
         var bridge = (typeof NSClassFromString === 'function') ? NSClassFromString('HanlinNativeServicesBridge') : (globalThis.HanlinNativeServicesBridge || null);
         var dataDir = null;

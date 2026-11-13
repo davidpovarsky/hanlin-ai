@@ -2,7 +2,7 @@
 
 Status: **IN_PROGRESS — source audit only**.
 
-Base commit: `a146d430b53f5d28e02e7e7e75f7aa738ecd05a3`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
+Base commit: `ed3b05eaee47e083cbb0f038046f79d6d5e8af69`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
 Runtime/API/version authority is [source-inventory.json](source-inventory.json); this matrix consumes it rather than maintaining a second SDK contract.
 
 The four actual extension targets × two engines × five canonical runtimes form40 cells. Live Activity, Host AppIntent, Shortcuts and foreground add40 more.
