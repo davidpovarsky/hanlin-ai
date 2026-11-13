@@ -2189,10 +2189,7 @@ jobs:
               done
               # Runtime V3 explicitly proves real jobs outlive 300 seconds.
               # Keep the ordinary suite limit unchanged; scope the larger allowance.
-              unit_time_allowance=300
-              if [[ "${SIMULATOR_UNIT_FILTER:-}" == *"RuntimeAutonomyV3Tests"* ]]; then
-                unit_time_allowance=660
-              fi
+              unit_time_allowance="$(python3 Scripts/CI/simulator_test_allowance.py --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}")"
               xcodebuild test-without-building \
               -project "$PROJECT_PATH" \
               -scheme "$SCHEME_NAME" \
