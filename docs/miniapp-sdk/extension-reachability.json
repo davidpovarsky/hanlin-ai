@@ -1,10 +1,9 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "d7b64fe65ff9ea3e32ee64cd209a6203cce671d8",
+  "sourceCommit": "7e43ba76f9eed57670a6b4c357c5c3eaa1c88008",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [
-    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
+    "Scripts/Audit/audit_miniapp_reachability.py"
   ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
@@ -307,15 +306,33 @@
   "sourceRefs": {
     "shareWrite": {
       "file": "ChavrusaChatShare/ShareViewController.swift",
-      "line": 55,
-      "anchor": "private func save(",
-      "sha256": "1817b0b506c206da242f53af78141744cac631e0a66375caa7f5a70f9639c17e"
+      "line": 59,
+      "anchor": "store.commit(batchID, items: items)",
+      "sha256": "6b71a2df3b98c8257e2d5663b0818c5c6f0d0d6eaedf5e56c4b4b628cad610bb"
     },
-    "shareReadOnlyDeclaration": {
-      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+    "shareOwnedStore": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift",
+      "line": 43,
+      "anchor": "public struct HanlinShareInboxStore",
+      "sha256": "6f3ab96132dffe14f73c59306238d0f2bb88245cc22da9516165b0d8c371e943"
+    },
+    "shareProviderCopy": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift",
       "line": 17,
-      "anchor": "func pendingItems()",
-      "sha256": "16a3319ee375626a5edb85a7e2674ec5b8312d6239fc0cd67fb4b1c8d5be06be"
+      "anchor": "return provider.loadFileRepresentation(",
+      "sha256": "6d7869a438638e5b3208ab9b82c140716680c21213652e289bde4fa984f0e100"
+    },
+    "shareRead": {
+      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+      "line": 27,
+      "anchor": "func pendingBatches()",
+      "sha256": "c914a30a0b5a5df7d45ea8672dd7bc3fad42d554167d453a44c85144f46c7972"
+    },
+    "shareReview": {
+      "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+      "line": 5,
+      "anchor": "struct ChavrusaShareInboxView",
+      "sha256": "79178b48b9d373ad808badf04491a7564207c9e57a174f8d480998e3fff4778c"
     },
     "translationSnapshot": {
       "file": "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift",
@@ -487,15 +504,15 @@
     },
     "projectTargets": {
       "file": "AI_HLY.xcodeproj/project.pbxproj",
-      "line": 492,
+      "line": 494,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "cbe420466bee1ec48bd892b1429dc4d5b7b47993b8d290725363c05a8bb07c1a"
+      "sha256": "586731884bd7aa41f797947541a91f179bf8917759ac5de2064619584b6d14ad"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "1a0df6f972487771f5119592162a6c4c554d1aad5bfd1aae49596d626875aef2"
+      "sha256": "b26012ffdcb85d33ef79e6f175b93b2881476e53e95956bfb181653be980f114"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
@@ -527,9 +544,12 @@
       "target": "ChavrusaChatShare",
       "refs": [
         "shareWrite",
-        "shareReadOnlyDeclaration"
+        "shareOwnedStore",
+        "shareProviderCopy",
+        "shareRead",
+        "shareReview"
       ],
-      "stop": "share-inbox.json has no Host consumer; only borrowed provider URLs are persisted, not an owned attachment transaction.",
+      "stop": "Owned atomic batches copy files during provider callbacks and feed Host ingress review. Installed target/action selection, INT-02 dispatch, expiry and execution receipt readback remain unconnected; historical share-inbox.json is retained.",
       "owner": "INT-04"
     },
     "translation": {

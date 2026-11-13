@@ -30,8 +30,11 @@ def build() -> dict:
                       "anchor": anchor, "sha256": hashlib.sha256(data).hexdigest()}
         return name
 
-    ref("shareWrite", "ChavrusaChatShare/ShareViewController.swift", "private func save(")
-    ref("shareReadOnlyDeclaration", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "func pendingItems()")
+    ref("shareWrite", "ChavrusaChatShare/ShareViewController.swift", "store.commit(batchID, items: items)")
+    ref("shareOwnedStore", "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift", "public struct HanlinShareInboxStore")
+    ref("shareProviderCopy", "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift", "return provider.loadFileRepresentation(")
+    ref("shareRead", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "func pendingBatches()")
+    ref("shareReview", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift", "struct ChavrusaShareInboxView")
     ref("translationSnapshot", "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift", "HanlinExtensionNodeView(")
     ref("extensionIntent", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift", "public func perform()")
     ref("extensionQueue", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift", "public func enqueue(")
@@ -67,7 +70,7 @@ def build() -> dict:
 
     tracked = subprocess.check_output(["git", "ls-files", "*.swift"], cwd=ROOT, text=True, encoding="utf-8").splitlines()
     share_references = [p for p in tracked if "ChavrusaShareInbox" in (ROOT / p).read_text(encoding="utf-8-sig")]
-    if share_references != ["AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift"]:
+    if share_references != ["AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift"]:
         raise ValueError(f"Share inbox callers changed; re-audit reachability: {share_references}")
     optional_surfaces = {symbol: [p for p in tracked if re.search(rf"\b{symbol}\b", (ROOT / p).read_text(encoding="utf-8-sig"))]
                          for symbol in ["ControlWidget", "CSSearchableIndex", "CoreSpotlight"]}
@@ -82,8 +85,8 @@ def build() -> dict:
         entitlements[file] = {"declared": plistlib.loads(data), "sha256": hashlib.sha256(data).hexdigest(),
                               "exportedSignatureVerified": False}
     paths = {
-        "share": {"target": "ChavrusaChatShare", "refs": ["shareWrite", "shareReadOnlyDeclaration"],
-                  "stop": "share-inbox.json has no Host consumer; only borrowed provider URLs are persisted, not an owned attachment transaction.", "owner": "INT-04"},
+        "share": {"target": "ChavrusaChatShare", "refs": ["shareWrite", "shareOwnedStore", "shareProviderCopy", "shareRead", "shareReview"],
+                  "stop": "Owned atomic batches copy files during provider callbacks and feed Host ingress review. Installed target/action selection, INT-02 dispatch, expiry and execution receipt readback remain unconnected; historical share-inbox.json is retained.", "owner": "INT-04"},
         "translation": {"target": "ChavrusaChatTranslationProvider", "refs": ["translationSnapshot", "extensionIntent", "extensionQueue", "resume", "expoExposureRejection"],
                         "stop": "Declarative snapshot/action continuation is not an NS/Expo runtime route. Resume requires an appIntent entrypoint; Expo non-widget exposure is rejected.", "owner": "INT-02/INT-03"},
         "widget": {"target": "HanlinScriptingWidgets", "refs": ["widgetBundle", "widgetIntent", "widgetCallback"],

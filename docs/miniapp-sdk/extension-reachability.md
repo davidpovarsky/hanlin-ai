@@ -2,7 +2,7 @@
 
 Status: **IN_PROGRESS — source audit only**.
 
-Base commit: `d7b64fe65ff9ea3e32ee64cd209a6203cce671d8`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
+Base commit: `7e43ba76f9eed57670a6b4c357c5c3eaa1c88008`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
 Runtime/API/version authority is [source-inventory.json](source-inventory.json); this matrix consumes it rather than maintaining a second SDK contract.
 
 The four actual extension targets × two engines × five canonical runtimes form40 cells. Live Activity, Host AppIntent, Shortcuts and foreground add40 more.
@@ -29,7 +29,7 @@ A declared bridge, rendered snapshot, queued command or widget-local callback is
 
 ## Existing path boundaries
 
-- **share** (ChavrusaChatShare): share-inbox.json has no Host consumer; only borrowed provider URLs are persisted, not an owned attachment transaction. Follow-up: INT-04. Sources: [shareWrite](../../ChavrusaChatShare/ShareViewController.swift#L55), [shareReadOnlyDeclaration](../../AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift#L17).
+- **share** (ChavrusaChatShare): Owned atomic batches copy files during provider callbacks and feed Host ingress review. Installed target/action selection, INT-02 dispatch, expiry and execution receipt readback remain unconnected; historical share-inbox.json is retained. Follow-up: INT-04. Sources: [shareWrite](../../ChavrusaChatShare/ShareViewController.swift#L59), [shareOwnedStore](../../Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift#L43), [shareProviderCopy](../../Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift#L17), [shareRead](../../AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift#L27), [shareReview](../../AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift#L5).
 - **translation** (ChavrusaChatTranslationProvider): Declarative snapshot/action continuation is not an NS/Expo runtime route. Resume requires an appIntent entrypoint; Expo non-widget exposure is rejected. Follow-up: INT-02/INT-03. Sources: [translationSnapshot](../../ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift#L41), [extensionIntent](../../Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift#L51), [extensionQueue](../../Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift#L13), [resume](../../AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift#L1418), [expoExposureRejection](../../Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift#L432).
 - **widget** (HanlinScriptingWidgets): Existing Expo/ScriptWidget callbacks commit revision/nonces in the widget-specific runtime. They do not expose the five canonical Host runtimes or an NS foreground VM. Follow-up: INT-02/INT-03. Sources: [widgetBundle](../../HanlinScriptingWidgets/HanlinScriptingWidgets.swift#L11), [widgetIntent](../../Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinGenericWidgetActionIntent.swift#L14), [widgetCallback](../../Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift#L45).
 - **notification** (ChavrusaChatNotificationService): Media attachment/category delivery only; no authenticated package event envelope, Host consumer or MiniApp receipt. Follow-up: INT-05. Sources: [notification](../../ChavrusaChatNotificationService/NotificationService.swift#L9).
