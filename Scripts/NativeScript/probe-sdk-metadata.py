@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import shlex
 import subprocess
 import sys
 
@@ -42,11 +43,32 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     if built.returncode:
         return {"status": "FAILED", "stage": "actual Swift package compilation", "exitCode": built.returncode}
     settings = json.loads(subprocess.check_output([*command, "-showBuildSettings", "-json"], cwd=package, text=True))
-    target = next(item["buildSettings"] for item in settings if item["target"] == "HanlinNativeScriptRuntime")
+    targets = [item for item in settings if item["target"] in ["HanlinNativeScriptRuntime", "HanlinNativeScriptRuntime-product"]]
+    if not targets:
+        raise RuntimeError("Actual package build-settings targets: " + ", ".join(item["target"] for item in settings))
+    target = next((item["buildSettings"] for item in targets if item["target"] == "HanlinNativeScriptRuntime"), targets[0]["buildSettings"])
+    # Xcode's package scheme may expose only the synthetic product target in
+    # -showBuildSettings. Preserve framework paths from the ACTUAL successful
+    # Swift compile invocation instead of guessing its binary dependency paths.
+    frameworks = shlex.split(target.get("FRAMEWORK_SEARCH_PATHS", ""))
+    for line in (folder / "package-build.log").read_text().splitlines():
+        if "-module-name HanlinNativeScriptRuntime " not in line:
+            continue
+        args = shlex.split(line)
+        for index, arg in enumerate(args):
+            if arg == "-F" and index + 1 < len(args):
+                frameworks.append(args[index + 1])
+            elif arg.startswith("-F") and len(arg) > 2:
+                frameworks.append(arg[2:])
+    (folder / "build-inputs.json").write_text(json.dumps({"target": targets[0]["target"],
+        "actualFrameworkSearchPaths": sorted(set(frameworks)),
+        "settings": {k: target.get(k) for k in ["SDKROOT", "OBJROOT", "PLATFORM_NAME", "EFFECTIVE_PLATFORM_NAME",
+                     "LLVM_TARGET_TRIPLE_VENDOR", "LLVM_TARGET_TRIPLE_OS_VERSION", "LLVM_TARGET_TRIPLE_SUFFIX"]}}, indent=2) + "\n")
     environment = {**os.environ, **{k: str(v) for k, v in target.items() if isinstance(v, (str, int))}}
     environment.update({"SRCROOT": str(root), "TARGET_TEMP_DIR": str(folder / "temp"),
                         "CONFIGURATION_BUILD_DIR": str(folder / "products"), "PER_VARIANT_OBJECT_FILE_DIR": "",
                         "NS_TYPESCRIPT_DECLARATIONS_PATH": str(folder / "types")})
+    environment["FRAMEWORK_SEARCH_PATHS"] = shlex.join(sorted(set(frameworks)))
     for name in ["TARGET_TEMP_DIR", "CONFIGURATION_BUILD_DIR"]:
         Path(environment[name]).mkdir(exist_ok=True)
     environment["HEADER_SEARCH_PATHS"] = environment.get("HEADER_SEARCH_PATHS", "") + " " + str(
@@ -219,7 +241,9 @@ def main() -> int:
         try:
             result["runtimeWrapper"] = probe_runtime_wrapper(root, output, original_generator, arch)
         except (subprocess.SubprocessError, RuntimeError, KeyError, StopIteration) as error:
-            result["runtimeWrapper"] = {"status": "FAILED", "stage": "actual runtime-wrapper probe", "reason": str(error)}
+            result["runtimeWrapper"] = {"status": "FAILED", "stage": "actual runtime-wrapper probe",
+                                        "reason": type(error).__name__ + ": " + str(error)}
+        print(json.dumps({"runtimeWrapper": result["runtimeWrapper"]}), flush=True)
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     success = result["modes"][options.mode]["status"] == "EXECUTED_PASS"
     if options.generator is not None:
