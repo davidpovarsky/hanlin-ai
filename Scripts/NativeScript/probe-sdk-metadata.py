@@ -20,8 +20,8 @@ def capture(*args: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=["modular", "textual", "textual-direct", "textual-ambient"],
-                        default="textual-ambient")
+    parser.add_argument("--mode", choices=["modular", "textual", "textual-direct", "textual-ambient", "textual-public"],
+                        default="textual-public")
     options = parser.parse_args()
     if sys.platform != "darwin":
         print(json.dumps({"status": "BLOCKED", "reason": "Actual macOS/Xcode SDK required"}))
@@ -45,6 +45,19 @@ def main() -> int:
     umbrella = output / "probe.h"
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")
+    if options.mode == "textual-public":
+        public_headers = []
+        inventory = []
+        for frameworks in [sdk / "System/Library/Frameworks", sdk / "System/Library/SubFrameworks"]:
+            for framework in sorted(frameworks.glob("*.framework")):
+                module_map = framework / "Modules/module.modulemap"
+                matches = re.findall(r'umbrella\s+header\s+"([^"]+)"', module_map.read_text()) if module_map.is_file() else []
+                found = [framework / "Headers" / name for name in matches if (framework / "Headers" / name).is_file()]
+                public_headers.extend(found)
+                inventory.append({"framework": framework.name, "publicUmbrellaHeaders": [str(p) for p in found]})
+        umbrella.write_text("\n".join('#import "' + str(p) + '"' for p in public_headers)
+                            + '\n#import "HanlinNativeServicesBridge.h"\n#import "HanlinNativeScriptCompatibility.h"\n')
+        (output / "public-framework-inventory.json").write_text(json.dumps(inventory, indent=2) + "\n")
     result = {"schemaVersion": 1, "nativeScriptIOS": package["version"], "sdk": str(sdk),
               "sdkVersion": version, "xcode": capture("xcodebuild", "-version"),
               "clangResourceDirectory": str(resources), "architecture": arch,
@@ -75,12 +88,17 @@ def main() -> int:
                    "-F" + str(sdk / "System/Library/SubFrameworks"),
                    "-fmodule-map-file=" + str(headers / "module.modulemap"),
                    "-fmodules" if mode == "modular" else "-fno-modules"]
-        if mode == "textual-direct":
+        if mode in ["textual-direct", "textual-public"]:
             # The upstream generator parses an empty translation unit to discover
             # module headers before parsing its input umbrella. Avoid forcing
             # UIKit into that discovery pass; keep the actual same SDK headers
             # for the real metadata pass.
             command[1:1] = ["-input-umbrella", str(umbrella)]
+            if mode == "textual-public":
+                # Match the parser's own builtin headers; current SDK C headers
+                # remain the selected SDK, with no edits or feature overrides.
+                resource_index = command.index("-resource-dir")
+                del command[resource_index:resource_index + 2]
         elif mode != "textual-ambient":
             command.extend(["-include", str(umbrella)])
         control = subprocess.run(["xcrun", "clang", "-x", "objective-c", "-fsyntax-only",
