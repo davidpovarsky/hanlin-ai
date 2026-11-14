@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8fce299691c75ce83a626d15cc924877adb0b8b1",
+  "sourceCommit": "70079a927cc16e05c856d2e59695a35af7d682d2",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -232,7 +232,7 @@
     },
     {
       "path": "Scripts/NativeScript/metadata_public_headers.py",
-      "sha256": "c8b516a48eb59edd369fca45db3428de9481a292e351f9427d881ed955ec4aec"
+      "sha256": "0ded5cfec90f7373f1ed0090b80b703b513aaf0b9f7564a0a7349d4e436027f8"
     },
     {
       "path": "Scripts/NativeScript/package.json",

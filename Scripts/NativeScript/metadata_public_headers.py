@@ -1,4 +1,6 @@
 """Public framework entry headers shared by SDK probes and the app metadata phase."""
+from __future__ import annotations
+
 import hashlib
 import json
 from pathlib import Path
