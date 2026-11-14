@@ -240,6 +240,17 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         add(tree)
     }
 
+    func testProductionExpoHostFilesPreserveEmptyAndBinaryBytesThroughTheJSFacade() throws {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+        let result = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'HOST_FILES_PASS:131073'")
+        ).firstMatch
+        XCTAssertTrue(result.waitForExistence(timeout: 45),
+            "Actual Expo JS→HanlinHostServices→native file roundtrip did not preserve empty/all-byte/131073-byte input and missing-file status")
+    }
+
     func testProductionExpoSwiftUIProbeEndToEnd() throws {
         openApps()
         importAndInstall(archive: "ExpoSwiftUIProbeA")

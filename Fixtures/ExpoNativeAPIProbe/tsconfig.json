@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "paths": {
+      "@hanlin/expo-ui": [
+        "../../Packages/HanlinExpoUI/src/index.ts"
+      ],
+      "@hanlin/expo-ui/*": [
+        "../../Packages/HanlinExpoUI/src/*"
+      ],
+      "@hanlin/expo-native-api": [
+        "../../Packages/HanlinExpoNativeAPIJS/src/index.ts"
+      ],
+      "@hanlin/expo-native-api/*": [
+        "../../Packages/HanlinExpoNativeAPIJS/src/*"
+      ],
+      "@nativescript/react-native": [
+        "../../Scripts/Expo/node_modules/@nativescript/react-native/src/index.d.ts"
+      ],
+      "react": [
+        "../../Scripts/Expo/node_modules/@types/react/index.d.ts"
+      ],
+      "react/jsx-runtime": [
+        "../../Scripts/Expo/node_modules/@types/react/jsx-runtime.d.ts"
+      ],
+      "react/jsx-dev-runtime": [
+        "../../Scripts/Expo/node_modules/@types/react/jsx-dev-runtime.d.ts"
+      ],
+      "react-native": [
+        "../../Scripts/Expo/node_modules/react-native/types_generated/index.d.ts"
+      ],
+      "*": [
+        "../../Scripts/Expo/node_modules/*"
+      ],
+      "@react-native/virtualized-lists": [
+        "../../Scripts/Expo/node_modules/@react-native/virtualized-lists/types_generated/index.d.ts"
+      ]
+    },
+    "skipLibCheck": false,
+    "strict": true,
+    "target": "ES2022",
+    "lib": [
+      "ES2022"
+    ]
+  },
+  "include": [
+    "*.ts",
+    "*.tsx",
+    "../../Packages/HanlinExpoUI/src/**/*.ts",
+    "../../Packages/HanlinExpoUI/src/**/*.tsx",
+    "../../Packages/HanlinExpoNativeAPIJS/src/**/*.ts"
+  ]
+}

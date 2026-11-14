@@ -1,6 +1,11 @@
 import { requireNativeModule } from 'expo';
+import { fromByteArray, toByteArray } from 'base64-js';
 
-const NativeHostServices = requireNativeModule('HanlinHostServices');
+interface NativeHostServicesModule {
+  invoke(operation: string, payloadJSON: string): Promise<string>;
+  hasCapability(capability: string): Promise<boolean>;
+}
+const NativeHostServices = requireNativeModule<NativeHostServicesModule>('HanlinHostServices');
 
 export type HanlinRuntimeKind = 'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell';
 export type HanlinDataArea = 'data' | 'documents' | 'state' | 'cache';
@@ -56,14 +61,11 @@ export const hostServices = {
   async readFile(path: string, area: HanlinDataArea = 'data'): Promise<Uint8Array | null> {
     const { base64 } = await invoke<{ base64?: string | null }>('files.read', { path, area });
     if (base64 == null) return null;
-    const binary = globalThis.atob(base64);
-    return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    return toByteArray(base64);
   },
 
   writeFile(path: string, data: Uint8Array, area: HanlinDataArea = 'data'): Promise<{ ok: true }> {
-    let binary = '';
-    for (const byte of data) binary += String.fromCharCode(byte);
-    return invoke('files.write', { path, area, base64: globalThis.btoa(binary) });
+    return invoke('files.write', { path, area, base64: fromByteArray(data) });
   },
 
   deleteFile(path: string, area: HanlinDataArea = 'data'): Promise<{ ok: true }> {

@@ -1,7 +1,16 @@
 {
-  "sourceCommit": "0f64aaff3490a886f5bc1ed4be6a8f34aafd1ac6",
+  "sourceCommit": "56fae42e896361d4ce6bc2784469b40a84927839",
   "uncommittedSourcePaths": [
-    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
+    "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+    "Packages/HanlinExpoUI/package.json",
+    "Packages/HanlinExpoUI/src/host-services.ts",
+    "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "Scripts/Expo/build-probe.mjs",
+    "Scripts/Expo/check-ui-type-contract.mjs",
+    "Scripts/Expo/package-lock.json",
+    "Scripts/Expo/package.json",
+    "Scripts/Expo/prepare-types.mjs"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -812,6 +821,9 @@
     },
     "hanlinUI": {
       "packageVersion": "1.0.0",
+      "dependencies": {
+        "base64-js": "1.5.1"
+      },
       "peerDependencies": {
         "@expo/ui": "58.0.3",
         "expo": "58.0.0",
@@ -4845,21 +4857,21 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 5,
+        "line": 10,
         "name": "HanlinRuntimeKind",
         "kind": "TypeAliasDeclaration",
         "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 6,
+        "line": 11,
         "name": "HanlinDataArea",
         "kind": "TypeAliasDeclaration",
         "type": "'data' | 'documents' | 'state' | 'cache'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 8,
+        "line": 13,
         "name": "RuntimeExecutionLimits",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -4879,7 +4891,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 15,
+        "line": 20,
         "name": "RuntimeOutputArtifact",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -4905,7 +4917,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 21,
+        "line": 26,
         "name": "RuntimeExecutionResult",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -4973,7 +4985,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 39,
+        "line": 44,
         "name": "hostServices",
         "kind": "variable",
         "members": [
@@ -5761,7 +5773,7 @@
     {
       "id": "SDK04-API-ACCEPTANCE",
       "owner": "SDK-04",
-      "detail": "HanlinExpoUI peers now match the existing stable tooling pins, with no resolved dependency changes. File empty/missing distinction and runtime deadline/artifact typings are source-corrected; actual JS->module->native per-API and Metro/device coverage remain required."
+      "detail": "Strict full UI/native-api declarations and exact negative diagnostics have local compiler proof without skipLibCheck; source-matched pinned declaration corrections retain hashes. Metro template bundles are separate evidence. The file facade uses the existing pinned Base64 implementation without browser globals; actual JS->module->native per-API/physical acceptance remains required."
     },
     {
       "id": "INT06-LEGACY-ACCEPTANCE",
@@ -5833,6 +5845,14 @@
       "sha256": "07dd6bf358f8d94cd9333fb4c5400478505d29a874380800eb5e7e4141e4e2ad"
     },
     {
+      "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
+      "sha256": "2ef0da47a48f9f41136b957deeadb8337f3e663502e430a38dadbb16ab933ed0"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+      "sha256": "bd2f831e1d7ba3ff24a4d2fec27c04e1bedee4b509669b5ec02b47e575640762"
+    },
+    {
       "path": "Packages/HanlinExpoNativeAPI/Package.swift",
       "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
     },
@@ -5874,7 +5894,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/package.json",
-      "sha256": "1f7a95effe1a120e9c59277f35751fa966ec552ff7c8359bdc031addf8deefa1"
+      "sha256": "140b70efbc40406a004d8e8fb2e6cdca3818e83eb4aebc5fe2cab0d1d8323b41"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
@@ -5890,7 +5910,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/host-services.ts",
-      "sha256": "3bb2a1352a544c435415464ef4fe2d870a62e0d9069fcb76f21c7d86c05e8ab8"
+      "sha256": "03576a9ce5a7c33739e28df5fd9a1306528c5959b011707ccc329fd6cf6daae4"
     },
     {
       "path": "Packages/HanlinExpoUI/src/index.ts",
@@ -5966,15 +5986,27 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "48a652bd840707c67a59fd3cbe4a0bff6801d75ba716880ebe648b1ba55f8a8e"
+      "sha256": "8516d814fe784df227dda135686ff1393e7b71acb52eea87df6a2ca1baf38c29"
+    },
+    {
+      "path": "Scripts/Expo/build-probe.mjs",
+      "sha256": "25773890b5cb4c7f04f592b6f30a040b698e1165ede845b2144e58b7960abcc8"
+    },
+    {
+      "path": "Scripts/Expo/check-ui-type-contract.mjs",
+      "sha256": "59570183dfab1e69c4f95ee56438c48c0835b63883a4d13e1af15f43c8a1b32b"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
-      "sha256": "822e67fb91840a07b1642c97d114fcf8d1d413eb6bf31b494d0e5944ed51c3b1"
+      "sha256": "01fd60dd46526bb4a874ee1b8a29bb31be180a0151463bb9a5cf922a66f2c6a4"
     },
     {
       "path": "Scripts/Expo/package.json",
-      "sha256": "958644db0225b790f789380b2bf7afa87de9630d1edc469d9277c5cd1c024767"
+      "sha256": "c1c2f07561773e443ebe3b30237774461b506229a48297e19df2af19e9ffe23e"
+    },
+    {
+      "path": "Scripts/Expo/prepare-types.mjs",
+      "sha256": "b5612d9396c15aba2595de7e0adb4b22941c74e0bdf3934c562152a424655138"
     },
     {
       "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
@@ -5990,7 +6022,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "f48101f4fae5c197ee4fe64a351cd64773048aa781c93f568cfbcd36e564c566"
+      "sha256": "ccc3fda00f4a17f414d7da38d626dc2f16c8d515309541bf09de8250575a5098"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",

@@ -229,6 +229,9 @@ jobs:
         run: |
           set -euxo pipefail
           npm run build:probe --prefix Scripts/Expo
+          npm run check:nativeapi-type-contract --prefix Scripts/Expo
+          npm run test:host-services --prefix Scripts/Expo
+          npm run test:native-api-globals --prefix Scripts/Expo
           node Scripts/Widgets/build-sample-packages.mjs
           test -s AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo
           test -s AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo

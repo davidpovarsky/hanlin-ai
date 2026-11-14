@@ -9,6 +9,9 @@
     "./modifiers": "./src/modifiers.ts",
     "./bridge-manifest": "./src/generated/bridge-manifest.ts"
   },
+  "dependencies": {
+    "base64-js": "1.5.1"
+  },
   "peerDependencies": {
     "@expo/ui": "58.0.3",
     "expo": "58.0.0",

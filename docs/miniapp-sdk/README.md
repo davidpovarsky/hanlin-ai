@@ -61,7 +61,13 @@ changes or a new Share inbox caller require re-audit. No new automatic workflow
 triggers, native rebuild, package installation in a MiniApp, cloud upload or
 runtime execution is performed by either check.
 
-Current gaps include the unconsumed Share inbox/temporary attachment URLs,
+The [owned Share ingress](OWNED_SHARE_INGRESS_2026-11-13.md) now copies temporary
+attachments and connects installed NS action selection to durable receipts in
+source; actual action/UI/physical acceptance remains open.
+The [strict Expo checks](EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md) cover the
+full UI/native-api declarations without skipLibCheck, exact negative diagnostics,
+and real Metro template bundling. They do not certify every native adapter.
+Current gaps include full Share system-sheet/Expo/physical acceptance,
 Expo non-widget exposure/intent rejection, NS single-active-session arbitration,
 full per-surface NS/Expo receipt acceptance, differing generic Shell source
 semantics and unpublished SystemServicesBroker bindings. The new
