@@ -1,0 +1,8 @@
+EXECUTED_PASS acceptsOfficialV1FixtureFrames
+EXECUTED_PASS rejectsMalformedAndAmbiguousFrames
+EXECUTED_PASS rejectsOtherProtocolVersions
+EXECUTED_PASS preservesUnicodeSurfaceIdentity
+EXECUTED_PASS boundsUTF8MessageAndComponentBatch
+EXECUTED_PASS rejectsRPCAndUnnegotiatedCatalogs
+EXECUTED_PASS componentValidationRemainsWithSDK
+Portable framing: 7 passed. SDK/SwiftUI cases: NOT_RUN.

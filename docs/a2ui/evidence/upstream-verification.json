@@ -1,0 +1,93 @@
+{
+  "repository": "https://github.com/a2ui-project/a2ui",
+  "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "commit_utc": "2026-11-14T00:38:20Z",
+  "verification": "Read exact revision from GitHub commits API and pinned raw source; not compiled",
+  "products": [
+    "A2UISwiftCore",
+    "A2UISwiftUI",
+    "BasicCatalog",
+    "BasicCatalogSwiftUI"
+  ],
+  "swift_tools_version": "6.1",
+  "files": [
+    {
+      "path": "Package.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/Package.swift",
+      "utf8_sha256": "28501404ddc90b9b9f6d753584e055a0a052b6d867b5688c6bc37d30ffbe55bb",
+      "bytes": 4198
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Processing/MessageProcessor.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Processing/MessageProcessor.swift",
+      "utf8_sha256": "457bed304dab46b1671b0f38fee73389e6b5004392592304de24d0d0ff88f5a4",
+      "bytes": 69663
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Processing/MessageParser.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Processing/MessageParser.swift",
+      "utf8_sha256": "9b8ba87764fd083b4908ffd4bf366efd0cae8fdc9b101b1186d17e9f8f0cb934",
+      "bytes": 2277
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Models/Node.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Models/Node.swift",
+      "utf8_sha256": "334866e674c69f5b497a36fd3d2662bda095dd3f84997b8c3fe154852aae7b10",
+      "bytes": 22205
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Models/DataBinding.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Models/DataBinding.swift",
+      "utf8_sha256": "46643ccefcd3dd04b5ec4fbe1f32c126d66ebd496f8123548f3004ab034c0998",
+      "bytes": 2070
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Validation/ValidationConfig.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Validation/ValidationConfig.swift",
+      "utf8_sha256": "9ca43d22a1f91e7dc8a8667ca4bed2786ae657d28287a47d1902ea74f6e3a8d9",
+      "bytes": 4675
+    },
+    {
+      "path": "swift/swiftui/Sources/A2UISwiftUI/Surface.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/swiftui/Sources/A2UISwiftUI/Surface.swift",
+      "utf8_sha256": "e2c3c346faa5092b88fc152c9474198d0ab4489fb245e40ab6a84bb155e5ee33",
+      "bytes": 4615
+    },
+    {
+      "path": "swift/swiftui/Sources/BasicCatalog/A2UITextField.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/swiftui/Sources/BasicCatalog/A2UITextField.swift",
+      "utf8_sha256": "81184de9d7baf7b4e4b599c38c3d9f5760a0d3049fd62fcebe6a88ccbe9ed6bc",
+      "bytes": 3942
+    },
+    {
+      "path": "swift/swiftui/Sources/BasicCatalog/A2UIButton.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/swiftui/Sources/BasicCatalog/A2UIButton.swift",
+      "utf8_sha256": "25a981b7a8dd575db21d45a36d9ee73ab44309b4930012fec05c7393698f1362",
+      "bytes": 3357
+    },
+    {
+      "path": "swift/swiftui/Sources/BasicCatalog/BasicCatalogImplementation.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/swiftui/Sources/BasicCatalog/BasicCatalogImplementation.swift",
+      "utf8_sha256": "893df3c48e7e7e74cd6c82ede683cef90467a81457cbdabd142cf7b51f7165eb",
+      "bytes": 3154
+    },
+    {
+      "path": "catalogs/basic/v1/catalog.json",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/catalogs/basic/v1/catalog.json",
+      "utf8_sha256": "d4ce11f8fff2da8d5fd0b2793db524f6aa7eef541eefb6fe2b71f0efc17cbfa9",
+      "bytes": 41967
+    },
+    {
+      "path": "specification/v1_0/json/agent_to_renderer.json",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/specification/v1_0/json/agent_to_renderer.json",
+      "utf8_sha256": "2f575f783fdda0e4d175fe5d331661655e4a4901613262322792dae7e823761d",
+      "bytes": 8968
+    },
+    {
+      "path": "specification/v1_0/json/common_types.json",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/specification/v1_0/json/common_types.json",
+      "utf8_sha256": "c4e78305be1de73eecb37f8179ba169730250611703683af291b18135a6430dc",
+      "bytes": 13111
+    }
+  ]
+}
