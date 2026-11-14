@@ -26,7 +26,8 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             text = module.read_text()
             self.assertIn(str(header.resolve()), text)
             self.assertNotIn("HanlinNativeServicesBridge.h", text)
-            flags = shlex.split(WRAPPER.metadata_flags(root, module, ROOT / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"))
+            flags = shlex.split(WRAPPER.metadata_flags(root, module, ROOT / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include", root / "Xcode clang"))
+            self.assertEqual(flags[:2], ["-resource-dir", str(root / "Xcode clang")])
             self.assertEqual(flags[-2:], ["-include", str(root / "HanlinMetadataImports.h")])
             self.assertIn(f"-fmodule-map-file={module}", flags)
             self.assertIn("@import HanlinNativeServicesBridge;", (root / "HanlinMetadataImports.h").read_text())
@@ -46,10 +47,14 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             diagnostic = products / "metadata-generation-stderr-arm64.txt"
             diagnostic.write_text("error: missing native module\n")
             (products / "metadata-arm64.bin").write_bytes(b"NSObject\0UIView\0")
+            resources = root / "Xcode clang"
+            (resources / "include").mkdir(parents=True)
+            (resources / "include/float.h").write_text("// actual SDK lookup is a separate native gate")
             env = {"OBJROOT": str(objroot), "SRCROOT": str(root), "TARGET_TEMP_DIR": str(root / "target"),
                    "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products)}
             with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
                  patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
+                 patch.object(WRAPPER.subprocess, "check_output", return_value=str(resources)), \
                  patch.object(WRAPPER.subprocess, "run") as run, contextlib.redirect_stdout(io.StringIO()):
                 run.return_value.returncode = 0
                 self.assertEqual(WRAPPER.main(), 1)

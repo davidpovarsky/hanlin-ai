@@ -60,7 +60,7 @@ def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) ->
     return unique_headers
 
 
-def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path) -> str:
+def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path, resource_dir: Path) -> str:
     # Each ObjC header keeps its existing module owner. Listing those headers
     # again in the generated Swift module can make clang's findModuleForHeader
     # ambiguous. The upstream generator silently skips unknown module owners.
@@ -68,7 +68,8 @@ def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path) 
     imports.write_text("@import HanlinNativeServicesBridge;\n"
                        "@import HanlinNativeScriptCompatibility;\n"
                        "@import hanlinnativescriptswiftsupport;\n", encoding="utf-8")
-    return shlex.join([f"-fmodule-map-file={core_support_dir / 'module.modulemap'}",
+    return shlex.join(["-resource-dir", str(resource_dir),
+                       f"-fmodule-map-file={core_support_dir / 'module.modulemap'}",
                        f"-fmodule-map-file={module_map}", "-include", str(imports)])
 
 
@@ -134,7 +135,15 @@ def main() -> int:
         write_swift_module_map(module_map, runtime_header, arch)
         environment = os.environ.copy()
         core_support_dir = Path(required_env("SRCROOT")) / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
-        extra_flags = metadata_flags(module_root, module_map, core_support_dir)
+        # The pinned generator embeds clang17. Its bundled float/stddef headers
+        # forward into SDK27's deliberately unavailable obsolete-C module. Use
+        # the selected Xcode's real builtin headers, never SDK edits or feature
+        # spoofing. The metadata parser itself remains the pinned generator.
+        resource_dir = Path(subprocess.check_output(["xcrun", "clang", "-print-resource-dir"], text=True).strip())
+        if not (resource_dir / "include/float.h").is_file():
+            raise RuntimeError("Selected Xcode clang resource headers are unavailable")
+        extra_flags = metadata_flags(module_root, module_map, core_support_dir, resource_dir)
+        print(f"Hanlin metadata clang resource directory: {resource_dir}", flush=True)
         environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {extra_flags}'.strip()
         completed = subprocess.run(
             [sys.executable, str(upstream_generator), *sys.argv[1:]],

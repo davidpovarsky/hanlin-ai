@@ -177,3 +177,27 @@ presence is only a build completeness guard; the strict VM tests remain required
 Two wrapper regressions plus4 existing parity checks PASS6/6 locally0.104s,
 including upstream exit0 with missing bridge metadata now producing failure and
 retaining the original diagnostic bytes. No Apple compiler pass is inferred.
+
+### SDK header incompatibility exposed,2026-11-14
+
+Actual43416777343/292e03bf failed before tests: ZERO selected cases executed;
+job7m47s. The completeness guard correctly rejected missing Host/UIKit metadata.
+The retained stderr proves the pinned generator's clang17.0.6 used its bundled
+lib/clang/17/include with the selected Xcode27.2 SDK. The old float header forwards
+into the SDK's deliberately unavailable _c_standard_library_obsolete module,
+which requires found_incompatible_headers__check_search_paths. Foundation/UIKit
+therefore cannot build, despite the upstream generator reporting success. The
+module-ownership cleanup did not by itself resolve this SDK header failure.
+
+Downloaded artifact14032213149/878341B, GitHub SHA256
+7debe1663bc3b32d9dfbb122829af111581219926d5b1b01ca21f2f3b7006c12.
+Actual stderr SHA2564dc2c5f2477632f3079e88fecb10392a224a5bd68852766a4f4d4f55336eef3e.
+No Share action/strict VM/consumer pass is credited to this run.
+
+The next wrapper change obtains the selected Xcode clang resource directory
+through xcrun clang -print-resource-dir, verifies its real float.h, and supplies
+-resource-dir to the existing metadata parser. It does not edit SDK headers,
+spoof the unavailable feature, or replace the pinned generator/runtime. Required
+symbol checks and raw binary/stderr/umbrella retention remain. Six local wrapper/
+parity cases passed0.130s; actual SDK generation and all selected app obligations
+still require a fresh run. Engine candidate42926628418 is unchanged.
