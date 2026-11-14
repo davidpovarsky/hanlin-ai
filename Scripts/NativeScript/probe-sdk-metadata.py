@@ -20,8 +20,8 @@ def capture(*args: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=["modular", "textual", "textual-direct"],
-                        default="textual-direct")
+    parser.add_argument("--mode", choices=["modular", "textual", "textual-direct", "textual-ambient"],
+                        default="textual-ambient")
     options = parser.parse_args()
     if sys.platform != "darwin":
         print(json.dumps({"status": "BLOCKED", "reason": "Actual macOS/Xcode SDK required"}))
@@ -81,7 +81,7 @@ def main() -> int:
             # UIKit into that discovery pass; keep the actual same SDK headers
             # for the real metadata pass.
             command[1:1] = ["-input-umbrella", str(umbrella)]
-        else:
+        elif mode != "textual-ambient":
             command.extend(["-include", str(umbrella)])
         control = subprocess.run(["xcrun", "clang", "-x", "objective-c", "-fsyntax-only",
                                   *command[command.index("Xclang") + 1:], str(umbrella)],
