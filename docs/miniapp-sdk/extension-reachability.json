@@ -1,10 +1,8 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "56fae42e896361d4ce6bc2784469b40a84927839",
+  "sourceCommit": "e2597651e9462f11a25c3a408be5d25a077325b2",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [
-    "Packages/HanlinExpoUI/src/host-services.ts"
-  ],
+  "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
@@ -218,7 +216,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "ccc3fda00f4a17f414d7da38d626dc2f16c8d515309541bf09de8250575a5098"
+      "sha256": "d9fe263d11604860e9ff0be4e3642f19867bfbcede0735ea66497eda7702725e"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",

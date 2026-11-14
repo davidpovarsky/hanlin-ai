@@ -4,6 +4,7 @@
 import os
 import hashlib
 import json
+import re
 from pathlib import Path
 import shlex
 import shutil
@@ -88,16 +89,19 @@ def retain_and_check_metadata(arch: str, platform: str) -> bool:
     binary = paths[2].read_bytes() if paths[2].is_file() else b""
     required = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge", "HanlinNativeScriptCompatibility", "UIView", "NSObject"]
     symbols = {name: name.encode("utf-8") + b"\0" in binary for name in required}
+    # The upstream generator can return zero and emit a partial binary after
+    # actual clang errors. An ObjC selector named error: is not a diagnostic.
+    diagnostics = paths[0].read_text(encoding="utf-8", errors="replace").splitlines() if paths[0].is_file() else []
+    errors = [line for line in diagnostics
+              if re.search(r"(?:^|:\d+(?::\d+)?:\s+)(?:fatal\s+)?error:", line)]
     (evidence / "visibility.json").write_text(json.dumps({"schemaVersion": 1,
         "platform": platform, "architecture": arch, "sha256": hashes,
         "requiredMetadataStringsPresent": symbols,
+        "clangErrorCount": len(errors),
         "boundary": "Build-time completeness check; actual VM tests still required."}, indent=2) + "\n", encoding="utf-8")
-    if not all(symbols.values()):
+    if not all(symbols.values()) or errors:
         print("Hanlin NativeScript metadata is incomplete: " + ", ".join(name for name, found in symbols.items() if not found), flush=True)
-        if paths[0].is_file():
-            diagnostics = [line for line in paths[0].read_text(encoding="utf-8", errors="replace").splitlines()
-                           if "error:" in line or "HanlinNativeServices" in line or "Unknown module" in line]
-            print("\n".join(diagnostics[:40]), flush=True)
+        print("\n".join(errors[:40]), flush=True)
         return False
     print("Hanlin metadata required strings present; actual JS visibility remains an execution gate.", flush=True)
     return True

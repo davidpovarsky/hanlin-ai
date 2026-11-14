@@ -1,16 +1,7 @@
 {
-  "sourceCommit": "56fae42e896361d4ce6bc2784469b40a84927839",
+  "sourceCommit": "e2597651e9462f11a25c3a408be5d25a077325b2",
   "uncommittedSourcePaths": [
-    "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
-    "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
-    "Packages/HanlinExpoUI/package.json",
-    "Packages/HanlinExpoUI/src/host-services.ts",
-    "Scripts/Audit/audit-miniapp-sdk.mjs",
-    "Scripts/Expo/build-probe.mjs",
-    "Scripts/Expo/check-ui-type-contract.mjs",
-    "Scripts/Expo/package-lock.json",
-    "Scripts/Expo/package.json",
-    "Scripts/Expo/prepare-types.mjs"
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -6022,7 +6013,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "ccc3fda00f4a17f414d7da38d626dc2f16c8d515309541bf09de8250575a5098"
+      "sha256": "d9fe263d11604860e9ff0be4e3642f19867bfbcede0735ea66497eda7702725e"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",

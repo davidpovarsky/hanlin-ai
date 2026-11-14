@@ -16,6 +16,21 @@ SPEC.loader.exec_module(WRAPPER)
 
 
 class NativeScriptMetadataWrapperTests(unittest.TestCase):
+    def test_real_clang_errors_reject_partial_metadata_even_when_required_classes_exist(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            binary = b"\0".join(n.encode() for n in ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge",
+                             "HanlinNativeScriptCompatibility", "UIView", "NSObject"]) + b"\0"
+            (root / "metadata-arm64.bin").write_bytes(binary)
+            diagnostic = root / "metadata-generation-stderr-arm64.txt"
+            with patch.dict(os.environ, {"SRCROOT": str(root), "CONFIGURATION_BUILD_DIR": str(root)}), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                for text in ["/SDK/Header.h:12:3: error: bad declaration\n", "fatal error: missing SDK header\n"]:
+                    diagnostic.write_text(text)
+                    self.assertFalse(WRAPPER.retain_and_check_metadata("arm64", "iphonesimulator"))
+                diagnostic.write_text("verbose: selector initWithValue:error: is available\n")
+                self.assertTrue(WRAPPER.retain_and_check_metadata("arm64", "iphonesimulator"))
+
     def test_objc_headers_keep_their_existing_owner_and_import_paths_roundtrip_spaces(self):
         with tempfile.TemporaryDirectory(prefix="Hanlin metadata ") as name:
             root = Path(name)
