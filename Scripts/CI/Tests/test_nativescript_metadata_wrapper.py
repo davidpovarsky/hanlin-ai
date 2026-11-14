@@ -7,6 +7,7 @@ import sys
 import os
 from pathlib import Path
 import shlex
+import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -22,6 +23,103 @@ HEADER_SPEC.loader.exec_module(HEADERS)
 
 
 class NativeScriptMetadataWrapperTests(unittest.TestCase):
+    def framework(self, directory, name="ExpoModulesCore", module=None):
+        framework = directory / (name + ".framework")
+        (framework / "Modules").mkdir(parents=True)
+        (framework / "Headers").mkdir()
+        (framework / "Headers/Entry.h").write_text('#include "Exported.h"\n')
+        (framework / "Headers/Exported.h").write_text("@interface EXExportedModule\n@end\n")
+        (framework / "Modules/module.modulemap").write_text(
+            'framework module ' + (module or name) + ' { umbrella header "Entry.h" export * }')
+        return framework
+
+    def test_identical_framework_copies_keep_search_order_and_all_unique_frameworks(self):
+        with tempfile.TemporaryDirectory(prefix="Hanlin metadata ") as name:
+            root = Path(name)
+            # Lexical path order deliberately opposes compiler search priority.
+            first = self.framework(root / "z-first")
+            second = root / "a-second" / first.name
+            shutil.copytree(first, second)
+            unique = self.framework(root / "a-second", "OtherModule")
+            umbrella = root / "input.h"
+            records = HEADERS.write_public_umbrella(root, umbrella, [], [first.parent, second.parent, first.parent])
+            self.assertEqual([r["status"] for r in records],
+                             ["SELECTED", "DEDUPLICATED_IDENTICAL", "SELECTED"])
+            self.assertIn(str(first / "Headers/Entry.h"), umbrella.read_text())
+            self.assertNotIn(str(second / "Headers/Entry.h"), umbrella.read_text())
+            self.assertIn(str(unique / "Headers/Entry.h"), umbrella.read_text())
+            self.assertEqual(records[1]["selectedFrameworkPath"], str(first.resolve()))
+            self.assertEqual(records[0]["inputSHA256"], records[1]["inputSHA256"])
+            self.assertEqual(records[0]["modules"], ["ExpoModulesCore"])
+            self.assertEqual(json.loads(umbrella.with_suffix(".inventory.json").read_text()), records)
+
+    def test_differing_transitive_header_copy_fails_and_retains_both_manifests(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            first = self.framework(root / "first")
+            second = root / "second" / first.name
+            shutil.copytree(first, second)
+            (second / "Headers/Exported.h").write_text("@interface DifferentExportedModule\n@end\n")
+            umbrella = root / "input.h"
+            with self.assertRaisesRegex(RuntimeError, "Conflicting framework/module headers") as error:
+                HEADERS.write_public_umbrella(root, umbrella, [], [first.parent, second.parent])
+            self.assertIn(str(first.resolve()), str(error.exception))
+            self.assertIn(str(second.resolve()), str(error.exception))
+            self.assertFalse(umbrella.exists())
+            records = json.loads(umbrella.with_suffix(".inventory.json").read_text())
+            self.assertEqual(records[1]["status"], "CONFLICT")
+            self.assertEqual(records[0]["inputSHA256"]["Headers/Entry.h"], records[1]["inputSHA256"]["Headers/Entry.h"])
+            self.assertNotEqual(records[0]["inputSHA256"]["Headers/Exported.h"], records[1]["inputSHA256"]["Headers/Exported.h"])
+
+    def test_changed_module_map_or_missing_private_header_is_not_an_identical_copy(self):
+        for change in ["module-map", "private-header"]:
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as name:
+                root = Path(name)
+                first = self.framework(root / "first")
+                (first / "PrivateHeaders").mkdir()
+                (first / "PrivateHeaders/Internal.h").write_text("// private declaration")
+                second = root / "second" / first.name
+                shutil.copytree(first, second)
+                if change == "module-map":
+                    with (second / "Modules/module.modulemap").open("a") as stream:
+                        stream.write("\n// changed module map")
+                else:
+                    (second / "PrivateHeaders/Internal.h").unlink()
+                with self.assertRaisesRegex(RuntimeError, "Conflicting framework/module headers"):
+                    HEADERS.write_public_umbrella(root, root / "input.h", [], [first.parent, second.parent])
+
+    def test_module_identity_collision_across_framework_names_fails(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            first = self.framework(root / "first")
+            second = self.framework(root / "second", "Renamed", module="ExpoModulesCore")
+            (second / "Headers/Exported.h").write_text("// different declaration")
+            with self.assertRaisesRegex(RuntimeError, "Conflicting framework/module headers"):
+                HEADERS.write_public_umbrella(root, root / "input.h", [], [first.parent, second.parent])
+
+    def test_explicit_framework_paths_precede_sdk_default_without_importing_duplicates(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            explicit = self.framework(root / "build-products")
+            sdk_copy = root / "System/Library/Frameworks" / explicit.name
+            shutil.copytree(explicit, sdk_copy)
+            records = HEADERS.write_public_umbrella(root, root / "input.h", [], [explicit.parent])
+            self.assertEqual(records[0]["path"], str(explicit.resolve()))
+            self.assertEqual(records[1]["status"], "DEDUPLICATED_IDENTICAL")
+
+    def test_nested_submodules_do_not_conflict_with_unrelated_framework_owners(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            for framework_name in ["One", "Two"]:
+                framework = self.framework(root / "products", framework_name)
+                (framework / "Modules/module.modulemap").write_text(
+                    '/* module Wrong {} */ framework module ' + framework_name +
+                    ' { umbrella header "Entry.h" module Common { export * } }\n'
+                    'extern module Shared "External{Map}.modulemap"')
+            records = HEADERS.write_public_umbrella(root, root / "input.h", [], [root / "products"])
+            self.assertEqual([r["modules"] for r in records], [["One"], ["Two"]])
+            self.assertTrue(all(r["status"] == "SELECTED" for r in records))
+
     def test_framework_entry_selection_excludes_internal_roots_and_explicit_private_headers(self):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
@@ -112,6 +210,22 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             self.assertEqual((retained / diagnostic.name).read_bytes(), diagnostic.read_bytes())
             self.assertEqual((retained / "metadata-arm64.bin").read_bytes(), b"NSObject\0UIView\0")
             self.assertIn('"HanlinNativeServicesBridge": false', (retained / "visibility.json").read_text())
+            # Discovery errors must also keep their provenance before cleanup;
+            # the generator must never run after differing copies are found.
+            duplicate = root / "duplicate-products/UIKit.framework"
+            shutil.copytree(framework, duplicate)
+            (duplicate / "Headers/UIKit.h").write_text("// conflicting SDK declaration")
+            env["FRAMEWORK_SEARCH_PATHS"] = shlex.quote(str(duplicate.parent))
+            with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
+                 patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
+                 patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
+                 patch.object(WRAPPER.subprocess, "run") as run:
+                with self.assertRaisesRegex(RuntimeError, "Conflicting framework/module headers"):
+                    WRAPPER.main()
+                run.assert_not_called()
+            inventory = json.loads((retained / "HanlinMetadataInput.inventory.json").read_text())
+            self.assertEqual(inventory[-1]["status"], "CONFLICT")
+            self.assertEqual(inventory[0]["path"], str(duplicate.resolve()))
 
 
 if __name__ == "__main__":

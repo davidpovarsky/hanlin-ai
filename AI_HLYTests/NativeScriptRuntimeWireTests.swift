@@ -85,6 +85,60 @@ extension HanlinUnifiedHostServicesE2ETests {
         #expect(results[4].stdout.hasPrefix("/"))
     }
 
+    @Test func actualNativeSDKGlobalAndPropertyShapesAreObservedWithoutInvokingUI() async throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: "ns-sdk-shapes-\(UUID().uuidString.lowercased())")
+        let app = directory.appending(path: "app", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: app, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try Data(#"{"name":"ns-sdk-shapes","type":"module","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.0"}}"#.utf8)
+            .write(to: app.appending(path: "package.json"))
+        let key = "HanlinNativeSDKShapes_" + UUID().uuidString
+        defer { UserDefaults.standard.removeObject(forKey: key) }
+        let script = """
+        try {
+          function shape(name, property) {
+            const constructor = globalThis[name];
+            if (typeof constructor !== 'function') throw new Error('Missing native class ' + name);
+            let prototype = constructor.prototype;
+            while (prototype) {
+              const descriptor = Object.getOwnPropertyDescriptor(prototype, property);
+              if (descriptor) return typeof descriptor.value + ':' + typeof descriptor.get;
+              prototype = Object.getPrototypeOf(prototype);
+            }
+            throw new Error('Missing native property ' + name + '.' + property);
+          }
+          const result = {timezone: typeof globalThis.timezone,
+            nsObjectDescription: shape('NSObject', 'description'),
+            collaborationDescription: shape('UIActivityCollaborationModeRestriction', 'description'),
+            providerOnEvent: shape('HanlinNativeScriptSwiftUIFixtureProvider', 'onEvent')};
+          NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify(result), '\(key)');
+        } catch (error) {
+          NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify({error:String(error)}), '\(key)');
+        }
+        """
+        try Data(script.utf8).write(to: app.appending(path: "bundle.mjs"))
+        let adapter = NativeScriptHostServicesAdapter(appID: try HanlinAppID(validating: "ns-sdk-\(UUID().uuidString.lowercased())"), grantedCapabilities: [], canPresentUI: false)
+        HanlinNativeServicesBridge.register(adapter, forSessionID: adapter.sessionID)
+        defer { HanlinNativeServicesBridge.unregisterProvider(forSessionID: adapter.sessionID) }
+        let session = try HanlinNativeScriptSession(applicationRoot: app, sessionID: adapter.sessionID)
+        defer { session.shutdown() }
+        try session.start()
+        let deadline = ContinuousClock.now + .seconds(20)
+        while UserDefaults.standard.string(forKey: key) == nil {
+            try #require(ContinuousClock.now < deadline, "Actual native SDK descriptors did not arrive")
+            try await Task.sleep(for: .milliseconds(25))
+        }
+        let json = try #require(UserDefaults.standard.string(forKey: key))
+        let shapes = try JSONDecoder().decode([String: String].self, from: Data(json.utf8))
+        #expect(shapes["error"] == nil, "Actual SDK descriptor error: \(shapes["error"] ?? "none")")
+        #expect(Set(shapes.keys) == ["timezone", "nsObjectDescription", "collaborationDescription", "providerOnEvent"])
+        #expect(["number", "function"].contains(try #require(shapes["timezone"])))
+        #expect(shapes["nsObjectDescription"] == "undefined:function")
+        #expect(["undefined:function", "function:undefined"].contains(try #require(shapes["collaborationDescription"])))
+        #expect(shapes["providerOnEvent"] == "undefined:function")
+        print("HANLIN_NATIVE_SDK_BINDING_SHAPES=" + json)
+    }
+
     @Test func boundObjectiveCBridgeReturnsActualReceiptsFromAllFiveEngines() async throws {
         let adapter = NativeScriptHostServicesAdapter(appID: try HanlinAppID(validating: "ns-wire-\(UUID().uuidString.lowercased())"), grantedCapabilities: [])
         let bridge = try bind(adapter)

@@ -56,6 +56,23 @@ def patch_main(text: str) -> str:
     return text
 
 
+def patch_declaration_writer(text: str) -> str:
+    # The existing inner writer hides ownership/runtime-only members such as
+    # zone. Its outer class-member writer still emits "readonly" before that
+    # empty result, producing a phantom implicit-any property in hundreds of
+    # generated classes. Apply the SAME visibility rule before any modifiers.
+    before = "    CompoundMemberMap<PropertyMeta> baseClassProperties) {\n  _buffer << std::endl"
+    after = "    CompoundMemberMap<PropertyMeta> baseClassProperties) {\n" \
+            "  if (hiddenMethods.find(propertyMeta->jsName) != hiddenMethods.end() || propertyMeta->jsName.empty()) return;\n" \
+            "  _buffer << std::endl"
+    text = replace_once(text, before, after)
+    before = '      return tsifyType(*nullableType.innerType, isFuncParam) + " | null";'
+    after = '      if (nullableType.innerType->stripNullability()->is(TypeBlock)) {\n' \
+            '        return "(" + tsifyType(*nullableType.innerType, isFuncParam) + ") | null";\n' \
+            '      }\n' + before
+    return replace_once(text, before, after)
+
+
 def main() -> int:
     if sys.platform != "darwin":
         print("BLOCKED: actual macOS/Xcode required for the metadata tool")
@@ -87,6 +104,8 @@ def main() -> int:
                  source / relative, digest)
     main_cpp = source / "metadata-generator/src/main.cpp"
     main_cpp.write_text(patch_main(main_cpp.read_text()), encoding="utf-8")
+    writer = source / "metadata-generator/src/TypeScript/DefinitionWriter.cpp"
+    writer.write_text(patch_declaration_writer(writer.read_text()), encoding="utf-8")
     serializer = source / "metadata-generator/src/Binary/binarySerializer.cpp"
     serializer.write_text(replace_once(serializer.read_text(), "Archive* archive = dyn_cast<Archive>(&binary)",
                                        "isa<Archive>(&binary)"), encoding="utf-8")

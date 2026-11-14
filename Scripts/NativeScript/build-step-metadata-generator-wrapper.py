@@ -160,13 +160,16 @@ def main() -> int:
            provenance["patchSourceSHA256"] != hashlib.sha256((root / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest():
             raise RuntimeError("Metadata build-tool provenance does not match actual inputs")
         umbrella = module_root / "HanlinMetadataInput.h"
-        write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
-                              sorted(core_support_dir.glob("*.h")) + swift_headers,
-                              [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))])
         evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
         evidence.mkdir(parents=True, exist_ok=True)
-        for path in [umbrella, umbrella.with_suffix(".inventory.json"), tool_root / "provenance.json"]:
-            shutil.copy2(path, evidence / path.name)
+        try:
+            write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
+                                  sorted(core_support_dir.glob("*.h")) + swift_headers,
+                                  [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))])
+        finally:
+            for path in [umbrella, umbrella.with_suffix(".inventory.json"), tool_root / "provenance.json"]:
+                if path.is_file():
+                    shutil.copy2(path, evidence / path.name)
         adapter = module_root / "upstream-generator-with-explicit-input.py"
         adapter.write_text(explicit_input_adapter(upstream_generator.read_text()), encoding="utf-8")
         environment["HANLIN_METADATA_GENERATOR"] = str(tool)
