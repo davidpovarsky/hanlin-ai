@@ -42,41 +42,52 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
         built = subprocess.run([*command, "build"], cwd=package, stdout=log, stderr=subprocess.STDOUT, timeout=480)
     if built.returncode:
         return {"status": "FAILED", "stage": "actual Swift package compilation", "exitCode": built.returncode}
-    settings = json.loads(subprocess.check_output([*command, "-showBuildSettings", "-json"], cwd=package, text=True))
-    targets = [item for item in settings if item["target"] in ["HanlinNativeScriptRuntime", "HanlinNativeScriptRuntime-product"]]
-    if not targets:
-        raise RuntimeError("Actual package build-settings targets: " + ", ".join(item["target"] for item in settings))
-    target = next((item["buildSettings"] for item in targets if item["target"] == "HanlinNativeScriptRuntime"), targets[0]["buildSettings"])
-    # Xcode's package scheme may expose only the synthetic product target in
-    # -showBuildSettings. Preserve framework paths from the ACTUAL successful
-    # Swift compile invocation instead of guessing its binary dependency paths.
-    frameworks = shlex.split(target.get("FRAMEWORK_SEARCH_PATHS", ""))
+    compilation = None
+    frameworks = []
     for line in (folder / "package-build.log").read_text().splitlines():
         if "-module-name HanlinNativeScriptRuntime " not in line:
             continue
         args = shlex.split(line)
+        if "-emit-objc-header-path" not in args:
+            continue
+        compilation = {key: args[args.index(key) + 1] for key in ["-sdk", "-target", "-emit-objc-header-path"]}
         for index, arg in enumerate(args):
             if arg == "-F" and index + 1 < len(args):
                 frameworks.append(args[index + 1])
             elif arg.startswith("-F") and len(arg) > 2:
                 frameworks.append(arg[2:])
-    (folder / "build-inputs.json").write_text(json.dumps({"target": targets[0]["target"],
-        "actualFrameworkSearchPaths": sorted(set(frameworks)),
-        "settings": {k: target.get(k) for k in ["SDKROOT", "OBJROOT", "PLATFORM_NAME", "EFFECTIVE_PLATFORM_NAME",
-                     "LLVM_TARGET_TRIPLE_VENDOR", "LLVM_TARGET_TRIPLE_OS_VERSION", "LLVM_TARGET_TRIPLE_SUFFIX"]}}, indent=2) + "\n")
-    environment = {**os.environ, **{k: str(v) for k, v in target.items() if isinstance(v, (str, int))}}
-    environment.update({"SRCROOT": str(root), "TARGET_TEMP_DIR": str(folder / "temp"),
-                        "CONFIGURATION_BUILD_DIR": str(folder / "products"), "PER_VARIANT_OBJECT_FILE_DIR": "",
-                        "NS_TYPESCRIPT_DECLARATIONS_PATH": str(folder / "types")})
-    environment["FRAMEWORK_SEARCH_PATHS"] = shlex.join(sorted(set(frameworks)))
+        break
+    if compilation is None:
+        raise RuntimeError("Successful build did not retain its actual provider Swift compiler invocation")
+    triple = re.fullmatch(r"(arm64|x86_64)-(apple)-ios([0-9.]+)-simulator", compilation["-target"])
+    if triple is None:
+        raise RuntimeError("Actual provider was not compiled for the requested Apple simulator")
+    header = Path(compilation["-emit-objc-header-path"])
+    if not header.is_file():
+        raise RuntimeError("Actual compiler output Swift ObjC interface is missing")
+    # SPM's synthetic product returns [] for -showBuildSettings. Stage a BYTE
+    # COPY of its actual compiled header at the wrapper's normal Xcode input
+    # location; do not synthesize a header or infer a Swift/ObjC API.
+    intermediates = folder / "intermediates"
+    staged_header = intermediates / "GeneratedModuleMaps-iphonesimulator" / header.name
+    staged_header.parent.mkdir(parents=True, exist_ok=True)
+    staged_header.write_bytes(header.read_bytes())
+    (folder / header.name).write_bytes(header.read_bytes())
+    environment = {**os.environ, "SRCROOT": str(root), "OBJROOT": str(intermediates),
+        "SDKROOT": compilation["-sdk"], "SDK_VERSION": capture("xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"),
+        "PLATFORM_NAME": "iphonesimulator", "EFFECTIVE_PLATFORM_NAME": "-iphonesimulator",
+        "LLVM_TARGET_TRIPLE_VENDOR": triple.group(2), "LLVM_TARGET_TRIPLE_SUFFIX": "-simulator",
+        "IPHONEOS_DEPLOYMENT_TARGET": triple.group(3), "GCC_C_LANGUAGE_STANDARD": "gnu17", "ARCHS": triple.group(1),
+        "TARGET_TEMP_DIR": str(folder / "temp"), "CONFIGURATION_BUILD_DIR": str(folder / "products"),
+        "PER_VARIANT_OBJECT_FILE_DIR": "", "NS_TYPESCRIPT_DECLARATIONS_PATH": str(folder / "types"),
+        "FRAMEWORK_SEARCH_PATHS": shlex.join(sorted(set(frameworks))),
+        "HEADER_SEARCH_PATHS": shlex.quote(str(root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"))}
     for name in ["TARGET_TEMP_DIR", "CONFIGURATION_BUILD_DIR"]:
         Path(environment[name]).mkdir(exist_ok=True)
-    environment["HEADER_SEARCH_PATHS"] = environment.get("HEADER_SEARCH_PATHS", "") + " " + str(
-        root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include")
-    header = Path(environment["OBJROOT"]) / "GeneratedModuleMaps-iphonesimulator/HanlinNativeScriptRuntime-Swift.h"
-    if not header.is_file():
-        raise RuntimeError("Actual package did not emit the required Swift ObjC interface")
-    (folder / header.name).write_bytes(header.read_bytes())
+    (folder / "build-inputs.json").write_text(json.dumps({"compilerInputs": compilation,
+        "actualFrameworkSearchPaths": sorted(set(frameworks)),
+        "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
+        "stagedSwiftHeaderSHA256": hashlib.sha256(staged_header.read_bytes()).hexdigest()}, indent=2) + "\n")
     with (folder / "wrapper.log").open("w") as log:
         execution = subprocess.run([sys.executable, str(original_generator.parent / "build-step-metadata-generator.py"), arch],
                                    cwd=original_generator.parent, env=environment, stdout=log,
