@@ -134,7 +134,7 @@ jobs:
   focused-nativescript-metadata-tests:
     if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
     name: Probe pinned NativeScript SDK metadata
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7.0.1

@@ -8,6 +8,7 @@ import hashlib
 import json
 from pathlib import Path
 import platform
+import re
 import subprocess
 import sys
 
@@ -60,13 +61,15 @@ def main() -> int:
         (destination / "stderr.log").write_bytes(completed.stderr)
         data = binary.read_bytes() if binary.is_file() else b""
         symbols = {name: name.encode() + b"\0" in data for name in required}
+        errors = [line for line in completed.stderr.decode("utf-8", errors="replace").splitlines()
+                  if re.search(r"(?:^|:\d+(?::\d+)?:\s+)(?:fatal\s+)?error:", line)]
         result["modes"][mode] = {"exitCode": completed.returncode, "requiredMetadataStringsPresent": symbols,
             "metadataSHA256": hashlib.sha256(data).hexdigest(), "metadataBytes": len(data),
-            "status": "EXECUTED_PASS" if completed.returncode == 0 and all(symbols.values()) else "FAILED"}
+            "clangErrorCount": len(errors),
+            "status": "EXECUTED_PASS" if completed.returncode == 0 and all(symbols.values()) and not errors else "FAILED"}
         print(json.dumps({mode: result["modes"][mode]}), flush=True)
         # Keep the actual first SDK failure bounded in the job log. Full stderr
         # stays in the existing evidence artifact, not another logging system.
-        errors = [line for line in completed.stderr.decode("utf-8", errors="replace").splitlines() if "error:" in line]
         print("\n".join(errors[:8]), flush=True)
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     return 0 if result["modes"]["textual"]["status"] == "EXECUTED_PASS" else 1
