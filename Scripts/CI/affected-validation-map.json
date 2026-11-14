@@ -256,6 +256,7 @@
         "Packages/HanlinExpoNativeAPI/**",
         "Scripts/ExpoNativeAPI/**",
         "Fixtures/ExpoSwiftUIProbe/**",
+        "Fixtures/ExpoNativeAPIProbe/**",
         "Scripts/Expo/**",
         "AI_HLYUITests/HanlinExpoProductionE2ETests.swift"
       ],

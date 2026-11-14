@@ -17,6 +17,13 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_native_api_template_config_uses_the_existing_expo_route(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMountAndInteraction"
+        plan = self.plan_files(["Fixtures/ExpoNativeAPIProbe/tsconfig.json"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
     def test_prepared_runtime_version_constructor_cases_have_a_focused_unit_route(self) -> None:
         selector = "AI_HLYTests/PreparedRuntimeVersionGateTests"
         plan = self.plan_files(["AI_HLYTests/PreparedRuntimeVersionGateTests.swift"])
