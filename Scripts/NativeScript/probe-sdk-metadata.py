@@ -5,6 +5,7 @@ No app/engine build, simulator, Swift-header stand-in, SDK modification or VM
 acceptance claim. The probe includes actual UIKit and Host ObjC headers.
 """
 import hashlib
+import argparse
 import json
 from pathlib import Path
 import platform
@@ -18,6 +19,10 @@ def capture(*args: str) -> str:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--mode", choices=["modular", "textual", "textual-direct"],
+                        default="textual-direct")
+    options = parser.parse_args()
     if sys.platform != "darwin":
         print(json.dumps({"status": "BLOCKED", "reason": "Actual macOS/Xcode SDK required"}))
         return 2
@@ -46,7 +51,20 @@ def main() -> int:
               "generatorSHA256": hashlib.sha256(generator.read_bytes()).hexdigest(), "modes": {},
               "boundary": "Actual ObjC SDK metadata generation only; no app/Swift-provider/VM or physical-device pass."}
     required = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge", "HanlinNativeScriptCompatibility", "UIView", "NSObject"]
-    for mode in ["modular", "textual"]:
+    # Retain the selected SDK declarations that explain header search failures;
+    # these are read-only inputs, never compatibility edits or feature overrides.
+    context = []
+    for path in [sdk / "usr/include/DarwinFoundation1.modulemap", sdk / "usr/include/math.h",
+                 resources / "include/float.h"]:
+        if path.is_file():
+            lines = path.read_text(errors="replace").splitlines()
+            context.append({"path": str(path), "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                            "lines": [{"line": n, "text": line} for n, line in enumerate(lines, 1)
+                                      if (path.name == "DarwinFoundation1.modulemap" and 270 <= n <= 335)
+                                      or (path.name == "math.h" and 35 <= n <= 85)
+                                      or path.name == "float.h"]})
+    (output / "sdk-header-context.json").write_text(json.dumps(context, indent=2) + "\n")
+    for mode in [options.mode]:
         destination = output / mode
         destination.mkdir(exist_ok=True)
         binary = destination / "metadata.bin"
@@ -56,15 +74,32 @@ def main() -> int:
                    "-std=gnu17", "-resource-dir", str(resources), "-I" + str(headers),
                    "-F" + str(sdk / "System/Library/SubFrameworks"),
                    "-fmodule-map-file=" + str(headers / "module.modulemap"),
-                   "-include", str(umbrella), "-fmodules" if mode == "modular" else "-fno-modules"]
+                   "-fmodules" if mode == "modular" else "-fno-modules"]
+        if mode == "textual-direct":
+            # The upstream generator parses an empty translation unit to discover
+            # module headers before parsing its input umbrella. Avoid forcing
+            # UIKit into that discovery pass; keep the actual same SDK headers
+            # for the real metadata pass.
+            command[1:1] = ["-input-umbrella", str(umbrella)]
+        else:
+            command.extend(["-include", str(umbrella)])
+        control = subprocess.run(["xcrun", "clang", "-x", "objective-c", "-fsyntax-only",
+                                  *command[command.index("Xclang") + 1:], str(umbrella)],
+                                 capture_output=True, timeout=120)
+        (destination / "xcode-clang-control.log").write_bytes(control.stdout + control.stderr)
         completed = subprocess.run(command, cwd=generator.parent, capture_output=True, timeout=180)
         (destination / "stdout.log").write_bytes(completed.stdout)
         (destination / "stderr.log").write_bytes(completed.stderr)
+        if completed.returncode < 0:
+            debugger = subprocess.run(["xcrun", "lldb", "--batch", "-o", "run", "-k", "bt 32",
+                                       "--", *command], cwd=generator.parent, capture_output=True, timeout=120)
+            (destination / "crash-backtrace.log").write_bytes(debugger.stdout + debugger.stderr)
         data = binary.read_bytes() if binary.is_file() else b""
         symbols = {name: name.encode() + b"\0" in data for name in required}
         errors = [line for line in completed.stderr.decode("utf-8", errors="replace").splitlines()
                   if re.search(r"(?:^|:\d+(?::\d+)?:\s+)(?:fatal\s+)?error:", line)]
         result["modes"][mode] = {"exitCode": completed.returncode, "requiredMetadataStringsPresent": symbols,
+            "xcodeClangSyntaxControlExitCode": control.returncode,
             "metadataSHA256": hashlib.sha256(data).hexdigest(), "metadataBytes": len(data),
             "clangErrorCount": len(errors),
             "status": "EXECUTED_PASS" if completed.returncode == 0 and all(symbols.values()) and not errors else "FAILED"}
@@ -73,7 +108,7 @@ def main() -> int:
         # stays in the existing evidence artifact, not another logging system.
         print("\n".join(errors[:8]), flush=True)
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
-    return 0 if result["modes"]["textual"]["status"] == "EXECUTED_PASS" else 1
+    return 0 if result["modes"][options.mode]["status"] == "EXECUTED_PASS" else 1
 
 
 if __name__ == "__main__":
