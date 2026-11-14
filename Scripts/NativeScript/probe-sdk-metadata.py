@@ -50,30 +50,9 @@ def main() -> int:
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")
     if options.mode == "textual-public":
-        public_headers = []
-        inventory = []
-        for frameworks in [sdk / "System/Library/Frameworks", sdk / "System/Library/SubFrameworks"]:
-            for framework in sorted(frameworks.glob("*.framework")):
-                module_map = framework / "Modules/module.modulemap"
-                module_text = module_map.read_text() if module_map.is_file() else ""
-                matches = re.findall(r'umbrella\s+header\s+"([^"]+)"', module_text)
-                found = [framework / "Headers" / name for name in matches if (framework / "Headers" / name).is_file()]
-                if not found and module_map.is_file():
-                    named = framework / "Headers" / f"{framework.stem}.h"
-                    if named.is_file():
-                        found = [named]
-                    elif re.search(r'umbrella\s+"', module_text):
-                        # A public framework umbrella directory is also a
-                        # declared public header root; avoid Swift-only overlays.
-                        private = re.findall(r'private\s+header\s+"([^"]+)"', module_text)
-                        found = [p for p in sorted((framework / "Headers").glob("*.h"))
-                                 if not p.name.endswith("-Swift.h") and p.name not in private]
-                public_headers.extend(found)
-                inventory.append({"framework": framework.name, "moduleMap": module_text,
-                                  "publicUmbrellaHeaders": [str(p) for p in found]})
-        umbrella.write_text('#import <UIKit/UIKit.h>\n' + "\n".join('#import "' + str(p) + '"' for p in public_headers)
-                            + '\n#import "HanlinNativeServicesBridge.h"\n#import "HanlinNativeScriptCompatibility.h"\n')
-        (output / "public-framework-inventory.json").write_text(json.dumps(inventory, indent=2) + "\n")
+        from metadata_public_headers import write_public_umbrella
+        write_public_umbrella(sdk, umbrella, [headers / "HanlinNativeServicesBridge.h",
+                                             headers / "HanlinNativeScriptCompatibility.h"])
     result = {"schemaVersion": 1, "nativeScriptIOS": package["version"], "sdk": str(sdk),
               "sdkVersion": version, "xcode": capture("xcodebuild", "-version"),
               "clangResourceDirectory": str(resources), "architecture": arch,

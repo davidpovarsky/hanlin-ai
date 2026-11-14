@@ -13,9 +13,30 @@ ROOT = Path(__file__).resolve().parents[3]
 SPEC = importlib.util.spec_from_file_location("hanlin_metadata_wrapper", ROOT / "Scripts/NativeScript/build-step-metadata-generator-wrapper.py")
 WRAPPER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(WRAPPER)
+HEADER_SPEC = importlib.util.spec_from_file_location("metadata_public_headers", ROOT / "Scripts/NativeScript/metadata_public_headers.py")
+HEADERS = importlib.util.module_from_spec(HEADER_SPEC)
+HEADER_SPEC.loader.exec_module(HEADERS)
 
 
 class NativeScriptMetadataWrapperTests(unittest.TestCase):
+    def test_framework_entry_selection_excludes_internal_roots_and_explicit_private_headers(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            public = root / "System/Library/Frameworks/Public.framework"
+            internal = root / "System/Library/SubFrameworks/FocusEngine.framework"
+            for framework in [public, internal]:
+                (framework / "Modules").mkdir(parents=True)
+                (framework / "Headers").mkdir()
+                (framework / "Headers/Entry.h").write_text("// public header fixture")
+                (framework / "Headers/Private.h").write_text("// explicit private header fixture")
+                (framework / "Modules/module.modulemap").write_text('framework module Entry {\n umbrella "."\n private header "Private.h"\n}')
+            umbrella = root / "input.h"
+            records = HEADERS.write_public_umbrella(root, umbrella, [])
+            self.assertEqual(len(records), 1)
+            self.assertIn(str(public / "Headers/Entry.h"), umbrella.read_text())
+            self.assertNotIn("FocusEngine", umbrella.read_text())
+            self.assertNotIn("Private.h", umbrella.read_text())
+
     def test_real_clang_errors_reject_partial_metadata_even_when_required_classes_exist(self):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)

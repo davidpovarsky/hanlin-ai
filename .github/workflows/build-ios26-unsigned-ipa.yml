@@ -152,8 +152,28 @@ jobs:
           echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
       - name: Install existing pinned NativeScript tooling
         run: npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund
+      - name: Identify metadata toolchain
+        id: metadata-toolchain
+        run: echo "digest=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+      - name: Restore metadata build tool
+        id: metadata-tool-cache
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: |
+            build/nativescript-metadata-tool/bin
+            build/nativescript-metadata-tool/provenance.json
+          key: metadata-tool-${{ runner.os }}-${{ runner.arch }}-${{ steps.metadata-toolchain.outputs.digest }}-${{ hashFiles('Scripts/NativeScript/build-metadata-tool.py', 'Scripts/NativeScript/package-lock.json') }}
       - name: Build declaration-only metadata tool candidate
+        if: steps.metadata-tool-cache.outputs.cache-hit != 'true'
         run: python3 Scripts/NativeScript/build-metadata-tool.py
+      - name: Save metadata build tool
+        if: steps.metadata-tool-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: |
+            build/nativescript-metadata-tool/bin
+            build/nativescript-metadata-tool/provenance.json
+          key: ${{ steps.metadata-tool-cache.outputs.cache-primary-key }}
       - name: Compare real SDK metadata parser modes
         run: python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-metadata-tool/bin/objc-metadata-generator
       - name: Retain actual SDK probe evidence
@@ -164,6 +184,7 @@ jobs:
           path: |
             build/acceptance/nativescript-sdk-probe
             build/nativescript-metadata-tool/provenance.json
+            build/nativescript-metadata-tool/bin
           if-no-files-found: error
           retention-days: 14
 
