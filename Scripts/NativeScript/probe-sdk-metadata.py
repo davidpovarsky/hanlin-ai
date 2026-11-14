@@ -23,6 +23,7 @@ def main() -> int:
     parser.add_argument("--mode", choices=["modular", "textual", "textual-direct", "textual-ambient", "textual-public"],
                         default="textual-public")
     parser.add_argument("--generator", type=Path, help="Explicit separately built metadata-tool candidate")
+    parser.add_argument("--emit-types", action="store_true", help="Retain actual selected-SDK TypeScript declarations")
     options = parser.parse_args()
     if sys.platform != "darwin":
         print(json.dumps({"status": "BLOCKED", "reason": "Actual macOS/Xcode SDK required"}))
@@ -84,6 +85,8 @@ def main() -> int:
                    "-F" + str(sdk / "System/Library/SubFrameworks"),
                    "-fmodule-map-file=" + str(headers / "module.modulemap"),
                    "-fmodules" if mode == "modular" else "-fno-modules"]
+        if options.emit_types:
+            command[1:1] = ["-output-typescript", str(destination / "types")]
         if mode in ["textual-direct", "textual-public"]:
             # The upstream generator parses an empty translation unit to discover
             # module headers before parsing its input umbrella. Avoid forcing
@@ -118,6 +121,13 @@ def main() -> int:
             "clangErrorCount": len(errors),
             "status": "EXECUTED_PASS" if completed.returncode == 0 and control.returncode == 0
                       and all(symbols.values()) and not errors else "FAILED"}
+        if options.emit_types:
+            declarations = {p.relative_to(destination / "types").as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                            for p in sorted((destination / "types").rglob("*.d.ts"))}
+            result["generatedTypeDeclarations"] = {"files": declarations,
+                "strictTypecheck": "NOT_RUN", "boundary": "Actual SDK generation; generated declarations still require full strict checking."}
+            if not declarations:
+                result["modes"][mode]["status"] = "FAILED"
         print(json.dumps({mode: result["modes"][mode]}), flush=True)
         # Keep the actual first SDK failure bounded in the job log. Full stderr
         # stays in the existing evidence artifact, not another logging system.

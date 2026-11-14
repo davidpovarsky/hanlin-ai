@@ -155,7 +155,7 @@ jobs:
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
       - name: Compare real SDK metadata parser modes
-        run: python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-metadata-tool/bin/objc-metadata-generator
+        run: python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-metadata-tool/bin/objc-metadata-generator --emit-types
       - name: Retain actual SDK probe evidence
         if: always()
         uses: actions/upload-artifact@v7.0.2
