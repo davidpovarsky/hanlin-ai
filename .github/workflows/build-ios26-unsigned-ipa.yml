@@ -3,6 +3,11 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
+      nativescript_metadata_validation_only:
+        description: Compare pinned NativeScript metadata parser modes against the selected SDK without app or engine builds
+        required: false
+        default: false
+        type: boolean
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false
@@ -122,12 +127,44 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
+  focused-nativescript-metadata-tests:
+    if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
+    name: Probe pinned NativeScript SDK metadata
+    runs-on: macos-26
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22.17.0'
+          cache: npm
+          cache-dependency-path: Scripts/NativeScript/package-lock.json
+      - name: Select installed stable Xcode
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Install existing pinned NativeScript tooling
+        run: npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund
+      - name: Compare real SDK metadata parser modes
+        run: python3 Scripts/NativeScript/probe-sdk-metadata.py
+      - name: Retain actual SDK probe evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: nativescript-sdk-metadata
+          path: build/acceptance/nativescript-sdk-probe
+          if-no-files-found: error
+          retention-days: 14
+
   plan-affected-validation:
-    if: ${{ !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
+    if: ${{ !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
