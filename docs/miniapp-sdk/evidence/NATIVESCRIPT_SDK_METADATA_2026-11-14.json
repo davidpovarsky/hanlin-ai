@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "runID": 43629307234,
+  "sourceCommit": "8fce2996",
+  "status": "EXECUTED_PASS",
+  "scope": "Actual selected SDK public ObjC declaration metadata generation, original declaration parity, invalid declaration rejection. No app/Swift-provider/VM/device pass.",
+  "artifact": [
+    {
+      "id": 14127228761,
+      "name": "nativescript-sdk-metadata",
+      "size_in_bytes": 18330020,
+      "digest": "sha256:3b4e720e592de9906f35b00154565f0d2be2cbe7e1e312e44e6e0e01dd645e6c"
+    }
+  ],
+  "resultSHA256": "672d03be9c9fe1324672e44d29505bbb192e192e263add3b63e3b9cd587bfe6c",
+  "result": {
+    "schemaVersion": 1,
+    "nativeScriptIOS": "9.1.0",
+    "sdk": "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk",
+    "sdkVersion": "27.2",
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "clangResourceDirectory": "/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21",
+    "architecture": "arm64",
+    "generatorSHA256": "4bd55ad184e381aafff3c4fd57e9874c2a63ac4999ae2d03bc62a0012d49f7ef",
+    "modes": {
+      "textual-public": {
+        "exitCode": 0,
+        "requiredMetadataStringsPresent": {
+          "HanlinNativeServicesBridge": true,
+          "HanlinNativeServicesSessionBridge": true,
+          "HanlinNativeScriptCompatibility": true,
+          "UIView": true,
+          "NSObject": true
+        },
+        "xcodeClangSyntaxControlExitCode": 0,
+        "metadataSHA256": "dae5882319e5c54af2719bc9bf4c799506773437bcf6a0a40bca5928e9774d2e",
+        "metadataBytes": 10745446,
+        "clangErrorCount": 0,
+        "status": "EXECUTED_PASS"
+      }
+    },
+    "originalPinnedGeneratorSHA256": "7682e1c285a8f4c619beceb16bcf906fa3fb7e6436b0fb53cea690d8188fb4c0",
+    "boundary": "Actual ObjC SDK metadata generation only; no app/Swift-provider/VM or physical-device pass.",
+    "unchangedUIKitAndHostDeclarationParity": {
+      "status": "EXECUTED_PASS",
+      "exitCodes": {
+        "original": 0,
+        "candidate": 0
+      },
+      "yamlSHA256": {
+        "original": {
+          "CFNetwork.yaml": "5128fb9164baf8a63d59239f43792fefb37a9f02d15fba9a771073a29383c0e1",
+          "CoreFoundation.yaml": "fd3d0af36f6f44065a41e6258e20eaad9a827be9692ff55c2078f0ca93e8f40b",
+          "CoreGraphics.yaml": "876839a2012b871fb3a2f3244e7f91174c892148a3c9c0e90bcd33b4e17d9425",
+          "CoreImage.yaml": "542a09ba4b4457a63017e752831c3e0f73518d9204f8d017194ba2bba5babb0d",
+          "CoreLocation.yaml": "6a50d149b2ac6fd8145e1bdd7582ac5d17abe38dac766304b1cd2ab6af26f15c",
+          "CoreMotion.yaml": "29feaaebade48a5d7d40deb3e6d8cd53fc4cfd7ff0ed1ca8af27488147bbfbbe",
+          "CoreText.yaml": "9ae920e8c6084ca60d395817b4a4758ba50d85e689ad859c35f3d37186b27afa",
+          "CoreVideo.yaml": "85ff5cd1a780cb7544836da76fc3fe5ef9fafc35d4799e728687a61290908004",
+          "Darwin.yaml": "dbc77099afa20ca8c45a33b24cd22806b781c099602d1efd37b8de1070b184a0",
+          "Dispatch.yaml": "4491277a8bba6f8dd75e29dc29dc81794e270b0b56fa1dd1267191d6a4d7888f",
+          "FileProvider.yaml": "a78463a7b2446045a55bff845e1f54e85b07a8ac2432c7927d7f91f2492a9b99",
+          "Foundation.yaml": "165c01f27043e62eb79ebbee5e6d0402db186e2a5e4912476635da396c61fbf0",
+          "HanlinNativeScriptCompatibility.yaml": "ddfe8d9bb337aad4d03a379d03bca11a96fea131011468975a63ae9b634d680e",
+          "HanlinNativeServicesBridge.yaml": "41e6eca89c2e540672cf547933b557ac855e6b1aeec9951f1482d7698e02b6bb",
+          "IOSurface.yaml": "22766c148f1bd6a53adc57484a347bef869db35b72a68867eae98e047f9578da",
+          "ImageIO.yaml": "038a44f3aa1fc8fd38367ded77a119d3c2f6dfc3be508138d334218773381ce0",
+          "Metal.yaml": "9ac3b3923eef33b480a90060149882b11e205a318c1d35b82c327a5af97466c0",
+          "ObjectiveC.yaml": "7589c675fd8d8385b46fc928e01451eb15b41766b463a78fc9b4ef4547d9593f",
+          "OpenGLES.yaml": "c691a2fd921c9b5fdaf016ca120739d1807c71eb390a1fad3a2592614eb3ba9f",
+          "QuartzCore.yaml": "5bb168cba0f8633b67ff540d959c40f3a354d8c62e6bc8ddca228beeb728cda1",
+          "Security.yaml": "580c1ddf053956a9d6bde8411311db85a724b659fd8cd1e381f712e623293017",
+          "Symbols.yaml": "f17da1763c30c77a18daaef762fc58c1d6c0b60fcdffbf1b9983009f8dee30c7",
+          "UIKit.yaml": "db445096c2449b2323ddea3b985353ffb6528bc63e22f6d10a17cd07a8434220",
+          "UIUtilities.yaml": "af0c14e9e1e612bdb831030f589fbbddea3151c11d0a43ec44e1a8e4af27887e",
+          "UserNotifications.yaml": "2516e67abdbd420fd2bcef933dd8a10d01156ea086bbad2eab7c1e342cb09c66",
+          "XPC.yaml": "ca9c782b92a76e4c235d4004a393c5868566c33536a432b53f56f79c9c13925a",
+          "_DarwinFoundation1.yaml": "42d244c1fb2d6e2bd936173c91c89d19d70689701e62a668c19eb4c3d8460f2e",
+          "_DarwinFoundation2.yaml": "d85727b812e7e69cb05404871d1ba7caa2db9ec1543f9f00055ab82286e52122",
+          "_DarwinFoundation3.yaml": "482924617c2cd2d3104664ed27d405e93073ca21e1bcdafb9555e83a5a158941",
+          "os_object.yaml": "4afa7fcd5236dda3a71e6da2be77e8bc3f1842c7b2f5e5855901fefa64c77599",
+          "os_workgroup.yaml": "a8b737c74e7bf1aa0739b107810a8dd5538b7aec9be98c0b1683b86d8f067ac8"
+        },
+        "candidate": {
+          "CFNetwork.yaml": "5128fb9164baf8a63d59239f43792fefb37a9f02d15fba9a771073a29383c0e1",
+          "CoreFoundation.yaml": "fd3d0af36f6f44065a41e6258e20eaad9a827be9692ff55c2078f0ca93e8f40b",
+          "CoreGraphics.yaml": "876839a2012b871fb3a2f3244e7f91174c892148a3c9c0e90bcd33b4e17d9425",
+          "CoreImage.yaml": "542a09ba4b4457a63017e752831c3e0f73518d9204f8d017194ba2bba5babb0d",
+          "CoreLocation.yaml": "6a50d149b2ac6fd8145e1bdd7582ac5d17abe38dac766304b1cd2ab6af26f15c",
+          "CoreMotion.yaml": "29feaaebade48a5d7d40deb3e6d8cd53fc4cfd7ff0ed1ca8af27488147bbfbbe",
+          "CoreText.yaml": "9ae920e8c6084ca60d395817b4a4758ba50d85e689ad859c35f3d37186b27afa",
+          "CoreVideo.yaml": "85ff5cd1a780cb7544836da76fc3fe5ef9fafc35d4799e728687a61290908004",
+          "Darwin.yaml": "dbc77099afa20ca8c45a33b24cd22806b781c099602d1efd37b8de1070b184a0",
+          "Dispatch.yaml": "4491277a8bba6f8dd75e29dc29dc81794e270b0b56fa1dd1267191d6a4d7888f",
+          "FileProvider.yaml": "a78463a7b2446045a55bff845e1f54e85b07a8ac2432c7927d7f91f2492a9b99",
+          "Foundation.yaml": "165c01f27043e62eb79ebbee5e6d0402db186e2a5e4912476635da396c61fbf0",
+          "HanlinNativeScriptCompatibility.yaml": "ddfe8d9bb337aad4d03a379d03bca11a96fea131011468975a63ae9b634d680e",
+          "HanlinNativeServicesBridge.yaml": "41e6eca89c2e540672cf547933b557ac855e6b1aeec9951f1482d7698e02b6bb",
+          "IOSurface.yaml": "22766c148f1bd6a53adc57484a347bef869db35b72a68867eae98e047f9578da",
+          "ImageIO.yaml": "038a44f3aa1fc8fd38367ded77a119d3c2f6dfc3be508138d334218773381ce0",
+          "Metal.yaml": "9ac3b3923eef33b480a90060149882b11e205a318c1d35b82c327a5af97466c0",
+          "ObjectiveC.yaml": "7589c675fd8d8385b46fc928e01451eb15b41766b463a78fc9b4ef4547d9593f",
+          "OpenGLES.yaml": "c691a2fd921c9b5fdaf016ca120739d1807c71eb390a1fad3a2592614eb3ba9f",
+          "QuartzCore.yaml": "5bb168cba0f8633b67ff540d959c40f3a354d8c62e6bc8ddca228beeb728cda1",
+          "Security.yaml": "580c1ddf053956a9d6bde8411311db85a724b659fd8cd1e381f712e623293017",
+          "Symbols.yaml": "f17da1763c30c77a18daaef762fc58c1d6c0b60fcdffbf1b9983009f8dee30c7",
+          "UIKit.yaml": "db445096c2449b2323ddea3b985353ffb6528bc63e22f6d10a17cd07a8434220",
+          "UIUtilities.yaml": "af0c14e9e1e612bdb831030f589fbbddea3151c11d0a43ec44e1a8e4af27887e",
+          "UserNotifications.yaml": "2516e67abdbd420fd2bcef933dd8a10d01156ea086bbad2eab7c1e342cb09c66",
+          "XPC.yaml": "ca9c782b92a76e4c235d4004a393c5868566c33536a432b53f56f79c9c13925a",
+          "_DarwinFoundation1.yaml": "42d244c1fb2d6e2bd936173c91c89d19d70689701e62a668c19eb4c3d8460f2e",
+          "_DarwinFoundation2.yaml": "d85727b812e7e69cb05404871d1ba7caa2db9ec1543f9f00055ab82286e52122",
+          "_DarwinFoundation3.yaml": "482924617c2cd2d3104664ed27d405e93073ca21e1bcdafb9555e83a5a158941",
+          "os_object.yaml": "4afa7fcd5236dda3a71e6da2be77e8bc3f1842c7b2f5e5855901fefa64c77599",
+          "os_workgroup.yaml": "a8b737c74e7bf1aa0739b107810a8dd5538b7aec9be98c0b1683b86d8f067ac8"
+        }
+      }
+    },
+    "invalidDeclarationRejected": {
+      "exitCode": 1,
+      "status": "EXECUTED_PASS"
+    }
+  },
+  "buildToolProvenance": {
+    "schemaVersion": 1,
+    "sourceCommit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+    "sourceArchiveSHA256": "fad3c54f5d321148e39c46eae6d9cbc8e2891afb414064eb3a10f64ba25d3f8b",
+    "cmakeSourceCommit": "8856ee520a44641dfed313a71cfc01dd47e0352b",
+    "cmakeSHA256": {
+      "metadata-generator/CMakeLists.txt": "0d64383530493f13d1bce04d367984bb6081e665814d893693f4b065fd1bcf51",
+      "metadata-generator/src/CMakeLists.txt": "0f0a48c60391e75c62db3387639de62088cb688e2d004a7576db36e02f18788b"
+    },
+    "llvmArchiveSHA256": "4d2eade1e9fb7a5fae1a502d0e5d935d20190007477743a1379d81838d87b832",
+    "architecture": "arm64",
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "patchSourceSHA256": "c9928a68e4fda3e49c2aec8aa84f5e7ff0a42bf1bd03ab6ebaf7bd4642d06b52",
+    "generatorSHA256": "4bd55ad184e381aafff3c4fd57e9874c2a63ac4999ae2d03bc62a0012d49f7ef",
+    "boundary": "Build tool only. No NativeScript/Node/Python engine or app rebuilt; no VM pass."
+  }
+}

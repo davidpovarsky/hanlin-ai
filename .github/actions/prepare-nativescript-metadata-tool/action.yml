@@ -1,0 +1,30 @@
+name: Prepare pinned declaration-only metadata tool
+description: Cache or build the metadata compiler without rebuilding any runtime engine
+runs:
+  using: composite
+  steps:
+    - id: toolchain
+      shell: bash
+      run: echo "digest=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+    - id: tool-cache
+      uses: actions/cache/restore@v6.1.0
+      with:
+        path: |
+          build/nativescript-metadata-tool/bin
+          build/nativescript-metadata-tool/provenance.json
+        key: metadata-tool-${{ runner.os }}-${{ runner.arch }}-${{ steps.toolchain.outputs.digest }}-${{ hashFiles('Scripts/NativeScript/build-metadata-tool.py', 'Scripts/NativeScript/package-lock.json') }}
+    - if: steps.tool-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        set -euo pipefail
+        if [ ! -f Scripts/NativeScript/node_modules/@nativescript/ios/package.json ]; then
+          npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund
+        fi
+        python3 Scripts/NativeScript/build-metadata-tool.py
+    - if: steps.tool-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v6.1.0
+      with:
+        path: |
+          build/nativescript-metadata-tool/bin
+          build/nativescript-metadata-tool/provenance.json
+        key: ${{ steps.tool-cache.outputs.cache-primary-key }}

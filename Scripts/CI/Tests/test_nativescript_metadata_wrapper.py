@@ -1,6 +1,9 @@
 import contextlib
 import importlib.util
 import io
+import hashlib
+import json
+import sys
 import os
 from pathlib import Path
 import shlex
@@ -40,8 +43,7 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
     def test_real_clang_errors_reject_partial_metadata_even_when_required_classes_exist(self):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
-            binary = b"\0".join(n.encode() for n in ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge",
-                             "HanlinNativeScriptCompatibility", "UIView", "NSObject"]) + b"\0"
+            binary = b"\0".join(n.encode() for n in WRAPPER.REQUIRED_METADATA_NAMES) + b"\0"
             (root / "metadata-arm64.bin").write_bytes(binary)
             diagnostic = root / "metadata-generation-stderr-arm64.txt"
             with patch.dict(os.environ, {"SRCROOT": str(root), "CONFIGURATION_BUILD_DIR": str(root)}), \
@@ -62,18 +64,18 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             text = module.read_text()
             self.assertIn(str(header.resolve()), text)
             self.assertNotIn("HanlinNativeServicesBridge.h", text)
-            flags = shlex.split(WRAPPER.metadata_flags(root, module, ROOT / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include", root / "Xcode clang"))
-            self.assertEqual(flags[:2], ["-resource-dir", str(root / "Xcode clang")])
-            self.assertEqual(flags[-2:], ["-include", str(root / "HanlinMetadataImports.h")])
+            flags = shlex.split(WRAPPER.metadata_flags(root, module, ROOT / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"))
+            self.assertEqual(flags[0], "-fno-modules")
             self.assertIn(f"-fmodule-map-file={module}", flags)
-            self.assertIn("@import HanlinNativeServicesBridge;", (root / "HanlinMetadataImports.h").read_text())
+            self.assertNotIn("-include", flags)
 
     def test_upstream_success_without_bridge_metadata_fails_and_keeps_diagnostics(self):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
             generator = root / "generator"
             generator.mkdir()
-            (generator / "build-step-metadata-generator-upstream.py").write_text("# test harness only")
+            (generator / "build-step-metadata-generator-upstream.py").write_text(
+                'def generate_metadata():\n    generator_call = ["./objc-metadata-generator", "-verbose",]\n    # clang arguments\n')
             objroot = root / "intermediates"
             header = objroot / "GeneratedModuleMaps-iphonesimulator/HanlinNativeScriptRuntime-Swift.h"
             header.parent.mkdir(parents=True)
@@ -83,14 +85,26 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             diagnostic = products / "metadata-generation-stderr-arm64.txt"
             diagnostic.write_text("error: missing native module\n")
             (products / "metadata-arm64.bin").write_bytes(b"NSObject\0UIView\0")
-            resources = root / "Xcode clang"
-            (resources / "include").mkdir(parents=True)
-            (resources / "include/float.h").write_text("// actual SDK lookup is a separate native gate")
+            tool = root / "build/nativescript-metadata-tool"
+            (tool / "bin").mkdir(parents=True)
+            (tool / "bin/objc-metadata-generator").write_bytes(b"tool fixture")
+            scripts = root / "Scripts/NativeScript"
+            scripts.mkdir(parents=True)
+            (scripts / "build-metadata-tool.py").write_text("# pinned source fixture")
+            (tool / "provenance.json").write_text(json.dumps({
+                "generatorSHA256": hashlib.sha256(b"tool fixture").hexdigest(),
+                "patchSourceSHA256": hashlib.sha256((scripts / "build-metadata-tool.py").read_bytes()).hexdigest()}))
+            sdk = root / "sdk"
+            framework = sdk / "System/Library/Frameworks/UIKit.framework"
+            (framework / "Modules").mkdir(parents=True)
+            (framework / "Headers").mkdir()
+            (framework / "Headers/UIKit.h").write_text("// SDK fixture")
+            (framework / "Modules/module.modulemap").write_text('framework module UIKit { umbrella header "UIKit.h" }')
             env = {"OBJROOT": str(objroot), "SRCROOT": str(root), "TARGET_TEMP_DIR": str(root / "target"),
-                   "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products)}
+                   "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products), "SDKROOT": str(sdk)}
             with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
                  patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
-                 patch.object(WRAPPER.subprocess, "check_output", return_value=str(resources)), \
+                 patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
                  patch.object(WRAPPER.subprocess, "run") as run, contextlib.redirect_stdout(io.StringIO()):
                 run.return_value.returncode = 0
                 self.assertEqual(WRAPPER.main(), 1)

@@ -201,3 +201,11 @@ spoof the unavailable feature, or replace the pinned generator/runtime. Required
 symbol checks and raw binary/stderr/umbrella retention remain. Six local wrapper/
 parity cases passed0.130s; actual SDK generation and all selected app obligations
 still require a fresh run. Engine candidate42926628418 is unchanged.
+
+### Declaration-only SDK generation follow-up,2026-11-14
+
+The resource-directory attempt alone failed43625309608 before every selected
+app case. The [authenticated SDK metadata follow-up](NATIVESCRIPT_SDK_METADATA_2026-11-14.md)
+records the public-header/declaration-only compiler pass43629307234 and earlier
+failures. Production adoption includes actual generated Swift headers and still
+requires fresh strict VM/Share/Core/UIKit/SwiftUI execution. No app pass is inferred.

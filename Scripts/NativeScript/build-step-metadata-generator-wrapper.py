@@ -11,6 +11,10 @@ import shutil
 import subprocess
 import sys
 
+REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge",
+    "HanlinNativeScriptCompatibility", "UIView", "NSObject", "NativeScriptEmbedder",
+    "SwiftUIProvider", "HanlinNativeScriptSwiftUIFixtureProvider"]
+
 
 def required_env(name: str) -> str:
     value = os.environ.get(name)
@@ -61,17 +65,24 @@ def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) ->
     return unique_headers
 
 
-def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path, resource_dir: Path) -> str:
+def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path) -> str:
     # Each ObjC header keeps its existing module owner. Listing those headers
     # again in the generated Swift module can make clang's findModuleForHeader
     # ambiguous. The upstream generator silently skips unknown module owners.
-    imports = module_root / "HanlinMetadataImports.h"
-    imports.write_text("@import HanlinNativeServicesBridge;\n"
-                       "@import HanlinNativeScriptCompatibility;\n"
-                       "@import hanlinnativescriptswiftsupport;\n", encoding="utf-8")
-    return shlex.join(["-resource-dir", str(resource_dir),
+    return shlex.join(["-fno-modules",
                        f"-fmodule-map-file={core_support_dir / 'module.modulemap'}",
-                       f"-fmodule-map-file={module_map}", "-include", str(imports)])
+                       f"-fmodule-map-file={module_map}"])
+
+
+def explicit_input_adapter(source: str) -> str:
+    # Preserve upstream's Xcode flag/architecture handling. Only add the real
+    # input umbrella before Xclang and select the separately verified tool.
+    before = 'generator_call = ["./objc-metadata-generator", "-verbose",'
+    if source.count(before) != 1 or source.count("    # clang arguments\n") != 1:
+        raise RuntimeError("Pinned upstream metadata launcher no longer matches")
+    return source.replace(before, 'generator_call = [env("HANLIN_METADATA_GENERATOR"), "-verbose",').replace(
+        "    # clang arguments\n",
+        '    generator_call.extend(["-input-umbrella", env("HANLIN_METADATA_INPUT_UMBRELLA")])\n\n    # clang arguments\n')
 
 
 def retain_and_check_metadata(arch: str, platform: str) -> bool:
@@ -87,7 +98,7 @@ def retain_and_check_metadata(arch: str, platform: str) -> bool:
             (evidence / path.name).write_bytes(data)
             hashes[path.name] = hashlib.sha256(data).hexdigest()
     binary = paths[2].read_bytes() if paths[2].is_file() else b""
-    required = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge", "HanlinNativeScriptCompatibility", "UIView", "NSObject"]
+    required = REQUIRED_METADATA_NAMES
     symbols = {name: name.encode("utf-8") + b"\0" in binary for name in required}
     # The upstream generator can return zero and emit a partial binary after
     # actual clang errors. An ObjC selector named error: is not a diagnostic.
@@ -136,21 +147,35 @@ def main() -> int:
     module_root.mkdir(parents=True)
 
     try:
-        write_swift_module_map(module_map, runtime_header, arch)
+        swift_headers = write_swift_module_map(module_map, runtime_header, arch)
         environment = os.environ.copy()
-        core_support_dir = Path(required_env("SRCROOT")) / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
-        # The pinned generator embeds clang17. Its bundled float/stddef headers
-        # forward into SDK27's deliberately unavailable obsolete-C module. Use
-        # the selected Xcode's real builtin headers, never SDK edits or feature
-        # spoofing. The metadata parser itself remains the pinned generator.
-        resource_dir = Path(subprocess.check_output(["xcrun", "clang", "-print-resource-dir"], text=True).strip())
-        if not (resource_dir / "include/float.h").is_file():
-            raise RuntimeError("Selected Xcode clang resource headers are unavailable")
-        extra_flags = metadata_flags(module_root, module_map, core_support_dir, resource_dir)
-        print(f"Hanlin metadata clang resource directory: {resource_dir}", flush=True)
+        root = Path(required_env("SRCROOT"))
+        sys.path.insert(0, str(root / "Scripts/NativeScript"))
+        from metadata_public_headers import write_public_umbrella
+        core_support_dir = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
+        tool_root = root / "build/nativescript-metadata-tool"
+        tool = tool_root / "bin/objc-metadata-generator"
+        provenance = json.loads((tool_root / "provenance.json").read_text())
+        if hashlib.sha256(tool.read_bytes()).hexdigest() != provenance["generatorSHA256"] or \
+           provenance["patchSourceSHA256"] != hashlib.sha256((root / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest():
+            raise RuntimeError("Metadata build-tool provenance does not match actual inputs")
+        umbrella = module_root / "HanlinMetadataInput.h"
+        write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
+                              sorted(core_support_dir.glob("*.h")) + swift_headers,
+                              [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))])
+        evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
+        evidence.mkdir(parents=True, exist_ok=True)
+        for path in [umbrella, umbrella.with_suffix(".inventory.json"), tool_root / "provenance.json"]:
+            shutil.copy2(path, evidence / path.name)
+        adapter = module_root / "upstream-generator-with-explicit-input.py"
+        adapter.write_text(explicit_input_adapter(upstream_generator.read_text()), encoding="utf-8")
+        environment["HANLIN_METADATA_GENERATOR"] = str(tool)
+        environment["HANLIN_METADATA_INPUT_UMBRELLA"] = str(umbrella)
+        environment["CLANG_ENABLE_MODULES"] = "NO"
+        extra_flags = metadata_flags(module_root, module_map, core_support_dir)
         environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {extra_flags}'.strip()
         completed = subprocess.run(
-            [sys.executable, str(upstream_generator), *sys.argv[1:]],
+            [sys.executable, str(adapter), *sys.argv[1:]],
             cwd=generator_root,
             env=environment,
             check=False,

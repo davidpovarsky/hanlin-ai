@@ -60,6 +60,18 @@ if (sha256(upstreamNativeContractBytes) !== dependencyLock.swiftUI.upstreamNativ
 // downstream wrapper at the pinned NativeScript generator entry point so that
 // phase can expose the Swift interface to the upstream metadata generator while
 // retaining the full Xcode build-phase environment it requires.
+if (process.platform === 'darwin') {
+  const toolRoot = resolve(repositoryRoot, 'build/nativescript-metadata-tool');
+  let toolReady = false;
+  try {
+    const proof = await readJSON(resolve(toolRoot, 'provenance.json'));
+    toolReady = proof.patchSourceSHA256 === sha256(await readFile(resolve(scriptRoot, 'build-metadata-tool.py')))
+      && proof.generatorSHA256 === sha256(await readFile(resolve(toolRoot, 'bin/objc-metadata-generator')))
+      && proof.architecture === (process.arch === 'x64' ? 'x86_64' : process.arch)
+      && proof.xcode === execFileSync('xcodebuild', ['-version'], {encoding: 'utf8'}).trim();
+  } catch { /* A missing/stale build tool must be built from the pinned inputs. */ }
+  if (!toolReady) execFileSync('python3', [resolve(scriptRoot, 'build-metadata-tool.py')], {stdio: 'inherit'});
+}
 const metadataInternalRoot = resolve(iosRuntimeRoot, 'framework', 'internal');
 const metadataWrapper = await readFile(resolve(scriptRoot, 'build-step-metadata-generator-wrapper.py'), 'utf8');
 const metadataGeneratorDirectories = (await readdir(metadataInternalRoot, { withFileTypes: true }))

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "e2597651e9462f11a25c3a408be5d25a077325b2",
+  "sourceCommit": "8fce299691c75ce83a626d15cc924877adb0b8b1",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -180,7 +180,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "8516d814fe784df227dda135686ff1393e7b71acb52eea87df6a2ca1baf38c29"
+      "sha256": "b86334ac389d296140ab07d084973503802b6185b3bd30180abd92823f6bb216"
     },
     {
       "path": "Scripts/Expo/build-probe.mjs",
@@ -215,8 +215,12 @@
       "sha256": "f74356b5bebb6677548ceaf1cca971627da295ad0fb1b744787025fc665ad343"
     },
     {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "sha256": "c9928a68e4fda3e49c2aec8aa84f5e7ff0a42bf1bd03ab6ebaf7bd4642d06b52"
+    },
+    {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "d9fe263d11604860e9ff0be4e3642f19867bfbcede0735ea66497eda7702725e"
+      "sha256": "556c5187c4613f178ed602389bf1a9e1e7c8f46d4f5c00b9cb777c13309ee81f"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",
@@ -227,12 +231,16 @@
       "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
     },
     {
+      "path": "Scripts/NativeScript/metadata_public_headers.py",
+      "sha256": "c8b516a48eb59edd369fca45db3428de9481a292e351f9427d881ed955ec4aec"
+    },
+    {
       "path": "Scripts/NativeScript/package.json",
       "sha256": "97c1400f8bce0072a89793e44d32006c4ad8f4cb166c878fe13677a78eadb6a5"
     },
     {
       "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
-      "sha256": "a074412c19f4ac85c4a76eb7dfa20d30efab68674a1928cce0a3c3a0ffe99348"
+      "sha256": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5"
     },
     {
       "path": "Tools/SwiftUIBridge/configuration.json",

@@ -350,6 +350,9 @@
         "Scripts/NativeScript/hanlin-nsld.sh",
         "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
         "Scripts/NativeScript/probe-sdk-metadata.py",
+        "Scripts/NativeScript/build-metadata-tool.py",
+        "Scripts/NativeScript/metadata_public_headers.py",
+        ".github/actions/prepare-nativescript-metadata-tool/**",
         "Scripts/NativeScript/host-services.ts",
         "Scripts/NativeScript/build-host-services.mjs"
       ],

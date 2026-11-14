@@ -5,13 +5,18 @@ from pathlib import Path
 import re
 
 
-def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path]) -> list[dict]:
+def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path],
+                          framework_search_paths: list[Path] | None = None) -> list[dict]:
     inventory = []
     public_headers = []
     # SubFrameworks is an include-search dependency, not another public root.
     # Importing its FocusEngine headers directly duplicates UIKit declarations
     # even with the selected Xcode clang. UIKit imports its own dependencies.
-    for framework in sorted((sdk / "System/Library/Frameworks").glob("*.framework")):
+    framework_roots = [sdk / "System/Library/Frameworks", *(framework_search_paths or [])]
+    frameworks = sorted({p.resolve() for directory in framework_roots
+                         if directory.resolve() != (sdk / "System/Library/SubFrameworks").resolve()
+                         for p in directory.glob("*.framework")})
+    for framework in frameworks:
         module_map = framework / "Modules/module.modulemap"
         module_text = module_map.read_text() if module_map.is_file() else ""
         header_root = framework / "Headers"
