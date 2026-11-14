@@ -54,6 +54,7 @@ def main() -> int:
                    "-output-umbrella", str(destination / "umbrella.h"),
                    "Xclang", "-isysroot", str(sdk), "-target", f"{arch}-apple-ios{version}-simulator",
                    "-std=gnu17", "-resource-dir", str(resources), "-I" + str(headers),
+                   "-F" + str(sdk / "System/Library/SubFrameworks"),
                    "-fmodule-map-file=" + str(headers / "module.modulemap"),
                    "-include", str(umbrella), "-fmodules" if mode == "modular" else "-fno-modules"]
         completed = subprocess.run(command, cwd=generator.parent, capture_output=True, timeout=180)
