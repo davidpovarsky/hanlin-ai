@@ -369,17 +369,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
     func testImportInstructionOnlyMarkdownKeepsCompatibilityUnknown() throws {
         openSkillCenter()
         tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)
-        let fixture = app.buttons["hanlin-skill-import-markdown-fixture-button"].firstMatch
-        XCTAssertTrue(fixture.waitForExistence(timeout: 5))
-        tapElement(fixture)
-        let title = app.descendants(matching: .any)["hanlin-skill-import-preview-title"].firstMatch
-        XCTAssertTrue(title.waitForExistence(timeout: 10))
-        XCTAssertEqual(title.label, markdownFixtureID)
-        assertUnknownCompatibility(scope: "import")
-        XCTAssertTrue(app.staticTexts["hanlin-skill-import-preview-resources-empty"].waitForExistence(timeout: 5))
-        let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 5))
-        XCTAssertTrue(install.isEnabled, "Instruction-only skills must remain installable without runtime proof")
+        let install = stageMarkdownFixture()
         tapElement(install)
         let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(markdownFixtureID)"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 10))
@@ -393,6 +383,34 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(confirm.waitForExistence(timeout: 5))
         tapElement(confirm)
         XCTAssertTrue(row.waitForNonExistence(timeout: 5), "Delete only this test's unique imported skill")
+    }
+
+    func testCancelPreviewThenRetryDoesNotInstallOrLoseUnknownState() throws {
+        openSkillCenter()
+        tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)
+        _ = stageMarkdownFixture()
+        let cancel = app.buttons["hanlin-skill-import-cancel-button"].firstMatch
+        tapElement(cancel)
+        _ = stageMarkdownFixture()
+        tapElement(cancel)
+        tapElement(cancel)
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(markdownFixtureID)"].exists,
+                       "Preview/cancel/retry must not install the unique fixture")
+    }
+
+    private func stageMarkdownFixture() -> XCUIElement {
+        let fixture = app.buttons["hanlin-skill-import-markdown-fixture-button"].firstMatch
+        XCTAssertTrue(fixture.waitForExistence(timeout: 5))
+        tapElement(fixture)
+        let title = app.descendants(matching: .any)["hanlin-skill-import-preview-title"].firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 10))
+        XCTAssertEqual(title.label, markdownFixtureID)
+        assertUnknownCompatibility(scope: "import")
+        XCTAssertTrue(app.staticTexts["hanlin-skill-import-preview-resources-empty"].waitForExistence(timeout: 5))
+        let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
+        XCTAssertTrue(install.waitForExistence(timeout: 5))
+        XCTAssertTrue(install.isEnabled, "Instruction-only skills must remain installable without runtime proof")
+        return install
     }
 
     func testInstallSkillFromURL() throws {

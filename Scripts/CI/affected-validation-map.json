@@ -854,6 +854,20 @@
       ],
       "consumers": []
     },
+    "skill_import_presentation_state": {
+      "description": "Attempt-scoped Skills import UI callbacks, cancellation and retry presentation",
+      "patterns": [
+        "AI_HLY/Downstream/AgentSkills/UI/SkillImportPresentationState.swift",
+        "AI_HLYTests/SkillImportPresentationStateTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillImportPresentationStateTests"
+      ],
+      "consumers": []
+    },
     "skill_store_and_import_unit_tests": {
       "description": "Skill store persistence, overrides, and archive importer unit tests",
       "patterns": [
