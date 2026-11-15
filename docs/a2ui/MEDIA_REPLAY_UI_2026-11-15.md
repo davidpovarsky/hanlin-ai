@@ -78,6 +78,18 @@ That added startup path was removed; the original Xcode-managed path already pro
 UI/AX and is kept as the authoritative setup. The focused retry selects only the
 history YouTube action/relay obligation to diagnose the shared setup before widening UI scope.
 
+That focused obligation passed in43751155249/job132925179600 at9fee230a5e7e38eb25f848df4f3411b83abbe754:
+EXECUTED_PASS1/1,764s, actual iPhone18Pro/iOS27.0 with Xcode27.2. Exact source/project inputs,
+one unique Passed node, selected identity, unchanged lock and original AX/pixels were authenticated
+in `evidence/media-replay-ui-43751155249.json`. The actual AX shows no WebView before explicit
+Load, a real WKWebView after it, the canonical source returned by the real Link/openURL port,
+disabled form before/after, NO_LISTENER from actual RPC rejection and outbound:0 after the real
+retained action/media interaction. Artifact14176349320 SHA256
+`9bca7456bad5d6a280cf980b5a76129824a35e0edff708de7f9ca3e20756666c`.
+This is construction/local-interaction proof, not successful external playback or original app
+acceptance. The other six UI obligations remain pending and are selected separately, without
+repeating the unchanged passing method.
+
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release
 settings remain unchanged.
