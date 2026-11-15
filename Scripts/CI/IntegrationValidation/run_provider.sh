@@ -63,7 +63,7 @@ for root in ['AI_HLY.xcodeproj','Packages/HanlinProductSplit']:
         records.append({'source_path':str(path),'raw_file':str(raw.relative_to(evidence)),
                         'sha256':hashlib.sha256(data).hexdigest(),'resolved':json.loads(data)})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
-(evidence/'process-status.json').write_text(json.dumps({'exit_code':int(sys.argv[2]),'scope':'actual wired MiniApps target, two UI cases and six leaf cases'}))
+(evidence/'process-status.json').write_text(json.dumps({'exit_code':int(sys.argv[2]),'scope':'actual wired MiniApps target, three UI + three bootstrap + six leaf cases'}))
 PY
 }
 trap 'retain_locks "$?"' EXIT
@@ -97,12 +97,40 @@ PY
 )"
 printf '%s\n' "$device" > "$evidence/simulator-udid.txt"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-miniapps-provider.XXXXXXXX")"
+python3 Scripts/CI/IntegrationValidation/prepare_ordinary_scriptui.py \
+  "$evidence/MiniApps-Ordinary-ScriptUI.scripting" > "$evidence/ordinary-scriptui-inputs.json"
+# Build once, stage only a real package into this new simulator app's private
+# Documents, then let the ordinary UI preview/compile/install/discover/launch it.
+xcodebuild build-for-testing -project AI_HLY.xcodeproj -scheme HanlinMiniApps -configuration Debug \
+  -destination "platform=iOS Simulator,id=$device" -derivedDataPath "$scratch/DerivedData" \
+  -resultBundlePath "$evidence/ProviderBuild.xcresult" \
+  -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
+  2>&1 | tee "$evidence/provider-build.log"
+state="$(xcrun simctl list devices -j | python3 -c 'import json,sys; data=json.load(sys.stdin); print(next(d["state"] for ds in data["devices"].values() for d in ds if d["udid"]==sys.argv[1]))' "$device")"
+if [[ "$state" != Booted ]]; then xcrun simctl boot "$device"; fi
+xcrun simctl bootstatus "$device" -b
+xcrun simctl install "$device" "$scratch/DerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app"
+app_container="$(xcrun simctl get_app_container "$device" com.itorah.hanlinminiapps.integration data)"
+python3 - "$app_container" "$device" "$evidence" <<'PY'
+from pathlib import Path
+import json,shutil,sys
+container=Path(sys.argv[1]).resolve(strict=True)
+assert f'/CoreSimulator/Devices/{sys.argv[2]}/data/Containers/Data/Application/' in str(container), 'Unexpected simulator container'
+evidence=Path(sys.argv[3]);source=evidence/'MiniApps-Ordinary-ScriptUI.scripting'
+destination=container/'Documents'/source.name;destination.parent.mkdir(exist_ok=True)
+if destination.exists():
+    assert destination.read_bytes()==source.read_bytes(), 'Preserve an existing different document'
+else:
+    shutil.copyfile(source,destination)
+(evidence/'ordinary-scriptui-staging.json').write_text(json.dumps({'container':str(container),'document':source.name,'installed_registry_edited':False}))
+PY
 set +e
-xcodebuild test -project AI_HLY.xcodeproj -scheme HanlinMiniApps -configuration Debug \
+xcodebuild test-without-building -project AI_HLY.xcodeproj -scheme HanlinMiniApps -configuration Debug \
   -destination "platform=iOS Simulator,id=$device" -derivedDataPath "$scratch/DerivedData" \
   -resultBundlePath "$evidence/ProviderUI.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation \
-  -only-testing:HanlinMiniAppsUITests/MiniAppsProviderUITests CODE_SIGNING_ALLOWED=NO \
+  -only-testing:HanlinMiniAppsUITests/MiniAppsProviderUITests \
+  -only-testing:HanlinMiniAppsBootstrapTests/MiniAppsBootstrapTests CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/provider-ui.log"
 ui_status=${PIPESTATUS[0]}
 set -e
@@ -134,7 +162,7 @@ import json
 print(json.dumps({'swift':'compiled canonical Swift Parity app launched in UI test',
                   'nativeScript':'existing source and SDK linked; actual app execution NOT_RUN',
                   'expo':'existing source and SDK linked; actual app execution NOT_RUN',
-                  'scriptUI':'existing source and SDK linked; actual app execution NOT_RUN',
+                  'scriptUI':'ordinary default-JSC package previewed, compiled, installed, discovered and state callback executed in UI test',
                   'cross_app_transport':'NOT_RUN; authenticated mailbox binding absent',
                   'ai_assistant':'unconfigured by design in MiniApps'},indent=2))
 PY

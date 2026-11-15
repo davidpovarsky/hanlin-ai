@@ -46,4 +46,34 @@ final class MiniAppsProviderUITests: XCTestCase {
         attachment.lifetime = .keepAlways
         add(attachment)
     }
+
+    @MainActor
+    func testOrdinaryInstalledScriptUICatalogAndStatefulLaunch() {
+        let app = launchLibrary()
+        app.buttons["hanlin-miniapps-management"].tap()
+        app.buttons["hanlin-miniapps-package-import"].tap()
+        let package = app.buttons["MiniApps-Ordinary-ScriptUI"]
+        XCTAssertTrue(package.waitForExistence(timeout: 10), "The actual package was not staged in this simulator app's Documents")
+        package.tap()
+        let install = app.buttons["hanlin-package-install"]
+        XCTAssertTrue(install.waitForExistence(timeout: 90), "Canonical package preview/compilation did not succeed")
+        XCTAssertTrue(install.isEnabled)
+        install.tap()
+        let installed = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: install)
+        wait(for: [installed], timeout: 90)
+        app.buttons["Done"].firstMatch.tap() // Original import sheet.
+        app.buttons["Done"].firstMatch.tap() // Package management cover.
+        let row = app.staticTexts["Production ScriptUI TSX"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 30), "An ordinary installed default-JSC app is absent from the canonical catalog")
+        row.tap()
+        app.buttons["hanlin-miniapps-open"].tap()
+        XCTAssertTrue(app.staticTexts["Count 0"].waitForExistence(timeout: 30), "The actual ScriptUI runtime did not render the installed app")
+        app.buttons["Increment"].tap()
+        XCTAssertTrue(app.staticTexts["Count 1"].waitForExistence(timeout: 10), "Actual ScriptUI callback/state did not update")
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Ordinary installed default-JSC app running real state callback"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        app.buttons["hanlin-script-app-close"].tap()
+    }
 }

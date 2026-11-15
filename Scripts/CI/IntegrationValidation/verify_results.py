@@ -44,7 +44,9 @@ if __name__ == "__main__":
     parser.add_argument("source")
     parser.add_argument("--miniapps-ui", action="store_true")
     args = parser.parse_args()
-    expected = ({"testCanonicalLibraryLaunchesRealCompiledSwiftApp", "testManagementPresentsExistingPackageImportScreen"}
+    expected = ({"testCanonicalLibraryLaunchesRealCompiledSwiftApp", "testManagementPresentsExistingPackageImportScreen",
+                 "testOrdinaryInstalledScriptUICatalogAndStatefulLaunch", "failureIsVisibleAndRetryReexecutesPreparation",
+                 "concurrentPreparationDoesNotDuplicateTheBoundary", "successfulPreparationIsNotRepeated"}
                 if args.miniapps_ui else EXPECTED)
     with open(args.source, encoding="utf-8") as stream:
         print(json.dumps({"status": "EXECUTED_PASS", "cases": verify(json.load(stream), expected)}, indent=2))

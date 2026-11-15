@@ -90,7 +90,9 @@ struct MiniAppsLibrary: View {
             }
         }
         .task { await reload() }
-        .fullScreenCover(item: $presentation) { destination in
+        .fullScreenCover(item: $presentation, onDismiss: {
+            Task { await reload() }
+        }) { destination in
             if destination.ownsNavigation {
                 destination.view
             } else {

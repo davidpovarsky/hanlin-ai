@@ -51,14 +51,22 @@ def validate():
     if provider:
         ui_id = provider["ui_test_target"]
         allowed_ids.add(ui_id)
+        bootstrap_id = provider["bootstrap_test_target"]
+        allowed_ids.add(bootstrap_id)
         ui = objects[ui_id]
         assert ui["productType"] == "com.apple.product-type.bundle.ui-testing"
         assert [objects[key]["target"] for key in ui["dependencies"]] == [mini_id]
         ui_sources = next(objects[key] for key in ui["buildPhases"] if objects[key]["isa"] == "PBXSourcesBuildPhase")
         assert [objects[objects[key]["fileRef"]]["path"] for key in ui_sources["files"]] == [provider["ui_test_source"]]
         testables = scheme.findall(".//TestableReference")
-        assert len(testables) == 1 and testables[0].get("skipped") == "NO"
-        assert testables[0].find("BuildableReference").get("BlueprintIdentifier") == ui_id
+        assert len(testables) == 2 and all(test.get("skipped") == "NO" for test in testables)
+        assert {test.find("BuildableReference").get("BlueprintIdentifier") for test in testables} == {ui_id, bootstrap_id}
+        bootstrap = objects[bootstrap_id]
+        assert bootstrap["productType"] == "com.apple.product-type.bundle.unit-test"
+        assert bootstrap["dependencies"] == [], "Bootstrap boundary tests must not initialize the app or runtime"
+        bootstrap_sources = next(objects[key] for key in bootstrap["buildPhases"] if objects[key]["isa"] == "PBXSourcesBuildPhase")
+        assert {objects[objects[key]["fileRef"]]["path"] for key in bootstrap_sources["files"]} == {
+            provider["bootstrap_source"], provider["bootstrap_test_source"]}
     else:
         assert not scheme.findall(".//TestableReference"), "Leaf tests run through their real package scheme"
     assert refs and all(ref.get("BlueprintIdentifier") in allowed_ids for ref in refs)

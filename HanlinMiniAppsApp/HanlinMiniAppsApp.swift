@@ -4,15 +4,45 @@ import SwiftUI
 /// model or assistant credential adapter is configured in the MiniApps target.
 @main
 struct HanlinMiniAppsApplication: App {
-    @State private var provider = HanlinMiniAppsProvider()
-    @Environment(\.scenePhase) private var scenePhase
+    @State private var bootstrap = HanlinMiniAppsBootstrap {
+        try await AppRuntimeCore.shared.prepareStorage()
+        HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
+    }
 
     var body: some Scene {
         WindowGroup {
-            MiniAppsLibrary(services: .connected(to: provider))
+            Group {
+                switch bootstrap.phase {
+                case .idle, .preparing:
+                    ProgressView("Preparing app storage…")
+                case .failed(let error):
+                    ContentUnavailableView {
+                        Label("App storage unavailable", systemImage: "exclamationmark.triangle")
+                    } description: {
+                        Text("App storage could not be prepared. Error \(error.domain) (\(error.code)).")
+                    } actions: {
+                        Button("Retry") { Task { await bootstrap.prepare() } }
+                    }
+                    .accessibilityIdentifier("hanlin-miniapps-bootstrap-failure")
+                case .ready:
+                    HanlinMiniAppsReadyRoot()
+                }
+            }
+            .task {
+                if bootstrap.phase == .idle { await bootstrap.prepare() }
+            }
+        }
+    }
+}
+
+/// Constructed only after the real storage preparation succeeded.
+private struct HanlinMiniAppsReadyRoot: View {
+    @State private var provider = HanlinMiniAppsProvider()
+    @Environment(\.scenePhase) private var scenePhase
+
+    var body: some View {
+        MiniAppsLibrary(services: .connected(to: provider))
                 .task {
-                    HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
-                    try? await AppRuntimeCore.shared.prepareStorage()
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
                 }
                 .onChange(of: scenePhase) { _, phase in
@@ -20,6 +50,5 @@ struct HanlinMiniAppsApplication: App {
                         Task { await AppRuntimeCore.shared.handleForegroundIfLaunched() }
                     }
                 }
-        }
     }
 }

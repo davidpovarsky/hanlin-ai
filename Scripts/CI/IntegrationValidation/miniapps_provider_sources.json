@@ -19,6 +19,7 @@
     "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
     "AI_HLY/Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift",
     "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift",
@@ -125,6 +126,17 @@
   "ui_test_source": "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift",
   "ui_test_cases": [
     "testCanonicalLibraryLaunchesRealCompiledSwiftApp",
-    "testManagementPresentsExistingPackageImportScreen"
-  ]
+    "testManagementPresentsExistingPackageImportScreen",
+    "testOrdinaryInstalledScriptUICatalogAndStatefulLaunch"
+  ],
+  "ordinary_scriptui_source": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidScriptUI",
+  "bootstrap_test_cases": [
+    "failureIsVisibleAndRetryReexecutesPreparation",
+    "concurrentPreparationDoesNotDuplicateTheBoundary",
+    "successfulPreparationIsNotRepeated"
+  ],
+  "bootstrap_test_target": "FA34D7A774EB6BF57D06CAA6",
+  "bootstrap_source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
+  "bootstrap_test_source": "Scripts/CI/IntegrationValidation/MiniAppsBootstrapTests.swift",
+  "host_jsc_discovery_cut": "6c4d30c87b16635a53f168d37737d63e18c1d2bc"
 }

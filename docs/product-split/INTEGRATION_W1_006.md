@@ -7,8 +7,46 @@ K `1219656771637321`; HQ `1220539630159023`. Date: 2026-11-15, Asia/Hebron.
 
 ## Current continuation: W1-007 provider candidate
 
+The bootstrap P2 is corrected in the current candidate: a single observable
+preparation boundary keeps the live provider unconstructed until real
+`AppRuntimeCore.prepareStorage()` succeeds. Failure shows a native unavailable
+view with Retry and actual allowlisted system domain/code; no raw error message,
+path or payload is shown. Retry reruns the real preparation; concurrent attempts
+coalesce and successful preparation is not repeated. Initial view tasks run only
+from idle, so an error does not trigger an automatic retry loop.
+
+Three actual bootstrap Swift Testing cases PASS on Windows Swift 6.3.3 against
+byte-identical production coordinator/test source: failure/retry plus private-path
+canary, concurrent preparation, and no repeated preparation after success. Tests
+inject only that boundary and never instantiate a provider/Expo/AppGroup/store.
+The first Windows SwiftPM attempt failed on a generated long-path I/O error before
+test execution; using a short separate build directory executed all three cases.
+Both logs and the source-hashed test harness remain under ignored evidence paths.
+This is not Apple/UI acceptance.
+
+The registered native plan now has **three UI + three bootstrap + six leaf**
+cases. The third UI case imports the unchanged ordinary default-JSC production
+compiler corpus `ValidScriptUI` through the existing preview/compiler/installer,
+finds its real canonical catalog row, launches it and requires the real Increment
+callback to change `Count 0` to `Count 1`. No installed registry, provider, script
+output or nil runtime profile is synthesized. Only the actual package archive is
+staged into this integration bundle's isolated simulator Documents after install;
+no live user store or cleanup is used. The library refreshes through its actual
+provider after management dismissal. The separate bootstrap unit target compiles
+the same production coordinator directly and has no app/runtime dependency.
+
+Noam's source-accepted Host/SDK JSC correction `6c4d30c8` was consumed as one
+isolated delta, preserving the composition test route. His seven Apple discovery
+cases remain NOT_RUN until his actual proof. Current source registration has
+**57 Swift + three native sources**; the helper manifest is the exact membership
+record. Nine source graph guards pass. The full provider proof remains blocked
+on the corrected metadata handoff: the old six-file candidate was withdrawn for
+non-fail-closed role audit errors, effective deployment-target mismatch, and stale
+React headers after staging. It was not applied here, no guard was waived, and
+the actual target stays iOS 27.0 rather than being raised to match a receipt.
+
 The W1-006 results below remain attached to their original tested source, not
-the expanded provider target. The current candidate registers 56 existing/shared
+the expanded provider target. The earlier provider candidate registered 56 existing/shared
 Swift sources, three existing native bridge sources, 21 package products, two
 existing native frameworks and 16 resources by explicit paths in
 `Scripts/CI/IntegrationValidation/miniapps_provider_sources.json`. No AI source
@@ -34,7 +72,7 @@ Roni's scoped source review accepts both prior P2 corrections; Noam owns the
 separate original 16 + eight composition Apple cases. Those results are not
 assumed or rerun here.
 
-The candidate adds a genuine MiniApps-only UI test target with two authored
+The initial provider candidate added a genuine MiniApps-only UI test target with two authored
 cases: real canonical Swift Parity launch, and the existing package import screen.
 Both capture screenshots and require actual controls. They are **NOT_RUN**.
 The old shell-only extraction route now rejects this expanded graph. The next
@@ -103,6 +141,29 @@ acceptance or A2UI02. A newer diagnostic privacy P2 remains assigned to Eitan:
 SDK paths may contain caller-derived identifiers despite length bounds. His
 coherent privacy correction will need one changed-source proof. No final source
 acceptance is inferred from the intermediate 25-case PASS.
+
+Privacy correction `a43f15639cdfb5c2edded52742bc62f1f7876b4e` subsequently passed
+the same 25 actual enabled cases in
+[43667371439](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43667371439),
+workflow `eb58144679df5bb3f95692686bbeae33e7c47000`, on the same exact SDK pin,
+compiler/host and raw resolved graph. Artifact `a2ui-exact-pin-43667371439`, id
+`14142832088`, API digest
+`sha256:584046a55ec1f57bcfc0f06b33df99f486d6154c9c62f83cd2cc305f06036efe`.
+Downloaded export has 25 Passed nodes, no omissions/skips; 13 tested source input
+hashes and 12 workflow input hashes match the respective exact Git blobs, and raw
+lock bytes/hash/parsed JSON agree. This covers the actual added privacy canary
+assertions. Raw xcresult is retained; no independent Windows binary decode is
+claimed. Result was delivered to lead/root/Eitan/Roni.
+
+A separate concrete app-consumer mismatch was found during integration:
+`A2UITests.swift` imports `AI_HLY`, while the actual app target/product and the
+Composer tests use `AI_Hanlin`, with no project/CI module override or alias. The
+isolated recipe mirrors `AI_HLY`, masking that app test-bundle compile boundary.
+Eitan was asked to correct the real test import and the exact-byte recipe module
+and paths coherently. No app module identity or source was changed by this
+integrator. The a43 privacy behavior PASS remains actual macOS consumer evidence;
+the corrected real-module consumer needs its own changed-source proof and app
+integration remains open.
 
 ## Assembled sources
 
