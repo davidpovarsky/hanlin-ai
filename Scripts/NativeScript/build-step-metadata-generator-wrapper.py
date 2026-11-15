@@ -69,7 +69,12 @@ def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path) 
     # Each ObjC header keeps its existing module owner. Listing those headers
     # again in the generated Swift module can make clang's findModuleForHeader
     # ambiguous. The upstream generator silently skips unknown module owners.
-    return shlex.join(["-fno-modules",
+    # React/JSI public framework entries contain C++ declarations. Parse their
+    # actual headers as ObjC++, preserving those APIs rather than filtering the
+    # frameworks out of the input. Later flags override the pinned tool's ObjC
+    # default. The standard is supplied by Xcode (the probe uses this repo's
+    # existing gnu++20 setting).
+    return shlex.join(["-fno-modules", "-x", "objective-c++",
                        f"-fmodule-map-file={core_support_dir / 'module.modulemap'}",
                        f"-fmodule-map-file={module_map}"])
 
@@ -175,6 +180,7 @@ def main() -> int:
         environment["HANLIN_METADATA_GENERATOR"] = str(tool)
         environment["HANLIN_METADATA_INPUT_UMBRELLA"] = str(umbrella)
         environment["CLANG_ENABLE_MODULES"] = "NO"
+        environment["GCC_C_LANGUAGE_STANDARD"] = environment.get("CLANG_CXX_LANGUAGE_STANDARD", "gnu++20")
         extra_flags = metadata_flags(module_root, module_map, core_support_dir)
         environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {extra_flags}'.strip()
         completed = subprocess.run(
