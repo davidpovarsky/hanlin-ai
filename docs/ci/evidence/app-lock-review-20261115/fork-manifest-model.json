@@ -1,0 +1,288 @@
+{
+  "cLanguageStandard": null,
+  "cxxLanguageStandard": null,
+  "defaultLocalization": "en",
+  "dependencies": [
+    {
+      "sourceControl": [
+        {
+          "identity": "equatable",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/ordo-one/equatable"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "exact": [
+              "1.4.1"
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl": [
+        {
+          "identity": "swift-snapshot-testing",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/pointfreeco/swift-snapshot-testing"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "exact": [
+              "1.19.3"
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl": [
+        {
+          "identity": "swift-markdown",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/swiftlang/swift-markdown.git"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "exact": [
+              "0.7.3"
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl": [
+        {
+          "identity": "highlightswift",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/appstefan/highlightswift"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "revision": [
+              "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl": [
+        {
+          "identity": "iosmath",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/junyan72/iosMath"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "revision": [
+              "ba9ab7729b151329c54fd895a7c1859981d9484c"
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl": [
+        {
+          "identity": "swiftui-shimmer",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/markiv/SwiftUI-Shimmer"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "exact": [
+              "1.5.1"
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name": "SwiftStreamingMarkdown",
+  "packageKind": {
+    "root": [
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\.scratch\\app-yams-pin-review\\fork"
+    ]
+  },
+  "pkgConfig": null,
+  "platforms": [
+    {
+      "options": [],
+      "platformName": "ios",
+      "version": "16.0"
+    },
+    {
+      "options": [],
+      "platformName": "macos",
+      "version": "14.0"
+    }
+  ],
+  "products": [
+    {
+      "name": "SwiftStreamingMarkdown",
+      "settings": [],
+      "targets": [
+        "SwiftStreamingMarkdown"
+      ],
+      "type": {
+        "library": [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "providers": null,
+  "swiftLanguageVersions": null,
+  "targets": [
+    {
+      "dependencies": [
+        {
+          "product": [
+            "Equatable",
+            "equatable",
+            null,
+            null
+          ]
+        },
+        {
+          "product": [
+            "Markdown",
+            "swift-markdown",
+            null,
+            null
+          ]
+        },
+        {
+          "product": [
+            "HighlightSwift",
+            "highlightswift",
+            null,
+            null
+          ]
+        },
+        {
+          "product": [
+            "iosMath",
+            "iosMath",
+            null,
+            null
+          ]
+        },
+        {
+          "product": [
+            "Shimmer",
+            "SwiftUI-Shimmer",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude": [],
+      "name": "SwiftStreamingMarkdown",
+      "packageAccess": true,
+      "path": "Sources/MarkdownText",
+      "resources": [
+        {
+          "path": "Resources",
+          "rule": {
+            "process": {}
+          }
+        }
+      ],
+      "settings": [],
+      "type": "regular"
+    },
+    {
+      "dependencies": [
+        {
+          "byName": [
+            "SwiftStreamingMarkdown",
+            null
+          ]
+        },
+        {
+          "product": [
+            "SnapshotTesting",
+            "swift-snapshot-testing",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude": [],
+      "name": "SwiftStreamingMarkdownTests",
+      "packageAccess": true,
+      "path": "Tests/MarkdownTextTests",
+      "resources": [
+        {
+          "path": "Resources",
+          "rule": {
+            "process": {}
+          }
+        }
+      ],
+      "settings": [],
+      "type": "test"
+    }
+  ],
+  "toolsVersion": {
+    "_version": "5.9.0"
+  },
+  "traits": []
+}

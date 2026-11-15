@@ -1,0 +1,114 @@
+{
+  "cLanguageStandard": null,
+  "cxxLanguageStandard": null,
+  "defaultLocalization": null,
+  "dependencies": [
+    {
+      "sourceControl": [
+        {
+          "identity": "swift-argument-parser",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/apple/swift-argument-parser"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "range": [
+              {
+                "lowerBound": "1.0.1",
+                "upperBound": "1.1.0"
+              }
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name": "SymbolKit",
+  "packageKind": {
+    "root": [
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\.scratch\\app-yams-pin-review\\symbolkit"
+    ]
+  },
+  "pkgConfig": null,
+  "platforms": [],
+  "products": [
+    {
+      "name": "SymbolKit",
+      "settings": [],
+      "targets": [
+        "SymbolKit"
+      ],
+      "type": {
+        "library": [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "providers": null,
+  "swiftLanguageVersions": null,
+  "targets": [
+    {
+      "dependencies": [],
+      "exclude": [],
+      "name": "SymbolKit",
+      "packageAccess": false,
+      "resources": [],
+      "settings": [],
+      "type": "regular"
+    },
+    {
+      "dependencies": [
+        {
+          "byName": [
+            "SymbolKit",
+            null
+          ]
+        }
+      ],
+      "exclude": [],
+      "name": "SymbolKitTests",
+      "packageAccess": false,
+      "resources": [],
+      "settings": [],
+      "type": "test"
+    },
+    {
+      "dependencies": [
+        {
+          "byName": [
+            "SymbolKit",
+            null
+          ]
+        },
+        {
+          "product": [
+            "ArgumentParser",
+            "swift-argument-parser",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude": [],
+      "name": "dump-unified-graph",
+      "packageAccess": false,
+      "resources": [],
+      "settings": [],
+      "type": "executable"
+    }
+  ],
+  "toolsVersion": {
+    "_version": "5.5.0"
+  },
+  "traits": []
+}

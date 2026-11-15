@@ -1,0 +1,71 @@
+{
+  "ahead_by": 14,
+  "relevant_files": [
+    {
+      "additions": 2,
+      "deletions": 4,
+      "filename": "Package.swift",
+      "patch": "@@ -11,12 +11,9 @@ import PackageDescription\n     // link time.\n     let cSettings: [CSetting] = [\n         .define(\"CMARK_GFM_STATIC_DEFINE\", .when(platforms: [.windows])),\n-        .define(\"CMARK_THREADING\"),\n     ]\n #else\n-    let cSettings: [CSetting] = [\n-        .define(\"CMARK_THREADING\"),\n-    ]\n+    let cSettings: [CSetting] = []\n #endif\n \n let package = Package(\n@@ -41,6 +38,7 @@ let package = Package(\n           exclude: [\n             \"scanners.re\",\n             \"libcmark-gfm.pc.in\",\n+            \"config.h.in\",\n             \"CMakeLists.txt\",\n           ],\n           cSettings: cSettings",
+      "status": "modified"
+    },
+    {
+      "additions": 4,
+      "deletions": 4,
+      "filename": "extensions/include/cmark-gfm-core-extensions.h",
+      "patch": "@@ -1,16 +1,16 @@\n #ifndef CMARK_GFM_CORE_EXTENSIONS_H\n #define CMARK_GFM_CORE_EXTENSIONS_H\n \n-#ifdef __cplusplus\n-extern \"C\" {\n-#endif\n-\n #include \"cmark-gfm-extension_api.h\"\n #include \"export.h\"\n \n #include <stdbool.h>\n #include <stdint.h>\n \n+#ifdef __cplusplus\n+extern \"C\" {\n+#endif\n+\n CMARK_GFM_EXPORT\n void cmark_gfm_core_extensions_ensure_registered(void);\n ",
+      "status": "modified"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "filename": "src/include/buffer.h",
+      "patch": "@@ -6,6 +6,7 @@\n #include <string.h>\n #include <limits.h>\n #include <stdint.h>\n+#include \"cmark-gfm_config.h\"\n #include \"cmark-gfm.h\"\n \n #ifdef __cplusplus",
+      "status": "modified"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "filename": "src/include/cmark-gfm.h",
+      "patch": "@@ -90,6 +90,13 @@ typedef enum {\n   CMARK_PAREN_DELIM\n } cmark_delim_type;\n \n+typedef enum {\n+  CMARK_NO_LIST_MARKER,\n+  CMARK_HYPHEN_LIST_MARKER,\n+  CMARK_PLUS_LIST_MARKER,\n+  CMARK_ASTERISK_LIST_MARKER\n+} cmark_list_marker_type;\n+\n typedef struct cmark_node cmark_node;\n typedef struct cmark_parser cmark_parser;\n typedef struct cmark_iter cmark_iter;\n@@ -395,6 +402,16 @@ CMARK_GFM_EXPORT cmark_list_type cmark_node_get_list_type(cmark_node *node);\n CMARK_GFM_EXPORT int cmark_node_set_list_type(cmark_node *node,\n                                           cmark_list_type type);\n \n+/** Returns the list marker of 'node', or `CMARK_NO_LIST_MARKER` if 'node'\n+ * is not a list.\n+ */\n+CMARK_GFM_EXPORT cmark_list_marker_type cmark_node_get_list_marker(cmark_node *node);\n+\n+/** Sets the list marker of 'node', returning 1 on success and 0 on error.\n+ */\n+CMARK_GFM_EXPORT int cmark_node_set_list_marker(cmark_node *node,\n+                                                cmark_list_marker_type listMarker);\n+\n /** Returns the list delimiter type of 'node', or `CMARK_NO_DELIM` if 'node'\n  * is not a list.\n  */\n@@ -865,6 +882,9 @@ const char *cmark_version_string(void);\n #define ORDERED_LIST CMARK_ORDERED_LIST\n #define PERIOD_DELIM CMARK_PERIOD_DELIM\n #define PAREN_DELIM CMARK_PAREN_DELIM\n+#define HYPHEN_LIST_MARKER CMARK_HYPHEN_LIST_MARKER\n+#define PLUS_LIST_MARKER CMARK_PLUS_LIST_MARKER\n+#define ASTERISK_LIST_MARKER CMARK_ASTERISK_LIST_MARKER\n #endif\n \n typedef int32_t bufsize_t;",
+      "status": "modified"
+    },
+    {
+      "additions": 29,
+      "deletions": 0,
+      "filename": "src/include/cmark-gfm_config.h",
+      "patch": "@@ -0,0 +1,29 @@\n+#ifndef CMARK_CONFIG_H\n+#define CMARK_CONFIG_H\n+\n+#ifdef CMARK_USE_CMAKE_HEADERS\n+// if the CMake config header exists, use that instead of this Swift package prebuilt one\n+// we need to undefine the header guard, since config.h uses the same one\n+#undef CMARK_CONFIG_H\n+#include \"config.h\"\n+#else\n+\n+#ifdef __cplusplus\n+extern \"C\" {\n+#endif\n+\n+#ifndef CMARK_THREADING\n+#if defined(__wasi__) && !defined(_REENTRANT)\n+#define CMARK_THREADING 0\n+#else\n+#define CMARK_THREADING 1\n+#endif\n+#endif\n+\n+#ifdef __cplusplus\n+}\n+#endif\n+\n+#endif /* not CMARK_USE_CMAKE_HEADERS */\n+\n+#endif /* not CMARK_CONFIG_H */",
+      "status": "added"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "filename": "src/include/houdini.h",
+      "patch": "@@ -2,7 +2,7 @@\n #define CMARK_HOUDINI_H\n \n #include <stdint.h>\n-\n+#include \"cmark-gfm_config.h\"\n #include \"buffer.h\"\n \n #ifdef __cplusplus",
+      "status": "modified"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "filename": "src/include/inlines.h",
+      "patch": "@@ -4,6 +4,7 @@\n #include <stdbool.h>\n #include <stdlib.h>\n \n+#include \"cmark-gfm_config.h\"\n #include \"references.h\"\n \n #ifdef __cplusplus",
+      "status": "modified"
+    },
+    {
+      "additions": 4,
+      "deletions": 2,
+      "filename": "src/include/mutex.h",
+      "patch": "@@ -1,11 +1,13 @@\n #ifndef CMARK_MUTEX_H\n #define CMARK_MUTEX_H\n \n+#include \"cmark-gfm_config.h\"\n+\n #include <stdbool.h>\n \n-#ifdef CMARK_THREADING\n+#if CMARK_THREADING\n \n-#if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))\n+#if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__)) || defined(__wasi__)\n #include <unistd.h>\n #endif\n ",
+      "status": "modified"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "filename": "src/include/syntax_extension.h",
+      "patch": "@@ -3,6 +3,7 @@\n \n #include \"cmark-gfm.h\"\n #include \"cmark-gfm-extension_api.h\"\n+#include \"cmark-gfm_config.h\"\n \n #include <stdbool.h>\n ",
+      "status": "modified"
+    }
+  ],
+  "returned_files": 29,
+  "status": "ahead",
+  "total_commits": 14
+}
