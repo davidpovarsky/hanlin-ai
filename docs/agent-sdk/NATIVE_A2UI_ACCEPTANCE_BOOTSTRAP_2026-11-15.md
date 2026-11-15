@@ -47,3 +47,7 @@ Source syntax/diff checked only. Enabled simulator app compilation and actual or
 controls remain NOT_RUN, blocked by the coherent app/Runtime build graph. Do not dispatch another
 full build for this source-only seam while that prerequisite is unresolved. Package/native-adapter
 proofs do not establish this app bootstrap's compilation or UI acceptance.
+
+The native and classic AgentRuntimeUIAcceptance modes are mutually exclusive; enabling both fails
+fixture bootstrap after choosing the isolated container. Never enable the classic environment for
+this proof. The native fixture does not reset either container or preferences to resolve a conflict.

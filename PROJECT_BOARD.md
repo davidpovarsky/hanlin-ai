@@ -27,9 +27,13 @@ Quick captures that still need classification.
 
 ## Ideas & Opportunities
 
+- **SDK account scope follow-up:** the app currently has one personal-library namespace; UserInfo has no authenticated account identity or account-change lifecycle. Foreign canonical namespaces are rejected, but this does not prove iCloud-account-switch isolation. Before closing SDK05/signed cross-account acceptance, bind to an actual existing account authority and verify invalidation/reopen behavior without inventing a grant registry or migrating user rows implicitly.
+
 Potential improvements, features, optimizations, or architectural ideas.
 
 ## Discoveries & Tips
+
+- **2026-11-15 external-return cancellation and writer ownership:** after an awaited OS open, repeat original cancellation checks before installing a continuation; revocation may have happened before that waiter existed. A scene's idle/new Session also must not replace tracking of another active writer for the same conversation. The SDK Split composition now rechecks the former and tracks all actual Session IDs weakly for the latter; app race controls are authored, not yet executed. See docs/agent-sdk/APP_SPLIT_ORIGIN_COMPOSITION_2026-11-15.md.
 
 - **2026-11-15 native Host guarantee metadata:** NativeToolCanonicalShadowAdapter and LegacyToolCanonicalAdapter currently classify general app tools as read/sensitiveRead, including tools with mutation modes. A shadow risk label is not proof of a business read-only operation. The SDK app bridge conservatively uses hostManagedMutation for canonical tools; future narrower guarantees require authoritative per-operation semantics, retaining original policy/executor and ambiguous outcomes. See docs/agent-sdk/APP_SESSION_PRESENTATION_HOOK_2026-11-15.md.
 

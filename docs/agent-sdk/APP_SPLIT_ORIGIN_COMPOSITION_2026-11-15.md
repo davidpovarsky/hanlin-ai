@@ -58,9 +58,8 @@ are untouched. UI navigation/mount acknowledgement remains A2UI-owned.
 
 Source syntax and diff checks pass. New actual Session association controls passed in separate
 Apple run43743854538 at exact364f10a6:27 EXECUTED_PASS (20 Session,6 Context,1 Dispatcher),
-iOS compile PASS. Authenticated ledger retains exact hashes/xcresult IDs/locks/toolchain. schema-only43742612086 does not cover this follow-on. The readonly isRunning
-accessor and actual app composition still need combined app compilation. Six prior actual app
-component controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
+iOS compile PASS. Authenticated ledger retains exact hashes/xcresult IDs/locks/toolchain. schema-only43742612086 does not cover this follow-on. The readonly isRunning accessor compiled in the later exact7df writer/iOS proof43745924452;
+its actual app consumer/composition still needs combined app compilation. Eight owner/store/Host controls and seven Split composition controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
 duplicate/deleted/deadline controls, original XCUITest, two-app cold process, signed group and
 physical device acceptance remain OPEN; injected open/target seams are not device proof.
 
@@ -73,7 +72,7 @@ compilation; a separate exact writer case+iOS compile is the only new package pr
 
 ## Authored actual app component controls (NOT_RUN)
 
-HanlinAppSplitOriginTests adds five bounded controls using the actual app Session owner, original
+HanlinAppSplitOriginTests adds seven bounded controls using the actual app Session owner, original
 ChatRecords+assistant ChatMessages, original SDK model loop/Host dispatch/ordered writer,
 coordinator, mailbox, transport and durable receiver. The OS open/target metadata and receiver
 operation result are explicit fixtures. They verify durable association before OS-open observation,
@@ -89,3 +88,21 @@ local revocation could occur before any Host waiter existed. The coordinator now
 local cancellation after dispatch and immediately before installing that continuation, so a
 cancelled origin cannot install a waiter after its timer/owner was already revoked. Known
 admission failures return notDispatched; possible post-dispatch cancellation/IO stays uncertain.
+
+Live/cold context also fetches the actual original assistant ChatMessages by its immutable ID and
+checks role+original conversation relation after awaits. A missing/deleted/reparented message cannot
+retarget another row merely because its conversation still exists; a sixth component control covers
+this independently of conversation deletion. This app still uses the actual personal-library
+namespace. No authenticated multi-account/iCloud-account-switch readiness is claimed; that DATA
+boundary remains OPEN rather than inventing an account registry or silently migrating old rows.
+
+Cold-write exclusion tracks every actual Session ID, including several scenes over one conversation,
+using bounded256 weak references. A later idle/failed owner cannot hide an earlier running writer.
+Registration fails closed before installing an owner when capacity is exhausted. A seventh app
+control starts the real pending original call, registers a second owner rejected by the existing
+unresolved-write gate, and requires that the original active writer still excludes cold saves.
+
+Exact writer run43745924452 at7dfd30b7 executed the one new writer case and iOS AgentCore compile,
+both passed. Raw ZIP SHA256/all CRCs plus245 source hashes against Git+tar are authenticated in
+evidence/exact-writer-43745924452.json. It does not execute the conflicting-outcome row test or
+any app/UI control; no app acceptance is inferred from that pure case.

@@ -16,6 +16,7 @@ enum HanlinNativeA2UIAcceptanceProvider {
 #endif
     }
 
+    enum BootstrapError: Error { case incompatibleClassicAcceptance }
     struct Plan: Codable, Sendable { let steps: [Step] }
     struct Step: Codable, Sendable {
         /// Match decoded input string content; follow-up MUST name the expected original action
@@ -31,6 +32,7 @@ enum HanlinNativeA2UIAcceptanceProvider {
 
     @MainActor static func configureIfRequested(context: ModelContext) throws {
         guard isEnabled else { return }
+        guard !AgentRuntimeUIAcceptanceProvider.isEnabled else { throw BootstrapError.incompatibleClassicAcceptance }
         // Called only on the new in-memory container. Reopen in this process preserves history;
         // no rows, preferences, user keys or external stores are reset by this fixture.
         guard try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty else { return }

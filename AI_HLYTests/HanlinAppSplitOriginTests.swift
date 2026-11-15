@@ -215,6 +215,44 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         #expect(try harness.mailbox.original(original.id) == original) // No mailbox acceptance on failed save/context.
     }
 
+    @Test func deletedOriginalAssistantRowCannotRetargetAnExistingConversation() async throws {
+        let harness = try SplitAppHarness(); defer { harness.stop() }
+        try harness.start()
+        let original = try await harness.opened()
+        try await harness.complete(original)
+        let context = harness.container.mainContext
+        context.delete(harness.assistant); try context.save()
+        await harness.coordinator.receiveReturn(SplitForegroundRoute.returnToAI.url(reference: original.id), modelContext: context)
+        #expect(harness.coordinator.acceptedOrigin == nil && harness.coordinator.lastFailure != nil)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).count == 1)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
+        #expect(try harness.mailbox.original(original.id) == original)
+    }
+
+    @Test func anotherIdleOrFailedOwnerCannotHideTheOriginalActiveCanonicalWriter() async throws {
+        let harness = try SplitAppHarness(); defer { harness.stop() }
+        try harness.start()
+        let original = try await harness.opened()
+        let context = harness.container.mainContext
+        let secondRow = ChatMessages(role: "assistant", text: "", record: harness.row)
+        context.insert(secondRow); try context.save()
+        let secondOwner = HanlinAppAgentSessionOwner(splitCoordinator: harness.coordinator)
+        defer { secondOwner.cancel() }
+        let model = SplitComponentModel()
+        let config = HanlinChatModelConfiguration(modelID: "second-owner", endpoint: URL(filePath: "/fixture"), apiKey: "", supportsToolUse: false)
+        do {
+            _ = try await secondOwner.stream(request: .init(conversation: harness.row, conversationID: original.chat,
+                sceneID: UUID(), rowID: secondRow.id, uiRunID: UUID(), temporary: false, interaction: nil),
+                modelContext: context, configuration: config,
+                engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(model)) },
+                toolAdapter: nil, messages: [.init(role: .user, text: "Do not conceal the pending original writer")], systemPrompt: nil)
+            Issue.record("Unreconciled original operation allowed another model turn")
+        } catch { #expect(error as? HanlinHostError == .unresolvedWrite) }
+        #expect(harness.coordinator.hasRunningSession(for: original.chat))
+        #expect(harness.owner.session?.isRunning == true && secondOwner.session?.isRunning == false)
+        #expect(harness.probe.count == 1)
+    }
+
     @Test func expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup() async throws {
         var targetCalls = 0
         let group = FileManager.default.temporaryDirectory.appending(path: "sdk-split-expired-\(UUID().uuidString)", directoryHint: .isDirectory).resolvingSymlinksInPath()

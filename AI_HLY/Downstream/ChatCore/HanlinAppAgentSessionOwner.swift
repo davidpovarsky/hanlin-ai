@@ -146,8 +146,8 @@ final class HanlinAppAgentSessionOwner {
             })
             let originalSession = HanlinAgentSession(identity: identity, host: originalHost, engine: originalEngine,
                 store: originalStore, capabilities: originalHost)
+            try splitCoordinator.register(session: originalSession, modelContext: modelContext)
             store = originalStore; host = originalHost; session = originalSession; engine = originalEngine; modelConfiguration = configuration
-            splitCoordinator.register(session: originalSession, modelContext: modelContext)
             originalHost.splitCoordinator = splitCoordinator
             originalHost.splitSession = originalSession
             originalHost.splitRowReference = { [weak self] in

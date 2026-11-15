@@ -68,10 +68,17 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         }
     }
 
-    func register(session: HanlinAgentSession, modelContext: ModelContext) {
-        if self.modelContext == nil { self.modelContext = modelContext }
+    func register(session: HanlinAgentSession, modelContext: ModelContext) throws {
         sessions = sessions.filter { $0.value.value != nil }
-        sessions[session.identity.conversationID] = WeakSession(session)
+        guard sessions.count < 256 || sessions[session.identity.id] != nil else { throw HanlinHostError.storageLimitExceeded }
+        if self.modelContext == nil { self.modelContext = modelContext }
+        // Several scenes may own the same conversation. Retain ALL actual live Session writers,
+        // not merely the most recently registered (possibly idle/failed) owner of that chat.
+        sessions[session.identity.id] = WeakSession(session)
+    }
+
+    func hasRunningSession(for conversationID: UUID) -> Bool {
+        sessions.values.contains { $0.value?.identity.conversationID == conversationID && $0.value?.isRunning == true }
     }
 
     /// The only AI dispatch entry. Identity/deadline/target generation are host-issued, not model input.
@@ -106,6 +113,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             logicalToolID: invocation.request.logicalToolID)
         let origin = StoredOrigin(requestID: request.id, requestDigest: try Self.digest(request), call: call,
             resultID: invocation.resultID, row: row)
+        try requireOriginalAssistant(origin)
         let reference = Self.originPrefix(request.id) + (try JSONEncoder().encode(origin)).base64EncodedString()
         guard reference.utf8.count <= 4096 else { throw SplitBridgeFailure.oversized }
         let item = Pending(request: request, origin: origin, reference: reference, host: host, session: session)
@@ -161,6 +169,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             guard !item.invalidated, item.request == request, let host = item.host, let session = item.session,
                   session.identity == item.origin.call.session else { throw SplitBridgeFailure.cancelled }
             _ = try await host.context(for: item.origin.call.session)
+            try requireOriginalAssistant(item.origin)
             guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
         } else { _ = try await coldOrigin(request) }
         let target = try await targetContext(request)
@@ -169,6 +178,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         if let item = pending[request.id] {
             guard !item.invalidated, let host = item.host else { throw SplitBridgeFailure.cancelled }
             _ = try await host.context(for: item.origin.call.session)
+            try requireOriginalAssistant(item.origin)
             guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
         } else { _ = try await coldOrigin(request) }
         try target.validate(request)
@@ -194,7 +204,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         } else {
             // Cold receipt only: no Session/engine/Host/grants are manufactured from stored metadata.
             let (origin, reference, store) = try await coldOrigin(response.request)
-            guard sessions[response.request.chat]?.value?.isRunning != true else { throw SplitBridgeFailure.transportUnavailable }
+            guard !hasRunningSession(for: response.request.chat) else { throw SplitBridgeFailure.transportUnavailable }
             let event = try HanlinHostResultEvent(resultID: origin.resultID, call: origin.call,
                 result: Self.result(response, origin: origin))
             let receiptKey = try Self.historicalReceiptReference(response, resultID: origin.resultID)
@@ -289,7 +299,16 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             return (origin, reference)
         }
         guard matches.count == 1, let original = matches.first else { throw SplitBridgeFailure.correlationMismatch }
+        try requireOriginalAssistant(original.0)
         return (original.0, original.1, store)
+    }
+
+    private func requireOriginalAssistant(_ origin: StoredOrigin) throws {
+        guard let modelContext else { throw SplitBridgeFailure.transportUnavailable }
+        let id = origin.row.rowID
+        let messages = try modelContext.fetch(FetchDescriptor<ChatMessages>(predicate: #Predicate { $0.id == id }))
+        guard messages.count == 1, let message = messages.first, message.role == "assistant",
+              message.record?.id == origin.call.session.conversationID else { throw SplitBridgeFailure.correlationMismatch }
     }
 
     private static func originPrefix(_ id: UUID) -> String { "hanlin.split.origin.v1:" + id.uuidString.lowercased() + ":" }
