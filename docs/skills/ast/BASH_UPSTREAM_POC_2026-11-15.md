@@ -108,3 +108,18 @@ compares its complete report/hash/spans with rebased bytes and verifies the over
 rejection. This changes the shared parser path: earlier6/7 passes retain their own source
 identity, and all8/native simulator/device compilation require fresh validation. The local
 Foundation reproduction does not substitute for the native Apple test.
+
+The shared-report tranche passed7/7 native methods in43757774591/job132945539155 at1a4d6ed4,
+including actual host helper JSON decode; both generic iOS compilations passed. Authenticated
+downloaded ZIP artifact14178579399 SHA256
+`b15fdcff3a494e47372ef8a815f64c25109b46c4ecdd3937e3eb7869d0e8e390`,156545bytes,206s job.
+This is historical evidence before the Data-slice correction.
+
+The corrected source0a16e28628d1551d60a65abc986eaf7db47c9031 passed8/8 native methods in
+[43758559539](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43758559539), job132947957756,
+including actual nonzero-Data/hash/UTF-8 span and byte-budget checks. Both unsigned generic iOS
+simulator/device compilations passed. Exact owned sources/archive, eight unique Passed nodes,
+all three original pins and unchanged lock, downloaded ZIP digest and raw results authenticated.
+Artifact14179426965, SHA256 `3541de0da1c2e38170338b04da8e24161da6d5ebdad91047aa4103ecb437e3b0`,163s job. Measured phases15/42/62/16/11s
+preflight/resolve/Mac/simulator/device. Durable `evidence/bash-native-43758559539.json`; iOS
+execution, embedded Python3.14/Node JITless and product/readiness acceptance remain NOT_RUN.
