@@ -1,5 +1,7 @@
 # Product split W1-003: source tranche and integration contract
 
+This is the historical W1-003 source-tranche contract. The active 2026-11-15 wave has since assembled a real `HanlinMiniApps` target and shared existing host composition, added AI-only provider injection, and registered Runtime resources. Current source and honest native-validation results are in [TARGET_VALIDATION_20261115.md](TARGET_VALIDATION_20261115.md). Historical lease/start-gate language below is not an active restriction. Cross-app transport, live migration, signed/device and full-product acceptance remain open.
+
 Acting owner: [איתן | ARCH+DEV] [MAIN_SESSION], primary `01a1dc79-6761-7463-a196-34771f7929bd`.
 Worktree: `C:/Users/DAVID/Code/hanlin-app-split-wave1-20261115`; branch `codex/hanlin-app-split-wave1-20261115`.
 Frozen starting revision: `dd700c03e9fe9d22e95a031d4684275512ee6e6f`.

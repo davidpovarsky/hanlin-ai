@@ -1,5 +1,7 @@
 # W1-003 initial source tranche
 
+Historical handoff for `fb90d670`. Target assembly and composition have progressed in the active 2026-11-15 wave; use [TARGET_VALIDATION_20261115.md](TARGET_VALIDATION_20261115.md) for current source/test evidence. The original results and limitations below retain their original scope and are not current two-app acceptance.
+
 [איתן | ARCH+DEV] [MAIN_SESSION] — source tranche ready for scoped review; whole-product acceptance remains open.
 
 Primary `01a1dc79-6761-7463-a196-34771f7929bd`; branch `codex/hanlin-app-split-wave1-20261115`; frozen starting SHA `dd700c03e9fe9d22e95a031d4684275512ee6e6f`.

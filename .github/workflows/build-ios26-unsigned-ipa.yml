@@ -118,6 +118,11 @@ on:
         required: false
         default: ''
         type: string
+      app_split_host_proof_run_id:
+        description: Completed same-source Host proof/archive for the focused app split consumer
+        required: false
+        default: ''
+        type: string
   push:
     branches:
       - main
@@ -136,6 +141,7 @@ jobs:
     uses: ./.github/workflows/validate-app-split.yml
     with:
       runtime_bundle_artifact_run_id: ${{ inputs.runtime_bundle_artifact_run_id || '42926628418' }}
+      host_proof_run_id: ${{ inputs.app_split_host_proof_run_id }}
 
   focused-nativescript-metadata-tests:
     if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}

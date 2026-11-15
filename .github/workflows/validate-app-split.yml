@@ -3,11 +3,20 @@ name: Validate standalone MiniApps target
 on:
   workflow_call:
     inputs:
+      host_proof_run_id:
+        type: string
+        required: false
+        default: ''
       runtime_bundle_artifact_run_id:
         type: string
         required: true
   workflow_dispatch:
     inputs:
+      host_proof_run_id:
+        description: Completed original Host proof/archive to validate before reuse
+        type: string
+        default: ''
+        required: false
       runtime_bundle_artifact_run_id:
         description: Existing successful checksum-pinned RuntimeCore candidate
         type: string
@@ -26,6 +35,7 @@ jobs:
       SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
       GH_TOKEN: ${{ github.token }}
       RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
+      HOST_PROOF_RUN_ID: ${{ inputs.host_proof_run_id }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
@@ -68,7 +78,12 @@ jobs:
           fi
           plutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements
           python3 Scripts/ProductSplit/verify_targets.py
+      - name: Validate authentic unchanged Host proof before reuse
+        id: host-proof
+        shell: bash
+        run: python3 Scripts/ProductSplit/restore_host_proof.py
       - name: Reproduce and verify affected package lifecycle on the actual Mac first
+        if: steps.host-proof.outputs.reused != 'true'
         shell: bash
         run: |
           set -euo pipefail
