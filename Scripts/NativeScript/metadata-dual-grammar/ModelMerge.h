@@ -87,7 +87,9 @@ class ModelMerge {
             }
         }
         if (cppModel != objcModel)
-            throw std::runtime_error("Dual-grammar actual API model conflict: " + cpp->identificationString());
+            throw std::runtime_error("Dual-grammar actual API model conflict: " + cpp->identificationString() +
+                "\nActual CPP model=" + llvm::formatv("{0}", cppModel).str() +
+                "\nActual ObjC model=" + llvm::formatv("{0}", objcModel).str());
         if (base) {
             auto& a = cpp->as<Meta::BaseClassMeta>();
             auto& b = objc->as<Meta::BaseClassMeta>();
