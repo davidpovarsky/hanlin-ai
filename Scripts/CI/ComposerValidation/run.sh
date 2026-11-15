@@ -137,7 +137,12 @@ evidence=Path(sys.argv[1]);context=json.loads((evidence/'device-preflight.json')
 after=json.loads((evidence/'simulators-after-boot.json').read_text())
 actual=next(d for d in after['devices'][context['runtime']['identifier']] if d['udid']==device)
 assert actual['state']=='Booted' and actual.get('isAvailable'),actual
-line=next(line for line in (evidence/'destinations.txt').read_text().splitlines() if re.search(r'\bid:\s*'+re.escape(device)+r'(?:,|\s|})',line))
+context.update(phase='booted_destination_unconfirmed',boot_confirmed_at_utc=datetime.now(timezone.utc).isoformat(),actual_device=actual)
+(evidence/'device-preflight.json').write_text(json.dumps(context,indent=2))
+candidates=[line for line in (evidence/'destinations.txt').read_text().splitlines() if re.search(r'\bid:\s*'+re.escape(device)+r'(?:,|\s|})',line)]
+if not candidates:
+    raise SystemExit('Preflight cannot confirm the owned simulator in scheme destinations; no test command executed')
+line=candidates[0]
 arch=re.search(r'arch:([^,}]+)',line);os_version=re.search(r'OS:([^,}]+)',line)
 assert re.search(r'platform:\s*iOS Simulator',line) and arch and arch[1].strip() in ['arm64','x86_64'] and os_version and os_version[1].strip().startswith('27.'),line
 context.update(phase='ready',ready_at_utc=datetime.now(timezone.utc).isoformat(),architecture=arch[1].strip(),os_version=os_version[1].strip(),destination=line,actual_device=actual)

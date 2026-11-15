@@ -1,5 +1,39 @@
 # W1-006 consolidated integration
 
+## Current evidence checkpoint — 2026-11-15
+
+- **SDK fixture chain:**10 new SDK cases PASS at6e8dd11d/run43688388938, with
+  target-specific authenticated reuse of48 producer+20 core and iOS compile at
+  e233bffc/run43686294717. Both exact e7bf manifest pins and six actual Apple locks
+  are integrated. Concrete nested-package consumer recipe is in
+  Scripts/CI/IntegrationValidation/AGENT_SDK_CONSUMER_LAYOUT.md (immutable delivery7779).
+  Real host/native permissions/actions/UI/device/general numeric grants remain open.
+- **Mini App UI:**8 observed passing variant/method outcomes at frozen2427 source,
+  across first43685785954(6) and continuation43690860829(2). The continuation is
+  independently verified2 new PASS,0 reused, with234 source+5 harness hashes/device/
+  PNG/raw lock evidence. First run was cancelled and lacks its actual raw lock;
+  do not call the combined8 matrix unconditionally dependency-authenticated or
+  current-e7/full-app/release acceptance. No six-case repeat was performed.
+- **Composer functional evidence:**last completed source-method run43691033216 at
+  51d3fa35 is11 PASS/1 wrapped-lines FAIL,12 unique methods; two issues have only
+  absolute height difference88 vs tolerance2 recorded. Both independent TextKit2
+  cases passed. No signed height/branch conclusion is established.
+- **Diagnostic blocked:**20980 instrumentation is integrated, but run43692594372
+  had0 authored methods/12 NOT_RUN plus one unexpected runner-connection failure.
+  Authorized fresh-device continuation43694776730 booted its owned phone but
+  preflight could not confirm that UUID in Xcode's generic-only scheme destination
+  listing; it stopped BEFORE test invocation. No new trace exists. No retry loop.
+  Source geometry/tolerance/assertions are unchanged; source owner needs a real
+  trace or independently justified correction before a future accepted proof.
+- **Release boundary:**full AI app/metadata closure, full comprehensive UI contract,
+  physical iPad and signing/TestFlight/main merge remain open. None was dispatched
+  or declared passed by these leaf/component results. The mandatory release gate
+  remains fail-closed. Original dirty primary worktree and user UI/data are preserved.
+
+The sections below retain original source/run-specific history; old active/pending
+phrases describe those checkpoints and are superseded by the current status above.
+
+
 Owner: Tomer, independent primary `01a1dc9e-91cb-7d12-9102-acd3500aee90`.
 Worktree `C:/Users/DAVID/Code/hanlin-wave1-integration-20261115`, branch
 `codex/hanlin-wave1-integration-20261115`. Source integration task
@@ -983,3 +1017,28 @@ Bash and six embedded Python syntax checks pass, with no local Swift build/cache
 Boot600s, scheme/destination120s each, test900s, export120s and owned shutdown60s
 are bounded under a35-minute job with artifact margin. If this fresh attempt still
 fails infrastructure, report the exact block without a retry loop.
+
+
+### Final fresh-device diagnostic infrastructure result
+
+43694776730 at9623d0e63733d66a51b6fc144daa9f84ca987806 stopped in owned readiness
+preflight, before xcodebuild test. Fresh iPhone18Pro UUID
+4FDC8BCD-88D3-4584-B22F-6BD378A82382 was created08:30:32UTC, available/Booted on
+actual installed iOS27.0/24A434 runtime supportingarm64. However xcodebuild
+-showdestinations -scheme ComposerValidation listed only Mac destinations plus
+Any iOS Simulator Device placeholder, not that concrete UUID. Guard raised
+StopIteration; process records preparation exit1/xcodebuild exitnull, host connection
+not_observed, no authored cases or xcresult. This does NOT prove the device/test
+host unsupported; it proves that the requested concrete destination was unconfirmed
+by this preflight. No geometry/runtime metrics were produced and no further attempt
+was dispatched under the capped repair authorization.
+
+Artifact14153149302 is51069 bytes; its FULL tiny ZIP SHA256 was independently
+recomputed as8f9f58e1ab733ebc5b1701dba1cf8d5b1f7c43d656e2f10c5c6e5bdb228f7050,
+with no disk download. All12 prepared input hashes match BOTH9623 and original
+e8/owner20980. Future harness diagnostics now explicitly retain
+booted_destination_unconfirmed and an explanatory message instead of bare
+StopIteration; the predicate still rejects generic placeholders. Six embedded
+Python syntax checks, Bash syntax and3 exact-source destination checks pass.
+No guard weakening, producer/test/source change, new retry, original-device action,
+global erase, runtime installation, Xcode system switch or local compiler/cache work.
