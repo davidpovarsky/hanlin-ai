@@ -10,6 +10,16 @@ finish_skill_format() {
   if [[ ! -s "$evidence/summary.json" ]]; then
     if [[ "$rc" == 0 ]]; then rc=1; fi
   fi
+  printf '%s\n' "$((SECONDS-started))" > "$evidence/skill-package-total-duration-seconds.txt"
+  # Use the repository's standard reporter; this standalone proof has no savings baseline.
+  printf '{"cost_estimates":{"baseline_full_run_minutes":0,"estimated_duration_minutes":0,"estimated_saved_minutes":0}}\n' > "$evidence/performance-context.json"
+  local report_status=0
+  python3 Scripts/CI/generate_performance_report.py --log-dir "$evidence" \
+    --validation-plan "$evidence/performance-context.json" --run-id "${GITHUB_RUN_ID:-local}" \
+    --commit-sha "$(git rev-parse HEAD)" --event-name "${GITHUB_EVENT_NAME:-manual}" \
+    --output-json "$evidence/ci-performance-report.json" \
+    --step-summary "${GITHUB_STEP_SUMMARY:-$evidence/step-summary.md}" --require-complete || report_status=$?
+  if [[ "$rc" == 0 && "$report_status" != 0 ]]; then rc="$report_status"; fi
   printf '{"exit":%s,"total_seconds":%s}\n' "$rc" "$((SECONDS-started))" > "$evidence/process-exit.json"
   trap - EXIT
   exit "$rc"

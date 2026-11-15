@@ -44,5 +44,29 @@
     "iOS26 in this resolution-only run"
   ],
   "ios26_separate_execution_run": 43756155889,
-  "subsequent_source_change": "Sliced-Data parser fix after target91c63352 invalidates the native test reuse for later source. Resolution/tag evidence remains authentic; fresh all-platform package tests required."
+  "subsequent_source_change": "Sliced-Data parser fix after target91c63352 invalidates the native test reuse for later source. Resolution/tag evidence remains authentic; fresh all-platform package tests required.",
+  "authoritative_swiftpm_manifest_dependencies": [
+    {
+      "identity": "yams",
+      "requirement": {
+        "exact": [
+          "6.2.2"
+        ]
+      },
+      "type": "sourceControl",
+      "url": "https://github.com/jpsim/Yams.git"
+    }
+  ],
+  "previous_authoritative_swiftpm_manifest_dependencies": [
+    {
+      "identity": "yams",
+      "requirement": {
+        "revision": [
+          "a27b21e0c81c5bf42049b897a62aaf387e80f279"
+        ]
+      },
+      "type": "sourceControl",
+      "url": "https://github.com/jpsim/Yams.git"
+    }
+  ]
 }

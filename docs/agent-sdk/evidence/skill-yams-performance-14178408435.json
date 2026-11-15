@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-11-15T20:36:27.552121+00:00",
+  "run_id": "43757913093",
+  "commit_sha": "e44c57cf348b1037baa8416277a3414d7e93b805",
+  "comparison_base": "unknown",
+  "event_name": "workflow_dispatch",
+  "is_full_validation": false,
+  "required_build_type": "Unknown",
+  "report_status": "COMPLETE",
+  "is_complete": true,
+  "component_cache_summary": {
+    "SourcePackages": {
+      "restore": "NOT_MEASURED",
+      "save": "NOT_MEASURED"
+    },
+    "DerivedData": {
+      "restore": "NOT_MEASURED",
+      "save": "NOT_MEASURED"
+    }
+  },
+  "core_timings": {
+    "build": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    },
+    "headers": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    },
+    "restore": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0,
+      "states": {}
+    },
+    "save": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0,
+      "states": {}
+    },
+    "simulator": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    },
+    "tests": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    }
+  },
+  "cache_metrics": {
+    "exact_hits": 0,
+    "fallback_compatible_restores": 0,
+    "misses": 0,
+    "saves_skipped": 0,
+    "saves_created": 0,
+    "states": {},
+    "save_states": {},
+    "metadata": {}
+  },
+  "step_durations_seconds": {
+    "14178408435/skill-package-total": 227
+  },
+  "step_statuses": {
+    "14178408435/skill-package-total": "MEASURED"
+  },
+  "skipped_steps": {},
+  "total_active_seconds": 227,
+  "test_metrics": {
+    "reused_verified_count": 0,
+    "reused_tests": [],
+    "executed_count": 0,
+    "skipped_groups_count": 0,
+    "skipped_groups": {}
+  },
+  "time_savings": {
+    "is_estimated": true,
+    "estimated_saved_minutes": 0,
+    "estimated_duration_minutes": 0,
+    "baseline_full_run_minutes": 0,
+    "actual_measured_time_human": "3m 47s (227s)",
+    "notes": "Estimated savings compare against a full cold baseline unless an authenticated comparison report is provided."
+  },
+  "provenance_note": "Postprocessed from authenticated native artifact process-exit.json elapsed_seconds; not claimed as generated inside original run. No cache savings baseline. Future manual Skill jobs invoke this same original repository reporter in their EXIT trap.",
+  "evidence_scope": "Duration accounting only. Actual test identities/outcomes are in skill-yams-native-43757913093.json; generic performance test-schema fields are not testcase acceptance evidence."
+}
