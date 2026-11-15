@@ -37,7 +37,7 @@ def command_plan(project_dir, sdk, device, scratch, evidence):
     # alongside -destination (run 43714792439, exit 64 before any test).
     owned = ['-destination', 'platform=iOS Simulator,id=' + device]
     return {
-        'settings': [*base, '-showBuildSettings', '-json', *owned, 'ONLY_ACTIVE_ARCH=YES'],
+        'settings': [*base, 'test', '-showBuildSettings', '-json', *owned, 'ONLY_ACTIVE_ARCH=YES'],
         'destinations': [*base, '-showdestinations'],
         'test': [*base, 'test', *owned, '-destination-timeout', '30',
                  '-parallel-testing-enabled', 'NO', '-maximum-concurrent-test-simulator-destinations', '1',
@@ -190,6 +190,7 @@ def execute():
                     'boot_state_confirmed': False})
         plan = command_plan(project_dir, sdk, device, scratch, evidence)
         runner.save('native-command-plan.json', plan)
+        runner.call('installed-xcodebuild-help', 30, ['xcodebuild', '-help'], required=False)
         runner.call('native-schemes', 30, ['xcodebuild', '-list', '-json', '-project', str(project_dir / native.PROJECT)])
         require(native.SCHEME in runner.json('native-schemes').get('project', {}).get('schemes', []), 'generated native scheme missing')
         runner.call('native-target-build-settings', 120, plan['settings'])

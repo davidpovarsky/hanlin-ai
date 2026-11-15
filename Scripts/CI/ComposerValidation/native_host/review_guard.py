@@ -256,6 +256,9 @@ def source_controls():
     for label in ['settings', 'test']:
         require('-destination' in plan[label] and '-arch' not in plan[label] and '--arch' not in plan[label],
                 'concrete destination must select architecture without conflicting CLI flags')
+    require(plan['settings'].count('test') == 1 and '-showBuildSettings' in plan['settings'],
+            'settings must inspect test action so the hosted unit target is included')
+    passed.append('test-action-settings-before-build-and-test')
     passed.append('concrete-destination-without-conflicting-architecture-flags')
     passed.append('actual-runner-pure-command-plan')
     require([item for item in plan['test'] if item.startswith('-only-testing:')] == ['-only-testing:' + FOCUSED_SELECTOR] and

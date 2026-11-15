@@ -53,6 +53,7 @@
     "synthetic-positive-12-unique-bound-case-classification",
     "synthetic-signed-trace-preserved-without-inference",
     "synthetic-positive-one-focused-case-eleven-not-run",
+    "test-action-settings-before-build-and-test",
     "concrete-destination-without-conflicting-architecture-flags",
     "actual-runner-pure-command-plan"
   ],
@@ -218,6 +219,7 @@
       "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk",
       "-derivedDataPath",
       "/SOURCE_REVIEW_ONLY/DerivedData",
+      "test",
       "-showBuildSettings",
       "-json",
       "-destination",
@@ -308,8 +310,8 @@
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/xcshareddata/xcschemes/ComposerNativeHost.xcscheme": "5c834a5ae4e67261dbe71a9a1afc7fc4328555e6296a1df31d8ac1784de91a97",
     "Scripts/CI/ComposerValidation/native_host/review/native-inputs.json": "31415ab05620b322052c2712584297d717779d0d53460497db4a93bcd105d990",
     "Scripts/CI/ComposerValidation/native_host/review/source-controls.json": "980322c016d6c1e1b57fa376165d346e82e16895fb988c24df26fd5de43875dc",
-    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "4304d7737762800a6370f92bb5db80cfe7a9b0d075cbae622813b043b5bd6f9a",
-    "Scripts/CI/ComposerValidation/native_host/run_native.py": "44e896ee8d1bc155b1a45faec342097e68d3212a678371a1b1649721cade78e4",
+    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "b6dd5eef294e2bbb053f43abb9e80b627f8171146d23858898eee82981f62957",
+    "Scripts/CI/ComposerValidation/native_host/run_native.py": "be6a239317dfd8399521810ced9f2fbd223d5b6e78172e01cd89ad8e40ab9589",
     "Scripts/CI/ComposerValidation/native_host/simctl-list-help-43711740465.txt": "4c7f0c98a485121183a1bc0b5ae8549958692117107664b4ee1c3fbf0f3c4693",
     "Scripts/CI/ComposerValidation/native_host/validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467"
   }
