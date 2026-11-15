@@ -1,0 +1,12 @@
+{
+  "name": "@hanlin/openclaw-skill-probe",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-upstream.mjs",
+    "build": "node build.mjs",
+    "test": "node --test Tests/*.test.mjs"
+  },
+  "devDependencies": { "esbuild": "0.28.2" }
+}
