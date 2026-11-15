@@ -275,7 +275,9 @@ jobs:
         env:
           HANLIN_METADATA_INVENTORY_SELECTOR: ${{ inputs.exact_test_selector }}
         run: |
-          if [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKAuthenticationLinkageControls" ]; then
+          if [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "SkillRuntimeContracts" ]; then
+            python3 Scripts/CI/skill_runtime_contract_checks.py
+          elif [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKAuthenticationLinkageControls" ]; then
             python3 Scripts/CI/MetadataProvenanceProof/reuse_modern_tool.py
             python3 Scripts/CI/MetadataProvenanceProof/sdk_linkage_controls.py --authentication-services
           elif [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKEnumFacts" ]; then
