@@ -32,7 +32,7 @@ for p in paths:
     records[p]=hashlib.sha256(raw).hexdigest()
 (evidence/'tested-source-sha256.json').write_text(json.dumps(records,indent=2))
 source=(scratch/'Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/SkillDocumentTests.swift').read_text()
-expected=re.findall(r'^\s+func (\w+)\(',source,re.M)
+expected=re.findall(r'\bfunc\s+(\w+)\s*\(',source)
 expected=[x for x in expected if not x.startswith(('document','fixture','expectFailure'))]
 assert len(expected)>=20 and len(expected)==len(set(expected))
 (evidence/'expected-tests.json').write_text(json.dumps(expected,indent=2))
