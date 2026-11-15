@@ -5,10 +5,18 @@ import HanlinPlatformContracts
 
 public struct HanlinAgentEvent: Sendable {
     public let session: HanlinHostSession
+    public let interactionOrigin: HanlinHostInteractionOrigin?
     public let runID: UUID
     public let step: Int
     public let sequence: UInt64
     public let event: HanlinAISDKStreamEvent
+}
+
+public struct HanlinAgentRunCompletion: Sendable {
+    public enum Outcome: Sendable { case completed, cancelled, failed(HanlinHostError) }
+    public let session: HanlinHostSession
+    public let runID: UUID
+    public let outcome: Outcome
 }
 
 /// A DI/persistence facade over ONE HanlinAISDKAgentEngine. No app singleton, SwiftData or renderer.
@@ -17,6 +25,8 @@ public final class HanlinAgentSession {
     public let identity: HanlinHostSession
     public var onHostProgress: (@MainActor @Sendable (HanlinHostProgressEvent) -> Void)?
     public var onHostResult: (@MainActor @Sendable (HanlinHostResultEvent) -> Void)?
+    public var onRunCompletion: (@MainActor @Sendable (HanlinAgentRunCompletion) -> Void)?
+    public var onSessionInvalidated: (@MainActor @Sendable (HanlinHostSession) -> Void)?
     private let host: any HanlinHostIntegration
     private let engine: HanlinAISDKAgentEngine
     private let store: any HanlinConversationStore
@@ -33,6 +43,8 @@ public final class HanlinAgentSession {
     private var producerTask: Task<Void, Never>?
     private var persistenceTail: Task<Void, Error>?
     private var currentCatalog: HanlinHostCatalog?
+    private var interactionOrigins = Set<HanlinHostInteractionOrigin>()
+    private var interactionRequests = Set<UUID>()
 
     public init(identity: HanlinHostSession, host: any HanlinHostIntegration, engine: HanlinAISDKAgentEngine,
                 store: any HanlinConversationStore, capabilities: (any HanlinHostCapabilitySource)? = nil,
@@ -44,6 +56,12 @@ public final class HanlinAgentSession {
 
     public func stream(messages: [HanlinAISDKMessage], systemPrompt: String? = nil,
                        modelReference: HanlinModelReference, maxSteps: Int? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+        try await startStream(messages: messages, systemPrompt: systemPrompt, modelReference: modelReference,
+                              maxSteps: maxSteps, interactionOrigin: nil)
+    }
+
+    private func startStream(messages: [HanlinAISDKMessage], systemPrompt: String?, modelReference: HanlinModelReference,
+                             maxSteps: Int?, interactionOrigin: HanlinHostInteractionOrigin?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !invalidated else { throw HanlinHostError.staleContext }
         guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
         guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
@@ -126,6 +144,7 @@ public final class HanlinAgentSession {
                 let task = Task { @MainActor in
                     var eventSequence: UInt64 = 0
                     var streamStep = 0
+                    var wasCancelled = false
                     await self.diagnostics?.record(.init(kind: .runStarted, runID: run))
                     do {
                         for try await event in source {
@@ -136,21 +155,34 @@ public final class HanlinAgentSession {
                             case .textDelta(let text): try self.append(.text(text), run: run, stepOverride: streamStep)
                             case .reasoningDelta(let text): try self.append(.reasoning(text), run: run, stepOverride: streamStep)
                             case .finished(let reason, _): try self.append(.finished(reason: reason), run: run, stepOverride: streamStep)
-                            case .cancelled: try self.append(.cancelled, run: run, stepOverride: streamStep)
+                            case .structuredPart(let part):
+                                if case .a2uiMessage = part.payload {
+                                    self.interactionOrigins.insert(.init(session: self.identity, runID: run,
+                                        messageID: part.messageID, partID: part.partID))
+                                }
+                            case .cancelled:
+                                wasCancelled = true
+                                try self.append(.cancelled, run: run, stepOverride: streamStep)
                             default: break
                             }
                             try self.requireActive(run: run)
-                            continuation.yield(.init(session: self.identity, runID: run, step: streamStep, sequence: eventSequence, event: event))
+                            continuation.yield(.init(session: self.identity, interactionOrigin: interactionOrigin,
+                                runID: run, step: streamStep, sequence: eventSequence, event: event))
                             eventSequence += 1
                         }
                         try await self.persist(model: modelReference)
                         try self.requireActive(run: run)
                         self.activeRun = nil
                         self.producerTask = nil
+                        if wasCancelled { self.revokeInteractions(run: run) }
+                        self.onRunCompletion?(.init(session: self.identity, runID: run,
+                            outcome: wasCancelled ? .cancelled : .completed))
                         await self.diagnostics?.record(.init(kind: .runFinished, runID: run))
                         continuation.finish()
                     } catch {
+                        self.revokeInteractions(run: run)
                         let safe = (error as? HanlinHostError) ?? (Task.isCancelled ? .cancelled : .unsupportedProviderCapability)
+                        self.onRunCompletion?(.init(session: self.identity, runID: run, outcome: .failed(safe)))
                         do { try self.append(.failed(code: safe), run: run); try await self.persist(model: modelReference) }
                         catch { self.activeRun = nil; self.producerTask = nil; continuation.finish(throwing: error); return }
                         self.activeRun = nil
@@ -175,9 +207,47 @@ public final class HanlinAgentSession {
 
     /// Auth/Space/scene invalidation is terminal for this presentation identity.
     public func invalidate() async {
+        let firstInvalidation = !invalidated
         invalidated = true
+        interactionOrigins.removeAll()
         producerTask?.cancel()
+        if firstInvalidation { onSessionInvalidated?(identity) }
         await dispatcher.invalidate(identity)
+    }
+
+    /// Surface deletion/replacement is explicit host lifecycle, independent of sheet visibility.
+    public func revokeInteraction(_ origin: HanlinHostInteractionOrigin) {
+        interactionOrigins.remove(origin)
+    }
+
+    /// Successful producer EOF keeps admitted controls live. A user action obtains current host
+    /// admission and starts a NEW turn through the same stream/engine, retaining original provenance.
+    public func continueInteraction(_ request: HanlinHostInteractionRequest, messages: [HanlinAISDKMessage],
+                                    modelReference: HanlinModelReference, maxSteps: Int? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+        guard let source = host as? any HanlinHostInteractionSource else { throw HanlinHostError.unsupportedProviderCapability }
+        guard interactionRequests.insert(request.requestID).inserted else { throw HanlinHostError.duplicateInvocation }
+        try await requireInteraction(request.origin)
+        guard !request.actionID.isEmpty, request.actionID.utf8.count <= 512,
+              try request.arguments.canonicalJSONData().count <= 1_048_576 else { throw HanlinHostError.invalidArguments }
+        let prepared = try await source.prepareInteraction(request)
+        try await requireInteraction(request.origin)
+        guard !prepared.userMessage.isEmpty, prepared.userMessage.utf8.count <= 1_048_576 else { throw HanlinHostError.invalidArguments }
+        return try await startStream(messages: messages + [.init(role: .user, text: prepared.userMessage)], systemPrompt: nil,
+            modelReference: modelReference, maxSteps: maxSteps, interactionOrigin: request.origin)
+    }
+
+    private func requireInteraction(_ origin: HanlinHostInteractionOrigin) async throws {
+        try Task.checkCancellation()
+        guard !invalidated, origin.session == identity, interactionOrigins.contains(origin) else { throw HanlinHostError.staleContext }
+        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        let current = try await host.context(for: identity)
+        try Task.checkCancellation()
+        guard !invalidated, origin.session == identity, interactionOrigins.contains(origin), current == identity.context else { throw HanlinHostError.staleContext }
+        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+    }
+
+    private func revokeInteractions(run: UUID) {
+        interactionOrigins = interactionOrigins.filter { $0.runID != run }
     }
 
     private func makeDefinitions(catalog: HanlinHostCatalog, run: UUID, model: HanlinModelReference) throws -> [HanlinAISDKToolDefinition] {

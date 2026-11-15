@@ -11,20 +11,20 @@ public struct HanlinChatStructuredPart: Codable, Hashable, Sendable {
         case a2uiMessage(protocolVersion: String, json: Data)
     }
     public let version: Int
-    public let messageID: String
-    public let partID: String
+    public let messageID: UUID
+    public let partID: UUID
     /// Monotonic across all parts in this message, including interleaved text/surfaces.
     public let sequence: UInt64
     public let payload: Payload
 
-    public init(version: Int = 1, messageID: String, partID: String, sequence: UInt64, payload: Payload) throws {
+    public init(version: Int = 1, messageID: UUID, partID: UUID, sequence: UInt64, payload: Payload) throws {
         self.version = version; self.messageID = messageID; self.partID = partID
         self.sequence = sequence; self.payload = payload
         try validate()
     }
 
     public func validate() throws {
-        guard version == 1, [messageID, partID].allSatisfy({ !$0.isEmpty && $0.utf8.count <= 512 }) else {
+        guard version == 1 else {
             throw HanlinChatStructuredPartError.invalidEnvelope
         }
         switch payload {
@@ -55,8 +55,8 @@ public struct HanlinChatStructuredPart: Codable, Hashable, Sendable {
     private enum CodingKeys: String, CodingKey { case version, messageID, partID, sequence, payload }
     public init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        try self.init(version: c.decode(Int.self, forKey: .version), messageID: c.decode(String.self, forKey: .messageID),
-                      partID: c.decode(String.self, forKey: .partID), sequence: c.decode(UInt64.self, forKey: .sequence),
+        try self.init(version: c.decode(Int.self, forKey: .version), messageID: c.decode(UUID.self, forKey: .messageID),
+                      partID: c.decode(UUID.self, forKey: .partID), sequence: c.decode(UInt64.self, forKey: .sequence),
                       payload: c.decode(Payload.self, forKey: .payload))
     }
 }
@@ -67,8 +67,8 @@ public enum HanlinChatStructuredPartError: Error, Sendable {
 
 /// Per-run ordering/replay validation. Replay is display data and conveys no host authority.
 public struct HanlinChatStructuredPartSequence: Sendable {
-    private var last: [String: UInt64] = [:]
-    private var seen: [String: [UInt64: HanlinChatStructuredPart]] = [:]
+    private var last: [UUID: UInt64] = [:]
+    private var seen: [UUID: [UInt64: HanlinChatStructuredPart]] = [:]
     public init() {}
 
     /// Returns false for an exact duplicate, throws for changed replay or stale order.

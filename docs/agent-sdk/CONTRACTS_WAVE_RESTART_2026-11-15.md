@@ -21,7 +21,7 @@ Step is captured before the first executor suspension. Callback data never reads
 late committed receipts remain in the original journal and do not deliver presentation callbacks.
 
 The consumer creates its own presentation generation and binds it to these original values.
-Run finish seals action authority; a historical receipt does not authorize an action. UI disappearance
+Successful producer EOF ends input while live admitted interactions remain available; a historical receipt does not authorize an action. UI disappearance
 is not host revocation. Queued navigation still does not mean an actual scene was mounted.
 No second renderer, UI registry, model selection UI or permission authority is introduced.
 
@@ -29,7 +29,7 @@ No second renderer, UI registry, model selection UI or permission authority is i
 
 Canonical public type: `HanlinChatCore.HanlinChatStructuredPart`, file
 `Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStructuredPart.swift`.
-Version 1 carries stable `messageID`, `partID`, message-wide `sequence: UInt64`, and typed payload
+Version 1 carries stable `messageID: UUID`, `partID: UUID` matching the existing A2UI store, message-wide `sequence: UInt64`, and typed payload
 `.textDelta(String)` or `.a2uiMessage(protocolVersion: String, json: Data)`.
 The latter holds a complete official protocol message; admission/validation/rendering stay with A2UI.
 
@@ -46,6 +46,16 @@ changed replay at the same sequence or unseen older sequence is rejected. Codabl
 replays through the same validator, with no grants or execution closures. Create a new validator
 for each originating run. Default SDK transcript storage still persists metadata/references only;
 the authorized host must supply a content store before claiming durable structured-payload replay.
+
+`onRunCompletion` carries original session/run and completed/cancelled/failed outcome;
+`onSessionInvalidated` fires once for terminal host/session revocation. A successful producer EOF
+retains only this Session's in-memory admitted structured-part origins. `continueInteraction`
+requires the exact original session/run/message/part and fresh context before and after the optional
+`HanlinHostInteractionSource.prepareInteraction` host admission. Its authorized user-message projection
+starts a NEW turn through the same canonical engine. Subsequent events retain `interactionOrigin`.
+Duplicate request IDs, unknown/replayed origins, deleted surfaces (`revokeInteraction`), cancellation,
+errors and invalidation fail closed. Host admission performs no business mutation; tool authority
+and actual effects remain with the existing host dispatcher. No persisted origin restores admission.
 
 The app's existing APIManager switch currently refuses this new event explicitly. A2UI owns the
 actual presentation bridge at that SDK adapter case; until it is connected, app inline rendering is OPEN.

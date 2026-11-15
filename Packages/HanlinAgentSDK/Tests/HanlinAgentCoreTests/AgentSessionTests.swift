@@ -55,6 +55,32 @@ private struct StructuredScriptModel: LanguageModelV3 {
     }
 }
 
+private actor InteractionFixtureHost: HanlinHostIntegration, HanlinHostInteractionSource {
+    nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
+    let base: SyntheticFixtureHost
+    private(set) var prepared = 0
+    private var shouldHold = false
+    private var held: CheckedContinuation<Void, Never>?
+    private var waiter: CheckedContinuation<Void, Never>?
+    init(context: HanlinHostContext) { base = SyntheticFixtureHost(context: context) }
+    func context(for session: HanlinHostSession) async -> HanlinHostContext { await base.context(for: session) }
+    func catalog(for context: HanlinHostContext) async throws -> HanlinHostCatalog { try await base.catalog(for: context) }
+    func execute(_ invocation: HanlinHostInvocation, progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult {
+        try await base.execute(invocation, progress: progress)
+    }
+    func cancel(_ id: HanlinToolInvocationID) async { await base.cancel(id) }
+    func open(_ destination: HanlinHostDestination) async throws -> HanlinHostNavigationResult { try await base.open(destination) }
+    func prepareInteraction(_ request: HanlinHostInteractionRequest) async throws -> HanlinHostInteractionContinuation {
+        guard request.actionID == "fixture_submit", request.origin.session.context == (await base.context(for: request.origin.session)) else { throw HanlinHostError.denied }
+        prepared += 1
+        if shouldHold { await withCheckedContinuation { held = $0; waiter?.resume(); waiter = nil } }
+        return .init(userMessage: "The user submitted the synthetic form.")
+    }
+    func holdPreparation() { shouldHold = true }
+    func waitUntilHeld() async { if held == nil { await withCheckedContinuation { waiter = $0 } } }
+    func release() { held?.resume(); held = nil }
+}
+
 private actor ExactNumericHost: HanlinHostIntegration {
     nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
     let original: HanlinHostContext
@@ -393,11 +419,12 @@ private struct ControlledTextModel: LanguageModelV3 {
         let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
         let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
         let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let messageID = UUID(), textPartID = UUID(), surfacePartID = UUID()
         let parts = try [
-            HanlinChatStructuredPart(messageID: "message", partID: "text", sequence: 0, payload: .textDelta("Before")),
-            HanlinChatStructuredPart(messageID: "message", partID: "surface", sequence: 1,
+            HanlinChatStructuredPart(messageID: messageID, partID: textPartID, sequence: 0, payload: .textDelta("Before")),
+            HanlinChatStructuredPart(messageID: messageID, partID: surfacePartID, sequence: 1,
                 payload: .a2uiMessage(protocolVersion: "v0.9", json: Data(#"{"createSurface":{"surfaceId":"test"}}"#.utf8))),
-            HanlinChatStructuredPart(messageID: "message", partID: "text", sequence: 2, payload: .textDelta("After"))
+            HanlinChatStructuredPart(messageID: messageID, partID: textPartID, sequence: 2, payload: .textDelta("After"))
         ]
         var source = try parts.map { LanguageModelV3StreamPart.custom(try $0.providerContent()) }
         source.insert(try .custom(parts[1].providerContent()), at: 2)
@@ -418,21 +445,95 @@ private struct ControlledTextModel: LanguageModelV3 {
     }
 
     @Test func structuredChannelRejectsConflictingReplayOrderAndInvalidVersion() throws {
-        let part = try HanlinChatStructuredPart(messageID: "m", partID: "p", sequence: UInt64.max, payload: .textDelta("safe"))
+        let messageID = UUID(), partID = UUID()
+        let part = try HanlinChatStructuredPart(messageID: messageID, partID: partID, sequence: UInt64.max, payload: .textDelta("safe"))
         let encoded = try part.providerContent()
         #expect(try HanlinChatStructuredPart.decodeProviderContent(kind: encoded.kind, metadata: encoded.providerMetadata) == part)
         var sequence = HanlinChatStructuredPartSequence()
         #expect(try sequence.admit(part))
-        let conflicting = try HanlinChatStructuredPart(messageID: "m", partID: "p", sequence: UInt64.max, payload: .textDelta("changed"))
+        let conflicting = try HanlinChatStructuredPart(messageID: messageID, partID: partID, sequence: UInt64.max, payload: .textDelta("changed"))
         #expect(throws: HanlinChatStructuredPartError.conflictingReplay) { try sequence.admit(conflicting) }
-        let old = try HanlinChatStructuredPart(messageID: "m", partID: "p", sequence: 0, payload: .textDelta("old"))
+        let old = try HanlinChatStructuredPart(messageID: messageID, partID: partID, sequence: 0, payload: .textDelta("old"))
         #expect(throws: HanlinChatStructuredPartError.outOfOrder) { try sequence.admit(old) }
         #expect(throws: HanlinChatStructuredPartError.invalidEnvelope) {
-            try HanlinChatStructuredPart(version: 2, messageID: "m", partID: "p", sequence: 0, payload: .textDelta("future"))
+            try HanlinChatStructuredPart(version: 2, messageID: messageID, partID: partID, sequence: 0, payload: .textDelta("future"))
         }
         #expect(throws: HanlinChatStructuredPartError.invalidEnvelope) {
             try HanlinChatStructuredPart.decodeProviderContent(kind: HanlinChatStructuredPart.channel, metadata: nil)
         }
         #expect(try HanlinChatStructuredPart.decodeProviderContent(kind: "other", metadata: nil) == nil)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = InteractionFixtureHost(context: context)
+        let part = try HanlinChatStructuredPart(messageID: UUID(), partID: UUID(), sequence: 0,
+            payload: .a2uiMessage(protocolVersion: "v0.9", json: Data(#"{"createSurface":{"surfaceId":"test"}}"#.utf8)))
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [try .custom(part.providerContent())])))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
+        var origin: HanlinHostInteractionOrigin?
+        var completed = 0
+        session.onRunCompletion = { if case .completed = $0.outcome { completed += 1 } }
+        let model = HanlinModelReference(provider: "fixture", modelID: "structured")
+        let first = try await session.stream(messages: [.init(role: .user, text: "Form")], modelReference: model)
+        for try await event in first {
+            if case .structuredPart(let value) = event.event {
+                origin = .init(session: event.session, runID: event.runID, messageID: value.messageID, partID: value.partID)
+            }
+        }
+        let live = try #require(origin)
+        #expect(completed == 1)
+        let request = HanlinHostInteractionRequest(origin: live, actionID: "fixture_submit", arguments: .object([:]))
+        let next = try await session.continueInteraction(request, messages: [], modelReference: model)
+        for try await event in next {
+            #expect(event.runID != live.runID && event.interactionOrigin == live && event.session == identity)
+        }
+        #expect(completed == 2)
+        #expect(await host.prepared == 1)
+        do { _ = try await session.continueInteraction(request, messages: [], modelReference: model); Issue.record("Duplicate action request repeated") }
+        catch { #expect(error as? HanlinHostError == .duplicateInvocation) }
+        session.revokeInteraction(live)
+        do { _ = try await session.continueInteraction(.init(origin: live, actionID: "fixture_submit", arguments: .null), messages: [], modelReference: model); Issue.record("Deleted surface continued") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        let replay = try JSONDecoder().decode(HanlinHostInteractionOrigin.self, from: JSONEncoder().encode(live))
+        let restored = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
+        do { _ = try await restored.continueInteraction(.init(origin: replay, actionID: "fixture_submit", arguments: .null), messages: [], modelReference: model); Issue.record("Replay restored live admission") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(await host.prepared == 1)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func invalidationDuringInteractionPreparationRejectsCapturedAdmission() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = InteractionFixtureHost(context: context)
+        let part = try HanlinChatStructuredPart(messageID: UUID(), partID: UUID(), sequence: 0,
+            payload: .a2uiMessage(protocolVersion: "v0.9", json: Data("{}".utf8)))
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [try .custom(part.providerContent())])))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
+        let model = HanlinModelReference(provider: "fixture", modelID: "structured")
+        var origin: HanlinHostInteractionOrigin?
+        let first = try await session.stream(messages: [.init(role: .user, text: "Form")], modelReference: model)
+        for try await event in first {
+            if case .structuredPart = event.event { origin = .init(session: identity, runID: event.runID, messageID: part.messageID, partID: part.partID) }
+        }
+        let request = HanlinHostInteractionRequest(origin: try #require(origin), actionID: "fixture_submit", arguments: .null)
+        await host.holdPreparation()
+        let continuation = Task { @MainActor in try await session.continueInteraction(request, messages: [], modelReference: model) }
+        await host.waitUntilHeld()
+        var invalidations = 0
+        session.onSessionInvalidated = { #expect($0 == identity); invalidations += 1 }
+        await session.invalidate(); await session.invalidate()
+        await host.release()
+        do { _ = try await continuation.value; Issue.record("Revoked captured admission created a turn") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(invalidations == 1)
+        #expect(await host.prepared == 1)
     }
 }
