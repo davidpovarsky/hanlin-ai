@@ -16,7 +16,7 @@ import shlex
 import subprocess
 import sys
 
-CANDIDATE_CPP_ARGUMENTS = ["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules", "-Xclang", "-fno-cxx-modules"]
+CANDIDATE_CPP_ARGUMENTS = ["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules", "-Xclang", "-fno-cxx-modules", "-fno-implicit-module-maps"]
 
 
 def capture(*args: str) -> str:

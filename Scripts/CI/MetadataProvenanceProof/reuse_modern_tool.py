@@ -2,6 +2,7 @@
 """Reuse only the previously compiled, source-identical candidate tool image."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -28,6 +29,14 @@ def main():
         return
     if evidence["xcode"] != subprocess.check_output(["xcodebuild", "-version"], text=True).strip():
         print("NEEDS_BUILD: actual Xcode compiler changed")
+        return
+    if not evidence.get("externalCompileInputs") or not evidence.get("buildTools") or not evidence.get("compilerEnvironment"):
+        print("NEEDS_BUILD: original compile/toolchain input closure unavailable")
+        return
+    if any(os.environ.get(key) != value for key, value in evidence["compilerEnvironment"].items()) or any(
+        not Path(path).is_file() or sha(Path(path)) != digest for path, digest in evidence["externalCompileInputs"].items()) or any(
+        not Path(tool["path"]).is_file() or sha(Path(tool["path"])) != tool["sha256"] for tool in evidence["buildTools"].values()):
+        print("NEEDS_BUILD: actual host compiler/linker/SDK/environment changed")
         return
     frontend = Path(evidence["frontendRoot"])
     inputs = {**evidence["frontendInputs"], **{"lib/" + name: digest for name, digest in evidence["libraries"].items()}}

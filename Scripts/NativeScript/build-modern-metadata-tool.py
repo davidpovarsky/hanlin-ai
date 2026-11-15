@@ -3,6 +3,7 @@
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import platform
 import shutil
@@ -44,7 +45,14 @@ def main():
         archive.extractall(work, filter="data")
     generator = source / "metadata-generator"
     main_cpp = generator / "src/main.cpp"
-    main_cpp.write_text(base.patch_main(main_cpp.read_text()))
+    main_text = base.patch_main(main_cpp.read_text())
+    main_text = base.replace_once(main_text, "#include <clang/Lex/Preprocessor.h>",
+        "#include <clang/Lex/Preprocessor.h>\n#include <clang/Lex/HeaderSearchOptions.h>")
+    main_text = base.replace_once(main_text, "        _headerSearch.collectAllModules(modules);",
+        "        // Ownership indexing after parsing never imports a serialized AST.\n"
+        "        _headerSearch.getHeaderSearchOpts().ImplicitModuleMaps = true;\n"
+        "        _headerSearch.collectAllModules(modules);")
+    main_cpp.write_text(main_text)
     writer = generator / "src/TypeScript/DefinitionWriter.cpp"
     writer.write_text(base.patch_declaration_writer(writer.read_text()).replace(
         "clang::ObjCMethodDecl::ImplementationControl::Optional", "clang::ObjCImplementationControl::Optional"))
@@ -59,6 +67,13 @@ def main():
     text = base.replace_once(text, "module->Umbrella && module->Umbrella.is<DirectoryEntryRef>()", "std::holds_alternative<DirectoryEntryRef>(module->Umbrella)")
     text = base.replace_once(text, "module->Umbrella.get<DirectoryEntryRef>()", "std::get<DirectoryEntryRef>(module->Umbrella)")
     text = base.replace_once(text, "module->Headers[Module::HK_Normal]", "module->getHeaders(Module::HK_Normal)")
+    text = base.replace_once(text, "#include <clang/Lex/HeaderSearch.h>",
+        "#include <clang/Lex/HeaderSearch.h>\n#include <clang/Lex/HeaderSearchOptions.h>")
+    text = base.replace_once(text, "    headerSearch.collectAllModules(modules);",
+        "    // The empty discovery AST has already completed. Read original maps\n"
+        "    // to index ownership without changing the actual parser invocation.\n"
+        "    headerSearch.getHeaderSearchOpts().ImplicitModuleMaps = true;\n"
+        "    headerSearch.collectAllModules(modules);")
     parser.write_text(text)
     # ObjC++ represents C-compatible records as CXXRecordDecl. Retain the
     # original field/layout serializer; never advertise C++ methods or mangled
@@ -123,6 +138,11 @@ add_subdirectory(src)
         "classifierLibrary": str(prefix / "lib/libclang.dylib"), "frontendVersion": lock["version"],
         "commands": commands, "platform": platform.platform(),
         "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(),
+        "compilerEnvironment": {key: os.environ.get(key) for key in ["CC", "CXX", "CFLAGS", "CXXFLAGS", "LDFLAGS", "SDKROOT", "DEVELOPER_DIR", "CPATH", "CPLUS_INCLUDE_PATH", "MACOSX_DEPLOYMENT_TARGET", "LIBRARY_PATH", "DYLD_LIBRARY_PATH"]},
+        "buildTools": {name: {"path": str(path), "sha256": sha(path)} for name, path in {
+            "clang++": Path(subprocess.check_output(["xcrun", "--find", "clang++"], text=True).strip()).resolve(),
+            "ld": Path(subprocess.check_output(["xcrun", "--find", "ld"], text=True).strip()).resolve(),
+            "cmake": Path(shutil.which("cmake")).resolve()}.items()},
         "serializerSources": {p.relative_to(generator).as_posix(): sha(p) for p in (generator / "src/Binary").rglob("*") if p.is_file()},
         "frontendInputs": {p.relative_to(prefix).as_posix(): sha(p) for folder in ["include/clang", "include/llvm", "lib/clang"]
             for p in (prefix / folder).rglob("*") if p.is_file()},
@@ -134,6 +154,17 @@ add_subdirectory(src)
             with (work / f"build-{index}.log").open("w") as log:
                 subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=420)
         result.update(status="BUILT_NOT_ACCEPTED", generatorSHA256=sha(build / "bin/objc-metadata-generator"))
+        import shlex
+        dependencies = set()
+        for file in build.rglob("*.o.d"):
+            text = file.read_text().replace("\\\n", " ")
+            for item in shlex.split(text.partition(":")[2]):
+                path = Path(item).resolve()
+                if path.is_file() and not path.is_relative_to(work):
+                    dependencies.add(path)
+        result["externalCompileInputs"] = {str(path): sha(path) for path in sorted(dependencies)}
+        if not result["externalCompileInputs"]:
+            raise RuntimeError("Actual compiler dependency closure was not retained")
         (work / "bin").mkdir(exist_ok=True)
         shutil.copy2(build / "bin/objc-metadata-generator", work / "bin/objc-metadata-generator")
         shutil.copytree(build / "bin/lib", work / "bin/lib", dirs_exist_ok=True)
