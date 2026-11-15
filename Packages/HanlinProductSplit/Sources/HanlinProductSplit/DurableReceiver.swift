@@ -39,6 +39,7 @@ public struct SplitReceiverContext: Sendable {
 public enum SplitDurabilityError: Error, Equatable, Sendable {
     case busy, corruptState, unsupportedVersion, outcomeUnknown, attemptMismatch
     case recoveryConflict, persistenceUnavailable, interrupted
+    case encodedSizeExceeded
 }
 
 public struct SplitReceiverRecord: Codable, Equatable, Sendable {

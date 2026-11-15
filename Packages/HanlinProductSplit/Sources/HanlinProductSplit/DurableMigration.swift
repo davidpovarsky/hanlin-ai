@@ -8,9 +8,17 @@ public struct SplitMigrationIntent: Codable, Equatable, Sendable {
     public let kind: Kind
     public let before: SplitMigrationJournal
     public let after: SplitMigrationJournal
+    public enum RecoveryTarget: String, Codable, Sendable { case before, after }
+    public let recoveryTarget: RecoveryTarget?
 
-    init(kind: Kind, before: SplitMigrationJournal, after: SplitMigrationJournal) {
+    init(kind: Kind, before: SplitMigrationJournal, after: SplitMigrationJournal,
+         recoveryTarget: RecoveryTarget? = nil) {
         version = 1; self.kind = kind; self.before = before; self.after = after
+        self.recoveryTarget = recoveryTarget
+    }
+
+    func selecting(_ target: RecoveryTarget) -> Self {
+        Self(kind: kind, before: before, after: after, recoveryTarget: recoveryTarget ?? target)
     }
 
     public func validate() throws {
@@ -30,4 +38,8 @@ public struct SplitMigrationIntent: Codable, Equatable, Sendable {
 
 public enum SplitMigrationInterruption: String, CaseIterable, Sendable {
     case afterIntent, afterDestination, afterJournal
+}
+
+public enum SplitRecoveryInterruption: String, CaseIterable, Sendable {
+    case afterDecision, afterDestination, afterJournal, afterCheckpoint
 }

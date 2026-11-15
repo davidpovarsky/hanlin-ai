@@ -4,8 +4,9 @@ import Foundation
 /// checks prevent applying a fixture command to an arbitrary application store.
 /// This is not an AppGroup, SwiftData, Keychain or production migration adapter.
 public struct SplitFixtureStore: Sendable {
-    public enum Slot: String { case source, destination, journal, receiver, migrationIntent, effect, delivery }
+    public enum Slot: String, Sendable { case source, destination, journal, receiver, migrationIntent, effect, delivery }
     public static let marker = "synthetic-fixture-only-v1\n"
+    public static let maximumSlotBytes = 16_777_216
     private let root: URL
 
     public init(root: URL) throws {
@@ -25,14 +26,23 @@ public struct SplitFixtureStore: Sendable {
         return result
     }
     public func write<T: Encodable>(_ value: T, to slot: Slot) throws {
-        let data = try JSONEncoder().encode(value)
+        let data = try Self.encodeBounded(value)
         try data.write(to: url(slot), options: .atomic)
+    }
+    public static func encodeBounded<T: Encodable>(_ value: T) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        let data = try encoder.encode(value)
+        guard data.count <= maximumSlotBytes else { throw SplitDurabilityError.encodedSizeExceeded }
+        return data
     }
     public func read<T: Decodable>(_ type: T.Type, from slot: Slot) throws -> T {
         let attributes = try FileManager.default.attributesOfItem(atPath: url(slot).path)
-        guard let size = attributes[.size] as? NSNumber, size.intValue <= 16_777_216
+        guard let size = attributes[.size] as? NSNumber, size.intValue <= Self.maximumSlotBytes
         else { throw SplitDurabilityError.corruptState }
-        return try JSONDecoder().decode(type, from: Data(contentsOf: url(slot)))
+        let data = try Data(contentsOf: url(slot))
+        guard data.count <= Self.maximumSlotBytes else { throw SplitDurabilityError.corruptState }
+        return try JSONDecoder().decode(type, from: data)
     }
 
     /// Exclusive create is shared by separate fixture-store instances/processes.

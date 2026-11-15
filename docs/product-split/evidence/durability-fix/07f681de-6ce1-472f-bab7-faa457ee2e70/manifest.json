@@ -1,0 +1,209 @@
+{
+  "files": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\commands.jsonl",
+      "bytes": 37360,
+      "sha256": "4926e7c66e0a51e83563b0ce97c3898408da182e64a6e8edbcbe1564a53ae989"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\contracts-provenance.json",
+      "bytes": 16076,
+      "sha256": "83081ca7819df5548cecc86d1f39b20b6971c17688abdc79095e65f9dbd41f07"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\core-provenance.json",
+      "bytes": 8524,
+      "sha256": "03542bb80441e28bb07f8bdcd246927a53ac17c0726346711192e3b5874eeaec"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\correction-binary-provenance.json",
+      "bytes": 9177,
+      "sha256": "be65b08d5edc854a80af53f4c14e99026a630b849cdf872f0cb1929a59552db8"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\durable-binary-provenance.json",
+      "bytes": 9136,
+      "sha256": "b2624cd025693a872266fc033d4635113d462c25e8c94c23a7614033db9aee35"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-001-toolchain.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-001-toolchain.stdout.log",
+      "bytes": 104,
+      "sha256": "a2aa2d7dcd61b2f3db2c0e6ff30a1f0ab2d45f58a9542e79f6b7fa7111b09dd5"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-002-link-durable.stderr.log",
+      "bytes": 3003,
+      "sha256": "7804b4b6290f7ebb1550f712c8288e906186a9973e0e3a6b0ded05af84b90125"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-002-link-durable.stdout.log",
+      "bytes": 22248,
+      "sha256": "42fa391ff9f16978aeffff78885f5e84b206c4d60145a94cd672ce93572108d0"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-003-tests-durable.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-003-tests-durable.stdout.log",
+      "bytes": 2067,
+      "sha256": "c57eab67ad00fefcf67b83a9e31f5b247d1b829250e8c58ad92ae381d02fbcc1"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-004-race-0.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-004-race-0.stdout.log",
+      "bytes": 71,
+      "sha256": "e36d098de31eebbfa0d35efb22cebff35868ceb41f41be99ce12b39092194d18"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-005-race-1.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-005-race-1.stdout.log",
+      "bytes": 19,
+      "sha256": "95d720112cf958cae3703d8ef6b51347e2b94714423f5a003bcfbeee12ccb34a"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-006-race-restart.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-006-race-restart.stdout.log",
+      "bytes": 27,
+      "sha256": "c80ae434e8463abbcbbd822d8f747611f7be0bfbe182d59bf7164bc3cccbe2d4"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-007-link-correction.stderr.log",
+      "bytes": 3035,
+      "sha256": "cc1e1bbbb2c4eee7c86b73ed96bec3c7339bdd4e1e2e9efccd8c5d7003138d5d"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-007-link-correction.stdout.log",
+      "bytes": 22416,
+      "sha256": "ff427177b9c99a4e2eb0ffa4088e498f968cce4684c32678cd3fe20aa4cf819f"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-008-tests-correction.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-008-tests-correction.stdout.log",
+      "bytes": 4975,
+      "sha256": "322b6ec23af416cf236e4bce2fe886e27ca0c509f2467a53ef0e72541abd51e1"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-009-recovery-restart-0.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-009-recovery-restart-0.stdout.log",
+      "bytes": 93,
+      "sha256": "252b2bfd199e2f16cc5cf574e8ff92c37eb7a6bd14c56005499370bcc903ae1e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-010-recovery-restart-1.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-010-recovery-restart-1.stdout.log",
+      "bytes": 93,
+      "sha256": "252b2bfd199e2f16cc5cf574e8ff92c37eb7a6bd14c56005499370bcc903ae1e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-011-recovery-restart-2.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-011-recovery-restart-2.stdout.log",
+      "bytes": 93,
+      "sha256": "252b2bfd199e2f16cc5cf574e8ff92c37eb7a6bd14c56005499370bcc903ae1e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-012-recovery-restart-3.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-012-recovery-restart-3.stdout.log",
+      "bytes": 93,
+      "sha256": "252b2bfd199e2f16cc5cf574e8ff92c37eb7a6bd14c56005499370bcc903ae1e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-013-recovery-restart-4.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-013-recovery-restart-4.stdout.log",
+      "bytes": 93,
+      "sha256": "ffd29885043279298d8a97b9f25a4842b27099cfacee00d270295be1674b2723"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-014-recovery-restart-5.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-014-recovery-restart-5.stdout.log",
+      "bytes": 93,
+      "sha256": "ffd29885043279298d8a97b9f25a4842b27099cfacee00d270295be1674b2723"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-015-recovery-restart-6.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-015-recovery-restart-6.stdout.log",
+      "bytes": 93,
+      "sha256": "ffd29885043279298d8a97b9f25a4842b27099cfacee00d270295be1674b2723"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-016-recovery-restart-7.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-016-recovery-restart-7.stdout.log",
+      "bytes": 93,
+      "sha256": "ffd29885043279298d8a97b9f25a4842b27099cfacee00d270295be1674b2723"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-017-commit-base.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-017-commit-base.stdout.log",
+      "bytes": 41,
+      "sha256": "ac63086a01e52497ff4d5e4fce78beb14248559e30cd7fcf779eaca04451963b"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-018-working-tree.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-018-working-tree.stdout.log",
+      "bytes": 660,
+      "sha256": "467c03aa3c7989b3e572f999c1bf137ae4ef150467b3ea24db646f8552c30ed6"
+    }
+  ]
+}
