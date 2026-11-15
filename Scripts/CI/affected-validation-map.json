@@ -933,6 +933,20 @@
       ],
       "consumers": []
     },
+    "hanlin_model_hosting_environment": {
+      "description": "Existing native model picker hosting boundary and catalog context propagation",
+      "patterns": [
+        "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
+        "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinModelHostingEnvironmentTests"
+      ],
+      "consumers": []
+    },
     "hanlin_morph_composer_ui_test_files": {
       "description": "Morph Composer navigation, viewport and enabled capability UI acceptance",
       "patterns": [

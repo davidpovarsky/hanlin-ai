@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import UIKit
 
 /// UIKit owns the popover's source-item morph; SwiftUI owns its inner geometry morph.
@@ -52,13 +53,14 @@ struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepr
     }
 }
 
-/// Carry user-facing environment choices across the explicit hosting boundary.
+/// Carry the existing catalog context and user choices across the hosting boundary.
 struct HanlinModelHostedView<Content: View>: View {
     let content: Content
     let environment: EnvironmentValues
 
     var body: some View {
         content
+            .modelContext(environment.modelContext)
             .environment(\.locale, environment.locale)
             .environment(\.layoutDirection, environment.layoutDirection)
             .environment(\.dynamicTypeSize, environment.dynamicTypeSize)
