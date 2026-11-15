@@ -7,7 +7,9 @@ fixture/diagnostic correction is documented in
 [NATIVE_VALIDATION_FIX_2026-11-15.md](NATIVE_VALIDATION_FIX_2026-11-15.md).
 The2bae5a3e follow-up passed25 in run43664698104, and a43 passed25 including
 privacy canaries in run43667371439. The actual AI_Hanlin consumer-name
-correction now awaits the same enabled proof; neither previous result covers it.
+correction at f654ac11 then passed all25 in
+[run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483).
+See [retained native evidence](evidence/native-run-43668852483.json).
 
 `prepare_exact_pin_proof.py` prepares the same3 source files, the unchanged25
 Swift Testing selectors and all7 fixtures in an isolated SwiftPM consumer.
@@ -23,9 +25,9 @@ target remains `AI_HLYTests` so the25 case identities do not change. No
 PRODUCT_MODULE_NAME override, stub or module alias is used. Both targets enable
 `HANLIN_A2UI_POC` and `DEBUG` for the Debug build; the standalone portable
 runner flag is absent. Source/fixture bytes and the harness manifest are
-hashed. The compiler and all25 tests, including the byte-budget assertions,
-remain **NOT_RUN for the corrected candidate**. The earlier c40e617b cases
-actually ran and failed; the recipe/flags must not be used to erase that result.
+hashed. The corrected f654ac11 consumer compiled and all25 tests passed,
+including the byte-budget assertions. The earlier c40e617b cases actually ran
+and failed; the successful follow-ups do not erase that result.
 
 This proves a macOS27 SDK consumer when executed successfully. It does not
 prove iOS27 app integration, an inline host, hosted layout or physical iPad
@@ -51,7 +53,7 @@ using stdin and the installed ManifestAPI module. No Package.swift file was
 created and no dependency was resolved. This checks the preparation template,
 not Apple SDK imports or the upstream package build.
 
-## Native recipe — corrected-source execution pending
+## Native recipe — executed at f654ac11
 
 Only after the authorized stable-Xcode host and serialized resource are
 available, run from an authenticated checkout of the handoff commit. Keep the

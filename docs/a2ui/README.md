@@ -114,8 +114,9 @@ run43664698104 with the exact SDK. See [the identifier evidence](NATIVE_VALIDATI
 The [privacy correction](DIAGNOSTIC_PRIVACY_FIX_2026-11-15.md) then passed all25
 enabled cases at a43 in run43667371439, including its canaries. The current
 [consumer-module correction](CONSUMER_MODULE_FIX_2026-11-15.md) aligns the test
-import and temporary recipe with actual `AI_Hanlin`; its new bytes need a proof.
-Neither isolated result establishes inline app or physical-device acceptance.
+import and temporary recipe with actual `AI_Hanlin`; source f654ac11 passed
+all25 actual native cases in [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483).
+These isolated results do not establish inline app or physical-device acceptance.
 Inline app integration and hardware verification remain NOT_RUN. A disabled
 flag, syntax-only parse or zero selected cases cannot satisfy either task.
 See [TEST_EXECUTION_MANIFEST.md](TEST_EXECUTION_MANIFEST.md) for exact cases,
@@ -124,8 +125,9 @@ commands, fixture identities and evidence.
 The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) uses all25 actual
 cases in a temporary consumer, exact root/transitive resolution evidence and
 unchanged source bytes. It does not require shared product wiring. Its planner
-and verifier have local checks. Tomer's existing verifier produced both actual
-native results; the consumer-name candidate awaits the same enabled25-case proof.
+and verifier have local checks. Tomer's existing verifier produced the actual
+native results, including the consumer-name25-case pass retained in
+[evidence](evidence/native-run-43668852483.json).
 No shared product wiring is added by this correction.
 
 ## Proposed integration, not applied

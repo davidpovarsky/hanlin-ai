@@ -1,0 +1,15 @@
+{
+  "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift": "a992fd554408786db74b36873b80bf61bb391e07e0e3f5a023d73738d89bdb67",
+  "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift": "06d5761ae398a978483b96ceca313cf9542a5ce535bec55b8c1800a99e5ef587",
+  "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift": "12905aa382be65d4b06da5a05c195e01c09d045150b05c01d54eff67525f65d6",
+  "AI_HLYTests/A2UIFixtures/form.jsonl": "c3f9f393341162f541321eb3c8462e111724d0f62d0cebc2f418f0967de5891d",
+  "AI_HLYTests/A2UIFixtures/invalid-components.jsonl": "e761c8070080e37bea0e22c5ed7a19d6424ff4237a214d9c4b0ace0cce51eba3",
+  "AI_HLYTests/A2UIFixtures/malformed.txt": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da",
+  "AI_HLYTests/A2UIFixtures/rtl.jsonl": "2e0ce205c2351e8a6baa0ecb184667ecab82e8d73a4c5172dfefa938c4664705",
+  "AI_HLYTests/A2UIFixtures/unknown-function.jsonl": "058f52de611a570b1a4db5116ea31a3f6fa01ab061d971249e6f51bb2041e63f",
+  "AI_HLYTests/A2UIFixtures/unknown.jsonl": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da",
+  "AI_HLYTests/A2UIFixtures/update.jsonl": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5",
+  "AI_HLYTests/A2UITests.swift": "b670e979b014c0e4c26a816788bd5ec905a5c22ee4bc690c4732700b93bbe0bb",
+  "docs/a2ui/EXACT_PIN_PROOF_ROUTE.md": "42b29e58db3d9fcb71c457aaccb4b7d7b9fe3292741a709781d408514869a4d6",
+  "docs/a2ui/prepare_exact_pin_proof.py": "a9b9dfd24892eef9df87b3ad3d0b3ea07855b761c5418d4d355cb9894c81b607"
+}
