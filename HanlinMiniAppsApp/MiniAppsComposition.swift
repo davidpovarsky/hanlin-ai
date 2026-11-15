@@ -15,6 +15,8 @@ enum MiniAppsComposition {
             if let error = platform.bootstrapError { throw HostError.unavailable(error) }
             await host.refresh(installedPackages: platform.installedPackages)
             if let error = host.lastError { throw HostError.unavailable(error) }
+            // Optional transport export never changes local package/library availability.
+            try? HanlinSplitLiveTarget.exportCatalog()
             return host.visibleItems
         }, launch: { item in
             switch item.engine {

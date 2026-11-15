@@ -90,6 +90,44 @@ private enum ForegroundSchemeTests {
                 throw Failure(detail: "corrupt decoded state accepted")
             }
         }
+        try test("senderCancellation.missingReceiverDoesNotReserve") {
+            var database = SplitReceiverDatabase()
+            try check(database.interruptIfPresent(request, reason: .cancelled) == nil)
+            try check(database.records.isEmpty)
+            try database.validate()
+        }
+        try test("senderCancellation.reservedAttemptCannotStart") {
+            var database = SplitReceiverDatabase()
+            _ = try database.reserve(request)
+            let cancelled = try database.interruptIfPresent(request, reason: .cancelled)
+            try check(cancelled?.phase == .completed && cancelled?.outcome == .failure(.cancelled) && cancelled?.attempt == nil)
+            do { _ = try database.update(request) { try $0.start() } }
+            catch SplitBridgeFailure.outOfOrder { return }
+            throw Failure(detail: "cancelled reservation started")
+        }
+        try test("senderCancellation.executingAttemptStaysUnknownWithoutReplay") {
+            var database = SplitReceiverDatabase()
+            _ = try database.reserve(request)
+            let started = try database.update(request) { try $0.start() }
+            let cancelled = try database.interruptIfPresent(request, reason: .cancelled)
+            try check(cancelled?.phase == .outcomeUnknown && cancelled?.attempt == started.attempt && cancelled?.outcome == nil)
+            try database.validate()
+            do { _ = try database.update(request) { try $0.start() } }
+            catch SplitDurabilityError.outcomeUnknown { return }
+            throw Failure(detail: "interrupted attempt replayed")
+        }
+        try test("senderCancellation.wrongImmutableOriginPreservesRecord") {
+            var database = SplitReceiverDatabase()
+            _ = try database.reserve(request)
+            let original = database
+            let wrong = SplitBridgeRequest(id: request.id, caller: request.caller, target: request.target,
+                installedPackage: request.installedPackage, session: request.session, chat: UUID(), generation: request.generation,
+                action: request.action, capability: request.capability, issuedAt: request.issuedAt,
+                expiresAt: request.expiresAt, payload: request.payload)
+            do { _ = try database.interruptIfPresent(wrong, reason: .cancelled) }
+            catch SplitBridgeFailure.correlationMismatch { try check(database == original); return }
+            throw Failure(detail: "wrong-origin cancellation accepted")
+        }
         let report: [String: Any] = ["status": "EXECUTED_PASS", "count": names.count, "tests": names]
         print(String(data: try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]), encoding: .utf8)!)
     }

@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\commands.jsonl",
+      "bytes": 13920,
+      "sha256": "8ece1b073727a4af0c0ef7e5014c7e9705c94258a424d92b2428c28d0d662955"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\contracts-provenance.json",
+      "bytes": 16076,
+      "sha256": "83081ca7819df5548cecc86d1f39b20b6971c17688abdc79095e65f9dbd41f07"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\core-provenance.json",
+      "bytes": 8524,
+      "sha256": "03542bb80441e28bb07f8bdcd246927a53ac17c0726346711192e3b5874eeaec"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\foreground-binary-provenance.json",
+      "bytes": 10454,
+      "sha256": "c54ffcea27c9b5280ad3d7950732aa6da266cad952ce064e3f302ae3e3cbda16"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-001-toolchain.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-001-toolchain.stdout.log",
+      "bytes": 104,
+      "sha256": "a2aa2d7dcd61b2f3db2c0e6ff30a1f0ab2d45f58a9542e79f6b7fa7111b09dd5"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-002-link-foreground.stderr.log",
+      "bytes": 3305,
+      "sha256": "634432a64e05e7ef86740979d8fbf8382d9bb5846afeb5424c0adf3a80dbadd5"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-002-link-foreground.stdout.log",
+      "bytes": 34283,
+      "sha256": "2119bcd1440b694bb38ffb7f293000cbb9ee5143b5571536375bc8c261485b49"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-003-tests-foreground.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-003-tests-foreground.stdout.log",
+      "bytes": 1785,
+      "sha256": "a3a4952e5439b5b19995340cdf7f4bc9e9002bd3029d017aba07904095b49426"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-004-commit-base.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-004-commit-base.stdout.log",
+      "bytes": 41,
+      "sha256": "8dbe391b9e1566fb98569ad02afa2d413e6949a36fb4ada64b738a174139ba62"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-005-working-tree.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\75fa9dce-312f-4da5-8c7a-513e2f0184fa\\raw-005-working-tree.stdout.log",
+      "bytes": 966,
+      "sha256": "60feedb01b9eaa7d79c747627aca9088138df520de70c32e506bbe96af8a5d6a"
+    }
+  ]
+}

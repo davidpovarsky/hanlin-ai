@@ -133,6 +133,92 @@ final class SplitMailboxTests: XCTestCase {
         XCTAssertThrowsError(try store.transactManagedState(fileName: ".transaction.lock", maximumBytes: 128) { $0 = Data() })
     }
 
+    func testCanonicalCatalogExportPreservesOriginalActionAndGeneration() async throws {
+        let group = try fixture()
+        defer { try? FileManager.default.removeItem(at: group) }
+        let host = HanlinMiniAppHost.shared
+        await host.refresh(installedPackages: [])
+        let item = try XCTUnwrap(host.items.first { $0.id.rawValue == "hanlin.demo.swift-parity" })
+        let registration = try HanlinSplitLiveTarget.registration(for: item, platform: .shared)
+        XCTAssertEqual(registration.installedPackage.rawValue, "compiled.hanlin.demo.swift-parity")
+        XCTAssertEqual(registration.generation, 0)
+        XCTAssertTrue(registration.descriptor.actions.contains { $0.id.rawValue == "share.value" })
+        let mailbox = try HanlinSplitMailbox(trustedGroupContainer: group)
+        try mailbox.publishCatalog([registration])
+        XCTAssertEqual(try HanlinSplitMailbox(trustedGroupContainer: group).registration(for: item.id), registration)
+        XCTAssertThrowsError(try mailbox.publishCatalog([registration, registration]))
+        XCTAssertEqual(try mailbox.registration(for: item.id), registration)
+    }
+
+    func testOriginInvalidationFencesExecutingReceiverInOneTransaction() async throws {
+        let group = try fixture()
+        defer { try? FileManager.default.removeItem(at: group) }
+        let mailbox = try HanlinSplitMailbox(trustedGroupContainer: group), request = try request()
+        try prepare(request, mailbox)
+        let receiver = SplitDurableReceiver(persistence: mailbox, source: mailbox)
+        _ = try await receiver.receive(reference: request.id, context: context(request), now: .now)
+        let started = try await receiver.start(reference: request.id, context: context(request), now: .now)
+        try mailbox.cancelDispatch(request.id)
+        XCTAssertThrowsError(try mailbox.original(request.id))
+        let path = try SplitAppStorageLayout.transportRoot(appGroupContainer: group).appending(path: "mailbox.json")
+        let persisted = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: path)) as? [String: Any])
+        let receiverJSON = try XCTUnwrap(persisted["receiver"])
+        let database = try JSONDecoder().decode(SplitReceiverDatabase.self,
+            from: JSONSerialization.data(withJSONObject: receiverJSON))
+        XCTAssertEqual(database.records[request.id]?.phase, .outcomeUnknown)
+        XCTAssertEqual(database.records[request.id]?.attempt, started.attempt)
+        do { _ = try await receiver.start(reference: request.id, context: context(request), now: .now); XCTFail("Revoked source granted a second attempt") }
+        catch SplitBridgeFailure.outOfOrder {}
+    }
+
+    func testConversationSaveFailurePreservesReturnForIdempotentRetry() async throws {
+        let group = try fixture()
+        defer { try? FileManager.default.removeItem(at: group) }
+        let mailbox = try HanlinSplitMailbox(trustedGroupContainer: group), request = try request()
+        try await complete(request, mailbox)
+        let origin = OriginFixture(request: request, context: context(request))
+        origin.failSave = true
+        let transport = HanlinSplitForegroundTransport(mailbox: mailbox, openURL: { _ in false })
+        let url = SplitForegroundRoute.returnToAI.url(reference: request.id)
+        do { try await transport.receiveReturn(url, origin: origin); XCTFail("Failed conversation save consumed result") }
+        catch OriginFixture.SaveError.failed {}
+        XCTAssertEqual(try mailbox.original(request.id), request)
+        XCTAssertTrue(origin.navigation.isEmpty)
+        origin.failSave = false
+        try await transport.receiveReturn(url, origin: origin)
+        XCTAssertEqual(origin.navigation, [request.chat])
+        XCTAssertEqual(origin.saved.count, 1)
+        do { try await transport.receiveReturn(url, origin: origin); XCTFail("Duplicate return delivered") }
+        catch SplitBridgeFailure.outOfOrder {}
+        XCTAssertEqual(origin.saved.count, 1)
+        XCTAssertEqual(origin.navigation, [request.chat])
+    }
+
+    func testRevocationDuringConversationSavePreventsNavigationAndAcceptance() async throws {
+        let group = try fixture()
+        defer { try? FileManager.default.removeItem(at: group) }
+        let mailbox = try HanlinSplitMailbox(trustedGroupContainer: group), request = try request()
+        try await complete(request, mailbox)
+        let origin = OriginFixture(request: request, context: context(request))
+        origin.afterSave = { try mailbox.cancelDispatch(request.id) }
+        let transport = HanlinSplitForegroundTransport(mailbox: mailbox, openURL: { _ in false })
+        do {
+            try await transport.receiveReturn(SplitForegroundRoute.returnToAI.url(reference: request.id), origin: origin)
+            XCTFail("Revoked origin was navigated")
+        } catch SplitBridgeFailure.duplicate {}
+        XCTAssertTrue(origin.navigation.isEmpty)
+        XCTAssertThrowsError(try mailbox.original(request.id))
+    }
+
+    private func complete(_ request: SplitBridgeRequest, _ mailbox: HanlinSplitMailbox) async throws {
+        try prepare(request, mailbox)
+        let receiver = SplitDurableReceiver(persistence: mailbox, source: mailbox)
+        _ = try await receiver.receive(reference: request.id, context: context(request), now: .now)
+        let started = try await receiver.start(reference: request.id, context: context(request), now: .now)
+        let attempt = try XCTUnwrap(started.attempt)
+        _ = try await receiver.complete(reference: request.id, attempt: attempt, outcome: .result(.string("original-result")), context: context(request))
+    }
+
     private func prepare(_ request: SplitBridgeRequest, _ mailbox: HanlinSplitMailbox) throws {
         try mailbox.prepareDispatch(request, now: .now, currentGeneration: 7,
                                     authorized: true, routeAvailable: true, handlerAvailable: true)
@@ -155,5 +241,34 @@ final class SplitMailboxTests: XCTestCase {
         let root = FileManager.default.temporaryDirectory.appending(path: "split-mailbox-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
         return root.resolvingSymlinksInPath().standardizedFileURL
+    }
+}
+
+/// Protocol failure injection only; this is not a production conversation store.
+@MainActor
+private final class OriginFixture: HanlinSplitOriginalOrigin {
+    enum SaveError: Error { case failed, wrongOrigin }
+    let request: SplitBridgeRequest
+    let context: SplitReceiverContext
+    var failSave = false
+    var afterSave: (() throws -> Void)?
+    var saved: [UUID: SplitBridgeReturn] = [:]
+    var navigation: [UUID] = []
+
+    init(request: SplitBridgeRequest, context: SplitReceiverContext) {
+        self.request = request; self.context = context
+    }
+    func currentContext(for request: SplitBridgeRequest) async throws -> SplitReceiverContext {
+        guard request == self.request else { throw SaveError.wrongOrigin }
+        return context
+    }
+    func persistVerifiedResult(_ response: SplitBridgeReturn) async throws {
+        guard response.request == request, saved[request.id] == nil || saved[request.id] == response else { throw SaveError.wrongOrigin }
+        if failSave { throw SaveError.failed }
+        saved[request.id] = response
+        try afterSave?()
+    }
+    func navigateToOriginalConversation(_ request: SplitBridgeRequest) {
+        navigation.append(request.chat)
     }
 }

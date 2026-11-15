@@ -101,7 +101,7 @@ def main():
             storage_summary = json.loads(command(['xcrun', 'xcresulttool', 'get', 'test-results', 'summary',
                 '--path', str(EVIDENCE/'Storage.xcresult')], 'storage-summary.json'))
             state['storage_summary'] = storage_summary
-            if storage_result.returncode == 0 and storage_summary.get('passedTests') == 13 \
+            if storage_result.returncode == 0 and storage_summary.get('passedTests') == 17 \
                     and storage_summary.get('failedTests', 0) == 0 and storage_summary.get('skippedTests', 0) == 0:
                 state['storage_boundary'] = 'EXECUTED_PASS'
             elif storage_summary.get('failedTests', 0):

@@ -102,6 +102,10 @@ final class HanlinMiniAppHost {
         items.filter { !hiddenAppIDs.contains($0.id) }
     }
 
+    func authorize(_ request: HanlinMiniAppRequest) async -> Bool {
+        await authorization.authorize(request)
+    }
+
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
             let dynamicPackages = installedPackages.filter { package in

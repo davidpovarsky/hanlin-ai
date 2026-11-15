@@ -112,6 +112,13 @@ public struct SplitReceiverDatabase: Codable, Equatable, Sendable {
         }
     }
 
+    /// Sender revocation may share the production persistence transaction with
+    /// its ledger update. It never reserves or starts an execution attempt.
+    public mutating func interruptIfPresent(_ request: SplitBridgeRequest, reason: SplitBridgeFailure) throws -> SplitReceiverRecord? {
+        guard records[request.id] != nil else { return nil }
+        return try update(request) { $0.interrupt(reason) }
+    }
+
     mutating func reserve(_ request: SplitBridgeRequest) throws -> SplitReceiverRecord {
         if let existing = records[request.id] {
             guard existing.request == request else { throw SplitBridgeFailure.correlationMismatch }

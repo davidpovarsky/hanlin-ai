@@ -21,6 +21,8 @@
     "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
     "AI_HLY/Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift",
     "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
     "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift",
