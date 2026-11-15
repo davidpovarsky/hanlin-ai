@@ -1073,6 +1073,7 @@
       "patterns": [
         "AI_HLY/Downstream/MiniApps/**",
         "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift",
         "DemoMiniApps/**",
         "Packages/HanlinParityMiniApp/**",
         "Packages/HanlinSefariaMiniApp/**",
@@ -1084,7 +1085,8 @@
         "simulator_targeted_ui"
       ],
       "unit_suites": [
-        "AI_HLYTests/CanonicalMiniAppIntegrationTests"
+        "AI_HLYTests/CanonicalMiniAppIntegrationTests",
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests"
       ],
       "ui_suites": [
         "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"

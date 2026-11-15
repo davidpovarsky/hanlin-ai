@@ -125,31 +125,29 @@ final class HanlinMiniAppHost {
         items.filter { !hiddenAppIDs.contains($0.id) }
     }
 
+    /// Use the same validated foreground launch contract as the canonical catalog.
+    /// Discovery needs no host instance, global store or runtime initialization.
+    static func packageDiscovery(installedPackages: [HanlinStoredPackageSnapshot]) -> HanlinScriptPackageDiscovery {
+        let eligible = installedPackages.filter { package in
+            guard package.enabled, package.hasLaunchableApp || package.entrypoints.isEmpty else { return false }
+            if let runtime = package.manifest?.hanlinRuntime {
+                guard HanlinRuntimeProfile(rawValue: runtime) != nil else { return false }
+            } else if let runtime = package.manifest?.unknownFields["hanlinRuntime"] {
+                guard case let .string(value) = runtime, HanlinRuntimeProfile(rawValue: value) != nil else { return false }
+            }
+            guard let descriptor = try? package.appDescriptor(),
+                  (try? HanlinMiniAppLaunchPlan(descriptor: descriptor)) != nil else { return false }
+            return true
+        }
+        return HanlinScriptPackageDiscovery(snapshots: eligible)
+    }
+
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
-            let dynamicPackages = installedPackages.filter { package in
-                guard package.hasLaunchableApp || package.entrypoints.isEmpty else {
-                    return false
-                }
-                if package.entrypoints.contains(where: {
-                    $0.runtimeProfile == .hanlinNativeScript || $0.runtimeProfile == .hanlinExpo
-                }) {
-                    return true
-                }
-                if let rt = package.manifest?.unknownFields["hanlinRuntime"],
-                   case let .string(rtStr) = rt,
-                   (rtStr == HanlinRuntimeProfile.hanlinNativeScript.rawValue || rtStr == HanlinRuntimeProfile.hanlinExpo.rawValue) {
-                    return true
-                }
-                if package.manifest?.entry?.contains("nativescript") == true || package.manifest?.entry?.contains("expo") == true {
-                    return true
-                }
-                return false
-            }
             BuiltinCanonicalRegistrations.ensureRegistered()
             let discovery = HanlinCompositeMiniAppDiscovery(providers: [
                 HanlinCompiledMiniAppDiscovery(),
-                HanlinScriptPackageDiscovery(snapshots: dynamicPackages)
+                Self.packageDiscovery(installedPackages: installedPackages)
             ])
             let refreshed = try await HanlinCanonicalMiniAppCatalog(discovery: discovery).items()
             items = refreshed
