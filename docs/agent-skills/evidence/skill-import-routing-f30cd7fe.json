@@ -1,0 +1,15 @@
+{
+  "status": "FAILED",
+  "executed": 97,
+  "passed": 96,
+  "failed": 1,
+  "failure": "test_runtime_tooling_full_acceptance_deduplication_and_scoped_build",
+  "baseline_map_commit": "ef89f4b9e03dccf48df70fafb2b2031b04d5814e",
+  "baseline_same_failure_executed": true,
+  "map_delta": "One additive component; every pre-existing component and all other JSON fields unchanged",
+  "dry_plan_status": "P_METADATA_ONLY",
+  "automatic_new_unit_route_verified": true,
+  "cumulative_swift_source_count": 9,
+  "ui_methods": 10,
+  "native_tests_executed": 0
+}

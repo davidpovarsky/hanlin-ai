@@ -18,13 +18,15 @@ struct SkillImportView: View {
     @State private var step: ImportStep = .input
     @State private var selectedTab: Int = 0
     @State private var urlString: String = ""
-    @State private var isProcessing: Bool = false
-    @State private var errorMessage: String? = nil
-    @State private var successMessage: String? = nil
+    @State private var presentation = SkillImportPresentationState()
     @State private var showFileImporter: Bool = false
     @State private var importTask: Task<Void, Never>?
-    @State private var downloadedBytes: Int64 = 0
-    @State private var expectedDownloadBytes: Int64?
+
+    private var isProcessing: Bool { presentation.isProcessing }
+    private var errorMessage: String? { presentation.errorMessage }
+    private var successMessage: String? { presentation.successMessage }
+    private var downloadedBytes: Int64 { presentation.downloadedBytes }
+    private var expectedDownloadBytes: Int64? { presentation.expectedDownloadBytes }
 
     init(initialTab: Int = 0, onImported: @escaping () -> Void = {}) {
         self.initialTab = initialTab
@@ -47,6 +49,7 @@ struct SkillImportView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(SkillL10n.string("Cancel")) {
+                        presentation.invalidate()
                         importTask?.cancel()
                         switch step {
                         case .input:
@@ -68,6 +71,7 @@ struct SkillImportView: View {
             }
         }
         .onDisappear {
+            presentation.invalidate()
             importTask?.cancel()
             if case .preview(let staged) = step { staged.cleanup() }
         }
@@ -348,58 +352,51 @@ struct SkillImportView: View {
         }
     }
 
+    private func beginInspection() -> UUID {
+        importTask?.cancel()
+        return presentation.beginInspection()
+    }
+
     private func handleFileImportResult(_ result: Result<[URL], Error>) {
         switch result {
         case .success(let urls):
             guard let fileURL = urls.first else { return }
-            isProcessing = true
-            errorMessage = nil
-            successMessage = nil
-
+            let attempt = beginInspection()
             importTask = Task {
                 do {
                     let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: fileURL)
-                    try presentPreview(staged)
+                    try presentPreview(staged, attempt: attempt)
                 } catch is CancellationError {
-                    isProcessing = false
+                    presentation.inspectionCancelled(attempt: attempt)
                 } catch {
-                    errorMessage = error.localizedDescription
-                    isProcessing = false
+                    presentation.inspectionFailed(attempt: attempt, message: error.localizedDescription)
                 }
             }
-
         case .failure(let error):
-            errorMessage = error.localizedDescription
+            let attempt = beginInspection()
+            presentation.inspectionFailed(attempt: attempt, message: error.localizedDescription)
         }
     }
 
     private func downloadAndInspect() {
+        let attempt = beginInspection()
         let trimmed = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let url = URL(string: trimmed), url.scheme?.lowercased() == "https" else {
-            errorMessage = "Please enter a valid HTTPS URL."
+            presentation.inspectionFailed(attempt: attempt, message: "Please enter a valid HTTPS URL.")
             return
         }
-
-        isProcessing = true
-        errorMessage = nil
-        successMessage = nil
-        downloadedBytes = 0
-        expectedDownloadBytes = nil
-
         importTask = Task { @MainActor in
             do {
                 let staged = try await SkillImporter.shared.downloadAndStage(from: url, downloadProgress: { received, expected in
                     Task { @MainActor in
-                        downloadedBytes = received
-                        expectedDownloadBytes = expected
+                        presentation.recordProgress(attempt: attempt, received: received, expected: expected)
                     }
                 })
-                try presentPreview(staged)
+                try presentPreview(staged, attempt: attempt)
             } catch is CancellationError {
-                isProcessing = false
+                presentation.inspectionCancelled(attempt: attempt)
             } catch {
-                errorMessage = error.localizedDescription
-                isProcessing = false
+                presentation.inspectionFailed(attempt: attempt, message: error.localizedDescription)
             }
         }
     }
@@ -411,16 +408,14 @@ struct SkillImportView: View {
     }
 
     private func loadTestFixtureZip() {
-        isProcessing = true
-        errorMessage = nil
+        let attempt = beginInspection()
         importTask = Task { @MainActor in
             do {
                 let tempDir = FileManager.default.temporaryDirectory
                 let tempZip = tempDir.appendingPathComponent("ui-import-skill-\(UUID().uuidString).zip")
                 defer { try? FileManager.default.removeItem(at: tempZip) }
                 guard let archive = try? Archive(url: tempZip, accessMode: .create) else {
-                    errorMessage = "Failed to create test fixture zip."
-                    isProcessing = false
+                    presentation.inspectionFailed(attempt: attempt, message: "Failed to create test fixture zip.")
                     return
                 }
                 let skillMD = """
@@ -446,21 +441,18 @@ struct SkillImportView: View {
                 })
 
                 let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: tempZip)
-                try presentPreview(staged)
+                try presentPreview(staged, attempt: attempt)
             } catch is CancellationError {
-                isProcessing = false
+                presentation.inspectionCancelled(attempt: attempt)
             } catch {
-                errorMessage = error.localizedDescription
-                isProcessing = false
+                presentation.inspectionFailed(attempt: attempt, message: error.localizedDescription)
             }
         }
     }
 
     #if targetEnvironment(simulator) || DEBUG
     private func loadTestFixtureMarkdown() {
-        isProcessing = true
-        errorMessage = nil
-        successMessage = nil
+        let attempt = beginInspection()
         importTask = Task { @MainActor in
             let temporaryFile = FileManager.default.temporaryDirectory
                 .appendingPathComponent("ui-markdown-\(UUID().uuidString).md")
@@ -480,40 +472,45 @@ struct SkillImportView: View {
                 """
                 try markdown.write(to: temporaryFile, atomically: true, encoding: .utf8)
                 let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: temporaryFile)
-                try presentPreview(staged)
+                try presentPreview(staged, attempt: attempt)
             } catch is CancellationError {
-                isProcessing = false
+                presentation.inspectionCancelled(attempt: attempt)
             } catch {
-                errorMessage = error.localizedDescription
-                isProcessing = false
+                presentation.inspectionFailed(attempt: attempt, message: error.localizedDescription)
             }
         }
     }
     #endif
 
-    private func presentPreview(_ staged: StagedSkillPackage) throws {
-        guard !Task.isCancelled else {
+    private func presentPreview(_ staged: StagedSkillPackage, attempt: UUID) throws {
+        guard !Task.isCancelled, presentation.preparePreview(attempt: attempt) else {
             staged.cleanup()
             throw CancellationError()
         }
-        isProcessing = false
         step = .preview(staged)
     }
 
     private func installStaged(_ staged: StagedSkillPackage) {
-        isProcessing = true
-        errorMessage = nil
-        Task { @MainActor in
+        guard let attempt = presentation.beginInstallation() else { return }
+        importTask?.cancel()
+        importTask = Task { @MainActor in
+            guard !Task.isCancelled, presentation.isInstalling(attempt: attempt) else {
+                presentation.installationCancelled(attempt: attempt)
+                return
+            }
             do {
                 let descriptor = try SkillImporter.shared.install(staged: staged)
-                successMessage = "Successfully installed skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)]."
-                isProcessing = false
+                // The store committed: notify its existing consumer even if this
+                // presentation has been superseded. Do not replay or roll it back.
                 onImported()
-                try? await Task.sleep(nanoseconds: 600_000_000)
-                dismiss()
+                if presentation.finishInstallation(attempt: attempt,
+                    message: "Successfully installed skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)].") {
+                    dismiss()
+                }
+            } catch is CancellationError {
+                presentation.installationCancelled(attempt: attempt)
             } catch {
-                errorMessage = error.localizedDescription
-                isProcessing = false
+                presentation.installationFailed(attempt: attempt, message: error.localizedDescription)
             }
         }
     }
