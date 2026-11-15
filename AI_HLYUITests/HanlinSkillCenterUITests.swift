@@ -394,6 +394,12 @@ final class HanlinSkillCenterUITests: XCTestCase {
         _ = stageMarkdownFixture()
         tapElement(cancel)
         tapElement(cancel)
+        XCTAssertTrue(cancel.waitForNonExistence(timeout: 5))
+        let search = app.searchFields.firstMatch
+        if !search.isHittable { app.descendants(matching: .any)["hanlin-skill-center-list"].firstMatch.swipeDown() }
+        tapElement(search)
+        search.typeText(markdownFixtureID)
+        XCTAssertTrue(app.staticTexts["No skills found"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(markdownFixtureID)"].exists,
                        "Preview/cancel/retry must not install the unique fixture")
     }

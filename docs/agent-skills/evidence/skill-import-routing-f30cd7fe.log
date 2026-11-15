@@ -1,0 +1,16 @@
+............................................................F....................................
+======================================================================
+FAIL: test_runtime_tooling_full_acceptance_deduplication_and_scoped_build (test_affected_validation.AffectedValidationPlannerTests.test_runtime_tooling_full_acceptance_deduplication_and_scoped_build)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\DAVID\Code\hanlin-composer-wave1-20261115\Scripts\CI\Tests\test_affected_validation.py", line 779, in test_runtime_tooling_full_acceptance_deduplication_and_scoped_build
+    self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/AgentSkillsExposureTests")
+AssertionError: 'AI_H[15 chars]illsExposureTests,AI_HLYTests/HanlinCapabilityObservationTests' != 'AI_H[15 chars]illsExposureTests'
+- AI_HLYTests/AgentSkillsExposureTests,AI_HLYTests/HanlinCapabilityObservationTests
++ AI_HLYTests/AgentSkillsExposureTests
+
+
+----------------------------------------------------------------------
+Ran 97 tests in 35.836s
+
+FAILED (failures=1)

@@ -1,0 +1,74 @@
+Building for debugging...
+[0/13] Write sources
+[2/13] Write swift-version-2807070033DA82CF.txt
+[4/15] Emitting module AI_Hanlin
+[5/15] Compiling AI_Hanlin SkillImportPresentationState.swift
+[6/18] Wrapping AST for AI_Hanlin for debugging
+[8/18] Compiling UIStateTests SkillImportPresentationStateTests.swift
+[9/18] Emitting module UIStateTests
+[10/19] C:\Users\DAVID\Code\hanlin-composer-wave1-20261115\build\skill-import-presentation-proof-f30cd7fe\.build\x86_64-unknown-windows-msvc\debug\SkillImportPresentationProofPackageDiscoveredTests.derived\all-discovered-tests.swift
+[11/19] Write sources
+[12/19] Wrapping AST for UIStateTests for debugging
+[14/22] Compiling SkillImportPresentationProofPackageDiscoveredTests all-discovered-tests.swift
+[15/22] Compiling SkillImportPresentationProofPackageDiscoveredTests UIStateTests.swift
+[16/22] Emitting module SkillImportPresentationProofPackageDiscoveredTests
+[17/23] C:\Users\DAVID\Code\hanlin-composer-wave1-20261115\build\skill-import-presentation-proof-f30cd7fe\.build\x86_64-unknown-windows-msvc\debug\SkillImportPresentationProofPackageTests.derived\runner.swift
+[18/23] Write sources
+[19/25] Wrapping AST for SkillImportPresentationProofPackageDiscoveredTests for debugging
+[21/25] Emitting module SkillImportPresentationProofPackageTests
+[22/25] Compiling SkillImportPresentationProofPackageTests runner.swift
+[23/26] Wrapping AST for SkillImportPresentationProofPackageTests for debugging
+[24/26] Write Objects.LinkFileList
+[25/26] Linking SkillImportPresentationProofPackageTests.xctest
+Build complete! (523.94s)
+Test Suite 'All tests' started at 2026-11-15 21:46:27.767
+
+Test Suite 'debug.xctest' started at 2026-11-15 21:46:27.864
+
+Test Suite 'debug.xctest' passed at 2026-11-15 21:46:27.865
+
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+
+Test Suite 'All tests' passed at 2026-11-15 21:46:27.866
+
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+
+◊ Test run started.
+
+→ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+
+→ Target Platform: x86_64-unknown-windows-msvc
+
+◊ Suite "Skill import attempt-scoped presentation" started.
+
+◊ Test "Cancel then retry rejects queued progress, error and cancellation from the old request" started.
+
+√ Test "Cancel then retry rejects queued progress, error and cancellation from the old request" passed after 0.005 seconds.
+
+◊ Test "An obsolete staged result cannot become the current preview" started.
+
+√ Test "An obsolete staged result cannot become the current preview" passed after 0.002 seconds.
+
+◊ Test "Inspection callbacks of the same request cannot overwrite its later installation phase" started.
+
+√ Test "Inspection callbacks of the same request cannot overwrite its later installation phase" passed after 0.001 seconds.
+
+◊ Test "A stale installation result cannot hide a newer request's error" started.
+
+√ Test "A stale installation result cannot hide a newer request's error" passed after 0.002 seconds.
+
+◊ Test "A current install failure remains retryable without authorizing a stale attempt" started.
+
+√ Test "A current install failure remains retryable without authorizing a stale attempt" passed after 0.001 seconds.
+
+◊ Test "A finished installation rejects later callbacks, and a new request clears old presentation data" started.
+
+√ Test "A finished installation rejects later callbacks, and a new request clears old presentation data" passed after 0.001 seconds.
+
+◊ Test "Dismissal invalidates all outstanding updates without retaining a false busy state" started.
+
+√ Test "Dismissal invalidates all outstanding updates without retaining a false busy state" passed after 0.001 seconds.
+
+√ Suite "Skill import attempt-scoped presentation" passed after 0.028 seconds.
+
+√ Test run with 7 tests in 1 suite passed after 0.030 seconds.
