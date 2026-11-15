@@ -21,6 +21,7 @@ on:
           - modern-cpp
           - modern-provenance
           - modern-validation
+          - modern-combined
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false
@@ -203,6 +204,9 @@ jobs:
       - name: Verify candidate ObjC++ SDK and original C metadata semantics
         if: inputs.nativescript_metadata_tooling_mode == 'modern-cpp' || inputs.nativescript_metadata_tooling_mode == 'modern-validation'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity
+      - name: Verify actual modern combined SDK Expo and compiled provider inputs
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-combined'
+        run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --runtime-wrapper
       - name: Inspect installed frontend development assets
         if: inputs.nativescript_metadata_tooling_mode == 'inventory'
         run: python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py

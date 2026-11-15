@@ -71,7 +71,7 @@ def diagnostic_probe_outcome(exit_code: int, diagnostic: dict, aliases: dict) ->
 
 
 def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, arch: str,
-                          preprocessing_provenance: bool = False) -> dict:
+                          preprocessing_provenance: bool = False, modern: bool = False) -> dict:
     """Exercise the actual launcher with a genuinely compiled Swift interface."""
     folder = output / "runtime-wrapper"
     folder.mkdir(exist_ok=True)
@@ -161,6 +161,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
                                            str(modular / "react.framework/Headers/react")])}
     if preprocessing_provenance:
         environment["HANLIN_METADATA_PREPROCESS_PROVENANCE"] = "1"
+    if modern:
+        environment["HANLIN_METADATA_FRONTEND"] = "modern-candidate"
     for name in ["TARGET_TEMP_DIR", "CONFIGURATION_BUILD_DIR"]:
         Path(environment[name]).mkdir(exist_ok=True)
     (folder / "build-inputs.json").write_text(json.dumps({"compilerInputs": compilation,
@@ -201,14 +203,20 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     inventory_path = visibility.parent / "HanlinMetadataInput.inventory.json"
     inventory = json.loads(inventory_path.read_text()) if inventory_path.is_file() else []
     include_only = [r for r in inventory if r.get("status") == "INCLUDE_SEARCH_ONLY_CPP"]
+    frontend_path = visibility.parent / "metadata-frontend.json"
+    frontend = json.loads(frontend_path.read_text()) if modern and frontend_path.is_file() else {}
+    root_policy = bool(include_only) if not modern else bool(inventory) and not include_only and all(
+        r.get("status") in {"SELECTED", "DEDUPLICATED_IDENTICAL"} for r in inventory) and \
+        frontend.get("rootPolicy") == "ALL_PUBLIC_INPUTS_RETAINED" and frontend.get("includeOnlyExemptions") == 0
     passed = execution.returncode == 0 and bool(recorded) and all(recorded["requiredMetadataStringsPresent"].values()) \
-        and recorded.get("clangErrorCount") == 0 and all(public_symbols.values()) and bool(include_only)
+        and recorded.get("clangErrorCount") == 0 and all(public_symbols.values()) and root_policy
     return {"status": "DIAGNOSTIC_ONLY" if preprocessing_provenance else "EXECUTED_PASS" if passed else "FAILED", "exitCode": execution.returncode,
             "python": sys.version, "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
             "visibility": recorded, "publicObjCAndCMetadataNames": public_symbols,
             "symbolChecksStatus": "EXECUTED" if binary else "NOT_RUN_NO_METADATA_BINARY",
             "actualMetadataCompilerArguments": actual_arguments, "actualMetadataContext": actual_context, "effectiveMetadataCompilerContext": effective_context, "actualSwiftProviderTarget": compilation["-target"],
             "headerAliasValidation": alias_validation,
+            "metadataFrontend": frontend, "rootPolicyPassed": root_policy,
             "preprocessingProvenance": diagnostic, "selectedPublicHeader": selected_body,
             **(diagnostic_probe_outcome(execution.returncode, diagnostic, alias_validation) if preprocessing_provenance
                else {"metadataExecution": "NORMAL_MODE"}),
@@ -232,8 +240,8 @@ def main() -> int:
     parser.add_argument("--preprocessing-provenance", action="store_true",
                         help="Opt-in diagnostic-only wrapper; requires future explicitly authorized native execution")
     options = parser.parse_args()
-    if options.language != "objective-c" and (options.generator is None or options.runtime_wrapper):
-        parser.error("Candidate ObjC++ dialect requires an explicit standalone generator proof")
+    if options.language != "objective-c" and (options.generator is None or (options.runtime_wrapper and not options.modern_semantic_parity)):
+        parser.error("Candidate ObjC++ dialect requires explicit modern generator/model proof")
     if options.preprocessing_provenance and (not options.runtime_wrapper or options.generator is None or options.emit_types):
         parser.error("--preprocessing-provenance requires --runtime-wrapper and --generator, without --emit-types")
     if sys.platform != "darwin":
@@ -268,6 +276,24 @@ def main() -> int:
     headers = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
     output = root / ("build/acceptance/nativescript-sdk-probe-cpp" if options.language == "objective-c++" else "build/acceptance/nativescript-sdk-probe")
     output.mkdir(parents=True, exist_ok=True)
+    if options.modern_semantic_parity and options.language == "objective-c++":
+        # Retain the actual SDK source needed to diagnose model differences.
+        # These copies never replace, filter or alter the generator's inputs.
+        facts = output / "sdk-source-facts"
+        sources = ["usr/include/objc/NSObject.h", "usr/include/mach/clock_types.h",
+                   "usr/include/bsm/audit.h", "usr/include/arm/thread_status.h",
+                   "usr/include/_inttypes.h", "usr/include/sys/_types/_sigaltstack.h",
+                   "usr/include/sys/_types/_ucontext.h"]
+        retained = []
+        for name in sources:
+            path = sdk / name
+            if path.is_file() and path.stat().st_size <= 1024 * 1024:
+                target = facts / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(path.read_bytes())
+                retained.append({"path": name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+        facts.mkdir(parents=True, exist_ok=True)
+        (facts / "manifest.json").write_text(json.dumps(retained, indent=2) + "\n")
     if options.preprocessing_provenance:
         if generator != (root / "build/nativescript-metadata-tool/bin/objc-metadata-generator").resolve():
             raise RuntimeError("Diagnostic candidate must match the production wrapper's instrumented tool")
@@ -435,7 +461,8 @@ def main() -> int:
             "status": "EXECUTED_PASS" if invalid.returncode > 0 and b"error:" in invalid.stderr else "FAILED"}
     if options.runtime_wrapper:
         try:
-            result["runtimeWrapper"] = probe_runtime_wrapper(root, output, original_generator, arch)
+            result["runtimeWrapper"] = probe_runtime_wrapper(root, output, original_generator, arch,
+                modern=options.modern_semantic_parity and options.language == "objective-c++")
         except (subprocess.SubprocessError, RuntimeError, KeyError, StopIteration) as error:
             result["runtimeWrapper"] = {"status": "FAILED", "stage": "actual runtime-wrapper probe",
                                         "reason": type(error).__name__ + ": " + str(error)}

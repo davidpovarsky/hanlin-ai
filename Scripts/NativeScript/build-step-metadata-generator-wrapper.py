@@ -581,6 +581,17 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         verify_role_context(arguments)
         metadata_compiler = capture_native_compiler_context(tool, json.loads(context_path.read_text()),
             environment, generator_root, effective_path)
+        if modern:
+            from metadata_public_headers import compiler_version
+            if metadata_compiler.get("compiler") != compiler_version(modern_library):
+                raise RuntimeError("Actual modern classifier and generator compiler identities differ")
+            (module_root / "metadata-frontend.json").write_text(json.dumps({
+                "status": "CANDIDATE_NOT_ACCEPTED", "frontend": "modern-candidate",
+                "rootPolicy": "ALL_PUBLIC_INPUTS_RETAINED", "includeOnlyExemptions": 0,
+                "compiler": metadata_compiler["compiler"],
+                "generatorSHA256": hashlib.sha256(tool.read_bytes()).hexdigest(),
+                "classifierLibrarySHA256": hashlib.sha256(modern_library.read_bytes()).hexdigest(),
+                "contextSHA256": metadata_compiler["contextSHA256"]}, indent=2) + "\n", encoding="utf-8")
         (module_root / "effective-compiler-context.json").write_text(json.dumps(metadata_compiler, indent=2) + "\n")
         arguments = metadata_compiler["arguments"]
         verify_role_context(arguments)
@@ -615,6 +626,7 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay, alias_validation,
                      alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
                      module_root / "actual-compiler-arguments.json", module_root / "effective-compiler-context.bin",
+                     *([module_root / "metadata-frontend.json"] if modern else []),
                      module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log", *receipts.values()]:
             if path.is_file():
                 shutil.copy2(path, evidence / path.name)

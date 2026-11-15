@@ -138,6 +138,15 @@ def main():
     factory = generator / "src/Meta/MetaFactory.cpp"
     text = base.replace_once(factory.read_text(), "    case clang::Decl::Kind::Record:",
         "    case clang::Decl::Kind::CXXRecord:\n    case clang::Decl::Kind::Record:")
+    text = base.replace_once(text, "          if (tagType->getDecl() == tagDecl) {", '''          if (tagType->getDecl() == tagDecl) {
+            // C++ canonicalizes a later standalone struct typedef to the
+            // definition. That later alias must not rename the original tag.
+            const auto& sm = tagDecl->getASTContext().getSourceManager();
+            if (tagDecl->getASTContext().getLangOpts().CPlusPlus && !tagDecl->getName().empty() &&
+                sm.isBeforeInTranslationUnit(tagDecl->getEndLoc(), nextDecl->getBeginLoc()))
+              return tagDecl->getNameAsString();''')
+    text = base.replace_once(text, "  if (var.getLexicalDeclContext() !=\n      var.getASTContext().getTranslationUnitDecl()) {",
+        "  if (var.getLexicalDeclContext()->getRedeclContext() !=\n      var.getASTContext().getTranslationUnitDecl()) {")
     text = base.replace_once(text, "  // The decl has no typedef name, so we return its name.", '''  // NS_OPTIONS in C++ is a preceding integer typedef and anonymous enum.
   // Recover only the real typedef at the same macro expansion location;
   // preserve the original enumerator/value serializer and public identity.
