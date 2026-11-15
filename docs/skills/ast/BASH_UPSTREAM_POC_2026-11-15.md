@@ -32,6 +32,13 @@ correction for a future upgrade; retain all three prior pins/lock and revert the
 rollback, with ABI/fixture/native validation. Upstream licenses remain in the resolved sources;
 the proof records original manifests/license hashes without vendoring them.
 
+The14-commit source review is retained in `wrapper-followup-audit.json`. Changes add Node.text
+and source retention for the String convenience, adjust bundle-query discovery/LanguageLayer
+visibility, update documentation/CI/tests and the development lock to Core0.25.10. This scanner
+uses none of Node.text, bundle queries or LanguageLayer; it reads bounded UTF-8 Data directly.
+The original UTF-8 Parser read-block implementation is unchanged in that range. This review
+does not establish a general security audit of upstream or certify unrelated wrapper features.
+
 ## Semantics and limits
 
 The actor creates one original parser per invocation. No parser/node/tree escapes actor
@@ -72,5 +79,15 @@ version availability, SkillFormat metadata adapter, product importer/store/UI an
 device memory remain NOT_RUN or pending their actual owner contracts. No full-app run is
 needed to prove this isolated parser slice.
 
-Initial local checks: owned Swift syntax parse, Python proof-plan generation and Bash syntax
-check only. Native compile/tests remain NOT_RUN until an actual retained run passes.
+Native run [43755607608](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43755607608),
+job132938916240 at7992c376764245b68be707e85596cb3747ab801a: EXECUTED_PASS6/6 XCTest methods,
+including all20 grammar fixtures and actual ABI15/language admission. macOS27.0.1 arm64,
+Xcode27.2/Swift6.4.2; unsigned generic iOS simulator/device compilation passed with deployment
+minimum26.0. iOS runtime execution remains NOT_RUN. Job124s; measured phases preflight10s,
+resolution35s, Mac42s, simulator compile16s, device compile11s. No cache-savings estimate.
+
+Exact owned source/archive hashes, six unique Passed identities, original three resolved Git
+revisions/URLs and unchanged lock were authenticated from retained raw results. Artifact14178590135,
+152104bytes, SHA256 `d12bb3394e57cfd812c524dad4bf76c4add442e0566881a3211faf2c2a418e48`.
+Durable record: `evidence/bash-native-43755607608.json`. This proves the isolated native Bash
+slice, not product/readiness, embedded Python/TS or the full mixed-language acceptance contract.

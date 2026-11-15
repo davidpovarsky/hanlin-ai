@@ -1,0 +1,106 @@
+{
+  "base": "08ef81eb8620617b55b08868126707ad72bf754f",
+  "head": "f97df585296977d8fcaf644cbde567151d1367b8",
+  "commits": [
+    {
+      "sha": "e25bdca5083543df215e1df5adef1a867b531b81",
+      "subject": "Update the installation method for Swiftly in CI (#37)"
+    },
+    {
+      "sha": "55a4fbd960259be986f8b86ee6865ab5d794ca7e",
+      "subject": "Migrate CI to use swiftly-action and update Xcode version"
+    },
+    {
+      "sha": "84f6595402eed3f39fb098da77cec867bccc09e8",
+      "subject": "Explicit OS requirement for visionOS"
+    },
+    {
+      "sha": "e586a5f19a7695e302b57e9c9460995e6957b391",
+      "subject": "Layer invalidation test change"
+    },
+    {
+      "sha": "f07ede36bf7ea4d3ccc044c828ca58709048a40f",
+      "subject": "Bump core library to 0.25.10 (#39)"
+    },
+    {
+      "sha": "114a5156889b590bbd0021dca7141b64871e8fba",
+      "subject": "Add `text` on Node (#41)"
+    },
+    {
+      "sha": "39236f7952042976ebfd472db6441ca7ab05efbd",
+      "subject": "Fix bundleQueriesDirectoryURL to work on all platforms (#43)"
+    },
+    {
+      "sha": "769f4770fe8197e2f4ce810375e9b21398ae36d5",
+      "subject": "LanguageConfiguration fails to load in Unit Tests (#45)"
+    },
+    {
+      "sha": "6e664e83d1d1150f002a9a815ec6ef5ccd599f75",
+      "subject": "Update README.md"
+    },
+    {
+      "sha": "3e76e708ead9d0eb4d0c859c22b6bbaeaa702e03",
+      "subject": "Make sure to include a specific version"
+    },
+    {
+      "sha": "f8e2c25dacf2a01f92dbe627be198f3991191d39",
+      "subject": "Merge pull request #46 from hawkinsw/main"
+    },
+    {
+      "sha": "52289fab13759eddb28b0d98d465c6a8ea3f993e",
+      "subject": "Fix a typo in comment"
+    },
+    {
+      "sha": "6c0b041d4fd7c8769edaa4cd6723adffba14531f",
+      "subject": "Make apply(_:) and parse(with:affecting:resolveSublayers:) in LanguageLayer public"
+    },
+    {
+      "sha": "f97df585296977d8fcaf644cbde567151d1367b8",
+      "subject": "Merge pull request #47 from 1024jp/feature/publicIncrementalParsing"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "patch_sha256": "3feb8216e355a284a01c5153779a965a42dd2baef79671b3bb1c15e73b536ab3"
+    },
+    {
+      "path": "Package.resolved",
+      "patch_sha256": "17f3bfc7a3e9910f9282c54785a4d358fd3d447cfdb2c64ac10dfa8c7b76bb48"
+    },
+    {
+      "path": "README.md",
+      "patch_sha256": "6f55ae8b130c4a17d8104646c751aedac7c7bbdd60316dd09cf0df4516a09d6c"
+    },
+    {
+      "path": "Sources/SwiftTreeSitter/LanguageConfiguration.swift",
+      "patch_sha256": "771dd129003aee8c7da6d0cb02226a0c871c26d0364cd53fd60f1550736119ef"
+    },
+    {
+      "path": "Sources/SwiftTreeSitter/Node.swift",
+      "patch_sha256": "733300af6eb131454a5662007bb3e8b4c8fce0a4446851ada5449876c483a6c3"
+    },
+    {
+      "path": "Sources/SwiftTreeSitter/Parser.swift",
+      "patch_sha256": "0bd5ac5ba92137d12b8fecc0e9a387b76446762123f5280c918c123a4f69af6d"
+    },
+    {
+      "path": "Sources/SwiftTreeSitter/Tree.swift",
+      "patch_sha256": "9f1866c5a229d99f2aaccc33bcf5cd31e38e40f0c01d65c266d0e3ccd65ae0e4"
+    },
+    {
+      "path": "Sources/SwiftTreeSitterLayer/LanguageLayer.swift",
+      "patch_sha256": "e11d4f8ec35110ede65970812f4e8cb595acc0f29dc61be3b7f735eb3b787682"
+    },
+    {
+      "path": "Tests/SwiftTreeSitterLayerTests/LanguageLayerTests.swift",
+      "patch_sha256": "c8f958ff3beaf7418ff86f6dedb631a567319365edca9eee984063aa9482b064"
+    },
+    {
+      "path": "Tests/SwiftTreeSitterTests/NodeTests.swift",
+      "patch_sha256": "75e169593790555caca691b153fd21e650acc36a0a28eaad0a20a591cfe25d02"
+    }
+  ],
+  "api_response_sha256": "86f3acf5435711c5dbe70f654a91e8e852921a6cd27b46569b8da28e460f507e",
+  "native_evidence": false
+}
