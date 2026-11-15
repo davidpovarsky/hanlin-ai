@@ -17,12 +17,23 @@
     "fullGraph": "BLOCKED_WINDOWS_FOUNDATION_API",
     "nativeSDK": "NOT_RUN",
     "device": "NOT_RUN",
-    "producerSelectedTests": "HISTORICAL_PASS_45_AT_788a591; CORRECTED_PRODUCER_NOT_RUN",
+    "producerSelectedTests": "48 real Mac producer tests reported verified by lead; reusable only if transitive inputs/locks/toolchain unchanged",
     "producerRootSwiftTest": "BLOCKED_UNCHANGED_WINDOWS_REVAI_URLSESSION_SHARED",
-    "hanlinSession": "NOT_RUN; syntax only",
-    "numericModelAcceptance": "BLOCKED_PENDING_APPLE_HANLIN_WHOLE_CHAIN",
-    "producerCurrentBuild": "NOT_RUN_RESOURCE_GATE",
-    "approvalCorrelationCorrection": "SOURCE_ONLY; new regression bodies/typecheck/parse NOT_RUN"
+    "hanlinSession": "CURRENT_FIXTURE_SOURCE_NOT_RUN; prior faithful Mac SDK bundle compile failure before all10 cases",
+    "numericModelAcceptance": "BLOCKED_PENDING_CORRECTED_SDK10_CASE_MAC_PROOF",
+    "producerCurrentBuild": "Prior real Mac producer proof reported; no local rerun for test-only fixture change",
+    "approvalCorrelationCorrection": "SOURCE_ONLY; new regression bodies/typecheck/parse NOT_RUN",
+    "reportedFaithfulMacPriorRun": {
+      "run": "43686294717",
+      "commit": "e233bffc",
+      "producerTestsPassed": 48,
+      "coreTestsPassed": 20,
+      "sdkCasesExecuted": 0,
+      "sdkCasesNotRun": 10,
+      "sdkCasesFailed": 0,
+      "iOSAgentCoreBuild": "PASS",
+      "provenance": "Lead-reported verified artifact14150797620; not independently downloaded in this resource-gated source correction"
+    }
   },
   "files": [
     {
@@ -102,8 +113,8 @@
     },
     {
       "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
-      "sha256": "6f46918932908ee5f55b9b15c7d7cf06c2aae1dd4c2c5358ace9e2a2049084ba",
-      "normalizedLFsha256": "6f46918932908ee5f55b9b15c7d7cf06c2aae1dd4c2c5358ace9e2a2049084ba"
+      "sha256": "a518033c54e8273371d437da7e4f4f12a4b20112995ba23130f5b5b3d8c909c4",
+      "normalizedLFsha256": "a518033c54e8273371d437da7e4f4f12a4b20112995ba23130f5b5b3d8c909c4"
     },
     {
       "path": "Packages/HanlinAgentSDK/Tests/HanlinHostContractsTests/ContextTests.swift",
@@ -146,7 +157,7 @@
       "normalizedLFsha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c"
     }
   ],
-  "reviewBase": "58de69a1e481de7ff63abbc599906f64955cbdce",
+  "reviewBase": "b82b851a6a728c88dcd39315ae96048bca3d4112",
   "producerFrozenCommit": "e7bf34111e603ca977becd007dd4e5bb109af857",
   "historicalProducerFrozenCommit": "788a591aa0981443ec9a8e747393f07fcdcae4cf"
 }

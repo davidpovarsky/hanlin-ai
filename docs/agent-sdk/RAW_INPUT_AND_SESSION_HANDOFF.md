@@ -1,5 +1,27 @@
 # Combined producer, consumer and session review packet
 
+## Current SDK test-fixture conformance correction
+
+Faithful Mac run43686294717 at e233bffc, as reported with verified artifact14150797620
+by the lead, passed48 real producer tests and20 core tests; iOS AgentCore built.
+The SDK test bundle failed compilation before cases because ExactNumericHost and
+ExecutionGateHost omitted required cancel/open methods: ZERO SDK cases executed,
+10 NOT_RUN, zero actual failed SDK tests. No numeric full-chain acceptance follows.
+
+This source-only correction adds those four methods in AgentSessionTests.swift.
+The numeric read fixture's cancel cannot undo its synchronous completed read. The
+gated fixture forwards cancellation recording without releasing controlled work,
+so Session revocation must still suppress a late result. Both navigation methods
+throw test-local unsupportedNavigation; no mounted/presented ACK is fabricated.
+All10 SDK test identities and their numeric/pending/receipt/lifetime assertions
+remain unchanged. Production source, producer, protocols, manifests and locks are
+unchanged. Current compile/typecheck/parse/test execution is NOT_RUN under the
+resource gate. See evidence/sdk-test-fixture-conformance-receipt.json for hashes,
+the10 identities and the exact prior artifact attribution. Roni source review then
+Tomer's SDK-only real Mac10-case proof remain required; prior68 passes are reusable
+only with unchanged transitive Git inputs, all3 rawlocks and toolchain.
+
+
 This packet is source-frozen for independent Roni review and Tomer integration.
 **Numeric model execution remains BLOCKED for Hanlin acceptance** until the actual
 Hanlin engine/session/host chain compiles and passes on Apple. Neither proof below

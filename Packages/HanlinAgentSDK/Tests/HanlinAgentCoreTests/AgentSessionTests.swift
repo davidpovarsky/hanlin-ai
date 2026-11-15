@@ -39,6 +39,8 @@ private struct ToolScriptModel: LanguageModelV3 {
     }
 }
 
+private enum SessionFixtureError: Error { case unsupportedNavigation }
+
 private actor ExactNumericHost: HanlinHostIntegration {
     nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
     let original: HanlinHostContext
@@ -59,6 +61,11 @@ private actor ExactNumericHost: HanlinHostIntegration {
         arguments.append(invocation.request.arguments)
         return .init(result: .init(invocationID: invocation.request.id, logicalToolID: invocation.request.logicalToolID,
             outcome: .completed([.text("Synthetic numeric read")]), completedAt: .now), effectState: .confirmedNoEffect, context: original)
+    }
+    // Reads complete synchronously on this actor; cancellation cannot undo a completed read.
+    func cancel(_ invocation: HanlinToolInvocationID) async {}
+    func open(_ destination: HanlinHostDestination) async throws -> HanlinHostNavigationResult {
+        throw SessionFixtureError.unsupportedNavigation
     }
 }
 
@@ -94,6 +101,12 @@ private actor ExecutionGateHost: HanlinHostIntegration {
     func execute(_ invocation: HanlinHostInvocation, progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult {
         await withCheckedContinuation { held = $0; waiter?.resume(); waiter = nil }
         return try await contexts.execute(invocation, progress: progress)
+    }
+    // Record cancellation without releasing either gate: the test explicitly releases
+    // captured work so Session revocation must suppress delivery even for a late host.
+    func cancel(_ invocation: HanlinToolInvocationID) async { await contexts.cancel(invocation) }
+    func open(_ destination: HanlinHostDestination) async throws -> HanlinHostNavigationResult {
+        throw SessionFixtureError.unsupportedNavigation
     }
     func waitForExecution() async {
         if held != nil { return }

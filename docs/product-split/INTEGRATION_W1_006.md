@@ -769,3 +769,23 @@ Composer diagnostic run43687001012 at94cd2662 still fails one wrapped method,
 both fitting148.0 /cap138.0 /returned138.0 /fontlineHeight20.287109375 /innerwidth152.0
 and scrolling=true. These exact numbers were relayed to the source owner. No
 hardcoded compensation, assertion change or causal conclusion is introduced here.
+
+
+SDK fixture-only correction03fa0191b35ae015071cd4acb3ea315550b4ff85 was independently
+source accepted and imported in its whole test file plus three packet documents.
+It implements missing cancellation/navigation members in the two test actors;
+no host protocol, production code, gates, continuations, ten method identities or
+assertions change. The new SDK-only proof is authorized for10 actual SDK methods.
+Prior48 producer/20 core/iOS evidence remains at e233; actual current raw lock and
+toolchain equality must be checked before reuse, not assumed from input locks.
+
+The following production/transitive test closure Git object IDs are independently
+unchanged from e233 (docs, new test fixture body, harness and committed old locks
+are deliberately not represented as all250 unchanged inputs):
+
+- Packages/HanlinAgentSDK/Sources: `fc14ca12b3309e5ffc736587bd61a200da4cabfd`
+- Packages/HanlinAgentSDK/Tests/Fixtures: `7d97c7d1815ae329f6e1d98aab460aafe9aef642`
+- Packages/HanlinPlatform/Sources: `be77ecc09955d8d109fc767653e8b353a645a443`
+- Packages/HanlinPlatform/Tests: `429041c1224a198a0671cf309762902aef5e69a3`
+- Packages/HanlinAgentSDK/Package.swift: `ef36f24a02c7a546686078c265bf521997331814`
+- Packages/HanlinPlatform/Package.swift: `0779b4fb4f044a8fc259c06fc3d4d6f3e172c1d0`
