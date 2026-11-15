@@ -2896,10 +2896,7 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "run": 43740551820,
-        "mode": "modern-dual-controls",
-        "source": "72fd7609",
-        "status": "RUNNING_NO_PASS_CLAIMED"
+        "status": "NONE_RUNNING_ACTUAL_DUAL_ENTRY_IMPLEMENTATION"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -2986,28 +2983,56 @@
         "mismatches": 0,
         "resultSHA256": "133e35e1eb0a049198eec71cebddda4c4339b4d4707344b1ba923758316a8db7"
       },
+      "dualGrammarControlHistory": [
+        {
+          "status": "FAILED",
+          "compileRun": 43740009253,
+          "sourceSHA": "a546fe990ac39ac014896a216c457b3d2797c353",
+          "compileStatus": "EXECUTED_PASS",
+          "generatorSHA256": "7ede2a79b304c76e1d5da673558796d140f7178248d729050ee25130baad6df5",
+          "controlBinarySHA256": "d25eca4d89f5b2c2ad5482972c47b8461a4622d741ef1db61eb95a24f8689e59",
+          "fixtures": {
+            "executedPass": 0,
+            "failed": 7,
+            "nativeReceiptCount": 0,
+            "termination": "SIGSEGV"
+          },
+          "artifactManifest": {
+            "filesVerified": 67,
+            "mismatches": 0
+          },
+          "diagnosticRun": 43740317581,
+          "diagnosticCompile": "REUSED_VERIFIED_COMPILE_PASS",
+          "actualStack": "HanlinDual::ActualUnit::ActualUnit +648; EXC_BAD_ACCESS address0x7f",
+          "correctionSource": "72fd7609",
+          "boundary": "No actual SDK/Host/Expo dual model, VM, UI or device acceptance"
+        }
+      ],
       "dualGrammarControls": {
-        "status": "FAILED",
-        "compileRun": 43740009253,
-        "sourceSHA": "a546fe990ac39ac014896a216c457b3d2797c353",
-        "compileStatus": "EXECUTED_PASS",
+        "status": "EXECUTED_PASS",
+        "run": 43741130714,
+        "sourceSHA": "ca1b81119eb8ca1796e68ee5d736e19554ea8e9e",
+        "executedPass": 7,
+        "failed": 0,
         "generatorSHA256": "7ede2a79b304c76e1d5da673558796d140f7178248d729050ee25130baad6df5",
-        "controlBinarySHA256": "d25eca4d89f5b2c2ad5482972c47b8461a4622d741ef1db61eb95a24f8689e59",
-        "fixtures": {
-          "executedPass": 0,
-          "failed": 7,
-          "nativeReceiptCount": 0,
-          "termination": "SIGSEGV"
+        "controlBinarySHA256": "c5ba46a78c859b7d556e16036b455c07d98deab64344a160957267f0d023b3e4",
+        "actualDuplicateProofs": 12,
+        "actualModuleOwnerProofs": 1,
+        "actualRetainedASTModels": {
+          "cpp": 1,
+          "objc": 14
         },
+        "actualRetainedGraphTypes": 12,
+        "crossFactoryTypeValidation": true,
+        "bothSourceManagersReadAfterSerialization": true,
+        "peakRSSAfterSerializationBytes": 59195392,
+        "metadataSHA256": "ddf2f5a0f798dbd967907175925f0c3c3f9662af9f3390aac852c4bfbdc48b0a",
         "artifactManifest": {
-          "filesVerified": 67,
-          "mismatches": 0
+          "filesVerified": 76,
+          "mismatches": 0,
+          "resultSHA256": "73aad028e1032585a78a02a9b215ccc2261350b20d78731af6fcb272f0043a94"
         },
-        "diagnosticRun": 43740317581,
-        "diagnosticCompile": "REUSED_VERIFIED_COMPILE_PASS",
-        "actualStack": "HanlinDual::ActualUnit::ActualUnit +648; EXC_BAD_ACCESS address0x7f",
-        "correctionSource": "72fd7609",
-        "boundary": "No actual SDK/Host/Expo dual model, VM, UI or device acceptance"
+        "boundary": "Actual fresh fixture/compiler/model/ABI/ownership/lifetime/original serializer only; combined SDK/Host/Expo and VM/UI/device NOT_RUN"
       }
     }
   }

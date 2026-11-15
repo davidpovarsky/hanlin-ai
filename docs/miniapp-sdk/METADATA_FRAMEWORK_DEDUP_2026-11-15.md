@@ -26,7 +26,19 @@ a resource budget. New real cross-grammar controls cover C-only exports,
 equivalent duplicates, conflicting signatures/layouts/owners and retained AST
 lifetimes before combined SDK/Host/Expo and actual runtime consumption.
 
-Focused actual dual-grammar controls are still failing. Run43740009253 at
+Actual run43741130714 at `ca1b8111` executes all7 cross-grammar fixture
+controls successfully: C-only exports plus equivalent duplicates, layout,
+signature, constant, availability, physical-owner conflicts and invalid ObjC.
+The positive case proves12 actual duplicate models and1 module-owner mapping,
+validates the cross-factory provider type, uses the original binary/YAML
+serializers, and reads both live SourceManagers after serialization. It retains
+1 CPP-owned and14 ObjC-owned models,12 graph types, and peaks at59,195,392B RSS.
+All76 manifest files verify with0 mismatches; result SHA256 is
+`73aad028e1032585a78a02a9b215ccc2261350b20d78731af6fcb272f0043a94`.
+This is a fixture pass only. Actual combined SDK/Host/Expo dual generation and
+runtime/VM/UI/device acceptance remain NOT_RUN.
+
+Earlier focused actual dual-grammar controls failed. Run43740009253 at
 `a546fe99` compiled both the candidate generator and the focused native control
 executable, but all7 fixtures exited with SIGSEGV before a native receipt.
 No fixture, merge, serializer or lifetime pass is established. Generator SHA256
