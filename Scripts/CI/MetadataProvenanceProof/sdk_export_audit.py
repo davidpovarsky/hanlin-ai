@@ -48,11 +48,12 @@ def main():
     binary = OUTPUT / "SDKExportAudit"
     dependency = OUTPUT / "SDKExportAudit.d"
     compiler = Path(subprocess.check_output(["xcrun", "--find", "clang++"], text=True).strip())
-    command = [str(compiler), "-std=c++17", "-I" + str(frontend / "include"), str(source), "-L" + str(frontend / "lib"),
+    host_sdk = Path(subprocess.check_output(["xcrun", "--sdk", "macosx", "--show-sdk-path"], text=True).strip())
+    command = ["xcrun", "--sdk", "macosx", "clang++", "-std=c++17", "-isysroot", str(host_sdk), "-isystem", str(host_sdk / "usr/include/c++/v1"), "-I" + str(frontend / "include"), str(source), "-L" + str(frontend / "lib"),
         "-Wl,-rpath," + str(frontend / "lib"), "-lLLVM", "-MD", "-MF", str(dependency), "-o", str(binary)]
     receipt = {"sourceSHA256": sha(source), "compileCommand": command, "compilerSHA256": sha(compiler),
         "originalCompilerLinkRun": 43753808737, "originalResultSHA256": sha(REFERENCE / "result.json"),
-        "sdk": str(sdk), "xcode": xcode, "target": original["target"], "runtimeAcceptance": "NOT_RUN"}
+        "sdk": str(sdk), "hostSDK": str(host_sdk), "xcode": xcode, "target": original["target"], "runtimeAcceptance": "NOT_RUN"}
     with (OUTPUT / "compile.log").open("wb") as log:
         built = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=90)
     receipt["compileExitCode"] = built.returncode
