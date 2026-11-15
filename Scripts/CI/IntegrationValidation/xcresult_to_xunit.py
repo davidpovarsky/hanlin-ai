@@ -1,7 +1,7 @@
 """Convert actual xcresulttool Test Case nodes for the owner's XML verifier.
 
 No expected case list is synthesized here. Unknown status is an error and the
-owner's unchanged recipe separately enforces its exact 25-case contract.
+owner's exact-source recipe separately enforces its complete case contract.
 """
 import argparse
 import hashlib

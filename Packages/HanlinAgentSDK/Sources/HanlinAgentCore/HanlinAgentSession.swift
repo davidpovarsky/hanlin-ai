@@ -4,6 +4,7 @@ import HanlinHostContracts
 import HanlinPlatformContracts
 
 public struct HanlinAgentEvent: Sendable {
+    public let session: HanlinHostSession
     public let runID: UUID
     public let step: Int
     public let sequence: UInt64
@@ -14,8 +15,8 @@ public struct HanlinAgentEvent: Sendable {
 @MainActor
 public final class HanlinAgentSession {
     public let identity: HanlinHostSession
-    public var onHostProgress: (@MainActor @Sendable (HanlinToolProgressEvent) -> Void)?
-    public var onHostResult: (@MainActor @Sendable (_ providerCallID: String, _ result: HanlinHostExecutionResult) -> Void)?
+    public var onHostProgress: (@MainActor @Sendable (HanlinHostProgressEvent) -> Void)?
+    public var onHostResult: (@MainActor @Sendable (HanlinHostResultEvent) -> Void)?
     private let host: any HanlinHostIntegration
     private let engine: HanlinAISDKAgentEngine
     private let store: any HanlinConversationStore
@@ -139,7 +140,7 @@ public final class HanlinAgentSession {
                             default: break
                             }
                             try self.requireActive(run: run)
-                            continuation.yield(.init(runID: run, step: streamStep, sequence: eventSequence, event: event))
+                            continuation.yield(.init(session: self.identity, runID: run, step: streamStep, sequence: eventSequence, event: event))
                             eventSequence += 1
                         }
                         try await self.persist(model: modelReference)
@@ -184,6 +185,7 @@ public final class HanlinAgentSession {
             let execution: HanlinAISDKToolDefinition.ProvenanceExecutor = { [weak self] arguments, providerID, provenance in
                 guard let self else { throw HanlinHostError.cancelled }
                 try self.requireActive(run: run)
+                let invocationStep = self.step
                 if let error = self.preparationError { throw error }
                 return try await HanlinModelToolInputGuard.withValidatedArguments(arguments, originalInputVerified: provenance == .acceptedOriginal) { _ -> HanlinAISDKToolExecutionOutput in
                     // Invalid/unsupported input is rejected before pending entry or host effect.
@@ -192,17 +194,19 @@ public final class HanlinAgentSession {
                     // Durable pending entry BEFORE dispatch; interruption must not silently replay.
                     try await self.persist(model: model)
                     try self.requireActive(run: run)
-                    let result = try await self.dispatcher.dispatch(alias: tool.route.alias, argumentsJSON: arguments,
-                        providerCallID: providerID, runID: run, step: self.step, session: self.identity, catalog: catalog,
+                    let hostEvent = try await self.dispatcher.dispatchEvent(alias: tool.route.alias, argumentsJSON: arguments,
+                        providerCallID: providerID, runID: run, step: invocationStep, session: self.identity, catalog: catalog,
                         expectedRevision: tool.writeGuarantee == .atomicRevisionMutation ? self.identity.context.sourceRevision : nil,
                         limits: HanlinToolInvocationLimits(), progress: { event in
-                            await self.deliverProgress(event, run: run)
+                            await self.deliverProgress(event, run: run, providerCallID: providerID,
+                                                       step: invocationStep, logicalToolID: tool.route.logicalToolID)
                         })
+                    let result = hostEvent.result
                     guard self.activeRun == run else { throw HanlinHostError.staleContext }
                     try self.append(.toolResult(providerCallID: providerID, result: result.metadataReceipt()), run: run)
                     try await self.persist(model: model)
                     try await self.requireCurrent(run: run)
-                    self.onHostResult?(providerID, result)
+                    self.onHostResult?(hostEvent)
                     if result.effectState == .uncertain { throw HanlinHostError.unresolvedWrite }
                     let encoded = try JSONEncoder().encode(result)
                     guard encoded.count <= 1_048_576 else { throw HanlinHostError.outputLimitExceeded }
@@ -231,9 +235,13 @@ public final class HanlinAgentSession {
         }
     }
 
-    private func deliverProgress(_ event: HanlinToolProgressEvent, run: UUID) async {
+    private func deliverProgress(_ event: HanlinToolProgressEvent, run: UUID, providerCallID: String,
+                                 step: Int, logicalToolID: HanlinLogicalToolID) async {
         do { try await requireCurrent(run: run) } catch { return }
-        onHostProgress?(event)
+        let call = HanlinHostCallIdentity(session: identity, runID: run, step: step,
+            providerCallID: providerCallID, invocationID: event.invocationID, logicalToolID: logicalToolID)
+        guard let wrapped = try? HanlinHostProgressEvent(call: call, progress: event) else { return }
+        onHostProgress?(wrapped)
     }
 
     private func requireActive(run: UUID) throws {

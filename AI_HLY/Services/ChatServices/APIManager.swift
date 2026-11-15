@@ -3793,6 +3793,11 @@ class APIManager {
                 }
                 continuation.yield(StreamData(content: text))
 
+            case .structuredPart:
+                // The canonical A2UI consumer installs its admission/presentation bridge here.
+                // Never reinterpret structured provider bytes as ordinary chat prose.
+                throw HanlinAISDKError.invalidConversation("Structured presentation is unavailable in this host adapter.")
+
             case .reasoningDelta(let text):
                 self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.reasoning", round: currentStepID, text: text)
                 RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)

@@ -144,6 +144,7 @@ public enum HanlinAISDKStreamEvent: Sendable {
     case runStarted
     case stepStarted(index: Int, preparation: HanlinAISDKStepPreparation)
     case textDelta(String)
+    case structuredPart(HanlinChatStructuredPart)
     case reasoningDelta(String)
     case source(id: String, url: String, title: String?)
     case file(mediaType: String, data: Data)

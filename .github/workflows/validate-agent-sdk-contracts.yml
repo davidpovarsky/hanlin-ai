@@ -1,0 +1,26 @@
+name: Agent SDK affected contracts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  affected-contracts:
+    runs-on: xcode-27
+    timeout-minutes: 60
+    env:
+      HANLIN_SDK_CONTRACTS_ONLY: '1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Run existing exact-source SDK and Core proof
+        run: bash Scripts/CI/IntegrationValidation/run_agent_sdk.sh
+      - name: Retain results and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: agent-sdk-contracts-${{ github.run_id }}
+          path: build/agent-sdk-validation-evidence
+          if-no-files-found: error
+          retention-days: 30
