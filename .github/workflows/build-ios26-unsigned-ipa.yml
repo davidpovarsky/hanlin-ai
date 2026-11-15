@@ -144,20 +144,28 @@ jobs:
   focused-composer-tests:
     if: ${{ inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
     name: Verify Composer shell and coordinator on iOS
-    runs-on: macos-26
-    timeout-minutes: 25
+    runs-on: ${{ inputs.target_validation_group == 'composer_native_host_diagnostic' && 'xcode-27' || 'macos-26' }}
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Compile actual Composer sources and run focused tests
+        if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' }}
         env:
           COMPOSER_EXPECTED_SHA: ${{ inputs.composer_expected_sha }}
         run: bash Scripts/CI/ComposerValidation/run.sh
+      - name: Confirm native settings and owned destination before one component test
+        if: ${{ inputs.target_validation_group == 'composer_native_host_diagnostic' }}
+        timeout-minutes: 37
+        env:
+          COMPOSER_EXPECTED_SHA: ${{ inputs.composer_expected_sha }}
+          COMPOSER_NATIVE_HOST_DIAGNOSTIC: '1'
+        run: python3 -B Scripts/CI/ComposerValidation/native_host/run_native.py
       - name: Retain Composer validation evidence
         if: always()
         uses: actions/upload-artifact@v7.0.2
         with:
-          name: composer-ios-validation-${{ github.run_id }}
-          path: build/composer-validation-evidence
+          name: composer-${{ inputs.target_validation_group == 'composer_native_host_diagnostic' && 'native-host' || 'ios-validation' }}-${{ github.run_id }}
+          path: ${{ inputs.target_validation_group == 'composer_native_host_diagnostic' && 'build/composer-native-host-evidence' || 'build/composer-validation-evidence' }}
           if-no-files-found: warn
           retention-days: 14
 

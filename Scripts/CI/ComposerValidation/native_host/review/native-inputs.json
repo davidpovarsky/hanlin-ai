@@ -1,0 +1,197 @@
+{
+  "scope": "native-hosted-component-unit-test-infrastructure",
+  "full_app_acceptance": false,
+  "source": "e8ccd81452843609285a0cd7e017a759bda6a6ef",
+  "owner": "20980c9448f0a5d78eefcaec38da6e92364de37d",
+  "status": "SOURCE_ONLY_NOT_COMPILED",
+  "original_reference_input_sha256": {
+    "AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift": "0761732958f062ab48dd39954758eab9e528decbfbf76c3e7109216a42dfce67",
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift": "93db8f73981ba3d8bb0bfcb84c87d9fbf69d7c7abce8c17a0e2539f9fa548516",
+    "AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift": "9cb0d043d13027aae0170f9a1920aa1496ad46648f1ad48912a99cb99a332dee",
+    "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift": "1fdd7f2c7e367907b63a7e6d571be8f334705c51ce1a8dc8b0c2c099fb6feafe",
+    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift": "46efd8a6082f73433f9746aa64b5a880f1f16ca4dc2c40aad57e082978878c95",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift": "06ce0518897c878f58a6da0d0135aab379fb26afce256e4b6e77f18ea5087711",
+    "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift": "7cb8257ab1c051ca9678d90a3dae0723a34f82665773ee29e2c778f1c3dafb02",
+    "AI_HLY/Model/AllModels.swift": "c0bd2a7b9d441876743c8ac4c25f179a07456b84ddd8828f22d5dc8c1b145ce5",
+    "AI_HLYTests/HanlinMorphComposerTests.swift": "95699e6c93b6dd02603130d46f06b85c783695bef08f87b842a096e224d3db64",
+    "AI_HLYTests/HanlinOrganizerDockParityTests.swift": "c01b6f861877023c975b504cbaee903306b317eed6f134c9270f67bf8c94185e",
+    "AI_HLYTests/NativeComposerLineSizingTests.swift": "a02b04896482a43f7347293f0ac05575ba9d624d75aacb995643ff7153454d82",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift": "cd5221362cad24677a27f768a714c494bd6969035a85197d78d06d8599ede3a1"
+  },
+  "native_canonical_sources": [
+    {
+      "original": "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift",
+      "native": "Canonical/AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift",
+      "sha256": "1fdd7f2c7e367907b63a7e6d571be8f334705c51ce1a8dc8b0c2c099fb6feafe",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+      "native": "Canonical/AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+      "sha256": "93db8f73981ba3d8bb0bfcb84c87d9fbf69d7c7abce8c17a0e2539f9fa548516",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift",
+      "native": "Canonical/AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift",
+      "sha256": "06ce0518897c878f58a6da0d0135aab379fb26afce256e4b6e77f18ea5087711",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift",
+      "native": "Canonical/AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift",
+      "sha256": "9cb0d043d13027aae0170f9a1920aa1496ad46648f1ad48912a99cb99a332dee",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift",
+      "native": "Canonical/AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift",
+      "sha256": "0761732958f062ab48dd39954758eab9e528decbfbf76c3e7109216a42dfce67",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLY/Model/AllModels.swift",
+      "native": "Canonical/AI_HLY/Model/AllModels.swift",
+      "sha256": "c0bd2a7b9d441876743c8ac4c25f179a07456b84ddd8828f22d5dc8c1b145ce5",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+      "native": "Canonical/AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+      "sha256": "7cb8257ab1c051ca9678d90a3dae0723a34f82665773ee29e2c778f1c3dafb02",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
+      "native": "Canonical/AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
+      "sha256": "46efd8a6082f73433f9746aa64b5a880f1f16ca4dc2c40aad57e082978878c95",
+      "target": "AI_Hanlin"
+    },
+    {
+      "original": "AI_HLYTests/HanlinMorphComposerTests.swift",
+      "native": "Canonical/AI_HLYTests/HanlinMorphComposerTests.swift",
+      "sha256": "95699e6c93b6dd02603130d46f06b85c783695bef08f87b842a096e224d3db64",
+      "target": "AI_HanlinTests"
+    },
+    {
+      "original": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "native": "Canonical/AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sha256": "a02b04896482a43f7347293f0ac05575ba9d624d75aacb995643ff7153454d82",
+      "target": "AI_HanlinTests"
+    }
+  ],
+  "reference_only_not_compiled": [
+    "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift"
+  ],
+  "native_infrastructure_sources": {
+    "Infrastructure/ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e"
+  },
+  "generated_infrastructure_sha256": {
+    "ComposerNativeHost.xcodeproj/project.pbxproj": "9443466ee77dac5545cc112957379ccd1ccc116673571eeac4d767e29b2773a4",
+    "ComposerNativeHost.xcodeproj/xcshareddata/xcschemes/ComposerNativeHost.xcscheme": "5c834a5ae4e67261dbe71a9a1afc7fc4328555e6296a1df31d8ac1784de91a97"
+  },
+  "expected_case_ids": [
+    "HanlinMorphComposerTests/heightAndOverflow()",
+    "HanlinMorphComposerTests/remainingViewportBudget()",
+    "HanlinMorphComposerTests/editorAndShellShareViewport()",
+    "HanlinMorphComposerTests/backSwipeThreshold()",
+    "HanlinMorphComposerTests/pageIdentity()",
+    "HanlinMorphComposerTests/coordinatorNavigationPreservesOpenState()",
+    "HanlinMorphComposerTests/capabilityRoutesReturnToOpenHome()",
+    "NativeComposerLineSizingTests/editingKeepsDraftAndSelection()",
+    "NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+    "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+    "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+    "NativeComposerLineSizingTests/fontAndViewport()"
+  ],
+  "reference_compiled_file_count": 10,
+  "native_compiled_file_count": 11,
+  "package_references": 0,
+  "conditional_directive_audit": {
+    "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift": [],
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift": [
+      {
+        "line": 471,
+        "text": "#if canImport(UIKit)"
+      },
+      {
+        "line": 490,
+        "text": "#endif"
+      }
+    ],
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift": [],
+    "AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift": [],
+    "AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift": [],
+    "AI_HLY/Model/AllModels.swift": [],
+    "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift": [],
+    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift": [],
+    "AI_HLYTests/HanlinMorphComposerTests.swift": [],
+    "AI_HLYTests/NativeComposerLineSizingTests.swift": []
+  },
+  "compilation_condition_mapping": {
+    "prior_actual_run": "43691033216",
+    "prior_source": "51d3fa350f6908526c6a78e4858b40122cc4f2f0",
+    "prior_github_cli_log_sha256": "9ae53b7446817a4d76f93fe465a01c8b21bf20e7e65b3e29c6dfc52ed651b687",
+    "prior_observed_swift_conditions": [
+      "SWIFT_PACKAGE",
+      "DEBUG",
+      "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "Xcode"
+    ],
+    "native_explicit_swift_conditions": [
+      "DEBUG",
+      "Xcode"
+    ],
+    "SWIFT_PACKAGE_dependency_in_compiled_frozen_files": false,
+    "omitted_unused_package_conditions": [
+      "SWIFT_PACKAGE",
+      "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+    ],
+    "canImport_UIKit": "required true for both iOS environments; actual compiler verification still NOT_RUN",
+    "language": "Swift6",
+    "optimization": "-Onone",
+    "testability": true,
+    "concurrency_overrides": "none; no app-specific default-actor/approachable-concurrency override copied"
+  },
+  "declared_environment_differences": [
+    "native real UIApplication host and hosted unit-test bundle, rather than synthesized SwiftPM runner",
+    "explicit iOS27 minimum instead of prior validation Package iOS26 minimum",
+    "zero Swift packages and no package resources; old Package.swift is reference only, not native input",
+    "new minimal clear host scene; canonical component code/tests/math/probes are unchanged",
+    "actual effective native build settings, loading and runtime metrics remain NOT_RUN"
+  ],
+  "target_ids": {
+    "app": "08F329FA9267432CDC84D3F7",
+    "unit": "EA26C42B1F5380EB1E3D7D52",
+    "project": "56F912F481BAD379E976B790"
+  },
+  "read_only_pattern_provenance": {
+    "reference_commit": "e8ccd81452843609285a0cd7e017a759bda6a6ef",
+    "read_only_reference_sha256": {
+      "AI_HLY.xcodeproj/project.pbxproj": "76bf1df2b370fe7fc393482531605ecbff21e931ff3269501b0cc65f631e09a3",
+      "Scripts/CI/SimulatorAcceptance/prepare_parity_project.py": "9ffa72bfc34ee5c190b0b23c426b9b2d1927ea0472dc16106f1dd643fec883d1",
+      "Scripts/CI/IntegrationValidation/extract_target.py": "5842d5b3004d266bd40607cfe4bd44a9a076908efae42534d385554b6eddecf3",
+      "Scripts/CI/IntegrationValidation/project_graph.py": "5a84cbe967e4fab3fd933e37004067e5037fc80408cb89e65101a79cf705df41"
+    },
+    "checked_in_native_unit_target": "AI_HLYTests",
+    "host_loading_pattern": {
+      "Debug": {
+        "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/AI_Hanlin.app/AI_Hanlin",
+        "BUNDLE_LOADER": "$(TEST_HOST)"
+      },
+      "Release": {
+        "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/AI_Hanlin.app/AI_Hanlin",
+        "BUNDLE_LOADER": "$(TEST_HOST)"
+      }
+    },
+    "prior_validation_package_sha256_reference_only": "f529f2843080de42fccc5f0c5879b2674caaa976de0fadeaa4db606dde71cc8d"
+  },
+  "review_materialization": "PBX/scheme/metadata only; canonical Swift held in memory and not copied locally",
+  "source_tool_sha256": {
+    "prepare_native.py": "a09f0f7798def05eb96815958d7fe38f349d6268974c0715bd880a6a267eac58",
+    "validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467",
+    "freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
+    "ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e"
+  }
+}

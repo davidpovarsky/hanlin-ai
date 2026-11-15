@@ -1,0 +1,8 @@
+List available devices, device types, runtimes, or device pairs.
+Usage: simctl list [-j | --json] [--json-fd=<fd>] [--json-output=<file path>] [-e | --no-escape-slashes] [-v] [devices|devicetypes|runtimes|pairs] [<search term>|available]
+-j     Print as JSON (optionally specify a file descriptor with --json-fd or file path with --json-output)
+-e     Encode slashes without escapes in JSON output
+-v     More verbose output
+
+Specify one of 'devices', 'devicetypes', 'runtimes', or 'pairs' to list only items of that type. If a type filter is specified you may also specify a search term. Search terms use a simple case-insensitive contains check against the item's description. You may use the search term 'available' to only list available items.
+
