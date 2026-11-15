@@ -71,7 +71,7 @@ PY
 python3 - <<'PY' > "$evidence/workflow-sha256.json"
 import hashlib,json,subprocess
 from pathlib import Path
-paths=['.github/workflows/validate-agent-sdk-contracts.yml','Scripts/CI/IntegrationValidation/run_agent_sdk.sh','Scripts/CI/IntegrationValidation/verify_agent_sdk.py','Scripts/CI/IntegrationValidation/xcresult_to_xunit.py']
+paths=['.github/workflows/build-ios26-unsigned-ipa.yml','Scripts/CI/IntegrationValidation/run_agent_sdk.sh','Scripts/CI/IntegrationValidation/verify_agent_sdk.py','Scripts/CI/IntegrationValidation/xcresult_to_xunit.py']
 for path in paths:assert Path(path).read_bytes()==subprocess.check_output(['git','show',f'HEAD:{path}'])
 print(json.dumps({p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths},indent=2))
 PY
