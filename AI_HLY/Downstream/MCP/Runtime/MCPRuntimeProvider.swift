@@ -205,6 +205,24 @@ final class MCPRuntimeProvider {
         } catch { lastError = error.localizedDescription }
     }
 
+    /// Composer intent against canonical current storage, never a UI selection
+    /// snapshot. Throws this request's failure and returns its committed readback.
+    /// The caller still owns scope/revision guards for asynchronous presentation.
+    @discardableResult
+    func applySelectionIntent(
+        _ intent: MCPChatServerSelectionIntent,
+        chatID: UUID,
+        temporary: Bool
+    ) async throws -> Set<UUID> {
+        guard persistentLoadState == .loaded else { throw MCPChatSelectionReadError.storageNotLoaded }
+        let defaults = Set(servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id))
+        let result = try await selectionStore.applySelectionIntent(
+            intent, chatID: chatID, temporary: temporary, defaultServerIDs: defaults
+        )
+        publishSelectionMutation(result.mutation)
+        return result.serverIDs
+    }
+
     func install(spec: MCPPackageSpec, entryPointOverride: String? = nil) async {
         await performInstall(spec: spec, existing: nil, entryPointOverride: entryPointOverride)
     }
