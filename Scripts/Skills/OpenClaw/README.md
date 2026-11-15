@@ -43,8 +43,10 @@ tool visibility, and Hanlin readiness are not covered by this pure module. The f
 OpenClaw config/SecretRef state, bundled-source policy and frontmatter helpers.
 Its `frontmatter.ts` install parser is private and its public metadata path goes
 through OpenClaw's string/JSON5 manifest normalization, semver and Markdown parser
-dependencies. Those closures remain under audit; no equivalent Hanlin engine is
-invented to conceal the gap. No Runtime-05 API is assumed.
+dependencies. The reproducible [dependency experiment and ADR](ADR-original-subset.md)
+records78 parsed original modules and17 unresolved external import paths, including
+YAML and desktop Node APIs. It is a partial graph, not a closed executable bundle.
+No equivalent Hanlin engine or Runtime-05 API is invented to conceal the gap.
 
 Build tools only (no upstream lifecycle scripts):
 
@@ -65,9 +67,23 @@ An initial harness assertion-count expectation15 failed after all original asser
 passed; corrected16 and reran only that affected wrapper. Other five controls had
 actually passed and were not rerun solely for the count correction.
 
-Windows Node22.17 JITless checks are portability evidence only. `native-probe.mjs`
-prepares the same cases for an in-process actual embedded Node24.5.0 probe; it does
-not use Node's child-process test runner. Native execution, physical iPad startup/
-RAM, complete policy parity and app integration are NOT_RUN at this checkpoint.
+Exact official portable Windows Node24.5.0 has also executed all six in-process
+cases with `--jitless`, including the original five tests/16 assertions. It remains
+portability evidence only. `native-probe.mjs` prepares the same cases for an actual
+embedded Node24.5.0 probe without Node's child-process test runner. The original
+NodeMobile sample compiled successfully against the existing authenticated native
+framework in run43766595877; simulator cold boot timed out before any embedded
+case ran. Native execution, physical iPad startup/RAM, complete policy parity and
+app integration are NOT_RUN at this checkpoint.
 Measured diagnostic-process timings/RSS must not be presented as physical iPad or
 full Hanlin startup/performance evidence.
+
+The dependency audit can be reproduced separately without executing its output:
+
+```sh
+node audit-dependency-closure.mjs           # fetch only pinned audit blobs as needed
+node audit-dependency-closure.mjs --offline # verify cached bytes and exact graph
+```
+
+This audit is a build-time investigation, not a runtime dependency or second YAML
+parser. Source drift and a changed observed graph fail closed.
