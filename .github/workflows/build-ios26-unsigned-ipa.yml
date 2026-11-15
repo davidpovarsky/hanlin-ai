@@ -119,7 +119,7 @@ on:
         default: ''
         type: string
       target_validation_group:
-        description: Explicitly run a targeted validation group (e.g. product_split_integration, ci_router, nativescript_runtime, simulator_targeted_ui, app_unit_tests)
+        description: Explicitly run a targeted validation group (e.g. product_split_integration, a2ui_exact_pin_proof, ci_router, nativescript_runtime, simulator_targeted_ui, app_unit_tests)
         required: false
         default: ''
         type: string
@@ -137,32 +137,38 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'product_split_integration') && 'product-split-integration' || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
   focused-integration-tests:
-    if: ${{ (inputs.target_validation_group == 'product_split_integration') && !inputs.composer_validation_only && !inputs.testflight_upload && !inputs.runtime_bundle_only && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
-    name: Verify registered MiniApps target and split product on iOS 27
+    if: ${{ (inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.composer_validation_only && !inputs.testflight_upload && !inputs.runtime_bundle_only && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
+    name: ${{ inputs.target_validation_group == 'a2ui_exact_pin_proof' && 'Verify exact-pin A2UI on macOS 27' || 'Verify registered MiniApps target and split product on iOS 27' }}
     runs-on: xcode-27
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7.0.1
-      - name: Build exact extracted target and execute registered package tests
+      - name: Execute the selected isolated source proof
         env:
           INTEGRATION_EXPECTED_SHA: ${{ github.sha }}
-        run: bash Scripts/CI/IntegrationValidation/run.sh
+          INTEGRATION_VALIDATION_MODE: ${{ inputs.target_validation_group }}
+        run: |
+          case "$INTEGRATION_VALIDATION_MODE" in
+            product_split_integration) bash Scripts/CI/IntegrationValidation/run.sh ;;
+            a2ui_exact_pin_proof) bash Scripts/CI/IntegrationValidation/run_a2ui.sh ;;
+            *) echo 'Unsupported isolated proof mode' >&2; exit 2 ;;
+          esac
       - name: Retain integration evidence
         if: always()
         uses: actions/upload-artifact@v7.0.2
         with:
-          name: product-split-integration-${{ github.run_id }}
+          name: ${{ inputs.target_validation_group == 'a2ui_exact_pin_proof' && 'a2ui-exact-pin' || 'product-split-integration' }}-${{ github.run_id }}
           path: build/integration-validation-evidence
           if-no-files-found: error
           retention-days: 14
 
   focused-composer-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
     name: Verify Composer shell and coordinator on iOS
     runs-on: macos-26
     timeout-minutes: 25
@@ -182,7 +188,7 @@ jobs:
           retention-days: 14
 
   focused-nativescript-metadata-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
     name: Probe pinned NativeScript SDK metadata
     runs-on: xcode-27
     timeout-minutes: 12
@@ -220,7 +226,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -3044,21 +3050,21 @@ jobs:
 
 
   focused-markdown-renderer-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && !inputs.testflight_upload && inputs.markdown_renderer_validation_only }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.testflight_upload && inputs.markdown_renderer_validation_only }}
     uses: ./.github/workflows/validate-chat-markdown.yml
 
   focused-code-fence-webkit-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && !inputs.testflight_upload && inputs.code_fence_webkit_validation_only }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.testflight_upload && inputs.code_fence_webkit_validation_only }}
     uses: ./.github/workflows/validate-chat-code-fences.yml
 
   focused-diagnostics-capture-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && !inputs.testflight_upload && inputs.diagnostics_capture_validation_only }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.testflight_upload && inputs.diagnostics_capture_validation_only }}
     uses: ./.github/workflows/validate-chat-diagnostics.yml
     with:
       test_suite: ${{ inputs.exact_test_selector }}
 
   focused-scripting-package-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}
     uses: ./.github/workflows/validate-scripting-runtime.yml
     with:
       test_filter: ${{ inputs.scripting_package_test_filter }}
@@ -3067,7 +3073,7 @@ jobs:
     secrets: inherit
 
   upload-chavrusachat-to-testflight:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration') && inputs.testflight_upload }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && inputs.testflight_upload }}
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true
