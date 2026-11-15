@@ -1,6 +1,6 @@
 # Composer app/SDK consumer handoff — 2026-11-15
 
-The editor correction is integrated in `e9c07cbd8a77e990ea88a667556fa2574f83eebb`. Its original one-plus-four native executions remain separate authenticated evidence; this work does not change their ten compiled source/test files or rerun those cases.
+The editor correction is integrated in `e9c07cbd8a77e990ea88a667556fa2574f83eebb`. Its original one-plus-four native executions remain separate authenticated evidence. The picker/routing tranche through965647e6 preserved all ten compiled inputs. The later chip accessibility followup below changes that view's body, while leaving both editor-fix source/test files unchanged; the original packet is not compilation evidence for the new view and those five cases are not rerun.
 
 ## Available source and missing app graph
 
@@ -42,5 +42,11 @@ These selectors are **NOT_RUN**. Local Windows Swift frontend parsing and whites
 The portable planner suite executed96 cases: **95 PASS / 1 FAILED**, including PASS for the new Composer routing regression. The failure is the existing `test_runtime_tooling_full_acceptance_deduplication_and_scoped_build`: it expects only `AgentSkillsExposureTests`, while the existing map also selects `HanlinCapabilityObservationTests`. The unchanged failing test was reexecuted with the original committed97fe29a0 map and failed identically. That expectation was preserved; no full-suite pass is claimed. Raw ignored logs: `build/evidence/composer-consumer-routing-tests.log` and `build/evidence/composer-routing-baseline-97fe29a0.log`.
 
 A dry plan using exactly the five Composer product/test transplant paths and the six selectors above passed: five unit selectors, one UI selector, no broad/full/device/IPA/Runtime bundle execution. Receipt `build/evidence/composer-consumer-net-dry-plan.json` is planning evidence only, zero Apple cases executed. Comparing the two entire diverged branches initially surfaced unrelated unmapped SDK/Split/A2UI paths; those paths were not imported, mapped or used to broaden this scope. Integration should plan the actual net transplant, not synchronize whole branches.
+
+## Localized chip accessibility followup
+
+An independent source audit against the reverified chips reference found an English-composed accessibility suffix and missing title translations. The followup adds `AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift` and five additive entries in `AI_HLY/Resource/Localizable.xcstrings` to the earlier five-path net tranche. The chip supplies localized name/Enabled value/Open settings hint separately. Dedicated thinking/runtime keys preserve Hebrew reference wording without rewriting925 existing translations; geometry, colors, context actions and state projection stay the same. Details and portable resource checks are in `W1-008_ENABLED_CAPABILITIES.md`.
+
+The existing English UI case above now requires label Tools/value Enabled. Add the existing affected Hebrew/RTL selector `AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel` to the exact app run; it now requires label כלים/value מופעל instead of nonempty text. Current selection is five unit plus two UI methods. Both UI cases remain NOT_RUN, with all actual SDK/app/VoiceOver/visual/physical gates open. No extra UI launch case was introduced. A separate seven-path/seven-selector dry-plan receipt is retained at `build/evidence/composer-localized-chip-net-dry-plan.json`; it is routing metadata only.
 
 `protectedFilesAndReferenceMetadataRemainIntact()` is preserved verbatim. Authorized SDK/A2UI changes to its protected whole-file inputs still require the precise versioned integration contract amendment and protected-behavior proof already agreed with the manager. Do not replace hashes silently or omit that obligation. Compact/wide/RTL, keyboard/accessibility/Reduce Motion and authentic physical iPad/reference parity remain open. Both Asana tasks remain incomplete.

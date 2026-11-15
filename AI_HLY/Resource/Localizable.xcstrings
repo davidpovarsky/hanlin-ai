@@ -1902,6 +1902,46 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已启用" } }
       }
     },
+    "Open settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open settings" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "פתיחת הגדרות" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开设置" } }
+      }
+    },
+    "Search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חיפוש" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索" } }
+      }
+    },
+    "composer.capability.runtimes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Runtimes" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "הרצה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "运行环境" } }
+      }
+    },
+    "Creative" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Creative" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "יצירה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "创作" } }
+      }
+    },
+    "composer.capability.thinking" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Thinking" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חשיבה" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "思考" } }
+      }
+    },
     "Examples" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Examples" } },
