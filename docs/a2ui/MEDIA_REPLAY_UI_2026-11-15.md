@@ -59,6 +59,22 @@ Artifact14175250950 SHA256
 `479d1b38d24c9ee4f124064919514094eca8dc56db8b617989c75f4801a0248a`.
 This is distinct from canonical Hanlin SDK consumer tests and from the pending iOS UI run.
 
+Run43747506272 at516 executed7/7 UI cases, all FAILED at the shared initial identifier lookup;
+none reached media action/relay/lifecycle acceptance. Its actual screenshots/AX show the native
+form controls disabled and Load/source controls present, with the official Surface assigning
+`a2ui-root` to descendant controls. The corrected queries use real AX type/label and WKWebView;
+native player content receives a meaningful containing accessibility group preserving its
+official controls. These corrections affect the failed cases, not the authenticated Mac36 inputs.
+The original artifact14175910717 SHA256
+`293bab7eeb87ab419fa0b70773885eee77b2a67a11d11ecb4a7059243d88e208`
+and each original AX attachment are authenticated in `evidence/media-replay-ui-43747506272.json`.
+
+Measured build/test928s contains an Xcode test-operation785.054s and actual case interval249.742s;
+the535.312s remainder is startup/runner/teardown overhead, not assumed functional work or cache
+savings. The runner now records a separate bounded explicit simulator boot phase before package
+resolution, destination timeout and per-case execution bounds. First retry selects only the
+history YouTube action/relay obligation to diagnose the shared setup before widening UI scope.
+
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release
 settings remain unchanged.

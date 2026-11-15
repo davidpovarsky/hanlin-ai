@@ -141,9 +141,15 @@ final class MediaReplayUITests: XCTestCase {
         XCTAssertTrue(load().waitForExistence(timeout: 20))
     }
     private func element(_ id: String) -> XCUIElement { app.descendants(matching: .any)[id].firstMatch }
-    private func load() -> XCUIElement { element(app.launchArguments.contains("--video") || app.launchArguments.contains("--audio") ? "hanlin-media-load-player" : "hanlin-youtube-load") }
-    private func source() -> XCUIElement { element(app.launchArguments.contains("--video") || app.launchArguments.contains("--audio") ? "hanlin-media-source" : "hanlin-youtube-source") }
-    private func player() -> XCUIElement { element(app.launchArguments.contains("--video") || app.launchArguments.contains("--audio") ? "hanlin-media-player" : "hanlin-youtube-player") }
+    // Official Surface assigns a2ui-root to descendants in the actual AX tree. Resolve the
+    // real semantic controls by type/label; do not force taps through a duplicate identifier.
+    private var nativeMedia: Bool { app.launchArguments.contains("--video") || app.launchArguments.contains("--audio") }
+    private func load() -> XCUIElement { app.buttons[nativeMedia ? "Load media player" : "Load YouTube player"].firstMatch }
+    private func source() -> XCUIElement { app.links[nativeMedia ? "Open media source" : "Open in YouTube"].firstMatch }
+    private func player() -> XCUIElement {
+        nativeMedia ? app.descendants(matching: .any).matching(NSPredicate(format: "label == 'Media player'")).firstMatch
+            : app.webViews.firstMatch
+    }
     private func wait(_ predicate: NSPredicate, on element: XCUIElement) -> Bool {
         XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: predicate, object: element)], timeout: 10) == .completed
     }

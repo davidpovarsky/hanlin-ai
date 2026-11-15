@@ -54,6 +54,8 @@ private struct HanlinRequestedA2UIPlayer: View {
         VStack(alignment: .leading, spacing: 8) {
             if requested && isEnabled && scenePhase == .active {
                 builder(node)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityLabel("Media player")
                     .accessibilityIdentifier("hanlin-media-player")
             } else {
                 Button("Load media player", systemImage: "play.circle") { requested = true }

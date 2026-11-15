@@ -66,12 +66,12 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         XCTAssertTrue(submit.exists)
         XCTAssertFalse(submit.isEnabled)
         XCTAssertFalse(app.textFields["Replay name"].firstMatch.isEnabled)
-        XCTAssertTrue(element("hanlin-youtube-load").isEnabled)
-        XCTAssertTrue(element("hanlin-youtube-source").isEnabled)
-        XCTAssertFalse(element("hanlin-youtube-player").exists)
+        XCTAssertTrue(app.buttons["Load YouTube player"].firstMatch.isEnabled)
+        XCTAssertTrue(app.links["Open in YouTube"].firstMatch.isEnabled)
+        XCTAssertFalse(app.webViews.firstMatch.exists)
         XCTAssertFalse(element("hanlin-a2ui-history-unavailable").exists)
-        element("hanlin-youtube-load").tap()
-        XCTAssertTrue(element("hanlin-youtube-player").waitForExistence(timeout: 10))
+        app.buttons["Load YouTube player"].firstMatch.tap()
+        XCTAssertTrue(app.webViews.firstMatch.waitForExistence(timeout: 10))
         XCTAssertFalse(submit.isEnabled, "Real local media interaction must not re-enable the original form")
         let unexpected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label != 'idle'"),
                                                   object: element("hanlin-native-a2ui-state"))
@@ -145,7 +145,7 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         XCTAssertTrue(surface().waitForExistence(timeout: 45), "The real native-schema/validator/owner path did not render its Surface")
         if expectText { assertText("NATIVE_A2UI_BEFORE"); assertText("NATIVE_A2UI_AFTER") }
         assertTransport(count: 1)
-        XCTAssertFalse(element("hanlin-youtube-player").exists)
+        XCTAssertFalse(app.webViews.firstMatch.exists)
         record("original-native-response")
     }
     private func submitEditedForm() throws {

@@ -10,6 +10,7 @@ import SwiftData
 import HanlinProductSplit
 
 struct MainTabView: View {
+    @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
     
     @Binding var deepLinkTarget: String?
     @ObservedObject private var torahRouter = TorahStudyNavigationRouter.shared
@@ -94,10 +95,10 @@ struct MainTabView: View {
                 deepLinkTarget = nil // 清除状态，避免重复跳转
             }
         }
-        .onChange(of: splitOrigins.acceptedOrigin, initial: true) { _, request in
+        .onChange(of: splitOrigins.acceptedOrigin(forReceivingWindowID: receivingWindowID), initial: true) { _, request in
             if request != nil { selectedTab = 0 }
         }
-        .onChange(of: splitOrigins.lastFailure) { _, failure in
+        .onChange(of: splitOrigins.failure(forReceivingWindowID: receivingWindowID)) { _, failure in
             if failure != nil { splitReturnFailed = true }
         }
         .alert("Unable to return to the original conversation", isPresented: $splitReturnFailed) {

@@ -3,6 +3,7 @@ import SwiftData
 import HanlinProductSplit
 
 struct ListView: View {
+    @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query private var chatRecords: [ChatRecords]
@@ -33,6 +34,7 @@ struct ListView: View {
     @State private var savedSourceDestination: ChatSourceDestination?
     @State private var splitOrigins = HanlinAppSplitOriginCoordinator.shared
     @State private var pendingSplitOrigin: SplitBridgeRequest?
+    @State private var pendingSplitOriginWindowID: UUID?
     @State private var splitOriginUnavailable = false
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
     
@@ -163,8 +165,9 @@ struct ListView: View {
         .environment(\.hanlinComposerSessionBridge, sessionBridge)
         .environment(\.hanlinAcceptedSplitOrigin, pendingSplitOrigin)
         .environment(\.hanlinSplitOriginDidMount, completeSplitOriginMount)
-        .onChange(of: splitOrigins.acceptedOrigin, initial: true) { _, request in
+        .onChange(of: splitOrigins.acceptedOrigin(forReceivingWindowID: receivingWindowID), initial: true) { _, request in
             if let request { navigateToAcceptedSplitOrigin(request) }
+            else { pendingSplitOrigin = nil; pendingSplitOriginWindowID = nil }
         }
         .safeAreaInset(edge: .top) {
             if splitOriginUnavailable {
@@ -423,11 +426,13 @@ struct ListView: View {
     /// Re-resolve after SDK receipt save/mailbox acceptance. The original request remains
     /// intact through navigation and a second check in the actually appearing ChatView.
     private func navigateToAcceptedSplitOrigin(_ request: SplitBridgeRequest) {
-        guard splitOrigins.acceptedOrigin == request else { return }
+        guard let receivingWindowID,
+              splitOrigins.acceptedOrigin(forReceivingWindowID: receivingWindowID) == request else { return }
         do {
             guard !sessionBridge.isTemporaryChat(request.chat) else { throw HanlinSplitOriginNavigation.Failure.unavailable }
             let original = try HanlinSplitOriginNavigation.originalConversation(request, context: modelContext)
             pendingSplitOrigin = request
+            pendingSplitOriginWindowID = receivingWindowID
             splitOriginUnavailable = false
             savedSourceDestination = nil
             matchedSnippets.removeValue(forKey: request.chat)
@@ -436,12 +441,15 @@ struct ListView: View {
             if useCompactWorkspace { compactWorkspacePath = [.chat(request.chat)] }
         } catch {
             pendingSplitOrigin = request
+            pendingSplitOriginWindowID = receivingWindowID
             completeSplitOriginMount(request, false)
         }
     }
 
     private func completeSplitOriginMount(_ request: SplitBridgeRequest, _ mounted: Bool) {
-        guard pendingSplitOrigin == request, splitOrigins.acceptedOrigin == request else { return }
+        guard let receivingWindowID, pendingSplitOriginWindowID == receivingWindowID,
+              pendingSplitOrigin == request,
+              splitOrigins.acceptedOrigin(forReceivingWindowID: receivingWindowID) == request else { return }
         if !mounted {
             splitOriginUnavailable = true
             selectedChatRecord = nil
@@ -449,7 +457,8 @@ struct ListView: View {
             sessionBridge.expectedActiveSessionID = nil
         }
         pendingSplitOrigin = nil
-        splitOrigins.acknowledgeAcceptedOrigin(requestID: request.id)
+        pendingSplitOriginWindowID = nil
+        splitOrigins.acknowledgeAcceptedOrigin(requestID: request.id, receivingWindowID: receivingWindowID)
     }
 
     // MARK: - 子视图：顶部 3 个按钮

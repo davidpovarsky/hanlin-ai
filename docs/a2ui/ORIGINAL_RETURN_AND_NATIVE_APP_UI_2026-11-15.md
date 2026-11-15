@@ -1,13 +1,13 @@
 # Original return navigation and native app UI controls
 
-Required joint SDK dependency:7dfd30b7f4f8d1237d7cf88d8c0ebf3ddfa3fa36, including its da2f
+Required joint SDK dependency:c7905d8489394ccc3f38236fb24e14fe498f0a52, including its7df/da2f
 composition/bootstrap source and the original app owner/restore contracts. Integration owns
 the combined graph, real SDK/Platform/Split leaves and product dependencies. This branch does
 not duplicate the SDK coordinator, root onOpenURL dispatcher, mailbox, store or APIManager.
 
 ## Existing navigation consumption
 
-MainTab observes the actual shared coordinator's acceptedOrigin and selects the existing Chats
+MainTab observes the actual coordinator's `acceptedOrigin(forReceivingWindowID:)` and selects the existing Chats
 tab. ListView retains the full SAME SplitBridgeRequest through the existing wide/compact routes,
 resolves request.chat with a fresh exact SwiftData fetch, and rejects missing/ambiguous/temporary
 rows. It neither recreates a chat nor falls back to the selected/default conversation. The normal
@@ -16,14 +16,22 @@ default-selection paths are suppressed while reporting an unavailable original.
 The actual appearing ChatView re-resolves the original row, verifies object/context identity and
 the workspace's original chat selection, and reports mount completion. Both UI callbacks require
 full request equality against the pending/coordinator delivery. Only then does the parent call
-acknowledgeAcceptedOrigin(requestID: request.id); a late old mount cannot erase a newer delivery.
+acknowledgeAcceptedOrigin(requestID: request.id, receivingWindowID: receivingWindowID); a late old mount cannot erase a newer delivery.
 The same exact-ID acknowledgement runs after an unavailable mount. No UI code parses a URL,
 accepts a mailbox again, decodes the canonical row reference, creates a Session or rechecks a
 different permission registry. request.session is the mapped original SDK Session UUID; it is
 never compared to sceneID. Cold receipt reconciliation stays with SDK composition. Temporary
 Split dispatch and cold process/device acceptance remain unsupported/unverified in this tranche.
 
-New transport failures observed while MainTab is active receive a generic native alert; an
+The SDK root supplies the actual per-WindowGroup content token through
+`hanlinAIReceivingWindowID`; nil or another owner produces no delivery/failure/ACK. ListView
+captures that same token with the full pending request and checks both again before ACK.
+ChatView likewise checks the token-filtered full request before/after fresh original-row
+resolution. No new scene registry, first/current-window selection or SDK-session mapping exists.
+This tranche returns the original conversation in the window that received the link; it does
+not promise return to the original originating window or completed multi-window acceptance.
+
+Token-filtered transport failures observed while MainTab is active receive a generic native alert; an
 accepted request whose original row disappears before mount receives the ListView unavailable
 label and exact acknowledgement. No raw payload/error details are presented as diagnostics.
 

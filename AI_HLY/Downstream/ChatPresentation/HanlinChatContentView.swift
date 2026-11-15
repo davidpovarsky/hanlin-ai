@@ -27,6 +27,7 @@ struct HanlinChatContentView: View {
                     } expandedContent: {
                         HanlinA2UIProjectedResultView(projection: surface)
                     }
+                    .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("hanlin-a2ui-model-part-\(part.id.uuidString)")
                 } else {
                     ContentUnavailableView("Content unavailable", systemImage: "rectangle.slash",

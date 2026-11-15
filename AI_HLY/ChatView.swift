@@ -17,6 +17,7 @@ import HanlinProductSplit
 struct ChatView: View {
     var chatRecord: ChatRecords
     @Environment(\.hanlinAcceptedSplitOrigin) private var acceptedSplitOrigin
+    @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
     @Environment(\.hanlinSplitOriginDidMount) private var splitOriginDidMount
     @State private var splitOriginViewMounted = false
     
@@ -936,14 +937,17 @@ struct ChatView: View {
 
     private func acknowledgeMountedSplitOrigin() {
         guard splitOriginViewMounted, let request = acceptedSplitOrigin,
+              let receivingWindowID,
               request.chat == chatRecord.id,
-              HanlinAppSplitOriginCoordinator.shared.acceptedOrigin == request else { return }
+              HanlinAppSplitOriginCoordinator.shared.acceptedOrigin(forReceivingWindowID: receivingWindowID) == request else { return }
         do {
             guard !TemporaryRecord, sessionBridge?.isTemporaryChat(request.chat) != true,
                   sessionBridge == nil || sessionBridge?.expectedActiveSessionID == request.chat,
                   try HanlinSplitOriginNavigation.originalConversation(request, context: context) === chatRecord else {
                 throw HanlinSplitOriginNavigation.Failure.unavailable
             }
+            guard self.receivingWindowID == receivingWindowID,
+                  HanlinAppSplitOriginCoordinator.shared.acceptedOrigin(forReceivingWindowID: receivingWindowID) == request else { return }
             splitOriginDidMount?(request, true)
         } catch { splitOriginDidMount?(request, false) }
     }
