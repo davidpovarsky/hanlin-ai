@@ -13,11 +13,11 @@ enum HanlinDetachedCapability: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .search: return String(localized: "Search")
-        case .thinking: return String(localized: "Thinking")
+        case .thinking: return String(localized: "composer.capability.thinking")
         case .tools: return String(localized: "Tools")
         case .skills: return "Skills"
         case .mcp: return "MCP"
-        case .runtimes: return String(localized: "Runtimes")
+        case .runtimes: return String(localized: "composer.capability.runtimes")
         case .creative: return String(localized: "Creative")
         }
     }
@@ -117,7 +117,9 @@ struct HanlinDetachedCapabilityChips: View {
                             }
                         }
                     }
-                    .accessibilityLabel(Text("\(capability.title), enabled, open settings"))
+                    .accessibilityLabel(Text(capability.title))
+                    .accessibilityValue(Text(String(localized: "Enabled")))
+                    .accessibilityHint(Text(String(localized: "Open settings")))
                     .accessibilityIdentifier("composer-chip-\(capability.id)")
                 }
             }

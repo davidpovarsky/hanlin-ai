@@ -9,6 +9,7 @@ import SwiftData
 import Foundation
 
 // MARK: - 模型数据预加载
+@MainActor
 func preloadModelDataIfNeeded(context: ModelContext) {
     do {
         let fetchDescriptor = FetchDescriptor<AllModels>()
@@ -18,6 +19,7 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         var validModelsMap: [String: AllModels] = [:]
         var modelsToDelete: [AllModels] = []
         for model in existingData {
+            if HanlinAppleModelCatalogAdapter.isNative(model) { continue }
             if let name = model.name, !name.isEmpty {
                 // 如果同名记录已存在，则保留第一个，其他重复的记录标记删除
                 if validModelsMap[name] == nil {
@@ -91,6 +93,7 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         }
         
         try context.save()
+        try HanlinAppleModelCatalogAdapter.register(in: context)
         print("模型数据同步完成")
         
     } catch {

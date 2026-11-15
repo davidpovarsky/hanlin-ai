@@ -103,7 +103,8 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let chip = app.buttons["composer-chip-tools"].firstMatch
         let plus = app.buttons["hanlin-composer-general-menu"].firstMatch
         XCTAssertTrue(chip.waitForExistence(timeout: 5))
-        XCTAssertFalse(chip.label.isEmpty, "Icon-only layout must retain an accessible capability label")
+        XCTAssertEqual(chip.label, "כלים", "Icon-only layout must retain the localized capability label")
+        XCTAssertEqual(chip.value as? String, "מופעל")
         XCTAssertGreaterThan(plus.frame.midX, input.frame.midX, "Launcher must follow the RTL layout")
         input.tap()
         let draft = String(repeating: "Long accessible composer draft. ", count: 18)
@@ -141,12 +142,20 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let toggle = app.descendants(matching: .any)["hanlin-tool-use-toggle"].firstMatch
         XCTAssertTrue(toggle.waitForExistence(timeout: 5), "Test requires a model that supports tool use")
         if (toggle.value as? String) != "1" { toggle.tap() }
+        let catalog = app.buttons["hanlin-tools-open-catalog"].firstMatch
+        XCTAssertTrue(catalog.waitForExistence(timeout: 5))
+        let enabled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "Enabled"), object: catalog)
+        XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 5), .completed,
+                       "Expanded tools must highlight the live enabled capability")
+        XCTAssertFalse(app.buttons["composer-chip-tools"].exists, "Expanded bubble must not duplicate the external chips")
         toolsButton.tap()
 
         let row = app.descendants(matching: .any)["active-tool-chips-above-composer"].firstMatch
         let chip = app.buttons["composer-chip-tools"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 5))
         XCTAssertTrue(chip.waitForExistence(timeout: 5))
+        XCTAssertEqual(chip.label, "Tools")
+        XCTAssertEqual(chip.value as? String, "Enabled")
         chip.tap()
         XCTAssertTrue(toggle.waitForExistence(timeout: 5))
         XCTAssertFalse(row.exists, "Detached chips must be hidden while the bubble is open")

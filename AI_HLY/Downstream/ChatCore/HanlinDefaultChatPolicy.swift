@@ -14,7 +14,7 @@ enum HanlinDefaultChatPolicy {
 
     static func defaultModelIndex(in models: [AllModels]) -> Int? {
         models.enumerated()
-            .filter { !$0.element.isHidden }
+            .filter { !$0.element.isHidden && !HanlinAppleModelCatalogAdapter.isNative($0.element) }
             .sorted {
                 let lhsPosition = $0.element.position ?? Int.max
                 let rhsPosition = $1.element.position ?? Int.max
@@ -25,7 +25,7 @@ enum HanlinDefaultChatPolicy {
     }
 
     static func defaultModel(in models: [AllModels]) -> AllModels? {
-        orderedModels(models).first { !$0.isHidden }
+        orderedModels(models).first { !$0.isHidden && !HanlinAppleModelCatalogAdapter.isNative($0) }
     }
 
     static let temperature = HanlinChatGenerationDefaults.temperature

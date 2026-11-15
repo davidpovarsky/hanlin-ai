@@ -7,6 +7,8 @@ public actor HanlinHostDispatcher {
     private struct CallKey: Hashable { let session: UUID; let run: UUID; let providerID: String }
     private struct CallState {
         let invocationID: HanlinToolInvocationID
+        let identity: HanlinHostCallIdentity
+        let resultID: UUID
         let alias: String
         let arguments: Data
         var result: HanlinHostExecutionResult?
@@ -41,7 +43,8 @@ public actor HanlinHostDispatcher {
         let bytes = try arguments.canonicalJSONData()
         let key = CallKey(session: session.id, run: runID, providerID: providerCallID)
         if let old = calls[key] {
-            guard old.alias == alias, old.arguments == bytes else { throw HanlinHostError.idempotencyConflict }
+            guard old.alias == alias, old.arguments == bytes, old.identity.session == session,
+                  old.identity.step == step else { throw HanlinHostError.idempotencyConflict }
             guard let result = old.result else { throw HanlinHostError.duplicateInvocation }
             guard try JSONEncoder().encode(result).count <= limits.maximumOutputBytes else { throw HanlinHostError.outputLimitExceeded }
             try Task.checkCancellation()
@@ -62,7 +65,10 @@ public actor HanlinHostDispatcher {
         // durable idempotency, permission/confirmation and the final native mutation boundary.
         try Task.checkCancellation()
         guard !revokedSessions.contains(session.id) else { throw HanlinHostError.staleContext }
-        calls[key] = CallState(invocationID: invocationID, alias: alias, arguments: bytes)
+        calls[key] = CallState(invocationID: invocationID,
+            identity: .init(session: session, runID: runID, step: step, providerCallID: providerCallID,
+                            invocationID: invocationID, logicalToolID: tool.route.logicalToolID),
+            resultID: UUID(), alias: alias, arguments: bytes)
         let result: HanlinHostExecutionResult
         do {
             result = try await host.execute(invocation) { event in
@@ -91,6 +97,22 @@ public actor HanlinHostDispatcher {
         }
         try await requireCurrent(session)
         return result
+    }
+
+    /// Same dispatch path with complete call/result correlation for presentation consumers.
+    public func dispatchEvent(alias: String, argumentsJSON: String, providerCallID: String, runID: UUID,
+                              step: Int, session: HanlinHostSession, catalog: HanlinHostCatalog,
+                              expectedRevision: String? = nil, limits: HanlinToolInvocationLimits,
+                              progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void = { _ in }) async throws -> HanlinHostResultEvent {
+        let result = try await dispatch(alias: alias, argumentsJSON: argumentsJSON, providerCallID: providerCallID,
+            runID: runID, step: step, session: session, catalog: catalog, expectedRevision: expectedRevision,
+            limits: limits, progress: progress)
+        try Task.checkCancellation()
+        guard !revokedSessions.contains(session.id),
+              let state = calls[CallKey(session: session.id, run: runID, providerID: providerCallID)] else {
+            throw HanlinHostError.staleContext
+        }
+        return try .init(resultID: state.resultID, call: state.identity, result: result)
     }
 
     /// Reconciliation is scoped to the ORIGINAL context, including after a caller stops waiting.

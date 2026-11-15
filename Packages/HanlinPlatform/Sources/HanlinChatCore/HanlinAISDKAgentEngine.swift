@@ -1,6 +1,7 @@
 import AISDKProvider
 import AISDKProviderUtils
 import Foundation
+import HanlinPlatformContracts
 import SwiftAISDK
 
 public actor HanlinAISDKAgentEngine {
@@ -143,6 +144,8 @@ public actor HanlinAISDKAgentEngine {
                     var stepOffset = 0
                     var finalVisibleCharacters = 0
                     var hasSuccessfulToolAction = false
+                    var structuredParts = HanlinChatStructuredPartSequence()
+                    var hasStructuredContent = false
 
                     while true {
                         let currentNames = Set(currentDefinitions.map(\.name))
@@ -205,6 +208,17 @@ public actor HanlinAISDKAgentEngine {
                                     meaningfulEventCount += 1
                                     continuation.yield(.textDelta(text))
                                 }
+                            case .custom(let kind, let metadata):
+                                if kind == HanlinChatStructuredPart.channel,
+                                   self.resolvedProvider.descriptor.structuredPartChannel != HanlinChatStructuredPart.channel {
+                                    throw HanlinChatStructuredPartError.unadvertisedChannel
+                                }
+                                if let part = try HanlinChatStructuredPart.decodeProviderContent(kind: kind, metadata: metadata),
+                                   try structuredParts.admit(part) {
+                                    meaningfulEventCount += 1
+                                    hasStructuredContent = true
+                                    continuation.yield(.structuredPart(part))
+                                }
                             case .reasoningDelta(_, let text, _):
                                 if !text.isEmpty {
                                     meaningfulEventCount += 1
@@ -263,7 +277,7 @@ public actor HanlinAISDKAgentEngine {
                                         break
                                     }
                                 }
-                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction else {
+                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction || hasStructuredContent else {
                                     throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)
                                 }
                                 continuation.yield(.finished(
@@ -316,7 +330,7 @@ public actor HanlinAISDKAgentEngine {
                                     toolName: denied.toolName
                                 ))
                             case .textStart, .textEnd, .reasoningStart, .reasoningEnd,
-                                 .toolInputEnd, .custom, .raw:
+                                 .toolInputEnd, .raw:
                                 break
                             }
                         }

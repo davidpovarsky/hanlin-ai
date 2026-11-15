@@ -866,6 +866,24 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertFalse(plan.step_outputs["run_ipa_packaging"])
         self.assertNotIn("AI_HLYUITests/AgentRuntimeConversationUITests", plan.not_required_tests)
 
+    def test_composer_ui_file_routes_and_exact_consumers_remain_bounded(self) -> None:
+        path = "AI_HLYUITests/HanlinMorphComposerUITests.swift"
+        ordinary = self.plan_files([path])
+        self.assertEqual(ordinary.step_outputs["simulator_ui_filter"],
+                         "AI_HLYUITests/HanlinMorphComposerUITests")
+        self.assertFalse(ordinary.step_outputs["run_simulator_unit"])
+        self.assertFalse(ordinary.step_outputs["run_device_build"])
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()"
+        ui = "AI_HLYUITests/HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables"
+        exact = self.plan_files([path, "AI_HLYTests/HanlinOrganizerDockParityTests.swift"],
+                                exact_test_selector=unit + "," + ui)
+        self.assertEqual(exact.step_outputs["simulator_unit_filter"], unit)
+        self.assertEqual(exact.step_outputs["simulator_ui_filter"], ui)
+        self.assertEqual(exact.step_outputs["simulator_build_for_testing_args"],
+                         f"-only-testing:{unit} -only-testing:{ui}")
+        self.assertFalse(exact.step_outputs["run_device_build"])
+        self.assertFalse(exact.step_outputs["run_ipa_packaging"])
+
     def test_exact_selectors_reject_invalid_members(self) -> None:
         valid = "AI_HLYTests/VoiceRecordingLifecycleTests"
         for suffix in [",", ",OtherBundle/Suite", ",AI_HLYUITests/Suite;echo"]:

@@ -1,6 +1,7 @@
 """Read the checked-in OpenStep project without Xcode or third-party packages."""
 import re
 import hashlib
+from pathlib import Path
 
 
 def parse_project(text):
@@ -116,3 +117,46 @@ def validate_graph(project, provider_manifest=None):
                 assert settings["PRODUCT_BUNDLE_IDENTIFIER"] == "com.itorah.chavrusachat"
     return {"miniapps_products": sorted(products), "miniapps_source_groups": groups,
             "deployment_target": "27.0", "signed_or_install_proof": False}
+
+
+def validate_agent_sdk_linkage(project, repository):
+    """Verify real target membership, without claiming Xcode compilation."""
+    objects = project["objects"]
+    root = objects[project["rootObject"]]
+    packages = [key for key in root["packageReferences"]
+                if objects[key].get("relativePath") == "Packages/HanlinAgentSDK"]
+    assert len(packages) == 1, "Exactly one canonical local SDK package is required"
+    package = packages[0]
+    expected = {"HanlinHostContracts", "HanlinAgentCore", "HanlinPersistenceAdapters"}
+    products = {key: value["productName"] for key, value in objects.items()
+                if value.get("isa") == "XCSwiftPackageProductDependency"
+                and value.get("package") == package}
+    assert len(products) == 3 and set(products.values()) == expected, "SDK product identity mismatch"
+    targets = {objects[key]["name"]: (key, objects[key]) for key in root["targets"]}
+    assert {"AI_Hanlin", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
+    for name, (_, target) in targets.items():
+        required = expected if name == "AI_Hanlin" else {"HanlinAgentCore"} if name == "AI_HLYTests" else set()
+        declared = [products[key] for key in target.get("packageProductDependencies", []) if key in products]
+        linked = [products[objects[file]["productRef"]]
+                  for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
+                  for file in objects[phase]["files"] if objects[file].get("productRef") in products]
+        assert len(declared) == len(required) and set(declared) == required, name + ": unexpected SDK dependency"
+        assert len(linked) == len(required) and set(linked) == required, name + ": SDK product is not actually linked"
+    ai_id, ai = targets["AI_Hanlin"]
+    groups = [objects[key] for key in ai["fileSystemSynchronizedGroups"]
+              if objects[key].get("path") == "AI_HLY"]
+    assert len(groups) == 1, "AI must retain its synchronized source folder"
+    adapter = "Model/HanlinAppleModelCatalogAdapter.swift"
+    for exception_id in groups[0].get("exceptions", []):
+        exception = objects[exception_id]
+        if exception.get("target") == ai_id:
+            assert not any(adapter == path or adapter.startswith(path.rstrip("/") + "/")
+                           for path in exception.get("membershipExceptions", [])), "Native adapter excluded from AI"
+    repository = Path(repository)
+    assert (repository / "AI_HLY" / adapter).is_file(), "Canonical native adapter source is missing"
+    for sibling in ("HanlinAgentSDK", "HanlinPlatform"):
+        for filename in ("Package.swift", "Package.resolved"):
+            assert (repository / "Packages" / sibling / filename).is_file(), "Incomplete literal sibling package graph"
+    return {"ai_products": sorted(expected), "unit_test_products": ["HanlinAgentCore"],
+            "miniapps_sdk_products": [], "synchronized_adapter": adapter,
+            "apple_compilation": "NOT_RUN"}

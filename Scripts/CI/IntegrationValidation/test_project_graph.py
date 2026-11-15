@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 from extract_target import extract
-from project_graph import parse_project, validate_graph
+from project_graph import parse_project, validate_graph, validate_agent_sdk_linkage
 from verify_results import EXPECTED, verify
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -22,6 +22,49 @@ class ProjectGraphTests(unittest.TestCase):
 
     def test_registered_graph(self):
         validate_graph(self.project, self.manifest)
+
+    def test_agent_sdk_actual_linkage(self):
+        validate_agent_sdk_linkage(self.project, ROOT)
+
+    def test_agent_sdk_requires_framework_link_not_just_declaration(self):
+        ai = next(value for value in self.objects.values() if value.get("name") == "AI_Hanlin"
+                  and value.get("isa") == "PBXNativeTarget")
+        phase = next(self.objects[key] for key in ai["buildPhases"]
+                     if self.objects[key]["isa"] == "PBXFrameworksBuildPhase")
+        phase["files"] = [key for key in phase["files"]
+                          if self.objects.get(self.objects[key].get("productRef"), {}).get("productName") != "HanlinAgentCore"]
+        with self.assertRaisesRegex(AssertionError, "not actually linked"):
+            validate_agent_sdk_linkage(self.project, ROOT)
+
+    def test_agent_sdk_does_not_leak_into_miniapps(self):
+        core = next(key for key, value in self.objects.items()
+                    if value.get("isa") == "XCSwiftPackageProductDependency" and value.get("productName") == "HanlinAgentCore")
+        self.mini["packageProductDependencies"].append(core)
+        with self.assertRaisesRegex(AssertionError, "unexpected SDK dependency"):
+            validate_agent_sdk_linkage(self.project, ROOT)
+
+    def test_agent_sdk_requires_canonical_sibling_package(self):
+        package = next(value for value in self.objects.values()
+                       if value.get("relativePath") == "Packages/HanlinAgentSDK")
+        package["relativePath"] = "../OtherSDK"
+        with self.assertRaisesRegex(AssertionError, "canonical local SDK"):
+            validate_agent_sdk_linkage(self.project, ROOT)
+
+    def test_agent_sdk_native_adapter_must_be_in_synchronized_ai_sources(self):
+        exception = next(value for value in self.objects.values()
+                         if value.get("isa") == "PBXFileSystemSynchronizedBuildFileExceptionSet"
+                         and value.get("target") == "D7B6C3C02D50A55D004E3AD6")
+        exception["membershipExceptions"].append("Model/HanlinAppleModelCatalogAdapter.swift")
+        with self.assertRaisesRegex(AssertionError, "adapter excluded"):
+            validate_agent_sdk_linkage(self.project, ROOT)
+
+    def test_agent_sdk_test_import_requires_its_real_product(self):
+        unit = next(value for value in self.objects.values() if value.get("name") == "AI_HLYTests"
+                    and value.get("isa") == "PBXNativeTarget")
+        unit["packageProductDependencies"] = [key for key in unit["packageProductDependencies"]
+                                               if self.objects[key].get("productName") != "HanlinAgentCore"]
+        with self.assertRaisesRegex(AssertionError, "unexpected SDK dependency"):
+            validate_agent_sdk_linkage(self.project, ROOT)
 
     def test_reject_app_dependency(self):
         self.mini["dependencies"] = ["D7B6C3C02D50A55D004E3AD6"]

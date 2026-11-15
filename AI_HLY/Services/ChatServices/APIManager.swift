@@ -12,6 +12,7 @@ import SwiftData
 import MapKit
 import Accelerate
 import HanlinChatCore
+import HanlinAgentCore
 import HanlinPlatformContracts
 
 // MARK: - 数据结构定义
@@ -2520,6 +2521,16 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在发送请求" : "Sending request"))
                     
                     // 获取与模型厂商匹配的完整 Provider 配置。
+                    if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
+                        let nativeConfiguration = try HanlinAppleModelCatalogAdapter.configuration(for: modelInfo)
+                        await self.agentDiagnosticsRecorder?.setAgentEngineKind("apple_on_device")
+                        try await self.processSDKAgentEngine(runID: currentRunID,
+                            formattedMessages: finalFormattedMessages, modelInfo: modelInfo,
+                            chatConfig: nativeConfiguration, preparedAssistantTools: nil, session: session,
+                            currentLanguage: currentLanguage, currentLanguagePrefix: currentLanguagePrefix,
+                            continuation: continuation)
+                        return
+                    }
                     guard let providerConfiguration = self.getAPIConfiguration(for: modelInfo.company ?? "Unknown"),
                           let apiKey = providerConfiguration.key,
                           !apiKey.isEmpty else {
@@ -3520,10 +3531,16 @@ class APIManager {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         
         // 从数据库查询模型信息
-        guard let modelInfo = try? context.fetch(
+        let matchingModels = try context.fetch(
             FetchDescriptor<AllModels>(predicate: #Predicate { $0.name == modelName })
-        ).first else {
+        )
+        guard let modelInfo = matchingModels.first else {
             throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无法获取模型信息"])
+        }
+        if modelName == HanlinAppleOnDeviceProvider.modelID {
+            guard matchingModels.count == 1, HanlinAppleModelCatalogAdapter.isNative(modelInfo) else {
+                throw HanlinAISDKError.invalidConversation("The native model selection is ambiguous or unavailable.")
+            }
         }
 
         let recorder = await AgentDiagnosticsRecorder.start(
@@ -3689,7 +3706,7 @@ class APIManager {
         formattedMessages: [[String: Any]],
         modelInfo: AllModels,
         chatConfig: HanlinChatModelConfiguration,
-        preparedAssistantTools: AssistantToolBridge.PreparedTools,
+        preparedAssistantTools: AssistantToolBridge.PreparedTools?,
         session: AssistantCapabilitySession,
         currentLanguage: String,
         currentLanguagePrefix: Bool,
@@ -3699,9 +3716,9 @@ class APIManager {
         let baseSystemPrompt = converted.baseSystemPrompt
         let sdkMessages = converted.messages
 
-        let toolAdapter = HanlinAISDKToolAdapter(
+        let toolAdapter = preparedAssistantTools.map { prepared in HanlinAISDKToolAdapter(
             session: session,
-            preparedTools: preparedAssistantTools,
+            preparedTools: prepared,
             modelContext: self.context,
             currentLanguage: currentLanguage,
             progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField,
@@ -3714,14 +3731,19 @@ class APIManager {
             ),
             reportProgressController: self.reportProgressController,
             diagnosticsRecorder: self.agentDiagnosticsRecorder
-        )
+        ) }
 
-        let toolDefinitions = try toolAdapter.allToolDefinitions()
+        let toolDefinitions = try toolAdapter?.allToolDefinitions() ?? []
+        let agentEngine: HanlinAISDKAgentEngine
+        if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
+            guard toolAdapter == nil else { throw HanlinAppleProviderError.unsupportedTools }
+            agentEngine = try HanlinAppleOnDeviceProvider.makeEngine(configuration: chatConfig)
+        } else {
         let chatEngine = self.chatEngineFactory()
         let fetch = await chatEngine.makeAISDKFetch(
             onRequest: { [weak self] request in
                 let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
-                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+                    (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
                 }
                 if isActive, let recorder, let roundID {
                     let body = request.httpBody ?? Data()
@@ -3731,7 +3753,7 @@ class APIManager {
             },
             onResponse: { [weak self] request, response in
                 let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
-                    (self?.agentDiagnosticsRecorder, toolAdapter.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+                    (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
                 }
                 if isActive, let recorder, let roundID {
                     let reqID = response.allHeaderFields["x-request-id"] as? String
@@ -3740,7 +3762,8 @@ class APIManager {
             },
             transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver
         )
-        let agentEngine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
+        agentEngine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
+        }
 
         let sdkStream = try await agentEngine.stream(
             messages: sdkMessages,
@@ -3751,7 +3774,8 @@ class APIManager {
                 return (try? toolAdapter.allToolDefinitions()) ?? toolDefinitions
             },
             prepareStep: { stepNumber in
-                await toolAdapter.prepareStep(stepNumber: stepNumber)
+                guard let toolAdapter else { return .init(activeToolAliases: []) }
+                return await toolAdapter.prepareStep(stepNumber: stepNumber)
             }
         )
 
@@ -3773,7 +3797,7 @@ class APIManager {
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在处理" : "Processing"))
 
             case .stepStarted(let index, let prep):
-                currentStepID = toolAdapter.currentRoundID
+                currentStepID = toolAdapter?.currentRoundID
                 visibleFinalCharacters = 0
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response", modelRoundID: currentStepID))
 
@@ -3792,6 +3816,11 @@ class APIManager {
                     )
                 }
                 continuation.yield(StreamData(content: text))
+
+            case .structuredPart:
+                // The canonical A2UI consumer installs its admission/presentation bridge here.
+                // Never reinterpret structured provider bytes as ordinary chat prose.
+                throw HanlinAISDKError.invalidConversation("Structured presentation is unavailable in this host adapter.")
 
             case .reasoningDelta(let text):
                 self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.reasoning", round: currentStepID, text: text)
@@ -3851,6 +3880,7 @@ class APIManager {
                 break
 
             case .toolResult(let callID, let name, let modelText, let resultRef, let isError):
+                guard let toolAdapter, let preparedAssistantTools else { throw HanlinAppleProviderError.unsupportedTools }
                 if !isError { hasCompletedToolAction = true }
                 if !toolAdapter.completedCallIDs.contains(callID) {
                     let profile = preparedAssistantTools.presentationProfile(for: name)
@@ -3922,8 +3952,8 @@ class APIManager {
                         usage: tokenUsage,
                         meaningfulEventCount: meaningfulCount
                     )
-                    if toolAdapter.currentRoundID == stepID {
-                        toolAdapter.currentRoundID = nil
+                    if toolAdapter?.currentRoundID == stepID {
+                        toolAdapter?.currentRoundID = nil
                     }
                 }
 

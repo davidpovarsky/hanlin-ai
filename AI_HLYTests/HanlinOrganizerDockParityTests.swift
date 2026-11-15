@@ -13,6 +13,9 @@ import SwiftUI
 import SwiftData
 import Testing
 import UIKit
+#if canImport(HanlinAgentCore)
+import HanlinAgentCore
+#endif
 @testable import AI_Hanlin
 
 @Suite("Composer live refresh identity")
@@ -1053,6 +1056,90 @@ struct PendingFirstTurnTests {
 @MainActor
 @Suite("7A.7 ModelPopoverZoomOrderTests — Expand First, Push All Models Only On Completion", .serialized)
 struct ModelPopoverZoomOrderTests {
+    @Test("The real native catalog registration feeds the existing picker without index drift")
+    func nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift() throws {
+        #if canImport(HanlinAgentCore)
+        let container = try ModelContainer(for: AllModels.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        let first = AllModels(name: "first", displayName: "First", position: 3, company: "OPENAI")
+        let hidden = AllModels(name: "hidden", displayName: "Hidden", position: 5, company: "CUSTOM", isHidden: true)
+        let selected = AllModels(name: "selected", displayName: "Selected", position: 8, company: "CUSTOM")
+        context.insert(first)
+        context.insert(hidden)
+        context.insert(selected)
+        try context.save()
+        let descriptor = FetchDescriptor<AllModels>(sortBy: [SortDescriptor(\.position)])
+        let original = try context.fetch(descriptor)
+        let selectedIndex = try #require(original.firstIndex(where: { $0.id == selected.id }))
+
+        let native = try HanlinAppleModelCatalogAdapter.register(in: context)
+        let repeated = try HanlinAppleModelCatalogAdapter.register(in: context)
+        let models = try context.fetch(descriptor)
+        let nativeIndex = try #require(models.firstIndex(where: { $0.id == native.id }))
+        #expect(native.id == HanlinAppleModelCatalogAdapter.catalogID)
+        #expect(native.id == repeated.id)
+        #expect(native.name == HanlinAppleOnDeviceProvider.modelID)
+        #expect(models.count == original.count + 1)
+        #expect(Array(models.prefix(original.count)).map(\.id) == original.map(\.id))
+        #expect(models[selectedIndex].id == selected.id)
+        #expect(nativeIndex == original.count)
+
+        let available = HanlinAppleOnDeviceProvider.availability == .available
+        let actual = HanlinModelPickerPopover.visibleModelIndices(models,
+            nativeID: HanlinAppleModelCatalogAdapter.catalogID, nativeAvailable: available)
+        #expect(actual.contains(nativeIndex) == available)
+        #expect(actual.contains(selectedIndex))
+        #expect(!actual.contains(1)) // Hidden row retains its original array slot.
+        #expect(HanlinModelPickerPopover.visibleModelIndices(models,
+            nativeID: HanlinAppleModelCatalogAdapter.catalogID, nativeAvailable: false) == [0, 2])
+        #expect(HanlinModelPickerPopover.visibleModelIndices(models,
+            nativeID: HanlinAppleModelCatalogAdapter.catalogID, nativeAvailable: true) == [0, 2, 3])
+        #expect(models[nativeIndex].id == native.id) // Unavailable does not rewrite a saved selection.
+        #else
+        Issue.record("Native picker integration requires HanlinAgentCore linked into the app and test target.")
+        #endif
+    }
+
+    @Test("Native picker visibility preserves original indices and explicit selection")
+    func nativeVisibilityKeepsOriginalIndices() {
+        let nativeID = UUID()
+        let cloud = AllModels(name: "cloud", displayName: "Cloud", position: 0, company: "OPENAI")
+        let hidden = AllModels(name: "hidden", displayName: "Hidden", position: 1, company: "OPENAI", isHidden: true)
+        let native = AllModels(id: nativeID, name: "native", displayName: "Native", position: 2, company: "APPLE")
+        let next = AllModels(name: "next", displayName: "Next", position: 3, company: "OPENAI")
+        let duplicate = AllModels(id: nativeID, name: "duplicate", displayName: "Duplicate", position: 4, company: "APPLE")
+        let models = [cloud, hidden, native, next, duplicate]
+        let selectedModelIndex = 2
+        #expect(HanlinModelPickerPopover.visibleModelIndices(models, nativeID: nativeID, nativeAvailable: false) == [0, 3])
+        #expect(HanlinModelPickerPopover.visibleModelIndices(models, nativeID: nativeID, nativeAvailable: true) == [0, 2, 3])
+        #expect(models[selectedModelIndex] === native)
+    }
+
+    @Test("Compact picker exposes an available native row beyond favorites and preserves explicit indices")
+    func compactNativeVisibilityKeepsFeaturedAndSelectedIndices() {
+        let nativeID = UUID()
+        let clouds = (0..<6).map { index in
+            AllModels(name: "cloud-\(index)", displayName: "Cloud \(index)", position: index, company: "CUSTOM")
+        }
+        let native = AllModels(id: nativeID, name: "native", displayName: "Native", position: 10, company: "APPLE")
+        let duplicate = AllModels(id: nativeID, name: "duplicate", displayName: "Duplicate", position: 11, company: "APPLE")
+        let models = clouds + [native, duplicate]
+        #expect(HanlinModelPickerPopover.compactFeaturedIndices(models, selectedModelIndex: 5,
+            nativeID: nativeID, nativeAvailable: true) == [5, 0, 1, 2, 6])
+        #expect(HanlinModelPickerPopover.compactFeaturedIndices(models, selectedModelIndex: 5,
+            nativeID: nativeID, nativeAvailable: false) == [5, 0, 1, 2])
+        let selectedNativeIndex = 6
+        #expect(HanlinModelPickerPopover.compactFeaturedIndices(models, selectedModelIndex: selectedNativeIndex,
+            nativeID: nativeID, nativeAvailable: true) == [6, 0, 1, 2])
+        #expect(HanlinModelPickerPopover.compactFeaturedIndices(models, selectedModelIndex: selectedNativeIndex,
+            nativeID: nativeID, nativeAvailable: false) == [0, 1, 2, 3])
+        #expect(models[selectedNativeIndex] === native)
+        native.isHidden = true
+        #expect(HanlinModelPickerPopover.compactFeaturedIndices(Array(models.dropLast()), selectedModelIndex: 5,
+            nativeID: nativeID, nativeAvailable: true) == [5, 0, 1, 2])
+    }
+
 
     @Test("Native resize callbacks leave the SwiftUI update and reject a superseded delivery")
     func nativeCallbacksAreDeferredAndSuperseded() async {
