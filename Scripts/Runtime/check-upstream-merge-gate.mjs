@@ -19,7 +19,10 @@ let protection;
 try { protection = api(`branches/${encodeURIComponent(pr.base.ref)}/protection`); }
 catch (error) { if (!String(error.stderr).includes('404')) throw error; }
 const settings = api('');
-const checks = runs.map(check => ({ name:check.name.replace(/^upstream-validation \/ /,''), head:check.head_sha, app:check.app.slug,
+let effectiveRules;
+try { effectiveRules = api(`rules/branches/${encodeURIComponent(pr.base.ref)}`); }
+catch { /* Inaccessible/unsupported effective rules stay unknown, never eligible. */ }
+const checks = runs.map(check => ({ name:check.name, head:check.head_sha, app:check.app?.slug, appId:check.app?.id, checkId:check.id,
   status:check.status, conclusion:check.conclusion }));
 let receipt;
 if (proofRun) {
@@ -42,11 +45,12 @@ if (proofRun) {
   }
 }
 const decision = evaluateUpdate({ head, evidenceHead:receipt?.head, updateType:receipt?.updateType, impact:dependencyImpact(paths.map(row=>row.filename)),
-  checks, required:['Hanlin upstream acceptance'], sourceIntegrity:receipt?.sourceIntegrity === true,
+  checks, required:[['Hanlin upstream acceptance','upstream-validation / Hanlin upstream acceptance']], sourceIntegrity:receipt?.sourceIntegrity === true,
   licensesReviewed:receipt?.licensesReviewed === true, rollback:!!receipt?.rollback,
-  protectedBranch:protection?.required_status_checks?.strict === true && (protection.required_status_checks.contexts ?? []).some(name => name === 'Hanlin upstream acceptance' || name === 'upstream-validation / Hanlin upstream acceptance'), autoMergeEnabled:settings.allow_auto_merge === true && pr.auto_merge != null });
+  protection, effectiveRules, autoMergeEnabled:settings.allow_auto_merge === true && pr.auto_merge != null });
 const report = { ...decision, repository, pullRequest:Number(number), head, baseSHA:pr.base.sha,
-  requiredChecks:protection?.required_status_checks ?? null, actualChecks:checks,
+  requiredChecks:protection?.required_status_checks ?? null, effectiveBranchRules:effectiveRules ?? null, actualChecks:checks,
+  evaluatedAt:new Date().toISOString(), scope:'CI-policy snapshot only; no PR review/deployment approval or merge operation',
   mergePerformed:false, evidence:'Authenticated GitHub API snapshot; no merge endpoint is called.' };
 await writeFile(output, JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report));

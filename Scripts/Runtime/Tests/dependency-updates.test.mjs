@@ -43,8 +43,8 @@ test('canonical dependency hash preserves its existing output/provenance boundar
 
 const head='1'.repeat(40);
 const valid=()=>({head,evidenceHead:head,updateType:'patch',impact:'runtime-host',sourceIntegrity:true,licensesReviewed:true,
-  rollback:{parent:'2'.repeat(40)},protectedBranch:true,autoMergeEnabled:true,required:['gate'],
-  checks:[{name:'gate',head,status:'completed',conclusion:'success',app:'github-actions'}]});
+  rollback:{parent:'2'.repeat(40)},protection:{required_status_checks:{strict:true,contexts:['gate'],checks:[{context:'gate',app_id:15368}]}},effectiveRules:[],autoMergeEnabled:true,required:['gate'],
+  checks:[{name:'gate',head,status:'completed',conclusion:'success',app:'github-actions',appId:15368}]});
 test('only complete, current, protected and explicitly enabled evidence can qualify',()=>{
   assert.equal(evaluateUpdate(valid()).mergeEligible,true);
 });
@@ -63,7 +63,7 @@ for (const [name,mutate,reason] of [
   ['missing checksum',s=>{s.sourceIntegrity=false},'MISSING_SOURCE_INTEGRITY'],
   ['no gates',s=>{s.required=[]},'NO_REQUIRED_GATES'],
   ['no rollback',s=>{s.rollback=null},'MISSING_ROLLBACK'],
-  ['unprotected branch',s=>{s.protectedBranch=false},'BRANCH_NOT_PROTECTED'],
+  ['unprotected branch',s=>{s.protection=undefined},'BRANCH_NOT_PROTECTED'],
   ['merge not enabled',s=>{s.autoMergeEnabled=false},'AUTO_MERGE_DISABLED']
 ]) test(`merge refuses ${name}`,()=>{const s=valid();mutate(s);const result=evaluateUpdate(s);assert.equal(result.mergeEligible,false);assert.ok(result.reasons.includes(reason));});
 test('a familiar lock filename cannot hide unknown source/native changes',()=>{
@@ -71,4 +71,83 @@ test('a familiar lock filename cannot hide unknown source/native changes',()=>{
   assert.equal(dependencyImpact(['Scripts/Runtime/DependencyUpdates/package-lock.json']),'tooling');
   assert.equal(dependencyImpact(['RuntimeDependencies.lock.json','Scripts/NativeScript/metadata_public_headers.py']),'native-or-unknown');
   assert.equal(dependencyImpact([]),'unknown');
+});
+
+
+const addRequired = (s, context, conclusion = 'success', status = 'completed') => {
+  s.protection.required_status_checks.contexts.push(context);
+  s.protection.required_status_checks.checks.push({context, app_id:77});
+  s.checks.push({name:context,head,app:'other-trusted-ci',appId:77,status,conclusion});
+};
+test('merge correct protected set requires every exact server context on the same head',()=>{
+  const s=valid();addRequired(s,'lint');
+  const decision=evaluateUpdate(s);
+  assert.equal(decision.validationPassed,true);assert.equal(decision.mergeEligible,true);
+  assert.deepEqual(decision.branchPolicy.requiredGates.map(g=>g.context),['gate','lint']);
+});
+test('merge protected-but-wrong-gate cannot substitute lint for the upstream gate',()=>{
+  const s=valid();s.protection.required_status_checks={strict:true,contexts:['lint']};
+  s.checks.push({name:'lint',head,app:'github-actions',appId:15368,status:'completed',conclusion:'success'});
+  const decision=evaluateUpdate(s);assert.equal(decision.validationPassed,true);
+  assert.equal(decision.mergeEligible,false);assert.ok(decision.reasons.includes('UPSTREAM_GATE_NOT_REQUIRED:gate'));
+});
+for(const [label,conclusion,status] of [['failed','failure','completed'],['pending',null,'in_progress'],['skipped','skipped','completed']]) {
+  test(`merge extra-required-${label} blocks even after upstream validation passes`,()=>{
+    const s=valid();addRequired(s,'security',conclusion,status);const decision=evaluateUpdate(s);
+    assert.equal(decision.validationPassed,true);assert.equal(decision.mergeEligible,false);
+    assert.ok(decision.reasons.includes('SERVER_REQUIRED_GATE_NOT_PASS:security'));
+  });
+}
+test('merge server context preserves the original raw prefixed check name',()=>{
+  const s=valid();s.required=[['gate','upstream-validation / gate']];
+  s.protection.required_status_checks={strict:true,contexts:['upstream-validation / gate'],checks:[{context:'upstream-validation / gate',app_id:15368}]};
+  // Logical aliases may validate the producer; server enforcement must match literally.
+  const missing=evaluateUpdate(s);assert.equal(missing.validationPassed,true);assert.equal(missing.mergeEligible,false);
+  s.checks[0].name='upstream-validation / gate';assert.equal(evaluateUpdate(s).mergeEligible,true);
+});
+test('merge missing or ambiguous server configuration stays blocked',()=>{
+  for(const required_status_checks of [null,{strict:true},{strict:true,contexts:[]},
+    {strict:false,contexts:['gate']},{strict:true,contexts:['gate','gate']},
+    {strict:true,checks:[{context:'gate',app_id:15368},{context:'gate',app_id:77}]},
+    {strict:true,contexts:['gate'],checks:'unknown'}]) {
+    const s=valid();s.protection={required_status_checks};
+    const decision=evaluateUpdate(s);assert.equal(decision.validationPassed,true);assert.equal(decision.mergeEligible,false);
+  }
+});
+test('merge app binding is enforced for additional required gates',()=>{
+  const s=valid();addRequired(s,'security');s.checks.at(-1).appId=88;
+  assert.equal(evaluateUpdate(s).mergeEligible,false);
+});
+test('merge checks-only server configuration is supported without losing app bindings',()=>{
+  const s=valid();delete s.protection.required_status_checks.contexts;
+  assert.equal(evaluateUpdate(s).mergeEligible,true);
+});
+test('merge legacy any-app context requires an unambiguous authenticated check run',()=>{
+  const s=valid();s.protection.required_status_checks={strict:true,contexts:['gate']};
+  assert.equal(evaluateUpdate(s).mergeEligible,true);
+  s.checks.push({...s.checks[0],app:'other-app',appId:77});assert.equal(evaluateUpdate(s).mergeEligible,false);
+});
+test('merge required status-only or missing gate is unknown rather than silently omitted',()=>{
+  const s=valid();s.protection.required_status_checks.contexts.push('legacy-ci');
+  const decision=evaluateUpdate(s);assert.equal(decision.validationPassed,true);assert.equal(decision.mergeEligible,false);
+  assert.ok(decision.reasons.includes('SERVER_REQUIRED_GATE_NOT_PASS:legacy-ci'));
+});
+test('merge extra required check cannot borrow another head result',()=>{
+  const s=valid();addRequired(s,'security');s.checks.at(-1).head='3'.repeat(40);
+  assert.equal(evaluateUpdate(s).mergeEligible,false);
+});
+test('merge unrelated failed checks do not replace the configured required set',()=>{
+  const s=valid();s.checks.push({name:'optional',head,app:'github-actions',appId:15368,status:'completed',conclusion:'failure'});
+  assert.equal(evaluateUpdate(s).mergeEligible,true);
+});
+test('merge unknown or additional effective branch rules require explicit review',()=>{
+  for(const effectiveRules of [undefined,[{type:'required_status_checks',parameters:{required_status_checks:[{context:'security'}]}}]]) {
+    const s=valid();s.effectiveRules=effectiveRules;const decision=evaluateUpdate(s);
+    assert.equal(decision.validationPassed,true);assert.equal(decision.mergeEligible,false);
+    assert.equal(decision.branchPolicy.configurationKnown,false);
+  }
+});
+test('merge caller protectedBranch boolean cannot bypass absent server configuration',()=>{
+  const s=valid();delete s.protection;s.protectedBranch=true;
+  assert.equal(evaluateUpdate(s).mergeEligible,false);
 });
