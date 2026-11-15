@@ -192,7 +192,7 @@ jobs:
   openclaw-embedded-requirements:
     if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'OpenClawEmbeddedRequirementsProbe' && !inputs.testflight_upload }}
     name: Original OpenClaw subset on existing embedded Node JITless
-    runs-on: xcode-27
+    runs-on: macos-26
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7.0.1

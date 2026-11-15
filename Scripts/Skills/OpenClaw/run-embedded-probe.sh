@@ -33,7 +33,7 @@ for name in paths:
     records[name]=hashlib.sha256(raw).hexdigest()
 (out/'tested-source-sha256.json').write_text(json.dumps(records,indent=2))
 PY_SOURCE
-selected_xcode="$(python3 -c 'import glob,re; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]27(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")')"
+selected_xcode="$(python3 -c 'import glob,re; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]26(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")')"
 test -n "$selected_xcode"
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 { xcodebuild -version; xcrun swift --version; xcrun --sdk iphonesimulator --show-sdk-version; uname -m; sw_vers; node --version; } > "$evidence/toolchain.txt"
@@ -98,10 +98,19 @@ python3 - "$evidence" "$app" <<'PY_EXECUTE'
 import hashlib,json,secrets,subprocess,sys,time
 from pathlib import Path
 out,app=map(Path,sys.argv[1:]);inventory=json.loads((out/'devices.json').read_text());runtimes={r['identifier']:r for r in json.loads((out/'runtimes.json').read_text())['runtimes']}
-candidates=[(runtime,d) for runtime,devices in inventory['devices'].items() if runtime.startswith('com.apple.CoreSimulator.SimRuntime.iOS-27-') for d in devices if d.get('isAvailable') and d['name'].startswith('iPhone')]
-assert candidates,'Actual allowed iOS27 runtime/device unavailable'
+candidates=[(runtime,d) for runtime,devices in inventory['devices'].items() if runtime.startswith('com.apple.CoreSimulator.SimRuntime.iOS-26-') for d in devices if d.get('isAvailable') and d['name'].startswith('iPhone')]
+assert candidates,'Actual allowed iOS26 runtime/device unavailable'
 runtime,device=sorted(candidates,key=lambda item:(item[1].get('state')!='Booted',item[1]['name']))[0];udid=device['udid'];identifier='nodejsmobile.test'
-def call(args,timeout=30):return subprocess.check_output(args,stderr=subprocess.STDOUT,text=True,timeout=timeout)
+def call(args,timeout=30):
+    started=time.monotonic();event={'command':args,'timeoutSeconds':timeout}
+    try:
+        result=subprocess.run(args,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=timeout,check=True)
+        event.update({'exit':result.returncode,'output':result.stdout});return result.stdout
+    except (subprocess.TimeoutExpired,subprocess.CalledProcessError) as error:
+        output=error.stdout or '';event.update({'error':str(error),'output':output.decode(errors='replace') if isinstance(output,bytes) else output});raise
+    finally:
+        event['measuredSeconds']=time.monotonic()-started
+        with (out/'simulator-commands.jsonl').open('a') as log:log.write(json.dumps(event)+'\n')
 def terminate_owned():
     result=subprocess.run(['xcrun','simctl','terminate',udid,identifier],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=30)
     with (out/'owned-app-termination.log').open('a') as log:log.write(str(result.returncode)+' '+result.stdout+'\n')
@@ -141,5 +150,5 @@ artifact=json.loads((out/'openclaw-artifact-provenance.json').read_text())
 assert report['artifactIdentity']=={key:artifact[key] for key in ['revision','artifactSHA256','nativeContractArtifactSHA256']}
 assert len(report['cases'])==6 and len({c['name'] for c in report['cases']})==6 and all(c['status']=='EXECUTED_PASS' for c in report['cases'])
 assert report['skillExecution']=='NOT_RUN' and report['physicalIPadStartupAndRAM']=='NOT_RUN'
-(out/'summary.json').write_text(json.dumps({'status':'EXECUTED_PASS','scope':'Original requirements subset only, actual existing embedded Node/JITless on iOS27; synthetic scoped facts, no Skills executed','cases':report['cases'],'upstreamOriginalTests':5,'upstreamOriginalAssertions':16,'resultSHA256':hashlib.sha256(data).hexdigest(),'not_run':['physical iPad startup/RAM','full Hanlin app','selection/disabled','install hints','tool visibility','Runtime05 integration']},indent=2))
+(out/'summary.json').write_text(json.dumps({'status':'EXECUTED_PASS','scope':'Original requirements subset only, actual existing embedded Node/JITless on iOS26; synthetic scoped facts, no Skills executed','cases':report['cases'],'upstreamOriginalTests':5,'upstreamOriginalAssertions':16,'resultSHA256':hashlib.sha256(data).hexdigest(),'not_run':['physical iPad startup/RAM','full Hanlin app','selection/disabled','install hints','tool visibility','Runtime05 integration']},indent=2))
 PY_EXECUTE

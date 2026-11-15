@@ -4,11 +4,12 @@ import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { build } from 'esbuild';
+import { build, version } from 'esbuild';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const pin = JSON.parse(await readFile(path.join(root, 'dependency-audit.json'), 'utf8'));
 const productionPin = JSON.parse(await readFile(path.join(root, 'upstream-pin.json'), 'utf8'));
+if (pin.tool !== `esbuild@${version}`) throw Error('Audit compiler version mismatch');
 if (pin.revision !== productionPin.revision || pin.repository !== productionPin.repository) throw Error('Audit/source revision mismatch');
 const sources = new Map(pin.sources.map(source => [source.path, source]));
 const loaded = new Set();
