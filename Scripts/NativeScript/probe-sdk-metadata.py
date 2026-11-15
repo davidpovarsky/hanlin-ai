@@ -16,6 +16,8 @@ import shlex
 import subprocess
 import sys
 
+CANDIDATE_CPP_ARGUMENTS = ["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules", "-Xclang", "-fno-cxx-modules"]
+
 
 def capture(*args: str) -> str:
     return subprocess.check_output(args, text=True).strip()
@@ -315,7 +317,9 @@ def main() -> int:
                    "-fmodule-map-file=" + str(headers / "module.modulemap"),
                    "-fmodules" if mode == "modular" else "-fno-modules"]
         if options.language == "objective-c++":
-            command.extend(["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules"])
+            # The observed LLVM20 driver drops the ObjC++ negative driver
+            # flag. Also pass the public cc1 flag; retain the actual vector.
+            command.extend(CANDIDATE_CPP_ARGUMENTS)
         if options.emit_types:
             command[1:1] = ["-output-typescript", str(destination / "types")]
         if mode in ["textual-direct", "textual-public"]:
@@ -398,9 +402,9 @@ def main() -> int:
             if name == "original" and options.language == "objective-c++":
                 # Compare with the accepted original ObjC reference. Its
                 # Clang17 cannot parse the current SDK's C++ standard library.
-                if flags[-4:] != ["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules"]:
+                if flags[-len(CANDIDATE_CPP_ARGUMENTS):] != CANDIDATE_CPP_ARGUMENTS:
                     raise RuntimeError("Candidate dialect argv changed")
-                comparison_flags = flags[:-4]
+                comparison_flags = flags[:-len(CANDIDATE_CPP_ARGUMENTS)]
             invocation = [str(executable), "-input-umbrella", str(parity_input),
                           "-output-yaml", str(folder / "yaml"), "Xclang", *comparison_flags]
             (folder / "command.json").write_text(json.dumps(invocation, indent=2) + "\n")
