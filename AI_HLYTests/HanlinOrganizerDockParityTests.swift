@@ -45,6 +45,41 @@ struct ComposerSelectionRefreshTests {
         }
     }
 
+    private final class IntentDelay {
+        var continuation: CheckedContinuation<Void, Never>?
+        func wait() async { await withCheckedContinuation { continuation = $0 } }
+    }
+
+    @Test("Rapid UI server intents retain both selections after a delayed first action")
+    func delayedUIToggleIntentsPreserveBothSelections() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin-ui-intents-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let runtimeLayout = RuntimeFileLayout(root: root)
+        let environment = RuntimeEnvironmentStore(fileLayout: runtimeLayout)
+        let runtime = NodeRuntimeService(fileLayout: runtimeLayout, environment: environment)
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        let store = MCPChatSelectionStore(fileLayout: layout)
+        let provider = MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment, selectionStore: store)
+        await provider.loadIfNeeded(startHost: false)
+        let chatID = UUID(), firstID = UUID(), secondID = UUID()
+        let delay = IntentDelay()
+        let first = Task { @MainActor in
+            await delay.wait()
+            return try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: firstID, isSelected: true, chatID: chatID, temporary: true)
+        }
+        while delay.continuation == nil { await Task.yield() }
+        let second = Task { @MainActor in
+            try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: secondID, isSelected: true, chatID: chatID, temporary: true)
+        }
+        let secondResult = await second.result
+        delay.continuation?.resume()
+        let firstResult = await first.result
+        _ = try secondResult.get()
+        _ = try firstResult.get()
+        #expect(try await provider.readSelection(chatID: chatID, temporary: true) == [firstID, secondID])
+        #expect(try await store.selection(chatID: chatID, temporary: true) == [firstID, secondID])
+    }
+
     @Test("A delayed old-chat result and error are discarded, while a current failure is published")
     func delayedChatSwitchAndReadFailure() async {
         let first = HanlinComposerRefreshContext(chatID: UUID(), temporary: false, selectionRevision: 1, globallyEnabled: true, serverStates: [])

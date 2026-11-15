@@ -1038,6 +1038,19 @@ struct HanlinComposerGeneralActionsView: View {
 
 @MainActor
 struct HanlinComposerToolsRootView: View {
+    static func applyServerSelection(
+        provider: MCPRuntimeProvider,
+        serverID: UUID,
+        isSelected: Bool,
+        chatID: UUID,
+        temporary: Bool
+    ) async throws -> UInt64 {
+        _ = try await provider.applySelectionIntent(
+            .init(serverID: serverID, isSelected: isSelected), chatID: chatID, temporary: temporary
+        )
+        return provider.selectionRevision(chatID: chatID, temporary: temporary)
+    }
+
     private enum ManagementDestination: String, Identifiable {
         case skills, mcp, runtime
         var id: String { rawValue }
@@ -1563,24 +1576,30 @@ struct HanlinComposerToolsRootView: View {
                                 Toggle(isOn: Binding(
                                     get: { isSelectedForChat },
                                     set: { enabled in
-                                        var next = selectedMCPServerIDs
-                                        if enabled { next.insert(server.id) } else { next.remove(server.id) }
                                         let requestChatID = chatID
                                         let requestTemporary = temporaryRecord
                                         Task {
-                                            await mcpProvider.setSelection(next, chatID: requestChatID, temporary: requestTemporary)
-                                            let revision = mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary)
+                                            let startingRevision = mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary)
+                                            var committedRevision: UInt64?
                                             do {
+                                                let revision = try await Self.applyServerSelection(
+                                                    provider: mcpProvider,
+                                                    serverID: server.id,
+                                                    isSelected: enabled,
+                                                    chatID: requestChatID,
+                                                    temporary: requestTemporary
+                                                )
+                                                committedRevision = revision
                                                 let actual = try await mcpProvider.readSelection(chatID: requestChatID, temporary: requestTemporary)
                                                 guard !Task.isCancelled, activeLiveContext?.chatID == requestChatID,
                                                       activeLiveContext?.temporary == requestTemporary,
                                                       mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) == revision else { return }
                                                 selectedMCPServerIDs = actual
-                                                selectionError = actual == next ? nil : String(localized: "MCP selection could not be updated.")
+                                                selectionError = actual.contains(server.id) == enabled ? nil : String(localized: "MCP selection could not be updated.")
                                             } catch {
                                                 guard !Task.isCancelled, activeLiveContext?.chatID == requestChatID,
                                                       activeLiveContext?.temporary == requestTemporary,
-                                                      mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) == revision else { return }
+                                                      mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) == (committedRevision ?? startingRevision) else { return }
                                                 selectionError = error.localizedDescription
                                             }
                                         }
