@@ -4,6 +4,8 @@ import HanlinPlatformContracts
 public struct HanlinHostInvocation: Sendable {
     public let request: HanlinToolInvocationRequest
     public let session: HanlinHostSession
+    /// Reserved once by the Dispatcher before Host entry; durable origin association can retain it.
+    public let resultID: UUID
     public let runID: UUID
     public let step: Int
     public let providerCallID: String
@@ -13,7 +15,8 @@ public struct HanlinHostInvocation: Sendable {
     public let expectedRevision: String?
     public init(request: HanlinToolInvocationRequest, session: HanlinHostSession, runID: UUID,
                 step: Int, providerCallID: String, writeGuarantee: HanlinHostWriteGuarantee, expectedRevision: String? = nil,
-                originalArgumentsJSON: Data? = nil) {
+                originalArgumentsJSON: Data? = nil, resultID: UUID = UUID()) {
+        self.resultID = resultID
         self.originalArgumentsJSON = originalArgumentsJSON
         self.request = request; self.session = session; self.runID = runID; self.step = step
         self.providerCallID = providerCallID; self.writeGuarantee = writeGuarantee; self.expectedRevision = expectedRevision

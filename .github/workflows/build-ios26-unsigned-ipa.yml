@@ -215,7 +215,8 @@ jobs:
       - uses: actions/checkout@v7.0.1
       - name: Compile real SDK graph and execute affected Apple tests
         env:
-          HOST_SCHEMA_ONLY: ${{ inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaValidationTests' && '1' || '0' }}
+          HOST_SCHEMA_ONLY: ${{ (inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaValidationTests' || inputs.exact_test_selector == 'HanlinAgentCoreTests/HostAssociation') && '1' || '0' }}
+          HANLIN_SDK_ASSOCIATION_ONLY: ${{ inputs.exact_test_selector == 'HanlinAgentCoreTests/HostAssociation' && '1' || '0' }}
         run: |
           if [[ "$HOST_SCHEMA_ONLY" == 1 ]]; then
             bash Scripts/CI/IntegrationValidation/run_host_schema.sh

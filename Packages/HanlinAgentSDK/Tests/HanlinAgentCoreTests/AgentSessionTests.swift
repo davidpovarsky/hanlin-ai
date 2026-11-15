@@ -139,6 +139,60 @@ private actor ExactNumericHost: HanlinHostIntegration {
     }
 }
 
+private actor AssociationStore: HanlinConversationStore {
+    let base = HanlinInMemoryConversationStore()
+    let rejectAssociation: Bool
+    init(rejectAssociation: Bool = false) { self.rejectAssociation = rejectAssociation }
+    func load(_ id: UUID, namespace: HanlinConversationNamespace) async throws -> HanlinConversationRecord? {
+        try await base.load(id, namespace: namespace)
+    }
+    func save(_ record: HanlinConversationRecord, replacing revision: UInt64?) async throws {
+        if rejectAssociation, record.entries.contains(where: {
+            if case .presentationReference(_, let reference) = $0.payload { return reference == "fixture.origin.v1:original" }
+            return false
+        }) { throw HanlinHostError.storeConflict }
+        try await base.save(record, replacing: revision)
+    }
+    func delete(_ id: UUID, namespace: HanlinConversationNamespace, replacing revision: UInt64) async throws {
+        try await base.delete(id, namespace: namespace, replacing: revision)
+    }
+}
+
+@MainActor private final class AssociationHost: HanlinHostIntegration {
+    nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
+    let base: SyntheticFixtureHost
+    let store: AssociationStore
+    weak var session: HanlinAgentSession?
+    var externalEffects = 0
+    var reservedResultID: UUID?
+    var rejectedForgedIdentity = false
+    init(context: HanlinHostContext, store: AssociationStore) { base = .init(context: context); self.store = store }
+    func context(for session: HanlinHostSession) async -> HanlinHostContext { await base.context(for: session) }
+    func catalog(for context: HanlinHostContext) async throws -> HanlinHostCatalog { try await base.catalog(for: context) }
+    func execute(_ invocation: HanlinHostInvocation, progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult {
+        let session = try #require(session)
+        let forged = HanlinHostInvocation(request: invocation.request, session: invocation.session,
+            runID: invocation.runID, step: invocation.step, providerCallID: invocation.providerCallID,
+            writeGuarantee: invocation.writeGuarantee, originalArgumentsJSON: invocation.originalArgumentsJSON, resultID: UUID())
+        do { try await session.associateHostInvocation(forged, opaqueReference: "fixture.origin.v1:forged") }
+        catch { rejectedForgedIdentity = error as? HanlinHostError == .resultMismatch }
+        try await session.associateHostInvocation(invocation, opaqueReference: "fixture.origin.v1:original")
+        try await session.associateHostInvocation(invocation, opaqueReference: "fixture.origin.v1:original")
+        let loaded = try await store.load(invocation.session.conversationID, namespace: invocation.session.context.namespace)
+        let saved = try #require(loaded)
+        let references = saved.entries.compactMap { entry -> String? in
+            if case .presentationReference(_, let reference) = entry.payload { return reference }; return nil
+        }
+        #expect(references == ["fixture.origin.v1:original"])
+        #expect(saved.entries.contains { if case .toolCall = $0.payload { return true }; return false })
+        reservedResultID = invocation.resultID
+        externalEffects += 1
+        return try await base.execute(invocation, progress: progress)
+    }
+    func cancel(_ id: HanlinToolInvocationID) async { await base.cancel(id) }
+    func open(_ destination: HanlinHostDestination) async throws -> HanlinHostNavigationResult { try await base.open(destination) }
+}
+
 private actor SessionEvents {
     private(set) var texts = 0
     private var sawStep = false
@@ -737,4 +791,50 @@ private struct ControlledTextModel: LanguageModelV3 {
         #expect(invalidations == 1)
         #expect(await host.prepared == 1)
     }
+    @Test @MainActor func hostAssociationUsesOrderedSaveBeforeEffectAndOriginalReceiptIdentity() async throws {
+        let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let store = AssociationStore(), host = AssociationHost(context: context, store: store)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        host.session = session
+        var callback: HanlinHostResultEvent?
+        session.onHostResult = { callback = $0 }
+        let stream = try await session.stream(messages: [.init(role: .user, text: "Original dispatch")],
+            modelReference: .init(provider: "fixture", modelID: "fixture"))
+        for try await _ in stream {}
+        #expect(host.externalEffects == 1 && host.rejectedForgedIdentity)
+        let event = try #require(callback)
+        #expect(event.resultID == host.reservedResultID && event.call.session == identity)
+        let loaded = try await store.load(identity.conversationID, namespace: ns)
+        let record = try #require(loaded)
+        #expect(record.entries.contains { if case .hostResultIdentity(let id, let call) = $0.payload { return id == event.resultID && call == event.call }; return false })
+        #expect(record.entries.contains { if case .toolResult(_, let result) = $0.payload { return result.result.invocationID == event.call.invocationID }; return false })
+    }
+
+    @Test @MainActor func failedAssociationSaveNeverStartsExternalEffect() async throws {
+        let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let store = AssociationStore(rejectAssociation: true), host = AssociationHost(context: context, store: store)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        host.session = session
+        var callbacks = 0
+        session.onHostResult = { _ in callbacks += 1 }
+        do {
+            let stream = try await session.stream(messages: [.init(role: .user, text: "Do not dispatch after failed save")],
+                modelReference: .init(provider: "fixture", modelID: "fixture"))
+            for try await _ in stream {}
+            Issue.record("Failed association save was reported successful")
+        } catch { /* Original writer fails closed; no external effect and no persisted-result callback. */ }
+        #expect(host.externalEffects == 0 && callbacks == 0)
+        let loaded = try await store.load(identity.conversationID, namespace: ns)
+        let record = try #require(loaded)
+        #expect(!record.entries.contains { if case .presentationReference = $0.payload { return true }; return false })
+    }
+
 }

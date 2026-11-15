@@ -1,9 +1,10 @@
 # Coherent SDK consumer recipe
 
-Current integration consumes the package source from SDK handoff
-`62db3a1cff9884b363d4c457c3c3a88c803363b9`: source matches the Apple-qualified
-`9c42cddd14f76741ce0af7045381c7a9a7db0f79`, with the actual resolved SDK lock copied from that
-run. This supersedes the older frozen80 package input; its historical evidence remains separate.
+Current integration consumes the package source from the Apple-qualified association snapshot
+`364f10a6dc55b9a28b67ab972843a2e1c44ef986`, handed off with evidence at
+`7d2612d8bc21f424468b9774929eb71ca446e420`. Its raw Mac locks remain byte-identical to the
+earlier schema handoff `62db3a1cff9884b363d4c457c3c3a88c803363b9`. This supersedes the older
+frozen80 and schema-only package inputs; their historical evidence remains separate.
 Use this monorepo's literal local packages, not its root as a Git package. Later app-owner,
 Host-executor, history UI and Split changes are not included in this package-only update.
 
@@ -34,8 +35,8 @@ Artifact14172853768 SHA-256 `23f962a56890524d03e6cde65eadf360428197c067aa0c7ed69
 was independently downloaded and all ZIP CRCs checked. All245 archived source hashes match both
 their source tar and original Git; the two raw Mac locks match the handed-off package graph.
 The actual33 unique xcresult case IDs, process exits, dependency source/revision and retained
-Apache-2.0 license were checked. Source closure is exact after importing the15 changed package
-paths; all other archived package inputs remain unchanged. See
+Apache-2.0 license were checked. At integration checkpoint7cca3941, importing the15 changed
+package paths matched that original closure; later association changes are accounted separately below. See
 `evidence/host-schema-43742612086.json` and `HOST_SCHEMA_VALIDATOR_DECISION_2026-11-15.md`.
 
 The existing manual SDK proof job accepts exact selector
@@ -44,6 +45,29 @@ automatic triggers and other job routes are unchanged. No proof run was dispatch
 This does not qualify the actual app Host, broad MCP, live provider, A2UI renderer, SwiftData,
 XCUITest, device or release. The new optional model-response implementation below is documented
 in `NATIVE_SCHEMA_MODEL_PATH_2026-11-15.md`; its older package fixtures remain separate evidence.
+
+## Qualified ordered Host association
+
+The Dispatcher reserves the actual result UUID before Host entry. An existing unresolved call
+can then associate one bounded opaque reference through `Session.associateHostInvocation` and
+the SAME ordered CAS persistence tail before external dispatch. Full original call/session/run/
+step/result/argument identity is checked; a changed reference or fabricated reservation is rejected.
+No second record writer or effect executor is introduced.
+
+[Run43743854538](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43743854538) at exact364
+executed **27 EXECUTED_PASS**:20 Session,6 Context and1 affected Dispatcher control; actual iOS
+AgentCore compilation passed. Artifact14173940167 SHA-256
+`04f671971b186a405d174e6864cd1c431911a4b65017ff58f9c5eb97ccb76f33` was independently downloaded
+and all ZIP CRCs checked. All245 archived hashes match the source tar, original Git archive and
+assembled package inputs, including unchanged actual raw Mac locks. All27 unique xcresult IDs
+and both successful process exits were checked. See `evidence/host-association-43743854538.json`.
+
+Manual selector `HanlinAgentCoreTests/HostAssociation` uses the same proof script with
+`HANLIN_SDK_ASSOCIATION_ONLY=1`, excluding the8 unaffected pure schema cases. Those cases retain
+their own earlier437426 execution; they did not execute in437438. No aggregate whole-suite pass
+or new run on the integration SHA is asserted. All automatic triggers/peer job routes remain
+unchanged. Later app composition, `isRunning`, exact fingerprint writer and Split return/UI
+changes are not included in this snapshot and have separate outstanding proof obligations.
 
 ## Live model/Host binding
 
@@ -121,9 +145,9 @@ The real Hanlin conversation SwiftData/Keychain/attachment/memory adapters, inst
 signed protection/AppGroups and actual app/UI/device obligations remain open; catalog SwiftData tests
 are not evidence for those unrelated data adapters. Anytype/Otzaria remain separate projects.
 
-## Integration recovery supplement: private-store ancestor traversal
+## Historical integration recovery: private-store ancestor traversal
 
-The integration branch takes only `HanlinPrivateConversationStore.rejectSymbolicLinks` from
+The earlier integration checkpoint464efc64 took only `HanlinPrivateConversationStore.rejectSymbolicLinks` from
 `8b6106ef247f12c8bc6abf1ceaed63d8373223e4`. Lexical ancestor paths now strictly shorten and have
 a finite bound; malformed traversal fails closed. No later Host minor, Session, provider schema
 or app-owner changes are included. The original checkpoint test and assertions are unchanged.

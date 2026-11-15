@@ -62,9 +62,10 @@ public actor HanlinHostDispatcher {
             arguments: arguments, origin: .assistantModel,
             idempotencyKey: invocationID.rawValue, deadline: Date().addingTimeInterval(Double(limits.timeoutMilliseconds) / 1_000), limits: limits
         )
+        let resultID = UUID()
         let invocation = HanlinHostInvocation(request: request, session: session, runID: runID, step: step,
                                               providerCallID: providerCallID, writeGuarantee: tool.writeGuarantee, expectedRevision: expectedRevision,
-                                              originalArgumentsJSON: bytes)
+                                              originalArgumentsJSON: bytes, resultID: resultID)
         // Revalidate after all suspensions and reserve before host dispatch. Host still owns schema,
         // durable idempotency, permission/confirmation and the final native mutation boundary.
         try Task.checkCancellation()
@@ -72,7 +73,7 @@ public actor HanlinHostDispatcher {
         calls[key] = CallState(invocationID: invocationID,
             identity: .init(session: session, runID: runID, step: step, providerCallID: providerCallID,
                             invocationID: invocationID, logicalToolID: tool.route.logicalToolID),
-            resultID: UUID(), alias: alias, arguments: bytes)
+            resultID: resultID, alias: alias, arguments: bytes)
         let result: HanlinHostExecutionResult
         do {
             result = try await host.execute(invocation) { event in
@@ -117,6 +118,17 @@ public actor HanlinHostDispatcher {
             throw HanlinHostError.staleContext
         }
         return try .init(resultID: state.resultID, call: state.identity, result: result)
+    }
+
+    /// Checks an actual unresolved reservation before a Host associates durable metadata with it.
+    /// The result identity and original bytes must be the ones captured before Host entry.
+    public func isReserved(_ invocation: HanlinHostInvocation) -> Bool {
+        guard !revokedSessions.contains(invocation.session.id),
+              let state = calls[CallKey(session: invocation.session.id, run: invocation.runID, providerID: invocation.providerCallID)] else { return false }
+        return state.result == nil && state.invocationID == invocation.request.id && state.resultID == invocation.resultID
+            && state.identity.session == invocation.session && state.identity.runID == invocation.runID
+            && state.identity.step == invocation.step && state.identity.logicalToolID == invocation.request.logicalToolID
+            && state.alias == invocation.request.aliasUsed && state.arguments == invocation.originalArgumentsJSON
     }
 
     /// Reconciliation is scoped to the ORIGINAL context, including after a caller stops waiting.
