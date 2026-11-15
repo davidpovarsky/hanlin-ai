@@ -363,7 +363,7 @@
   "source_file_sha256": {
     ".github/workflows/build-ios26-unsigned-ipa.yml": "11414b818c71275ab116ac37997ebdc88d3a21b32a98e25103784943d56f663a",
     "Scripts/CI/ComposerValidation/native_host/ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e",
-    "Scripts/CI/ComposerValidation/native_host/README.md": "65d0e5c7a6f1a4b0f5289ed98c0fb3297849a8fdabc147fb518268d61e33b38f",
+    "Scripts/CI/ComposerValidation/native_host/README.md": "268931bc35a45c789f2a3b777f9882ab76a9911f45dd16e1fb0cfd88941c4cac",
     "Scripts/CI/ComposerValidation/native_host/freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
     "Scripts/CI/ComposerValidation/native_host/guards.py": "b0f1ab824e4a708966a84f2a833ddb00f0c683dcd820e9d9e035e9631d1c24a3",
     "Scripts/CI/ComposerValidation/native_host/precreated_readiness.py": "84045e59dfdc6dc8c5a57620c6f0960b5374c967e4237c16adbc99df7597eef5",

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "run": "43740448589",
+  "artifact": "14172387355",
+  "bytes": 3704274,
+  "sha256": "de0760816bbbc3a51c54a3f5ee1d7a88f629e7d3ab8e927c7bc3607e3510d8a2",
+  "full_zip_matches_github_digest": true,
+  "all_zip_entry_crcs_valid": true,
+  "xcresult_retained": true,
+  "whole_source_bindings_verified_to_original_and_head": [
+    "AI_HLY/Model/AllModels.swift",
+    "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
+    "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift"
+  ],
+  "original_executed_source": "1df1f6ab33b5d94a2dceb452003843645ce3d45e",
+  "workflow_commit": "77ebee9fdd2a5ee95a73d33d90c75d585a54a0e5",
+  "status": "EXECUTED_PASS_ONE_SCOPED_NATIVE_CASE",
+  "full_app_acceptance": false,
+  "case": {
+    "id": "HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()",
+    "result": "PASS",
+    "raw_results": [
+      "Passed"
+    ],
+    "selected_for_this_run": true
+  },
+  "execution_device_binding": "VERIFIED",
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "A8CE73D2-F54C-4FB2-B688-BC6BD7612FA8",
+    "deviceName": "iPhone 18 Pro",
+    "modelName": "iPhone 18 Pro",
+    "osBuildNumber": "24B8117",
+    "osVersion": "27.2",
+    "platform": "iOS Simulator"
+  },
+  "instance_fingerprint": "86a3dc30648608fc25f2807e4efe818462f29861e86bb2714739d79f8c23fb0b",
+  "packet_contract": "composer-model-host-environment-v2-20261115",
+  "actual_xcode_version": "Xcode 27.2\nBuild version 27B52",
+  "actual_swift_version": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "actual_sdk_version": "27.2",
+  "whole_source_sha256": {
+    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift": "8e069541a760bfe68362c17b40ade854d04f73237ff14489542ebd7b1abc07b8",
+    "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift": "7cb8257ab1c051ca9678d90a3dae0723a34f82665773ee29e2c778f1c3dafb02",
+    "AI_HLY/Model/AllModels.swift": "c0bd2a7b9d441876743c8ac4c25f179a07456b84ddd8828f22d5dc8c1b145ce5",
+    "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift": "f9067e859f9a2eae3ab6bc5e43b91e5bba70e7721a807e8e020cdfe4db6b9e19"
+  },
+  "source_packet_tar_sha256": "1f8e07b89ca30f39a1d59403e5e0c1f579937c7f8986b60e83d610b12e266ac8",
+  "generated_infrastructure_sha256": {
+    "ComposerNativeHost.xcodeproj/project.pbxproj": "e17a3a63c36d9cd71fde3c50db76caad2a4b1bf74224cb4655ac83161659b5c6",
+    "ComposerNativeHost.xcodeproj/xcshareddata/xcschemes/ComposerNativeHost.xcscheme": "5c834a5ae4e67261dbe71a9a1afc7fc4328555e6296a1df31d8ac1784de91a97"
+  },
+  "owned_shutdown_exit_code": 0,
+  "prior_editor_and_morph_cases": "NOT_RUN; excluded from this packet",
+  "real_app_consumers": "NOT_RUN; no automatic cross-host reuse",
+  "evidence_location": "build/evidence/run-43740448589 (ignored raw local copy); original GitHub artifact14172387355"
+}

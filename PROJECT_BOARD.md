@@ -29,6 +29,8 @@ Do not turn this into a duplicate issue tracker or a dump of temporary thoughts.
 
 Quick captures that still need classification.
 
+- **2026-11-15 native compile-before-boot opportunity:** model-host run43739521312 spent206.043s in measured readiness before a30.296s native command stopped at a Swift SDK compiler error (zero cases). Evaluate an initial whole-source `build-for-testing` stage to catch compiler errors before simulator boot, retaining every existing ownership/readiness/device guard before execution. This ordering is not implemented and no savings are claimed; preserve actual xcresult/source evidence and avoid a duplicate build. See docs/composer/APP_SDK_CONSUMER_HANDOFF_2026-11-15.md.
+
 - **2026-11-15 existing Runtime planner regression:** `test_runtime_tooling_full_acceptance_deduplication_and_scoped_build` expects only `AgentSkillsExposureTests`, but the current map also selects `HanlinCapabilityObservationTests`. Composer's portable planner run was95/96; the same failure reproduced with committed97fe29a0 mapping before the scoped Composer UI route addition. Resolve the intended Runtime coverage contract before changing the assertion; preserve required observation coverage. See docs/composer/APP_SDK_CONSUMER_HANDOFF_2026-11-15.md.
 
 ## Ideas & Opportunities
