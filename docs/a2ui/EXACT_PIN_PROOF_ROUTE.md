@@ -7,6 +7,14 @@ Its compilation/execution is NOT_RUN. Six separate iOS hosted cases and the two
 shared UI files are not part of this macOS harness. No961 result can accept the
 new lifetime-policy correction or host mounting. This owner dispatched no CI.
 
+The actual96134-case attempt43674291306 failed to compile (xcodebuild65), with
+recursive nested Testing.require expansion and0 executed Test Case nodes. All34
+are NOT_RUN. That expression also existed in e1d3d242. The current follow-up uses
+sequential requires in a returning helper so the unwrapped sink does not survive
+the caller's sink=nil. This still needs one changed-source35-case native proof;
+local syntax parsing cannot expand/typecheck Swift Testing on this Windows host.
+See [actual failed-build evidence](evidence/native-run-43674291306.json).
+
 Initially prepared after source review of `3a24003e`; the preparation utility
 itself dispatched no native job. Tomer's actual run43662884686 later compiled
 c40e617b and executed all25 cases:8 PASS/17 SDK FAIL during fixture load. The

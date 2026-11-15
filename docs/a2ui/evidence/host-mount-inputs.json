@@ -16,14 +16,14 @@
   "hosted_cases": 6,
   "hosted_platform_gate": "HANLIN_A2UI_POC && os(iOS)",
   "benchmark_plan_sha256": "168d04f1bc2fb8a93275ba84a805c9c6ae5bf0a455a3dd0581f462f773b2561a",
-  "current_sdk_plan_sha256": "ea278582596e5e47b99d0d160205bb331383f420ccee76cdc213e68686117bac",
+  "current_sdk_plan_sha256": "83443009d89671b71cfe8e1a3452f7e3f97a4ee61f5fce4d871128a73f32d216",
   "files": {
     "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift": "109d671bc7bdea6c295020be1aeac29b8dcdc5146578d049d8f75b69d08a6a64",
     "AI_HLY/Views/Components/ChatViewComponents.swift": "5ac247cefa2af11771d538d954cb1eea63f5970b644d9f1f857a21ff9af446ac",
     "AI_HLYTests/A2UIHostedResultTests.swift": "68c04e9eb86a60604f09d268656a53ec56f1e0dc859bcbeba204592f45dca981",
     "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift": "8ede697eeb8524227f621e76866dfb36863b949ddc2fca84f753ba55fb3d131a",
     "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift": "0bc24e163d0c7ef2d5fff6bffb57a60861552778919abe99ec9ac8c5e72c9348",
-    "AI_HLYTests/A2UITests.swift": "1a3737054e4369e53b1c1f90970fba64f3e9cf804c7672aef9d6fd14ae8d333b"
+    "AI_HLYTests/A2UITests.swift": "9042a112ab7bf41edf1d7f522cdf9177f79500c8f113172d2bc75d25a0ecbed9"
   },
   "local_observations": [
     "8 portable cases executed PASS",
@@ -36,6 +36,13 @@
     "No current SDK/iOS API compilation or host/test-bundle execution",
     "UIKit presentation test does not activate host expansion controls",
     "No production frame/event/run-continuation connection, project/lock/flag change or native job",
-    "Inline/expanded controls, RTL/accessibility and physical iPad acceptance remain open"
-  ]
+    "Inline/expanded controls, RTL/accessibility and physical iPad acceptance remain open",
+    "Sequential require helper and weak-sink lifetime still need actual native35-case proof"
+  ],
+  "benchmark_actual_native_evidence": "native-run-43674291306.json",
+  "benchmark_actual_native_result": "Build FAILED exit65 before tests;0 actual cases; all34 NOT_RUN",
+  "local_testing_macro_typecheck": {
+    "status": "UNAVAILABLE",
+    "reason": "Active Windows Swift import Testing: no such module;0 macros expanded"
+  }
 }

@@ -504,7 +504,14 @@ struct A2UISDKTests {
         let recorder = A2UIEventRecorder()
         var sink: A2UIResultSinkRecorder? = A2UIResultSinkRecorder(recorder: recorder)
         weak var weakSink = sink
-        let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: try #require(sink)))
+        // Keep macro expansion and the unwrapped strong reference inside a returning
+        // helper frame. No unwrapped sink can remain alive across the caller's sink=nil.
+        @MainActor func register(_ candidate: A2UIResultSinkRecorder?) throws -> HanlinA2UIResultProjection {
+            let liveSink = try #require(candidate)
+            let registered = store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: liveSink)
+            return try #require(registered)
+        }
+        let p = try register(sink)
         try load(store, p)
         let action = try #require(try node(p, id: "submit").action(for: "action", userActivation: true))
         action()

@@ -9,7 +9,21 @@ separate and NOT_RUN. Local8 framing scenarios and Windows syntax parsing pass;
 7 synthetic verifier checks pass; prior25/benchmark34 case sets cannot satisfy35.
 No native job/CI, project wiring or production transport was added/dispatched.
 
-**Latest real native result:** [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483)
+**Latest actual native attempt:** source961 failed compilation in
+[run43674291306](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43674291306),
+workflow `b34ea9d90104a4787665aa2c3ae1869edcf76ecf`, xcodebuild exit65.
+Raw tests.json has0 actual Test Case nodes: all34 cases are NOT_RUN, not3 failed
+tests. The compiler reports recursive Testing.require expansion at A2UITests.swift
+line507. That nested expression also remained in e1d3d242. The current correction
+uses sequential requires inside a returning helper, so no unwrapped strong sink
+survives into the caller's intentional sink=nil. Weak/cancel/privacy assertions
+and all35/6 current method identities remain. See
+[retained failed-build evidence](evidence/native-run-43674291306.json).
+Native compilation of the correction remains NOT_RUN. A local macro typecheck
+could not proceed because the active Windows Swift invocation cannot import Testing; syntax
+parsing and portable scenarios cannot substitute for actual macro expansion.
+
+**Latest passing native source:** [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483)
 compiled source `f654ac113447177df3838908c53ce9aa24dc47ff` with the actual
 `AI_Hanlin` consumer module, `AI_HLYTests` test module and POC+DEBUG enabled.
 All25 actual cases passed, including the privacy canaries. Workflow SHA:
@@ -80,6 +94,8 @@ No upstream code or package dependency was installed into the app.
 | Exact-pin enabled compilation/cases at2bae5a3e | EXECUTED_PASS, 25 cases | Run43664698104; identifier correction only, privacy P2 not accepted |
 | Exact-pin enabled compilation/cases at a43f1563 | EXECUTED_PASS, 25 cases | Run43667371439; privacy canaries executed, old consumer module |
 | Actual AI_Hanlin consumer-name proof at f654ac11 | EXECUTED_PASS, 25 cases | Run43668852483; actual AI_Hanlin consumer and AI_HLYTests module |
+| Result-owner benchmark961 native build | FAILED, exit65 | Run43674291306; recursive require macro,0 actual case nodes, all34 NOT_RUN |
+| Local Swift Testing macro typecheck | UNAVAILABLE | Windows import Testing fails; no macro or SDK typecheck result |
 | Current SDK compilation/cases | NOT_RUN, 35 authored cases | Changed source; f65425-case and96134-case outcomes do not cover this correction |
 | Current iOS host compilation/cases | NOT_RUN, 6 authored cases | AI_HLYTests/A2UIHostedResultTests.swift; excluded from macOS harness |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |

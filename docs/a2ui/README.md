@@ -45,6 +45,16 @@ path and excluded from the isolated macOS harness. Their compilation/execution i
 NOT_RUN. Windows syntax parsing is not Apple import/API/type checking. Historical
 f65425-case and96134-case outcomes cannot accept this later correction or UI mount.
 
+The actual961 attempt [run43674291306](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43674291306)
+failed compilation (exit65) on recursive nested Testing.require expansion at
+A2UITests.swift507, before any tests. All34 are NOT_RUN; raw test-case count is0.
+The same expression survived in e1d3d242. The follow-up moves registration into a
+returning helper with sequential requires, releasing its unwrapped sink before
+the weak-lifetime test sets sink=nil. Current35/6 cases retain their assertions
+and remain NOT_RUN. [Failure evidence](evidence/native-run-43674291306.json)
+records exact source/workflow/artifact provenance. Local Windows macro typecheck
+is unavailable because this Windows Swift invocation cannot import Testing; no native job was dispatched.
+
 ## Official source and revision
 
 Use [a2ui-project/a2ui](https://github.com/a2ui-project/a2ui), exact revision
