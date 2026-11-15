@@ -152,15 +152,30 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         return (min(max(0, availableHeight), max(minimumHeight, ceil(bottom + verticalInsets))), false)
     }
 
-    func measuredHeight(for textView: UITextView, isEmpty: Bool) -> CGFloat {
+    struct MeasurementTrace {
+        let fitting: CGFloat
+        let minimum: CGFloat
+        let maximum: CGFloat
+        let lineCount: Int?
+        let sixthBottom: CGFloat?
+        let complete: Bool?
+        let forcedScroll: Bool
+        let height: CGFloat
+        let scrolling: Bool
+    }
+
+    func measuredHeight(for textView: UITextView, isEmpty: Bool,
+                        observeMeasurement: ((MeasurementTrace) -> Void)? = nil) -> CGFloat {
         let width = Self.effectiveMeasurementWidth(for: textView)
         let fitting = textView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height
         var bounds = usesAutomaticLineLimits
             ? Self.automaticHeightBounds(for: textView, isEmpty: isEmpty, availableHeight: maxHeight)
             : (min: minHeight, max: max(minHeight, maxHeight))
         var incompleteLayout = false
+        var measuredLines: (count: Int, sixthBottom: CGFloat?, complete: Bool)? = nil
         if usesAutomaticLineLimits && !isEmpty {
             let lines = Self.visualLineLimit(for: textView)
+            measuredLines = lines
             let limit = Self.automaticLimit(fittingHeight: fitting, availableHeight: maxHeight, minimumHeight: bounds.min,
                 verticalInsets: textView.textContainerInset.top + textView.textContainerInset.bottom,
                 count: lines.count, sixthBottom: lines.sixthBottom, complete: lines.complete)
@@ -168,7 +183,12 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
             incompleteLayout = limit.forceScroll
         }
         textView.isScrollEnabled = !isEmpty && (incompleteLayout || Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max))
-        return Self.calculatedHeight(fittingHeight: fitting, minHeight: bounds.min, maxHeight: bounds.max)
+        let height = Self.calculatedHeight(fittingHeight: fitting, minHeight: bounds.min, maxHeight: bounds.max)
+        observeMeasurement?(.init(fitting: fitting, minimum: bounds.min, maximum: bounds.max,
+            lineCount: measuredLines?.count, sixthBottom: measuredLines?.sixthBottom,
+            complete: measuredLines?.complete, forcedScroll: incompleteLayout, height: height,
+            scrolling: textView.isScrollEnabled))
+        return height
     }
 
     static func effectiveMeasurementWidth(for textView: UITextView, fallbackWidth: CGFloat = 240) -> CGFloat {
