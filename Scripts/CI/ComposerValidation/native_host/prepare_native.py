@@ -19,9 +19,9 @@ sys.path.insert(0, str(HERE.parents[1] / "IntegrationValidation"))
 from extract_target import render
 from project_graph import parse_project
 
-SOURCE = "3c82667e86f71f5effb30fbde41874a437a86fb7"
+SOURCE = "1df1f6ab33b5d94a2dceb452003843645ce3d45e"
 OWNER = SOURCE
-PACKET_CONTRACT = "composer-model-host-environment-v1-20261115"
+PACKET_CONTRACT = "composer-model-host-environment-v2-20261115"
 SOURCES = (
     "AI_HLY/Model/AllModels.swift",
     "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",

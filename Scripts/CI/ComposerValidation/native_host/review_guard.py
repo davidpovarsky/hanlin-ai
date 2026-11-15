@@ -281,6 +281,7 @@ def source_controls():
         ('preflight-no-cases', 0, 2, {}, '', 'INFRA_ERROR'),
         ('actual-test-build-marker', 1, 65, {}, '** TEST BUILD FAILED **', 'BUILD_FAILED'),
         ('actual-build-marker', 1, 65, {}, '** BUILD FAILED **', 'BUILD_FAILED'),
+        ('actual-compiler-build-cancellation', 1, 65, {}, 'Testing cancelled because the build failed.', 'BUILD_FAILED'),
         ('authored-case-failed', 1, 65, {'cases': [{'result': 'FAIL'}]}, '** TEST FAILED **', 'TEST_FAILED'),
         ('empty-test-harness-failed', 1, 65, {}, '** TEST FAILED **', 'INFRA_ERROR'),
         ('zero-case-exit-zero', 1, 0, {}, '** TEST SUCCEEDED **', 'INFRA_ERROR'),

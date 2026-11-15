@@ -277,7 +277,8 @@ def classify_execution_status(test_commands, exit_code, actual_results, build_lo
         return 'INFRA_ERROR'
     if any(case.get('result') == 'FAIL' for case in actual_results.get('cases', [])):
         return 'TEST_FAILED'
-    if any(marker in build_log for marker in ['** BUILD FAILED **', '** TEST BUILD FAILED **']):
+    if any(marker in build_log for marker in ['** BUILD FAILED **', '** TEST BUILD FAILED **',
+                                              'Testing cancelled because the build failed.']):
         return 'BUILD_FAILED'
     if exit_code == 0 and actual_results.get('all_selected_unique_pass_on_owned_device') is True:
         return 'PASS'

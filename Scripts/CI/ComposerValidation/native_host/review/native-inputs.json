@@ -1,15 +1,15 @@
 {
   "scope": "native-hosted-component-unit-test-infrastructure",
   "full_app_acceptance": false,
-  "source": "3c82667e86f71f5effb30fbde41874a437a86fb7",
-  "owner": "3c82667e86f71f5effb30fbde41874a437a86fb7",
-  "packet_contract": "composer-model-host-environment-v1-20261115",
+  "source": "1df1f6ab33b5d94a2dceb452003843645ce3d45e",
+  "owner": "1df1f6ab33b5d94a2dceb452003843645ce3d45e",
+  "packet_contract": "composer-model-host-environment-v2-20261115",
   "status": "SOURCE_ONLY_NOT_COMPILED",
   "original_reference_input_sha256": {
-    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift": "876602c59feeb6fce632030246b3790a53a7b7a7fe707da0f6e0ad781983364d",
+    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift": "8e069541a760bfe68362c17b40ade854d04f73237ff14489542ebd7b1abc07b8",
     "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift": "7cb8257ab1c051ca9678d90a3dae0723a34f82665773ee29e2c778f1c3dafb02",
     "AI_HLY/Model/AllModels.swift": "c0bd2a7b9d441876743c8ac4c25f179a07456b84ddd8828f22d5dc8c1b145ce5",
-    "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift": "c88e0f496a3aa287f5ee8a981641c5dbcbe90d7906bc40f678870eae818d3ba1"
+    "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift": "f9067e859f9a2eae3ab6bc5e43b91e5bba70e7721a807e8e020cdfe4db6b9e19"
   },
   "native_canonical_sources": [
     {
@@ -27,13 +27,13 @@
     {
       "original": "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
       "native": "Canonical/AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
-      "sha256": "876602c59feeb6fce632030246b3790a53a7b7a7fe707da0f6e0ad781983364d",
+      "sha256": "8e069541a760bfe68362c17b40ade854d04f73237ff14489542ebd7b1abc07b8",
       "target": "AI_Hanlin"
     },
     {
       "original": "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift",
       "native": "Canonical/AI_HLYTests/HanlinModelHostingEnvironmentTests.swift",
-      "sha256": "c88e0f496a3aa287f5ee8a981641c5dbcbe90d7906bc40f678870eae818d3ba1",
+      "sha256": "f9067e859f9a2eae3ab6bc5e43b91e5bba70e7721a807e8e020cdfe4db6b9e19",
       "target": "AI_HanlinTests"
     }
   ],
@@ -110,7 +110,7 @@
   },
   "review_materialization": "PBX/scheme/metadata only; canonical Swift held in memory and not copied locally",
   "source_tool_sha256": {
-    "prepare_native.py": "df219fb98bba9290b2eb806f37e44610147e645f55b79ee753b333faede15354",
+    "prepare_native.py": "16fc27623a7f175f2f2fb72f5254e4d5e8fd5da3951a08fac5b206b2e1378b34",
     "validate_packet.py": "cc7ea2e72b28da3936ce27aab2b9660a6def05e0b0106e1b6c884602cd9d4840",
     "freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
     "ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e"
