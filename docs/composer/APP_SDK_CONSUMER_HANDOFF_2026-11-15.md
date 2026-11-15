@@ -24,12 +24,14 @@ The new real-catalog consumer case creates an in-memory SwiftData store using th
 
 After the authoritative app/SDK graph and header fix are available, compile the real app and run these exact new/affected methods with retained xcresult/case/device provenance:
 
-1. `AI_HanlinTests/ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()`
-2. `AI_HanlinTests/ModelPopoverZoomOrderTests/nativeVisibilityKeepsOriginalIndices()`
-3. `AI_HanlinTests/ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()`
-4. `AI_HanlinTests/ComposerActionsParityTests/detachedCapabilitiesProjectRealModeState()`
-5. `AI_HanlinTests/ChatComposerSessionBridgeTests/toolUseBindingRemainsScopedToItsChat()`
-6. `AI_HanlinUITests/HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables`
+1. `AI_HLYTests/ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()`
+2. `AI_HLYTests/ModelPopoverZoomOrderTests/nativeVisibilityKeepsOriginalIndices()`
+3. `AI_HLYTests/ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()`
+4. `AI_HLYTests/ComposerActionsParityTests/detachedCapabilitiesProjectRealModeState()`
+5. `AI_HLYTests/ChatComposerSessionBridgeTests/toolUseBindingRemainsScopedToItsChat()`
+6. `AI_HLYUITests/HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables`
+
+These are the actual app target/scheme bundle names, verified against `project.pbxproj`, `AI_HLY.xcscheme` and the exact-selector router. The isolated editor diagnostic's synthetic bundle name `AI_HanlinTests` must not be used for this app route.
 
 These selectors are **NOT_RUN**. Local Windows Swift frontend parsing and whitespace checks passed only for the changed picker/parity source. No SDK typecheck, app compile, native generation, selection/send, UI/visual or physical-device result is claimed. The separate editor5 passes do not cover this tranche. No broad CI or native-editor rerun is justified by these changes.
 
