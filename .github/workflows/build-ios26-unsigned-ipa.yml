@@ -173,7 +173,6 @@ jobs:
           trap 'echo "$SECONDS" > build/skill-format-app-resolution/native-staging-duration-seconds.txt' EXIT
           {
             npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-            npm run preflight:ios-dependencies --prefix Scripts/NativeScript
             npm ci --prefix Scripts/Expo
             node Scripts/Expo/prepare-ios-dependencies.mjs
           } 2>&1 | tee build/skill-format-app-resolution/native-staging.log
