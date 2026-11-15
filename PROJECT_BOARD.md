@@ -27,6 +27,8 @@ Quick captures that still need classification.
 
 ## Ideas & Opportunities
 
+- **2026-11-15 focused iOS component startup cost:** A2UI/media run43727280314 executed eight controls in1.311s, while Xcode reported350.094s for the test-operation interval and the measured build/test phase was478s (job657s). Investigate simulator boot/install/test-host startup in the retained xcresult before changing test scope or cache policy; package resolution70s and scheme preflight44s are measured separately. This is an optimization opportunity, not a failed functional gate; avoid rerunning the eight passing controls solely for timing refresh.
+
 Potential improvements, features, optimizations, or architectural ideas.
 
 ## Discoveries & Tips
