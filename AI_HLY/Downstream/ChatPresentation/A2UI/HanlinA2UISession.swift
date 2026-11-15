@@ -73,6 +73,10 @@ final class HanlinA2UISession {
             return .success(())
         } catch {
             let failure = (error as? HanlinA2UIIngress.Rejection)?.failure ?? .sdkValidation
+            let sdkError = error as? any A2UIError
+            let diagnostics = sdkError?.details.prefix(8).map {
+                HanlinA2UIIngress.SDKDiagnostic(code: $0.code, path: $0.path)
+            } ?? []
             var correlatedID: String?
             // SDK ownership is the only source of surface membership. Raw IDs in an error,
             // a rejected create request, or failure bookkeeping never grant target authority.
@@ -86,7 +90,11 @@ final class HanlinA2UISession {
                 unroutedFailure = failure
             }
             refreshSurfaceIDs()
-            return .failure(.init(failure, surfaceID: correlatedID))
+            return .failure(.init(
+                failure, surfaceID: correlatedID,
+                sdkErrorType: sdkError.map { String(reflecting: type(of: $0)) },
+                diagnostics: diagnostics
+            ))
         }
     }
 

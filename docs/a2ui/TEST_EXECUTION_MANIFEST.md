@@ -1,5 +1,15 @@
 # A2UI test execution manifest
 
+**Latest real native result:** [run43662884686](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43662884686)
+compiled `c40e617b` against official pin3ed9601 with POC+DEBUG enabled and
+executed all25 actual cases:8 portable PASS,17 SDK FAIL during fixture loading.
+The corrected candidate fixes the invalid v1 component identifier and preserves
+SDK type/code/path diagnostics. Its17 SDK cases and enabled compilation remain
+pending. Read [NATIVE_VALIDATION_FIX_2026-11-15.md](NATIVE_VALIDATION_FIX_2026-11-15.md)
+and [the actual case outcomes](evidence/native-run-43662884686.json).
+Earlier NOT_RUN statements below describe source-preparation history; they do
+not override this actual native failure or imply the correction passed.
+
 [איתן | ARCH] [MAIN_SESSION], 2026-11-15, Asia/Hebron. W1-001.
 
 Repository: `davidpovarsky/hanlin-ai`. Worktree:
@@ -50,16 +60,18 @@ No upstream code or package dependency was installed into the app.
 | Enabled-flag Swift frontend syntax parse | EXECUTED_PASS | All3 source files and test file; no import/type/API checking |
 | Isolated proof plan and verifier self-checks | EXECUTED_PASS | Current source/fixture hashes,25 selectors;7 synthetic XML/lock checks, no SDK execution |
 | Generated SwiftPM manifest API typecheck | EXECUTED_PASS | Windows Swift6.3.3, PackageDescription6.1,24 template lines via stdin; no manifest file or dependency resolution |
-| Official exact-pin enabled SDK compilation | NOT_RUN | No dependencies wired; remote slot reserved for Runtime |
-| Official SDK/SwiftUI cases | NOT_RUN, 17 cases | Flag-gated cases listed below |
+| Exact-pin enabled SDK compilation at c40e617b | EXECUTED_PASS | Actual native run43662884686; isolated consumer, no app wiring |
+| Exact-pin SDK cases at c40e617b | FAILED, 17 cases | All executed; common valid-fixture load rejection |
+| Corrected candidate enabled compilation/SDK cases | NOT_RUN | Same25-case verifier to rerun with corrected source/fixture bytes |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |
 
 The8 local scenarios execute through the standalone runner, not XCTest or
 Swift Testing discovery. Each uses the same check function as its project
 Swift Testing wrapper. Output is in
 [portable-results.txt](evidence/portable-results.txt). This does not assert
-that8 Swift Testing case nodes exist in an xcresult. No Xcode run, CI run,
-upstream conformance suite or simulator result is claimed.
+that8 Swift Testing case nodes exist in a new corrected-source xcresult.
+Actual native c40e617b results are recorded separately above. No corrected
+SDK pass, upstream conformance suite or iOS simulator result is claimed.
 
 The initial strict-concurrency compile caught a non-Sendable function-array
 declaration in the portable harness. Its immutable scenario closures were
@@ -117,7 +129,7 @@ swiftc -frontend -parse -D HANLIN_A2UI_POC -D DEBUG `
   AI_HLYTests/A2UITests.swift
 ```
 
-## Exact-pin SDK cases: 17 NOT_RUN
+## Exact-pin SDK cases: 17 FAILED at c40e617b; correction pending
 
 All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 `A2UISDKTests`. They compile only with `HANLIN_A2UI_POC`, in the app and test
@@ -129,23 +141,23 @@ rather than accepting a smaller discovered count.
 
 | Case | Obligation | Actual result |
 | --- | --- | --- |
-| parsesAndRendersTextCardInputButton() | Official parser/model and renderer-builder availability | NOT_RUN |
-| nativeInputBindingWritesAndReadsOfficialModel() | Native TextField writes; agent updates read back | NOT_RUN |
-| stableIDsAndNodeIdentityAcrossUpdates() | Upstream node identity through model/component updates | NOT_RUN |
-| malformedAndUnknownContentFallsBackAndRecovers() | Fallback routing and subsequent valid recovery | NOT_RUN |
-| officialSchemasRejectInvalidTextInputButton() | Real catalog schema rejection of all3 malformed components | NOT_RUN |
-| independentSurfacesKeepModelsSeparate() | Separate models and fallback per surface | NOT_RUN |
-| independentOwnersCanReuseWireSurfaceID() | Separate processors for separate result owners | NOT_RUN |
-| deleteDisposesAndRecreateStartsWithNewIdentity() | Surface deletion/recreation lifecycle | NOT_RUN |
-| closeRejectsLateFramesAndDisposesSurfaces() | Owner disposal and late ingress | NOT_RUN |
-| buttonEventUsesCurrentBoundValue() | Official action context after a user edit | NOT_RUN |
-| hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | NOT_RUN |
-| surfaceLimitDoesNotRemoveExistingContent() | Four-surface and exact byte-budget limits; update/delete correlated only to the owned target; preserve models/data | NOT_RUN |
-| rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | NOT_RUN |
-| unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Official validator and no-listener policy; reject unsolicited response | NOT_RUN |
-| closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | NOT_RUN |
-| closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | NOT_RUN |
-| unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() | Missing, blank, whitespace, overlong/UTF-8/60KB IDs, other-owner and current IDs cannot route fallback or change live models | NOT_RUN |
+| parsesAndRendersTextCardInputButton() | Official parser/model and renderer-builder availability | FAILED at c40; correction NOT_RUN |
+| nativeInputBindingWritesAndReadsOfficialModel() | Native TextField writes; agent updates read back | FAILED at c40; correction NOT_RUN |
+| stableIDsAndNodeIdentityAcrossUpdates() | Upstream node identity through model/component updates | FAILED at c40; correction NOT_RUN |
+| malformedAndUnknownContentFallsBackAndRecovers() | Fallback routing and subsequent valid recovery | FAILED at c40; correction NOT_RUN |
+| officialSchemasRejectInvalidTextInputButton() | Real catalog schema rejection of bad Text/Input/Button values plus invalid_identifier metadata for the original hyphenated ID | FAILED at c40; correction NOT_RUN |
+| independentSurfacesKeepModelsSeparate() | Separate models and fallback per surface | FAILED at c40; correction NOT_RUN |
+| independentOwnersCanReuseWireSurfaceID() | Separate processors for separate result owners | FAILED at c40; correction NOT_RUN |
+| deleteDisposesAndRecreateStartsWithNewIdentity() | Surface deletion/recreation lifecycle | FAILED at c40; correction NOT_RUN |
+| closeRejectsLateFramesAndDisposesSurfaces() | Owner disposal and late ingress | FAILED at c40; correction NOT_RUN |
+| buttonEventUsesCurrentBoundValue() | Official action context after a user edit | FAILED at c40; correction NOT_RUN |
+| hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | FAILED at c40; correction NOT_RUN |
+| surfaceLimitDoesNotRemoveExistingContent() | Four-surface and exact byte-budget limits; update/delete correlated only to the owned target; preserve models/data | FAILED at c40; correction NOT_RUN |
+| rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | FAILED at c40; correction NOT_RUN |
+| unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Official validator and no-listener policy; reject unsolicited response | FAILED at c40; correction NOT_RUN |
+| closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | FAILED at c40; correction NOT_RUN |
+| closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | FAILED at c40; correction NOT_RUN |
+| unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() | Missing, blank, whitespace, overlong/UTF-8/60KB IDs, other-owner and current IDs cannot route fallback or change live models | FAILED at c40; correction NOT_RUN |
 
 The three lifecycle/RPC cases address the2 P2 findings in the independent review of
 `e7141d55`; they exercise official SDK objects, not source-string matching.
@@ -179,7 +191,8 @@ For a consumer without app wiring, use [EXACT_PIN_PROOF_ROUTE.md](EXACT_PIN_PROO
 and `prepare_exact_pin_proof.py`. The planner copies actual source/fixtures
 without rewriting them, enables both SDK/Debug gates, verifies the resolved pin
 and requires25 executed cases. Local planning and seven synthetic verifier
-self-checks do not run SDK code. Native preparation/compile/tests are NOT_RUN.
+self-checks do not run SDK code. Tomer's actual native c40e617b proof compiled
+and reached17 real failures; only corrected-source verification is NOT_RUN.
 The app command below remains a separate future integration route.
 
 Prerequisites: explicit serialized Apple-slot approval, stable Xcode with the

@@ -108,18 +108,23 @@ protects the synchronized app source groups from unresolved optional imports.
 When enabled, missing imports fail compilation; there is no `canImport` fake
 implementation or success fallback.
 
-Eight portable framing scenarios passed on Windows Swift6.3.3. All17 SDK tests
-are **NOT_RUN**, and enabled SDK compilation, SwiftUI rendering, inline app
-integration and hardware verification remain **NOT_RUN**. A disabled flag,
-syntax-only parse or zero selected cases cannot satisfy either source task.
+The actual native run43662884686 compiled `c40e617b` with the exact SDK and
+executed all25 cases:8 portable PASS and17 SDK FAIL during fixture load. The
+fixtures used invalid v1 component ID `submit-label`; the corrected candidate
+uses `submitLabel` and preserves the invalid spelling as a negative SDK case.
+See [the diagnosis and evidence](NATIVE_VALIDATION_FIX_2026-11-15.md).
+The corrected candidate's native compile/17 SDK cases are pending, not PASS.
+Inline app integration and hardware verification remain NOT_RUN. A disabled
+flag, syntax-only parse or zero selected cases cannot satisfy either task.
 See [TEST_EXECUTION_MANIFEST.md](TEST_EXECUTION_MANIFEST.md) for exact cases,
 commands, fixture identities and evidence.
 
 The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) uses all25 actual
 cases in a temporary consumer, exact root/transitive resolution evidence and
 unchanged source bytes. It does not require shared product wiring. Its planner
-and verifier have local checks; native harness generation/compile/execution
-remain NOT_RUN and require the approved Apple resource.
+and verifier have local checks. Tomer's existing verifier already reached the
+real failure above; the corrected candidate awaits the same enabled25-case
+proof. No shared product wiring is added by this correction.
 
 ## Proposed integration, not applied
 

@@ -1,8 +1,11 @@
 # Isolated exact-pin proof route
 
-Prepared after source review of `3a24003e`. No native job, package resolution,
-dependency download, temporary harness creation or product wiring ran during
-preparation. Actual status remains8 portable passes /17 SDK NOT_RUN.
+Initially prepared after source review of `3a24003e`; the preparation utility
+itself dispatched no native job. Tomer's actual run43662884686 later compiled
+c40e617b and executed all25 cases:8 PASS/17 SDK FAIL during fixture load. The
+fixture/diagnostic correction is documented in
+[NATIVE_VALIDATION_FIX_2026-11-15.md](NATIVE_VALIDATION_FIX_2026-11-15.md).
+The current corrected candidate is pending the same enabled proof, not SDK_PASS.
 
 `prepare_exact_pin_proof.py` prepares the same3 source files, the unchanged25
 Swift Testing selectors and all7 fixtures in an isolated SwiftPM consumer.
@@ -16,7 +19,8 @@ four real products. It names its source module `AI_HLY` so the actual
 `HANLIN_A2UI_POC` and `DEBUG` for the Debug build; the standalone portable
 runner flag is absent. Source/fixture bytes and the harness manifest are
 hashed. The compiler and all25 tests, including the byte-budget assertions,
-remain **NOT_RUN** until the approved Apple execution happens.
+remain **NOT_RUN for the corrected candidate**. The earlier c40e617b cases
+actually ran and failed; the recipe/flags must not be used to erase that result.
 
 This proves a macOS27 SDK consumer when executed successfully. It does not
 prove iOS27 app integration, an inline host, hosted layout or physical iPad
@@ -42,7 +46,7 @@ using stdin and the installed ManifestAPI module. No Package.swift file was
 created and no dependency was resolved. This checks the preparation template,
 not Apple SDK imports or the upstream package build.
 
-## Native execution — prepared, NOT_RUN
+## Native recipe — corrected-source execution pending
 
 Only after the authorized stable-Xcode host and serialized resource are
 available, run from an authenticated checkout of the handoff commit. Keep the

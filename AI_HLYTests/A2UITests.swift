@@ -158,6 +158,8 @@ private enum A2UIPortableChecks {
             } catch let error as HanlinA2UIIngress.Rejection {
                 try requireA2UI(error.failure == .unsupportedOperation, "Unsupported classification changed")
                 try requireA2UI(error.surfaceID == nil, "Raw unsupported-operation ID escaped rejection")
+                try requireA2UI(error.sdkErrorType == nil && error.diagnostics.isEmpty,
+                               "Ingress rejection falsely acquired SDK diagnostics")
             }
         }
         for message in [
@@ -289,7 +291,7 @@ struct A2UISDKTests {
         try load(session, fixture: "update")
         #expect(try node(session, id: "name").identity == input.identity)
         #expect(try node(session, id: "root").identity == root.identity)
-        #expect(try node(session, id: "submit-label").string(for: "text") == "Send")
+        #expect(try node(session, id: "submitLabel").string(for: "text") == "Send")
     }
 
     @Test func malformedAndUnknownContentFallsBackAndRecovers() throws {
@@ -308,11 +310,19 @@ struct A2UISDKTests {
     }
 
     @Test func officialSchemasRejectInvalidTextInputButton() throws {
-        for line in try A2UIFixture.lines("invalid-components") {
+        let invalid = try A2UIFixture.lines("invalid-components")
+        #expect(invalid.count == 4)
+        for (index, line) in invalid.enumerated() {
             let session = HanlinA2UISession(onEvent: { _ in })
             try load(session)
-            #expect(throws: HanlinA2UIIngress.Rejection.self) { try session.receive(line).get() }
+            let result = session.receive(line)
+            #expect(throws: HanlinA2UIIngress.Rejection.self) { try result.get() }
             #expect(session.failures["form-a"] == .sdkValidation)
+            if index == 3, case .failure(let rejection) = result {
+                // Preserve the original invalid identifier as a real SDK rejection regression.
+                #expect(rejection.diagnostics.contains { $0.code == "invalid_identifier" })
+                #expect(rejection.sdkErrorType?.hasSuffix("A2UIValidationError") == true)
+            }
         }
     }
 

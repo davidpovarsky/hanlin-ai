@@ -22,13 +22,29 @@ enum HanlinA2UIIngress {
         case surfaceLimit, sessionBudget, sdkValidation, closed
     }
 
+    /// SDK diagnostic metadata only; never payload values or an alternative routing authority.
+    struct SDKDiagnostic: Equatable, Sendable {
+        let code: String
+        let path: String
+
+        init(code: String, path: String) {
+            self.code = String(code.prefix(96))
+            self.path = String(path.prefix(256))
+        }
+    }
+
     struct Rejection: Error, Equatable, Sendable {
         let failure: Failure
         let surfaceID: String?
+        let sdkErrorType: String?
+        let diagnostics: [SDKDiagnostic]
 
-        init(_ failure: Failure, surfaceID: String? = nil) {
+        init(_ failure: Failure, surfaceID: String? = nil,
+             sdkErrorType: String? = nil, diagnostics: [SDKDiagnostic] = []) {
             self.failure = failure
             self.surfaceID = surfaceID
+            self.sdkErrorType = sdkErrorType.map { String($0.prefix(96)) }
+            self.diagnostics = Array(diagnostics.prefix(8))
         }
     }
 
