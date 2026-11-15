@@ -37,7 +37,7 @@ PY
 tar -C "$package_dir" -cf "$evidence/source-inputs.tar" Package.swift Sources Tests proof-inputs.json
 printf '%s\n' "$actual_sha" > "$evidence/source-commit.txt"
 shasum -a 256 Scripts/CI/ComposerValidation/Package.swift Scripts/CI/ComposerValidation/run.sh Scripts/CI/ComposerValidation/verify_results.py Scripts/CI/ComposerValidation/prepare_capability_proof.py > "$evidence/harness-sha256.txt"
-printf '%s\n' 'Scope: eight whole production component files; six Morph cases and two whole-suite UIKit editor measurement cases.' \
+printf '%s\n' 'Scope: eight whole production component files; every declared Morph and UIKit editor case from the two complete owner test files, with exact identities in proof-inputs.json.' \
   'NOT covered: parity/session/manual dock resize, ChatViewBottom, popup live consumers, production app UI, physical device or reference parity.' > "$evidence/scope.txt"
 
 xcrun simctl list devices available -j > "$evidence/available-simulators.json"

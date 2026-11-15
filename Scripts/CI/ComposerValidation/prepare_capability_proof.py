@@ -67,6 +67,16 @@ def prepare(repo: Path, source_sha: str, destination: Path, include_editor_tests
     tests = (TEST_SOURCE, EDITOR_TEST_SOURCE) if include_editor_tests else (TEST_SOURCE,)
     contents = {path: blob(path) for path in (*SOURCES, *tests, *APP_INPUTS)}
     test_text = contents[TEST_SOURCE].decode("utf-8-sig")
+    # Include every actual case in each complete owner file. The minimum names
+    # below protect the earlier contract without silently omitting added cases.
+    def case_names(text: str) -> list[str]:
+        names = re.findall(r"@Test(?:\([^\n]*\))?\s+func\s+(\w+)\s*\(", text)
+        if not names or len(names) != len(set(names)):
+            raise ValueError("Missing or duplicate test declarations in a whole owner file")
+        return names
+
+    morph_cases = case_names(test_text)
+    editor_cases = []
     for case in COMPONENT_CASES:
         if len(re.findall(r"\bfunc\s+" + re.escape(case) + r"\s*\(", test_text)) != 1:
             raise ValueError(f"Missing or duplicate component case: {case}")
@@ -77,6 +87,7 @@ def prepare(repo: Path, source_sha: str, destination: Path, include_editor_tests
             raise ValueError(f"Missing actual app selector: {selector}")
     if include_editor_tests:
         editor_text = contents[EDITOR_TEST_SOURCE].decode("utf-8-sig")
+        editor_cases = case_names(editor_text)
         parity_text = contents[APP_INPUTS[0]].decode("utf-8-sig")
         if not re.search(r"\bstruct\s+NativeComposerLineSizingTests\b", editor_text):
             raise ValueError("The whole owner editor suite is required")
@@ -97,12 +108,15 @@ def prepare(repo: Path, source_sha: str, destination: Path, include_editor_tests
         "source_commit": source_sha,
         "consumer_module": "AI_Hanlin",
         "component_sources": list(SOURCES),
-        "component_cases": list(COMPONENT_CASES),
+        "component_cases": morph_cases,
+        "editor_cases": editor_cases,
         "component_test_sources": list(tests),
-        "expected_case_ids": [f"HanlinMorphComposerTests/{case}()" for case in COMPONENT_CASES]
-            + ([selector.split("/", 1)[1] + "()" for selector in EDITOR_SELECTORS] if include_editor_tests else []),
+        "expected_case_ids": [f"HanlinMorphComposerTests/{case}()" for case in morph_cases]
+            + [f"NativeComposerLineSizingTests/{case}()" for case in editor_cases],
         "actual_app_selectors_not_executed": list(APP_SELECTORS),
-        "editor_selectors_not_executed": list(EDITOR_SELECTORS),
+        "editor_selectors_not_executed":
+            [f"AI_HLYTests/NativeComposerLineSizingTests/{case}" for case in editor_cases]
+            if include_editor_tests else list(EDITOR_SELECTORS),
         "editor_test_file_staged": include_editor_tests,
         "input_sha256": hashes,
         "harness_manifest_sha256": hashlib.sha256(manifest).hexdigest(),

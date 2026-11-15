@@ -321,6 +321,22 @@ Python and shell syntax checks pass, as do seven synthetic result-validator
 checks; these are tooling checks, **not** native execution. Source import and
 native CI still await the coherent accepted service/UI packet.
 
+Latest frozen UI candidate `b0272e550369125a3a418461fa3c79728ba1c5a3` now has
+**seven Morph + three UIKit = ten** component cases, rather than the earlier
+six-plus-two plan. New `editorAndShellShareViewport` and
+`editingKeepsDraftAndSelection` cases remain included. Whole-file preparation
+succeeded against that exact Git commit: eight production files, both complete
+test files, 12 hashed inputs including the app-only test inputs, and ten exact
+expected result identities. The original parity file no longer duplicates the
+UIKit suite. Inputs are retained under ignored
+`build/integration-validation-evidence/composer-b0272e55-prepared`.
+The preparation recipe now derives every declared case from each whole owner
+test file, preserving the earlier required case names; added cases cannot be
+silently omitted by a stale fixed count. The same two-suite native runner and
+strict actual-case verifier consume that exact plan. Shell syntax and byte-copy
+preparation checks pass. Source QA is pending; no candidate source import or
+native dispatch occurred, and all ten cases remain NOT_RUN.
+
 ## Assembled sources
 
 Frozen Runtime baseline `dd700c03e9fe9d22e95a031d4684275512ee6e6f` plus one
