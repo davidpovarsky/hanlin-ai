@@ -81,8 +81,11 @@ class ModelMerge {
         if (!compared.emplace(cpp, objc).second) return;
         if (entityKey(*cpp) != entityKey(*objc) || !sameSourceOwner(*cpp, *objc))
             throw std::runtime_error("Dual-grammar canonical declaration/owner conflict: " + cpp->identificationString());
-        auto cppABI = declarationABI(*cpp);
-        auto objcABI = declarationABI(*objc);
+        llvm::json::Value cppABI(nullptr), objcABI(nullptr);
+        try { cppABI = declarationABI(*cpp); }
+        catch (const std::exception& error) { throw std::runtime_error("Unproven actual CPP ABI: " + cpp->identificationString() + "\n" + error.what()); }
+        try { objcABI = declarationABI(*objc); }
+        catch (const std::exception& error) { throw std::runtime_error("Unproven actual ObjC ABI: " + objc->identificationString() + "\n" + error.what()); }
         if (cppABI != objcABI)
             throw std::runtime_error("Dual-grammar actual AST ABI conflict: " + cpp->identificationString() +
                 "\nActual CPP ABI=" + llvm::formatv("{0}", cppABI).str() +
@@ -149,7 +152,8 @@ class ModelMerge {
             {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)}, {"rawFunctionLinkage", std::move(rawFunctionLinkage)},
             {"cppRawParameterCVR", rawParameterCVR(*cpp)}, {"objcRawParameterCVR", rawParameterCVR(*objc)},
             {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
-            {"availability", availabilityDifference ? "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET" : "EXACT"},
+            {"availability", !availabilityDifference ? "EXACT" : versionEquivalent(cpp->introducedIn, objc->introducedIn) ?
+                "ORIGINAL_UNKNOWN_VERSION_ENCODINGS_EQUIVALENT" : "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET"},
             {"objcIntroducedIn", objc->introducedIn.toString()}, {"cppIntroducedIn", cpp->introducedIn.toString()},
             {"rawAvailability", llvm::json::Object{{"cppDeprecated", cpp->deprecatedIn.toString()}, {"objcDeprecated", objc->deprecatedIn.toString()},
                 {"cppObsoleted", cpp->obsoletedIn.toString()}, {"objcObsoleted", objc->obsoletedIn.toString()}}}});

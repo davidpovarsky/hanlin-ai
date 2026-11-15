@@ -74,7 +74,7 @@ inline llvm::json::Object typeABI(clang::ASTContext& context, clang::QualType ty
     if (const auto* array = context.getAsIncompleteArrayType(type))
         return llvm::json::Object{{"incompleteArrayElement", llvm::json::Value(typeABI(context, array->getElementType(), depth + 1))}};
     if (type->isIncompleteType() || type->isFunctionType() || type->isDependentType())
-        throw std::runtime_error("Unproven incomplete/function/dependent ABI type");
+        throw std::runtime_error("Unproven incomplete/function/dependent ABI type: " + type.getAsString() + " [" + type->getTypeClassName() + "]");
     const auto info = context.getTypeInfo(type);
     llvm::json::Object result{{"widthBits", static_cast<int64_t>(info.Width)},
         {"alignmentBits", static_cast<int64_t>(info.Align)},
