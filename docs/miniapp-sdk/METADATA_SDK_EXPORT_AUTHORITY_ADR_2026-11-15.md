@@ -242,3 +242,25 @@ name/header hash, under all existing contract3 guards and fresh four-way proof,
 is pending in manager mailbox task1220548041266710. Full SDK remains FAILED;
 combined/VM/physical remain NOT_RUN. Independent authorized Runtime05 contract
 work can continue while that nonurgent decision is pending.
+
+Manager decision1220548041266710 subsequently approved only this fourth pinned
+declaration under the same contract3 rules, subject to fresh certificate and
+complete actual model/ABI/source/module/availability/export proof. It does not
+approve a generic export rule, runtime acceptance, merge or release.
+
+The additional helper keeps the original three-declaration evidence helper
+byte-identical and produces a separately bound AuthenticationServices certificate.
+All four actual compiler/grammar AST/object/link controls and their dependency
+closure are required; original AVFoundation proofs may be reused only by their
+existing complete unchanged-input check. No extra declaration is admitted.
+
+The actual AuthenticationServices public SDK header resolves into the same SDK's
+Cryptex tree. The source guard now requires the actual public module's header
+alias to resolve to precisely the canonical declaration file, still inside the
+bound SDK. Equal bytes/name are insufficient; alias targets are reverified after
+serialization. Native fixture counterexamples cover wrong owner, another physical
+file with equal bytes, and a public alias pointing outside the selected SDK.
+These changed native/request-bound sources require fresh17 model/transaction and
+31-module execution; the independent9 TextAPI/export tests remain eligible only
+for authenticated unchanged-input reuse. The affected slice now imports the
+actual AuthenticationServices header as well as UIKit/Host/AVFoundation/Accelerate.

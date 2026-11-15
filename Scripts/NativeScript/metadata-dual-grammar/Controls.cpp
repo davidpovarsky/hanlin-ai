@@ -6,6 +6,7 @@
 #include "Pipeline.h"
 #include "OptionsMacro.h"
 #include <map>
+#include <fstream>
 
 static void writeControlReceipt(const std::string& path, const llvm::json::Object& receipt) {
     std::error_code error;
@@ -165,6 +166,31 @@ int main(int argc, const char** argv) {
         }
         receipt["vendorMacroPrimitiveAndConstantsPreserved"] = true;
         receipt["originalOptionsMacroModelsPreserved"] = true;
+        // Real filesystem identities: an SDK-owned public Cryptex alias is
+        // allowed; equal bytes in another file, another owner, or outside the
+        // selected SDK can never substitute for the physical declaration.
+        const auto sdkFixture = std::filesystem::path(root) / "public-header-identity";
+        const auto sdkRoot = sdkFixture / "SDK";
+        const auto physicalHeader = sdkRoot / "System/Cryptexes/OS/Original.h";
+        const auto publicHeaders = sdkRoot / "System/Library/Frameworks/Actual.framework/Headers";
+        std::filesystem::create_directories(physicalHeader.parent_path());
+        std::filesystem::create_directories(publicHeaders);
+        { std::ofstream file(physicalHeader); file << "original physical header\n"; }
+        std::filesystem::create_symlink(physicalHeader, publicHeaders / "Original.h");
+        if (!HanlinDual::publicSDKHeaderHasIdentity(sdkRoot, physicalHeader, "Actual") ||
+            HanlinDual::publicSDKHeaderHasIdentity(sdkRoot, physicalHeader, "Other"))
+            throw std::runtime_error("Actual SDK public alias/module identity guard failed");
+        const auto otherHeader = sdkRoot / "Different/Original.h";
+        std::filesystem::create_directories(otherHeader.parent_path());
+        std::filesystem::copy_file(physicalHeader, otherHeader);
+        if (HanlinDual::publicSDKHeaderHasIdentity(sdkRoot, otherHeader, "Actual"))
+            throw std::runtime_error("Equal bytes in another physical SDK header passed public identity");
+        const auto externalHeader = sdkFixture / "Outside.h";
+        std::filesystem::copy_file(physicalHeader, externalHeader);
+        std::filesystem::create_symlink(externalHeader, publicHeaders / "Outside.h");
+        if (HanlinDual::publicSDKHeaderHasIdentity(sdkRoot, externalHeader, "Actual"))
+            throw std::runtime_error("Public alias to a source outside the bound SDK was accepted");
+        receipt["publicSDKHeaderPhysicalIdentityCounterexamples"] = true;
         // Derived adversarial ABI objects start from a real retained Clang
         // declaration. Changing only its symbol may be considered later;
         // changing visibility or formal linkage can never qualify.

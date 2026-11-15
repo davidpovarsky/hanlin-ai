@@ -361,7 +361,7 @@ def main() -> int:
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")
     if options.export_authority_slice:
-        umbrella.write_text(umbrella.read_text() + '#import <AVFoundation/AVCaptureTimecodeGenerator.h>\n#import <Accelerate/Accelerate.h>\n', encoding="utf-8")
+        umbrella.write_text(umbrella.read_text() + '#import <AVFoundation/AVCaptureTimecodeGenerator.h>\n#import <Accelerate/Accelerate.h>\n#import <AuthenticationServices/ASAuthorizationSecurityKeyPublicKeyCredentialDescriptor.h>\n', encoding="utf-8")
     if options.mode == "textual-public" and not options.parity_only and not options.export_authority_slice:
         from metadata_public_headers import write_public_umbrella
         write_public_umbrella(sdk, umbrella, [headers / "HanlinNativeServicesBridge.h",

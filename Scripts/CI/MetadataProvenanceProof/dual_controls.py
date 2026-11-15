@@ -204,6 +204,7 @@ HANLIN_DECL_EXPORT
         passed = run.returncode == 0 and actual.get("status") == expected_status
         if expectation == "pass":
             passed = passed and actual.get("vendorMacroPrimitiveAndConstantsPreserved") is True and actual.get("originalOptionsMacroModelsPreserved") is True
+            passed = passed and actual.get("publicSDKHeaderPhysicalIdentityCounterexamples") is True
             passed = passed and output.is_file() and actual.get("lifetime", {}).get("bothSourceManagersReadAfterSerialization") is True and actual.get("crossFactoryTypeValidation") is True and actual.get("actualRecordAliasIdentity") is True and actual.get("sameProtocolObjectMultiplicityPreserved") is True and actual.get("cppAddedProtocolRoutedToCanonicalCObject") is True and actual.get("bindingNameOnlyGuardCounterexamples") is True
             if output.is_file():
                 body = output.read_bytes()

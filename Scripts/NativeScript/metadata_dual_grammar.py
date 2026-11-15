@@ -33,11 +33,12 @@ def create_request(destination: Path, full_root: Path, objc_root: Path, context:
         raise RuntimeError("Actual SDK C++ standard-library directory is missing")
     evidence = None
     if sdk_export_authority:
-        from metadata_sdk_export_evidence import create_evidence
+        from metadata_sdk_pinned_export_extension import create_evidence
         if tool is None:
             raise RuntimeError("SDK export proof requires the actual generator path")
         evidence, proof_inputs = create_evidence(destination.parent / "sdk-export-evidence", context, sdk, tool)
-        bound_paths = [*bound_paths, *proof_inputs, Path(__file__).with_name("metadata_sdk_export_evidence.py")]
+        bound_paths = [*bound_paths, *proof_inputs, Path(__file__).with_name("metadata_sdk_export_evidence.py"),
+                       Path(__file__).with_name("metadata_sdk_pinned_export_extension.py")]
     paths = sorted({path.resolve(strict=True) for path in [full_root, objc_root, *bound_paths]})
     request = {"schemaVersion": 2, "mergePolicyVersion": 3, "aliasPolicyVersion": 2,
         "mode": "retained-dual-grammar", "nonce": str(uuid.uuid4()),

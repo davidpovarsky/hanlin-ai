@@ -5,11 +5,26 @@
 
 namespace HanlinDual {
 
+inline bool publicSDKHeaderHasIdentity(const std::filesystem::path& sdk,
+                                       const std::filesystem::path& physical,
+                                       const std::string& owner) {
+    if (owner.empty() || owner == "." || owner == ".." || owner.find('/') != std::string::npos ||
+        owner.find('\\') != std::string::npos) return false;
+    const auto relative = physical.lexically_relative(sdk);
+    if (relative.empty() || relative.is_absolute() || *relative.begin() == "..") return false;
+    // Public SDK framework symlinks can resolve into the SDK's own Cryptex tree.
+    // Require the actual module's public header alias to resolve to THIS physical
+    // source, still inside the bound SDK; never accept a basename/byte match.
+    const auto alias = sdk / "System/Library/Frameworks" / (owner + ".framework") / "Headers" / physical.filename();
+    return std::filesystem::is_regular_file(alias) && std::filesystem::canonical(alias) == physical;
+}
+
 class SDKExportAuthority {
     std::unique_ptr<llvm::json::Value> evidence;
     const llvm::json::Object* fields;
     std::filesystem::path sdk;
     std::map<std::string, std::unique_ptr<SDKExportClosure>> closures;
+    std::map<std::string, std::string> publicHeaderAliases;
 public:
     SDKExportAuthority(const llvm::json::Object& request, const llvm::json::Object& actualCPP) {
         const auto path = request.getString("sdkExportEvidence");
@@ -58,6 +73,9 @@ public:
                 throw std::runtime_error("SDK binding evidence physical input drift");
         }
         for (const auto& closure : closures) closure.second->verify();
+        for (const auto& alias : publicHeaderAliases)
+            if (!std::filesystem::is_regular_file(alias.first) || std::filesystem::canonical(alias.first) != alias.second)
+                throw std::runtime_error("SDK public header alias changed during operation");
     }
 
     std::optional<llvm::json::Object> resolve(const Meta::Meta& cpp, const Meta::Meta& objc,
@@ -71,13 +89,13 @@ public:
             a->hasAttr<clang::AliasAttr>() || b->hasAttr<clang::AliasAttr>() || a->hasAttr<clang::IFuncAttr>() || b->hasAttr<clang::IFuncAttr>()) return std::nullopt;
         const auto publicRoot = sdk / "System/Library/Frameworks";
         const auto physical = std::filesystem::canonical(objc.fileName);
-        const auto relative = physical.lexically_relative(publicRoot);
-        if (relative.empty() || relative.is_absolute() || *relative.begin() == "..") return std::nullopt;
-        auto part = relative.begin();
-        const auto framework = part->string();
-        if (!llvm::StringRef(framework).ends_with(".framework") || ++part == relative.end() || *part != "Headers") return std::nullopt;
-        const auto name = framework.substr(0, framework.size() - std::string(".framework").size());
-        if (objc.module->getTopLevelModule()->getFullModuleName() != name) return std::nullopt;
+        const auto name = objc.module->getTopLevelModule()->getFullModuleName();
+        if (!publicSDKHeaderHasIdentity(sdk, physical, name)) return std::nullopt;
+        const auto framework = name + ".framework";
+        const auto publicHeader = publicRoot / framework / "Headers" / physical.filename();
+        const auto aliasEntry = publicHeaderAliases.emplace(publicHeader.string(), physical.string());
+        if (!aliasEntry.second && aliasEntry.first->second != physical.string())
+            throw std::runtime_error("SDK public header alias physical owner collision");
         const auto* functions = fields->getArray("functions");
         const llvm::json::Object* match = nullptr;
         if (!functions) throw std::runtime_error("SDK binding declaration proofs missing");
@@ -125,6 +143,8 @@ public:
         proof["publicModelOwner"] = moduleName(objc);
         proof["source"] = physical.string();
         proof["sourceSHA256"] = hanlinString(*match, "sourceSHA256");
+        proof["publicHeaderAlias"] = publicHeader.string();
+        proof["publicHeaderAliasResolvedToSource"] = true;
         proof["target"] = triple.str();
         proof["compilerProofTarget"] = hanlinString(*fields, "target");
         proof["requestedTarget"] = hanlinString(*fields, "requestedTarget");
