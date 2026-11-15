@@ -67,17 +67,19 @@ def historical():
 
 
 @lru_cache(maxsize=None)
-def anchor(path, level):
-    data = git("show", f"{BASELINE}:{path}")
+def anchor(path, level, revision=BASELINE):
+    data = git("show", f"{revision}:{path}")
     lines = data.decode("utf-8-sig").splitlines()
     line = next((i for i, value in enumerate(lines, 1)
                  if re.search(r"\b(struct|class|actor|enum|func)\b", value) and not value.lstrip().startswith("//")), 1)
-    return {"path": path, "line": line, "sha256": hashlib.sha256(data).hexdigest(), "revision": BASELINE, "level": level}
+    return {"path": path, "line": line, "sha256": hashlib.sha256(data).hexdigest(), "revision": revision, "level": level}
 
 
-def generate():
+def generate(target_revision=BASELINE):
+    if not re.fullmatch(r"[0-9a-f]{40}", target_revision):
+        raise ValueError("target revision must be an exact source commit SHA")
     blob, original = historical()
-    paths = git("ls-tree", "-r", "--name-only", BASELINE).decode().splitlines()
+    paths = git("ls-tree", "-r", "--name-only", target_revision).decode().splitlines()
     by_name = {}
     for path in paths:
         by_name.setdefault(Path(path).name, []).append(path)
@@ -87,8 +89,8 @@ def generate():
         explicit = []
         for name in re.findall(r"`([^`/]+\.swift)`", feature):
             explicit.extend(by_name.get(name, []))
-        evidence = [anchor(p, "HISTORICAL_FILENAME_RESOLVED") for p in dict.fromkeys(explicit)]
-        evidence += [anchor(p, "COMPONENT_ANCHOR_ONLY") for p in ANCHORS[group] if p not in explicit]
+        evidence = [anchor(p, "HISTORICAL_FILENAME_RESOLVED", target_revision) for p in dict.fromkeys(explicit)]
+        evidence += [anchor(p, "COMPONENT_ANCHOR_ONLY", target_revision) for p in ANCHORS[group] if p not in explicit]
         owner = "SHARED" if decision == "SHARED" else "MINIAPPS" if decision == "MINI" else "AI"
         status = "BLOCKED" if decision in {"FIX_FIRST", "RETIRE"} else "NOT_RUN"
         rows.append({"id": feature_id, "historical_decision": decision, "historical_feature": feature,
@@ -104,6 +106,9 @@ def generate():
     (OUTPUT / "historical-278.md").write_bytes(blob)
     result = {"schema_version": 1, "historical_revision": HISTORY, "historical_blob_sha256": DIGEST,
               "baseline": BASELINE, "historical_count": 278, "rows": rows,
+              "target_revision": target_revision,
+              "target_project": {"path": "AI_HLY.xcodeproj/project.pbxproj", "revision": target_revision,
+                  "sha256": hashlib.sha256(git("show", f"{target_revision}:AI_HLY.xcodeproj/project.pbxproj")).hexdigest()},
               "new_capabilities": [
                   {"id": "SPLIT-FOREGROUND-V1", "provenance": "W1-003", "status": "SOURCE_IMPLEMENTED_PORTABLE_TESTS_SEPARATE", "affects": ["MINI-16", "MINI-17"]},
                   {"id": "A2UI-W1", "provenance": "e7141d5569b6eb7813b13ccad0d8b4b44048492e", "status": "OTHER_LANE_SDK_NOT_RUN", "affects": ["RESULT-01", "MINI-16"]},
@@ -111,6 +116,7 @@ def generate():
     (OUTPUT / "feature-delta-278.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     changes = git("diff", "--name-status", "8f24983dc4e62cc52250858f0870826a3bc5f073", BASELINE).decode()
     (OUTPUT / "baseline-source-delta.tsv").write_text(changes, encoding="utf-8", newline="\n")
+    (OUTPUT / "target-source-delta.tsv").write_text(git("diff", "--name-status", BASELINE, target_revision).decode(), encoding="utf-8", newline="\n")
     return result
 
 
@@ -125,6 +131,18 @@ def validate(document, original):
         errors.append("duplicate IDs or incorrect 278 denominator")
     if document.get("historical_blob_sha256") != DIGEST or document.get("baseline") != BASELINE:
         errors.append("wrong provenance")
+    target_revision = document.get("target_revision", BASELINE)
+    if not isinstance(target_revision, str) or not re.fullmatch(r"[0-9a-f]{40}", target_revision):
+        errors.append("invalid target revision")
+        target_revision = BASELINE
+    if "target_revision" in document:
+        try:
+            expected_project = {"path": "AI_HLY.xcodeproj/project.pbxproj", "revision": target_revision,
+                "sha256": hashlib.sha256(git("show", f"{target_revision}:AI_HLY.xcodeproj/project.pbxproj")).hexdigest()}
+            if document.get("target_project") != expected_project:
+                errors.append("changed target project evidence")
+        except subprocess.CalledProcessError:
+            errors.append("invalid target project revision")
     originals = {r[0]: r[1:] for r in original}
     for row in rows:
         name = row.get("id")
@@ -144,7 +162,7 @@ def validate(document, original):
             errors.append(f"{name}: missing source evidence")
         for evidence in row.get("source_evidence", []):
             try:
-                if evidence["level"] not in {"HISTORICAL_FILENAME_RESOLVED", "COMPONENT_ANCHOR_ONLY"} or evidence != anchor(evidence["path"], evidence["level"]):
+                if evidence["level"] not in {"HISTORICAL_FILENAME_RESOLVED", "COMPONENT_ANCHOR_ONLY"} or evidence != anchor(evidence["path"], evidence["level"], target_revision):
                     errors.append(f"{name}: changed source anchor")
             except (KeyError, subprocess.CalledProcessError, UnicodeError):
                 errors.append(f"{name}: invalid source anchor")
@@ -154,8 +172,9 @@ def validate(document, original):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--generate", action="store_true")
+    parser.add_argument("--target-revision", help="Exact commit to audit; generation defaults to current HEAD")
     args = parser.parse_args()
-    document = generate() if args.generate else json.loads((OUTPUT / "feature-delta-278.json").read_text(encoding="utf-8"))
+    document = generate(args.target_revision or git("rev-parse", "HEAD").decode().strip()) if args.generate else json.loads((OUTPUT / "feature-delta-278.json").read_text(encoding="utf-8"))
     _, original = historical()
     errors = validate(document, original)
     summary = {"status": "FAILED" if errors else "EXECUTED_PASS", "coverage_count": len(document["rows"]),

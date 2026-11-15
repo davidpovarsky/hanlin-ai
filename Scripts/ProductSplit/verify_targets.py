@@ -19,6 +19,10 @@ def main():
         assert not any(part in source for part in ['/ChatInput/', '/ChatView.swift', '/Views/Components/Chat'])
     for source in membership['excludes']:
         assert source not in sources, source
+    for resource in membership.get('shared_resources', []):
+        assert f'path = "{resource}";' in project or f'path = {resource};' in project, resource
+        if resource != 'AI_HLY/RuntimeHostResources.zip':
+            assert (ROOT / resource).is_file(), resource
     assert 'PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;' in project
     assert 'PRODUCT_BUNDLE_IDENTIFIER = com.itorah.hanlinminiapps;' in project
     assert 'name = HanlinMiniApps;' in project

@@ -48,6 +48,15 @@ class ParityValidatorTests(unittest.TestCase):
     def test_missing_required_status_fields_rejected(self):
         self.validate_mutation(lambda v: v["rows"][0].update(migration="", permissions="", unresolved_decision=""))
 
+    def test_target_revision_must_be_exact_commit(self):
+        self.validate_mutation(lambda v: v.update(target_revision="HEAD"))
+
+    def test_target_project_fingerprint_cannot_be_changed(self):
+        self.validate_mutation(lambda v: v["target_project"].update(sha256="0" * 64))
+
+    def test_source_anchor_must_match_selected_target_revision(self):
+        self.validate_mutation(lambda v: v["rows"][0]["source_evidence"][0].update(revision="0" * 40))
+
 
 if __name__ == "__main__":
     unittest.main()

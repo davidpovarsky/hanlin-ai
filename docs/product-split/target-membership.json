@@ -64,5 +64,23 @@
     "AI_HLY/AI_HLY.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform+AIConfiguration.swift"
   ],
-  "data_policy": "AI stores remain in place. No automatic live migration."
+  "data_policy": "AI stores remain in place. No automatic live migration.",
+  "shared_resources": [
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.LICENSE.txt",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.json",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.pem",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonExecution.py",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonNativeExtensions.json",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.lock.json",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.py",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/installer-1.1.0-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/packaging-26.3-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/pyproject_hooks-1.3.3-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/resolvelib-1.2.1-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/hanlin_native-1.0.0-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
+    "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
+    "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
+    "AI_HLY/RuntimeHostResources.zip"
+  ]
 }
