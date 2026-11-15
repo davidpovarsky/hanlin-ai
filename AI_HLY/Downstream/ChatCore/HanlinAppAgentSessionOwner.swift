@@ -29,6 +29,50 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var activeReference: HanlinAppAgentRowReference?
     @ObservationIgnored private var completion: HanlinAgentRunCompletion?
     @ObservationIgnored private var starting = false
+    @ObservationIgnored private var historyGeneration: UUID?
+
+    /// Read-only history on conversation open. No engine, Host, Session or interaction admission
+    /// is created. The caller supplies its original row/context, never a current-selection lookup.
+    func restoreHistory(conversation: ChatRecords, conversationID: UUID, sceneID: UUID,
+                        temporary: Bool, modelContext: ModelContext) async throws {
+        try Task.checkCancellation()
+        guard !starting, activeUIRunID == nil else { throw HanlinHostError.staleContext }
+        let namespace = try Self.namespace(conversationID: conversationID, temporary: temporary)
+        if let session {
+            guard session.identity.conversationID == conversationID,
+                  session.identity.context.namespace == namespace,
+                  session.identity.context.sceneID == sceneID else { throw HanlinHostError.staleContext }
+        }
+        let originalSession = session?.identity
+        let originalGeneration = contextGeneration
+        let token = UUID()
+        historyGeneration = token
+        let originalStore: HanlinAppConversationStore
+        if let store, store.namespace == namespace,
+           store.belongsTo(context: modelContext, conversation: conversation, temporary: temporary) {
+            originalStore = store
+        } else {
+            guard session == nil else { throw HanlinHostError.staleContext }
+            originalStore = HanlinAppConversationStore(context: modelContext, conversation: conversation,
+                namespace: namespace, conversationID: conversationID, temporary: temporary)
+            store = originalStore
+        }
+        let record = try await originalStore.load(conversationID, namespace: namespace)
+        try Task.checkCancellation()
+        guard historyGeneration == token, !starting, activeUIRunID == nil,
+              session?.identity == originalSession, contextGeneration == originalGeneration,
+              store === originalStore else { throw HanlinHostError.staleContext }
+        _ = try originalStore.requireOriginalConversation()
+        guard let record else { return }
+        let restored = try Self.restoredBindings(record)
+        try presentation?.replay(record, bindings: restored)
+        bindings = restored
+    }
+
+    private static func namespace(conversationID: UUID, temporary: Bool) throws -> HanlinConversationNamespace {
+        try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: temporary ? "temporary" : "swiftdata", space: conversationID.uuidString)
+    }
 
     /// Called with the already-created original response row, real conversation and scene.
     /// The UI must keep this owner for that conversation instead of recreating it each request.
@@ -68,10 +112,10 @@ final class HanlinAppAgentSessionOwner {
                 messages: [HanlinAISDKMessage], systemPrompt: String?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
+        historyGeneration = nil
         starting = true
         defer { starting = false }
-        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
-            workspace: request.temporary ? "temporary" : "swiftdata", space: request.conversationID.uuidString)
+        let namespace = try Self.namespace(conversationID: request.conversationID, temporary: request.temporary)
         let matches = session?.identity.conversationID == request.conversationID
             && session?.identity.context.namespace == namespace && session?.identity.context.sceneID == request.sceneID
             && Self.sameEngineConfiguration(modelConfiguration, configuration)
@@ -182,6 +226,7 @@ final class HanlinAppAgentSessionOwner {
 
     /// Synchronous authority revocation precedes any asynchronous cancellation/host cleanup.
     func revoke() {
+        historyGeneration = nil
         contextGeneration = nil
         if let session { presentation?.invalidated(session.identity) }
         activeUIRunID = nil; activeReference = nil
