@@ -1,0 +1,196 @@
+{
+  "source_sha": "9a864b3c21eaad374c93730d7877addb6726e09d",
+  "run": 43725502988,
+  "job": 132846445367,
+  "workflow_status": "FAILED",
+  "classification": "TEST_FAILED",
+  "executed_pass": 40,
+  "failed": 1,
+  "native_catalog": "NOT_RUN (prior package gate failed)",
+  "ios_agentcore_compile": "PASS",
+  "source_hashes_verified": 268,
+  "artifact": {
+    "id": 14166341480,
+    "digest": "sha256:e17e7520a45f3dbbb58cc9d6d021fce36edbe3a18e38e4a495da623eef562452"
+  },
+  "raw_hashes": {
+    "summary.json": "6a18723f7176c839c3f68c8594c19f121e38841cb03e0ed49bf03e9604e0a8a6",
+    "SDKTests.json": "c96207a6dfcbd3045d00f54cfcae8b96bfb964ca3291570f8f2f6ed1ab9a4e5e",
+    "CoreTests.json": "025e5db4289ac655cf1685ba97d05e248382eb30165d8efb0d523fe4cf80b46a",
+    "sdk-tests.log": "0022cf78db9120444ffcf1ba73799ca4990613c335e87d56e3d339bd96df684f",
+    "process-status.json": "9a6c6737c5528613012db902eb1200b613649ab8c14aa36242394e9b8707d1aa"
+  },
+  "failure": "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration: caught invalidRecord; fixture passed an aliased temporary root to the symlink-rejecting private store",
+  "cases": [
+    {
+      "id": "StoreTests/sameConversationIDIsIsolatedBySpace()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()",
+      "status": "FAILED"
+    },
+    {
+      "id": "ContextTests/structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "ContextTests/canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "ContextTests/persistedPresentationCarriesNoExecutionAuthority()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "ContextTests/decodedNamespacesCannotBypassValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "ContextTests/previousMetadataFormatRemainsReadableWithoutMutation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenRouterDescriptor()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testAnthropicDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenAIDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testGeminiDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testCustomOpenAICompatibleDescriptor()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/duplicateDefinitionsThrowBeforeDictionaryConstruction()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeNonTextRejectedBeforeProviderCapabilityOrDownloadPath()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeDescriptorNeverSelectsNetworkProvider()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testSourceAndFileStreamEventMapping()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/cancellationAfterFortyStopsTheActualTool()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testParallelToolExecution()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testDynamicToolExposure()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testAdvertisedSchemaPreservesOriginalConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testRealProviderTransportErrorAbortsStream()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testUnknownToolProducesNonFatalErrorAndAllowsRecovery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testInvalidArgumentsReachExecutorWithoutAborting()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testMultimodalUserMessagePartsPreserved()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testNonPositiveMaxStepsClampedToAtLeastOne()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testToolContinuationRegression()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/defaultRunContinuesPastFortyWithDiscovery()",
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "recovery_contract": "docs/agent-sdk/VALIDATION_CONTRACT_V2.md",
+  "duration": {
+    "total_seconds": 514,
+    "sdk_test_seconds": 112,
+    "measured": true
+  }
+}

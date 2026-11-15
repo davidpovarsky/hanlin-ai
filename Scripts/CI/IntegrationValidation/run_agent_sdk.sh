@@ -133,7 +133,8 @@ assert method in planned['StoreTests']
 (root/'expected-tests.json').write_text(json.dumps({'StoreTests':[method]}))
 (root/'selected-suites.json').write_text(json.dumps({'SDKTests':['StoreTests']}))
 PY
-  sdk_testing=(-only-testing:HanlinPersistenceAdaptersTests/StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration)
+  # Keep the exact Swift Testing identifier from the actual xcresult, including ().
+  sdk_testing=("-only-testing:HanlinPersistenceAdaptersTests/StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()")
 fi
 xcrun swift package --package-path "$sdk" resolve > "$evidence/sdk-resolve.log" 2>&1
 xcrun swift package --package-path "$core" resolve > "$evidence/core-resolve.log" 2>&1
@@ -155,6 +156,28 @@ d=json.load(open(sys.argv[1]));names=d.get('workspace',{}).get('schemes',[])+d.g
 print(next(x for x in ['SwiftAISDK-Package','SwiftAISDK'] if x in names))
 PY
 )"
+if [[ "${HANLIN_SDK_CHECKPOINT_ONLY:-0}" == 1 ]]; then
+  xcodebuild -help > "$evidence/xcodebuild-help.txt" 2>&1 || true
+  for option in -enumerate-tests -test-enumeration-format -test-enumeration-style -test-enumeration-output-path; do
+    grep -F -- "$option" "$evidence/xcodebuild-help.txt" > /dev/null
+  done
+  (cd "$sdk" && xcodebuild test -scheme "$sdk_scheme" -destination 'platform=macOS' \
+    -derivedDataPath "$scratch/SDKDerivedData" -skipPackagePluginValidation -skipMacroValidation \
+    CODE_SIGNING_ALLOWED=NO "${sdk_testing[@]}" -enumerate-tests -test-enumeration-format json \
+    -test-enumeration-style flat -test-enumeration-output-path "$evidence/enumerated-tests.json") > "$evidence/test-enumeration.log" 2>&1
+  python3 - "$evidence/enumerated-tests.json" <<'PY'
+import json,sys
+def strings(value):
+    if isinstance(value,str):yield value
+    elif isinstance(value,dict):
+        for child in value.values():yield from strings(child)
+    elif isinstance(value,list):
+        for child in value:yield from strings(child)
+values=list(strings(json.load(open(sys.argv[1]))))
+expected='HanlinPersistenceAdaptersTests/StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()'
+assert any(value==expected or value.endswith('/StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()') for value in values),values
+PY
+fi
 set +e
 if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 && "${HANLIN_SDK_CONTRACTS_ONLY:-0}" != 1 ]]; then
 (cd "$producer" && AGENT=1 xcodebuild test -scheme "$producer_scheme" -destination 'platform=macOS' \

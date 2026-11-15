@@ -35,3 +35,9 @@ source-scanned obligation list alongside the selected failed obligation and chec
 case, never a synthesized pass. Report fresh recovery/native results as EXECUTED_PASS and each
 authenticated older case as REUSED_VERIFIED_PASS, with its OWN original run/SHA/raw hashes.
 No aggregated count may be described as tests all executed in the recovery invocation or full-CI success.
+
+Run43727119840 executed zero cases because the method selector omitted the Swift Testing `()` suffix.
+The verifier rejected the apparent xcodebuild success: INFRA_ERROR/NOT_RUN, not a product test failure
+or a pass. The correction uses the actual xcresult method ID and performs real Mac test enumeration
+before invocation. Apple documents enumeration in the [Xcode release notes](https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes.md).
+Installed CLI help and the actual enumerated identifier remain the authority for this runner.
