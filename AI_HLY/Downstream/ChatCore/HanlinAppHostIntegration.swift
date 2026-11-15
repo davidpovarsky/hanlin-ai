@@ -61,7 +61,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                 originalInputSchemaJSON: definition.inputSchemaData)
         }
         guard !tools.contains(where: { $0.route.alias == Self.splitAlias }) else { throw HanlinHostError.duplicateAlias }
-        if toolAdapter != nil { tools.append(try Self.splitTool()) }
+        if supportsSplit { tools.append(try Self.splitTool()) }
         // JSON dictionaries must be canonical before hashing or unchanged schemas spuriously
         // change the catalog generation. No process-random Hasher is used for public revision.
         let canonicalTools = try tools.map { tool in HanlinJSONValue.object([
@@ -84,7 +84,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
         guard let toolAdapter else { return .init(activeAliases: []) }
         let prepared = await toolAdapter.prepareStep(stepNumber: step)
         _ = try await context(for: session)
-        return .init(activeAliases: prepared.activeToolAliases + (prepared.activeToolAliases.contains(Self.splitAlias) ? [] : [Self.splitAlias]), skillIDs: prepared.loadedSkillIDs,
+        return .init(activeAliases: prepared.activeToolAliases + (!supportsSplit || prepared.activeToolAliases.contains(Self.splitAlias) ? [] : [Self.splitAlias]), skillIDs: prepared.loadedSkillIDs,
             instructions: prepared.loadedSkillInstructions)
     }
 

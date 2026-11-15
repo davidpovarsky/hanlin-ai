@@ -6,7 +6,9 @@ here. Manager owns coherent target/product linkage. No new conversation database
 registry, MiniApp runtime or model loop is introduced. Original shared leaves remain Split-owned.
 
 The sole new tool is open_mini_app in the existing application Host catalog/Session dispatch.
-It is exposed only with the original application tool adapter. Its model input permits only target
+It is exposed only with the original application tool adapter in an existing persisted SwiftData
+conversation. Temporary conversation dispatch is explicitly unavailable in this first tranche; it
+must not advertise a durable cold-return path for transient-only metadata. Its model input permits only target
 hanlin.demo.swift-parity, action share.value and payload. Original caller, actual SDK Session UUID
 (mapped explicitly to HanlinAppSessionID), chat, requestID, expiry, installed package/generation,
 canonical call/result identity and original response row are issued by the Host. It verifies the
@@ -52,8 +54,9 @@ are untouched. UI navigation/mount acknowledgement remains A2UI-owned.
 
 ## Verification boundary
 
-Source syntax and diff checks pass. New actual Session association controls are in a separate
-Apple run43743854538; schema-only43742612086 does not cover this follow-on. The readonly isRunning
+Source syntax and diff checks pass. New actual Session association controls passed in separate
+Apple run43743854538 at exact364f10a6:27 EXECUTED_PASS (20 Session,6 Context,1 Dispatcher),
+iOS compile PASS. Authenticated ledger retains exact hashes/xcresult IDs/locks/toolchain. schema-only43742612086 does not cover this follow-on. The readonly isRunning
 accessor and actual app composition still need combined app compilation. Six prior actual app
 component controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
 duplicate/deleted/deadline controls, original XCUITest, two-app cold process, signed group and

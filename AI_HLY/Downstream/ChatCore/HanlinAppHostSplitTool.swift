@@ -4,6 +4,7 @@ import HanlinHostContracts
 import HanlinPlatformContracts
 
 extension HanlinAppHostIntegration {
+    var supportsSplit: Bool { toolAdapter != nil && identity.context.namespace.workspace == "swiftdata" }
     static let splitAlias = "open_mini_app"
     static let splitSchema = Data(#"{"type":"object","properties":{"target":{"type":"string","enum":["hanlin.demo.swift-parity"]},"action":{"type":"string","enum":["share.value"]},"payload":{}},"required":["target","action","payload"],"additionalProperties":false}"#.utf8)
 

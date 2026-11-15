@@ -76,7 +76,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     /// The only AI dispatch entry. Identity/deadline/target generation are host-issued, not model input.
     func execute(_ invocation: HanlinHostInvocation, host: HanlinAppHostIntegration,
                  session: HanlinAgentSession, row: HanlinAppAgentRowReference) async throws -> HanlinHostExecutionResult {
-        guard pending.count < 64, invocation.session == session.identity,
+        guard pending.count < 64, invocation.session.context.namespace.workspace == "swiftdata", invocation.session == session.identity,
               invocation.session.conversationID == session.identity.conversationID, row.rowID == row.messageID,
               let original = invocation.originalArgumentsJSON, let deadline = invocation.request.deadline,
               deadline > Date() else { throw SplitBridgeFailure.denied }
