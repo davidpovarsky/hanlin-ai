@@ -1,4 +1,5 @@
 import contextlib
+import copy
 import importlib.util
 import io
 import hashlib
@@ -8,6 +9,7 @@ import os
 from pathlib import Path
 import shlex
 import shutil
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -722,6 +724,295 @@ generate_metadata("arm64")
             inventory = json.loads((retained / "HanlinMetadataInput.inventory.json").read_text())
             self.assertEqual(inventory[-1]["status"], "CONFLICT")
             self.assertEqual(inventory[0]["path"], str(duplicate.resolve()))
+
+
+class PreprocessingReceiptControls(unittest.TestCase):
+    """Pure receipt rejection controls. Authored source; execution is separate."""
+
+    def packet(self):
+        root = {"ordinal": 0, "line": 1, "path": "/fixture/a.h", "owner": "fixture", "sha256": "a" * 64}
+        request = {"bindings": {"contextSHA256": "b" * 64}, "roots": [root]}
+        receipt = {"schemaVersion": 1, "mode": "preprocessing-provenance", "status": "COMPLETE",
+            "bindings": copy.deepcopy(request["bindings"]), "sawEOF": True, "endOfMainFile": True,
+            "actionEnded": True, "hadASTContext": False, "hadSema": False, "hadErrors": False,
+            "serializedContext": False, "truncated": False, "diagnosticErrors": 0,
+            "lookupMisses": 0, "unknownOwners": 0, "uncorrelated": 0, "unprovenPragmas": 0,
+            "consumerEntries": 0, "writerEntries": 0, "expectedRootOccurrences": 1,
+            "resolvedRootOccurrences": 1, "inactiveRootOccurrences": 0, "reasons": [],
+            "observedInputs": [{"path": root["path"], "sha256": root["sha256"]}], "events": [],
+            "roots": [{**root, "state": "resolved", "resolvedPath": root["path"], "observedOwner": root["owner"]}]}
+        return request, receipt
+
+    def test_partial_cancelled_truncated_or_parser_receipt_cannot_be_complete(self):
+        request, receipt = self.packet()
+        self.assertEqual(WRAPPER.validate_preprocessing_receipt(receipt, request), [])
+        changes = {"sawEOF": False, "endOfMainFile": False, "actionEnded": False,
+            "hadASTContext": True, "hadSema": True, "hadErrors": True, "serializedContext": True,
+            "truncated": True, "diagnosticErrors": 1, "lookupMisses": 1, "unknownOwners": 1,
+            "uncorrelated": 1, "unprovenPragmas": 1, "consumerEntries": 1, "writerEntries": 1,
+            "expectedRootOccurrences": True, "resolvedRootOccurrences": True, "roots": [],
+            "status": "CANCELLED", "bindings": {}, "reasons": ["partial"]}
+        for key, value in changes.items():
+            with self.subTest(key=key):
+                self.assertTrue(WRAPPER.validate_preprocessing_receipt({**receipt, key: value}, request))
+        for malformed in [None, [], "COMPLETE"]:
+            self.assertTrue(WRAPPER.validate_preprocessing_receipt(malformed, request))
+
+    def test_inactive_occurrence_has_no_observed_resolution_or_owner(self):
+        request, receipt = self.packet()
+        receipt.update(resolvedRootOccurrences=0, inactiveRootOccurrences=1)
+        receipt["roots"] = [{**request["roots"][0], "state": "inactive"}]
+        self.assertEqual(WRAPPER.validate_preprocessing_receipt(receipt, request), [])
+        receipt["roots"][0]["observedOwner"] = "fixture"
+        self.assertIn("inactive-is-not-resolved", WRAPPER.validate_preprocessing_receipt(receipt, request))
+
+
+class NativePreprocessingProvenanceControls(unittest.TestCase):
+    """FUTURE BLACK-BOX CONTROLS: NOT_RUN in the source-only packet.
+
+    Requires explicit HANLIN_RUN_PROVENANCE_NATIVE_CONTROLS=1 on macOS and an
+    already built, source-hash-matched tool/provenance. This suite never builds
+    or downloads a tool. Context capture is a separate normal discovery process
+    which can build an AST; the subsequent diagnostic process must not do so.
+    """
+
+    def setUp(self):
+        if os.environ.get("HANLIN_RUN_PROVENANCE_NATIVE_CONTROLS") != "1" or sys.platform != "darwin":
+            self.skipTest("NOT_RUN: separately authorized native provenance controls required")
+        self.tool = Path(os.environ["HANLIN_PREPROCESS_PROVENANCE_NATIVE_TOOL"]).resolve(strict=True)
+        self.provenance_path = Path(os.environ["HANLIN_PREPROCESS_PROVENANCE_TOOL_RECEIPT"]).resolve(strict=True)
+        self.patch_source = ROOT / "Scripts/NativeScript/build-metadata-tool.py"
+        provenance = json.loads(self.provenance_path.read_text())
+        self.assertEqual(provenance["patchSourceSHA256"], self.sha(self.patch_source))
+        self.assertEqual(provenance["generatorSHA256"], self.sha(self.tool))
+        self.flags = json.loads(os.environ["HANLIN_PREPROCESS_PROVENANCE_CLANG_ARGS_JSON"])
+        self.assertIsInstance(self.flags, list)
+        self.temporary = tempfile.TemporaryDirectory(prefix="hanlin-provenance-controls-")
+        self.addCleanup(self.temporary.cleanup)
+        self.folder = Path(self.temporary.name).resolve()
+
+    @staticmethod
+    def sha(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def prepare(self, text, occurrences, extra_flags=()):
+        umbrella = self.folder / "input.h"
+        umbrella.write_text(text)
+        overlay = self.folder / "overlay.json"
+        overlay.write_text(json.dumps({"version": 0, "use-external-names": True, "roots": []}))
+        # Each normal output category has an existing byte canary. A missing
+        # blacklist is another canary: diagnostic mode must never open it.
+        normal = []
+        self.canaries = {}
+        for option, name, directory in [("-output-bin", "metadata.bin", False),
+                ("-output-umbrella", "normal-umbrella.h", False), ("-output-yaml", "yaml", True),
+                ("-output-typescript", "types", True), ("-output-modulemaps", "maps", True)]:
+            path = self.folder / name
+            if directory:
+                path.mkdir()
+            canary = path / "canary" if directory else path
+            canary.write_bytes(b"UNCHANGED-NORMAL-OUTPUT\0")
+            self.canaries[canary] = canary.read_bytes()
+            normal.extend([option, str(path)])
+        self.call = [str(self.tool), "-input-umbrella", str(umbrella), *normal,
+            "-blacklist-modules-file", str(self.folder / "must-never-open-blacklist"), "Xclang",
+            *self.flags, "-I" + str(self.folder), "-ivfsoverlay", str(overlay), *extra_flags]
+        self.context_path = self.folder / "context.bin"
+        split = self.call.index("Xclang")
+        captured = subprocess.run([*self.call[:split], "-hanlin-dump-clang-context", str(self.context_path),
+            *self.call[split:]], cwd=self.tool.parent, capture_output=True, timeout=60)
+        self.assertEqual(captured.returncode, 0, captured.stderr.decode(errors="replace"))
+        self.assertTrue(self.context_path.read_bytes().endswith(b"\0"))
+        roots = [{"ordinal": index, "line": line, "path": str((self.folder / name).resolve()),
+                  "owner": "fixture", "sha256": self.sha(self.folder / name)}
+                 for index, (line, name) in enumerate(occurrences)]
+        files = [umbrella, overlay, self.context_path, self.tool, self.patch_source, self.provenance_path,
+                 *[self.folder / name for _, name in occurrences]]
+        self.request = {"schemaVersion": 1,
+            "bindings": {"contextSHA256": self.sha(self.context_path), "umbrellaSHA256": self.sha(umbrella),
+                "overlaySHA256": self.sha(overlay), "patchSourceSHA256": self.sha(self.patch_source),
+                "instrumentedBinarySHA256": self.sha(self.tool)}, "roots": roots,
+            "owners": [{"root": str(self.folder), "id": "fixture"}], "filteredPrefixes": [str(self.folder)],
+            "verifiedFiles": [{"path": str(path), "sha256": self.sha(path)} for path in dict.fromkeys(files)]}
+        self.request_path = self.folder / "request.json"
+        self.request_path.write_text(json.dumps(self.request))
+        self.receipt_path = self.folder / "trace.json"
+        self.trace_call = [*self.call[:split], "-hanlin-expected-clang-context", str(self.context_path),
+            "-hanlin-preprocess-provenance", str(self.receipt_path), "-hanlin-provenance-inputs", str(self.request_path),
+            *self.call[split:]]
+        self.assert_canaries()
+
+    def assert_canaries(self):
+        for path, body in self.canaries.items():
+            self.assertEqual(path.read_bytes(), body, str(path))
+        for directory in ["yaml", "types", "maps"]:
+            self.assertEqual([path.name for path in (self.folder / directory).iterdir()], ["canary"])
+
+    def trace(self):
+        run = subprocess.run(self.trace_call, cwd=self.tool.parent, capture_output=True, timeout=60)
+        self.assert_canaries()
+        receipt = json.loads(self.receipt_path.read_text()) if self.receipt_path.is_file() else {}
+        return run, receipt
+
+    def test_338_occurrences_quote_angle_macro_import_guard_pragma_and_inactive(self):
+        for name in ["quote.h", "angle.h", "macro.h", "inactive.h"]:
+            (self.folder / name).write_text("int fixture_declaration;\n")
+        (self.folder / "once.h").write_text("#pragma once\nint once_declaration;\n")
+        (self.folder / "guard.h").write_text("#ifndef FIXTURE_GUARD\n#define FIXTURE_GUARD\nint guard_declaration;\n#endif\n")
+        lines = ['#include "quote.h"', '#include <angle.h>', '#define HEADER_MACRO "macro.h"',
+            '#include HEADER_MACRO', '#import "once.h"', '#import "once.h"',
+            '#include "guard.h"', '#include "guard.h"', '#if 0', '#include "inactive.h"', '#endif']
+        occurrences = [(1, "quote.h"), (2, "angle.h"), (4, "macro.h"), (5, "once.h"),
+                       (6, "once.h"), (7, "guard.h"), (8, "guard.h"), (10, "inactive.h")]
+        while len(occurrences) < 338:
+            lines.append('#import "once.h"')
+            occurrences.append((len(lines), "once.h"))
+        self.prepare("\n".join(lines) + "\n", occurrences)
+        run, receipt = self.trace()
+        self.assertEqual(run.returncode, 0, run.stderr.decode(errors="replace"))
+        self.assertEqual(WRAPPER.validate_preprocessing_receipt(receipt, self.request), [])
+        self.assertEqual(receipt["expectedRootOccurrences"], 338)
+        self.assertEqual(receipt["resolvedRootOccurrences"], 337)
+        self.assertEqual(receipt["inactiveRootOccurrences"], 1)
+        includes = {event["line"]: event for event in receipt["events"] if event["kind"] == "include"}
+        self.assertEqual([includes[line]["form"] for line in [1, 2, 4]], ["quote", "angle", "macro"])
+        self.assertEqual(includes[5]["directive"], "import")
+        self.assertIn("skip", receipt["roots"][4])
+        self.assertIn("skip", receipt["roots"][6])
+        self.assertEqual(receipt["roots"][7]["state"], "inactive")
+
+    def test_semantically_invalid_cpp_tokens_are_not_an_ast_or_metadata_pass(self):
+        header = self.folder / "cpp.h"
+        header.write_text("namespace cpp_only { template<class T> struct Type {}; }\n")
+        self.prepare('#include "cpp.h"\n', [(1, "cpp.h")])
+        run, receipt = self.trace()
+        self.assertEqual(run.returncode, 0, run.stderr.decode(errors="replace"))
+        self.assertEqual(WRAPPER.validate_preprocessing_receipt(receipt, self.request), [])
+        # Same captured frontend in ObjC rejects C++ syntax. Preprocessing
+        # completion must therefore never be interpreted as semantic success.
+        fields = self.context_path.read_bytes()[:-1].split(b"\0")
+        flags = [field.decode() for field in fields[1:]]
+        semantic = subprocess.run(["xcrun", "clang", "-fsyntax-only", *flags, str(self.folder / "input.h")],
+            cwd=self.tool.parent, capture_output=True, timeout=60)
+        self.assertNotEqual(semantic.returncode, 0)
+        self.assertIn(b"error:", semantic.stderr)
+
+    def test_suppressed_missing_header_still_makes_trace_incomplete(self):
+        (self.folder / "root.h").write_text('#include "does-not-exist.h"\n')
+        self.prepare('#include "root.h"\n', [(1, "root.h")])
+        run, receipt = self.trace()  # default strict-includes=false, as production
+        self.assertNotEqual(run.returncode, 0)
+        self.assertEqual(receipt["status"], "INCOMPLETE")
+        self.assertGreater(receipt["lookupMisses"], 0)
+        self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
+
+    def test_unknown_owner_and_semantic_pragma_cannot_be_complete(self):
+        (self.folder / "root.h").write_text('#pragma clang diagnostic push\nint declaration;\n')
+        self.prepare('#include "root.h"\n', [(1, "root.h")])
+        self.request["owners"] = []
+        self.request_path.write_text(json.dumps(self.request))
+        run, receipt = self.trace()
+        self.assertNotEqual(run.returncode, 0)
+        self.assertGreater(receipt["unknownOwners"], 0)
+        self.assertGreater(receipt["unprovenPragmas"], 0)
+
+    def test_source_import_cannot_claim_serialization_absence_without_parser(self):
+        (self.folder / "root.h").write_text("@import UnknownModule;\n")
+        self.prepare('#include "root.h"\n', [(1, "root.h")])
+        run, receipt = self.trace()
+        self.assertNotEqual(run.returncode, 0)
+        self.assertTrue(receipt["serializedContext"])
+        self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
+
+    def test_serialized_context_rejected_without_cache_or_emitter_work(self):
+        # Separate test instances isolate all filesystem/cache state.
+        variant = os.environ.get("HANLIN_PROVENANCE_SERIALIZED_VARIANT", "modules")
+        cache = self.folder / "module-cache"
+        choices = {"modules": ["-fmodules", "-fmodules-cache-path=" + str(cache)],
+            "pch": ["-include-pch", str(self.folder / "absent.pch")],
+            "module-file": ["-fmodule-file=" + str(self.folder / "absent.pcm")],
+            "preamble": ["-Xclang", "-preamble-bytes=1,0"]}
+        self.assertIn(variant, choices)
+        (self.folder / "root.h").write_text("int declaration;\n")
+        self.prepare('#include "root.h"\n', [(1, "root.h")], choices[variant])
+        before = {str(path): self.sha(path) for path in cache.rglob("*") if path.is_file()}
+        run, receipt = self.trace()
+        self.assertNotEqual(run.returncode, 0)
+        self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
+        self.assertEqual({str(path): self.sha(path) for path in cache.rglob("*") if path.is_file()}, before)
+        if receipt:
+            self.assertTrue(receipt["serializedContext"])
+            self.assertFalse(receipt["sawEOF"])
+            self.assertEqual(receipt["consumerEntries"], 0)
+            self.assertEqual(receipt["writerEntries"], 0)
+
+    def test_hash_drift_or_output_collision_cannot_write_a_complete_receipt(self):
+        variant = os.environ.get("HANLIN_PROVENANCE_NEGATIVE_VARIANT", "overlay")
+        (self.folder / "root.h").write_text("int declaration;\n")
+        self.prepare('#include "root.h"\n', [(1, "root.h")])
+        if variant in {"overlay", "umbrella", "header", "context"}:
+            names = {"overlay": "overlay.json", "umbrella": "input.h", "header": "root.h", "context": "context.bin"}
+            path = self.folder / names[variant]
+            path.write_bytes(path.read_bytes() + b"\n")
+        elif variant == "request":
+            self.request["bindings"]["contextSHA256"] = "0" * 64
+            self.request_path.write_text(json.dumps(self.request))
+        elif variant == "collision":
+            index = self.trace_call.index("-hanlin-preprocess-provenance") + 1
+            self.trace_call[index] = str(self.folder / "metadata.bin")
+        else:
+            self.fail("Unknown negative variant")
+        run, receipt = self.trace()
+        self.assertNotEqual(run.returncode, 0)
+        self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
+
+    def test_cancelled_native_process_cannot_leave_a_complete_receipt(self):
+        # Cancel after observing actual tool startup. A child that completes
+        # before it can be stopped fails this control; it cannot yield a pass.
+        # This exercises cancellation after exec, not a claimed mid-lex seam.
+        import selectors
+        import signal
+        (self.folder / "root.h").write_text("int declaration;\n")
+        self.prepare('#include "root.h"\n', [(1, "root.h")])
+        child = subprocess.Popen(self.trace_call, cwd=self.tool.parent, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        selector = selectors.DefaultSelector()
+        selector.register(child.stdout, selectors.EVENT_READ)
+        try:
+            self.assertTrue(selector.select(timeout=10), "Native tool startup not observed")
+            self.assertTrue(os.read(child.stdout.fileno(), 4096), "Native tool exited before startup evidence")
+            self.assertIsNone(child.poll(), "Native tool completed before cancellation control")
+            os.kill(child.pid, signal.SIGSTOP)
+            _, status = os.waitpid(child.pid, os.WUNTRACED)
+            self.assertTrue(os.WIFSTOPPED(status), "Native tool was not stopped")
+        finally:
+            selector.close()
+            if child.poll() is None:
+                child.kill()
+            child.communicate(timeout=10)
+        receipt = json.loads(self.receipt_path.read_text()) if self.receipt_path.is_file() else {}
+        self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
+        self.assert_canaries()
+
+    def test_normal_sdk31_binary_invalidtype_context_and_combined_alias_controls(self):
+        if os.environ.get("HANLIN_RUN_PROVENANCE_FULL_NATIVE_CONTROLS") != "1":
+            self.skipTest("NOT_RUN: SDK/provider compilation requires its separate native authorization")
+        environment = {**os.environ, "HANLIN_METADATA_PREPROCESS_PROVENANCE": "0"}
+        run = subprocess.run([sys.executable, str(ROOT / "Scripts/NativeScript/probe-sdk-metadata.py"),
+            "--generator", str(self.tool), "--runtime-wrapper"], cwd=ROOT, env=environment,
+            capture_output=True, timeout=1200)
+        result = json.loads((ROOT / "build/acceptance/nativescript-sdk-probe/result.json").read_text())
+        self.assertNotEqual(run.returncode, 0)  # Existing unequal combined JSI alias remains a failure.
+        self.assertEqual(result["modes"]["textual-public"]["status"], "EXECUTED_PASS")
+        self.assertGreater(result["modes"]["textual-public"]["metadataBytes"], 0)
+        parity = result["unchangedUIKitAndHostDeclarationParity"]
+        self.assertEqual(parity["status"], "EXECUTED_PASS")
+        self.assertEqual(len(parity["yamlSHA256"]["candidate"]), 31)
+        self.assertEqual(result["invalidDeclarationRejected"]["status"], "EXECUTED_PASS")
+        self.assertEqual(result["nativeCompilerContext"]["status"], "EXECUTED_PASS")
+        combined = result["runtimeWrapper"]
+        self.assertEqual(combined["headerAliasValidation"]["status"], "FAILED")
+        self.assertIn("Conflicting public header alias bytes", combined["headerAliasValidation"]["reason"])
+        self.assertEqual(combined["symbolChecksStatus"], "NOT_RUN_NO_METADATA_BINARY")
 
 
 if __name__ == "__main__":

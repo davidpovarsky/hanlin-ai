@@ -150,6 +150,213 @@ def capture_native_compiler_context(tool: Path, invocation_plan: dict, environme
             "contextSHA256": hashlib.sha256(raw).hexdigest()}
 
 
+def validate_preprocessing_receipt(receipt: dict, request: dict) -> list[str]:
+    """Pure structural/binding gate; never confers metadata/API/ABI acceptance."""
+    if not isinstance(receipt, dict):
+        return ["receipt-schema"]
+    failures = []
+    if type(receipt.get("schemaVersion")) is not int or receipt["schemaVersion"] != 1 or receipt.get("mode") != "preprocessing-provenance":
+        failures.append("receipt-schema")
+    if receipt.get("bindings") != request["bindings"]:
+        failures.append("receipt-binding-drift")
+    if receipt.get("status") != "COMPLETE":
+        failures.append("native-preprocessing-incomplete")
+    for key in ["sawEOF", "endOfMainFile", "actionEnded"]:
+        if receipt.get(key) is not True:
+            failures.append(key)
+    for key in ["hadASTContext", "hadSema", "hadErrors", "serializedContext", "truncated"]:
+        if receipt.get(key) is not False:
+            failures.append(key)
+    for key in ["diagnosticErrors", "lookupMisses", "unknownOwners", "uncorrelated", "unprovenPragmas", "consumerEntries", "writerEntries"]:
+        if type(receipt.get(key)) is not int or receipt[key] != 0:
+            failures.append(key)
+    observed = receipt.get("observedInputs")
+    if not isinstance(observed, list) or any(not isinstance(item, dict) or not isinstance(item.get("path"), str)
+            or not item["path"].startswith("/") or not isinstance(item.get("sha256"), str)
+            or re.fullmatch(r"[0-9a-f]{64}", item["sha256"]) is None for item in observed):
+        failures.append("observed-input-schema")
+    if not isinstance(receipt.get("events"), list) or any(not isinstance(event, dict) for event in receipt["events"]):
+        failures.append("event-schema")
+    roots = receipt.get("roots", [])
+    if not isinstance(roots, list) or len(roots) != len(request["roots"]) or type(receipt.get("expectedRootOccurrences")) is not int or receipt["expectedRootOccurrences"] != len(request["roots"]):
+        failures.append("root-occurrence-coverage")
+        return failures
+    resolved = inactive = 0
+    for expected, actual in zip(request["roots"], roots):
+        if not isinstance(actual, dict):
+            failures.append("root-occurrence-schema")
+            continue
+        if any(type(actual.get(key)) is not int for key in ["ordinal", "line"]):
+            failures.append("root-occurrence-types")
+        if any(actual.get(key) != expected[key] for key in ["ordinal", "line", "path", "owner", "sha256"]):
+            failures.append("root-occurrence-identity")
+        if actual.get("state") == "resolved":
+            resolved += 1
+            if actual.get("resolvedPath") != expected["path"] or actual.get("observedOwner") != expected["owner"]:
+                failures.append("resolved-root-owner")
+        elif actual.get("state") == "inactive":
+            inactive += 1
+            if actual.get("resolvedPath") or actual.get("observedOwner"):
+                failures.append("inactive-is-not-resolved")
+        else:
+            failures.append("unresolved-root-occurrence")
+    if any(type(receipt.get(key)) is not int for key in ["resolvedRootOccurrences", "inactiveRootOccurrences"]) or receipt.get("resolvedRootOccurrences") != resolved or receipt.get("inactiveRootOccurrences") != inactive:
+        failures.append("root-occurrence-counts")
+    if receipt.get("reasons") != []:
+        failures.append("native-incomplete-reasons")
+    return failures
+
+
+def capture_preprocessing_provenance(tool: Path, plan: dict, context: dict, environment: dict,
+                                    cwd: Path, module_root: Path, inventory: list[dict],
+                                    umbrella: Path, inventory_path: Path, overlay: Path,
+                                    patch_source: Path, tool_provenance: Path) -> dict:
+    """Opt-in diagnostic transport. No final metadata invocation or alias bypass."""
+    request_path = module_root / "preprocessing-provenance-inputs.json"
+    native_path = module_root / "preprocessing-provenance.native.json"
+    output_path = module_root / "preprocessing-provenance.json"
+    log_path = module_root / "preprocessing-provenance.log"
+    summary = {"schemaVersion": 1, "status": "INCOMPLETE", "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY",
+               "reason": "diagnostic-not-completed"}
+    # New outputs must not replace an old receipt, input, canary, or symlink.
+    for path in [request_path, native_path, output_path, log_path]:
+        if path.exists() or path.is_symlink():
+            raise RuntimeError("Diagnostic output already exists: " + str(path))
+    call = plan["generatorCall"]
+    if Path(call[0]).resolve() != tool.resolve() or Path(plan["workingDirectory"]).resolve() != cwd.resolve():
+        raise RuntimeError("Diagnostic tool/cwd differs from captured invocation")
+    ignored = {"HANLIN_METADATA_CAPTURE_ARGUMENTS", "HANLIN_METADATA_EXPECTED_CONTEXT", "HANLIN_METADATA_ACTUAL_CONTEXT"}
+    environment_sha = hashlib.sha256(json.dumps({key: value for key, value in environment.items()
+        if key not in ignored}, sort_keys=True).encode()).hexdigest()
+    if environment_sha != plan["environmentSHA256"]:
+        raise RuntimeError("Diagnostic environment differs from captured invocation")
+    provenance = json.loads(tool_provenance.read_text(encoding="utf-8"))
+    if provenance.get("patchSourceSHA256") != hashlib.sha256(patch_source.read_bytes()).hexdigest() or provenance.get("generatorSHA256") != hashlib.sha256(tool.read_bytes()).hexdigest():
+        raise RuntimeError("Instrumented binary/source provenance mismatch")
+    arguments = context["arguments"]
+    owners = [{"root": str(Path(row["path"]).resolve()), "id": "framework:" + str(Path(row["path"]).resolve())}
+              for row in inventory if row["status"] == "SELECTED"]
+    sdk = Path(arguments[arguments.index("-isysroot") + 1]).resolve()
+    owners.append({"root": str(sdk), "id": "selected-sdk"})
+    for argument in arguments:
+        if argument.startswith("-idirafter"):
+            directory = Path(argument[len("-idirafter"):])
+            if not directory.is_absolute():
+                directory = cwd / directory
+            if directory.is_dir():
+                owners.append({"root": str(directory.resolve()), "id": "captured-include:" + str(directory.resolve())})
+    def owner_for(path):
+        candidates = [owner for owner in owners if path == Path(owner["root"]) or Path(owner["root"]) in path.parents]
+        return max(candidates, key=lambda value: len(value["root"]))["id"] if candidates else None
+    roots = []
+    for line, text in enumerate(umbrella.read_text(encoding="utf-8").splitlines(), 1):
+        match = re.fullmatch(r'\s*#\s*(?:import|include)\s+["<]([^">]+)[">]\s*', text)
+        if not match:
+            if text.strip():
+                raise RuntimeError("Production umbrella contains an unbound directive")
+            continue
+        name = match[1]
+        path = (sdk / "System/Library/Frameworks/UIKit.framework/Headers/UIKit.h") if name == "UIKit/UIKit.h" else Path(name)
+        path = path.resolve(strict=True)
+        for row in inventory:
+            for header in row.get("publicUmbrellaHeaders", []):
+                if Path(header["path"]).resolve() == path and hashlib.sha256(path.read_bytes()).hexdigest() != header["sha256"]:
+                    raise RuntimeError("Diagnostic public root differs from inventory")
+        owner = owner_for(path)
+        if owner is None:
+            owners.append({"root": str(path.parent), "id": "explicit-root:" + str(path.parent)})
+            owner = owner_for(path)
+        roots.append({"ordinal": len(roots), "line": line, "path": str(path), "owner": owner,
+                      "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+    if not roots:
+        raise RuntimeError("Diagnostic umbrella has no root occurrences")
+    verified = [umbrella, inventory_path, overlay, tool, patch_source, tool_provenance,
+                module_root / "effective-compiler-context.bin", *[Path(root["path"]) for root in roots]]
+    for row in inventory:
+        if row["status"] != "SELECTED":
+            continue
+        for relative, expected_sha in row.get("inputSHA256", {}).items():
+            path = Path(row["path"]) / relative
+            if hashlib.sha256(path.read_bytes()).hexdigest() != expected_sha:
+                raise RuntimeError("Diagnostic framework input differs from inventory")
+            verified.append(path)
+    for index, argument in enumerate(arguments):
+        if argument.startswith("-fmodule-map-file="):
+            verified.append(Path(argument.split("=", 1)[1]))
+        elif argument == "-ivfsoverlay":
+            verified.append(Path(arguments[index + 1]))
+    verified = list(dict.fromkeys(verified))
+    bindings = {"contextSHA256": context["contextSHA256"],
+        "umbrellaSHA256": hashlib.sha256(umbrella.read_bytes()).hexdigest(),
+        "inventorySHA256": hashlib.sha256(inventory_path.read_bytes()).hexdigest(),
+        "overlaySHA256": hashlib.sha256(overlay.read_bytes()).hexdigest(),
+        "instrumentedBinarySHA256": hashlib.sha256(tool.read_bytes()).hexdigest(),
+        "patchSourceSHA256": hashlib.sha256(patch_source.read_bytes()).hexdigest(),
+        "toolProvenanceSHA256": hashlib.sha256(tool_provenance.read_bytes()).hexdigest(),
+        "environmentSHA256": plan["environmentSHA256"], "cwd": str(cwd.resolve()),
+        "compiler": context["compiler"]}
+    prefixes = []
+    for row in inventory:
+        if row["status"] != "SELECTED":
+            continue
+        base = Path(row["path"]).resolve()
+        if row["framework"] == "jsi.framework":
+            prefixes.append(str(base / "Headers"))
+        elif row["framework"] in {"NativeScript.framework", "react.framework"}:
+            prefixes.append(str(base / "Headers/jsi"))
+    request = {"schemaVersion": 1, "bindings": bindings, "roots": roots, "owners": owners,
+        "filteredPrefixes": prefixes,
+        "verifiedFiles": [{"path": str(path.resolve()), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()} for path in verified]}
+    # Snapshot existing normal output trees, including directory/symlink identity.
+    normal_options = {"-output-bin", "-output-yaml", "-output-typescript", "-output-modulemaps", "-output-umbrella"}
+    normal_paths = [(Path(call[i + 1]) if Path(call[i + 1]).is_absolute() else cwd / call[i + 1])
+                    for i, value in enumerate(call[:-1]) if value in normal_options]
+    for path in [request_path, native_path, output_path, log_path]:
+        if any(path.resolve() == normal.resolve() or normal.resolve() in path.resolve().parents for normal in normal_paths):
+            raise RuntimeError("Diagnostic output collides with normal output")
+    def snapshot():
+        result = {}
+        for path in normal_paths:
+            entries = [path, *(path.rglob("*") if path.is_dir() and not path.is_symlink() else [])]
+            for entry in entries:
+                result[str(entry)] = ("symlink", os.readlink(entry)) if entry.is_symlink() else (
+                    ("file", hashlib.sha256(entry.read_bytes()).hexdigest()) if entry.is_file() else
+                    ("directory", None) if entry.is_dir() else ("absent", None))
+        return result
+    before = snapshot()
+    request_path.write_text(json.dumps(request, indent=2) + "\n", encoding="utf-8")
+    output_path.write_text(json.dumps(summary) + "\n", encoding="utf-8")
+    split = call.index("Xclang")
+    diagnostic_call = [*call[:split], "-hanlin-preprocess-provenance", str(native_path),
+                       "-hanlin-provenance-inputs", str(request_path), *call[split:]]
+    try:
+        with log_path.open("x", encoding="utf-8") as log:
+            completed = subprocess.run(diagnostic_call, cwd=cwd, env=environment, stdout=log,
+                                       stderr=subprocess.STDOUT, check=False, timeout=180)
+        native_value = json.loads(native_path.read_text(encoding="utf-8")) if native_path.is_file() else {}
+        failures = validate_preprocessing_receipt(native_value, request)
+        native = native_value if isinstance(native_value, dict) else {}
+        if completed.returncode:
+            failures.append("native-exit-" + str(completed.returncode))
+        for item in request["verifiedFiles"]:
+            if hashlib.sha256(Path(item["path"]).read_bytes()).hexdigest() != item["sha256"]:
+                failures.append("input-content-drift")
+        if isinstance(native.get("observedInputs"), list) and "observed-input-schema" not in failures:
+            for item in native["observedInputs"]:
+                if hashlib.sha256(Path(item["path"]).read_bytes()).hexdigest() != item["sha256"]:
+                    failures.append("observed-input-content-drift")
+        if native.get("requestSHA256") != hashlib.sha256(request_path.read_bytes()).hexdigest():
+            failures.append("request-drift")
+        if snapshot() != before:
+            failures.append("normal-output-canary-changed")
+        summary.update(status="COMPLETE" if not failures else "INCOMPLETE", failures=failures,
+                       native=native, bindings=bindings, reason="diagnostic-only-no-metadata-acceptance")
+    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
+        summary.update(reason=type(error).__name__ + ": " + str(error))
+    output_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+    return summary
+
+
 def retain_and_check_metadata(arch: str, platform: str) -> bool:
     products = Path(required_env("CONFIGURATION_BUILD_DIR"))
     evidence = Path(required_env("SRCROOT")) / "build/acceptance/nativescript-metadata" / f"{platform}-{arch}"
@@ -248,6 +455,11 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     directories = [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))]
     role_roots = list(dict.fromkeys(p.resolve() for p in directories if (p / ROLE_MANIFEST).is_file()))
     receipts = {str(directory): module_root / f"input-roles-{n}.json" for n, directory in enumerate(role_roots)}
+    diagnostic_mode = environment.get("HANLIN_METADATA_PREPROCESS_PROVENANCE", "0")
+    if diagnostic_mode not in {"0", "1"}:
+        raise RuntimeError("Invalid preprocessing provenance opt-in")
+    diagnostic_result = None
+    inventory = []
     try:
         library = None
         if role_roots:
@@ -277,12 +489,26 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         (module_root / "effective-compiler-context.json").write_text(json.dumps(metadata_compiler, indent=2) + "\n")
         arguments = metadata_compiler["arguments"]
         verify_role_context(arguments)
+        if diagnostic_mode == "1":
+            try:
+                diagnostic_result = capture_preprocessing_provenance(tool, json.loads(context_path.read_text()),
+                    metadata_compiler, environment, generator_root, module_root, inventory, umbrella,
+                    umbrella.with_suffix(".inventory.json"), alias_overlay,
+                    root / "Scripts/NativeScript/build-metadata-tool.py", tool_root / "provenance.json")
+            except (RuntimeError, OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
+                diagnostic_result = {"schemaVersion": 1, "status": "INCOMPLETE",
+                    "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY", "reason": type(error).__name__ + ": " + str(error)}
+                (module_root / "preprocessing-provenance.json").write_text(json.dumps(diagnostic_result, indent=2) + "\n", encoding="utf-8")
         try:
             aliases = write_verified_header_alias_overlay(inventory, alias_overlay)
         except RuntimeError as error:
             alias_validation.write_text(json.dumps({"status": "FAILED", "reason": str(error)}) + "\n", encoding="utf-8")
             raise
         alias_validation.write_text(json.dumps({"status": "VERIFIED", "aliases": len(aliases)}) + "\n", encoding="utf-8")
+        if diagnostic_mode == "1":
+            # Diagnostic completion is never a final metadata invocation. The
+            # unchanged alias guard above still raises on conflicting bytes.
+            return 0 if diagnostic_result.get("status") == "COMPLETE" else 2
         # Reclassify ALL final, post-staging bytes at the exact captured context.
         # Never promote a stale receipt by updating hashes alone.
         for directory in role_roots:
@@ -290,10 +516,31 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
             sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments, metadata_compiler)
     finally:
+        selected = {"status": "NOT_RETAINED", "reason": "selected umbrella not discovered"}
+        for row in inventory:
+            if row["framework"] != "ExpoModulesCore.framework" or row["status"] != "SELECTED":
+                continue
+            for header in row["publicUmbrellaHeaders"]:
+                path = Path(header["path"])
+                if path.name != "ExpoModulesCore_umbrella.h":
+                    continue
+                selected = {"status": "INCOMPLETE", "path": str(path), "expectedSHA256": header["sha256"]}
+                try:
+                    with path.open("rb") as source:
+                        body = source.read(128 * 1024 + 1)
+                    selected["actualSHA256"] = hashlib.sha256(body).hexdigest()
+                    if len(body) <= 128 * 1024 and selected["actualSHA256"] == header["sha256"]:
+                        (evidence / "selected-ExpoModulesCore_umbrella.h").write_bytes(body)
+                        selected.update(status="RETAINED_EXACT", bytes=len(body))
+                except OSError as error:
+                    selected["reason"] = str(error)
+        (evidence / "selected-public-header.json").write_text(json.dumps(selected, indent=2) + "\n", encoding="utf-8")
         for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay, alias_validation,
                      alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
                      module_root / "actual-compiler-arguments.json", module_root / "effective-compiler-context.bin",
-                     module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log", *receipts.values()]:
+                     module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log",
+                     *[module_root / name for name in ["preprocessing-provenance-inputs.json", "preprocessing-provenance.native.json",
+                         "preprocessing-provenance.json", "preprocessing-provenance.log"]], *receipts.values()]:
             if path.is_file():
                 shutil.copy2(path, evidence / path.name)
     completed = subprocess.run(

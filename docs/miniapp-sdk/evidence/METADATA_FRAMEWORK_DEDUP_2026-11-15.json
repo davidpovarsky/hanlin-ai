@@ -2079,5 +2079,120 @@
       },
       "boundary": "Local30 metadata +14 contract methods verified across these runs;49 eventual Apple bodies NOT_RUN."
     }
+  },
+  "sourceOnlyPreprocessingProvenance": {
+    "status": "SOURCE_ONLY_FROZEN_PENDING_LEAD_RONI_ROOT_REVIEW",
+    "baseCommit": "fcce779678fb0010042e962882c2e5e1a77d08a6",
+    "sourceSHA256": {
+      "Scripts/NativeScript/build-metadata-tool.py": "b553391db3c07ce1364dedf2334e7ce707173037d60d8c080df8c9b74611f83d",
+      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "e0631695f4e7b94fa35fc386a1a0f1e3f0bb335a1b31abbf84a9dcbba3e589da",
+      "Scripts/NativeScript/probe-sdk-metadata.py": "490a2adce1b8d3c986f20c9e68f1ceb8ac49895b60a8caaec29577dc85758a77",
+      "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "83fecdcf36282629eb7375048e0bc8820bd1c1a70fb2dbd469608b39d82cf0da"
+    },
+    "schemaIdentity": {
+      "schemaVersion": 1,
+      "mode": "preprocessing-provenance",
+      "producerSourceSHA256": "6679382dee4cf7056ebf5f215648bc0660dbf43dd597d010e5d1ef74019c74b1",
+      "validatorSourceSHA256": "2ec5f16c7b7e43ab75712cb1c3b6ecf9b64aba78561e0be007514c7b0bb0de17",
+      "rootIdentity": [
+        "ordinal",
+        "line",
+        "path",
+        "owner",
+        "sha256"
+      ],
+      "rootStates": [
+        "resolved",
+        "inactive",
+        "unresolved",
+        "pending"
+      ],
+      "completeness": "EOF + EndOfMainFile + action-ended + no errors/AST/Sema/serialization/truncation/misses/unknown owners/uncorrelated/unproven pragmas/consumer entries/writer entries; all root occurrences covered; inactive is not resolved; bindings/files/request/observed-inputs/canaries checked."
+    },
+    "schemaContractSHA256": "81fa42a9fe3696aad9891a625fbaebffe790c037c388bfa197a26ddb05c3e501",
+    "pinnedOriginalMainSHA256": "88943e6a0a5fad5eb35300b18c09b3ce9a74a850a7f8473ba3fa6f05e2cd1b0a",
+    "patchedMainSHA256": "9c968d7a15253f3613bd1888970ce1851597939222c05c78c5eb73763a3ef757",
+    "sourceAnalysis": {
+      "status": "PURE_SOURCE_ANALYSIS_PASS",
+      "pythonASTFiles": 4,
+      "pinnedArchiveSHA256Verified": true,
+      "allReplacementAnchorsMatch": true,
+      "consumerFactoryIncrements": 1,
+      "metadataWriterBranchIncrements": 5,
+      "inMemoryReceiptNegativeCases": 28,
+      "diffCheck": "PASS"
+    },
+    "authoredControls": {
+      "PreprocessingReceiptControls": {
+        "status": "NOT_RUN",
+        "methods": [
+          "test_partial_cancelled_truncated_or_parser_receipt_cannot_be_complete",
+          "test_inactive_occurrence_has_no_observed_resolution_or_owner"
+        ]
+      },
+      "NativePreprocessingProvenanceControls": {
+        "status": "NOT_RUN",
+        "methods": [
+          "test_338_occurrences_quote_angle_macro_import_guard_pragma_and_inactive",
+          "test_semantically_invalid_cpp_tokens_are_not_an_ast_or_metadata_pass",
+          "test_suppressed_missing_header_still_makes_trace_incomplete",
+          "test_unknown_owner_and_semantic_pragma_cannot_be_complete",
+          "test_source_import_cannot_claim_serialization_absence_without_parser",
+          "test_serialized_context_rejected_without_cache_or_emitter_work",
+          "test_hash_drift_or_output_collision_cannot_write_a_complete_receipt",
+          "test_cancelled_native_process_cannot_leave_a_complete_receipt",
+          "test_normal_sdk31_binary_invalidtype_context_and_combined_alias_controls"
+        ]
+      }
+    },
+    "futureVariantMatrix": {
+      "serialization": [
+        "modules",
+        "pch",
+        "module-file",
+        "preamble"
+      ],
+      "negative": [
+        "overlay",
+        "umbrella",
+        "header",
+        "context",
+        "request",
+        "collision"
+      ]
+    },
+    "execution": {
+      "CxxParse": "NOT_RUN",
+      "nativeToolCompilation": "NOT_RUN",
+      "instrumentedBinarySHA256": null,
+      "newNativeReceipts": "NOT_RUN",
+      "unittestFixtures": "NOT_RUN",
+      "sdk31BinaryParityInvalidtypeContextControls": "NOT_RUN_NEW_SOURCE",
+      "combinedAliasControl": "NOT_RUN_NEW_SOURCE",
+      "CI": "NOT_RUN",
+      "metadataAPIABIProjectionAcceptance": "NOT_ESTABLISHED"
+    },
+    "frozenCombinedInput": {
+      "contextSHA256": "ca571fbb9408d0d20b338b0656763d88de66c2c8ffb25dd45e4639443d4c5ace",
+      "umbrellaSHA256": "9ae71e009e4ee8c63f72e5e1c99f794421a159aeaa60f4f02bc890d361d9cbd3",
+      "expectedRootDirectiveOccurrences": 338,
+      "inventorySHA256": "c0c716d2d79e94aa973fab9e5f255ac476081933fc255eff58be0e45b5465ac9",
+      "overlaySHA256": "6aa9743330f1212ae5705dda2e9d468dcade110cdcc0cf39df0462bf14653593"
+    },
+    "designBoundaries": [
+      "Diagnostic invocation never calls upstream AST-based ambient discovery. It checks actual generator/compiler/user argument prefix, reuses only validated -idirafter discovery tail from separately captured normal context, then verifies the entire assembled vector. Separate context-capture process may use AST; not a no-AST claim for that preparation.",
+      "Custom PreprocessorFrontendAction preserves pragma handlers; only pragma-once has established completeness policy. Other pragmas, parser-dependent source imports, unknown owners or unsupported contexts remain INCOMPLETE.",
+      "FileSkipped is correlated to actual include source/root/owner. Guard versus pragma skip mechanism is not inferred from FileSkipped alone.",
+      "Cancellation control observes actual tool startup before stopping/killing; a process that completes before it can be stopped fails the control. No mid-lex deterministic handshake or proof claimed.",
+      "Production receipt binds all selected framework inventory inputs, module maps, VFS content, tool/source/provenance, actual environment/cwd/compiler/vector and observed file buffers. Zero consumer/writer claims come from instrumented actual entry points.",
+      "Default alias validator is unchanged and still runs after diagnostic failure or completion. Diagnostic return never reaches final metadata invocation. SDK03/INT03 remain OPEN; projection remains disabled."
+    ],
+    "selectedUmbrellaGap": {
+      "status": "NO_RECOVERY",
+      "expectedSHA256": "cdd18a04c3294af41355a434f1748c33e2c2d414870bbb3c50d8b70c6b564aab",
+      "archiveEvidence": "43680891375 / 14148745560: 7216 central-directory entries inspected; zero direct ExpoModulesCore_umbrella.h basename entries. No selected body recovered.",
+      "futureCapture": "Bounded selected-header bytes retained only when actual selected path body matches that run inventory hash. No local/upstream substitute or retrospective recovery."
+    },
+    "handoffGate": "One source/schema/test identity packet to lead for independent Roni + root review BEFORE any native execution; C reserve gate stays active. No dispatch, signing, merge, integration or Asana mutation."
   }
 }

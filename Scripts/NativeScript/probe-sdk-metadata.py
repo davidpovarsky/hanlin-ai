@@ -60,7 +60,8 @@ def replay_final_header_staging(root: Path, folder: Path) -> dict:
     return evidence
 
 
-def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, arch: str) -> dict:
+def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, arch: str,
+                          preprocessing_provenance: bool = False) -> dict:
     """Exercise the actual launcher with a genuinely compiled Swift interface."""
     folder = output / "runtime-wrapper"
     folder.mkdir(exist_ok=True)
@@ -148,6 +149,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
         "HEADER_SEARCH_PATHS": shlex.join([str(root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"),
                                            str(modular / "react.framework/Headers"),
                                            str(modular / "react.framework/Headers/react")])}
+    if preprocessing_provenance:
+        environment["HANLIN_METADATA_PREPROCESS_PROVENANCE"] = "1"
     for name in ["TARGET_TEMP_DIR", "CONFIGURATION_BUILD_DIR"]:
         Path(environment[name]).mkdir(exist_ok=True)
     (folder / "build-inputs.json").write_text(json.dumps({"compilerInputs": compilation,
@@ -169,25 +172,33 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     effective_context = json.loads(effective_path.read_text()) if effective_path.is_file() else {}
     aliases_path = visibility.parent / "header-alias-validation.json"
     alias_validation = json.loads(aliases_path.read_text()) if aliases_path.is_file() else {}
+    diagnostic_path = visibility.parent / "preprocessing-provenance.json"
+    diagnostic = json.loads(diagnostic_path.read_text()) if preprocessing_provenance and diagnostic_path.is_file() else {}
+    selected_path = visibility.parent / "selected-public-header.json"
+    selected_body = json.loads(selected_path.read_text()) if selected_path.is_file() else {}
+    if preprocessing_provenance:
+        recorded = {}  # A previous binary/visibility file is never diagnostic evidence.
     for receipt in visibility.parent.glob("input-roles-*.json"):
         (folder / ("final-" + receipt.name)).write_bytes(receipt.read_bytes())
     # Names confirmed from current staged declarations, not synthetic APIs.
     public_names = ["EXExportedModule", "EXModuleRegistry", "RCTBridge", "RCTView", "RCTAppDelegate",
                     "RCTSwiftUIContainerViewWrapper", "YGNodeNew", "YGConfigNew", "YGNodeStyleSetWidth"]
     binary_path = Path(environment["CONFIGURATION_BUILD_DIR"]) / f"metadata-{arch}.bin"
-    binary = binary_path.read_bytes() if binary_path.is_file() else b""
+    binary = binary_path.read_bytes() if binary_path.is_file() and not preprocessing_provenance else b""
     public_symbols = {name: name.encode() + b"\0" in binary for name in public_names}
     inventory_path = visibility.parent / "HanlinMetadataInput.inventory.json"
     inventory = json.loads(inventory_path.read_text()) if inventory_path.is_file() else []
     include_only = [r for r in inventory if r.get("status") == "INCLUDE_SEARCH_ONLY_CPP"]
     passed = execution.returncode == 0 and bool(recorded) and all(recorded["requiredMetadataStringsPresent"].values()) \
         and recorded.get("clangErrorCount") == 0 and all(public_symbols.values()) and bool(include_only)
-    return {"status": "EXECUTED_PASS" if passed else "FAILED", "exitCode": execution.returncode,
+    return {"status": "DIAGNOSTIC_ONLY" if preprocessing_provenance else "EXECUTED_PASS" if passed else "FAILED", "exitCode": execution.returncode,
             "python": sys.version, "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
             "visibility": recorded, "publicObjCAndCMetadataNames": public_symbols,
             "symbolChecksStatus": "EXECUTED" if binary else "NOT_RUN_NO_METADATA_BINARY",
             "actualMetadataCompilerArguments": actual_arguments, "actualMetadataContext": actual_context, "effectiveMetadataCompilerContext": effective_context, "actualSwiftProviderTarget": compilation["-target"],
             "headerAliasValidation": alias_validation,
+            "preprocessingProvenance": diagnostic, "selectedPublicHeader": selected_body,
+            "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY" if preprocessing_provenance else "NORMAL_MODE",
             "finalHeaderStaging": final_staging,
             "includeOnlyFrameworks": [{"framework": r["framework"], "inputManifestSHA256": r["inputManifestSHA256"],
                                        "declarations": len(r["inputRoleProof"]["declarations"])} for r in include_only],
@@ -201,7 +212,11 @@ def main() -> int:
     parser.add_argument("--generator", type=Path, help="Explicit separately built metadata-tool candidate")
     parser.add_argument("--emit-types", action="store_true", help="Retain actual selected-SDK TypeScript declarations")
     parser.add_argument("--runtime-wrapper", action="store_true", help="Compile the real provider and exercise the production metadata launcher")
+    parser.add_argument("--preprocessing-provenance", action="store_true",
+                        help="Opt-in diagnostic-only wrapper; requires future explicitly authorized native execution")
     options = parser.parse_args()
+    if options.preprocessing_provenance and (not options.runtime_wrapper or options.generator is None or options.emit_types):
+        parser.error("--preprocessing-provenance requires --runtime-wrapper and --generator, without --emit-types")
     if sys.platform != "darwin":
         print(json.dumps({"status": "BLOCKED", "reason": "Actual macOS/Xcode SDK required"}))
         return 2
@@ -224,6 +239,15 @@ def main() -> int:
     headers = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
     output = root / "build/acceptance/nativescript-sdk-probe"
     output.mkdir(parents=True, exist_ok=True)
+    if options.preprocessing_provenance:
+        if generator != (root / "build/nativescript-metadata-tool/bin/objc-metadata-generator").resolve():
+            raise RuntimeError("Diagnostic candidate must match the production wrapper's instrumented tool")
+        diagnostic = probe_runtime_wrapper(root, output, original_generator, arch, preprocessing_provenance=True)
+        result = {"schemaVersion": 1, "status": "DIAGNOSTIC_ONLY", "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY",
+                  "runtimeWrapper": diagnostic, "boundary": "Reachability only; no metadata/API/ABI/VM pass."}
+        (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(result), flush=True)
+        return 0 if diagnostic.get("preprocessingProvenance", {}).get("status") == "COMPLETE" and diagnostic.get("headerAliasValidation", {}).get("status") == "VERIFIED" else 2
     umbrella = output / "probe.h"
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")
