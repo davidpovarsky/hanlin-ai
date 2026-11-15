@@ -37,6 +37,15 @@ jobs:
           ref: ${{ steps.renderer.outputs.revision }}
           path: build/MarkdownRenderer
           persist-credentials: false
+      - name: Prepare the authenticated app runtime pin closure in the isolated consumer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/markdown-evidence
+          date +%s > build/markdown-evidence/preflight-start-epoch.txt
+          git rev-parse HEAD > build/markdown-evidence/source-sha.txt
+          git -C build/MarkdownRenderer rev-parse HEAD > build/markdown-evidence/renderer-sha.txt
+          python3 Scripts/CI/prepare_markdown_consumer_closure.py --renderer build/MarkdownRenderer --evidence build/markdown-evidence
       - name: Select the installed stable Xcode and iPhone runtime
         id: toolchain
         shell: bash
@@ -46,7 +55,14 @@ jobs:
           test -n "$selected_xcode"
           echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
           export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
-          xcodebuild -version
+          {
+            xcodebuild -version
+            xcrun swift --version
+            xcodebuild -showsdks
+            sw_vers
+            uname -m
+          } > build/markdown-evidence/preflight.txt
+          xcrun simctl list runtimes -j > build/markdown-evidence/runtimes.json
           echo "build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
           major="$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)"
           xcrun simctl list devices available -j > build/markdown-devices.json
@@ -61,48 +77,20 @@ jobs:
           PY
           )"
           echo "device=$device" >> "$GITHUB_OUTPUT"
+          cp build/markdown-devices.json build/markdown-evidence/devices.json
+          echo "$device" > build/markdown-evidence/selected-device.txt
+          printf '%s\n' "$(($(date +%s)-$(cat build/markdown-evidence/preflight-start-epoch.txt)))" > build/markdown-evidence/preflight-duration-seconds.txt
       - uses: actions/cache/restore@v6.1.0
         id: packages
         with:
           path: build/MarkdownSourcePackages
-          key: chat-markdown-spm-v1-${{ runner.arch }}-${{ steps.toolchain.outputs.build }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'build/MarkdownRenderer/Package.swift', 'build/MarkdownRenderer/Package.resolved') }}
+          key: chat-markdown-spm-v2-${{ runner.arch }}-${{ steps.toolchain.outputs.build }}-${{ hashFiles('build/MarkdownRenderer/Package.swift', 'build/MarkdownRenderer/Package.resolved') }}
       - name: Compile the real package and execute affected code-block tests
-        working-directory: build/MarkdownRenderer
+        timeout-minutes: 16
         shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p ../markdown-evidence
-          git rev-parse HEAD > ../markdown-evidence/renderer-sha.txt
-          xcodebuild test -scheme SwiftStreamingMarkdown \
-            -destination 'platform=iOS Simulator,id=${{ steps.toolchain.outputs.device }}' \
-            -clonedSourcePackagesDirPath "$GITHUB_WORKSPACE/build/MarkdownSourcePackages" \
-            -derivedDataPath "$RUNNER_TEMP/MarkdownDerivedData" \
-            -resultBundlePath "$GITHUB_WORKSPACE/build/markdown-evidence/CodeBlocks.xcresult" \
-            -only-testing:SwiftStreamingMarkdownTests/CodeBlockRendererTests \
-            -only-testing:SwiftStreamingMarkdownTests/CodeBlockConfigTests \
-            -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
-            2>&1 | tee ../markdown-evidence/xcodebuild.log
-          xcrun xcresulttool get test-results tests --path ../markdown-evidence/CodeBlocks.xcresult --format json > ../markdown-evidence/tests.json
-          python3 - <<'PY'
-          import json
-          expected = {'testDefaultRendererRemainsOptIn', 'testParsedBlocksKeepLiteralSourceAndStableSelectionIdentity',
-                      'testViewHookReceivesTheExistingParsedBlock', 'testCustomTextFontsAreStoredForRendering',
-                      'testDefaultTextFontsPreserveBundledTypography', 'testOriginalInitializerFunctionTypeRemainsSourceCompatible'}
-          found = {}
-          def visit(node):
-              if isinstance(node, dict):
-                  if node.get('nodeType') == 'Test Case':
-                      name = node.get('name', '').split('(')[0]
-                      if name in expected:
-                          found.setdefault(name, []).append(node.get('result'))
-                  for value in node.values(): visit(value)
-              elif isinstance(node, list):
-                  for value in node: visit(value)
-          visit(json.load(open('../markdown-evidence/tests.json')))
-          if set(found) != expected or any(results != ['Passed'] for results in found.values()):
-              raise SystemExit(f'Missing, duplicate or nonpassing required case: {found}')
-          print('EXECUTED_PASS: all six exact code-block cases')
-          PY
+        env:
+          MARKDOWN_DEVICE: ${{ steps.toolchain.outputs.device }}
+        run: bash Scripts/CI/IntegrationValidation/run_chat_markdown_consumer.sh
       - uses: actions/cache/save@v6.1.0
         if: ${{ success() && steps.packages.outputs.cache-hit != 'true' }}
         with:
