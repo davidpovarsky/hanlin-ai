@@ -4,6 +4,7 @@ root="$(git rev-parse --show-toplevel)"
 cd "$root"
 source_sha="$(git rev-parse HEAD)"
 producer_sha=e7bf34111e603ca977becd007dd4e5bb109af857
+if [[ "${HANLIN_SDK_CHECKPOINT_ONLY:-0}" == 1 ]]; then export HANLIN_SDK_SESSION_ONLY=1; fi
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
 validation_started=$SECONDS
@@ -120,6 +121,20 @@ for path in paths:
 assert set(result)==wanted and all(result.values()),result
 print(json.dumps(result,indent=2))
 PY
+sdk_testing=(-only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests -only-testing:HanlinPersistenceAdaptersTests/StoreTests)
+if [[ "${HANLIN_SDK_CHECKPOINT_ONLY:-0}" == 1 ]]; then
+  cp "$evidence/expected-tests.json" "$evidence/all-expected-tests.json"
+  python3 - "$evidence" <<'PY'
+import json,sys
+from pathlib import Path
+root=Path(sys.argv[1]);planned=json.loads((root/'expected-tests.json').read_text())
+method='versionOneCheckpointCanBeRestoredWithoutDestructiveMigration'
+assert method in planned['StoreTests']
+(root/'expected-tests.json').write_text(json.dumps({'StoreTests':[method]}))
+(root/'selected-suites.json').write_text(json.dumps({'SDKTests':['StoreTests']}))
+PY
+  sdk_testing=(-only-testing:HanlinPersistenceAdaptersTests/StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration)
+fi
 xcrun swift package --package-path "$sdk" resolve > "$evidence/sdk-resolve.log" 2>&1
 xcrun swift package --package-path "$core" resolve > "$evidence/core-resolve.log" 2>&1
 (cd "$sdk" && xcodebuild -list -json) > "$evidence/sdk-schemes.json"
@@ -157,9 +172,7 @@ sdk_started=$SECONDS
 (cd "$sdk" && xcodebuild test -scheme "$sdk_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/SDKDerivedData" -resultBundlePath "$evidence/SDKTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
-  -only-testing:HanlinAgentCoreTests/AgentSessionTests \
-  -only-testing:HanlinHostContractsTests/ContextTests \
-  -only-testing:HanlinPersistenceAdaptersTests/StoreTests) > "$evidence/sdk-tests.log" 2>&1
+  "${sdk_testing[@]}") > "$evidence/sdk-tests.log" 2>&1
 sdk_status=$?
 sdk_seconds=$((SECONDS-sdk_started))
 if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then

@@ -14,7 +14,10 @@ import Testing
     }
 
     @Test func versionOneCheckpointCanBeRestoredWithoutDestructiveMigration() async throws {
-        let directory = FileManager.default.temporaryDirectory.appending(path: "HanlinStoreTest-" + UUID().uuidString)
+        // macOS's temporary root may be a system symlink (/var -> /private/var).
+        // The private store intentionally rejects symlink ancestors; supply a canonical fixture root.
+        let directory = FileManager.default.temporaryDirectory.resolvingSymlinksInPath()
+            .appending(path: "HanlinStoreTest-" + UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }
         let store = try HanlinPrivateConversationStore(directory: directory)
         let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "one")

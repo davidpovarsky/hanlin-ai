@@ -30,8 +30,13 @@ def summarize(root):
     selected=json.loads((root/'selected-results.json').read_text()) if (root/'selected-results.json').exists() else list(EXPECTED)
     if selected not in [list(EXPECTED),['SDKTests'],['SDKTests','CoreTests']]:raise ValueError('Unsupported result selection')
     planned=json.loads((root/'expected-tests.json').read_text()) if (root/'expected-tests.json').exists() else {}
+    selection=json.loads((root/'selected-suites.json').read_text()) if (root/'selected-suites.json').exists() else {}
+    if selection:
+        if selection!={'SDKTests':['StoreTests']} or selected!=['SDKTests'] or planned!={'StoreTests':['versionOneCheckpointCanBeRestoredWithoutDestructiveMigration']}:
+            raise ValueError('Unsupported checkpoint recovery contract')
     for name,suites in EXPECTED.items():
         if name not in selected:continue
+        if selection:suites={key:value for key,value in suites.items() if key in selection[name]}
         try:
             data=json.loads((root/f'{name}.json').read_text());actual=[n for n in nodes(data) if n.get('nodeType')=='Test Case']
         except (OSError,ValueError):actual=[]
@@ -50,7 +55,7 @@ def summarize(root):
     relevant={'SDKTests':'sdk_test_exit','CoreTests':'core_test_exit','ProducerTests':'producer_test_exit'}
     required=[relevant[name] for name in selected]+([] if selected==['SDKTests'] else ['ios_build_exit'])
     passed=bool(cases) and not errors and all(statuses.get(key)==0 for key in required) and counts['EXECUTED_PASS']==len(cases)
-    return {'scope':'exact-source-Apple-session-package-regression' if selected==['SDKTests'] else 'exact-source-Apple-producer-core-session-fixture-host-regression','selected_results':selected,'status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight']}
+    return {'scope':'exact-source-Apple-checkpoint-recovery' if selection else 'exact-source-Apple-session-package-regression' if selected==['SDKTests'] else 'exact-source-Apple-producer-core-session-fixture-host-regression','selected_results':selected,'selected_suites':selection,'status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight']}
 
 
 if __name__=='__main__':
