@@ -21,6 +21,7 @@ final class MCPRuntimeProvider {
     private(set) var installState: MCPInstallState = .idle
     private(set) var lastError: String?
     private(set) var persistentLoadState: MCPPersistentLoadState = .notLoaded
+    private(set) var selectionRevision: UInt64 = 0
 
     let nodeRuntime: NodeRuntimeService
     let controller: MCPRuntimeController
@@ -33,17 +34,22 @@ final class MCPRuntimeProvider {
     private var activeInstallOperationID: UUID?
     private var cancelledInstallOperationIDs: Set<UUID> = []
 
-    private init() {
-        let runtime = AppRuntimeCore.shared.node
-        let registry = MCPServerRegistryStore()
+    init(
+        runtime: NodeRuntimeService? = nil,
+        fileLayout: MCPFileLayout = .default,
+        runtimeEnvironment: RuntimeEnvironmentStore? = nil
+    ) {
+        let runtime = runtime ?? AppRuntimeCore.shared.node
+        let registry = MCPServerRegistryStore(fileLayout: fileLayout)
         let secrets = MCPSecretStore()
         nodeRuntime = runtime
         registryStore = registry
-        selectionStore = MCPChatSelectionStore()
-        configurationStore = MCPFeatureConfigurationStore()
+        selectionStore = MCPChatSelectionStore(fileLayout: fileLayout)
+        configurationStore = MCPFeatureConfigurationStore(fileLayout: fileLayout)
         secretStore = secrets
-        controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets)
-        installService = MCPPackageInstallService(runtime: runtime)
+        controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets,
+            runtimeEnvironment: runtimeEnvironment ?? AppRuntimeCore.shared.environment, fileLayout: fileLayout)
+        installService = MCPPackageInstallService(runtime: runtime, fileLayout: fileLayout)
     }
 
     func loadIfNeeded(startHost: Bool = false) async {
@@ -144,6 +150,7 @@ final class MCPRuntimeProvider {
     }
 
     func selection(chatID: UUID, temporary: Bool) async -> Set<UUID> {
+        _ = selectionRevision
         do {
             if let stored = try await selectionStore.selection(chatID: chatID, temporary: temporary) {
                 return stored
@@ -154,8 +161,10 @@ final class MCPRuntimeProvider {
 
     func setSelection(_ ids: Set<UUID>, chatID: UUID, temporary: Bool) async {
         guard persistentLoadState == .loaded else { return }
-        do { try await selectionStore.setSelection(ids, chatID: chatID, temporary: temporary) }
-        catch { lastError = error.localizedDescription }
+        do {
+            try await selectionStore.setSelection(ids, chatID: chatID, temporary: temporary)
+            selectionRevision &+= 1
+        } catch { lastError = error.localizedDescription }
     }
 
     func install(spec: MCPPackageSpec, entryPointOverride: String? = nil) async {
@@ -394,6 +403,7 @@ final class MCPRuntimeProvider {
                 )
             }
             try await selectionStore.removeServer(server.id)
+            selectionRevision &+= 1
             servers = try await registryStore.remove(id: server.id)
             lastError = nil
         } catch {

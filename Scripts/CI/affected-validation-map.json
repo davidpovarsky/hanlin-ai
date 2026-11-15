@@ -829,13 +829,15 @@
     "agent_skills_unit_tests": {
       "description": "Agent skills, tool exposure, and capability session unit tests",
       "patterns": [
-        "AI_HLYTests/AgentSkillsExposureTests.swift"
+        "AI_HLYTests/AgentSkillsExposureTests.swift",
+        "AI_HLYTests/HanlinCapabilityObservationTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
       ],
       "unit_suites": [
-        "AI_HLYTests/AgentSkillsExposureTests"
+        "AI_HLYTests/AgentSkillsExposureTests",
+        "AI_HLYTests/HanlinCapabilityObservationTests"
       ],
       "consumers": []
     },
