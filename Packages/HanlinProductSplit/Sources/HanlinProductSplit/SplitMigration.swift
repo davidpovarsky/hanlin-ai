@@ -74,7 +74,7 @@ public struct SplitMigrationJournal: Codable, Equatable, Sendable {
     }
     public mutating func apply(source: SplitStoreSnapshot, current: SplitStoreSnapshot,
                                interruptAfter: Int? = nil) throws -> SplitStoreSnapshot {
-        try validateState()
+        try validate()
         guard current == output else { throw SplitMigrationError.destinationConflict }
         let expected = try plan.dryRun(source: source, destination: plan.destination)
         guard !complete else { return output }
@@ -90,13 +90,13 @@ public struct SplitMigrationJournal: Codable, Equatable, Sendable {
         return output
     }
     public mutating func rollback(current: SplitStoreSnapshot) throws -> SplitStoreSnapshot {
-        try validateState()
+        try validate()
         guard current == output else { throw SplitMigrationError.rollbackConflict }
         output = plan.destination; copied = []; complete = false
         return output
     }
 
-    private func validateState() throws {
+    public func validate() throws {
         _ = try plan.dryRun(source: plan.source, destination: plan.destination)
         guard copied.isSubset(of: Set(plan.copies.values)),
               !complete || copied == Set(plan.copies.values) else { throw SplitMigrationError.snapshotMismatch }
