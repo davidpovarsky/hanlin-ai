@@ -16,9 +16,18 @@ import HanlinExpoNativeAPI
 import HanlinMiniAppCore
 import Observation
 import OSLog
-import SwiftData
 import UIKit
 import WidgetKit
+
+/// Application-owned services; the runtime carries no model/credential store.
+/// Permission checks remain in the existing SDK and broker admission paths.
+@MainActor
+protocol HanlinScriptingApplicationServices: AnyObject {
+    func publishCompactAgentConfig() async throws
+    func loadAssistant(
+        _ request: HanlinScriptingAssistantRequest
+    ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error>
+}
 
 @MainActor
 @Observable
@@ -67,7 +76,7 @@ final class HanlinScriptingPlatform {
     private var resumeDrainRequested = false
     private var queuedNativeScriptAdmissions: Set<UUID> = []
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
-    private var modelContext: ModelContext?
+    private var applicationServices: (any HanlinScriptingApplicationServices)?
     private let locationService = HanlinAppleLocationService()
     private let healthService = HanlinAppleHealthService()
     private let notificationService = HanlinAppleNotificationService()
@@ -195,8 +204,8 @@ final class HanlinScriptingPlatform {
         resumeCommandRejections = scan?.rejections ?? []
     }
 
-    func configure(modelContext: ModelContext) {
-        self.modelContext = modelContext
+    func configure(applicationServices: (any HanlinScriptingApplicationServices)?) {
+        self.applicationServices = applicationServices
         Task {
             await publishCompactAgentConfig()
         }
@@ -1397,73 +1406,9 @@ final class HanlinScriptingPlatform {
     }
 
     func publishCompactAgentConfig() async {
-        guard let modelContext else { return }
+        guard let applicationServices else { return }
         do {
-            let keys = try modelContext.fetch(FetchDescriptor<APIKeys>())
-            let models = try modelContext.fetch(FetchDescriptor<AllModels>())
-
-            let validKeys = keys.filter { key in
-                guard let k = key.key, !k.isEmpty, k.uppercased() != "LOCAL",
-                      let company = key.company, !company.isEmpty, company.uppercased() != "LOCAL",
-                      let urlStr = key.requestURL, !urlStr.isEmpty, URL(string: urlStr) != nil else {
-                    return false
-                }
-                return true
-            }
-
-            var keyByCompany: [String: APIKeys] = [:]
-            for key in validKeys {
-                let company = key.company ?? ""
-                if let existing = keyByCompany[company] {
-                    if existing.isHidden && !key.isHidden {
-                        keyByCompany[company] = key
-                    }
-                } else {
-                    keyByCompany[company] = key
-                }
-            }
-
-            let eligibleModels = models.filter { model in
-                guard !model.isHidden,
-                      model.supportsTextGen,
-                      let name = model.name, !name.isEmpty,
-                      let company = model.company,
-                      company.uppercased() != "LOCAL",
-                      keyByCompany[company] != nil else {
-                    return false
-                }
-                return true
-            }
-
-            guard let selectedModel = HanlinDefaultChatPolicy.defaultModel(in: eligibleModels),
-                  let selectedKey = keyByCompany[selectedModel.company ?? ""],
-                  let apiKey = selectedKey.key,
-                  let endpointStr = selectedKey.requestURL,
-                  let endpoint = URL(string: endpointStr) else {
-                let store = try HanlinCompactAgentConfigStore()
-                try store.clear()
-                return
-            }
-
-            let config = HanlinCompactAgentConfiguration(
-                endpoint: endpoint,
-                apiKey: apiKey,
-                modelID: selectedModel.name ?? "gpt-4o-mini",
-                company: selectedKey.company,
-                displayName: selectedModel.displayName ?? selectedModel.name,
-                systemPrompt: "You are Hanlin, an intelligent AI assistant. Provide concise, helpful answers directly relating to the user's selected text and query.",
-                apiType: selectedKey.apiType.rawValue,
-                temperature: HanlinDefaultChatPolicy.temperature,
-                topP: HanlinDefaultChatPolicy.topP,
-                maxTokens: HanlinDefaultChatPolicy.maxTokens,
-                supportsReasoning: selectedModel.supportsReasoning && !selectedModel.supportReasoningChange,
-                supportReasoningChange: selectedModel.supportReasoningChange,
-                thinkingLength: HanlinDefaultChatPolicy.thinkingLength,
-                supportsToolUse: false,
-                updatedAt: .now
-            )
-            let store = try HanlinCompactAgentConfigStore()
-            try store.save(config)
+            try await applicationServices.publishCompactAgentConfig()
         } catch {
             Self.logger.error("Failed to publish compact agent config: \(Self.safeMessage(error), privacy: .public)")
         }
@@ -1912,17 +1857,17 @@ final class HanlinScriptingPlatform {
         }
     }
 
-    private func performAssistant(
+    func performAssistant(
         _ request: HanlinScriptingAssistantRequest
     ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error> {
-        guard let modelContext else {
+        guard let applicationServices else {
             throw HanlinScriptingNativeError(
                 name: "Error",
                 code: "assistant_configuration_unavailable",
                 message: "The Assistant configuration is unavailable."
             )
         }
-        return try await HanlinScriptingAssistantProviderAdapter(context: modelContext).load(request)
+        return try await applicationServices.loadAssistant(request)
     }
 
     private func performHealthStatistics(
