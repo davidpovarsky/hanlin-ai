@@ -442,6 +442,64 @@ struct HanlinCapabilityObservationTests {
         #expect(provider.selectionRevision(chatID: chat, temporary: true) == 1)
     }
 
+    @Test func firstIntentPinsRequestDefaultsAcrossGatedConfigurationChanges() async throws {
+        for temporary in [false, true] {
+            for globallyDisableOldDefault in [false, true] {
+                let gate = CapabilitySelectionIntentDelay()
+                let (root, provider, layout, store) = makeMCPFixture(selectionIntentAdmission: { await gate.wait() })
+                defer { try? FileManager.default.removeItem(at: root) }
+                var oldDefault = try mcpServer(layout: layout)
+                var newDefault = try mcpServer(layout: layout)
+                newDefault.isEnabledForNewChats = false
+                var intentServer = try mcpServer(layout: layout)
+                intentServer.isEnabledForNewChats = false
+                try await MCPServerRegistryStore(fileLayout: layout).save([oldDefault, newDefault, intentServer])
+                await provider.loadIfNeeded(startHost: false)
+                let chat = UUID(), untouchedChat = UUID()
+                let capturedIntentServerID = intentServer.id
+                #expect(try await provider.readSelection(chatID: chat, temporary: temporary) == [oldDefault.id])
+                let firstIntent = Task { @MainActor in
+                    try await provider.applySelectionIntent(.init(serverID: capturedIntentServerID, isSelected: true),
+                        chatID: chat, temporary: temporary)
+                }
+                // The internal initializer seam runs after the actual provider
+                // captures defaults, but before actor admission. No timer or
+                // public blocking hook, copied selection state or fake registry.
+                await gate.waitUntilArrived()
+                oldDefault.isEnabledForNewChats = false
+                oldDefault.isGloballyEnabled = !globallyDisableOldDefault
+                newDefault.isEnabledForNewChats = true
+                await provider.update(oldDefault)
+                await provider.update(newDefault)
+                await gate.release()
+                let committed = try await firstIntent.value
+                #expect(committed == [oldDefault.id, intentServer.id])
+                #expect(try await store.selection(chatID: chat, temporary: temporary) == committed)
+                #expect(try await provider.readSelection(chatID: chat, temporary: temporary) == committed)
+                #expect(try await store.selection(chatID: untouchedChat, temporary: temporary) == nil)
+                #expect(try await provider.readSelection(chatID: untouchedChat, temporary: temporary) == [newDefault.id])
+                let subsequent = try await provider.applySelectionIntent(.init(serverID: intentServer.id, isSelected: true),
+                    chatID: untouchedChat, temporary: temporary)
+                #expect(subsequent == [newDefault.id, intentServer.id])
+                // The now-explicit first chat ignores the later request's B seed.
+                let repeated = try await provider.applySelectionIntent(.init(serverID: intentServer.id, isSelected: true),
+                    chatID: chat, temporary: temporary)
+                #expect(repeated == committed)
+                #expect(provider.selectionRevision(chatID: chat, temporary: temporary) == 1)
+                if globallyDisableOldDefault {
+                    let resolution = await provider.controller.resolveToolDescriptors(serverIDs: [oldDefault.id])
+                    #expect(resolution.descriptors.isEmpty)
+                    #expect(resolution.failures.map(\.serverID) == [oldDefault.id])
+                    do {
+                        _ = try await provider.controller.call(serverID: oldDefault.id, toolName: "unit_unused", argumentsJSON: "{}")
+                        Issue.record("Stored preference must not authorize a globally disabled server")
+                    } catch MCPError.serverNotFound {} catch { Issue.record("Unexpected eligibility error") }
+                }
+                #expect(await provider.nodeRuntime.snapshot().state == .stopped)
+            }
+        }
+    }
+
     @Test func serverIntentSaveFailureAfterSuccessfulReadPreservesBytesAndRevision() async throws {
         let (root, provider, layout, store) = makeMCPFixture()
         defer { try? FileManager.default.removeItem(at: root) }
@@ -488,14 +546,17 @@ struct HanlinCapabilityObservationTests {
         #expect(!FileManager.default.fileExists(atPath: isolated.registry.appending(path: "unit-sentinel.txt").path))
     }
 
-    private func makeMCPFixture() -> (URL, MCPRuntimeProvider, MCPFileLayout, MCPChatSelectionStore) {
+    private func makeMCPFixture(
+        selectionIntentAdmission: (@Sendable () async -> Void)? = nil
+    ) -> (URL, MCPRuntimeProvider, MCPFileLayout, MCPChatSelectionStore) {
         let root = temporaryRoot()
         let runtimeLayout = RuntimeFileLayout(root: root)
         let environment = RuntimeEnvironmentStore(fileLayout: runtimeLayout)
         let runtime = NodeRuntimeService(fileLayout: runtimeLayout, environment: environment)
         let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
         let selections = MCPChatSelectionStore(fileLayout: layout)
-        return (root, MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment, selectionStore: selections), layout, selections)
+        return (root, MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment,
+            selectionStore: selections, selectionIntentAdmission: selectionIntentAdmission), layout, selections)
     }
 
     private func mcpServer(layout: MCPFileLayout) throws -> MCPServerDescriptor {

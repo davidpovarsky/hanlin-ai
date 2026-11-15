@@ -37,6 +37,8 @@ final class MCPRuntimeProvider {
     let controller: MCPRuntimeController
     private let registryStore: MCPServerRegistryStore
     private let selectionStore: MCPChatSelectionStore
+    // Internal fixture seam only; nil in production, without an extra suspension.
+    private let selectionIntentAdmission: (@Sendable () async -> Void)?
     private let configurationStore: MCPFeatureConfigurationStore
     private let secretStore: MCPSecretStore
     private let installService: MCPPackageInstallService
@@ -48,7 +50,8 @@ final class MCPRuntimeProvider {
         runtime: NodeRuntimeService? = nil,
         fileLayout: MCPFileLayout = .default,
         runtimeEnvironment: RuntimeEnvironmentStore? = nil,
-        selectionStore: MCPChatSelectionStore? = nil
+        selectionStore: MCPChatSelectionStore? = nil,
+        selectionIntentAdmission: (@Sendable () async -> Void)? = nil
     ) {
         let runtime = runtime ?? AppRuntimeCore.shared.node
         let registry = MCPServerRegistryStore(fileLayout: fileLayout)
@@ -56,6 +59,7 @@ final class MCPRuntimeProvider {
         nodeRuntime = runtime
         registryStore = registry
         self.selectionStore = selectionStore ?? MCPChatSelectionStore(fileLayout: fileLayout)
+        self.selectionIntentAdmission = selectionIntentAdmission
         configurationStore = MCPFeatureConfigurationStore(fileLayout: fileLayout)
         secretStore = secrets
         controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets,
@@ -208,6 +212,10 @@ final class MCPRuntimeProvider {
     /// Composer intent against canonical current storage, never a UI selection
     /// snapshot. Throws this request's failure and returns its committed readback.
     /// The caller still owns scope/revision guards for asynchronous presentation.
+    /// Defaults are a request-entry snapshot of eligible configured servers, used
+    /// only if this intent first materializes an absent record. Later default or
+    /// global-enable changes never rebase explicit selections. This is a stored
+    /// preference; runtime resolution/calls still enforce current eligibility.
     @discardableResult
     func applySelectionIntent(
         _ intent: MCPChatServerSelectionIntent,
@@ -216,6 +224,7 @@ final class MCPRuntimeProvider {
     ) async throws -> Set<UUID> {
         guard persistentLoadState == .loaded else { throw MCPChatSelectionReadError.storageNotLoaded }
         let defaults = Set(servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id))
+        if let selectionIntentAdmission { await selectionIntentAdmission() }
         let result = try await selectionStore.applySelectionIntent(
             intent, chatID: chatID, temporary: temporary, defaultServerIDs: defaults
         )
