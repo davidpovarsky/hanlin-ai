@@ -555,7 +555,9 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         except RuntimeError as error:
             alias_validation.write_text(json.dumps({"status": "FAILED", "reason": str(error)}) + "\n", encoding="utf-8")
             raise
-        alias_validation.write_text(json.dumps({"status": "VERIFIED", "aliases": len(aliases)}) + "\n", encoding="utf-8")
+        alias_validation.write_text(json.dumps({"status": "VERIFIED", "contractVersion": 2,
+            "aliases": sum(r["disposition"] == "VERIFIED_EQUIVALENT" for r in aliases),
+            "notAliased": sum(r["disposition"] == "NOT_ALIASED" for r in aliases)}) + "\n", encoding="utf-8")
         if diagnostic_mode == "0":
             # Reclassify ALL final, post-staging bytes at the exact captured context.
             # Never promote a stale receipt by updating hashes alone.

@@ -2583,5 +2583,42 @@
         "handoff": "Use exact frozen commit/tree bytes, never mutable local older test/source. No source integration implied. Later root activation required."
       }
     }
+  },
+  "activeWave20261115": {
+    "status": "IN_PROGRESS",
+    "aliasOptimizationContractVersion": 2,
+    "managerThread": "01a1df7a-f6e6-7ff0-9e6f-781f57c2456a",
+    "rules": {
+      "identicalAndProven": "VERIFIED_EQUIVALENT overlay",
+      "differentOrUnproven": "NOT_ALIASED; original physical input, header/tree hashes and search order retained",
+      "moduleOwnerCollision": "FATAL",
+      "nativeCompilerDiagnostics": "FATAL",
+      "publicAPIValidation": "REQUIRED"
+    },
+    "localValidation": {
+      "wrapperMethodsExecuted": 30,
+      "seconds": 20.142,
+      "additionalDependencyAndNativeConflictMethodsExecuted": 2,
+      "additionalSeconds": 0.206,
+      "platform": "Windows libclang; not Apple/UI/device"
+    },
+    "nativeBuildHistory": [
+      {
+        "run": 43721885166,
+        "sourceSHA": "e810cec6",
+        "status": "BUILD_FAILED",
+        "nativeCasesExecuted": 0
+      },
+      {
+        "run": 43722155484,
+        "sourceSHA": "31459c2c",
+        "toolCompilation": "EXECUTED_PASS",
+        "controls": "RESULTS_UNDER_REVIEW"
+      }
+    ],
+    "combinedVersion2": "NOT_RUN",
+    "UI": "NOT_RUN",
+    "physicalDevice": "NOT_RUN",
+    "completion": false
   }
 }

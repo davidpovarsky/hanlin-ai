@@ -1,5 +1,40 @@
 # Framework ownership and duplicate metadata inputs
 
+## Active wave: alias optimization contract version 2
+
+The owner's 2026-11-15 activation supersedes the historical pause/preparation
+limits below. Runtime remains the sole metadata/tooling writer in the existing
+worktree and branch. SDK-03/SDK-04/INT-03 remain open.
+
+The single manager approved version 2 at the actual alias boundary: a path of
+the form `Headers/<module>/<file>` establishes a **candidate**, not equivalence.
+Only byte-identical headers with the existing complete dependency/context proof
+receive a VFS redirect and `VERIFIED_EQUIVALENT`. Different header bytes,
+different/missing dependency trees and unproven private dependencies receive
+`NOT_ALIASED`, a reason, both physical paths, both header hashes and both tree
+fingerprints. Those files remain physically unchanged and searchable in the
+original order. No root or public header is removed by this rule.
+
+Framework/top-level module identity collisions, conflicting alias owners and
+alias chains/selected-owner replacements remain fatal. Actual native parser
+errors remain fatal even when every required symbol is present. Final role
+reclassification and public ObjC/C API validation still apply. This supersedes
+the old blanket abort for unequal **name-pattern candidates**, not the genuine
+module-owner or compiler conflict gates. Independent NativeScript/RN JSI
+sources are not interchangeable.
+
+Local checks at this tranche: all 30 wrapper methods passed in 20.142s before
+the extra native-conflict regression; the two affected dependency/context and
+actual conflicting-enum cases then passed in 0.206s with Windows libclang.
+This is portable tooling evidence, not Apple/UI/device acceptance.
+
+Actual pinned-tool run 43721885166 at e810cec6 failed compilation before tests
+(callback arity and explicit LLVM JSON constructors). The callback correction
+uses the actual pinned Apple LLVM snapshot's `ModuleImported` parameter, rather
+than assuming llvmorg's same-version signature. Run 43722155484 at 31459c2c
+compiled the tool and started retained controls; final results pending here.
+These runs do not validate the version 2 combined input until separately run.
+
 2026-11-15 — [נועם | Runtime/SDK] [MAIN_SESSION], lease W1-001.
 SDK-03 `1220373608755846`; INT-03 `1220374076374903` remain open.
 Baseline: `ba7a5ba3ed9e8983cc47df532114079f64bff0b0`.

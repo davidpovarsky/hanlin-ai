@@ -434,8 +434,26 @@ def write_verified_header_alias_overlay(inventory: list[dict], destination: Path
                     if carrier["path"] == owner["path"] or key not in carrier["inputSHA256"]:
                         continue
                     alias = Path(carrier["path"]) / key
+                    owner_tree = {k[len("Headers/"):]: v for k, v in owner["inputSHA256"].items() if k.startswith("Headers/")}
+                    prefix = "Headers/" + module + "/"
+                    carrier_tree = {k[len(prefix):]: v for k, v in carrier["inputSHA256"].items() if k.startswith(prefix)}
+                    reason = None
                     if carrier["inputSHA256"][key] != header["sha256"]:
-                        raise RuntimeError("Conflicting public header alias bytes: " + str(alias) + " vs " + str(canonical))
+                        reason = "different-header-bytes"
+                    elif any(k.startswith("PrivateHeaders/") for k in owner["inputSHA256"]):
+                        reason = "unproven-private-dependency-context"
+                    elif any(carrier_tree.get(name) != digest for name, digest in owner_tree.items()):
+                        reason = "different-or-missing-dependency-tree"
+                    if reason:
+                        # A namespace-shaped pathname is only a candidate. Keep
+                        # independent sources physically intact; the real parser
+                        # and module-owner guards still reject actual conflicts.
+                        evidence[alias.as_posix()] = {"contractVersion": 2, "disposition": "NOT_ALIASED", "reason": reason,
+                            "module": module, "alias": alias.as_posix(), "canonical": canonical.as_posix(),
+                            "candidateSHA256": carrier["inputSHA256"][key], "ownerSHA256": header["sha256"],
+                            "candidateTreeSHA256": hashlib.sha256(json.dumps(carrier_tree, sort_keys=True).encode()).hexdigest(),
+                            "ownerTreeSHA256": hashlib.sha256(json.dumps(owner_tree, sort_keys=True).encode()).hexdigest()}
+                        continue
                     pair = (owner["path"], module, carrier["path"])
                     if pair not in verified_trees:
                         # Identical entry bytes are insufficient if a relative
@@ -451,7 +469,8 @@ def write_verified_header_alias_overlay(inventory: list[dict], destination: Path
                     if alias_name in aliases and aliases[alias_name] != target:
                         raise RuntimeError("Conflicting public header alias owners: " + alias_name)
                     aliases[alias_name] = target
-                    evidence[alias_name] = {"module": module, "alias": alias_name, "canonical": target,
+                    evidence[alias_name] = {"contractVersion": 2, "disposition": "VERIFIED_EQUIVALENT",
+                                            "module": module, "alias": alias_name, "canonical": target,
                                             "sha256": header["sha256"], "ownerSearchPriority": owner["searchPriority"],
                                             "matchingOwnerHeaderTree": verified_trees[pair]}
     if any(target in aliases and aliases[target] != target for target in aliases.values()):

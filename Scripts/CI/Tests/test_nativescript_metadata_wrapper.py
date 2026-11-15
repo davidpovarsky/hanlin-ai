@@ -588,12 +588,20 @@ generate_metadata("arm64")
                 'framework module lower {\n header "Exported.h"\n export *\n}\n')
             alias = root / "products/Carrier.framework/Headers/lower/Exported.h"
             alias.parent.mkdir(parents=True)
-            alias.write_text("// different bytes must stay visible")
+            alias.write_text("int independent_candidate_c_api(void);\n")
             records = HEADERS.write_public_umbrella(root, root / "input.h", [], [owner.parent])
             overlay = root / "aliases.json"
-            with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias bytes"):
-                HEADERS.write_verified_header_alias_overlay(records, overlay)
-            self.assertFalse(overlay.exists())
+            before = (header := owner / "Headers/Exported.h").read_bytes(), alias.read_bytes()
+            evidence = HEADERS.write_verified_header_alias_overlay(records, overlay)
+            self.assertEqual(json.loads(overlay.read_text())["roots"], [])
+            self.assertEqual(evidence[0]["disposition"], "NOT_ALIASED")
+            self.assertEqual(evidence[0]["reason"], "different-header-bytes")
+            self.assertEqual(evidence[0]["candidateSHA256"], hashlib.sha256(before[1]).hexdigest())
+            self.assertEqual(evidence[0]["ownerSHA256"], hashlib.sha256(before[0]).hexdigest())
+            self.assertEqual((header.read_bytes(), alias.read_bytes()), before)
+            parsed = HEADERS.inspect_header_declarations([header, alias], ["-ivfsoverlay", str(overlay)], self.compiler_library(), "objective-c")
+            self.assertEqual(parsed["errors"], [])
+            self.assertIn("independent_candidate_c_api", [d["name"] for d in parsed["declarations"]])
 
     def test_identical_entry_with_changed_alias_dependency_is_rejected(self):
         with tempfile.TemporaryDirectory() as name:
@@ -603,8 +611,33 @@ generate_metadata("arm64")
             shutil.copytree(owner / "Headers", alias_root)
             (alias_root / "Exported.h").write_text("// changed relative dependency of identical Entry.h")
             records = HEADERS.write_public_umbrella(root, root / "input.h", [], [owner.parent])
-            with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias dependency tree"):
-                HEADERS.write_verified_header_alias_overlay(records, root / "aliases.json")
+            evidence = HEADERS.write_verified_header_alias_overlay(records, root / "aliases.json")
+            self.assertEqual(json.loads((root / "aliases.json").read_text())["roots"], [])
+            self.assertEqual(evidence[0]["disposition"], "NOT_ALIASED")
+            self.assertEqual(evidence[0]["reason"], "different-or-missing-dependency-tree")
+            parsed = HEADERS.inspect_header_declarations([owner / "Headers/Entry.h", alias_root / "Entry.h"],
+                ["-ivfsoverlay", str(root / "aliases.json")], self.compiler_library(), "objective-c")
+            self.assertEqual(parsed["errors"], [])
+            for actual in [owner / "Headers/Exported.h", alias_root / "Exported.h"]:
+                self.assertEqual(parsed["dependencies"][str(actual.resolve())], hashlib.sha256(actual.read_bytes()).hexdigest())
+
+    def test_unaliased_candidates_do_not_hide_actual_native_declaration_conflict(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            owner = self.framework(root / "products", "lower")
+            header = owner / "Headers/Entry.h"
+            header.write_text("enum Collision { FirstValue };\n")
+            candidate = root / "products/Carrier.framework/Headers/lower/Entry.h"
+            candidate.parent.mkdir(parents=True)
+            candidate.write_text("enum Collision { SecondValue };\n")
+            inventory = HEADERS.write_public_umbrella(root, root / "input.h", [], [owner.parent])
+            overlay = root / "aliases.json"
+            evidence = HEADERS.write_verified_header_alias_overlay(inventory, overlay)
+            self.assertEqual(evidence[0]["disposition"], "NOT_ALIASED")
+            self.assertEqual(json.loads(overlay.read_text())["roots"], [])
+            parsed = HEADERS.inspect_header_declarations([header, candidate], ["-ivfsoverlay", str(overlay)], self.compiler_library(), "objective-c")
+            self.assertTrue(parsed["errors"])
+            self.assertIn("redefinition", "\n".join(parsed["errors"]))
 
     def test_real_clang_errors_reject_partial_metadata_even_when_required_classes_exist(self):
         with tempfile.TemporaryDirectory() as name:
@@ -692,8 +725,8 @@ generate_metadata("arm64")
             self.assertEqual((retained / diagnostic.name).read_bytes(), diagnostic.read_bytes())
             self.assertEqual((retained / "metadata-arm64.bin").read_bytes(), b"NSObject\0UIView\0")
             self.assertIn('"HanlinNativeServicesBridge": false', (retained / "visibility.json").read_text())
-            # Capture-only discovery must retain the real context before an
-            # unequal namespace alias fails; it must never reach final emission.
+            # Capture-only discovery retains context before a genuine alias
+            # owner conflict; it must never reach final emission on that error.
             carrier = self.framework(sdk / "System/Library/Frameworks", "Carrier")
             alias = carrier / "Headers/UIKit/UIKit.h"
             alias.parent.mkdir()
@@ -701,9 +734,10 @@ generate_metadata("arm64")
             with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
                  patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
                  patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
+                 patch.object(HEADERS, "write_verified_header_alias_overlay", side_effect=RuntimeError("Conflicting public header alias owners")), \
                  patch.object(WRAPPER.subprocess, "run") as run:
                 run.side_effect = capture
-                with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias bytes"):
+                with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias owners"):
                     WRAPPER.main()
                 self.assertEqual(run.call_count, 2)  # launcher capture, native read-only dump; no final invocation.
                 self.assertIn("-hanlin-dump-clang-context", run.call_args_list[1].args[0])
