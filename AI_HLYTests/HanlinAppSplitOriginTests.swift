@@ -270,6 +270,10 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == nil)
         #expect(coordinator.acceptedOrigin(forReceivingWindowID: other) == nil)
         #expect(coordinator.acceptedOrigin(forReceivingWindowID: nil) == nil)
+        coordinator.revokeReceivingWindow(other)
+        #expect(coordinator.claimReturn(url, receivingWindowID: other) == nil)
+        coordinator.revokeReceivingWindow(window)
+        _ = try #require(coordinator.claimReturn(url, receivingWindowID: other))
     }
 
     @Test func expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup() async throws {

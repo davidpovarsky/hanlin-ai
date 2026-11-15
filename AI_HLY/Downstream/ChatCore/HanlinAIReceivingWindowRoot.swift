@@ -19,11 +19,16 @@ extension EnvironmentValues {
 struct HanlinAIReceivingWindowRoot<Content: View>: View {
     @State private var receivingWindowID = UUID()
     private let content: @MainActor (UUID) -> Content
+    private let onWindowDisappears: @MainActor (UUID) -> Void
 
-    init(@ViewBuilder content: @escaping @MainActor (UUID) -> Content) { self.content = content }
+    init(onDisappear: @escaping @MainActor (UUID) -> Void = { _ in },
+         @ViewBuilder content: @escaping @MainActor (UUID) -> Content) {
+        self.onWindowDisappears = onDisappear; self.content = content
+    }
 
     var body: some View {
         content(receivingWindowID)
             .environment(\.hanlinAIReceivingWindowID, receivingWindowID)
+            .onDisappear { onWindowDisappears(receivingWindowID) }
     }
 }

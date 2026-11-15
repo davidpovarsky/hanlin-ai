@@ -105,7 +105,9 @@ struct MyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HanlinAIReceivingWindowRoot { receivingWindowID in
+            HanlinAIReceivingWindowRoot(onDisappear: { windowID in
+                HanlinAppSplitOriginCoordinator.shared.revokeReceivingWindow(windowID)
+            }) { receivingWindowID in
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
                 .task {

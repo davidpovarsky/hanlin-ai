@@ -131,3 +131,11 @@ as well as typed identity, avoiding Swift String canonical-equivalence shortcuts
 store control covers live-without-cold-marker and provisional-to-final paths using conflicting
 large integers AND K/Kelvin outcomes, requiring unchanged bytes after the conflict. It is authored
 NOT_RUN, not represented by the pure exact-writer case.
+
+Receiving-root disappearance revokes only its own UI claim. It does not cancel/retry the business
+operation or infer an original Scene ID. If canonical receipt save outlives that view, a matching
+claim nonce is required again before mailbox acceptance; the receipt remains stored on failure.
+Another window's disappearance cannot erase this delivery. The wrapper's existing State/content
+code passed standalone Mac SwiftUI typecheck atc7905d84 in toolkit43749408559 (0 runtime tests,
+no app graph); after adding its disappearance callback, the changed file needs its own fresh
+focused typecheck. Neither preflight substitutes for enabled iOS app/scene XCUITest.

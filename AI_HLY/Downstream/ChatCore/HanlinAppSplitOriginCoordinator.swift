@@ -192,7 +192,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     /// Release Host completion FIRST, then await its real persisted-receipt callback. Holding
     /// Host execution until this callback would deadlock the existing model tool loop.
     func persistVerifiedResult(_ response: SplitBridgeReturn) async throws {
-        guard returnClaim?.requestID == response.request.id else { throw SplitBridgeFailure.transportUnavailable }
+        guard let receivingClaim = returnClaim, receivingClaim.requestID == response.request.id else { throw SplitBridgeFailure.transportUnavailable }
         if let item = pending[response.request.id] {
             guard !item.invalidated, item.request == response.request,
                   item.origin.requestDigest == (try Self.digest(response.request)) else { throw SplitBridgeFailure.cancelled }
@@ -217,6 +217,11 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             try await store.persistHistoricalReceipt(event, originReference: reference, receiptReference: receiptKey,
                 replacingUncertainReference: Self.receiptReference(response.request.id))
             _ = try await coldOrigin(response.request)
+        }
+        // Canonical save may outlive the receiving view. Keep the receipt, but do not consume
+        // mailbox delivery when that original reception owner disappeared during the await.
+        guard returnClaim?.nonce == receivingClaim.nonce, returnClaim?.windowID == receivingClaim.windowID else {
+            throw SplitBridgeFailure.transportUnavailable
         }
     }
 
@@ -279,6 +284,14 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             lastFailureReceivingWindowID = windowID
             return nil
         }
+    }
+
+    /// Visibility/lifetime revokes only this UI reception claim, never a tool permission/effect.
+    /// Another window's disappearance cannot revoke the current receiving owner.
+    func revokeReceivingWindow(_ windowID: UUID) {
+        guard returnClaim?.windowID == windowID else { return }
+        acceptedOrigin = nil; acceptedReceivingWindowID = nil; returnClaim = nil
+        lastFailure = .transportUnavailable; lastFailureReceivingWindowID = windowID
     }
 
     /// A stale mount/ACK cannot consume another window's delivery or clear a newer request.
