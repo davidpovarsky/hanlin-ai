@@ -65,6 +65,19 @@ public struct HanlinHostSchemaValidation: Sendable {
         return originalJSON
     }
 
+    /// Deterministic exact JSON bytes for DTO fingerprints. Uses the already approved bounded
+    /// parser/writer, scalar key ordering and exact decimal normalization, never a Double bridge.
+    /// This is a local encoding contract, not a claim of an external signature canonicalization.
+    public static func deterministicJSONData(_ originalJSON: Data) throws -> Data {
+        try Task.checkCancellation()
+        let value = try parse(originalJSON)
+        var bounded = limits
+        bounded[.outputBytes] = UInt64(maximumBytes)
+        let bytes = try JSONWriter(options: .init(limits: bounded, keyOrder: .scalar, numberStyle: .normalized)).write(value)
+        try Task.checkCancellation()
+        return bytes
+    }
+
     private static func parse(_ data: Data) throws -> JSON {
         guard data.count <= maximumBytes else { throw Failure.inputTooLarge }
         return try JSONParser(options: .init(limits: limits)).parse(data)

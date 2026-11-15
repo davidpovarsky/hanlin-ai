@@ -44,6 +44,8 @@ cancelled mailbox states retain original conservative transport semantics.
 - `static let shared: HanlinAppSplitOriginCoordinator`
 - `private(set) var acceptedOrigin: SplitBridgeRequest?`
 - `private(set) var lastFailure: SplitBridgeFailure?`
+- `func acknowledgeAcceptedOrigin(requestID: UUID)` clears only a matching accepted ID, without
+  consuming mailbox again; an older asynchronous mount cannot erase a newer delivery.
 
 A2UI may retain shared and observe acceptedOrigin outside View.body navigation mutation. The
 value is the SAME SplitBridgeRequest from navigateToOriginalConversation after save/fresh check/
@@ -61,3 +63,10 @@ accessor and actual app composition still need combined app compilation. Six pri
 component controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
 duplicate/deleted/deadline controls, original XCUITest, two-app cold process, signed group and
 physical device acceptance remain OPEN; injected open/target seams are not device proof.
+
+The DTO fingerprint now uses the approved exact JSON parser/writer facade with scalar key ordering
+and normalized exact decimals; no portable projection sits between existing DTO encoding and hash.
+An actual row-store receipt-dedup control compares9007199254740992/9007199254740993 outcomes under
+the same original invocation/result/request and requires typed conflict with unchanged stored bytes.
+This app control and the acknowledgement/remount-state control are authored NOT_RUN until app
+compilation; a separate exact writer case+iOS compile is the only new package proof obligation.

@@ -88,6 +88,10 @@ private final class HanlinNativeA2UIAcceptanceURLProtocol: URLProtocol, @uncheck
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
     override func startLoading() {
+        // Count every intercepted HTTP attempt, including malformed/unexpected/extra calls.
+        Self.lock.lock()
+        let index = Self.requestCount; Self.requestCount += 1
+        Self.lock.unlock()
         do {
             let bytes = try Self.bodyData(request)
             guard HanlinNativeA2UIAcceptanceProvider.isEnabled,
@@ -118,9 +122,6 @@ private final class HanlinNativeA2UIAcceptanceURLProtocol: URLProtocol, @uncheck
                   raw.utf8.count <= 262_144 else { throw FixtureError.invalidPlan }
             let plan = try JSONDecoder().decode(HanlinNativeA2UIAcceptanceProvider.Plan.self, from: Data(raw.utf8))
             guard !plan.steps.isEmpty, plan.steps.count <= 8 else { throw FixtureError.invalidPlan }
-            Self.lock.lock()
-            let index = Self.requestCount; Self.requestCount += 1
-            Self.lock.unlock()
             guard plan.steps.indices.contains(index) else { throw FixtureError.exhaustedPlan }
             let step = plan.steps[index]
             guard step.expectedInputContains.count <= 16, step.forbiddenInputContains.count <= 16,

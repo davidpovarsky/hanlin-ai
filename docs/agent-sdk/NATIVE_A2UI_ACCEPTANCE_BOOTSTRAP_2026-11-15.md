@@ -40,7 +40,7 @@ plans to prove reopen/dismiss/cancellation did not issue a second model request.
 
 The stub checks actual direct Responses model/method/stream, strict native json_schema root,
 required parts, additionalProperties=false, item required fields/types/enums and bounds before
-emitting any SSE. Actual HTTP request attempts are observable through static observedRequestCount
+emitting any SSE. All intercepted HTTP attempts, counted at startLoading before URL/schema/plan/input rejections, are observable through static observedRequestCount
 and lastRequestFailure for A2UI-owned AX/test display; they are not manufactured success markers.
 
 Source syntax/diff checked only. Enabled simulator app compilation and actual original app UI

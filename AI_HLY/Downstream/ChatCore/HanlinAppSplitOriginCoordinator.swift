@@ -21,7 +21,8 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     @ObservationIgnored private let makeTransport: @MainActor () throws -> HanlinSplitForegroundTransport
     @ObservationIgnored private let targetContext: @MainActor (SplitBridgeRequest) async throws -> SplitReceiverContext
 
-    init() {
+    init(modelContext: ModelContext? = nil) {
+        self.modelContext = modelContext
         makeMailbox = { try HanlinSplitMailbox() }
         makeTransport = { try HanlinSplitForegroundTransport() }
         targetContext = { request in try await HanlinSplitLiveTarget.current(request).1 }
@@ -184,7 +185,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             guard sessions[response.request.chat]?.value?.isRunning != true else { throw SplitBridgeFailure.transportUnavailable }
             let event = try HanlinHostResultEvent(resultID: origin.resultID, call: origin.call,
                 result: Self.result(response, origin: origin))
-            let receiptKey = "hanlin.split.receipt.v1:" + origin.resultID.uuidString.lowercased() + ":" + (try Self.digest(response))
+            let receiptKey = try Self.historicalReceiptReference(response, resultID: origin.resultID)
             try await store.persistHistoricalReceipt(event, originReference: reference, receiptReference: receiptKey)
             _ = try await coldOrigin(response.request)
         }
@@ -212,6 +213,13 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         acceptedOrigin = request
         pending[request.id]?.timer?.cancel()
         pending[request.id] = nil
+    }
+
+    /// UI mount acknowledgement clears only that delivered request; an older asynchronous
+    /// mount cannot erase a newer accepted delivery. This never consumes mailbox state again.
+    func acknowledgeAcceptedOrigin(requestID: UUID) {
+        guard acceptedOrigin?.id == requestID else { return }
+        acceptedOrigin = nil
     }
 
     func receiveReturn(_ url: URL, modelContext: ModelContext) async {
@@ -276,8 +284,11 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     private static func receiptReference(_ id: UUID) -> String { "hanlin.split.return.v1:" + id.uuidString.lowercased() }
     private static func digest<T: Encodable>(_ value: T) throws -> String {
         let raw = try SplitBridgeCodec.encode(value)
-        let canonical = try HanlinJSONValue.decodeCanonicalJSON(raw).canonicalJSONData()
+        let canonical = try HanlinHostSchemaValidation.deterministicJSONData(raw)
         return SHA256.hash(data: canonical).map { String(format: "%02x", $0) }.joined()
+    }
+    static func historicalReceiptReference(_ response: SplitBridgeReturn, resultID: UUID) throws -> String {
+        "hanlin.split.receipt.v1:" + resultID.uuidString.lowercased() + ":" + (try digest(response))
     }
     private static func result(_ response: SplitBridgeReturn, origin: StoredOrigin) throws -> HanlinHostExecutionResult {
         let outcome: HanlinToolOutcome

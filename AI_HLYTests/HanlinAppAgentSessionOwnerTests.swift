@@ -4,6 +4,7 @@ import HanlinAgentCore
 import HanlinChatCore
 import HanlinHostContracts
 import HanlinPlatformContracts
+import HanlinProductSplit
 import SwiftData
 import Testing
 @testable import AI_Hanlin
@@ -195,6 +196,75 @@ private struct AppPartModel: LanguageModelV3 {
         } catch { #expect(error as? HanlinHostError == .staleContext) }
         #expect(owner.session == nil && recorder.installed.isEmpty && recorder.replayed.isEmpty)
         #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+    }
+
+    @Test func historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Historical original", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id)
+        let ns = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library", workspace: "swiftdata", space: id.uuidString)
+        let session = HanlinHostSession(conversationID: id, context: .init(namespace: ns, sceneID: UUID(), generation: UUID()))
+        let logical = try HanlinLogicalToolID(providerInstanceID: .init(validating: "hanlin.host"), localToolID: .init(validating: "open_mini_app"))
+        let call = HanlinHostCallIdentity(session: session, runID: UUID(), step: 0, providerCallID: "original",
+            invocationID: try .init(validating: UUID().uuidString.lowercased()), logicalToolID: logical)
+        let request = SplitBridgeRequest(caller: try .init(validating: "hanlin.host"), target: try .init(validating: "hanlin.demo.swift-parity"),
+            installedPackage: try .init(validating: "compiled.hanlin.demo.swift-parity"), session: try .init(validating: session.id.uuidString.lowercased()),
+            chat: id, generation: 0, action: try .init(validating: "share.value"), capability: try .init(validating: "inter-app.share"),
+            issuedAt: .now, expiresAt: .now.addingTimeInterval(30), payload: .null)
+        let originReference = "hanlin.split.origin.v1:" + request.id.uuidString.lowercased() + ":fixture-existing-origin"
+        let store = HanlinAppConversationStore(context: context, conversation: row, namespace: ns, conversationID: id, temporary: false)
+        try await store.save(.init(namespace: ns, conversationID: id, revision: 0,
+            entries: [.init(runID: call.runID, step: 0, sequence: 0, payload: .presentationReference(version: 1, opaqueReference: originReference))]), replacing: nil)
+        let resultID = UUID()
+        func receipt(_ value: Int64) throws -> (HanlinHostResultEvent, String) {
+            let response = SplitBridgeReturn(request: request, outcome: .result(.integer(value)))
+            let key = try HanlinAppSplitOriginCoordinator.historicalReceiptReference(response, resultID: resultID)
+            let result = HanlinHostExecutionResult(result: .init(invocationID: call.invocationID, logicalToolID: logical,
+                outcome: .completed([.structured(.integer(value))]), completedAt: .now), effectState: .confirmedCommitted,
+                context: session.context, reconciliationReference: key)
+            return (try .init(resultID: resultID, call: call, result: result), key)
+        }
+        let (original, originalKey) = try receipt(9_007_199_254_740_992)
+        try await store.persistHistoricalReceipt(original, originReference: originReference, receiptReference: originalKey)
+        let preserved = row.agentSDKRecordData
+        let (duplicate, duplicateKey) = try receipt(9_007_199_254_740_992)
+        try await store.persistHistoricalReceipt(duplicate, originReference: originReference, receiptReference: duplicateKey)
+        #expect(row.agentSDKRecordData == preserved)
+        let (conflict, conflictKey) = try receipt(9_007_199_254_740_993)
+        do {
+            try await store.persistHistoricalReceipt(conflict, originReference: originReference, receiptReference: conflictKey)
+            Issue.record("Changed large-integer outcome deduplicated as the original receipt")
+        } catch { #expect(error as? HanlinHostError == .resultMismatch) }
+        #expect(row.agentSDKRecordData == preserved)
+        let loaded = try await store.load(id, namespace: ns)
+        #expect(loaded?.revision == 1)
+    }
+
+    @Test func acceptedOriginAcknowledgementCannotClearANewerDelivery() throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Existing origin", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id)
+        func request() throws -> SplitBridgeRequest {
+            .init(caller: try .init(validating: "hanlin.host"), target: try .init(validating: "hanlin.demo.swift-parity"),
+                installedPackage: try .init(validating: "compiled.hanlin.demo.swift-parity"), session: try .init(validating: UUID().uuidString.lowercased()),
+                chat: id, generation: 0, action: try .init(validating: "share.value"), capability: try .init(validating: "inter-app.share"),
+                issuedAt: .now, expiresAt: .now.addingTimeInterval(30), payload: .null)
+        }
+        let coordinator = HanlinAppSplitOriginCoordinator(modelContext: context), first = try request(), next = try request()
+        // Simulates the transport's trusted post-accept callback; not mailbox or UI mount proof.
+        coordinator.navigateToOriginalConversation(first)
+        coordinator.acknowledgeAcceptedOrigin(requestID: first.id)
+        #expect(coordinator.acceptedOrigin == nil)
+        coordinator.navigateToOriginalConversation(next)
+        coordinator.acknowledgeAcceptedOrigin(requestID: first.id)
+        #expect(coordinator.acceptedOrigin == next)
+        coordinator.acknowledgeAcceptedOrigin(requestID: next.id)
+        #expect(coordinator.acceptedOrigin == nil)
+        context.delete(row); try context.save()
+        coordinator.navigateToOriginalConversation(first)
+        #expect(coordinator.acceptedOrigin == nil && coordinator.lastFailure == .correlationMismatch)
     }
 
     @Test func actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects() async throws {
