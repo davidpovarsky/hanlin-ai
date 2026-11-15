@@ -22,6 +22,23 @@ struct HanlinComposerRefreshContext: Hashable {
     }
 }
 
+@MainActor
+enum HanlinComposerSelectionRefresh {
+    static func perform(
+        request: HanlinComposerRefreshContext,
+        current: () -> HanlinComposerRefreshContext?,
+        revision: () -> UInt64,
+        read: () async throws -> Set<UUID>,
+        publish: (Result<Set<UUID>, Error>) -> Void
+    ) async {
+        let result: Result<Set<UUID>, Error>
+        do { result = .success(try await read()) }
+        catch { result = .failure(error) }
+        guard request.canPublish(current: current(), currentSelectionRevision: revision(), isCancelled: Task.isCancelled) else { return }
+        publish(result)
+    }
+}
+
 /// Summarizes an active mode or capability chip displayed above the composer editor.
 struct HanlinComposerActiveChip: Identifiable, Equatable, Sendable {
     enum Kind: String, Equatable, Sendable {

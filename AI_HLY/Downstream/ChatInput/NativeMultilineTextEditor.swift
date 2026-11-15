@@ -50,9 +50,9 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
     static func automaticHeightBounds(for textView: UITextView, isEmpty: Bool, availableHeight: CGFloat) -> (min: CGFloat, max: CGFloat) {
         let lineHeight = (textView.font ?? UIFont.preferredFont(forTextStyle: .body)).lineHeight
         let insets = textView.textContainerInset.top + textView.textContainerInset.bottom
-        let minimum = ceil(insets + lineHeight * (isEmpty ? 1 : 2))
+        let minimum = min(max(0, availableHeight), ceil(insets + lineHeight * (isEmpty ? 1 : 2)))
         let maximum = ceil(insets + lineHeight * (isEmpty ? 1 : 6))
-        return (minimum, min(maximum, max(minimum, availableHeight)))
+        return (minimum, min(maximum, max(0, availableHeight)))
     }
 
     func measuredHeight(for textView: UITextView, isEmpty: Bool) -> CGFloat {

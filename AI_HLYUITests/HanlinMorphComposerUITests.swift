@@ -2,6 +2,77 @@ import XCTest
 
 @MainActor
 final class HanlinMorphComposerUITests: XCTestCase {
+    func testLargeTextLongDraftFitsWithKeyboardAndAfterPalette() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
+        app.launch()
+        defer { app.terminate() }
+
+        let input = app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
+        if !input.waitForExistence(timeout: 5) {
+            let chat = app.descendants(matching: .any).matching(
+                NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            ).firstMatch
+            XCTAssertTrue(chat.waitForExistence(timeout: 15))
+            chat.tap()
+        }
+        XCTAssertTrue(input.waitForExistence(timeout: 20))
+        input.tap()
+        let draft = String(repeating: "Wrapped accessible draft text ", count: 32)
+        input.typeText(draft)
+        let window = app.windows.firstMatch
+        XCTAssertGreaterThanOrEqual(input.frame.minY, window.frame.minY - 1)
+        XCTAssertLessThanOrEqual(input.frame.maxY, window.frame.maxY + 1)
+        XCTAssertEqual(input.value as? String, draft)
+        let plus = app.buttons["hanlin-composer-general-menu"].firstMatch
+        XCTAssertTrue(plus.waitForExistence(timeout: 5))
+        plus.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["morphing-action-panel"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertGreaterThanOrEqual(input.frame.minY, window.frame.minY - 1)
+        XCTAssertLessThanOrEqual(input.frame.maxY, window.frame.maxY + 1)
+        plus.tap()
+        XCTAssertEqual(input.value as? String, draft)
+    }
+
+    func testDismissModelPickerKeepsSelectedModelAndDraft() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
+        app.launch()
+        defer { app.terminate() }
+
+        let input = app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
+        if !input.waitForExistence(timeout: 5) {
+            let chat = app.descendants(matching: .any).matching(
+                NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            ).firstMatch
+            XCTAssertTrue(chat.waitForExistence(timeout: 15))
+            chat.tap()
+        }
+        XCTAssertTrue(input.waitForExistence(timeout: 20))
+        input.tap()
+        let draft = "Draft survives model picker cancellation"
+        input.typeText(draft)
+        let model = app.buttons["hanlin-composer-model-picker"].firstMatch
+        XCTAssertTrue(model.waitForExistence(timeout: 5))
+        let originalLabel = model.label
+        XCTAssertFalse(originalLabel.isEmpty)
+        model.tap()
+        let picker = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
+        XCTAssertTrue(picker.waitForExistence(timeout: 10))
+        model.tap()
+        XCTAssertTrue(picker.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(model.label, originalLabel)
+        XCTAssertEqual(input.value as? String, draft)
+    }
+
     func testRTLToolChipKeepsLongDraftAndAccessibleLabel() throws {
         continueAfterFailure = false
         let app = XCUIApplication()

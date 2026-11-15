@@ -1057,6 +1057,7 @@ struct HanlinComposerToolsRootView: View {
     @State private var mcpProvider = MCPRuntimeProvider.shared
     @State private var selectedMCPServerIDs: Set<UUID> = []
     @State private var activeLiveContext: LiveContext?
+    @State private var selectionError: String?
     @State private var skillSearchText: String = ""
     @State private var runtimeSnapshots: [RuntimeSnapshot] = []
     @State private var managementDestination: ManagementDestination?
@@ -1064,9 +1065,9 @@ struct HanlinComposerToolsRootView: View {
     private typealias LiveContext = HanlinComposerRefreshContext
 
     private var liveContext: LiveContext {
-        LiveContext(chatID: chatID, temporary: temporaryRecord, selectionRevision: mcpProvider.selectionRevision,
+        LiveContext(chatID: chatID, temporary: temporaryRecord, selectionRevision: mcpProvider.selectionRevision(chatID: chatID, temporary: temporaryRecord),
                     globallyEnabled: mcpProvider.configuration.isEnabled,
-                    serverStates: mcpProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled)" })
+                    serverStates: mcpProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled):\($0.isEnabledForNewChats)" })
     }
 
     private var toolGroups: [NativeAssistantToolGroup] { NativeToolCatalog.shared.settingsGroups() }
@@ -1529,6 +1530,13 @@ struct HanlinComposerToolsRootView: View {
                     .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .accessibilityIdentifier("hanlin-mcp-global-toggle")
 
+                    if let selectionError {
+                        Text(selectionError)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                            .accessibilityIdentifier("hanlin-mcp-selection-error")
+                    }
+
                     if mcpProvider.servers.isEmpty {
                         VStack(spacing: 6) {
                             Image(systemName: "server.rack")
@@ -1557,8 +1565,24 @@ struct HanlinComposerToolsRootView: View {
                                     set: { enabled in
                                         var next = selectedMCPServerIDs
                                         if enabled { next.insert(server.id) } else { next.remove(server.id) }
+                                        let requestChatID = chatID
+                                        let requestTemporary = temporaryRecord
                                         Task {
-                                            await mcpProvider.setSelection(next, chatID: chatID, temporary: temporaryRecord)
+                                            await mcpProvider.setSelection(next, chatID: requestChatID, temporary: requestTemporary)
+                                            let revision = mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary)
+                                            do {
+                                                let actual = try await mcpProvider.readSelection(chatID: requestChatID, temporary: requestTemporary)
+                                                guard !Task.isCancelled, activeLiveContext?.chatID == requestChatID,
+                                                      activeLiveContext?.temporary == requestTemporary,
+                                                      mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) == revision else { return }
+                                                selectedMCPServerIDs = actual
+                                                selectionError = actual == next ? nil : String(localized: "MCP selection could not be updated.")
+                                            } catch {
+                                                guard !Task.isCancelled, activeLiveContext?.chatID == requestChatID,
+                                                      activeLiveContext?.temporary == requestTemporary,
+                                                      mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) == revision else { return }
+                                                selectionError = error.localizedDescription
+                                            }
                                         }
                                     }
                                 )) {
@@ -1744,20 +1768,29 @@ struct HanlinComposerToolsRootView: View {
     private func refreshLiveState(for request: LiveContext) async {
         if activeLiveContext?.chatID != request.chatID || activeLiveContext?.temporary != request.temporary {
             selectedMCPServerIDs = []
+            selectionError = nil
         }
         activeLiveContext = request
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
         await mcpProvider.loadIfNeeded(startHost: false)
-        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
-        let selection = await mcpProvider.selection(chatID: request.chatID, temporary: request.temporary)
-        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
-        selectedMCPServerIDs = selection
+        await HanlinComposerSelectionRefresh.perform(
+            request: request,
+            current: { activeLiveContext },
+            revision: { mcpProvider.selectionRevision(chatID: request.chatID, temporary: request.temporary) },
+            read: { try await mcpProvider.readSelection(chatID: request.chatID, temporary: request.temporary) },
+            publish: { result in
+                switch result {
+                case .success(let selection): selectedMCPServerIDs = selection; selectionError = nil
+                case .failure(let error): selectionError = error.localizedDescription
+                }
+            }
+        )
         await refreshRuntimeSnapshots(for: request)
     }
 
     private func refreshRuntimeSnapshots(for request: LiveContext) async {
         let snapshots = await AppRuntimeCore.shared.snapshots()
-        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
+        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision(chatID: request.chatID, temporary: request.temporary), isCancelled: Task.isCancelled) else { return }
         runtimeSnapshots = snapshots
     }
 
