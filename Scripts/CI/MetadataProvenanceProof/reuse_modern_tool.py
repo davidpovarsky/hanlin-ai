@@ -38,6 +38,9 @@ def main():
         raise RuntimeError("Original compiled image digest mismatch")
     destination = ROOT / "build/nativescript-modern-metadata-tool"
     shutil.copytree(reference / "bin", destination / "bin")  # Exclusive; never overwrite owned outputs.
+    # GitHub artifact transport preserves bytes but normalizes file modes.
+    # Restore only this verified, newly owned executable's original launch mode.
+    (destination / "bin/objc-metadata-generator").chmod(0o755)
     shutil.copy2(receipt, destination / "provenance.json")
     (destination / "compile-reuse.json").write_text(json.dumps({"status": "REUSED_VERIFIED_COMPILE_PASS",
         "originalRun": 43726156819, "originalSourceSHA": "7fbb5be1", "generatorSHA256": evidence["generatorSHA256"],
