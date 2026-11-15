@@ -26,13 +26,30 @@ TEST_SECONDS = 900
 RUN_SECONDS = 2100
 FOCUSED_CASE = 'NativeComposerLineSizingTests/wrappedLinesAndScrolling()'
 FOCUSED_SELECTOR = 'AI_HanlinTests/' + FOCUSED_CASE
+REMAINING_NATIVE_CASES = (
+    'NativeComposerLineSizingTests/editingKeepsDraftAndSelection()',
+    'NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()',
+    'NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()',
+    'NativeComposerLineSizingTests/fontAndViewport()',
+)
+
+
+def selected_cases(raw):
+    if not raw.strip():
+        return (FOCUSED_CASE,)
+    prefix = 'AI_HanlinTests/'
+    requested = tuple(item.strip().removeprefix(prefix) for item in raw.split(','))
+    require(requested in [(FOCUSED_CASE,), REMAINING_NATIVE_CASES],
+            'only the failing method or its four remaining native regressions may be selected')
+    return requested
+
 
 
 def stamp():
     return datetime.now(timezone.utc).isoformat()
 
 
-def command_plan(project_dir, sdk, device, scratch, evidence):
+def command_plan(project_dir, sdk, device, scratch, evidence, selected=(FOCUSED_CASE,)):
     base = ['xcodebuild', '-project', str(project_dir / native.PROJECT), '-scheme', native.SCHEME,
             '-configuration', 'Debug', '-sdk', sdk, '-derivedDataPath', str(scratch / 'DerivedData')]
     # The concrete destination selects the architecture. Xcode rejects -arch
@@ -45,7 +62,7 @@ def command_plan(project_dir, sdk, device, scratch, evidence):
                  '-parallel-testing-enabled', 'NO', '-maximum-concurrent-test-simulator-destinations', '1',
                  '-maximum-parallel-testing-workers', '1',
                  '-resultBundlePath', str(evidence / 'ComposerNative.xcresult'),
-                 '-only-testing:' + FOCUSED_SELECTOR, 'ONLY_ACTIVE_ARCH=YES', 'CODE_SIGNING_ALLOWED=NO'],
+                 *['-only-testing:AI_HanlinTests/' + case for case in selected], 'ONLY_ACTIVE_ARCH=YES', 'CODE_SIGNING_ALLOWED=NO'],
     }
 
 
@@ -110,9 +127,11 @@ def execute():
     evidence.mkdir(parents=True, exist_ok=False)
     runner = Runner(evidence)
     expected = json.loads((native.HERE / 'review/native-inputs.json').read_text(encoding='utf-8'))['expected_case_ids']
-    require(FOCUSED_CASE in expected and len(set(expected)) == 12, 'focused selector must bind one of the frozen 12 authored identities')
-    state = {'scope': 'native-hosted Composer single previously failing method diagnostic', 'full_app_acceptance': False,
-             'authored_inventory_count': 12, 'selected_case_ids': [FOCUSED_CASE], 'xcodebuild_only_testing_selector': FOCUSED_SELECTOR,
+    selected = selected_cases(os.environ.get('COMPOSER_NATIVE_SELECTORS', ''))
+    selectors = ['AI_HanlinTests/' + case for case in selected]
+    require(set(selected).issubset(expected) and len(set(expected)) == 12, 'selection must bind frozen authored identities')
+    state = {'scope': 'native-hosted Composer previously failing method diagnostic' if len(selected) == 1 else 'remaining four native editor regressions', 'full_app_acceptance': False,
+             'authored_inventory_count': 12, 'selected_case_ids': list(selected), 'xcodebuild_only_testing_selectors': selectors,
              'product_composer_acceptance': 'OPEN',
              'started_at_utc': stamp(), 'status': 'PREPARING', 'test_commands': 0,
              'native_settings_confirmed': False, 'owned_sdk_destination_confirmed': False,
@@ -157,9 +176,10 @@ def execute():
         manifest = json.loads((project_dir / 'native-inputs.json').read_text(encoding='utf-8'))
         require(manifest['expected_case_ids'] == expected and manifest['full_app_acceptance'] is False, 'staged manifest mismatch')
         runner.save('native-inputs.json', manifest)
-        runner.save('focused-selection.json', {'authored_case_ids': expected, 'selected_case_ids': [FOCUSED_CASE],
-                    'xcodebuild_only_testing_selector': FOCUSED_SELECTOR, 'selected_expected_count': 1,
+        runner.save('focused-selection.json', {'authored_case_ids': expected, 'selected_case_ids': list(selected),
+                    'xcodebuild_only_testing_selectors': selectors, 'selected_expected_count': len(selected),
                     'other_authored_cases_expected': 'NOT_RUN in this invocation; no reused passes',
+                    'unselected_authored_count': len(expected) - len(selected),
                     'selector_matching_basis': 'frozen method identity; actual matching must be confirmed by xcresult, zero => BLOCKED without retry'})
         # Retain whole original source and generated native inputs on the remote runner only.
         with tarfile.open(evidence / 'native-source-inputs.tar', 'w') as archive:
@@ -190,7 +210,7 @@ def execute():
         runner.save('installed-environment.json', {'runtime': runtime, 'device_type': model, 'sdk_path': sdk,
                 'Xcode': '27.2/27B52', 'DEVELOPER_DIR': XCODE, 'environment_contract': CONTRACT,
                 'runtime27_0_acceptance': 'NOT_COVERED', 'prior_infra_run': '43723707247'})
-        plan = command_plan(project_dir, sdk, device, scratch, evidence)
+        plan = command_plan(project_dir, sdk, device, scratch, evidence, selected)
         runner.save('native-command-plan.json', plan)
         runner.call('installed-xcodebuild-help', 30, ['xcodebuild', '-help'], required=False)
         runner.call('native-schemes', 30, ['xcodebuild', '-list', '-json', '-project', str(project_dir / native.PROJECT)])
@@ -261,14 +281,14 @@ def execute():
                 if path.exists():
                     with path.open(encoding='utf-8', errors='replace') as stream:
                         trace_lines.extend(line for line in stream if 'signedDelta=' in line)
-            actual_results = focused_observations(result, expected, FOCUSED_CASE, device, trace_lines)
+            actual_results = focused_observations(result, expected, selected, device, trace_lines)
             actual_results['raw_result_availability'] = result_state
             runner.save('case-observations.json', actual_results)
             state['apple_pass_claim'] = state['test_commands'] == 1 and exit_code == 0 and actual_results['all_selected_unique_pass_on_owned_device']
             if state['test_commands'] and not state['apple_pass_claim'] and exit_code == 0:
                 exit_code = 2
         except (ValueError, OSError, KeyError, json.JSONDecodeError) as error:
-            unavailable = focused_observations({}, expected, FOCUSED_CASE, device)
+            unavailable = focused_observations({}, expected, selected, device)
             unavailable['raw_result_availability'] = 'EXPORT_OR_CLASSIFICATION_FAILED'
             runner.save('case-observations.json', unavailable)
             state['result_export_or_classification_error'] = str(error)

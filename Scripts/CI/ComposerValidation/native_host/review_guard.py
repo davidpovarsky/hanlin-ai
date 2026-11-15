@@ -12,13 +12,13 @@ import prepare_native as native
 from guards import (native_settings, environment, owned_boot, destination, observations, require,
                     simctl_list_contract, owned_devices_command, require_pretest, owned_name,
                     created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256, classify_execution_status)
-from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR
+from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR, REMAINING_NATIVE_CASES, selected_cases
 from freeze_review import review_files
 from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
 
 BASE = '67642faaa8f16c89eb0e2330db56291c35c61c06'
 BASE_WORKFLOW_SHA256 = '9276edf7542e6bf2e530dccc3e7f3f0819d1251db6d7e40f47d71630c4e5415d'
-FROZEN_WORKFLOW_SHA256 = '2ce53bb63b1e8c350745f90f18f41ba5855603ec8baf6827446b3bc120e3bdb4'
+FROZEN_WORKFLOW_SHA256 = '11414b818c71275ab116ac37997ebdc88d3a21b32a98e25103784943d56f663a'
 # Source-segment bytes avoid version-dependent ast.dump output (Windows3.12/Mac3.15).
 REVIEWED_FUNCTION_SOURCE_SHA256 = {
     'guards.py': {'native_settings': '97b5edb2266010467b6335845604411cf663c95299d5610ca722f9e0e9a5df40',
@@ -232,6 +232,25 @@ def source_controls():
             sum(case['result'] == 'NOT_RUN' for case in classified['cases']) == 11 and len(classified['cases']) == 12,
             'exact one selected PASS with eleven NOT_RUN; no reused source-suite passes')
     passed.append('synthetic-positive-one-focused-case-eleven-not-run')
+    remaining_raw = ','.join('AI_HanlinTests/' + case for case in REMAINING_NATIVE_CASES)
+    require(selected_cases('') == (FOCUSED_CASE,) and selected_cases(remaining_raw) == REMAINING_NATIVE_CASES,
+            'explicit remaining native selection without rerunning failing-method pass')
+    remaining_result = {'devices': [device], 'testNodes': [{'nodeType': 'Test Case', 'nodeIdentifier': case, 'result': 'Passed'} for case in REMAINING_NATIVE_CASES]}
+    remaining = focused_observations(remaining_result, expected, REMAINING_NATIVE_CASES, UDI)
+    require(remaining['all_selected_unique_pass_on_owned_device'] and remaining['selected_expected_count'] == 4 and
+            sum(case['result'] == 'NOT_RUN' for case in remaining['cases']) == 8, 'exact four selected and eight not run')
+    for invalid in ['AI_HanlinTests', remaining_raw + ',' + FOCUSED_SELECTOR, remaining_raw + ',' + remaining_raw,
+                    'AI_HanlinTests/NativeComposerLineSizingTests/fontAndViewport()']:
+        reject('invalid-native-selection-' + invalid, selected_cases, invalid)
+    mutated_remaining = copy.deepcopy(remaining_result)
+    mutated_remaining['testNodes'].pop()
+    require(not focused_observations(mutated_remaining, expected, REMAINING_NATIVE_CASES, UDI)['all_selected_unique_pass_on_owned_device'],
+            'missing one of four selected methods cannot pass')
+    mutated_remaining['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': FOCUSED_CASE, 'result': 'Passed'})
+    require(not focused_observations(mutated_remaining, expected, REMAINING_NATIVE_CASES, UDI)['all_selected_unique_pass_on_owned_device'],
+            'unselected original method cannot replace missing selected regression')
+    passed.append('synthetic-four-remaining-native-cases-exact-coverage')
+
     for label in ['zero-selected', 'failed-selected', 'duplicate-selected', 'skipped-selected', 'other-authored-only',
                   'extra-authored', 'all-twelve', 'wrong-device', 'unexpected-infrastructure']:
         changed = copy.deepcopy(focused)

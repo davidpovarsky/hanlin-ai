@@ -159,6 +159,7 @@ jobs:
         env:
           COMPOSER_EXPECTED_SHA: ${{ inputs.composer_expected_sha }}
           COMPOSER_NATIVE_HOST_DIAGNOSTIC: '1'
+          COMPOSER_NATIVE_SELECTORS: ${{ inputs.exact_test_selector }}
         run: python3 -B Scripts/CI/ComposerValidation/native_host/run_native.py
       - name: Retain Composer validation evidence
         if: always()

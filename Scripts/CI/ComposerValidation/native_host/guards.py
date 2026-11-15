@@ -254,19 +254,23 @@ def observations(data, expected, udid, log_lines=()):
 
 
 def focused_observations(data, authored, selected, udid, log_lines=()):
-    require(isinstance(selected, str) and selected in authored, 'one selected frozen authored identity required')
+    selected = [selected] if isinstance(selected, str) else list(selected)
+    require(bool(selected) and len(selected) == len(set(selected)) and set(selected).issubset(authored),
+            'nonempty unique selected authored identities required')
     result = observations(data, authored, udid, log_lines)
     result.pop('all_12_unique_pass_on_owned_device')
-    target = next(case for case in result['cases'] if case['id'] == selected)
-    extra_authored = [case for case in result['cases'] if case['id'] != selected and case['raw_results']]
-    matched = len(target['raw_results']) == 1 and result['authored_unique_observed'] == 1 and not extra_authored and not result['unexpected_infrastructure_case_nodes']
-    result.update(selected_case_ids=[selected], selected_expected_count=1, preserved_authored_inventory_count=12,
-                  selected_method_result=target['result'], unselected_authored_observations=extra_authored,
+    targets = [case for case in result['cases'] if case['id'] in selected]
+    extra_authored = [case for case in result['cases'] if case['id'] not in selected and case['raw_results']]
+    matched = len(targets) == len(selected) and all(len(case['raw_results']) == 1 for case in targets) and result['authored_unique_observed'] == len(selected) and not extra_authored and not result['unexpected_infrastructure_case_nodes']
+    all_pass = all(case['result'] == 'PASS' for case in targets)
+    summary = targets[0]['result'] if len(targets) == 1 else 'PASS' if all_pass else 'FAIL' if any(case['result'] == 'FAIL' for case in targets) else 'NOT_RUN' if all(case['result'] == 'NOT_RUN' for case in targets) else 'OBSERVED_NONPASS'
+    result.update(selected_case_ids=selected, selected_expected_count=len(selected), preserved_authored_inventory_count=12,
+                  selected_method_result=summary, unselected_authored_observations=extra_authored,
                   focused_selection_matched=matched,
-                  all_selected_unique_pass_on_owned_device=matched and target['result'] == 'PASS' and result['execution_device_binding'] == 'VERIFIED',
+                  all_selected_unique_pass_on_owned_device=matched and all_pass and result['execution_device_binding'] == 'VERIFIED',
                   product_composer_acceptance='OPEN')
     for case in result['cases']:
-        case['selected_for_this_run'] = case['id'] == selected
+        case['selected_for_this_run'] = case['id'] in selected
     return result
 
 
