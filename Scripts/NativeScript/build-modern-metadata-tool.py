@@ -209,9 +209,10 @@ int main() {
 }
 ''')
         control_binary = work / "enum-prefix-controls"
-        control_compile = [result["buildTools"]["clang++"]["path"], "-std=c++17", str(controls), "-o", str(control_binary)]
-        subprocess.run(control_compile, check=True, capture_output=True, timeout=60)
-        subprocess.run([str(control_binary)], check=True, capture_output=True, timeout=5)
+        control_compile = ["xcrun", "clang++", "-std=c++17", str(controls), "-o", str(control_binary)]
+        with (work / "build-2-enum-prefix-controls.log").open("w") as log:
+            subprocess.run(control_compile, check=True, stdout=log, stderr=subprocess.STDOUT, timeout=60)
+            subprocess.run([str(control_binary)], check=True, stdout=log, stderr=subprocess.STDOUT, timeout=5)
         result["enumPrefixControls"] = {"status": "EXECUTED_PASS", "cases": 5, "sourceSHA256": sha(controls), "compileCommand": control_compile,
             "boundary": "Actual portable C++ algorithm execution, not iOS/runtime acceptance."}
         result.update(status="BUILT_NOT_ACCEPTED", generatorSHA256=sha(build / "bin/objc-metadata-generator"))
