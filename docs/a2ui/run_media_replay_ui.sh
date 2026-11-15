@@ -30,7 +30,7 @@ if (e/'tests.json').exists(): visit(json.loads((e/'tests.json').read_text()))
 log=(e/'xcodebuild.log').read_text(errors='replace') if (e/'xcodebuild.log').exists() else ''
 status='EXECUTED_PASS' if code==0 else 'TEST_FAILED' if cases else 'BUILD_FAILED' if 'error:' in log else 'INFRA_ERROR'
 (e/'process-status.json').write_text(json.dumps({'status':status,'exit_code':code,'executed_cases':len(cases),
-    'xcresult_exists':(e/'MediaReplay.xcresult').exists(),
+    'xcresult_archive_exists':(e/'MediaReplay.xcresult.tar.gz').exists(),
     'scope':'actual SwiftUI component UI; full app/provider/playback/physical NOT_RUN'},indent=2))
 if (e/'selected-device.txt').exists():
     device=(e/'selected-device.txt').read_text().strip()
@@ -112,7 +112,7 @@ xcodebuild test -project "$project" -scheme MediaReplay -configuration Debug \
   -destination "platform=iOS Simulator,id=$device" -parallel-testing-enabled NO \
   -destination-timeout 60 -test-timeouts-enabled YES \
   -default-test-execution-time-allowance 180 -maximum-test-execution-time-allowance 240 \
-  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$evidence/MediaReplay.xcresult" \
+  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/MediaReplay.xcresult" \
   -disableAutomaticPackageResolution \
   -skipPackagePluginValidation -skipMacroValidation \
   "${selectors[@]}" 2>&1 | tee "$evidence/xcodebuild.log"
@@ -120,9 +120,31 @@ test_code=${PIPESTATUS[0]}
 set -e
 finish_phase result-verification
 cp "$lock" "$evidence/Package.resolved"
-if [[ -d "$evidence/MediaReplay.xcresult" ]]; then
-  xcrun xcresulttool get test-results tests --path "$evidence/MediaReplay.xcresult" --format json > "$evidence/tests.json" || true
-  xcrun xcresulttool export attachments --path "$evidence/MediaReplay.xcresult" --output-path "$evidence/attachments" > "$evidence/attachment-export.log" 2>&1 || true
+if [[ -d "$scratch/MediaReplay.xcresult" ]]; then
+  # The owned xcodebuild operation has exited. Require bounded readable final results
+  # before archiving; never expose a still-changing Staging directory to upload.
+  python3 - "$scratch/MediaReplay.xcresult" "$evidence" <<'PY'
+import json,subprocess,sys
+from pathlib import Path
+bundle=Path(sys.argv[1]); e=Path(sys.argv[2])
+try:
+    result=subprocess.run(['xcrun','xcresulttool','get','test-results','tests','--path',str(bundle),'--format','json'],
+                          capture_output=True,text=True,timeout=30,check=True)
+    json.loads(result.stdout)
+    (e/'tests.json').write_text(result.stdout)
+    subprocess.run(['tar','-czf',str(e/'MediaReplay.xcresult.tar.gz'),'-C',str(bundle.parent),bundle.name],
+                   capture_output=True,timeout=90,check=True)
+    with (e/'attachment-export.log').open('w') as log:
+        subprocess.run(['xcrun','xcresulttool','export','attachments','--path',str(bundle),'--output-path',str(e/'attachments')],
+                       stdout=log,stderr=subprocess.STDOUT,timeout=60,check=True)
+    (e/'raw-result-status.json').write_text(json.dumps({'status':'FINALIZED_READABLE_ARCHIVED'}))
+except (OSError,ValueError,subprocess.SubprocessError) as error:
+    # Only immutable finalized archives qualify as raw evidence. Stable small logs
+    # and source/commands/selection survive even when finalization is unavailable.
+    (e/'MediaReplay.xcresult.tar.gz').unlink(missing_ok=True)
+    (e/'raw-result-status.json').write_text(json.dumps({'status':'RAW_RESULT_UNAVAILABLE','reason':type(error).__name__}))
+    raise
+PY
 fi
 [[ "$test_code" == 0 ]] || exit "$test_code"
 python3 - "$evidence" <<'PY'

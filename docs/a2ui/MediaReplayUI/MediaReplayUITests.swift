@@ -76,7 +76,12 @@ final class MediaReplayUITests: XCTestCase {
             XCTAssertTrue(player().waitForExistence(timeout: 10))
             app.buttons["proof-change-source"].tap()
             let unloaded = wait(NSPredicate(format: "exists == false"), on: player())
-            if !unloaded { record("source-replacement-unload-failed-\(kind)") }
+            if !unloaded {
+                // The real Link reads the same resolved node URL as the gate. Capture
+                // its actual openURL receipt to distinguish stale binding from teardown.
+                source().tap()
+                record("source-replacement-unload-failed-\(kind)")
+            }
             XCTAssertTrue(unloaded)
             XCTAssertTrue(load().isEnabled)
             source().tap()
