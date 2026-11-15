@@ -1,0 +1,145 @@
+{
+  "producer_source_sha": "febe93e2717a9a647ae85feccb97117e72d6e176",
+  "workflow_source_sha": "3e7ef6996da9f0c024019305536a3c8795c1e8a7",
+  "run": 43738513423,
+  "job": 132886351502,
+  "status": "EXECUTED_PASS",
+  "executed_pass": 25,
+  "source_hashes_verified": 1394,
+  "artifact": {
+    "id": 14171393481,
+    "digest": "sha256:f8b18ccb5e3c27b5f5fd01b0f36ae65504ed3128940947469b35d2effd914abd"
+  },
+  "cases": [
+    {
+      "id": "JSONSchemaValidatorTests/emailFormatConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/conditionalKeywordsValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/arrayLengthConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/enumValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/uniqueItemsValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/stringConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/unresolvedRefValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/anyOfFormatConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/allOfPatternWithoutTypeValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/integerTypeValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/objectPropertiesBounds()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/publicFacadeEnforcesFalseSchemaAndUnicodeScalarLength()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/uriFormatConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/contentEncodingBase64Constraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/refValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/unicodeScalarLengthsDoNotCountUTF16UnitsOrGraphemeClusters()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/numericBoundsValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/booleanSchemasRejectAtRootAndNestedLocations()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/anyOfDoesNotBypassTypeValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/uuidFormatConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/recursiveRefValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/constValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/multipleOfValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/typeArrayUnionValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "JSONSchemaValidatorTests/tupleValidation()",
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "raw_hashes": {
+    "expected-tests.json": "ff7e013a0beb845ce6e7ece45043be5d47d60200ab9a95c1e00d11468139c3dd",
+    "process-exit.json": "b14fb89940ea453aa19cf16a05d729ee83c11eabc98f146be42c860801554e89",
+    "process-status.json": "1c3ba8fbf1f3969d7cbc051cc8fe621454f57836b927464be29a39047a77b89c",
+    "producer-clone.log": "b22264cc6dcbfc8b658767413a88049765353cebd1d05be5dff473df3a777e84",
+    "producer-schema-tests.log": "dcf5b854e335e399c61ce84eeafb20bcdb76a5b26dd000471acd0d09a124f89c",
+    "producer-source-commit.txt": "0cb4f471cc83e1ba0eb170f907bebf2fc6ae9c63763073c29a4694cb7da22407",
+    "producer-source-sha256.json": "c9d1daf9b49bff9067018a345cbfa64c109dc5cebc3fcb8bb5c390686aa40b0e",
+    "producer-source.tar": "5260075391b7fd46d7dcb7e0226eb8a7ffebb74c694eda09d5adedf37dd2ef7a",
+    "ProducerSchemaTests.json": "6e57d54ce065b69030d727a8b3279e02f81384583b4c09aeef9325884f2a18eb",
+    "schemes.json": "c664174e99f497fc6ebc3fcdeffed8daa885fa5f5119abe26598a83d85b14dab",
+    "summary.json": "66bf27117bd4ded4ccdabc94a4a24df62daae8a8c45586c188dba34e52e46191",
+    "toolchain.txt": "4eb0bfedc14236cf22d36539fcd9a279c7ced951d37fe19ec6257cc30358878c",
+    "workflow-source-commit.txt": "3ca9ea551f18d713b6db3529ecaf7515f396743c37c6c77944e3ee976aee44c3"
+  },
+  "scope": "Actual producer root manifest/shared validator suite, 22 existing +3 new controls, not full SDK/dialect/app acceptance",
+  "consumer_pins": "Stille7bf at this evidence collection. No adoption claimed.",
+  "failed_authority_attempt": {
+    "run": 43737985595,
+    "repository": "davidpovarsky/apple-devtools",
+    "status": "INFRA_ERROR",
+    "actual_jobs": 0,
+    "actual_cases": 0,
+    "cause": "No diagnostic reason returned by run/check-suite endpoints; no product/test result exists."
+  },
+  "remaining": [
+    "complete Host schema/vocabulary/ref/precision compatibility",
+    "actual app Host/store/row binding",
+    "live model/UI/device/release"
+  ]
+}

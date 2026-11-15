@@ -339,7 +339,8 @@ public final class HanlinAgentSession {
             }
             return HanlinAISDKToolDefinition(name: tool.route.alias,
                 description: tool.descriptor.summary.preferredValue(forLocale: identity.context.localeIdentifier),
-                inputSchemaData: try tool.descriptor.inputSchema.canonicalJSONData(),
+                inputSchemaData: try HanlinHostSchemaValidation.providerSchema(
+                    tool.originalInputSchemaJSON ?? tool.descriptor.inputSchema.canonicalJSONData()),
                 execute: { arguments, id in try await execution(arguments, id, .normalized) },
                 executeWithInputProvenance: execution)
         }

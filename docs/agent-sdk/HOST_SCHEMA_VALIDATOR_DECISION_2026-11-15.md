@@ -1,6 +1,8 @@
 # Host schema validation: source findings and dependency proposal
 
-No dependency has been added by this proposal. Existing application tools/OS permissions remain
+Manager approved the exact Swift-JSON dependency on 2026-11-15. The current follow-on source adds
+only JSON/JSONSchema to HanlinAgentCore; adoption remains pending actual Apple controls, iOS
+compile and retained real resolution. Frozen80/e7 evidence remains separate. Existing application tools/OS permissions remain
 the effect authority; a validator must complete before their original closure is entered. A known
 pre-dispatch denial is not an uncertain post-dispatch mutation. No permission registry or parallel
 hand-written JSON Schema value engine should be introduced.
@@ -18,7 +20,7 @@ Swift equality and Double merges9007199254740992/9007199254740993; it is not an 
 Producer correction `febe93e2717a9a647ae85feccb97117e72d6e176` fixes only false schemas and Unicode
 scalar length while preserving Foundation regex UTF-16 ranges. Three focused controls added to
 the actual25-case JSONSchemaValidator suite cover root/nested booleans, supplementary/combining
-strings and the public facade. Its Apple proof is pending; consumer/foundation pins remain e7.
+strings and the public facade. Its actual25-case Apple proof passed in run43738513423 at producerfebe; consumer/foundation pins remain e7.
 The local design-decision record preserves this narrow boundary, with no full validator claim.
 
 JSON Schema's [boolean rule](https://json-schema.org/draft/2020-12/json-schema-core#section-4.3.2),
@@ -68,3 +70,34 @@ valid Hebrew/emoji inputs, false schemas, unsupported external/vocabulary paths,
 finite exhaustion; then actual app original-closure/OS-policy/row/storage controls. Retain license
 and exact resolved source evidence. Required unsupported MCP resources/dialects remain explicit
 compatibility obligations. Frozen80 remains e7. No full Host/MCP readiness is claimed here.
+
+## Follow-on source boundary and affected validation
+
+The Dispatcher now retains the accepted original argument Data on HanlinHostInvocation before
+HanlinJSONValue projection and compares exact original bytes for invocation replay. Whitespace-only
+changes conservatively conflict; a rounded decimal can never replay an original receipt. The
+portable projection remains the one canonical request value; it is not mislabeled as raw input.
+HanlinHostTool optionally retains original host input-schema bytes. Session checks the actual
+AISDKProvider.JSONValue encode/decode projection with bounded exact-decimal/scalar equality before
+publishing that original schema to the existing model engine. No second engine is introduced.
+
+The new small HanlinHostSchemaValidation facade uses the released library's conservative finite
+limits (input/schema bytes capped1MiB), explicit empty offline registry and complete diagnostics.
+Missing resources/dialects/budget/cancellation fail closed. Plans are immutable/transient. The app
+follow-on caches at most8 plans; it validates original input and proves that its portable projection
+and actual existing metadata-sanitized executor value retain the approved business value. Only the
+two existing top-level metadata keys may be removed. It repeats checks at the original prepared
+executor boundary after diagnostic awaits. Known denial returns typed notDispatched, while an
+exception after actual executor entry retains uncertain semantics for general mutations.
+
+External MCP schemas currently reach the app via String/Any dictionaries, so original external
+numeric/key fidelity is unavailable. That path is explicitly unsupported before effects; serializing
+that dictionary is not accepted as proof of raw MCP provenance. Native host declarations are the
+existing trusted app schema boundary. Broad MCP acceptance stays OPEN.
+
+Affected package validation selects all18 Session cases (changed makeDefinitions/Dispatcher), all6
+Context cases (public Host contracts), nine real validator/raw-boundary cases and iOS AgentCore
+compilation. It does not rerun unchanged platform/model/native catalog tests or private checkpoint
+persistence. Raw resolved locks and exact dependency source/license are retained by the proof.
+Actual SwiftData/app/native-boundary controls are separate and currently NOT_RUN. The new manual
+selector does not broaden automatic triggers. No app/whole-CI acceptance is claimed.

@@ -110,7 +110,12 @@ public struct HanlinHostTool: Sendable {
     public let route: HanlinToolRoute
     public let descriptor: HanlinToolDescriptor
     public let writeGuarantee: HanlinHostWriteGuarantee
-    public init(route: HanlinToolRoute, descriptor: HanlinToolDescriptor, writeGuarantee: HanlinHostWriteGuarantee) {
+    /// Optional original host schema before the portable descriptor projection. This is not
+    /// evidence of an external provider's source fidelity; the Host owns that provenance check.
+    public let originalInputSchemaJSON: Data?
+    public init(route: HanlinToolRoute, descriptor: HanlinToolDescriptor, writeGuarantee: HanlinHostWriteGuarantee,
+                originalInputSchemaJSON: Data? = nil) {
+        self.originalInputSchemaJSON = originalInputSchemaJSON
         self.route = route; self.descriptor = descriptor; self.writeGuarantee = writeGuarantee
     }
 }

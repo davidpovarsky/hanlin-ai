@@ -42,8 +42,8 @@ public actor HanlinHostDispatcher {
         }
         guard !providerCallID.isEmpty, providerCallID.utf8.count <= 512, step >= 0,
               argumentsJSON.utf8.count <= 1_048_576 else { throw HanlinHostError.invalidArguments }
-        let arguments = try HanlinJSONValue.decodeCanonicalJSON(Data(argumentsJSON.utf8))
-        let bytes = try arguments.canonicalJSONData()
+        let bytes = Data(argumentsJSON.utf8)
+        let arguments = try HanlinJSONValue.decodeCanonicalJSON(bytes)
         let key = CallKey(session: session.id, run: runID, providerID: providerCallID)
         if let old = calls[key] {
             guard old.alias == alias, old.arguments == bytes, old.identity.session == session,
@@ -63,7 +63,8 @@ public actor HanlinHostDispatcher {
             idempotencyKey: invocationID.rawValue, deadline: Date().addingTimeInterval(Double(limits.timeoutMilliseconds) / 1_000), limits: limits
         )
         let invocation = HanlinHostInvocation(request: request, session: session, runID: runID, step: step,
-                                              providerCallID: providerCallID, writeGuarantee: tool.writeGuarantee, expectedRevision: expectedRevision)
+                                              providerCallID: providerCallID, writeGuarantee: tool.writeGuarantee, expectedRevision: expectedRevision,
+                                              originalArgumentsJSON: bytes)
         // Revalidate after all suspensions and reserve before host dispatch. Host still owns schema,
         // durable idempotency, permission/confirmation and the final native mutation boundary.
         try Task.checkCancellation()
