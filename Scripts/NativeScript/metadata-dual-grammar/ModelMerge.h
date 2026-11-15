@@ -113,9 +113,16 @@ class ModelMerge {
             rawLinkage["cppLanguageLinkage"] = static_cast<int64_t>(variable->getLanguageLinkage());
             rawLinkage["objcLanguageLinkage"] = static_cast<int64_t>(authoritative->getLanguageLinkage());
         }
+        llvm::json::Object rawFunctionLinkage;
+        if (const auto* function = clang::dyn_cast<clang::FunctionDecl>(cpp->declaration)) {
+            const auto* authoritative = clang::dyn_cast<clang::FunctionDecl>(objc->declaration);
+            if (!authoritative) throw std::runtime_error("Actual function declaration kind mismatch");
+            rawFunctionLinkage["cppLanguageLinkage"] = static_cast<int64_t>(function->getLanguageLinkage());
+            rawFunctionLinkage["objcLanguageLinkage"] = static_cast<int64_t>(authoritative->getLanguageLinkage());
+        }
         proofs.push_back(llvm::json::Object{{"canonicalKey", entityKey(*objc)},
             {"source", objc->fileName}, {"actualSourceBytesEqual", true},
-            {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)},
+            {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)}, {"rawFunctionLinkage", std::move(rawFunctionLinkage)},
             {"cppRawParameterCVR", rawParameterCVR(*cpp)}, {"objcRawParameterCVR", rawParameterCVR(*objc)},
             {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
             {"availability", availabilityDifference ? "INTRODUCED_ATTR_EXTERN_C_WRAPPER_EQUIVALENT_AT_BOUND_TARGET" : "EXACT"},

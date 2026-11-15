@@ -133,14 +133,14 @@ inline llvm::json::Array rawParameterCVR(const Meta::Meta& meta) {
     return qualifiers;
 }
 
-inline llvm::json::Object externalVariableBinding(const clang::VarDecl& variable) {
+inline llvm::json::Object externalBinding(const clang::NamedDecl& variable) {
     std::unique_ptr<clang::MangleContext> mangler(variable.getASTContext().createMangleContext());
     std::string symbol;
     llvm::raw_string_ostream output(symbol);
     if (mangler->shouldMangleDeclName(&variable)) mangler->mangleName(clang::GlobalDecl(&variable), output);
     else output << variable.getName();
     output.flush();
-    if (symbol.empty()) throw std::runtime_error("External variable has no actual Clang symbol name");
+    if (symbol.empty()) throw std::runtime_error("External declaration has no actual Clang symbol name");
     return llvm::json::Object{{"clangSymbolBeforeTargetPrefix", symbol},
         {"formalLinkage", static_cast<int64_t>(variable.getFormalLinkage())},
         {"visibility", static_cast<int64_t>(variable.getVisibility())}};
@@ -159,7 +159,8 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
         result["signature"] = std::move(signature);
         result["parameterTypeRule"] = "ASTContext.getCanonicalParamType";
         result["variadic"] = function->isVariadic();
-        result["languageLinkage"] = static_cast<int64_t>(function->getLanguageLinkage());
+        if (function->hasExternalFormalLinkage()) result["externalBinding"] = externalBinding(*function);
+        else result["languageLinkage"] = static_cast<int64_t>(function->getLanguageLinkage());
         if (const auto* prototype = function->getType()->getAs<clang::FunctionProtoType>())
             result["callingConvention"] = static_cast<int64_t>(prototype->getCallConv());
     } else if (const auto* method = clang::dyn_cast<clang::ObjCMethodDecl>(decl)) {
@@ -196,7 +197,7 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
             // gives them exactly the same external symbol as the C spelling.
             // Prove the actual target-bound name, formal linkage and visibility;
             // the raw language linkage remains in the duplicate proof receipt.
-            result["externalBinding"] = externalVariableBinding(*variable);
+            result["externalBinding"] = externalBinding(*variable);
         } else {
             result["languageLinkage"] = static_cast<int64_t>(variable->getLanguageLinkage());
         }

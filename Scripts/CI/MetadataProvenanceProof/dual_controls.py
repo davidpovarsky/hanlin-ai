@@ -84,6 +84,7 @@ __attribute__((objc_root_class))
 @property(nonatomic) int token;
 @end
 extern const char *const HanlinDualSignNames[32];
+int HanlinDualAsmFunction(int value) __asm__("hanlin_dual_function");
 EXTERNAL_BINDING
 @interface HanlinDualGeneric<Element> : HanlinDualObject
 @end
@@ -99,6 +100,7 @@ EXTERNAL_BINDING
         ("conflicting-pointee-qualifier", "#ifdef __cplusplus\n#define HANLIN_POINTEE_CONST const\n#else\n#define HANLIN_POINTEE_CONST\n#endif\n" + baseline.replace("int HanlinDualTakeSigned(int value);", "int HanlinDualTakeSigned(HANLIN_POINTEE_CONST int *value);"), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-constant", "#ifdef __cplusplus\n#define HANLIN_REAL_FIXTURE_CONSTANT 43\n#else\n#define HANLIN_REAL_FIXTURE_CONSTANT 42\n#endif\n" + baseline.replace("HanlinDualConstant = 42", "HanlinDualConstant = HANLIN_REAL_FIXTURE_CONSTANT"), "merge-failure", "Dual-grammar actual API model conflict:"),
         ("conflicting-symbol-binding", "#ifdef __cplusplus\n#define HANLIN_ACTUAL_BINDING \"hanlin_cpp_symbol\"\n#else\n#define HANLIN_ACTUAL_BINDING \"hanlin_c_symbol\"\n#endif\n" + baseline + "\nextern int HanlinDualAlias __asm__(HANLIN_ACTUAL_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
+        ("conflicting-function-symbol", "#ifdef __cplusplus\n#define HANLIN_FUNCTION_BINDING \"hanlin_cpp_function\"\n#else\n#define HANLIN_FUNCTION_BINDING \"hanlin_c_function\"\n#endif\n" + baseline + "\nint HanlinDualFunctionAlias(int value) __asm__(HANLIN_FUNCTION_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-availability", baseline.replace("__attribute__((objc_root_class))", "#ifdef __cplusplus\n__attribute__((availability(ios,introduced=26.0)))\n#else\n__attribute__((availability(ios,introduced=25.0)))\n#endif\n__attribute__((objc_root_class))"), "merge-failure", "Dual-grammar availability conflict:"),
         ("conflicting-physical-owner", baseline, "merge-failure", "Dual-grammar canonical declaration/owner conflict:"),
         ("invalid-objc-pass", baseline.replace("_Static_assert", "HanlinOnlyBadType invalid;\n_Static_assert"), "parse-failure", "Actual dual-grammar AST parse failed"),
@@ -148,6 +150,9 @@ EXTERNAL_BINDING
             sign_names = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualSignNames" in item["canonicalKey"]]
             passed = passed and len(sign_names) == 1 and sign_names[0].get("rawVariableLinkage") == {
                 "cppLanguageLinkage": 1, "objcLanguageLinkage": 0} and sign_names[0].get("actualASTABI", {}).get("externalBinding", {}).get("clangSymbolBeforeTargetPrefix") == "HanlinDualSignNames"
+            asm_functions = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualAsmFunction" in item["canonicalKey"]]
+            passed = passed and len(asm_functions) == 1 and asm_functions[0].get("rawFunctionLinkage") == {
+                "cppLanguageLinkage": 1, "objcLanguageLinkage": 0} and asm_functions[0].get("actualASTABI", {}).get("externalBinding", {}).get("clangSymbolBeforeTargetPrefix") == "\x01hanlin_dual_function"
             canonical_parameters = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualTakePointer" in item["canonicalKey"]]
             passed = passed and len(canonical_parameters) == 1 and canonical_parameters[0].get("cppRawParameterCVR") == [0] and canonical_parameters[0].get("objcRawParameterCVR") == [2] and canonical_parameters[0]["actualASTABI"].get("parameterTypeRule") == "ASTContext.getCanonicalParamType"
             passed = passed and bool(declarations) and all(fragment in declaration_text for fragment in [
