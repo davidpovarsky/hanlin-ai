@@ -1,0 +1,21 @@
+Swift version 6.3.3 (swift-6.3.3-RELEASE)
+Target: x86_64-unknown-windows-msvc
+C:\Users\DAVID\Code\hanlin-app-split-wave1-20261115\Packages\HanlinProductSplit\Tests\DurabilityCorrectionTests.swift:16:16: error: static property 'slots' is not concurrency-safe because non-'Sendable' type '[SplitFixtureStore.Slot]' may have shared mutable state [#MutableGlobalVariable]
+ 14 | @main
+ 15 | private enum DurabilityCorrectionTests {
+ 16 |     static let slots: [SplitFixtureStore.Slot] = [.source, .destination, .journal, .receiver, .migrationIntent, .effect, .delivery]
+    |                |- error: static property 'slots' is not concurrency-safe because non-'Sendable' type '[SplitFixtureStore.Slot]' may have shared mutable state [#MutableGlobalVariable]
+    |                |- note: add '@MainActor' to make static property 'slots' part of global actor 'MainActor'
+    |                `- note: disable concurrency-safety checks if accesses are protected by an external synchronization mechanism
+ 17 |     static func main() {
+ 18 |         do {
+
+C:\Users\DAVID\Code\hanlin-app-split-wave1-20261115\Packages\HanlinProductSplit\Sources\HanlinProductSplit\SplitFixtureStore.swift:7:17: note: consider making enum 'Slot' conform to the 'Sendable' protocol
+ 5 | /// This is not an AppGroup, SwiftData, Keychain or production migration adapter.
+ 6 | public struct SplitFixtureStore: Sendable {
+ 7 |     public enum Slot: String { case source, destination, journal, receiver, migrationIntent, effect, delivery }
+   |                 `- note: consider making enum 'Slot' conform to the 'Sendable' protocol
+ 8 |     public static let marker = "synthetic-fixture-only-v1\n"
+ 9 |     public static let maximumSlotBytes = 16_777_216
+
+[#MutableGlobalVariable]: <https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable>
