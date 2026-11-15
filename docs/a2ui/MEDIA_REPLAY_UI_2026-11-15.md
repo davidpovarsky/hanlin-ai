@@ -25,7 +25,8 @@ It retains AX/screenshot attachments, xcresult, complete source hashes, resolved
 This is component UI evidence; original ChatView/native-schema/provider/physical acceptance is
 separate. Media asset decoding or successful external playback is not inferred from mounting.
 
-Required controls cover explicit history Load/source, disabled form and retained SDK action,
+Required controls use actual Accessibility controls without coordinate forcing or artificial
+successful taps. They cover explicit history Load/source, disabled form and retained SDK action,
 NO_LISTENER RPC, live positive form control, ordinary live sealing, host disable, URL replacement,
 background, disappearance and owner disposal. The shared JSONL payload is
 `AI_HLYUITests/Fixtures/A2UIReplayMedia.jsonl`; the real app fixture can wrap these complete frames
@@ -37,6 +38,18 @@ selecting `.history` also needs affected native consumer coverage against the ne
 SDK snapshot; no intermediate changing Session/Host snapshot is dispatched. Pure URL/YouTube
 parser inputs are unchanged and are not rerun merely for this view policy. The initial component
 UI execution is pending; local Swift syntax, JSON/spec planning and shell/YAML checks passed.
+The first43745838998 remains INFRA_ERROR/zero cases (pinned plugin approval missing before
+compilation);43746572416 remains BUILD_FAILED/zero cases (UI-test synchronous tearDown crossed
+MainActor isolation). Both original artifacts/input hashes are preserved in evidence records.
+The second compiler also exposed a nearly-matching WebKit navigation-policy witness; its callback
+now uses the SDK's MainActor/Sendable contract. The retry validates the real witness and actual
+UI controls. Cleanup uses the supported asynchronous MainActor XCTest teardown block, following
+[Apple's teardown guidance](https://developer.apple.com/documentation/xctest/set-up-and-tear-down-state-in-your-tests).
+
+The manual `a2ui_native_regression` selector executes the36 affected official SDK/owner controls
+after Session/store changes, without repeating the unchanged8 portable ingress controls. It
+uses the existing SDK-only verification profile and excludes the moving Hanlin SDK package
+snapshot; no SDK consumer or whole-app success is inferred from those component results.
 
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release

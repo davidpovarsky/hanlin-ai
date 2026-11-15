@@ -117,7 +117,7 @@ private struct HanlinYouTubeWebView: UIViewRepresentable {
         }
 
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
-                     decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+                     decisionHandler: @escaping @MainActor @Sendable (WKNavigationActionPolicy) -> Void) {
             guard !isClosed, let url = navigationAction.request.url else { decisionHandler(.cancel); return }
             if navigationAction.targetFrame?.isMainFrame == true {
                 let isOwnOrigin = origin != nil && url.scheme == origin?.scheme && url.host == origin?.host

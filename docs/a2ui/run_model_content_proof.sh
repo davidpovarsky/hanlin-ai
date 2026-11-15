@@ -135,7 +135,7 @@ if [[ "$platform" == ios ]]; then
   grep -q "$(cat "$evidence/selected-device.txt")" "$evidence/destinations.txt" || { echo 'INFRA_ERROR: unsupported actual destination'; exit 2; }
 fi
 suite="${A2UI_PROOF_SUITE:-ownership}"
-[[ "$suite" == all || "$suite" == ownership || "$suite" == media || "$suite" == consumer || "$suite" == compile || "$suite" == app ]] || { echo 'Unsupported focused proof suite'; exit 2; }
+[[ "$suite" == all || "$suite" == sdk || "$suite" == ownership || "$suite" == media || "$suite" == consumer || "$suite" == compile || "$suite" == app ]] || { echo 'Unsupported focused proof suite'; exit 2; }
 python3 - "$scratch/harness/proof-inputs.json" "$suite" <<'PY' > "$evidence/selected-cases.txt"
 import json,sys
 p=json.load(open(sys.argv[1]))
@@ -151,6 +151,8 @@ elif sys.argv[2]=='consumer':
            +['HanlinA2UICompleteBatchValidatorTests/'+x+'()' for x in p['validator_cases']])
 elif sys.argv[2]=='all':
     names=['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
+elif sys.argv[2]=='sdk':
+    names=['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
 else:
     field='media_cases' if sys.argv[2]=='media' else 'ownership_cases'
     names=[('A2UISDKTests/' if x in p['sdk_cases'] else 'HanlinRemoteMediaURLTests/')+x+'()' for x in p[field]]

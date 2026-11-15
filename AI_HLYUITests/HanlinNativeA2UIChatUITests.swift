@@ -8,13 +8,6 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
     private var app: XCUIApplication!
     private let prompt = "NATIVE_A2UI_FIRST"
     override func setUp() { continueAfterFailure = false }
-    override func tearDown() {
-        if let app {
-            record("original-app-final")
-            app.terminate()
-        }
-        app = nil
-    }
 
     func testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft() throws {
         try launch(continuation: true)
@@ -77,7 +70,9 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         XCTAssertTrue(element("hanlin-youtube-source").isEnabled)
         XCTAssertFalse(element("hanlin-youtube-player").exists)
         XCTAssertFalse(element("hanlin-a2ui-history-unavailable").exists)
-        submit.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        element("hanlin-youtube-load").tap()
+        XCTAssertTrue(element("hanlin-youtube-player").waitForExistence(timeout: 10))
+        XCTAssertFalse(submit.isEnabled, "Real local media interaction must not re-enable the original form")
         let unexpected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label != 'idle'"),
                                                   object: element("hanlin-native-a2ui-state"))
         unexpected.isInverted = true
@@ -123,6 +118,10 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         let plan = String(decoding: try JSONSerialization.data(withJSONObject: ["steps": steps]), as: UTF8.self)
         XCTAssertLessThan(plan.utf8.count, 262_144)
         app = XCUIApplication()
+        addTeardownBlock { @MainActor [weak self] () async throws in
+            guard let self, let app = self.app else { return }
+            self.record("original-app-final"); app.terminate(); self.app = nil
+        }
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_SIMULATE_CONTAINER_WIDTH"] = "390"

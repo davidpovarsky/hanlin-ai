@@ -4,10 +4,6 @@ import XCTest
 final class MediaReplayUITests: XCTestCase {
     private var app: XCUIApplication!
     override func setUp() { continueAfterFailure = false }
-    override func tearDown() {
-        if let app { record("final"); app.terminate() }
-        app = nil
-    }
 
     func testHistoryYouTubeAllowsOnlyExplicitLocalMedia() throws {
         launch()
@@ -21,8 +17,6 @@ final class MediaReplayUITests: XCTestCase {
         record("history-before-explicit-load")
         source().tap()
         XCTAssertEqual(app.staticTexts["proof-source-result"].label, "https://www.youtube.com/watch?v=M7lc1UVf-VE")
-        // A coordinate tap also reaches the real disabled form rather than relying only on AX.
-        submit.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         app.buttons["proof-probe"].tap() // Actual retained SDK action and callAgentFunction.
         let noRPC = NSPredicate(format: "label == %@", "NO_LISTENER")
         XCTAssertTrue(wait(noRPC, on: app.staticTexts["proof-probe-result"]))
@@ -133,6 +127,12 @@ final class MediaReplayUITests: XCTestCase {
         record("native-history-loaded-\(kind)")
     }
     private func launch(_ kind: String = "", live: Bool = false) {
+        if app == nil {
+            addTeardownBlock { @MainActor [weak self] () async throws in
+                guard let self, let app = self.app else { return }
+                self.record("final"); app.terminate(); self.app = nil
+            }
+        }
         app?.terminate()
         app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", kind]
