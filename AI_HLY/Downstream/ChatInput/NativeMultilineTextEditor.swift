@@ -48,24 +48,71 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     static func automaticHeightBounds(for textView: UITextView, isEmpty: Bool, availableHeight: CGFloat) -> (min: CGFloat, max: CGFloat) {
-        let lineHeight = (textView.font ?? UIFont.preferredFont(forTextStyle: .body)).lineHeight
+        let font = textView.font ?? UIFont.preferredFont(forTextStyle: .body)
+        let lineHeight = NSLayoutManager().defaultLineHeight(for: font)
         let insets = textView.textContainerInset.top + textView.textContainerInset.bottom
         let minimum = min(max(0, availableHeight), ceil(insets + lineHeight * (isEmpty ? 1 : 2)))
         let maximum = ceil(insets + lineHeight * (isEmpty ? 1 : 6))
         return (minimum, min(maximum, max(0, availableHeight)))
     }
 
-    func measuredHeight(
-        for textView: UITextView,
-        isEmpty: Bool,
-        observeMeasurement: ((CGFloat, CGFloat) -> Void)? = nil
-    ) -> CGFloat {
+    /// Reads visual line fragments without switching a TextKit 2 editor to TextKit 1.
+    /// The seventh line is enough to determine whether the six-line limit applies.
+    static func visualLineLimit(for textView: UITextView) -> (count: Int, sixthBottom: CGFloat?) {
+        var count = 0
+        var sixthBottom: CGFloat?
+        if let manager = textView.textLayoutManager {
+            let end = manager.enumerateTextLayoutFragments(from: nil, options: [.ensuresLayout, .ensuresExtraLineFragment]) { fragment in
+                for line in fragment.textLineFragments {
+                    count += 1
+                    if count == 6 {
+                        sixthBottom = fragment.layoutFragmentFrame.minY + line.typographicBounds.maxY
+                    }
+                    if count >= 7 { return false }
+                }
+                return true
+            }
+            if count < 7, let documentEnd = manager.textContentManager?.documentRange.endLocation,
+               end?.compare(documentEnd) != .orderedSame {
+                count = 0
+                sixthBottom = nil
+            }
+        } else {
+            // Access only when the view is already using TextKit 1.
+            let manager = textView.layoutManager
+            manager.ensureLayout(for: textView.textContainer)
+            let glyphs = manager.glyphRange(for: textView.textContainer)
+            manager.enumerateLineFragments(forGlyphRange: glyphs) { rect, _, _, _, stop in
+                count += 1
+                if count == 6 { sixthBottom = rect.maxY }
+                if count >= 7 { stop.pointee = true }
+            }
+            if count < 7 && NSMaxRange(glyphs) < manager.numberOfGlyphs {
+                return (0, nil)
+            }
+            if count < 7 && manager.extraLineFragmentTextContainer === textView.textContainer {
+                count += 1
+                if count == 6 { sixthBottom = manager.extraLineFragmentRect.maxY }
+            }
+        }
+        return (count, sixthBottom)
+    }
+
+    func measuredHeight(for textView: UITextView, isEmpty: Bool) -> CGFloat {
         let width = Self.effectiveMeasurementWidth(for: textView)
         let fitting = textView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height
-        let bounds = usesAutomaticLineLimits
+        var bounds = usesAutomaticLineLimits
             ? Self.automaticHeightBounds(for: textView, isEmpty: isEmpty, availableHeight: maxHeight)
             : (min: minHeight, max: max(minHeight, maxHeight))
-        observeMeasurement?(fitting, bounds.max)
+        if usesAutomaticLineLimits && !isEmpty {
+            let lines = Self.visualLineLimit(for: textView)
+            if lines.count > 0 && lines.count <= 6 {
+                bounds.max = min(max(0, maxHeight), max(bounds.min, fitting))
+            } else if let bottom = lines.sixthBottom {
+                let insets = textView.textContainerInset.top + textView.textContainerInset.bottom
+                bounds.max = min(max(0, maxHeight), max(bounds.min, ceil(bottom + insets)))
+            }
+        }
         textView.isScrollEnabled = !isEmpty && Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max)
         return Self.calculatedHeight(fittingHeight: fitting, minHeight: bounds.min, maxHeight: bounds.max)
     }

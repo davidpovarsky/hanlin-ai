@@ -39,7 +39,6 @@ struct NativeComposerLineSizingTests {
     func wrappedLinesAndScrolling() {
         let editor = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: 1000, usesAutomaticLineLimits: true)
         for sample in ["word ", "שלום "] {
-            let script = sample == "word " ? "Latin" : "Hebrew"
             let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 160, height: 100))
             view.font = .preferredFont(forTextStyle: .body)
             view.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
@@ -71,20 +70,52 @@ struct NativeComposerLineSizingTests {
                     layoutManager.enumerateLineFragments(forGlyphRange: range) { _, _, _, _, _ in lines += 1 }
                     if lines == target {
                         #expect(range.location == 0 && range.length == layoutManager.numberOfGlyphs)
-                        var fittingHeight: CGFloat = 0
-                        var maximumHeight: CGFloat = 0
-                        let height = editor.measuredHeight(for: view, isEmpty: false) { fitting, maximum in
-                            fittingHeight = fitting
-                            maximumHeight = maximum
-                        }
-                        #expect(view.isScrollEnabled == (target == 7),
-                            "script=\(script) lines=\(target) fitting=\(fittingHeight) max=\(maximumHeight) measured=\(height) lineHeight=\(view.font?.lineHeight ?? 0) width=\(contentWidth) scrolling=\(view.isScrollEnabled)")
+                        let height = editor.measuredHeight(for: view, isEmpty: false)
+                        #expect(view.isScrollEnabled == (target == 7))
                         if target == 6 {
                             #expect(height > minimum)
                             sixLineHeight = height
+                            let constrained = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: height / 2, usesAutomaticLineLimits: true)
+                            let constrainedHeight = constrained.measuredHeight(for: view, isEmpty: false)
+                            #expect(constrainedHeight == height / 2)
+                            #expect(view.isScrollEnabled)
+                            view.isScrollEnabled = false
                         } else if let sixLineHeight {
                             #expect(abs(height - sixLineHeight) <= 2)
                         }
+                        found = true
+                        break
+                    }
+                }
+                #expect(found)
+            }
+        }
+    }
+
+    @Test("TextKit 2 retains its layout manager while wrapped six and seven lines are measured")
+    func textKit2WrappedLinesKeepNativeLayout() throws {
+        let editor = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: 1000, usesAutomaticLineLimits: true)
+        for sample in ["word ", "שלום "] {
+            let view = UITextView(usingTextLayoutManager: true)
+            view.frame = CGRect(x: 0, y: 0, width: 160, height: 100)
+            view.font = .preferredFont(forTextStyle: .body)
+            view.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
+            view.textContainer.lineFragmentPadding = 0
+            view.isScrollEnabled = false
+            view.layoutIfNeeded()
+            view.textContainer.widthTracksTextView = false
+            view.textContainer.heightTracksTextView = false
+            let manager = try #require(view.textLayoutManager)
+            for target in [6, 7] {
+                var found = false
+                for count in 1...500 {
+                    view.text = String(repeating: sample, count: count)
+                    view.textContainer.size = CGSize(width: 152, height: 10_000)
+                    let lines = NativeMultilineTextEditor.visualLineLimit(for: view)
+                    if lines.count == target {
+                        _ = editor.measuredHeight(for: view, isEmpty: false)
+                        #expect(view.isScrollEnabled == (target == 7))
+                        #expect(view.textLayoutManager === manager)
                         found = true
                         break
                     }
