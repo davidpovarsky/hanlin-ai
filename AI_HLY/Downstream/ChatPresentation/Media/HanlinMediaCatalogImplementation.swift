@@ -11,7 +11,9 @@ enum HanlinMediaCatalogImplementation {
         for name in ["Image", "Video", "AudioPlayer"] {
             guard let original = catalog.components[name] else { continue }
             catalog.components[name] = ComponentImplementation(api: original) { node in
-                HanlinA2UIMediaURLGate(node: node, isPlayer: name != "Image", builder: original.builder)
+                HanlinA2UILocalMedia {
+                    HanlinA2UIMediaURLGate(node: node, isPlayer: name != "Image", builder: original.builder)
+                }
             }
         }
         return catalog
@@ -21,7 +23,7 @@ enum HanlinMediaCatalogImplementation {
         var catalog = basicCatalog(locale: locale)
         catalog.id = HanlinA2UIIngress.mediaCatalogID
         catalog.components["YouTube"] = ComponentImplementation(api: HanlinMediaCatalog.youTube) { node in
-            Group {
+            HanlinA2UILocalMedia {
                 if let value = node.string(for: "url"), value.utf8.count <= 2048, let url = URL(string: value),
                    let video = HanlinYouTubeVideo(url: url) {
                     HanlinYouTubePlayerView(video: video)

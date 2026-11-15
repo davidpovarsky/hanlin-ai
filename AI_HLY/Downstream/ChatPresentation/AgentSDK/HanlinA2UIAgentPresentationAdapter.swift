@@ -193,7 +193,8 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
                 key = stored; sequence = next
             } else {
                 guard let projection = store.registerModelPart(runID: runID, messageID: part.messageID,
-                    partID: part.partID, sink: self) else { throw AdmissionError.endedRun }
+                    partID: part.partID, presentation: live ? .live : .history,
+                    sink: self) else { throw AdmissionError.endedRun }
                 key = projection.key; sequence = 0
             }
             let result: Result<Void, HanlinA2UIResultAdmissionError>

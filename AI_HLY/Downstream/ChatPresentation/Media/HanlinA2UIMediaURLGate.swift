@@ -51,13 +51,20 @@ private struct HanlinRequestedA2UIPlayer: View {
     @State private var requested = false
 
     var body: some View {
-        Group {
+        VStack(alignment: .leading, spacing: 8) {
             if requested && isEnabled && scenePhase == .active {
                 builder(node)
+                    .accessibilityIdentifier("hanlin-media-player")
             } else {
                 Button("Load media player", systemImage: "play.circle") { requested = true }
-                    .disabled(!isEnabled)
+                    .disabled(!isEnabled || scenePhase != .active)
                     .accessibilityIdentifier("hanlin-media-load-player")
+            }
+            if let value = node.string(for: "url"), HanlinRemoteMediaURL(value) != nil,
+               let source = URL(string: value) {
+                Link("Open media source", destination: source)
+                    .disabled(!isEnabled || scenePhase != .active)
+                    .accessibilityIdentifier("hanlin-media-source")
             }
         }
         .onChange(of: isEnabled) { _, enabled in if !enabled { requested = false } }

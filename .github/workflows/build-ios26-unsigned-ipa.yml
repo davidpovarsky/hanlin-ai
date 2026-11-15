@@ -127,7 +127,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'a2ui_model_content' || inputs.target_validation_group == 'a2ui_media_catalog' || inputs.target_validation_group == 'a2ui_media_ios_compile' || inputs.target_validation_group == 'a2ui_media_ios' || inputs.target_validation_group == 'a2ui_media_focused' || inputs.target_validation_group == 'a2ui_app_consumer' || inputs.target_validation_group == 'a2ui_sdk_consumer' || inputs.target_validation_group == 'chat_media_component') && inputs.target_validation_group || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'a2ui_model_content' || inputs.target_validation_group == 'a2ui_media_catalog' || inputs.target_validation_group == 'a2ui_media_ios_compile' || inputs.target_validation_group == 'a2ui_media_ios' || inputs.target_validation_group == 'a2ui_media_focused' || inputs.target_validation_group == 'a2ui_app_consumer' || inputs.target_validation_group == 'a2ui_sdk_consumer' || inputs.target_validation_group == 'chat_media_component' || inputs.target_validation_group == 'a2ui_media_replay_ui') && inputs.target_validation_group || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
@@ -148,6 +148,26 @@ jobs:
         with:
           name: chat-media-component-${{ github.run_id }}
           path: build/chat-media-component-evidence
+          if-no-files-found: error
+          retention-days: 14
+
+  focused-a2ui-media-replay-ui:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'a2ui_media_replay_ui' && !inputs.testflight_upload }}
+    name: Actual SwiftUI replay media controls
+    runs-on: xcode-27
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify original renderer and media interaction in native UI
+        timeout-minutes: 19
+        run: bash docs/a2ui/run_media_replay_ui.sh
+      - if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: a2ui-media-replay-ui-${{ github.run_id }}
+          path: build/a2ui-media-replay-ui-evidence
           if-no-files-found: error
           retention-days: 14
 
@@ -213,7 +233,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ inputs.target_validation_group != 'a2ui_app_consumer' && inputs.target_validation_group != 'a2ui_sdk_consumer' && inputs.target_validation_group != 'a2ui_media_focused' && inputs.target_validation_group != 'a2ui_media_ios_compile' && inputs.target_validation_group != 'a2ui_media_ios' && inputs.target_validation_group != 'a2ui_media_catalog' && inputs.target_validation_group != 'chat_media_component' && inputs.target_validation_group != 'a2ui_model_content' && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
+    if: ${{ inputs.target_validation_group != 'a2ui_media_replay_ui' && inputs.target_validation_group != 'a2ui_app_consumer' && inputs.target_validation_group != 'a2ui_sdk_consumer' && inputs.target_validation_group != 'a2ui_media_focused' && inputs.target_validation_group != 'a2ui_media_ios_compile' && inputs.target_validation_group != 'a2ui_media_ios' && inputs.target_validation_group != 'a2ui_media_catalog' && inputs.target_validation_group != 'chat_media_component' && inputs.target_validation_group != 'a2ui_model_content' && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15

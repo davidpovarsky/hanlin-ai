@@ -4,10 +4,11 @@ import A2UISwiftUI
 import BasicCatalogSwiftUI
 import SwiftUI
 
-/// An isolated native renderer, ready for a later integration proposal. No chat-shell wiring.
+/// The same official renderer is shared by inline, expanded and historical presentation.
 @MainActor
 struct HanlinA2UIResultView: View {
     let session: HanlinA2UISession
+    @Environment(\.isEnabled) private var hostEnabled
 
     var body: some View {
         Group {
@@ -19,6 +20,8 @@ struct HanlinA2UIResultView: View {
                     fallback
                 } else if let surface = session.surface(id) {
                     HanlinA2UISurfaceView(model: surface)
+                        .environment(\.hanlinA2UIHistoryMediaEnabled,
+                            session.allowsLocalHistoryMedia ? hostEnabled : nil)
                 }
             }
         }

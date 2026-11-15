@@ -23,7 +23,8 @@ private struct HanlinRequestedYouTubePlayer: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if requested && !failed, let origin = HanlinYouTubeDocument.origin(bundleID: Bundle.main.bundleIdentifier) {
+            if requested && !failed && isEnabled && scenePhase == .active,
+               let origin = HanlinYouTubeDocument.origin(bundleID: Bundle.main.bundleIdentifier) {
                 HanlinYouTubeWebView(video: video, origin: origin,
                     onReady: { ready = true }, onFailure: { failed = true })
                     .aspectRatio(16 / 9, contentMode: .fit)
@@ -44,10 +45,12 @@ private struct HanlinRequestedYouTubePlayer: View {
                     Label(failed ? String(localized: "Retry YouTube player") : String(localized: "Load YouTube player"), systemImage: "play.rectangle")
                 }
                 .accessibilityIdentifier("hanlin-youtube-load")
+                .disabled(!isEnabled || scenePhase != .active)
                 if failed { Text("This video could not be played here.").foregroundStyle(.secondary) }
             }
             Link("Open in YouTube", destination: video.sourceURL)
                 .accessibilityIdentifier("hanlin-youtube-source")
+                .disabled(!isEnabled || scenePhase != .active)
         }
         .onChange(of: video) { requested = false; ready = false; failed = false }
         .onChange(of: scenePhase) { _, phase in if phase != .active { requested = false } }

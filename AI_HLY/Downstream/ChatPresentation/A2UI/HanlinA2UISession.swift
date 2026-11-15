@@ -10,6 +10,8 @@ import Observation
 @MainActor
 @Observable
 final class HanlinA2UISession {
+    enum Presentation: Equatable, Sendable { case live, history }
+    private let presentation: Presentation
     private let processor: MessageProcessor
     private let eventRelay: HanlinA2UIEventRelay
     private var acceptedBytes = 0
@@ -18,13 +20,15 @@ final class HanlinA2UISession {
     private(set) var surfaceIDs: [String] = []
     private(set) var failures: [String: HanlinA2UIIngress.Failure] = [:]
     private(set) var unroutedFailure: HanlinA2UIIngress.Failure?
+    var allowsLocalHistoryMedia: Bool { presentation == .history && isInputSealed && !isClosed }
 
     static let maximumSurfaces = 4
     static let maximumSessionBytes = 1_048_576
 
     /// Only resolved user events and renderer errors leave this POC. RPC stays disabled by the
     /// SDK's absent-listener policy; installing an outboundListener would enable agent calls.
-    init(onEvent: @escaping @Sendable (RendererToAgentMessage) -> Void) {
+    init(presentation: Presentation = .live, onEvent: @escaping @Sendable (RendererToAgentMessage) -> Void) {
+        self.presentation = presentation
         let relay = HanlinA2UIEventRelay(onEvent: onEvent)
         eventRelay = relay
         processor = MessageProcessor(

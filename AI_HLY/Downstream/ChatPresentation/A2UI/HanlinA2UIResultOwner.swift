@@ -74,11 +74,12 @@ fileprivate final class HanlinA2UIResultOwner {
     private var receiveTask: Task<Void, Never>?
     private(set) var isReceivingFinished = false
 
-    init(key: HanlinA2UIResultKey, sink: any HanlinA2UIResultEventSink, store: HanlinA2UIResultStore) {
+    init(key: HanlinA2UIResultKey, sink: any HanlinA2UIResultEventSink, store: HanlinA2UIResultStore,
+         presentation: HanlinA2UISession.Presentation) {
         self.key = key
         let relay = HanlinA2UIResultRelay(sink: sink)
         self.relay = relay
-        session = HanlinA2UISession { [weak relay] event in
+        session = HanlinA2UISession(presentation: presentation) { [weak relay] event in
             Task { @MainActor [weak relay] in relay?.deliver(event) }
         }
         relay.owner = self
@@ -191,11 +192,14 @@ final class HanlinA2UIResultStore {
 
     /// Model content has a message/part identity, never a fabricated provider tool call.
     func registerModelPart(runID: UUID, messageID: UUID, partID: UUID,
+                           presentation: HanlinA2UISession.Presentation = .live,
                            sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
-        register(runID: runID, resultID: partID, origin: .model(messageID: messageID), sink: sink)
+        register(runID: runID, resultID: partID, origin: .model(messageID: messageID),
+                 presentation: presentation, sink: sink)
     }
 
     private func register(runID: UUID, resultID: UUID, origin: HanlinA2UIResultKey.Origin,
+                          presentation: HanlinA2UISession.Presentation = .live,
                           sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
         let slot = Slot(runID: runID, resultID: resultID, origin: origin)
         guard !isDiscarded, !endedRuns.contains(runID), !completedProducerRuns.contains(runID),
@@ -205,7 +209,7 @@ final class HanlinA2UIResultStore {
                       && (existing.modelMessageID == nil) != (slot.modelMessageID == nil)
               }) else { return nil }
         let key = HanlinA2UIResultKey(runID: runID, resultID: resultID, origin: origin, generation: UUID())
-        let owner = HanlinA2UIResultOwner(key: key, sink: sink, store: self)
+        let owner = HanlinA2UIResultOwner(key: key, sink: sink, store: self, presentation: presentation)
         owners[slot] = owner
         return HanlinA2UIResultProjection(owner: owner)
     }
