@@ -75,7 +75,14 @@ The first two production files passed portable Swift6 typechecking and32 checks
 on Windows Swift6.3.3. The expanded registry and38-case suite were freshly compiled
 and executed on that compiler: EXECUTED_PASS38. Local results and original source/
 executable hashes are in build/acceptance/local-skill-runtime-contracts/result.json.
-Apple validation is still NOT_RUN. The existing manual workflow selector `SkillRuntimeContracts`
+Apple validation run43768185348/52bb7720 is EXECUTED_PASS: actual macOS compile,
+38 executed cases, and iOS26.0/27.0 Simulator target typechecks. All10 artifact
+manifest file hashes verified locally with0 mismatch. Apple Swift6.4.2,
+Xcode27.2/27B52. Result SHA256
+4ff1259eff24574b75c87faae906e29b565d2b3482dd2e11c8ce1234ca153370.
+The first two failed host attempts and their harness corrections remain recorded;
+no failed/skipped native acceptance is converted into a pass.
+The existing manual workflow selector `SkillRuntimeContracts`
 compiles and executes those actual sources on macOS, then typechecks them for
 arm64 iOS Simulator deployment26.0 and27.0 using the selected installed SDK.
 These synthetic checks do not replace15+ real Skills or engine/device tests.
