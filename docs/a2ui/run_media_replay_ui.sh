@@ -98,6 +98,7 @@ xcodebuild test -project "$project" -scheme MediaReplay -configuration Debug \
   -destination "platform=iOS Simulator,id=$device" -parallel-testing-enabled NO \
   -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$evidence/MediaReplay.xcresult" \
   -only-testing:MediaReplayUITests/MediaReplayUITests -disableAutomaticPackageResolution \
+  -skipPackagePluginValidation -skipMacroValidation \
   CODE_SIGNING_ALLOWED=NO 2>&1 | tee "$evidence/xcodebuild.log"
 test_code=${PIPESTATUS[0]}
 set -e
