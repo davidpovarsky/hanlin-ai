@@ -65,13 +65,16 @@ def write_swift_module_map(module_map: Path, runtime_header: Path, arch: str) ->
     return unique_headers
 
 
-def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path) -> str:
+def metadata_flags(module_root: Path, module_map: Path, core_support_dir: Path, header_alias_overlay: Path = None) -> str:
     # Each ObjC header keeps its existing module owner. Listing those headers
     # again in the generated Swift module can make clang's findModuleForHeader
     # ambiguous. The upstream generator silently skips unknown module owners.
-    return shlex.join(["-fno-modules",
+    flags = ["-fno-modules",
                        f"-fmodule-map-file={core_support_dir / 'module.modulemap'}",
-                       f"-fmodule-map-file={module_map}"])
+                       f"-fmodule-map-file={module_map}"]
+    if header_alias_overlay is not None:
+        flags.extend(["-ivfsoverlay", str(header_alias_overlay)])
+    return shlex.join(flags)
 
 
 def explicit_input_adapter(source: str) -> str:
@@ -151,7 +154,7 @@ def main() -> int:
         environment = os.environ.copy()
         root = Path(required_env("SRCROOT"))
         sys.path.insert(0, str(root / "Scripts/NativeScript"))
-        from metadata_public_headers import write_public_umbrella
+        from metadata_public_headers import write_public_umbrella, write_verified_header_alias_overlay
         core_support_dir = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
         tool_root = root / "build/nativescript-metadata-tool"
         tool = tool_root / "bin/objc-metadata-generator"
@@ -162,12 +165,15 @@ def main() -> int:
         umbrella = module_root / "HanlinMetadataInput.h"
         evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
         evidence.mkdir(parents=True, exist_ok=True)
+        alias_overlay = module_root / "HanlinHeaderAliases.json"
         try:
-            write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
+            inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
                                   sorted(core_support_dir.glob("*.h")) + swift_headers,
                                   [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))])
+            aliases = write_verified_header_alias_overlay(inventory, alias_overlay)
         finally:
-            for path in [umbrella, umbrella.with_suffix(".inventory.json"), tool_root / "provenance.json"]:
+            for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay,
+                         alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json"]:
                 if path.is_file():
                     shutil.copy2(path, evidence / path.name)
         adapter = module_root / "upstream-generator-with-explicit-input.py"
@@ -175,7 +181,7 @@ def main() -> int:
         environment["HANLIN_METADATA_GENERATOR"] = str(tool)
         environment["HANLIN_METADATA_INPUT_UMBRELLA"] = str(umbrella)
         environment["CLANG_ENABLE_MODULES"] = "NO"
-        extra_flags = metadata_flags(module_root, module_map, core_support_dir)
+        extra_flags = metadata_flags(module_root, module_map, core_support_dir, alias_overlay if aliases else None)
         environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {extra_flags}'.strip()
         completed = subprocess.run(
             [sys.executable, str(adapter), *sys.argv[1:]],

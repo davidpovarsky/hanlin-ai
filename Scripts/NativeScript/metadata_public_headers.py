@@ -288,6 +288,43 @@ def module_names(module_text: str) -> list[str]:
     return names
 
 
+def write_verified_header_alias_overlay(inventory: list[dict], destination: Path) -> list[dict]:
+    """Give identical module-qualified header copies their existing owner.
+
+    -I/-F order and bytes stay intact. Clang's pragma-once identity and module
+    lookup use the real canonical file through a documented VFS alias.
+    """
+    aliases = {}
+    evidence = {}
+    for owner in inventory:
+        if owner["status"] != "SELECTED":
+            continue
+        for header in owner["publicUmbrellaHeaders"]:
+            canonical = Path(header["path"])
+            relative = canonical.relative_to(Path(owner["path"]) / "Headers").as_posix()
+            for module in owner["modules"]:
+                key = "Headers/" + module + "/" + relative
+                for carrier in inventory:
+                    if carrier["path"] == owner["path"] or key not in carrier["inputSHA256"]:
+                        continue
+                    alias = Path(carrier["path"]) / key
+                    if carrier["inputSHA256"][key] != header["sha256"]:
+                        raise RuntimeError("Conflicting public header alias bytes: " + str(alias) + " vs " + str(canonical))
+                    alias_name, target = alias.as_posix(), canonical.as_posix()
+                    if alias_name in aliases and aliases[alias_name] != target:
+                        raise RuntimeError("Conflicting public header alias owners: " + alias_name)
+                    aliases[alias_name] = target
+                    evidence[alias_name] = {"module": module, "alias": alias_name, "canonical": target,
+                                            "sha256": header["sha256"], "ownerSearchPriority": owner["searchPriority"]}
+    if any(target in aliases and aliases[target] != target for target in aliases.values()):
+        raise RuntimeError("Public header aliases would replace another selected module owner")
+    destination.write_text(json.dumps({"version": 0, "use-external-names": True,
+        "roots": [{"type": "file", "name": alias, "external-contents": target} for alias, target in sorted(aliases.items())]}, indent=2) + "\n", encoding="utf-8")
+    records = [evidence[alias] for alias in sorted(evidence)]
+    destination.with_suffix(".evidence.json").write_text(json.dumps(records, indent=2) + "\n", encoding="utf-8")
+    return records
+
+
 def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path],
                           framework_search_paths: list[Path] | None = None) -> list[dict]:
     inventory = []

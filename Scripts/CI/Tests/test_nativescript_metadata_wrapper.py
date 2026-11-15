@@ -279,6 +279,47 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             self.assertEqual([Path(h["path"]).name for h in records[0]["publicUmbrellaHeaders"]], ["Public.h", "Additional.h"])
             self.assertIn(str(framework / "Headers/Additional.h"), umbrella.read_text())
 
+    def test_identical_header_alias_overlay_preserves_c_api_and_real_clang_identity(self):
+        with tempfile.TemporaryDirectory(prefix="Hanlin aliases ") as name:
+            root = Path(name)
+            owner = self.framework(root / "products", "lower")
+            header = owner / "Headers/Exported.h"
+            header.write_text("#pragma once\nenum ActualEnum { ActualValue };\nint actual_public_c_api(void);\n")
+            (owner / "Modules/module.modulemap").write_text(
+                'framework module lower {\n header "Exported.h"\n export *\n}\n')
+            alias = root / "products/Carrier.framework/Headers/lower/Exported.h"
+            alias.parent.mkdir(parents=True)
+            shutil.copy2(header, alias)
+            records = HEADERS.write_public_umbrella(root, root / "input.h", [], [owner.parent])
+            library = self.compiler_library()
+            before = HEADERS.inspect_header_declarations([header, alias], [], library, "objective-c")
+            self.assertTrue(before["errors"], "Different physical pragma-once files must genuinely reproduce redefinition")
+            overlay = root / "aliases.json"
+            evidence = HEADERS.write_verified_header_alias_overlay(records, overlay)
+            self.assertEqual(len(evidence), 1)
+            self.assertEqual(evidence[0]["module"], "lower")
+            after = HEADERS.inspect_header_declarations([header, alias], ["-ivfsoverlay", str(overlay)], library, "objective-c")
+            self.assertEqual(after["errors"], [])
+            self.assertEqual([d["name"] for d in after["declarations"]].count("actual_public_c_api"), 1)
+            self.assertEqual(header.read_bytes(), alias.read_bytes())
+            flags = shlex.split(WRAPPER.metadata_flags(root, root / "module.modulemap", root / "include", overlay))
+            self.assertEqual(flags[flags.index("-ivfsoverlay") + 1], str(overlay))
+
+    def test_differing_public_header_alias_cannot_be_overlaid(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            owner = self.framework(root / "products", "lower")
+            (owner / "Modules/module.modulemap").write_text(
+                'framework module lower {\n header "Exported.h"\n export *\n}\n')
+            alias = root / "products/Carrier.framework/Headers/lower/Exported.h"
+            alias.parent.mkdir(parents=True)
+            alias.write_text("// different bytes must stay visible")
+            records = HEADERS.write_public_umbrella(root, root / "input.h", [], [owner.parent])
+            overlay = root / "aliases.json"
+            with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias bytes"):
+                HEADERS.write_verified_header_alias_overlay(records, overlay)
+            self.assertFalse(overlay.exists())
+
     def test_real_clang_errors_reject_partial_metadata_even_when_required_classes_exist(self):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
