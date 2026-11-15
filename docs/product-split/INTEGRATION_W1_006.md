@@ -689,3 +689,14 @@ unchanged scroll decision; the test records script/target/metrics on its unchang
 assertion. One newly authorized Composer-only diagnostic run is permitted. This
 is expected-failure instrumentation, not a product fix or acceptance. No second
 sizeThatFits, threshold/tolerance change, draft logging or weakened test is added.
+
+
+The same producer dependency window also covers four existing Mini App committed
+locks (Parity/TextStudio/Sefaria/Wikipedia), each transitively using HanlinPlatform.
+They must not be rewritten by hand or copied from a different root graph. An
+isolated Apple resolution-only route now runs the actual existing six manifests
+in their whole source layout, retains every raw root lock and source/toolchain
+binding, and rejects any unrelated pin/identity change. It runs zero builds and
+zero tests and cannot stand in for the active 78-case chain or 8-case UI proof.
+No new input parameter, app/release job, manifest substitution or dependency is
+introduced. Local compiler/cache work remains excluded under the reserve gate.

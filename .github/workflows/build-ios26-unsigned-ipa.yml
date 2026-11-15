@@ -137,7 +137,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
@@ -156,6 +156,24 @@ jobs:
         with:
           name: agent-sdk-apple-${{ github.run_id }}
           path: build/agent-sdk-validation-evidence
+          if-no-files-found: error
+          retention-days: 30
+
+  agent-sdk-lock-resolution:
+    if: ${{ inputs.target_validation_group == 'agent_sdk_resolve_locks' && !inputs.testflight_upload }}
+    name: Resolve exact SDK producer in all six existing Apple package graphs
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Resolve unchanged manifests with one corrected exact producer
+        run: bash Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh
+      - name: Retain actual locks and source binding
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: agent-sdk-locks-${{ github.run_id }}
+          path: build/agent-sdk-lock-evidence
           if-no-files-found: error
           retention-days: 30
 
@@ -215,7 +233,7 @@ jobs:
           retention-days: 14
 
   focused-composer-tests:
-    if: ${{ (inputs.target_validation_group == 'agent_sdk_exact_source_proof' || !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') ) && inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
+    if: ${{ (inputs.target_validation_group == 'agent_sdk_exact_source_proof' || !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') ) && inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
     name: Verify whole Composer and UIKit components on iOS 27
     runs-on: xcode-27
     timeout-minutes: 25
@@ -235,7 +253,7 @@ jobs:
           retention-days: 14
 
   focused-nativescript-metadata-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
     name: Probe pinned NativeScript SDK metadata
     runs-on: xcode-27
     timeout-minutes: 12
@@ -273,7 +291,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -310,7 +328,7 @@ jobs:
       changed_files_count: ${{ steps.plan.outputs.changed_files_count }}
       exact_test_selector: ${{ steps.plan.outputs.exact_test_selector }}
     steps:
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -397,7 +415,7 @@ jobs:
       LOG_DIR: phase1-validation-logs
 
     steps:
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -660,7 +678,7 @@ jobs:
           swift build --package-path "$PACKAGE_PATH" \
             2>&1 | tee "$LOG_DIR/04-swift-build.log"
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
@@ -815,7 +833,7 @@ jobs:
             grep -RIn --include='*.log' 'warning:' "$LOG_DIR" || true
           } | tee "$LOG_DIR/09-warnings.log"
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
@@ -866,7 +884,7 @@ jobs:
       IOS_DEPLOYMENT_TARGET: "27.0"
 
     steps:
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -1484,7 +1502,7 @@ jobs:
 
           } 2>&1 | tee "$LOG_DIR/08-locate-app.log"
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -1569,7 +1587,7 @@ jobs:
             build/DerivedData/CacheMetadata/xcode-build-inputs.json
           key: ${{ steps.app-deriveddata-cache.outputs.cache-primary-key }}
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
@@ -1692,7 +1710,7 @@ jobs:
       RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE: ${{ needs.plan-affected-validation.outputs.run_runtime_tooling_full_acceptance }}
 
     steps:
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -2215,7 +2233,7 @@ jobs:
               > "$LOG_DIR/07-simulator-dyld-closure-skipped.txt"
           fi
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -2311,7 +2329,7 @@ jobs:
           fi
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-simulator-staging-duration-seconds.txt"
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -2908,7 +2926,7 @@ jobs:
           fi
           trap - EXIT
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
@@ -2997,7 +3015,7 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -3045,7 +3063,7 @@ jobs:
             --output provider-conformance-summary.json \
             $gate_flags
 
-      - name: Live Activity · refresh
+      - name: Live Activity Â· refresh
         if: always()
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
@@ -3097,21 +3115,21 @@ jobs:
 
 
   focused-markdown-renderer-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && !inputs.testflight_upload && inputs.markdown_renderer_validation_only }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && !inputs.testflight_upload && inputs.markdown_renderer_validation_only }}
     uses: ./.github/workflows/validate-chat-markdown.yml
 
   focused-code-fence-webkit-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && !inputs.testflight_upload && inputs.code_fence_webkit_validation_only }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && !inputs.testflight_upload && inputs.code_fence_webkit_validation_only }}
     uses: ./.github/workflows/validate-chat-code-fences.yml
 
   focused-diagnostics-capture-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && !inputs.testflight_upload && inputs.diagnostics_capture_validation_only }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && !inputs.testflight_upload && inputs.diagnostics_capture_validation_only }}
     uses: ./.github/workflows/validate-chat-diagnostics.yml
     with:
       test_suite: ${{ inputs.exact_test_selector }}
 
   focused-scripting-package-tests:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '') }}
     uses: ./.github/workflows/validate-scripting-runtime.yml
     with:
       test_filter: ${{ inputs.scripting_package_test_filter }}
@@ -3120,7 +3138,7 @@ jobs:
     secrets: inherit
 
   upload-chavrusachat-to-testflight:
-    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof') && inputs.testflight_upload }}
+    if: ${{ !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks') && inputs.testflight_upload }}
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true
