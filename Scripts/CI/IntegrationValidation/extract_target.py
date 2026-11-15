@@ -12,6 +12,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import textwrap
 
 from project_graph import parse_project, validate_graph
 
@@ -76,6 +77,16 @@ def extract(root, output):
     assert objects[target] == original[target], "Extracted target must remain byte-structurally equivalent"
     project["objects"] = objects
     output.mkdir(parents=True, exist_ok=False)
+    # Match the repository's existing deterministic simulator CI configuration.
+    # It intentionally contains no credentials. Do not omit inherited config,
+    # or invent different compiler flags to make the extracted target pass.
+    workflow = (root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
+    simulator_route = workflow.split("  full-app-simulator-smoke:", 1)[1]
+    template = re.search(r"          cat > Config.xcconfig <<EOF\n([\s\S]*?)          EOF", simulator_route)
+    if template is None:
+        raise ValueError("Existing simulator CI configuration template missing")
+    config = textwrap.dedent(template[1]).replace("\\$", "$").replace("$repo_root", str(root))
+    (output.parent / "Config.xcconfig").write_text(config, encoding="utf-8")
     (output / "project.pbxproj").write_text("// !$*UTF8*$!\n" + render(project) + "\n", encoding="utf-8")
     schemes = output / "xcshareddata/xcschemes"
     schemes.mkdir(parents=True)
@@ -83,6 +94,8 @@ def extract(root, output):
                     schemes / "HanlinMiniApps.xcscheme")
     return {"status": "EXTRACTED_NOT_COMPILED", "target_structurally_identical": True,
             "source_copy_or_substitution": False, "target_id": target,
+            "inherited_config": "existing full-app simulator CI template, no credentials",
+            "config_sha256": hashlib.sha256(config.encode()).hexdigest(),
             "retained_objects": len(objects), "full_project_acceptance": False,
             "project_sha256": hashlib.sha256((output / "project.pbxproj").read_bytes()).hexdigest()}
 

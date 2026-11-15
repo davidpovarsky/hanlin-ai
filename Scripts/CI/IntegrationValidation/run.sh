@@ -20,7 +20,8 @@ python3 -m unittest discover -s Scripts/CI/IntegrationValidation -p 'test_*.py' 
 python3 - <<'PY' > "$evidence/source-sha256.json"
 import hashlib,json,subprocess
 from pathlib import Path
-paths=['AI_HLY.xcodeproj/project.pbxproj','AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme']
+paths=['AI_HLY.xcodeproj/project.pbxproj','AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme',
+       '.github/workflows/build-ios26-unsigned-ipa.yml']
 for prefix in ['HanlinMiniAppsApp','Packages/HanlinProductSplit','Packages/HanlinPlatform','Scripts/CI/IntegrationValidation']:
     paths += subprocess.check_output(['git','ls-files',prefix],text=True).splitlines()
 hashes={}
@@ -80,6 +81,7 @@ trap 'retain_resolution "$?"' EXIT
 # binary inputs. No source bytes, target settings or canonical products change.
 python3 Scripts/CI/IntegrationValidation/extract_target.py --output "$scratch/AI_HLY.xcodeproj" > "$evidence/extraction.json"
 cp "$scratch/AI_HLY.xcodeproj/project.pbxproj" "$evidence/extracted-project.pbxproj"
+cp "$scratch/Config.xcconfig" "$evidence/CI-Config.xcconfig"
 plutil -lint "$scratch/AI_HLY.xcodeproj/project.pbxproj" | tee "$evidence/plutil.txt"
 xcodebuild -project "$scratch/AI_HLY.xcodeproj" -scheme HanlinMiniApps \
   -destination "platform=iOS Simulator,id=$device" -derivedDataPath "$scratch/AppDerivedData" \

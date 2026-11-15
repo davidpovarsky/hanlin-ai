@@ -13,7 +13,8 @@ let package = Package(
                 .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
                 .product(name: "HanlinMiniAppCore", package: "HanlinPlatform")
             ],
-            exclude: ["SplitFixtureStore.swift"]
+            exclude: ["SplitFixtureStore.swift", "SplitReceiverFixturePersistence.swift",
+                      "SplitMigrationFixturePersistence.swift"]
         ),
         .testTarget(
             name: "RegisteredIntegrationTests",

@@ -68,8 +68,13 @@ class ProjectGraphTests(unittest.TestCase):
             for key in self.mini["fileSystemSynchronizedGroups"]:
                 self.assertEqual(Path(extracted["objects"][key]["path"]), ROOT / "HanlinMiniAppsApp")
             self.assertFalse(any(obj["isa"] == "PBXShellScriptBuildPhase" for obj in extracted["objects"].values()))
+            config = (output.parent / "Config.xcconfig").read_text(encoding="utf-8")
+            self.assertIn("SWIFT_OBJC_INTEROP_MODE = objcxx", config)
+            self.assertIn("CLANG_CXX_LANGUAGE_STANDARD = gnu++20", config)
+            self.assertIn("HANLIN_API_KEY =\n", config)
+            self.assertNotIn("$repo_root", config)
 
-    def test_result_verifier_requires_four_actual_passing_nodes(self):
+    def test_result_verifier_requires_all_actual_passing_nodes(self):
         nodes = [{"nodeType": "Test Case", "name": name + "()", "result": "Passed"} for name in EXPECTED]
         self.assertEqual(set(verify({"children": nodes})), EXPECTED)
         for invalid in [[], nodes[:-1], nodes + [nodes[0]],

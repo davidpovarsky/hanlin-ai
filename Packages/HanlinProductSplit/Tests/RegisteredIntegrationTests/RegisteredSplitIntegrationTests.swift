@@ -7,6 +7,12 @@ import Testing
 /// Tests the exported leaf product against the real canonical broker. These
 /// synthetic records never open a user store or authenticate an OS transport.
 @Suite struct RegisteredSplitIntegrationTests {
+    private struct UnavailablePersistence: SplitReceiverPersistence {
+        func transaction(_ operation: @Sendable (inout SplitReceiverDatabase) throws -> SplitReceiverRecord) throws -> SplitReceiverRecord {
+            throw SplitDurabilityError.persistenceUnavailable
+        }
+    }
+
     private func request() throws -> SplitBridgeRequest {
         let now = Date(timeIntervalSince1970: 1_800_000_000)
         return try SplitBridgeRequest(
@@ -80,5 +86,17 @@ import Testing
         #expect(output.files["identity.json"] == bytes)
         #expect(source.files["identity.json"] == bytes)
         #expect(destination.files.isEmpty)
+    }
+
+    @Test func unconfiguredDurableReceiverRejectsBeforePersistence() async throws {
+        let request = try request()
+        let receiver = SplitDurableReceiver(persistence: UnavailablePersistence())
+        let context = SplitReceiverContext(caller: request.caller, target: request.target,
+                                            package: request.installedPackage, session: request.session,
+                                            chat: request.chat, generation: request.generation,
+                                            authorized: true, routeAvailable: true, online: true)
+        await #expect(throws: SplitBridgeFailure.transportUnavailable) {
+            _ = try await receiver.receive(reference: request.id, context: context, now: request.issuedAt)
+        }
     }
 }

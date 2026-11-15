@@ -8,6 +8,7 @@ EXPECTED = {
     "canonicalAuthorityDenialIsNotBypassedByAdapter",
     "absentTransportCannotAdvanceToDispatched",
     "registeredMigrationIsPureAndPreservesIdentityBytes",
+    "unconfiguredDurableReceiverRejectsBeforePersistence",
 }
 
 

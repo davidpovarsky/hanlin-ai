@@ -33,10 +33,12 @@ def validate():
         cwd=ROOT, encoding="utf-8"))
     targets = {target["name"]: target for target in manifest["targets"]}
     assert set(targets) == {"HanlinProductSplit", "RegisteredIntegrationTests"}
-    assert targets["HanlinProductSplit"]["exclude"] == ["SplitFixtureStore.swift"]
+    excluded = {"SplitFixtureStore.swift", "SplitReceiverFixturePersistence.swift",
+                "SplitMigrationFixturePersistence.swift"}
+    assert set(targets["HanlinProductSplit"]["exclude"]) == excluded
     assert targets["RegisteredIntegrationTests"]["path"] == "Tests/RegisteredIntegrationTests"
     source_root = ROOT / "Packages/HanlinProductSplit/Sources/HanlinProductSplit"
-    production = sorted(p.name for p in source_root.glob("*.swift") if p.name != "SplitFixtureStore.swift")
+    production = sorted(p.name for p in source_root.glob("*.swift") if p.name not in excluded)
     assert production, "Empty production target"
     assert all("@main" not in (source_root / name).read_text(encoding="utf-8") for name in production)
     scheme = ET.parse(ROOT / "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme")
@@ -46,7 +48,7 @@ def validate():
     assert refs and all(ref.get("BlueprintIdentifier") == mini_id for ref in refs)
     assert not scheme.findall(".//TestableReference"), "Leaf tests run through their real package scheme"
     result.update(status="GRAPH_CHECKS_PASS", base=BASE, production_sources=production,
-                  registered_suite="RegisteredSplitIntegrationTests", registered_cases=4,
+                  registered_suite="RegisteredSplitIntegrationTests", registered_cases=5,
                   project_sha256=hashlib.sha256((ROOT / PROJECT).read_bytes()).hexdigest(),
                   native_build="NOT_RUN", feature_acceptance="NOT_RUN")
     return result
