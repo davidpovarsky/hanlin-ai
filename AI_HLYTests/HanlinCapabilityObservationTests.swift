@@ -98,19 +98,19 @@ struct HanlinCapabilityObservationTests {
     }
 
     @Test func mcpSelectionNotifiesAfterRealCommitAndPreservesOtherChats() async throws {
-        let (root, provider, layout) = makeMCPFixture()
+        let (root, provider, layout, _) = makeMCPFixture()
         defer { try? FileManager.default.removeItem(at: root) }
         await provider.loadIfNeeded(startHost: false)
         #expect(provider.persistentLoadState == .loaded)
         let firstChat = UUID(), otherChat = UUID()
         let firstIDs: Set<UUID> = [UUID()], otherIDs: Set<UUID> = [UUID()]
         await provider.setSelection(otherIDs, chatID: otherChat, temporary: false)
-        let revision = provider.selectionRevision
+        let revision = provider.selectionRevision(chatID: firstChat, temporary: false)
         let changes = CapabilityObservationCounter()
-        withObservationTracking { _ = provider.selectionRevision } onChange: { changes.mark() }
+        withObservationTracking { _ = provider.selectionRevision(chatID: firstChat, temporary: false) } onChange: { changes.mark() }
         await provider.setSelection(firstIDs, chatID: firstChat, temporary: false)
         #expect(changes.count == 1)
-        #expect(provider.selectionRevision == revision + 1)
+        #expect(provider.selectionRevision(chatID: firstChat, temporary: false) == revision + 1)
         let actualStore = MCPChatSelectionStore(fileLayout: layout)
         #expect(try await actualStore.selection(chatID: firstChat) == firstIDs)
         #expect(try await actualStore.selection(chatID: otherChat) == otherIDs)
@@ -123,27 +123,149 @@ struct HanlinCapabilityObservationTests {
     }
 
     @Test func failedMCPSelectionDoesNotNotifyACommit() async throws {
-        let (root, provider, layout) = makeMCPFixture()
+        let (root, provider, layout, store) = makeMCPFixture()
+        let firstChat = UUID()
         defer { try? FileManager.default.removeItem(at: root) }
         await provider.loadIfNeeded(startHost: false)
         #expect(provider.persistentLoadState == .loaded)
+        let temporaryServer = UUID()
+        await provider.setSelection([temporaryServer], chatID: firstChat, temporary: true)
+        let temporaryChanges = CapabilityObservationCounter()
+        withObservationTracking { _ = provider.selectionRevision(chatID: firstChat, temporary: true) } onChange: { temporaryChanges.mark() }
         // A real directory at the JSON path makes the real actor store read fail.
         try FileManager.default.createDirectory(at: layout.chatSelections, withIntermediateDirectories: true)
         let changes = CapabilityObservationCounter()
-        withObservationTracking { _ = provider.selectionRevision } onChange: { changes.mark() }
-        await provider.setSelection([UUID()], chatID: UUID(), temporary: false)
-        #expect(provider.selectionRevision == 0)
+        withObservationTracking { _ = provider.selectionRevision(chatID: firstChat, temporary: false) } onChange: { changes.mark() }
+        await provider.setSelection([UUID()], chatID: firstChat, temporary: false)
+        #expect(provider.selectionRevision(chatID: firstChat, temporary: false) == 0)
         #expect(changes.count == 0)
         #expect(provider.lastError != nil)
+        do {
+            _ = try await provider.readSelection(chatID: firstChat, temporary: false)
+            Issue.record("A failed real store read must not report successful default selection")
+        } catch {}
+        do {
+            let mutation = try await store.removeServer(temporaryServer)
+            provider.publishSelectionMutation(mutation)
+            Issue.record("A failed real removal must not report committed mutation scopes")
+        } catch {}
+        #expect(temporaryChanges.count == 0)
+        #expect(provider.selectionRevision(chatID: firstChat, temporary: true) == 1)
+        #expect(try await provider.readSelection(chatID: firstChat, temporary: true) == [temporaryServer])
     }
 
     @Test func unloadedMCPSelectionKeepsTheExistingAdmissionGuard() async {
-        let (root, provider, layout) = makeMCPFixture()
+        let (root, provider, layout, _) = makeMCPFixture()
+        let firstChat = UUID()
         defer { try? FileManager.default.removeItem(at: root) }
-        await provider.setSelection([UUID()], chatID: UUID(), temporary: false)
+        for temporary in [false, true] {
+            await provider.setSelection([UUID()], chatID: firstChat, temporary: temporary)
+            #expect(provider.selectionRevision(chatID: firstChat, temporary: temporary) == 0)
+            do {
+                _ = try await provider.readSelection(chatID: firstChat, temporary: temporary)
+                Issue.record("An unloaded store must report request-scoped failure")
+            } catch MCPChatSelectionReadError.storageNotLoaded {} catch {
+                Issue.record("Unexpected unloaded selection error")
+            }
+        }
         #expect(provider.persistentLoadState == .notLoaded)
-        #expect(provider.selectionRevision == 0)
         #expect(!FileManager.default.fileExists(atPath: layout.chatSelections.path))
+    }
+
+    @Test func mcpSignalsAreScopedAndNoopWritesDoNotNotify() async throws {
+        let (root, provider, layout, store) = makeMCPFixture()
+        defer { try? FileManager.default.removeItem(at: root) }
+        await provider.loadIfNeeded(startHost: false)
+        let first = UUID(), second = UUID()
+        for temporary in [false, true] {
+            let changes = CapabilityObservationCounter()
+            withObservationTracking { _ = provider.selectionRevision(chatID: first, temporary: temporary) } onChange: { changes.mark() }
+            // Creating another token and committing another scope must not invalidate first.
+            _ = provider.selectionRevision(chatID: second, temporary: temporary)
+            await provider.setSelection([UUID()], chatID: second, temporary: temporary)
+            #expect(changes.count == 0)
+            #expect(try await store.selection(chatID: first, temporary: temporary) == nil)
+            let oppositeMode = CapabilityObservationCounter()
+            withObservationTracking { _ = provider.selectionRevision(chatID: first, temporary: !temporary) } onChange: { oppositeMode.mark() }
+            await provider.setSelection([], chatID: first, temporary: temporary)
+            #expect(oppositeMode.count == 0)
+            #expect(changes.count == 1)
+            #expect(provider.selectionRevision(chatID: first, temporary: temporary) == 1)
+            let explicitEmpty = try #require(try await store.selection(chatID: first, temporary: temporary))
+            #expect(explicitEmpty.isEmpty)
+            let repeated = CapabilityObservationCounter()
+            withObservationTracking { _ = provider.selectionRevision(chatID: first, temporary: temporary) } onChange: { repeated.mark() }
+            await provider.setSelection([], chatID: first, temporary: temporary)
+            #expect(repeated.count == 0)
+            #expect(provider.selectionRevision(chatID: first, temporary: temporary) == 1)
+        }
+        let reopened = MCPChatSelectionStore(fileLayout: layout)
+        let persisted = try #require(try await reopened.selection(chatID: first))
+        #expect(persisted.isEmpty)
+    }
+
+    @Test func serverRemovalPreservesExplicitEmptyAndNotifiesOnlyAffectedScopes() async throws {
+        let (root, provider, layout, store) = makeMCPFixture()
+        defer { try? FileManager.default.removeItem(at: root) }
+        await provider.loadIfNeeded(startHost: false)
+        let selected = UUID(), empty = UUID(), unaffected = UUID()
+        let removedServer = UUID(), retainedServer = UUID()
+        for temporary in [false, true] {
+            await provider.setSelection([removedServer], chatID: selected, temporary: temporary)
+            await provider.setSelection([], chatID: empty, temporary: temporary)
+            await provider.setSelection([retainedServer], chatID: unaffected, temporary: temporary)
+        }
+        let selectedChanges = CapabilityObservationCounter(), emptyChanges = CapabilityObservationCounter(), otherChanges = CapabilityObservationCounter()
+        withObservationTracking {
+            _ = provider.selectionRevision(chatID: selected, temporary: false)
+            _ = provider.selectionRevision(chatID: selected, temporary: true)
+        } onChange: { selectedChanges.mark() }
+        withObservationTracking {
+            _ = provider.selectionRevision(chatID: empty, temporary: false)
+            _ = provider.selectionRevision(chatID: empty, temporary: true)
+        } onChange: { emptyChanges.mark() }
+        withObservationTracking {
+            _ = provider.selectionRevision(chatID: unaffected, temporary: false)
+            _ = provider.selectionRevision(chatID: unaffected, temporary: true)
+        } onChange: { otherChanges.mark() }
+        let mutation = try await store.removeServer(removedServer)
+        #expect(mutation.affectedScopes == [.init(chatID: selected, temporary: false), .init(chatID: selected, temporary: true)])
+        provider.publishSelectionMutation(mutation)
+        #expect(selectedChanges.count == 1)
+        #expect(emptyChanges.count == 0)
+        #expect(otherChanges.count == 0)
+        for temporary in [false, true] {
+            #expect(provider.selectionRevision(chatID: selected, temporary: temporary) == 2)
+            #expect(provider.selectionRevision(chatID: empty, temporary: temporary) == 1)
+            #expect(try await store.selection(chatID: selected, temporary: temporary) == [])
+            #expect(try await store.selection(chatID: empty, temporary: temporary) == [])
+            #expect(try await store.selection(chatID: unaffected, temporary: temporary) == [retainedServer])
+            #expect(await provider.selection(chatID: empty, temporary: temporary).isEmpty)
+        }
+        let reopened = MCPChatSelectionStore(fileLayout: layout)
+        #expect(try await reopened.selection(chatID: empty) == [])
+        #expect(try await reopened.selection(chatID: selected) == [])
+        #expect(try await store.removeServer(removedServer).affectedScopes.isEmpty)
+    }
+
+    @Test func concurrentMCPReadsKeepTheirRequestedChatAndStorageScope() async throws {
+        let (root, provider, _, store) = makeMCPFixture()
+        defer { try? FileManager.default.removeItem(at: root) }
+        await provider.loadIfNeeded(startHost: false)
+        let first = UUID(), second = UUID()
+        let persistent: Set<UUID> = [UUID()], temporary: Set<UUID> = [UUID()]
+        await provider.setSelection(persistent, chatID: first, temporary: false)
+        await provider.setSelection(temporary, chatID: second, temporary: true)
+        async let firstRead = provider.readSelection(chatID: first, temporary: false)
+        async let secondRead = provider.readSelection(chatID: second, temporary: true)
+        let (firstValue, secondValue) = try await (firstRead, secondRead)
+        #expect(firstValue == persistent)
+        #expect(secondValue == temporary)
+        #expect(try await store.selection(chatID: first, temporary: true) == nil)
+        #expect(try await store.selection(chatID: second, temporary: false) == nil)
+        #expect(try await provider.readSelection(chatID: first, temporary: true).isEmpty)
+        await provider.setSelection([], chatID: first, temporary: false)
+        #expect(try await provider.readSelection(chatID: first, temporary: false).isEmpty)
     }
 
     @Test func migrationOverrideUsesOnlyItsOwnedSource() throws {
@@ -161,13 +283,14 @@ struct HanlinCapabilityObservationTests {
         #expect(!FileManager.default.fileExists(atPath: isolated.registry.appending(path: "unit-sentinel.txt").path))
     }
 
-    private func makeMCPFixture() -> (URL, MCPRuntimeProvider, MCPFileLayout) {
+    private func makeMCPFixture() -> (URL, MCPRuntimeProvider, MCPFileLayout, MCPChatSelectionStore) {
         let root = temporaryRoot()
         let runtimeLayout = RuntimeFileLayout(root: root)
         let environment = RuntimeEnvironmentStore(fileLayout: runtimeLayout)
         let runtime = NodeRuntimeService(fileLayout: runtimeLayout, environment: environment)
         let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
-        return (root, MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment), layout)
+        let selections = MCPChatSelectionStore(fileLayout: layout)
+        return (root, MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment, selectionStore: selections), layout, selections)
     }
 
     private func temporaryRoot() -> URL {

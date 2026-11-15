@@ -9,6 +9,16 @@ enum MCPPersistentLoadState: Equatable, Sendable {
     case failed(String)
 }
 
+enum MCPChatSelectionReadError: Error, Sendable {
+    case storageNotLoaded
+}
+
+@MainActor
+@Observable
+private final class MCPChatSelectionSignal {
+    var revision: UInt64 = 0
+}
+
 @MainActor
 @Observable
 final class MCPRuntimeProvider {
@@ -21,7 +31,7 @@ final class MCPRuntimeProvider {
     private(set) var installState: MCPInstallState = .idle
     private(set) var lastError: String?
     private(set) var persistentLoadState: MCPPersistentLoadState = .notLoaded
-    private(set) var selectionRevision: UInt64 = 0
+    @ObservationIgnored private var selectionSignals: [MCPChatSelectionScope: MCPChatSelectionSignal] = [:]
 
     let nodeRuntime: NodeRuntimeService
     let controller: MCPRuntimeController
@@ -37,14 +47,15 @@ final class MCPRuntimeProvider {
     init(
         runtime: NodeRuntimeService? = nil,
         fileLayout: MCPFileLayout = .default,
-        runtimeEnvironment: RuntimeEnvironmentStore? = nil
+        runtimeEnvironment: RuntimeEnvironmentStore? = nil,
+        selectionStore: MCPChatSelectionStore? = nil
     ) {
         let runtime = runtime ?? AppRuntimeCore.shared.node
         let registry = MCPServerRegistryStore(fileLayout: fileLayout)
         let secrets = MCPSecretStore()
         nodeRuntime = runtime
         registryStore = registry
-        selectionStore = MCPChatSelectionStore(fileLayout: fileLayout)
+        self.selectionStore = selectionStore ?? MCPChatSelectionStore(fileLayout: fileLayout)
         configurationStore = MCPFeatureConfigurationStore(fileLayout: fileLayout)
         secretStore = secrets
         controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets,
@@ -149,8 +160,35 @@ final class MCPRuntimeProvider {
         }
     }
 
+    /// Stable per-chat observation: inserting or mutating another token is ignored.
+    func selectionRevision(chatID: UUID, temporary: Bool) -> UInt64 {
+        selectionSignal(for: .init(chatID: chatID, temporary: temporary)).revision
+    }
+
+    private func selectionSignal(for scope: MCPChatSelectionScope) -> MCPChatSelectionSignal {
+        if let signal = selectionSignals[scope] { return signal }
+        let signal = MCPChatSelectionSignal()
+        selectionSignals[scope] = signal
+        return signal
+    }
+
+    /// Notification only; the committed store outcome carries no new authority.
+    func publishSelectionMutation(_ mutation: MCPChatSelectionMutation) {
+        for scope in mutation.affectedScopes { selectionSignal(for: scope).revision &+= 1 }
+    }
+
+    /// Request-scoped read: absence uses defaults, while storage failures throw.
+    func readSelection(chatID: UUID, temporary: Bool) async throws -> Set<UUID> {
+        _ = selectionRevision(chatID: chatID, temporary: temporary)
+        guard persistentLoadState == .loaded else { throw MCPChatSelectionReadError.storageNotLoaded }
+        if let stored = try await selectionStore.selection(chatID: chatID, temporary: temporary) {
+            return stored
+        }
+        return Set(servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id))
+    }
+
     func selection(chatID: UUID, temporary: Bool) async -> Set<UUID> {
-        _ = selectionRevision
+        _ = selectionRevision(chatID: chatID, temporary: temporary)
         do {
             if let stored = try await selectionStore.selection(chatID: chatID, temporary: temporary) {
                 return stored
@@ -162,8 +200,8 @@ final class MCPRuntimeProvider {
     func setSelection(_ ids: Set<UUID>, chatID: UUID, temporary: Bool) async {
         guard persistentLoadState == .loaded else { return }
         do {
-            try await selectionStore.setSelection(ids, chatID: chatID, temporary: temporary)
-            selectionRevision &+= 1
+            let mutation = try await selectionStore.setSelection(ids, chatID: chatID, temporary: temporary)
+            publishSelectionMutation(mutation)
         } catch { lastError = error.localizedDescription }
     }
 
@@ -402,8 +440,8 @@ final class MCPRuntimeProvider {
                     method: "DELETE"
                 )
             }
-            try await selectionStore.removeServer(server.id)
-            selectionRevision &+= 1
+            let mutation = try await selectionStore.removeServer(server.id)
+            publishSelectionMutation(mutation)
             servers = try await registryStore.remove(id: server.id)
             lastError = nil
         } catch {

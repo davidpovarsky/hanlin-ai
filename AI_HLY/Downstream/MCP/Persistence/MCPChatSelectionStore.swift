@@ -1,5 +1,15 @@
 import Foundation
 
+struct MCPChatSelectionScope: Hashable, Sendable {
+    let chatID: UUID
+    let temporary: Bool
+}
+
+struct MCPChatSelectionMutation: Sendable {
+    let affectedScopes: Set<MCPChatSelectionScope>
+    static let unchanged = Self(affectedScopes: [])
+}
+
 actor MCPChatSelectionStore {
     private let fileLayout: MCPFileLayout
     private var temporarySelections: [UUID: Set<UUID>] = [:]
@@ -13,32 +23,44 @@ actor MCPChatSelectionStore {
         return try load()[chatID]?.serverIDs
     }
 
-    func setSelection(_ serverIDs: Set<UUID>, chatID: UUID, temporary: Bool = false) throws {
+    @discardableResult
+    func setSelection(_ serverIDs: Set<UUID>, chatID: UUID, temporary: Bool = false) throws -> MCPChatSelectionMutation {
+        let scope = MCPChatSelectionScope(chatID: chatID, temporary: temporary)
         if temporary {
+            guard temporarySelections[chatID] != serverIDs else { return .unchanged }
             temporarySelections[chatID] = serverIDs
-            return
+            return .init(affectedScopes: [scope])
         }
         var selections = try load()
+        // Absent means defaults; explicitly stored [] means disabled for this chat.
+        guard selections[chatID]?.serverIDs != serverIDs else { return .unchanged }
         selections[chatID] = MCPChatSelection(chatID: chatID, serverIDs: serverIDs)
         try save(selections)
+        return .init(affectedScopes: [scope])
     }
 
-    func removeServer(_ serverID: UUID) throws {
+    @discardableResult
+    func removeServer(_ serverID: UUID) throws -> MCPChatSelectionMutation {
         var selections = try load()
-        for key in selections.keys {
+        var affected = Set<MCPChatSelectionScope>()
+        for key in selections.keys where selections[key]?.serverIDs.contains(serverID) == true {
             selections[key]?.serverIDs.remove(serverID)
+            affected.insert(.init(chatID: key, temporary: false))
         }
-        selections = selections.filter { !$0.value.serverIDs.isEmpty }
-        try save(selections)
-        temporarySelections = temporarySelections.mapValues { ids in
-            var updated = ids
-            updated.remove(serverID)
-            return updated
+        // Retain explicit empty records, including a selection whose last server
+        // was removed. Dropping it would silently restore default server selection.
+        if !affected.isEmpty { try save(selections) }
+        for key in temporarySelections.keys where temporarySelections[key]?.contains(serverID) == true {
+            temporarySelections[key]?.remove(serverID)
+            affected.insert(.init(chatID: key, temporary: true))
         }
+        return .init(affectedScopes: affected)
     }
 
-    func clearTemporary(chatID: UUID) {
-        temporarySelections.removeValue(forKey: chatID)
+    @discardableResult
+    func clearTemporary(chatID: UUID) -> MCPChatSelectionMutation {
+        guard temporarySelections.removeValue(forKey: chatID) != nil else { return .unchanged }
+        return .init(affectedScopes: [.init(chatID: chatID, temporary: true)])
     }
 
     private func load() throws -> [UUID: MCPChatSelection] {
