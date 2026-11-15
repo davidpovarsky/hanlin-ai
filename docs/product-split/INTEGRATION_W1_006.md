@@ -672,3 +672,20 @@ setup failure, not a producer compiler failure. The inventory now enumerates onl
 the frozen Hanlin packages/docs using git ls-tree; producer inputs keep their
 separate exact revision and source inventory. Source/pins/assertions are unchanged.
 Actual producer/core/Session tests and replacement locks remain NOT_RUN/pending.
+
+
+Composer changed-fixture run43686167890 at1221dea8 remains FAILURE: exported raw
+JSON has exactly10 unique methods, 9 Passed and only wrappedLinesAndScrolling
+Failed; all12 input hashes match Git. ZIP14150702778,25623406 bytes,SHA256
+6dd154ba5b73e543f49cfddd9f7089b453b24517fdd82dd86bb543cf2f7bbc55 was checked in RAM.
+Both issues show actual isScrollEnabled=true and (target==7)=false. Source loop
+is[6,7], so target6 follows; actual script/height/cap values were not recorded.
+TextKit1 compatibility was logged, without a proven causal conclusion.
+
+Independently source-reviewed diagnostic03a9cf030e077cb7cb16025698dc2825eac63aff
+is now imported byte-for-byte in its exact two leased paths. It adds a default-nil
+measurement observer using the existing computed fitting/max values before the
+unchanged scroll decision; the test records script/target/metrics on its unchanged
+assertion. One newly authorized Composer-only diagnostic run is permitted. This
+is expected-failure instrumentation, not a product fix or acceptance. No second
+sizeThatFits, threshold/tolerance change, draft logging or weakened test is added.

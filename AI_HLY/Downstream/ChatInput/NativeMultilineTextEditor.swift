@@ -55,12 +55,17 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         return (minimum, min(maximum, max(0, availableHeight)))
     }
 
-    func measuredHeight(for textView: UITextView, isEmpty: Bool) -> CGFloat {
+    func measuredHeight(
+        for textView: UITextView,
+        isEmpty: Bool,
+        observeMeasurement: ((CGFloat, CGFloat) -> Void)? = nil
+    ) -> CGFloat {
         let width = Self.effectiveMeasurementWidth(for: textView)
         let fitting = textView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height
         let bounds = usesAutomaticLineLimits
             ? Self.automaticHeightBounds(for: textView, isEmpty: isEmpty, availableHeight: maxHeight)
             : (min: minHeight, max: max(minHeight, maxHeight))
+        observeMeasurement?(fitting, bounds.max)
         textView.isScrollEnabled = !isEmpty && Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max)
         return Self.calculatedHeight(fittingHeight: fitting, minHeight: bounds.min, maxHeight: bounds.max)
     }

@@ -39,6 +39,7 @@ struct NativeComposerLineSizingTests {
     func wrappedLinesAndScrolling() {
         let editor = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: 1000, usesAutomaticLineLimits: true)
         for sample in ["word ", "שלום "] {
+            let script = sample == "word " ? "Latin" : "Hebrew"
             let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 160, height: 100))
             view.font = .preferredFont(forTextStyle: .body)
             view.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
@@ -70,8 +71,14 @@ struct NativeComposerLineSizingTests {
                     layoutManager.enumerateLineFragments(forGlyphRange: range) { _, _, _, _, _ in lines += 1 }
                     if lines == target {
                         #expect(range.location == 0 && range.length == layoutManager.numberOfGlyphs)
-                        let height = editor.measuredHeight(for: view, isEmpty: false)
-                        #expect(view.isScrollEnabled == (target == 7))
+                        var fittingHeight: CGFloat = 0
+                        var maximumHeight: CGFloat = 0
+                        let height = editor.measuredHeight(for: view, isEmpty: false) { fitting, maximum in
+                            fittingHeight = fitting
+                            maximumHeight = maximum
+                        }
+                        #expect(view.isScrollEnabled == (target == 7),
+                            "script=\(script) lines=\(target) fitting=\(fittingHeight) max=\(maximumHeight) measured=\(height) lineHeight=\(view.font?.lineHeight ?? 0) width=\(contentWidth) scrolling=\(view.isScrollEnabled)")
                         if target == 6 {
                             #expect(height > minimum)
                             sixLineHeight = height
