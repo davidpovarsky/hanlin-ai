@@ -5,6 +5,16 @@ import WebKit
 /// remains with the official A2UI Video/AudioPlayer components.
 struct HanlinYouTubePlayerView: View {
     let video: HanlinYouTubeVideo
+
+    var body: some View {
+        HanlinRequestedYouTubePlayer(video: video).id(video.id)
+    }
+}
+
+/// The request belongs to this video identity before UIKit construction. An onChange reset
+/// alone could let a newly identified WebView load before that reset is applied.
+private struct HanlinRequestedYouTubePlayer: View {
+    let video: HanlinYouTubeVideo
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.isEnabled) private var isEnabled
     @State private var requested = false

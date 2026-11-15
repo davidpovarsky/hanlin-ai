@@ -168,3 +168,19 @@ Artifact14169003246 (17,139 bytes), SHA256
 `9ca79ee8557cbc662050f12d93d7fbba2367d03e6d27ec78d1483c122df1573f` preserves preflight,
 original input hashes, lock and failure status. This attempt is not a source-compilation failure
 or a test pass. A focused compile retry is required; unchanged media tests remain unrepeated.
+
+The YouTube request state now belongs to an inner view keyed by the canonical video ID.
+Changing videos resets state before constructing a replacement WKWebView. The prior onChange
+reset alone happened after body evaluation and could race a changed player's construction.
+This uses the same sanctioned player and native SwiftUI identity; no second player/renderer.
+Actual gesture/source-change lifecycle XCUITest remains pending.
+
+At source3637e842, the iOS compile-only retry43735081607/job132875786155 was COMPILE_PASS,
+zero tests,199s. Source/lock/toolchain/xcresult hashes are retained in
+`evidence/media-compile-43735081607.json`; artifact14169953145 SHA256
+`f2a5d63cafea29dca5e8ffe5b7cd75512f2335b8ecdddb106c38b2cb10f5f640`.
+It confirms native player-wrapper and final-graph compilation at that original SHA, before the
+subsequent YouTube identity wrapper. The d7634f36 compile43734204357 remains BUILD_FAILED/zero
+tests on the same non-re-exported JSONValue annotation, separately recorded. The new YouTube
+identity wrapper needs its own affected compile check; unchanged identity/document/URL tests
+are not rerun and no playback/gesture behavior is inferred from compilation.

@@ -42,3 +42,13 @@ and schema rejection, owner isolation/retirement, whole-batch rejection before s
 canonical/budget rules, RPC absence and disposal on both exits. Native execution is pending
 at this source commit. Combined affected proof selects6 validator +6 consumer +17 ownership
 cases; unrelated direct SDK/producer/media test cases are not repeated.
+
+The corrected source3637e8428fd7e37c8107d404efee23f040e1a854 passed all29 selected cases in
+run43735078623/job132875777032 (333s), Xcode27.2/Swift6.4.2 on actual macOS27.0.1 arm64.
+Artifact14170327633 SHA256a1bedd6ed597c287edd60f285af74ed31efca7bc586703edd56cead736c06350
+and `evidence/sdk-batch-43735078623.json` retain authenticated original inputs/exact cases.
+The earlier d7634f36 attempts43734178023 (Mac29 cases) and43734204357 (iOS compile-only)
+were BUILD_FAILED/zero executed because an explicit JSONValue annotation named a type that
+A2UICore does not re-export. Inferring the SDK model property type fixed both platforms without
+adding a dependency or changing validation semantics. Their failure records are retained.
+Actual application protocol conformance, owner/Host wiring, live provider and XCUITest remain OPEN.
