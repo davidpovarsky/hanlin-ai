@@ -22,15 +22,34 @@ enum HanlinA2UIIngress {
         case surfaceLimit, sessionBudget, sdkValidation, closed
     }
 
-    /// SDK diagnostic metadata only; never payload values or an alternative routing authority.
+    /// Finite SDK codes only. Never store a raw path, message, identifier or unknown code.
     struct SDKDiagnostic: Equatable, Sendable {
-        let code: String
-        let path: String
-
-        init(code: String, path: String) {
-            self.code = String(code.prefix(96))
-            self.path = String(path.prefix(256))
+        private enum Code: String, Sendable {
+            case invalidIdentifier = "invalid_identifier", invalidValue = "invalid_value"
+            case typeMismatch = "type_mismatch", missingField = "missing_field"
+            case unknownComponent = "unknown_component", unknownFunction = "unknown_function"
+            case invalidFunctionCall = "invalid_function_call", tooManyArguments = "too_many_arguments"
+            case validationFailed = "VALIDATION_FAILED", unallowedParent = "UNALLOWED_PARENT"
+            case unallowedChild = "UNALLOWED_CHILD", integrityError = "INTEGRITY_ERROR"
+            case recursionLimit = "RECURSION_LIMIT_EXCEEDED", dataError = "DATA_ERROR"
+            case internalError = "INTERNAL_ERROR", expressionError = "EXPRESSION_ERROR"
+            case parsingFailed = "PARSING_FAILED", invalidCall = "INVALID_FUNCTION_CALL"
+            case surfaceNotFound = "SURFACE_NOT_FOUND", sdkError = "SDK_ERROR"
         }
+        private let kind: Code
+        var code: String { kind.rawValue }
+
+        init(code: String) {
+            kind = Code(rawValue: code) ?? .sdkError
+        }
+    }
+
+    private static func safeSDKErrorType(_ raw: String) -> String {
+        for name in ["A2UIValidationError", "A2UIIntegrityError", "A2UIRecursionError",
+                     "A2UICatalogError", "A2UIDataError", "A2UIParseError"] {
+            if raw == name || raw == "A2UICore." + name { return name }
+        }
+        return "A2UIError"
     }
 
     struct Rejection: Error, Equatable, Sendable {
@@ -43,7 +62,7 @@ enum HanlinA2UIIngress {
              sdkErrorType: String? = nil, diagnostics: [SDKDiagnostic] = []) {
             self.failure = failure
             self.surfaceID = surfaceID
-            self.sdkErrorType = sdkErrorType.map { String($0.prefix(96)) }
+            self.sdkErrorType = sdkErrorType.map { HanlinA2UIIngress.safeSDKErrorType($0) }
             self.diagnostics = Array(diagnostics.prefix(8))
         }
     }

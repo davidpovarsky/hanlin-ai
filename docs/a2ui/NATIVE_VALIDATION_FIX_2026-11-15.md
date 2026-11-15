@@ -4,10 +4,16 @@ The actual [run43662884686](https://github.com/davidpovarsky/hanlin-ai/actions/r
 compiled source `c40e617b` against the exact official SDK with both gates enabled.
 All25 real cases executed:8 portable passed and17 SDK cases failed during
 nominal fixture loading. This replaces the previous NOT_RUN status **for that
-tested revision**, not the corrected candidate. New-source execution is pending.
+tested revision**. The later passing source result is recorded below; only the
+new privacy correction's source execution remains pending.
 Read [native-run-43662884686.json](evidence/native-run-43662884686.json) for the
 actual per-case log outcomes and advertised artifact identity. The111MB ZIP was
 not duplicated locally; its digest is the GitHub API value, not a local rehash.
+
+The later actual [run43664698104](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43664698104)
+on2bae5a3e passed all25 enabled cases, validating the identifier correction.
+It does not cover the subsequent diagnostic privacy fix described in
+[DIAGNOSTIC_PRIVACY_FIX_2026-11-15.md](DIAGNOSTIC_PRIVACY_FIX_2026-11-15.md).
 
 ## Cause and correction
 
@@ -22,9 +28,9 @@ The exact source is at
 [PayloadValidator.swift](https://github.com/a2ui-project/a2ui/blob/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Validation/PayloadValidator.swift)
 and [UnicodeIdentifierValidator.swift](https://github.com/a2ui-project/a2ui/blob/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Validation/UnicodeIdentifierValidator.swift).
 The actual failing run retained only our generic rejection, so its *underlying*
-SDK code/path was not observed there. The identified fixture violation is
-established by the pinned validator source and its portable execution; the
-corrected full-SDK25-case run must still confirm the entire behavior.
+SDK code/path was not observed there. The fixture violation was established
+by pinned source/portable execution and then its correction executed in the
+passing2bae25-case native run. The new privacy assertions need separate proof.
 
 Positive form/RTL/update fixtures and their Button child references now use
 `submitLabel`, including the stable-ID assertion. Negative Button/function
@@ -37,12 +43,13 @@ is no automatic renaming of incoming IDs or persisted-envelope change.
 
 ## Diagnostics and evidence
 
-Rejection now retains the SDK error type and up to8 structured code/path pairs
-(96/256-character field caps). SDK messages and payload values are not copied.
-These are diagnostic metadata only: failure routing still depends exclusively
-on the validated Frame and current SDK-owned surface. Raw ingress failures have
-no SDK diagnostics. A future fixture/schema failure can identify its original
-code/path instead of stopping at a generic sdkValidation label.
+Rejection now retains only fixed SDK error-type literals and up to8 allowlisted
+codes. The intermediate bounded code/path design at2bae was privacy-unsafe:
+paths can interpolate payload identifiers. That path field is removed entirely,
+and error callbacks are normalized as detailed in the privacy correction.
+Failure routing still depends exclusively on the validated Frame and current
+SDK-owned surface. Raw ingress failures have no SDK diagnostics. Stable failure
+codes remain useful without exporting component/function/argument names.
 
 `validate_fixture_identifiers.swift` compiles with the **unchanged** pinned
 upstream validator snapshot in `evidence/UnicodeIdentifierValidator.pinned.swift`

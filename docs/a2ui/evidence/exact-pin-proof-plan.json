@@ -34,7 +34,7 @@
   "files": [
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
-      "sha256": "ddbf26d308dae5de5f7365c29b413c18666ab8dc3b868d2b73d966be63a4b1f7"
+      "sha256": "a992fd554408786db74b36873b80bf61bb391e07e0e3f5a023d73738d89bdb67"
     },
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
@@ -42,11 +42,11 @@
     },
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
-      "sha256": "11cb78ff8a4b7a153def82d7b63b4f472e1cab7bbfd6638279ed1493c3e3ce31"
+      "sha256": "12905aa382be65d4b06da5a05c195e01c09d045150b05c01d54eff67525f65d6"
     },
     {
       "path": "AI_HLYTests/A2UITests.swift",
-      "sha256": "80bd738e20f692cc50d0ef4da358bc9af9497d0db456a120c7329ef85ebad840"
+      "sha256": "367480e224946c6f5d08c034dfd3e16ef6ee9d0fcc7da5df5323389a86f3190f"
     },
     {
       "path": "AI_HLYTests/A2UIFixtures/form.jsonl",

@@ -130,6 +130,18 @@
       "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/A2UIError.swift",
       "utf8_sha256": "b1c8b4dc7e40fe1463c13890d757927971e17034278b43438266727e37f7a47f",
       "bytes": 1701
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Errors/GenericError.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/GenericError.swift",
+      "utf8_sha256": "02aeeb1f478aa0d0a4f4d54299590fac6fd13d1166d06b0ade434059658a94e7",
+      "bytes": 3796
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Errors/ValidationFailedError.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/ValidationFailedError.swift",
+      "utf8_sha256": "996b378a9354496ee0db5c6ca73393550581e6368db41cfb35ca9d9b28afbe9c",
+      "bytes": 1934
     }
   ]
 }

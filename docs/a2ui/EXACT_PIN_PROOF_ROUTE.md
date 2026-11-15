@@ -5,7 +5,8 @@ itself dispatched no native job. Tomer's actual run43662884686 later compiled
 c40e617b and executed all25 cases:8 PASS/17 SDK FAIL during fixture load. The
 fixture/diagnostic correction is documented in
 [NATIVE_VALIDATION_FIX_2026-11-15.md](NATIVE_VALIDATION_FIX_2026-11-15.md).
-The current corrected candidate is pending the same enabled proof, not SDK_PASS.
+The2bae5a3e follow-up actually passed25 in run43664698104. The current diagnostic
+privacy candidate is pending that same enabled proof, not covered by the2bae pass.
 
 `prepare_exact_pin_proof.py` prepares the same3 source files, the unchanged25
 Swift Testing selectors and all7 fixtures in an isolated SwiftPM consumer.

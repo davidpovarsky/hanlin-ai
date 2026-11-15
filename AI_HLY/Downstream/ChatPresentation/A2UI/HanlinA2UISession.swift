@@ -37,6 +37,7 @@ final class HanlinA2UISession {
                 protocolVersion: .v10
             )
         )
+        relay.processor = processor
         // Deliberately leave outboundListener nil, including on every created surface.
     }
 
@@ -75,7 +76,7 @@ final class HanlinA2UISession {
             let failure = (error as? HanlinA2UIIngress.Rejection)?.failure ?? .sdkValidation
             let sdkError = error as? any A2UIError
             let diagnostics = sdkError?.details.prefix(8).map {
-                HanlinA2UIIngress.SDKDiagnostic(code: $0.code, path: $0.path)
+                HanlinA2UIIngress.SDKDiagnostic(code: $0.code)
             } ?? []
             var correlatedID: String?
             // SDK ownership is the only source of surface membership. Raw IDs in an error,
@@ -129,6 +130,7 @@ final class HanlinA2UISession {
 @MainActor
 private final class HanlinA2UIEventRelay: ActionHandling {
     private var onEvent: (@Sendable (RendererToAgentMessage) -> Void)?
+    weak var processor: MessageProcessor?
 
     init(onEvent: @escaping @Sendable (RendererToAgentMessage) -> Void) {
         self.onEvent = onEvent
@@ -154,7 +156,33 @@ private final class HanlinA2UIEventRelay: ActionHandling {
     }
 
     nonisolated func handle(error: RendererError, from surfaceID: String) {
-        Task { @MainActor [weak self] in self?.onEvent?(.error(error)) }
+        // Do not capture the raw SDK error in the queued callback: it can contain payload paths,
+        // messages and expressions. Only a finite code crosses to the UI actor.
+        let code: String
+        switch error {
+        case .validationFailed(let failure):
+            code = HanlinA2UIIngress.SDKDiagnostic(code: failure.code.rawValue).code
+        case .generic(let failure):
+            code = HanlinA2UIIngress.SDKDiagnostic(code: failure.code).code
+        }
+        Task { @MainActor [weak self] in
+            guard let self, let callback = self.onEvent,
+                  self.processor?.surfaceGroupModel[surfaceID] != nil else { return }
+            let safe: RendererError
+            if let validationCode = A2UICore.ValidationFailedError.Code(rawValue: code) {
+                // This official wire model requires a path. Use one fixed category, no SDK path.
+                safe = .validationFailed(A2UICore.ValidationFailedError(
+                    code: validationCode, surfaceID: surfaceID, path: "validation",
+                    message: "Content could not be processed.", version: .v10
+                ))
+            } else {
+                safe = .generic(A2UICore.GenericError(
+                    code: code, surfaceID: surfaceID,
+                    message: "Content could not be processed.", version: .v10
+                ))
+            }
+            callback(.error(safe))
+        }
     }
 }
 #endif
