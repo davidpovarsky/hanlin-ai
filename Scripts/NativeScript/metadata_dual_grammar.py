@@ -72,6 +72,9 @@ def validate_receipt(binary: Path, request_path: Path, context: dict, tool: Path
     if any(cpp[key] != objc[key] for key in ["compiler", "target", "resourceDirectory", "actualSearchDirectories"]) or \
        cpp["compiler"] != context["compiler"] or any(unit.get("diagnosticErrorCount") != 0 for unit in [cpp, objc]):
         raise RuntimeError("Actual dual compiler/search/diagnostic context is unproven")
+    if not isinstance(receipt.get("peakRSSBytes"), int) or not 0 < receipt["peakRSSBytes"] <= 4 * 1024**3 or \
+       any(unit.get("peakRSSBudget") != 4 * 1024**3 for unit in [cpp, objc]):
+        raise RuntimeError("Dual metadata resource budget is unproven or exceeded")
     coverage = proof.get("originalAModelCoverage", {})
     if coverage.get("status") != "COMPLETE" or coverage.get("unmappedModels") != 0 or \
        coverage.get("originalGraphModels") != coverage.get("retainedOriginalModels", -1) + coverage.get("mappedWithProof", -1) or \

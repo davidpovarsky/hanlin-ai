@@ -109,7 +109,22 @@ inline int generate(const std::string& requestPath, const std::vector<std::strin
         {"writerEntries", static_cast<int64_t>(hanlinWriterEntries)}, {"peakRSSBytes", peakResidentBytes()},
         {"seconds", std::chrono::duration<double>(std::chrono::steady_clock::now() - started).count()},
         {"runtimeAcceptance", "NOT_ESTABLISHED"}};
-    writeExclusive(stage + "/receipt.json", llvm::formatv("{0:2}\n", llvm::json::Value(std::move(result))).str());
+    llvm::json::Value finalReceipt(std::move(result));
+    auto* statistics = finalReceipt.getAsObject();
+    (*statistics)["secondsMeasurement"] = "start_to_final_receipt_render_begin";
+    (*statistics)["peakRSSMeasurement"] = "maximum_through_complete_receipt_render";
+    std::string receiptBytes;
+    for (unsigned render = 0; ; ++render) {
+        const auto observedPeak = peakResidentBytes();
+        (*statistics)["peakRSSBytes"] = observedPeak;
+        (*statistics)["seconds"] = std::chrono::duration<double>(std::chrono::steady_clock::now() - started).count();
+        receiptBytes = llvm::formatv("{0:2}\n", finalReceipt).str();
+        requireResidentBudget("complete receipt construction before publication");
+        if (peakResidentBytes() == observedPeak) break;
+        if (render == 3) throw std::runtime_error("Receipt RSS accounting did not stabilize within bounded pure renders");
+    }
+    writeExclusive(stage + "/receipt.json", receiptBytes);
+    requireResidentBudget("all staged outputs before publication");
     // Each rename is atomic. Publish the receipt last; consumers must verify
     // its complete bound identity and all hashes, never accept a partial set.
     if (!yaml.empty()) fs::rename(stage + "/yaml", yaml);

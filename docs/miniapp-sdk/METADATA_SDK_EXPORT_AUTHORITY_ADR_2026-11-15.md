@@ -115,3 +115,27 @@ exact, and sysroot must equal the bound physical SDK. New native counterexamples
 reject a changed deployment version and environment and accept only explicit-zero
 formatting. Binding proof may erase only the symbol name: formal linkage and
 visibility remain exact, with derived counterexamples from a real AST ABI object.
+
+Actual1191af99/run43757087726 passes13 model/transaction controls, strict31
+original models,9 export/target controls and the genuine SDK authority slice.
+All220 model-control and6 export-control manifest files verify with0 mismatches.
+The3 actual SDK functions select C authority with raw differing bindings kept;
+public model owner is AVFoundation.AVCaptureTimecodeGenerator, no private module
+is added. All34,151 original A graph nodes are covered:14 retained and34,137
+mapped,0 missing. The slice produces2,282,320B metadata and36 declaration files;
+strict generated TypeScript remains NOT_RUN. Static compiler/link controls from
+e5c8c671 were REUSED_VERIFIED_STATIC_BINDING_PROOF after unchanged inputs checks;
+they did not execute again in this run. Slice result SHA256:
+`5ba4a0644b2202d3dd90413865a83c09ec6b0c89423bcaf040681d9652cfcecc`.
+Observed RSS at receipt construction was2,299,068,416B; producer time22.188s.
+Those metrics preceded final receipt rendering and are not full process peaks.
+
+Before full SDK widening, the candidate now enforces the4GiB measured RSS budget
+also after model merge, binary/YAML/TypeScript writers, lifetime postflight and
+complete final receipt rendering, before publication. Receipt RSS includes its
+own bounded pure rendering; elapsed-time phase is explicit and the probe records
+the whole metadata child-process duration. This budget-path change requires an
+affected model/SDK slice run. The separate9-case export test implementation,
+fixtures and transitive code did not change; an explicit verifier reuses its
+original pass only after complete source/compiler/library/environment and SDK
+fixture hashes match, reporting REUSED_VERIFIED_PASS and new execution NOT_RUN.

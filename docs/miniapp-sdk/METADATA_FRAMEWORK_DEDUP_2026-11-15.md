@@ -15,7 +15,7 @@ The manager authorized the narrow authority rule; native export prototype
 LLVM TextAPI closure implementation, requires actual compiler/link evidence,
 preserves every original-A model through an explicit route ledger, and retains
 the raw differing bindings as RESOLVED_TO_EXPORTED_C_AUTHORITY (never binding
- equivalence). Integrated13-case/31-model/actual SDK slice validation is pending.
+ equivalence). Integrated run43757087726/1191af99 passes13 controls,31 original models,9 export/target controls and the actual SDK slice. All3 defective bindings select C authority with no missing A models. Full SDK widening follows affected verification of budget enforcement through final receipt rendering.
 No new fullSDK/combined/VM acceptance or consumer activation is claimed.
 
 #### Authorized dual-grammar contract version 2 (candidate)

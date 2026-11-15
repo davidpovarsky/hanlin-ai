@@ -15,6 +15,7 @@ import re
 import shlex
 import subprocess
 import sys
+import time
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from metadata_public_headers import MODERN_CPP_ARGUMENTS as CANDIDATE_CPP_ARGUMENTS
@@ -442,7 +443,9 @@ def main() -> int:
             result["nativeCompilerContext"] = {**native_context, "driftExitCode": drift.returncode,
                 "status": "EXECUTED_PASS" if drift.returncode > 0 and b"Effective metadata compiler context drifted" in drift.stdout + drift.stderr else "FAILED",
                 "boundary": "Actual tool argument capture/verification; not a C++ absence or VM proof."}
+        metadata_started = time.monotonic()
         completed = subprocess.run(command, cwd=generator.parent, capture_output=True, timeout=180)
+        metadata_seconds = time.monotonic() - metadata_started
         (destination / "stdout.log").write_bytes(completed.stdout)
         (destination / "stderr.log").write_bytes(completed.stderr)
         if completed.returncode < 0:
@@ -453,7 +456,7 @@ def main() -> int:
         symbols = {name: name.encode() + b"\0" in data for name in required}
         errors = [line for line in completed.stderr.decode("utf-8", errors="replace").splitlines()
                   if re.search(r"(?:^|:\d+(?::\d+)?:\s+)(?:fatal\s+)?error:", line)]
-        result["modes"][mode] = {"exitCode": completed.returncode, "requiredMetadataStringsPresent": symbols,
+        result["modes"][mode] = {"exitCode": completed.returncode, "metadataProcessSeconds": metadata_seconds, "requiredMetadataStringsPresent": symbols,
             "xcodeClangSyntaxControlExitCode": control.returncode,
             "metadataSHA256": hashlib.sha256(data).hexdigest(), "metadataBytes": len(data),
             "clangErrorCount": len(errors),

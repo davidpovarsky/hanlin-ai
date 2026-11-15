@@ -15,6 +15,12 @@ inline int64_t peakResidentBytes() {
     return usage.ru_maxrss; // This candidate is explicitly macOS: ru_maxrss is bytes.
 }
 
+inline void requireResidentBudget(llvm::StringRef phase) {
+    const auto peak = peakResidentBytes();
+    if (peak > 4LL * 1024 * 1024 * 1024)
+        throw std::runtime_error("Dual metadata RSS budget exceeded at " + phase.str() + ": " + std::to_string(peak));
+}
+
 inline llvm::json::Array searchDirectories(clang::ASTUnit& ast) {
     llvm::json::Array directories;
     auto& search = ast.getPreprocessor().getHeaderSearchInfo();

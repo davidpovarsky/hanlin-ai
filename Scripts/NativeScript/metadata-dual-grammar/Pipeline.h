@@ -34,6 +34,8 @@ public:
              Meta::ModulesBlacklist& blacklist, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem> fs,
              const llvm::json::Object* request = nullptr)
         : cpp(cppCode, cppArguments, blacklist, fs), objc(objcCode, objcArguments, blacklist, fs) {
+        llvm::errs() << "Hanlin dual resources: retained AST/model collection cpp=" << cpp.models().size()
+                     << " objc=" << objc.models().size() << " peakRSSBytes=" << peakResidentBytes() << "\n";
         if (!cpp.context().getLangOpts().CPlusPlus || objc.context().getLangOpts().CPlusPlus ||
             !cpp.context().getLangOpts().ObjC || !objc.context().getLangOpts().ObjC)
             throw std::runtime_error("Dual grammar requires actual ObjC++ and ObjC source ASTs");
@@ -53,6 +55,8 @@ public:
     std::list<Meta::Meta*>& merge() {
         if (merged) throw std::runtime_error("Dual grammar merge may execute only once");
         canonical = merger.merge(cpp.models(), objc.models());
+        llvm::errs() << "Hanlin dual resources: complete model merge peakRSSBytes=" << peakResidentBytes() << "\n";
+        requireResidentBudget("complete model merge and original-A coverage");
         owners = std::make_unique<ModuleOwners>(objc, cpp);
         owners->apply(merger.retainedMetas());
         std::map<std::string, std::pair<clang::Module*, std::vector<Meta::Meta*>>> groups;
@@ -86,6 +90,7 @@ public:
     }
 
     llvm::json::Object lifetime() {
+        requireResidentBudget("retained AST lifetime postflight");
         if (sdkAuthority) sdkAuthority->verify();
         size_t cppModels = 0, objcModels = 0;
         for (auto* meta : merger.retainedMetas()) {
@@ -134,6 +139,7 @@ public:
                 if (file.has_error()) throw std::runtime_error("Dual TypeScript write failed");
             }
         }
+        requireResidentBudget("original binary/YAML/TypeScript serialization");
     }
 };
 

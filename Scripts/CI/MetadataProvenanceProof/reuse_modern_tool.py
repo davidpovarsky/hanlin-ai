@@ -61,7 +61,7 @@ def main():
     (destination / "bin/HanlinDualGrammarControls").chmod(0o755)
     shutil.copy2(receipt, destination / "provenance.json")
     (destination / "compile-reuse.json").write_text(json.dumps({"status": "REUSED_VERIFIED_COMPILE_PASS",
-        "originalRun": 43756153599, "originalSourceSHA": "e5c8c6713334761dca781990b26d5b7a85b51e1a", "generatorSHA256": evidence["generatorSHA256"],
+        "originalRun": 43757087726, "originalSourceSHA": "1191af999bd200e1f432d61b71c47d2dd5882118", "generatorSHA256": evidence["generatorSHA256"],
         "originalReceiptSHA256": sha(receipt), "verifiedFrontendInputs": len(inputs),
         "boundary": "Original compile and focused31-module run passed. This record reuses compilation only; no metadata test execution is inherited."}, indent=2) + "\n")
     print("REUSED_VERIFIED_COMPILE_PASS: original source, binary, Xcode and complete frontend input hashes match")

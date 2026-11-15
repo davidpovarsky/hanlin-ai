@@ -2896,9 +2896,10 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "AFFECTED_13_CONTROLS_31_MODELS_9_EXPORT_TARGET_CONTROLS_AND_SDK_SLICE",
+        "scope": "AFFECTED_POST_SERIALIZATION_RSS_BUDGET_CONTROLS_31_MODELS_AND_SDK_SLICE",
         "status": "PENDING_DISPATCH",
-        "fullSDK": "NOT_RUN until affected slice passes"
+        "unchangedExportTargetControls": "Explicit verified reuse only; no repeat execution",
+        "fullSDK": "NOT_RUN until budget scope passes"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3170,6 +3171,35 @@
             "CPPLinksRejected": 6,
             "functions": 3
           },
+          "runtimeAcceptance": "NOT_ESTABLISHED"
+        },
+        "SDKAuthoritySlice": {
+          "run": 43757087726,
+          "sourceSHA": "1191af99",
+          "status": "EXECUTED_PASS",
+          "modelControls": 13,
+          "modelControlResultSHA256": "6756cae56b237a39153621a7502827ddc30642fa1b731ed89e7b03e52fd6a97d",
+          "referenceModules": 31,
+          "exportTargetControls": 9,
+          "exportResultSHA256": "11f9622236f5494c736dfe2bf0578067938751924eb7b9eac0fa483a439c765e",
+          "verifiedModelManifestFiles": 220,
+          "verifiedExportManifestFiles": 6,
+          "manifestMismatches": 0,
+          "resolvedSDKBindings": 3,
+          "publicModelOwner": "AVFoundation.AVCaptureTimecodeGenerator",
+          "bindingEquivalent": false,
+          "metadataBytes": 2282320,
+          "metadataSHA256": "5427fad1780ce05963d4006ce35fb199d6af57dc398d4b803de4a98fa2e4674e",
+          "declarationFilesGenerated": 36,
+          "strictGeneratedTypecheck": "NOT_RUN",
+          "originalAGraphModels": 34151,
+          "retainedOriginalModels": 14,
+          "mappedWithProof": 34137,
+          "unmappedModels": 0,
+          "staticCompilerLinkControls": "REUSED_VERIFIED_STATIC_BINDING_PROOF",
+          "observedRSSBeforeReceiptRender": 2299068416,
+          "secondsBeforeReceiptRender": 22.188113,
+          "resultSHA256": "5ba4a0644b2202d3dd90413865a83c09ec6b0c89423bcaf040681d9652cfcecc",
           "runtimeAcceptance": "NOT_ESTABLISHED"
         }
       }
