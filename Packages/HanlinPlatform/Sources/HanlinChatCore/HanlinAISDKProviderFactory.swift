@@ -25,7 +25,7 @@ public enum HanlinAISDKProviderFactory {
         } else if company == "GOOGLE" || company == "GEMINI" || apiType.contains("gemini") {
             kind = .google
         } else if company == "OPENAI" && !isOpenAICompatibleHost(configuration.endpoint.host) {
-            kind = .openAI
+            kind = apiType == "openai-responses" ? .openAIResponses : .openAI
         } else {
             kind = .openAICompatible
         }
@@ -74,7 +74,7 @@ public enum HanlinAISDKProviderFactory {
         switch kind {
         case .appleOnDevice:
             return endpoint
-        case .openAI, .openAICompatible:
+        case .openAI, .openAIResponses, .openAICompatible:
             suffixes = ["/chat/completions", "/responses"]
         case .anthropic:
             suffixes = ["/messages", "/chat/completions"]
@@ -108,7 +108,7 @@ extension HanlinAISDKProviderFactory {
         switch descriptor.kind {
         case .appleOnDevice:
             throw HanlinAISDKError.nativeProviderInjectionRequired
-        case .openAI:
+        case .openAI, .openAIResponses:
             let provider = try createOpenAIProvider(settings: .init(
                 baseURL: baseURL,
                 apiKey: configuration.apiKey,
@@ -116,7 +116,11 @@ extension HanlinAISDKProviderFactory {
                 name: "hanlin-openai",
                 fetch: fetch
             ))
-            model = try provider.chatModel(modelId: descriptor.modelID)
+            if descriptor.kind == .openAIResponses {
+                model = provider.responses(descriptor.modelID)
+            } else {
+                model = try provider.chatModel(modelId: descriptor.modelID)
+            }
 
         case .anthropic:
             let provider = createAnthropicProvider(settings: .init(
@@ -167,7 +171,7 @@ extension HanlinAISDKProviderFactory {
         switch kind {
         case .appleOnDevice:
             return nil
-        case .openAI:
+        case .openAI, .openAIResponses:
             guard let effort = configuration.reasoningEffort, !effort.isEmpty else { return nil }
             return ["openai": ["reasoningEffort": .string(effort)]]
         case .openAICompatible:

@@ -108,8 +108,8 @@ trap finish EXIT
 python3 - "$scratch" <<'PY' > "$evidence/expected-tests.json"
 import json,re,sys
 from pathlib import Path
-root=Path(sys.argv[1]);wanted={'AgentSessionTests','ContextTests','StoreTests','HanlinInjectedProviderTests','HanlinAISDKProviderFactoryTests','HanlinAISDKAgentEngineTests','RawToolInputPropagationTests','ToResponseMessagesTests','ExecuteToolCallProviderMetadataTests','ModelMessageCodableTests'};result={}
-paths=list((root/'Packages/HanlinAgentSDK/Tests').rglob('*.swift'))+[root/'Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAISDKTests.swift',root/'Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinInjectedProviderTests.swift']
+root=Path(sys.argv[1]);wanted={'AgentSessionTests','ContextTests','StoreTests','HanlinInjectedProviderTests','HanlinAISDKProviderFactoryTests','HanlinAISDKAgentEngineTests','HanlinNativeStructuredResponseTests','RawToolInputPropagationTests','ToResponseMessagesTests','ExecuteToolCallProviderMetadataTests','ModelMessageCodableTests'};result={}
+paths=list((root/'Packages/HanlinAgentSDK/Tests').rglob('*.swift'))+[root/'Packages/HanlinPlatform/Tests/HanlinChatCoreTests'/name for name in ['HanlinAISDKTests.swift','HanlinInjectedProviderTests.swift','HanlinNativeStructuredResponseTests.swift']]
 paths += [root/'Producer'/p for p in ['Tests/SwiftAISDKTests/GenerateText/RawToolInputPropagationTests.swift','Tests/SwiftAISDKTests/GenerateText/ToResponseMessagesTests.swift','Tests/SwiftAISDKTests/GenerateText/ExecuteToolCallProviderMetadataTests.swift','Tests/AISDKProviderUtilsTests/ModelMessageCodableTests.swift']]
 for path in paths:
     suite=None;pending=False
@@ -125,6 +125,12 @@ assert set(result)==wanted and all(result.values()),result
 print(json.dumps(result,indent=2))
 PY
 sdk_testing=(-only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests -only-testing:HanlinPersistenceAdaptersTests/StoreTests)
+if [[ "${HANLIN_SDK_NATIVE_SCHEMA_ONLY:-0}" == 1 ]]; then
+  # Engine/provider/Session changed. Pure HostContracts and private/in-memory store cases
+  # have no dependency on those sources; the independent checkpoint recovery owns its case.
+  sdk_testing=(-only-testing:HanlinAgentCoreTests/AgentSessionTests)
+  printf '{"SDKTests":["AgentSessionTests"],"CoreTests":["HanlinInjectedProviderTests","HanlinAISDKProviderFactoryTests","HanlinAISDKAgentEngineTests","HanlinNativeStructuredResponseTests"]}\n' > "$evidence/selected-suites.json"
+fi
 if [[ "${HANLIN_SDK_CHECKPOINT_ONLY:-0}" == 1 ]]; then
   cp "$evidence/expected-tests.json" "$evidence/all-expected-tests.json"
   python3 - "$evidence" <<'PY'
@@ -207,6 +213,7 @@ if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
   -only-testing:HanlinChatCoreTests/HanlinInjectedProviderTests \
   -only-testing:HanlinChatCoreTests/HanlinAISDKProviderFactoryTests \
+  -only-testing:HanlinChatCoreTests/HanlinNativeStructuredResponseTests \
   -only-testing:HanlinChatCoreTests/HanlinAISDKAgentEngineTests) > "$evidence/core-tests.log" 2>&1
 core_status=$?
 (cd "$sdk" && xcodebuild build -scheme HanlinAgentCore -destination 'generic/platform=iOS Simulator' \

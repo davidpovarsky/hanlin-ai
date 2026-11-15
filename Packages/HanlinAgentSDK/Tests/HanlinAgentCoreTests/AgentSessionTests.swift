@@ -209,6 +209,47 @@ private struct ControlledTextModel: LanguageModelV3 {
 }
 
 @Suite struct AgentSessionTests {
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = SyntheticFixtureHost(context: context)
+        let messageID = UUID()
+        let wire = #"{"parts":[{"part":"text","kind":"text","text":"Canonical answer","a2uiJSON":null}]}"#
+        let config = HanlinChatModelConfiguration(modelID: HanlinNativeStructuredResponse.modelID, company: "OPENAI",
+            apiType: "openai-responses", endpoint: "https://api.openai.com/v1/responses", credential: "fixture-only")
+        // Session/persistence contract proof. The Core tests separately execute the real HTTP adapter.
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [
+            .textStart(id: "fixture", providerMetadata: nil), .textDelta(id: "fixture", delta: wire, providerMetadata: nil),
+            .textEnd(id: "fixture", providerMetadata: nil)
+        ])))
+        let store = HanlinInMemoryConversationStore()
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        let source = try await session.stream(messages: [.init(role: .user, text: "Fixture")],
+            modelReference: .init(provider: "openai-responses", modelID: config.modelID),
+            structuredResponse: .init(messageID: messageID, validateCompleteParts: { _ in }))
+        var observed = 0
+        for try await event in source {
+            #expect(event.session == identity)
+            if case .textDelta = event.event { Issue.record("Schema JSON persisted as prose") }
+            if case .structuredPart(let part) = event.event {
+                observed += 1
+                let saved = try #require(await store.load(identity.conversationID, namespace: ns))
+                let replay = try saved.structuredEntries(runID: event.runID, messageID: messageID)
+                #expect(replay.contains {
+                    if case .structuredPart(let savedPart, let savedContext) = $0.payload {
+                        return savedPart == part && savedContext == context
+                    }
+                    return false
+                })
+                #expect(part.payload == .textDelta("Canonical answer"))
+            }
+        }
+        #expect(observed == 1)
+        #expect(await host.executions == 0)
+    }
+
     /// Requires the separately frozen producer and Tomer's temporary/final pin window.
     /// NOT_RUN on Windows: do not infer this chain from either isolated proof.
     @Test(.timeLimit(.minutes(1))) @MainActor

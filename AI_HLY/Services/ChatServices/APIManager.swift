@@ -3796,6 +3796,9 @@ class APIManager {
             case .runStarted:
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在处理" : "Processing"))
 
+            case .structuredResponseStarted:
+                break // Metadata only; canonical parts are delivered through the session projection.
+
             case .stepStarted(let index, let prep):
                 currentStepID = toolAdapter?.currentRoundID
                 visibleFinalCharacters = 0

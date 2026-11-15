@@ -56,13 +56,15 @@ public final class HanlinAgentSession {
     }
 
     public func stream(messages: [HanlinAISDKMessage], systemPrompt: String? = nil,
-                       modelReference: HanlinModelReference, maxSteps: Int? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                       modelReference: HanlinModelReference, maxSteps: Int? = nil,
+                       structuredResponse: HanlinNativeStructuredResponse? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         try await startStream(messages: messages, systemPrompt: systemPrompt, modelReference: modelReference,
-                              maxSteps: maxSteps, interactionOrigin: nil)
+                              maxSteps: maxSteps, interactionOrigin: nil, structuredResponse: structuredResponse)
     }
 
     private func startStream(messages: [HanlinAISDKMessage], systemPrompt: String?, modelReference: HanlinModelReference,
-                             maxSteps: Int?, interactionOrigin: HanlinHostInteractionOrigin?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                             maxSteps: Int?, interactionOrigin: HanlinHostInteractionOrigin?,
+                             structuredResponse: HanlinNativeStructuredResponse?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !invalidated else { throw HanlinHostError.staleContext }
         guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
         guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
@@ -119,6 +121,7 @@ public final class HanlinAgentSession {
                         return []
                     }
                 },
+                structuredResponse: structuredResponse,
                 prepareStep: { [weak self] index in
                     guard let self, !self.invalidated, self.activeRun == run else { return .init(activeToolAliases: []) }
                     self.step = index
@@ -241,7 +244,8 @@ public final class HanlinAgentSession {
     /// Successful producer EOF keeps admitted controls live. A user action obtains current host
     /// admission and starts a NEW turn through the same stream/engine, retaining original provenance.
     public func continueInteraction(_ request: HanlinHostInteractionRequest, messages: [HanlinAISDKMessage],
-                                    modelReference: HanlinModelReference, maxSteps: Int? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                                    modelReference: HanlinModelReference, maxSteps: Int? = nil,
+                                    structuredResponse: HanlinNativeStructuredResponse? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard let source = host as? any HanlinHostInteractionSource else { throw HanlinHostError.unsupportedProviderCapability }
         guard interactionRequests.insert(request.requestID).inserted else { throw HanlinHostError.duplicateInvocation }
         try await requireInteraction(request.origin)
@@ -251,7 +255,8 @@ public final class HanlinAgentSession {
         try await requireInteraction(request.origin)
         guard !prepared.userMessage.isEmpty, prepared.userMessage.utf8.count <= 1_048_576 else { throw HanlinHostError.invalidArguments }
         return try await startStream(messages: messages + [.init(role: .user, text: prepared.userMessage)], systemPrompt: nil,
-            modelReference: modelReference, maxSteps: maxSteps, interactionOrigin: request.origin)
+            modelReference: modelReference, maxSteps: maxSteps, interactionOrigin: request.origin,
+            structuredResponse: structuredResponse)
     }
 
     private func requireInteraction(_ origin: HanlinHostInteractionOrigin) async throws {

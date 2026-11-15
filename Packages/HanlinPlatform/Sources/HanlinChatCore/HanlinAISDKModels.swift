@@ -3,6 +3,7 @@ import HanlinPlatformContracts
 
 public enum HanlinAISDKProviderKind: String, Codable, Hashable, Sendable {
     case openAI
+    case openAIResponses
     case anthropic
     case google
     case openAICompatible
@@ -147,6 +148,8 @@ public struct HanlinAISDKToolCall: Hashable, Sendable {
 
 public enum HanlinAISDKStreamEvent: Sendable {
     case runStarted
+    /// Emitted only when this run actually requests the native schema response contract.
+    case structuredResponseStarted(messageID: UUID, channel: String)
     case stepStarted(index: Int, preparation: HanlinAISDKStepPreparation)
     case textDelta(String)
     case structuredPart(HanlinChatStructuredPart)
