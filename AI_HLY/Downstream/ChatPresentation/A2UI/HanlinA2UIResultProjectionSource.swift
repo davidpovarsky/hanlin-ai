@@ -17,7 +17,8 @@ final class HanlinA2UIResultProjectionSource {
     init?(store: HanlinA2UIResultStore, keys: [HanlinA2UIResultKey]) {
         var registered: [Identity: HanlinA2UIResultKey] = [:]
         for key in keys {
-            let identity = Identity(runID: key.runID, resultID: key.resultID, callID: key.callID)
+            guard let callID = key.callID else { return nil }
+            let identity = Identity(runID: key.runID, resultID: key.resultID, callID: callID)
             guard registered[identity] == nil, store.projection(for: key) != nil else { return nil }
             registered[identity] = key
         }

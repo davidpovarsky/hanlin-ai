@@ -7,10 +7,30 @@ import SwiftUI
 /// Transient identity supplied by the existing run/result owner, never by an A2UI payload.
 /// Registration mints the generation; a wire surface ID cannot select or replace an owner.
 struct HanlinA2UIResultKey: Hashable, Sendable {
+    enum Origin: Hashable, Sendable {
+        case tool(callID: String)
+        case model(messageID: UUID)
+    }
     let runID: UUID
     let resultID: UUID
-    let callID: String
+    let origin: Origin
     let generation: UUID
+
+    var callID: String? {
+        if case .tool(let callID) = origin { return callID }
+        return nil
+    }
+
+    init(runID: UUID, resultID: UUID, callID: String?, generation: UUID) {
+        self.init(runID: runID, resultID: resultID, origin: .tool(callID: callID ?? ""), generation: generation)
+    }
+
+    init(runID: UUID, resultID: UUID, origin: Origin, generation: UUID) {
+        self.runID = runID
+        self.resultID = resultID
+        self.origin = origin
+        self.generation = generation
+    }
 }
 
 @MainActor
@@ -163,12 +183,23 @@ final class HanlinA2UIResultStore {
     private var endedRuns: Set<UUID> = []
     private var isDiscarded = false
 
-    func register(runID: UUID, resultID: UUID, callID: String,
+    func register(runID: UUID, resultID: UUID, callID: String?,
                   sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
+        guard let callID, !callID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
+        return register(runID: runID, resultID: resultID, origin: .tool(callID: callID), sink: sink)
+    }
+
+    /// Model content has a message/part identity, never a fabricated provider tool call.
+    func registerModelPart(runID: UUID, messageID: UUID, partID: UUID,
+                           sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
+        register(runID: runID, resultID: partID, origin: .model(messageID: messageID), sink: sink)
+    }
+
+    private func register(runID: UUID, resultID: UUID, origin: HanlinA2UIResultKey.Origin,
+                          sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
         let slot = Slot(runID: runID, resultID: resultID)
-        guard !isDiscarded, !endedRuns.contains(runID), owners[slot] == nil,
-              !callID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
-        let key = HanlinA2UIResultKey(runID: runID, resultID: resultID, callID: callID, generation: UUID())
+        guard !isDiscarded, !endedRuns.contains(runID), owners[slot] == nil else { return nil }
+        let key = HanlinA2UIResultKey(runID: runID, resultID: resultID, origin: origin, generation: UUID())
         let owner = HanlinA2UIResultOwner(key: key, sink: sink, store: self)
         owners[slot] = owner
         return HanlinA2UIResultProjection(owner: owner)
@@ -205,9 +236,10 @@ final class HanlinA2UIResultStore {
     }
 
     /// Explicit replacement invalidates the old generation before registering its successor.
-    func replace(_ key: HanlinA2UIResultKey, callID: String,
+    func replace(_ key: HanlinA2UIResultKey, callID: String?,
                  sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
-        guard !isDiscarded, !endedRuns.contains(key.runID), let owner = owned(key),
+        guard case .tool = key.origin, let callID,
+              !isDiscarded, !endedRuns.contains(key.runID), let owner = owned(key),
               !owner.session.isInputSealed, !owner.session.isClosed,
               !callID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
         discard(key)

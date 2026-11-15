@@ -12,6 +12,7 @@ struct AgentTranscriptToolResultView: View {
   var body: some View {
     #if HANLIN_A2UI_POC
     if let projection = a2uiProjection, !projection.isClosed,
+       case .tool = projection.key.origin,
        item.kind == .userVisibleToolResult,
        projection.key.resultID == item.id, projection.key.callID == item.callID {
       let title = item.embeddedResultPayload?.title ?? item.nativeUIBlocks.compactMap(\.title).first ?? item.toolName

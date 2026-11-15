@@ -19,7 +19,7 @@ UPSTREAM = "https://github.com/a2ui-project/a2ui"
 REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
 CONSUMER_MODULE = "AI_Hanlin"
 PORTABLE_CASE_COUNT = 8
-SDK_CASE_COUNT = 27
+SDK_CASE_COUNT = 31
 CASE_COUNT = PORTABLE_CASE_COUNT + SDK_CASE_COUNT
 SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
 TEST = "AI_HLYTests/A2UITests.swift"
@@ -126,7 +126,7 @@ def verify_cases(roots: list[ET.Element], expected: list[str]) -> None:
                 raise ValueError(f"Unrecognized/ambiguous actual test identity: {identity}")
             seen.append(matches[0])
     if sorted(seen) != sorted(expected):
-        raise ValueError(f"Executed cases differ from the exact {CASE_COUNT}-case contract (missing/duplicate/zero cases)")
+        raise ValueError(f"Executed cases differ from the exact {len(expected)}-case contract (missing/duplicate/zero cases)")
 
 
 def self_test(inputs: dict) -> int:
@@ -163,8 +163,11 @@ def main() -> None:
     modes.add_argument("--self-test", action="store_true")
     modes.add_argument("--verify-pin", type=Path)
     modes.add_argument("--verify-results", type=Path, nargs="+")
+    modes.add_argument("--verify-xcresult", type=Path)
     parser.add_argument("--resolved", type=Path)
     parser.add_argument("--inputs", type=Path)
+    parser.add_argument("--suite", choices=["all", "sdk"], default="all",
+                        help="Verify only SDK identities when portable framing is unaffected")
     args = parser.parse_args()
     inputs = plan()
     if args.self_test:
@@ -177,16 +180,33 @@ def main() -> None:
     elif args.output:
         prepare(args.output, inputs)
         print(json.dumps({"harness": str(args.output.resolve()), "status": "PREPARED_NOT_EXECUTED"}))
-    elif args.verify_results:
+    elif args.verify_results or args.verify_xcresult:
         if not args.resolved or not args.inputs:
             parser.error("--verify-results requires the actual --resolved lock and retained --inputs")
         recorded = json.loads(args.inputs.read_text(encoding="utf-8"))
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
         verify_pin(json.loads(args.resolved.read_text(encoding="utf-8")))
-        verify_cases([ET.parse(p).getroot() for p in args.verify_results],
-                     inputs["portable_cases"] + inputs["sdk_cases"])
-        print(json.dumps({"status": "RESULT_CONTENTS_VALID", "cases": CASE_COUNT,
+        expected = inputs["sdk_cases"] if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"]
+        if args.verify_xcresult:
+            root = ET.Element("testsuite")
+            def visit(node):
+                if isinstance(node, dict):
+                    if node.get("nodeType") == "Test Case":
+                        case = ET.SubElement(root, "testcase", name=node.get("name", ""),
+                                             classname=node.get("nodeIdentifier", ""))
+                        if node.get("result") != "Passed":
+                            ET.SubElement(case, "failure")
+                    for value in node.values():
+                        visit(value)
+                elif isinstance(node, list):
+                    for value in node:
+                        visit(value)
+            visit(json.loads(args.verify_xcresult.read_text(encoding="utf-8")))
+            verify_cases([root], expected)
+        else:
+            verify_cases([ET.parse(p).getroot() for p in args.verify_results], expected)
+        print(json.dumps({"status": "RESULT_CONTENTS_VALID", "cases": len(expected), "suite": args.suite,
                           "provenance": "Authenticate process/toolchain/artifact separately",
                           "lock_sha256": sha(args.resolved.read_bytes())}))
     else:

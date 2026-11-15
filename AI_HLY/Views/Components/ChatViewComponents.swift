@@ -79,6 +79,7 @@ struct ChatBubbleView: View {
     @Environment(\.chatExcerptSource) private var excerptSource
     #if HANLIN_A2UI_POC
     @Environment(\.hanlinA2UIResultProjectionSource) private var a2uiProjectionSource
+    @Environment(\.hanlinChatContentProjectionSource) private var chatContentProjectionSource
     #endif
     @State private var isPersonallySaved = false
     let temporaryRecord: Bool
@@ -601,7 +602,10 @@ struct ChatBubbleView: View {
     }
 
     private var hasAssistantRichCards: Bool {
-        (showCanvas && canvas?.content.isEmpty == false)
+        #if HANLIN_A2UI_POC
+        if orderedModelContent != nil { return true }
+        #endif
+        return (showCanvas && canvas?.content.isEmpty == false)
             || codeBlocks?.isEmpty == false
             || knowledgeCard?.isEmpty == false
             || htmlContent?.isEmpty == false
@@ -1778,90 +1782,114 @@ struct ChatBubbleView: View {
     }
 
     // MARK: - AI 助手消息内容
+    #if HANLIN_A2UI_POC
+    private var orderedModelContent: HanlinChatContentProjection? {
+        chatContentProjectionSource?.projection(runID: agentRun?.id, messageID: id, text: text)
+    }
+    #endif
+
+    @ViewBuilder
+    private var existingAssistantMarkdown: some View {
+        if !text.isEmpty {
+            ChatMarkdownView(text: text,
+                savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
+                saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
+            .padding(.vertical, 4)
+            .contentShape(Rectangle())
+            .contextMenu {
+                // 复制
+                Button(action: {
+                    UIPasteboard.general.string = markdownToPlainText(text)
+                }) {
+                    Label("复制内容", systemImage: "square.on.square")
+                }
+                .accessibilityIdentifier("hanlin-message-menu-copy")
+
+                // 选中文本
+                Button(action: {
+                    isTextSelectionSheetPresented = true
+                }) {
+                    Label("选择文本", systemImage: "text.redaction")
+                }
+
+                // 生成语音
+                Button(action: {
+                    tts.setContextIfNeeded(modelContext)
+                    tts.updateSelectedModel()
+                    tts.setMessageId(id)
+                    tts.toggleSpeech(text: text)
+                }) {
+                    if tts.isAsking {
+                        Label("正在请求", systemImage: "progress.indicator")
+                    } else {
+                        Label("生成语音", systemImage: "waveform")
+                    }
+                }
+
+                // 翻译/删除译文/翻译中…
+                Button(action: translateText) {
+                    if isTranslating {
+                        Label("正在翻译", systemImage: "progress.indicator")
+                    } else if translated {
+                        Label("删除译文", systemImage: "trash")
+                    } else {
+                        HStack {
+                            Image("translate")
+                                .renderingMode(.template)
+                                .font(.system(size: size_14, weight: .medium))
+                                .frame(width: size_24, height: size_24)
+                                .foregroundColor(.secondary)
+                                .clipShape(Circle())
+                            Text("翻译内容")
+                        }
+                    }
+                }
+
+                Button { savePersonalExcerpt(text) } label: {
+                    Label("Save for myself", systemImage: "bookmark")
+                }
+
+                // 存为知识
+                Button(action: {
+                    createAndSaveKnowledgeRecord(with: text)
+                }) {
+                    Label("存为知识", systemImage: "backpack")
+                }
+
+                // 删除消息
+                Button(action: {
+                    showDeleteConfirmation = true
+                }) {
+                    Label("删除消息", systemImage: "trash")
+                }
+            } preview: {
+                ChatMarkdownView(text: text)
+                    .padding()
+                    .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 16))
+                    .frame(maxWidth: 560)
+            }
+        }
+
+    }
+
+
+
     @ViewBuilder
     private func messageContent() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             if showsAgentActivitySummary { activityContent() }
             
-            if !text.isEmpty {
-                ChatMarkdownView(text: text,
+            #if HANLIN_A2UI_POC
+            if let projection = orderedModelContent {
+                HanlinChatContentView(projection: projection,
                     savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
                     saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
-                .padding(.vertical, 4)
-                .contentShape(Rectangle())
-                .contextMenu {
-                    // 复制
-                    Button(action: {
-                        UIPasteboard.general.string = markdownToPlainText(text)
-                    }) {
-                        Label("复制内容", systemImage: "square.on.square")
-                    }
-                    .accessibilityIdentifier("hanlin-message-menu-copy")
-                    
-                    // 选中文本
-                    Button(action: {
-                        isTextSelectionSheetPresented = true
-                    }) {
-                        Label("选择文本", systemImage: "text.redaction")
-                    }
-                    
-                    // 生成语音
-                    Button(action: {
-                        tts.setContextIfNeeded(modelContext)
-                        tts.updateSelectedModel()
-                        tts.setMessageId(id)
-                        tts.toggleSpeech(text: text)
-                    }) {
-                        if tts.isAsking {
-                            Label("正在请求", systemImage: "progress.indicator")
-                        } else {
-                            Label("生成语音", systemImage: "waveform")
-                        }
-                    }
-                    
-                    // 翻译/删除译文/翻译中…
-                    Button(action: translateText) {
-                        if isTranslating {
-                            Label("正在翻译", systemImage: "progress.indicator")
-                        } else if translated {
-                            Label("删除译文", systemImage: "trash")
-                        } else {
-                            HStack {
-                                Image("translate")
-                                    .renderingMode(.template)
-                                    .font(.system(size: size_14, weight: .medium))
-                                    .frame(width: size_24, height: size_24)
-                                    .foregroundColor(.secondary)
-                                    .clipShape(Circle())
-                                Text("翻译内容")
-                            }
-                        }
-                    }
-                    
-                    Button { savePersonalExcerpt(text) } label: {
-                        Label("Save for myself", systemImage: "bookmark")
-                    }
-
-                    // 存为知识
-                    Button(action: {
-                        createAndSaveKnowledgeRecord(with: text)
-                    }) {
-                        Label("存为知识", systemImage: "backpack")
-                    }
-                    
-                    // 删除消息
-                    Button(action: {
-                        showDeleteConfirmation = true
-                    }) {
-                        Label("删除消息", systemImage: "trash")
-                    }
-                } preview: {
-                    ChatMarkdownView(text: text)
-                        .padding()
-                        .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 16))
-                        .frame(maxWidth: 560)
-                }
+            } else {
+                existingAssistantMarkdown
             }
+            #else
+            existingAssistantMarkdown
+            #endif
             
             audioView()
                 .transition(.opacity.combined(with: .move(edge: .top)))

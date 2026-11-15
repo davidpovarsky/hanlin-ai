@@ -296,6 +296,89 @@ private final class A2UIResultSinkRecorder: HanlinA2UIResultEventSink {
 @MainActor
 @Suite("A2UI official exact-pin SDK")
 struct A2UISDKTests {
+    @Test func modelPartUsesMessageIdentityWithoutToolCall() throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let run = UUID(), message = UUID(), part = UUID()
+        let p = try #require(store.registerModelPart(runID: run, messageID: message, partID: part, sink: sink))
+        #expect(p.key.callID == nil)
+        #expect(p.key.origin == .model(messageID: message))
+        #expect(store.register(runID: run, resultID: part, callID: "invented-tool", sink: sink) == nil)
+        #expect(store.replace(p.key, callID: "invented-tool", sink: sink) == nil)
+        #expect(HanlinA2UIResultProjectionSource(store: store, keys: [p.key]) == nil)
+        try load(store, p)
+        #expect(try node(p, id: "greeting").string(for: "text") == "Ada")
+    }
+
+    @Test func orderedModelProjectionPreservesTextAndRegisteredSurface() throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let run = UUID(), message = UUID(), part = UUID()
+        let p = try #require(store.registerModelPart(runID: run, messageID: message, partID: part, sink: sink))
+        try load(store, p)
+        let parts: [HanlinChatContentProjection.Part] = [
+            .init(id: UUID(), content: .markdown("שלום\n\n")),
+            .init(id: part, content: .surface(p.key)),
+            .init(id: UUID(), content: .markdown("**Summary**"))
+        ]
+        let projection = try #require(HanlinChatContentProjection(runID: run, messageID: message, parts: parts, store: store))
+        let source = try #require(HanlinChatContentProjectionSource(messages: [projection]))
+        #expect(projection.parts.map(\.id) == parts.map(\.id))
+        #expect(source.projection(runID: run, messageID: message, text: "שלום\n\n**Summary**") === projection)
+        #expect(source.projection(runID: run, messageID: message, text: "text cannot disappear") == nil)
+        #expect(source.projection(runID: UUID(), messageID: message, text: projection.plainText) == nil)
+        #expect(source.projection(runID: run, messageID: UUID(), text: projection.plainText) == nil)
+        let model = try #require(p.surface("form-a"))
+        for _ in 0..<10 { #expect(projection.surface(for: parts[1])?.surface("form-a") === model) }
+        A2UITextField(node: try node(p, id: "name")).valueBinding.wrappedValue = "Local edit"
+        #expect(try node(p, id: "greeting").string(for: "text") == "Local edit")
+        #expect(projection.surface(for: parts[0]) == nil)
+    }
+
+    @Test func modelProjectionRejectsForeignIdentityAndAmbiguousParts() throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let run = UUID(), message = UUID(), part = UUID()
+        let p = try #require(store.registerModelPart(runID: run, messageID: message, partID: part, sink: sink))
+        let surface = HanlinChatContentProjection.Part(id: part, content: .surface(p.key))
+        #expect(HanlinChatContentProjection(runID: UUID(), messageID: message, parts: [surface], store: store) == nil)
+        #expect(HanlinChatContentProjection(runID: run, messageID: UUID(), parts: [surface], store: store) == nil)
+        #expect(HanlinChatContentProjection(runID: run, messageID: message, parts: [surface, surface], store: store) == nil)
+        #expect(HanlinChatContentProjection(runID: run, messageID: message,
+            parts: [.init(id: UUID(), content: .surface(p.key))], store: store) == nil)
+        let tool = try #require(store.register(runID: run, resultID: UUID(), callID: "actual-call", sink: sink))
+        #expect(HanlinChatContentProjection(runID: run, messageID: message,
+            parts: [.init(id: tool.key.resultID, content: .surface(tool.key))], store: store) == nil)
+        #expect(HanlinChatContentProjection(runID: run, messageID: message,
+            parts: [.init(id: UUID(), content: .markdown(String(repeating: "x", count: 1_048_577)))], store: store) == nil)
+        #expect(HanlinChatContentProjection(runID: run, messageID: message,
+            parts: (0..<129).map { _ in .init(id: UUID(), content: .markdown("x")) }, store: store) == nil)
+    }
+
+    @Test func modelProjectionNeverFollowsReplacedGeneration() throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let run = UUID(), message = UUID(), part = UUID()
+        let p = try #require(store.registerModelPart(runID: run, messageID: message, partID: part, sink: sink))
+        try load(store, p)
+        let surface = HanlinChatContentProjection.Part(id: part, content: .surface(p.key))
+        let projection = try #require(HanlinChatContentProjection(runID: run, messageID: message, parts: [surface], store: store))
+        store.seal(p.key)
+        #expect(projection.surface(for: surface)?.isReadOnly == true)
+        store.discard(p.key)
+        let next = try #require(store.registerModelPart(runID: run, messageID: message, partID: part, sink: sink))
+        #expect(next.key.generation != p.key.generation)
+        #expect(projection.surface(for: surface) == nil)
+        #expect(projection.surface(for: .init(id: part, content: .surface(next.key))) == nil)
+        #expect(HanlinChatContentProjection(runID: run, messageID: message, parts: [surface], store: store) == nil)
+        store.discardRun(run)
+        #expect(store.registerModelPart(runID: run, messageID: message, partID: UUID(), sink: sink) == nil)
+    }
+
     private func load(_ session: HanlinA2UISession, fixture: String = "form") throws {
         for line in try A2UIFixture.lines(fixture) { try session.receive(line).get() }
     }
