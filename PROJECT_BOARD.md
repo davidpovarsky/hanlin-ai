@@ -31,6 +31,8 @@ Potential improvements, features, optimizations, or architectural ideas.
 
 ## Discoveries & Tips
 
+- **2026-11-15 native Host guarantee metadata:** NativeToolCanonicalShadowAdapter and LegacyToolCanonicalAdapter currently classify general app tools as read/sensitiveRead, including tools with mutation modes. A shadow risk label is not proof of a business read-only operation. The SDK app bridge conservatively uses hostManagedMutation for canonical tools; future narrower guarantees require authoritative per-operation semantics, retaining original policy/executor and ambiguous outcomes. See docs/agent-sdk/APP_SESSION_PRESENTATION_HOOK_2026-11-15.md.
+
 - **2026-11-14 Expo version dimensions:** hanlinExpo.runtimeVersion58.0.3 is the existing generated UI runtime contract, distinct from npm Expo58.0.0; bridge3.0.0 is distinct from @hanlin/expo-ui package1.0.0. Prepared fixture dependency metadata still mixes the latter two, and generic Expo/RN dependency minima are not yet validated. SDK-02 should validate separate dimensions against their actual authorities; blindly replacing58.0.3 with58.0.0 would change the existing contract. The unused old RN rc constant is not evidence of the installed ABI.
 
 - **2026-11-13 NativeScript generator success is insufficient:** pinned v9.1.0 ignores the clang tooling Boolean return and silently skips declarations with unknown module ownership. Preserve one module owner per native header and retain the actual generated metadata/stderr/umbrella. A zero exit or a metadata section alone cannot certify Host bridge globals; require actual VM visibility/receipt tests. Run43411873747 proves the metadata-pointer change alone did not solve missing globals.

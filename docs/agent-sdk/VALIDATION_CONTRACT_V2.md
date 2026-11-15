@@ -1,5 +1,10 @@
 # Package-contract acceptance v2 — impact-aware aggregation
 
+Historical recovery contract. `VALIDATION_CONTRACT_V3.md` supersedes it for the later native
+schema/Host source and authenticated45+3 executed /6 unchanged-reused cases. The initial aliased
+root explanation below was a hypothesis, not an established cause; source80 later hung at save_v1.
+The actual bounded traversal recovery and original symbolic-link assertion passed43735446863.
+
 Scope: canonical SDK/Core fixture-host contracts and real SwiftData native catalog, not application
 XCUITest, actual cloud structured output, eligible FoundationModels generation, signed storage or devices.
 This version explicitly permits authenticated per-case aggregation across unchanged closures.

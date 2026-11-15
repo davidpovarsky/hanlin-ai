@@ -1,0 +1,6 @@
+{
+  "status": "SUPERSEDED_BY_V3_AUTHENTICATED_SIX_CASE_AUDIT",
+  "historical_40_case_candidates_never_relabelled_as_reused": true,
+  "current_audit": "package-contracts-v3-aggregate.json",
+  "current_reused_verified_pass": 6
+}

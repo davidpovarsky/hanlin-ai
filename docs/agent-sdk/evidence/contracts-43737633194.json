@@ -1,0 +1,54 @@
+{
+  "source_sha": "04addc76c972a338b70514aa94c3251db46201fd",
+  "run": 43737633194,
+  "job": 132883644954,
+  "workflow_status": "SUCCESS",
+  "classification": "EXECUTED_PASS",
+  "executed_pass": 3,
+  "ios_native_catalog_compile": "PASS",
+  "source_hashes_verified": 249,
+  "artifact": {
+    "id": 14171027608,
+    "digest": "sha256:30fb145055ddc17c2d980fdf4d3892f9e0d53e197019d3d5ceadbde2473145ef"
+  },
+  "cases": [
+    {
+      "id": "NativeModelCatalogTests/reservedNameConflictPreservesOriginalCatalog()",
+      "status": "EXECUTED_PASS",
+      "run": 43737633194,
+      "source_sha": "04addc76c972a338b70514aa94c3251db46201fd"
+    },
+    {
+      "id": "NativeModelCatalogTests/registrationIsIdempotentAndAppendsWithoutReorderingExistingRows()",
+      "status": "EXECUTED_PASS",
+      "run": 43737633194,
+      "source_sha": "04addc76c972a338b70514aa94c3251db46201fd"
+    },
+    {
+      "id": "NativeModelCatalogTests/nativeConfigurationUsesActualAvailabilityWithoutCredentialsOrFallback()",
+      "status": "EXECUTED_PASS",
+      "run": 43737633194,
+      "source_sha": "04addc76c972a338b70514aa94c3251db46201fd"
+    }
+  ],
+  "raw_hashes": {
+    "native-catalog-ios-build.log": "22ef1445c5fed28c9e66526a8364ccfd02aef5054207c2fdb2577afbf1c4d323",
+    "native-catalog-tests.log": "2673ab8797b444d0afa4648188d18a8af1968d60bc9e5c1c475bd8d382a88425",
+    "NativeCatalogTests.json": "5850c44387b304b991bec750bf6a1d7772496eaed0489022df3f96fa644e7df9",
+    "process-exit.json": "713c2fb12c46465365cfd93504dfb799a37ad064aca974da7272865693c35267",
+    "process-status.json": "2d7219c797aa08abd9413bc68e247f4b001923e5e06c67f43ad7ec8dcacf6b43",
+    "resolve.log": "cfe843506e24d870e9af029e60c10f456febf3ae1847428f84a69b54d2fc59a1",
+    "schemes.json": "4798d452da8b9cea97a6c974f1ff25e67be30bd2e2f1fccf04375af3e2731d2a",
+    "simulator-runtimes.json": "5a050af873eace12f20a44953129b62ab34049f5d925ef2c03a028926ce30880",
+    "source-binding.json": "2e9ef5d9ec4c12408f772bea8bb1972a0964dbf58d3f6c018760b9f6500e71b7",
+    "summary.json": "dfee3494367f6788e642a4d8b23fdca5ac9e17271b3dfc58c7e0e9d2695dbd37",
+    "tested-source-commit.txt": "53d53f655309e683da6c06efff736c534518445cfa71c4a120f30ee44b331f39",
+    "tested-source.tar": "7c9dcedf06d88fcb29acf2281c3b504f66c255ad1682952fc22ca977dfdfef30",
+    "toolchain.txt": "a8bed08466a1b4e0726454d47e526136a83414cec62e16420bd263fcb88ae584"
+  },
+  "not_asserted": [
+    "actual APIManager/SwiftData conversation migration",
+    "live model generation",
+    "whole app/Composer/UI/device/release"
+  ]
+}

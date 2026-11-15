@@ -1,0 +1,388 @@
+{
+  "contract": "VALIDATION_CONTRACT_V3",
+  "scope": "PACKAGE CONTRACTS + real native catalog, not whole SDK/app acceptance",
+  "target_source_sha": "3e7ef6996da9f0c024019305536a3c8795c1e8a7",
+  "producer_revision": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "status": "PACKAGE_CONTRACTS_PASS",
+  "counts": {
+    "EXECUTED_PASS": 48,
+    "REUSED_VERIFIED_PASS": 6,
+    "FAILED": 0,
+    "NOT_RUN": 0
+  },
+  "cases": [
+    {
+      "id": "StoreTests/sameConversationIDIsIsolatedBySpace()",
+      "status": "REUSED_VERIFIED_PASS",
+      "original_run": 43725502988,
+      "original_source_sha": "9a864b3c21eaad374c93730d7877addb6726e09d",
+      "test_source_closure_sha256": "20c3a3c81659ca2b5fe911bd7370280369d4c0739a32ddff7a943a350aa0be3d"
+    },
+    {
+      "id": "ContextTests/structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "status": "REUSED_VERIFIED_PASS",
+      "original_run": 43725502988,
+      "original_source_sha": "9a864b3c21eaad374c93730d7877addb6726e09d",
+      "test_source_closure_sha256": "e6d9c9ea6ba230050b1fa910140a71894f7f7d639ebf4676f65f544a7d64c299"
+    },
+    {
+      "id": "ContextTests/canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "status": "REUSED_VERIFIED_PASS",
+      "original_run": 43725502988,
+      "original_source_sha": "9a864b3c21eaad374c93730d7877addb6726e09d",
+      "test_source_closure_sha256": "b829506fdeaa8f89f853daa6da7fe3a5abc5edebd645ac91fa702f288e80b05c"
+    },
+    {
+      "id": "ContextTests/persistedPresentationCarriesNoExecutionAuthority()",
+      "status": "REUSED_VERIFIED_PASS",
+      "original_run": 43725502988,
+      "original_source_sha": "9a864b3c21eaad374c93730d7877addb6726e09d",
+      "test_source_closure_sha256": "d4435f9d410e98959f7f393e2b92c75b466021a0bbaa760b72cda7488f0b4736"
+    },
+    {
+      "id": "ContextTests/decodedNamespacesCannotBypassValidation()",
+      "status": "REUSED_VERIFIED_PASS",
+      "original_run": 43725502988,
+      "original_source_sha": "9a864b3c21eaad374c93730d7877addb6726e09d",
+      "test_source_closure_sha256": "6bee8d75c0dd757963951eb272012b04c173835ac80f7c5056a9a9110ea6da56"
+    },
+    {
+      "id": "ContextTests/previousMetadataFormatRemainsReadableWithoutMutation()",
+      "status": "REUSED_VERIFIED_PASS",
+      "original_run": 43725502988,
+      "original_source_sha": "9a864b3c21eaad374c93730d7877addb6726e09d",
+      "test_source_closure_sha256": "8b87523bc5088aaabc63252aecb664e356b2741320b1eb37071161b3d19ca9b2"
+    },
+    {
+      "id": "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "ContextTests/hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testGeminiDescriptorAndOptions()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testCustomOpenAICompatibleDescriptor()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenRouterDescriptor()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testAnthropicDescriptorAndOptions()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenAIDescriptorAndOptions()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/realResponsesAdapterRequestsStrictSchemaAndPublishesOnlyCanonicalParts()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/officialValidationFailureIsAtomic()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/malformedRepairedAndTruncatedResponsesPublishNoParts()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/unsupportedModelsFailBeforeAnyHTTPRequest()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/nativeSchemaKeepsTheExistingToolContinuationAndExactlyOneEffect()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeDescriptorNeverSelectsNetworkProvider()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeNonTextRejectedBeforeProviderCapabilityOrDownloadPath()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/duplicateDefinitionsThrowBeforeDictionaryConstruction()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testParallelToolExecution()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testNonPositiveMaxStepsClampedToAtLeastOne()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testMultimodalUserMessagePartsPreserved()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/cancellationAfterFortyStopsTheActualTool()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testRealProviderTransportErrorAbortsStream()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testToolContinuationRegression()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testInvalidArgumentsReachExecutorWithoutAborting()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/defaultRunContinuesPastFortyWithDiscovery()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testAdvertisedSchemaPreservesOriginalConstraints()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testDynamicToolExposure()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testUnknownToolProducesNonFatalErrorAndAllowsRecovery()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testSourceAndFileStreamEventMapping()",
+      "status": "EXECUTED_PASS",
+      "run": 43735446863,
+      "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4"
+    },
+    {
+      "id": "NativeModelCatalogTests/reservedNameConflictPreservesOriginalCatalog()",
+      "status": "EXECUTED_PASS",
+      "run": 43737633194,
+      "source_sha": "04addc76c972a338b70514aa94c3251db46201fd"
+    },
+    {
+      "id": "NativeModelCatalogTests/registrationIsIdempotentAndAppendsWithoutReorderingExistingRows()",
+      "status": "EXECUTED_PASS",
+      "run": 43737633194,
+      "source_sha": "04addc76c972a338b70514aa94c3251db46201fd"
+    },
+    {
+      "id": "NativeModelCatalogTests/nativeConfigurationUsesActualAvailabilityWithoutCredentialsOrFallback()",
+      "status": "EXECUTED_PASS",
+      "run": 43737633194,
+      "source_sha": "04addc76c972a338b70514aa94c3251db46201fd"
+    }
+  ],
+  "closure_audit": {
+    "range": "9a864b3c21eaad374c93730d7877addb6726e09d..3e7ef6996da9f0c024019305536a3c8795c1e8a7",
+    "environment_compared": [
+      "Xcode27.2/27B52",
+      "Swift6.4.2",
+      "SDK27.2",
+      "macOS27.0.1/26A434",
+      "arm64"
+    ],
+    "same_manifests_raw_locks": true,
+    "same_platform_contracts_sources": true,
+    "same_HostContracts_except_unreferenced_guarantee_enum_and_catalog_validator": true,
+    "same_namespace_context_session_declarations": true,
+    "same_in_memory_store_and_record_replay_sources": true,
+    "same_test_imports_and_assertion_bodies": true,
+    "changed_Host_guarantee_enum_and_catalog_paths": "Not called or serialized by the reused six pure namespace/context/replay/in-memory fixture closures; new1.1 control executed freshly."
+  },
+  "ios_compilation": {
+    "AgentCore": {
+      "status": "EXECUTED_PASS",
+      "run": 43735446863
+    },
+    "NativeCatalog": {
+      "status": "EXECUTED_PASS",
+      "run": 43737633194
+    }
+  },
+  "not_asserted": [
+    "full CI",
+    "app Host/schema/SwiftData/row binding component controls",
+    "SDK-enabled actual app/Composer/XCUITest",
+    "live model-to-renderer",
+    "native business operation",
+    "physical device/RTL/AX/release"
+  ],
+  "historical_failures_retained": [
+    43725502988,
+    43728173010,
+    43729703890,
+    43730362902,
+    43732861666
+  ],
+  "original_infra_gate": "43735446863 catalog NOT_RUN from Bash3.2; only that missing phase reexecuted43737633194."
+}
