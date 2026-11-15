@@ -8,6 +8,11 @@ const published = '.hanlin-package-published.json';
 const validID = value => typeof value === 'string' && /^[a-z0-9-]{8,80}$/i.test(value);
 const pointer = root => path.join(root,'packages','node-global-current.json');
 
+async function physicalDirectoryIfPresent(directory) {
+  try { return await fs.realpath(directory); }
+  catch(error) { if(error.code==='ENOENT')return directory; throw error; }
+}
+
 export function transactionRoot(root,id) {
   if (!validID(id)) throw new Error('Invalid global package transaction ID.');
   return path.join(root,'clients','tools',`npm-lifecycle-${id}`);
@@ -15,11 +20,11 @@ export function transactionRoot(root,id) {
 export async function currentGlobalState(root) {
   let state;
   try { state=JSON.parse(await fs.readFile(pointer(root),'utf8')); }
-  catch(error) { if(error.code==='ENOENT')return {revision:'legacy',directory:path.join(root,'packages','node-global')}; throw error; }
+  catch(error) { if(error.code==='ENOENT')return {revision:'legacy',directory:await physicalDirectoryIfPresent(path.join(root,'packages','node-global'))}; throw error; }
   if (state.schemaVersion!==1 || !validID(state.transactionID))throw new Error('Invalid global package registry pointer; existing generations were preserved.');
   const directory=transactionRoot(root,state.transactionID);
   await fs.access(path.join(directory,published));
-  return {revision:state.transactionID,directory};
+  return {revision:state.transactionID,directory:await fs.realpath(directory)};
 }
 export async function globalNodeModules(root) {return path.join((await currentGlobalState(root)).directory,'node_modules');}
 
@@ -49,6 +54,9 @@ export async function loadGlobalTransaction(root,transactionID) {
   return transaction;
 }
 export async function publishGlobalTransaction(root,transactionID) {
+  // Aliases of one host root must serialize against the same commit queue.
+  // The transaction already exists, so resolving it creates no new state.
+  root=await fs.realpath(root);
   const previous=commits.get(root)??Promise.resolve();
   const commit=previous.catch(()=>{}).then(async()=>{
     const transaction=await loadGlobalTransaction(root,transactionID);
