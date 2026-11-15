@@ -1,8 +1,10 @@
 import Foundation
+import Observation
 import HanlinMiniAppCore
 import HanlinPlatformContracts
 
 @MainActor
+@Observable
 public final class HanlinSkillCatalog {
     public static let shared = HanlinSkillCatalog(loadProductionSkills: true)
 

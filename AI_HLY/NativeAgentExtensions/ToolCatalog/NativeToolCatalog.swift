@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Observation
 
 @MainActor
+@Observable
 final class NativeToolCatalog {
     static let shared = NativeToolCatalog()
 
@@ -19,12 +21,23 @@ final class NativeToolCatalog {
 
     private var toolsByName: [String: RegisteredTool] = [:]
     private var didRegisterBuiltins = false
-    private let enabledStore = NativeToolEnabledStore()
+    private let enabledStore: NativeToolEnabledStore
+    private let automaticallyRegistersBuiltins: Bool
+    private let trace: @MainActor (String, [String: Any]) -> Void
+    private(set) var preferenceRevision: UInt64 = 0
 
-    private init() {}
+    init(
+        defaults: UserDefaults = .standard,
+        automaticallyRegistersBuiltins: Bool = true,
+        trace: @escaping @MainActor (String, [String: Any]) -> Void = { NativeToolTraceLogger.shared.log($0, $1) }
+    ) {
+        enabledStore = NativeToolEnabledStore(defaults: defaults)
+        self.automaticallyRegistersBuiltins = automaticallyRegistersBuiltins
+        self.trace = trace
+    }
 
     func ensureBuiltinsRegistered() {
-        guard !didRegisterBuiltins else { return }
+        guard automaticallyRegistersBuiltins, !didRegisterBuiltins else { return }
         didRegisterBuiltins = true
         register(QuickCalculateTool())
         registerRuntimeTools()
@@ -36,7 +49,7 @@ final class NativeToolCatalog {
         let name = tool.name
         guard Self.isValidCanonicalName(name) else {
             let message = "Invalid canonical assistant tool name '\(name)'. Names must match [a-z][a-z0-9_]* and must not use app_."
-            NativeToolTraceLogger.shared.log(
+            trace(
                 "tool_registration_invalid_name",
                 ["toolName": name, "sourceAppID": sourceApp?.id as Any, "reason": message]
             )
@@ -49,7 +62,7 @@ final class NativeToolCatalog {
               let schemaName = function["name"] as? String,
               schemaName == name else {
             let message = "Assistant tool '\(name)' must expose the same canonical name in its schema."
-            NativeToolTraceLogger.shared.log(
+            trace(
                 "tool_registration_schema_name_mismatch",
                 ["toolName": name, "sourceAppID": sourceApp?.id as Any, "reason": message]
             )
@@ -68,7 +81,7 @@ final class NativeToolCatalog {
                 }
             }
             toolsByName[name] = RegisteredTool(tool: tool, entry: entry, schema: schema)
-            NativeToolTraceLogger.shared.log(
+            trace(
                 "assistant_tool_discovered",
                 [
                     "toolName": name,
@@ -86,7 +99,7 @@ final class NativeToolCatalog {
         }
 
         let message = "Duplicate assistant tool '\(name)' from '\(sourceApp?.id ?? "Hanlin")'; already registered by '\(existing.entry.sourceAppID ?? "Hanlin")'."
-        NativeToolTraceLogger.shared.log(
+        trace(
             "duplicate_tool_registration_failed",
             [
                 "toolName": name,
@@ -156,7 +169,7 @@ final class NativeToolCatalog {
             return $0.title.localizedStandardCompare($1.title) == .orderedAscending
         }
 
-        NativeToolTraceLogger.shared.log(
+        trace(
             "native_assistant_tool_groups_discovered",
             [
                 "groupCount": groups.count,
@@ -180,7 +193,7 @@ final class NativeToolCatalog {
             )
         }
 
-        NativeToolTraceLogger.shared.log(
+        trace(
             "schemas_for_request_completed",
             [
                 "schemaCount": schemas.count,
@@ -202,20 +215,27 @@ final class NativeToolCatalog {
     }
 
     func isEnabled(_ entry: NativeToolCatalogEntry) -> Bool {
-        enabledStore.isEnabled(entry)
+        _ = preferenceRevision
+        return enabledStore.isEnabled(entry)
     }
 
     func isEffectivelyEnabled(_ entry: NativeToolCatalogEntry) -> Bool {
-        enabledStore.isEnabled(entry) && !isGroupDisabled(for: entry)
+        _ = preferenceRevision
+        return enabledStore.isEnabled(entry) && !isGroupDisabled(for: entry)
     }
 
     func isGroupEnabled(_ group: NativeAssistantToolGroup) -> Bool {
-        enabledStore.isGroupEnabled(group.id, defaultValue: group.isEnabledByDefault)
+        _ = preferenceRevision
+        return enabledStore.isGroupEnabled(group.id, defaultValue: group.isEnabledByDefault)
     }
 
     func setGroupEnabled(_ enabled: Bool, for group: NativeAssistantToolGroup) {
+        let previous = enabledStore.isGroupEnabled(group.id, defaultValue: group.isEnabledByDefault)
         enabledStore.setGroupEnabled(enabled, groupID: group.id)
-        NativeToolTraceLogger.shared.log(
+        if previous != enabledStore.isGroupEnabled(group.id, defaultValue: group.isEnabledByDefault) {
+            preferenceRevision &+= 1
+        }
+        trace(
             "tool_group_enabled_state_changed",
             [
                 "groupID": group.id,
@@ -231,8 +251,10 @@ final class NativeToolCatalog {
     }
 
     func setEnabled(_ enabled: Bool, for entry: NativeToolCatalogEntry) {
+        let previous = enabledStore.isEnabled(entry)
         enabledStore.setEnabled(enabled, for: entry)
-        NativeToolTraceLogger.shared.log(
+        if previous != enabledStore.isEnabled(entry) { preferenceRevision &+= 1 }
+        trace(
             "tool_enabled_state_changed",
             [
                 "toolName": entry.name,
