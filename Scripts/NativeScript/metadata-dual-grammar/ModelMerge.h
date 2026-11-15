@@ -3,6 +3,7 @@
 #include "ModelGraph.h"
 #include "ModelProof.h"
 #include <clang/Basic/TargetInfo.h>
+#include <clang/AST/Attr.h>
 #include <algorithm>
 #include <list>
 
@@ -22,14 +23,28 @@ class ModelMerge {
 
     static bool introducedAvailabilityEquivalent(const Meta::Meta& cpp, const Meta::Meta& objc) {
         if (cpp.introducedIn == objc.introducedIn) return true;
-        // OBJC_AVAILABLE precedes OBJC_EXPORT's extern-C linkage specification
-        // in this SDK. The actual C AST attaches it to the ObjC interface;
-        // the C++ AST has an extern-C lexical wrapper and no introduced attr.
-        // Prove equivalent availability AT THE BOUND TARGET, retain C's actual
-        // annotation in the emitted model, and record this bounded exception.
+        // This comparison runs only after physical source/owner and full ABI
+        // equality. ObjC++ can lose a prefix availability annotation before an
+        // export linkage specification; ObjC interfaces themselves still have
+        // translation-unit context. Prove the real annotations and availability
+        // AT THE BOUND TARGET, and retain C's actual original annotation.
         if (!cpp.introducedIn.isUnknown() || objc.introducedIn.isUnknown() ||
-            !cpp.is(Meta::MetaType::Interface) || !objc.is(Meta::MetaType::Interface) ||
-            !cpp.declaration->getLexicalDeclContext()->isExternCContext()) return false;
+            !cpp.is(Meta::MetaType::Interface) || !objc.is(Meta::MetaType::Interface)) return false;
+        bool actualCAnnotation = false;
+        for (const auto* attribute : objc.declaration->specific_attrs<clang::AvailabilityAttr>()) {
+            if (attribute->getPlatform()->getName() != "ios") continue;
+            if (attribute->getUnavailable()) return false;
+            const auto value = attribute->getIntroduced();
+            if (value.empty()) continue;
+            Meta::Version version{static_cast<int>(value.getMajor()),
+                static_cast<int>(value.getMinor().value_or(-1)), static_cast<int>(value.getSubminor().value_or(-1))};
+            if (version != objc.introducedIn) return false;
+            actualCAnnotation = true;
+        }
+        for (const auto* attribute : cpp.declaration->specific_attrs<clang::AvailabilityAttr>())
+            if (attribute->getPlatform()->getName() == "ios" &&
+                (attribute->getUnavailable() || !attribute->getIntroduced().empty())) return false;
+        if (!actualCAnnotation) return false;
         const auto cppTarget = targetVersion(cpp.declaration->getASTContext());
         const auto objcTarget = targetVersion(objc.declaration->getASTContext());
         return cppTarget == objcTarget && cppTarget >= objc.introducedIn;
@@ -125,7 +140,7 @@ class ModelMerge {
             {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)}, {"rawFunctionLinkage", std::move(rawFunctionLinkage)},
             {"cppRawParameterCVR", rawParameterCVR(*cpp)}, {"objcRawParameterCVR", rawParameterCVR(*objc)},
             {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
-            {"availability", availabilityDifference ? "INTRODUCED_ATTR_EXTERN_C_WRAPPER_EQUIVALENT_AT_BOUND_TARGET" : "EXACT"},
+            {"availability", availabilityDifference ? "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET" : "EXACT"},
             {"objcIntroducedIn", objc->introducedIn.toString()}, {"cppIntroducedIn", cpp->introducedIn.toString()}});
     }
 

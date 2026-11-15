@@ -90,6 +90,16 @@ EXTERNAL_BINDING
 @end
 @interface HanlinDualDerived : HanlinDualGeneric<HanlinDualObject *>
 @end
+#ifdef __cplusplus
+#define HANLIN_DECL_EXPORT extern "C" __attribute__((visibility("default")))
+#else
+#define HANLIN_DECL_EXPORT extern __attribute__((visibility("default")))
+#endif
+__attribute__((availability(ios,introduced=2.0)))
+__attribute__((objc_root_class))
+HANLIN_DECL_EXPORT
+@interface HanlinDualPrefixAvailable { void *isa; }
+@end
 """
     baseline = core.replace("SHARED_FIELD", "int value;").replace("RETURN_TYPE", "int").replace("CONSTANT_VALUE", "42").replace("OBJC_INVALID", "").replace("CLASS_ATTRIBUTE", "").replace("EXTERNAL_BINDING", "")
     provider = '#include "core.h"\nnamespace hanlin_cpp { template<class T> struct Token { T value; }; }\nextern "C" int HanlinDualProvider(struct HanlinDualShared *value);\n@interface HanlinDualProviderObject : HanlinDualGeneric<HanlinDualObject *>\n@end\n'
@@ -101,7 +111,8 @@ EXTERNAL_BINDING
         ("conflicting-constant", "#ifdef __cplusplus\n#define HANLIN_REAL_FIXTURE_CONSTANT 43\n#else\n#define HANLIN_REAL_FIXTURE_CONSTANT 42\n#endif\n" + baseline.replace("HanlinDualConstant = 42", "HanlinDualConstant = HANLIN_REAL_FIXTURE_CONSTANT"), "merge-failure", "Dual-grammar actual API model conflict:"),
         ("conflicting-symbol-binding", "#ifdef __cplusplus\n#define HANLIN_ACTUAL_BINDING \"hanlin_cpp_symbol\"\n#else\n#define HANLIN_ACTUAL_BINDING \"hanlin_c_symbol\"\n#endif\n" + baseline + "\nextern int HanlinDualAlias __asm__(HANLIN_ACTUAL_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-function-symbol", "#ifdef __cplusplus\n#define HANLIN_FUNCTION_BINDING \"hanlin_cpp_function\"\n#else\n#define HANLIN_FUNCTION_BINDING \"hanlin_c_function\"\n#endif\n" + baseline + "\nint HanlinDualFunctionAlias(int value) __asm__(HANLIN_FUNCTION_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
-        ("conflicting-availability", baseline.replace("__attribute__((objc_root_class))", "#ifdef __cplusplus\n__attribute__((availability(ios,introduced=26.0)))\n#else\n__attribute__((availability(ios,introduced=25.0)))\n#endif\n__attribute__((objc_root_class))"), "merge-failure", "Dual-grammar availability conflict:"),
+        ("conflicting-availability", baseline.replace("__attribute__((objc_root_class))", "#ifdef __cplusplus\n__attribute__((availability(ios,introduced=26.0)))\n#else\n__attribute__((availability(ios,introduced=25.0)))\n#endif\n__attribute__((objc_root_class))", 1), "merge-failure", "Dual-grammar availability conflict:"),
+        ("missing-cpp-availability-before-target", baseline.replace("availability(ios,introduced=2.0)", "availability(ios,introduced=28.0)"), "merge-failure", "Dual-grammar availability conflict:"),
         ("conflicting-physical-owner", baseline, "merge-failure", "Dual-grammar canonical declaration/owner conflict:"),
         ("invalid-objc-pass", baseline.replace("_Static_assert", "HanlinOnlyBadType invalid;\n_Static_assert"), "parse-failure", "Actual dual-grammar AST parse failed"),
     ]
@@ -150,6 +161,8 @@ EXTERNAL_BINDING
             sign_names = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualSignNames" in item["canonicalKey"]]
             passed = passed and len(sign_names) == 1 and sign_names[0].get("rawVariableLinkage") == {
                 "cppLanguageLinkage": 1, "objcLanguageLinkage": 0} and sign_names[0].get("actualASTABI", {}).get("externalBinding", {}).get("clangSymbolBeforeTargetPrefix") == "HanlinDualSignNames"
+            prefix_availability = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualPrefixAvailable" in item["canonicalKey"]]
+            passed = passed and len(prefix_availability) == 1 and prefix_availability[0].get("cppIntroducedIn") == "" and prefix_availability[0].get("objcIntroducedIn") == "2.0" and prefix_availability[0].get("availability") == "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET"
             asm_functions = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualAsmFunction" in item["canonicalKey"]]
             passed = passed and len(asm_functions) == 1 and asm_functions[0].get("rawFunctionLinkage") == {
                 "cppLanguageLinkage": 1, "objcLanguageLinkage": 0} and asm_functions[0].get("actualASTABI", {}).get("externalBinding", {}).get("clangSymbolBeforeTargetPrefix") == "\x01hanlin_dual_function"
