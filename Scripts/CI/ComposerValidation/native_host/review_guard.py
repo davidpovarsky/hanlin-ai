@@ -12,7 +12,7 @@ import prepare_native as native
 from guards import (native_settings, environment, owned_boot, observations, require,
                     simctl_list_contract, owned_devices_command, require_pretest, owned_name,
                     created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256, classify_execution_status, resolved_destination)
-from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR, REMAINING_NATIVE_CASES, selected_cases
+from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR, selected_cases
 from freeze_review import review_files
 from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
 
@@ -23,7 +23,7 @@ FROZEN_WORKFLOW_SHA256 = '11414b818c71275ab116ac37997ebdc88d3a21b32a98e251037849
 REVIEWED_FUNCTION_SOURCE_SHA256 = {
     'guards.py': {'native_settings': '97b5edb2266010467b6335845604411cf663c95299d5610ca722f9e0e9a5df40',
                   'environment': '7fc45c76767d915ca5b3c558a0fc8523070021c36e8051be48400960c8d8cc5d',
-                  'observations': '09aea2cc006d3808472d3f4ad37a7ba066e132d31a5479e3616998aaaea91f59'},
+                  'observations': 'f0e8c6cab2c551c1f43bd16cce02d2b0bdddd60c81811fc3599f75332fd33b45'},
 }
 WORKFLOW = '.github/workflows/build-ios26-unsigned-ipa.yml'
 MODE = 'composer_native_host_diagnostic'
@@ -188,8 +188,8 @@ def source_controls():
     device = {'deviceId': UDI, 'modelName': 'iPhone 18 Pro', 'osVersion': '27.2', 'osBuildNumber': '24B8117',
               'architecture': 'arm64', 'platform': 'iOS Simulator'}
     result = {'devices': [device], 'testNodes': [{'nodeType': 'Test Case', 'nodeIdentifier': x, 'result': 'Passed'} for x in expected]}
-    require(observations(result, expected, UDI)['all_12_unique_pass_on_owned_device'], 'synthetic all12 classification')
-    passed.append('synthetic-positive-12-unique-bound-case-classification')
+    require(observations(result, expected, UDI)['all_expected_unique_pass_on_owned_device'], 'synthetic exact frozen inventory classification')
+    passed.append('synthetic-positive-frozen-bound-case-classification')
     for name in ['empty-result', 'unexpected-infrastructure-only', 'all-skipped', 'failed-method', 'duplicate-method', 'missing-device-binding', 'wrong-device', 'missing-method', 'unexpected-extra-method']:
         changed = copy.deepcopy(result)
         if name == 'empty-result':
@@ -212,9 +212,9 @@ def source_controls():
         elif name == 'unexpected-extra-method':
             changed['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': 'other/method()', 'result': 'Passed'})
         classified = observations(changed, expected, UDI)
-        require(not classified['all_12_unique_pass_on_owned_device'], name + ' incorrectly classified pass')
+        require(not classified['all_expected_unique_pass_on_owned_device'], name + ' incorrectly classified pass')
         if name in ['empty-result', 'unexpected-infrastructure-only']:
-            require(len(classified['cases']) == 12 and all(x['result'] == 'NOT_RUN' for x in classified['cases']), name + ': authored NOT_RUN classification')
+            require(len(classified['cases']) == len(expected) and all(x['result'] == 'NOT_RUN' for x in classified['cases']), name + ': authored NOT_RUN classification')
         if name == 'unexpected-infrastructure-only':
             require(len(classified['unexpected_infrastructure_case_nodes']) == 1, 'separate unexpected framework node')
         if name == 'all-skipped':
@@ -226,38 +226,30 @@ def source_controls():
     focused = {'devices': [device], 'testNodes': [{'nodeType': 'Test Case', 'nodeIdentifier': FOCUSED_CASE, 'result': 'Passed'}]}
     classified = focused_observations(focused, expected, FOCUSED_CASE, UDI)
     require(classified['all_selected_unique_pass_on_owned_device'] and classified['selected_expected_count'] == 1 and
-            sum(case['result'] == 'NOT_RUN' for case in classified['cases']) == 11 and len(classified['cases']) == 12,
-            'exact one selected PASS with eleven NOT_RUN; no reused source-suite passes')
-    passed.append('synthetic-positive-one-focused-case-eleven-not-run')
-    remaining_raw = ','.join('AI_HanlinTests/' + case for case in REMAINING_NATIVE_CASES)
-    require(selected_cases('') == (FOCUSED_CASE,) and selected_cases(remaining_raw) == REMAINING_NATIVE_CASES,
-            'explicit remaining native selection without rerunning failing-method pass')
-    remaining_result = {'devices': [device], 'testNodes': [{'nodeType': 'Test Case', 'nodeIdentifier': case, 'result': 'Passed'} for case in REMAINING_NATIVE_CASES]}
-    remaining = focused_observations(remaining_result, expected, REMAINING_NATIVE_CASES, UDI)
-    require(remaining['all_selected_unique_pass_on_owned_device'] and remaining['selected_expected_count'] == 4 and
-            sum(case['result'] == 'NOT_RUN' for case in remaining['cases']) == 8, 'exact four selected and eight not run')
-    for invalid in ['AI_HanlinTests', remaining_raw + ',' + FOCUSED_SELECTOR, remaining_raw + ',' + remaining_raw,
-                    'AI_HanlinTests/NativeComposerLineSizingTests/fontAndViewport()']:
-        reject('invalid-native-selection-' + invalid, selected_cases, invalid)
-    mutated_remaining = copy.deepcopy(remaining_result)
-    mutated_remaining['testNodes'].pop()
-    require(not focused_observations(mutated_remaining, expected, REMAINING_NATIVE_CASES, UDI)['all_selected_unique_pass_on_owned_device'],
-            'missing one of four selected methods cannot pass')
-    mutated_remaining['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': FOCUSED_CASE, 'result': 'Passed'})
-    require(not focused_observations(mutated_remaining, expected, REMAINING_NATIVE_CASES, UDI)['all_selected_unique_pass_on_owned_device'],
-            'unselected original method cannot replace missing selected regression')
-    passed.append('synthetic-four-remaining-native-cases-exact-coverage')
+            len(classified['cases']) == len(expected) == 1,
+            'exact new selected case only; prior editor and Morph cases excluded')
+    passed.append('synthetic-positive-one-new-host-case')
+    require(selected_cases('') == (FOCUSED_CASE,) and selected_cases(FOCUSED_SELECTOR) == (FOCUSED_CASE,),
+            'default and explicit selector both bind the same new case')
+    old_case = 'NativeComposerLineSizingTests/wrappedLinesAndScrolling()'
+    for invalid in ['AI_HanlinTests', FOCUSED_SELECTOR + ',' + FOCUSED_SELECTOR,
+                    FOCUSED_CASE, 'AI_HanlinTests/' + old_case,
+                    'AI_HanlinTests/HanlinMorphComposerTests/heightAndOverflow()']:
+        reject('invalid-host-selection-' + invalid, selected_cases, invalid)
+    reject('empty-expected-inventory', observations, focused, [], UDI)
+    reject('duplicate-expected-inventory', observations, focused, expected + expected, UDI)
+    passed.append('synthetic-host-selection-rejects-prior-editor-and-morph')
 
     for label in ['zero-selected', 'failed-selected', 'duplicate-selected', 'skipped-selected', 'other-authored-only',
-                  'extra-authored', 'all-twelve', 'wrong-device', 'unexpected-infrastructure']:
+                  'extra-authored', 'old-editor-only', 'wrong-device', 'unexpected-infrastructure']:
         changed = copy.deepcopy(focused)
         if label == 'zero-selected': changed = {}
         elif label == 'failed-selected': changed['testNodes'][0]['result'] = 'Failed'
         elif label == 'duplicate-selected': changed['testNodes'].append(dict(changed['testNodes'][0]))
         elif label == 'skipped-selected': changed['testNodes'][0]['result'] = 'Skipped'
-        elif label == 'other-authored-only': changed['testNodes'][0]['nodeIdentifier'] = expected[0]
-        elif label == 'extra-authored': changed['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': expected[0], 'result': 'Passed'})
-        elif label == 'all-twelve': changed = copy.deepcopy(result)
+        elif label == 'other-authored-only': changed['testNodes'][0]['nodeIdentifier'] = old_case
+        elif label == 'extra-authored': changed['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': old_case, 'result': 'Passed'})
+        elif label == 'old-editor-only': changed['testNodes'] = [{'nodeType': 'Test Case', 'nodeIdentifier': old_case, 'result': 'Passed'}]
         elif label == 'wrong-device': changed['devices'][0]['deviceId'] = 'other-device'
         elif label == 'unexpected-infrastructure': changed['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': 'xctest(1234)', 'result': 'Failed'})
         actual_focus = focused_observations(changed, expected, FOCUSED_CASE, UDI)
@@ -448,10 +440,10 @@ def packet():
     workflow = workflow_controls()
     files = [p for p in native.HERE.rglob('*') if p.is_file() and p.name != 'final-guard-review.json']
     files.append(native.REPO / WORKFLOW)
-    return {'status': 'FILTERED_OWNED_PREFLIGHT_REPAIR_SOURCE_REVIEW_ONLY', 'dispatch_authorized_by_this_packet': False,
+    return {'status': 'MODEL_HOST_ENVIRONMENT_SOURCE_REVIEW_ONLY', 'dispatch_authorized_by_this_packet': False,
             'standing_execution_quality_gate': 'single Composer owner validates and executes under explicit 2026-11-15 activation',
             'apple_build_test_or_device_action': 'NOT_RUN', 'full_app_acceptance': False,
-            'accepted_generator_commit': BASE, 'source': native.SOURCE, 'owner': native.OWNER,
+            'generator_pattern_origin': BASE, 'packet_contract': native.PACKET_CONTRACT, 'source': native.SOURCE, 'owner': native.OWNER,
             'execution_environment_contract': {'version': 'composer-runtime-27.2-v1-20261115',
                 'ownership_readiness_contract': CONTRACT, 'readiness_seconds': READINESS_SECONDS,
                 'runtime_identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-2', 'version_number': '27.2', 'build': '24B8117',
@@ -469,7 +461,8 @@ def packet():
                 'identity_established_by_help': False},
             'new_attempt_installed_help_and_owned_name_output': 'NOT_RUN; actual returned identity/state required',
             'focused_selection': {'selected_case_ids': [FOCUSED_CASE], 'xcodebuild_selector': FOCUSED_SELECTOR,
-                                 'required_executed_unique_count': 1, 'other_authored_count': 11,
+                                 'required_executed_unique_count': 1, 'other_authored_count': 0,
+                                 'prior_editor_and_morph': 'NOT_RUN; not compiled in this packet',
                                  'other_authored_expected': 'NOT_RUN; no reused passes', 'zero_selected': 'BLOCKED; no selector retry'},
             'fixture_warning': 'Python identity/result controls are synthetic. Help text is retained actual documentation. Neither proves a new Apple execution.',
             'positive_source_controls': positive, 'negative_source_controls_rejected': negative,
@@ -482,7 +475,7 @@ def packet():
                               'run-instance/image boot UUID + deterministic precreated claim; initial state/runtime/type origins explicit',
                               'native settings JSON + exact SDK destinations + predicates', 'exact-device blocking bootstatus/display PNG + SDK destination eligibility; no post-boot name enumeration',
                               'ComposerNative.xcresult when actually produced', 'actual tests export and per-method observations',
-                              'unexpected framework nodes separate from authored 12', 'numeric signedDelta raw lines only, no inferred metrics'],
+                              'unexpected framework nodes separate from the one authored host case', 'numeric signedDelta raw lines only, no inferred metrics'],
             'source_file_sha256': {p.relative_to(native.REPO).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                                    for p in sorted(files, key=lambda p: p.relative_to(native.REPO).as_posix())}}
 

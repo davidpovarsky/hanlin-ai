@@ -1,12 +1,13 @@
 {
-  "status": "FILTERED_OWNED_PREFLIGHT_REPAIR_SOURCE_REVIEW_ONLY",
+  "status": "MODEL_HOST_ENVIRONMENT_SOURCE_REVIEW_ONLY",
   "dispatch_authorized_by_this_packet": false,
   "standing_execution_quality_gate": "single Composer owner validates and executes under explicit 2026-11-15 activation",
   "apple_build_test_or_device_action": "NOT_RUN",
   "full_app_acceptance": false,
-  "accepted_generator_commit": "67642faaa8f16c89eb0e2330db56291c35c61c06",
-  "source": "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9",
-  "owner": "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9",
+  "generator_pattern_origin": "67642faaa8f16c89eb0e2330db56291c35c61c06",
+  "packet_contract": "composer-model-host-environment-v1-20261115",
+  "source": "3c82667e86f71f5effb30fbde41874a437a86fb7",
+  "owner": "3c82667e86f71f5effb30fbde41874a437a86fb7",
   "execution_environment_contract": {
     "version": "composer-runtime-27.2-v1-20261115",
     "ownership_readiness_contract": "composer-precreated-27.2-v3-20261115",
@@ -47,11 +48,12 @@
   "new_attempt_installed_help_and_owned_name_output": "NOT_RUN; actual returned identity/state required",
   "focused_selection": {
     "selected_case_ids": [
-      "NativeComposerLineSizingTests/wrappedLinesAndScrolling()"
+      "HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()"
     ],
-    "xcodebuild_selector": "AI_HanlinTests/NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+    "xcodebuild_selector": "AI_HanlinTests/HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()",
     "required_executed_unique_count": 1,
-    "other_authored_count": 11,
+    "other_authored_count": 0,
+    "prior_editor_and_morph": "NOT_RUN; not compiled in this packet",
     "other_authored_expected": "NOT_RUN; no reused passes",
     "zero_selected": "BLOCKED; no selector retry"
   },
@@ -64,10 +66,10 @@
     "synthetic-positive-one-owned-device-with-empty-other-runtime",
     "captured-actual-help-syntax-only-and-unique-name-query",
     "synthetic-positive-all-actual-pretest-predicates",
-    "synthetic-positive-12-unique-bound-case-classification",
+    "synthetic-positive-frozen-bound-case-classification",
     "synthetic-signed-trace-preserved-without-inference",
-    "synthetic-positive-one-focused-case-eleven-not-run",
-    "synthetic-four-remaining-native-cases-exact-coverage",
+    "synthetic-positive-one-new-host-case",
+    "synthetic-host-selection-rejects-prior-editor-and-morph",
     "test-action-settings-before-build-and-test",
     "concrete-destination-without-conflicting-architecture-flags",
     "actual-runner-pure-command-plan",
@@ -180,17 +182,20 @@
     "classification-wrong-device",
     "classification-missing-method",
     "classification-unexpected-extra-method",
-    "invalid-native-selection-AI_HanlinTests",
-    "invalid-native-selection-AI_HanlinTests/NativeComposerLineSizingTests/editingKeepsDraftAndSelection(),AI_HanlinTests/NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout(),AI_HanlinTests/NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback(),AI_HanlinTests/NativeComposerLineSizingTests/fontAndViewport(),AI_HanlinTests/NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
-    "invalid-native-selection-AI_HanlinTests/NativeComposerLineSizingTests/editingKeepsDraftAndSelection(),AI_HanlinTests/NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout(),AI_HanlinTests/NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback(),AI_HanlinTests/NativeComposerLineSizingTests/fontAndViewport(),AI_HanlinTests/NativeComposerLineSizingTests/editingKeepsDraftAndSelection(),AI_HanlinTests/NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout(),AI_HanlinTests/NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback(),AI_HanlinTests/NativeComposerLineSizingTests/fontAndViewport()",
-    "invalid-native-selection-AI_HanlinTests/NativeComposerLineSizingTests/fontAndViewport()",
+    "invalid-host-selection-AI_HanlinTests",
+    "invalid-host-selection-AI_HanlinTests/HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates(),AI_HanlinTests/HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()",
+    "invalid-host-selection-HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()",
+    "invalid-host-selection-AI_HanlinTests/NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+    "invalid-host-selection-AI_HanlinTests/HanlinMorphComposerTests/heightAndOverflow()",
+    "empty-expected-inventory",
+    "duplicate-expected-inventory",
     "focused-zero-selected",
     "focused-failed-selected",
     "focused-duplicate-selected",
     "focused-skipped-selected",
     "focused-other-authored-only",
     "focused-extra-authored",
-    "focused-all-twelve",
+    "focused-old-editor-only",
     "focused-wrong-device",
     "focused-unexpected-infrastructure",
     "instance-RUNNER_ENVIRONMENT",
@@ -249,7 +254,7 @@
       "guards.py": {
         "native_settings": "97b5edb2266010467b6335845604411cf663c95299d5610ca722f9e0e9a5df40",
         "environment": "7fc45c76767d915ca5b3c558a0fc8523070021c36e8051be48400960c8d8cc5d",
-        "observations": "09aea2cc006d3808472d3f4ad37a7ba066e132d31a5479e3616998aaaea91f59"
+        "observations": "f0e8c6cab2c551c1f43bd16cce02d2b0bdddd60c81811fc3599f75332fd33b45"
       }
     }
   },
@@ -320,7 +325,7 @@
       "1",
       "-resultBundlePath",
       "/SOURCE_REVIEW_ONLY/evidence/ComposerNative.xcresult",
-      "-only-testing:AI_HanlinTests/NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+      "-only-testing:AI_HanlinTests/HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()",
       "ONLY_ACTIVE_ARCH=YES",
       "CODE_SIGNING_ALLOWED=NO"
     ]
@@ -352,24 +357,24 @@
     "exact-device blocking bootstatus/display PNG + SDK destination eligibility; no post-boot name enumeration",
     "ComposerNative.xcresult when actually produced",
     "actual tests export and per-method observations",
-    "unexpected framework nodes separate from authored 12",
+    "unexpected framework nodes separate from the one authored host case",
     "numeric signedDelta raw lines only, no inferred metrics"
   ],
   "source_file_sha256": {
     ".github/workflows/build-ios26-unsigned-ipa.yml": "11414b818c71275ab116ac37997ebdc88d3a21b32a98e25103784943d56f663a",
     "Scripts/CI/ComposerValidation/native_host/ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e",
-    "Scripts/CI/ComposerValidation/native_host/README.md": "c71a48de1e0ddfefce26a3257a348c1fb19e8fd5e196b0ee45e8586c92829149",
+    "Scripts/CI/ComposerValidation/native_host/README.md": "63ec236a3f754c67a5d43aa33006c4fcaec169926663f531783288eddcf44d7b",
     "Scripts/CI/ComposerValidation/native_host/freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
-    "Scripts/CI/ComposerValidation/native_host/guards.py": "d1fc479d9acf5f746f6e2d18b67e2ff0430f589380a4cf8a0f3853950f9eef68",
+    "Scripts/CI/ComposerValidation/native_host/guards.py": "af456a119c1505a2c7fa3483967151f2d11be250b22c6cb29d72ca13bfdcdfdc",
     "Scripts/CI/ComposerValidation/native_host/precreated_readiness.py": "84045e59dfdc6dc8c5a57620c6f0960b5374c967e4237c16adbc99df7597eef5",
-    "Scripts/CI/ComposerValidation/native_host/prepare_native.py": "b36f9f73d34c7b16cebea22862fc24b627de1c0a94d6736be2f31c07e207fa3d",
-    "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/project.pbxproj": "9443466ee77dac5545cc112957379ccd1ccc116673571eeac4d767e29b2773a4",
+    "Scripts/CI/ComposerValidation/native_host/prepare_native.py": "df219fb98bba9290b2eb806f37e44610147e645f55b79ee753b333faede15354",
+    "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/project.pbxproj": "e17a3a63c36d9cd71fde3c50db76caad2a4b1bf74224cb4655ac83161659b5c6",
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/xcshareddata/xcschemes/ComposerNativeHost.xcscheme": "5c834a5ae4e67261dbe71a9a1afc7fc4328555e6296a1df31d8ac1784de91a97",
-    "Scripts/CI/ComposerValidation/native_host/review/native-inputs.json": "9dcfb58b22ab96b6ea1872f6c646fd9eadeda296e2f01c2d51c3c6b626b953b2",
-    "Scripts/CI/ComposerValidation/native_host/review/source-controls.json": "980322c016d6c1e1b57fa376165d346e82e16895fb988c24df26fd5de43875dc",
-    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "74a58dea5c903676d5bd601a6461ac4d5c72d5fe16ad65a72b50c7fa986cb634",
-    "Scripts/CI/ComposerValidation/native_host/run_native.py": "ee05d0f8999132be807532b2783f0b4f8d390594e805907bd804b55c522a0402",
+    "Scripts/CI/ComposerValidation/native_host/review/native-inputs.json": "5337e805ec890e5a88b541bbb0a39070f49fffa6873cc9247fbe75f66f4a2c8d",
+    "Scripts/CI/ComposerValidation/native_host/review/source-controls.json": "d4eac9c52944a18f11bd76b73a942bb9c143e1bd2cfc4e9c9031a8fb50e085d0",
+    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "10d4b8a03dd0c20801be1049b728796064101346a1400ddb10c3083eaad49847",
+    "Scripts/CI/ComposerValidation/native_host/run_native.py": "6d48590da621c753dbbc9e5e3fd33069d756844aa66ad3c13ddab06ff9049db4",
     "Scripts/CI/ComposerValidation/native_host/simctl-list-help-43711740465.txt": "4c7f0c98a485121183a1bc0b5ae8549958692117107664b4ee1c3fbf0f3c4693",
-    "Scripts/CI/ComposerValidation/native_host/validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467"
+    "Scripts/CI/ComposerValidation/native_host/validate_packet.py": "cc7ea2e72b28da3936ce27aab2b9660a6def05e0b0106e1b6c884602cd9d4840"
   }
 }

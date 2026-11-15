@@ -214,7 +214,7 @@ def dictionaries(value):
 
 
 def observations(data, expected, udid, log_lines=()):
-    require(len(expected) == len(set(expected)) == 12, 'exact 12 unique expected methods')
+    require(bool(expected) and len(expected) == len(set(expected)), 'nonempty unique frozen expected methods')
     cases = []
     for node in dictionaries(data):
         if node.get('nodeType') == 'Test Case':
@@ -239,7 +239,7 @@ def observations(data, expected, udid, log_lines=()):
         return re.search(r'signedDelta=-?\d+(?:\.\d+)?', line) is not None
     trace = [{'origin': 'xcresult Failure Message', 'raw_text': line} for line in messages if actual_trace(line)]
     trace += [{'origin': 'raw xcodebuild log', 'raw_text': line.rstrip()} for line in log_lines if actual_trace(line)]
-    complete = len(authored) == 12 and len(counts) == 12 and not unexpected and all(n['result'] == 'PASS' for n in records) and bound
+    complete = len(authored) == len(expected) and len(counts) == len(expected) and not unexpected and all(n['result'] == 'PASS' for n in records) and bound
     return {'full_app_acceptance': False, 'cases': records, 'authored_unique_observed': len(counts),
             'unexpected_infrastructure_case_nodes': unexpected, 'raw_devices': devices,
             'execution_device_binding': 'VERIFIED' if authored and bound else 'MISMATCH' if authored else 'NOT_OBSERVED',
@@ -247,7 +247,7 @@ def observations(data, expected, udid, log_lines=()):
                 'authored_results_observed_without_device_binding' if executed else 'failed_before_connection' if
                 any('hung before establishing connection' in m for m in messages) else 'not_observed',
             'raw_failure_messages': messages, 'signed_trace_raw_evidence': trace,
-            'signed_metrics_inferred': False, 'all_12_unique_pass_on_owned_device': complete}
+            'signed_metrics_inferred': False, 'all_expected_unique_pass_on_owned_device': complete}
 
 
 def focused_observations(data, authored, selected, udid, log_lines=()):
@@ -255,13 +255,13 @@ def focused_observations(data, authored, selected, udid, log_lines=()):
     require(bool(selected) and len(selected) == len(set(selected)) and set(selected).issubset(authored),
             'nonempty unique selected authored identities required')
     result = observations(data, authored, udid, log_lines)
-    result.pop('all_12_unique_pass_on_owned_device')
+    result.pop('all_expected_unique_pass_on_owned_device')
     targets = [case for case in result['cases'] if case['id'] in selected]
     extra_authored = [case for case in result['cases'] if case['id'] not in selected and case['raw_results']]
     matched = len(targets) == len(selected) and all(len(case['raw_results']) == 1 for case in targets) and result['authored_unique_observed'] == len(selected) and not extra_authored and not result['unexpected_infrastructure_case_nodes']
     all_pass = all(case['result'] == 'PASS' for case in targets)
     summary = targets[0]['result'] if len(targets) == 1 else 'PASS' if all_pass else 'FAIL' if any(case['result'] == 'FAIL' for case in targets) else 'NOT_RUN' if all(case['result'] == 'NOT_RUN' for case in targets) else 'OBSERVED_NONPASS'
-    result.update(selected_case_ids=selected, selected_expected_count=len(selected), preserved_authored_inventory_count=12,
+    result.update(selected_case_ids=selected, selected_expected_count=len(selected), preserved_authored_inventory_count=len(authored),
                   selected_method_result=summary, unselected_authored_observations=extra_authored,
                   focused_selection_matched=matched,
                   all_selected_unique_pass_on_owned_device=matched and all_pass and result['execution_device_binding'] == 'VERIFIED',

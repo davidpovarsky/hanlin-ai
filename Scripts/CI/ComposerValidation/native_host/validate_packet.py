@@ -18,23 +18,26 @@ def validate(generated, staged, manifest, originals):
     require(manifest['source'] == native.SOURCE and manifest['owner'] == native.OWNER, 'frozen identity')
     require(manifest['full_app_acceptance'] is False, 'component scope')
     require(manifest['original_reference_input_sha256'] ==
-            {p: native.digest(raw) for p, raw in sorted(originals.items())}, '12 original hashes')
-    require(len(originals) == 12 and len(manifest['expected_case_ids']) == 12 and
-            len(set(manifest['expected_case_ids'])) == 12, '12 unique reference inputs/cases')
+            {p: native.digest(raw) for p, raw in sorted(originals.items())}, 'exact original hashes')
+    require(set(originals) == set([*native.SOURCES, *native.TEST_SOURCES, *native.APP_INPUTS]) and
+            tuple(manifest['expected_case_ids']) == native.EXPECTED_CASES and
+            manifest.get('packet_contract') == native.PACKET_CONTRACT, 'exact versioned whole-source inventory/cases')
     expected_cases = []
-    for path, suite in [(native.TEST_SOURCE, 'HanlinMorphComposerTests'),
-                        (native.EDITOR_TEST_SOURCE, 'NativeComposerLineSizingTests')]:
+    for path, suite, _ in native.TEST_SUITES:
         names = re.findall(r'@Test(?:\([^\n]*\))?\s+func\s+(\w+)\s*\(', originals[path].decode('utf-8-sig'))
         expected_cases.extend(suite + '/' + name + '()' for name in names)
     require(manifest['expected_case_ids'] == expected_cases, 'exact frozen case identities')
-    expected_paths = {'Canonical/' + p for p in [*native.SOURCES, native.TEST_SOURCE, native.EDITOR_TEST_SOURCE]}
+    expected_paths = {'Canonical/' + p for p in [*native.SOURCES, *native.TEST_SOURCES]}
+    require(manifest['reference_compiled_file_count'] == len(expected_paths) and
+            manifest['native_compiled_file_count'] == len(expected_paths) + 1,
+            'exact declared canonical and infrastructure source counts')
     require(set(staged) == expected_paths | {native.HOST_PATH}, 'exact whole-file staging inventory')
     for path in expected_paths:
         require(staged[path] == originals[path.removeprefix('Canonical/')], 'whole frozen bytes: ' + path)
     require(manifest['native_canonical_sources'] == [
         {'original': p, 'native': 'Canonical/' + p, 'sha256': native.digest(originals[p]),
          'target': 'AI_Hanlin' if p in native.SOURCES else 'AI_HanlinTests'}
-        for p in [*native.SOURCES, native.TEST_SOURCE, native.EDITOR_TEST_SOURCE]], 'canonical target/hash ledger')
+        for p in [*native.SOURCES, *native.TEST_SOURCES]], 'canonical target/hash ledger')
     require(manifest['reference_only_not_compiled'] == list(native.APP_INPUTS), 'reference-only APP inventory')
     require(manifest['native_infrastructure_sources'] == {native.HOST_PATH: native.digest(staged[native.HOST_PATH])}, 'host hash')
     require(manifest['generated_infrastructure_sha256'] ==
@@ -103,7 +106,7 @@ def validate(generated, staged, manifest, originals):
         require(len(members) == len(set(members)), 'no duplicate source members')
         paths = [objects[objects[key]['fileRef']]['path'] for key in members]
         expected = (['Canonical/' + p for p in native.SOURCES] + [native.HOST_PATH] if name == 'AI_Hanlin'
-                    else ['Canonical/' + p for p in [native.TEST_SOURCE, native.EDITOR_TEST_SOURCE]])
+                    else ['Canonical/' + p for p in native.TEST_SOURCES])
         require(paths == expected, name + ': exact source membership')
     require(configs['AI_HanlinTests'].get('TEST_HOST') == '$(BUILT_PRODUCTS_DIR)/AI_Hanlin.app/AI_Hanlin' and
             configs['AI_HanlinTests'].get('BUNDLE_LOADER') == '$(TEST_HOST)', 'host loading settings')
@@ -118,8 +121,8 @@ def validate(generated, staged, manifest, originals):
             testables[0].find('BuildableReference').get('BlueprintIdentifier') == unit_id, 'serial whole unit bundle')
     require(action.find('MacroExpansion/BuildableReference').get('BlueprintIdentifier') == app_id, 'app host macro expansion')
     return {'status': 'SOURCE_CONTROLS_PASS', 'apple_build_or_test': 'NOT_RUN', 'full_app_acceptance': False,
-            'original_reference_files': 12, 'whole_canonical_files_compiled_by_future_project': 10,
-            'new_infrastructure_swift_files': 1, 'expected_unique_cases': 12, 'package_objects': 0,
+            'original_reference_files': len(originals), 'whole_canonical_files_compiled_by_future_project': len(expected_paths),
+            'new_infrastructure_swift_files': 1, 'expected_unique_cases': len(expected_cases), 'package_objects': 0,
             'native_targets': sorted(targets), 'host_loading_graph': 'verified in source only'}
 
 

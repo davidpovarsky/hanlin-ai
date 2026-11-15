@@ -2,10 +2,10 @@
   "status": "SOURCE_CONTROLS_PASS",
   "apple_build_or_test": "NOT_RUN",
   "full_app_acceptance": false,
-  "original_reference_files": 12,
-  "whole_canonical_files_compiled_by_future_project": 10,
+  "original_reference_files": 4,
+  "whole_canonical_files_compiled_by_future_project": 4,
   "new_infrastructure_swift_files": 1,
-  "expected_unique_cases": 12,
+  "expected_unique_cases": 1,
   "package_objects": 0,
   "native_targets": [
     "AI_Hanlin",

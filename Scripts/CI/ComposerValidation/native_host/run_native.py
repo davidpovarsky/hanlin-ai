@@ -1,4 +1,4 @@
-"""One guarded native-project diagnostic. Manual CI only, after final source approval."""
+"""One guarded native model-host case. Manual CI with exact source/host/device evidence."""
 import hashlib
 import json
 import os
@@ -24,24 +24,15 @@ from precreated_readiness import runner_instance, claim_precreated, readiness_he
 XCODE = '/Applications/Xcode_27.2.app/Contents/Developer'
 TEST_SECONDS = 900
 RUN_SECONDS = 2100
-FOCUSED_CASE = 'NativeComposerLineSizingTests/wrappedLinesAndScrolling()'
+FOCUSED_CASE = native.EXPECTED_CASES[0]
 FOCUSED_SELECTOR = 'AI_HanlinTests/' + FOCUSED_CASE
-REMAINING_NATIVE_CASES = (
-    'NativeComposerLineSizingTests/editingKeepsDraftAndSelection()',
-    'NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()',
-    'NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()',
-    'NativeComposerLineSizingTests/fontAndViewport()',
-)
 
 
 def selected_cases(raw):
     if not raw.strip():
         return (FOCUSED_CASE,)
-    prefix = 'AI_HanlinTests/'
-    requested = tuple(item.strip().removeprefix(prefix) for item in raw.split(','))
-    require(requested in [(FOCUSED_CASE,), REMAINING_NATIVE_CASES],
-            'only the failing method or its four remaining native regressions may be selected')
-    return requested
+    require(raw.strip() == FOCUSED_SELECTOR, 'only the exact new native model hosting case may be selected')
+    return (FOCUSED_CASE,)
 
 
 
@@ -129,9 +120,10 @@ def execute():
     expected = json.loads((native.HERE / 'review/native-inputs.json').read_text(encoding='utf-8'))['expected_case_ids']
     selected = selected_cases(os.environ.get('COMPOSER_NATIVE_SELECTORS', ''))
     selectors = ['AI_HanlinTests/' + case for case in selected]
-    require(set(selected).issubset(expected) and len(set(expected)) == 12, 'selection must bind frozen authored identities')
-    state = {'scope': 'native-hosted Composer previously failing method diagnostic' if len(selected) == 1 else 'remaining four native editor regressions', 'full_app_acceptance': False,
-             'authored_inventory_count': 12, 'selected_case_ids': list(selected), 'xcodebuild_only_testing_selectors': selectors,
+    require(tuple(expected) == native.EXPECTED_CASES and tuple(selected) == native.EXPECTED_CASES, 'selection must bind exact new authored identity')
+    state = {'scope': 'native model picker hosting environment component', 'packet_contract': native.PACKET_CONTRACT, 'full_app_acceptance': False,
+             'authored_inventory_count': len(expected), 'selected_case_ids': list(selected), 'xcodebuild_only_testing_selectors': selectors,
+             'prior_editor_and_morph_cases': 'NOT_RUN; excluded from this new source packet',
              'product_composer_acceptance': 'OPEN',
              'started_at_utc': stamp(), 'status': 'PREPARING', 'test_commands': 0,
              'native_settings_confirmed': False, 'owned_sdk_destination_confirmed': False,

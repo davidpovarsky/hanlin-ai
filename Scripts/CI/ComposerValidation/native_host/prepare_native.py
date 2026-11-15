@@ -16,12 +16,22 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parents[1] / "IntegrationValidation"))
-from prepare_capability_proof import SOURCES, TEST_SOURCE, EDITOR_TEST_SOURCE, APP_INPUTS
 from extract_target import render
 from project_graph import parse_project
 
-SOURCE = "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9"
-OWNER = "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9"
+SOURCE = "3c82667e86f71f5effb30fbde41874a437a86fb7"
+OWNER = SOURCE
+PACKET_CONTRACT = "composer-model-host-environment-v1-20261115"
+SOURCES = (
+    "AI_HLY/Model/AllModels.swift",
+    "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
+)
+TEST_SOURCE = "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift"
+TEST_SUITES = ((TEST_SOURCE, "HanlinModelHostingEnvironmentTests", 1),)
+TEST_SOURCES = tuple(path for path, _, _ in TEST_SUITES)
+APP_INPUTS = ()
+EXPECTED_CASES = ("HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()",)
 PATTERN_SOURCE = "e8ccd81452843609285a0cd7e017a759bda6a6ef"
 PROJECT = "ComposerNativeHost.xcodeproj"
 SCHEME = "ComposerNativeHost"
@@ -33,7 +43,7 @@ def digest(raw):
 
 
 def frozen_inputs(repo):
-    paths = [*SOURCES, TEST_SOURCE, EDITOR_TEST_SOURCE, *APP_INPUTS]
+    paths = [*SOURCES, *TEST_SOURCES, *APP_INPUTS]
     return {path: subprocess.check_output(["git", "-C", str(repo), "show", SOURCE + ":" + path],
                                          timeout=30) for path in paths}
 
@@ -66,14 +76,14 @@ def provenance(repo):
 
 
 def make_packet(contents, host):
-    assert set(contents) == set([*SOURCES, TEST_SOURCE, EDITOR_TEST_SOURCE, *APP_INPUTS])
-    tests = [TEST_SOURCE, EDITOR_TEST_SOURCE]
+    assert set(contents) == set([*SOURCES, *TEST_SOURCES, *APP_INPUTS])
+    tests = list(TEST_SOURCES)
     ids = []
-    for path, suite in [(TEST_SOURCE, "HanlinMorphComposerTests"),
-                        (EDITOR_TEST_SOURCE, "NativeComposerLineSizingTests")]:
+    for path, suite, count in TEST_SUITES:
         names = re.findall(r"@Test(?:\([^\n]*\))?\s+func\s+(\w+)\s*\(", contents[path].decode("utf-8-sig"))
-        assert len(names) == (7 if path == TEST_SOURCE else 5) and len(set(names)) == len(names)
+        assert len(names) == count and len(set(names)) == len(names)
         ids += [f"{suite}/{name}()" for name in names]
+    assert tuple(ids) == EXPECTED_CASES
     compiled = [*SOURCES, *tests]
     directives = {
         path: [{"line": i, "text": line.strip()} for i, line in enumerate(
@@ -206,7 +216,7 @@ def make_packet(contents, host):
                  PROJECT + "/xcshareddata/xcschemes/" + SCHEME + ".xcscheme": xml}
     manifest = {
         "scope": "native-hosted-component-unit-test-infrastructure", "full_app_acceptance": False,
-        "source": SOURCE, "owner": OWNER, "status": "SOURCE_ONLY_NOT_COMPILED",
+        "source": SOURCE, "owner": OWNER, "packet_contract": PACKET_CONTRACT, "status": "SOURCE_ONLY_NOT_COMPILED",
         "original_reference_input_sha256": {p: digest(raw) for p, raw in sorted(contents.items())},
         "native_canonical_sources": [
             {"original": p, "native": "Canonical/" + p, "sha256": digest(contents[p]),
@@ -214,13 +224,11 @@ def make_packet(contents, host):
         "reference_only_not_compiled": list(APP_INPUTS),
         "native_infrastructure_sources": {HOST_PATH: digest(host)},
         "generated_infrastructure_sha256": {p: digest(raw) for p, raw in generated.items()},
-        "expected_case_ids": ids, "reference_compiled_file_count": 10,
-        "native_compiled_file_count": 11, "package_references": 0,
+        "expected_case_ids": ids, "reference_compiled_file_count": len(compiled),
+        "native_compiled_file_count": len(compiled) + 1, "package_references": 0,
         "conditional_directive_audit": directives,
         "compilation_condition_mapping": {
-            "prior_actual_run": "43691033216", "prior_source": "51d3fa350f6908526c6a78e4858b40122cc4f2f0",
-            "prior_github_cli_log_sha256": "9ae53b7446817a4d76f93fe465a01c8b21bf20e7e65b3e29c6dfc52ed651b687",
-            "prior_observed_swift_conditions": ["SWIFT_PACKAGE", "DEBUG", "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE", "Xcode"],
+            "prior_native_harness_run_reference_only": "43733139843",
             "native_explicit_swift_conditions": ["DEBUG", "Xcode"],
             "SWIFT_PACKAGE_dependency_in_compiled_frozen_files": False,
             "omitted_unused_package_conditions": ["SWIFT_PACKAGE", "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"],
@@ -232,7 +240,8 @@ def make_packet(contents, host):
             "native real UIApplication host and hosted unit-test bundle, rather than synthesized SwiftPM runner",
             "explicit iOS27 minimum instead of prior validation Package iOS26 minimum",
             "zero Swift packages and no package resources; old Package.swift is reference only, not native input",
-            "new minimal clear host scene; canonical component code/tests/math/probes are unchanged",
+            "existing minimal clear host scene; whole production host/model/metadata and new authored test are unchanged from the source SHA",
+            "only the model hosting environment case is compiled/selected; prior five editor and seven Morph cases are not inputs and are NOT_RUN",
             "actual effective native build settings, loading and runtime metrics remain NOT_RUN"],
         "target_ids": {"app": app, "unit": unit, "project": project},
     }

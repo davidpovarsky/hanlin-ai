@@ -1,5 +1,13 @@
 # Native hosted Composer source-review packet
 
+## Current model-host environment packet
+
+Active packet `composer-model-host-environment-v1-20261115`, source/owner `3c82667e86f71f5effb30fbde41874a437a86fb7`. The unchanged existing zero-package native host now compiles only three WHOLE production files (`AllModels.swift`, `ProviderModelCatalogMetadata.swift`, `HanlinModelZoomPopover.swift`) and the WHOLE `HanlinModelHostingEnvironmentTests.swift`. They are the actual dependency closure; no alternate model/context owner/renderer or test slicing. Exactly `HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()` is selected. The prior five editor/seven Morph cases are not compiled or run in this packet; their historical evidence remains below and in the handoff.
+
+Same installed Xcode27.2/27B52, explicit simulator SDK27.2, arm64 standard27.2/24B8117 iPhone18Pro, real TEST_HOST/BUNDLE_LOADER, serial900s command,2100s runner,600s precreated ownership/readinessv3, actual display/both-target device settings and exact xcresult case/device binding remain required. Only the source packet/expected inventory/result cardinality/strict selector changes. Workflow/triggers are unchanged. Source controls18 positive/135 rejected and nine source/graph mutations are synthetic verification only; native compilation/render/execution are pending until the actual focused run.
+
+## Historical editor packet and evidence
+
 Active platform contract `composer-runtime-27.2-v1-20261115` / ownership-readiness `composer-precreated-27.2-v2-20261115`: standard installed `com.apple.CoreSimulator.SimRuntime.iOS-27-2`, iOS27.2/build24B8117, arm64 iPhone18Pro, Xcode27.2/27B52. Explicit manager decision replaces the hanging27.0 runtime for a new VM invocation. Duo24B91016s is rejected. Original production source, tests, deployment27.0 and assertions remain unchanged. This does not cover27.0 or UI/device acceptance. Historical contracts below are retained as history.
 
 Status: **SOURCE ONLY — no Apple build/test or remote dispatch.** `full_app_acceptance` is false.
