@@ -162,3 +162,21 @@ native2^53 input vs decimal/Unicode-key loss/schema-invalid/context-change denia
 The injected original executor is a component fixture, not OS permission or business-effect proof.
 Windows source syntax and diff checks pass. All six Apple app tests remain NOT_RUN; the focused
 package proof does not include these app sources or establish actual app compilation/acceptance.
+
+## Original Host association before external dispatch
+
+`HanlinAgentSession.associateHostInvocation(_:opaqueReference:) async throws` is a narrow metadata
+association on the same ordered Session CAS writer. It requires the actual Dispatcher reservation,
+original Session/run/step/provider/invocation/alias/raw bytes and resultID, matching durable pending
+tool-call entry, a current Host context and a bounded reference. Exact repeats await the same
+writer; retargeted references or forged result identity fail. The resultID is now assigned before
+Host entry and carried on the existing HanlinHostInvocation so a cold historical receipt can keep
+that original identity. No Split product/DTO/registry is introduced in any SDK product.
+
+The actual app Split coordinator will release the waiting Host completion upon a verified return,
+then wait for the existing onHostResult callback (which follows actual receipt persistence) before
+mailbox acceptance and navigation. It must not hold Host execution while waiting for that callback.
+Two real Session controls are authored for original association/order/dedup/forgery/receipt identity
+and failed-save/no-effect. Follow-on Apple proof reruns20 Session,6 Context and the affected raw
+Dispatcher case plus iOS compilation; the8 unchanged pure schema controls retain their own437426
+execution evidence, not relabeled as fresh. Actual Split/app/cold-process/device gates stay OPEN.

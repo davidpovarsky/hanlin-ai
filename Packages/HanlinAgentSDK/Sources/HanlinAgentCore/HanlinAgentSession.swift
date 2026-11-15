@@ -42,6 +42,7 @@ public final class HanlinAgentSession {
     private var invalidated = false
     private var producerTask: Task<Void, Never>?
     private var persistenceTail: Task<Void, Error>?
+    private var associatedInvocations: [HanlinToolInvocationID: String] = [:]
     private var currentCatalog: HanlinHostCatalog?
     private var interactionOrigins = Set<HanlinHostInteractionOrigin>()
     private var observedInteractionOrigins = Set<HanlinHostInteractionOrigin>()
@@ -85,6 +86,7 @@ public final class HanlinAgentSession {
             sequence = (entries.last?.sequence).map { $0 + 1 } ?? 0
             step = 0; preparationError = nil
             persistenceTail = nil
+            associatedInvocations = [:]
             // An interrupted dispatch must be reconciled by the original host before another run.
             var pending = Set<String>()
             for entry in entries {
@@ -266,6 +268,32 @@ public final class HanlinAgentSession {
         return try await startStream(messages: messages + [.init(role: .user, text: prepared.userMessage)], systemPrompt: systemPrompt,
             modelReference: modelReference, maxSteps: maxSteps, interactionOrigin: request.origin,
             structuredResponse: structuredResponse, presentationReference: presentationReference)
+    }
+
+    /// Associates one bounded opaque host reference with an ACTUAL pending call before an
+    /// external dispatch. Uses this Session's existing ordered CAS writer; no competing store save.
+    /// The reference is display/correlation metadata, never permission or executable input.
+    public func associateHostInvocation(_ invocation: HanlinHostInvocation, opaqueReference: String) async throws {
+        guard invocation.session == identity, !opaqueReference.isEmpty, opaqueReference.utf8.count <= 4096,
+              let model = record?.model else { throw HanlinHostError.invalidArguments }
+        try await requireCurrent(run: invocation.runID)
+        guard await dispatcher.isReserved(invocation) else { throw HanlinHostError.resultMismatch }
+        try await requireCurrent(run: invocation.runID)
+        guard entries.contains(where: {
+            guard $0.runID == invocation.runID, $0.step == invocation.step,
+                  case .toolCall(let providerID, let alias, _) = $0.payload else { return false }
+            return providerID == invocation.providerCallID && alias == invocation.request.aliasUsed
+        }) else { throw HanlinHostError.resultMismatch }
+        if let original = associatedInvocations[invocation.request.id] {
+            guard original.utf8.elementsEqual(opaqueReference.utf8) else { throw HanlinHostError.resultMismatch }
+            try await persistenceTail?.value
+        } else {
+            associatedInvocations[invocation.request.id] = opaqueReference
+            try append(.presentationReference(version: 1, opaqueReference: opaqueReference), run: invocation.runID,
+                       stepOverride: invocation.step)
+            try await persist(model: model)
+        }
+        try await requireCurrent(run: invocation.runID)
     }
 
     private func requireInteraction(_ origin: HanlinHostInteractionOrigin) async throws {
