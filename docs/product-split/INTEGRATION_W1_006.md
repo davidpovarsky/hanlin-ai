@@ -1121,3 +1121,30 @@ solely because no nonempty build-settings array exists; command exits are0, not
 failed tests. Builds0/tests0/devices-created0; all12 authored obligations NOT_RUN.
 No UI guard bypass, measurement/pin/platform/source change, new agent, runtime
 installation, global Xcode switch, follow-up query or future test dispatch.
+
+
+### New, separately authorized SDK-context eligibility diagnostic
+
+A new capped scope follows metadata43698593968; it does not extend earlier exhausted
+attempts. Source child1220541898122292/integrationK1219656771637321. The dedicated
+mode freezes original e8/owner20980, unchanged package/preparer and all12 content
+identities. A new workflow/harness commit is recorded separately. Eighteen existing
+jobs, including metadata/build/release paths, explicitly reject this diagnostic mode.
+No new default baseline/showBuildSettings/unrelated proof is included.
+
+InstalledXcode27.2/27B52,Swift6.4.2,SimSDK27.2 are required. One fresh iPhone18Pro
+uses EXACT available iOS27.0/24A434/arm64; no substitute if unavailable. Boot<=600s.
+ONE eligibility query<=120s explicitly uses -sdk iphonesimulator. Only the concrete
+fresh owned UUID in eligible iOSSimulator/arm64/OS27.0 context permits ONE test
+command<=900s using the SAME explicit SDK and -parallel-testing-enabled NO. Generic
+or other-phone matches, explicit owned ineligibility, wrong OS/arch or CLI failure
+stop before tests. Actual xcresult device binding must match that UUID/model/build.
+No second phone, retry loop, geometry/measurement/assertion/tolerance/pin/platform
+change. Missing target build settings remain unavailable, not inferred from CLI.
+Only existing trace comments may be captured; a pass without signed trace is not
+proof of an old geometry fix. Full app/physical/release claims remain excluded.
+
+Bash syntax,8 embedded Python syntax checks,6 exact-source in-memory eligibility
+checks (including generic/other UUID/ineligible/wrong OS/wrong arch rejection),18
+job guards, explicit SDK/serial flag checks and frozen12 path comparison passed.
+No local Swift/SDK compiler, cache, simulator or artifact download was used.
