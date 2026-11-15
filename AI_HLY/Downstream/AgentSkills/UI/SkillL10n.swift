@@ -33,6 +33,9 @@ enum SkillL10n {
         "Save": "保存",
         "Import Skill": "导入技能",
         "Import ZIP Archive": "导入 ZIP 压缩包",
+        "Import File": "导入文件",
+        "Select ZIP or SKILL.md": "选择 ZIP 或 SKILL.md",
+        "Select a ZIP package or a SKILL.md file. Previewing does not run scripts.": "选择 ZIP 包或 SKILL.md 文件。预览不会运行脚本。",
         "Select ZIP File": "选择 ZIP 文件",
         "Install from HTTPS URL": "从 HTTPS 地址安装",
         "Skill Archive URL": "技能压缩包链接",
@@ -59,6 +62,9 @@ enum SkillL10n {
     ]
 
     private static let heTranslations: [String: String] = [
+        "Import File": "ייבוא קובץ",
+        "Select ZIP or SKILL.md": "בחירת ZIP או SKILL.md",
+        "Select a ZIP package or a SKILL.md file. Previewing does not run scripts.": "יש לבחור חבילת ZIP או קובץ SKILL.md. תצוגה מקדימה אינה מריצה סקריפטים.",
         "Compatibility": "תאימות",
         "Compatibility unknown": "תאימות לא ידועה",
         "Status": "מצב",

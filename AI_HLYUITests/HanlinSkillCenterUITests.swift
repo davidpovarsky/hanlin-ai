@@ -3,12 +3,14 @@ import XCTest
 @MainActor
 final class HanlinSkillCenterUITests: XCTestCase {
     private let app = XCUIApplication()
+    private let markdownFixtureID = "ui-md-\(UUID().uuidString.lowercased())"
 
     override func setUpWithError() throws {
         continueAfterFailure = false
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_AGENT_SKILLS_EMBEDDED_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_SKILL_MARKDOWN_FIXTURE_ID"] = markdownFixtureID
         app.launch()
     }
 
@@ -362,6 +364,35 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(importedRow.waitForExistence(timeout: 10), "Imported skill row not found in catalog")
         tapElement(importedRow)
         assertUnknownCompatibility(scope: "detail")
+    }
+
+    func testImportInstructionOnlyMarkdownKeepsCompatibilityUnknown() throws {
+        openSkillCenter()
+        tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)
+        let fixture = app.buttons["hanlin-skill-import-markdown-fixture-button"].firstMatch
+        XCTAssertTrue(fixture.waitForExistence(timeout: 5))
+        tapElement(fixture)
+        let title = app.descendants(matching: .any)["hanlin-skill-import-preview-title"].firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 10))
+        XCTAssertEqual(title.label, markdownFixtureID)
+        assertUnknownCompatibility(scope: "import")
+        XCTAssertTrue(app.staticTexts["hanlin-skill-import-preview-resources-empty"].waitForExistence(timeout: 5))
+        let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
+        XCTAssertTrue(install.waitForExistence(timeout: 5))
+        XCTAssertTrue(install.isEnabled, "Instruction-only skills must remain installable without runtime proof")
+        tapElement(install)
+        let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(markdownFixtureID)"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        tapElement(row)
+        assertUnknownCompatibility(scope: "detail")
+        let toggle = skillDetailToggle()
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        XCTAssertTrue(isToggleOn(toggle))
+        tapElement(app.buttons["hanlin-skill-detail-delete-button"].firstMatch)
+        let confirm = app.buttons["Delete"].firstMatch
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+        tapElement(confirm)
+        XCTAssertTrue(row.waitForNonExistence(timeout: 5), "Delete only this test's unique imported skill")
     }
 
     func testInstallSkillFromURL() throws {

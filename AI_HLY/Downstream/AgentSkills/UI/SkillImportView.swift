@@ -61,7 +61,7 @@ struct SkillImportView: View {
             }
             .fileImporter(
                 isPresented: $showFileImporter,
-                allowedContentTypes: [.zip],
+                allowedContentTypes: [.zip, UTType(filenameExtension: "md") ?? .plainText],
                 allowsMultipleSelection: false
             ) { result in
                 handleFileImportResult(result)
@@ -85,7 +85,7 @@ struct SkillImportView: View {
     private var inputView: some View {
         VStack(spacing: 0) {
             Picker("", selection: $selectedTab) {
-                Text(SkillL10n.string("Import ZIP Archive")).tag(0)
+                Text(SkillL10n.string("Import File")).tag(0)
                     .accessibilityIdentifier("hanlin-skill-import-tab-zip")
                 Text(SkillL10n.string("Install from HTTPS URL")).tag(1)
                     .accessibilityIdentifier("hanlin-skill-import-tab-url")
@@ -175,6 +175,7 @@ struct SkillImportView: View {
                     Text("No additional resources.")
                         .font(.footnote)
                         .foregroundColor(.secondary)
+                        .accessibilityIdentifier("hanlin-skill-import-preview-resources-empty")
                 } else {
                     ForEach(staged.resources) { res in
                         HStack {
@@ -257,7 +258,7 @@ struct SkillImportView: View {
                 .foregroundColor(.accentColor)
                 .padding(.top, 30)
 
-            Text("Select a .zip archive containing a valid SKILL.md bundle and optional resources.")
+            Text(SkillL10n.string("Select a ZIP package or a SKILL.md file. Previewing does not run scripts."))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -266,7 +267,7 @@ struct SkillImportView: View {
             Button {
                 showFileImporter = true
             } label: {
-                Label(SkillL10n.string("Select ZIP File"), systemImage: "folder")
+                Label(SkillL10n.string("Select ZIP or SKILL.md"), systemImage: "folder")
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
             }
@@ -287,6 +288,15 @@ struct SkillImportView: View {
             .disabled(isProcessing)
             .accessibilityIdentifier("hanlin-skill-import-fixture-button")
             .padding(.horizontal, 40)
+            if ProcessInfo.processInfo.environment["HANLIN_AGENT_SKILLS_EMBEDDED_ACCEPTANCE"] == "1" {
+                Button {
+                    loadTestFixtureMarkdown()
+                } label: {
+                    Label("Load Markdown Acceptance Fixture", systemImage: "doc.text")
+                }
+                .disabled(isProcessing)
+                .accessibilityIdentifier("hanlin-skill-import-markdown-fixture-button")
+            }
             #endif
 
             if isProcessing {
@@ -448,6 +458,46 @@ struct SkillImportView: View {
             }
         }
     }
+
+    #if targetEnvironment(simulator) || DEBUG
+    private func loadTestFixtureMarkdown() {
+        isProcessing = true
+        errorMessage = nil
+        successMessage = nil
+        importTask = Task { @MainActor in
+            let temporaryFile = FileManager.default.temporaryDirectory
+                .appendingPathComponent("ui-markdown-\(UUID().uuidString).md")
+            defer { try? FileManager.default.removeItem(at: temporaryFile) }
+            do {
+                let suppliedID = ProcessInfo.processInfo.environment["HANLIN_SKILL_MARKDOWN_FIXTURE_ID"]
+                    ?? "ui-md-\(UUID().uuidString.lowercased())"
+                let id = try HanlinSkillID(validating: suppliedID)
+                let markdown = """
+                ---
+                name: \(id.rawValue)
+                description: Instruction-only Markdown acceptance fixture.
+                ---
+
+                # Instruction-only Skill
+                Summarize the question using these instructions. No script is included.
+                """
+                try markdown.write(to: temporaryFile, atomically: true, encoding: .utf8)
+                let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: temporaryFile)
+                if Task.isCancelled {
+                    staged.cleanup()
+                    throw CancellationError()
+                }
+                isProcessing = false
+                step = .preview(staged)
+            } catch is CancellationError {
+                isProcessing = false
+            } catch {
+                errorMessage = error.localizedDescription
+                isProcessing = false
+            }
+        }
+    }
+    #endif
 
     private func installStaged(_ staged: StagedSkillPackage) {
         isProcessing = true
