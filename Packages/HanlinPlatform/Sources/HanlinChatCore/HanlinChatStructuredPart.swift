@@ -62,7 +62,7 @@ public struct HanlinChatStructuredPart: Codable, Hashable, Sendable {
 }
 
 public enum HanlinChatStructuredPartError: Error, Sendable {
-    case invalidEnvelope, outOfOrder, conflictingReplay
+    case invalidEnvelope, outOfOrder, conflictingReplay, unadvertisedChannel
 }
 
 /// Per-run ordering/replay validation. Replay is display data and conveys no host authority.

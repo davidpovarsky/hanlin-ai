@@ -208,6 +208,10 @@ public actor HanlinAISDKAgentEngine {
                                     continuation.yield(.textDelta(text))
                                 }
                             case .custom(let kind, let metadata):
+                                if kind == HanlinChatStructuredPart.channel,
+                                   self.resolvedProvider.descriptor.structuredPartChannel != HanlinChatStructuredPart.channel {
+                                    throw HanlinChatStructuredPartError.unadvertisedChannel
+                                }
                                 if let part = try HanlinChatStructuredPart.decodeProviderContent(kind: kind, metadata: metadata),
                                    try structuredParts.admit(part) {
                                     meaningfulEventCount += 1

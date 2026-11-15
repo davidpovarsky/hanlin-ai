@@ -44,6 +44,7 @@ public final class HanlinAgentSession {
     private var persistenceTail: Task<Void, Error>?
     private var currentCatalog: HanlinHostCatalog?
     private var interactionOrigins = Set<HanlinHostInteractionOrigin>()
+    private var observedInteractionOrigins = Set<HanlinHostInteractionOrigin>()
     private var interactionRequests = Set<UUID>()
 
     public init(identity: HanlinHostSession, host: any HanlinHostIntegration, engine: HanlinAISDKAgentEngine,
@@ -157,7 +158,7 @@ public final class HanlinAgentSession {
                             case .finished(let reason, _): try self.append(.finished(reason: reason), run: run, stepOverride: streamStep)
                             case .structuredPart(let part):
                                 if case .a2uiMessage = part.payload {
-                                    self.interactionOrigins.insert(.init(session: self.identity, runID: run,
+                                    self.observedInteractionOrigins.insert(.init(session: self.identity, runID: run,
                                         messageID: part.messageID, partID: part.partID))
                                 }
                             case .cancelled:
@@ -174,13 +175,17 @@ public final class HanlinAgentSession {
                         try self.requireActive(run: run)
                         self.activeRun = nil
                         self.producerTask = nil
-                        if wasCancelled { self.revokeInteractions(run: run) }
+                        if wasCancelled {
+                            self.revokeInteractions(run: run)
+                            if let interactionOrigin { self.revokeInteraction(interactionOrigin) }
+                        }
                         self.onRunCompletion?(.init(session: self.identity, runID: run,
                             outcome: wasCancelled ? .cancelled : .completed))
                         await self.diagnostics?.record(.init(kind: .runFinished, runID: run))
                         continuation.finish()
                     } catch {
                         self.revokeInteractions(run: run)
+                        if let interactionOrigin { self.revokeInteraction(interactionOrigin) }
                         let safe = (error as? HanlinHostError) ?? (Task.isCancelled ? .cancelled : .unsupportedProviderCapability)
                         self.onRunCompletion?(.init(session: self.identity, runID: run, outcome: .failed(safe)))
                         do { try self.append(.failed(code: safe), run: run); try await self.persist(model: modelReference) }
@@ -210,6 +215,7 @@ public final class HanlinAgentSession {
         let firstInvalidation = !invalidated
         invalidated = true
         interactionOrigins.removeAll()
+        observedInteractionOrigins.removeAll()
         producerTask?.cancel()
         if firstInvalidation { onSessionInvalidated?(identity) }
         await dispatcher.invalidate(identity)
@@ -218,6 +224,14 @@ public final class HanlinAgentSession {
     /// Surface deletion/replacement is explicit host lifecycle, independent of sheet visibility.
     public func revokeInteraction(_ origin: HanlinHostInteractionOrigin) {
         interactionOrigins.remove(origin)
+        observedInteractionOrigins.remove(origin)
+    }
+
+    /// Called by the trusted presentation adapter AFTER official A2UI admission. Merely receiving
+    /// model bytes does not enable actions. The host still owns live action/policy validation.
+    public func admitInteraction(_ origin: HanlinHostInteractionOrigin) throws {
+        guard !invalidated, origin.session == identity, observedInteractionOrigins.contains(origin) else { throw HanlinHostError.staleContext }
+        interactionOrigins.insert(origin)
     }
 
     /// Successful producer EOF keeps admitted controls live. A user action obtains current host
@@ -248,6 +262,7 @@ public final class HanlinAgentSession {
 
     private func revokeInteractions(run: UUID) {
         interactionOrigins = interactionOrigins.filter { $0.runID != run }
+        observedInteractionOrigins = observedInteractionOrigins.filter { $0.runID != run }
     }
 
     private func makeDefinitions(catalog: HanlinHostCatalog, run: UUID, model: HanlinModelReference) throws -> [HanlinAISDKToolDefinition] {
@@ -273,7 +288,10 @@ public final class HanlinAgentSession {
                         })
                     let result = hostEvent.result
                     guard self.activeRun == run else { throw HanlinHostError.staleContext }
-                    try self.append(.toolResult(providerCallID: providerID, result: result.metadataReceipt()), run: run)
+                    try self.append(.hostResultIdentity(resultID: hostEvent.resultID, call: hostEvent.call),
+                                    run: run, stepOverride: hostEvent.call.step)
+                    try self.append(.toolResult(providerCallID: providerID, result: result.metadataReceipt()),
+                                    run: run, stepOverride: hostEvent.call.step)
                     try await self.persist(model: model)
                     try await self.requireCurrent(run: run)
                     self.onHostResult?(hostEvent)

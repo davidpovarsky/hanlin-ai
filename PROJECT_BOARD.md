@@ -246,3 +246,10 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **2026-11-13 performance report provenance:** artifact14023364972's performance-summary.md labels iOS26/Release and says all hard invariants passed despite no benchmark samples, while the authenticated driver ran Debug/iOS27.2. Before using this generator for acceptance, derive environment and pass status from actual run inputs/results and label missing samples NOT_RUN; do not cite this boilerplate as measured performance.
 - **2026-11-13 NS process config cache:** pinned NativeScript9.1.0 Runtime.mm retains AppPackageJson/AppConfigCache after isolate destruction. Actual43402191132 failed because an earlier lifecycle fixture's bundle.js main reached a later bundle.mjs package. Hanlin's prepared contract now explicitly requires bundle.mjs, already used by all8 prepared source packages; lifecycle assertions stay intact under canonical ESM. General cross-package app-config/main support requires an upstream cache-lifetime correction and a verified SDK artifact, not a private-symbol cache reset or second isolate. Current exact VM follow-up is still required.
 - **2026-11-13 inter-app action lifetime:** personal MiniApp Host inherited an implicit15s broker deadline, independent of uncapped Runtime Core jobs. Personal Host now explicitly selects a nil deadline; actual16s/explicit deadline/cancellation tests are pending. Typed HanlinValue and broker payload/response budgets remain1MiB/4MiB. Share text beyond inline budgets needs owned references rather than a misleading claim that removing the timer removes every data boundary.
+# Native model catalog identity (2026-11-15)
+
+- The existing chat stores selected models as indices. Keep the single built-in Apple row in the
+  primary AllModels array even while unavailable; filter only the picker projection using original
+  indices. Append registration after existing positions and exclude the native UUID from automatic
+  defaults so availability changes neither remap a saved choice nor select a fallback provider.
+  Implementation and proof scope: `docs/agent-sdk/APPLE_APP_MODEL_MAPPING_2026-11-15.md`.

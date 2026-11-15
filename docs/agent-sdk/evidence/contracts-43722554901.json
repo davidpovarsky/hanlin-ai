@@ -1,0 +1,166 @@
+{
+  "source_sha": "f26fe05fad224d30023b043165904ec89e3757e8",
+  "run": 43722554901,
+  "job": 132837473769,
+  "status": "EXECUTED_PASS",
+  "executed": 33,
+  "reused": 0,
+  "ios_compile": "PASS",
+  "source_hashes_verified_against_git": 264,
+  "artifact": {
+    "id": 14165202248,
+    "digest": "sha256:711da13ed1b6485e9693ecc54f13a2b1658a17900127cc909f38406a90197b8b"
+  },
+  "raw": {
+    "summary.json": "22de357718bcefc81e854e38c0bb9c150e3e0dfc514444ae2c2c915a16208ee9",
+    "SDKTests.json": "310807a28972b7cdcceaa14ab2575ad8fb47327856dab72c6f7fb13dc2cd2a22",
+    "CoreTests.json": "3f9c5ded4d845c7dd65735cceafc19fd4ca57dad2972a0773501559dfeea6add",
+    "tested-source-sha256.json": "c41acc816fbba7237a473b44e33fa6c7ae48a7a47596bc6b777c14b1aa8d0e06",
+    "process-status.json": "52ee0fa485ab176baec3f51510f464f2a949128662af935cd2fcb62c644cac46"
+  },
+  "toolchain": {
+    "xcode.txt": "Xcode 27.2\nBuild version 27B52",
+    "swift.txt": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+    "macos-sdk.txt": "27.2",
+    "ios-sdk.txt": "27.2",
+    "os.txt": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+    "architecture.txt": "arm64",
+    "duration.json": "{\"total_seconds\":421,\"sdk_test_seconds\":104,\"measured\":true}",
+    "diagnostic-cli.txt": "/opt/homebrew/bin/python3\nPython 3.15.2"
+  },
+  "cases": [
+    {
+      "id": "StoreTests/sameConversationIDIsIsolatedBySpace()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "ContextTests/persistedPresentationCarriesNoExecutionAuthority()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "ContextTests/decodedNamespacesCannotBypassValidation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeNonTextRejectedBeforeProviderCapabilityOrDownloadPath()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeDescriptorNeverSelectsNetworkProvider()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/duplicateDefinitionsThrowBeforeDictionaryConstruction()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testGeminiDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testCustomOpenAICompatibleDescriptor()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenRouterDescriptor()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenAIDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testAnthropicDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testAdvertisedSchemaPreservesOriginalConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testInvalidArgumentsReachExecutorWithoutAborting()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testDynamicToolExposure()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testMultimodalUserMessagePartsPreserved()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/cancellationAfterFortyStopsTheActualTool()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testUnknownToolProducesNonFatalErrorAndAllowsRecovery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testToolContinuationRegression()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testSourceAndFileStreamEventMapping()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testNonPositiveMaxStepsClampedToAtLeastOne()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/defaultRunContinuesPastFortyWithDiscovery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testParallelToolExecution()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testRealProviderTransportErrorAbortsStream()",
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "scope": "package fixture host and canonical engine; no app/XCUITest/device acceptance"
+}

@@ -21,6 +21,9 @@ Step is captured before the first executor suspension. Callback data never reads
 late committed receipts remain in the original journal and do not deliver presentation callbacks.
 
 The consumer creates its own presentation generation and binds it to these original values.
+Metadata record format 2 persists that resultID and complete call identity beside the redacted tool
+receipt. The reader continues accepting format 1 without rewriting original records; new saves use 2.
+Replaying these persisted identities does not restore the Session's live interaction admission.
 Successful producer EOF ends input while live admitted interactions remain available; a historical receipt does not authorize an action. UI disappearance
 is not host revocation. Queued navigation still does not mean an actual scene was mounted.
 No second renderer, UI registry, model selection UI or permission authority is introduced.
@@ -38,7 +41,9 @@ An explicit model/provider adapter calls `part.providerContent()` and emits that
 `hanlin.part`, a Base64 string of the versioned Codable envelope. Exact integer sequences survive
 the provider's Double-valued metadata representation. The canonical engine emits
 `.structuredPart(part)` in source order on its SAME event stream. It never searches prose,
-Markdown or fenced JSON for protocol content. Cloud adapters do not automatically gain this capability.
+Markdown or fenced JSON for protocol content. The provider descriptor must explicitly advertise
+`structuredPartChannel: HanlinChatStructuredPart.channel`; otherwise the declared channel is refused.
+Cloud/native defaults remain nil and do not automatically gain this capability.
 Unknown custom channels stay outside this channel; malformed declared channel data fails explicitly.
 
 `HanlinChatStructuredPartSequence` validates strict per-message order. An exact duplicate is suppressed;
@@ -49,7 +54,9 @@ the authorized host must supply a content store before claiming durable structur
 
 `onRunCompletion` carries original session/run and completed/cancelled/failed outcome;
 `onSessionInvalidated` fires once for terminal host/session revocation. A successful producer EOF
-retains only this Session's in-memory admitted structured-part origins. `continueInteraction`
+retains only this Session's in-memory observed structured-part origins. The trusted app adapter calls
+`admitInteraction(origin)` AFTER official A2UI admission; receiving model bytes alone enables no action.
+`continueInteraction`
 requires the exact original session/run/message/part and fresh context before and after the optional
 `HanlinHostInteractionSource.prepareInteraction` host admission. Its authorized user-message projection
 starts a NEW turn through the same canonical engine. Subsequent events retain `interactionOrigin`.

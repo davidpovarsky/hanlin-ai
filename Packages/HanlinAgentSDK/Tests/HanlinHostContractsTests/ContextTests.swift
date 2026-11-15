@@ -16,4 +16,14 @@ import Testing
         try decoded.validate()
         #expect(decoded == record)
     }
+    @Test func previousMetadataFormatRemainsReadableWithoutMutation() throws {
+        let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "s")
+        let original = HanlinConversationRecord(formatVersion: 1, namespace: ns, conversationID: UUID(), revision: 4,
+            draft: "Preserve original", entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("History"))])
+        let bytes = try JSONEncoder().encode(original)
+        let restored = try JSONDecoder().decode(HanlinConversationRecord.self, from: bytes)
+        try restored.validate()
+        #expect(restored == original && restored.formatVersion == 1)
+        #expect(HanlinConversationRecord.currentFormat == 2)
+    }
 }

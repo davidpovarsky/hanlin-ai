@@ -2,7 +2,7 @@ import HanlinChatCore
 
 /// The single model/generation policy used when Hanlin creates a conversation
 /// without an existing per-chat selection (including compact extension chat).
-@MainActor enum HanlinDefaultChatPolicy {
+enum HanlinDefaultChatPolicy {
     static func orderedModels(_ models: [AllModels]) -> [AllModels] {
         models.sorted {
             let lhsPosition = $0.position ?? Int.max

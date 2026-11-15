@@ -55,6 +55,11 @@ private struct StructuredScriptModel: LanguageModelV3 {
     }
 }
 
+private func structuredDescriptor() -> HanlinAISDKProviderDescriptor {
+    .init(kind: .openAICompatible, modelID: "structured", baseURL: URL(filePath: "/fixture"),
+          structuredPartChannel: HanlinChatStructuredPart.channel)
+}
+
 private actor InteractionFixtureHost: HanlinHostIntegration, HanlinHostInteractionSource {
     nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
     let base: SyntheticFixtureHost
@@ -383,6 +388,8 @@ private struct ControlledTextModel: LanguageModelV3 {
             try HanlinHostResultEvent(resultID: callback.resultID, call: staleCall, result: callback.result)
         }
         let record = try #require(await store.load(identity.conversationID, namespace: namespace))
+        #expect(record.formatVersion == 2)
+        #expect(record.entries.contains { if case .hostResultIdentity(let id, let call) = $0.payload { return id == callback.resultID && call == callback.call }; return false })
         #expect(record.entries.contains { if case .toolResult("opaque/fixture-call", _) = $0.payload { return true }; return false })
     }
 
@@ -429,7 +436,7 @@ private struct ControlledTextModel: LanguageModelV3 {
         var source = try parts.map { LanguageModelV3StreamPart.custom(try $0.providerContent()) }
         source.insert(try .custom(parts[1].providerContent()), at: 2)
         let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
-        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: source)))
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: source)), descriptor: structuredDescriptor())
         let session = HanlinAgentSession(identity: identity, host: SyntheticFixtureHost(context: context), engine: engine, store: HanlinInMemoryConversationStore())
         let stream = try await session.stream(messages: [.init(role: .user, text: "test")], modelReference: .init(provider: "fixture", modelID: "structured"))
         var observed: [HanlinChatStructuredPart] = []
@@ -465,6 +472,29 @@ private struct ControlledTextModel: LanguageModelV3 {
     }
 
     @Test(.timeLimit(.minutes(1))) @MainActor
+    func providerMustAdvertiseStructuredChannelAndProseCannotEnterIt() async throws {
+        let part = try HanlinChatStructuredPart(messageID: UUID(), partID: UUID(), sequence: 0, payload: .textDelta("Explicit"))
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let unadvertised = HanlinAISDKAgentEngine(configuration: config,
+            model: .v3(StructuredScriptModel(parts: [try .custom(part.providerContent())])))
+        let rejected = try await unadvertised.stream(messages: [.init(role: .user, text: "test")], baseSystemPrompt: nil, tools: [], prepareStep: { .init(activeToolAliases: []) })
+        do { for try await _ in rejected {}; Issue.record("Unadvertised channel was delivered") }
+        catch { #expect(error as? HanlinChatStructuredPartError == .unadvertisedChannel) }
+        let prose = #"```json {"createSurface":{"surfaceId":"prose"}} ```"#
+        let plain = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [
+            .textStart(id: "text", providerMetadata: nil), .textDelta(id: "text", delta: prose, providerMetadata: nil),
+            .textEnd(id: "text", providerMetadata: nil)
+        ])))
+        let stream = try await plain.stream(messages: [.init(role: .user, text: "test")], baseSystemPrompt: nil, tools: [], prepareStep: { .init(activeToolAliases: []) })
+        var text = "", structured = 0
+        for try await event in stream {
+            if case .textDelta(let value) = event { text += value }
+            if case .structuredPart = event { structured += 1 }
+        }
+        #expect(text == prose && structured == 0)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
     func interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority() async throws {
         let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
         let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
@@ -473,7 +503,7 @@ private struct ControlledTextModel: LanguageModelV3 {
         let part = try HanlinChatStructuredPart(messageID: UUID(), partID: UUID(), sequence: 0,
             payload: .a2uiMessage(protocolVersion: "v0.9", json: Data(#"{"createSurface":{"surfaceId":"test"}}"#.utf8)))
         let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
-        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [try .custom(part.providerContent())])))
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [try .custom(part.providerContent())])), descriptor: structuredDescriptor())
         let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
         var origin: HanlinHostInteractionOrigin?
         var completed = 0
@@ -487,6 +517,10 @@ private struct ControlledTextModel: LanguageModelV3 {
         }
         let live = try #require(origin)
         #expect(completed == 1)
+        do { _ = try await session.continueInteraction(.init(origin: live, actionID: "fixture_submit", arguments: .null), messages: [], modelReference: model); Issue.record("Model bytes alone enabled interaction") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        // Synthetic presentation admission, not proof of a real renderer/UI mount.
+        try session.admitInteraction(live)
         let request = HanlinHostInteractionRequest(origin: live, actionID: "fixture_submit", arguments: .object([:]))
         let next = try await session.continueInteraction(request, messages: [], modelReference: model)
         for try await event in next {
@@ -515,7 +549,7 @@ private struct ControlledTextModel: LanguageModelV3 {
         let part = try HanlinChatStructuredPart(messageID: UUID(), partID: UUID(), sequence: 0,
             payload: .a2uiMessage(protocolVersion: "v0.9", json: Data("{}".utf8)))
         let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
-        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [try .custom(part.providerContent())])))
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [try .custom(part.providerContent())])), descriptor: structuredDescriptor())
         let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
         let model = HanlinModelReference(provider: "fixture", modelID: "structured")
         var origin: HanlinHostInteractionOrigin?
@@ -524,6 +558,7 @@ private struct ControlledTextModel: LanguageModelV3 {
             if case .structuredPart = event.event { origin = .init(session: identity, runID: event.runID, messageID: part.messageID, partID: part.partID) }
         }
         let request = HanlinHostInteractionRequest(origin: try #require(origin), actionID: "fixture_submit", arguments: .null)
+        try session.admitInteraction(request.origin)
         await host.holdPreparation()
         let continuation = Task { @MainActor in try await session.continueInteraction(request, messages: [], modelReference: model) }
         await host.waitUntilHeld()

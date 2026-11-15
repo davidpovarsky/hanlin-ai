@@ -4,7 +4,6 @@ import HanlinAgentCore
 import HanlinChatCore
 
 /// The one app catalog row for the system provider. The existing picker owns visibility.
-@MainActor
 enum HanlinAppleModelCatalogAdapter {
     static let catalogID = UUID(uuid: (0x76, 0x29, 0x8a, 0x03, 0x22, 0x51, 0x4d, 0x79,
                                        0x8e, 0x19, 0x5e, 0x29, 0x30, 0x9c, 0x5d, 0xa1))
@@ -14,6 +13,7 @@ enum HanlinAppleModelCatalogAdapter {
     /// Append once after existing rows. Never remove/reorder rows or rewrite saved useModel indices.
     /// Remains in the catalog when unavailable so a saved selection cannot shift to another model.
     @discardableResult
+    @MainActor
     static func register(in context: ModelContext) throws -> AllModels {
         let models = try context.fetch(FetchDescriptor<AllModels>())
         let native = models.filter { $0.id == catalogID }
@@ -32,7 +32,7 @@ enum HanlinAppleModelCatalogAdapter {
         return try insert(position: maximum + 1, in: context)
     }
 
-    private static func insert(position: Int, in context: ModelContext) throws -> AllModels {
+    @MainActor private static func insert(position: Int, in context: ModelContext) throws -> AllModels {
         let model = AllModels(id: catalogID, name: HanlinAppleOnDeviceProvider.modelID,
             displayName: HanlinAppleOnDeviceProvider.displayName, position: position, company: "APPLE",
             isHidden: false, systemProvision: false, icon: "apple.intelligence")

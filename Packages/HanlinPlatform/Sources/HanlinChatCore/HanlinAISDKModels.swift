@@ -14,19 +14,23 @@ public struct HanlinAISDKProviderDescriptor: Codable, Hashable, Sendable {
     public let baseURL: URL
     public let headers: [String: String]
     public let queryParameters: [String: String]
+    /// Only an adapter implementing this exact channel may advertise it. Cloud/native defaults are nil.
+    public let structuredPartChannel: String?
 
     public init(
         kind: HanlinAISDKProviderKind,
         modelID: String,
         baseURL: URL,
         headers: [String: String] = [:],
-        queryParameters: [String: String] = [:]
+        queryParameters: [String: String] = [:],
+        structuredPartChannel: String? = nil
     ) {
         self.kind = kind
         self.modelID = modelID
         self.baseURL = baseURL
         self.headers = headers
         self.queryParameters = queryParameters
+        self.structuredPartChannel = structuredPartChannel
     }
 }
 

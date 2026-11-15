@@ -133,3 +133,11 @@ accepted/repaired input, but are **NOT_RUN / not typechecked** under the resourc
 gate. Prior 45-producer/39-portable results remain historical old-closure evidence.
 No consumer source or shipping dependency pin/lock changed for this correction;
 Roni review and Tomer's real Mac proof/final dependency window remain required.
+# Current wave contract (2026-11-15)
+
+The callback/structured-output/interaction contract in
+[CONTRACTS_WAVE_RESTART_2026-11-15.md](CONTRACTS_WAVE_RESTART_2026-11-15.md)
+supersedes older preview callback signatures below. App registration and native routing are in
+[APPLE_APP_MODEL_MAPPING_2026-11-15.md](APPLE_APP_MODEL_MAPPING_2026-11-15.md).
+Metadata format 2 retains call/result identities; format 1 remains readable. Actual package proof
+and app/device limitations are attributed to their own immutable runs, not this document date.
