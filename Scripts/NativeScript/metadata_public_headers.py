@@ -28,7 +28,8 @@ def declaration_role(declarations: list[dict]) -> str:
     return CPP_ROLE if any(d["category"] == "cpp" for d in declarations) else PUBLIC_ROLE
 
 
-def inspect_header_declarations(headers: list[Path], arguments: list[str], library: Path) -> dict:
+def inspect_header_declarations(headers: list[Path], arguments: list[str], library: Path,
+                                language: str = "objective-c++") -> dict:
     """Inspect actual owned declarations using the selected compiler's libclang."""
     class Cursor(ctypes.Structure):
         _fields_ = [("kind", ctypes.c_uint), ("xdata", ctypes.c_int), ("data", ctypes.c_void_p * 3)]
@@ -111,16 +112,17 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
                 ancestors.append(ancestor.kind)
                 ancestor = parent(ancestor)
             cpp_scope = any(k in {4, 21, 22, 24, 25, 26, 30, 31, 32} for k in ancestors)
+            symbol = ""
             if 11 <= kind <= 19 or kind in {37, 38}:
                 category = "public"
             elif kind == 8:  # C linkage remains public, even inside a C++ namespace.
                 symbol = string(mangling(cursor))
                 # A global C-compatible declaration acquires C++ mangling in
                 # this inspection TU even without an extern-C wrapper. Keep it.
-                category = "cpp" if cpp_scope and not c_linkage(cursor) and (not symbol or symbol.startswith(("_Z", "?"))) else "public"
+                category = "cpp" if cpp_scope and not c_linkage(cursor) and (not symbol or symbol.startswith(("_Z", "__Z", "?"))) else "public"
             elif kind == 9 and cpp_scope:
                 symbol = string(mangling(cursor))
-                category = "cpp" if not c_linkage(cursor) and (not symbol or symbol.startswith(("_Z", "?"))) else "public"
+                category = "cpp" if not c_linkage(cursor) and (not symbol or symbol.startswith(("_Z", "__Z", "?"))) else "public"
             elif kind in {2, 3, 5} and not definition(cursor):
                 # The pinned MetaFactory rejects forward records/enums. They
                 # are not a supported entity by themselves; a public typedef,
@@ -135,7 +137,8 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
             else:
                 category = "unknown"  # Conservative public root, never silently skipped.
             declarations.append({"header": str(owned[path]), "line": line.value,
-                                 "kind": kind, "name": string(spelling(cursor)), "category": category})
+                                 "kind": kind, "name": string(spelling(cursor)), "category": category,
+                                 "linkageName": symbol})
         except Exception as error:
             callback_errors.append(str(error))
         return 2
@@ -144,7 +147,8 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
         with tempfile.TemporaryDirectory(prefix="hanlin-header-role-") as folder:
             driver = Path(folder) / "input.mm"
             driver.write_text("\n".join('#include "' + str(h.resolve()).replace("\\", "/") + '"' for h in headers) + "\n", encoding="utf-8")
-            args = [a.encode() for a in ["-x", "objective-c++", "-std=gnu++20", *arguments]]
+            standard = "gnu++20" if language == "objective-c++" else "gnu17"
+            args = [a.encode() for a in ["-x", language, "-std=" + standard, *arguments]]
             result = parse(index, os.fsencode(driver), (ctypes.c_char_p * len(args))(*args), len(args), None, 0, 0x40, ctypes.byref(unit))
             if result or not unit.value:
                 raise RuntimeError(f"Actual libclang header-role parse failed: {result}")
@@ -162,6 +166,7 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
             if callback_errors:
                 raise RuntimeError("Header-role cursor inspection failed: " + "; ".join(callback_errors))
             return {"compiler": string(version()), "errors": errors, "diagnostics": diagnostics, "declarations": declarations,
+                    "language": language,
                     "role": PUBLIC_ROLE if errors else declaration_role(declarations)}
     finally:
         if unit.value:
@@ -185,7 +190,16 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path)
             proof = {"role": PUBLIC_ROLE, "errors": [], "declarations": [], "reason": "Conservative public root"}
         else:
             proof = inspect_header_declarations(headers, arguments, library)
+            if proof["role"] == CPP_ROLE:
+                # A dual-language header may expose a C API only in its
+                # non-C++ branch. Inspect the actual ObjC translation as well.
+                objc = inspect_header_declarations(headers, arguments, library, "objective-c")
+                proof["objcCompatibility"] = objc
+                if not objc["errors"] and any(d["category"] == "public" for d in objc["declarations"]):
+                    proof["role"] = PUBLIC_ROLE
             for declaration in proof["declarations"]:
+                declaration["header"] = Path(declaration["header"]).relative_to(framework.resolve()).as_posix()
+            for declaration in proof.get("objcCompatibility", {}).get("declarations", []):
                 declaration["header"] = Path(declaration["header"]).relative_to(framework.resolve()).as_posix()
         records.append({"framework": framework.name, "relativePath": framework.name,
                         "modules": module_names((framework / "Modules/module.modulemap").read_text(encoding="utf-8"))
@@ -209,7 +223,8 @@ def verified_framework_roles(directory: Path) -> dict:
         return {}
     manifest = json.loads(path.read_text(encoding="utf-8"))
     repository = Path(__file__).resolve().parents[2]
-    if manifest.get("schemaVersion") != 1 or manifest.get("producer") != "Scripts/Expo/prepare-ios-dependencies.mjs" or \
+    if manifest.get("schemaVersion") != 1 or not re.fullmatch(r"[0-9a-f]{64}", manifest.get("compilerLibrarySHA256", "")) or \
+       manifest.get("producer") != "Scripts/Expo/prepare-ios-dependencies.mjs" or \
        manifest.get("producerSHA256") != hashlib.sha256((repository / "Scripts/Expo/prepare-ios-dependencies.mjs").read_bytes()).hexdigest() or \
        manifest.get("classifierSHA256") != hashlib.sha256(Path(__file__).read_bytes()).hexdigest() or \
        manifest.get("metadataToolSourceSHA256") != hashlib.sha256((repository / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest() or \
@@ -229,9 +244,13 @@ def verified_framework_roles(directory: Path) -> dict:
         proof = record["proof"]
         if any(d.get("header") not in record["inputSHA256"] for d in proof.get("declarations", [])):
             raise RuntimeError("Framework input-role proof refers to an unowned header")
-        if record["role"] == CPP_ROLE and (proof.get("errors") or proof.get("role") != CPP_ROLE or
+        if record["role"] == CPP_ROLE and (not proof.get("compiler") or proof.get("errors") or proof.get("role") != CPP_ROLE or
                                            declaration_role(proof["declarations"]) != CPP_ROLE):
             raise RuntimeError("Framework input-role contains supported/mixed or unknown declarations: " + framework.name)
+        if record["role"] == CPP_ROLE:
+            objc = proof.get("objcCompatibility")
+            if not objc or (not objc["errors"] and any(d["category"] == "public" for d in objc["declarations"])):
+                raise RuntimeError("Framework input-role lacks a valid ObjC compatibility audit: " + framework.name)
         if record["role"] == CPP_ROLE and os.environ.get("SDKROOT"):
             arguments = manifest["compilerArguments"]
             if "-isysroot" not in arguments or Path(arguments[arguments.index("-isysroot") + 1]).resolve() != Path(os.environ["SDKROOT"]).resolve():

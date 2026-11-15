@@ -56,12 +56,13 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
         library = self.compiler_library()
         with tempfile.TemporaryDirectory() as name:
             header = Path(name) / "entry.h"
-            for source, expected in cases:
-                with self.subTest(source=source):
-                    header.write_text(source, encoding="utf-8")
-                    proof = HEADERS.inspect_header_declarations([header], [], library)
-                    self.assertEqual(proof["errors"], [])
-                    self.assertEqual(proof["role"], expected)
+            for target in [[], ["-target", "arm64-apple-ios27.2-simulator"]]:
+                for source, expected in cases:
+                    with self.subTest(source=source, target=target):
+                        header.write_text(source, encoding="utf-8")
+                        proof = HEADERS.inspect_header_declarations([header], target, library)
+                        self.assertEqual(proof["errors"], [])
+                        self.assertEqual(proof["role"], expected)
 
     def test_verified_producer_roles_keep_search_dependencies_and_public_frameworks(self):
         with tempfile.TemporaryDirectory() as name:
@@ -86,7 +87,7 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
 
     def test_role_receipt_rejects_unknown_role_tampering_future_headers_and_mixed_proof(self):
         library = self.compiler_library()
-        for change in ["unknown-role", "changed-header", "future-c-api", "mixed-proof", "wrong-producer"]:
+        for change in ["unknown-role", "changed-header", "future-c-api", "mixed-proof", "wrong-producer", "missing-compiler", "missing-objc-audit"]:
             with self.subTest(change=change), tempfile.TemporaryDirectory() as name:
                 root = Path(name)
                 framework = self.framework(root / "products", "CppFixture")
@@ -101,8 +102,12 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
                     (framework / "Headers/Future.h").write_text('extern "C" int new_public_api();')
                 elif change == "mixed-proof":
                     record["proof"]["declarations"].append({"header": "Headers/Exported.h", "category": "public"})
-                else:
+                elif change == "wrong-producer":
                     manifest["producerSHA256"] = "0" * 64
+                elif change == "missing-compiler":
+                    del manifest["compilerLibrarySHA256"]
+                else:
+                    del record["proof"]["objcCompatibility"]
                 (framework.parent / HEADERS.ROLE_MANIFEST).write_text(json.dumps(manifest))
                 with self.assertRaisesRegex(RuntimeError, "Framework input-role"):
                     HEADERS.write_public_umbrella(root, root / "input.h", [], [framework.parent])
@@ -132,6 +137,19 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             self.assertEqual(updated["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
             self.assertTrue(any(d["name"] == "future_public_api" and d["category"] == "public"
                                 for d in updated["frameworks"][0]["proof"]["declarations"]))
+
+    def test_objc_branch_c_api_keeps_a_dual_language_framework_public(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            framework = self.framework(root / "products", "DualLanguage")
+            (framework / "Headers/Exported.h").write_text(
+                '#pragma once\n#ifdef __cplusplus\nnamespace api { class Thing {}; }\n'
+                '#else\nint supported_c_api(void);\n#endif\n')
+            manifest = HEADERS.produce_role_inventory(framework.parent, [], self.compiler_library())
+            proof = manifest["frameworks"][0]["proof"]
+            self.assertEqual(manifest["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
+            self.assertEqual(proof["objcCompatibility"]["errors"], [])
+            self.assertTrue(any(d["name"] == "supported_c_api" for d in proof["objcCompatibility"]["declarations"]))
 
     def framework(self, directory, name="ExpoModulesCore", module=None):
         framework = directory / (name + ".framework")
