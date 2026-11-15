@@ -10,11 +10,20 @@ struct HanlinA2UIMediaURLGate: View {
     let node: Node
     let isPlayer: Bool
     let builder: ComponentViewBuilder
-    @Environment(\.isEnabled) private var isEnabled
+
+    private struct Source: Hashable {
+        let url: String?
+        let poster: String?
+    }
 
     var body: some View {
-        if permitted, !isPlayer || isEnabled {
-            builder(node)
+        if permitted {
+            if isPlayer {
+                HanlinRequestedA2UIPlayer(node: node, builder: builder)
+                    .id(Source(url: node.string(for: "url"), poster: node.string(for: "posterUrl")))
+            } else {
+                builder(node)
+            }
         } else {
             ContentUnavailableView("Media unavailable", systemImage: "rectangle.slash",
                 description: Text("This media source could not be displayed."))
@@ -27,6 +36,33 @@ struct HanlinA2UIMediaURLGate: View {
             return HanlinRemoteMediaURL(poster) != nil
         }
         return true
+    }
+}
+
+/// Construct the original official player only on a user request. URL-bound identity resets
+/// admission before a changed source can construct a new player, rather than resetting after
+/// its onAppear/network work. Disabling, leaving the screen or backgrounding unloads it.
+@MainActor
+private struct HanlinRequestedA2UIPlayer: View {
+    let node: Node
+    let builder: ComponentViewBuilder
+    @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var requested = false
+
+    var body: some View {
+        Group {
+            if requested && isEnabled && scenePhase == .active {
+                builder(node)
+            } else {
+                Button("Load media player", systemImage: "play.circle") { requested = true }
+                    .disabled(!isEnabled)
+                    .accessibilityIdentifier("hanlin-media-load-player")
+            }
+        }
+        .onChange(of: isEnabled) { _, enabled in if !enabled { requested = false } }
+        .onChange(of: scenePhase) { _, phase in if phase != .active { requested = false } }
+        .onDisappear { requested = false }
     }
 }
 #endif

@@ -22,7 +22,7 @@ retain() {
   status="$?"
   finish_phase diagnostics
   if [[ -n "$scratch" && -f "$scratch/harness/Package.resolved" ]]; then cp "$scratch/harness/Package.resolved" "$evidence/Package.resolved"; fi
-  python3 - "$status" "$phase" "$evidence" "$platform" <<'PY'
+  python3 - "$status" "$phase" "$evidence" "$platform" "${A2UI_PROOF_SUITE:-ownership}" <<'PY'
 import json,subprocess,sys
 from pathlib import Path
 e=Path(sys.argv[3]);code=int(sys.argv[1]);phase=sys.argv[2];cases=[]
@@ -36,7 +36,7 @@ if (e/'tests.json').exists():
     try:visit(json.loads((e/'tests.json').read_text()))
     except (OSError,ValueError):pass
 log=(e/'xcodebuild.log').read_text(errors='replace') if (e/'xcodebuild.log').exists() else ''
-status='EXECUTED_PASS' if code==0 else ('TEST_FAILED' if cases else 'BUILD_FAILED' if phase!='preflight' and 'error:' in log else 'INFRA_ERROR')
+status=('COMPILE_PASS' if sys.argv[5]=='compile' else 'EXECUTED_PASS') if code==0 else ('TEST_FAILED' if cases else 'BUILD_FAILED' if phase!='preflight' and 'error:' in log else 'INFRA_ERROR')
 if code and (e/'selected-device.txt').exists():
     device=(e/'selected-device.txt').read_text().strip();diagnostics={}
     for name,args in [('screenshot',['xcrun','simctl','io',device,'screenshot',str(e/'failure.png')]),
@@ -48,7 +48,7 @@ if code and (e/'selected-device.txt').exists():
     diagnostics['accessibility']='NOT_AVAILABLE: component SDK runner has no original app XCUITest hierarchy'
     (e/'failure-diagnostics.json').write_text(json.dumps(diagnostics,indent=2))
 (e/'process-status.json').write_text(json.dumps({'exit_code':code,'status':status,'phase':phase,'executed_cases':len(cases),
-    'platform':sys.argv[4],'xcresult_exists':(e/'A2UI.xcresult').exists(),'scope':'official exact-pin SDK component; app UI NOT_RUN'},indent=2))
+    'platform':sys.argv[4],'suite':sys.argv[5],'xcresult_exists':(e/'A2UI.xcresult').exists(),'scope':'official exact-pin SDK component; app UI NOT_RUN'},indent=2))
 PY
   finish_phase complete
   python3 Scripts/CI/generate_performance_report.py --log-dir "$evidence" \
@@ -132,11 +132,13 @@ if [[ "$platform" == ios ]]; then
   grep -q "$(cat "$evidence/selected-device.txt")" "$evidence/destinations.txt" || { echo 'INFRA_ERROR: unsupported actual destination'; exit 2; }
 fi
 suite="${A2UI_PROOF_SUITE:-ownership}"
-[[ "$suite" == all || "$suite" == ownership || "$suite" == media || "$suite" == consumer ]] || { echo 'Unsupported focused proof suite'; exit 2; }
+[[ "$suite" == all || "$suite" == ownership || "$suite" == media || "$suite" == consumer || "$suite" == compile ]] || { echo 'Unsupported focused proof suite'; exit 2; }
 python3 - "$scratch/harness/proof-inputs.json" "$suite" <<'PY' > "$evidence/selected-cases.txt"
 import json,sys
 p=json.load(open(sys.argv[1]))
-if sys.argv[2]=='consumer':
+if sys.argv[2]=='compile':
+    names=[]
+elif sys.argv[2]=='consumer':
     names=['HanlinA2UIAgentPresentationTests/'+x+'()' for x in p['consumer_cases']]+['A2UISDKTests/'+x+'()' for x in p['ownership_cases']]
 elif sys.argv[2]=='all':
     names=['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
@@ -146,13 +148,16 @@ else:
 print('\n'.join(names))
 PY
 selectors=()
-while IFS= read -r method; do selectors+=("-only-testing:AI_HLYTests/$method"); done < "$evidence/selected-cases.txt"
+while IFS= read -r method; do [[ -z "$method" ]] || selectors+=("-only-testing:AI_HLYTests/$method"); done < "$evidence/selected-cases.txt"
+action=test
+if [[ "$suite" == compile ]]; then action=build; fi
 phase=build-and-test
-finish_phase build-and-test
+if [[ "$action" == build ]]; then phase=build-only; fi
+finish_phase "$phase"
 set +e
 (
   cd "$scratch/harness"
-  xcodebuild test -scheme "$scheme" -configuration Debug -destination "$destination" \
+  xcodebuild "$action" -scheme "$scheme" -configuration Debug -destination "$destination" \
     -parallel-testing-enabled NO -destination-timeout 60 \
     -disableAutomaticPackageResolution -derivedDataPath "$scratch/DerivedData" \
     -resultBundlePath "$evidence/A2UI.xcresult" -skipPackagePluginValidation -skipMacroValidation \
@@ -161,11 +166,15 @@ set +e
 test_status=${PIPESTATUS[0]}
 set -e
 finish_phase result-verification
-if [[ -d "$evidence/A2UI.xcresult" ]]; then
+if [[ -d "$evidence/A2UI.xcresult" && "$suite" != compile ]]; then
   xcrun xcresulttool get test-results tests --path "$evidence/A2UI.xcresult" --format json > "$evidence/tests.json" || true
 fi
 [[ "$test_status" == 0 ]] || exit "$test_status"
 cmp "$evidence/resolved-before.json" "$scratch/harness/Package.resolved"
+if [[ "$suite" == compile ]]; then
+  printf '%s\n' '{"status":"COMPILE_PASS","executed_cases":0,"ui_behavior":"NOT_RUN"}' > "$evidence/result-validation.json"
+  exit 0
+fi
 "${proof[@]}" --verify-xcresult "$evidence/tests.json" --suite "$suite" \
   --resolved "$scratch/harness/Package.resolved" --inputs "$scratch/harness/proof-inputs.json" \
   > "$evidence/result-validation.json"

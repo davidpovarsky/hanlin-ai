@@ -146,3 +146,17 @@ Measured phases were 478s build/test, 70s package resolution, 44s scheme preflig
 20s initial preflight and 19s result verification (657s job). No cache savings are claimed.
 The unaffected eight YouTube identity/document cases were not rerun. Playback, actual-app
 XCUITest, redirect/DNS/pixel limits and physical-device acceptance remain OPEN.
+
+## Native player construction policy
+
+`HanlinA2UIMediaURLGate` now constructs the original official Video/AudioPlayer builder
+only after the user presses the native Load media player button. It preserves the official
+playback controls. The request state belongs to the exact URL/poster pair, so a binding change
+creates a fresh unrequested identity; backgrounding, disabling or disappearance unloads the
+player and requires another request. Image rendering retains its original builder.
+
+Only this SwiftUI wrapper and the iOS compile route changed after the iOS8-case proof.
+The manual `a2ui_media_ios_compile` route builds the real enabled iOS sources and reports
+COMPILE_PASS/zero executed tests on success. It does not rerun the unchanged URL/parser/binding
+tests or infer gesture, networking, native playback or lifecycle XCUITest behavior from a build.
+That build is pending at this source commit; original-app XCUITest remains required.
