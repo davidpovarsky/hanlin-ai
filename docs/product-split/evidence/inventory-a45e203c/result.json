@@ -1,0 +1,49 @@
+{
+  "status": "EXECUTED_PASS",
+  "scope": "Source inventory/provenance validation only; no feature/UI acceptance",
+  "target_revision": "a45e203c5989e3a43c53c2f9eeecac27ea769a30",
+  "target_project": {
+    "path": "AI_HLY.xcodeproj/project.pbxproj",
+    "revision": "a45e203c5989e3a43c53c2f9eeecac27ea769a30",
+    "sha256": "1681f0cb8855224d7005c3fb4b3ad96badf06033731c59c86dba450f3e797a82"
+  },
+  "command": [
+    "py",
+    "-3",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Tests/ProductSplit",
+    "-p",
+    "test_parity_inventory.py",
+    "-v"
+  ],
+  "python": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+  "tests_executed": 12,
+  "failed": 0,
+  "duration_seconds": 5.416,
+  "raw_log": {
+    "path": "docs/product-split/evidence/inventory-a45e203c/unittest.log",
+    "sha256": "41132a67afdb5a5769a6c9d22c9b757f8b8e47ddb17482017c916e0ea6127fee"
+  },
+  "input_sha256": {
+    "Scripts/ProductSplit/parity_inventory.py": "c8af0678e2a806e5953a0cfc012f0c0af1184ee0cb5b48ceeb6e0b4919af0d33",
+    "Tests/ProductSplit/test_parity_inventory.py": "fa2ebb384f406a34781bc384d139b79806c0af47dc9a0325a7f263df4f38acf9",
+    "docs/product-split/feature-delta-278.json": "4c83c847e5d614914407a4cf7cd7483cf761a4597d2ced9df8f1e4edc10e8626",
+    "docs/product-split/legacy-ui-decisions.json": "eca41399ce713fd020d5211c8af8f2fdd9075a853f9bf4c9365726333e63b3db"
+  },
+  "capability_count": 278,
+  "acceptance_counts": {
+    "NOT_RUN": 269,
+    "BLOCKED": 9
+  },
+  "ux_decision_count": 26,
+  "ux_choices": {
+    "KEEP": 14,
+    "RESTORE_TRIAL": 11,
+    "OPEN": 1
+  }
+}
