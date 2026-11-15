@@ -9,6 +9,9 @@
 
 import SwiftUI
 import SwiftData
+#if canImport(HanlinAgentCore)
+import HanlinAgentCore
+#endif
 
 @MainActor
 struct HanlinModelPickerPopover: View {
@@ -25,25 +28,57 @@ struct HanlinModelPickerPopover: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var allModelsZoom
     @State private var searchText: String = ""
+    @State private var appleOnDeviceAvailable = false
+    @Environment(\.scenePhase) private var scenePhase
 
     private var accentColor: Color {
         temporaryRecord ? .primary : .hlBluefont
     }
 
-    private var visibleIndices: [Int] {
-        models.indices
-            .filter { !models[$0].isHidden }
-            .sorted { (models[$0].position ?? 0) < (models[$1].position ?? 0) }
+    // SDK owns registration and identity; this view only projects visibility.
+    private static var nativeCatalogID: UUID? {
+        #if canImport(HanlinAgentCore)
+        HanlinAppleModelCatalogAdapter.catalogID
+        #else
+        nil
+        #endif
     }
 
-    /// Top 4 favorite/recent models plus the currently selected model if it isn't in the first 4.
+    private static func nativeModelIsAvailable() -> Bool {
+        #if canImport(HanlinAgentCore)
+        HanlinAppleOnDeviceProvider.availability == .available
+        #else
+        false
+        #endif
+    }
+
+    /// Return original array indices so saved useModel selections never shift.
+    static func visibleModelIndices(_ models: [AllModels], nativeID: UUID?, nativeAvailable: Bool) -> [Int] {
+        var includedNative = false
+        return models.indices.filter { index in
+            let model = models[index]
+            guard !model.isHidden else { return false }
+            guard let nativeID, model.id == nativeID else { return true }
+            guard nativeAvailable, !includedNative else { return false }
+            includedNative = true
+            return true
+        }.sorted { (models[$0].position ?? 0) < (models[$1].position ?? 0) }
+    }
+
+    private var visibleIndices: [Int] {
+        Self.visibleModelIndices(models, nativeID: Self.nativeCatalogID, nativeAvailable: appleOnDeviceAvailable)
+    }
+
+    /// Preserve featured/current rows and expose the one available local row.
     private var compactFeaturedIndices: [Int] {
-        var result = Array(visibleIndices.prefix(4))
-        if models.indices.contains(selectedModelIndex),
-           !models[selectedModelIndex].isHidden,
-           !result.contains(selectedModelIndex) {
+        let visible = visibleIndices
+        var result = Array(visible.prefix(4))
+        if visible.contains(selectedModelIndex), !result.contains(selectedModelIndex) {
             result.insert(selectedModelIndex, at: 0)
             result = Array(result.prefix(4))
+        }
+        if let native = visible.first(where: { models[$0].id == Self.nativeCatalogID }), !result.contains(native) {
+            result.append(native)
         }
         return result
     }
@@ -113,6 +148,10 @@ struct HanlinModelPickerPopover: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-popover")
+        .onAppear { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
+        }
         .task { await ModelRefreshService.refreshOpenRouterMetadata(in: modelContext) }
     }
 
@@ -321,6 +360,11 @@ struct HanlinModelPickerPopover: View {
     private func modelRowButton(model: AllModels, index: Int, compact: Bool) -> some View {
         let isSelected = (index == selectedModelIndex)
         Button {
+            if model.id == Self.nativeCatalogID {
+                let available = Self.nativeModelIsAvailable()
+                appleOnDeviceAvailable = available
+                guard available else { return }
+            }
             onSelectModel(index)
             coordinator.closeAll()
         } label: {
@@ -360,7 +404,11 @@ struct HanlinModelPickerPopover: View {
 
     @ViewBuilder
     private func modelIconView(for model: AllModels) -> some View {
-        if model.identity == "model" {
+        if model.id == Self.nativeCatalogID {
+            Image(systemName: "apple.intelligence")
+                .font(.title3)
+                .foregroundStyle(accentColor)
+        } else if model.identity == "model" {
             Image(getCompanyIcon(for: model.company ?? "Unknown"))
                 .resizable()
                 .scaledToFit()

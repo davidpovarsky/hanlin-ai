@@ -1053,6 +1053,21 @@ struct PendingFirstTurnTests {
 @MainActor
 @Suite("7A.7 ModelPopoverZoomOrderTests — Expand First, Push All Models Only On Completion", .serialized)
 struct ModelPopoverZoomOrderTests {
+    @Test("Native picker visibility preserves original indices and explicit selection")
+    func nativeVisibilityKeepsOriginalIndices() {
+        let nativeID = UUID()
+        let cloud = AllModels(name: "cloud", position: 0)
+        let hidden = AllModels(name: "hidden", position: 1, isHidden: true)
+        let native = AllModels(id: nativeID, name: "native", position: 2)
+        let next = AllModels(name: "next", position: 3)
+        let duplicate = AllModels(id: nativeID, name: "duplicate", position: 4)
+        let models = [cloud, hidden, native, next, duplicate]
+        let selectedModelIndex = 2
+        #expect(HanlinModelPickerPopover.visibleModelIndices(models, nativeID: nativeID, nativeAvailable: false) == [0, 3])
+        #expect(HanlinModelPickerPopover.visibleModelIndices(models, nativeID: nativeID, nativeAvailable: true) == [0, 2, 3])
+        #expect(models[selectedModelIndex] === native)
+    }
+
 
     @Test("Native resize callbacks leave the SwiftUI update and reject a superseded delivery")
     func nativeCallbacksAreDeferredAndSuperseded() async {
