@@ -134,6 +134,8 @@ jobs:
   focused-app-split:
     if: ${{ inputs.target_validation_group == 'app_split' && !inputs.testflight_upload }}
     uses: ./.github/workflows/validate-app-split.yml
+    with:
+      runtime_bundle_artifact_run_id: ${{ inputs.runtime_bundle_artifact_run_id || '42926628418' }}
 
   focused-nativescript-metadata-tests:
     if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}

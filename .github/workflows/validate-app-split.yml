@@ -2,7 +2,17 @@ name: Validate standalone MiniApps target
 
 on:
   workflow_call:
+    inputs:
+      runtime_bundle_artifact_run_id:
+        type: string
+        required: true
   workflow_dispatch:
+    inputs:
+      runtime_bundle_artifact_run_id:
+        description: Existing successful checksum-pinned RuntimeCore candidate
+        type: string
+        default: '42926628418'
+        required: true
 
 permissions:
   actions: read
@@ -15,6 +25,7 @@ jobs:
     env:
       SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
       GH_TOKEN: ${{ github.token }}
+      RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0

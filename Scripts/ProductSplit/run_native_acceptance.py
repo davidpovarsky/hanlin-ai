@@ -40,7 +40,8 @@ def main():
         runtimes = json.loads(command(['xcrun', 'simctl', 'list', 'runtimes', '-j'], 'runtimes.json'))['runtimes']
         runtime = next(r for r in runtimes if r.get('isAvailable') and r['identifier'].endswith('iOS-27-0'))
         types = json.loads(command(['xcrun', 'simctl', 'list', 'devicetypes', '-j'], 'devicetypes.json'))['devicetypes']
-        device = next(t for t in reversed(types) if t.get('productFamily') == 'iPhone')
+        supported = {t['identifier'] for t in runtime['supportedDeviceTypes']}
+        device = next(t for t in types if t.get('productFamily') == 'iPhone' and t['identifier'] in supported)
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
         state.update(simulator=simulator, runtime=runtime, device=device)
