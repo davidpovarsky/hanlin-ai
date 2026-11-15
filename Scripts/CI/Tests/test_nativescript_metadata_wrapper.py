@@ -997,7 +997,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         provenance = json.loads(self.provenance_path.read_text(encoding="utf-8"))
         self.assertEqual(provenance["patchSourceSHA256"], self.sha(self.patch_source))
         self.assertEqual(provenance["generatorSHA256"], self.sha(self.tool))
-        frozen = {"build-metadata-tool.py": "b553391db3c07ce1364dedf2334e7ce707173037d60d8c080df8c9b74611f83d",
+        frozen = {"build-metadata-tool.py": "0bcfd5e51ae29f3a6814aef7f642ea7800d6157dc5acd8b8f2ead22ea5058ee6",
             "build-step-metadata-generator-wrapper.py": "c42783300284ddbd93c75041f5de4dcbc6d1c37b7a173177485744ab10132e23",
             "probe-sdk-metadata.py": "dd00967e2c63c28af37c3305700fd867ed994b30df0f6834c9fd47b6ac5c0458"}
         for filename, digest in frozen.items():

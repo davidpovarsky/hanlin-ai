@@ -43,8 +43,8 @@ def replace_once(text: str, before: str, after: str) -> str:
 
 
 def preprocessing_provenance_source() -> str:
-    # Public llvmorg-17.0.6 APIs verified in the read-only design review.
-    # Source only until the instrumented tool and black-box controls execute.
+    # Use the pinned Apple LLVM snapshot's declarations, not llvmorg's
+    # same-version label: InclusionDirective also carries ModuleImported.
     return r'''
 static uint64_t hanlinConsumerEntries = 0, hanlinWriterEntries = 0;
 
@@ -158,7 +158,7 @@ class HanlinProvenanceCallbacks final : public clang::PPCallbacks {
     void condition(clang::SourceLocation loc, llvm::StringRef kind, int value = -1) {
         auto path = physical(loc);
         if (sm.getFileID(sm.getExpansionLoc(loc)) == sm.getMainFileID() || state.retain(path))
-            state.event({{"kind", kind.str()}, {"includer", path}, {"line", static_cast<int64_t>(line(loc))},
+            state.event(llvm::json::Object{{"kind", kind.str()}, {"includer", path}, {"line", static_cast<int64_t>(line(loc))},
                 {"source", sourceLine(loc)}, {"value", value}});
     }
     std::string form(llvm::StringRef source, bool angled) {
@@ -179,13 +179,13 @@ public:
     HanlinProvenanceCallbacks(clang::SourceManager &s, HanlinProvenanceState &v) : sm(s), state(v) {}
     bool FileNotFound(llvm::StringRef name) override {
         ++state.misses; state.fail("include-lookup-miss");
-        state.event({{"kind", "missing"}, {"spelling", name.str()}});
+        state.event(llvm::json::Object{{"kind", "missing"}, {"spelling", name.str()}});
         return false; // Observe only; never silently skip/recover an include.
     }
     void InclusionDirective(clang::SourceLocation hash, const clang::Token &token,
         llvm::StringRef name, bool angled, clang::CharSourceRange range,
         clang::OptionalFileEntryRef file, llvm::StringRef search, llvm::StringRef relative,
-        const clang::Module *imported, clang::SrcMgr::CharacteristicKind) override {
+        const clang::Module *suggested, bool imported, clang::SrcMgr::CharacteristicKind) override {
         const bool main = sm.getFileID(sm.getExpansionLoc(hash)) == sm.getMainFileID();
         auto target = file ? file->getFileEntry().tryGetRealPathName().str() : std::string();
         auto parent = physical(hash);
@@ -217,7 +217,7 @@ public:
         auto source = sourceLine(hash);
         auto includeForm = form(source, angled);
         if (main || state.retain(target) || state.retain(parent)) {
-            state.event({{"kind", "include"}, {"line", static_cast<int64_t>(line(hash))},
+            state.event(llvm::json::Object{{"kind", "include"}, {"line", static_cast<int64_t>(line(hash))},
                 {"directive", token.getIdentifierInfo() ? token.getIdentifierInfo()->getName().str() : "unknown"},
                 {"form", includeForm}, {"filenameRangeIsMacro", range.getBegin().isMacroID()},
                 {"sourceDirective", source}, {"isAngled", angled},
@@ -239,7 +239,7 @@ public:
             else root["skip"] = "clang-file-skipped-mechanism-not-inferred";
         }
         if (state.lastRoot >= 0 || state.retain(path) || state.retain(state.lastIncluder))
-            state.event({{"kind", "skipped"}, {"resolvedPath", path}, {"owner", state.owner(path)},
+            state.event(llvm::json::Object{{"kind", "skipped"}, {"resolvedPath", path}, {"owner", state.owner(path)},
                 {"includer", state.lastIncluder}, {"line", static_cast<int64_t>(state.lastLine)},
                 {"rootOrdinal", state.lastRoot}, {"directive", state.lastDirective}});
     }
@@ -259,7 +259,7 @@ public:
                 else state.observedInputs[path] = digest;
             }
         }
-        if (state.retain(path)) state.event({{"kind", reason == LexedFileChangeReason::EnterFile ? "enter" : "exit"},
+        if (state.retain(path)) state.event(llvm::json::Object{{"kind", reason == LexedFileChangeReason::EnterFile ? "enter" : "exit"},
             {"resolvedPath", path}, {"owner", state.owner(path)}});
     }
     void SourceRangeSkipped(clang::SourceRange range, clang::SourceLocation) override {
@@ -275,7 +275,7 @@ public:
         auto textBytes = sourceLine(loc);
         auto text = llvm::StringRef(textBytes).trim();
         auto path = physical(loc);
-        if (state.retain(path)) state.event({{"kind", "pragma"}, {"includer", path},
+        if (state.retain(path)) state.event(llvm::json::Object{{"kind", "pragma"}, {"includer", path},
             {"owner", state.owner(path)}, {"line", static_cast<int64_t>(line(loc))}, {"source", textBytes}});
         // Preserve ALL handlers. Only pragma-once has established equivalence
         // here; parser/Sema-dependent or unknown pragmas conservatively fail.
