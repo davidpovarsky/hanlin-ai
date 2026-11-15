@@ -14,6 +14,19 @@ struct HanlinMorphComposerTests {
         #expect(HanlinMorphGeometry.viewportLimit(availableHeight: 20) == 80)
     }
 
+    @Test("Page budget accounts for keyboard-adjusted space, editor, accessories and toolbar")
+    func remainingViewportBudget() {
+        let ordinary = HanlinMorphGeometry.pageBudget(availableHeight: 800, accessoryHeight: 0, inputHeight: 120, toolbarHeight: 44)
+        let expanded = HanlinMorphGeometry.pageBudget(availableHeight: 800, accessoryHeight: 130, inputHeight: 260, toolbarHeight: 44)
+        let keyboard = HanlinMorphGeometry.pageBudget(availableHeight: 400, accessoryHeight: 130, inputHeight: 260, toolbarHeight: 60)
+        #expect(ordinary == 545)
+        #expect(expanded == 275)
+        #expect(keyboard == 0)
+        #expect(HanlinMorphGeometry.selectedHeight(naturalHeight: 900, maxHeight: expanded) == expanded)
+        #expect(HanlinMorphGeometry.accessoryBudget(availableHeight: 400, inputHeight: 260, toolbarHeight: 60, isExpanded: true) == 0)
+        #expect(HanlinMorphGeometry.accessoryBudget(availableHeight: 800, inputHeight: 260, toolbarHeight: 44, isExpanded: true) == 405)
+    }
+
     @Test("The source back gesture requires a predominantly horizontal leftward drag")
     func backSwipeThreshold() {
         #expect(HanlinMorphGeometry.isBackSwipe(horizontal: -66, vertical: 10))

@@ -1,7 +1,7 @@
 // Adapted from Hanlin_Composer_MorphView_Bubble_Experiment.swift, SHA-256:
 // 51bb10cdf71ee1c10cac8108f602eee4b34e78967de23dc437985aa89db9bbbb.
-// This isolated shell is not wired to the app's frozen ChatViewBottom host.
-// Its caller owns the live editor, actions, navigation and session state.
+// The authorized ChatViewBottom host supplies live editor, action, navigation
+// and session state; this component does not own those values.
 
 import SwiftUI
 
@@ -19,22 +19,39 @@ enum HanlinMorphGeometry {
         naturalHeight.map { min($0, maxHeight) }
     }
 
+    static func pageBudget(availableHeight: CGFloat, accessoryHeight: CGFloat, inputHeight: CGFloat, toolbarHeight: CGFloat) -> CGFloat {
+        let available = max(0, availableHeight)
+        // Panel padding and toolbar gap, launcher gap, shell padding and host spacing.
+        let chrome: CGFloat = 32 + 14 + 13 + 26 + 6
+        let remaining = available - max(0, accessoryHeight) - max(52, inputHeight) - max(0, toolbarHeight) - chrome
+        return max(0, min(viewportLimit(availableHeight: available), remaining))
+    }
+
+    static func accessoryBudget(availableHeight: CGFloat, inputHeight: CGFloat, toolbarHeight: CGFloat, isExpanded: Bool) -> CGFloat {
+        let panelChrome: CGFloat = isExpanded ? 32 + 14 + 13 + max(0, toolbarHeight) : 0
+        return max(0, availableHeight - max(52, inputHeight) - panelChrome - 32)
+    }
+
     static func isBackSwipe(horizontal: CGFloat, vertical: CGFloat) -> Bool {
         horizontal < -65 && abs(horizontal) > abs(vertical) * 1.2
     }
 }
 
 /// Reference shell with caller-supplied, live content. This view owns no draft,
-/// model, attachment or action state; it is deliberately not connected yet.
+/// model, attachment or action state.
 @MainActor
 struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View>: View {
     @Binding var isExpanded: Bool
     @Binding var activePage: Page?
     let availableHeight: CGFloat
+    let accessoryHeight: CGFloat
     let title: (Page?) -> String
     let subtitle: (Page?) -> String
     let backIdentifier: (Page) -> String
     let onOpen: () -> Void
+    let onBackgroundTap: () -> Void
+    let onInputHeightChange: (CGFloat) -> Void
+    let onToolbarHeightChange: (CGFloat) -> Void
     var isEnabled: Bool = true
     @ViewBuilder let home: () -> Home
     @ViewBuilder let detail: (Page) -> Detail
@@ -42,16 +59,22 @@ struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View
 
     @Namespace private var glassNamespace
     @State private var swipeOffset: CGFloat = 0
+    @State private var measuredInputHeight: CGFloat = 52
+    @State private var measuredToolbarHeight: CGFloat = 44
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(
         isExpanded: Binding<Bool>,
         activePage: Binding<Page?>,
         availableHeight: CGFloat,
+        accessoryHeight: CGFloat,
         title: @escaping (Page?) -> String,
         subtitle: @escaping (Page?) -> String,
         backIdentifier: @escaping (Page) -> String,
         onOpen: @escaping () -> Void,
+        onBackgroundTap: @escaping () -> Void,
+        onInputHeightChange: @escaping (CGFloat) -> Void,
+        onToolbarHeightChange: @escaping (CGFloat) -> Void,
         isEnabled: Bool = true,
         @ViewBuilder home: @escaping () -> Home,
         @ViewBuilder detail: @escaping (Page) -> Detail,
@@ -60,10 +83,14 @@ struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View
         self._isExpanded = isExpanded
         self._activePage = activePage
         self.availableHeight = availableHeight
+        self.accessoryHeight = accessoryHeight
         self.title = title
         self.subtitle = subtitle
         self.backIdentifier = backIdentifier
         self.onOpen = onOpen
+        self.onBackgroundTap = onBackgroundTap
+        self.onInputHeightChange = onInputHeightChange
+        self.onToolbarHeightChange = onToolbarHeightChange
         self.isEnabled = isEnabled
         self.home = home
         self.detail = detail
@@ -89,11 +116,12 @@ struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View
                 }
                 HStack(alignment: .bottom, spacing: 10) {
                     Button {
-                        if !isExpanded { onOpen() }
+                        let opening = !isExpanded
                         withAnimation(reduceMotion ? nil : .spring(response: 0.48, dampingFraction: 0.79)) {
                             isExpanded.toggle()
                             if !isExpanded { activePage = nil; swipeOffset = 0 }
                         }
+                        if opening { onOpen() }
                     } label: {
                         Image(systemName: "plus")
                             .font(.system(size: 21, weight: .semibold))
@@ -113,6 +141,13 @@ struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View
                     // The host supplies the actual editor and send/stop controls.
                     input()
                         .frame(minHeight: 52)
+                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+                            measuredInputHeight = height
+                            onInputHeightChange(height)
+                        }
+                        .background {
+                            Color.clear.contentShape(Rectangle()).onTapGesture(perform: onBackgroundTap)
+                        }
                         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 27, style: .continuous))
                         .glassEffectID("composer-input", in: glassNamespace)
                         .overlay {
@@ -131,7 +166,16 @@ struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View
     private var panel: some View {
         VStack(alignment: .leading, spacing: 14) {
             toolbar
-            HanlinMorphMeasuredPages(id: pageID, maxHeight: HanlinMorphGeometry.viewportLimit(availableHeight: availableHeight)) {
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+                    measuredToolbarHeight = height
+                    onToolbarHeightChange(height)
+                }
+            HanlinMorphMeasuredPages(id: pageID, maxHeight: HanlinMorphGeometry.pageBudget(
+                availableHeight: availableHeight,
+                accessoryHeight: accessoryHeight,
+                inputHeight: measuredInputHeight,
+                toolbarHeight: measuredToolbarHeight
+            )) {
                 home().tag(HanlinMorphPageID<Page>.home)
                 if let page = activePage {
                     detail(page)
@@ -279,7 +323,7 @@ private struct HanlinMorphMeasuredPages<ID: Hashable, Content: View>: View {
     }
 
     private func adoptHeight(_ target: CGFloat?) {
-        guard let target, target.isFinite, target > 1 else { return }
+        guard let target, target.isFinite, target >= 0 else { return }
         if let previous = animatedHeight {
             guard abs(target - previous) > 0.5 else { return }
             withAnimation(reduceMotion ? nil : .spring(response: 0.54, dampingFraction: 0.84)) {

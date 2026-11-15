@@ -280,6 +280,8 @@ struct ChatViewBottom: View {
     @State private var isSelect = false
     @State private var textEditorHeight: CGFloat = 38
     @State private var measuredAttachmentPreviewHeight: CGFloat = 0
+    @State private var measuredMorphInputHeight: CGFloat = 52
+    @State private var measuredMorphToolbarHeight: CGFloat = 44
     @State private var baselineWorkspaceHeight: CGFloat = 0
     @State private var popupCoordinator = HanlinComposerPopupCoordinator()
     @State private var selectedMCPCountForChat: Int = 0
@@ -578,6 +580,7 @@ struct ChatViewBottom: View {
                 VStack {
                     if showTemperatureSlider {
                         TemperaturePicker(value: $temperature)
+                            .accessibilityIdentifier("hanlin-temperature-overlay")
                             .onChange(of: temperature) {
                                 chatRecord.temperature = temperature
                                 do {
@@ -661,12 +664,24 @@ struct ChatViewBottom: View {
     }
 
     private var morphComposer: some View {
-        VStack(spacing: 6) {
-            composerInputAccessories
+        let availableHeight = max(0, popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight)
+        let accessoryLimit = HanlinMorphGeometry.accessoryBudget(
+            availableHeight: availableHeight,
+            inputHeight: measuredMorphInputHeight,
+            toolbarHeight: measuredMorphToolbarHeight,
+            isExpanded: morphExpanded.wrappedValue
+        )
+        let visibleAccessoryHeight = min(measuredAttachmentPreviewHeight, accessoryLimit)
+        return VStack(spacing: 6) {
+            ScrollView(.vertical, showsIndicators: measuredAttachmentPreviewHeight > accessoryLimit) {
+                composerInputAccessories
+            }
+            .frame(height: visibleAccessoryHeight)
             HanlinMorphComposer(
                 isExpanded: morphExpanded,
                 activePage: morphPage,
-                availableHeight: max(0, popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight),
+                availableHeight: availableHeight,
+                accessoryHeight: visibleAccessoryHeight,
                 title: { page in
                     switch page {
                     case nil: return String(localized: "Action Center")
@@ -688,6 +703,14 @@ struct ChatViewBottom: View {
                     }
                 },
                 onOpen: { isInputActive.wrappedValue = false },
+                onBackgroundTap: {
+                    showTemperatureSlider = false
+                    showTopPSlider = false
+                    showMaxTokensSlider = false
+                    showMaxMessagesNumSlider = false
+                },
+                onInputHeightChange: { measuredMorphInputHeight = $0 },
+                onToolbarHeightChange: { measuredMorphToolbarHeight = $0 },
                 isEnabled: !isResponding,
                 home: { generalDrawerView(morphHomeOnly: true) },
                 detail: { route in
@@ -1314,6 +1337,7 @@ struct ChatViewBottom: View {
         } message: {
             Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
         }
+        .accessibilityIdentifier("hanlin-composer-surface")
     }
 
     private var composerResizeHandle: some View {
