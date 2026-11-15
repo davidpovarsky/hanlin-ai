@@ -31,6 +31,11 @@
   JSON is exactly an empty array. Target names and all four requested build-setting
   values remain missing; metadata status BLOCKED. No test/build/device action,
   default-query rerun or extension of the exhausted test authorization occurred.
+- **Latest eligibility-gated diagnostic:**43700529436/0256ceb2 created and booted
+  the exact owned iPhone18Pro/27.0/24A434, but its ONE SDK-explicit discovery query
+  timed out at Resolve Package Graph (120s/status124). Eligibility was never
+  confirmed; NO test command or xcresult. All12 authored obligations NOT_RUN,
+  signed trace absent. The capped scope is closed without a retry/second phone.
 - **APP suite routing:**source-reviewed owner `fcce7796` adds only two existing
   organizer-parity APP suite selectors. JSON bytes match owner SHA256
   51b1b735ceb9a2b107ca41a323a174159f00fff90e4450f7fad0135e25d1f79a.
@@ -1148,3 +1153,36 @@ Bash syntax,8 embedded Python syntax checks,6 exact-source in-memory eligibility
 checks (including generic/other UUID/ineligible/wrong OS/wrong arch rejection),18
 job guards, explicit SDK/serial flag checks and frozen12 path comparison passed.
 No local Swift/SDK compiler, cache, simulator or artifact download was used.
+
+
+### Actual capped SDK-context diagnostic outcome — infrastructure block
+
+43700529436 failed at the eligibility query, not in source methods. Executed
+workflow/harness0256ceb262c8b85d363a5d1c61f55ba358f9df1a; frozen source remains
+e8ccd81452843609285a0cd7e017a759bda6a6ef/owner20980. All12 frozen content SHA and
+5 executed workflow/harness SHA were independently matched to the proper Git
+commits. Artifact14156004468 is52315 bytes; FULL tiny ZIP SHA256 independently
+recomputed8b146eb664e9d1fd4b889f81052d468457b5098118958ee787e0633b2f570150,
+with no disk download. Only the new diagnostic job ran; prior jobs were excluded.
+
+One fresh owned phone44151192-3419-4397-83E4-CA66B4809833 (Hanlin-Composer-db5359c9)
+was created09:43:02UTC. Actual installed runtime iOS27.0/24A434 supportsarm64;
+model type iPhone18Pro. Post-boot snapshot is available/Booted and matches that
+UUID. Boot log reports already booted. No alternate runtime/model or second device.
+
+The sole eligibility command was exactly xcodebuild -showdestinations -scheme
+ComposerValidation -sdk iphonesimulator. It produced its invocation and command-line
+SDKROOT=iphonesimulator27.2 header, then stopped progressing at Resolve Package
+Graph. Retention budget120s expired; eligibility exit124. That command-line header
+is NOT a target build-settings query/result; the four target fields remain missing.
+No concrete fresh-device eligibility was returned, and no explicit incompatibility
+or geometric cause is established. The guard stopped before xcodebuild test.
+
+Process receipt: preparation_exit_code124, xcodebuild_exit_codenull; no test log or
+xcresult, connection not_observed, device execution NOT_OBSERVED, authored case
+observations12 NOT_RUN and no unexpected case nodes. No signed height/branch
+trace exists. Current last functional evidence remains51d3/43691033216 with11 PASS
+and1 plateau FAIL/two abs88 issues/sign unknown. No old geometry fix or whole app,
+physical iPad, release/TestFlight acceptance follows. Owned phone shutdown command
+only; no global erase/cache cleanup/runtime install/system Xcode switch. Single
+capped attempt is finished, watcher closed, no retry/further query/test queued.
