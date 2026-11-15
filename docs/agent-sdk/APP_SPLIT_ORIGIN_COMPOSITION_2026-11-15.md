@@ -137,5 +137,6 @@ operation or infer an original Scene ID. If canonical receipt save outlives that
 claim nonce is required again before mailbox acceptance; the receipt remains stored on failure.
 Another window's disappearance cannot erase this delivery. The wrapper's existing State/content
 code passed standalone Mac SwiftUI typecheck atc7905d84 in toolkit43749408559 (0 runtime tests,
-no app graph); after adding its disappearance callback, the changed file needs its own fresh
-focused typecheck. Neither preflight substitutes for enabled iOS app/scene XCUITest.
+no app graph); after adding its disappearance callback, the changed exact71ba wrapper freshly passed
+standalone Mac typecheck43749781105. Evidence records actual source checkout/command/log hash
+and no runtime cases; hidden toolkit logs were not uploaded as an artifact. Neither preflight substitutes for enabled iOS app/scene XCUITest.

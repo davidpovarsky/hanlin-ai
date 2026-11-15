@@ -1,0 +1,30 @@
+{
+  "run_id": 43749781105,
+  "url": "https://github.com/davidpovarsky/apple-devtools/actions/runs/43749781105",
+  "repository": "davidpovarsky/apple-devtools",
+  "job_id": 132920963819,
+  "classification": "TYPECHECK_PASS",
+  "actual_runtime_test_cases": 0,
+  "source_sha": "71ba9d73941c27c582ebb71e05bee36ec02dd8a7",
+  "source_file": "AI_HLY/Downstream/ChatCore/HanlinAIReceivingWindowRoot.swift",
+  "source_sha256": "32305f9a2c21a385a69dd960e6e4cc7543aaff3242bab5256ecd6f62bac7b880",
+  "source_checkout_authenticated_in_job_log": true,
+  "job_log_sha256": "aeec4a0901464bdbb51fb23c5de3913bc376317d94f74cda91e5e13bb39a03da",
+  "command": "xcrun --sdk macosx swiftc -typecheck -sdk <installed macosx SDK> AI_HLY/Downstream/ChatCore/HanlinAIReceivingWindowRoot.swift",
+  "xcode_selection": "stable (toolkit glob selection; exact version/default compiler language mode not retained)",
+  "artifact_status": "No artifact retained: toolkit upload did not include hidden .apple-devtools-logs. Actual compiler exit/job success and source checkout are retained in authenticated GitHub job log.",
+  "limits": "Standalone actual SwiftUI wrapper on Mac only; not iOS/project Swift6 app compilation or any Host/coordinator/window runtime/UI/physical test.",
+  "prior_preflight": {
+    "run_id": 43749408559,
+    "classification": "TYPECHECK_PASS",
+    "source_sha": "c7905d8489394ccc3f38236fb24e14fe498f0a52",
+    "superseded_for_changed_wrapper": true
+  },
+  "failed_api_attempt": {
+    "run_id": 43748643230,
+    "classification": "INVALID_LOOKUP_INPUT",
+    "reason": "Qualified symbol passed as module name; no product/API pass inferred."
+  },
+  "semantic_source": "https://developer.apple.com/documentation/swiftui/windowgroup.md",
+  "semantic_scope": "Each WindowGroup window owns separate State/StateObject storage in its content hierarchy."
+}
