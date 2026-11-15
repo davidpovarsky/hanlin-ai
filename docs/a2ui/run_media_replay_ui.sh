@@ -78,6 +78,17 @@ device="$(cat "$evidence/selected-device.txt")"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/a2ui-media-ui.XXXXXXXX")"
 python3 docs/a2ui/prepare_media_replay_ui.py --output "$scratch/host" > "$evidence/preparation.json"
 cp "$scratch/host/proof-inputs.json" "$scratch/host/project.json" "$evidence/"
+python3 - "$evidence" <<'PY'
+import json,os,re,sys
+from pathlib import Path
+e=Path(sys.argv[1]); all_cases=json.loads((e/'proof-inputs.json').read_text())['cases']
+raw=os.environ.get('A2UI_MEDIA_UI_TESTS','').strip()
+selected=[x.removeprefix('MediaReplayUITests/MediaReplayUITests/').removesuffix('()')
+          for x in re.split(r'[,\s]+',raw)] if raw else all_cases
+assert selected and len(set(selected))==len(selected) and set(selected)<=set(all_cases),selected
+(e/'selected-cases.txt').write_text('\n'.join(selected)+'\n')
+(e/'selection.json').write_text(json.dumps({'selected_cases':selected,'all_fixture_cases':all_cases},indent=2))
+PY
 xcodegen generate --spec "$scratch/host/project.json" --project "$scratch/host" > "$evidence/xcodegen.log"
 project="$scratch/host/MediaReplay.xcodeproj"
 finish_phase resolution
@@ -93,13 +104,15 @@ print('{"status":"EXACT_PIN_VERIFIED"}')
 PY
 xcodebuild -list -json -project "$project" > "$evidence/schemes.json"
 finish_phase build-and-test
+selectors=(CODE_SIGNING_ALLOWED=NO)
+while IFS= read -r name; do selectors+=("-only-testing:MediaReplayUITests/MediaReplayUITests/$name"); done < "$evidence/selected-cases.txt"
 set +e
 xcodebuild test -project "$project" -scheme MediaReplay -configuration Debug \
   -destination "platform=iOS Simulator,id=$device" -parallel-testing-enabled NO \
   -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$evidence/MediaReplay.xcresult" \
-  -only-testing:MediaReplayUITests/MediaReplayUITests -disableAutomaticPackageResolution \
+  -disableAutomaticPackageResolution \
   -skipPackagePluginValidation -skipMacroValidation \
-  CODE_SIGNING_ALLOWED=NO 2>&1 | tee "$evidence/xcodebuild.log"
+  "${selectors[@]}" 2>&1 | tee "$evidence/xcodebuild.log"
 test_code=${PIPESTATUS[0]}
 set -e
 finish_phase result-verification
@@ -113,6 +126,7 @@ python3 - "$evidence" <<'PY'
 import json,sys
 from pathlib import Path
 e=Path(sys.argv[1]); p=json.loads((e/'proof-inputs.json').read_text()); found=[]
+expected=json.loads((e/'selection.json').read_text())['selected_cases']
 def visit(n):
     if isinstance(n,dict):
         if n.get('nodeType')=='Test Case': found.append(n)
@@ -120,11 +134,11 @@ def visit(n):
     elif isinstance(n,list):
         for v in n: visit(v)
 visit(json.loads((e/'tests.json').read_text()))
-assert len(found)==len(p['cases'])==7
+assert len(found)==len(expected)
 assert all(n.get('result')=='Passed' for n in found),found
-assert {n['name'].removesuffix('()') for n in found}==set(p['cases'])
-assert len({n['nodeIdentifier'] for n in found})==7
+assert {n['name'].removesuffix('()') for n in found}==set(expected)
+assert len({n['nodeIdentifier'] for n in found})==len(expected)
 assert (e/'Package.resolved').read_bytes()==(e/'resolved-before.json').read_bytes()
 assert list((e/'attachments').glob('**/*.png')), 'Missing actual UI screenshots'
-(e/'result-validation.json').write_text(json.dumps({'status':'RESULT_CONTENTS_VALID','cases':7,'scope':p['scope']}))
+(e/'result-validation.json').write_text(json.dumps({'status':'RESULT_CONTENTS_VALID','cases':len(expected),'scope':p['scope']}))
 PY

@@ -162,6 +162,8 @@ jobs:
           persist-credentials: false
       - name: Verify original renderer and media interaction in native UI
         timeout-minutes: 19
+        env:
+          A2UI_MEDIA_UI_TESTS: ${{ inputs.exact_test_selector }}
         run: bash docs/a2ui/run_media_replay_ui.sh
       - if: always()
         uses: actions/upload-artifact@v7.0.2

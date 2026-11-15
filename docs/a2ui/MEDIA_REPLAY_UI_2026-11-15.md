@@ -51,6 +51,29 @@ after Session/store changes, without repeating the unchanged8 portable ingress c
 uses the existing SDK-only verification profile and excludes the moving Hanlin SDK package
 snapshot; no SDK consumer or whole-app success is inferred from those component results.
 
+At516ca9e1794c7fe8f6ad214a9b0ab3fcc18db58a, run43747509478/job132913962195 executed
+all36 affected official A2UI/owner/projection controls: EXECUTED_PASS36/36, native macOS,236s.
+Original source blobs, all36 unique Passed nodes, manifest, unchanged resolved lock and exact
+official3ed pin were authenticated in `evidence/native-regression-43747509478.json`.
+Artifact14175250950 SHA256
+`479d1b38d24c9ee4f124064919514094eca8dc56db8b617989c75f4801a0248a`.
+This is distinct from canonical Hanlin SDK consumer tests and from the pending iOS UI run.
+
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release
 settings remain unchanged.
+
+## Component UI acceptance contract v1
+
+The seven named UI obligations may aggregate authentic per-case passes at the target source
+only when each pass's exact identity, assertion semantics, full source/transitive closure,
+fixtures, launch/runtime inputs, official/transitive pins, toolchain, simulator OS/environment
+and required freshness are demonstrably unchanged from its OWN original evidence SHA. An
+uncertain or changed case is rerun. Missing, failed, skipped and not-executed cases never qualify.
+Keep EXECUTED_PASS, REUSED_VERIFIED_PASS, FAILED, NOT_RUN and BLOCKED separate per identity.
+Aggregate component acceptance is not a new seven-case execution or original app acceptance.
+
+For an affected-case retry, the manual selector accepts `exact_test_selector` containing only
+whitelisted method names (optionally full `MediaReplayUITests/MediaReplayUITests/` prefix),
+comma/whitespace separated. An empty selector executes all seven. Requested identities and the
+actual unique Passed nodes must match exactly; unknown/duplicate/missing selections fail.
