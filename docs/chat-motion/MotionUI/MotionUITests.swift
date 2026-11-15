@@ -3,9 +3,40 @@ import XCTest
 @MainActor
 final class MotionUITests: XCTestCase {
     private var app: XCUIApplication!
+    private var originalReduceMotion: Bool?
+
+    override func tearDown() async throws {
+        if let originalReduceMotion {
+            setSystemReduceMotion(originalReduceMotion)
+        }
+    }
+
+    private func setSystemReduceMotion(_ enabled: Bool) {
+        let settings = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
+        settings.activate()
+        let toggle = settings.switches["Reduce Motion"]
+        if !toggle.waitForExistence(timeout: 2) {
+            let accessibility = settings.staticTexts["Accessibility"].firstMatch
+            for _ in 0..<6 {
+                if accessibility.exists && accessibility.isHittable { break }
+                if settings.tables.firstMatch.exists { settings.tables.firstMatch.swipeUp() }
+                else { settings.swipeUp() }
+            }
+            XCTAssertTrue(accessibility.waitForExistence(timeout: 5))
+            accessibility.tap()
+            let motion = settings.staticTexts["Motion"].firstMatch
+            XCTAssertTrue(motion.waitForExistence(timeout: 5)); motion.tap()
+        }
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        let wasEnabled = (toggle.value as? String) == "1"
+        if originalReduceMotion == nil { originalReduceMotion = wasEnabled }
+        if wasEnabled != enabled { toggle.tap() }
+        app.activate()
+    }
 
     override func setUp() async throws {
         continueAfterFailure = false
+        originalReduceMotion = nil
         app = XCUIApplication()
         app.launchArguments = ["--reset-motion", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
@@ -66,7 +97,7 @@ final class MotionUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts["proof-persisted-preset"].label, "v1.height-reveal")
         app.terminate(); app.launchArguments.append("--invalid-motion"); app.launch()
         XCTAssertEqual(app.staticTexts["proof-persisted-preset"].label, "v1.relaxed")
-        app.switches["proof-reduce-motion"].tap()
+        setSystemReduceMotion(true)
         XCTAssertEqual(app.staticTexts["proof-effective-motion"].label, "shimmer=false;numeric=false")
         app.buttons["proof-thinking"].tap(); waitForGeometry("expanded")
         app.buttons["proof-thinking"].tap(); waitForGeometry("collapsed")

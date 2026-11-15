@@ -1,0 +1,18 @@
+{
+  "run_id": 43769856352,
+  "job_id": 132983111848,
+  "source_sha": "4bf4d0e668fceb95cbb090c29309aa0fe3265a12",
+  "status": "BUILD_FAILED",
+  "executed_test_methods": 0,
+  "reason": "Fixture attempted to assign read-only accessibilityReduceMotion EnvironmentValues key path, native Swift compiler rejected it, exit65",
+  "job_duration_seconds": 47,
+  "artifact": {
+    "id": 14184156268,
+    "size_bytes": 81903,
+    "zip_sha256": "3229e14dbd101b9f8add789447e740925ec8eeaec5cbe2115b306619e5fcd8ef",
+    "verification": "DOWNLOADED_ZIP_MATCHES_API"
+  },
+  "raw_xcresult": "NOT_CREATED",
+  "fix_scope": "Remove artificial environment assignment; drive real simulator Settings Reduce Motion and restore its original value",
+  "product_ReduceMotion_reader_changed": false
+}

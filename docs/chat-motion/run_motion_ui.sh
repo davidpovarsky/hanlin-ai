@@ -4,7 +4,14 @@ root="$(git rev-parse --show-toplevel)";cd "$root"
 evidence="$root/build/chat-motion-ui-evidence";mkdir -p "$evidence"
 phase=preflight;phase_started=$SECONDS
 finish_phase(){ printf '%s\n' "$((SECONDS-phase_started))" > "$evidence/$phase-duration-seconds.txt";phase="$1";phase_started=$SECONDS; }
-retain(){ code=$?;last_phase="$phase";finish_phase diagnostics;printf 'exit_code=%s\nphase=%s\n' "$code" "$last_phase" > "$evidence/process-status.txt"; }
+retain(){
+  code=$?;last_phase="$phase";finish_phase diagnostics
+  printf 'exit_code=%s\nphase=%s\n' "$code" "$last_phase" > "$evidence/process-status.txt"
+  python3 "$root/Scripts/CI/generate_performance_report.py" --log-dir "$evidence" \
+    --run-id "${GITHUB_RUN_ID:-}" --commit-sha "$(git -C "$root" rev-parse HEAD)" --event-name workflow_dispatch \
+    --output-json "$evidence/ci-performance-report.json" --step-summary "${GITHUB_STEP_SUMMARY:-$evidence/step-summary.md}"
+  return "$code"
+}
 trap retain EXIT
 git rev-parse HEAD > "$evidence/source-sha.txt"
 selected_xcode="$(python3 - <<'PY'

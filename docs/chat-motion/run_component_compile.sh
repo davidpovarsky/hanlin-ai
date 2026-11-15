@@ -6,7 +6,17 @@ evidence="$root/build/chat-motion-component-evidence"
 mkdir -p "$evidence"
 started=$SECONDS
 phase=preflight
-trap 'status=$?; printf "exit_code=%s\nphase=%s\nduration_seconds=%s\n" "$status" "$phase" "$((SECONDS-started))" > "$evidence/process-status.txt"' EXIT
+phase_started=$SECONDS
+finish_phase(){ printf '%s\n' "$((SECONDS-phase_started))" > "$evidence/$phase-duration-seconds.txt";phase="$1";phase_started=$SECONDS; }
+retain(){
+  status=$?;last_phase="$phase";finish_phase diagnostics
+  printf 'exit_code=%s\nphase=%s\nduration_seconds=%s\n' "$status" "$last_phase" "$((SECONDS-started))" > "$evidence/process-status.txt"
+  python3 "$root/Scripts/CI/generate_performance_report.py" --log-dir "$evidence" \
+    --run-id "${GITHUB_RUN_ID:-}" --commit-sha "$(git -C "$root" rev-parse HEAD)" --event-name workflow_dispatch \
+    --output-json "$evidence/ci-performance-report.json" --step-summary "${GITHUB_STEP_SUMMARY:-$evidence/step-summary.md}"
+  return "$status"
+}
+trap retain EXIT
 git rev-parse HEAD > "$evidence/source-sha.txt"
 selected_xcode="$(python3 - <<'PY'
 import glob,re
@@ -20,7 +30,7 @@ export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 xcodebuild -version > "$evidence/xcode.txt"
 xcrun swift --version > "$evidence/swift.txt"
 sw_vers > "$evidence/os.txt"
-phase=compile
+finish_phase compile
 files=(AI_HLY/Downstream/ChatPresentation/ChatMotionConfiguration.swift
        AI_HLY/Downstream/ChatPresentation/ChatMotionPreferences.swift
        AI_HLY/Downstream/ChatPresentation/HanlinAnimatedDisclosure.swift)
@@ -34,8 +44,8 @@ for sdk in iphonesimulator iphoneos; do
     -sdk "$(xcrun --sdk "$sdk" --show-sdk-path)" "${files[@]}" \
     2>&1 | tee "$evidence/$sdk-compile.log"
 done
-phase=model-checks
+finish_phase model-checks
 xcrun swiftc -parse-as-library "${files[0]}" docs/chat-motion/ChatMotionModelChecks.swift -o "$evidence/model-checks"
 "$evidence/model-checks" | tee "$evidence/model-checks.log"
-phase=complete
+finish_phase complete
 printf '%s\n' 'COMPILE_PASS simulator/device; portable model checks EXECUTED_PASS; UI/app acceptance NOT_RUN' > "$evidence/result.txt"

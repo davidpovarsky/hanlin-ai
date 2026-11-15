@@ -102,3 +102,13 @@ the project-level empty icon setting was overridden by XcodeGen's target preset.
 was inspected. The override is now on the disposable app target itself; generated target
 configurations are checked with native plutil before building, and generated PBX evidence
 is archived. No product PBX or asset file was edited.
+
+Fourth attempt43769856352 at4bf4d0e6 passed the generated target-setting check, then
+BUILD_FAILED in fixture compilation: accessibilityReduceMotion is read-only in this SDK,
+so it cannot be assigned with an environment modifier. Zero UI methods executed (job47s).
+The artificial fixture override was removed. The XCUITest now changes the simulator's actual
+Settings → Accessibility → Motion → Reduce Motion switch and restores the original value in
+tearDown, following [Apple's documented path](https://support.apple.com/en-us/111781).
+Both proof scripts now generate the repository's standard measured-phase performance report
+on exit. Earlier artifacts retain their original missing-report limitation; no pass was
+rerun solely to add accounting, and estimated savings are not treated as measurements.

@@ -13,20 +13,7 @@ struct MotionProofApp: App {
     }
 
     var body: some Scene {
-        WindowGroup { MotionProofSettings().chatMotionPreferences() }
-    }
-}
-
-private struct MotionProofSettings: View {
-    @State private var reduceMotion = false
-    var body: some View {
-        MotionProofContent()
-            .chatMotionPreferences()
-            .environment(\.accessibilityReduceMotion, reduceMotion)
-            .safeAreaInset(edge: .bottom) {
-                Toggle("Reduce Motion", isOn: $reduceMotion)
-                    .accessibilityIdentifier("proof-reduce-motion").padding()
-            }
+        WindowGroup { MotionProofContent().chatMotionPreferences() }
     }
 }
 
