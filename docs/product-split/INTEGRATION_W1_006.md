@@ -838,3 +838,12 @@ Artifact14150579611:70015 bytes, API ZIP digest
 bcf5f4d6d20398ab213524f3e20e7329b44f0d703d6c482762161f3f747e3ef0.
 Actual compiler output was relayed for owner correction/independent review;
 no unchanged retry, alternate framework/shim or hardcoded metric was added.
+
+
+UIKit minimum-only source correctiondb2a434bd2ac9ee271eb2a80671ad7b9179f294c
+was independently accepted and imported in the single editor file. It removes
+unsupported NSLayoutManager.defaultLineHeight, using the public UIKit attributed
+string drawing metric only for minimum height. Native visual coverage still
+controls nonempty maximum/scrolling; all12 test identities/assertions are unchanged.
+A single changed-source12-case proof is authorized. No AppKit shim, constant+10,
+tolerance, forced TextKit mode or weakened test is introduced by the integrator.
