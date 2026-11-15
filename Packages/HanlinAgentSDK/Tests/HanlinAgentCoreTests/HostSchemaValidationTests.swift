@@ -113,6 +113,18 @@ private actor RawBoundaryHost: HanlinHostIntegration {
         catch { #expect(error is CancellationError) }
     }
 
+    @Test func deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering() throws {
+        let first = try HanlinHostSchemaValidation.deterministicJSONData(bytes(#"{"z":9007199254740993,"K":1,"\u212A":2,"decimal":1.234567890123456789}"#))
+        let reordered = try HanlinHostSchemaValidation.deterministicJSONData(bytes(#"{"decimal":1.234567890123456789,"\u212A":2,"K":1,"z":9007199254740993}"#))
+        #expect(first == reordered)
+        try HanlinHostSchemaValidation.requireSameValue(originalJSON: first, projectedJSON: reordered)
+        for changed in [#"{"z":9007199254740992,"K":1,"\u212A":2,"decimal":1.234567890123456789}"#,
+                        #"{"z":9007199254740993,"K":1,"decimal":1.234567890123456789}"#,
+                        #"{"z":9007199254740993,"K":1,"\u212A":2,"decimal":1.2345678901234567}"#] {
+            #expect(first != (try HanlinHostSchemaValidation.deterministicJSONData(bytes(changed))))
+        }
+    }
+
     @Test func dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue() async throws {
         let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "s")
         let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())

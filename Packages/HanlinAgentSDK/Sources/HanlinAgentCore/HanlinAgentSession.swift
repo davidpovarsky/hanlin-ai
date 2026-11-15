@@ -33,6 +33,7 @@ public final class HanlinAgentSession {
     private let capabilities: (any HanlinHostCapabilitySource)?
     private let diagnostics: (any HanlinDiagnosticsSink)?
     public let dispatcher: HanlinHostDispatcher
+    public var isRunning: Bool { activeRun != nil }
     private var activeRun: UUID?
     private var record: HanlinConversationRecord?
     private var entries: [HanlinTranscriptEntry] = []

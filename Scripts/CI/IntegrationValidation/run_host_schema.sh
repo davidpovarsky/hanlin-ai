@@ -42,10 +42,13 @@ for rel,suite in [('HanlinAgentCoreTests/HostSchemaValidationTests.swift','HostS
         if re.search(r'^\s*(?:@MainActor\s+)?@Test\b',line):pending=True
         method=re.search(r'\bfunc\s+(\w+)\s*\(',line)
         if pending and method:expected.append(suite+'/'+method[1]+'()');pending=False
-assert len([x for x in expected if x.startswith('HostSchemaValidationTests/')])==9
+assert len([x for x in expected if x.startswith('HostSchemaValidationTests/')])>=9
 assert len(expected)==len(set(expected)) and len(expected)>=33
 if os.environ.get('HANLIN_SDK_ASSOCIATION_ONLY')=='1':
     expected=[x for x in expected if not x.startswith('HostSchemaValidationTests/') or x=='HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()']
+if os.environ.get('HANLIN_SDK_WRITER_ONLY')=='1':
+    expected=[x for x in expected if x=='HostSchemaValidationTests/deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()']
+    assert len(expected)==1
 (evidence/'expected-tests.json').write_text(json.dumps(expected,indent=2))
 PY_SOURCE
 selected_xcode="$(python3 -c 'import glob,re; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]27(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")')"
@@ -79,17 +82,19 @@ d=json.load(open(sys.argv[1]));names=d.get('workspace',{}).get('schemes',[])+d.g
 print(next(x for x in ['HanlinAgentSDK-Package','HanlinAgentSDK'] if x in names))
 PY_SCHEME
 )"
-schema_tests=(-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests)
+selected_tests=(-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests
+  -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests)
 if [[ "${HANLIN_SDK_ASSOCIATION_ONLY:-0}" == 1 ]]; then
-  schema_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()')
+  selected_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()'
+    -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests)
+elif [[ "${HANLIN_SDK_WRITER_ONLY:-0}" == 1 ]]; then
+  selected_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()')
 fi
 set +e
 (cd "$sdk" && xcodebuild test -scheme "$scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$evidence/HostSchemaTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
-  "${schema_tests[@]}" \
-  -only-testing:HanlinAgentCoreTests/AgentSessionTests \
-  -only-testing:HanlinHostContractsTests/ContextTests) > "$evidence/host-schema-tests.log" 2>&1
+  "${selected_tests[@]}") > "$evidence/host-schema-tests.log" 2>&1
 test_status=$?
 (cd "$sdk" && xcodebuild build -scheme HanlinAgentCore -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath "$scratch/IOSDerivedData" -resultBundlePath "$evidence/HostSchemaIOS.xcresult" \
@@ -112,6 +117,6 @@ expected=set(json.loads((root/'expected-tests.json').read_text()))
 actual=['/'.join(c.get('nodeIdentifier','').split('/')[-2:]) for c in cases]
 passed=status['test_exit']==0 and status['ios_build_exit']==0 and set(actual)==expected and len(actual)==len(expected) and all(c.get('result')=='Passed' for c in cases)
 classification='EXECUTED_PASS' if passed else 'TEST_FAILED' if any(c.get('result')=='Failed' for c in cases) else 'BUILD_FAILED' if status['test_exit'] or status['ios_build_exit'] else 'INFRA_ERROR'
-print(json.dumps({'status':classification,'scope':'exact SDK Host schema/raw boundary, affected Session/Context cases and iOS package compile; actual app NOT_RUN','process_status':status,'cases':cases},indent=2))
+print(json.dumps({'status':classification,'scope':'exact selected SDK controls and iOS package compile; actual app NOT_RUN','process_status':status,'cases':cases},indent=2))
 sys.exit(0 if passed else 1)
 PY_RESULTS

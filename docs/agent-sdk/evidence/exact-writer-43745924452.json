@@ -1,0 +1,132 @@
+{
+  "run_id": 43745924452,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43745924452",
+  "source_sha": "7dfd30b7f4f8d1237d7cf88d8c0ebf3ddfa3fa36",
+  "job_id": 132909078713,
+  "artifact_id": 14174208320,
+  "artifact_digest": "sha256:ddba2964ca2c7789118d13d1faadd33cdf25e015a07101733b0d6bb8ce2ce03e",
+  "raw_zip_sha256_and_all_crcs_verified": true,
+  "source_hashes_authenticated": 245,
+  "classification": "EXECUTED_PASS",
+  "unique_actual_cases": 1,
+  "cases": [
+    {
+      "duration": "0.0052s",
+      "durationInSeconds": 0.005243062973022461,
+      "name": "deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()",
+      "nodeIdentifier": "HostSchemaValidationTests/deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    }
+  ],
+  "ios_agent_core_compile": "EXECUTED_PASS",
+  "resolution": [
+    {
+      "path": "Packages/HanlinAgentSDK/Package.resolved",
+      "raw_file": "raw-0-Package.resolved",
+      "sha256": "f1d3bc296d9140741423eac850a1426eb8cf2e6a9aea9db21079746f7c573474",
+      "resolved": {
+        "originHash": "22f30a52c2b08e3a255c30c0887c35e8d2cdc1b0ca6b84648fbacd7f678b8d2c",
+        "pins": [
+          {
+            "identity": "swift-ai-sdk",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+            "state": {
+              "revision": "e7bf34111e603ca977becd007dd4e5bb109af857"
+            }
+          },
+          {
+            "identity": "swift-argument-parser",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/apple/swift-argument-parser",
+            "state": {
+              "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+              "version": "1.8.2"
+            }
+          },
+          {
+            "identity": "swift-json",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/ThorFuchs/Swift-JSON.git",
+            "state": {
+              "revision": "f2a0d12da7028edfbcb0cb307f19a921a3a12d03"
+            }
+          },
+          {
+            "identity": "swiftyjson",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+            "state": {
+              "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+              "version": "5.0.1"
+            }
+          },
+          {
+            "identity": "zipfoundation",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/weichsel/ZIPFoundation.git",
+            "state": {
+              "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+              "version": "0.9.19"
+            }
+          }
+        ],
+        "version": 3
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.resolved",
+      "raw_file": "raw-1-Package.resolved",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "resolved": {
+        "originHash": "3f8cbcbad6b07b509a7976fe0577315481f25358ce34a01e505f2d1b04821066",
+        "pins": [
+          {
+            "identity": "swift-ai-sdk",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+            "state": {
+              "revision": "e7bf34111e603ca977becd007dd4e5bb109af857"
+            }
+          },
+          {
+            "identity": "swift-argument-parser",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/apple/swift-argument-parser",
+            "state": {
+              "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+              "version": "1.8.2"
+            }
+          },
+          {
+            "identity": "swiftyjson",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+            "state": {
+              "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+              "version": "5.0.1"
+            }
+          },
+          {
+            "identity": "zipfoundation",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/weichsel/ZIPFoundation.git",
+            "state": {
+              "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+              "version": "0.9.19"
+            }
+          }
+        ],
+        "version": 3
+      }
+    }
+  ],
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\n27.2\n27.2\narm64\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "process_exit": {
+    "exit": 0,
+    "total_seconds": 297
+  },
+  "limits": "Actual exact writer+package iOS compilation only. Source includes readonly isRunning getter, not app consumer compilation. No unchanged Session/Context/pure schema/catalog tests rerun. Actual conflicting-outcome store and ack/remount controls, Split app/component/UI/bootstrap/cold device gates remain authored NOT_RUN."
+}

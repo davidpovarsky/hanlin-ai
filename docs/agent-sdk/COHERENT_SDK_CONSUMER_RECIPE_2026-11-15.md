@@ -1,8 +1,9 @@
 # Coherent SDK consumer recipe
 
-Current integration consumes the package source from the Apple-qualified association snapshot
-`364f10a6dc55b9a28b67ab972843a2e1c44ef986`, handed off with evidence at
-`7d2612d8bc21f424468b9774929eb71ca446e420`. Its raw Mac locks remain byte-identical to the
+Current integration consumes the package source from the exact-writer snapshot
+`7dfd30b7f4f8d1237d7cf88d8c0ebf3ddfa3fa36`. Its focused writer qualification is separate from
+the earlier association snapshot364f10a6; each original run is accounted below.
+The raw Mac locks remain byte-identical to the
 earlier schema handoff `62db3a1cff9884b363d4c457c3c3a88c803363b9`. This supersedes the older
 frozen80 and schema-only package inputs; their historical evidence remains separate.
 Use this monorepo's literal local packages, not its root as a Git package. Later app-owner,
@@ -66,8 +67,33 @@ Manual selector `HanlinAgentCoreTests/HostAssociation` uses the same proof scrip
 `HANLIN_SDK_ASSOCIATION_ONLY=1`, excluding the8 unaffected pure schema cases. Those cases retain
 their own earlier437426 execution; they did not execute in437438. No aggregate whole-suite pass
 or new run on the integration SHA is asserted. All automatic triggers/peer job routes remain
-unchanged. Later app composition, `isRunning`, exact fingerprint writer and Split return/UI
-changes are not included in this snapshot and have separate outstanding proof obligations.
+unchanged. This was the earlier ea074050 integration snapshot; its27 cases were not reexecuted
+by the subsequent one-case writer operation below. App composition and Split return/UI retain
+separate outstanding proof obligations.
+
+## Exact DTO fingerprint writer
+
+`HanlinHostSchemaValidation.deterministicJSONData` uses the same bounded exact parser and writer,
+scalar key ordering, normalized decimals and a finite output-byte budget. It does not pass DTO
+fingerprints through the portable Double projection. This is a local encoding contract, not an
+external signature canonicalization claim. The snapshot also exposes the read-only Session
+`isRunning` accessor; actual app use of that accessor remains unverified here.
+
+[Run43745924452](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43745924452) at exact7df
+executed **one EXECUTED_PASS**:
+`HostSchemaValidationTests/deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()`;
+actual iOS AgentCore compilation passed. Artifact14174208320 SHA-256
+`ddba2964ca2c7789118d13d1faadd33cdf25e015a07101733b0d6bb8ce2ce03e` was independently downloaded,
+all ZIP CRCs checked, and all245 source hashes authenticated against both the source tar and
+original Git archive. The assembled package inputs match that exact closure and its two raw
+Mac locks. The actual one-case identity/result and process exits were checked. See
+`evidence/exact-writer-43745924452.json`. No new run on the integration SHA is asserted.
+
+Manual selector `HanlinAgentCoreTests/HostSchemaWriter` selects only that affected case plus
+iOS compilation using the existing proof route. Unaffected Session/schema/catalog/editor cases
+were not repeated. The actual SwiftData conflicting-result receipt control, receiving-window
+mount, cross-app return and XCUITest obligations remain **NOT_RUN**; this helper pass does not
+substitute for them. No app composition, fixture, navigation or Yams source is imported here.
 
 ## Live model/Host binding
 
