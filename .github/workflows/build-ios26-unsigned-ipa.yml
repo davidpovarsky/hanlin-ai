@@ -241,7 +241,7 @@ jobs:
     if: ${{ (inputs.target_validation_group == 'agent_sdk_exact_source_proof' || !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') ) && inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == '' }}
     name: Verify whole Composer and UIKit components on iOS 27
     runs-on: xcode-27
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Compile actual Composer sources and run focused tests

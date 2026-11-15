@@ -957,3 +957,29 @@ UI tags, signing/TestFlight/release acceptance remain separate/open.
 Composer same-measurement diagnostic20980 is frozen at integratione8ccd81452843609285a0cd7e017a759bda6a6ef;
 single authorized12-case run43692594372 is active. It is expected-failure diagnostic
 scope until actual values/outcomes arrive, not a product-fix claim.
+
+
+Diagnostic43692594372/e8ccd814 did NOT execute any of the12 authored methods.
+Actual raw export has ONE unexpected framework TestCase `xctest (9008) encountered
+an error`, FAILED, child `The test runner hung before establishing connection.`
+All12 expected obligations remain NOT_RUN, with this separate infrastructure
+failure; no signed trace/new geometry conclusion exists. All12 input hashes match
+e8ccd; actual listed iPhone18Pro/27.0/arm64/24A434, process65. Artifact14153306349:
+48790500 bytes, API SHA256
+3a30462f8b3c619e0323d73e5151f0b0fb3af1d33978569c709242da1cda8eff;
+305435 bytes/entry CRCs checked, not full ZIP digest. Unrelated watch nil-architecture
+warnings are not a proven cause.
+
+One repaired-environment continuation for the UNRUN diagnostic is explicitly
+authorized. Only owned workflow/harness changes: create one fresh available iOS27
+phone from installed inventory, assert new UUID absent from prior inventory, finite
+boot/readiness, retain actual model/runtime/OS/architecture/exact-destination and
+preflight UTC times, then run the same whole code/tests. All12 prepared content
+paths remain identical to e8/owner20980. No original device/runtime/Xcode settings,
+production/layout/math/assertions or extra UIKit measurement change. Only newly
+owned simulator is shut down. Native exported authored cases determine connection
+status; one unexpected framework failure does not imply12 failed source tests.
+Bash and six embedded Python syntax checks pass, with no local Swift build/cache.
+Boot600s, scheme/destination120s each, test900s, export120s and owned shutdown60s
+are bounded under a35-minute job with artifact margin. If this fresh attempt still
+fails infrastructure, report the exact block without a retry loop.
