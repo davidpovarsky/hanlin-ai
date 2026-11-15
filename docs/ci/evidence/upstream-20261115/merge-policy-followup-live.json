@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "validationPassed": true,
+  "mergeEligible": false,
+  "reasons": [
+    "BRANCH_NOT_PROTECTED",
+    "NO_SERVER_REQUIRED_GATES",
+    "UPSTREAM_GATE_NOT_REQUIRED:Hanlin upstream acceptance|upstream-validation / Hanlin upstream acceptance",
+    "AUTO_MERGE_DISABLED"
+  ],
+  "branchPolicy": {
+    "configurationKnown": false,
+    "eligible": false,
+    "requiredGates": [],
+    "reasons": [
+      "BRANCH_NOT_PROTECTED",
+      "NO_SERVER_REQUIRED_GATES",
+      "UPSTREAM_GATE_NOT_REQUIRED:Hanlin upstream acceptance|upstream-validation / Hanlin upstream acceptance"
+    ]
+  },
+  "repository": "davidpovarsky/hanlin-ai",
+  "pullRequest": 6,
+  "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+  "baseSHA": "8b25e148c1d789c56e7d91a9211d72f7b3748cee",
+  "requiredChecks": null,
+  "effectiveBranchRules": [],
+  "actualChecks": [
+    {
+      "name": "upstream-validation / Pin, build, test, and propose RuntimeCore updates",
+      "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "app": "github-actions",
+      "appId": 15368,
+      "checkId": 132936163166,
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "miniapps",
+      "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "app": "github-actions",
+      "appId": 15368,
+      "checkId": 132936162623,
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "upstream-validation / Hanlin upstream acceptance",
+      "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "app": "github-actions",
+      "appId": 15368,
+      "checkId": 132936161812,
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "evaluatedAt": "2026-11-15T20:31:09.095Z",
+  "scope": "CI-policy snapshot only; no PR review/deployment approval or merge operation",
+  "mergePerformed": false,
+  "evidence": "Authenticated GitHub API snapshot; no merge endpoint is called."
+}
