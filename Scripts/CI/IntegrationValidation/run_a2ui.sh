@@ -104,6 +104,7 @@ set +e
   xcodebuild test -scheme "$scheme" -configuration Debug -destination 'platform=macOS' \
     -disableAutomaticPackageResolution -derivedDataPath "$scratch/DerivedData" \
     -resultBundlePath "$evidence/A2UI.xcresult" \
+    -skipPackagePluginValidation -skipMacroValidation \
     -only-testing:AI_HLYTests/A2UIIngressTests -only-testing:AI_HLYTests/A2UISDKTests \
     CODE_SIGNING_ALLOWED=NO
 ) 2>&1 | tee "$evidence/xcodebuild.log"
