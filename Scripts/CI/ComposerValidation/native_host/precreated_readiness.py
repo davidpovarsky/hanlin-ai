@@ -4,7 +4,7 @@ import json
 import re
 from guards import environment, owned_uuid, device_rows, require, RUNTIME_ID
 
-CONTRACT = 'composer-precreated-27.2-v2-20261115'
+CONTRACT = 'composer-precreated-27.2-v3-20261115'
 READINESS_SECONDS = 600
 
 
@@ -24,6 +24,7 @@ def runner_instance(context, boot_uuid, os_build, hostname):
 
 def claim_precreated(before, instance):
     runtime, model = environment(before)
+    require(bool(model.get('modelIdentifier')), 'actual inventory hardware model identifier required')
     value = dict(instance)
     fingerprint = value.pop('instance_fingerprint', None)
     require(fingerprint == hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest(), 'runner-instance receipt drift')

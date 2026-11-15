@@ -9,9 +9,9 @@ import sys
 
 sys.dont_write_bytecode = True
 import prepare_native as native
-from guards import (native_settings, environment, owned_boot, destination, observations, require,
+from guards import (native_settings, environment, owned_boot, observations, require,
                     simctl_list_contract, owned_devices_command, require_pretest, owned_name,
-                    created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256, classify_execution_status)
+                    created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256, classify_execution_status, resolved_destination)
 from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR, REMAINING_NATIVE_CASES, selected_cases
 from freeze_review import review_files
 from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
@@ -23,7 +23,6 @@ FROZEN_WORKFLOW_SHA256 = '11414b818c71275ab116ac37997ebdc88d3a21b32a98e251037849
 REVIEWED_FUNCTION_SOURCE_SHA256 = {
     'guards.py': {'native_settings': '97b5edb2266010467b6335845604411cf663c95299d5610ca722f9e0e9a5df40',
                   'environment': '7fc45c76767d915ca5b3c558a0fc8523070021c36e8051be48400960c8d8cc5d',
-                  'destination': '96e93e3b4ed5da7a41adc9919bab1eba066f16cdc0fd9869082299461ad4362c',
                   'observations': '09aea2cc006d3808472d3f4ad37a7ba066e132d31a5479e3616998aaaea91f59'},
 }
 WORKFLOW = '.github/workflows/build-ios26-unsigned-ipa.yml'
@@ -63,6 +62,18 @@ def source_controls():
     passed.append('synthetic-positive-both-native-target-settings')
     reject('empty-settings-array', native_settings, [], SDK)
     reject('only-app-settings', native_settings, data[:1], SDK)
+    concrete = copy.deepcopy(data)
+    device_fields = {'TARGET_DEVICE_IDENTIFIER': UDI, 'TARGET_DEVICE_MODEL': 'iPhone19,2',
+                     'TARGET_DEVICE_OS_VERSION': '27.2', 'TARGET_DEVICE_PLATFORM_NAME': 'iphonesimulator'}
+    for entry in concrete:
+        entry['buildSettings'].update(device_fields)
+    require(resolved_destination(concrete, SDK, UDI, 'iPhone19,2')['owned_udid'] == UDI, 'both native targets resolve actual owned hardware')
+    for key in device_fields:
+        changed = copy.deepcopy(concrete)
+        changed[1]['buildSettings'][key] = 'wrong-destination'
+        reject('resolved-device-' + key, resolved_destination, changed, SDK, UDI, 'iPhone19,2')
+    reject('generic-settings-without-device-fields', resolved_destination, data, SDK, UDI, 'iPhone19,2')
+    passed.append('synthetic-exact-device-resolution-on-both-native-targets')
     for key, value in {'SDKROOT': 'iphonesimulator', 'SDK_NAME': 'iphoneos27.2', 'PLATFORM_NAME': 'iphoneos',
                        'SUPPORTED_PLATFORMS': 'iphoneos iphonesimulator', 'IPHONEOS_DEPLOYMENT_TARGET': '26.0',
                        'CONFIGURATION': 'Release', 'ARCHS': 'x86_64', 'EXCLUDED_ARCHS': 'arm64',
@@ -82,7 +93,7 @@ def source_controls():
                'identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-2', 'supportedArchitectures': ['arm64'],
                'platform': 'iOS', 'isInternal': False,
                'supportedDeviceTypes': [{'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro'}]}
-    model = {'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro', 'name': 'iPhone 18 Pro'}
+    model = {'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro', 'name': 'iPhone 18 Pro', 'modelIdentifier': 'iPhone19,2'}
     before = {'runtimes': [runtime], 'devicetypes': [model], 'devices': {runtime['identifier']: []}}
     environment(before)
     passed.append('synthetic-positive-exact-installed-runtime-model')
@@ -173,20 +184,6 @@ def source_controls():
             reject('pretest-' + key + '-' + str(value), require_pretest, dict(ready, **{key: value}))
     reject('pretest-previous-test-command', require_pretest, dict(ready, test_commands=1))
     reject('created-settings-are-not-boot-readiness', require_pretest, dict(ready, owned_boot_confirmed=False, owned_sdk_destination_confirmed=False))
-    heading = 'Available destinations for the "ComposerNativeHost" scheme:\n'
-    line = '{ platform:iOS Simulator, arch:arm64, id:' + UDI + ', OS:27.2, name:Hanlin-NativeComposer-fixture }'
-    destination(heading + line, '', UDI)
-    passed.append('synthetic-positive-owned-explicit-SDK-destination')
-    for name, stdout, stderr in [
-        ('generic-only-listing', heading + '{ platform:iOS Simulator, id:dvtdevice-DVTiOSDeviceSimulatorPlaceholder-iphonesimulator:placeholder, name:Any iOS Simulator Device }', ''),
-        ('wrong-UDI', heading + line.replace(UDI, 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'), ''),
-        ('wrong-architecture', heading + line.replace('arm64', 'x86_64'), ''),
-        ('wrong-OS', heading + line.replace('27.2', '27.0'), ''),
-        ('no-eligible-heading', line, ''),
-        ('ineligible-section', heading + line + '\nIneligible destinations:\n' + line, ''),
-        ('explicit-UDI-stderr-error', heading + line, 'error: ' + UDI),
-        ('duplicate-owned-destinations', heading + line + '\n' + line, '')]:
-        reject(name, destination, stdout, stderr, UDI)
     expected = json.loads((native.HERE / 'review/native-inputs.json').read_text())['expected_case_ids']
     device = {'deviceId': UDI, 'modelName': 'iPhone 18 Pro', 'osVersion': '27.2', 'osBuildNumber': '24B8117',
               'architecture': 'arm64', 'platform': 'iOS Simulator'}
@@ -277,7 +274,7 @@ def source_controls():
         require(not any(token in ' '.join(command) for token in ['Package.swift', 'ComposerValidation-Package', '-workspace', '-resolvePackageDependencies']), 'no package/synthesized-scheme command')
     require(plan['test'].count('test') == 1 and plan['test'][plan['test'].index('-parallel-testing-enabled') + 1] == 'NO' and
             plan['test'][plan['test'].index('-destination') + 1] == 'platform=iOS Simulator,id=' + UDI and TEST_SECONDS == 900 and RUN_SECONDS == 2100, 'one finite owned serial native test command')
-    for label in ['settings', 'test']:
+    for label in ['settings', 'destinations', 'test']:
         require('-destination' in plan[label] and '-arch' not in plan[label] and '--arch' not in plan[label],
                 'concrete destination must select architecture without conflicting CLI flags')
     require(plan['settings'].count('test') == 1 and '-showBuildSettings' in plan['settings'],
@@ -316,7 +313,7 @@ def precreated_controls():
                'identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-2', 'supportedArchitectures': ['arm64'],
                'platform': 'iOS', 'isInternal': False,
                'supportedDeviceTypes': [{'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro'}]}
-    model = {'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro', 'name': 'iPhone 18 Pro'}
+    model = {'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro', 'name': 'iPhone 18 Pro', 'modelIdentifier': 'iPhone19,2'}
     device = {'udid': UDI, 'name': model['name'], 'state': 'Shutdown', 'isAvailable': True, 'deviceTypeIdentifier': model['identifier']}
     before = {'runtimes': [runtime], 'devicetypes': [model], 'devices': {runtime['identifier']: [device]}}
     claim = claim_precreated(before, instance)

@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 
 sys.dont_write_bytecode = True
 import prepare_native as native
-from guards import (native_settings, environment, destination, require, require_pretest,
+from guards import (native_settings, environment, resolved_destination, require, require_pretest,
                     focused_observations, classify_execution_status)
 from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
 
@@ -57,7 +57,7 @@ def command_plan(project_dir, sdk, device, scratch, evidence, selected=(FOCUSED_
     owned = ['-destination', 'platform=iOS Simulator,id=' + device]
     return {
         'settings': [*base, 'test', '-showBuildSettings', '-json', *owned, 'ONLY_ACTIVE_ARCH=YES'],
-        'destinations': [*base, '-showdestinations'],
+        'destinations': [*base, 'test', '-showBuildSettings', '-json', *owned, '-destination-timeout', '300', 'ONLY_ACTIVE_ARCH=YES'],
         'test': [*base, 'test', *owned, '-showBuildTimingSummary', '-destination-timeout', '30',
                  '-parallel-testing-enabled', 'NO', '-maximum-concurrent-test-simulator-destinations', '1',
                  '-maximum-parallel-testing-workers', '1',
@@ -241,15 +241,14 @@ def execute():
         if shutil.which('idb'):
             runner.call('owned-accessibility-tree', min(30, ready_budget(30)), ['idb', 'ui', 'describe-all', '--udid', device, '--json'], required=False)
         runner.call('native-sdk-destinations', ready_budget(), plan['destinations'])
-        eligibility = destination(runner.text('native-sdk-destinations'),
-                                  (evidence / 'native-sdk-destinations.stderr').read_text(encoding='utf-8', errors='replace'), device)
+        eligibility = resolved_destination(runner.json('native-sdk-destinations'), sdk, device, model['modelIdentifier'])
         runner.save('owned-sdk-destination-guard.json', eligibility)
         state['owned_sdk_destination_confirmed'] = True
         runner.save('precreated-readiness.json', {'status': 'ACTUAL_OWNED_DISPLAY_AND_SDK_ELIGIBILITY_CONFIRMED',
             'contract': CONTRACT, 'ownership_instance_fingerprint': instance['instance_fingerprint'], 'device': device,
             'initial_state': ownership['initial_state'], 'elapsed_seconds': round(time.monotonic() - readiness_start, 3),
             'budget_seconds': READINESS_SECONDS, 'screenshot': 'owned-boot.png', 'AX_available': bool(shutil.which('idb')),
-            'state_basis': 'actual exact-device blocking bootstatus + display PNG + native SDK destination',
+            'state_basis': 'actual exact-device blocking bootstatus + display PNG + both native targets resolving the same SDK/device/OS',
             'no_readiness_claim_from_initial_available_flag': True})
         require(runner.deadline - time.monotonic() >= TEST_SECONDS + 180, 'insufficient remaining test/export/owned-teardown budget; no test')
         require_pretest(state)

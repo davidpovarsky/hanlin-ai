@@ -188,22 +188,19 @@ def require_pretest(state):
             'actual installed readiness help, run-instance ownership, both native settings, boot/display and SDK eligibility required before the only test')
 
 
-def destination(stdout, stderr, udid):
-    eligible, found, rejected = False, [], []
-    for line in stdout.splitlines():
-        if 'Ineligible destinations' in line:
-            eligible = False
-        elif 'Available destinations' in line or 'Destinations compatible' in line:
-            eligible = True
-        if re.search(r'\bid:\s*' + re.escape(udid) + r'(?:,|\s|})', line):
-            (found if eligible and not re.search(r'\berror:', line, re.I) else rejected).append(line)
-    require(not rejected and len(found) == 1, 'exact owned UDID absent/ambiguous/ineligible in explicit SDK native-project listing')
-    line = found[0]
-    for key, value in [('platform', 'iOS Simulator'), ('arch', 'arm64'), ('OS', RUNTIME_VERSION), ('name', None)]:
-        match = re.search(r'\b' + key + r':\s*([^,}]+)', line)
-        require(match is not None and (value is None or match[1].strip() == value), 'owned destination ' + key)
-    require(not any(udid in line and re.search(r'ineligible|error:', line, re.I) for line in stderr.splitlines()), 'owned UDID error in listing stderr')
-    return {'status': 'EXACT_OWNED_SDK_DESTINATION_CONFIRMED', 'owned_udid': udid, 'raw_destination_line': line}
+def resolved_destination(data, sdk_path, udid, model_identifier):
+    """Exact-device SDK resolution; general discovery lists can lag a live VM."""
+    receipt = native_settings(data, sdk_path)
+    owned_uuid(udid)
+    require(isinstance(model_identifier, str) and re.fullmatch(r'iPhone[0-9]+,[0-9]+', model_identifier) is not None,
+            'actual initial device-type hardware identifier required')
+    expected = {'TARGET_DEVICE_IDENTIFIER': udid, 'TARGET_DEVICE_MODEL': model_identifier,
+                'TARGET_DEVICE_OS_VERSION': RUNTIME_VERSION, 'TARGET_DEVICE_PLATFORM_NAME': 'iphonesimulator'}
+    for entry in data:
+        for key, value in expected.items():
+            require(entry['buildSettings'].get(key) == value, entry['target'] + ': actual resolved destination ' + key)
+    return dict(receipt, status='EXACT_OWNED_SDK_DEVICE_SETTINGS_CONFIRMED', owned_udid=udid,
+                actual_device_fields=expected, basis='fresh post-display test -showBuildSettings -json with explicit owned destination')
 
 
 def dictionaries(value):
