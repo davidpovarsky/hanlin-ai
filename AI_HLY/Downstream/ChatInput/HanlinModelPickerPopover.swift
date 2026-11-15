@@ -70,17 +70,23 @@ struct HanlinModelPickerPopover: View {
     }
 
     /// Preserve featured/current rows and expose the one available local row.
-    private var compactFeaturedIndices: [Int] {
-        let visible = visibleIndices
+    static func compactFeaturedIndices(_ models: [AllModels], selectedModelIndex: Int,
+                                       nativeID: UUID?, nativeAvailable: Bool) -> [Int] {
+        let visible = visibleModelIndices(models, nativeID: nativeID, nativeAvailable: nativeAvailable)
         var result = Array(visible.prefix(4))
         if visible.contains(selectedModelIndex), !result.contains(selectedModelIndex) {
             result.insert(selectedModelIndex, at: 0)
             result = Array(result.prefix(4))
         }
-        if let native = visible.first(where: { models[$0].id == Self.nativeCatalogID }), !result.contains(native) {
+        if let native = visible.first(where: { models[$0].id == nativeID }), !result.contains(native) {
             result.append(native)
         }
         return result
+    }
+
+    private var compactFeaturedIndices: [Int] {
+        Self.compactFeaturedIndices(models, selectedModelIndex: selectedModelIndex,
+                                    nativeID: Self.nativeCatalogID, nativeAvailable: appleOnDeviceAvailable)
     }
 
     private var filteredAllIndices: [Int] {
