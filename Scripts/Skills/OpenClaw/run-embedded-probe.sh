@@ -106,7 +106,7 @@ def terminate_owned():
     result=subprocess.run(['xcrun','simctl','terminate',udid,identifier],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=30)
     with (out/'owned-app-termination.log').open('a') as log:log.write(str(result.returncode)+' '+result.stdout+'\n')
 with (out/'simulator-readiness.log').open('w') as log:
-    if device['state']=='Shutdown':subprocess.run(['xcrun','simctl','boot',udid],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=30)
+    if device['state']=='Shutdown':subprocess.run(['xcrun','simctl','boot',udid],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)
     subprocess.run(['xcrun','simctl','bootstatus',udid,'-b'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=150)
 call(['xcrun','simctl','install',udid,str(app)],timeout=60)
 container=Path(call(['xcrun','simctl','get_app_container',udid,identifier,'data'],timeout=5).strip())
