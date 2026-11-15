@@ -789,3 +789,15 @@ are deliberately not represented as all250 unchanged inputs):
 - Packages/HanlinPlatform/Tests: `429041c1224a198a0671cf309762902aef5e69a3`
 - Packages/HanlinAgentSDK/Package.swift: `ef36f24a02c7a546686078c265bf521997331814`
 - Packages/HanlinPlatform/Package.swift: `0779b4fb4f044a8fc259c06fc3d4d6f3e172c1d0`
+
+
+Composer e1117d4f4ae5a8182c56ce9d76faa3dd91b75d08 is independently SOURCE ACCEPTED
+and imported at c1a6cd97563bcf3a806d71ea0c6d0f3df2e0e3b2 in its exact two files.
+It replaces diagnostic instrumentation with native line-fragment geometry and
+ordered contiguous document-relative ranges, plus independent native line-count/
+sixth-line geometry, paragraph/trailing-newline and incomplete-range fallback
+checks. Rejected intermediate a644 was never dispatched. The dynamic whole-file
+planner includes12 identities:7 Morph+5 Native methods, with all original8 whole
+production files. Whole-document enumeration cost remains unmeasured; source
+acceptance is not runtime/performance/full mounted UI or device parity. A single
+changed-source12-case Composer-only run is authorized, separate from SDK/A2UI.
