@@ -4,14 +4,14 @@
 SDK-03 `1220373608755846`; INT-03 `1220374076374903` remain open.
 Baseline: `ba7a5ba3ed9e8983cc47df532114079f64bff0b0`.
 
-Current acceptance: **blocked on a complete Objective-C compatibility proof**.
-Historical combined output43664215125 genuinely passed its output gates, but QA
-rejected its error-bearing C++ role evidence and target mismatch. Corrected
-source `7cb86898` retains fail-closed gates and adds an incomplete source contract.
-Latest native source was cc15459c: run43673578445 failed on differing
-CallInvoker alias bytes before combined generation; its SDK-only/context controls
-passed. All49 current eventual Apple cases remain NOT_RUN (24 previously build-blocked,
-Host7 and observation18 not dispatched). See the latest checkpoint below.
+Current acceptance: **blocked on a complete supported-profile API/type proof and
+separate NativeScript JSI ownership**. Source84d98306 retains fail-closed gates;
+no language projection is enabled. Latest native sourcea7c52ed7/run43680891375
+captured the genuine combined context and proved fresh RN guard preservation,
+then rejected differing NativeScript JSI bytes before classification/generation.
+All49 current eventual Apple cases remain NOT_RUN (24 previously build-blocked,
+Host7 and observation18 not dispatched). Historical combined43664215125 output
+passed its old gates but source acceptance remains withdrawn.
 The earlier checkpoints below remain historical evidence, not current acceptance.
 
 App run [43650510166](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43650510166)
@@ -578,3 +578,87 @@ remain NOT_RUN; portable actor execution still refers to unchanged actor source
 from9249e0e0 and does not cover this provider gate/configuration test. Prepared49
 selectors (16+8+7+18) are at build/mcp-intent-defaults-final-inputs-NOT-DISPATCHED.json.
 The previous48/43 plans are historical. No workflow/full-app retry was dispatched.
+## Fresh native source-fact checkpoint — a7c52ed7 / 84d98306
+
+The wrapper now captures actual effective frontend flags with its existing
+read-only dump **before** checking namespace aliases. Capture and final invocation
+use the same overlay argument; discovery writes an empty overlay, which grants no
+alias. Only successful exact-byte/dependency verification can populate it, and
+any conflict still raises before classification or final metadata emission. A
+retained header-alias-validation receipt distinguishes PENDING/FAILED/VERIFIED.
+A focused control-flow regression proves capture occurs but final invocation does
+not occur on a differing alias. It uses an explicitly synthetic tool fixture;
+the real native execution below supplies compiler facts.
+
+Actual focused [43680891375](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43680891375)
+at `a7c52ed75ac06d4b3cd9c40ffc0548f4652347f9` **FAILED3m25s**. SDK generation,
+zero-error/unchanged dae58823 metadata,31-file UIKit/Host YAML parity, invalid type
+and effective-context-drift rejection passed. Actual compiled Swift provider
+remains target27.0/headercf655de3. Complete production staging succeeded:
+6731 files,7.056s; no signing/engine/app build was requested.
+
+This fresh producer preserves the pinned RN guard bytes: modular ReactCommon
+CallInvoker SHA6f8f8bcc… and SchedulerPriority SHAde141385… match their namespaced
+React.xcframework and unified react.framework copies. The former mismatch is
+corrected on actual staged output. This is a narrow byte/guard proof, not a
+whole-graph alias pass. The next rejected pair is NativeScript.framework's
+Headers/jsi/decorator.h versus RN modular jsi.framework's Headers/decorator.h.
+Combined symbol checks are NOT_RUN_NO_METADATA_BINARY; no role classification
+or combined metadata emission followed the failed alias check.
+
+Actual combined effective context is now retained: pinned Clang17.0.6,
+arm64-apple-ios27.0-simulator, SDK27.2, exact ordered I/F/map/overlay/internal
+resource paths and generator-owned defines. Context SHA-256
+`ca571fbb9408d0d20b338b0656763d88de66c2c8ffb25dd45e4639443d4c5ace`.
+This proves the vector, not the complete macro state or active branch inventory.
+Absence of a WITH_PERFETTO command-line define is not used as inactivity proof.
+
+Artifact14148745560:32,838,080 bytes, GitHub SHA-256
+`e507b3f78c6409fef211ae37cd48305ab083c709e933a31cebb780fc3c1f56dd`.
+Raw result SHA-256
+`f5890e39cca280d814d088a56c8203ef304c3f5e7070120f9e3eb8ceaeb4e36c`.
+Tool binary16619435… and actual patch source match downloaded provenance.
+No watcher remains active; no full-app retry occurred.
+
+Producer source-fact contract `84d9830660469500938bd786c0e07f57b3e708e5`
+records the two observed native contexts separately from **approved profiles=[]**.
+Schema1 rejects fabricated profile approval, including WITH_PERFETTO, before any
+projection. Every public API inventory field remains null/INCOMPLETE. No language
+view is generated and no feature branch is suppressed.
+
+Pinned ReactNativeDependencies artifact309b2fce… owns the actual Folly source.
+Its json/dynamic.h SHA0ce5093e… equals the local staged unified-react candidate.
+A conservative lexical traversal records170 source hashes and80 external include
+spellings across all source branches; this is not active preprocessor reachability.
+It finds explicit C-linkage preservation candidates: MallocImpl.h's mallocx/rallocx/
+xallocx/sallocx/dallocx/sdallocx/nallocx/mallctl families and
+MallocExtension_Internal_GetNumericProperty, with weak-function/function-pointer
+alternatives, and Apple-conditioned malloc_usable_size in portability/Malloc.h.
+Consequently these transitive declarations cannot be declared absent from a C/ObjC
+surface just because the root uses C++ namespaces. Actual active macro, signature,
+type/layout, linkage and SDK availability preservation remains unproven.
+
+All six differing NativeScript JSI headers were fetched from exact upstream v9.1.0
+Git blobs. Their verified Git blob IDs and SHA256 match **6/6 actual retained
+framework header hashes**, proving separate pinned provenance. See
+[upstream JSI sources](https://github.com/NativeScript/ios/tree/v9.1.0/NativeScript/jsi)
+and the [9.1.0 binary manifest](https://raw.githubusercontent.com/NativeScript/ios-spm/9.1.0/Package.swift).
+NativeScript uses quoted jsi/... includes and different declarations from RN.
+Its actual inventory has modules=[], publicUmbrellaHeaders=[] and no module-map
+hash; the genuine NativeScript.h also matches its upstream blob and directly
+imports Foundation without JSI. These are ownership facts, not complete dependency
+reachability or permission to skip an unequal alias. The separate C++ variant
+remains untouched and the guard fails closed.
+
+The actual package-build log has a successful Xcode Objective-C++ command for
+HanlinNativeScriptCoreSupport.mm at target27.0, but references an unretained
+common-args response file. It does not establish a complete supported RN C++
+profile or macro/token/AST/layout equivalence. Remaining facts: actual active
+header-defined macro/SDK/libc++/Folly C ABI inventory, supported complete C++
+consumer profiles and precise NativeScript include/module reachability. Perfetto
+remains unsupported; its missing source is not a reason to guess an empty API.
+
+Local metadata30+contract13 methods passed together43/39.997s at a7c52ed7. After
+adding the explicit unsupported-profile control, all14 contract methods passed
+8.315s at84d98306; both Node syntax and diff checks passed. These are local source
+checks, distinct from all49 eventual Apple methods, which remain NOT_RUN.
