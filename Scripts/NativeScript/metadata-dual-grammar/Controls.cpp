@@ -4,6 +4,8 @@
 #include "../main.cpp"
 #undef main
 #include "Pipeline.h"
+#include "OptionsMacro.h"
+#include <map>
 
 static void writeControlReceipt(const std::string& path, const llvm::json::Object& receipt) {
     std::error_code error;
@@ -109,6 +111,60 @@ int main(int argc, const char** argv) {
                 throw std::runtime_error("Actual record alias signature identity is inconsistent");
         }
         receipt["actualRecordAliasIdentity"] = true;
+        // Exercise original factories, not a model projection: a lookalike
+        // vendor macro stays primitive in both retained ASTs, while the actual
+        // NS_OPTIONS/CF_OPTIONS ancestry keeps the existing named Enum model.
+        const std::map<std::string, std::string> vendorConstants{
+            {"HanlinDualVendorSuccess", "0"}, {"HanlinDualVendorFailure", "-21766"},
+            {"HanlinDualVendorNoFlags", "0"}, {"HanlinDualVendorHighFlag", "2147483648"}};
+        for (auto* unit : {&pipeline.cpp, &pipeline.objc}) {
+            bool vendorFunction = false;
+            std::set<std::string> constants, options;
+            for (auto* meta : unit->models()) {
+                if ((meta->name == "HanlinDualVendorError" || meta->name == "HanlinDualVendorFlags") &&
+                    meta->type == Meta::MetaType::Enum)
+                    throw std::runtime_error("Vendor lookalike was incorrectly named as an options enum");
+                if (meta->name == "HanlinDualVendorCall") {
+                    auto& function = meta->as<Meta::FunctionMeta>();
+                    const auto* declaration = clang::dyn_cast<clang::FunctionDecl>(meta->declaration);
+                    if (!declaration || !declaration->getReturnType()->isIntegerType() ||
+                        declaration->getReturnType()->isEnumeralType() || declaration->getNumParams() != 1 ||
+                        !declaration->getParamDecl(0)->getType()->isIntegerType() ||
+                        declaration->getParamDecl(0)->getType()->isEnumeralType() || function.signature.size() != 2 ||
+                        !function.signature[0]->stripNullability()->is(Meta::TypeType::TypeLong) ||
+                        !function.signature[1]->stripNullability()->is(Meta::TypeType::TypeUInt))
+                        throw std::runtime_error("Actual vendor typedef/primitive signature was not preserved");
+                    vendorFunction = true;
+                }
+                const auto expectedConstant = vendorConstants.find(meta->name);
+                if (expectedConstant != vendorConstants.end()) {
+                    if (meta->type != Meta::MetaType::EnumConstant ||
+                        meta->as<Meta::EnumConstantMeta>().value != expectedConstant->second ||
+                        meta->as<Meta::EnumConstantMeta>().isScoped)
+                        throw std::runtime_error("Original unscoped vendor constant/value was not preserved");
+                    constants.insert(meta->name);
+                }
+                if (meta->name == "HanlinDualOptionsCall" || meta->name == "HanlinDualCFOptionsCall") {
+                    auto& function = meta->as<Meta::FunctionMeta>();
+                    const std::string expectedEnum = meta->name == "HanlinDualOptionsCall" ?
+                        "HanlinDualActualOptions" : "HanlinDualActualCFOptions";
+                    if (function.signature.size() != 2)
+                        throw std::runtime_error("Actual options signature was not collected");
+                    for (auto* entry : function.signature) {
+                        auto* type = entry->stripNullability();
+                        if (!type->is(Meta::TypeType::TypeEnum) ||
+                            type->as<Meta::EnumType>().enumMeta->name != expectedEnum ||
+                            !type->as<Meta::EnumType>().underlyingType->is(Meta::TypeType::TypeUInt))
+                            throw std::runtime_error("Actual NS_OPTIONS/CF_OPTIONS model was not preserved");
+                    }
+                    options.insert(meta->name);
+                }
+            }
+            if (!vendorFunction || constants.size() != vendorConstants.size() || options.size() != 2)
+                throw std::runtime_error("Actual macro ancestry controls did not execute in both grammars");
+        }
+        receipt["vendorMacroPrimitiveAndConstantsPreserved"] = true;
+        receipt["originalOptionsMacroModelsPreserved"] = true;
         // Derived adversarial ABI objects start from a real retained Clang
         // declaration. Changing only its symbol may be considered later;
         // changing visibility or formal linkage can never qualify.

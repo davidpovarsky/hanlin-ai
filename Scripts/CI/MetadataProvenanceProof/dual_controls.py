@@ -71,6 +71,29 @@ typedef int (*HanlinDualNoProtoCallback)(HANLIN_NO_PROTO_CB_PARAM);
 int HanlinDualUseNoProtoCallback(HanlinDualNoProtoCallback value);
 unsigned long HanlinDualTakeUnsigned(unsigned long value);
 double HanlinDualTakeDouble(double value);
+#define HANLIN_VENDOR_CHOICE(_name, _type) _type _name; enum
+typedef HANLIN_VENDOR_CHOICE(HanlinDualVendorError, long) {
+  HanlinDualVendorSuccess = 0, HanlinDualVendorFailure = -21766
+};
+typedef HANLIN_VENDOR_CHOICE(HanlinDualVendorFlags, unsigned int) {
+  HanlinDualVendorNoFlags = 0, HanlinDualVendorHighFlag = 0x80000000U
+};
+HanlinDualVendorError HanlinDualVendorCall(HanlinDualVendorFlags flags);
+#ifdef __cplusplus
+#define HANLIN_OPTIONS_BODY(_type, _name) _type _name; enum
+#else
+#define HANLIN_OPTIONS_BODY(_type, _name) enum _name : _type _name; enum _name : _type
+#endif
+#define NS_OPTIONS(_type, _name) HANLIN_OPTIONS_BODY(_type, _name)
+#define CF_OPTIONS(_type, _name) HANLIN_OPTIONS_BODY(_type, _name)
+typedef NS_OPTIONS(unsigned int, HanlinDualActualOptions) {
+  HanlinDualOptionNone = 0, HanlinDualOptionHigh = 0x80000000U
+};
+typedef CF_OPTIONS(unsigned int, HanlinDualActualCFOptions) {
+  HanlinDualCFOptionNone = 0, HanlinDualCFOptionHigh = 0x80000000U
+};
+HanlinDualActualOptions HanlinDualOptionsCall(HanlinDualActualOptions flags);
+HanlinDualActualCFOptions HanlinDualCFOptionsCall(HanlinDualActualCFOptions flags);
 void HanlinDualTakePointer(void * HANLIN_PARAM_ALIAS value);
 typedef int (*HanlinDualCallback)(int * HANLIN_PARAM_ALIAS value);
 int HanlinDualUseCallback(HanlinDualCallback value);
@@ -133,6 +156,8 @@ HANLIN_DECL_EXPORT
         ("no-prototype-callback-parameter-loss-rejected", baseline.replace("#define HANLIN_NO_PROTO_CB_PARAM\n", "#define HANLIN_NO_PROTO_CB_PARAM int value\n", 1), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-pointee-qualifier", "#ifdef __cplusplus\n#define HANLIN_POINTEE_CONST const\n#else\n#define HANLIN_POINTEE_CONST\n#endif\n" + baseline.replace("int HanlinDualTakeSigned(int value);", "int HanlinDualTakeSigned(HANLIN_POINTEE_CONST int *value);"), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-constant", "#ifdef __cplusplus\n#define HANLIN_REAL_FIXTURE_CONSTANT 43\n#else\n#define HANLIN_REAL_FIXTURE_CONSTANT 42\n#endif\n" + baseline.replace("HanlinDualConstant = 42", "HanlinDualConstant = HANLIN_REAL_FIXTURE_CONSTANT"), "merge-failure", "Dual-grammar actual API model conflict:"),
+        ("vendor-options-width-conflict", "#ifdef __cplusplus\n#define HANLIN_VENDOR_WIDTH unsigned long\n#else\n#define HANLIN_VENDOR_WIDTH unsigned int\n#endif\n" + baseline.replace("HanlinDualVendorFlags, unsigned int", "HanlinDualVendorFlags, HANLIN_VENDOR_WIDTH"), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
+        ("vendor-options-value-conflict", "#ifdef __cplusplus\n#define HANLIN_VENDOR_FAILURE -21765\n#else\n#define HANLIN_VENDOR_FAILURE -21766\n#endif\n" + baseline.replace("HanlinDualVendorFailure = -21766", "HanlinDualVendorFailure = HANLIN_VENDOR_FAILURE"), "merge-failure", "Dual-grammar actual API model conflict:"),
         ("conflicting-symbol-binding", "#ifdef __cplusplus\n#define HANLIN_ACTUAL_BINDING \"hanlin_cpp_symbol\"\n#else\n#define HANLIN_ACTUAL_BINDING \"hanlin_c_symbol\"\n#endif\n" + baseline + "\nextern int HanlinDualAlias __asm__(HANLIN_ACTUAL_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-function-symbol", "#ifdef __cplusplus\n#define HANLIN_FUNCTION_BINDING \"hanlin_cpp_function\"\n#else\n#define HANLIN_FUNCTION_BINDING \"hanlin_c_function\"\n#endif\n" + baseline + "\nint HanlinDualFunctionAlias(int value) __asm__(HANLIN_FUNCTION_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("nonSDK-unexported-mangling", baseline + "\nint HanlinDualNonSDKMangled(int value);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
@@ -178,6 +203,7 @@ HANLIN_DECL_EXPORT
         expected_status = "EXECUTED_PASS" if expectation == "pass" else "REJECTED_EXPECTED"
         passed = run.returncode == 0 and actual.get("status") == expected_status
         if expectation == "pass":
+            passed = passed and actual.get("vendorMacroPrimitiveAndConstantsPreserved") is True and actual.get("originalOptionsMacroModelsPreserved") is True
             passed = passed and output.is_file() and actual.get("lifetime", {}).get("bothSourceManagersReadAfterSerialization") is True and actual.get("crossFactoryTypeValidation") is True and actual.get("actualRecordAliasIdentity") is True and actual.get("sameProtocolObjectMultiplicityPreserved") is True and actual.get("cppAddedProtocolRoutedToCanonicalCObject") is True and actual.get("bindingNameOnlyGuardCounterexamples") is True
             if output.is_file():
                 body = output.read_bytes()

@@ -175,3 +175,28 @@ Actual CPP direct/callback argument additions remain fatal. New15-case native
 controls include both negative cases, and the genuine Accelerate header/root
 joins the affected SDK slice before any full SDK retry. Export exceptions remain
 exactly the3 pinned AVFoundation declarations; none is broadened.
+
+### vImage source facts: narrow the factory heuristic, retain contract3
+
+Read-only run43763007185/3ce27355 completed six real Clang AST dumps; all17
+artifact-manifest file hashes were verified locally. Both retained-language
+inputs declare vImage_Error as long and vImage_Flags as unsigned int, with135
+kvImage constant roots each. Actual vImage_Types.h
+SHA2569a5875bc177e77d95a4cead967265339e58eea0529f75cc77a05cf6bbf6ef8bd
+disables its typed-enum branch with #if0. The active VIMAGE_CHOICE_ENUM and
+VIMAGE_OPTIONS_ENUM macros both form integer typedefs plus anonymous enums.
+
+Run43761102593/41a534af passed the15 native/transaction controls and strict31,
+but its Accelerate slice rejected vImageAlphaBlend_Planar8 before publication.
+The apparent CPP Enum versus C scalar difference came from our overly broad
+NS_OPTIONS recovery heuristic, not the SDK's actual nominal types. The proposed
+contract4 enum-underlying projection is withdrawn and has not been implemented.
+
+The candidate now requires actual NS_OPTIONS/CF_OPTIONS expansion ancestry,
+using Clang Lexer and SourceManager, in both name and signature recovery. A
+vendor lookalike must preserve primitive models and original unscoped constant
+values; nested NS_OPTIONS/CF_OPTIONS expansions must retain existing Enum models.
+Two additional adversarial cases reject changed vendor width and constant value.
+The affected17-case controls, strict31 and Accelerate slice require fresh native
+execution. Unchanged export controls qualify only for authenticated reuse; full
+SDK, combined wrapper, strict generated declarations and VM remain unfulfilled.

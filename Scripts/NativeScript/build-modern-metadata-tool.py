@@ -147,6 +147,8 @@ def main():
     factory = generator / "src/Meta/MetaFactory.cpp"
     text = base.replace_once(factory.read_text(), "    case clang::Decl::Kind::Record:",
         "    case clang::Decl::Kind::CXXRecord:\n    case clang::Decl::Kind::Record:")
+    text = base.replace_once(text, '#include "MetaFactory.h"',
+        '#include "MetaFactory.h"\n#include "HanlinDual/OptionsMacro.h"')
     text = base.replace_once(text, "          if (tagType->getDecl() == tagDecl) {", '''          if (tagType->getDecl() == tagDecl) {
             // After a retained source AST completes, C and C++ can both
             // canonicalize a later standalone typedef to the definition.
@@ -159,11 +161,11 @@ def main():
     text = base.replace_once(text, "  if (var.getLexicalDeclContext() !=\n      var.getASTContext().getTranslationUnitDecl()) {",
         "  if (var.getLexicalDeclContext()->getRedeclContext() !=\n      var.getASTContext().getTranslationUnitDecl()) {")
     text = base.replace_once(text, "  // The decl has no typedef name, so we return its name.", '''  // NS_OPTIONS in C++ is a preceding integer typedef and anonymous enum.
-  // Recover only the real typedef at the same macro expansion location;
+  // Recover only a real NS_OPTIONS/CF_OPTIONS expansion and its same-location typedef;
   // preserve the original enumerator/value serializer and public identity.
   if (tagDecl->getASTContext().getLangOpts().CPlusPlus &&
       clang::isa<clang::EnumDecl>(tagDecl) && tagDecl->getName().empty() &&
-      tagDecl->getBeginLoc().isMacroID()) {
+      HanlinDual::isOriginalOptionsExpansion(tagDecl->getBeginLoc(), tagDecl->getASTContext())) {
     const auto& sm = tagDecl->getASTContext().getSourceManager();
     const clang::TypedefDecl* previous = nullptr;
     for (const auto* sibling : tagDecl->getDeclContext()->decls()) {
@@ -180,13 +182,16 @@ def main():
     factory_header.write_text(header_text)
     factory.write_text(text)
     type_factory = generator / "src/Meta/TypeFactory.cpp"
-    text = base.replace_once(type_factory.read_text(),
+    text = base.replace_once(type_factory.read_text(), '#include "TypeFactory.h"',
+        '#include "TypeFactory.h"\n#include "HanlinDual/OptionsMacro.h"')
+    text = base.replace_once(text,
         '  vector<string> boolTypedefs{"BOOL", "Boolean", "bool"};', '''  // The C++ NS_OPTIONS integer typedef belongs to its immediately following
   // anonymous enum at the same macro expansion. Preserve the existing Enum
   // model in function/property signatures as well as in named exports.
   const auto* alias = type->getDecl();
   if (alias->getASTContext().getLangOpts().CPlusPlus &&
-      alias->getUnderlyingType()->isIntegerType() && alias->getLocation().isMacroID()) {
+      alias->getUnderlyingType()->isIntegerType() &&
+      HanlinDual::isOriginalOptionsExpansion(alias->getLocation(), alias->getASTContext())) {
     if (const auto* enumeration = clang::dyn_cast_or_null<clang::EnumDecl>(alias->getNextDeclInContext())) {
       const auto& sm = alias->getASTContext().getSourceManager();
       if (enumeration->getName().empty() && enumeration->getBeginLoc().isMacroID() &&
