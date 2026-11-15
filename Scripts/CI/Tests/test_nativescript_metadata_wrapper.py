@@ -688,6 +688,24 @@ generate_metadata("arm64")
             self.assertEqual((retained / diagnostic.name).read_bytes(), diagnostic.read_bytes())
             self.assertEqual((retained / "metadata-arm64.bin").read_bytes(), b"NSObject\0UIView\0")
             self.assertIn('"HanlinNativeServicesBridge": false', (retained / "visibility.json").read_text())
+            # Capture-only discovery must retain the real context before an
+            # unequal namespace alias fails; it must never reach final emission.
+            carrier = self.framework(sdk / "System/Library/Frameworks", "Carrier")
+            alias = carrier / "Headers/UIKit/UIKit.h"
+            alias.parent.mkdir()
+            alias.write_text("// differing alias, never safe to map by name")
+            with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
+                 patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
+                 patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
+                 patch.object(WRAPPER.subprocess, "run") as run:
+                run.side_effect = capture
+                with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias bytes"):
+                    WRAPPER.main()
+                self.assertEqual(run.call_count, 2)  # launcher capture, native read-only dump; no final invocation.
+                self.assertIn("-hanlin-dump-clang-context", run.call_args_list[1].args[0])
+            self.assertEqual(json.loads((retained / "effective-compiler-context.json").read_text())["compiler"], "Unit fixture compiler")
+            self.assertEqual(json.loads((retained / "header-alias-validation.json").read_text())["status"], "FAILED")
+            self.assertEqual(json.loads((retained / "HanlinHeaderAliases.json").read_text())["roots"], [])
             # Discovery errors must also keep their provenance before cleanup;
             # the generator must never run after differing copies are found.
             duplicate = root / "duplicate-products/UIKit.framework"

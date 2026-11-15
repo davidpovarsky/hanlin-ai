@@ -237,6 +237,7 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
     evidence.mkdir(parents=True, exist_ok=True)
     alias_overlay = module_root / "HanlinHeaderAliases.json"
+    alias_validation = module_root / "header-alias-validation.json"
     adapter = module_root / "build-step-metadata-generator-adapter.py"
     adapter.write_text(explicit_input_adapter(upstream_generator.read_text()), encoding="utf-8")
     environment["HANLIN_METADATA_GENERATOR"] = str(tool)
@@ -257,8 +258,13 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
                 produce_role_inventory(directory, [], library, classify=False, receipt_path=receipts[str(directory)])
         inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
             sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts)
-        aliases = write_verified_header_alias_overlay(inventory, alias_overlay)
-        environment["OTHER_CFLAGS"] = f'{original_cflags} {metadata_flags(module_root, module_map, core_support_dir, alias_overlay if aliases else None)}'.strip()
+        # Capture the real frontend vector even when a later alias validation
+        # rejects the inputs. The tool's dump exits before parsing/emission.
+        # Keep the same overlay argument for capture and final execution; the
+        # empty discovery overlay grants no aliases or language-role exemption.
+        alias_overlay.write_text(json.dumps({"version": 0, "use-external-names": True, "roots": []}) + "\n", encoding="utf-8")
+        alias_validation.write_text(json.dumps({"status": "PENDING"}) + "\n", encoding="utf-8")
+        environment["OTHER_CFLAGS"] = f'{original_cflags} {metadata_flags(module_root, module_map, core_support_dir, alias_overlay)}'.strip()
         context_path = module_root / "actual-compiler-arguments.json"
         environment["HANLIN_METADATA_EXPECTED_CONTEXT"] = str(context_path)
         environment["HANLIN_METADATA_ACTUAL_CONTEXT"] = str(module_root / "actual-generator-context.json")
@@ -271,6 +277,12 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         (module_root / "effective-compiler-context.json").write_text(json.dumps(metadata_compiler, indent=2) + "\n")
         arguments = metadata_compiler["arguments"]
         verify_role_context(arguments)
+        try:
+            aliases = write_verified_header_alias_overlay(inventory, alias_overlay)
+        except RuntimeError as error:
+            alias_validation.write_text(json.dumps({"status": "FAILED", "reason": str(error)}) + "\n", encoding="utf-8")
+            raise
+        alias_validation.write_text(json.dumps({"status": "VERIFIED", "aliases": len(aliases)}) + "\n", encoding="utf-8")
         # Reclassify ALL final, post-staging bytes at the exact captured context.
         # Never promote a stale receipt by updating hashes alone.
         for directory in role_roots:
@@ -278,7 +290,7 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
             sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments, metadata_compiler)
     finally:
-        for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay,
+        for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay, alias_validation,
                      alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
                      module_root / "actual-compiler-arguments.json", module_root / "effective-compiler-context.bin",
                      module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log", *receipts.values()]:

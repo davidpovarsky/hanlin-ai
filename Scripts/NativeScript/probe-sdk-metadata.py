@@ -167,6 +167,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     actual_arguments = actual_context.get("arguments", [])
     effective_path = visibility.parent / "effective-compiler-context.json"
     effective_context = json.loads(effective_path.read_text()) if effective_path.is_file() else {}
+    aliases_path = visibility.parent / "header-alias-validation.json"
+    alias_validation = json.loads(aliases_path.read_text()) if aliases_path.is_file() else {}
     for receipt in visibility.parent.glob("input-roles-*.json"):
         (folder / ("final-" + receipt.name)).write_bytes(receipt.read_bytes())
     # Names confirmed from current staged declarations, not synthetic APIs.
@@ -185,6 +187,7 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
             "visibility": recorded, "publicObjCAndCMetadataNames": public_symbols,
             "symbolChecksStatus": "EXECUTED" if binary else "NOT_RUN_NO_METADATA_BINARY",
             "actualMetadataCompilerArguments": actual_arguments, "actualMetadataContext": actual_context, "effectiveMetadataCompilerContext": effective_context, "actualSwiftProviderTarget": compilation["-target"],
+            "headerAliasValidation": alias_validation,
             "finalHeaderStaging": final_staging,
             "includeOnlyFrameworks": [{"framework": r["framework"], "inputManifestSHA256": r["inputManifestSHA256"],
                                        "declarations": len(r["inputRoleProof"]["declarations"])} for r in include_only],
