@@ -5,7 +5,7 @@ cd "$root"
 evidence="$root/build/integration-validation-evidence"
 mkdir -p "$evidence"
 workflow_sha="$(git rev-parse HEAD)"
-source_sha=a43f15639cdfb5c2edded52742bc62f1f7876b4e
+source_sha=f654ac113447177df3838908c53ce9aa24dc47ff
 [[ "${INTEGRATION_EXPECTED_SHA:-}" =~ ^[0-9a-f]{40}$ && "$workflow_sha" == "$INTEGRATION_EXPECTED_SHA" ]] || {
   echo 'Exact workflow checkout SHA mismatch' >&2; exit 2;
 }
@@ -94,7 +94,7 @@ python3 "$recipe" --verify-pin "$scratch/harness/Package.resolved" | tee "$evide
 scheme="$(python3 - "$evidence/package-schemes.json" <<'PY'
 import json,sys
 data=json.load(open(sys.argv[1]));schemes=data.get('workspace',{}).get('schemes',[])+data.get('project',{}).get('schemes',[])
-print(next(s for s in ['HanlinA2UIProof-Package','HanlinA2UIProof','AI_HLY'] if s in schemes))
+print(next(s for s in ['HanlinA2UIProof-Package','HanlinA2UIProof','AI_Hanlin'] if s in schemes))
 PY
 )"
 printf '%s\n' "$scheme" > "$evidence/scheme.txt"
