@@ -94,6 +94,18 @@ struct SkillDocumentTests {
         #expect(edited.rawBody == Data("\r\nnew\r\nשלום\r\n\r\n".utf8))
     }
 
+    @Test func importedFenceAtEOFCanGainInstructionsWithoutHeaderRewrite() throws {
+        let source = Data("\u{FEFF}---\r\nname: empty-body\r\ndescription: Description\r\nunknown: {keep: true}\r\n---".utf8)
+        let parsed = try SkillDocumentParser.parse(source)
+        #expect(parsed.rawBody.isEmpty)
+        let unchanged = try parsed.updating(name: parsed.name, title: nil, description: parsed.description, instructionBody: "")
+        #expect(unchanged.originalSource == source)
+        let edited = try parsed.updating(name: parsed.name, title: nil, description: parsed.description, instructionBody: "New\nשלום")
+        #expect(edited.rawFrontmatter == parsed.rawFrontmatter)
+        #expect(edited.originalSource == source + Data("\r\nNew\r\nשלום".utf8))
+        #expect(edited.instructionBody == "New\nשלום")
+    }
+
     @Test(arguments: ["|", "|-", "|+", ">", ">-"])
     func blockScalarUsesNativeSpanAndRetainsFollowingField(style: String) throws {
         let parsed = try document("name: multiline\ndescription: \(style)\n  first\n  ---\n  שלום 😀\n\nunknown: [one, two] # retain")

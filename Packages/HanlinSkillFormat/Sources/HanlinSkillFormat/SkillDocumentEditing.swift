@@ -52,7 +52,14 @@ public extension SkillMarkdownDocument {
             let bytes = Array(rawBody)
             let leading = bytes.prefix(while: { $0 == 10 || $0 == 13 })
             let trailing = bytes.dropFirst(leading.count).reversed().prefix(while: { $0 == 10 || $0 == 13 }).reversed()
-            var replacement = Data(leading); replacement.append(Data(newBody.utf8)); replacement.append(contentsOf: trailing)
+            var replacement = Data(leading)
+            if bodyRange.isEmpty, bodyRange.lowerBound > 0,
+               ![10, 13].contains(originalSource[bodyRange.lowerBound - 1]) {
+                // A valid closing fence can be the last bytes of the imported file. Separate
+                // newly added instructions from that fence without rewriting its header.
+                replacement.append(newline)
+            }
+            replacement.append(Data(newBody.utf8)); replacement.append(contentsOf: trailing)
             edits.append((bodyRange, replacement))
         }
         guard !edits.isEmpty else { return self }
