@@ -1056,11 +1056,11 @@ struct ModelPopoverZoomOrderTests {
     @Test("Native picker visibility preserves original indices and explicit selection")
     func nativeVisibilityKeepsOriginalIndices() {
         let nativeID = UUID()
-        let cloud = AllModels(name: "cloud", position: 0)
-        let hidden = AllModels(name: "hidden", position: 1, isHidden: true)
-        let native = AllModels(id: nativeID, name: "native", position: 2)
-        let next = AllModels(name: "next", position: 3)
-        let duplicate = AllModels(id: nativeID, name: "duplicate", position: 4)
+        let cloud = AllModels(name: "cloud", displayName: "Cloud", position: 0, company: "OPENAI")
+        let hidden = AllModels(name: "hidden", displayName: "Hidden", position: 1, company: "OPENAI", isHidden: true)
+        let native = AllModels(id: nativeID, name: "native", displayName: "Native", position: 2, company: "APPLE")
+        let next = AllModels(name: "next", displayName: "Next", position: 3, company: "OPENAI")
+        let duplicate = AllModels(id: nativeID, name: "duplicate", displayName: "Duplicate", position: 4, company: "APPLE")
         let models = [cloud, hidden, native, next, duplicate]
         let selectedModelIndex = 2
         #expect(HanlinModelPickerPopover.visibleModelIndices(models, nativeID: nativeID, nativeAvailable: false) == [0, 3])
