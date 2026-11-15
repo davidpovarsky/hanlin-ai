@@ -161,8 +161,11 @@ jobs:
           NATIVE_CATALOG_ONLY: ${{ inputs.exact_test_selector == 'NativeModelCatalogTests' && '1' || '0' }}
           HOST_SCHEMA_ONLY: ${{ (inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaValidationTests' || inputs.exact_test_selector == 'HanlinAgentCoreTests/HostAssociation' || inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaWriter') && '1' || '0' }}
           PRODUCER_SCHEMA_ONLY: ${{ inputs.exact_test_selector == 'AISDKProviderUtilsTests/JSONSchemaValidatorTests' && '1' || '0' }}
+          SKILL_FORMAT_ONLY: ${{ inputs.exact_test_selector == 'HanlinSkillFormatTests' && '1' || '0' }}
         run: |
-          if [[ "$HOST_SCHEMA_ONLY" == 1 ]]; then
+          if [[ "$SKILL_FORMAT_ONLY" == 1 ]]; then
+            bash Scripts/CI/IntegrationValidation/run_skill_format.sh
+          elif [[ "$HOST_SCHEMA_ONLY" == 1 ]]; then
             bash Scripts/CI/IntegrationValidation/run_host_schema.sh
           elif [[ "$PRODUCER_SCHEMA_ONLY" == 1 ]]; then
             bash Scripts/CI/IntegrationValidation/run_producer_schema.sh
