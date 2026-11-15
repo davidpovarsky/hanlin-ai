@@ -37,7 +37,7 @@ def create_request(destination: Path, full_root: Path, objc_root: Path, context:
         "fullRootSHA256": sha(full_root), "objcRoot": str(objc_root.resolve(strict=True)),
         "objcRootSHA256": sha(objc_root), "contextSHA256": context["contextSHA256"],
         "generatorSHA256": context["generatorSHA256"],
-        "standardLibraryDirectory": str(standard_library.resolve(strict=True)),
+        "standardLibraryDirectory": str(standard_library),
         "fullArguments": context["arguments"],
         "boundFiles": [{"path": str(path), "sha256": sha(path)} for path in paths]}
     with destination.open("x", encoding="utf-8", newline="\n") as file:

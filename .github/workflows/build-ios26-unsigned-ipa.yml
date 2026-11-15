@@ -212,15 +212,15 @@ jobs:
       - name: Verify actual modern combined SDK Expo and compiled provider inputs
         if: inputs.nativescript_metadata_tooling_mode == 'modern-combined'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --runtime-wrapper
+      - name: Execute actual cross-grammar model ABI ownership and lifetime controls
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-controls' || inputs.nativescript_metadata_tooling_mode == 'modern-dual-sdk'
+        run: python3 Scripts/CI/MetadataProvenanceProof/dual_controls.py
       - name: Verify actual retained dual SDK and strict original model preservation
         if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-sdk'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --dual-grammar
       - name: Verify actual retained dual combined SDK Host Expo provider metadata
         if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-combined'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --dual-grammar --runtime-wrapper
-      - name: Execute actual cross-grammar model ABI ownership and lifetime controls
-        if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-controls'
-        run: python3 Scripts/CI/MetadataProvenanceProof/dual_controls.py
       - name: Inspect installed frontend development assets
         if: inputs.nativescript_metadata_tooling_mode == 'inventory'
         run: python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py
