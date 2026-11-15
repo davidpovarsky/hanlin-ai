@@ -96,3 +96,27 @@ Public contracts and recovery acceptance rules:
 The real Hanlin conversation SwiftData/Keychain/attachment/memory adapters, installed Host effects,
 signed protection/AppGroups and actual app/UI/device obligations remain open; catalog SwiftData tests
 are not evidence for those unrelated data adapters. Anytype/Otzaria remain separate projects.
+
+## Integration recovery supplement: private-store ancestor traversal
+
+The integration branch takes only `HanlinPrivateConversationStore.rejectSymbolicLinks` from
+`8b6106ef247f12c8bc6abf1ceaed63d8373223e4`. Lexical ancestor paths now strictly shorten and have
+a finite bound; malformed traversal fails closed. No later Host minor, Session, provider schema
+or app-owner changes are included. The original checkpoint test and assertions are unchanged.
+
+`StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()` is
+**REUSED_VERIFIED_PASS**, originally executed in
+[run 43735446863](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43735446863).
+Artifact `14170641291`, SHA-256
+`cdcc7b0010f71fa6048afa6a0cd487bfd69f016a555776f89d829ff89a916794`, was independently downloaded.
+Its source manifest authenticates 33 relevant source/test/manifest/lock files against the original
+Git objects. After this backport, their bytes match the tested closure except two unused additions
+in `HanlinHostContext.swift`: `hostManagedMutation` and its catalog minor-version guard. Neither
+is called by the private-store/checkpoint path; all store protocols, records, errors, namespace,
+PlatformContracts and test fixture code match. The original Mac log records save, checkpoint,
+second save, restore, restored load and symbolic-link rejection, then a pass in 0.044 seconds.
+Environment: Xcode 27.2/27B52, Apple Swift 6.4.2, arm64 macOS 27.0.1/26A434.
+
+This evidence replaces the known checkpoint failure for this specific recovered implementation;
+the historical failure remains historical. The test did not execute again on the integration SHA.
+No whole-package, app, XCUITest or distribution acceptance is implied.
