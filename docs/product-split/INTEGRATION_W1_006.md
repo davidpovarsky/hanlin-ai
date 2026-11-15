@@ -1052,3 +1052,26 @@ StopIteration; the predicate still rejects generic placeholders. Six embedded
 Python syntax checks, Bash syntax and3 exact-source destination checks pass.
 No guard weakening, producer/test/source change, new retry, original-device action,
 global erase, runtime installation, Xcode system switch or local compiler/cache work.
+
+
+### Separately authorized metadata-only scope (no test authorization)
+
+HQ authorized one remote Mac job with exactly two sequential120s xcodebuild
+queries on frozen e8/owner20980 whole component inputs and unchanged validation
+package/scheme: SDK-explicit showdestinations, then JSON showBuildSettings with
+generic iOS Simulator destination. Original default query is NOT rerun; its exact
+51,069-byte artifact/SHA and raw output are retained as a prior-run reference.
+Per-process DeveloperDir uses installedXcode27.2/27B52, Swift6.4.2, SimulatorSDK27.2;
+no global setting change. Toolchain setup reads installed metadata and the compiler
+version only. Query receipts retain argv/context/raw stdout/stderr/exit/timeouts.
+The four requested setting values are extracted only if present in actual JSON;
+empty/error/missing values or absent concrete eligibility produce BLOCKED.
+All12 authored test obligations remain NOT_RUN regardless metadata job success.
+
+The dedicated workflow mode explicitly excludes all17 existing jobs, including
+all build/test/IPA/release paths. Static checks verify the three allowed child
+command receipts (one Swift version + two exact xcodebuild queries), two120s query
+budgets,17 exclusion guards and unchanged12 prepared input paths. No native code
+was compiled or metadata query executed locally. No device creation/boot, runtime
+installation, geometry/test/measurement/pin/platform change or extra query is
+included. A future test/eligibility attempt requires separate authorization.
