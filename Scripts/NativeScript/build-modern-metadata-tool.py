@@ -46,7 +46,8 @@ def main():
     main_cpp = generator / "src/main.cpp"
     main_cpp.write_text(base.patch_main(main_cpp.read_text()))
     writer = generator / "src/TypeScript/DefinitionWriter.cpp"
-    writer.write_text(base.patch_declaration_writer(writer.read_text()))
+    writer.write_text(base.patch_declaration_writer(writer.read_text()).replace(
+        "clang::ObjCMethodDecl::ImplementationControl::Optional", "clang::ObjCImplementationControl::Optional"))
     serializer = generator / "src/Binary/binarySerializer.cpp"
     serializer.write_text(base.replace_once(serializer.read_text(), "Archive* archive = dyn_cast<Archive>(&binary)", "isa<Archive>(&binary)"))
     parser = generator / "src/HeadersParser/Parser.cpp"
