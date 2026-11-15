@@ -311,7 +311,7 @@
     "Scripts/CI/ComposerValidation/native_host/review/native-inputs.json": "31415ab05620b322052c2712584297d717779d0d53460497db4a93bcd105d990",
     "Scripts/CI/ComposerValidation/native_host/review/source-controls.json": "980322c016d6c1e1b57fa376165d346e82e16895fb988c24df26fd5de43875dc",
     "Scripts/CI/ComposerValidation/native_host/review_guard.py": "b6dd5eef294e2bbb053f43abb9e80b627f8171146d23858898eee82981f62957",
-    "Scripts/CI/ComposerValidation/native_host/run_native.py": "be6a239317dfd8399521810ced9f2fbd223d5b6e78172e01cd89ad8e40ab9589",
+    "Scripts/CI/ComposerValidation/native_host/run_native.py": "f8c9b20fdc45b69e5bafcf91dbac3593958e9cdc2f5c0268f47245c2723a44fe",
     "Scripts/CI/ComposerValidation/native_host/simctl-list-help-43711740465.txt": "4c7f0c98a485121183a1bc0b5ae8549958692117107664b4ee1c3fbf0f3c4693",
     "Scripts/CI/ComposerValidation/native_host/validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467"
   }

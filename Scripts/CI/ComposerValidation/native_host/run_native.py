@@ -254,7 +254,11 @@ def execute():
             runner.save('case-observations.json', unavailable)
             state['result_export_or_classification_error'] = str(error)
             exit_code = 2
-        if exit_code and device and state.get('owned_boot_confirmed'):
+        bootstatus_returned = any(command['label'] == 'bootstatus-owned-device' and command['exit_code'] == 0
+                                  for command in runner.commands)
+        # Even if the subsequent state query fails, try bounded diagnostics of
+        # our created UUID. This does not relax the pretest readiness predicate.
+        if exit_code and device and bootstatus_returned:
             try:
                 runner.call('failure-screenshot', 30, ['xcrun', 'simctl', 'io', device, 'screenshot', str(evidence / 'failure.png')], required=False)
                 runner.call('failure-simulator-logs', 30, ['xcrun', 'simctl', 'spawn', device, 'log', 'show', '--last', '2m', '--style', 'compact', '--predicate', 'process == "AI_Hanlin"'], required=False)
