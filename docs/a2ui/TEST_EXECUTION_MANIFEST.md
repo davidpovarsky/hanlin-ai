@@ -9,6 +9,13 @@ Starting SHA: `ba7a5ba3ed9e8983cc47df532114079f64bff0b0`.
 The handoff commit is supplied in the coordinator message; this file does not
 self-reference its own commit hash.
 
+Revision after independent QA of `e7141d55`: both P2 fixes and3 additional
+SDK regressions are included. The7 portable scenarios were rebuilt and rerun
+after the ingress/policy change (all passed); the shared bounded async-wait
+helper also compiled under Swift6 strict concurrency. Enabled syntax parsing
+included both `HANLIN_A2UI_POC` and `DEBUG`. SDK execution is still pending,
+so this revision does not supersede the independent acceptance decision.
+
 Official upstream pin: `https://github.com/a2ui-project/a2ui`, revision
 `3ed9601862ecc78027e20ac80ad8b1b98a5d9079`.
 Read-only source verification is retained in
@@ -23,7 +30,7 @@ No upstream code or package dependency was installed into the app.
 | Swift6 strict-concurrency standalone build and execution | EXECUTED_PASS, 7 scenarios | Actual ingress source plus portable cases in A2UITests.swift |
 | Enabled-flag Swift frontend syntax parse | EXECUTED_PASS | All3 source files and test file; no import/type/API checking |
 | Official exact-pin enabled SDK compilation | NOT_RUN | No dependencies wired; remote slot reserved for Runtime |
-| Official SDK/SwiftUI cases | NOT_RUN, 13 cases | Flag-gated cases listed below |
+| Official SDK/SwiftUI cases | NOT_RUN, 16 cases | Flag-gated cases listed below |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |
 
 The7 local scenarios execute through the standalone runner, not XCTest or
@@ -81,19 +88,22 @@ are committed. Missing fixtures cause an error, not skipped success.
 Actual enabled-flag syntax-only check:
 
 ```powershell
-swiftc -frontend -parse -D HANLIN_A2UI_POC `
+swiftc -frontend -parse -D HANLIN_A2UI_POC -D DEBUG `
   AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift `
   AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift `
   AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift `
   AI_HLYTests/A2UITests.swift
 ```
 
-## Exact-pin SDK cases: 13 NOT_RUN
+## Exact-pin SDK cases: 16 NOT_RUN
 
 All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 `A2UISDKTests`. They compile only with `HANLIN_A2UI_POC`, in the app and test
 targets, and the real pinned upstream products linked. The standalone
 `HANLIN_A2UI_PORTABLE_RUNNER` configuration never executes these cases.
+The pending-call disposal regression also requires `DEBUG` in both consumers;
+the proposed enabled command explicitly defines it. Require its case node,
+rather than accepting a smaller discovered count.
 
 | Case | Obligation | Actual result |
 | --- | --- | --- |
@@ -110,6 +120,20 @@ targets, and the real pinned upstream products linked. The standalone
 | hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | NOT_RUN |
 | surfaceLimitDoesNotRemoveExistingContent() | Four-surface capacity; preserve old model | NOT_RUN |
 | rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | NOT_RUN |
+| unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Official validator and no-listener policy; reject unsolicited response | NOT_RUN |
+| closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | NOT_RUN |
+| closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | NOT_RUN |
+
+The last3 cases address the2 P2 findings in the independent review of
+`e7141d55`; they exercise official SDK objects, not source-string matching.
+The disposal test temporarily installs a listener through a Debug-only test
+hook to seed a real in-flight call, observes its request, closes the session,
+and requires `CANCELLED` before2s. A late call must return `DISPOSED`. Both
+close regressions check repeated-close safety and a bounded100ms window with
+no callbacks after revocation. This is authored regression coverage, **not
+executed SDK proof**. No normal session installs an outbound RPC listener.
+The Button regression now waits for the actual callback with a2s deadline;
+it no longer assumes `Task.yield()` completes asynchronous delivery.
 
 `Surface.render` constructs a native view builder result; it is not a hosted
 screen assertion. The RTL case likewise constructs an RTL/accessibility-size
@@ -148,7 +172,7 @@ xcodebuild -project AI_HLY.xcodeproj -scheme AI_HLY \
   -resultBundlePath "$A2UI_RESULT_BUNDLE" \
   '-only-testing:AI_HLYTests/A2UIIngressTests' \
   '-only-testing:AI_HLYTests/A2UISDKTests' \
-  'OTHER_SWIFT_FLAGS=$(inherited) -D HANLIN_A2UI_POC' \
+  'OTHER_SWIFT_FLAGS=$(inherited) -D HANLIN_A2UI_POC -D DEBUG' \
   CODE_SIGNING_ALLOWED=NO test
 ```
 
@@ -156,9 +180,9 @@ The project/scheme already exist. This is a future integrator command, not an
 executed action or permission to edit shared files now. An isolated exact-pin
 SDK harness may avoid the full app's Runtime dependency closure, but creating
 that package/project is outside this lease. Prefer such a focused harness
-after the lead assigns its owner; retain these same13 SDK cases and fixtures.
+after the lead assigns its owner; retain these same16 SDK cases and fixtures.
 
-Retain resolved root/transitive revisions, compiler diagnostics and actual20
+Retain resolved root/transitive revisions, compiler diagnostics and actual23
 executed case identities. A green process with zero/omitted tests or the flag
 off is **not** a pass. Select the suites as above, or exact Swift Testing method
 signatures including `()`, and inspect xcresult case nodes. Never promote this
@@ -175,6 +199,7 @@ values are retained in [fixture-identities.json](evidence/fixture-identities.jso
 | update.jsonl | Model edit and same-ID component update |
 | rtl.jsonl | Same native composition with Hebrew strings, separate surface ID |
 | unknown.jsonl | Unknown component fallback |
+| unknown-function.jsonl | Unknown function binding/action-context requests; no RPC authorization |
 | invalid-components.jsonl | Invalid Text, TextField and Button schema payloads |
 | malformed.txt | Truncated JSON envelope |
 

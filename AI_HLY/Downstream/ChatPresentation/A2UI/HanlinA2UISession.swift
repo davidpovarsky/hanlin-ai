@@ -11,6 +11,7 @@ import Observation
 @Observable
 final class HanlinA2UISession {
     private let processor: MessageProcessor
+    private let eventRelay: HanlinA2UIEventRelay
     private var acceptedBytes = 0
     private(set) var isClosed = false
     private(set) var surfaceIDs: [String] = []
@@ -20,10 +21,14 @@ final class HanlinA2UISession {
     static let maximumSurfaces = 4
     static let maximumSessionBytes = 1_048_576
 
-    /// Events are emitted by the official processor. No app services or tool execution are wired.
+    /// Only resolved user events and renderer errors leave this POC. RPC stays disabled by the
+    /// SDK's absent-listener policy; installing an outboundListener would enable agent calls.
     init(onEvent: @escaping @Sendable (RendererToAgentMessage) -> Void) {
+        let relay = HanlinA2UIEventRelay(onEvent: onEvent)
+        eventRelay = relay
         processor = MessageProcessor(
             catalog: BasicCatalog.makeCatalog(version: .v10),
+            actionHandler: relay,
             validationConfig: ValidationConfig(
                 allowOrphanComponents: true,
                 allowDanglingReferences: true,
@@ -32,7 +37,7 @@ final class HanlinA2UISession {
                 protocolVersion: .v10
             )
         )
-        processor.outboundListener = onEvent
+        // Deliberately leave outboundListener nil, including on every created surface.
     }
 
     func surface(_ id: String) -> SurfaceViewModel? {
@@ -82,20 +87,59 @@ final class HanlinA2UISession {
     /// Called by the owner when the result is discarded. Old model subscriptions are disposed.
     /// Closed sessions cannot be reanimated by late stream frames.
     func close() {
+        guard !isClosed else { return }
+        isClosed = true
+        eventRelay.close()
         processor.outboundListener = nil
-        for id in Array(processor.surfaceGroupModel.surfacesMap.keys) {
-            processor.surfaceGroupModel.removeSurface(id: id)
-        }
+        processor.dispose()
         failures.removeAll()
         unroutedFailure = nil
         surfaceIDs.removeAll()
-        isClosed = true
     }
+
+    #if DEBUG
+    /// Exact-pin tests seed a real pending SDK call to verify defensive disposal. Not transport API.
+    var sdkProcessorForLifecycleTests: MessageProcessor { processor }
+    #endif
 
     private func refreshSurfaceIDs() {
         // Stable deterministic POC ordering only; integration must use existing transcript order.
         surfaceIDs = Set(processor.surfaceGroupModel.surfacesMap.keys)
             .union(failures.keys).sorted()
+    }
+}
+
+/// The official ActionHandling hook delivers already-resolved events without enabling RPC.
+/// Its nonisolated callbacks cross to the UI actor; close revokes even callbacks already queued.
+@MainActor
+private final class HanlinA2UIEventRelay: ActionHandling {
+    private var onEvent: (@Sendable (RendererToAgentMessage) -> Void)?
+
+    init(onEvent: @escaping @Sendable (RendererToAgentMessage) -> Void) {
+        self.onEvent = onEvent
+    }
+
+    func close() { onEvent = nil }
+
+    nonisolated func handle(action: ResolvedAction, from surfaceID: String) {
+        Task { @MainActor [weak self] in
+            guard let callback = self?.onEvent,
+                  case .event(let name, let context, let userMessage) = action.identity else { return }
+            callback(.action(RendererAction(
+                name: name,
+                surfaceID: surfaceID,
+                sourceComponentID: action.sourceComponentID ?? "",
+                timestamp: ISO8601DateFormatter().string(from: Date()),
+                context: context ?? [:],
+                userMessage: userMessage,
+                metadata: action.metadata,
+                version: .v10
+            )))
+        }
+    }
+
+    nonisolated func handle(error: RendererError, from surfaceID: String) {
+        Task { @MainActor [weak self] in self?.onEvent?(.error(error)) }
     }
 }
 #endif

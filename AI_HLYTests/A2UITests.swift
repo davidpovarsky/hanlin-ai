@@ -60,7 +60,7 @@ private enum A2UIPortableChecks {
     }
 
     static func acceptsOfficialV1FixtureFrames() throws {
-        for name in ["form", "update", "rtl", "unknown", "invalid-components"] {
+        for name in ["form", "update", "rtl", "unknown", "unknown-function", "invalid-components"] {
             let lines = try A2UIFixture.lines(name)
             try requireA2UI(!lines.isEmpty, "Empty fixture \(name)")
             for line in lines { _ = try inspect(line) }
@@ -118,6 +118,8 @@ private enum A2UIPortableChecks {
     static func rejectsRPCAndUnnegotiatedCatalogs() throws {
         try rejection(#"{"version":"1.0","callRendererFunction":{"surfaceId":"s"}}"#,
                       is: .unsupportedOperation)
+        try rejection(#"{"version":"1.0","agentFunctionResponse":{"functionCallId":"unsolicited","value":"x"}}"#,
+                      is: .unsupportedOperation)
         try rejection(#"{"version":"1.0","createSurface":{"surfaceId":"s","catalogId":"https://untrusted.invalid/catalog"}}"#,
                       is: .unsupportedCatalog)
         try rejection(#"{"version":"1.0","createSurface":{"surfaceId":"s"}}"#,
@@ -130,6 +132,27 @@ private enum A2UIPortableChecks {
             let frame = try inspect(line)
             try requireA2UI(frame.operation == .updateComponents, "Invalid-component fixture route")
         }
+    }
+}
+
+private enum A2UIWaitError: Error { case deadline, ended }
+
+/// A callback drives progress; the clock only bounds a missing callback. No yield/poll assumption.
+private func nextA2UIValue<Element: Sendable>(
+    _ stream: AsyncStream<Element>, timeout: Duration = .seconds(2)
+) async throws -> Element {
+    try await withThrowingTaskGroup(of: Element.self) { group in
+        defer { group.cancelAll() }
+        group.addTask {
+            for await value in stream { return value }
+            throw A2UIWaitError.ended
+        }
+        group.addTask {
+            try await Task.sleep(for: timeout)
+            throw A2UIWaitError.deadline
+        }
+        guard let value = try await group.next() else { throw A2UIWaitError.ended }
+        return value
     }
 }
 
@@ -165,8 +188,19 @@ import Synchronization
 
 private final class A2UIEventRecorder: Sendable {
     let events = Mutex<[RendererToAgentMessage]>([])
-    func record(_ event: RendererToAgentMessage) { events.withLock { $0.append(event) } }
+    let stream: AsyncStream<RendererToAgentMessage>
+    private let continuation: AsyncStream<RendererToAgentMessage>.Continuation
+
+    init() {
+        (stream, continuation) = AsyncStream.makeStream(bufferingPolicy: .bufferingNewest(64))
+    }
+
+    func record(_ event: RendererToAgentMessage) {
+        events.withLock { $0.append(event) }
+        continuation.yield(event)
+    }
     var snapshot: [RendererToAgentMessage] { events.withLock { $0 } }
+    deinit { continuation.finish() }
 }
 
 @MainActor
@@ -287,7 +321,11 @@ struct A2UISDKTests {
         A2UITextField(node: try node(session, id: "name")).valueBinding.wrappedValue = "Changed"
         let action = try #require(try node(session, id: "submit").action(for: "action", userActivation: true))
         action()
-        await Task.yield()
+        let event = try await nextA2UIValue(recorder.stream)
+        guard case .action = event else {
+            Issue.record("Expected the resolved Button event, got \(event)")
+            return
+        }
         let actions = recorder.snapshot.compactMap { event -> RendererAction? in
             if case .action(let action) = event { return action }
             return nil
@@ -333,6 +371,105 @@ struct A2UISDKTests {
         #expect(session.failures.count <= HanlinA2UISession.maximumSurfaces)
         #expect(session.surface("form-a")?.dataModel.get("/name")?.stringValue == "Ada")
     }
+
+    @Test func unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() async throws {
+        let recorder = A2UIEventRecorder()
+        let session = HanlinA2UISession(onEvent: { recorder.record($0) })
+        try load(session)
+        let surface = try #require(session.surface("form-a"))
+        #expect(surface.agentFunctionCaller == nil)
+        do {
+            _ = try await surface.callAgentFunction(AgentFunctionCall(
+                name: "lookupNotAuthorized", catalogID: HanlinA2UIIngress.catalogID
+            ))
+            Issue.record("An agent call succeeded without permission")
+        } catch let error as FunctionError {
+            #expect(error.rpcCode == "NO_LISTENER")
+        }
+        for line in try A2UIFixture.lines("unknown-function") {
+            #expect(throws: HanlinA2UIIngress.Rejection.self) { try session.receive(line).get() }
+            let event = try await nextA2UIValue(recorder.stream)
+            guard case .error = event else {
+                Issue.record("Unknown function emitted an outbound request: \(event)")
+                return
+            }
+        }
+        let response = session.receive(#"{"version":"1.0","agentFunctionResponse":{"functionCallId":"unsolicited","value":"x"}}"#)
+        guard case .failure(let rejection) = response else {
+            Issue.record("An unsolicited RPC response was accepted")
+            return
+        }
+        #expect(rejection.failure == .unsupportedOperation)
+        #expect(surface.agentFunctionCaller == nil)
+        #expect(!recorder.snapshot.contains { if case .callAgentFunction = $0 { return true }; return false })
+        session.close()
+    }
+
+    @Test func closeRevokesQueuedAndRetainedActionCallbacks() async throws {
+        let recorder = A2UIEventRecorder()
+        let session = HanlinA2UISession(onEvent: { recorder.record($0) })
+        try load(session)
+        let action = try #require(try node(session, id: "submit").action(for: "action", userActivation: true))
+        action() // The nonisolated SDK hook queues delivery to MainActor.
+        session.close()
+        session.close()
+        action() // Retained SDK nodes/actions must not reach a closed owner's callback.
+        do {
+            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
+            Issue.record("An action reached the owner after close")
+        } catch A2UIWaitError.deadline {}
+        #expect(recorder.snapshot.isEmpty && session.isClosed)
+    }
+
+    #if DEBUG
+    @Test func closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() async throws {
+        let recorder = A2UIEventRecorder()
+        let session = HanlinA2UISession(onEvent: { recorder.record($0) })
+        try load(session)
+        // Test-only real-SDK fault injection. Production never installs this listener.
+        let processor = session.sdkProcessorForLifecycleTests
+        processor.outboundListener = { recorder.record($0) }
+        let completion = AsyncStream<String>.makeStream(bufferingPolicy: .bufferingNewest(1))
+        let pending = Task { @MainActor in
+            defer { completion.continuation.finish() }
+            do {
+                _ = try await processor.callAgentFunction(
+                    surfaceID: "form-a", functionName: "pendingAtClose", version: .v10,
+                    timeoutSeconds: 30
+                )
+                completion.continuation.yield("UNEXPECTED_SUCCESS")
+            } catch let error as FunctionError {
+                completion.continuation.yield(error.rpcCode)
+            } catch {
+                completion.continuation.yield("UNEXPECTED_ERROR")
+            }
+        }
+        defer { pending.cancel(); session.close() }
+        let outbound = try await nextA2UIValue(recorder.stream)
+        guard case .callAgentFunction = outbound else {
+            Issue.record("The SDK call was not in flight before close")
+            return
+        }
+        session.close()
+        session.close()
+        // This 2s deadline is shorter than the SDK's 30s timeout; waiting for timeout cannot pass.
+        #expect(try await nextA2UIValue(completion.stream) == "CANCELLED")
+        #expect(session.surface("form-a") == nil && session.surfaceIDs.isEmpty)
+        do {
+            _ = try await processor.callAgentFunction(
+                surfaceID: "form-a", functionName: "late", version: .v10
+            )
+            Issue.record("Disposed SDK processor accepted a new call")
+        } catch let error as FunctionError {
+            #expect(error.rpcCode == "DISPOSED")
+        }
+        do {
+            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
+            Issue.record("An SDK callback escaped disposal")
+        } catch A2UIWaitError.deadline {}
+        #expect(recorder.snapshot.count == 1) // Only the test-seeded request before close.
+    }
+    #endif
 }
 #endif
 #endif

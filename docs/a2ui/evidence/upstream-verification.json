@@ -88,6 +88,30 @@
       "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/specification/v1_0/json/common_types.json",
       "utf8_sha256": "c4e78305be1de73eecb37f8179ba169730250611703683af291b18135a6430dc",
       "bytes": 13111
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/RPC/RPCHandler.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/RPC/RPCHandler.swift",
+      "utf8_sha256": "9b33c4efe42efdf0920c82457385afe0949eb063a5fe4ecb124513468da6275e",
+      "bytes": 18070
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Catalogs/ActionHandling.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Catalogs/ActionHandling.swift",
+      "utf8_sha256": "7d48a232895ac1362d40ec4d233855114f8d8ec9c064b78b5cf9a42189d805b6",
+      "bytes": 1243
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Models/AgentFunctionCall.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Models/AgentFunctionCall.swift",
+      "utf8_sha256": "5c760d17449714e0a212ebe2a71bafa5e9e7d68aeedda7e9548d5e2983e372e0",
+      "bytes": 1696
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Errors/FunctionError.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/FunctionError.swift",
+      "utf8_sha256": "2c270c997fd62ea176ba37dae52147c25ba9b5e736746121ae994e09b9f35074",
+      "bytes": 4086
     }
   ]
 }

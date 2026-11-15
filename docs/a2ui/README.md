@@ -61,6 +61,15 @@ graph updates, model resolution, action context and input writes all belong to
 the SDK. A Button event goes to an explicitly supplied callback; it is not
 connected to Hanlin tools, navigation, the composer or HostServices.
 
+After independent QA on `e7141d55`, outbound delivery uses the SDK's
+`ActionHandling` hook with an actor-isolated, revocable event/error relay.
+`outboundListener` stays nil: upstream consequently installs no agent-function
+caller on surfaces. Unknown function expressions are rejected by the official
+catalog validator, direct surface RPC has no listener, and inbound RPC calls
+and responses are rejected by ingress. The relay only converts already-resolved
+event actions to the official RendererAction model; it does not resolve bindings
+or execute actions itself. No cross-app or service authorization is implied.
+
 One session may hold four surfaces, each message is at most65,536 UTF-8 bytes
 and64 components, and a session accepts at most1,048,576 cumulative bytes. The
 budget resets only with a new owner/session. This intentionally bounded POC is
@@ -68,8 +77,11 @@ not a long-running production streaming policy. Unknown component schemas and
 malformed messages fall back to a native unavailable-content presentation.
 Failures with a known ID hide only that surface's controls until a valid update;
 unroutable failures appear separately. Invalid surface IDs cannot grow fallback
-storage without bound. `close()` disposes upstream surfaces, drops the listener
-and rejects late input. The caller must dispose sessions when discarding results.
+storage without bound. `close()` first revokes queued callbacks, then uses
+the official `MessageProcessor.dispose()` to clear surfaces/graph bounds and
+cancel pending SDK calls. It is idempotent and rejects late input. The caller
+must dispose sessions when discarding results. A Debug-only test hook seeds a
+real pending SDK call to verify cancellation; it is not production transport API.
 
 Locale, layout direction, Dynamic Type, accessibility and sizing are inherited
 from the host SwiftUI environment. There is no fixed geometry, nested scrolling,
@@ -81,14 +93,14 @@ integration concern, not an asserted capability.
 
 ## Deliberate activation gate
 
-The SDK-backed source and13 SDK tests are behind **HANLIN_A2UI_POC**. The manager
+The SDK-backed source and16 SDK tests are behind **HANLIN_A2UI_POC**. The manager
 authorized this temporary prototype gate without changing the lease. No build
 flag, manifest, dependency lock or project file was changed. This explicit flag
 protects the synchronized app source groups from unresolved optional imports.
 When enabled, missing imports fail compilation; there is no `canImport` fake
 implementation or success fallback.
 
-Seven portable framing scenarios passed on Windows Swift6.3.3. All13 SDK tests
+Seven portable framing scenarios passed on Windows Swift6.3.3. All16 SDK tests
 are **NOT_RUN**, and enabled SDK compilation, SwiftUI rendering, inline app
 integration and hardware verification remain **NOT_RUN**. A disabled flag,
 syntax-only parse or zero selected cases cannot satisfy either source task.
@@ -106,7 +118,7 @@ integrator the shared seams:
    and preserve the real Package.resolved provenance. Do not use a moving main
    branch or a similarly named community package.
 2. Enable `HANLIN_A2UI_POC` only for the focused exact-pin build and tests first.
-   Stage A2UIFixtures in the test bundle. Require all20 actual test cases and
+   Stage A2UIFixtures in the test bundle. Require all23 actual test cases and
    the resolved revision in retained evidence. No native Runtime rebuild is
    necessary for this isolated renderer proof.
 3. Agree how an existing transcript result owns the session, routes complete
