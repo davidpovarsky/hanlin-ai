@@ -10,11 +10,15 @@ import AVFoundation
 import SwiftData
 import UniformTypeIdentifiers
 import HanlinHostContracts
+import HanlinProductSplit
 
 // 聊天界面
 @MainActor
 struct ChatView: View {
     var chatRecord: ChatRecords
+    @Environment(\.hanlinAcceptedSplitOrigin) private var acceptedSplitOrigin
+    @Environment(\.hanlinSplitOriginDidMount) private var splitOriginDidMount
+    @State private var splitOriginViewMounted = false
     
     // 输入与会话状态相关
     @State private var message = ""                        // 用户输入的消息
@@ -483,6 +487,13 @@ struct ChatView: View {
         chatWorkspaceStack
         #if HANLIN_A2UI_POC
         .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
+        #if DEBUG && targetEnvironment(simulator)
+        .safeAreaInset(edge: .top) {
+            if HanlinNativeA2UIAcceptanceProvider.isEnabled {
+                HanlinA2UIAcceptanceStatusView(isResponding: isResponding, conversationID: chatRecord.id)
+            }
+        }
+        #endif
         .task(id: A2UIHistoryScope(conversationID: chatRecord.id, temporary: TemporaryRecord,
             model: a2uiModelChoice, session: agentSessionOwner.session?.identity)) { @MainActor in
             guard let originalID = chatRecord.id else { return }
@@ -530,6 +541,7 @@ struct ChatView: View {
         #endif
         .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
+        .onChange(of: acceptedSplitOrigin) { _, _ in acknowledgeMountedSplitOrigin() }
         .onAppear {
             #if HANLIN_A2UI_POC
             if a2uiPresentation == nil { a2uiPresentation = HanlinA2UIAppPresentation() }
@@ -540,6 +552,8 @@ struct ChatView: View {
                 TemporaryRecord = true
             }
             handleOnAppear()
+            splitOriginViewMounted = true
+            acknowledgeMountedSplitOrigin()
             if isExternalCompactComposerHost {
                 sessionBridge?.register(endpoint: makeExternalComposerEndpoint())
             } else if let sessionBridge {
@@ -564,6 +578,7 @@ struct ChatView: View {
             syncComposerEndpointWithBridge()
         }
         .onDisappear {
+            splitOriginViewMounted = false
             // The workspace router supplies actual selection ownership. A sheet/full-screen
             // result that leaves that original selection mounted does not revoke its Session.
             if let sessionBridge, sessionBridge.expectedActiveSessionID != effectiveChatSessionID {
@@ -917,6 +932,20 @@ struct ChatView: View {
             await Task.yield()
             proxy.scrollTo(id, anchor: .center)
         }
+    }
+
+    private func acknowledgeMountedSplitOrigin() {
+        guard splitOriginViewMounted, let request = acceptedSplitOrigin,
+              request.chat == chatRecord.id,
+              HanlinAppSplitOriginCoordinator.shared.acceptedOrigin == request else { return }
+        do {
+            guard !TemporaryRecord, sessionBridge?.isTemporaryChat(request.chat) != true,
+                  sessionBridge == nil || sessionBridge?.expectedActiveSessionID == request.chat,
+                  try HanlinSplitOriginNavigation.originalConversation(request, context: context) === chatRecord else {
+                throw HanlinSplitOriginNavigation.Failure.unavailable
+            }
+            splitOriginDidMount?(request, true)
+        } catch { splitOriginDidMount?(request, false) }
     }
 
     private var scrollTriggerState: ScrollTriggerState {

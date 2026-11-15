@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import HanlinProductSplit
 
 struct ListView: View {
     @Environment(\.modelContext) private var modelContext
@@ -30,6 +31,9 @@ struct ListView: View {
     @State private var measuredContainerWidth: CGFloat = 0
     @State private var selectedChatRecord: ChatRecords? = nil
     @State private var savedSourceDestination: ChatSourceDestination?
+    @State private var splitOrigins = HanlinAppSplitOriginCoordinator.shared
+    @State private var pendingSplitOrigin: SplitBridgeRequest?
+    @State private var splitOriginUnavailable = false
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
     
     @State private var showSafariGuide: Bool = false
@@ -157,6 +161,18 @@ struct ListView: View {
             }
         }
         .environment(\.hanlinComposerSessionBridge, sessionBridge)
+        .environment(\.hanlinAcceptedSplitOrigin, pendingSplitOrigin)
+        .environment(\.hanlinSplitOriginDidMount, completeSplitOriginMount)
+        .onChange(of: splitOrigins.acceptedOrigin, initial: true) { _, request in
+            if let request { navigateToAcceptedSplitOrigin(request) }
+        }
+        .safeAreaInset(edge: .top) {
+            if splitOriginUnavailable {
+                Label("The original conversation is unavailable.", systemImage: "bubble.left.and.exclamationmark.bubble.right")
+                    .font(.footnote).foregroundStyle(.secondary).padding(8)
+                    .accessibilityIdentifier("hanlin-split-origin-unavailable")
+            }
+        }
         .sheet(isPresented: $showsSavedMessages) { ChatSavedExcerptsView() }
         .environment(\.chatSourceDestination, savedSourceDestination)
         .environment(\.chatOpenSavedSource, { record, destination in
@@ -205,7 +221,7 @@ struct ListView: View {
                 if case .chat(let activeID) = compactWorkspacePath.last,
                    let match = chatRecords.first(where: { $0.id == activeID }) {
                     selectedChatRecord = match
-                } else if selectedChatRecord == nil {
+                } else if selectedChatRecord == nil && !splitOriginUnavailable {
                     selectedChatRecord = defaultInitialChatRecord
                 }
                 sessionBridge.expectedActiveSessionID = selectedChatRecord?.id
@@ -228,7 +244,7 @@ struct ListView: View {
         .onAppear {
             handleOnAppear()
             searchText = ""
-            if !useCompactWorkspace && selectedChatRecord == nil {
+            if !useCompactWorkspace && selectedChatRecord == nil && !splitOriginUnavailable {
                 selectedChatRecord = defaultInitialChatRecord
                 sessionBridge.expectedActiveSessionID = selectedChatRecord?.id
             }
@@ -404,6 +420,38 @@ struct ListView: View {
         }
     }
     
+    /// Re-resolve after SDK receipt save/mailbox acceptance. The original request remains
+    /// intact through navigation and a second check in the actually appearing ChatView.
+    private func navigateToAcceptedSplitOrigin(_ request: SplitBridgeRequest) {
+        guard splitOrigins.acceptedOrigin == request else { return }
+        do {
+            guard !sessionBridge.isTemporaryChat(request.chat) else { throw HanlinSplitOriginNavigation.Failure.unavailable }
+            let original = try HanlinSplitOriginNavigation.originalConversation(request, context: modelContext)
+            pendingSplitOrigin = request
+            splitOriginUnavailable = false
+            savedSourceDestination = nil
+            matchedSnippets.removeValue(forKey: request.chat)
+            selectedChatRecord = original
+            sessionBridge.expectedActiveSessionID = request.chat
+            if useCompactWorkspace { compactWorkspacePath = [.chat(request.chat)] }
+        } catch {
+            pendingSplitOrigin = request
+            completeSplitOriginMount(request, false)
+        }
+    }
+
+    private func completeSplitOriginMount(_ request: SplitBridgeRequest, _ mounted: Bool) {
+        guard pendingSplitOrigin == request, splitOrigins.acceptedOrigin == request else { return }
+        if !mounted {
+            splitOriginUnavailable = true
+            selectedChatRecord = nil
+            compactWorkspacePath = []
+            sessionBridge.expectedActiveSessionID = nil
+        }
+        pendingSplitOrigin = nil
+        splitOrigins.acknowledgeAcceptedOrigin(requestID: request.id)
+    }
+
     // MARK: - 子视图：顶部 3 个按钮
     private var topButtonsSection: some View {
         Section {

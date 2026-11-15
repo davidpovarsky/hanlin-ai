@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import HanlinProductSplit
 
 struct MainTabView: View {
     
@@ -21,6 +22,8 @@ struct MainTabView: View {
             || environment["HANLIN_SCRIPTUI_E2E"] != nil ? 4 : 0
     }()
     @State private var hideTabBar: Bool = false
+    @State private var splitOrigins = HanlinAppSplitOriginCoordinator.shared
+    @State private var splitReturnFailed = false
     
     var body: some View {
         // 使用系统原生的TabView
@@ -90,6 +93,17 @@ struct MainTabView: View {
                 selectedTab = 1
                 deepLinkTarget = nil // 清除状态，避免重复跳转
             }
+        }
+        .onChange(of: splitOrigins.acceptedOrigin, initial: true) { _, request in
+            if request != nil { selectedTab = 0 }
+        }
+        .onChange(of: splitOrigins.lastFailure) { _, failure in
+            if failure != nil { splitReturnFailed = true }
+        }
+        .alert("Unable to return to the original conversation", isPresented: $splitReturnFailed) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("The return could not be completed.")
         }
         // background修饰符对于TabView不是必需的，但保留以防有特定需要
         .background(Color(.systemBackground))
