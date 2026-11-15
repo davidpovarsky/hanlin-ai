@@ -75,9 +75,9 @@ def patch_main(text: str) -> str:
         bool parsed;
         if (customFS) {
             auto memoryFS = llvm::makeIntrusiveRefCnt<llvm::vfs::InMemoryFileSystem>();
-            memoryFS->addFile("umbrella.h", 0, llvm::MemoryBuffer::getMemBufferCopy(umbrellaContent));
             auto layeredFS = llvm::makeIntrusiveRefCnt<llvm::vfs::OverlayFileSystem>(metadataFS);
             layeredFS->pushOverlay(memoryFS);
+            memoryFS->addFile("umbrella.h", 0, llvm::MemoryBuffer::getMemBufferCopy(umbrellaContent));
             parsed = ''' + call.replace('umbrellaContent, clangArgs', 'umbrellaContent, layeredFS, clangArgs') + ''';
         } else {
             parsed = ''' + call + ''';
