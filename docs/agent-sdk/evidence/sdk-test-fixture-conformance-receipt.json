@@ -1,0 +1,63 @@
+{
+  "status": "TEST_SOURCE_ONLY_NOT_RUN",
+  "reviewBase": "b82b851a6a728c88dcd39315ae96048bca3d4112",
+  "affectedSource": {
+    "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+    "previousGitBlob": "7dd4c485739a5aa812f32bdfcd45af795ea536eb",
+    "currentGitBlob": "ec0f0c71fbb0c6eca6891a6fbe14b167488c7ad4",
+    "sha256": "a518033c54e8273371d437da7e4f4f12a4b20112995ba23130f5b5b3d8c909c4",
+    "normalizedLFsha256": "a518033c54e8273371d437da7e4f4f12a4b20112995ba23130f5b5b3d8c909c4"
+  },
+  "productionSourceChanges": [],
+  "producerCommit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "correction": {
+    "ExactNumericHost.cancel": "Explicit no-op for actor-synchronous completed read; no rollback claim",
+    "ExecutionGateHost.cancel": "Forward to existing fixture cancellation recorder without releasing either continuation gate",
+    "openBoth": "Throws test-local SessionFixtureError.unsupportedNavigation; no queued/presented or native UI ACK"
+  },
+  "sdkTestIdentitiesPreserved": [
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift::originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift::unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift::invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift::invalidationDuringCapturedEventContextSuppressesDelivery",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift::concurrentStartIsReservedBeforeInitialContextAwait",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift::nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift::existingEngineRunsHostToolOnceAndPersistsCorrelation",
+    "Packages/HanlinAgentSDK/Tests/HanlinHostContractsTests/ContextTests.swift::decodedNamespacesCannotBypassValidation",
+    "Packages/HanlinAgentSDK/Tests/HanlinHostContractsTests/ContextTests.swift::persistedPresentationCarriesNoExecutionAuthority",
+    "Packages/HanlinAgentSDK/Tests/HanlinPersistenceAdaptersTests/StoreTests.swift::sameConversationIDIsIsolatedBySpace"
+  ],
+  "sdkTestCount": 10,
+  "currentLocalBuild": "NOT_RUN",
+  "currentLocalTypecheck": "NOT_RUN",
+  "currentLocalSyntaxParse": "NOT_RUN",
+  "currentSDKCases": "10_NOT_RUN; no executed failure claim",
+  "priorFaithfulMacEvidence": {
+    "run": "43686294717",
+    "sourceCommit": "e233bffc",
+    "artifactID": "14150797620",
+    "artifactBytes": 5689572,
+    "artifactSHA256": "96b513a92fb7e82f35d46cc5940d2e6711596c7c5397d484a8175afd51ca1028",
+    "verificationProvenance": "Reported independently verified in RAM by lead/Tomer; not downloaded/verified locally in this correction",
+    "producerPass": 48,
+    "producerBreakdown": "30 SwiftAISDK across3 suites +18 ModelMessageCodable",
+    "corePass": 20,
+    "iOSAgentCoreBuild": "PASS",
+    "SDKBundle": "COMPILE_FAIL beforecases, missing cancel/open on both test actors",
+    "sdkExecuted": 0,
+    "sdkNotRun": 10,
+    "sdkFailed": 0,
+    "overallExecutedPass": 68,
+    "reuseCondition": "Only if producer/core transitive Git inputs, all3 rawlocks and actual toolchain remain unchanged"
+  },
+  "requiredNext": "Independent Roni source review, then Tomer SDK-only faithful real Mac10-case proof; do not rerun unchanged68 solely for these fixture actors",
+  "numericFullChainAcceptance": "BLOCKED",
+  "resourcePolicy": "No local compile/parse/cache/download/worktree expansion/cleanup retry",
+  "publication": "No consumer/producer push or pin/lock change for this correction",
+  "currentConsumerSourceManifest": {
+    "path": "final-source-manifest.json",
+    "sha256": "011f149678ec38863dbd49682fb7526b2b860aadb63c07a641b0ab1c1e95c85c",
+    "sourceInputs": 24,
+    "supersedesConsumerClosureAt": "b82b851a6a728c88dcd39315ae96048bca3d4112"
+  }
+}
