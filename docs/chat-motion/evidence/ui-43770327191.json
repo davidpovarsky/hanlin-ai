@@ -1,0 +1,22 @@
+{
+  "run_id": 43770327191,
+  "job_id": 132984573765,
+  "source_sha": "6e8c1ec8c35f8e37241cec75c6b952082f69a483",
+  "status": "INFRA_ERROR",
+  "fixture_build_for_testing": "COMPILE_PASS",
+  "compiled_scope": "Exact four Motion production files, original LoadingGradientText/ToggleButton snippets, original color/string resources, fixture app and three XCUITest methods",
+  "executed_test_methods": 0,
+  "reason": "Manual simctl bootstatus -b exceeded90s before test-without-building was invoked",
+  "job_duration_seconds": 405,
+  "artifact": {
+    "id": 14183558681,
+    "size_bytes": 85573,
+    "zip_sha256": "c438e007182c7d337ca541d85a4ea525997fd1ae868684bd8cb9afa4c1fa993c",
+    "verification": "DOWNLOADED_ZIP_MATCHES_API"
+  },
+  "raw_xcresult": "NOT_CREATED",
+  "performance_report": "GENERATED_IN_ORIGINAL_CI_ARTIFACT",
+  "fix_scope": "Remove manual boot barrier; xcodebuild owns simulator startup, start recording on a real XCTest case event",
+  "original_app_acceptance": "NOT_RUN",
+  "later_layout_hit_region_and_terminal_status_edits": "NOT_COVERED_BY_THIS_SOURCE_COMPILE"
+}

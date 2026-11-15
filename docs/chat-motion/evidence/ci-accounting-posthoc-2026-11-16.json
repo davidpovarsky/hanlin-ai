@@ -1,0 +1,98 @@
+{
+  "status": "AUTHENTICATED_POSTHOC_ACCOUNTING",
+  "runs": [
+    {
+      "run_id": 43767448211,
+      "source_sha": "2b79df3f68c6aa5a47f6a0cf19d81cba8790b343",
+      "artifact_id": 14182084326,
+      "artifact_zip_sha256": "d885dbb9e7f028724442c07fb6bd51022840017180a11fadb4566b7f0be2afa6",
+      "origin": "POSTHOC_FROM_AUTHENTICATED_ARTIFACT_MEASUREMENTS; original uploaded artifact did not contain standard report",
+      "job_duration_seconds": 41,
+      "recorded_active_phases": {
+        "recorded-total-duration-seconds.txt": 31
+      },
+      "measured_active_seconds": 31,
+      "posthoc_report_sha256": "f8d31198fa33a1d64f007b69433a9a38b4ca0580ae17aaea8e83154d212c3807",
+      "savings_are_estimated": true,
+      "limits": [
+        "No missing phase or checkout/upload time invented",
+        "Generated report completeness means accounting completeness, not test success"
+      ]
+    },
+    {
+      "run_id": 43768841286,
+      "source_sha": "3b16b802b4bbe56d0319f4e0347641cc2a2ae4e9",
+      "artifact_id": 14183127431,
+      "artifact_zip_sha256": "8c606dfa9dbdc0767c0822b6d0acdf0911fec04a5913962f6b675c2bde37f357",
+      "origin": "POSTHOC_FROM_AUTHENTICATED_ARTIFACT_MEASUREMENTS; original uploaded artifact did not contain standard report",
+      "job_duration_seconds": 16,
+      "recorded_active_phases": {
+        "preflight-duration-seconds.txt": 6
+      },
+      "measured_active_seconds": 6,
+      "posthoc_report_sha256": "1df2b3118157ea41520cf0d6a494b44c9b5e124a75f529055ccee0759dcc02fe",
+      "savings_are_estimated": true,
+      "limits": [
+        "No missing phase or checkout/upload time invented",
+        "Generated report completeness means accounting completeness, not test success"
+      ]
+    },
+    {
+      "run_id": 43769077102,
+      "source_sha": "0d5ff3fdba640406d0408fb1912508cf905258ea",
+      "artifact_id": 14183381970,
+      "artifact_zip_sha256": "d39fb4643296645856cdfe227bb1fc3b72f0700cf0e3eaed362462fd6b22f25e",
+      "origin": "POSTHOC_FROM_AUTHENTICATED_ARTIFACT_MEASUREMENTS; original uploaded artifact did not contain standard report",
+      "job_duration_seconds": 47,
+      "recorded_active_phases": {
+        "build-duration-seconds.txt": 11,
+        "preflight-duration-seconds.txt": 22
+      },
+      "measured_active_seconds": 33,
+      "posthoc_report_sha256": "8dcb4df983e439d599ff6a265925ea30f477a07b8ec92ea290488cc486664b23",
+      "savings_are_estimated": true,
+      "limits": [
+        "No missing phase or checkout/upload time invented",
+        "Generated report completeness means accounting completeness, not test success"
+      ]
+    },
+    {
+      "run_id": 43769467020,
+      "source_sha": "beca83e6599888f358d35d13fdb5ccd0a184cdb3",
+      "artifact_id": 14183487219,
+      "artifact_zip_sha256": "705b7d6bae8fd042f5c3440eae28edbd0f8aec1792bd1b19fa4027225aac2ede",
+      "origin": "POSTHOC_FROM_AUTHENTICATED_ARTIFACT_MEASUREMENTS; original uploaded artifact did not contain standard report",
+      "job_duration_seconds": 45,
+      "recorded_active_phases": {
+        "build-duration-seconds.txt": 9,
+        "preflight-duration-seconds.txt": 22
+      },
+      "measured_active_seconds": 31,
+      "posthoc_report_sha256": "b177df3e01d1b0b76a2d7ec5058920804b931e4bd40e6b034ed60a99efeafcff",
+      "savings_are_estimated": true,
+      "limits": [
+        "No missing phase or checkout/upload time invented",
+        "Generated report completeness means accounting completeness, not test success"
+      ]
+    },
+    {
+      "run_id": 43769856352,
+      "source_sha": "4bf4d0e668fceb95cbb090c29309aa0fe3265a12",
+      "artifact_id": 14184156268,
+      "artifact_zip_sha256": "3229e14dbd101b9f8add789447e740925ec8eeaec5cbe2115b306619e5fcd8ef",
+      "origin": "POSTHOC_FROM_AUTHENTICATED_ARTIFACT_MEASUREMENTS; original uploaded artifact did not contain standard report",
+      "job_duration_seconds": 47,
+      "recorded_active_phases": {
+        "build-duration-seconds.txt": 19,
+        "preflight-duration-seconds.txt": 16
+      },
+      "measured_active_seconds": 35,
+      "posthoc_report_sha256": "6b339738b1b872c6bb671d855a7993dc6bcdf5d4e559294ef622508954df75b1",
+      "savings_are_estimated": true,
+      "limits": [
+        "No missing phase or checkout/upload time invented",
+        "Generated report completeness means accounting completeness, not test success"
+      ]
+    }
+  ]
+}

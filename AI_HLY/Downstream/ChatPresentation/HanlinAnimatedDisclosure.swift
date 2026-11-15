@@ -23,6 +23,7 @@ struct HanlinAnimatedDisclosure<Content: View>: View {
                         .scaleEffect(x: 1, y: motion.collapsedScale + (1 - motion.collapsedScale) * Double(progress), anchor: .top)
                 }
                 .clipped()
+                .contentShape(Rectangle())
                 .allowsHitTesting(isExpanded)
                 .accessibilityHidden(!isExpanded)
                 .onAppear {
@@ -115,7 +116,10 @@ private struct ChatDisclosureLayout: Layout {
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let natural = subviews.first?.sizeThatFits(ProposedViewSize(width: proposal.width, height: nil)) ?? .zero
-        return CGSize(width: natural.width, height: (natural.height + spacing) * min(1, max(0, progress)))
+        // Use the same width for measurement and placement. A narrower reported
+        // text width can otherwise rewrap during placement and change its height.
+        let width = proposal.width.flatMap { $0.isFinite ? $0 : nil } ?? natural.width
+        return CGSize(width: width, height: (natural.height + spacing) * min(1, max(0, progress)))
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {

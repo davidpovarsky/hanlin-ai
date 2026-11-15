@@ -112,3 +112,20 @@ tearDown, following [Apple's documented path](https://support.apple.com/en-us/11
 Both proof scripts now generate the repository's standard measured-phase performance report
 on exit. Earlier artifacts retain their original missing-report limitation; no pass was
 rerun solely to add accounting, and estimated savings are not treated as measurements.
+
+Fifth attempt43770327191 at6e8c1ec8 successfully built the real four Motion component
+sources, extracted original LoadingGradientText/ToggleButton, native resources, fixture app
+and three XCUITest methods. Runtime was INFRA_ERROR before test invocation: manual
+simctl bootstatus exceeded90s. Zero methods executed; no raw xcresult exists. The manual
+boot barrier was removed, following this repository's prior media-proof lesson. xcodebuild
+now owns startup; the video recorder starts only on an actual XCTest case-start event.
+Its original CI artifact includes the standard phase performance report. Earlier five
+component/UI attempts also have clearly labeled posthoc accounting reconstructed from their
+authenticated raw timing files (`evidence/ci-accounting-posthoc-2026-11-16.json`); those reports
+were not present in their original uploaded artifacts and do not change test outcomes.
+
+Independent source review added three scoped guards pending fresh validation: disclosure
+reports the same width it uses for placement to avoid text rewrapping, contentShape bounds
+hit testing to its revealed rectangle, and original chat shimmer also checks canonical run
+terminal status instead of waiting only for isResponding to clear. No renderer or engine
+data/state was changed, and these edits are not claimed covered by the earlier compile.

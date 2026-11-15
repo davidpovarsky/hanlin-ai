@@ -725,7 +725,7 @@ struct ChatBubbleView: View {
                 .bold()
                 .foregroundColor(.hlBluefont)
                 .symbolEffect(.breathe.pulse.byLayer,
-                              options: .repeat(.continuous), isActive: chatMotion.isAnimated)
+                              options: .repeat(.continuous), isActive: isMotionRunActive && chatMotion.isAnimated)
                 .padding(5)
         }
     }
@@ -736,7 +736,7 @@ struct ChatBubbleView: View {
         HStack(alignment: .top) {
             if !operationalState.isEmpty {
                 VStack(alignment: .leading) {
-                    LoadingGradientText(text: operationalState, isActive: isResponding && isLastAssistant)
+                    LoadingGradientText(text: operationalState, isActive: isMotionRunActive && isLastAssistant)
                         .foregroundColor(.gray)
                         .padding(5)
                         .contentTransition(.opacity)
@@ -777,7 +777,7 @@ struct ChatBubbleView: View {
                     .bold()
                     .foregroundColor(.hlBluefont)
                     .symbolEffect(.breathe.pulse.byLayer,
-                                  options: .repeat(.continuous), isActive: isResponding && isLastAssistant && chatMotion.isAnimated)
+                                  options: .repeat(.continuous), isActive: isMotionRunActive && isLastAssistant && chatMotion.isAnimated)
             }
         }
         .padding(10)
@@ -2156,6 +2156,12 @@ struct ChatBubbleView: View {
             || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty)
     }
 
+    private var isMotionRunActive: Bool {
+        guard isResponding else { return false }
+        guard let status = agentRun?.status else { return true }
+        return status == .pending || status == .running
+    }
+
     /// The first original bubble owns the run's activity. Streaming changes the data,
     /// never the user's disclosure state. Rich results keep their original rendering below.
     @ViewBuilder
@@ -2168,12 +2174,12 @@ struct ChatBubbleView: View {
                     title: String(localized: "Thinking"),
                     timeText: reasoningTime ?? timeline?.summaryTitle ?? "",
                     isExpanded: $isReasoningExpanded,
-                    isActive: isResponding && isLastAssistantGroup,
+                    isActive: isMotionRunActive && isLastAssistantGroup,
                     usesAnimatedDisclosure: true
                 )
                 .accessibilityIdentifier("hanlin-reasoning-toggle")
 
-                HanlinAnimatedDisclosure(isExpanded: !isReasoningExpanded && isResponding && isLastAssistantGroup) {
+                HanlinAnimatedDisclosure(isExpanded: !isReasoningExpanded && isMotionRunActive && isLastAssistantGroup) {
                     VStack(alignment: .leading, spacing: 2) {
                         ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { index, line in
                             Text(line)

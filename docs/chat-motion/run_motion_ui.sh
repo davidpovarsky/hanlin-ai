@@ -55,12 +55,6 @@ xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMoti
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 90 \
   -derivedDataPath "$scratch/DerivedData" CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/build.log"
-finish_phase boot
-python3 - "$device" <<'PY'
-import subprocess,sys
-subprocess.run(['xcrun','simctl','boot',sys.argv[1]],capture_output=True,timeout=20)
-subprocess.run(['xcrun','simctl','bootstatus',sys.argv[1],'-b'],timeout=90,check=True)
-PY
 finish_phase test
 set +e
 python3 "$root/docs/chat-motion/record_ui_run.py" --device "$device" --evidence "$evidence" -- \
