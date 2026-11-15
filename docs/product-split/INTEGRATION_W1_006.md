@@ -25,6 +25,13 @@
   listing; it stopped BEFORE test invocation. No new trace exists. No retry loop.
   Source geometry/tolerance/assertions are unchanged; source owner needs a real
   trace or independently justified correction before a future accepted proof.
+- **APP suite routing:**source-reviewed owner `fcce7796` adds only two existing
+  organizer-parity APP suite selectors. JSON bytes match owner SHA256
+  51b1b735ceb9a2b107ca41a323a174159f00fff90e4450f7fad0135e25d1f79a.
+  Four memory-only planner comparisons confirm only the suite filter and its
+  build-for-testing arguments change; all other groups/flags remain identical.
+  No planner/workflow/production/test edit, isolated Composer12 inclusion, metadata
+  ancestor import or CI trigger. Actual app-suite execution stays NOT_RUN.
 - **Release boundary:**full AI app/metadata closure, full comprehensive UI contract,
   physical iPad and signing/TestFlight/main merge remain open. None was dispatched
   or declared passed by these leaf/component results. The mandatory release gate
@@ -52,9 +59,12 @@ accepted owner bytes in the index and working tree. Net patch SHA256:
 No metadata ancestors, whole producer branch or original dirty worktree entered.
 The component plan retains all ten cases; application observation/refresh,
 parity, manual resize and UI obligations still require their actual app closure.
-The affected map was consumed as the exact owner delta; newly declared
-`ComposerSelectionRefreshTests` and `ComposerRefreshIdentityTests` are not yet
-listed in that map's suite routing and need the map owner's follow-up.
+The affected map's routing gap is now corrected by the independently accepted,
+map-only owner delta `fcce779678fb0010042e962882c2e5e1a77d08a6`. It adds exactly
+`AI_HLYTests/ComposerSelectionRefreshTests` and
+`AI_HLYTests/ComposerRefreshIdentityTests` to the existing APP organizer parity
+record. The actual application suites remain NOT_RUN/metadata-blocked; neither
+was added to the isolated Composer12 proof.
 
 QA packet `0eac9556e99b6b9811fbd55bb7f7177f424c526d` was consumed as three
 unchanged new test/coverage/document files. Its three methods describe **six**

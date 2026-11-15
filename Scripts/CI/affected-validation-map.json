@@ -927,6 +927,8 @@
         "AI_HLYTests/ModelPopoverZoomOrderTests",
         "AI_HLYTests/ComposerActionsParityTests",
         "AI_HLYTests/NativeComposerLineSizingTests",
+        "AI_HLYTests/ComposerSelectionRefreshTests",
+        "AI_HLYTests/ComposerRefreshIdentityTests",
         "AI_HLYTests/OriginalSourceNonRegressionTests"
       ],
       "consumers": []
