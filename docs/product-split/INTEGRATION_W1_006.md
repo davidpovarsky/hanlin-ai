@@ -94,7 +94,7 @@ production bytes. Nine graph/evidence guards pass for the registered candidate;
 syntax parses do not establish Apple compilation or UI behavior. All three
 fixture adapters and all producer portable executable tests remain excluded.
 
-## Enabled A2UI proof and remaining privacy correction
+## Enabled A2UI proof and consumer-module correction
 
 The separate existing workflow mode `a2ui_exact_pin_proof` tests exact A2UI source
 in scratch without product wiring or source edits by this integrator. Exact
@@ -161,9 +161,55 @@ Composer tests use `AI_Hanlin`, with no project/CI module override or alias. The
 isolated recipe mirrors `AI_HLY`, masking that app test-bundle compile boundary.
 Eitan was asked to correct the real test import and the exact-byte recipe module
 and paths coherently. No app module identity or source was changed by this
-integrator. The a43 privacy behavior PASS remains actual macOS consumer evidence;
-the corrected real-module consumer needs its own changed-source proof and app
-integration remains open.
+integrator. Owner correction `f654ac113447177df3838908c53ce9aa24dc47ff`
+changes the actual test import and generated consumer module to `AI_Hanlin`,
+preserving physical repository paths, the `AI_HLYTests` test module and all 25
+case bodies/assertions. Roni accepted this source correction.
+
+Its changed-source native proof
+[43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483)
+is **SUCCESS**, workflow `e1dba14f78e543316dd2f6c9b901cdb558bdb844`.
+The downloaded export contains exactly 25 actual passing Test Case nodes; all
+13 source and 15 workflow hashes match their respective Git commits. The compiler
+log records `-module-name AI_Hanlin`. Raw lock bytes/hash/full JSON agree, with
+SHA256 `af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae`;
+the manifest origin hash changed with the module name, while the exact upstream
+revision and four resolved package pins are unchanged. Artifact
+`a2ui-exact-pin-43668852483`, id `14143507639`, API digest
+`sha256:4c8473c1acc6930b25c6d6f448276637146f4f33b20a4f8321502ad69b5b49cd`.
+Evidence remains under ignored `build/integration-validation-evidence/a2ui-43668852483`.
+This is the native macOS consumer proof using Xcode 27.2, Swift 6.4.2, macOS SDK
+27.2 and macOS 27.0.1. Actual iOS app/test-bundle compilation, inline connection,
+A2UI02 and physical iPad acceptance remain open. The producer source has not yet
+been merged into this integration branch; its verification ref only supplies the
+exact immutable source object. No unchanged proof rerun is needed.
+
+## W1-008 Composer verification preparation
+
+Lead released clean source checkpoint `ee534fae3b87fc087cb80828bca15236c8a752dd`
+for preparation while the service-observation hook follow-up remains pending.
+`Scripts/CI/ComposerValidation/prepare_capability_proof.py` stages seven complete
+production files from exact Git blobs: the Morph shell, popup coordinator, dock
+state, detached chips, ActionBridge, real SwiftData `AllModels`, and its real
+`ProviderModelCatalogMetadata` dependency. It also copies the entire Morph test
+file unchanged and checks the six actual case declarations, including
+`capabilityRoutesReturnToOpenHome`. The prepared package uses the existing
+`AI_Hanlin` component manifest; there is no model stub or source slicing.
+Preparation succeeded locally and recorded hashes; compilation/tests are
+**NOT_RUN**. No workflow was dispatched on an intermediate producer packet.
+
+The complete `HanlinOrganizerDockParityTests.swift` file also compiles tests for
+`HanlinCompactChatWorkspace`, which constructs real `ChatViewWrapper` and
+`ChatViewBottom`. Its session suite compiles `HanlinComposerSessionBridge`, whose
+send gating calls `ChatViewBottom.shouldEnableSend`. Therefore the requested
+`ComposerActionsParityTests/detachedCapabilitiesProjectRealModeState` and
+`ChatComposerSessionBridgeTests/toolUseBindingRemainsScopedToItsChat` require
+the actual application closure. Compiling only selected suites by slicing that
+file would hide this dependency and is not a valid isolated proof.
+`HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables`
+also requires the actual app UI. All three are recorded as NOT_RUN app selectors
+in the preparation manifest. The earlier five-case SDK 26.5 component result
+does not cover these new sources, the app at iOS 27, UI or a physical iPad.
 
 ## Assembled sources
 
