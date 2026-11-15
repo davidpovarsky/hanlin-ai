@@ -2896,9 +2896,9 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "SDK_AUTHORITY_DECISION_THEN_AFFECTED_SLICE",
-        "status": "PENDING_MANAGER_DECISION_1220548041266710",
-        "fullSDK": "FAILED_43764936118",
+        "scope": "FULL_SDK_GENERATION_ONLY_AFTER_AUTHENTICATIONSERVICES_SLICE",
+        "status": "PENDING_DISPATCH",
+        "affectedSlice": "EXECUTED_PASS_43769978905",
         "combined": "NOT_RUN",
         "runtime": "NOT_ESTABLISHED"
       },
@@ -3306,10 +3306,45 @@
         "verifiedManifestFiles": 52,
         "mismatches": 0,
         "resultSHA256": "49c1472115e8627f55cc3dd3aa707f58ea80855dd645a0a1a210cda69cbbb733",
-        "completeOriginalModelAvailabilityProof": "NOT_RUN",
-        "authorityExtension": "NOT_IMPLEMENTED_PENDING_DECISION",
+        "completeOriginalModelAvailabilityProof": "EXECUTED_PASS_43769978905",
+        "authorityExtension": "MANAGER_APPROVED_AND_ACTUAL_SLICE_PROVEN",
         "managerMailboxTask": "1220548041266710",
-        "runtimeAcceptance": "NOT_ESTABLISHED"
+        "runtimeAcceptance": "NOT_ESTABLISHED",
+        "managerDecisionTask": "1220548041266710",
+        "affectedSlice": {
+          "run": 43769978905,
+          "sourceSHA": "ea50396e7f35b6f7aa80fbc0f857a8f61b5b9978",
+          "status": "EXECUTED_PASS",
+          "freshModelAndTransactionCases": 17,
+          "freshReferenceModules": 31,
+          "freshCompilerASTObjectsForNewDeclaration": 4,
+          "CLinksPassed": 2,
+          "CPPLinksRejected": 2,
+          "originalAVFoundationProofs": "REUSED_VERIFIED_STATIC_BINDING_PROOF_989_INPUTS",
+          "nativeExport9": "REUSED_VERIFIED_PASS_935_COMPILE_INPUTS_NEW_EXECUTION_NOT_RUN",
+          "verifiedFreshControlManifestFiles": 289,
+          "verifiedReuseManifestFiles": 1,
+          "manifestMismatches": 0,
+          "originalAGraphModels": 38857,
+          "retainedOriginalModels": 667,
+          "mappedWithProof": 38190,
+          "unmappedModels": 0,
+          "publicModelOwner": "AuthenticationServices.ASAuthorizationSecurityKeyPublicKeyCredentialDescriptor",
+          "bindingEquivalent": false,
+          "authenticationExportClosureLibraries": 1,
+          "resolvedPinnedDeclarations": 4,
+          "metadataBytes": 2596492,
+          "metadataSHA256": "2db3d7248e35a85ee9a1c91efe177357965f636e12248a31414afd0f60409b03",
+          "generatedDeclarationFiles": 42,
+          "strictTypecheck": "NOT_RUN",
+          "peakRSSBytes": 2829533184,
+          "peakRSSMeasurement": "maximum_through_complete_receipt_render",
+          "peakRSSBudget": 4294967296,
+          "metadataProcessSeconds": 33.342450583,
+          "secondsBeforeFinalRender": 30.179128333,
+          "resultSHA256": "11d140b23ec91eba59870a682beb80335340f192ee8085148560b5ae5770f812",
+          "runtimeAcceptance": "NOT_ESTABLISHED"
+        }
       }
     }
   }

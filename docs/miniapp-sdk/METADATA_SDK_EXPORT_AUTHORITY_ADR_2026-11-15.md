@@ -264,3 +264,23 @@ These changed native/request-bound sources require fresh17 model/transaction and
 31-module execution; the independent9 TextAPI/export tests remain eligible only
 for authenticated unchanged-input reuse. The affected slice now imports the
 actual AuthenticationServices header as well as UIKit/Host/AVFoundation/Accelerate.
+
+Run43769978905/ea50396e executed all17 changed model/transaction controls and the
+31-module gate, then passed the expanded actual SDK slice. Original model, full
+ABI except the preserved raw symbol, source/module/availability and exact export
+closure now pass for the approved AuthenticationServices declaration. Its public
+model owner stays AuthenticationServices.ASAuthorizationSecurityKeyPublicKeyCredentialDescriptor,
+bindingEquivalent=false; the closure contains one library and the actual Cryptex
+TBD SHA6d28abfc…5189. All4 pinned resolutions are recorded in the receipt.
+
+The AuthenticationServices certificate has4 fresh object/AST proofs,2 successful
+C links and2 expected CPP link rejections. The3 unchanged AVFoundation proofs
+are REUSED_VERIFIED_STATIC_BINDING_PROOF after989 exact inputs; native9 export
+tests are separately REUSED_VERIFIED_PASS after935 compile inputs, new execution
+NOT_RUN. All289 fresh control+1 reuse manifest files verified locally0 mismatch.
+Slice:38,857 A graph models=667 kept+38,190 proven mapped,0 missing; metadata
+2,596,492B SHA2562db3d7248e35a85ee9a1c91efe177357965f636e12248a31414afd0f60409b03.
+42 declaration files generated, strict typecheck NOT_RUN. Whole child33.342450583s;
+maximum RSS through complete receipt rendering2,829,533,184B below4GiB.
+Result SHA25611d140b23ec91eba59870a682beb80335340f192ee8085148560b5ae5770f812.
+Full SDK is the next new input scope; combined/VM/physical remain NOT_RUN.
