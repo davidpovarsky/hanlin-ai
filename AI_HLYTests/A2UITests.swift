@@ -308,7 +308,8 @@ struct A2UISDKTests {
         store.finishRun(run)
         store.finishRun(run)
         #expect(p.isReceivingFinished && !p.isReadOnly && !p.isClosed)
-        #expect(p.surface("form-a") === model && (try node(p, id: "name").identity) == identity)
+        let retainedIdentity = try node(p, id: "name").identity
+        #expect(p.surface("form-a") === model && retainedIdentity == identity)
         #expect(admissionFailure(store.receive(try #require(A2UIFixture.lines("update").first), sequence: 3, for: p.key)) == .inputFinished)
         #expect(store.registerModelPart(runID: run, messageID: message, partID: UUID(), sink: sink) == nil)
         #expect(store.register(runID: run, resultID: UUID(), callID: "late", sink: sink) == nil)
