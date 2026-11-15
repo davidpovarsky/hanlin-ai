@@ -78,6 +78,9 @@ def main():
     spec.loader.exec_module(module)
     results = []
     for row in rows:
+        if modern and "cancelled_native_process" in row["selector"]:
+            row = {**row, "supersedesSelector": row["selector"],
+                   "selector": "NativePreprocessingProvenanceControls.test_debugger_cancellation_during_observed_preprocessor_lex"}
         key = row["selector"] + "--" + row["variant"]
         if modern and ("cancelled_native_process" in row["selector"] or "normal_sdk31_" in row["selector"]):
             reason = "Existing one-attempt observer does not establish PP Lex; no unchanged infrastructure retry" if "cancelled_native_process" in row["selector"] else "Modern combined production wrapper is not adopted; separate SDK/combined/runtime obligations remain open"

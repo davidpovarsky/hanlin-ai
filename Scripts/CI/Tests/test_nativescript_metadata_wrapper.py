@@ -1385,6 +1385,38 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertNotEqual(run.returncode, 0)
         self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
 
+    def test_debugger_cancellation_during_observed_preprocessor_lex(self):
+        (self.folder / "root.h").write_text("int declaration;\n")
+        self.prepare('#include "root.h"\n', [(1, "root.h")])
+        observer = self.evidence / "lldb_cancel.py"
+        observer.write_bytes((ROOT / "Scripts/CI/MetadataProvenanceProof/lldb_cancel.py").read_bytes())
+        config = self.evidence / "debugger-cancel-config.json"
+        facts_path = self.evidence / "debugger-cancel-facts.json"
+        self.record(config.name, {"executable": str(self.tool), "binarySHA256": self.sha(self.tool),
+                                 "observerSHA256": self.sha(observer), "receipt": str(self.receipt_path), "output": str(facts_path)})
+        call = ["xcrun", "lldb", "--batch", "-o", "command script import " + shlex.quote(str(observer)),
+                "-o", "breakpoint set --name 'clang::Preprocessor::Lex(clang::Token&)'",
+                "-o", "run", "-o", "thread backtrace all", "-o", "image list -o -f",
+                "-o", "hanlin-cancel " + shlex.quote(str(config)), "-o", "quit", "--", *self.trace_call]
+        run = self.run_recorded("observed-lldb-cancellation", call, timeout=45)
+        if not facts_path.is_file():
+            self.not_observed("Debugger did not retain an actual stopped PP Lex observation on this single attempt")
+        facts = json.loads(facts_path.read_text())
+        if facts.get("status") != "OBSERVED_CANCELLED":
+            self.not_observed("Actual debugger ownership/same-thread PP Lex/unfinished/kill boundary was not established")
+        self.assertEqual(run.returncode, 0)
+        self.assertTrue(facts["unfinishedEstablished"])
+        self.assertTrue(facts["ownedExecutable"])
+        self.assertTrue(facts["killSucceeded"])
+        self.assertTrue(facts["exited"])
+        self.assertGreater(facts["pid"], 0)
+        self.assertEqual(facts["executableSHA256"], self.sha(self.tool))
+        self.assertFalse(facts["beforeKillReceipt"]["exists"])
+        self.assertFalse(facts["afterKillReceipt"]["exists"])
+        self.assertFalse(self.receipt_path.exists())
+        self.assertTrue(WRAPPER.validate_preprocessing_receipt({}, self.request))
+        self.assert_canaries()
+
     def test_cancelled_native_process_cannot_leave_a_complete_receipt(self):
         # One attempt; observing a stopped PID alone does NOT establish an
         # unfinished operation. A completed pre-cancel receipt is not a defect.
