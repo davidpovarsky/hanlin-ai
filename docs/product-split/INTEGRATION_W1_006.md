@@ -907,3 +907,21 @@ header/CRC/dimensions per cohort was checked (1206x2622 phones;2064x2752 iPad).
 This is not independent binary xcresult decoding or visual/reference parity.
 Final iPad-he test.log ends at Resolve Package Graph with no actual case start.
 No full ZIP checksum was recomputed; API digest and per-entry CRC are distinct.
+
+
+Composer43691033216/51d3 now compiles and executes exactly12 unique methods:
+11 PASS /1 wrappedLinesAndScrolling FAIL, two plateau issues at111 with absolute
+difference88.0 vs tolerance2.0. Both new TextKit2 methods, font/viewport, editing
+and all seven Morph methods passed. All12 input hashes match51d3; actual iPhone18
+Pro arm64/iOSSimulator27.0/24A434. Artifact14152762340:33730788 bytes, API SHA256
+4c9648d3b35bf6c2776aa4949f932d804930591fe10bff22046bfdc5855a2ffe;
+281736 range bytes/entry CRCs checked, no full ZIP checksum recompute or binary
+xcresult decode. Signed height difference/individual heights were not recorded.
+
+Source-reviewed20980c9448f0a5d78eefcaec38da6e92364de37d is a two-file diagnostic
+packet now imported whole. Optional nil-default trace observes the SAME already
+computed fitting/min/max/native-coverage/scroll/returned-height values after the
+unchanged decision; no extra UIKit measurement, retained callback or new math.
+The unchanged12 assertions record signed6/7/constrained trace context. One new
+12-case diagnostic run is authorized, expected-failure instrumentation, not a fix.
+No plateau threshold/test/viewport weakening or unrelated SDK/A2UI rerun.

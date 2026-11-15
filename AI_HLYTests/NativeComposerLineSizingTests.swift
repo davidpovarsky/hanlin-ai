@@ -86,6 +86,8 @@ struct NativeComposerLineSizingTests {
             let minimum = NativeMultilineTextEditor.automaticHeightBounds(for: view, isEmpty: false, availableHeight: 1000).min
             #expect(editor.measuredHeight(for: view, isEmpty: false) >= minimum)
             var sixLineHeight: CGFloat?
+            var sixTrace: NativeMultilineTextEditor.MeasurementTrace?
+            var constrainedTrace: NativeMultilineTextEditor.MeasurementTrace?
             for target in [6, 7] {
                 var found = false
                 for count in 1...500 {
@@ -97,18 +99,21 @@ struct NativeComposerLineSizingTests {
                     layoutManager.enumerateLineFragments(forGlyphRange: range) { _, _, _, _, _ in lines += 1 }
                     if lines == target {
                         #expect(range.location == 0 && range.length == layoutManager.numberOfGlyphs)
-                        let height = editor.measuredHeight(for: view, isEmpty: false)
+                        var currentTrace: NativeMultilineTextEditor.MeasurementTrace?
+                        let height = editor.measuredHeight(for: view, isEmpty: false) { currentTrace = $0 }
                         #expect(view.isScrollEnabled == (target == 7))
                         if target == 6 {
                             #expect(height > minimum)
                             sixLineHeight = height
+                            sixTrace = currentTrace
                             let constrained = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: height / 2, usesAutomaticLineLimits: true)
-                            let constrainedHeight = constrained.measuredHeight(for: view, isEmpty: false)
+                            let constrainedHeight = constrained.measuredHeight(for: view, isEmpty: false) { constrainedTrace = $0 }
                             #expect(constrainedHeight == height / 2)
                             #expect(view.isScrollEnabled)
                             view.isScrollEnabled = false
                         } else if let sixLineHeight {
-                            #expect(abs(height - sixLineHeight) <= 2)
+                            #expect(abs(height - sixLineHeight) <= 2,
+                                "script=\(sample) six=\(String(describing: sixTrace)) constrained=\(String(describing: constrainedTrace)) seven=\(String(describing: currentTrace)) signedDelta=\(height - sixLineHeight)")
                         }
                         found = true
                         break
