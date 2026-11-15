@@ -44,6 +44,9 @@ function validateContractShape(contract) {
       contract.productionProjectionEnabled !== false) {
     throw new Error('Unsupported interface contract; version1 permits incomplete inventory only');
   }
+  if (!Array.isArray(contract.approvedCompilerProfiles) || contract.approvedCompilerProfiles.length !== 0) {
+    throw new Error('Version1 has no approved compilation profiles, including WITH_PERFETTO');
+  }
   if (sortedJSON(Object.keys(contract.frameworks ?? {})) !== sortedJSON(Object.keys(scopedHeaders))) {
     throw new Error('Interface framework scope changed');
   }
@@ -102,6 +105,8 @@ export async function auditInterfacePartitionInputs({
     status: 'INCOMPLETE',
     projectionEnabled: false,
     metadataInputRole: 'PUBLIC',
+    approvedCompilerProfiles: [],
+    observedNativeCompilerContexts: contract.observedNativeCompilerContexts,
     sourceChecks: [],
     generatedChecks: [],
     sourceDrift: [],

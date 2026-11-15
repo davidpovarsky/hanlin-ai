@@ -1949,6 +1949,1273 @@
     "react/timing/primitives.h reaches mach/mach_time.h under __APPLE__; SDK C declarations/constants/types and availability must be inventoried in the actual native context.",
     "16 C++ standard-library includes and their transitive C headers need actual SDK/libc++ preprocessing and API comparison; a namespace-only source scan is insufficient.",
     "NativeScript.framework carries a separate differing six-file JSI variant; actual include/module ownership must be established before aliasing or changing its C++ ABI inputs.",
-    "No native preprocessed-token/AST/layout equivalence receipt exists for either Apple slice or relevant macro/deployment contexts, and no valid Clang17 projected ObjC root receipt exists."
-  ]
+    "No native preprocessed-token/AST/layout equivalence receipt exists for either Apple slice or relevant macro/deployment contexts, and no valid Clang17 projected ObjC root receipt exists.",
+    "Pinned Folly transitive source has explicit C-linkage candidates: MallocImpl mallocx/rallocx/mallctl families with weak-function versus function-pointer alternatives, and Apple-conditioned malloc_usable_size. Their active profile/signatures/types/linkage must be preserved, not guessed empty."
+  ],
+  "approvedCompilerProfiles": [],
+  "observedNativeCompilerContexts": [
+    {
+      "run": 43673578445,
+      "scope": "SDK_ONLY_NOT_EXPO_PARTITION",
+      "status": "OBSERVED_NOT_APPROVED_FOR_PARTITION",
+      "effectiveContext": {
+        "compiler": "clang version 17.0.6 (https://github.com/swiftlang/llvm-project bf8bbb910874156e718c74ae132072244f3f3643)",
+        "arguments": [
+          "-v",
+          "-x",
+          "objective-c",
+          "-fno-objc-arc",
+          "-fmodule-maps",
+          "-ferror-limit=0",
+          "-Wno-unknown-pragmas",
+          "-Wno-ignored-attributes",
+          "-Wno-nullability-completeness",
+          "-Wno-expansion-to-defined",
+          "-D__NATIVESCRIPT_METADATA_GENERATOR=1",
+          "-isysroot",
+          "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk",
+          "-target",
+          "arm64-apple-ios27.2-simulator",
+          "-std=gnu17",
+          "-I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include",
+          "-F/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/System/Library/SubFrameworks",
+          "-fmodule-map-file=/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/module.modulemap",
+          "-fno-modules",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include",
+          "-idirafterlib/clang/17/include",
+          "-idirafter/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/simd",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/networkext",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/CommonCrypto",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/hvf",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/System/Library/Frameworks/CoreAudioKit.framework",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/libxml2/libxml",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/AppleArchive",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/rpc",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/Spatial"
+        ],
+        "generatorSHA256": "16619435fb1ea32da0ad94e467d4d9bdffe27ccb108effd435ae7e05475a57ac",
+        "contextSHA256": "7d7f3aeafefb7782b99779a5bd42695ae576cfeac7e967625936627e3709e55e",
+        "driftExitCode": 1,
+        "status": "EXECUTED_PASS",
+        "boundary": "Actual tool argument capture/verification; not a C++ absence or VM proof."
+      },
+      "macroProfile": "NOT_ESTABLISHED; full arguments are not proof of all header-defined macros or active conditional branches."
+    },
+    {
+      "run": 43680891375,
+      "sourceCommit": "a7c52ed75ac06d4b3cd9c40ffc0548f4652347f9",
+      "scope": "ACTUAL_COMBINED_LAUNCHER_READ_ONLY_BEFORE_ALIAS_VALIDATION",
+      "status": "OBSERVED_NOT_APPROVED_FOR_PARTITION",
+      "effectiveContext": {
+        "compiler": "clang version 17.0.6 (https://github.com/swiftlang/llvm-project bf8bbb910874156e718c74ae132072244f3f3643)",
+        "arguments": [
+          "-v",
+          "-x",
+          "objective-c",
+          "-fno-objc-arc",
+          "-fmodule-maps",
+          "-ferror-limit=0",
+          "-Wno-unknown-pragmas",
+          "-Wno-ignored-attributes",
+          "-Wno-nullability-completeness",
+          "-Wno-expansion-to-defined",
+          "-D__NATIVESCRIPT_METADATA_GENERATOR=1",
+          "-isysroot",
+          "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk",
+          "-std=gnu17",
+          "-target",
+          "arm64-apple-ios27.0-simulator",
+          "-I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include",
+          "-I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+          "-I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/build/NativeScriptMetadataProbeDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/build/NativeScriptMetadataProbeDerivedData/Build/Products/Debug-iphonesimulator",
+          "-F/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks",
+          "-F/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/ios-arm64_x86_64-simulator",
+          "-F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+          "-F/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/System/Library/SubFrameworks",
+          "-fno-modules",
+          "-fmodule-map-file=/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/module.modulemap",
+          "-fmodule-map-file=/Users/runner/work/hanlin-ai/hanlin-ai/build/acceptance/nativescript-sdk-probe/runtime-wrapper/temp/HanlinNativeScriptSwiftMetadata-arm64/module.modulemap",
+          "-ivfsoverlay",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/acceptance/nativescript-sdk-probe/runtime-wrapper/temp/HanlinNativeScriptSwiftMetadata-arm64/HanlinHeaderAliases.json",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include",
+          "-idirafterlib/clang/17/include",
+          "-idirafter/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/simd",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/networkext",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/CommonCrypto",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/hvf",
+          "-idirafter/Users/runner/work/hanlin-ai/hanlin-ai/build/acceptance/nativescript-sdk-probe/runtime-wrapper/temp/HanlinNativeScriptSwiftMetadata-arm64",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/System/Library/Frameworks/CoreAudioKit.framework",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/libxml2/libxml",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/AppleArchive",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/rpc",
+          "-idirafter/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/usr/include/Spatial"
+        ],
+        "generatorSHA256": "16619435fb1ea32da0ad94e467d4d9bdffe27ccb108effd435ae7e05475a57ac",
+        "contextSHA256": "ca571fbb9408d0d20b338b0656763d88de66c2c8ffb25dd45e4639443d4c5ace"
+      },
+      "macroProfile": "NOT_ESTABLISHED. Captured -D arguments do not prove header-defined macro state/active branches. No WITH_PERFETTO profile is supported.",
+      "aliasValidation": {
+        "status": "FAILED",
+        "reason": "Conflicting public header alias bytes: /Users/runner/work/hanlin-ai/hanlin-ai/build/NativeScriptMetadataProbeDerivedData/Build/Products/Debug-iphonesimulator/NativeScript.framework/Headers/jsi/decorator.h vs /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/jsi.framework/Headers/decorator.h"
+      }
+    }
+  ],
+  "externalDependencySourceFacts": {
+    "status": "SOURCE_PROVENANCE_ONLY_NO_ACTIVE_PROFILE_OR_ABI_PROOF",
+    "reactNativeDependenciesPin": {
+      "name": "ReactNativeDependencies",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.0/react-native-artifacts-0.88.0-reactnative-dependencies-release.tar.gz",
+      "sha256": "309b2fcea39fb4cdeb434144e735bc4065ac0dd8720e4f35ffee55fb3be54093",
+      "subpath": "packages/react-native/third-party/ReactNativeDependencies.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework"
+    },
+    "follyDynamic": {
+      "source": "Headers/folly/json/dynamic.h",
+      "sha256": "0ce5093ebe3657db8dc12401a45826ba71da1f72813469f07a32357683bb2f62",
+      "localUnifiedReactCopyEqual": true,
+      "actualSelectedOwner": "Requires actual effective include/module lookup; byte-equal candidate copies do not establish selection."
+    },
+    "conservativeLexicalClosure": {
+      "status": "CONSERVATIVE_ALL_SOURCE_BRANCHES_NOT_ACTIVE_PREPROCESSOR_GRAPH",
+      "files": [
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/dec.hpp",
+          "sha256": "d4a0973c1058da68155167f44f5740c59f51a3ce1ba53337f45bd8c1121c7631"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/inc.hpp",
+          "sha256": "346fb6cdde60c4cf12e45fd7ab24ae47f636d0793d972b77f6c933ec7420ce92"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/limits/dec_1024.hpp",
+          "sha256": "a549259f9c62bfa0b4e5cff3c1a870277bee853ed69ea460ad04aa859a91f2f7"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/limits/dec_256.hpp",
+          "sha256": "89279d5a0a69447028fcfff5a215fc700f58efaa7d21fa30c3f254dee545599b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/limits/dec_512.hpp",
+          "sha256": "300ced17a81def48ba811d35ac74d16d926084bf2f87817fd8f6733a20034507"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/limits/inc_1024.hpp",
+          "sha256": "7753bdfcc7a2b5cbe0e5dcd079283cc569566f1b311aaf1e22258a23c313e844"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/limits/inc_256.hpp",
+          "sha256": "5bc4fa77ffc27a47e0514a5faa6e7f77beb5eb2572f6819e70445d5b4c13e795"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/arithmetic/limits/inc_512.hpp",
+          "sha256": "ccdb45de01ec70c8eb9df26c6305a5d08ce1f1b0df01c7d0f9ea56699bdfb068"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/cat.hpp",
+          "sha256": "9f232dca396d537f103fd26b7fc4e2026aeb43cb476d069688be697c11a084bf"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/config/config.hpp",
+          "sha256": "05c8b9e1e0ebec00f1c396e6c01eabdf400f5c1daf6f76da5c312454f736e43a"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/config/limits.hpp",
+          "sha256": "1f4f0a187666383981262634194127fc7b02b5c54a5036142fb1ca1007fccbaf"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/control/expr_iif.hpp",
+          "sha256": "225dd9118c65de2e473e4cdec0aef9acc4b474216e683b4609bb1072dce32a10"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/control/if.hpp",
+          "sha256": "ddb9af759ba3695b91dff747ce2fe18d768cdadf93ddd956884eff8333e4ee40"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/control/iif.hpp",
+          "sha256": "ccffe0f0bbc7ae9e4993a43d77fa0fd23b143d533148e462f1248e809208da04"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/debug/error.hpp",
+          "sha256": "3cee86e4c00fb6e8572acf2efcf121f1b02dec3c89c4ab59d41f584920c79885"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/detail/auto_rec.hpp",
+          "sha256": "b021b4b909cba82d33b282a7709c868706c0f7a423c2a561c4fe336448fea155"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/detail/check.hpp",
+          "sha256": "f44f116a02d55b4e31df2dedb35a1e4e22ba1f62923882c29cf7d7f26497b78b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/detail/dmc/auto_rec.hpp",
+          "sha256": "99cc277999519497e048ceb3dd6a9957fe113d05730fcb1c28c115884e4cd820"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/detail/is_binary.hpp",
+          "sha256": "4461a173cb87b7b18002d0b5dc70a709452049b057fc7fb94fa8b941ee89c41a"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/detail/limits/auto_rec_1024.hpp",
+          "sha256": "407806d9d49e0d4c84b155cc8ede437ae0214a8a21dddc8c080aad76b5fa868b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/detail/limits/auto_rec_256.hpp",
+          "sha256": "39c24888b7c821b721f3512e99f69dfe6a172774c0015fa518d626c3b76f34b4"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/detail/limits/auto_rec_512.hpp",
+          "sha256": "9535413a836fee2bae127c479a9e47db06563d28c151ef918698ce66201d7788"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/check_empty.hpp",
+          "sha256": "1c4a1dd1d4e6a3b4cce449b83aaf9cd0116b0db1f27950fb7bd2c6820603aac6"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/detail/is_empty.hpp",
+          "sha256": "61fea803ffa804064d652c03f66ab57bc2eb2a388bf04c78ec20f1d5e75d3255"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/empty.hpp",
+          "sha256": "0e086fd6efde0fabbf12715c72a80d9fa2916d14bed6a6e8631cc3a9efd7d648"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/expand.hpp",
+          "sha256": "2c3dcec5afba1e28fd48da9066b828c386c0149c2a7cf5b27e38ea2c1040ec1e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/is_1.hpp",
+          "sha256": "c481a0e24bedd5902ef9729c3b32dcecb214975c940fc22402f4ccb6e8eb5ecf"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/is_empty.hpp",
+          "sha256": "4c3757fcba1bb854d9f3b303b551e92220442e01f52d850e20014dc7f3d81035"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/is_empty_variadic.hpp",
+          "sha256": "5e03cd8c60dbbad96f8c88f6428c9e3947c8aa0cb6aefdf4dbec829d26cc1cfe"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/facilities/overload.hpp",
+          "sha256": "234ac6d38b2dc7ec1f900107e296de316b2a50e9c842dc5860259f45c2ce5f60"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/list/adt.hpp",
+          "sha256": "c8c9b63e1be1dd34032d07c726b9b8676d1556b20ff1e05f542aa63da6aa05fd"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/list/for_each.hpp",
+          "sha256": "066c897602fad2ee55c1be3fb9823a962079f4614b23c1cb14ba56b39a1fe9a6"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/list/for_each_i.hpp",
+          "sha256": "c2e01a4af9a4d151fc0591c600dac3d43c9b313779191facfbc78368219aee73"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/logical/bool.hpp",
+          "sha256": "55b055b965602275dd8b3d66089de3e5e0c06f1ea30677c2c3ce797c993bf279"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/logical/compl.hpp",
+          "sha256": "5d12c8c00c74fef902f84cfcfb899dea2bac16ce7c2fd038de84ce1cdc3b6df4"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/logical/limits/bool_1024.hpp",
+          "sha256": "8504499fbeb13ebfa8f2863a74c1aa7e713b8bd2c860e93b71f87464006c12d5"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/logical/limits/bool_256.hpp",
+          "sha256": "d64ca968c4956678ef1c7a242f271d77ea9084b84b88efb3dabcb07ad6014008"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/logical/limits/bool_512.hpp",
+          "sha256": "cb040cc7333e6ca9a8f66e6ea60660f67a3c2f53eec7c3afe7b4903b7c2be219"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/logical/not.hpp",
+          "sha256": "4d05ec8aa9e209f9a08d433f4641c6ea8bc0b7079bf76419748d6879c7908a4e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/punctuation/detail/is_begin_parens.hpp",
+          "sha256": "310514fccb7ad34582cc5f2e1254742ed7dc604bdfda3ac3e28865d5b6bf2300"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/punctuation/is_begin_parens.hpp",
+          "sha256": "0323a562253cc5e9507588b39d9914c36e3a017b9bcd7d74425e2bf5cfec52fd"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/dmc/for.hpp",
+          "sha256": "e1126f5f96efecfbc9b736ef1f90ca0cca16f19358b70edc832a9d31a1673f7c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/edg/for.hpp",
+          "sha256": "1b54a429e37dcb801269fbcdead2ef197e2cef3c74e6b4cdf26d657fbc34e2ff"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/edg/limits/for_1024.hpp",
+          "sha256": "c90faad8edaa4ed96a668849ec565ce7aae7113f857d5f644841f319bb98a88c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/edg/limits/for_256.hpp",
+          "sha256": "ad4b9812f4bab5f509bcdcbb1fb8f03f4398f316a83f286b0250bf63f98ff17c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/edg/limits/for_512.hpp",
+          "sha256": "0dd7f73a2db7afab6f1558c06bbaa3851e44895430b89aa0621cafbd097ac84f"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/for.hpp",
+          "sha256": "7265b7d9f4079ed4a6b503b6985cf4bb181a5176572bd7a3e70f56886a148b8b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/limits/for_1024.hpp",
+          "sha256": "1fc84add7dc260404517e8aed351834f44a6f2cb6c3673570a70f8bca19670f9"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/limits/for_256.hpp",
+          "sha256": "e616847d8e80c2c6c793f2ee542925252584e6618e6a14f9672f4816aaf1d49e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/limits/for_512.hpp",
+          "sha256": "0c64e3be1b92ff38581bf6144ef1a58a1d2f3550756db1dcb8befb22db0bc90d"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/detail/msvc/for.hpp",
+          "sha256": "9e970d43fe3e0050f8c1b7b0737882f50d7663143d0b6b8dc6fcba9f804c44fa"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/for.hpp",
+          "sha256": "e64f8a84a70eccb2dfa4a4a7f942ac8ab601153966e4612c9a31ed5cafc9a550"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/limits/for_1024.hpp",
+          "sha256": "fdbc27066d10fffcbddafffc4181f7479c52721cd5d93b7e2fab5799b31bad3d"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/limits/for_256.hpp",
+          "sha256": "25e5c5250d39867ace2ad1c67b3e034aaa215a92f7143b97857ac84cd8a75e27"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/repetition/limits/for_512.hpp",
+          "sha256": "821391b8bc8d7ec0cc4c3a7cddfa622533b6a622eeb5895eb92eb74f6ba1dc8e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/detail/is_single_return.hpp",
+          "sha256": "90f66c4d1ffd0f241dafa9976bc4f1dbaa42180cf1239a4800d24847558ef009"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/eat.hpp",
+          "sha256": "06ecd3a226acda9afa15af2f90000178c9c3fc998adc54baf56d4a425efc5fc1"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/elem.hpp",
+          "sha256": "4a799588541b02c0b7c03006950d773c3b0756ff3142af0a0efe9ef85128c532"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/limits/to_list_128.hpp",
+          "sha256": "6fdc22487775bf4fa0f944a230aded215fb4caa514be3e334a324f6dfd4b257c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/limits/to_list_256.hpp",
+          "sha256": "0c41f98505bd4fee36237474a6258a7f79904e05aeef2a8d31e243102c703fcf"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/limits/to_list_64.hpp",
+          "sha256": "f398bb51b830aa581a8bfd7a39acdedb79288b012e5a2f2970085655ce5503e5"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/rem.hpp",
+          "sha256": "035a61fd0140c8ac0e17a9f24c2a474952d11e1f187e35f0b61ebdf491068fb6"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/size.hpp",
+          "sha256": "63753c1ce2e743620525d1e7647350489448a9c555ca9eb8dbf612d2c05a3c0b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/tuple/to_list.hpp",
+          "sha256": "5bf41bc812afa81f33ef7621583d6b53db30ca1ba842e662f758542df644947b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/detail/has_opt.hpp",
+          "sha256": "9c871536ce9bbfd8fef660f2f32e9e3432907d44dc7cd9d6abc8294aea892eaf"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/elem.hpp",
+          "sha256": "bf8dcacd98d78b2c097583deec205db3322059204fb71230ab297c1639dd6499"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/has_opt.hpp",
+          "sha256": "1d5c809ea1fe298827d07d3b4de49e089870249d1d0a780b22795ce99e82b0f3"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/limits/elem_128.hpp",
+          "sha256": "00e08a3fd90704a9fbcc2d1a0f73e28edf149721354ed224f4220d48f7e23b4f"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/limits/elem_256.hpp",
+          "sha256": "30e8d7d48413436b834895bdbf9c545c744cfa75616dcd1079e19fb0bd908f39"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/limits/elem_64.hpp",
+          "sha256": "cbce81c3b64073b29706cf8ee1b96af60f1654ff8ec941324561a7fa3533a25f"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/limits/size_128.hpp",
+          "sha256": "b1cf65cdafb9fdd81ed99350d55a874c8a9e269d38e878bea7fa79173bb7f4b6"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/limits/size_256.hpp",
+          "sha256": "cc10dac7c5a7ec199d906f4e56a45d08b685b2e91a8bcb0fb4ef8ff4f9d5a411"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/limits/size_64.hpp",
+          "sha256": "9d3c58e19083ff0d5615ba6c21ed6e327393a5c68dcd294dcc1bd966fdcbbe52"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "boost/preprocessor/variadic/size.hpp",
+          "sha256": "6efa634fd178422c97ca3ac1180807f063cee350ed755942fa14134f6861695d"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "double-conversion/double-conversion.h",
+          "sha256": "d4776089b9e760cfd819a86a9b10c69998b956f8f2102ac3b4361d775e0edcbe"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "double-conversion/utils.h",
+          "sha256": "b495b11f7b61693486894f747add5b454894b8b3ca41aa1610d370ba16407ab7"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "fmt/base.h",
+          "sha256": "73ba80ca15c02d6826a611d1651ca6f1495ec127815e257a5d6552d6f6ad313e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "fmt/format-inl.h",
+          "sha256": "e7baf108b84e89b29915bb35733540f8f4262cd8f4b41c15754eed4d2f185f61"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "fmt/format.h",
+          "sha256": "b4c65350362bf40e76a8e6b450587d912c7081b6eafeafaf3d7bcf53153e17fc"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Bits.h",
+          "sha256": "e197b95d72a4069765ee50e629e3e6729dd76c2837fa89168532303fa434d5c4"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/CPortability.h",
+          "sha256": "49dd870d2e5b3b797f7762a1a5649c55ea88d1505cc05d7494c3c336633f8ac9"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/ConstexprMath.h",
+          "sha256": "9977c3d4ff475d3849758ec5173aa7c3e674e7e1242ace4ca99f5bfb6f3a7f6f"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Conv.h",
+          "sha256": "457d7709d42a47c2ac0a223f06b63b03df0929a60ba0aeb4fe09e30776388181"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/CppAttributes.h",
+          "sha256": "8411eaca1c2975f0f71e273fcd4bf2234ca4b11a918a3f9bf5a833dd1bdd34d8"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/CpuId.h",
+          "sha256": "f0455393e4464c33ae5ab96deadcc0e999ca9c4abe50cf49abd83c9f21d1013e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Demangle.h",
+          "sha256": "0e8294ca8a64d3d9e380c54e8e1ac2fefbcddd0bcf97d4b3b78a6641a35b5993"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Exception.h",
+          "sha256": "8602c650d890a7e73b499dad833d4c40522fc01be5a43f73a2de7f7b444ab525"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/ExceptionString.h",
+          "sha256": "02e156647579a400e7011b63f099e2d435a84ac3b1c42037a58db086bd65c74b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Expected.h",
+          "sha256": "4da331b1e3ddef6118ef77c68c2da52d2f8b387e8801c3f036e3ea662f75bf7b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/FBString.h",
+          "sha256": "2553065d51804f5a4e0d44bc200ff9290d297067904f8ff4ec8e31635ca9bf51"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Format-inl.h",
+          "sha256": "916086bef95e17fe9027cfeb3b199c327df229fda81fca6dc3e4f385ed817630"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Format.h",
+          "sha256": "99c4f769503aea951523e01aa9962514e18493fcf62d694590e6d1643382be0c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/FormatArg.h",
+          "sha256": "ff5b87b3f67b15946bfb4bdc72464c77fde3d49d87683d6ab753aaaa737e41fb"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/FormatTraits.h",
+          "sha256": "7ec50afcf0b4daf16201b0d5037c3f0d775b5603eaa0a24ecd8e5dfc74532212"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Likely.h",
+          "sha256": "46409aabfa24b3e1a58b3ceb9fc649f701fc71b8555ccd2cb09bed8ecfcdc199"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/MapUtil.h",
+          "sha256": "ff4be5dc6f0852b02c3504e177ca36e668e2420714f271d568786a1e32091d89"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Memory.h",
+          "sha256": "18ea8d30ae495c41811293e4a6718a4631fe700ea2d9dbd5d7643c744422c489"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Optional.h",
+          "sha256": "db8d34dc3a9e16438429a7391c1f57e6d79669a37b05599250eec0ba6a2b5c3e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Portability.h",
+          "sha256": "3cfdbbf7de751d13b66cd9ff5d2a9cfacda8f80bc46dceda3a4f2c85768389d0"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Preprocessor.h",
+          "sha256": "5c88061c3916a0b2993679b3a2ed483d11bb5cd11c5af210f96a238d6380fe8c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Range.h",
+          "sha256": "5ea57a02b018c252217e8bf4c2f2c013f69caf3e493775977b9ffc2128c1dcbd"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/ScopeGuard.h",
+          "sha256": "a41578db33684b247d1beae1ff9d6a7b557e31223ca130be0a2715b963ca489b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/String-inl.h",
+          "sha256": "830f75e214a99af0dcc29cbbbea7d43d9dbb965ed14fdad8d4e80e94d525709b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/String.h",
+          "sha256": "f3079b82424156a25f3ed8d4f2891cb38b21ffc9beece983b19dd2a5757041c4"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Traits.h",
+          "sha256": "979e55c25247fd0eaef0b10d27a0e5e1514ec5007ad998a4a870d19b7c3bb987"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Unit.h",
+          "sha256": "90e940eeb3b3952ca4d9c7e39b562b8fd92e78f6f0e42f350777ba9db15b9b8f"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/Utility.h",
+          "sha256": "b5734512cd4c07b0ca52ee921c8a7d217ad3f1035b4f4bdc6ada3e22a6c58d33"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/Access.h",
+          "sha256": "5b8352672395254de2d01221fb91e95c18ec4123281d6aff82e71e99b0ddea39"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/F14Map-fwd.h",
+          "sha256": "e011f35761f74fc712532c64078618713dbb707566cb5f0e269aba0d00a19bd9"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/F14Map.h",
+          "sha256": "93f9af3e2333ff58c93b5aa75fc2ee44a2187065aac06b5e3301d68387aa9bb8"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/HeterogeneousAccess-fwd.h",
+          "sha256": "1f6bf51021fcb41af5b9217af999f6e00e4c57d1c3b4ff5bfedca8dbceaf062a"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/HeterogeneousAccess.h",
+          "sha256": "f025e0799142b5155e18445825949354ea893215ca7bda6d8e6d75fb8d00fce1"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/Iterator.h",
+          "sha256": "6deeaafd374536f4a671e8875b294bea5e680a07ec809192c672a6e983db1b5c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/MapUtil.h",
+          "sha256": "45436c0fd25ffa1295f149ce9c326fe04ac89c7f8458501d7c0ef048b6ed468f"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/Reserve.h",
+          "sha256": "076b5228b345dc9da9cf409e54aa6841128e4d79ac4c8f4be1abf9876a761052"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/View.h",
+          "sha256": "3f7dc46df22ca1bb8d4cdb198f08f947ef1225395218d515848116c544f13f85"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/detail/F14Defaults.h",
+          "sha256": "e92d05c25fbad0d39ca7074efe4288f56b7211ec4ad1b63427744855339aabc2"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/detail/F14IntrinsicsAvailability.h",
+          "sha256": "657ac22dbade34c4133392b4e50cc942f9cbe91e157a22dd39a345cdccc359bf"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/detail/F14MapFallback.h",
+          "sha256": "1536aad7cc8ce8fbb25db19a5905ddc8ad11b6c49c56a3952f8ee2af96e22642"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/detail/F14Mask.h",
+          "sha256": "f96d20eb555254d1482eb8b175232cc2d074c913279159f9f1184dfd7fe96bcd"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/detail/F14Policy.h",
+          "sha256": "de9a75ccc24740f6c8dc3d45d35f4ef9157fb17a6e02af7ea9f20a2a08ccc444"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/detail/F14Table.h",
+          "sha256": "4c1da5509918b43792ef9a4af51989b4700c08a22375f6c88dc4d35782d29889"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/container/detail/Util.h",
+          "sha256": "d522458be3a480897625ebbbfc79ad89828835c1fb2e02b133a13c728332dcd4"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/detail/Iterators.h",
+          "sha256": "a8a3ce8d6ba9286c1061af3ef57230462f6e48f74e02915492070a6b14712b49"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/detail/RangeCommon.h",
+          "sha256": "29a9653cf70db6398c9f57a92aa16fe4eadb547dcd6b56b22ed887517b41fa4c"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/detail/RangeSse42.h",
+          "sha256": "8bef1939b6dbfe96ddf83562dcd35a820877435b82443e28403423f70e11b39b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/detail/SimpleSimdStringUtils.h",
+          "sha256": "e9336bfa89c30cf300daf047cd90259ab34f9ae9525e2e294d12ae84091b8a8f"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/detail/SplitStringSimd.h",
+          "sha256": "f3f33ddea1979dd5c44bf35265fad8328959d368915d9123fd9af9fc3334bd13"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/folly-config.h",
+          "sha256": "52afb4e22e79ea863e9ef29cb999d9faa3141e6042cdf22dae68413ab8147278"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/functional/ApplyTuple.h",
+          "sha256": "dda47d616142eb5272ef5e19ea03f5f91332fa717bbfec68bc50efd7745b7eec"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/functional/Invoke.h",
+          "sha256": "0438d09ba959e0e0e3cf9ca5c1fcfca545c88c37f4c3078e37be34e94eef1883"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/hash/Hash.h",
+          "sha256": "7f6224c749d3bd1f0b46f613a330e1f0c8cf13998c204c30ecc738a59788bded"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/hash/MurmurHash.h",
+          "sha256": "90729f5dd63529b08285bcd447fafa8d3afd7fbc06bf7c64f2df0673990d5bf8"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/hash/SpookyHashV1.h",
+          "sha256": "866b7725297d4c8c45d148f319b447762970533579d43d5aed8b454f34c1df79"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/hash/SpookyHashV2.h",
+          "sha256": "46de845288a6d5810c515ca97f19ed0b2fabb59ea204ca0fad6b2b8c2ca4bf13"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/hash/traits.h",
+          "sha256": "85a15b37c89bab15002d1bea30e5a852b595bd9f8ca52f89ecd18e8755c35fe3"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/json/dynamic-inl.h",
+          "sha256": "0e1290376098fdeb227af94956ee84478b8cad494ae5e000dd4154f8e3b62f98"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/json/dynamic.h",
+          "sha256": "0ce5093ebe3657db8dc12401a45826ba71da1f72813469f07a32357683bb2f62"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/json/json_pointer.h",
+          "sha256": "c975250481215e3c26cf76a94e99e6f2f9a75194772f937b425cb4b686b2fdd7"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/json_pointer.h",
+          "sha256": "4552a9c6654ef2b31e852842e5f3a42c792bb461295fde74061eacaa4b08ff1d"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Align.h",
+          "sha256": "8a370bb014aa6719ce25acd123e3b29e786dffebb5432b6a332315da98b2ba3e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Assume.h",
+          "sha256": "3a2876726154801dfd2cc85e0726502a5d36862db9fc2b7413efbf9f228998eb"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Bits.h",
+          "sha256": "6a3a8190ee9c8e2dfae193a579ba5c05caae875537a84c0cc815ac4242da3b3e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Builtin.h",
+          "sha256": "9034f1bfefc8239b1567fb4899e09e37b1cbdf4358ddcf47ad17e7ba37cedd4b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/CArray.h",
+          "sha256": "37785faff4858a630bbb3faecf8b61a1cb1fe2db29d1fad2ae1191f1ef797053"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/CString.h",
+          "sha256": "890d6e4ca648d93045185622b8ef7b9183e3c1fd5ca14f89bf1232d5a08bf296"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/CheckedMath.h",
+          "sha256": "b5d74eebefe7d0c7de73661390e2757976f88c2f671ab016992c03aa8bf0f2ad"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/CustomizationPoint.h",
+          "sha256": "94f47098ed632a371cb68178cd757f8fb79e4af47a17d06b0a2c74f15725b814"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Exception.h",
+          "sha256": "4e726a977540a4710f9600c624a5baa826a3f51266de44a61fec7f30249ecbf6"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Hint-inl.h",
+          "sha256": "9660cc48aa52ac33acd5f05ae617a0511594be630d8e7f57a8576fac6078c36e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Hint.h",
+          "sha256": "21056a7aeba8f93dd19f951bfc0e2358caa19be04823a5f0fd44d799dbc5ee3b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/New.h",
+          "sha256": "68b7da4b0e26e6e4c03146e42b4eff7f3e8299f374ecbd1a9df30580b98c71a2"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Pretty.h",
+          "sha256": "07b7238a69682de23a330a1b56a0c95e8bdcbfe69e7ad7cb2c903f0c75687c63"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/RValueReferenceWrapper.h",
+          "sha256": "d9cac32453ea09dd5e2701b7d8b826e502579bae648a97f8400cf76be7312b06"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/SafeAssert.h",
+          "sha256": "7691cc640bf4d241054e46cfb133b83eb9ae1b5bc5c68b1de2f3736670ce8807"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/StaticConst.h",
+          "sha256": "6b4a344b1f7f7a0b60e2c88a29ac3ae05550d553df22f4887d0911909fe53e50"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/Thunk.h",
+          "sha256": "fc63fb6265562264ba761a14588fa3bf4289ce2a12507653e74f0725109bd482"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/ToAscii.h",
+          "sha256": "756801ae13af446315edba06596b9a4e58293da9598551fdfbae0fc61fb33538"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/TypeInfo.h",
+          "sha256": "ca946489c8da8e752ac6d0c946cc6c65f8fe9f2bc98021e9d0a8d4d3c50570aa"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/lang/UncaughtExceptions.h",
+          "sha256": "e505b0c9ad812ae8a7ddf7592231a0e6ac3cf883a26efc2d797b17877b79b83e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/memory/Malloc.h",
+          "sha256": "4a0c518a6b5b305e8b4c547436c60d7c406702914698f50a61cc2cee575c8d92"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/memory/MemoryResource.h",
+          "sha256": "fdd97e67996f1d0f1d3b72f689427831ef681421ebba6c13cdc5eb21b20339bd"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/memory/detail/MallocImpl.h",
+          "sha256": "82311fcca9f10894f180c488d07d0c096986d6600cffec06413d83007f223961"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/portability/Builtins.h",
+          "sha256": "55bc1b17b4a077d9cd2d414e7cf0606cb25445c554ae6c92b1257d9a7bbd3031"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/portability/Config.h",
+          "sha256": "64d8a5168ba0c7e12c56e880530c3e3dabb656085e6626b915ef2372b1183e9a"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/portability/Constexpr.h",
+          "sha256": "b1e7624e6f74149b0a83086906acc814943c9138f8da80950a6176f14c5bdf40"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/portability/Malloc.h",
+          "sha256": "819cda048b41c3153de2d690cbdc5b72e886948483266062f372f3e8546fe51e"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/portability/Math.h",
+          "sha256": "93266d794bc2aed43071c9dbb3a20c25af69d4b71a2956c3d1b8abfb5bc7f6b8"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/portability/SysTypes.h",
+          "sha256": "82b1178c71a7656aec0c9e021f8b01806aead6032cf416a0ca9dcb284d0f650b"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "source": "folly/portability/Windows.h",
+          "sha256": "3777088b7f311fb53d42a05fabd08bc1261b7486203cbbf2568a2bcffa7b03c7"
+        }
+      ],
+      "externalIncludeFrontier": [
+        "Availability.h",
+        "AvailabilityMacros.h",
+        "TargetConditionals.h",
+        "WinSock2.h",
+        "Windows.h",
+        "__config",
+        "algorithm",
+        "android/api-level.h",
+        "arm_acle.h",
+        "arm_neon.h",
+        "array",
+        "assert.h",
+        "atomic",
+        "basetsd.h",
+        "bit",
+        "bits/c++config.h",
+        "cassert",
+        "cctype",
+        "cerrno",
+        "charconv",
+        "cinttypes",
+        "climits",
+        "cmath",
+        "compare",
+        "concepts",
+        "cstdarg",
+        "cstddef",
+        "cstdint",
+        "cstdio",
+        "cstdlib",
+        "cstring",
+        "deque",
+        "direct.h",
+        "emmintrin.h",
+        "errno.h",
+        "exception",
+        "experimental/memory_resource",
+        "features.h",
+        "folly/coro/Coroutine.h",
+        "functional",
+        "immintrin.h",
+        "initializer_list",
+        "intrin.h",
+        "io.h",
+        "ios",
+        "iosfwd",
+        "iterator",
+        "jemalloc/jemalloc.h",
+        "limits",
+        "limits.h",
+        "locale",
+        "malloc.h",
+        "malloc_np.h",
+        "map",
+        "memory",
+        "memory_resource",
+        "new",
+        "nmmintrin.h",
+        "optional",
+        "ostream",
+        "range/v3/range/concepts.hpp",
+        "sal.h",
+        "stdexcept",
+        "stdint.h",
+        "stdio.h",
+        "stdlib.h",
+        "string",
+        "string.h",
+        "string_view",
+        "sys/types.h",
+        "system_error",
+        "tuple",
+        "type_traits",
+        "typeinfo",
+        "unordered_map",
+        "unordered_set",
+        "utility",
+        "vector",
+        "version",
+        "xmmintrin.h"
+      ],
+      "explicitCLinkageSourceLines": [
+        {
+          "owner": "ReactNativeDependencies",
+          "path": "fmt/format-inl.h",
+          "line": 1698,
+          "text": "extern \"C\" __declspec(dllimport) int __stdcall WriteConsoleW(  //"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "path": "folly/memory/detail/MallocImpl.h",
+          "line": 23,
+          "text": "extern \"C\" {"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "path": "folly/portability/Malloc.h",
+          "line": 49,
+          "text": "extern \"C\" size_t malloc_usable_size(void* ptr);"
+        },
+        {
+          "owner": "ReactNativeDependencies",
+          "path": "folly/portability/Malloc.h",
+          "line": 51,
+          "text": "extern \"C\" size_t malloc_usable_size(void* ptr);"
+        }
+      ],
+      "rawGraphLocalPath": "build/metadata-folly-source-facts.json",
+      "rawGraphSHA256": "1b1d272f711c0288da28cad8bf8577ddd6ddeb0b1a6822d9d0d3f0993fbf8ed5"
+    },
+    "cLinkagePreservationCandidates": [
+      {
+        "source": "folly/memory/detail/MallocImpl.h",
+        "lines": [
+          23,
+          102
+        ],
+        "names": [
+          "mallocx",
+          "rallocx",
+          "xallocx",
+          "sallocx",
+          "dallocx",
+          "sdallocx",
+          "nallocx",
+          "mallctl",
+          "mallctlnametomib",
+          "mallctlbymib",
+          "MallocExtension_Internal_GetNumericProperty"
+        ],
+        "conditions": [
+          "FOLLY_HAVE_WEAK_SYMBOLS",
+          "__FreeBSD__",
+          "USE_JEMALLOC",
+          "FOLLY_USE_JEMALLOC",
+          "FOLLY_SANITIZE",
+          "_MSC_VER",
+          "_M_IX86"
+        ],
+        "status": "Actual source contains extern-C function or function-pointer alternatives; active profile and complete signature/type/linkage inventory still required."
+      },
+      {
+        "source": "folly/portability/Malloc.h",
+        "lines": [
+          25,
+          53
+        ],
+        "names": [
+          "malloc_usable_size"
+        ],
+        "conditions": [
+          "USE_JEMALLOC",
+          "FOLLY_USE_JEMALLOC",
+          "FOLLY_SANITIZE",
+          "__FreeBSD__",
+          "__APPLE__",
+          "FOLLY_HAVE_MALLOC_USABLE_SIZE",
+          "_WIN32"
+        ],
+        "status": "Actual Apple-conditioned C declaration; cannot assume inactive or omit from a language projection."
+      }
+    ],
+    "perfetto": {
+      "exactHeader": "perfetto.h",
+      "localExactHeaderMatches": [],
+      "status": "UNSUPPORTED_WITH_PERFETTO_PROFILE; no approved macro profile, no conditional suppression or guessed expansion."
+    },
+    "sdk": {
+      "observedSDK": "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk",
+      "xcode": "Xcode 27.2\nBuild version 27B52",
+      "rnDirectSDKDependency": "react/timing/primitives.h -> mach/mach_time.h under __APPLE__",
+      "status": "Actual selected SDK header/macro/availability/type inventory not established for a production Expo partition profile.",
+      "actualCombinedEffectiveContextSHA256": "ca571fbb9408d0d20b338b0656763d88de66c2c8ffb25dd45e4639443d4c5ace",
+      "actualCombinedTarget": "arm64-apple-ios27.0-simulator"
+    }
+  },
+  "freshProducerGuardEvidence": {
+    "run": 43680891375,
+    "sourceCommit": "a7c52ed75ac06d4b3cd9c40ffc0548f4652347f9",
+    "status": "ACTUAL_FRESH_STAGING_GUARD_BYTES_PRESERVED",
+    "copies": [
+      {
+        "framework": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator/React.framework",
+        "hashes": {
+          "Headers/CallInvoker.h": "81e170047205812feb71aea3a8efe377cc04d61fcf78be025933a0ae8de70713",
+          "Headers/ReactCommon/CallInvoker.h": "6f8f8bcc7aec8f5496d9c4845131101c90adc37c847c01de8cba5152a4846037",
+          "Headers/ReactCommon/SchedulerPriority.h": "de14138508908f67ba7ea103bfe59acabed3dd97549e0f80c288ea669e832002"
+        }
+      },
+      {
+        "framework": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/ReactCommon.framework",
+        "hashes": {
+          "Headers/CallInvoker.h": "6f8f8bcc7aec8f5496d9c4845131101c90adc37c847c01de8cba5152a4846037",
+          "Headers/SchedulerPriority.h": "de14138508908f67ba7ea103bfe59acabed3dd97549e0f80c288ea669e832002"
+        }
+      },
+      {
+        "framework": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework",
+        "hashes": {
+          "Headers/CallInvoker.h": "81e170047205812feb71aea3a8efe377cc04d61fcf78be025933a0ae8de70713",
+          "Headers/ReactCommon/CallInvoker.h": "6f8f8bcc7aec8f5496d9c4845131101c90adc37c847c01de8cba5152a4846037",
+          "Headers/ReactCommon/SchedulerPriority.h": "de14138508908f67ba7ea103bfe59acabed3dd97549e0f80c288ea669e832002"
+        }
+      }
+    ],
+    "boundary": "ReactCommon CallInvoker/SchedulerPriority namespace aliases now match pinned source bytes; subsequent NativeScript JSI alias guard still fails. No whole-graph alias or combined metadata pass."
+  },
+  "nativeScriptJSISourceFacts": {
+    "version": "9.1.0",
+    "upstreamSource": "https://github.com/NativeScript/ios/tree/v9.1.0/NativeScript/jsi",
+    "binaryManifest": "https://raw.githubusercontent.com/NativeScript/ios-spm/9.1.0/Package.swift",
+    "binaryArchive": "https://github.com/NativeScript/ios/releases/download/v9.1.0/NativeScript.xcframework.zip",
+    "binaryManifestChecksum": "7fe4225faf085c61cef93d7faaa6c70fa3c97bf0631d53f4c868eea2d819c209",
+    "sourceBlobReceipts": [
+      {
+        "path": "NativeScript/jsi/decorator.h",
+        "gitBlobSHA": "deaa86b731f6e52adc314395ed16df7551f4f4c0",
+        "sha256": "cf4dd0e6741eead1febc499dc972a78f51122b29a85f063cabd79ecc62b1eaad",
+        "actualNativeFrameworkHeaderSHA256": "cf4dd0e6741eead1febc499dc972a78f51122b29a85f063cabd79ecc62b1eaad",
+        "matchesActualFramework": true
+      },
+      {
+        "path": "NativeScript/jsi/instrumentation.h",
+        "gitBlobSHA": "db22f4a41cf05ee21610fddde37da286b864ed4a",
+        "sha256": "d4500cca95bffdbd87cdc82f7afd8b23018477d7fa8499b79cc8be3a4e478bf9",
+        "actualNativeFrameworkHeaderSHA256": "d4500cca95bffdbd87cdc82f7afd8b23018477d7fa8499b79cc8be3a4e478bf9",
+        "matchesActualFramework": true
+      },
+      {
+        "path": "NativeScript/jsi/jsi-inl.h",
+        "gitBlobSHA": "8f30c056674cff96304b0568912e027543bd9e4e",
+        "sha256": "5f73c2dc4b8ca9e28d8f9d5552262a01cdcf97d487e0aafc6fa476ce6b73795d",
+        "actualNativeFrameworkHeaderSHA256": "5f73c2dc4b8ca9e28d8f9d5552262a01cdcf97d487e0aafc6fa476ce6b73795d",
+        "matchesActualFramework": true
+      },
+      {
+        "path": "NativeScript/jsi/jsi.h",
+        "gitBlobSHA": "7d760ef5ee7388cc60d0018cd2d6aacdd93d745a",
+        "sha256": "c3060269263853375bb668caf748025e93ea87e942124dc140f3b6977b03b7e3",
+        "actualNativeFrameworkHeaderSHA256": "c3060269263853375bb668caf748025e93ea87e942124dc140f3b6977b03b7e3",
+        "matchesActualFramework": true
+      },
+      {
+        "path": "NativeScript/jsi/jsilib.h",
+        "gitBlobSHA": "0dad2ee87233bc1dde188ed5ff3134fd27ca4f6d",
+        "sha256": "db831b495f88756a8e226c23e5d46b5c200211f7e64dc9eb8b81c7e1668fea26",
+        "actualNativeFrameworkHeaderSHA256": "db831b495f88756a8e226c23e5d46b5c200211f7e64dc9eb8b81c7e1668fea26",
+        "matchesActualFramework": true
+      },
+      {
+        "path": "NativeScript/jsi/threadsafe.h",
+        "gitBlobSHA": "768edb4ae3b39a20fc3e0fe9da22960607536f77",
+        "sha256": "da4bb6b034a7e4d715676993610004f5328ab58a926d008224fe5c97594e8d91",
+        "actualNativeFrameworkHeaderSHA256": "da4bb6b034a7e4d715676993610004f5328ab58a926d008224fe5c97594e8d91",
+        "matchesActualFramework": true
+      }
+    ],
+    "actualMetadataInventory": {
+      "run": 43680891375,
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/build/NativeScriptMetadataProbeDerivedData/Build/Products/Debug-iphonesimulator/NativeScript.framework",
+      "status": "SELECTED",
+      "modules": [],
+      "publicUmbrellaHeaders": [],
+      "moduleMapSHA256": null
+    },
+    "umbrellaHeader": {
+      "upstreamPath": "NativeScript/NativeScript.h",
+      "gitBlobSHA": "f9bcc9f18f2dc49422d7689c72e5376539e1478b",
+      "sha256": "fbc2af062b87b1c0655afe9cc9604075861d3c2e298d37e724bc2cf0ab41259b",
+      "matchesActualFramework": true,
+      "directInclude": "Foundation/Foundation.h; no JSI include in this file"
+    },
+    "includeSpelling": "NativeScript six-file source uses quoted jsi/... includes, distinct from RN angle jsi/... and different declarations. This does not by itself prove actual dependency reachability.",
+    "ownershipStatus": "SEPARATE_PINNED_SOURCE_PROVEN; actual full include/module reachability and C++ consumer ABI contexts not proven. Preserve variant; no replacement or alias waiver."
+  }
 }

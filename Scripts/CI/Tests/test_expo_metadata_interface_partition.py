@@ -127,6 +127,16 @@ class ExpoMetadataInterfacePartitionTests(unittest.TestCase):
                 self.assertIn("incomplete inventory only", result.stderr)
                 self.contract[field] = original
 
+    def test_observed_sdk_context_and_perfetto_flag_do_not_approve_a_partition_profile(self):
+        observed = self.contract["observedNativeCompilerContexts"][0]
+        for macros in [{}, {"WITH_PERFETTO": "1"}]:
+            with self.subTest(macros=macros):
+                self.contract["approvedCompilerProfiles"] = [{"context": observed, "macros": macros}]
+                self.save_contract()
+                result = self.audit()
+                self.assertEqual(result.returncode, 1)
+                self.assertIn("no approved compilation profiles", result.stderr)
+
     def test_unleased_header_and_contract_path_traversal_are_rejected(self):
         group = self.contract["frameworks"]["jsi.framework"]
         header = group["headers"][0]
