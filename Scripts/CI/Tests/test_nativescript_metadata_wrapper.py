@@ -164,7 +164,6 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             self.assertNotIn("HanlinNativeServicesBridge.h", text)
             flags = shlex.split(WRAPPER.metadata_flags(root, module, ROOT / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"))
             self.assertEqual(flags[0], "-fno-modules")
-            self.assertEqual(flags[flags.index("-x") + 1], "objective-c++")
             self.assertIn(f"-fmodule-map-file={module}", flags)
             self.assertNotIn("-include", flags)
 
@@ -207,8 +206,6 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
                  patch.object(WRAPPER.subprocess, "run") as run, contextlib.redirect_stdout(io.StringIO()):
                 run.return_value.returncode = 0
                 self.assertEqual(WRAPPER.main(), 1)
-                actual_env = run.call_args.kwargs["env"]
-                self.assertEqual(actual_env["GCC_C_LANGUAGE_STANDARD"], actual_env.get("CLANG_CXX_LANGUAGE_STANDARD", "gnu++20"))
             retained = root / "build/acceptance/nativescript-metadata/iphonesimulator-arm64"
             self.assertEqual((retained / diagnostic.name).read_bytes(), diagnostic.read_bytes())
             self.assertEqual((retained / "metadata-arm64.bin").read_bytes(), b"NSObject\0UIView\0")

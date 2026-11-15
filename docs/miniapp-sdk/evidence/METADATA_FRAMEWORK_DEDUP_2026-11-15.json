@@ -4,7 +4,10 @@
   "attribution": "[נועם | Runtime/SDK] [MAIN_SESSION]",
   "lease": "W1-001",
   "baseline": "ba7a5ba3ed9e8983cc47df532114079f64bff0b0",
-  "tasks": ["1220373608755846", "1220374076374903"],
+  "tasks": [
+    "1220373608755846",
+    "1220374076374903"
+  ],
   "localWrapperTests": {
     "status": "EXECUTED_PASS",
     "command": "py -3 -B -m unittest Scripts.CI.Tests.test_nativescript_metadata_wrapper -v",
@@ -15,10 +18,458 @@
     "platform": "Windows",
     "boundary": "Synthetic filesystem discovery/failure cases; no Apple/VM claim"
   },
-  "focusedNativeMetadata": {"status": "NOT_RUN"},
-  "appConsumers": {"status": "NOT_RUN", "requestedMethods": 16},
-  "strictCompleteSDKTyping": {"status": "NOT_RUN"},
-  "physicalDevice": {"status": "NOT_RUN"},
-  "historicalFailure": {"run": 43650510166, "status": "FAILED", "executedMethods": 0},
-  "taskCompletion": false
+  "focusedNativeMetadata": {
+    "status": "REUSED_VERIFIED_PASS",
+    "run": 43654504526,
+    "commit": "dd700c03e9fe9d22e95a031d4684275512ee6e6f",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43654504526",
+    "jobSeconds": 165,
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "sdkVersion": "27.2",
+    "architecture": "arm64",
+    "artifact": {
+      "id": 14137184091,
+      "size_in_bytes": 28346655,
+      "digest": "sha256:c3f0b902a56f1d07303f55a94b972ac055d97f6810d5ea56d7753a80d5551178"
+    },
+    "rawResultSHA256": "b86d722eec28344fd39c21bb73df0da943c430a680ed5d0e683bc2dc3d17fa08",
+    "generatorSHA256": "ca40f0190fa0f10fc8b6da42ce5956b48698718f20778f09919f9e22d3860ae8",
+    "actualToolSourceHashMatches": true,
+    "actualToolBinaryHashMatches": true,
+    "sdk": {
+      "exitCode": 0,
+      "requiredMetadataStringsPresent": {
+        "HanlinNativeServicesBridge": true,
+        "HanlinNativeServicesSessionBridge": true,
+        "HanlinNativeScriptCompatibility": true,
+        "UIView": true,
+        "NSObject": true
+      },
+      "xcodeClangSyntaxControlExitCode": 0,
+      "metadataSHA256": "dae5882319e5c54af2719bc9bf4c799506773437bcf6a0a40bca5928e9774d2e",
+      "metadataBytes": 10745446,
+      "clangErrorCount": 0,
+      "status": "EXECUTED_PASS"
+    },
+    "runtimeWrapper": {
+      "status": "EXECUTED_PASS",
+      "exitCode": 0,
+      "python": "3.9.6 (default, Oct 19 2026, 19:18:13) \n[Clang 21.0.0 (clang-2100.4.1.1)]",
+      "generatedSwiftHeaderSHA256": "cf655de3a171181605fb062db6e5e4776a7f1df43f92e63f6a16847c82c66c88",
+      "visibility": {
+        "schemaVersion": 1,
+        "platform": "iphonesimulator",
+        "architecture": "arm64",
+        "sha256": {
+          "metadata-generation-stderr-arm64.txt": "6a5a6decd8213393537a02f79be1dce1f096c5d73ad7e17625ac3e7e8cb6a352",
+          "umbrella-arm64.h": "576a283f5e9b9c8c1d57a529115537e0f7abbebc755ebf36c1093d0e557ecf37",
+          "metadata-arm64.bin": "8c0809b1ff88174f39b1a45f4bae168449d2f1c14d3b8778529e5496efeca183"
+        },
+        "requiredMetadataStringsPresent": {
+          "HanlinNativeServicesBridge": true,
+          "HanlinNativeServicesSessionBridge": true,
+          "HanlinNativeScriptCompatibility": true,
+          "UIView": true,
+          "NSObject": true,
+          "NativeScriptEmbedder": true,
+          "SwiftUIProvider": true,
+          "HanlinNativeScriptSwiftUIFixtureProvider": true
+        },
+        "clangErrorCount": 0,
+        "boundary": "Build-time completeness check; actual VM tests still required."
+      },
+      "boundary": "Actual Swift compilation+production metadata launcher; no app/VM/device execution."
+    },
+    "declarationParity": {
+      "status": "EXECUTED_PASS",
+      "yamlFiles": 31
+    },
+    "invalidDeclarationRejected": {
+      "exitCode": 1,
+      "status": "EXECUTED_PASS"
+    },
+    "generatedSDKDeclarationFiles": 180,
+    "actualProviderOnEvent": "((p1: NSDictionary<any, any>) => void) | null",
+    "boundary": "Actual tool/SDK/Swift-provider proof. No duplicate Expo copies in this isolated probe; app/VM/UI/device acceptance separate.",
+    "originalExecutionStatus": "EXECUTED_PASS",
+    "reuseBasis": "All five relevant code/test files restored byte-identical to dd700c03; no relevant package/fixture/toolchain inputs changed. This is not a new native execution."
+  },
+  "appConsumers": {
+    "status": "NOT_RUN",
+    "requestedMethods": 16,
+    "run": 43654868788,
+    "commit": "dd700c03e9fe9d22e95a031d4684275512ee6e6f",
+    "executionState": "COMPLETED",
+    "selectors": [
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptRuntimeRealLaunchFixtureAndTeardown()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/onlyTheStartedNativeScriptSessionRestoresItsExactPreviousEnvironment()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/failedNativeScriptBootstrapRollsBackEnvironmentWithoutKeepingAFalseOwner()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptLocalAndRemoteRequestWorksAfterCleanupAndReregistration()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptNegativeAuthCasesFailWithGenuineErrors()",
+      "AI_HLYTests/CanonicalMiniAppIntegrationTests/compiledIntentPublishesItsActualDurableResultAndRejectsStaleIdentity()",
+      "AI_HLYTests/HanlinScriptPackageProductionE2ETests/launchActiveApplicationIDIsNoOp()",
+      "AI_HLYTests/HanlinScriptPackageProductionE2ETests/productionPackageFlow()",
+      "AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoHostFilesPreserveEmptyAndBinaryBytesThroughTheJSFacade",
+      "AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoMalformedPackageRejection",
+      "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSharedCoreUnbundledEndToEnd",
+      "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testDirectUIKitTabBarBridge",
+      "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSwiftUIInteractionCoreRegressionAndLifecycle",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeSDKGlobalAndPropertyShapesAreObservedWithoutInvokingUI()"
+    ],
+    "executedMethods": 0,
+    "reason": "App build failed; simulator test suite skipped",
+    "cases": [
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptRuntimeRealLaunchFixtureAndTeardown()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/onlyTheStartedNativeScriptSessionRestoresItsExactPreviousEnvironment()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/failedNativeScriptBootstrapRollsBackEnvironmentWithoutKeepingAFalseOwner()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptLocalAndRemoteRequestWorksAfterCleanupAndReregistration()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptNegativeAuthCasesFailWithGenuineErrors()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/CanonicalMiniAppIntegrationTests/compiledIntentPublishesItsActualDurableResultAndRejectsStaleIdentity()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinScriptPackageProductionE2ETests/launchActiveApplicationIDIsNoOp()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinScriptPackageProductionE2ETests/productionPackageFlow()",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoHostFilesPreserveEmptyAndBinaryBytesThroughTheJSFacade",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoMalformedPackageRejection",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSharedCoreUnbundledEndToEnd",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testDirectUIKitTabBarBridge",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionSwiftUIInteractionCoreRegressionAndLifecycle",
+        "status": "NOT_RUN"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeSDKGlobalAndPropertyShapesAreObservedWithoutInvokingUI()",
+        "status": "NOT_RUN"
+      }
+    ]
+  },
+  "strictCompleteSDKTyping": {
+    "status": "NOT_RUN"
+  },
+  "physicalDevice": {
+    "status": "NOT_RUN"
+  },
+  "historicalFailure": {
+    "run": 43650510166,
+    "status": "FAILED",
+    "executedMethods": 0
+  },
+  "taskCompletion": false,
+  "implementationCommit": "dd700c03e9fe9d22e95a031d4684275512ee6e6f",
+  "sourceSHA256": {
+    "AI_HLYTests/NativeScriptRuntimeWireTests.swift": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835",
+    "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "8a5d2456e6e93e6275421a8a6b9853e564687a2f75541ac60c0531f4fde89819",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "1d7ebf9d90edae93e301ad5ea764228b7eee79ca60d9b142e7f65dc7b400180b",
+    "Scripts/NativeScript/metadata_public_headers.py": "64cdd9a8d14a31361d910d17815ded7f462ed1b04c4f7f5ed9163424a4f4c3d9"
+  },
+  "currentSourceMatchesVerifiedImplementation": true,
+  "status": "BLOCKED_INPUT_ROLE_CONTRACT",
+  "appFrameworkDedup": {
+    "status": "EXECUTED_PASS",
+    "run": 43654868788,
+    "commit": "dd700c03e9fe9d22e95a031d4684275512ee6e6f",
+    "inventorySHA256": "b06081f45b670a874174d75e8c816c768edf47830c62e96cafc101d372394f50",
+    "records": 339,
+    "checks": [
+      {
+        "framework": "ExpoBrownfield.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/ExpoBrownfield.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/ExpoBrownfield.framework",
+        "manifestSHA256": "0e277a5755ad7548b842578735158808ecb9652e1dd4ce1272de309ce4374e0d",
+        "inputFiles": 2,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "ExpoModulesCore.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/ExpoModulesCore.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/ExpoModulesCore.framework",
+        "manifestSHA256": "6cb6e803d96e5a8d5913230df4e85c17900ae84dc2ea5cc18868069ba0bbada9",
+        "inputFiles": 81,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "ExpoModulesJSI.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/ExpoModulesJSI.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/ExpoModulesJSI.framework",
+        "manifestSHA256": "e8a11f0738e5dfa05cd3628e3ee6fbf204b0e870106dd1cb32d191b8e108094b",
+        "inputFiles": 2,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "ExpoModulesWorklets.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/ExpoModulesWorklets.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/ExpoModulesWorklets.framework",
+        "manifestSHA256": "dd018ae735d260f7037776c198939c23ba37cd9a18af38bf3605eb6383889116",
+        "inputFiles": 9,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "ExpoUI.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/ExpoUI.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/ExpoUI.framework",
+        "manifestSHA256": "01ae87341ff2bfd1901ac7c847172963032cb4d8bf790e4abcb7c206453be1b4",
+        "inputFiles": 4,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "NSCWinterTC.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/NSCWinterTC.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/NSCWinterTC.framework",
+        "manifestSHA256": "19e58d2ee2ee52dea655b594abb24d64f8ce437b906c1b96221c8f031ec63bda",
+        "inputFiles": 4,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "NativeScript.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/NativeScript.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/NativeScript.framework",
+        "manifestSHA256": "2bfe584f0e3b2ca54e2376b21390d883a21b4cc834aa79c412f51d9d9b5dc5dc",
+        "inputFiles": 290,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "React.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/React.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/React.framework",
+        "manifestSHA256": "9ff6382855e1bce75ee6709abbac7dc170b31a556f8e747d9fa1fef856dd1392",
+        "inputFiles": 3355,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "ReactNativeDependencies.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/ReactNativeDependencies.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/ReactNativeDependencies.framework",
+        "manifestSHA256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "inputFiles": 0,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "TKLiveSync.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/TKLiveSync.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/TKLiveSync.framework",
+        "manifestSHA256": "e6ca32c7eb3042bd179c5eae2d524bb55fee0fb3cc177efe38e1f7f038bd29d1",
+        "inputFiles": 1,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "TNSWidgets.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/TNSWidgets.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/TNSWidgets.framework",
+        "manifestSHA256": "82db4337b3bfc4a587faf39a33431f7337152a49289e02f17779b6371363ef5b",
+        "inputFiles": 12,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      },
+      {
+        "framework": "hermesvm.framework",
+        "selected": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/PackageFrameworks/hermesvm.framework",
+        "duplicate": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/hermesvm.framework",
+        "manifestSHA256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "inputFiles": 0,
+        "equal": true,
+        "selectedPriority": 0,
+        "duplicatePriority": 67
+      }
+    ],
+    "boundary": "Actual file-discovery and identical-copy proof; app build and VM/UI did not pass."
+  },
+  "appBuild": {
+    "status": "FAILED",
+    "run": 43654868788,
+    "commit": "dd700c03e9fe9d22e95a031d4684275512ee6e6f",
+    "jobSeconds": 933,
+    "baselineCompilationSeconds": 160,
+    "artifact": {
+      "id": 14138215380,
+      "size_in_bytes": 6962705,
+      "digest": "sha256:cb3205f30dabb0d7666f19dcf14c50e28b2f023715f6f96161cd696d06d40661"
+    },
+    "visibility": {
+      "schemaVersion": 1,
+      "platform": "iphonesimulator",
+      "architecture": "arm64",
+      "sha256": {
+        "metadata-generation-stderr-arm64.txt": "415b8420dfd600f90abe561f52e98b7eccf91ee76821093e2cc6b024aa12dc48",
+        "umbrella-arm64.h": "e84023bd463409530e6a96db169985986e689ba61cc81b96a76b5c7e57f39508",
+        "metadata-arm64.bin": "4ca9339a93cb1039b3a5bbe977f3115befcdc6390080ebadda9e59ffa27e64c0"
+      },
+      "requiredMetadataStringsPresent": {
+        "HanlinNativeServicesBridge": true,
+        "HanlinNativeServicesSessionBridge": true,
+        "HanlinNativeScriptCompatibility": true,
+        "UIView": true,
+        "NSObject": true,
+        "NativeScriptEmbedder": true,
+        "SwiftUIProvider": true,
+        "HanlinNativeScriptSwiftUIFixtureProvider": true
+      },
+      "clangErrorCount": 20,
+      "boundary": "Build-time completeness check; actual VM tests still required."
+    },
+    "reason": "Pure C++ ReactCommon/jsi include-shim headers imported in Objective-C metadata mode",
+    "simulatorTestStep": "skipped"
+  },
+  "rejectedObjectiveCPlusPlusAttempt": {
+    "status": "FAILED",
+    "run": 43656411654,
+    "commit": "5ae5eb94036a0e6a0c01edc1daba940e959d41c6",
+    "jobSeconds": 141,
+    "artifact": {
+      "id": 14138211926,
+      "size_in_bytes": 20153559,
+      "digest": "sha256:066e1c90aabef84c7d974d4c0259ba8be7552124d908b971f3315fefba677166"
+    },
+    "runtimeWrapper": {
+      "status": "FAILED",
+      "exitCode": 1,
+      "python": "3.9.6 (default, Oct 19 2026, 19:18:13) \n[Clang 21.0.0 (clang-2100.4.1.1)]",
+      "generatedSwiftHeaderSHA256": "cf655de3a171181605fb062db6e5e4776a7f1df43f92e63f6a16847c82c66c88",
+      "visibility": {
+        "schemaVersion": 1,
+        "platform": "iphonesimulator",
+        "architecture": "arm64",
+        "sha256": {
+          "metadata-generation-stderr-arm64.txt": "775ddfe430120044235f8cad85db78ff2e94dbcee39aebed18b3549788ccc0cd",
+          "umbrella-arm64.h": "576a283f5e9b9c8c1d57a529115537e0f7abbebc755ebf36c1093d0e557ecf37"
+        },
+        "requiredMetadataStringsPresent": {
+          "HanlinNativeServicesBridge": false,
+          "HanlinNativeServicesSessionBridge": false,
+          "HanlinNativeScriptCompatibility": false,
+          "UIView": false,
+          "NSObject": false,
+          "NativeScriptEmbedder": false,
+          "SwiftUIProvider": false,
+          "HanlinNativeScriptSwiftUIFixtureProvider": false
+        },
+        "clangErrorCount": 28,
+        "boundary": "Build-time completeness check; actual VM tests still required."
+      },
+      "boundary": "Actual Swift compilation+production metadata launcher; no app/VM/device execution."
+    },
+    "reason": "Pinned Clang17 lacks SDK27.2 C++ builtins; generator cannot create jsName for CXXRecord",
+    "reverted": true,
+    "boundary": "No app retry was dispatched with this failed candidate."
+  },
+  "includeShimEvidence": [
+    {
+      "framework": "ReactCommon",
+      "filesMatchActualRemoteManifest": true,
+      "inputSHA256": {
+        "Headers/CallInvoker.h": "67f17c2a4e20d5451a6397e520def0881030ee4ff22217633c159cc6274f354d",
+        "Headers/RuntimeExecutor.h": "2d45bcff701f20b265e36df3400d4f819d06b1cec5e5cd6d14b6334a71d8cecd",
+        "Headers/RuntimeExecutorSyncUIThreadUtils.h": "60e5603d38fc9c82d0062185ef7b139ed529e06c07bc8b38b4e24f5a9b4b35a5",
+        "Headers/SchedulerPriority.h": "78c5fff23e8a04e4968202f93681ba2b028708fde1407b1f368240aeb81abda3",
+        "Modules/module.modulemap": "c25e7f037af1eea168f433dab35c0e1dc5467364fc7ca2da027a5f87ba265910"
+      },
+      "hasFrameworkBinary": false,
+      "objcInterfaceOrProtocolHeaders": []
+    },
+    {
+      "framework": "jsi",
+      "filesMatchActualRemoteManifest": true,
+      "inputSHA256": {
+        "Headers/decorator.h": "155fa250fc68b7e9e3d17a7d75f3760a6bd103af8ecc4352ac4d59e3a91d0613",
+        "Headers/hermes-interfaces.h": "0fbc1ea7088d3bc9c568f20bd129233a37c6ef4a4a0cdabb49940c9390186e14",
+        "Headers/instrumentation.h": "1395779ad53ec372518b977d077e65a876215bc31a94cf049ed55d0a3d2426f4",
+        "Headers/jsi-inl.h": "a6cbf72ee25991a25cd43049e96fb275c900e24da67d5c2b9581faaca11f06a4",
+        "Headers/jsi.h": "db2f1ee9291340f3d05b11abdcdc3d12ac84c239e58599d4ef2ac06dbaa14d92",
+        "Headers/jsilib.h": "76d9a7c2725ead3898bf7bee5ce343442ea8b4ad1a74300a2a253bcd428c46f7",
+        "Headers/threadsafe.h": "c1733397f6af144fa5d2ddd1cf67f97974d2267a934977cc23e8e19d101566ca",
+        "Modules/module.modulemap": "dd062fb6a8cd97fdbd5d445249ae31396b38d906fcbdd24609420652fad77582"
+      },
+      "hasFrameworkBinary": false,
+      "objcInterfaceOrProtocolHeaders": []
+    }
+  ],
+  "contractDecisionRequired": {
+    "proposal": "Explicitly distinguish generated C++-only include dependencies from metadata root inputs, retain framework search paths/module ownership and supported ObjC/C APIs. No exclusion implemented.",
+    "stagingSource": "Scripts/Expo/prepare-ios-dependencies.mjs:523",
+    "requestedAdditionalLease": [
+      "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "Scripts/NativeScript/probe-sdk-metadata.py"
+    ],
+    "alternative": "Separate architectural C++ metadata/LLVM support project; do not fake SDK support or suppress diagnostics.",
+    "preservedAPINames": [
+      "EXExportedModule",
+      "EXModuleRegistry",
+      "RCTBridge",
+      "RCTView",
+      "RCTAppDelegate",
+      "RCTSwiftUIContainerViewWrapper",
+      "YGNodeNew",
+      "YGConfigNew",
+      "YGNodeStyleSetWidth"
+    ],
+    "coverageStatus": "FUTURE_OBLIGATION_NOT_EXECUTED",
+    "mustNotExcludeWholeModularFrameworksRoot": true,
+    "languageRequirementReference": "https://clang.llvm.org/docs/Modules.html#requires-declaration",
+    "replayInputs": "Existing pinned Expo staging + real compiled NativeScript Swift header + actual framework maps, order and header hashes. No synthesized SDK/Swift interfaces."
+  }
 }
