@@ -95,11 +95,19 @@ struct ChatView: View {
     @State private var a2uiPresentation: HanlinA2UIAppPresentation?
     @State private var a2uiSubmittingAction: HanlinA2UIAppPresentation.PendingAction?
     @State private var a2uiOriginalModelChoice: A2UIModelChoice?
+    @State private var a2uiHistoryUnavailable = false
 
-    private struct A2UIModelChoice: Equatable {
+    private struct A2UIModelChoice: Equatable, Sendable {
         let id: UUID
         let company: String?
         let name: String?
+    }
+
+    private struct A2UIHistoryScope: Equatable, Sendable {
+        let conversationID: UUID?
+        let temporary: Bool
+        let model: A2UIModelChoice?
+        let session: HanlinHostSession?
     }
 
     private var a2uiModelChoice: A2UIModelChoice? {
@@ -475,6 +483,37 @@ struct ChatView: View {
         chatWorkspaceStack
         #if HANLIN_A2UI_POC
         .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
+        .task(id: A2UIHistoryScope(conversationID: chatRecord.id, temporary: TemporaryRecord,
+            model: a2uiModelChoice, session: agentSessionOwner.session?.identity)) { @MainActor in
+            guard let originalID = chatRecord.id else { return }
+            let originalConversation = chatRecord
+            let originalScene = sessionScopeID
+            let originalTemporary = TemporaryRecord || sessionBridge?.isTemporaryChat(originalID) == true
+            if a2uiPresentation == nil { a2uiPresentation = HanlinA2UIAppPresentation() }
+            agentSessionOwner.presentation = a2uiPresentation
+            a2uiHistoryUnavailable = false
+            do {
+                try await agentSessionOwner.restoreHistory(conversation: originalConversation,
+                    conversationID: originalID, sceneID: originalScene,
+                    temporary: originalTemporary, modelContext: context)
+            } catch is CancellationError {
+                return
+            } catch let error as HanlinHostError where error == .staleContext || error == .cancelled {
+                return
+            } catch {
+                guard !Task.isCancelled, chatRecord === originalConversation, sessionScopeID == originalScene else { return }
+                a2uiHistoryUnavailable = true
+                NativeToolTraceLogger.shared.log("a2ui_history_restore_failed", ["code": "unavailable"])
+            }
+        }
+        .safeAreaInset(edge: .top) {
+            if a2uiHistoryUnavailable {
+                Label("Some rich content could not be restored.", systemImage: "exclamationmark.bubble")
+                    .font(.footnote).foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading).padding(8)
+                    .accessibilityIdentifier("hanlin-a2ui-history-unavailable")
+            }
+        }
         .onChange(of: a2uiPresentation?.pendingAction?.request.requestID) { _, _ in
             guard let action = a2uiPresentation?.takePendingAction(), !isResponding,
                   a2uiPresentation?.isCurrent(action) == true,

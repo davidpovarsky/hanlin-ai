@@ -2,7 +2,8 @@
 
 This source implements the actual `HanlinAppAgentPresentationConsumer` extracted by the SDK
 owner at `d1eedf9ed73b4f6c7c64f488caf92494602db865`. The app owner/APIManager source is the
-SDK8b hook; it is a required joint integration dependency, not duplicated in this branch.
+SDK8b hook plus the committed3ba46192603e9d31ff2029cbc684d2f05649c675 read-only restore hook;
+these are required joint integration dependencies, not duplicated in this branch.
 
 `ChatView` retains one `HanlinAppAgentSessionOwner` across requests and strongly retains its
 observable `HanlinA2UIAppPresentation`. The owner's protocol property remains weak. Before
@@ -35,6 +36,12 @@ historical binding/context and leaving the live run budget available. It cannot 
 Replay validates all bindings before publishing, disposes a failed reader, and retains at most
 the last64 rich history owners; older history keeps its canonical storage/Markdown fallback.
 
+Opening the original chat also calls `owner.restoreHistory` in a cancellable task, after
+installing the strong consumer, without creating an engine or sending a model request. It
+captures the original conversation/scene/temporary identity and does not decode a parallel
+presentationReference. New request/context cancellation is silent; actual load failure retains
+Markdown and reports a generic, nonpersisted unavailable label with finite diagnostics.
+
 ## Native proof scope
 
 The new manual `a2ui_app_consumer` selector compiles the real consumer and the exact verbatim
@@ -42,8 +49,14 @@ Foundation/SDK-only app protocol file from d1. It archives the actual SDK/Platfo
 from that same SHA and records the contract's source SHA/hash. No owner/store/APIManager stub
 or alternate DTO is used. It executes five new app-consumer cases, six affected live/replay SDK
 consumer cases on the newer SDK snapshot, and four affected canonical projection controls.
-The four projections are affected by the factored registered-identity lookup. All15 are pending
-native execution at this source commit. The prior29-case3637 callback proof remains separate;
+The four projections are affected by the factored registered-identity lookup. All15 passed in
+native macOS run43740867685/job132893514622 at ba868c6aa1587c86983c4bf0a40bb1239809049b.
+Exact original source blobs (including the d1 contract), SDK trees, unchanged lock, toolchain
+and all15 unique Passed xcresult nodes were authenticated. The durable record is
+`evidence/app-consumer-43740867685.json`; artifact14172755169 SHA256
+`34df084c24b958ed4869fd13e068a44b0f688596c397d195cee92332201fe63c`.
+The later ChatView history task changes no tested component input and is not claimed as tested.
+The prior29-case3637 callback proof remains separate;
 unaffected ownership/pure-validator/media controls are not repeated or relabeled as fresh.
 
 This proof excludes the SwiftData owner implementation and actual ChatView compilation. Those
@@ -54,7 +67,7 @@ the forthcoming typed cross-app original-return navigation port also remain OPEN
 
 ## Combined app graph requirements
 
-AI_Hanlin needs the real SDK app owner/store/Host/APIManager+optional ChatRecords field from8b/d1
+AI_Hanlin needs the real SDK app owner/store/Host/APIManager+optional ChatRecords field from8b/d1/3ba
 in addition to the three SDK package products already linked by integration. Its synchronized
 source folder includes these files automatically; do not add duplicate PBX source references.
 Link official root package `https://github.com/a2ui-project/a2ui` at exact revision

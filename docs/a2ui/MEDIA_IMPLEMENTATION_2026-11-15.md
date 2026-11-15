@@ -182,5 +182,10 @@ zero tests,199s. Source/lock/toolchain/xcresult hashes are retained in
 It confirms native player-wrapper and final-graph compilation at that original SHA, before the
 subsequent YouTube identity wrapper. The d7634f36 compile43734204357 remains BUILD_FAILED/zero
 tests on the same non-re-exported JSONValue annotation, separately recorded. The new YouTube
-identity wrapper needs its own affected compile check; unchanged identity/document/URL tests
-are not rerun and no playback/gesture behavior is inferred from compilation.
+identity wrapper received its affected compile check at0bf7c55d5fc068f3d7afa5b4102a6624e6e4b220:
+run43737141153/job132882135355 was COMPILE_PASS/zero executed tests,175s. Original source
+blobs, manifest/unchanged lock, build xcresult presence and Apple toolchain were authenticated in
+`evidence/media-compile-43737141153.json`; artifact14170872129 SHA256
+`2544fe0de9fec0bb625919079c13a9029f46dbc9dec1991cfc62ab8b23bbbe92`.
+Unchanged identity/document/URL tests were not rerun, and no playback/gesture behavior is
+inferred from compilation.
