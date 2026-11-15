@@ -1233,6 +1233,12 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertIn("skip", receipt["roots"][4])
         self.assertIn("skip", receipt["roots"][6])
         self.assertEqual(receipt["roots"][7]["state"], "inactive")
+        if self.modern:
+            builtin_pragmas = [event for event in receipt["events"] if event["kind"] == "compiler-predefine-pragma"]
+            self.assertEqual({event["source"] for event in builtin_pragmas}, {
+                '#pragma push_macro("__GCC_DESTRUCTIVE_SIZE")', '#pragma push_macro("__GCC_CONSTRUCTIVE_SIZE")'})
+            self.assertEqual(len(builtin_pragmas), 2)
+            self.assertTrue(all(re.fullmatch(r"[0-9a-f]{64}", event["predefinesSHA256"]) for event in builtin_pragmas))
 
     def test_semantically_invalid_cpp_tokens_are_not_an_ast_or_metadata_pass(self):
         header = self.folder / "cpp.h"
@@ -1262,7 +1268,9 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
 
     def test_unknown_owner_and_semantic_pragma_cannot_be_complete(self):
-        (self.folder / "root.h").write_text('#pragma clang diagnostic push\nint declaration;\n')
+        (self.folder / "root.h").write_text('#pragma clang diagnostic push\n' +
+            ('#line 1 "<built-in>"\n#pragma push_macro("__GCC_DESTRUCTIVE_SIZE")\n' if self.modern else '') +
+            'int declaration;\n')
         self.prepare('#include "root.h"\n', [(1, "root.h")])
         self.request["owners"] = []
         self.request_path.write_text(json.dumps(self.request))
@@ -1270,6 +1278,8 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertNotEqual(run.returncode, 0)
         self.assertGreater(receipt["unknownOwners"], 0)
         self.assertGreater(receipt["unprovenPragmas"], 0)
+        if self.modern:
+            self.assertGreaterEqual(receipt["unprovenPragmas"], 2)  # User source cannot impersonate compiler predefines.
 
     def test_source_import_cannot_claim_serialization_absence_without_parser(self):
         (self.folder / "root.h").write_text("@import UnknownModule;\n")

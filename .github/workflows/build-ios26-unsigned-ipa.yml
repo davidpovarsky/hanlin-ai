@@ -20,6 +20,7 @@ on:
           - modern-compile
           - modern-cpp
           - modern-provenance
+          - modern-validation
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false
@@ -147,7 +148,7 @@ jobs:
     if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
     name: Probe pinned NativeScript SDK metadata
     runs-on: xcode-27
-    timeout-minutes: ${{ (inputs.nativescript_metadata_tooling_mode == 'provenance' || inputs.nativescript_metadata_tooling_mode == 'modern-provenance') && 30 || 12 }}
+    timeout-minutes: ${{ (inputs.nativescript_metadata_tooling_mode == 'provenance' || inputs.nativescript_metadata_tooling_mode == 'modern-provenance' || inputs.nativescript_metadata_tooling_mode == 'modern-validation') && 30 || 12 }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
@@ -189,6 +190,7 @@ jobs:
           github-token: ${{ github.token }}
           path: build/modern-compile-reference
       - name: Compile candidate modern metadata frontend
+        id: modern-frontend
         if: startsWith(inputs.nativescript_metadata_tooling_mode, 'modern-')
         run: |
           python3 Scripts/CI/MetadataProvenanceProof/reuse_modern_tool.py
@@ -199,7 +201,7 @@ jobs:
         if: inputs.nativescript_metadata_tooling_mode == 'modern-compile'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --emit-types --modern-semantic-parity
       - name: Verify candidate ObjC++ SDK and original C metadata semantics
-        if: inputs.nativescript_metadata_tooling_mode == 'modern-cpp'
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-cpp' || inputs.nativescript_metadata_tooling_mode == 'modern-validation'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity
       - name: Inspect installed frontend development assets
         if: inputs.nativescript_metadata_tooling_mode == 'inventory'
@@ -208,7 +210,7 @@ jobs:
         if: ${{ inputs.nativescript_metadata_tooling_mode == 'provenance' && inputs.nativescript_metadata_tooling_mode != 'inventory' && inputs.nativescript_metadata_tooling_mode != 'modern-compile' }}
         run: python3 Scripts/CI/MetadataProvenanceProof/run.py
       - name: Execute changed modern frontend provenance controls
-        if: inputs.nativescript_metadata_tooling_mode == 'modern-provenance'
+        if: ${{ !cancelled() && (inputs.nativescript_metadata_tooling_mode == 'modern-provenance' || inputs.nativescript_metadata_tooling_mode == 'modern-validation') && steps.modern-frontend.outcome == 'success' }}
         env:
           HANLIN_METADATA_PROOF_FRONTEND: modern
         run: python3 Scripts/CI/MetadataProvenanceProof/run.py

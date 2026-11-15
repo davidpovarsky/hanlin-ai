@@ -26,6 +26,7 @@ def enum_prefix_source():
   std::set<std::string> visited;
   std::string candidate = prefix;
   while (visited.insert(candidate).second) {
+    if (candidate.empty()) return ""; // Original routine terminates at empty prefix.
     for (const auto& field : fieldNames)
       if (candidate.size() > field.size()) return "";
     bool shortened = false;
@@ -81,6 +82,27 @@ def main():
     generator = source / "metadata-generator"
     main_cpp = generator / "src/main.cpp"
     main_text = base.patch_main(main_cpp.read_text())
+    main_text = base.replace_once(main_text, "    clang::SourceManager &sm;",
+        "    clang::SourceManager &sm;\n    clang::Preprocessor &pp;")
+    main_text = base.replace_once(main_text,
+        "HanlinProvenanceCallbacks(clang::SourceManager &s, HanlinProvenanceState &v) : sm(s), state(v) {}",
+        "HanlinProvenanceCallbacks(clang::SourceManager &s, clang::Preprocessor &p, HanlinProvenanceState &v) : sm(s), pp(p), state(v) {}")
+    main_text = base.replace_once(main_text,
+        "std::make_unique<HanlinProvenanceCallbacks>(ci.getSourceManager(), state)",
+        "std::make_unique<HanlinProvenanceCallbacks>(ci.getSourceManager(), ci.getPreprocessor(), state)")
+    main_text = base.replace_once(main_text, "        // Preserve ALL handlers. Only pragma-once has established equivalence",
+        r'''        // LLVM20 InitPreprocessor emits these two push_macro directives.
+        // They execute entirely in PP. Trust only the actual predefines FileID,
+        // never a presumed filename that a source #line directive can spoof.
+        auto fileID = sm.getFileID(sm.getExpansionLoc(loc));
+        if (pp.getPredefinesFileID().isValid() && fileID == pp.getPredefinesFileID() &&
+            (text == "#pragma push_macro(\"__GCC_DESTRUCTIVE_SIZE\")" ||
+             text == "#pragma push_macro(\"__GCC_CONSTRUCTIVE_SIZE\")")) {
+            state.event(llvm::json::Object{{"kind", "compiler-predefine-pragma"},
+                {"source", textBytes}, {"predefinesSHA256", hanlinSHA(sm.getBufferData(fileID))}});
+            return; // Observed classification only; the original handler still runs.
+        }
+        // Preserve ALL handlers. Only pragma-once has established equivalence''')
     main_text = base.replace_once(main_text, "#include <clang/Lex/Preprocessor.h>",
         "#include <clang/Lex/Preprocessor.h>\n#include <clang/Lex/HeaderSearchOptions.h>")
     main_text = base.replace_once(main_text, "        _headerSearch.collectAllModules(modules);",
@@ -114,18 +136,37 @@ def main():
     # original field/layout serializer; never advertise C++ methods or mangled
     # functions/variables as C-callable globals.
     factory = generator / "src/Meta/MetaFactory.cpp"
-    factory.write_text(base.replace_once(factory.read_text(), "    case clang::Decl::Kind::Record:",
-        "    case clang::Decl::Kind::CXXRecord:\n    case clang::Decl::Kind::Record:"))
+    text = base.replace_once(factory.read_text(), "    case clang::Decl::Kind::Record:",
+        "    case clang::Decl::Kind::CXXRecord:\n    case clang::Decl::Kind::Record:")
+    text = base.replace_once(text, "  // The decl has no typedef name, so we return its name.", '''  // NS_OPTIONS in C++ is a preceding integer typedef and anonymous enum.
+  // Recover only the real typedef at the same macro expansion location;
+  // preserve the original enumerator/value serializer and public identity.
+  if (tagDecl->getASTContext().getLangOpts().CPlusPlus &&
+      clang::isa<clang::EnumDecl>(tagDecl) && tagDecl->getName().empty() &&
+      tagDecl->getBeginLoc().isMacroID()) {
+    const auto& sm = tagDecl->getASTContext().getSourceManager();
+    const clang::TypedefDecl* previous = nullptr;
+    for (const auto* sibling : tagDecl->getDeclContext()->decls()) {
+      if (sibling == tagDecl) break;
+      previous = clang::dyn_cast<clang::TypedefDecl>(sibling);
+    }
+    if (previous && previous->getUnderlyingType()->isIntegerType() &&
+        sm.getExpansionLoc(previous->getLocation()) == sm.getExpansionLoc(tagDecl->getBeginLoc()))
+      return previous->getNameAsString();
+  }
+  // The decl has no typedef name, so we return its name.''')
+    factory.write_text(text)
     visitor = generator / "src/Meta/DeclarationConverterVisitor.h"
     text = visitor.read_text()
     text = base.replace_once(text, "#include <clang/AST/RecursiveASTVisitor.h>",
-        "#include <clang/AST/RecursiveASTVisitor.h>\n#include <clang/AST/DeclTemplate.h>")
+        "#include <clang/AST/RecursiveASTVisitor.h>\n#include <clang/AST/DeclTemplate.h>\n#include <clang/AST/Mangle.h>")
     text = base.replace_once(text, "        try {\n            // Remove from cache", '''        if (decl->getASTContext().getLangOpts().CPlusPlus) {
             if (auto function = clang::dyn_cast<clang::FunctionDecl>(decl)) {
                 if (!function->isExternC()) return true;
             }
             if (auto variable = clang::dyn_cast<clang::VarDecl>(decl)) {
-                if (!variable->isExternC()) return true;
+                std::unique_ptr<clang::MangleContext> mangler(variable->getASTContext().createMangleContext());
+                if (mangler->shouldMangleDeclName(variable)) return true;
             }
             if (auto record = clang::dyn_cast<clang::CXXRecordDecl>(decl)) {
                 if (record->getDescribedClassTemplate() || clang::isa<clang::ClassTemplateSpecializationDecl>(record) ||
@@ -205,6 +246,7 @@ int main() {
   if (createValidPrefix({"MyEnumOne", "MyEnumTwo"}, "MyEnum") != "MyEnum") return 3;
   if (createValidPrefix({"Prefix_One", "Prefix_Two"}, "Prefix") != "Prefix_") return 4;
   if (createValidPrefix({"ABC1", "ABC2"}, "ABC") != "AB") return 5;
+  if (createValidPrefix({"_CLOCK_REALTIME", "_CLOCK_MONOTONIC"}, "") != "") return 6;
   return 0;
 }
 ''')
@@ -213,7 +255,7 @@ int main() {
         with (work / "build-2-enum-prefix-controls.log").open("w") as log:
             subprocess.run(control_compile, check=True, stdout=log, stderr=subprocess.STDOUT, timeout=60)
             subprocess.run([str(control_binary)], check=True, stdout=log, stderr=subprocess.STDOUT, timeout=5)
-        result["enumPrefixControls"] = {"status": "EXECUTED_PASS", "cases": 5, "sourceSHA256": sha(controls), "compileCommand": control_compile,
+        result["enumPrefixControls"] = {"status": "EXECUTED_PASS", "cases": 6, "sourceSHA256": sha(controls), "compileCommand": control_compile,
             "boundary": "Actual portable C++ algorithm execution, not iOS/runtime acceptance."}
         result.update(status="BUILT_NOT_ACCEPTED", generatorSHA256=sha(build / "bin/objc-metadata-generator"))
         import shlex

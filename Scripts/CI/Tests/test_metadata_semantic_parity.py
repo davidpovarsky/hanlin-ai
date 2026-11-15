@@ -35,3 +35,13 @@ class MetadataSemanticParityTests(unittest.TestCase):
         self.assertEqual(parity.compare_models(original, {"Items": original["Items"] * 2})["status"], "FAILED")
         with self.assertRaises(ValueError):
             parity.erase_generic_encoding({"Type": "TypeArgument", "Name": "T", "UnderlyingType": {"Type": "Id"}, "unknownABI": True})
+
+    def test_distinct_export_aliases_preserve_each_original_declaration(self):
+        original = {"Items": [{"Name": "native", "JsName": "native", "Type": "Var"},
+                              {"Name": "native", "JsName": "nativeVar", "Type": "Var"}]}
+        candidate = {"Items": [*original["Items"], {"Name": "new", "JsName": "new", "Type": "Var"}]}
+        self.assertEqual(parity.compare_models(original, candidate)["status"], "EXECUTED_PASS")
+        candidate["Items"][1] = {**candidate["Items"][1], "Type": "Function"}
+        self.assertEqual(parity.compare_models(original, candidate)["status"], "FAILED")
+        candidate["Items"][1] = candidate["Items"][0]
+        self.assertEqual(parity.compare_models(original, candidate)["status"], "FAILED")

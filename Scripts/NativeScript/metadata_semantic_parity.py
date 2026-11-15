@@ -45,8 +45,13 @@ def compare_models(original, candidate):
                 if any(not isinstance(item, dict) or not isinstance(item.get("Name"), str) for item in before + after):
                     differences.append({"path": path, "reason": "unnamed-member"})
                     return
-                old = {item["Name"]: item for item in before}
-                new = {item["Name"]: item for item in after}
+                # Top-level exports can share a native name but have distinct
+                # JS identities (e.g. UIKeyInputF1 and UIKeyInputF1Var). Compare
+                # every original field after matching its actual export identity.
+                def identity(item):
+                    return item.get("JsName", item["Name"]) if path.rsplit("/", 1)[-1] == "Items" else item["Name"]
+                old = {identity(item): item for item in before}
+                new = {identity(item): item for item in after}
                 if len(old) != len(before) or len(new) != len(after):
                     differences.append({"path": path, "reason": "duplicate-member-identity"})
                     return
