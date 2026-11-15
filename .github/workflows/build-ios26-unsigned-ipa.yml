@@ -145,11 +145,38 @@ jobs:
     if: ${{ inputs.target_validation_group == 'skill_format_app_resolve' && !inputs.testflight_upload }}
     name: Resolve original Yams in the actual app graph only
     runs-on: xcode-27
-    timeout-minutes: 18
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24.22.1'
+      - name: Preflight actual Xcode and runner before dependency staging
+        run: bash Scripts/CI/IntegrationValidation/resolve_skill_format_app.sh preflight
+      - name: Install existing pinned NativeScript preparation dependencies
+        timeout-minutes: 10
+        run: |
+          set -euo pipefail
+          SECONDS=0
+          trap 'echo "$SECONDS" > build/skill-format-app-resolution/nativescript-install-duration-seconds.txt' EXIT
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript 2>&1 | tee build/skill-format-app-resolution/nativescript-install.log
+      - name: Restore or prepare the existing declaration-only metadata compiler
+        timeout-minutes: 12
+        uses: ./.github/actions/prepare-nativescript-metadata-tool
+      - name: Stage existing pinned native binary targets
+        timeout-minutes: 12
+        run: |
+          set -euo pipefail
+          SECONDS=0
+          trap 'echo "$SECONDS" > build/skill-format-app-resolution/native-staging-duration-seconds.txt' EXIT
+          {
+            npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+            npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+            npm ci --prefix Scripts/Expo
+            node Scripts/Expo/prepare-ios-dependencies.mjs
+          } 2>&1 | tee build/skill-format-app-resolution/native-staging.log
       - name: Resolve app dependencies without building or testing
         run: bash Scripts/CI/IntegrationValidation/resolve_skill_format_app.sh
       - name: Record measured resolution cost
