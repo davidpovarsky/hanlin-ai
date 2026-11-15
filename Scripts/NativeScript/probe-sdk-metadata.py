@@ -32,16 +32,18 @@ def replay_final_header_staging(root: Path, folder: Path) -> dict:
     spec = importlib.util.spec_from_file_location("hanlin_actual_header_staging", script)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    for header in artifacts.rglob("*"):
-        if header.is_file() and header.suffix in {".h", ".hpp"}:
-            original = header.read_text(encoding="utf-8")
-            patched = module.patch_header_content(original, header.name)
-            if original != patched:
-                header.write_text(patched, encoding="utf-8")
+    staging_root = folder / "final-stage"
+    packages = staging_root / "SourcePackages"
+    derived = staging_root / "DerivedData"
+    packages.mkdir(parents=True, exist_ok=True)
     patcher = root / "Scripts/Expo/patch-hash-combine.mjs"
     with (folder / "final-header-staging.log").open("w") as log:
-        subprocess.run(["node", str(patcher), str(artifacts)], cwd=root,
-            stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
+        import contextlib
+        with contextlib.redirect_stdout(log), contextlib.redirect_stderr(log):
+            result = module.stage_modular_headers(packages, artifacts, derived_data_dir=derived,
+                configurations=["Debug"], force=True, sign_xcframeworks=False)
+    if result["status"] != "SUCCESS":
+        raise RuntimeError("Actual final header staging did not succeed")
     after = {p.name: framework_inputs(p) for p in modular.glob("*.framework")}
     changes = []
     for framework in sorted(set(before) | set(after)):
@@ -51,7 +53,9 @@ def replay_final_header_staging(root: Path, folder: Path) -> dict:
                 changes.append({"framework": framework, "path": path, "beforeSHA256": old, "afterSHA256": new})
     evidence = {"stageSourceSHA256": hashlib.sha256(script.read_bytes()).hexdigest(),
         "patcherSourceSHA256": hashlib.sha256(patcher.read_bytes()).hexdigest(), "changes": changes,
-        "boundary": "Actual existing pure header patches; no signing, engine build or substituted declarations."}
+        "stagingResult": result, "sourcePackages": str(packages), "derivedData": str(derived),
+        "signXCFrameworks": False,
+        "boundary": "Complete actual production header staging/copy/materialization; owned temporary outputs, no signing or engine build."}
     (folder / "final-header-staging.json").write_text(json.dumps(evidence, indent=2) + "\n")
     return evidence
 
@@ -159,7 +163,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     visibility = root / "build/acceptance/nativescript-metadata" / f"iphonesimulator-{arch}" / "visibility.json"
     recorded = json.loads(visibility.read_text()) if visibility.is_file() else {}
     arguments_path = visibility.parent / "actual-compiler-arguments.json"
-    actual_arguments = json.loads(arguments_path.read_text()) if arguments_path.is_file() else []
+    actual_context = json.loads(arguments_path.read_text()) if arguments_path.is_file() else {}
+    actual_arguments = actual_context.get("arguments", [])
     for receipt in visibility.parent.glob("input-roles-*.json"):
         (folder / ("final-" + receipt.name)).write_bytes(receipt.read_bytes())
     # Names confirmed from current staged declarations, not synthetic APIs.
@@ -176,7 +181,7 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     return {"status": "EXECUTED_PASS" if passed else "FAILED", "exitCode": execution.returncode,
             "python": sys.version, "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
             "visibility": recorded, "publicObjCAndCMetadataNames": public_symbols,
-            "actualMetadataCompilerArguments": actual_arguments, "actualSwiftProviderTarget": compilation["-target"],
+            "actualMetadataCompilerArguments": actual_arguments, "actualMetadataContext": actual_context, "actualSwiftProviderTarget": compilation["-target"],
             "finalHeaderStaging": final_staging,
             "includeOnlyFrameworks": [{"framework": r["framework"], "inputManifestSHA256": r["inputManifestSHA256"],
                                        "declarations": len(r["inputRoleProof"]["declarations"])} for r in include_only],

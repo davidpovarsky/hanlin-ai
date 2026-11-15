@@ -1,6 +1,7 @@
 """Public framework entry headers shared by SDK probes and the app metadata phase."""
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import json
 from pathlib import Path
@@ -26,6 +27,24 @@ def declaration_role(declarations: list[dict]) -> str:
     if any(d["category"] not in {"cpp", "public", "inert"} for d in declarations):
         return PUBLIC_ROLE
     return CPP_ROLE if any(d["category"] == "cpp" for d in declarations) else PUBLIC_ROLE
+
+
+@contextlib.contextmanager
+def compiler_working_directory(directory: Path):
+    previous = Path.cwd()
+    try:
+        os.chdir(directory)
+        yield
+    finally:
+        os.chdir(previous)
+
+
+def compiler_environment_sha256() -> str:
+    # These driver/preprocessor inputs affect implicit include lookup and target defaults.
+    names = ["CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "OBJC_INCLUDE_PATH",
+             "OBJCPLUS_INCLUDE_PATH", "SDKROOT", "DEVELOPER_DIR", "PATH", "LANG", "LC_ALL",
+             "LC_CTYPE", "MACOSX_DEPLOYMENT_TARGET", "IPHONEOS_DEPLOYMENT_TARGET"]
+    return hashlib.sha256(json.dumps({name: os.environ.get(name) for name in names}, sort_keys=True).encode()).hexdigest()
 
 
 def canonical_target(target: str) -> tuple:
@@ -274,7 +293,9 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path,
                 "metadataDeclarationPolicySource": INCOMPLETE_RECORD_POLICY_SOURCE,
                 "dependencyLockSHA256": hashlib.sha256((repository / "Scripts/Expo/dependency-lock.json").read_bytes()).hexdigest(),
                 "compilerLibrarySHA256": hashlib.sha256(library.read_bytes()).hexdigest(),
-                "originRoot": str(directory.resolve()), "compilerArguments": arguments, "frameworks": records}
+                "originRoot": str(directory.resolve()), "compilerArguments": arguments,
+                "workingDirectory": str(Path.cwd().resolve()), "compilerEnvironmentSHA256": compiler_environment_sha256(),
+                "frameworks": records}
     (receipt_path or directory / ROLE_MANIFEST).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return manifest
 
@@ -308,6 +329,11 @@ def verified_framework_roles(directory: Path, compiler_arguments: list[str] | No
             raise RuntimeError("Framework input-role proof refers to an unowned header")
         if record["role"] == CPP_ROLE:
             arguments = manifest["compilerArguments"]
+            verify_role_context(arguments, compiler_arguments)
+            if manifest.get("workingDirectory") != str(Path.cwd().resolve()):
+                raise RuntimeError("Framework input-role working directory changed")
+            if manifest.get("compilerEnvironmentSHA256") != compiler_environment_sha256():
+                raise RuntimeError("Framework input-role compiler environment changed")
             objc = proof.get("objcCompatibility", {})
             if not complete_language_proof(proof, "objective-c++", arguments) or proof.get("role") != CPP_ROLE or declaration_role(proof["declarations"]) != CPP_ROLE:
                 raise RuntimeError("Framework input-role contains incomplete/supported/mixed or unknown declarations: " + framework.name)
@@ -320,7 +346,6 @@ def verified_framework_roles(directory: Path, compiler_arguments: list[str] | No
                     dependency = Path(name)
                     if not dependency.is_file() or hashlib.sha256(dependency.read_bytes()).hexdigest() != digest:
                         raise RuntimeError("Framework input-role parser dependency changed: " + name)
-            verify_role_context(arguments, compiler_arguments)
         roles[framework.name] = record
     return roles
 

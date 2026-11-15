@@ -244,6 +244,7 @@ def stage_modular_headers(
     configurations: Optional[List[str]] = None,
     force: bool = False,
     run_patch_hash_combine: bool = True,
+    sign_xcframeworks: bool = True,
 ) -> Dict[str, any]:
     """Execute fast, complete and idempotent modular header staging."""
     start_time = time.perf_counter()
@@ -511,14 +512,15 @@ def stage_modular_headers(
                     print("[stage_modular_headers] patch-hash-combine.mjs executed successfully.")
 
     # 6. Resign xcframeworks on macOS
-    for xcf in expo_artifacts_dir.glob("*.xcframework"):
-        resign_xcframework(xcf)
-    if checkouts_dir.is_dir():
-        for checkout in checkouts_dir.iterdir():
-            for base in (checkout / "Packages" / "HanlinExpoRuntime" / "Artifacts", checkout / "Artifacts"):
-                if base.is_dir():
-                    for xcf in base.glob("*.xcframework"):
-                        resign_xcframework(xcf)
+    if sign_xcframeworks:
+        for xcf in expo_artifacts_dir.glob("*.xcframework"):
+            resign_xcframework(xcf)
+        if checkouts_dir.is_dir():
+            for checkout in checkouts_dir.iterdir():
+                for base in (checkout / "Packages" / "HanlinExpoRuntime" / "Artifacts", checkout / "Artifacts"):
+                    if base.is_dir():
+                        for xcf in base.glob("*.xcframework"):
+                            resign_xcframework(xcf)
 
     # 7. Write stamps to all stamp targets
     stamp_payload = json.dumps(
@@ -556,6 +558,7 @@ def main() -> int:
     parser.add_argument("--configuration", action="append", help="Build configuration(s) to stage")
     parser.add_argument("--force", action="store_true", help="Force re-staging even if stamp matches")
     parser.add_argument("--no-patch-hash-combine", action="store_true", help="Skip patch-hash-combine.mjs")
+    parser.add_argument("--skip-signing", action="store_true", help="Skip signing only for isolated metadata/header validation")
 
     args = parser.parse_args()
     sp_path = Path(args.source_packages_path)
@@ -570,6 +573,7 @@ def main() -> int:
         configurations=cfgs,
         force=args.force,
         run_patch_hash_combine=not args.no_patch_hash_combine,
+        sign_xcframeworks=not args.skip_signing,
     )
     return 0 if res["status"] in ("SUCCESS", "SKIPPED_STAMP_MATCH") else 1
 

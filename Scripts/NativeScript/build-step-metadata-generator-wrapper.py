@@ -93,19 +93,33 @@ def explicit_input_adapter(source: str) -> str:
         "    # clang arguments\n",
         '    generator_call.extend(["-input-umbrella", env("HANLIN_METADATA_INPUT_UMBRELLA")])\n\n    # clang arguments\n')
     return source.replace(invocation,
+        '    import json, hashlib\n'
+        '    ignored = {"HANLIN_METADATA_CAPTURE_ARGUMENTS", "HANLIN_METADATA_EXPECTED_CONTEXT", "HANLIN_METADATA_ACTUAL_CONTEXT"}\n'
+        '    context = {"schemaVersion": 1, "workingDirectory": os.path.realpath(os.getcwd()),\n'
+        '        "arguments": generator_call[generator_call.index("Xclang") + 1:], "generatorCall": generator_call,\n'
+        '        "environmentSHA256": hashlib.sha256(json.dumps({k:v for k,v in os.environ.items() if k not in ignored}, sort_keys=True).encode()).hexdigest()}\n'
         '    if os.environ.get("HANLIN_METADATA_CAPTURE_ARGUMENTS"):\n'
-        '        import json\n'
         '        with open(os.environ["HANLIN_METADATA_CAPTURE_ARGUMENTS"], "w") as output:\n'
-        '            json.dump(generator_call[generator_call.index("Xclang") + 1:], output)\n'
-        '        return\n' + invocation)
+        '            json.dump(context, output)\n'
+        '        return\n'
+        '    with open(os.environ["HANLIN_METADATA_EXPECTED_CONTEXT"]) as expected:\n'
+        '        if context != json.load(expected):\n'
+        '            raise RuntimeError("Metadata generator invocation context drifted after classification")\n'
+        '    with open(os.environ["HANLIN_METADATA_ACTUAL_CONTEXT"], "w") as output:\n'
+        '        json.dump(context, output)\n' + invocation)
 
 
-def capture_compiler_arguments(adapter: Path, environment: dict, arch: str, destination: Path) -> list[str]:
-    captured = subprocess.run([sys.executable, str(adapter), arch], cwd=adapter.parent,
+def capture_compiler_arguments(adapter: Path, environment: dict, arch: str, destination: Path,
+                               working_directory: Path | None = None) -> list[str]:
+    working_directory = (working_directory or adapter.parent).resolve()
+    captured = subprocess.run([sys.executable, str(adapter), arch], cwd=working_directory,
         env={**environment, "HANLIN_METADATA_CAPTURE_ARGUMENTS": str(destination)}, check=False)
     if captured.returncode or not destination.is_file():
         raise RuntimeError("Actual upstream metadata compiler arguments were not captured")
-    return json.loads(destination.read_text(encoding="utf-8"))
+    plan = json.loads(destination.read_text(encoding="utf-8"))
+    if Path(plan["workingDirectory"]).resolve() != working_directory:
+        raise RuntimeError("Metadata capture working directory differs from generator")
+    return plan["arguments"]
 
 
 def retain_and_check_metadata(arch: str, platform: str) -> bool:
@@ -164,76 +178,87 @@ def main() -> int:
             f"Hanlin NativeScript metadata: generated runtime Swift header is missing: {runtime_header}"
         )
 
-    module_root = Path(required_env("TARGET_TEMP_DIR")) / f"HanlinNativeScriptSwiftMetadata-{arch}"
+    module_root = (Path(required_env("TARGET_TEMP_DIR")) / f"HanlinNativeScriptSwiftMetadata-{arch}").resolve()
     module_map = module_root / "module.modulemap"
     shutil.rmtree(module_root, ignore_errors=True)
     module_root.mkdir(parents=True)
 
+    root = Path(required_env("SRCROOT")).resolve()
+    sys.path.insert(0, str(root / "Scripts/NativeScript"))
+    from metadata_public_headers import compiler_working_directory
     try:
-        swift_headers = write_swift_module_map(module_map, runtime_header, arch)
-        environment = os.environ.copy()
-        root = Path(required_env("SRCROOT"))
-        sys.path.insert(0, str(root / "Scripts/NativeScript"))
-        from metadata_public_headers import (write_public_umbrella, write_verified_header_alias_overlay,
-            produce_role_inventory, ROLE_MANIFEST, verify_role_context)
-        core_support_dir = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
-        tool_root = root / "build/nativescript-metadata-tool"
-        tool = tool_root / "bin/objc-metadata-generator"
-        provenance = json.loads((tool_root / "provenance.json").read_text())
-        if hashlib.sha256(tool.read_bytes()).hexdigest() != provenance["generatorSHA256"] or \
-           provenance["patchSourceSHA256"] != hashlib.sha256((root / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest():
-            raise RuntimeError("Metadata build-tool provenance does not match actual inputs")
-        umbrella = module_root / "HanlinMetadataInput.h"
-        evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
-        evidence.mkdir(parents=True, exist_ok=True)
-        alias_overlay = module_root / "HanlinHeaderAliases.json"
-        adapter = module_root / "build-step-metadata-generator-adapter.py"
-        adapter.write_text(explicit_input_adapter(upstream_generator.read_text()), encoding="utf-8")
-        environment["HANLIN_METADATA_GENERATOR"] = str(tool)
-        environment["HANLIN_METADATA_INPUT_UMBRELLA"] = str(umbrella)
-        environment["CLANG_ENABLE_MODULES"] = "NO"
-        original_cflags = environment.get("OTHER_CFLAGS", "")
-        environment["OTHER_CFLAGS"] = f'{original_cflags} {metadata_flags(module_root, module_map, core_support_dir)}'.strip()
-        directories = [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))]
-        role_roots = list(dict.fromkeys(p.resolve() for p in directories if (p / ROLE_MANIFEST).is_file()))
-        receipts = {str(directory): module_root / f"input-roles-{n}.json" for n, directory in enumerate(role_roots)}
-        try:
-            library = None
-            if role_roots:
-                clang = Path(subprocess.check_output(["xcrun", "--find", "clang"], text=True).strip()).resolve()
-                library = clang.parent.parent / "lib/libclang.dylib"
-                # First inventory only discovers ownership/aliases; it grants no include-only role.
-                for directory in role_roots:
-                    produce_role_inventory(directory, [], library, classify=False, receipt_path=receipts[str(directory)])
-            inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
-                sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts)
-            aliases = write_verified_header_alias_overlay(inventory, alias_overlay)
-            environment["OTHER_CFLAGS"] = f'{original_cflags} {metadata_flags(module_root, module_map, core_support_dir, alias_overlay if aliases else None)}'.strip()
-            arguments = capture_compiler_arguments(adapter, environment, arch, module_root / "actual-compiler-arguments.json")
-            verify_role_context(arguments, arguments)
-            # Reclassify ALL final, post-staging bytes at the exact captured context.
-            # Never promote a stale receipt by updating hashes alone.
-            for directory in role_roots:
-                produce_role_inventory(directory, arguments, library, receipt_path=receipts[str(directory)])
-            inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
-                sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments)
-        finally:
-            for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay,
-                         alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
-                         module_root / "actual-compiler-arguments.json", *receipts.values()]:
-                if path.is_file():
-                    shutil.copy2(path, evidence / path.name)
-        completed = subprocess.run(
-            [sys.executable, str(adapter), *sys.argv[1:]],
-            cwd=generator_root,
-            env=environment,
-            check=False,
-        )
-        complete = retain_and_check_metadata(arch, platform_name)
-        return completed.returncode if completed.returncode else (0 if complete else 1)
+        with compiler_working_directory(generator_root):
+            return generate_final_metadata(root, arch, platform_name, module_root, module_map, runtime_header, generator_root, upstream_generator)
     finally:
         shutil.rmtree(module_root, ignore_errors=True)
 
+
+def generate_final_metadata(root, arch, platform_name, module_root, module_map, runtime_header, generator_root, upstream_generator):
+    swift_headers = write_swift_module_map(module_map, runtime_header, arch)
+    environment = os.environ.copy()
+    from metadata_public_headers import (write_public_umbrella, write_verified_header_alias_overlay,
+        produce_role_inventory, ROLE_MANIFEST, verify_role_context)
+    core_support_dir = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
+    tool_root = root / "build/nativescript-metadata-tool"
+    tool = tool_root / "bin/objc-metadata-generator"
+    provenance = json.loads((tool_root / "provenance.json").read_text())
+    if hashlib.sha256(tool.read_bytes()).hexdigest() != provenance["generatorSHA256"] or \
+       provenance["patchSourceSHA256"] != hashlib.sha256((root / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest():
+        raise RuntimeError("Metadata build-tool provenance does not match actual inputs")
+    umbrella = module_root / "HanlinMetadataInput.h"
+    evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
+    evidence.mkdir(parents=True, exist_ok=True)
+    alias_overlay = module_root / "HanlinHeaderAliases.json"
+    adapter = module_root / "build-step-metadata-generator-adapter.py"
+    adapter.write_text(explicit_input_adapter(upstream_generator.read_text()), encoding="utf-8")
+    environment["HANLIN_METADATA_GENERATOR"] = str(tool)
+    environment["HANLIN_METADATA_INPUT_UMBRELLA"] = str(umbrella)
+    environment["CLANG_ENABLE_MODULES"] = "NO"
+    original_cflags = environment.get("OTHER_CFLAGS", "")
+    environment["OTHER_CFLAGS"] = f'{original_cflags} {metadata_flags(module_root, module_map, core_support_dir)}'.strip()
+    directories = [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))]
+    role_roots = list(dict.fromkeys(p.resolve() for p in directories if (p / ROLE_MANIFEST).is_file()))
+    receipts = {str(directory): module_root / f"input-roles-{n}.json" for n, directory in enumerate(role_roots)}
+    try:
+        library = None
+        if role_roots:
+            clang = Path(subprocess.check_output(["xcrun", "--find", "clang"], text=True).strip()).resolve()
+            library = clang.parent.parent / "lib/libclang.dylib"
+            # First inventory only discovers ownership/aliases; it grants no include-only role.
+            for directory in role_roots:
+                produce_role_inventory(directory, [], library, classify=False, receipt_path=receipts[str(directory)])
+        inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
+            sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts)
+        aliases = write_verified_header_alias_overlay(inventory, alias_overlay)
+        environment["OTHER_CFLAGS"] = f'{original_cflags} {metadata_flags(module_root, module_map, core_support_dir, alias_overlay if aliases else None)}'.strip()
+        context_path = module_root / "actual-compiler-arguments.json"
+        environment["HANLIN_METADATA_EXPECTED_CONTEXT"] = str(context_path)
+        environment["HANLIN_METADATA_ACTUAL_CONTEXT"] = str(module_root / "actual-generator-context.json")
+        arguments = capture_compiler_arguments(adapter, environment, arch, context_path, generator_root)
+        verify_role_context(arguments)
+        # Reclassify ALL final, post-staging bytes at the exact captured context.
+        # Never promote a stale receipt by updating hashes alone.
+        for directory in role_roots:
+            produce_role_inventory(directory, arguments, library, receipt_path=receipts[str(directory)])
+        inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
+            sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments)
+    finally:
+        for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay,
+                     alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
+                     module_root / "actual-compiler-arguments.json", *receipts.values()]:
+            if path.is_file():
+                shutil.copy2(path, evidence / path.name)
+    completed = subprocess.run(
+        [sys.executable, str(adapter), *sys.argv[1:]],
+        cwd=generator_root,
+        env=environment,
+        check=False,
+    )
+    actual_context = module_root / "actual-generator-context.json"
+    if actual_context.is_file():
+        shutil.copy2(actual_context, evidence / actual_context.name)
+    complete = retain_and_check_metadata(arch, platform_name)
+    return completed.returncode if completed.returncode else (0 if complete else 1)
 
 if __name__ == "__main__":
     raise SystemExit(main())
