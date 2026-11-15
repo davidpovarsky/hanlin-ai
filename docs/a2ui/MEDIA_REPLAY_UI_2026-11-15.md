@@ -71,8 +71,11 @@ and each original AX attachment are authenticated in `evidence/media-replay-ui-4
 
 Measured build/test928s contains an Xcode test-operation785.054s and actual case interval249.742s;
 the535.312s remainder is startup/runner/teardown overhead, not assumed functional work or cache
-savings. The runner now records a separate bounded explicit simulator boot phase before package
-resolution, destination timeout and per-case execution bounds. First retry selects only the
+savings. The runner retains Xcode-managed simulator startup, destination timeout and per-case
+execution bounds. An attempted explicit boot phase in43750257931 stopped at its newly imposed5s
+boot-command timeout before compilation/preparation: INFRA_ERROR/zero cases, not a UI failure.
+That added startup path was removed; the original Xcode-managed path already produced actual
+UI/AX and is kept as the authoritative setup. The focused retry selects only the
 history YouTube action/relay obligation to diagnose the shared setup before widening UI scope.
 
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).

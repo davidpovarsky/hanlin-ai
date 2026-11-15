@@ -75,21 +75,6 @@ assert eligible,'No iPhone/iOS27 simulator'
 print(eligible[0]['udid'])
 PY
 device="$(cat "$evidence/selected-device.txt")"
-finish_phase simulator-boot
-python3 - "$device" "$evidence" <<'PY'
-import json,subprocess,sys
-from pathlib import Path
-device=sys.argv[1]; e=Path(sys.argv[2])
-devices=json.loads((e/'devices.json').read_text())['devices']
-state=next(d['state'] for rows in devices.values() for d in rows if d['udid']==device)
-if state!='Booted':
-    result=subprocess.run(['xcrun','simctl','boot',device],capture_output=True,text=True,timeout=5)
-    (e/'simulator-boot-command.log').write_text(result.stdout+result.stderr)
-    result.check_returncode()
-result=subprocess.run(['xcrun','simctl','bootstatus',device,'-b'],capture_output=True,text=True,timeout=180)
-(e/'simulator-bootstatus.log').write_text(result.stdout+result.stderr)
-result.check_returncode()
-PY
 finish_phase preparation
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/a2ui-media-ui.XXXXXXXX")"
 python3 docs/a2ui/prepare_media_replay_ui.py --output "$scratch/host" > "$evidence/preparation.json"
