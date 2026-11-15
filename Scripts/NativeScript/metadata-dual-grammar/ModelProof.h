@@ -253,6 +253,18 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
     return llvm::json::Value(std::move(result));
 }
 
+inline bool sameABIExceptExternalSymbol(const llvm::json::Value& left, const llvm::json::Value& right) {
+    const auto* a = left.getAsObject(); const auto* b = right.getAsObject();
+    if (!a || !b || !a->getObject("externalBinding") || !b->getObject("externalBinding")) return false;
+    auto bindingA = llvm::json::Object(*a->getObject("externalBinding"));
+    auto bindingB = llvm::json::Object(*b->getObject("externalBinding"));
+    bindingA.erase("clangSymbolBeforeTargetPrefix"); bindingB.erase("clangSymbolBeforeTargetPrefix");
+    if (llvm::json::Value(std::move(bindingA)) != llvm::json::Value(std::move(bindingB))) return false;
+    auto shapeA = llvm::json::Object(*a); auto shapeB = llvm::json::Object(*b);
+    shapeA.erase("externalBinding"); shapeB.erase("externalBinding");
+    return llvm::json::Value(std::move(shapeA)) == llvm::json::Value(std::move(shapeB));
+}
+
 inline bool sameSourceOwner(const Meta::Meta& left, const Meta::Meta& right) {
     if (moduleName(left) != moduleName(right) || left.name != right.name || left.type != right.type ||
         left.fileName != right.fileName || !left.declaration || !right.declaration) return false;

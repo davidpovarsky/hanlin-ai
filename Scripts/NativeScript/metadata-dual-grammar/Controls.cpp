@@ -109,6 +109,25 @@ int main(int argc, const char** argv) {
                 throw std::runtime_error("Actual record alias signature identity is inconsistent");
         }
         receipt["actualRecordAliasIdentity"] = true;
+        // Derived adversarial ABI objects start from a real retained Clang
+        // declaration. Changing only its symbol may be considered later;
+        // changing visibility or formal linkage can never qualify.
+        for (auto* meta : cpp.models()) if (meta->name == "HanlinDualSharedFunction") {
+            auto actual = HanlinDual::declarationABI(*meta);
+            auto changed = llvm::json::Value(llvm::json::Object(*actual.getAsObject()));
+            auto* binding = changed.getAsObject()->getObject("externalBinding");
+            if (!binding) throw std::runtime_error("Actual fixture has no external binding");
+            (*binding)["clangSymbolBeforeTargetPrefix"] = "__hanlin_derived_different_binding";
+            if (!HanlinDual::sameABIExceptExternalSymbol(actual, changed)) throw std::runtime_error("Name-only ABI counterexample was not recognized");
+            (*binding)["visibility"] = -123;
+            if (HanlinDual::sameABIExceptExternalSymbol(actual, changed)) throw std::runtime_error("Changed visibility passed SDK binding guard");
+            (*binding)["visibility"] = actual.getAsObject()->getObject("externalBinding")->getInteger("visibility").value_or(-999);
+            (*binding)["formalLinkage"] = -123;
+            if (HanlinDual::sameABIExceptExternalSymbol(actual, changed)) throw std::runtime_error("Changed formal linkage passed SDK binding guard");
+            receipt["bindingNameOnlyGuardCounterexamples"] = true;
+        }
+        if (receipt.getBoolean("bindingNameOnlyGuardCounterexamples") != true)
+            throw std::runtime_error("Actual binding guard counterexamples did not execute");
         cpp.producer().hanlinFactory().validate(provider->signature.at(1));
         receipt["crossFactoryTypeValidation"] = true;
         if (hanlinWriterEntries) throw std::runtime_error("An output writer ran before both parses and merge succeeded");

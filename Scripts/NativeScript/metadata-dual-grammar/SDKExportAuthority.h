@@ -21,11 +21,31 @@ public:
         if (!fields || fields->getInteger("schemaVersion") != 1 || fields->getString("status") != "STATIC_BINDING_PROOF" ||
             fields->getString("contextCompiler") != actualCPP.getString("compiler") ||
             !fields->getArray("fullArguments") || *fields->getArray("fullArguments") != *actualCPP.getArray("arguments") ||
-            fields->getString("target") != actualCPP.getString("target"))
+            !fields->getString("target") || !actualCPP.getString("target") ||
+            !sameBoundTargetTriple(*fields->getString("target"), *actualCPP.getString("target")))
             throw std::runtime_error("SDK export evidence actual compiler/target/argv drift");
         sdk = std::filesystem::canonical(hanlinString(request, "sdkRoot"));
         if (std::filesystem::canonical(hanlinString(*fields, "sdkRoot")) != sdk)
             throw std::runtime_error("SDK export evidence root drift");
+        const auto* arguments = actualCPP.getArray("arguments");
+        size_t targets = 0, roots = 0;
+        for (size_t index = 0; index < arguments->size(); ++index) {
+            const auto option = (*arguments)[index].getAsString();
+            if (option != "-target" && option != "-isysroot") continue;
+            if (++index == arguments->size() || !(*arguments)[index].getAsString())
+                throw std::runtime_error("Incomplete SDK authority target/root argv");
+            const auto value = *(*arguments)[index].getAsString();
+            if (option == "-target") {
+                ++targets;
+                if (fields->getString("requestedTarget") != value)
+                    throw std::runtime_error("SDK binding proof raw target argv drift");
+            } else {
+                ++roots;
+                if (std::filesystem::canonical(value.str()) != sdk)
+                    throw std::runtime_error("SDK binding proof actual sysroot drift");
+            }
+        }
+        if (targets != 1 || roots != 1) throw std::runtime_error("Ambiguous SDK authority target/root argv");
         verify();
     }
 
@@ -106,6 +126,8 @@ public:
         proof["source"] = physical.string();
         proof["sourceSHA256"] = hanlinString(*match, "sourceSHA256");
         proof["target"] = triple.str();
+        proof["compilerProofTarget"] = hanlinString(*fields, "target");
+        proof["requestedTarget"] = hanlinString(*fields, "requestedTarget");
         proof["rawCPPExternalBinding"] = llvm::json::Object(*cppBinding);
         proof["rawCExternalBinding"] = llvm::json::Object(*cBinding);
         proof["compilerLinkEvidence"] = llvm::json::Object(*match);

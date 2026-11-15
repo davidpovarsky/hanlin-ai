@@ -113,10 +113,7 @@ class ModelMerge {
         const bool differentBinding = cppABI != objcABI;
         if (differentBinding) {
             if (!cpp->is(Meta::MetaType::Function) || !objc->is(Meta::MetaType::Function)) failABI();
-            auto cppShape = llvm::json::Object(*cppABI.getAsObject());
-            auto objcShape = llvm::json::Object(*objcABI.getAsObject());
-            cppShape.erase("externalBinding"); objcShape.erase("externalBinding");
-            if (llvm::json::Value(std::move(cppShape)) != llvm::json::Value(std::move(objcShape))) failABI();
+            if (!sameABIExceptExternalSymbol(cppABI, objcABI)) failABI();
         }
         if (!versionEquivalent(cpp->deprecatedIn, objc->deprecatedIn) || !versionEquivalent(cpp->obsoletedIn, objc->obsoletedIn) ||
             !introducedAvailabilityEquivalent(*cpp, *objc))

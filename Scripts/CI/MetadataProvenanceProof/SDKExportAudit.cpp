@@ -43,6 +43,16 @@ int main(int argc, char** argv) {
     run("unresolved-target-reexport", "MISSING_EXPORT_FILE", [&](auto& closure, auto& selected) {
         closure.root->addReexportedLibrary("/System/Library/Frameworks/HanlinMissing.framework/HanlinMissing", selected);
     });
+    const auto targetCase = [&](StringRef name, StringRef a, StringRef b, bool expected) {
+        const bool observed = sameBoundTargetTriple(a, b);
+        const bool valid = observed == expected;
+        if (!valid) passed = false;
+        cases.push_back(json::Object{{"case", name.str()}, {"left", a.str()}, {"right", b.str()},
+            {"expectedEquivalent", expected}, {"observedEquivalent", observed}, {"status", valid ? "EXECUTED_PASS" : "FAILED"}});
+    };
+    targetCase("bound-target-explicit-zero-components", "arm64-apple-ios27.2-simulator", "arm64-apple-ios27.2.0-simulator", true);
+    targetCase("different-deployment-version-rejected", "arm64-apple-ios27.2-simulator", "arm64-apple-ios27.3.0-simulator", false);
+    targetCase("different-target-environment-rejected", "arm64-apple-ios27.2-simulator", "arm64-apple-ios27.2.0", false);
     std::error_code error;
     raw_fd_ostream file(output, error);
     if (error) return 2;

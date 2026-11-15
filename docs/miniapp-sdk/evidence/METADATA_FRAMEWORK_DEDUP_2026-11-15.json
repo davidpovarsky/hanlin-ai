@@ -2896,7 +2896,7 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "AFFECTED_13_CONTROLS_31_MODELS_EXPORT_COUNTEREXAMPLES_AND_ACTUAL_SDK_SLICE",
+        "scope": "AFFECTED_13_CONTROLS_31_MODELS_9_EXPORT_TARGET_CONTROLS_AND_SDK_SLICE",
         "status": "PENDING_DISPATCH",
         "fullSDK": "NOT_RUN until affected slice passes"
       },
@@ -3144,7 +3144,34 @@
         "disposition": "RESOLVED_TO_EXPORTED_C_AUTHORITY",
         "publicModelOwner": "AVFoundation",
         "integrated13Controls31ModelsSlice": "NOT_RUN",
-        "runtimeAcceptance": "NOT_ESTABLISHED"
+        "runtimeAcceptance": "NOT_ESTABLISHED",
+        "firstIntegratedAttempt": {
+          "run": 43756153599,
+          "sourceSHA": "e5c8c671",
+          "aggregate": "FAILED",
+          "focusedAndTransactionCases": "EXECUTED_PASS_13",
+          "verifiedControlManifestFiles": 220,
+          "mismatches": 0,
+          "controlResultSHA256": "95f0c0f2df02beddee0f072581d88ac588780706161e4e6a605d4545854327bb",
+          "referenceModules": "EXECUTED_PASS_31",
+          "parityResultSHA256": "3441cde79647900b1149eaba57b6a7d87e3222ba14e0e5c4b43f0c6101b4fc10",
+          "exportCounterexamples": "EXECUTED_PASS_6",
+          "originalAGraphModels": 33015,
+          "retainedOriginalModels": 14,
+          "mappedWithProof": 33001,
+          "unmappedModels": 0,
+          "peakRSSBytes": 2146385920,
+          "nativeSeconds": 9.980055958,
+          "SDKSlice": "FAILED_before_publication",
+          "reason": "Driver target ios27.2 vs AST TargetInfo ios27.2.0; raw argv/compiler identical",
+          "staticCompilerLinkEvidence": {
+            "objectCompiles": 12,
+            "CLinksPassed": 6,
+            "CPPLinksRejected": 6,
+            "functions": 3
+          },
+          "runtimeAcceptance": "NOT_ESTABLISHED"
+        }
       }
     }
   }

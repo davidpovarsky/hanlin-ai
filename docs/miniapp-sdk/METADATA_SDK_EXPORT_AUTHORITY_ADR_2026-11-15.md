@@ -96,3 +96,22 @@ Every raw C/CPP binding stays in the receipt. All model/ABI/availability checks
 run before choosing export authority. Unsupported declarations stay fatal.
 The public model/module remains AVFoundation. The reexport implementation name
 is evidence only; no private framework dependency, module or API is introduced.
+
+Integrated run43756153599/e5c8c671 compiles the new producer and passes all13
+focused+transaction cases, all31 original model comparisons and the6 shared
+export counterexamples. All220 control manifest files verify with0 mismatches.
+Original-A coverage proves33,015 actual graph nodes:14 kept directly and33,001
+explicitly mapped,0 missing. The31-module native peak is2,146,385,920B,9.980s.
+The targeted SDK operation fails before publication because Driver reports
+`ios27.2` while actual AST TargetInfo reports `ios27.2.0`. Compiler identity and
+full raw argv match. Its12 object compilations pass;6 C links pass and6 C++ links
+are rejected for the exact3 source declarations. Those static proof passes are
+separate from the failed metadata operation.
+
+The next affected fix compares LLVM Triple architecture/vendor/OS/environment,
+object format and VersionTuple OS versions; LLVM VersionTuple equality explicitly
+treats omitted zero components as zero. Raw requested target argv stays byte
+exact, and sysroot must equal the bound physical SDK. New native counterexamples
+reject a changed deployment version and environment and accept only explicit-zero
+formatting. Binding proof may erase only the symbol name: formal linkage and
+visibility remain exact, with derived counterexamples from a real AST ABI object.

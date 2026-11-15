@@ -20,6 +20,16 @@ using namespace llvm;
 using namespace llvm::MachO;
 namespace fs = std::filesystem;
 
+// LLVM VersionTuple equality treats omitted version components as zero.
+// Keep the raw bound argv separately; only that documented representation
+// difference is normalized between Driver output and actual AST TargetInfo.
+inline bool sameBoundTargetTriple(llvm::StringRef left, llvm::StringRef right) {
+    const llvm::Triple a(left), b(right);
+    return a.getArchName() == b.getArchName() && a.getVendorName() == b.getVendorName() &&
+        a.getOS() == b.getOS() && a.getOSVersion() == b.getOSVersion() &&
+        a.getEnvironmentName() == b.getEnvironmentName() && a.getObjectFormat() == b.getObjectFormat();
+}
+
 class SDKExportClosure {
     fs::path sdk;
     std::vector<std::unique_ptr<InterfaceFile>> files;
