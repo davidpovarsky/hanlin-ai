@@ -49,11 +49,17 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
 
     static func automaticHeightBounds(for textView: UITextView, isEmpty: Bool, availableHeight: CGFloat) -> (min: CGFloat, max: CGFloat) {
         let font = textView.font ?? UIFont.preferredFont(forTextStyle: .body)
-        let lineHeight = NSLayoutManager().defaultLineHeight(for: font)
         let insets = textView.textContainerInset.top + textView.textContainerInset.bottom
-        let minimum = min(max(0, availableHeight), ceil(insets + lineHeight * (isEmpty ? 1 : 2)))
-        let maximum = ceil(insets + lineHeight * (isEmpty ? 1 : 6))
-        return (minimum, min(maximum, max(0, availableHeight)))
+        // This is only the one/two-line minimum. The six-line maximum comes
+        // from actual visual fragments in automaticLimit, not this estimate.
+        let sample = NSAttributedString(string: isEmpty ? "M" : "M\nM", attributes: [.font: font])
+        let sampleHeight = sample.boundingRect(
+            with: CGSize(width: .greatestFiniteMagnitude, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil
+        ).height
+        let available = max(0, availableHeight)
+        let minimum = min(available, ceil(insets + sampleHeight))
+        return (minimum, isEmpty ? minimum : available)
     }
 
     /// Accept only ordered, contiguous document coverage. An empty final range
