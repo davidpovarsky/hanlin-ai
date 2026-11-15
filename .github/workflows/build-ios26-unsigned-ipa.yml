@@ -227,7 +227,14 @@ jobs:
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --dual-grammar --runtime-wrapper --runtime-wrapper-only
       - name: Inspect installed frontend development assets
         if: inputs.nativescript_metadata_tooling_mode == 'inventory'
-        run: python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py
+        env:
+          HANLIN_METADATA_INVENTORY_SELECTOR: ${{ inputs.exact_test_selector }}
+        run: |
+          if [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKLinkageFacts" ]; then
+            python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py --sdk-linkage-facts
+          else
+            python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py
+          fi
       - name: Execute retained native provenance controls
         if: ${{ inputs.nativescript_metadata_tooling_mode == 'provenance' && inputs.nativescript_metadata_tooling_mode != 'inventory' && inputs.nativescript_metadata_tooling_mode != 'modern-compile' }}
         run: python3 Scripts/CI/MetadataProvenanceProof/run.py

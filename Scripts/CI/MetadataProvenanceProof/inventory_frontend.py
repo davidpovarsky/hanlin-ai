@@ -94,5 +94,35 @@ def main():
     return 0
 
 
+def sdk_linkage_facts():
+    """Read actual SDK header/export bytes; do not execute metadata or change inputs."""
+    OUTPUT.mkdir(parents=True, exist_ok=False)
+    sdk = Path(subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"], text=True).strip())
+    symbol = "AVCaptureTimecodeCreateMetadataSampleBufferAssociatedWithPresentationTimeStamp"
+    relative = "System/Library/Frameworks/AVFoundation.framework"
+    paths = [sdk / relative / "Headers/AVCaptureTimecodeGenerator.h", sdk / relative / "Headers/AVBase.h"]
+    paths.extend(sorted((sdk / relative).rglob("*.tbd")))
+    result = {"status": "READ_ONLY_FACTS", "symbol": symbol, "sdk": str(sdk),
+        "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(), "files": []}
+    for path in paths:
+        if not path.is_file():
+            result["files"].append({"path": str(path), "status": "MISSING"})
+            continue
+        data = path.read_bytes()
+        if len(data) > 16 * 1024 * 1024:
+            raise RuntimeError("SDK fact file exceeds bounded size")
+        target = OUTPUT / "sdk-linkage" / path.relative_to(sdk)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+        lines = data.decode("utf-8").splitlines()
+        matches = [index for index, text in enumerate(lines) if symbol in text or (path.suffix == ".h" and any(key in text for key in ["extern", "AVF_EXPORT", "__cplusplus"]))]
+        indexes = sorted({i for index in matches for i in range(max(0, index - 3), min(len(lines), index + 4))})
+        result["files"].append({"path": str(path), "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data),
+            "retained": target.relative_to(OUTPUT).as_posix(), "matches": [{"line": i + 1, "text": lines[i]} for i in indexes]})
+    (OUTPUT / "sdk-linkage-facts.json").write_text(json.dumps(result, indent=2) + "\n")
+    print(json.dumps(result))
+    return 0
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(sdk_linkage_facts() if "--sdk-linkage-facts" in sys.argv else main())
