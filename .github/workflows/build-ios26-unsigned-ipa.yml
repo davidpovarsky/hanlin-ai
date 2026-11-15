@@ -141,6 +141,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Verify actual simulator SDK and compile the production YouTube component
+        timeout-minutes: 17
         run: bash docs/a2ui/run_media_component_proof.sh
       - if: always()
         uses: actions/upload-artifact@v7.0.2
@@ -160,6 +161,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Verify changed model ownership and ordered projection
+        timeout-minutes: 22
         env:
           A2UI_PROOF_SUITE: ${{ (inputs.target_validation_group == 'a2ui_media_ios' || inputs.target_validation_group == 'a2ui_media_focused') && 'media' || inputs.target_validation_group == 'a2ui_media_catalog' && 'all' || 'ownership' }}
           A2UI_PROOF_PLATFORM: ${{ inputs.target_validation_group == 'a2ui_media_ios' && 'ios' || 'macos' }}

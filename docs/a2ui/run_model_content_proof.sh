@@ -8,10 +8,18 @@ platform="${A2UI_PROOF_PLATFORM:-macos}"
 proof=(python3 docs/a2ui/prepare_exact_pin_proof.py --platform "$platform")
 evidence="$root/build/a2ui-model-content-evidence"
 mkdir -p "$evidence"
+proof_phase=preflight
+proof_phase_started=$SECONDS
+finish_phase() {
+  printf '%s\n' "$((SECONDS-proof_phase_started))" > "$evidence/$proof_phase-duration-seconds.txt"
+  proof_phase="$1"
+  proof_phase_started=$SECONDS
+}
 phase=preflight
 scratch=''
 retain() {
   status="$?"
+  finish_phase diagnostics
   if [[ -n "$scratch" && -f "$scratch/harness/Package.resolved" ]]; then cp "$scratch/harness/Package.resolved" "$evidence/Package.resolved"; fi
   python3 - "$status" "$phase" "$evidence" "$platform" <<'PY'
 import json,subprocess,sys
@@ -41,6 +49,12 @@ if code and (e/'selected-device.txt').exists():
 (e/'process-status.json').write_text(json.dumps({'exit_code':code,'status':status,'phase':phase,'executed_cases':len(cases),
     'platform':sys.argv[4],'xcresult_exists':(e/'A2UI.xcresult').exists(),'scope':'official exact-pin SDK component; app UI NOT_RUN'},indent=2))
 PY
+  finish_phase complete
+  python3 Scripts/CI/generate_performance_report.py --log-dir "$evidence" \
+    --run-id "${GITHUB_RUN_ID:-}" --commit-sha "$(git rev-parse HEAD)" \
+    --event-name "${GITHUB_EVENT_NAME:-workflow_dispatch}" \
+    --output-json "$evidence/ci-performance-report.json" --step-summary "${GITHUB_STEP_SUMMARY:-$evidence/step-summary.md}"
+  return "$status"
 }
 trap retain EXIT
 git rev-parse HEAD > "$evidence/source-sha.txt"
@@ -91,9 +105,11 @@ PY
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/a2ui-model-content.XXXXXXXX")"
 "${proof[@]}" --output "$scratch/harness" > "$evidence/preparation.json"
 cp "$scratch/harness/proof-inputs.json" "$scratch/harness/Package.swift" "$evidence/"
+finish_phase resolution
 xcrun swift package --package-path "$scratch/harness" resolve 2>&1 | tee "$evidence/resolve.log"
 "${proof[@]}" --verify-pin "$scratch/harness/Package.resolved" > "$evidence/pin-validation.json"
 cp "$scratch/harness/Package.resolved" "$evidence/resolved-before.json"
+finish_phase scheme-preflight
 (
   cd "$scratch/harness"
   xcodebuild -list -json -disableAutomaticPackageResolution
@@ -118,12 +134,13 @@ if sys.argv[2]=='all':
     names=['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
 else:
     field='media_cases' if sys.argv[2]=='media' else 'ownership_cases'
-    names=['A2UISDKTests/'+x+'()' for x in p[field]]
+    names=[('A2UISDKTests/' if x in p['sdk_cases'] else 'HanlinRemoteMediaURLTests/')+x+'()' for x in p[field]]
 print('\n'.join(names))
 PY
 selectors=()
 while IFS= read -r method; do selectors+=("-only-testing:AI_HLYTests/$method"); done < "$evidence/selected-cases.txt"
 phase=build-and-test
+finish_phase build-and-test
 set +e
 (
   cd "$scratch/harness"
@@ -135,6 +152,7 @@ set +e
 ) 2>&1 | tee "$evidence/xcodebuild.log"
 test_status=${PIPESTATUS[0]}
 set -e
+finish_phase result-verification
 if [[ -d "$evidence/A2UI.xcresult" ]]; then
   xcrun xcresulttool get test-results tests --path "$evidence/A2UI.xcresult" --format json > "$evidence/tests.json" || true
 fi

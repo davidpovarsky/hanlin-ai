@@ -45,6 +45,7 @@ CASE_COUNT = PORTABLE_CASE_COUNT + SDK_CASE_COUNT
 SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
 MEDIA_SOURCES = "AI_HLY/Downstream/ChatPresentation/Media"
 TEST = "AI_HLYTests/A2UITests.swift"
+MEDIA_POLICY_TEST = "AI_HLYTests/HanlinRemoteMediaURLTests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
 PACKAGE = f'''// swift-tools-version: 6.1
 import PackageDescription
@@ -94,15 +95,21 @@ def plan(platform: str = "macos") -> dict:
     if not set(OWNERSHIP_CASES + MEDIA_CASES).issubset(native):
         raise ValueError("Missing exact affected ownership case")
     paths = sorted((REPOSITORY / SOURCES).glob("*.swift"))
+    media_cases = list(MEDIA_CASES)
     if platform == "ios":
         paths += sorted((REPOSITORY / MEDIA_SOURCES).glob("*.swift"))
+        paths += [REPOSITORY / MEDIA_POLICY_TEST]
+        policy_cases = re.findall(r"@Test func (\w+)\(", (REPOSITORY / MEDIA_POLICY_TEST).read_text(encoding="utf-8"))
+        if len(set(policy_cases)) != 6:
+            raise ValueError("Expected six media source admission controls")
+        media_cases += policy_cases
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
     return {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
             "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
             "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES,
-            "media_cases": MEDIA_CASES, "files": files, "target_platform": platform,
+            "media_cases": media_cases, "files": files, "target_platform": platform,
             "harness_manifest_sha256": sha(package_text(platform).encode()),
             "native_execution": "NOT_RUN", "platform": platform + "27 / current stable Xcode"}
 
@@ -121,8 +128,8 @@ def prepare(destination: Path, inputs: dict) -> None:
             raise ValueError(f"Input changed while preparing proof: {relative}")
         if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/"):
             target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
-        elif relative == TEST:
-            target = destination / "Tests/AI_HLYTests/A2UITests.swift"
+        elif relative in [TEST, MEDIA_POLICY_TEST]:
+            target = destination / "Tests/AI_HLYTests" / Path(relative).name
         else:
             target = destination / "Tests/AI_HLYTests/A2UIFixtures" / Path(relative).name
         target.parent.mkdir(parents=True, exist_ok=True)

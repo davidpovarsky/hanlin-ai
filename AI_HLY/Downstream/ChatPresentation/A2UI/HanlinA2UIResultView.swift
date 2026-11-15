@@ -45,7 +45,7 @@ private struct HanlinA2UISurfaceView: View {
     var body: some View {
         #if os(iOS)
         Surface(viewModel: model, catalogs: [
-            BasicCatalogImplementation.makeCatalog(version: .v10, locale: locale),
+            HanlinMediaCatalogImplementation.basicCatalog(locale: locale),
             HanlinMediaCatalogImplementation.makeCatalog(locale: locale)
         ])
         #else

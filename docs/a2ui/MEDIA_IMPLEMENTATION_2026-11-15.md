@@ -89,6 +89,32 @@ DynamicString reference with the same bounded definition. No manual binding reso
 or weaker assertion is introduced. The two affected catalog controls must rerun on
 macOS and iOS; the43 prior passes are not a new full-suite pass of the correction.
 
+The corrected two macOS cases EXECUTED_PASS at
+`a8336b4e7bce5c43ba22942ce356a41f0db52edb` in
+[run43726416294](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43726416294),
+job132849216558 (215seconds), artifact14166941666,232286bytes, SHA256
+`c980b9ed7c4c184b87df666267a142c2120d04caec59f49d6db784b40bbd28b3`.
+Raw case identities and source hashes match. `evidence/media-binding-43726416294.json`
+retains both new passes and the original43/1 failure separately; no44-case fresh
+pass is claimed. The older iOS attempt8838 still contains the pre-correction
+schema; its compilation/result must retain that source attribution.
+
+The latest iOS source wraps the existing official Image/Video/AudioPlayer builders
+with lexical HTTPS-source admission before media construction. It rejects credentials,
+IP literals, local/reserved names, invalid DNS labels, nonstandard ports and oversized
+URLs. Poster URLs are checked too. Revoked/disabled players are removed so upstream
+cleanup executes. This remains a lexical guard, not public-DNS/rebinding/redirect or
+response/decoded-size verification. Six portable source controls passed with strict
+Swift6 compilation. The next iOS run selects those six new controls plus the two
+corrected catalog cases, and compiles the actual catalog/player/URL-gate source.
+The eight prior identity/document cases are not repeated or described as newly run.
+
+Focused proof scripts now measure preflight, resolution, scheme, build/test and
+verification phases and use the existing CI performance reporter. Step timeouts leave
+artifact-upload room. The34 existing cache/CI optimization regression tests executed
+PASS locally, including the required22 scenarios; no cache key or automatic trigger
+was broadened.
+
 ## Verified existing Markdown API
 
 The app's exact pinned renderer remains

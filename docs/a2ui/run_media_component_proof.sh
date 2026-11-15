@@ -4,11 +4,19 @@ root="$(git rev-parse --show-toplevel)"
 cd "$root"
 evidence="$root/build/chat-media-component-evidence"
 mkdir -p "$evidence"
+proof_phase=preflight
+proof_phase_started=$SECONDS
+finish_phase() {
+  printf '%s\n' "$((SECONDS-proof_phase_started))" > "$evidence/$proof_phase-duration-seconds.txt"
+  proof_phase="$1"
+  proof_phase_started=$SECONDS
+}
 git rev-parse HEAD > "$evidence/source-sha.txt"
 phase=preflight
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-media-proof.XXXXXXXX")"
 retain() {
   status="$?"
+  finish_phase diagnostics
   python3 - "$status" "$phase" "$evidence" <<'PY'
 import json,subprocess,sys
 from pathlib import Path
@@ -43,6 +51,12 @@ if status and (e/'selected-device.txt').exists():
     'executed_cases':len(nodes),'xcresult_exists':(e/'Media.xcresult').exists(),
     'scope':'native SDK component only; playback/full-app XCUITest NOT_RUN'},indent=2))
 PY
+  finish_phase complete
+  python3 Scripts/CI/generate_performance_report.py --log-dir "$evidence" \
+    --run-id "${GITHUB_RUN_ID:-}" --commit-sha "$(git rev-parse HEAD)" \
+    --event-name "${GITHUB_EVENT_NAME:-workflow_dispatch}" \
+    --output-json "$evidence/ci-performance-report.json" --step-summary "${GITHUB_STEP_SUMMARY:-$evidence/step-summary.md}"
+  return "$status"
 }
 trap retain EXIT
 df -h . > "$evidence/disk.txt"
@@ -95,6 +109,7 @@ printf '%s\n' "$scheme" > "$evidence/selected-scheme.txt"
 (cd "$scratch/harness"; xcodebuild -scheme "$scheme" -showdestinations) > "$evidence/destinations.txt"
 grep -q "$device" "$evidence/destinations.txt" || { echo 'INFRA_ERROR: destination not supported by actual scheme'; exit 2; }
 phase=build-and-test
+finish_phase build-and-test
 set +e
 (
   cd "$scratch/harness"
@@ -105,6 +120,7 @@ set +e
 ) 2>&1 | tee "$evidence/xcodebuild.log"
 test_status=${PIPESTATUS[0]}
 set -e
+finish_phase result-verification
 if [[ -d "$evidence/Media.xcresult" ]]; then
   xcrun xcresulttool get test-results tests --path "$evidence/Media.xcresult" --format json > "$evidence/tests.json" || true
 fi
