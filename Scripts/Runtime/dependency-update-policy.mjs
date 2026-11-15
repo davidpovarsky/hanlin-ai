@@ -68,7 +68,7 @@ export function evaluateBranchRequirements({ head, protection, effectiveRules, c
 }
 
 export function evaluateUpdate({ head, evidenceHead, updateType, impact, checks = [], required = [],
-  sourceIntegrity, licensesReviewed, rollback, protection, effectiveRules, autoMergeEnabled = false }) {
+  sourceIntegrity, licensesReviewed, rollback, protection, effectiveRules, consumerEvidenceVerified = false, autoMergeEnabled = false }) {
   const reasons = [];
   if (!/^[a-f0-9]{40}$/.test(head ?? '') || evidenceHead !== head) reasons.push('EVIDENCE_HEAD_MISMATCH');
   if (!['patch', 'minor'].includes(updateType)) reasons.push('MANUAL_VERSION_REVIEW');
@@ -76,6 +76,7 @@ export function evaluateUpdate({ head, evidenceHead, updateType, impact, checks 
   if (!sourceIntegrity) reasons.push('MISSING_SOURCE_INTEGRITY');
   if (!licensesReviewed) reasons.push('MISSING_LICENSE_REVIEW');
   if (!rollback) reasons.push('MISSING_ROLLBACK');
+  if (!consumerEvidenceVerified) reasons.push('UNKNOWN_CONSUMER_EXECUTION_ACCOUNTING');
   if (!required.length) reasons.push('NO_REQUIRED_GATES');
   for (const names of sourceGroups(required)) {
     const candidates = checks.filter(check => names.includes(check.name));

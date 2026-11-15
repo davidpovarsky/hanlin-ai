@@ -43,7 +43,7 @@ test('canonical dependency hash preserves its existing output/provenance boundar
 
 const head='1'.repeat(40);
 const valid=()=>({head,evidenceHead:head,updateType:'patch',impact:'runtime-host',sourceIntegrity:true,licensesReviewed:true,
-  rollback:{parent:'2'.repeat(40)},protection:{required_status_checks:{strict:true,contexts:['gate'],checks:[{context:'gate',app_id:15368}]}},effectiveRules:[],autoMergeEnabled:true,required:['gate'],
+  rollback:{parent:'2'.repeat(40)},consumerEvidenceVerified:true,protection:{required_status_checks:{strict:true,contexts:['gate'],checks:[{context:'gate',app_id:15368}]}},effectiveRules:[],autoMergeEnabled:true,required:['gate'],
   checks:[{name:'gate',head,status:'completed',conclusion:'success',app:'github-actions',appId:15368}]});
 test('only complete, current, protected and explicitly enabled evidence can qualify',()=>{
   assert.equal(evaluateUpdate(valid()).mergeEligible,true);
@@ -151,3 +151,5 @@ test('merge caller protectedBranch boolean cannot bypass absent server configura
   const s=valid();delete s.protection;s.protectedBranch=true;
   assert.equal(evaluateUpdate(s).mergeEligible,false);
 });
+
+test('merge missing execution accounting cannot qualify despite a passed CI boolean',()=>{const s=valid();delete s.consumerEvidenceVerified;const r=evaluateUpdate(s);assert.equal(r.validationPassed,false);assert.equal(r.mergeEligible,false);assert.ok(r.reasons.includes('UNKNOWN_CONSUMER_EXECUTION_ACCOUNTING'));});

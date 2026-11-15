@@ -334,7 +334,10 @@ jobs:
       - name: Validate actual Renovate configuration
         run: node Scripts/Runtime/DependencyUpdates/node_modules/renovate/dist/config-validator.js --strict .renovaterc.json
       - name: Test updater, drift and merge policy
-        run: node --test Scripts/Runtime/Tests/dependency-updates.test.mjs
+        run: |
+          node --test Scripts/Runtime/Tests/dependency-updates.test.mjs
+          node --test Scripts/Runtime/Tests/upstream-host-accounting.test.mjs
+          python3 Scripts/Runtime/Tests/test_upstream_proof_reader.py
       - name: Inventory actual tracked graphs
         run: node Scripts/Runtime/inventory-upstream-dependencies.mjs
       - name: Audit supported upstream releases without editing pins
@@ -376,15 +379,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_baseline_run_id }}
         run: |
+          node Scripts/Runtime/upstream-host-accounting.mjs capture native-origin
           python3 Scripts/Runtime/runtime_native_identity.py --verify-reuse
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee build/upstream-updates/native-origin.log
-      - name: Execute affected Host closure and packed JITless smoke without repository credentials
+      - name: Prepare Host artifact or verify its same-run reuse
         id: host-closure
         if: env.UPDATE_OPERATION == 'candidate'
         shell: bash
         run: |
           set -euo pipefail
           test "$(node --version)" = 'v24.5.0'
+          node Scripts/Runtime/upstream-host-accounting.mjs capture host
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee build/upstream-updates/host.log
           node Scripts/Runtime/validate-runtime-lock.mjs
           cp build/runtime-host/host-metadata.json build/upstream-updates/host-metadata.json
