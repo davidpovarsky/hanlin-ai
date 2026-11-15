@@ -95,6 +95,9 @@ PY
 }
 finish() {
   local code="$?"
+  if [[ -f "$evidence/sdk-tests.log" ]]; then
+    grep -E 'CHECKPOINT_FILE_STANDARDIZATION|recorded an issue|error:' "$evidence/sdk-tests.log" | head -n 20 >&2 || true
+  fi
   if [[ ! -f "$evidence/process-status.json" ]]; then
     printf '{"preparation_exit":%s,"producer_test_exit":null,"sdk_test_exit":null,"core_test_exit":null,"ios_build_exit":null}\n' "$code" > "$evidence/process-status.json"
   fi

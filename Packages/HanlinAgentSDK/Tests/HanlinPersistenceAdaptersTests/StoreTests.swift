@@ -18,6 +18,9 @@ import Testing
         // The private store intentionally rejects symlink ancestors; supply a canonical fixture root.
         let directory = FileManager.default.temporaryDirectory.resolvingSymlinksInPath()
             .appending(path: "HanlinStoreTest-" + UUID().uuidString)
+        #if os(macOS)
+        print("CHECKPOINT_FILE_STANDARDIZATION_CHANGED_ROOT=\(directory.standardizedFileURL.path != directory.standardized.path)")
+        #endif
         defer { try? FileManager.default.removeItem(at: directory) }
         let store = try HanlinPrivateConversationStore(directory: directory)
         let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "one")
@@ -38,5 +41,12 @@ import Testing
             Issue.record("Unknown future format replaced the original record")
         } catch { #expect(error as? HanlinHostError == .unsupportedVersion) }
         #expect(try await store.load(original.conversationID, namespace: ns) == restored)
+        let target = directory.appending(path: "link-target")
+        let link = directory.appending(path: "linked-root")
+        try FileManager.default.createDirectory(at: target, withIntermediateDirectories: true)
+        try FileManager.default.createSymbolicLink(at: link, withDestinationURL: target)
+        let linked = try HanlinPrivateConversationStore(directory: link)
+        do { _ = try await linked.load(original.conversationID, namespace: ns); Issue.record("A symbolic-link store root bypassed rejection") }
+        catch { #expect(error as? HanlinHostError == .invalidRecord) }
     }
 }

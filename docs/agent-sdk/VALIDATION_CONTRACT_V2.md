@@ -41,3 +41,15 @@ The verifier rejected the apparent xcodebuild success: INFRA_ERROR/NOT_RUN, not 
 or a pass. The correction uses the actual xcresult method ID and performs real Mac test enumeration
 before invocation. Apple documents enumeration in the [Xcode release notes](https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes.md).
 Installed CLI help and the actual enumerated identifier remain the authority for this runner.
+
+Run43728173010 confirmed that enumeration and the corrected selector execute the exact method,
+but the checkpoint still threw invalidRecord. The production store used filesystem standardization,
+which can rewrite a canonical /private path to its /var alias. The source correction uses URL-level
+dot-segment normalization instead, preserving symbolic-link rejection. The failed case also checks
+that an actual symlink root remains rejected. Apple documents the distinction in
+[standardized URL](https://developer.apple.com/documentation/foundation/url/standardized) and
+[filesystem path standardization](https://developer.apple.com/documentation/foundation/nsstring/standardizingpath).
+This private-store initializer is invoked only by the failed checkpoint case among the41 package cases.
+Core20 and Context5 have no private-store dependency; Session14 and the other Store case use only the
+unchanged in-memory store. Their40 original passes remain candidates only after the complete source,
+method/fixture and environment audit; do not treat the entire changed persistence module as unchanged.
