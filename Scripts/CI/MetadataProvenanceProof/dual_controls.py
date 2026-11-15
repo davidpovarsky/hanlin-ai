@@ -88,6 +88,13 @@ extern struct HanlinDualOpaque HanlinDualOpaqueObject;
 extern const char *const HanlinDualSignNames[32];
 int HanlinDualAsmFunction(int value) __asm__("hanlin_dual_function");
 EXTERNAL_BINDING
+@protocol HanlinDualRepeatedProtocol
+- (int)repeatProtocolMarker;
+@end
+@interface HanlinDualRepeatedConsumer : HanlinDualObject <HanlinDualRepeatedProtocol>
+@end
+@interface HanlinDualRepeatedConsumer (ActualAdditionalConformance) <HanlinDualRepeatedProtocol>
+@end
 @interface HanlinDualGeneric<Element> : HanlinDualObject
 @end
 @interface HanlinDualDerived : HanlinDualGeneric<HanlinDualObject *>
@@ -155,7 +162,7 @@ HANLIN_DECL_EXPORT
         expected_status = "EXECUTED_PASS" if expectation == "pass" else "REJECTED_EXPECTED"
         passed = run.returncode == 0 and actual.get("status") == expected_status
         if expectation == "pass":
-            passed = passed and output.is_file() and actual.get("lifetime", {}).get("bothSourceManagersReadAfterSerialization") is True and actual.get("crossFactoryTypeValidation") is True and actual.get("actualRecordAliasIdentity") is True
+            passed = passed and output.is_file() and actual.get("lifetime", {}).get("bothSourceManagersReadAfterSerialization") is True and actual.get("crossFactoryTypeValidation") is True and actual.get("actualRecordAliasIdentity") is True and actual.get("sameProtocolObjectMultiplicityPreserved") is True
             if output.is_file():
                 body = output.read_bytes()
                 passed = passed and all(name.encode() + b"\0" in body for name in ["HanlinDualCOnlyRecord", "HanlinDualCOnlyFunction", "HanlinDualProvider"])

@@ -60,8 +60,15 @@ class ModelMerge {
     template<class T> void members(std::vector<T*>& objc, const std::vector<T*>& cpp) {
         std::map<std::string, T*> index;
         for (auto* member : objc) {
-            if (!index.emplace(entityKey(*member), member).second)
-                throw std::runtime_error("Duplicate member identity in actual ObjC model");
+            const auto inserted = index.emplace(entityKey(*member), member);
+            if (!inserted.second) {
+                if (inserted.first->second != member)
+                    throw std::runtime_error("Distinct actual ObjC objects share a member identity: " + member->identificationString());
+                // Original category merging can retain the SAME protocol
+                // object twice (NSDictionary/NSFastEnumeration). Keep both
+                // authoritative references and their original multiplicity.
+                ++repeatedAuthoritativeReferences;
+            }
         }
         for (auto* member : cpp) {
             auto found = index.find(entityKey(*member));
@@ -188,6 +195,7 @@ public:
         return result;
     }
 
+    size_t repeatedAuthoritativeReferences = 0;
     size_t graphMetas = 0;
     size_t graphTypes = 0;
     const llvm::json::Array& duplicateProofs() const { return proofs; }

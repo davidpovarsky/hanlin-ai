@@ -59,11 +59,13 @@ int main(int argc, const char** argv) {
         Meta::FunctionMeta* provider = nullptr;
         Meta::FunctionMeta* recordAliases = nullptr;
         bool lateNamed = false, inlineAlias = false, lateAliasExported = false;
+        Meta::InterfaceMeta* repeatedConsumer = nullptr;
         bool onlyCRecord = false, onlyCFunction = false;
         for (auto* meta : models) {
             if (meta->name == "HanlinDualShared") shared = &meta->as<Meta::StructMeta>();
             if (meta->name == "HanlinDualProvider") provider = &meta->as<Meta::FunctionMeta>();
             if (meta->name == "HanlinDualRecordAliases") recordAliases = &meta->as<Meta::FunctionMeta>();
+            if (meta->name == "HanlinDualRepeatedConsumer") repeatedConsumer = &meta->as<Meta::InterfaceMeta>();
             lateNamed |= meta->name == "HanlinDualLateNamed";
             inlineAlias |= meta->name == "HanlinDualInlineAlias";
             lateAliasExported |= meta->name == "HanlinDualLaterAlias";
@@ -77,6 +79,11 @@ int main(int argc, const char** argv) {
             !argument->as<Meta::PointerType>().innerType->is(Meta::TypeType::TypeStruct) ||
             argument->as<Meta::PointerType>().innerType->as<Meta::StructType>().structMeta != shared)
             throw std::runtime_error("Cross-context provider type did not reconnect to authoritative actual record");
+        if (!repeatedConsumer || repeatedConsumer->protocols.size() != 2 ||
+            repeatedConsumer->protocols[0] != repeatedConsumer->protocols[1] ||
+            repeatedConsumer->protocols[0]->name != "HanlinDualRepeatedProtocol")
+            throw std::runtime_error("Original same-object protocol multiplicity was not preserved");
+        receipt["sameProtocolObjectMultiplicityPreserved"] = true;
         if (!recordAliases || !lateNamed || !inlineAlias || lateAliasExported)
             throw std::runtime_error("Actual inline/standalone record identity was not preserved");
         const std::vector<std::string> recordNames{"HanlinDualLateNamed", "HanlinDualLateNamed", "HanlinDualInlineAlias"};

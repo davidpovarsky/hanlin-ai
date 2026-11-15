@@ -73,6 +73,7 @@ public:
         return llvm::json::Object{{"cpp", llvm::json::Object(cpp.receipt)},
             {"objc", llvm::json::Object(objc.receipt)}, {"mergePolicyVersion", 2},
             {"duplicateProofs", llvm::json::Array(merger.duplicateProofs())},
+            {"sameObjectRepeatedMemberReferencesPreserved", static_cast<int64_t>(merger.repeatedAuthoritativeReferences)},
             {"moduleOwnerProofs", llvm::json::Array(owners->ownerProofs())}};
     }
 
