@@ -59,6 +59,8 @@ CONSUMER_CASES = [
     "canonicalRecordReplayKeepsBytesAndCannotRestoreActions",
     "invalidationRejectsQueuedOriginalEventsAndKeys",
     "malformedCompletePartStaysUnavailableAndPreservesAdjacentText",
+    "completedRunBudgetRevokesBeforeUnboundedIdentityGrowth",
+    "canonicalMessagesCanReusePartIDWithoutSharingFormState",
 ]
 PROJECTION_CASES = ["modelPartUsesMessageIdentityWithoutToolCall",
     "orderedModelProjectionPreservesTextAndRegisteredSurface",
@@ -283,7 +285,7 @@ def main() -> None:
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
         check_lock(args.resolved)
-        expected = (inputs["consumer_cases"] + inputs["projection_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
+        expected = (inputs["consumer_cases"] + inputs["ownership_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
                     if args.suite == "ownership" else inputs["sdk_cases"]
                     if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"])
         if args.verify_xcresult:

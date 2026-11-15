@@ -186,8 +186,12 @@ final class HanlinA2UIResultStore {
     private struct Slot: Hashable {
         let runID: UUID
         let resultID: UUID
-        init(_ key: HanlinA2UIResultKey) { runID = key.runID; resultID = key.resultID }
-        init(runID: UUID, resultID: UUID) { self.runID = runID; self.resultID = resultID }
+        let modelMessageID: UUID?
+        init(_ key: HanlinA2UIResultKey) { self.init(runID: key.runID, resultID: key.resultID, origin: key.origin) }
+        init(runID: UUID, resultID: UUID, origin: HanlinA2UIResultKey.Origin) {
+            self.runID = runID; self.resultID = resultID
+            if case .model(let messageID) = origin { modelMessageID = messageID } else { modelMessageID = nil }
+        }
     }
     private var owners: [Slot: HanlinA2UIResultOwner] = [:]
     private var endedRuns: Set<UUID> = []
@@ -208,7 +212,7 @@ final class HanlinA2UIResultStore {
 
     private func register(runID: UUID, resultID: UUID, origin: HanlinA2UIResultKey.Origin,
                           sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
-        let slot = Slot(runID: runID, resultID: resultID)
+        let slot = Slot(runID: runID, resultID: resultID, origin: origin)
         guard !isDiscarded, !endedRuns.contains(runID), !completedProducerRuns.contains(runID),
               owners[slot] == nil else { return nil }
         let key = HanlinA2UIResultKey(runID: runID, resultID: resultID, origin: origin, generation: UUID())

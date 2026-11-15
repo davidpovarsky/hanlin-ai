@@ -137,7 +137,7 @@ python3 - "$scratch/harness/proof-inputs.json" "$suite" <<'PY' > "$evidence/sele
 import json,sys
 p=json.load(open(sys.argv[1]))
 if sys.argv[2]=='consumer':
-    names=['HanlinA2UIAgentPresentationTests/'+x+'()' for x in p['consumer_cases']]+['A2UISDKTests/'+x+'()' for x in p['projection_cases']]
+    names=['HanlinA2UIAgentPresentationTests/'+x+'()' for x in p['consumer_cases']]+['A2UISDKTests/'+x+'()' for x in p['ownership_cases']]
 elif sys.argv[2]=='all':
     names=['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
 else:

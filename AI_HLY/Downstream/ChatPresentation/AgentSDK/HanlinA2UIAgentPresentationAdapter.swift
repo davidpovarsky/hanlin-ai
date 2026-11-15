@@ -35,10 +35,12 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
     @ObservationIgnored private var modes: [UUID: Mode] = [:]
     @ObservationIgnored private var finishedRuns: Set<UUID> = []
     @ObservationIgnored private var successfulEOF: Set<UUID> = []
+    @ObservationIgnored private var runIDs: Set<UUID> = []
     @ObservationIgnored private var routes: [HanlinA2UIResultKey: HanlinHostInteractionOrigin] = [:]
     @ObservationIgnored private var frameCount = 0
     @ObservationIgnored private var wireBytes = 0
     @ObservationIgnored private var invalidated = false
+    @ObservationIgnored private var resourceExhausted = false
 
     init(session: HanlinAgentSession,
          onInteraction: @escaping @MainActor @Sendable (HanlinHostInteractionRequest, HanlinA2UIResultKey) -> Void) {
@@ -49,10 +51,12 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
 
     @discardableResult
     func receive(_ event: HanlinAgentEvent) throws -> Bool {
+        guard !resourceExhausted else { throw AdmissionError.resourceLimit }
         guard !invalidated, event.session == identity, session?.identity == identity else { throw AdmissionError.foreignSession }
         guard !finishedRuns.contains(event.runID) else { throw AdmissionError.endedRun }
         guard modes[event.runID] != .replay else { throw AdmissionError.mixedReplay }
         guard case .structuredPart(let part) = event.event else { return false }
+        try reserveRun(event.runID)
         modes[event.runID] = .live
         return try consume(part, runID: event.runID, live: true)
     }
@@ -60,10 +64,13 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
     /// The SDK record remains the only persisted transcript. A replay is permanently read-only
     /// and cannot mix with live delivery or call admitInteraction for its historical identities.
     func replay(_ record: HanlinConversationRecord, runID: UUID, messageID: UUID) throws {
+        guard !resourceExhausted else { throw AdmissionError.resourceLimit }
         guard !invalidated, record.conversationID == identity.conversationID,
               record.namespace == identity.context.namespace else { throw AdmissionError.foreignSession }
         guard modes[runID] != .live else { throw AdmissionError.mixedReplay }
         let entries = try record.structuredEntries(runID: runID, messageID: messageID)
+        guard !entries.isEmpty else { return }
+        try reserveRun(runID)
         modes[runID] = .replay
         for entry in entries {
             if case .structuredPart(let part, _) = entry.payload { _ = try consume(part, runID: runID, live: false) }
@@ -78,6 +85,7 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
 
     func completed(_ completion: HanlinAgentRunCompletion) {
         guard !invalidated, completion.session == identity, modes[completion.runID] != .replay else { return }
+        do { try reserveRun(completion.runID) } catch { return }
         switch completion.outcome {
         case .completed:
             // SDK production can finish before AsyncThrowingStream's consumer drains buffered
@@ -114,6 +122,17 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
     func isCurrent(_ key: HanlinA2UIResultKey) -> Bool {
         !invalidated && session?.identity == identity && routes[key] != nil
             && store.projection(for: key).map { !$0.isReadOnly } == true
+    }
+
+    /// Delete the exact presentation generation and its native admission together. Inline /
+    /// expanded views only project this store; their disappearance does not delete authority.
+    @discardableResult
+    func discard(_ key: HanlinA2UIResultKey) -> Bool {
+        guard store.projection(for: key) != nil else { return false }
+        if let origin = routes.removeValue(forKey: key) { session?.revokeInteraction(origin) }
+        let removed = store.discard(key)
+        publish()
+        return removed
     }
 
     func receive(_ event: RendererToAgentMessage, for key: HanlinA2UIResultKey) {
@@ -216,6 +235,18 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
         for key in routes.keys.filter({ $0.runID == runID }) {
             if let origin = routes.removeValue(forKey: key) { session?.revokeInteraction(origin) }
         }
+    }
+
+    /// Include completion-only and rejected runs in the bound. Otherwise a long-lived caller
+    /// could grow EOF/tombstone/mode sets even after the content budget has been exhausted.
+    private func reserveRun(_ runID: UUID) throws {
+        guard !runIDs.contains(runID) else { return }
+        guard runIDs.count < 64 else {
+            resourceExhausted = true
+            invalidate(identity)
+            throw AdmissionError.resourceLimit
+        }
+        runIDs.insert(runID)
     }
 
     private func publish() {

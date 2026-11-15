@@ -54,6 +54,7 @@ private actor PresentationHost: HanlinHostIntegration, HanlinHostInteractionSour
 @MainActor
 private final class PresentationFixture {
     let messageID: UUID, surfacePartID: UUID
+    let secondMessageID: UUID
     let host: PresentationHost
     let persistence: HanlinInMemoryConversationStore
     let session: HanlinAgentSession
@@ -62,9 +63,11 @@ private final class PresentationFixture {
     let actions: AsyncStream<HanlinHostInteractionRequest>
     static let model = HanlinModelReference(provider: "fixture", modelID: "structured")
 
-    init(malformed: Bool = false) throws {
+    init(malformed: Bool = false, duplicatePartIDAcrossMessages: Bool = false) throws {
         let messageID = UUID(), surfacePartID = UUID()
         self.messageID = messageID; self.surfacePartID = surfacePartID
+        let secondMessageID = UUID()
+        self.secondMessageID = secondMessageID
         let persistence = HanlinInMemoryConversationStore()
         self.persistence = persistence
         let namespace = try HanlinConversationNamespace(app: "consumer-proof", account: "a", workspace: "w", space: "s")
@@ -80,6 +83,12 @@ private final class PresentationFixture {
                 payload: .a2uiMessage(protocolVersion: "1.0", json: Data((malformed && index == 0 ? "{" : frame).utf8))))
         }
         canonical.append(try .init(messageID: messageID, partID: UUID(), sequence: 4, payload: .textDelta("After")))
+        if duplicatePartIDAcrossMessages {
+            for (index, frame) in frames.enumerated() {
+                canonical.append(try .init(messageID: secondMessageID, partID: surfacePartID, sequence: UInt64(index),
+                    payload: .a2uiMessage(protocolVersion: "1.0", json: Data(frame.utf8))))
+            }
+        }
         let engine = HanlinAISDKAgentEngine(
             configuration: .init(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: ""),
             model: .v3(PresentationModel(parts: try canonical.map { .custom(try $0.providerContent()) })),
@@ -211,6 +220,49 @@ struct HanlinA2UIAgentPresentationTests {
         #expect(await f.host.prepared == 0)
         let saved = try #require(await f.persistence.load(f.session.identity.conversationID, namespace: f.session.identity.context.namespace))
         #expect(try saved.structuredEntries(runID: run, messageID: f.messageID).count == 5)
+        await f.session.invalidate()
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func completedRunBudgetRevokesBeforeUnboundedIdentityGrowth() async throws {
+        let f = try PresentationFixture()
+        let (firstRun, _) = try await f.firstRun()
+        let original = try f.projection(firstRun)
+        // Producer completion alone must consume the budget too, even when a caller never
+        // forwards structured events. Only actual Session callbacks can construct completions.
+        for _ in 1..<65 {
+            let stream = try await f.session.stream(messages: [.init(role: .user, text: "Synthetic budget control")],
+                                                    modelReference: PresentationFixture.model)
+            var done = f.completed.makeAsyncIterator()
+            _ = try #require(await done.next())
+            for try await _ in stream {}
+        }
+        #expect(original.isClosed && !f.adapter.isCurrent(original.key))
+        #expect(f.adapter.source?.projection(runID: firstRun, messageID: f.messageID, text: "BeforeAfter")?.plainText == "BeforeAfter")
+        #expect(await f.host.prepared == 0)
+        await f.session.invalidate()
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func canonicalMessagesCanReusePartIDWithoutSharingFormState() async throws {
+        let f = try PresentationFixture(duplicatePartIDAcrossMessages: true)
+        let (run, _) = try await f.firstRun()
+        let first = try f.projection(run)
+        let secondMessage = try #require(f.adapter.source?.projection(runID: run, messageID: f.secondMessageID, text: ""))
+        let second = try #require(secondMessage.surface(for: secondMessage.parts[0]))
+        #expect(first.key.resultID == second.key.resultID && first.key.origin != second.key.origin)
+        A2UITextField(node: try f.node(first, id: "name")).valueBinding.wrappedValue = "Only first message"
+        #expect(try f.node(second, id: "greeting").string(for: "text") == "Ada")
+        #expect(f.adapter.discard(first.key))
+        #expect(first.isClosed && !second.isClosed && f.adapter.isCurrent(second.key))
+        let oldOrigin = HanlinHostInteractionOrigin(session: f.session.identity, runID: run,
+                                                   messageID: f.messageID, partID: f.surfacePartID)
+        do {
+            _ = try await f.session.continueInteraction(.init(origin: oldOrigin, actionID: "submit", arguments: .object([:])),
+                messages: [], modelReference: PresentationFixture.model)
+            Issue.record("Deleted exact message retained native admission")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(await f.host.prepared == 0)
         await f.session.invalidate()
     }
 }

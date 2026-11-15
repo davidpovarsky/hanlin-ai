@@ -27,9 +27,26 @@ The new manual `a2ui_sdk_consumer` route archives the immutable SDK and literal 
 from the same Git SHA, records both Git tree IDs, and resolves the original producer revision
 `e7bf34111e603ca977becd007dd4e5bb109af857` plus official A2UI revision
 `3ed9601862ecc78027e20ac80ad8b1b98a5d9079`. It compiles real consumer sources and selects four
-new real-session/renderer component tests plus four affected projection tests. It does not repeat
-the unaffected SDK/producer suites or media tests. Local syntax and proof-validator checks passed;
-native typecheck/test execution is pending at this source commit.
+new real-session/renderer component tests plus four affected projection tests at source `9ac4ede8`.
+Run [43731062935](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43731062935)
+passed **8/8** on actual macOS/Xcode27.2/Swift6.4.2 in311s. Artifact `14169065648`, SHA256
+`e2ed1f3facbaccc557d315e26970478d0ae921a3e8ebae7a83b2b96c16abc4ae` retains the xcresult,
+original package/input hashes and both immutable SDK sibling tree IDs. See
+`evidence/sdk-consumer-43731062935.json`. No UI, native effect or live-model acceptance is inferred.
+
+The subsequent identity/budget correction keys model owners by `(run, message, part)` while
+preserving tool slot semantics. Same-part UUIDs in different canonical messages no longer collide.
+`discard(originalKey)` revokes that exact SDK origin before removing its owner; view disappearance
+is not deletion. Completion-only and rejected runs also count toward a64-run lifetime limit;
+exhaustion revokes the adapter while leaving canonical transcript bytes and plain text intact.
+This bounds EOF/tombstone/mode metadata as well as content. A replacement adapter/session may
+rehydrate the transcript read-only, never restore old native admission.
+
+The next operation selects six consumer controls (the four original controls plus a65-run
+completion budget and same-part-ID/two-message isolation) and17 affected ownership controls.
+The shared owner slot change affects all17; unaffected direct SDK/producer/media cases are not
+rerun. This23-case native operation is pending at this source commit. It does not refresh the
+separate media passes or claim an aggregate full-app acceptance.
 
 Main-app session ownership/environment wiring, a supported live schema-response provider path,
 native host effects, XCUITest, saved local form state, physical-device/RTL/AX acceptance remain OPEN.
