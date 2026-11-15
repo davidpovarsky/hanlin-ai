@@ -887,3 +887,23 @@ NOT_RUN,0 executed. Artifact14151544015:71510 bytes, API SHA256
 d901006a96775940b0611b5e20a3f59d4d3074a4b615e2806c523d7dd43b65c0.
 The source owner and reviewer received the actual compiler error; no unchanged
 retry or integrator edit of that leased production file occurred.
+
+
+Roni accepted df4d93e35fca1297b7d81e3b8113d4a48198e4c6, a single editor-line
+correction making both CGSize greatestFiniteMagnitude dimensions explicitly
+CGFloat. Whole owner bytes were imported; no test/math/threshold/layout changes.
+A single changed-source12-case Composer proof is authorized. Parity continuation
+43690860829 at4244e5c462a1e7833fb85e2c0e496cc4de60b8f2 remains separate, testing
+only two unexecuted iPad-he cases at immutable2427 with declared new CI harness.
+First partial-run dependency raw-lock snapshot is absent; source234 equality
+alone does NOT authenticate an unconditional combined eight-case dependency graph.
+No past lock bytes will be reconstructed from the new resolve/current worktree.
+
+Bounded completed-cohort audit fetched778346 additional bytes through ZIP ranges:
+actual iPhone18Pro en/he and iPadPro13-inch(M5) en, all arm64/iOSSimulator27.0,
+OSbuild24A434; each raw deviceId exactly matches its newly created simulator UUID.
+Each cohort retains4 PNG entries and raw xcresult Info.plist; one genuine PNG
+header/CRC/dimensions per cohort was checked (1206x2622 phones;2064x2752 iPad).
+This is not independent binary xcresult decoding or visual/reference parity.
+Final iPad-he test.log ends at Resolve Package Graph with no actual case start.
+No full ZIP checksum was recomputed; API digest and per-entry CRC are distinct.

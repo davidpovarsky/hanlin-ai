@@ -54,7 +54,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         // from actual visual fragments in automaticLimit, not this estimate.
         let sample = NSAttributedString(string: isEmpty ? "M" : "M\nM", attributes: [.font: font])
         let sampleHeight = sample.boundingRect(
-            with: CGSize(width: .greatestFiniteMagnitude, height: .greatestFiniteMagnitude),
+            with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
             options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil
         ).height
         let available = max(0, availableHeight)
