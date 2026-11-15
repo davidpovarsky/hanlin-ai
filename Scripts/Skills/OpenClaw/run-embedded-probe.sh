@@ -22,11 +22,11 @@ finish_openclaw_probe() {
 trap finish_openclaw_probe EXIT
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-openclaw.XXXXXXXX")"
 git rev-parse HEAD > "$evidence/tested-source-commit.txt"
-git archive HEAD Scripts/Skills/OpenClaw Scripts/Runtime RuntimeDependencies.lock.json > "$evidence/tested-source.tar"
+git archive HEAD Scripts/Skills/OpenClaw Scripts/Runtime RuntimeDependencies.lock.json Scripts/CI/stage_simulator_fixtures.py Scripts/CI/generate_performance_report.py > "$evidence/tested-source.tar"
 python3 - "$evidence" <<'PY_SOURCE'
 import hashlib,json,subprocess,sys
 from pathlib import Path
-out=Path(sys.argv[1]);paths=subprocess.check_output(['git','ls-files','Scripts/Skills/OpenClaw','Scripts/Runtime','RuntimeDependencies.lock.json'],text=True).splitlines()
+out=Path(sys.argv[1]);paths=subprocess.check_output(['git','ls-files','Scripts/Skills/OpenClaw','Scripts/Runtime','RuntimeDependencies.lock.json','Scripts/CI/stage_simulator_fixtures.py','Scripts/CI/generate_performance_report.py'],text=True).splitlines()
 records={}
 for name in paths:
     raw=Path(name).read_bytes();assert raw==subprocess.check_output(['git','show','HEAD:'+name]),name
@@ -95,32 +95,33 @@ python3 Scripts/Runtime/run-with-heartbeat.py --log "$evidence/sample-build.log"
 app="$(find "$scratch/DerivedData/Build/Products" -path '*Release-iphonesimulator/testnode.app' -type d -print -quit)"
 test -n "$app"
 python3 - "$evidence" "$app" <<'PY_EXECUTE'
-import hashlib,json,secrets,subprocess,sys,time
+import hashlib,importlib.util,json,secrets,subprocess,sys,time
 from pathlib import Path
 out,app=map(Path,sys.argv[1:]);inventory=json.loads((out/'devices.json').read_text());runtimes={r['identifier']:r for r in json.loads((out/'runtimes.json').read_text())['runtimes']}
+spec=importlib.util.spec_from_file_location('existing_bounded_simulator',Path('Scripts/CI/stage_simulator_fixtures.py'));bounded=importlib.util.module_from_spec(spec);spec.loader.exec_module(bounded)
 candidates=[(runtime,d) for runtime,devices in inventory['devices'].items() if runtime.startswith('com.apple.CoreSimulator.SimRuntime.iOS-26-') for d in devices if d.get('isAvailable') and d['name'].startswith('iPhone')]
 assert candidates,'Actual allowed iOS26 runtime/device unavailable'
 runtime,device=sorted(candidates,key=lambda item:(item[1].get('state')!='Booted',item[1]['name']))[0];udid=device['udid'];identifier='nodejsmobile.test'
 def call(args,timeout=30):
     started=time.monotonic();event={'command':args,'timeoutSeconds':timeout}
     try:
-        result=subprocess.run(args,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=timeout,check=True)
-        event.update({'exit':result.returncode,'output':result.stdout});return result.stdout
+        result=bounded.run_bounded(args,timeout_seconds=timeout)
+        event.update({'exit':result.returncode,'output':result.stdout,'stderr':result.stderr});result.check_returncode();return result.stdout
     except (subprocess.TimeoutExpired,subprocess.CalledProcessError) as error:
         output=error.stdout or '';event.update({'error':str(error),'output':output.decode(errors='replace') if isinstance(output,bytes) else output});raise
     finally:
         event['measuredSeconds']=time.monotonic()-started
         with (out/'simulator-commands.jsonl').open('a') as log:log.write(json.dumps(event)+'\n')
 def terminate_owned():
-    result=subprocess.run(['xcrun','simctl','terminate',udid,identifier],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=30)
+    result=bounded.run_bounded(['xcrun','simctl','terminate',udid,identifier],timeout_seconds=30)
     with (out/'owned-app-termination.log').open('a') as log:log.write(str(result.returncode)+' '+result.stdout+'\n')
 with (out/'simulator-readiness.log').open('w') as log:
     if device['state']=='Shutdown':subprocess.run(['xcrun','simctl','boot',udid],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)
     subprocess.run(['xcrun','simctl','bootstatus',udid,'-b'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=150)
 call(['xcrun','simctl','install',udid,str(app)],timeout=180)
-container=Path(call(['xcrun','simctl','get_app_container',udid,identifier,'data'],timeout=5).strip())
-(out/'actual-destination.json').write_text(json.dumps({'device':device,'runtime':runtimes[runtime],'container':str(container)},indent=2))
 call(['xcrun','simctl','launch',udid,identifier,'--copy-path-for-testing'])
+container=Path(call(['xcrun','simctl','get_app_container',udid,identifier,'data'],timeout=bounded.APP_CONTAINER_TIMEOUT_SECONDS).strip())
+(out/'actual-destination.json').write_text(json.dumps({'device':device,'runtime':runtimes[runtime],'container':str(container)},indent=2))
 fixture=container/'Documents/test/fixtures/hanlin-openclaw';deadline=time.monotonic()+30
 expected=json.loads((out/'fixture-sha256.json').read_text())
 while time.monotonic()<deadline:
