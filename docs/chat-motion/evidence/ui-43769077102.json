@@ -1,0 +1,19 @@
+{
+  "run_id": 43769077102,
+  "job_id": 132980685127,
+  "source_sha": "0d5ff3fdba640406d0408fb1912508cf905258ea",
+  "status": "BUILD_FAILED",
+  "executed_test_methods": 0,
+  "reason": "Disposable host color-only asset catalog has no AppIcon; XcodeGen default app-icon setting caused actool error, exit65",
+  "job_duration_seconds": 47,
+  "artifact": {
+    "id": 14183381970,
+    "size_bytes": 72697,
+    "zip_sha256": "d39fb4643296645856cdfe227bb1fc3b72f0700cf0e3eaed362462fd6b22f25e",
+    "verification": "DOWNLOADED_ZIP_MATCHES_API"
+  },
+  "raw_xcresult": "NOT_CREATED",
+  "fix_scope": "Disposable host explicitly leaves ASSETCATALOG_COMPILER_APPICON_NAME empty",
+  "product_asset_changes": false,
+  "production_root_cause_claim": false
+}

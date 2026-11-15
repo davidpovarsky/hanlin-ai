@@ -88,3 +88,10 @@ First UI attempt43768841286 at3b16b802 was INFRA_ERROR before compilation/test p
 the fresh runner lacked XcodeGen (exit127, job16s), zero XCTest methods executed. The existing
 repository convention of installing XcodeGen only when absent was added to this proof's
 preflight. No production renderer/disclosure change was inferred from this infrastructure failure.
+
+Second UI attempt43769077102 at0d5ff3fd reached build preparation but FAILED in the disposable
+host's asset-catalog step: XcodeGen defaulted to an AppIcon set that this color-only fixture
+does not contain (exit65, job47s). Zero UI methods executed. The fixture now explicitly leaves
+its app-icon build setting empty; the product asset catalog is unchanged. Rapid reversal uses
+one native three-tap gesture, avoiding serial tap calls that may wait for animation idle.
+Both shimmer paths explicitly stop their TimelineView when scenePhase is inactive.

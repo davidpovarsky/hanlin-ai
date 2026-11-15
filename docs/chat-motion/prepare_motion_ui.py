@@ -21,6 +21,7 @@ def snippets():
 
 def spec():
     common={'GENERATE_INFOPLIST_FILE':'YES','SWIFT_VERSION':'6.0','CODE_SIGNING_ALLOWED':'NO',
+        'ASSETCATALOG_COMPILER_APPICON_NAME':'',
         'TARGETED_DEVICE_FAMILY':'1,2','ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS':'YES'}
     return {'name':'ChatMotionProof','options':{'deploymentTarget':{'iOS':'26.0'}},'settings':{'base':common},
         'targets':{

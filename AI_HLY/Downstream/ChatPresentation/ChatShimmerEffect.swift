@@ -11,6 +11,7 @@ struct ChatShimmerModifier: ViewModifier {
     let isActive: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.chatMotion) private var motion
 
     init(isActive: Bool = true) {
@@ -18,7 +19,7 @@ struct ChatShimmerModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        if !isActive || reduceMotion || !motion.showsShimmer {
+        if !isActive || reduceMotion || scenePhase != .active || !motion.showsShimmer {
             content
         } else {
             content

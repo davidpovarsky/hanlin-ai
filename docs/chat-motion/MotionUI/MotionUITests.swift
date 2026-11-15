@@ -50,7 +50,7 @@ final class MotionUITests: XCTestCase {
 
     func testBRapidReversalPresetSwitchAndPersistence() {
         let toggle = app.buttons["proof-thinking"]
-        toggle.tap(); toggle.tap(); toggle.tap()
+        toggle.tap(withNumberOfTaps: 3, numberOfTouches: 1)
         waitForGeometry("expanded")
         selectPreset("Height reveal", id: "v1.height-reveal")
         waitForGeometry("expanded")

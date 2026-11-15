@@ -24,6 +24,7 @@ import HanlinPlatformContracts
 
 struct LoadingGradientText: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.chatMotion) private var motion
     let text: String
     var textColor: Color = .gray
@@ -40,7 +41,7 @@ struct LoadingGradientText: View {
     var isActive: Bool = true
 
     var body: some View {
-        if reduceMotion || !isActive || !motion.showsShimmer {
+        if reduceMotion || scenePhase != .active || !isActive || !motion.showsShimmer {
             Text(text).font(font).foregroundStyle(textColor)
         } else {
         Text(text)
