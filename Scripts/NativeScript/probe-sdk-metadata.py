@@ -71,7 +71,7 @@ def diagnostic_probe_outcome(exit_code: int, diagnostic: dict, aliases: dict) ->
 
 
 def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, arch: str,
-                          preprocessing_provenance: bool = False, modern: bool = False) -> dict:
+                          preprocessing_provenance: bool = False, modern: bool = False, dual: bool = False) -> dict:
     """Exercise the actual launcher with a genuinely compiled Swift interface."""
     folder = output / "runtime-wrapper"
     folder.mkdir(exist_ok=True)
@@ -162,7 +162,7 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     if preprocessing_provenance:
         environment["HANLIN_METADATA_PREPROCESS_PROVENANCE"] = "1"
     if modern:
-        environment["HANLIN_METADATA_FRONTEND"] = "modern-candidate"
+        environment["HANLIN_METADATA_FRONTEND"] = "modern-dual-candidate" if dual else "modern-candidate"
     for name in ["TARGET_TEMP_DIR", "CONFIGURATION_BUILD_DIR"]:
         Path(environment[name]).mkdir(exist_ok=True)
     (folder / "build-inputs.json").write_text(json.dumps({"compilerInputs": compilation,
@@ -226,6 +226,31 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
             "boundary": "Actual Swift compilation+combined SDK/Expo production metadata launcher; no app/VM/device execution."}
 
 
+def bind_dual_command(command: list[str], root: Path, sdk: Path, full_root: Path,
+                      objc_root: Path, folder: Path) -> tuple[list[str], dict]:
+    """Capture the real producer context, then bind both actual root inputs."""
+    from metadata_dual_grammar import create_request
+    spec = importlib.util.spec_from_file_location("dual_probe_launcher", root / "Scripts/NativeScript/build-step-metadata-generator-wrapper.py")
+    launcher = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(launcher)
+    request = folder / "dual-request.json"
+    position = command.index("Xclang")
+    command = [*command[:position], "-hanlin-dual-grammar-request", str(request), *command[position:]]
+    context = launcher.capture_native_compiler_context(Path(command[0]), {"generatorCall": command},
+        os.environ.copy(), Path(command[0]).parent, folder / "dual-context.bin")
+    headers = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
+    bound = [*headers.glob("*.h"), headers / "module.modulemap",
+        root / "build/nativescript-modern-metadata-tool/provenance.json",
+        root / "Scripts/NativeScript/metadata_dual_grammar.py", Path(__file__).resolve()]
+    inventory = full_root.with_suffix(".inventory.json")
+    if inventory.is_file():
+        bound.append(inventory)
+        for record in json.loads(inventory.read_text()):
+            bound.extend(Path(record["path"]) / relative for relative in record.get("inputSHA256", {}))
+    create_request(request, full_root, objc_root, context, sdk, bound)
+    return command, context
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=["modular", "textual", "textual-direct", "textual-ambient", "textual-public"],
@@ -236,12 +261,15 @@ def main() -> int:
                         help="Explicit standalone candidate dialect; not production adoption")
     parser.add_argument("--modern-semantic-parity", action="store_true",
                         help="Versioned modern candidate reference check; preserve raw YAML differences separately")
+    parser.add_argument("--dual-grammar", action="store_true", help="Bind and execute both retained source ASTs and authenticate publication")
     parser.add_argument("--runtime-wrapper", action="store_true", help="Compile the real provider and exercise the production metadata launcher")
     parser.add_argument("--preprocessing-provenance", action="store_true",
                         help="Opt-in diagnostic-only wrapper; requires future explicitly authorized native execution")
     options = parser.parse_args()
     if options.language != "objective-c" and (options.generator is None or (options.runtime_wrapper and not options.modern_semantic_parity)):
         parser.error("Candidate ObjC++ dialect requires explicit modern generator/model proof")
+    if options.dual_grammar and (not options.modern_semantic_parity or options.language != "objective-c++" or options.mode != "textual-public"):
+        parser.error("Dual grammar requires the locked modern ObjC++ public-root/model proof")
     if options.preprocessing_provenance and (not options.runtime_wrapper or options.generator is None or options.emit_types):
         parser.error("--preprocessing-provenance requires --runtime-wrapper and --generator, without --emit-types")
     if sys.platform != "darwin":
@@ -278,7 +306,7 @@ def main() -> int:
     version = capture("xcrun", "--sdk", "iphonesimulator", "--show-sdk-version")
     resources = Path(capture("xcrun", "clang", "-print-resource-dir"))
     headers = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
-    output = root / ("build/acceptance/nativescript-sdk-probe-cpp" if options.language == "objective-c++" else "build/acceptance/nativescript-sdk-probe")
+    output = root / ("build/acceptance/nativescript-sdk-probe-dual" if options.dual_grammar else "build/acceptance/nativescript-sdk-probe-cpp" if options.language == "objective-c++" else "build/acceptance/nativescript-sdk-probe")
     output.mkdir(parents=True, exist_ok=True)
     if options.modern_semantic_parity and options.language == "objective-c++":
         # Retain the actual SDK source needed to diagnose model differences.
@@ -366,6 +394,8 @@ def main() -> int:
                 del command[resource_index:resource_index + 2]
         elif mode != "textual-ambient":
             command.extend(["-include", str(umbrella)])
+        if options.dual_grammar:
+            command, dual_context = bind_dual_command(command, root, sdk, umbrella, umbrella, destination)
         control = subprocess.run(["xcrun", "clang", "-x", "objective-c", "-fsyntax-only",
                                   *command[command.index("Xclang") + 1:], str(umbrella)],
                                  capture_output=True, timeout=120)
@@ -406,6 +436,16 @@ def main() -> int:
             "clangErrorCount": len(errors),
             "status": "EXECUTED_PASS" if completed.returncode == 0 and control.returncode == 0
                       and all(symbols.values()) and not errors else "FAILED"}
+        if options.dual_grammar:
+            from metadata_dual_grammar import validate_receipt
+            try:
+                if completed.returncode:
+                    raise RuntimeError("Actual dual SDK producer failed")
+                validate_receipt(binary, destination / "dual-request.json", dual_context, generator)
+                result["dualGrammarPublication"] = {"status": "EXECUTED_PASS"}
+            except (RuntimeError, OSError, ValueError, KeyError) as error:
+                result["dualGrammarPublication"] = {"status": "FAILED", "reason": str(error)}
+                result["modes"][mode]["status"] = "FAILED"
         if options.emit_types:
             declarations = {p.relative_to(destination / "types").as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                             for p in sorted((destination / "types").rglob("*.d.ts"))}
@@ -438,6 +478,9 @@ def main() -> int:
                 comparison_flags = flags[:-len(CANDIDATE_CPP_ARGUMENTS)]
             invocation = [str(executable), "-input-umbrella", str(parity_input),
                           "-output-yaml", str(folder / "yaml"), "Xclang", *comparison_flags]
+            if options.dual_grammar and name == "candidate":
+                invocation[1:1] = ["-output-bin", str(folder / "metadata.bin")]
+                invocation, parity_dual_context = bind_dual_command(invocation, root, sdk, parity_input, parity_input, folder)
             (folder / "command.json").write_text(json.dumps(invocation, indent=2) + "\n")
             execution = subprocess.run(invocation, cwd=executable.parent, capture_output=True, timeout=120)
             (folder / "stdout.log").write_bytes(execution.stdout)
@@ -445,6 +488,14 @@ def main() -> int:
             manifests[name] = {p.relative_to(folder / "yaml").as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                                for p in sorted((folder / "yaml").glob("*.yaml"))}
             exits[name] = execution.returncode
+            if options.dual_grammar and name == "candidate":
+                try:
+                    if execution.returncode:
+                        raise RuntimeError("Actual dual parity producer failed")
+                    validate_receipt(folder / "metadata.bin", folder / "dual-request.json", parity_dual_context, executable)
+                except (RuntimeError, OSError, ValueError, KeyError) as error:
+                    exits[name] = 1
+                    (folder / "dual-validation-error.txt").write_text(str(error))
         parity_ok = bool(manifests["original"]) and manifests["original"] == manifests["candidate"] and all(v == 0 for v in exits.values())
         result["unchangedUIKitAndHostDeclarationParity"] = {"status": "EXECUTED_PASS" if parity_ok else "DIFFERENT" if options.modern_semantic_parity else "FAILED",
             "requiredForAcceptance": not options.modern_semantic_parity, "exitCodes": exits, "yamlSHA256": manifests}
@@ -466,7 +517,7 @@ def main() -> int:
     if options.runtime_wrapper:
         try:
             result["runtimeWrapper"] = probe_runtime_wrapper(root, output, original_generator, arch,
-                modern=options.modern_semantic_parity and options.language == "objective-c++")
+                modern=options.modern_semantic_parity and options.language == "objective-c++", dual=options.dual_grammar)
         except (subprocess.SubprocessError, RuntimeError, KeyError, StopIteration) as error:
             result["runtimeWrapper"] = {"status": "FAILED", "stage": "actual runtime-wrapper probe",
                                         "reason": type(error).__name__ + ": " + str(error)}

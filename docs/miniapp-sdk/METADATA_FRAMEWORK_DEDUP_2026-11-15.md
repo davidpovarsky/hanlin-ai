@@ -26,7 +26,19 @@ a resource budget. New real cross-grammar controls cover C-only exports,
 equivalent duplicates, conflicting signatures/layouts/owners and retained AST
 lifetimes before combined SDK/Host/Expo and actual runtime consumption.
 
-Actual run43741130714 at `ca1b8111` executes all7 cross-grammar fixture
+Actual run43742363711 at `aade8dc2` passes all7 cases through both the focused
+native main and the actual generator transaction entry. The positive operation
+publishes4 authenticated binary/YAML/TypeScript/root outputs and a bound final
+receipt. All6 negative operations publish0 outputs. The real wrapper gate
+verifies both actual grammars, ordered search contexts,0 compiler errors,
+source/dependency hashes, retained AST lifetime and every output hash. Generic
+C and CPP class declarations use their own actual factories for TypeScript.
+All124 manifest files verify with0 mismatches; result SHA256 is
+`77c83ca5096ddc3221c772fbee6ece41c0ca6e69fe5e009cd2366fe555a20c20`.
+The default remains legacy. The explicit opt-in is `modern-dual-candidate`;
+actual SDK/Host/Expo acceptance is still pending and consumers must not activate.
+
+Historical actual run43741130714 at `ca1b8111` executes all7 cross-grammar fixture
 controls successfully: C-only exports plus equivalent duplicates, layout,
 signature, constant, availability, physical-owner conflicts and invalid ObjC.
 The positive case proves12 actual duplicate models and1 module-owner mapping,

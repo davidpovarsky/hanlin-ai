@@ -2896,7 +2896,7 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "status": "NONE_RUNNING_ACTUAL_DUAL_ENTRY_IMPLEMENTATION"
+        "status": "PREPARED_MODERN_DUAL_SDK_NOT_YET_DISPATCHED"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3006,33 +3006,59 @@
           "actualStack": "HanlinDual::ActualUnit::ActualUnit +648; EXC_BAD_ACCESS address0x7f",
           "correctionSource": "72fd7609",
           "boundary": "No actual SDK/Host/Expo dual model, VM, UI or device acceptance"
+        },
+        {
+          "status": "EXECUTED_PASS",
+          "run": 43741130714,
+          "sourceSHA": "ca1b81119eb8ca1796e68ee5d736e19554ea8e9e",
+          "executedPass": 7,
+          "failed": 0,
+          "generatorSHA256": "7ede2a79b304c76e1d5da673558796d140f7178248d729050ee25130baad6df5",
+          "controlBinarySHA256": "c5ba46a78c859b7d556e16036b455c07d98deab64344a160957267f0d023b3e4",
+          "actualDuplicateProofs": 12,
+          "actualModuleOwnerProofs": 1,
+          "actualRetainedASTModels": {
+            "cpp": 1,
+            "objc": 14
+          },
+          "actualRetainedGraphTypes": 12,
+          "crossFactoryTypeValidation": true,
+          "bothSourceManagersReadAfterSerialization": true,
+          "peakRSSAfterSerializationBytes": 59195392,
+          "metadataSHA256": "ddf2f5a0f798dbd967907175925f0c3c3f9662af9f3390aac852c4bfbdc48b0a",
+          "artifactManifest": {
+            "filesVerified": 76,
+            "mismatches": 0,
+            "resultSHA256": "73aad028e1032585a78a02a9b215ccc2261350b20d78731af6fcb272f0043a94"
+          },
+          "boundary": "Actual fresh fixture/compiler/model/ABI/ownership/lifetime/original serializer only; combined SDK/Host/Expo and VM/UI/device NOT_RUN"
         }
       ],
       "dualGrammarControls": {
         "status": "EXECUTED_PASS",
-        "run": 43741130714,
-        "sourceSHA": "ca1b81119eb8ca1796e68ee5d736e19554ea8e9e",
-        "executedPass": 7,
-        "failed": 0,
-        "generatorSHA256": "7ede2a79b304c76e1d5da673558796d140f7178248d729050ee25130baad6df5",
-        "controlBinarySHA256": "c5ba46a78c859b7d556e16036b455c07d98deab64344a160957267f0d023b3e4",
-        "actualDuplicateProofs": 12,
-        "actualModuleOwnerProofs": 1,
-        "actualRetainedASTModels": {
-          "cpp": 1,
-          "objc": 14
+        "run": 43742363711,
+        "sourceSHA": "aade8dc2ea8ddee6b92cf1258f1b371aae838b43",
+        "cases": 7,
+        "focusedNativeExecution": "EXECUTED_PASS",
+        "realGeneratorTransactions": "EXECUTED_PASS",
+        "negativeTransactions": {
+          "cases": 6,
+          "publishedOutputs": 0
         },
-        "actualRetainedGraphTypes": 12,
-        "crossFactoryTypeValidation": true,
-        "bothSourceManagersReadAfterSerialization": true,
-        "peakRSSAfterSerializationBytes": 59195392,
-        "metadataSHA256": "ddf2f5a0f798dbd967907175925f0c3c3f9662af9f3390aac852c4bfbdc48b0a",
+        "positiveTransaction": {
+          "outputs": 4,
+          "metadataSHA256": "ae4d61dabfbe41038a20673046f17fd61369197f7336efc16115b066d60a04d9",
+          "receiptSHA256": "938d8cfb06e21e23052bce8a9df60e0bf65c362946369662400c3b4fdb96c74d"
+        },
+        "generatorSHA256": "816710b08682f80d9ded09e63eed4eebc53c39a50061db0ffbf77c87a138b6f1",
+        "controlBinarySHA256": "fab7a38fef99fedada586bcd88b9bdae3d770b85951191069f448f55521f7f13",
         "artifactManifest": {
-          "filesVerified": 76,
+          "filesVerified": 124,
           "mismatches": 0,
-          "resultSHA256": "73aad028e1032585a78a02a9b215ccc2261350b20d78731af6fcb272f0043a94"
+          "resultSHA256": "77c83ca5096ddc3221c772fbee6ece41c0ca6e69fe5e009cd2366fe555a20c20"
         },
-        "boundary": "Actual fresh fixture/compiler/model/ABI/ownership/lifetime/original serializer only; combined SDK/Host/Expo and VM/UI/device NOT_RUN"
+        "genericDeclarations": "Actual C and CPP declaration owners selected and generated",
+        "boundary": "Fixture/compiler/ABI/model/ownership/lifetime/real entry publication only; SDK/Host/Expo/VM/UI/device NOT_RUN"
       }
     }
   }
