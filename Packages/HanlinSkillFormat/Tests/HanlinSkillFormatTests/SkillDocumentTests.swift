@@ -43,6 +43,21 @@ struct SkillDocumentTests {
         #expect(roundtrip == parsed.root)
     }
 
+    @Test func slicedDataUsesDocumentRelativeRangesWithoutChangingBytes() throws {
+        let original = Data("\u{FEFF}---\r\nname: sliced-data\r\ndescription: \"שלום 😀\"\r\nunknown: {retained: true}\r\n---\r\n\r\nInstructions\r\n".utf8)
+        let prefixed = Data([0, 1, 2, 3]) + original
+        let sliced = prefixed.dropFirst(4)
+        #expect(sliced.startIndex == 4)
+        let parsed = try SkillDocumentParser.parse(sliced)
+        #expect(parsed.originalSource == original)
+        #expect(parsed.originalSource.startIndex == 0)
+        #expect(parsed.rawBody == Data("\r\nInstructions\r\n".utf8))
+        let edited = try parsed.updating(name: parsed.name, title: nil, description: "Edited", instructionBody: parsed.instructionBody)
+        #expect(edited.root["unknown"] == parsed.root["unknown"])
+        #expect(edited.rawBody == parsed.rawBody)
+        #expect(edited.description == "Edited")
+    }
+
     @Test func bomCRLFUnicodeMarksMapToExactUTF8Bytes() throws {
         let raw = "\u{FEFF}---\r\nunknown: \"שלום 👩🏽‍💻 e\u{301}\"\r\nname: unicode-skill\r\ntitle: \"כותרת 😀\" # keep\r\ndescription: \"old # : text\"\r\n---\r\n\r\n# גוף\r\n"
         let parsed = try SkillDocumentParser.parse(raw)

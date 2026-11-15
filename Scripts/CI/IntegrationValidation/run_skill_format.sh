@@ -135,6 +135,7 @@ PY_SCHEME
 printf '[]\n' > "$evidence/process-status.json"
 platforms=(macOS iOS26 iOS27)
 if [[ "${HANLIN_SKILL_IOS26_ONLY:-0}" == 1 ]]; then platforms=(iOS26); fi
+if [[ "${HANLIN_SKILL_MAC_IOS27_ONLY:-0}" == 1 ]]; then platforms=(macOS iOS27); fi
 for platform in "${platforms[@]}"; do
   destination='platform=macOS'
   if [[ "$platform" != macOS ]]; then
@@ -167,7 +168,7 @@ inventory=json.loads((evidence/'devices.json').read_text());device=next(d for de
 with (evidence/'owned-simulator-readiness.log').open('w') as log:
     if device['state']=='Shutdown':subprocess.run(['xcrun','simctl','boot',udid],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=30)
     subprocess.run(['xcrun','simctl','bootstatus',udid,'-b'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)
-subprocess.run(['xcrun','simctl','list','devices',udid,'-j'],stdout=(evidence/'selected-device.json').open('w'),check=True,timeout=10)
+(evidence/'selected-device.json').write_text(json.dumps({'destination':destination,'inventory_device':device,'readiness':'Actual simctl bootstatus -b completed successfully; see retained log'},indent=2))
 PY_BOOT
     fi
   fi
@@ -203,7 +204,7 @@ for status in statuses:
         actual.append(match[1] if match else '')
     passed=status['exit']==0 and set(actual)==expected and len(actual)==len(expected) and all(c.get('result')=='Passed' for c in cases)
     results.append(dict(status,classification='EXECUTED_PASS' if passed else 'BLOCKED' if status.get('blocked') else 'FAILED',cases=cases))
-expected_platforms={'iOS26'} if os.environ.get('HANLIN_SKILL_IOS26_ONLY')=='1' else {'macOS','iOS26','iOS27'}
+expected_platforms={'iOS26'} if os.environ.get('HANLIN_SKILL_IOS26_ONLY')=='1' else {'macOS','iOS27'} if os.environ.get('HANLIN_SKILL_MAC_IOS27_ONLY')=='1' else {'macOS','iOS26','iOS27'}
 passed={x['platform'] for x in results}==expected_platforms and all(x['classification']=='EXECUTED_PASS' for x in results)
 print(json.dumps({'status':'EXECUTED_PASS' if passed else 'FAILED','scope':'Original Yams Skill format package only; actual app, ZIP/Store/UI tests NOT_RUN','platforms':results},indent=2))
 sys.exit(0 if passed else 1)

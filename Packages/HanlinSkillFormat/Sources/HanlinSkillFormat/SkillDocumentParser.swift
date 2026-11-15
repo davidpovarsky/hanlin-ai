@@ -6,11 +6,14 @@ public enum SkillDocumentParser {
 
     /// Compatible reads retain installed legacy identifiers; standards violations remain findings.
     /// Neither mode interprets metadata as permissions, readiness or executable configuration.
-    public static func parse(_ source: Data, limits: SkillMarkdownLimits = .default,
+    public static func parse(_ input: Data, limits: SkillMarkdownLimits = .default,
                              validation: Validation = .compatible) throws -> SkillMarkdownDocument {
         try checkCancellation()
         try validate(limits)
-        guard source.count <= limits.maximumSourceBytes else { throw SkillMarkdownError(.inputLimit, "SKILL.md exceeds its byte budget.") }
+        guard input.count <= limits.maximumSourceBytes else { throw SkillMarkdownError(.inputLimit, "SKILL.md exceeds its byte budget.") }
+        // Data slices retain their original collection indices. All public source ranges are
+        // offsets in this document, so rebase without changing a byte before slicing/indexing.
+        let source = input.startIndex == 0 ? input : Data(input)
         guard String(data: source, encoding: .utf8) != nil else { throw SkillMarkdownError(.invalidUTF8, "SKILL.md must be UTF-8.") }
         let envelope = try envelope(source)
         guard envelope.header.count <= limits.maximumFrontmatterBytes else { throw SkillMarkdownError(.inputLimit, "YAML frontmatter exceeds its byte budget.") }

@@ -161,8 +161,9 @@ jobs:
           NATIVE_CATALOG_ONLY: ${{ inputs.exact_test_selector == 'NativeModelCatalogTests' && '1' || '0' }}
           HOST_SCHEMA_ONLY: ${{ (inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaValidationTests' || inputs.exact_test_selector == 'HanlinAgentCoreTests/HostAssociation' || inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaWriter') && '1' || '0' }}
           PRODUCER_SCHEMA_ONLY: ${{ inputs.exact_test_selector == 'AISDKProviderUtilsTests/JSONSchemaValidatorTests' && '1' || '0' }}
-          SKILL_FORMAT_ONLY: ${{ (inputs.exact_test_selector == 'HanlinSkillFormatTests' || inputs.exact_test_selector == 'HanlinSkillFormatResolveOnly') && '1' || '0' }}
+          SKILL_FORMAT_ONLY: ${{ (inputs.exact_test_selector == 'HanlinSkillFormatTests' || inputs.exact_test_selector == 'HanlinSkillFormatResolveOnly' || inputs.exact_test_selector == 'HanlinSkillFormatAllApple') && '1' || '0' }}
           HANLIN_SKILL_RESOLVE_ONLY: ${{ inputs.exact_test_selector == 'HanlinSkillFormatResolveOnly' && '1' || '0' }}
+          HANLIN_SKILL_MAC_IOS27_ONLY: ${{ inputs.exact_test_selector == 'HanlinSkillFormatAllApple' && '1' || '0' }}
         run: |
           if [[ "$SKILL_FORMAT_ONLY" == 1 ]]; then
             bash Scripts/CI/IntegrationValidation/run_skill_format.sh
@@ -189,7 +190,7 @@ jobs:
           retention-days: 30
 
   skill-format-ios26:
-    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSkillFormatIOS26' && !inputs.testflight_upload }}
+    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && (inputs.exact_test_selector == 'HanlinSkillFormatIOS26' || inputs.exact_test_selector == 'HanlinSkillFormatAllApple') && !inputs.testflight_upload }}
     name: Original Yams Skill package tests on iOS 26 only
     runs-on: macos-26
     timeout-minutes: 20

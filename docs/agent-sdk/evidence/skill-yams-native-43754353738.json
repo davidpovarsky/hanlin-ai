@@ -109,5 +109,5 @@
     "executed_test_identities": 0,
     "reason": "Evidence extractor missed inline @Test func declarations; corrected and real20 identities verified before replacement run."
   },
-  "reuse_to_exact_version_manifest": "PENDING actual Mac resolved-only/source-closure audit; native executions belong to original revision-pin source SHA above."
+  "reuse_to_exact_version_manifest": "Historical REUSED_VERIFIED_PASS only through91c63352 via actual Mac resolved-only audit43755833008. Subsequent sliced-Data parser source fix invalidates current-source test reuse; all affected native cases will execute afresh. Original executions remain source78c8880e."
 }

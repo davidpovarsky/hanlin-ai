@@ -1,0 +1,20 @@
+{
+  "source_commit": "7aeace65197d746fd98f3de8fb362fb01901e96b",
+  "source_path": "Scripts/Runtime/verify-swiftpm-pin.py",
+  "script_sha256": "a4b20751119d5dde6b3a87af59cc929be27e28dcd8144fbad6d6b9abfdf44289",
+  "command_arguments": [
+    "Packages/HanlinSkillFormat",
+    "6.2.2",
+    "jpsim/Yams",
+    "a27b21e0c81c5bf42049b897a62aaf387e80f279"
+  ],
+  "exit_code": 0,
+  "actual_output": {
+    "version": "6.2.2",
+    "repository": "jpsim/Yams",
+    "revision": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+    "upstreamPeeledCommit": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+    "status": "EXECUTED_PASS"
+  },
+  "limitation": "Original manifest check is textual regex, not authoritative SwiftPM semantic evidence; actual Mac resolution/target graph/tag/lock audit43755833008 separately supplies that proof. Original source only staged in ignored scratch, not copied/forked into production. Initial local invocation with a mistyped non-40-character SHA failed input validation and is not tag-retarget evidence."
+}
