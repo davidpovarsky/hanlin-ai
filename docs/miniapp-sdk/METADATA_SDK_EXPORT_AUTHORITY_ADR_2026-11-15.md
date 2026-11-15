@@ -139,3 +139,18 @@ affected model/SDK slice run. The separate9-case export test implementation,
 fixtures and transitive code did not change; an explicit verifier reuses its
 original pass only after complete source/compiler/library/environment and SDK
 fixture hashes match, reporting REUSED_VERIFIED_PASS and new execution NOT_RUN.
+
+Budget-scope run43758215868/7115b997 passes13 fresh model/transaction cases,
+strict31 existing models and the actual SDK slice. The unchanged native9-case
+export pass is REUSED_VERIFIED_PASS from43757087726 after935 original compile
+inputs plus exact image/compiler/libraries/environment/SDK fixture checks.
+All220 fresh control and1 reuse-receipt manifest files verify with0 mismatches.
+The slice binary stays byte-identical (SHA5427fad1…674e); all34,151 A models
+remain covered. Measured whole metadata child process25.732s; measured peak
+through complete receipt rendering2,291,236,864B, below4GiB. The native receipt
+states the exact time/RSS measurement phases; no final acceptance test rerun was
+performed solely for acceptance. Model-merge observed peak1,949,958,144B versus
+401,932,288B after the two actual AST/model collections. Full SDK is the next
+new input scope, with the same source-identical tool image and static binding
+proofs reused only after complete input verification.
+Slice result SHA256: `db2f31f08505f229aa37469f75725b217a26691dc5de99b4033e0f28155bfe82`.

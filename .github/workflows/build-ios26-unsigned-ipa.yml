@@ -193,7 +193,7 @@ jobs:
         uses: actions/download-artifact@v8.0.2
         with:
           name: nativescript-sdk-metadata
-          run-id: 43757087726
+          run-id: 43758215868
           github-token: ${{ github.token }}
           path: build/modern-compile-reference
       - name: Compile candidate modern metadata frontend
@@ -227,6 +227,14 @@ jobs:
           run-id: 43753808737
           github-token: ${{ github.token }}
           path: build/sdk-export-compile-reference
+      - name: Retrieve original executed export pass for exact unchanged-input verification
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-parity' && inputs.exact_test_selector == 'SDKResourceBudgetSlice'
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: nativescript-sdk-metadata
+          run-id: 43757087726
+          github-token: ${{ github.token }}
+          path: build/sdk-export-original-pass-reference
       - name: Verify affected native export counterexamples or unchanged original pass
         if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-parity' && (inputs.exact_test_selector == 'SDKExportAuthoritySlice' || inputs.exact_test_selector == 'SDKResourceBudgetSlice')
         env:

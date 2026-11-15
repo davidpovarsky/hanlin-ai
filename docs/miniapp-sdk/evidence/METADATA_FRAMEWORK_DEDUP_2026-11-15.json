@@ -2896,10 +2896,10 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "AFFECTED_POST_SERIALIZATION_RSS_BUDGET_CONTROLS_31_MODELS_AND_SDK_SLICE",
+        "scope": "FULL_SDK_GENERATION_ONLY_CONTRACT3",
         "status": "PENDING_DISPATCH",
-        "unchangedExportTargetControls": "Explicit verified reuse only; no repeat execution",
-        "fullSDK": "NOT_RUN until budget scope passes"
+        "controlsAnd31Gate": "NOT_RUN in next focused scope; original passing evidence remains separately verified",
+        "combinedVM": "NOT_RUN"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3200,6 +3200,32 @@
           "observedRSSBeforeReceiptRender": 2299068416,
           "secondsBeforeReceiptRender": 22.188113,
           "resultSHA256": "5ba4a0644b2202d3dd90413865a83c09ec6b0c89423bcaf040681d9652cfcecc",
+          "runtimeAcceptance": "NOT_ESTABLISHED"
+        },
+        "resourceBudgetSlice": {
+          "run": 43758215868,
+          "sourceSHA": "7115b9971c6dc0a64a8762f1ce935e95a1c4c490",
+          "status": "EXECUTED_PASS",
+          "freshModelAndTransactionCases": 13,
+          "freshReferenceModules": 31,
+          "exportTargetControls": {
+            "status": "REUSED_VERIFIED_PASS",
+            "originalRun": 43757087726,
+            "cases": 9,
+            "verifiedCompileInputs": 935,
+            "newExecution": "NOT_RUN"
+          },
+          "verifiedFreshControlManifestFiles": 220,
+          "verifiedReuseManifestFiles": 1,
+          "mismatches": 0,
+          "metadataSHA256": "5427fad1780ce05963d4006ce35fb199d6af57dc398d4b803de4a98fa2e4674e",
+          "wholeMetadataProcessSeconds": 25.73235475,
+          "peakRSSBytes": 2291236864,
+          "peakRSSMeasurement": "maximum_through_complete_receipt_render",
+          "peakRSSBudget": 4294967296,
+          "originalAGraphModels": 34151,
+          "unmappedModels": 0,
+          "resultSHA256": "db2f31f08505f229aa37469f75725b217a26691dc5de99b4033e0f28155bfe82",
           "runtimeAcceptance": "NOT_ESTABLISHED"
         }
       }

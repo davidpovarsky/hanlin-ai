@@ -83,7 +83,7 @@ def main():
 
 def verify_unchanged_prior_pass():
     """Revalidate exact native test, fixtures and transitive inputs; do not execute."""
-    previous = ROOT / "build/modern-compile-reference/acceptance/metadata-sdk-export-audit"
+    previous = ROOT / "build/sdk-export-original-pass-reference/acceptance/metadata-sdk-export-audit"
     result = json.loads((previous / "result.json").read_text())
     provenance = json.loads((previous / "provenance.json").read_text())
     for item in json.loads((previous / "artifact-manifest.json").read_text()):
@@ -98,10 +98,12 @@ def verify_unchanged_prior_pass():
     for path, digest in provenance["compileInputs"].items():
         if not Path(path).is_file() or sha(Path(path)) != digest:
             raise RuntimeError("Native export transitive compiler/source input changed; rerun required")
+    if subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"], text=True).strip() != provenance["sdk"]:
+        raise RuntimeError("Original SDK export fixture selection changed; rerun required")
     apple = Path(subprocess.check_output(["xcrun", "--find", "clang++"], text=True).strip())
     if sha(apple) != provenance["compilerSHA256"] or subprocess.check_output(["xcodebuild", "-version"], text=True).strip() != provenance["xcode"]:
         raise RuntimeError("Native export Apple toolchain changed; rerun required")
-    original_tool = json.loads((ROOT / "build/modern-compile-reference/nativescript-modern-metadata-tool/provenance.json").read_text())
+    original_tool = json.loads((ROOT / "build/sdk-export-original-pass-reference/nativescript-modern-metadata-tool/provenance.json").read_text())
     if any(os.environ.get(key) != value for key, value in original_tool["compilerEnvironment"].items()):
         raise RuntimeError("Original native export environment changed; rerun required")
     frontend = Path(original_tool["frontendRoot"])
