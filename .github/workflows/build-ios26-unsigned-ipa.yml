@@ -217,6 +217,7 @@ jobs:
         if: ${{ !cancelled() && (inputs.nativescript_metadata_tooling_mode == 'modern-provenance' || inputs.nativescript_metadata_tooling_mode == 'modern-validation') && steps.modern-frontend.outcome == 'success' }}
         env:
           HANLIN_METADATA_PROOF_FRONTEND: modern
+          HANLIN_PROVENANCE_ONLY_SELECTOR: ${{ inputs.exact_test_selector }}
         run: python3 Scripts/CI/MetadataProvenanceProof/run.py
       - name: Compare real SDK metadata parser modes
         if: ${{ inputs.nativescript_metadata_tooling_mode != 'provenance' && inputs.nativescript_metadata_tooling_mode != 'inventory' && !startsWith(inputs.nativescript_metadata_tooling_mode, 'modern-') }}

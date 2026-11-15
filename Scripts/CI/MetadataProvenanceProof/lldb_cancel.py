@@ -28,7 +28,7 @@ def cancel(debugger, command, result, unused):
         return {"exists": exists, "bytes": len(body), "sha256": hashlib.sha256(body).hexdigest()}
 
     try:
-        actual = file_path(process.GetProcessInfo().GetExecutable())
+        actual = file_path(process.GetProcessInfo().GetExecutableFile())
         facts["processExecutable"] = actual
         facts["selectedExecutable"] = file_path(target.GetExecutable())
         facts["executableSHA256"] = hashlib.sha256(Path(actual).read_bytes()).hexdigest()

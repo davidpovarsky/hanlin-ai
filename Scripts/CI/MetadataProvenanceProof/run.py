@@ -77,11 +77,15 @@ def main():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     results = []
+    only_selector = os.environ.get("HANLIN_PROVENANCE_ONLY_SELECTOR", "")
     for row in rows:
         if modern and "cancelled_native_process" in row["selector"]:
             row = {**row, "supersedesSelector": row["selector"],
                    "selector": "NativePreprocessingProvenanceControls.test_debugger_cancellation_during_observed_preprocessor_lex"}
         key = row["selector"] + "--" + row["variant"]
+        if only_selector and row["selector"] != only_selector:
+            results.append({**row, "status": "NOT_RUN", "testsRun": 0, "reason": "Outside the explicitly affected selector; no new pass or reuse claimed"})
+            continue
         if modern and ("cancelled_native_process" in row["selector"] or "normal_sdk31_" in row["selector"]):
             reason = "Existing one-attempt observer does not establish PP Lex; no unchanged infrastructure retry" if "cancelled_native_process" in row["selector"] else "Modern combined production wrapper is not adopted; separate SDK/combined/runtime obligations remain open"
             results.append({**row, "status": "NOT_RUN", "testsRun": 0, "reason": reason})
