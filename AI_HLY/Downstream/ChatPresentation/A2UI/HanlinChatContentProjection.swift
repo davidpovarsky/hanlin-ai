@@ -72,13 +72,14 @@ final class HanlinChatContentProjectionSource {
     }
 
     func projection(runID: UUID?, messageID: UUID, text: String) -> HanlinChatContentProjection? {
-        guard let runID, let message = messages[Identity(runID: runID, messageID: messageID)],
+        guard let runID, let message = registeredProjection(runID: runID, messageID: messageID),
               message.plainText == text else { return nil }
         return message
     }
+
+    func registeredProjection(runID: UUID, messageID: UUID) -> HanlinChatContentProjection? {
+        messages[Identity(runID: runID, messageID: messageID)]
+    }
 }
 
-extension EnvironmentValues {
-    @Entry var hanlinChatContentProjectionSource: HanlinChatContentProjectionSource? = nil
-}
 #endif

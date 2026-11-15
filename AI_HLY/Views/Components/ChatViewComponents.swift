@@ -79,7 +79,7 @@ struct ChatBubbleView: View {
     @Environment(\.chatExcerptSource) private var excerptSource
     #if HANLIN_A2UI_POC
     @Environment(\.hanlinA2UIResultProjectionSource) private var a2uiProjectionSource
-    @Environment(\.hanlinChatContentProjectionSource) private var chatContentProjectionSource
+    @Environment(\.hanlinA2UIAppPresentation) private var a2uiAppPresentation
     #endif
     @State private var isPersonallySaved = false
     let temporaryRecord: Bool
@@ -1784,7 +1784,7 @@ struct ChatBubbleView: View {
     // MARK: - AI 助手消息内容
     #if HANLIN_A2UI_POC
     private var orderedModelContent: HanlinChatContentProjection? {
-        chatContentProjectionSource?.projection(runID: agentRun?.id, messageID: id, text: text)
+        a2uiAppPresentation?.projection(uiRunID: agentRun?.id, rowID: id, text: text)
     }
     #endif
 

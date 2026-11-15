@@ -11,7 +11,7 @@ import HanlinPlatformContracts
 import Testing
 @testable import AI_Hanlin
 
-private struct PresentationModel: LanguageModelV3 {
+struct PresentationModel: LanguageModelV3 {
     let provider = "fixture"
     let modelId = "structured"
     let parts: [LanguageModelV3StreamPart]
@@ -28,7 +28,7 @@ private struct PresentationModel: LanguageModelV3 {
 }
 
 /// Test-only host. It authorizes one input shape and performs no native business effects.
-private actor PresentationHost: HanlinHostIntegration, HanlinHostInteractionSource {
+actor PresentationHost: HanlinHostIntegration, HanlinHostInteractionSource {
     nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
     let captured: HanlinHostContext
     private(set) var prepared = 0

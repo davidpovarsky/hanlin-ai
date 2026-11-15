@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 import SwiftData
 import UniformTypeIdentifiers
+import HanlinHostContracts
 
 // 聊天界面
 @MainActor
@@ -89,6 +90,24 @@ struct ChatView: View {
     @State private var operationalState: String = ""        // 操作状态文本
     @State private var operationalDescription: String = ""  // 操作描述文本
     @State private var apiManager: APIManager?
+    @State private var agentSessionOwner = HanlinAppAgentSessionOwner()
+    #if HANLIN_A2UI_POC
+    @State private var a2uiPresentation: HanlinA2UIAppPresentation?
+    @State private var a2uiSubmittingAction: HanlinA2UIAppPresentation.PendingAction?
+    @State private var a2uiOriginalModelChoice: A2UIModelChoice?
+
+    private struct A2UIModelChoice: Equatable {
+        let id: UUID
+        let company: String?
+        let name: String?
+    }
+
+    private var a2uiModelChoice: A2UIModelChoice? {
+        guard modelTemp.indices.contains(selectedModelIndex) else { return nil }
+        let model = modelTemp[selectedModelIndex]
+        return .init(id: model.id, company: model.company, name: model.name)
+    }
+    #endif
     @State private var activeAgentCoordinator: AgentRunCoordinator?
     @State private var activeAgentRun: AgentRun?
     @State private var activeAgentMessage: ChatMessages?
@@ -454,14 +473,34 @@ struct ChatView: View {
 
     var body: some View {
         chatWorkspaceStack
+        #if HANLIN_A2UI_POC
+        .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
+        .onChange(of: a2uiPresentation?.pendingAction?.request.requestID) { _, _ in
+            guard let action = a2uiPresentation?.takePendingAction(), !isResponding,
+                  a2uiPresentation?.isCurrent(action) == true,
+                  a2uiModelChoice == a2uiOriginalModelChoice else { return }
+            a2uiSubmittingAction = action
+            handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Form submitted"))
+        }
+        .onChange(of: a2uiModelChoice) { _, current in
+            guard let original = a2uiOriginalModelChoice, original != current else { return }
+            if isResponding { handleCancellation() }
+            agentSessionOwner.cancel()
+            a2uiOriginalModelChoice = nil
+        }
+        #endif
         .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
         .onAppear {
+            #if HANLIN_A2UI_POC
+            if a2uiPresentation == nil { a2uiPresentation = HanlinA2UIAppPresentation() }
+            agentSessionOwner.presentation = a2uiPresentation
+            #endif
             composerRegistrationToken = UUID()
-            handleOnAppear()
             if sessionBridge?.isTemporaryChat(effectiveChatSessionID) == true {
                 TemporaryRecord = true
             }
+            handleOnAppear()
             if isExternalCompactComposerHost {
                 sessionBridge?.register(endpoint: makeExternalComposerEndpoint())
             } else if let sessionBridge {
@@ -474,12 +513,23 @@ struct ChatView: View {
             }
         }
         .onChange(of: TemporaryRecord) { _, newValue in
+            if isResponding { handleCancellation() }
+            agentSessionOwner.cancel()
             sessionBridge?.setTemporaryChat(newValue, for: effectiveChatSessionID)
+        }
+        .onChange(of: chatRecord.id) { _, _ in agentSessionOwner.cancel() }
+        .onChange(of: sessionBridge?.expectedActiveSessionID) { _, current in
+            if sessionBridge != nil, current != effectiveChatSessionID { agentSessionOwner.cancel() }
         }
         .onChange(of: composerBridgeSyncState) { _, _ in
             syncComposerEndpointWithBridge()
         }
         .onDisappear {
+            // The workspace router supplies actual selection ownership. A sheet/full-screen
+            // result that leaves that original selection mounted does not revoke its Session.
+            if let sessionBridge, sessionBridge.expectedActiveSessionID != effectiveChatSessionID {
+                agentSessionOwner.cancel()
+            }
             if isExternalCompactComposerHost {
                 sessionBridge?.unregister(sessionID: effectiveChatSessionID, token: composerRegistrationToken)
             } else {
@@ -490,6 +540,7 @@ struct ChatView: View {
             }
             openHistory()
             if TemporaryRecord && sessionBridge?.isTransitioningLayoutMode != true {
+                agentSessionOwner.cancel() // Revoke synchronously before deleting the original conversation.
                 sessionBridge?.clearCachedDraft(for: effectiveChatSessionID)
                 context.delete(chatRecord)
                 do {
@@ -1097,7 +1148,14 @@ struct ChatView: View {
             ? (AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? [])?
                 .trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
             : ""
-        let bubbleText = !rawMsgText.isEmpty ? rawMsgText : fallbackFinalAnswer
+        let legacyBubbleText = !rawMsgText.isEmpty ? rawMsgText : fallbackFinalAnswer
+        #if HANLIN_A2UI_POC
+        let exactCanonicalBody = a2uiPresentation?.projection(uiRunID: activityRun?.id,
+            rowID: msg.id, text: msg.text ?? "") != nil
+        let bubbleText = exactCanonicalBody ? (msg.text ?? "") : legacyBubbleText
+        #else
+        let bubbleText = legacyBubbleText
+        #endif
         
         // 1. 构造基础气泡
         let bubble = ChatBubbleView(
@@ -1368,6 +1426,27 @@ struct ChatView: View {
     
     // 处理消息发送
     private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil) {
+        guard modelTemp.indices.contains(selectedModelIndex) else { return }
+        let requestModelName = modelTemp[selectedModelIndex].name ?? "Unknown"
+        let requestModelCompany = modelTemp[selectedModelIndex].company
+        let requestCapabilities = (
+            search: modelTemp[selectedModelIndex].supportsSearch,
+            tools: modelTemp[selectedModelIndex].supportsToolUse,
+            reasoning: modelTemp[selectedModelIndex].supportsReasoning,
+            voice: modelTemp[selectedModelIndex].supportsVoiceGen)
+        let nativeInteraction: HanlinHostInteractionRequest?
+        #if HANLIN_A2UI_POC
+        let originalAction = a2uiSubmittingAction
+        a2uiSubmittingAction = nil
+        if let originalAction {
+            guard a2uiPresentation?.isCurrent(originalAction) == true,
+                  a2uiModelChoice == a2uiOriginalModelChoice else { return }
+        } else { a2uiOriginalModelChoice = a2uiModelChoice }
+        nativeInteraction = originalAction?.request
+        #else
+        nativeInteraction = nil
+        #endif
+        if nativeInteraction != nil { isRetry = false; isObserving = false; retryMessagesOverride = nil }
         
         isFeedBack.toggle()
         var userMessage: ChatMessages?
@@ -1463,8 +1542,8 @@ struct ChatView: View {
         var searchMessage: ChatMessages? = nil
         let agentCoordinator = AgentRunCoordinator(
             groupID: thisGroupID,
-            providerID: modelTemp[selectedModelIndex].company,
-            modelID: modelTemp[selectedModelIndex].name
+            providerID: requestModelCompany,
+            modelID: requestModelName
         )
         var agentProjection = ClassicChatAgentProjection(runID: agentCoordinator.runID)
         groupBeginMessage.agentRun = agentCoordinator.run
@@ -1473,7 +1552,15 @@ struct ChatView: View {
         activeAgentMessage = groupBeginMessage
         
         // 进行API请求
-        let requestAPIManager = APIManager(context: context)
+        // Register the already-created original row, not a second SDK-specific message.
+        context.insert(assistantPlaceholder)
+        let originalSDKRequest: HanlinAppAgentSessionOwner.Request?
+        if let conversationID = chatRecord.id {
+            originalSDKRequest = .init(conversation: chatRecord, conversationID: conversationID,
+                sceneID: sessionScopeID, rowID: assistantPlaceholder.id, uiRunID: agentCoordinator.runID,
+                temporary: TemporaryRecord, interaction: nativeInteraction)
+        } else { originalSDKRequest = nil }
+        let requestAPIManager = APIManager(context: context, agentSessionOwner: agentSessionOwner)
         self.apiManager = requestAPIManager
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
@@ -1490,29 +1577,35 @@ struct ChatView: View {
                     temporary: TemporaryRecord
                 )
                 guard activeAgentCoordinator === agentCoordinator, !Task.isCancelled else { return }
+                #if HANLIN_A2UI_POC
+                if let originalAction, a2uiPresentation?.isCurrent(originalAction) != true {
+                    throw HanlinHostError.staleContext
+                }
+                #endif
                 let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await requestAPIManager.sendStreamRequest(
                     messages: messagesToSend,
-                    modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
+                    modelName: requestModelName,
                     groupID: thisGroupID,
                     runID: agentCoordinator.runID,
-                    ifSearch: modelTemp[selectedModelIndex].supportsSearch && ifSearch,
-                    ifKnowledge: modelTemp[selectedModelIndex].supportsSearch && ifKnowledge,
-                    ifToolUse: modelTemp[selectedModelIndex].supportsToolUse && ifToolUse,
+                    ifSearch: requestCapabilities.search && ifSearch,
+                    ifKnowledge: requestCapabilities.search && ifKnowledge,
+                    ifToolUse: requestCapabilities.tools && ifToolUse,
                     assistantToolScope: assistantToolScope,
-                    ifThink: modelTemp[selectedModelIndex].supportsReasoning && ifThink,
-                    ifAudio: modelTemp[selectedModelIndex].supportsVoiceGen && ifAudio,
-                    ifPlanning: !modelTemp[selectedModelIndex].supportsReasoning && ifPlanning,
+                    ifThink: requestCapabilities.reasoning && ifThink,
+                    ifAudio: requestCapabilities.voice && ifAudio,
+                    ifPlanning: !requestCapabilities.reasoning && ifPlanning,
                     thinkingLength: thinkingLength,
                     isObservation: ifObservingMode,
                     temperature: temperature,
                     topP: topP,
                     maxTokens: maxTokens,
                     canvasData: chatRecord.canvas ?? CanvasData(),
-                    selectedURLs: selectedURLs,
-                    selectedPromptsContent: selectedPrompts.compactMap { $0.content },
+                    selectedURLs: nativeInteraction == nil ? selectedURLs : [],
+                    selectedPromptsContent: nativeInteraction == nil ? selectedPrompts.compactMap { $0.content } : [],
                     systemMessage: useSystemMessage ? "Default" : systemMessage,
                     selectedImageSize: selectedImageSize,
-                    imageReversePrompt: imageReversePrompt
+                    imageReversePrompt: imageReversePrompt,
+                    agentSDKRequest: originalSDKRequest
                 )
                 
                 // 接受流式数据
@@ -1530,6 +1623,12 @@ struct ChatView: View {
                         
                         // 普通回复文本
                         if let content = data.content {
+                            #if HANLIN_A2UI_POC
+                            if a2uiPresentation?.hasCanonicalParts(uiRunID: agentCoordinator.runID,
+                                                                  rowID: groupBeginMessage.id) == true {
+                                assistantMessage = groupBeginMessage
+                            }
+                            #endif
                             assistantMessage.text?.append(content)
                             if !operationalState.isEmpty { operationalState = "" }
                             if let start = reasoningStart, let end = reasoningEnd {
@@ -1808,8 +1907,15 @@ struct ChatView: View {
                     
                     // 最终判断：仅当助手消息既没有文本又没有图片或富卡片结果时，视为请求异常
                     if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
+                        #if HANLIN_A2UI_POC
+                        let hasCanonicalParts = a2uiPresentation?.hasCanonicalParts(uiRunID: agentCoordinator.runID,
+                            rowID: groupBeginMessage.id) == true
+                        if hasCanonicalParts { assistantMessage = groupBeginMessage }
+                        #else
+                        let hasCanonicalParts = false
+                        #endif
                         var textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        if textContent.isEmpty,
+                        if !hasCanonicalParts, textContent.isEmpty,
                            let recoveredAnswer = AgentTranscriptValidation.finalAnswer(in: agentCoordinator.run.transcriptItems)?
                                .trimmingCharacters(in: .whitespacesAndNewlines),
                            !recoveredAnswer.isEmpty {
@@ -1817,7 +1923,14 @@ struct ChatView: View {
                             assistantMessage.text = recoveredAnswer
                         }
                         let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        let hasRichContent = !assistantMessage.imageArray.isEmpty
+                        #if HANLIN_A2UI_POC
+                        let hasA2UIContent = a2uiPresentation?.hasStructuredContent(uiRunID: agentCoordinator.runID,
+                            rowID: groupBeginMessage.id, text: assistantMessage.text ?? "") == true
+                        #else
+                        let hasA2UIContent = false
+                        #endif
+                        if hasCanonicalParts { textContent = assistantMessage.text ?? "" }
+                        let hasRichContent = hasA2UIContent || !assistantMessage.imageArray.isEmpty
                             || assistantMessage.codeBlockData?.isEmpty == false
                             || assistantMessage.knowledgeCard?.isEmpty == false
                             || assistantMessage.htmlContent?.isEmpty == false
@@ -1951,6 +2064,7 @@ struct ChatView: View {
     
     // 打断操作
     private func handleCancellation() {
+        agentSessionOwner.cancel()
         
         isFeedBack.toggle()
         isCancelled = true

@@ -51,6 +51,17 @@ TEST = "AI_HLYTests/A2UITests.swift"
 MEDIA_POLICY_TEST = "AI_HLYTests/HanlinRemoteMediaURLTests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
 SDK_SHA = "18813519eada1db152bd206d5c7bd922ddc987ee"
+APP_SDK_SHA = "d1eedf9ed73b4f6c7c64f488caf92494602db865"
+APP_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift"
+APP_TEST = "AI_HLYTests/HanlinA2UIAppPresentationTests.swift"
+APP_CONTRACT = "AI_HLY/Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift"
+APP_CASES = [
+    "originalRowAndUIRunMapToCanonicalSurfaceWithoutTextInference",
+    "foreignAndAmbiguousBindingsCannotRetargetAnExistingRow",
+    "realRendererActionQueuesOriginalBindingAndRevokesBeforeAsyncContinuation",
+    "canonicalHistoryKeepsOriginalDisplayBindingWithoutRestoringAuthority",
+    "sourceReplacementIsObservedOutsideViewBody",
+]
 PRODUCER_SHA = "e7bf34111e603ca977becd007dd4e5bb109af857"
 CONSUMER_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift"
 CONSUMER_TEST = "AI_HLYTests/HanlinA2UIAgentPresentationTests.swift"
@@ -125,7 +136,8 @@ def package_text(platform: str, consumer: bool = False) -> str:
     return text
 
 
-def plan(platform: str = "macos", consumer: bool = False) -> dict:
+def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> dict:
+    sdk_source = APP_SDK_SHA if app else SDK_SHA
     source = (REPOSITORY / TEST).read_text(encoding="utf-8")
     if re.findall(r"^@testable import (\w+)$", source, re.MULTILINE) != [CONSUMER_MODULE]:
         raise ValueError("Test import must match the actual AI_Hanlin consumer; do not add a module alias")
@@ -157,8 +169,16 @@ def plan(platform: str = "macos", consumer: bool = False) -> dict:
         actual = re.findall(r"@Test func (\w+)\(", (REPOSITORY / VALIDATOR_TEST).read_text(encoding="utf-8"))
         if actual != VALIDATOR_CASES:
             raise ValueError("Unexpected pure validator test identities")
+    if app:
+        paths += [REPOSITORY / APP_SOURCE, REPOSITORY / APP_TEST]
+        suite = (REPOSITORY / APP_TEST).read_text(encoding="utf-8").split("struct HanlinA2UIAppPresentationTests {", 1)[1]
+        if re.findall(r"^    func (\w+)\(", suite, re.MULTILINE) != APP_CASES:
+            raise ValueError("Unexpected actual application-consumer test identities")
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
+    if app:
+        original = subprocess.check_output(["git", "show", sdk_source + ":" + APP_CONTRACT], cwd=REPOSITORY)
+        files.append({"path": APP_CONTRACT, "sha256": sha(original), "source_git_sha": sdk_source})
     result = {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
             "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
             "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES,
@@ -167,9 +187,11 @@ def plan(platform: str = "macos", consumer: bool = False) -> dict:
             "native_execution": "NOT_RUN", "platform": platform + "27 / current stable Xcode"}
     if consumer:
         result.update(consumer_cases=CONSUMER_CASES, projection_cases=PROJECTION_CASES, validator_cases=VALIDATOR_CASES,
-                      sdk_source_sha=SDK_SHA, producer_revision=PRODUCER_SHA,
-                      sdk_tree_ids={name: subprocess.check_output(["git", "rev-parse", f"{SDK_SHA}:Packages/{name}"], cwd=REPOSITORY, text=True).strip()
+                      sdk_source_sha=sdk_source, producer_revision=PRODUCER_SHA,
+                      sdk_tree_ids={name: subprocess.check_output(["git", "rev-parse", f"{sdk_source}:Packages/{name}"], cwd=REPOSITORY, text=True).strip()
                                     for name in ["HanlinAgentSDK", "HanlinPlatform"]})
+    if app:
+        result.update(app_cases=APP_CASES, scope="actual app presentation protocol/consumer; ChatView/SwiftData owner/native model/XCUITest NOT_RUN")
     return result
 
 
@@ -182,12 +204,13 @@ def prepare(destination: Path, inputs: dict) -> None:
     destination.mkdir()
     for entry in inputs["files"]:
         relative = entry["path"]
-        data = (REPOSITORY / relative).read_bytes()
+        data = (subprocess.check_output(["git", "show", entry["source_git_sha"] + ":" + relative], cwd=REPOSITORY)
+                if "source_git_sha" in entry else (REPOSITORY / relative).read_bytes())
         if sha(data) != entry["sha256"]:
             raise ValueError(f"Input changed while preparing proof: {relative}")
-        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/") or relative in [CONSUMER_SOURCE, VALIDATOR_SOURCE]:
+        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/") or relative in [CONSUMER_SOURCE, VALIDATOR_SOURCE, APP_SOURCE, APP_CONTRACT]:
             target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
-        elif relative in [TEST, MEDIA_POLICY_TEST, CONSUMER_TEST, VALIDATOR_TEST]:
+        elif relative in [TEST, MEDIA_POLICY_TEST, CONSUMER_TEST, VALIDATOR_TEST, APP_TEST]:
             target = destination / "Tests/AI_HLYTests" / Path(relative).name
         else:
             target = destination / "Tests/AI_HLYTests/A2UIFixtures" / Path(relative).name
@@ -195,7 +218,7 @@ def prepare(destination: Path, inputs: dict) -> None:
         target.write_bytes(data)
     consumer = "sdk_source_sha" in inputs
     if consumer:
-        archive = subprocess.check_output(["git", "archive", "--format=tar", SDK_SHA,
+        archive = subprocess.check_output(["git", "archive", "--format=tar", inputs["sdk_source_sha"],
                                           "Packages/HanlinAgentSDK", "Packages/HanlinPlatform"], cwd=REPOSITORY)
         with tarfile.open(fileobj=io.BytesIO(archive)) as content:
             content.extractall(destination.parent, filter="data")
@@ -271,14 +294,15 @@ def main() -> None:
     parser.add_argument("--inputs", type=Path)
     parser.add_argument("--platform", choices=["macos", "ios"], default="macos")
     parser.add_argument("--sdk-consumer", action="store_true")
-    parser.add_argument("--suite", choices=["all", "sdk", "ownership", "media", "consumer"], default="all",
+    parser.add_argument("--app-consumer", action="store_true")
+    parser.add_argument("--suite", choices=["all", "sdk", "ownership", "media", "consumer", "app"], default="all",
                         help="Verify only SDK identities when portable framing is unaffected")
     args = parser.parse_args()
-    inputs = plan(args.platform, args.sdk_consumer)
+    inputs = plan(args.platform, args.sdk_consumer or args.app_consumer, args.app_consumer)
     def check_lock(path: Path) -> None:
         lock = json.loads(path.read_text(encoding="utf-8"))
         verify_pin(lock)
-        if args.sdk_consumer:
+        if args.sdk_consumer or args.app_consumer:
             producer = [p for p in lock["pins"] if p.get("identity") == "swift-ai-sdk"]
             if len(producer) != 1 or producer[0]["state"].get("revision") != PRODUCER_SHA:
                 raise ValueError("Canonical producer revision changed")
@@ -299,7 +323,7 @@ def main() -> None:
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
         check_lock(args.resolved)
-        expected = (inputs["consumer_cases"] + inputs["ownership_cases"] + inputs["validator_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
+        expected = (inputs["app_cases"] + inputs["consumer_cases"] + inputs["projection_cases"] if args.suite == "app" else inputs["consumer_cases"] + inputs["ownership_cases"] + inputs["validator_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
                     if args.suite == "ownership" else inputs["sdk_cases"]
                     if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"])
         if args.verify_xcresult:

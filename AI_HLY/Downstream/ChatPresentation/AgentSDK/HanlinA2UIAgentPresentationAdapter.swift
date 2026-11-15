@@ -49,6 +49,13 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
         self.onInteraction = onInteraction
     }
 
+    /// Historical identity is display provenance only. This reader has no native Session,
+    /// and therefore can neither receive live events nor admit/continue any interaction.
+    init(readOnly identity: HanlinHostSession) {
+        self.identity = identity
+        self.onInteraction = { _, _ in }
+    }
+
     @discardableResult
     func receive(_ event: HanlinAgentEvent) throws -> Bool {
         guard !resourceExhausted else { throw AdmissionError.resourceLimit }
