@@ -75,7 +75,9 @@ final class MediaReplayUITests: XCTestCase {
             load().tap()
             XCTAssertTrue(player().waitForExistence(timeout: 10))
             app.buttons["proof-change-source"].tap()
-            XCTAssertTrue(wait(NSPredicate(format: "exists == false"), on: player()))
+            let unloaded = wait(NSPredicate(format: "exists == false"), on: player())
+            if !unloaded { record("source-replacement-unload-failed-\(kind)") }
+            XCTAssertTrue(unloaded)
             XCTAssertTrue(load().isEnabled)
             source().tap()
             let expected = kind.isEmpty ? "https://www.youtube.com/watch?v=dQw4w9WgXcQ"

@@ -155,13 +155,13 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'a2ui_media_replay_ui' && !inputs.testflight_upload }}
     name: Actual SwiftUI replay media controls
     runs-on: xcode-27
-    timeout-minutes: 22
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - name: Verify original renderer and media interaction in native UI
-        timeout-minutes: 19
+        timeout-minutes: 27
         env:
           A2UI_MEDIA_UI_TESTS: ${{ inputs.exact_test_selector }}
         run: bash docs/a2ui/run_media_replay_ui.sh

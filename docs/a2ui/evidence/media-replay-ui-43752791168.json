@@ -1,0 +1,54 @@
+{
+  "run": 43752791168,
+  "job": 132930253726,
+  "source_sha": "c9dd5af25ef7c4f83ccbe9f24953620b07b5fd3d",
+  "status": "FAILED",
+  "job_seconds": 1193,
+  "log_observed_cases": [
+    {
+      "name": "testBackgroundDisappearanceAndDisposalUnloadEveryPlayer",
+      "log_result": "passed",
+      "seconds": 135.403,
+      "acceptance_status": "BLOCKED_MISSING_REQUIRED_RAW_EVIDENCE"
+    },
+    {
+      "name": "testBoundURLReplacementUnloadsEveryRequestedPlayer",
+      "log_result": "failed",
+      "seconds": 136.126,
+      "acceptance_status": "FAILED"
+    },
+    {
+      "name": "testHistoryAudioAllowsExplicitLoadAndApprovedSource",
+      "log_result": "passed",
+      "seconds": 33.189,
+      "acceptance_status": "BLOCKED_MISSING_REQUIRED_RAW_EVIDENCE"
+    },
+    {
+      "name": "testHistoryVideoAllowsExplicitLoadAndApprovedSource",
+      "log_result": "passed",
+      "seconds": 17.449,
+      "acceptance_status": "BLOCKED_MISSING_REQUIRED_RAW_EVIDENCE"
+    },
+    {
+      "name": "testParentDisabledBlocksAndUnloadsEveryMediaBuilder",
+      "log_result": "passed",
+      "seconds": 49.703,
+      "acceptance_status": "BLOCKED_MISSING_REQUIRED_RAW_EVIDENCE"
+    },
+    {
+      "name": "testSealingALiveOwnerDoesNotGrantHistoryMediaPermission",
+      "log_result": "passed",
+      "seconds": 20.847,
+      "acceptance_status": "BLOCKED_MISSING_REQUIRED_RAW_EVIDENCE"
+    }
+  ],
+  "executed_case_interval_seconds": 392.717,
+  "raw_xcresult": "UNAVAILABLE",
+  "artifact_count": 0,
+  "failure": "Audio bound-source player remained in AX after actual Change URL. Test suite finished 6/1 failure, then 19-minute step timeout interrupted Xcode finalization; upload raced still-changing xcresult Staging and failed ENOENT.",
+  "log_sha256": "2e37c0c9a46d3728210a639c31ea8859de9fef8d17abab22cd4d121ba9ac7ddd",
+  "run_metadata_sha256": "5e8b994567249e080a062a1b326fe8e25d76e3df26b8d4720b83bd7a020bd037",
+  "artifact_metadata_sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c",
+  "reused_passes": 0,
+  "full_ci_pass": false
+}

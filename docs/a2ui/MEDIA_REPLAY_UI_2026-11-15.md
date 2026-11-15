@@ -90,6 +90,17 @@ This is construction/local-interaction proof, not successful external playback o
 acceptance. The other six UI obligations remain pending and are selected separately, without
 repeating the unchanged passing method.
 
+Run43752791168 atc9dd5af2 selected the remaining six. Its log reports five Passed and
+one Failed (audio player still present after bound URL replacement); six cases took392.717s.
+Xcode had earlier spent over seven minutes establishing the simulator connection. The19-minute
+step expired after the suite finished but before Xcode finalized its result bundle. Upload then
+failed ENOENT on a still-changing xcresult Staging log: no artifact exists. These five log passes
+do not satisfy the required raw-result/AX/pixel evidence and are not reused for acceptance.
+`evidence/media-replay-ui-43752791168.json` records the failure and missing evidence distinctly.
+The next focused retry retains failure-specific AX/pixels for bound-source replacement and gives
+Xcode a27-minute step inside a30-minute job, based on this measured startup/finalization cost.
+It does not change the actual UI assertions, source or per-case timeout limits.
+
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release
 settings remain unchanged.
