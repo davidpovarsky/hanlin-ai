@@ -359,8 +359,7 @@ struct SkillImportView: View {
             importTask = Task {
                 do {
                     let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: fileURL)
-                    isProcessing = false
-                    step = .preview(staged)
+                    try presentPreview(staged)
                 } catch is CancellationError {
                     isProcessing = false
                 } catch {
@@ -395,8 +394,7 @@ struct SkillImportView: View {
                         expectedDownloadBytes = expected
                     }
                 })
-                isProcessing = false
-                step = .preview(staged)
+                try presentPreview(staged)
             } catch is CancellationError {
                 isProcessing = false
             } catch {
@@ -448,8 +446,7 @@ struct SkillImportView: View {
                 })
 
                 let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: tempZip)
-                isProcessing = false
-                step = .preview(staged)
+                try presentPreview(staged)
             } catch is CancellationError {
                 isProcessing = false
             } catch {
@@ -483,12 +480,7 @@ struct SkillImportView: View {
                 """
                 try markdown.write(to: temporaryFile, atomically: true, encoding: .utf8)
                 let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: temporaryFile)
-                if Task.isCancelled {
-                    staged.cleanup()
-                    throw CancellationError()
-                }
-                isProcessing = false
-                step = .preview(staged)
+                try presentPreview(staged)
             } catch is CancellationError {
                 isProcessing = false
             } catch {
@@ -498,6 +490,15 @@ struct SkillImportView: View {
         }
     }
     #endif
+
+    private func presentPreview(_ staged: StagedSkillPackage) throws {
+        guard !Task.isCancelled else {
+            staged.cleanup()
+            throw CancellationError()
+        }
+        isProcessing = false
+        step = .preview(staged)
+    }
 
     private func installStaged(_ staged: StagedSkillPackage) {
         isProcessing = true
