@@ -2,6 +2,9 @@
 
 Task: [SKILL-YAMS-02](https://app.asana.com/0/0/1220546710401425).
 Package/API implementation: `485933ba`; evidence preflight correction: `78c8880e`.
+The manager approved `exact: "6.2.2"` adoption in `76fffd08`, retaining the original
+Yams source commit for upstream update-tool discovery. App integration is `bedecb5a`
+plus the selected-source regression control in `727f67b6`.
 The public contract and parser/editor limits are documented in
 `Packages/HanlinSkillFormat/README.md`.
 
@@ -36,7 +39,7 @@ resolution, enabled state and SDK descriptor/Host contracts remain unchanged.
 The manager owns the shared project graph. Required delta is one local Swift package
 reference `Packages/HanlinSkillFormat` and its `HanlinSkillFormat` product linked to
 the app and unit-test targets. Its only original remote dependency is Yams at
-`a27b21e0c81c5bf42049b897a62aaf387e80f279` (tag6.2.2). Resolve the real app graph and
+`exact: "6.2.2"`, locked to `a27b21e0c81c5bf42049b897a62aaf387e80f279`. Resolve the real app graph and
 retain its actual Package.resolved; do not copy an old PBX or manufacture that lock.
 Existing proven AgentSDK/Host manifests/products/pins are untouched.
 
@@ -52,15 +55,35 @@ Validation at this checkpoint:
 - FAILED preparation: Apple run43754160901, evidence extractor missed inline
   `@Test func` declarations;0 tests ran. Corrected extractor counts the actual20
   identities locally; Bash syntax and all7 embedded Python blocks parse.
-- Apple package run43754353738 is pending; macOS/iOS26/iOS27 and raw Apple lock
-  acceptance must be assessed from retained actual results, not this document.
+- EXECUTED_PASS: Apple package run43754353738 at original revision-pin source
+  `78c8880e512078bafaa21f4deab87163d410f887`,20 actual xcresult identities/25 parameter
+  invocations on each macOS and iOS27. Xcode27.2, Swift6.4.2, SDK27.2, Swift language6.
+  The iOS package actually compiled for `arm64-apple-ios26.0-simulator`; this is a
+  deployment26 compile, distinct from an actual iOS26 SDK/runtime test. All native
+  argument children passed. Raw artifact digest/ZIP CRCs,9 Git/tar source hashes and
+  raw lock were authenticated. The original Mac raw lock equals the original
+  checked-in revision lock. See `evidence/skill-yams-native-43754353738.json`.
+- BLOCKED: actual iOS26 execution; the runner has iOS27 runtimes only. No local
+  xcrun or self-hosted alternate repo runner was found. Consequently the entire
+  native workflow remains failure; it is not full-CI success. This is not a failed
+  product test, and the40 passed native identities are retained without rerunning.
+- PENDING: actual Mac exact-version resolution/source/target graph audit43755833008.
+  It executes0 tests and checks both real lock resolutions, unchanged source/tests/
+  fixtures, target/product/platform graph, original upstream archives and remote
+  tag→peeled commit. A retargeted tag/new source fails the expecteda27 assertion.
+  The actual update/rollback/controlled failure demonstration remains UPSTREAM01.
 - NOT_RUN: actual app `SkillStoreAndImportTests`, including the four new controls
   `nestedMetadataSurvivesStoreSaveAndOverride`, `anchoredStoreEditDoesNotRewriteOriginal`,
   `zipNestedMetadataAndResourcesRemainLossless`, `catalogMetadataFollowsSelectedSource`. The direct-Markdown passive preview
   control retains the manager's exact89f2caaf method delta. Full app/Runtime/UI and
   physical-device acceptance are not established by package tests.
-- OPEN: actual upstream dependency update PR and coordinated app package linkage/
-  focused app test run. Task remains incomplete until required evidence exists.
+- OPEN: manager-owned focused Yams adoption PR, coordinated app package linkage/
+  actual app lock and focused app test run; separate upstream update demonstration.
+  The manager owns the missing iOS26 acceptance environment decision. Task remains
+  incomplete until required evidence exists. Package evidence cannot close app/UI
+  obligations. Affected suites include SkillStoreAndImportTests, catalog controls
+  in AgentSkillsExposureTests/ProductionSystemSkillsTests and Skills UI consumers;
+  unchanged SDK/Host package tests are not rerun for this app-only source change.
 
 Rollback uses the feature commits and original installed SKILL.md bytes. No read
 migration changes those files. Changing/removing the dependency must be coordinated

@@ -39,10 +39,23 @@ assert len(expected)>=20 and len(expected)==len(set(expected))
 workflow=['.github/workflows/build-ios26-unsigned-ipa.yml','Scripts/CI/IntegrationValidation/run_skill_format.sh','Scripts/CI/IntegrationValidation/xcresult_to_xunit.py']
 (evidence/'workflow-sha256.json').write_text(json.dumps({p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in workflow},indent=2))
 PY_SOURCE
-selected_xcode="$(python3 -c 'import glob,re; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]27(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")')"
-test -n "$selected_xcode"
+xcode_major=27
+if [[ "${HANLIN_SKILL_IOS26_ONLY:-0}" == 1 ]]; then xcode_major=26; fi
+python3 -c 'import glob,json; print(json.dumps(glob.glob("/Applications/Xcode*.app"),indent=2))' > "$evidence/installed-xcode.json"
+selected_xcode="$(python3 -c 'import glob,re,sys; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]"+sys.argv[1]+r"(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")' "$xcode_major")"
+if [[ -z "$selected_xcode" ]]; then
+  printf '{"status":"BLOCKED","tests_executed":0,"reason":"Required stable Xcode major is absent from actual installed inventory"}\n' > "$evidence/summary.json"
+  exit 1
+fi
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 { xcodebuild -version; xcrun swift --version; xcrun --sdk macosx --show-sdk-version; xcrun --sdk iphonesimulator --show-sdk-version; uname -m; sw_vers; } > "$evidence/toolchain.txt"
+if [[ "${HANLIN_SKILL_IOS26_ONLY:-0}" == 1 ]]; then
+  sdk_version="$(xcrun --sdk iphonesimulator --show-sdk-version)"
+  if [[ "$sdk_version" != 26.* ]]; then
+    printf '{"status":"BLOCKED","tests_executed":0,"reason":"Selected Xcode does not provide the required actual iOS26 SDK"}\n' > "$evidence/summary.json"
+    exit 1
+  fi
+fi
 xcrun simctl list devices available -j > "$evidence/devices.json"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
 sdk="$scratch/Packages/HanlinSkillFormat"
@@ -120,7 +133,9 @@ print(next(x for x in ['HanlinSkillFormat-Package','HanlinSkillFormat'] if x in 
 PY_SCHEME
 )"
 printf '[]\n' > "$evidence/process-status.json"
-for platform in macOS iOS26 iOS27; do
+platforms=(macOS iOS26 iOS27)
+if [[ "${HANLIN_SKILL_IOS26_ONLY:-0}" == 1 ]]; then platforms=(iOS26); fi
+for platform in "${platforms[@]}"; do
   destination='platform=macOS'
   if [[ "$platform" != macOS ]]; then
     set +e
@@ -129,7 +144,8 @@ import json,sys
 data=json.load(open(sys.argv[1]));version=sys.argv[2]
 candidates=[d for runtime,devices in data['devices'].items() if runtime.startswith('com.apple.CoreSimulator.SimRuntime.iOS-'+version+'-') for d in devices if d.get('isAvailable') and d['name'].startswith('iPhone')]
 if not candidates:raise SystemExit('Required iOS '+version+' simulator runtime/device is unavailable')
-print('platform=iOS Simulator,id='+sorted(candidates,key=lambda d:d['name'])[0]['udid'])
+selected=sorted(candidates,key=lambda d:(d.get('state')!='Booted',d['name']))[0]
+print('platform=iOS Simulator,id='+selected['udid'])
 PY_DEVICE
 )"
     destination_status=$?
@@ -141,6 +157,18 @@ from pathlib import Path
 p=Path(sys.argv[1]);data=json.loads(p.read_text());data.append({'platform':sys.argv[2],'exit':None,'destination':None,'blocked':'Required installed simulator runtime/device unavailable'});p.write_text(json.dumps(data,indent=2))
 PY_UNAVAILABLE
       continue
+    fi
+    if [[ "${HANLIN_SKILL_IOS26_ONLY:-0}" == 1 ]]; then
+      python3 - "$destination" "$evidence" <<'PY_BOOT'
+import json,subprocess,sys
+from pathlib import Path
+destination,evidence=sys.argv[1],Path(sys.argv[2]);udid=destination.split('id=',1)[1]
+inventory=json.loads((evidence/'devices.json').read_text());device=next(d for devices in inventory['devices'].values() for d in devices if d['udid']==udid)
+with (evidence/'owned-simulator-readiness.log').open('w') as log:
+    if device['state']=='Shutdown':subprocess.run(['xcrun','simctl','boot',udid],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=30)
+    subprocess.run(['xcrun','simctl','bootstatus',udid,'-b'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)
+subprocess.run(['xcrun','simctl','list','devices',udid,'-j'],stdout=(evidence/'selected-device.json').open('w'),check=True,timeout=10)
+PY_BOOT
     fi
   fi
   set +e
@@ -160,7 +188,7 @@ PY_STATUS
   fi
 done
 python3 - "$evidence" <<'PY_RESULTS' | tee "$evidence/summary.json"
-import json,re,sys
+import json,os,re,sys
 from pathlib import Path
 sys.path.insert(0,'Scripts/CI/IntegrationValidation')
 from xcresult_to_xunit import nodes
@@ -175,7 +203,8 @@ for status in statuses:
         actual.append(match[1] if match else '')
     passed=status['exit']==0 and set(actual)==expected and len(actual)==len(expected) and all(c.get('result')=='Passed' for c in cases)
     results.append(dict(status,classification='EXECUTED_PASS' if passed else 'BLOCKED' if status.get('blocked') else 'FAILED',cases=cases))
-passed=len(results)==3 and all(x['classification']=='EXECUTED_PASS' for x in results)
+expected_platforms={'iOS26'} if os.environ.get('HANLIN_SKILL_IOS26_ONLY')=='1' else {'macOS','iOS26','iOS27'}
+passed={x['platform'] for x in results}==expected_platforms and all(x['classification']=='EXECUTED_PASS' for x in results)
 print(json.dumps({'status':'EXECUTED_PASS' if passed else 'FAILED','scope':'Original Yams Skill format package only; actual app, ZIP/Store/UI tests NOT_RUN','platforms':results},indent=2))
 sys.exit(0 if passed else 1)
 PY_RESULTS

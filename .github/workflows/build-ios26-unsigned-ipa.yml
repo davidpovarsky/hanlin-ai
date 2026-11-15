@@ -142,7 +142,7 @@ concurrency:
 
 jobs:
   agent-sdk-proof:
-    if: ${{ (inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload }}
+    if: ${{ (inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && inputs.exact_test_selector != 'HanlinSkillFormatIOS26' && !inputs.testflight_upload }}
     name: Exact-source Agent SDK Apple tests
     env:
       HANLIN_SDK_CONTRACTS_ONLY: '1'
@@ -184,6 +184,26 @@ jobs:
         uses: actions/upload-artifact@v7.0.2
         with:
           name: agent-sdk-apple-${{ github.run_id }}
+          path: build/agent-sdk-validation-evidence
+          if-no-files-found: error
+          retention-days: 30
+
+  skill-format-ios26:
+    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSkillFormatIOS26' && !inputs.testflight_upload }}
+    name: Original Yams Skill package tests on iOS 26 only
+    runs-on: macos-26
+    timeout-minutes: 20
+    env:
+      HANLIN_SKILL_IOS26_ONLY: '1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Verify actual installed Xcode and execute only missing iOS 26 cases
+        run: bash Scripts/CI/IntegrationValidation/run_skill_format.sh
+      - name: Retain complete iOS 26 proof including unavailable environment
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: skill-format-ios26-${{ github.run_id }}
           path: build/agent-sdk-validation-evidence
           if-no-files-found: error
           retention-days: 30
