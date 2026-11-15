@@ -36,8 +36,10 @@ final class MediaReplayUITests: XCTestCase {
 
     func testSealingALiveOwnerDoesNotGrantHistoryMediaPermission() {
         launch(live: true)
+        recordHostContinuity("live-before-player")
         load().tap()
         XCTAssertTrue(player().waitForExistence(timeout: 10))
+        recordHostContinuity("live-with-player")
         app.buttons["proof-seal"].tap()
         XCTAssertTrue(wait(NSPredicate(format: "exists == false"), on: player()))
         XCTAssertTrue(load().exists)
@@ -45,6 +47,13 @@ final class MediaReplayUITests: XCTestCase {
         XCTAssertFalse(source().isEnabled)
         XCTAssertFalse(app.buttons["Submit replay form"].isEnabled)
         record("sealed-live-owner-stays-disabled")
+        recordHostContinuity("sealed-before-host-action")
+        // Existing host control, outside the Surface: a real interaction and actual
+        // changed receipt distinguish host liveness/redraw from an AX-only assertion.
+        app.buttons["proof-probe"].tap()
+        XCTAssertTrue(wait(NSPredicate(format: "label == %@", "NO_LISTENER"), on: app.staticTexts["proof-probe-result"]))
+        XCTAssertEqual(app.staticTexts["proof-outbound"].label, "outbound:0")
+        recordHostContinuity("sealed-after-host-action")
     }
 
     func testParentDisabledBlocksAndUnloadsEveryMediaBuilder() {
@@ -165,5 +174,43 @@ final class MediaReplayUITests: XCTestCase {
         pixels.name = name; pixels.lifetime = .keepAlways; add(pixels)
         let ax = XCTAttachment(string: app.debugDescription)
         ax.name = name + "-AX"; ax.lifetime = .keepAlways; add(ax)
+    }
+
+    /// Visual diagnostic, not an automatic pixel-pass assertion. Capture the same
+    /// state through independent providers and bounded element rectangles, with no
+    /// sleep/coordinate action, so crop/render/capture differences remain observable.
+    private func recordHostContinuity(_ phase: String) {
+        let header = app.staticTexts["proof-outbound"]
+        let receipt = app.staticTexts["proof-probe-result"]
+        let probe = app.buttons["proof-probe"]
+        let window = app.windows.firstMatch
+        XCTAssertTrue(header.exists)
+        XCTAssertTrue(receipt.exists)
+        XCTAssertTrue(probe.isHittable)
+        func attach(_ screenshot: XCUIScreenshot, _ provider: String) {
+            let pixels = XCTAttachment(screenshot: screenshot)
+            pixels.name = "continuity-\(phase)-\(provider)"
+            pixels.lifetime = .keepAlways
+            add(pixels)
+        }
+        attach(app.screenshot(), "app-first")
+        attach(XCUIScreen.main.screenshot(), "screen")
+        attach(window.screenshot(), "window")
+        attach(header.screenshot(), "header-element")
+        attach(receipt.screenshot(), "receipt-element")
+        attach(app.screenshot(), "app-again")
+        let metadata = XCTAttachment(string: """
+        phase=\(phase)
+        applicationState=\(String(describing: app.state))
+        appFrame=\(app.frame)
+        windowFrame=\(window.frame)
+        headerFrame=\(header.frame) label=\(header.label) hittable=\(header.isHittable)
+        receiptFrame=\(receipt.frame) label=\(receipt.label) hittable=\(receipt.isHittable)
+        probeFrame=\(probe.frame) hittable=\(probe.isHittable)
+        AX=\(app.debugDescription)
+        """)
+        metadata.name = "continuity-\(phase)-frames-AX"
+        metadata.lifetime = .keepAlways
+        add(metadata)
     }
 }
