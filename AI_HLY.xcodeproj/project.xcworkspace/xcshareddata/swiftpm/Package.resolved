@@ -1,6 +1,15 @@
 {
-  "originHash" : "3f78126e5a83b0eb4a05e73a7711984064f49ae4fb2a2e54a0e9bd02f6e12072",
+  "originHash" : "28d7c44a9c1c3699d0e99a2025b0445d63a47f4af46bde23aed639e22cd1bbf6",
   "pins" : [
+    {
+      "identity" : "bitbytedata",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tsolomko/BitByteData",
+      "state" : {
+        "revision" : "e1a5443be67daf0833cbb5f4fa3a06a265ca3105",
+        "version" : "2.1.0"
+      }
+    },
     {
       "identity" : "corexlsx",
       "kind" : "remoteSourceControl",
@@ -11,12 +20,54 @@
       }
     },
     {
+      "identity" : "equatable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ordo-one/equatable",
+      "state" : {
+        "revision" : "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version" : "1.4.1"
+      }
+    },
+    {
       "identity" : "eventsource",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattt/eventsource.git",
       "state" : {
         "revision" : "e83f076811f32757305b8bf69ac92d05626ffdd7",
         "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "hanlin-streaming-markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+      "state" : {
+        "revision" : "f59bd0d533b6d94e01408bf6bdf9f5b09db57891"
+      }
+    },
+    {
+      "identity" : "highlightswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/appstefan/highlightswift",
+      "state" : {
+        "revision" : "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+      }
+    },
+    {
+      "identity" : "ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NativeScript/ios-spm.git",
+      "state" : {
+        "revision" : "a8e26efad02d792a62d2d015f0f7a632e336b2d1",
+        "version" : "9.1.0"
+      }
+    },
+    {
+      "identity" : "iosmath",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/junyan72/iosMath",
+      "state" : {
+        "revision" : "ba9ab7729b151329c54fd895a7c1859981d9484c"
       }
     },
     {
@@ -74,30 +125,29 @@
       }
     },
     {
-      "identity" : "swift-cmark",
+      "identity" : "swcompression",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swiftlang/swift-cmark",
+      "location" : "https://github.com/tsolomko/SWCompression.git",
       "state" : {
-        "revision" : "b022b08312decdc46585e0b3440d97f6f22ef703",
-        "version" : "0.6.0"
+        "revision" : "c729f0baa49e91bafef3921fea663db2b75acc46",
+        "version" : "4.9.0"
       }
     },
     {
-      "identity" : "swift-html-entities",
+      "identity" : "swift-ai-sdk",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Kitura/swift-html-entities",
+      "location" : "https://github.com/davidpovarsky/swift-ai-sdk.git",
       "state" : {
-        "revision" : "d8ca73197f59ce260c71bd6d7f6eb8bbdccf508b",
-        "version" : "4.0.1"
+        "revision" : "e7bf34111e603ca977becd007dd4e5bb109af857"
       }
     },
     {
-      "identity" : "swiftdraw",
+      "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swhitty/SwiftDraw",
+      "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "2a36e6ce369cbecdd031ee95f5b5b3faa69ef50f",
-        "version" : "0.21.0"
+        "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version" : "1.8.2"
       }
     },
     {
@@ -110,6 +160,15 @@
       }
     },
     {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark",
+      "state" : {
+        "revision" : "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version" : "0.9.0"
+      }
+    },
+    {
       "identity" : "swift-collections",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
@@ -119,21 +178,20 @@
       }
     },
     {
-      "identity" : "swift-docc-plugin",
+      "identity" : "swift-html-entities",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swiftlang/swift-docc-plugin",
+      "location" : "https://github.com/Kitura/swift-html-entities",
       "state" : {
-        "branch" : "main",
-        "revision" : "e977f65879f82b375a044c8837597f690c067da6"
+        "revision" : "d8ca73197f59ce260c71bd6d7f6eb8bbdccf508b",
+        "version" : "4.0.1"
       }
     },
     {
-      "identity" : "swift-docc-symbolkit",
+      "identity" : "swift-json",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swiftlang/swift-docc-symbolkit",
+      "location" : "https://github.com/ThorFuchs/Swift-JSON.git",
       "state" : {
-        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
-        "version" : "1.0.0"
+        "revision" : "f2a0d12da7028edfbcb0cb307f19a921a3a12d03"
       }
     },
     {
@@ -143,6 +201,15 @@
       "state" : {
         "revision" : "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
         "version" : "1.6.2"
+      }
+    },
+    {
+      "identity" : "swift-markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-markdown.git",
+      "state" : {
+        "revision" : "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "version" : "0.7.3"
       }
     },
     {
@@ -164,6 +231,15 @@
       }
     },
     {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax.git",
+      "state" : {
+        "revision" : "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version" : "603.0.2"
+      }
+    },
+    {
       "identity" : "swift-system",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-system.git",
@@ -173,12 +249,12 @@
       }
     },
     {
-      "identity" : "swcompression",
+      "identity" : "swiftdraw",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tsolomko/SWCompression.git",
+      "location" : "https://github.com/swhitty/SwiftDraw",
       "state" : {
-        "revision" : "c729f0baa49e91bafef3921fea663db2b75acc46",
-        "version" : "4.9.0"
+        "revision" : "2a36e6ce369cbecdd031ee95f5b5b3faa69ef50f",
+        "version" : "0.21.0"
       }
     },
     {
@@ -191,12 +267,39 @@
       }
     },
     {
+      "identity" : "swiftui-shimmer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/markiv/SwiftUI-Shimmer",
+      "state" : {
+        "revision" : "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version" : "1.5.1"
+      }
+    },
+    {
+      "identity" : "swiftyjson",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyJSON/SwiftyJSON.git",
+      "state" : {
+        "revision" : "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "version" : "5.0.1"
+      }
+    },
+    {
       "identity" : "xmlcoder",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/maxdesiatov/XMLCoder.git",
       "state" : {
         "revision" : "ca932442d7481700f5434a7b138c47dd42d9902b",
         "version" : "0.14.0"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams.git",
+      "state" : {
+        "revision" : "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+        "version" : "6.2.2"
       }
     },
     {

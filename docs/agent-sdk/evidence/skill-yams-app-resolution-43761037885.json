@@ -1,0 +1,106 @@
+{
+  "run": 43761037885,
+  "sourceSHA": "c1a539774072b70047f128b5fde89d155fe7d986",
+  "artifactID": 14180119013,
+  "artifactDigest": "sha256:d245f3e04099528f99286784a244f417b78fb47c5665a061dce49954997abb53",
+  "classification": "RESOLVED_ONLY_PASS",
+  "sourceInputsAuthenticated": 129,
+  "sourceTarAuthenticated": true,
+  "packageFilesEqualNativeSource": 9,
+  "rawAppLockSHA256": "c71ab78897eb3c84f245f5efa96c5371b61172f712b8ff534bec7a9d19982fb6",
+  "originalResolverSummary": {
+    "classification": "RESOLVED_ONLY_PASS",
+    "builds": 0,
+    "tests": 0,
+    "exitCode": 0,
+    "rawLockSHA256": "c71ab78897eb3c84f245f5efa96c5371b61172f712b8ff534bec7a9d19982fb6",
+    "addedPins": [
+      "bitbytedata",
+      "equatable",
+      "hanlin-streaming-markdown",
+      "highlightswift",
+      "ios-spm",
+      "iosmath",
+      "swift-ai-sdk",
+      "swift-argument-parser",
+      "swift-json",
+      "swift-markdown",
+      "swift-syntax",
+      "swiftui-shimmer",
+      "swiftyjson",
+      "yams"
+    ],
+    "changedPins": {
+      "swift-cmark": {
+        "before": {
+          "identity": "swift-cmark",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/swiftlang/swift-cmark",
+          "state": {
+            "revision": "b022b08312decdc46585e0b3440d97f6f22ef703",
+            "version": "0.6.0"
+          }
+        },
+        "after": {
+          "identity": "swift-cmark",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/swiftlang/swift-cmark",
+          "state": {
+            "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+            "version": "0.9.0"
+          }
+        }
+      },
+      "swift-docc-plugin": {
+        "before": {
+          "identity": "swift-docc-plugin",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/swiftlang/swift-docc-plugin",
+          "state": {
+            "branch": "main",
+            "revision": "e977f65879f82b375a044c8837597f690c067da6"
+          }
+        },
+        "after": null
+      },
+      "swift-docc-symbolkit": {
+        "before": {
+          "identity": "swift-docc-symbolkit",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/swiftlang/swift-docc-symbolkit",
+          "state": {
+            "revision": "b45d1f2ed151d057b54504d653e0da5552844e34",
+            "version": "1.0.0"
+          }
+        },
+        "after": null
+      }
+    },
+    "unrelatedPinReviewRequired": true
+  },
+  "scope": "Actual app graph resolution only. Canonical preparation compiled ExpoModulesJSI bridge; app compilation/tests NOT_RUN.",
+  "pinReview": "Pre-existing frozen Markdown fork f59bd0d requires swift-markdown exact0.7.3, whose original manifest requires swift-cmark from0.7.0. Old app lock0.6.0 was incompatible. Actual selected0.9.0 and removed documentation-only pins are explicit draft review items; affected Markdown consumer validation remains NOT_RUN.",
+  "newPins": [
+    "bitbytedata",
+    "equatable",
+    "hanlin-streaming-markdown",
+    "highlightswift",
+    "ios-spm",
+    "iosmath",
+    "swift-ai-sdk",
+    "swift-argument-parser",
+    "swift-json",
+    "swift-markdown",
+    "swift-syntax",
+    "swiftui-shimmer",
+    "swiftyjson",
+    "yams"
+  ],
+  "sourceManifestHashes": {
+    "hanlin-streaming-markdown-Package.swift": "9a6d87007499587933bbd04e3edf9aadb4bfceba91c3b1914bfc383e96f7aa8e",
+    "highlightswift-Package.swift": "3471309f274eaacfa3f0f7912822f2dd0d63aa7452ee89de0d72d302989eaf47",
+    "markdownui-Package.swift": "e9b91c7361e2258157445289b9cc5eabd0f83b11b6c371574d6868485a8a2b9a",
+    "swift-json-Package.swift": "91ce8ff3a2fdb1edc409b0cb2c2c75fec716db6af59a8508dd1dad6a080f37c9",
+    "swift-markdown-Package.swift": "f2b31dc2e03b221015e71c8a242c8517df53a9622a8ee0df4ba56275a23753cf"
+  }
+}

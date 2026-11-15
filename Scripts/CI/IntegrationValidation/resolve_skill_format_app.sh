@@ -30,7 +30,8 @@ scheme=ET.parse(root/'AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme')
 assert any(ref.get('BlueprintName')=='AI_Hanlin' for ref in scheme.iter('BuildableReference'))
 command=['xcodebuild','-resolvePackageDependencies','-project','AI_HLY.xcodeproj','-scheme','AI_HLY','-clonedSourcePackagesDirPath',str(pathlib.Path(os.environ['RUNNER_TEMP'])/'skill-format-app-sourcepackages')]
 (out/'command.json').write_text(json.dumps(command))
-status={'classification':'NOT_RUN','builds':0,'tests':0}
+status={'classification':'NOT_RUN','builds':0,'tests':0,
+        'scope':'App dependency resolver only; canonical native prerequisite compilation is separate'}
 started=time.monotonic()
 try:
     with (out/'resolve.log').open('wb') as log:
