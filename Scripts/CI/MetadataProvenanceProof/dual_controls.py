@@ -83,6 +83,8 @@ __attribute__((objc_root_class))
 @interface HanlinDualObject { void *isa; int _token; }
 @property(nonatomic) int token;
 @end
+struct HanlinDualOpaque;
+extern struct HanlinDualOpaque HanlinDualOpaqueObject;
 extern const char *const HanlinDualSignNames[32];
 int HanlinDualAsmFunction(int value) __asm__("hanlin_dual_function");
 EXTERNAL_BINDING
@@ -111,6 +113,7 @@ HANLIN_DECL_EXPORT
         ("conflicting-constant", "#ifdef __cplusplus\n#define HANLIN_REAL_FIXTURE_CONSTANT 43\n#else\n#define HANLIN_REAL_FIXTURE_CONSTANT 42\n#endif\n" + baseline.replace("HanlinDualConstant = 42", "HanlinDualConstant = HANLIN_REAL_FIXTURE_CONSTANT"), "merge-failure", "Dual-grammar actual API model conflict:"),
         ("conflicting-symbol-binding", "#ifdef __cplusplus\n#define HANLIN_ACTUAL_BINDING \"hanlin_cpp_symbol\"\n#else\n#define HANLIN_ACTUAL_BINDING \"hanlin_c_symbol\"\n#endif\n" + baseline + "\nextern int HanlinDualAlias __asm__(HANLIN_ACTUAL_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-function-symbol", "#ifdef __cplusplus\n#define HANLIN_FUNCTION_BINDING \"hanlin_cpp_function\"\n#else\n#define HANLIN_FUNCTION_BINDING \"hanlin_c_function\"\n#endif\n" + baseline + "\nint HanlinDualFunctionAlias(int value) __asm__(HANLIN_FUNCTION_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
+        ("opaque-by-value-rejected", baseline + "\n#ifdef __cplusplus\nextern \"C\" {\n#endif\nvoid HanlinDualOpaqueByValue(struct HanlinDualOpaque value);\n#ifdef __cplusplus\n}\n#endif\n", "merge-failure", "Unproven actual CPP ABI:"),
         ("conflicting-availability", baseline.replace("__attribute__((objc_root_class))", "#ifdef __cplusplus\n__attribute__((availability(ios,introduced=26.0)))\n#else\n__attribute__((availability(ios,introduced=25.0)))\n#endif\n__attribute__((objc_root_class))", 1), "merge-failure", "Dual-grammar availability conflict:"),
         ("missing-cpp-availability-before-target", baseline.replace("availability(ios,introduced=2.0)", "availability(ios,introduced=28.0)"), "merge-failure", "Dual-grammar availability conflict:"),
         ("conflicting-physical-owner", baseline, "merge-failure", "Dual-grammar canonical declaration/owner conflict:"),
@@ -161,6 +164,8 @@ HANLIN_DECL_EXPORT
             sign_names = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualSignNames" in item["canonicalKey"]]
             passed = passed and len(sign_names) == 1 and sign_names[0].get("rawVariableLinkage") == {
                 "cppLanguageLinkage": 1, "objcLanguageLinkage": 0} and sign_names[0].get("actualASTABI", {}).get("externalBinding", {}).get("clangSymbolBeforeTargetPrefix") == "HanlinDualSignNames"
+            opaque_objects = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualOpaqueObject" in item["canonicalKey"]]
+            passed = passed and len(opaque_objects) == 1 and opaque_objects[0].get("actualASTABI", {}).get("type", {}).get("storageContract") == "EXTERNAL_OPAQUE_OBJECT_NO_BY_VALUE_ENCODING" and opaque_objects[0]["actualASTABI"]["type"].get("layout") == "NOT_DECLARED"
             prefix_availability = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualPrefixAvailable" in item["canonicalKey"]]
             passed = passed and len(prefix_availability) == 1 and prefix_availability[0].get("cppIntroducedIn") == "" and prefix_availability[0].get("objcIntroducedIn") == "2.0" and prefix_availability[0].get("availability") == "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET"
             asm_functions = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualAsmFunction" in item["canonicalKey"]]

@@ -191,7 +191,27 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
         }
         result["fields"] = std::move(fields);
     } else if (const auto* variable = clang::dyn_cast<clang::VarDecl>(decl)) {
-        result["type"] = llvm::json::Value(typeABI(context, variable->getType()));
+        const auto valueType = variable->getType();
+        const auto* record = valueType->getAs<clang::RecordType>();
+        if (valueType->isIncompleteType() && record) {
+            const auto& model = meta.as<Meta::VarMeta>();
+            if (!variable->hasExternalFormalLinkage() || static_cast<int>(variable->getTLSKind()) != 0 ||
+                record->getDecl()->getDefinition() || model.hasValue || !model.signature ||
+                !model.signature->stripNullability()->is(Meta::TypeType::TypeVoid))
+                throw std::runtime_error("Unproven incomplete variable storage contract");
+            const auto tag = record->getDecl()->getQualifiedNameAsString();
+            if (tag.empty()) throw std::runtime_error("Opaque external object has no actual type identity");
+            // The SDK exports only this object's symbol/address, never its
+            // layout or a by-value payload. Preserve the original Void model;
+            // do not invent a size/alignment or allow this rule for parameters.
+            result["type"] = llvm::json::Object{{"storageContract", "EXTERNAL_OPAQUE_OBJECT_NO_BY_VALUE_ENCODING"},
+                {"sourceTypeTag", tag}, {"tagKind", static_cast<int64_t>(record->getDecl()->getTagKind())},
+                {"addressSpace", static_cast<int64_t>(valueType.getAddressSpace())},
+                {"qualifiersCVR", static_cast<int64_t>(valueType.getCVRQualifiers())},
+                {"metadataEncoding", "Void"}, {"layout", "NOT_DECLARED"}};
+        } else {
+            result["type"] = llvm::json::Value(typeABI(context, valueType));
+        }
         if (variable->hasExternalFormalLinkage()) {
             // Global C++ variables can have C++ language linkage while Clang
             // gives them exactly the same external symbol as the C spelling.
