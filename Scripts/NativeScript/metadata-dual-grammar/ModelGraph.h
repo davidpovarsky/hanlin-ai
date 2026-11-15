@@ -114,6 +114,7 @@ public:
 
     size_t retainedMetaCount() const { return metas.size(); }
     size_t retainedTypeCount() const { return types.size(); }
+    const std::set<Meta::Meta*>& retainedMetas() const { return metas; }
 };
 
 } // namespace HanlinDual

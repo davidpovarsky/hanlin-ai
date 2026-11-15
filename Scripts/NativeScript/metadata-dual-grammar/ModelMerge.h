@@ -12,6 +12,7 @@ class ModelMerge {
     std::map<Meta::Meta*, Meta::Meta*> replacements;
     std::set<std::pair<Meta::Meta*, Meta::Meta*>> compared;
     llvm::json::Array proofs;
+    std::set<Meta::Meta*> retained;
 
     static Meta::Version targetVersion(const clang::ASTContext& context) {
         auto version = context.getTargetInfo().getTriple().getOSVersion();
@@ -132,6 +133,7 @@ public:
         }
         ModelGraph graph(replacements);
         for (auto* meta : result) graph.visit(meta);
+        retained = graph.retainedMetas();
         graphMetas = graph.retainedMetaCount(); graphTypes = graph.retainedTypeCount();
         return result;
     }
@@ -139,6 +141,7 @@ public:
     size_t graphMetas = 0;
     size_t graphTypes = 0;
     const llvm::json::Array& duplicateProofs() const { return proofs; }
+    const std::set<Meta::Meta*>& retainedMetas() const { return retained; }
 };
 
 } // namespace HanlinDual

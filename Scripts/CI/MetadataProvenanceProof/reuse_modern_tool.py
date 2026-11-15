@@ -27,7 +27,7 @@ def main():
     if evidence.get("status") != "BUILT_NOT_ACCEPTED" or any(evidence.get(key) != sha(ROOT / path) for key, path in expected.items()):
         print("NEEDS_BUILD: candidate build source/lock changed")
         return
-    support_sources = {p.relative_to(ROOT).as_posix(): sha(p) for p in sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h"))}
+    support_sources = {p.relative_to(ROOT).as_posix(): sha(p) for p in sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*")) if p.suffix in {".h", ".cpp", ".py"}}
     if not support_sources or evidence.get("supportSources") != support_sources:
         print("NEEDS_BUILD: dual-grammar support source closure changed")
         return
@@ -49,11 +49,16 @@ def main():
         return
     if sha(reference / "bin/objc-metadata-generator") != evidence["generatorSHA256"]:
         raise RuntimeError("Original compiled image digest mismatch")
+    if not evidence.get("dualControlBinarySHA256") or not (reference / "bin/HanlinDualGrammarControls").is_file() or \
+       sha(reference / "bin/HanlinDualGrammarControls") != evidence["dualControlBinarySHA256"]:
+        print("NEEDS_BUILD: focused dual-model control executable unavailable or changed")
+        return
     destination = ROOT / "build/nativescript-modern-metadata-tool"
     shutil.copytree(reference / "bin", destination / "bin")  # Exclusive; never overwrite owned outputs.
     # GitHub artifact transport preserves bytes but normalizes file modes.
     # Restore only this verified, newly owned executable's original launch mode.
     (destination / "bin/objc-metadata-generator").chmod(0o755)
+    (destination / "bin/HanlinDualGrammarControls").chmod(0o755)
     shutil.copy2(receipt, destination / "provenance.json")
     (destination / "compile-reuse.json").write_text(json.dumps({"status": "REUSED_VERIFIED_COMPILE_PASS",
         "originalRun": 43731970518, "originalSourceSHA": "26b514398b39cbb5e5f10a7503b4d985fb3a63e4", "generatorSHA256": evidence["generatorSHA256"],

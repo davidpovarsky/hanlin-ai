@@ -259,7 +259,7 @@ def main() -> int:
             provenance.get(key) != hashlib.sha256((root / "Scripts/NativeScript" / path).read_bytes()).hexdigest() for key, path in sources.items()):
             raise RuntimeError("Modern candidate source/binary provenance drift")
         support = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-                   for p in sorted((root / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h"))}
+                   for p in sorted((root / "Scripts/NativeScript/metadata-dual-grammar").glob("*")) if p.suffix in {".h", ".cpp", ".py"}}
         if not support or provenance.get("supportSources") != support:
             raise RuntimeError("Modern candidate support source closure drift")
     arch = "arm64" if platform.machine() == "arm64" else "x86_64"

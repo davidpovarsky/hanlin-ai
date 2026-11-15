@@ -1092,7 +1092,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
                 frozen[filename] = provenance[key]
             frontend = Path(provenance["frontendRoot"])
             support_sources = {p.relative_to(ROOT).as_posix(): self.sha(p)
-                               for p in sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h"))}
+                               for p in sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*")) if p.suffix in {".h", ".cpp", ".py"}}
             self.assertTrue(support_sources)
             self.assertEqual(provenance["supportSources"], support_sources)
             frozen.update(support_sources)
@@ -1226,7 +1226,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
                  *[self.folder / name for _, name in occurrences]]
         if self.modern:
             files.extend(ROOT / "Scripts/NativeScript" / name for name in ["build-modern-metadata-tool.py", "metadata-frontend-lock.json"])
-            files.extend(sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h")))
+            files.extend(p for p in sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*")) if p.suffix in {".h", ".cpp", ".py"})
         self.request = {"schemaVersion": 1,
             "bindings": {"contextSHA256": self.sha(self.context_path), "umbrellaSHA256": self.sha(umbrella),
                 "overlaySHA256": self.sha(overlay), "patchSourceSHA256": self.sha(self.patch_source),

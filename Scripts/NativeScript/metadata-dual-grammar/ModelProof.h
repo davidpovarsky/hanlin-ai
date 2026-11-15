@@ -49,7 +49,7 @@ inline llvm::json::Value yamlValue(llvm::yaml::Node* node) {
     throw std::runtime_error("Unknown/null node in actual model representation");
 }
 
-inline llvm::json::Value modelValue(Meta::Meta* meta) {
+template<class T> inline llvm::json::Value actualValue(T* meta) {
     std::string bytes;
     llvm::raw_string_ostream stream(bytes);
     { llvm::yaml::Output output(stream); output << meta; }
@@ -63,6 +63,8 @@ inline llvm::json::Value modelValue(Meta::Meta* meta) {
     if (first != documents.end() || documents.failed()) throw std::runtime_error("Invalid actual metadata model");
     return value;
 }
+
+inline llvm::json::Value modelValue(Meta::Meta* meta) { return actualValue(meta); }
 
 inline llvm::json::Object typeABI(clang::ASTContext& context, clang::QualType type) {
     if (type.isNull()) throw std::runtime_error("Missing ABI type");
@@ -117,7 +119,7 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
             abi["name"] = field->getNameAsString();
             abi["offsetBits"] = static_cast<int64_t>(layout.getFieldOffset(index++));
             abi["bitField"] = field->isBitField();
-            if (field->isBitField()) abi["bitWidth"] = static_cast<int64_t>(field->getBitWidthValue(context));
+            if (field->isBitField()) abi["bitWidth"] = static_cast<int64_t>(field->getBitWidthValue());
             fields.push_back(llvm::json::Value(std::move(abi)));
         }
         result["fields"] = std::move(fields);

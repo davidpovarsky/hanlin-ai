@@ -23,6 +23,7 @@ on:
           - modern-validation
           - modern-combined
           - modern-dual-compile
+          - modern-dual-controls
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false
@@ -154,6 +155,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
+        if: ${{ inputs.nativescript_metadata_tooling_mode != 'modern-dual-compile' && inputs.nativescript_metadata_tooling_mode != 'modern-dual-controls' }}
         with:
           node-version: '22.17.0'
           cache: npm
@@ -166,7 +168,7 @@ jobs:
           test -n "$selected_xcode"
           echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
       - name: Install existing pinned NativeScript tooling
-        if: ${{ inputs.nativescript_metadata_tooling_mode != 'inventory' }}
+        if: ${{ inputs.nativescript_metadata_tooling_mode != 'inventory' && inputs.nativescript_metadata_tooling_mode != 'modern-dual-compile' && inputs.nativescript_metadata_tooling_mode != 'modern-dual-controls' }}
         run: npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund
       - name: Preflight actual metadata compiler host
         shell: bash
@@ -208,6 +210,9 @@ jobs:
       - name: Verify actual modern combined SDK Expo and compiled provider inputs
         if: inputs.nativescript_metadata_tooling_mode == 'modern-combined'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --runtime-wrapper
+      - name: Execute actual cross-grammar model ABI ownership and lifetime controls
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-controls'
+        run: python3 Scripts/CI/MetadataProvenanceProof/dual_controls.py
       - name: Inspect installed frontend development assets
         if: inputs.nativescript_metadata_tooling_mode == 'inventory'
         run: python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py
@@ -234,6 +239,7 @@ jobs:
             build/acceptance/nativescript-metadata
             build/acceptance/metadata-provenance-proof
             build/acceptance/metadata-frontend-inventory
+            build/acceptance/metadata-dual-grammar-controls
             build/nativescript-metadata-tool/provenance.json
             build/nativescript-metadata-tool/bin
             build/nativescript-modern-metadata-tool/provenance.json

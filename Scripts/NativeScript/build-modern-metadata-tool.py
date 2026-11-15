@@ -82,7 +82,7 @@ def main():
     generator = source / "metadata-generator"
     main_cpp = generator / "src/main.cpp"
     support = ROOT / "Scripts/NativeScript/metadata-dual-grammar"
-    support_sources = {p.relative_to(ROOT).as_posix(): sha(p) for p in sorted(support.glob("*.h"))}
+    support_sources = {p.relative_to(ROOT).as_posix(): sha(p) for p in sorted(support.glob("*")) if p.suffix in {".h", ".cpp", ".py"}}
     if not support_sources:
         raise RuntimeError("Dual-grammar support source closure is missing")
     shutil.copytree(support, generator / "src/HanlinDual")
@@ -117,6 +117,10 @@ def main():
         "        _headerSearch.getHeaderSearchOpts().ImplicitModuleMaps = true;\n"
         "        _headerSearch.collectAllModules(modules);")
     main_cpp.write_text(main_text)
+    support_spec = importlib.util.spec_from_file_location("dual_grammar_patches", support / "patches.py")
+    support_patch = importlib.util.module_from_spec(support_spec)
+    support_spec.loader.exec_module(support_patch)
+    main_cpp.write_text(support_patch.apply(main_cpp.read_text(), base.replace_once))
     writer = generator / "src/TypeScript/DefinitionWriter.cpp"
     writer.write_text(base.patch_declaration_writer(writer.read_text()).replace(
         "clang::ObjCMethodDecl::ImplementationControl::Optional", "clang::ObjCImplementationControl::Optional"))
@@ -239,6 +243,7 @@ find_package(LLVM 20.1.8 EXACT REQUIRED CONFIG)
 find_package(Clang REQUIRED CONFIG)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Release)
 include_directories(SYSTEM ${LLVM_INCLUDE_DIRS} ${CLANG_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
@@ -274,6 +279,38 @@ add_subdirectory(src)
         for index, command in enumerate(commands):
             with (work / f"build-{index}.log").open("w") as log:
                 subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=420)
+        # Compile only one focused control object; relink the exact already
+        # compiled generator dependencies, excluding its original main object.
+        # Keep the actual CMake compiler/link vectors rather than inventing a
+        # parallel LLVM toolchain or compiling all source objects again.
+        import shlex
+        compilation = next(item for item in json.loads((build / "compile_commands.json").read_text())
+                           if Path(item["file"]).resolve() == main_cpp.resolve())
+        control_object = work / "dual-controls.o"
+        control_dependencies = work / "dual-controls.o.d"
+        control_compile = list(compilation.get("arguments") or shlex.split(compilation["command"]))
+        control_compile[control_compile.index("-o") + 1] = str(control_object)
+        control_compile = [str(generator / "src/HanlinDual/Controls.cpp") if item == str(main_cpp) else item for item in control_compile]
+        if "-MF" in control_compile:
+            control_compile[control_compile.index("-MF") + 1] = str(control_dependencies)
+        else:
+            control_compile.extend(["-MD", "-MF", str(control_dependencies)])
+        if "-MT" in control_compile:
+            control_compile[control_compile.index("-MT") + 1] = str(control_object)
+        link_file = build / "src/CMakeFiles/objc-metadata-generator.dir/link.txt"
+        control_link = shlex.split(link_file.read_text())
+        main_objects = [n for n, item in enumerate(control_link) if item.endswith("/main.cpp.o")]
+        if len(main_objects) != 1 or str(main_cpp) not in (compilation.get("arguments") or shlex.split(compilation["command"])):
+            raise RuntimeError("Actual focused control compiler/link inputs are ambiguous")
+        control_link[main_objects[0]] = str(control_object)
+        dual_control_binary = build / "bin/HanlinDualGrammarControls"
+        control_link[control_link.index("-o") + 1] = str(dual_control_binary)
+        result["dualControlCommands"] = [{"argv": control_compile, "cwd": compilation["directory"]},
+                                         {"argv": control_link, "cwd": str(build / "src")}]
+        for index, (command, cwd) in enumerate([(control_compile, compilation["directory"]), (control_link, build / "src")], 3):
+            with (work / f"build-{index}-dual-control.log").open("w") as log:
+                subprocess.run(command, cwd=cwd, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
+        result["dualControlBinarySHA256"] = sha(dual_control_binary)
         controls = work / "enum-prefix-controls.cpp"
         controls.write_text('#include <string>\n#include <vector>\n#include <set>\n#include <cctype>\n' + enum_prefix_source() + r'''
 int main() {
@@ -295,9 +332,8 @@ int main() {
         result["enumPrefixControls"] = {"status": "EXECUTED_PASS", "cases": 7, "sourceSHA256": sha(controls), "compileCommand": control_compile,
             "boundary": "Actual portable C++ algorithm execution, not iOS/runtime acceptance."}
         result.update(status="BUILT_NOT_ACCEPTED", generatorSHA256=sha(build / "bin/objc-metadata-generator"))
-        import shlex
         dependencies = set()
-        for file in build.rglob("*.o.d"):
+        for file in [*build.rglob("*.o.d"), control_dependencies]:
             text = file.read_text().replace("\\\n", " ")
             for item in shlex.split(text.partition(":")[2]):
                 path = Path(item).resolve()
@@ -308,6 +344,7 @@ int main() {
             raise RuntimeError("Actual compiler dependency closure was not retained")
         (work / "bin").mkdir(exist_ok=True)
         shutil.copy2(build / "bin/objc-metadata-generator", work / "bin/objc-metadata-generator")
+        shutil.copy2(dual_control_binary, work / "bin/HanlinDualGrammarControls")
         shutil.copytree(build / "bin/lib", work / "bin/lib", dirs_exist_ok=True)
         result["linkedLibraries"] = subprocess.check_output(["otool", "-L", str(work / "bin/objc-metadata-generator")], text=True)
     except Exception as error:
