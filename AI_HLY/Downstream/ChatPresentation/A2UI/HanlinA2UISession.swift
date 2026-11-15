@@ -52,7 +52,7 @@ final class HanlinA2UISession {
         guard !isClosed else { throw HanlinA2UIIngress.Rejection(.closed) }
         for id in surfaceIDs {
             guard let surface = surface(id) else { continue }
-            let components: [[String: JSONValue]] = surface.componentsModel.components.values.map { model in
+            let components = surface.componentsModel.components.values.map { model in
                 var value = model.properties
                 value["id"] = .string(model.id)
                 value["component"] = .string(model.type)
