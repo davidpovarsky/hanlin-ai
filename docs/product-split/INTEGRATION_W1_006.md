@@ -700,3 +700,16 @@ binding, and rejects any unrelated pin/identity change. It runs zero builds and
 zero tests and cannot stand in for the active 78-case chain or 8-case UI proof.
 No new input parameter, app/release job, manifest substitution or dependency is
 introduced. Local compiler/cache work remains excluded under the reserve gate.
+
+
+First resolution-only run43687342052 resolved all six graphs, then its strict
+identity-equality verifier stopped at Parity: the four old Mini App locks omit
+SwiftyJSON even though the unchanged Platform manifest already declares exact
+5.0.1. All actual resolver logs retain 5.0.1 alongside unchanged argument-parser
+1.8.2/ZIPFoundation0.9.19 and new producer e7bf. This is not a new manifest
+requirement or unrelated upgrade. The verifier now permits ONLY this inherited
+SwiftyJSON identity in the four stale Mini App locks, equal to the actual Platform
+pin; all old other pin records must remain identical. All resulting identity sets
+must equal the existing Platform graph, and raw six locks are retained before
+validation even on failure. The corrected resolution-only route performs no tests
+or builds. Failed first verifier output is not a successful lock handoff.
