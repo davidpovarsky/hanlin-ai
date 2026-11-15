@@ -54,9 +54,9 @@ Validation at this checkpoint:
   identities locally; Bash syntax and all7 embedded Python blocks parse.
 - Apple package run43754353738 is pending; macOS/iOS26/iOS27 and raw Apple lock
   acceptance must be assessed from retained actual results, not this document.
-- NOT_RUN: actual app `SkillStoreAndImportTests`, including the three new controls
+- NOT_RUN: actual app `SkillStoreAndImportTests`, including the four new controls
   `nestedMetadataSurvivesStoreSaveAndOverride`, `anchoredStoreEditDoesNotRewriteOriginal`,
-  `zipNestedMetadataAndResourcesRemainLossless`. The direct-Markdown passive preview
+  `zipNestedMetadataAndResourcesRemainLossless`, `catalogMetadataFollowsSelectedSource`. The direct-Markdown passive preview
   control retains the manager's exact89f2caaf method delta. Full app/Runtime/UI and
   physical-device acceptance are not established by package tests.
 - OPEN: actual upstream dependency update PR and coordinated app package linkage/

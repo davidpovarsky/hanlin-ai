@@ -210,6 +210,24 @@ struct SkillStoreAndImportTests {
         #expect(store.listResources(for: record.id).contains { $0.relativePath == "resources/raw.bin" && $0.byteCount == 6 })
     }
 
+    @Test("Catalog metadata follows the selected source without shadowed fallback")
+    func catalogMetadataFollowsSelectedSource() throws {
+        let id = try HanlinSkillID(validating: "metadata-precedence")
+        let descriptor = try HanlinSkillDescriptor(id: id, title: "Selected skill", summary: "Description", instructions: .inline("Instructions"))
+        let lower = try SkillDocumentParser.parse("---\nname: metadata-precedence\ndescription: Description\nmetadata: {source: lower}\n---\nInstructions")
+        let higher = try SkillDocumentParser.parse("---\nname: metadata-precedence\ndescription: Description\nmetadata: {source: higher}\n---\nInstructions")
+        let catalog = HanlinSkillCatalog()
+        catalog.register(skill: descriptor, tier: .userCustom, markdownDocument: lower)
+        #expect(catalog.markdownDocument(for: id)?.metadata?["source"]?.stringValue == "lower")
+        catalog.register(skill: descriptor, tier: .userOverride, isExplicitOverride: true)
+        #expect(catalog.resolve(id: id) != nil)
+        #expect(catalog.markdownDocument(for: id) == nil,
+                "A selected source without a document must not inherit shadowed requirements")
+        catalog.register(skill: descriptor, tier: .userOverride, isExplicitOverride: true, markdownDocument: higher)
+        catalog.register(skill: descriptor, tier: .system, markdownDocument: lower)
+        #expect(catalog.markdownDocument(for: id)?.metadata?["source"]?.stringValue == "higher")
+    }
+
     @Test("SkillStore manages custom skill lifecycle and state")
     func customSkillLifecycle() throws {
         let store = SkillStore.shared
