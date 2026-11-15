@@ -89,7 +89,16 @@ struct ChatMarkdownView: View {
         let codeStyle = CodeBlockConfig.default
         let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .regular),
             italic: nil, bold: nil, boldItalic: nil, preferredLetterSpacing: nil, preferredLineHeight: nil)
+        #if HANLIN_A2UI_POC
+        // The pinned renderer owns parsing, loading/failure presentation and fullscreen zoom.
+        // Keep this in the existing rich-content prototype until network/resource gates pass.
+        let imageConfig = ImageConfig(enabled: true,
+            allowedImageTypes: [.remote(allowedDomains: [])], fullscreenViewerEnabled: true)
+        #else
+        let imageConfig = ImageConfig.disabled
+        #endif
         return MarkdownRenderConfig.default
+            .withImageConfig(imageConfig)
             .withShouldAnimateText(value: false)
             .withBlockSpacing(value: 12)
             .withParagraphStyle(value: body)

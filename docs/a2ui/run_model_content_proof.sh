@@ -3,8 +3,46 @@
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
+platform="${A2UI_PROOF_PLATFORM:-macos}"
+[[ "$platform" == ios || "$platform" == macos ]] || { echo 'Unsupported proof platform'; exit 2; }
+proof=(python3 docs/a2ui/prepare_exact_pin_proof.py --platform "$platform")
 evidence="$root/build/a2ui-model-content-evidence"
 mkdir -p "$evidence"
+phase=preflight
+scratch=''
+retain() {
+  status="$?"
+  if [[ -n "$scratch" && -f "$scratch/harness/Package.resolved" ]]; then cp "$scratch/harness/Package.resolved" "$evidence/Package.resolved"; fi
+  python3 - "$status" "$phase" "$evidence" "$platform" <<'PY'
+import json,subprocess,sys
+from pathlib import Path
+e=Path(sys.argv[3]);code=int(sys.argv[1]);phase=sys.argv[2];cases=[]
+def visit(n):
+    if isinstance(n,dict):
+        if n.get('nodeType')=='Test Case':cases.append(n)
+        for v in n.values():visit(v)
+    elif isinstance(n,list):
+        for v in n:visit(v)
+if (e/'tests.json').exists():
+    try:visit(json.loads((e/'tests.json').read_text()))
+    except (OSError,ValueError):pass
+log=(e/'xcodebuild.log').read_text(errors='replace') if (e/'xcodebuild.log').exists() else ''
+status='EXECUTED_PASS' if code==0 else ('TEST_FAILED' if cases else 'BUILD_FAILED' if phase!='preflight' and 'error:' in log else 'INFRA_ERROR')
+if code and (e/'selected-device.txt').exists():
+    device=(e/'selected-device.txt').read_text().strip();diagnostics={}
+    for name,args in [('screenshot',['xcrun','simctl','io',device,'screenshot',str(e/'failure.png')]),
+                      ('simulator-log',['xcrun','simctl','spawn',device,'log','show','--last','2m','--style','compact'])]:
+        try:
+            r=subprocess.run(args,capture_output=True,text=True,timeout=5)
+            diagnostics[name]={'exit_code':r.returncode};(e/(name+'.txt')).write_text(r.stdout+r.stderr)
+        except (subprocess.TimeoutExpired,OSError) as err:diagnostics[name]={'unavailable':type(err).__name__}
+    diagnostics['accessibility']='NOT_AVAILABLE: component SDK runner has no original app XCUITest hierarchy'
+    (e/'failure-diagnostics.json').write_text(json.dumps(diagnostics,indent=2))
+(e/'process-status.json').write_text(json.dumps({'exit_code':code,'status':status,'phase':phase,'executed_cases':len(cases),
+    'platform':sys.argv[4],'xcresult_exists':(e/'A2UI.xcresult').exists(),'scope':'official exact-pin SDK component; app UI NOT_RUN'},indent=2))
+PY
+}
+trap retain EXIT
 git rev-parse HEAD > "$evidence/source-sha.txt"
 df -h . > "$evidence/disk.txt"
 selected_xcode="$(python3 - <<'PY'
@@ -25,6 +63,19 @@ export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
   for cli in python3 idb maestro; do command -v "$cli" || true; done
 } > "$evidence/preflight.txt"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
+destination='platform=macOS'
+if [[ "$platform" == ios ]]; then
+  xcrun simctl list devices available -j > "$evidence/devices.json"
+  python3 - "$evidence/devices.json" <<'PY' > "$evidence/selected-device.txt"
+import json,sys
+d=json.load(open(sys.argv[1]))['devices']
+eligible=[x for runtime,rows in d.items() if '.iOS-27-' in runtime for x in rows
+          if x.get('isAvailable') and x['name'].startswith('iPhone')]
+assert eligible,'No actual available iPhone/iOS27 runtime'
+print(eligible[0]['udid'])
+PY
+  destination="platform=iOS Simulator,id=$(cat "$evidence/selected-device.txt")"
+fi
 skill="$HOME/.codex/skills/ios-simulator-skill/scripts/sim_health_check.sh"
 if [[ -f "$skill" ]]; then
   bash "$skill" > "$evidence/skill-health.txt" 2>&1 || true
@@ -38,20 +89,10 @@ assert int(subprocess.check_output(['xcrun','--sdk','macosx','--show-sdk-version
 assert shutil.disk_usage('.').free>=10*1024**3, 'INFRA_ERROR: less than10GiB free'
 PY
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/a2ui-model-content.XXXXXXXX")"
-python3 docs/a2ui/prepare_exact_pin_proof.py --output "$scratch/harness" > "$evidence/preparation.json"
+"${proof[@]}" --output "$scratch/harness" > "$evidence/preparation.json"
 cp "$scratch/harness/proof-inputs.json" "$scratch/harness/Package.swift" "$evidence/"
-retain() {
-  status="$?"
-  if [[ -f "$scratch/harness/Package.resolved" ]]; then cp "$scratch/harness/Package.resolved" "$evidence/Package.resolved"; fi
-  python3 - "$status" "$evidence/process-status.json" <<'PY'
-import json,sys
-from pathlib import Path
-Path(sys.argv[2]).write_text(json.dumps({'exit_code':int(sys.argv[1]),'scope':'macOS exact-pin SDK component; UI NOT_RUN'}))
-PY
-}
-trap retain EXIT
 xcrun swift package --package-path "$scratch/harness" resolve 2>&1 | tee "$evidence/resolve.log"
-python3 docs/a2ui/prepare_exact_pin_proof.py --verify-pin "$scratch/harness/Package.resolved" > "$evidence/pin-validation.json"
+"${proof[@]}" --verify-pin "$scratch/harness/Package.resolved" > "$evidence/pin-validation.json"
 cp "$scratch/harness/Package.resolved" "$evidence/resolved-before.json"
 (
   cd "$scratch/harness"
@@ -64,21 +105,30 @@ print(next(x for x in ['HanlinA2UIProof-Package','HanlinA2UIProof','AI_Hanlin'] 
 PY
 )"
 printf '%s\n' "$scheme" > "$evidence/selected-scheme.txt"
+if [[ "$platform" == ios ]]; then
+  (cd "$scratch/harness"; xcodebuild -scheme "$scheme" -showdestinations) > "$evidence/destinations.txt"
+  grep -q "$(cat "$evidence/selected-device.txt")" "$evidence/destinations.txt" || { echo 'INFRA_ERROR: unsupported actual destination'; exit 2; }
+fi
 suite="${A2UI_PROOF_SUITE:-ownership}"
-[[ "$suite" == all || "$suite" == ownership ]] || { echo 'Unsupported focused proof suite'; exit 2; }
+[[ "$suite" == all || "$suite" == ownership || "$suite" == media ]] || { echo 'Unsupported focused proof suite'; exit 2; }
 python3 - "$scratch/harness/proof-inputs.json" "$suite" <<'PY' > "$evidence/selected-cases.txt"
 import json,sys
 p=json.load(open(sys.argv[1]))
-names=(['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
-       if sys.argv[2]=='all' else ['A2UISDKTests/'+x+'()' for x in p['ownership_cases']])
+if sys.argv[2]=='all':
+    names=['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
+else:
+    field='media_cases' if sys.argv[2]=='media' else 'ownership_cases'
+    names=['A2UISDKTests/'+x+'()' for x in p[field]]
 print('\n'.join(names))
 PY
 selectors=()
 while IFS= read -r method; do selectors+=("-only-testing:AI_HLYTests/$method"); done < "$evidence/selected-cases.txt"
+phase=build-and-test
 set +e
 (
   cd "$scratch/harness"
-  xcodebuild test -scheme "$scheme" -configuration Debug -destination 'platform=macOS' \
+  xcodebuild test -scheme "$scheme" -configuration Debug -destination "$destination" \
+    -parallel-testing-enabled NO -destination-timeout 60 \
     -disableAutomaticPackageResolution -derivedDataPath "$scratch/DerivedData" \
     -resultBundlePath "$evidence/A2UI.xcresult" -skipPackagePluginValidation -skipMacroValidation \
     "${selectors[@]}" CODE_SIGNING_ALLOWED=NO
@@ -90,6 +140,6 @@ if [[ -d "$evidence/A2UI.xcresult" ]]; then
 fi
 [[ "$test_status" == 0 ]] || exit "$test_status"
 cmp "$evidence/resolved-before.json" "$scratch/harness/Package.resolved"
-python3 docs/a2ui/prepare_exact_pin_proof.py --verify-xcresult "$evidence/tests.json" --suite "$suite" \
+"${proof[@]}" --verify-xcresult "$evidence/tests.json" --suite "$suite" \
   --resolved "$scratch/harness/Package.resolved" --inputs "$scratch/harness/proof-inputs.json" \
   > "$evidence/result-validation.json"

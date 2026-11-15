@@ -37,6 +37,15 @@ This is SDK/component verification. Actual original-app XCUITest playback,
 VoiceOver/RTL/fullscreen/background observations and signed physical iPad remain
 NOT_RUN. Do not count portable controls as UI cases.
 
+Native component verification completed:8 EXECUTED_PASS/0 FAILED at
+`42f1e7a9da1ee968af61189a03a67b0bb62dca1e`,
+[run43724157995](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43724157995),
+job132842329366 (327seconds). Xcode27.2/27B52, Swift6.4.2, iOSSDK27.2, actual
+iPhone18Pro iOS27.0 arm64 destination. Artifact14166201264,91556bytes, SHA256
+`0cf7b90dfddd3e4d9b788e0bac1b546718a1a82324896e65f508c0f83f1f910b`.
+All8 unique passed xcresult nodes and original source hashes were verified. See
+`evidence/media-component-43724157995.json`. This still does not prove playback.
+
 The canonical SDK structured-model type/adapter is still needed to mount media
 without inferring executable UI from arbitrary Markdown. Custom A2UI media catalog,
 galleries, safe metadata/image pipeline and direct MP4/HLS/audio acceptance remain
@@ -57,6 +66,13 @@ affected/uncertain. The `a2ui_media_catalog` manual route therefore executes44 e
 cases rather than reusing the prior31/17 historical proofs. It does not expand into
 unrelated Composer/runtime/provider suites or imply iOS app acceptance.
 
+The next iOS proof compiles the actual A2UI+media source closure, including the
+custom catalog builder and upstream Surface call, and executes only the two
+new catalog controls. The `a2ui_media_ios` route selects an actual available
+iOS27 destination and preserves failure xcresult/screenshot/logs where available.
+It does not repeat the8 unaffected identity/document controls as a timestamp refresh.
+Actual original-app/provider/XCUITest and network playback gates remain open.
+
 ## Verified existing Markdown API
 
 The app's exact pinned renderer remains
@@ -67,3 +83,8 @@ image-tap viewer is unnecessary. Its remote domain matching accepts subdomains a
 the default AsyncImage loader exposes no injectable response/redirect/decoded-pixel
 limits. Do not describe merely enabling an unrestricted config as completion of
 the task's private-network/redirect/size/privacy acceptance. No fork pin was changed.
+
+The source now enables the existing renderer's HTTPS-only remote image mode and
+built-in fullscreen viewer under the existing `HANLIN_A2UI_POC` prototype flag.
+Flag-off behavior remains disabled. This is not a production security acceptance;
+response/redirect/decoded-size and actual app XCUITest image/zoom checks remain open.

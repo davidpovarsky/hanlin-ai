@@ -20,6 +20,8 @@ REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
 CONSUMER_MODULE = "AI_Hanlin"
 PORTABLE_CASE_COUNT = 8
 SDK_CASE_COUNT = 36
+MEDIA_CASES = ["customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
+               "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields"]
 OWNERSHIP_CASES = [
     "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
     "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
@@ -41,6 +43,7 @@ OWNERSHIP_CASES = [
 ]
 CASE_COUNT = PORTABLE_CASE_COUNT + SDK_CASE_COUNT
 SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
+MEDIA_SOURCES = "AI_HLY/Downstream/ChatPresentation/Media"
 TEST = "AI_HLYTests/A2UITests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
 PACKAGE = f'''// swift-tools-version: 6.1
@@ -74,7 +77,11 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def plan() -> dict:
+def package_text(platform: str) -> str:
+    return PACKAGE.replace('.macOS("27.0")', '.iOS("27.0")') if platform == "ios" else PACKAGE
+
+
+def plan(platform: str = "macos") -> dict:
     source = (REPOSITORY / TEST).read_text(encoding="utf-8")
     if re.findall(r"^@testable import (\w+)$", source, re.MULTILINE) != [CONSUMER_MODULE]:
         raise ValueError("Test import must match the actual AI_Hanlin consumer; do not add a module alias")
@@ -84,17 +91,20 @@ def plan() -> dict:
     if (len(portable) != PORTABLE_CASE_COUNT or len(native) != SDK_CASE_COUNT
             or len(set(portable + native)) != CASE_COUNT):
         raise ValueError(f"Expected exactly {PORTABLE_CASE_COUNT} portable and {SDK_CASE_COUNT} enabled SDK cases; update the proof contract")
-    if not set(OWNERSHIP_CASES).issubset(native):
+    if not set(OWNERSHIP_CASES + MEDIA_CASES).issubset(native):
         raise ValueError("Missing exact affected ownership case")
     paths = sorted((REPOSITORY / SOURCES).glob("*.swift"))
+    if platform == "ios":
+        paths += sorted((REPOSITORY / MEDIA_SOURCES).glob("*.swift"))
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
     return {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
             "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
-            "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES, "files": files,
-            "harness_manifest_sha256": sha(PACKAGE.encode()),
-            "native_execution": "NOT_RUN", "platform": "macOS27 / current stable Xcode"}
+            "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES,
+            "media_cases": MEDIA_CASES, "files": files, "target_platform": platform,
+            "harness_manifest_sha256": sha(package_text(platform).encode()),
+            "native_execution": "NOT_RUN", "platform": platform + "27 / current stable Xcode"}
 
 
 def prepare(destination: Path, inputs: dict) -> None:
@@ -109,7 +119,7 @@ def prepare(destination: Path, inputs: dict) -> None:
         data = (REPOSITORY / relative).read_bytes()
         if sha(data) != entry["sha256"]:
             raise ValueError(f"Input changed while preparing proof: {relative}")
-        if relative.startswith(SOURCES + "/"):
+        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/"):
             target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
         elif relative == TEST:
             target = destination / "Tests/AI_HLYTests/A2UITests.swift"
@@ -117,7 +127,7 @@ def prepare(destination: Path, inputs: dict) -> None:
             target = destination / "Tests/AI_HLYTests/A2UIFixtures" / Path(relative).name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-    (destination / "Package.swift").write_text(PACKAGE, encoding="utf-8")
+    (destination / "Package.swift").write_text(package_text(inputs["target_platform"]), encoding="utf-8")
     (destination / "proof-inputs.json").write_text(json.dumps(inputs, indent=2) + "\n", encoding="utf-8")
 
 
@@ -187,10 +197,11 @@ def main() -> None:
     modes.add_argument("--verify-xcresult", type=Path)
     parser.add_argument("--resolved", type=Path)
     parser.add_argument("--inputs", type=Path)
-    parser.add_argument("--suite", choices=["all", "sdk", "ownership"], default="all",
+    parser.add_argument("--platform", choices=["macos", "ios"], default="macos")
+    parser.add_argument("--suite", choices=["all", "sdk", "ownership", "media"], default="all",
                         help="Verify only SDK identities when portable framing is unaffected")
     args = parser.parse_args()
-    inputs = plan()
+    inputs = plan(args.platform)
     if args.self_test:
         print(json.dumps({"local_validator_self_checks": self_test(inputs),
                           "data": "synthetic XML/lock; not native execution", "sdk": "NOT_RUN"}))
@@ -208,7 +219,8 @@ def main() -> None:
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
         verify_pin(json.loads(args.resolved.read_text(encoding="utf-8")))
-        expected = (inputs["ownership_cases"] if args.suite == "ownership" else inputs["sdk_cases"]
+        expected = (inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
+                    if args.suite == "ownership" else inputs["sdk_cases"]
                     if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"])
         if args.verify_xcresult:
             root = ET.Element("testsuite")

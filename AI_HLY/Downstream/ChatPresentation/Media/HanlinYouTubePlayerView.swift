@@ -6,6 +6,7 @@ import WebKit
 struct HanlinYouTubePlayerView: View {
     let video: HanlinYouTubeVideo
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.isEnabled) private var isEnabled
     @State private var requested = false
     @State private var ready = false
     @State private var failed = false
@@ -30,7 +31,7 @@ struct HanlinYouTubePlayerView: View {
                     failed = HanlinYouTubeDocument.origin(bundleID: Bundle.main.bundleIdentifier) == nil
                     requested = !failed
                 } label: {
-                    Label(failed ? "Retry YouTube player" : "Load YouTube player", systemImage: "play.rectangle")
+                    Label(failed ? String(localized: "Retry YouTube player") : String(localized: "Load YouTube player"), systemImage: "play.rectangle")
                 }
                 .accessibilityIdentifier("hanlin-youtube-load")
                 if failed { Text("This video could not be played here.").foregroundStyle(.secondary) }
@@ -40,6 +41,7 @@ struct HanlinYouTubePlayerView: View {
         }
         .onChange(of: video) { requested = false; ready = false; failed = false }
         .onChange(of: scenePhase) { _, phase in if phase != .active { requested = false } }
+        .onChange(of: isEnabled) { _, enabled in if !enabled { requested = false } }
         .onDisappear { requested = false }
     }
 }
