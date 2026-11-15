@@ -62,6 +62,18 @@ requested. The canonical shared scheme is AI_HLY (target AI_Hanlin); the follow-
 also verifies that checked-in scheme/target association. Only this affected
 resolution operation is repeated after repairing its missing prerequisites.
 
+Follow-up43760670564 at7dea67f3 successfully staged both NativeScript binary
+targets, then stopped before Expo/resolution because the broad NativeScript
+preflight additionally requires a prepared SwiftUI demonstration fixture. That
+fixture is not an input to app package resolution. This is INFRA_ERROR with zero
+builds/tests/resolver execution, not a package test failure. Original artifact
+14179769489 digest
+`fc3df7621111a9a52955783c3c2354af08d38cfd14295dc13c88efdbb9d172e6`
+was independently authenticated. The next scoped route retains the canonical
+binary preparation and its validation, omits that unrelated fixture gate, then
+uses Xcode itself as the actual binary-target consumer. The existing broader CI
+preflight and its fixture requirements are unchanged.
+
 NOT_RUN: affected actual app `SkillStoreAndImportTests`, catalog/exposure consumers,
 Skills UI/XCUITest, physical iPad and complete app compilation. The canonical
 Runtime metadata correction is still required for the app build. Original package
