@@ -41,8 +41,12 @@ not Apple-framework compilation.
 
 The manual `skill_format_app_resolve` route runs only actual Xcode app dependency
 resolution, retains the original before/after lock and source archive, and records
-measured phase cost. It runs no build, test, simulator boot, signing or release.
+measured phase cost. It runs no app build, app test, simulator boot, app signing or release.
 Its actual result and lock must be reviewed before adopting the generated lock.
+The zero build/test counters describe the app resolver phase. Canonical dependency
+preparation separately compiles its metadata build tool when needed and builds the
+ExpoModulesJSI bridge for device/simulator; those are prerequisite component builds,
+not app compilation or app test acceptance.
 
 First app-graph run43759980799 at4c82bbfe ended INFRA_ERROR/exit74,
 zero builds/tests: the clean runner lacked11 local NativeScript/Expo XCFrameworks.
@@ -73,6 +77,36 @@ was independently authenticated. The next scoped route retains the canonical
 binary preparation and its validation, omits that unrelated fixture gate, then
 uses Xcode itself as the actual binary-target consumer. The existing broader CI
 preflight and its fixture requirements are unchanged.
+
+Final app resolution43761037885 atc1a53977 is RESOLVED_ONLY_PASS. Original
+artifact14180119013 digest
+`d245f3e04099528f99286784a244f417b78fb47c5665a061dce49954997abb53`
+was independently authenticated, including ZIP CRCs,129 Git source-input hashes,
+the retained source tar and all nine package files against e44c57cf. The actual
+app lock was adopted byte-for-byte, SHA256
+`c71ab78897eb3c84f245f5efa96c5371b61172f712b8ff534bec7a9d19982fb6`.
+Yams is6.2.2/a27b21e; existing SDK e7bf341 and Swift-JSON f2a0d12 pins match
+their previously authenticated package locks. The source manifests and toolchain
+constraints were unchanged after this execution; the checked-in app lock is its
+actual output. No second resolution or package-test rerun is claimed.
+
+The old app lock was stale for existing linked packages: actual resolution adds14
+pins, including Yams and13 existing direct/transitive requirements. It also changes
+swift-cmark0.6.0 to0.9.0 and drops the two previous docc pins. The pre-existing frozen
+Markdown fork f59bd0d already requires swift-markdown exact0.7.3; that original
+manifest requires swift-cmark from0.7.0, so the old0.6.0 pin cannot satisfy it.
+MarkdownUI's existing constraint also permits the actual selected version. These
+facts were checked in the original manifests at the exact resolved Git commits.
+The pin change and documentation-pin pruning remain explicit draft review items;
+affected Markdown consumer validation is NOT_RUN until prior evidence is audited
+or the affected cases execute. No earlier Markdown pass is silently reused.
+
+The job took5m54s. Reported measured phases were native staging155s, NativeScript
+installation4s, final preflight5s and resolution148s; those phase totals exclude
+other job/setup overhead. Native staging includes the actual ExpoModulesJSI bridge
+build, separately from zero app builds/tests. The standard report's estimated
+savings are not measured speedups. Full result and pin diff:
+`evidence/skill-yams-app-resolution-43761037885.json`.
 
 NOT_RUN: affected actual app `SkillStoreAndImportTests`, catalog/exposure consumers,
 Skills UI/XCUITest, physical iPad and complete app compilation. The canonical
