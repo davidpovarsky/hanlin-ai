@@ -8,6 +8,11 @@ on:
         required: false
         default: false
         type: boolean
+      nativescript_metadata_provenance_controls:
+        description: Execute retained pinned-generator provenance controls in the metadata-only job
+        required: false
+        default: false
+        type: boolean
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false
@@ -135,7 +140,7 @@ jobs:
     if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
     name: Probe pinned NativeScript SDK metadata
     runs-on: xcode-27
-    timeout-minutes: 12
+    timeout-minutes: ${{ inputs.nativescript_metadata_provenance_controls && 30 || 12 }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
@@ -152,9 +157,24 @@ jobs:
           echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
       - name: Install existing pinned NativeScript tooling
         run: npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund
+      - name: Preflight actual metadata compiler host
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild -version
+          xcrun --sdk iphonesimulator --show-sdk-version
+          xcrun --sdk iphonesimulator --show-sdk-path
+          uname -m
+          cmake --version
+          python3 --version
+          python3 -c 'import shutil; free = shutil.disk_usage(".").free; print("freeBytes", free); assert free >= 8 * 1024**3'
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
+      - name: Execute retained native provenance controls
+        if: inputs.nativescript_metadata_provenance_controls
+        run: python3 Scripts/CI/MetadataProvenanceProof/run.py
       - name: Compare real SDK metadata parser modes
+        if: ${{ !inputs.nativescript_metadata_provenance_controls }}
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-metadata-tool/bin/objc-metadata-generator --emit-types --runtime-wrapper
       - name: Retain actual SDK probe evidence
         if: always()
@@ -164,6 +184,7 @@ jobs:
           path: |
             build/acceptance/nativescript-sdk-probe
             build/acceptance/nativescript-metadata
+            build/acceptance/metadata-provenance-proof
             build/nativescript-metadata-tool/provenance.json
             build/nativescript-metadata-tool/bin
           if-no-files-found: error
