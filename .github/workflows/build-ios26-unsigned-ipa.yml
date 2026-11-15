@@ -178,9 +178,22 @@ jobs:
       - name: Prepare declaration-only metadata tool
         if: ${{ inputs.nativescript_metadata_tooling_mode != 'inventory' && !startsWith(inputs.nativescript_metadata_tooling_mode, 'modern-') }}
         uses: ./.github/actions/prepare-nativescript-metadata-tool
+      - name: Retrieve original compiled modern candidate for verified reuse
+        if: startsWith(inputs.nativescript_metadata_tooling_mode, 'modern-')
+        continue-on-error: true
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: nativescript-sdk-metadata
+          run-id: 43726156819
+          github-token: ${{ github.token }}
+          path: build/modern-compile-reference
       - name: Compile candidate modern metadata frontend
         if: startsWith(inputs.nativescript_metadata_tooling_mode, 'modern-')
-        run: python3 Scripts/NativeScript/build-modern-metadata-tool.py
+        run: |
+          python3 Scripts/CI/MetadataProvenanceProof/reuse_modern_tool.py
+          if [ ! -f build/nativescript-modern-metadata-tool/bin/objc-metadata-generator ]; then
+            python3 Scripts/NativeScript/build-modern-metadata-tool.py
+          fi
       - name: Verify candidate SDK declarations and original serializer semantics
         if: inputs.nativescript_metadata_tooling_mode == 'modern-compile'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --emit-types
@@ -210,6 +223,7 @@ jobs:
             build/nativescript-metadata-tool/provenance.json
             build/nativescript-metadata-tool/bin
             build/nativescript-modern-metadata-tool/provenance.json
+            build/nativescript-modern-metadata-tool/compile-reuse.json
             build/nativescript-modern-metadata-tool/build-*.log
             build/nativescript-modern-metadata-tool/bin
           if-no-files-found: error

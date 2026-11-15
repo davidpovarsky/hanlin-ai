@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+"""Reuse only the previously compiled, source-identical candidate tool image."""
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[3]
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    reference = ROOT / "build/modern-compile-reference/nativescript-modern-metadata-tool"
+    receipt = reference / "provenance.json"
+    if not receipt.is_file():
+        print("NEEDS_BUILD: original compiled artifact unavailable")
+        return
+    evidence = json.loads(receipt.read_text())
+    expected = {"basePatchSourceSHA256": "Scripts/NativeScript/build-metadata-tool.py",
+        "modernPatchSourceSHA256": "Scripts/NativeScript/build-modern-metadata-tool.py",
+        "frontendLockSHA256": "Scripts/NativeScript/metadata-frontend-lock.json"}
+    if evidence.get("status") != "BUILT_NOT_ACCEPTED" or any(evidence.get(key) != sha(ROOT / path) for key, path in expected.items()):
+        print("NEEDS_BUILD: candidate build source/lock changed")
+        return
+    if evidence["xcode"] != subprocess.check_output(["xcodebuild", "-version"], text=True).strip():
+        print("NEEDS_BUILD: actual Xcode compiler changed")
+        return
+    frontend = Path(evidence["frontendRoot"])
+    inputs = {**evidence["frontendInputs"], **{"lib/" + name: digest for name, digest in evidence["libraries"].items()}}
+    if not inputs or any(not (frontend / path).is_file() or sha(frontend / path) != digest for path, digest in inputs.items()):
+        print("NEEDS_BUILD: actual frontend headers/resources/libraries changed")
+        return
+    if sha(reference / "bin/objc-metadata-generator") != evidence["generatorSHA256"]:
+        raise RuntimeError("Original compiled image digest mismatch")
+    destination = ROOT / "build/nativescript-modern-metadata-tool"
+    shutil.copytree(reference / "bin", destination / "bin")  # Exclusive; never overwrite owned outputs.
+    shutil.copy2(receipt, destination / "provenance.json")
+    (destination / "compile-reuse.json").write_text(json.dumps({"status": "REUSED_VERIFIED_COMPILE_PASS",
+        "originalRun": 43726156819, "originalSourceSHA": "7fbb5be1", "generatorSHA256": evidence["generatorSHA256"],
+        "originalReceiptSHA256": sha(receipt), "verifiedFrontendInputs": len(inputs),
+        "boundary": "Original compile step passed; original aggregate run failed. No new compilation or metadata acceptance claimed."}, indent=2) + "\n")
+    print("REUSED_VERIFIED_COMPILE_PASS: original source, binary, Xcode and complete frontend input hashes match")
+
+
+if __name__ == "__main__":
+    main()

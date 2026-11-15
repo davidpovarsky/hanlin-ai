@@ -303,7 +303,7 @@ def main() -> int:
                    "-fmodule-map-file=" + str(headers / "module.modulemap"),
                    "-fmodules" if mode == "modular" else "-fno-modules"]
         if options.language == "objective-c++":
-            command.extend(["-x", "objective-c++", "-std=gnu++20"])
+            command.extend(["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules"])
         if options.emit_types:
             command[1:1] = ["-output-typescript", str(destination / "types")]
         if mode in ["textual-direct", "textual-public"]:
@@ -386,9 +386,9 @@ def main() -> int:
             if name == "original" and options.language == "objective-c++":
                 # Compare with the accepted original ObjC reference. Its
                 # Clang17 cannot parse the current SDK's C++ standard library.
-                if flags[-3:] != ["-x", "objective-c++", "-std=gnu++20"]:
+                if flags[-4:] != ["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules"]:
                     raise RuntimeError("Candidate dialect argv changed")
-                comparison_flags = flags[:-3]
+                comparison_flags = flags[:-4]
             invocation = [str(executable), "-input-umbrella", str(parity_input),
                           "-output-yaml", str(folder / "yaml"), "Xclang", *comparison_flags]
             (folder / "command.json").write_text(json.dumps(invocation, indent=2) + "\n")
