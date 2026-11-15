@@ -13,7 +13,7 @@ Pass that same object to `APIManager(context: ..., agentSessionOwner: owner)` fo
 requests. Install a strongly retained A2UI consumer in `owner.presentation` **before** starting
 the request. The property is weak; the consumer/view owns its lifetime.
 
-`HanlinAppAgentPresentationConsumer` is the callable seam. It receives installed Session,
+`HanlinAppAgentPresentationConsumer` is the callable seam, extracted verbatim with the existing row/binding types into `AI_HLY/Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift`. This file imports only actual SDK contracts and Foundation; it introduces no replacement DTO or SwiftData test stand-in. It receives installed Session,
 original Host result/progress, canonical event plus immutable binding, completion, invalidation,
 successful consumer drain, and read-only record replay. Completion hooks fan out existing
 callbacks; no consumer overwrites an adapter's callback slot. Implement its
