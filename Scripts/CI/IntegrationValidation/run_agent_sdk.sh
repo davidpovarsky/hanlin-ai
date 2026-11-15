@@ -189,5 +189,5 @@ done
 retain_locks
 python3 Scripts/CI/IntegrationValidation/verify_agent_sdk.py "$evidence" | tee "$evidence/summary.json"
 if [[ "${HANLIN_SDK_RUN_NATIVE_CATALOG:-0}" == 1 ]]; then
-  HANLIN_SDK_EVIDENCE_DIRECTORY="$evidence/native-catalog" bash Scripts/CI/IntegrationValidation/run_native_model_catalog.sh
+  HANLIN_SDK_EVIDENCE_DIRECTORY="$evidence/native-catalog" HANLIN_SDK_VALIDATION_SCRATCH="$scratch" bash Scripts/CI/IntegrationValidation/run_native_model_catalog.sh
 fi

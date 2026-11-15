@@ -9,6 +9,7 @@ public enum HanlinTranscriptPayload: Codable, Hashable, Sendable {
     case toolResult(providerCallID: String, result: HanlinHostExecutionResult)
     /// Replay correlation only; never restores live admission or host authority.
     case hostResultIdentity(resultID: UUID, call: HanlinHostCallIdentity)
+    case structuredPart(HanlinChatStructuredPart, context: HanlinHostContext)
     case presentationReference(version: Int, opaqueReference: String)
     case finished(reason: String)
     case cancelled
@@ -45,6 +46,7 @@ public struct HanlinConversationRecord: Codable, Hashable, Sendable {
         // Read old metadata records without rewriting them. New saves use the explicit v2 format.
         guard (1...Self.currentFormat).contains(formatVersion) else { throw HanlinHostError.unsupportedVersion }
         var last: UInt64?
+        var structured = [UUID: HanlinChatStructuredPartSequence]()
         for entry in entries {
             guard entry.step >= 0, last.map({ entry.sequence > $0 }) ?? true else { throw HanlinHostError.invalidRecord }
             if case .toolResult(_, let outcome) = entry.payload {
@@ -55,7 +57,25 @@ public struct HanlinConversationRecord: Codable, Hashable, Sendable {
                       call.session.conversationID == conversationID, call.runID == entry.runID,
                       call.step == entry.step else { throw HanlinHostError.invalidRecord }
             }
+            if case .structuredPart(let part, let context) = entry.payload {
+                guard formatVersion >= 2, context.namespace == namespace else { throw HanlinHostError.invalidRecord }
+                var ordering = structured[entry.runID] ?? HanlinChatStructuredPartSequence()
+                _ = try ordering.admit(part)
+                structured[entry.runID] = ordering
+            }
             last = entry.sequence
+        }
+    }
+
+    /// Read-only original entries in global transcript order, including exact typed text/Surface
+    /// bytes and original context. This never registers live interaction admission.
+    public func structuredEntries(runID: UUID, messageID: UUID) throws -> [HanlinTranscriptEntry] {
+        try validate()
+        var ordering = HanlinChatStructuredPartSequence()
+        return try entries.filter { entry in
+            guard entry.runID == runID, case .structuredPart(let part, _) = entry.payload,
+                  part.messageID == messageID else { return false }
+            return try ordering.admit(part)
         }
     }
 }

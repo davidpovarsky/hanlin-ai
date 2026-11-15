@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 
 public enum HanlinAISDKProviderKind: String, Codable, Hashable, Sendable {
     case openAI

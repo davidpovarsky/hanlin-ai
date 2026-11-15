@@ -157,6 +157,10 @@ public final class HanlinAgentSession {
                             case .reasoningDelta(let text): try self.append(.reasoning(text), run: run, stepOverride: streamStep)
                             case .finished(let reason, _): try self.append(.finished(reason: reason), run: run, stepOverride: streamStep)
                             case .structuredPart(let part):
+                                try self.append(.structuredPart(part, context: self.identity.context), run: run, stepOverride: streamStep)
+                                // Preserve partial interrupted output in the authoritative conversation path.
+                                try await self.persist(model: modelReference)
+                                try await self.requireCurrent(run: run)
                                 if case .a2uiMessage = part.payload {
                                     self.observedInteractionOrigins.insert(.init(session: self.identity, runID: run,
                                         messageID: part.messageID, partID: part.partID))

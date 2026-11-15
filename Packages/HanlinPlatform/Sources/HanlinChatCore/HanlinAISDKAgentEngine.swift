@@ -1,6 +1,7 @@
 import AISDKProvider
 import AISDKProviderUtils
 import Foundation
+import HanlinPlatformContracts
 import SwiftAISDK
 
 public actor HanlinAISDKAgentEngine {

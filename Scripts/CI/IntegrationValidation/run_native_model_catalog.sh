@@ -7,7 +7,19 @@ mkdir -p "$evidence"
 git rev-parse HEAD > "$evidence/tested-source-commit.txt"
 started=$SECONDS
 trap 'rc=$?; printf "{\"exit\":%s,\"total_seconds\":%s}\n" "$rc" "$((SECONDS-started))" > "$evidence/process-exit.json"' EXIT
-scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-native-catalog.XXXXXXXX")"
+if [[ -n "${HANLIN_SDK_VALIDATION_SCRATCH:-}" ]]; then
+  scratch="$HANLIN_SDK_VALIDATION_SCRATCH"
+  test -f "$scratch/Packages/HanlinAgentSDK/Package.swift"
+  # Same job, exact same Git-bound dependency sources. Preserve their mtimes/build graph.
+  archive_packages=()
+  mac_derived="$scratch/SDKDerivedData"
+  ios_derived="$scratch/IOSDerivedData"
+else
+  scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-native-catalog.XXXXXXXX")"
+  archive_packages=(Packages/HanlinAgentSDK Packages/HanlinPlatform)
+  mac_derived="$scratch/DerivedData"
+  ios_derived="$scratch/IOSDerivedData"
+fi
 python3 - "$scratch" <<'PY'
 import shutil,sys
 assert shutil.disk_usage(sys.argv[1]).free >= 8*1024**3, 'Less than 8 GiB runner space'
@@ -17,7 +29,7 @@ test -n "$selected_xcode"
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 { xcodebuild -version; xcrun swift --version; xcrun --sdk macosx --show-sdk-version; xcrun --sdk iphonesimulator --show-sdk-version; uname -m; sw_vers; } > "$evidence/toolchain.txt"
 xcrun simctl list runtimes -j > "$evidence/simulator-runtimes.json"
-git archive HEAD Packages/HanlinAgentSDK Packages/HanlinPlatform Scripts/CI/NativeModelValidation \
+git archive HEAD "${archive_packages[@]}" Scripts/CI/NativeModelValidation \
   AI_HLY/Model/AllModels.swift AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift \
   AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift \
   AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift > "$evidence/tested-source.tar"
@@ -49,12 +61,12 @@ PY
 )"
 set +e
 (cd "$package" && xcodebuild test -scheme "$scheme" -destination 'platform=macOS' \
-  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$evidence/NativeCatalogTests.xcresult" \
+  -derivedDataPath "$mac_derived" -resultBundlePath "$evidence/NativeCatalogTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
   -only-testing:HanlinNativeModelCatalogTests/NativeModelCatalogTests) > "$evidence/native-catalog-tests.log" 2>&1
 test_status=$?
 (cd "$package" && xcodebuild build -scheme HanlinNativeModelCatalog -destination 'generic/platform=iOS Simulator' \
-  -derivedDataPath "$scratch/IOSDerivedData" -resultBundlePath "$evidence/NativeCatalogIOSBuild.xcresult" \
+  -derivedDataPath "$ios_derived" -resultBundlePath "$evidence/NativeCatalogIOSBuild.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO) > "$evidence/native-catalog-ios-build.log" 2>&1
 build_status=$?
 set -e

@@ -495,6 +495,37 @@ private struct ControlledTextModel: LanguageModelV3 {
     }
 
     @Test(.timeLimit(.minutes(1))) @MainActor
+    func interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = InteractionFixtureHost(context: context)
+        let part = try HanlinChatStructuredPart(messageID: UUID(), partID: UUID(), sequence: 0,
+            payload: .a2uiMessage(protocolVersion: "v0.9", json: Data("{}".utf8)))
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [
+            try .custom(part.providerContent()), .error(error: .string("Synthetic interruption"))
+        ])), descriptor: structuredDescriptor())
+        let store = HanlinInMemoryConversationStore()
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        let model = HanlinModelReference(provider: "fixture", modelID: "structured")
+        let stream = try await session.stream(messages: [.init(role: .user, text: "Form")], modelReference: model)
+        var original: HanlinHostInteractionOrigin?
+        do {
+            for try await event in stream {
+                if case .structuredPart = event.event { original = .init(session: identity, runID: event.runID, messageID: part.messageID, partID: part.partID) }
+            }
+            Issue.record("Synthetic provider error was accepted as completion")
+        } catch { /* Partial content is retained while interaction admission is revoked. */ }
+        let origin = try #require(original)
+        let record = try #require(await store.load(identity.conversationID, namespace: ns))
+        let replay = try record.structuredEntries(runID: origin.runID, messageID: part.messageID)
+        #expect(replay.count == 1)
+        #expect(throws: HanlinHostError.staleContext) { try session.admitInteraction(origin) }
+        #expect(await host.prepared == 0)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
     func interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority() async throws {
         let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
         let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())

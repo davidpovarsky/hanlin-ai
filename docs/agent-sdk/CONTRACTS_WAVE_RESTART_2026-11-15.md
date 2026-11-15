@@ -30,8 +30,11 @@ No second renderer, UI registry, model selection UI or permission authority is i
 
 ## Model structured parts
 
-Canonical public type: `HanlinChatCore.HanlinChatStructuredPart`, file
-`Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStructuredPart.swift`.
+Canonical public type: `HanlinPlatformContracts.HanlinChatStructuredPart`, file
+`Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift`.
+Import `HanlinPlatformContracts` for the value and `HanlinChatCore` for its provider bridge extension.
+The value was moved once to the existing foundation-contract product so HostContracts persistence
+can use the EXACT same type without depending on the model engine or copying a second envelope.
 Version 1 carries stable `messageID: UUID`, `partID: UUID` matching the existing A2UI store, message-wide `sequence: UInt64`, and typed payload
 `.textDelta(String)` or `.a2uiMessage(protocolVersion: String, json: Data)`.
 The latter holds a complete official protocol message; admission/validation/rendering stay with A2UI.
@@ -49,8 +52,13 @@ Unknown custom channels stay outside this channel; malformed declared channel da
 `HanlinChatStructuredPartSequence` validates strict per-message order. An exact duplicate is suppressed;
 changed replay at the same sequence or unseen older sequence is rejected. Codable reconstruction
 replays through the same validator, with no grants or execution closures. Create a new validator
-for each originating run. Default SDK transcript storage still persists metadata/references only;
-the authorized host must supply a content store before claiming durable structured-payload replay.
+for each originating run. The existing authoritative `HanlinConversationStore` path now persists
+`.structuredPart(part, context:)` entries before delivery, including exact text/Surface bytes,
+original host context, global transcript order and typed message/part sequence. Partial interrupted
+output is retained. `record.structuredEntries(runID:messageID:)` validates the record and returns
+deduplicated original entries in their global order, outside View.body. A conflicting replay,
+foreign namespace, part-kind/version change or unknown format is rejected without rewriting data.
+The original file-store byte budget and iOS file-protection policy still apply.
 
 `onRunCompletion` carries original session/run and completed/cancelled/failed outcome;
 `onSessionInvalidated` fires once for terminal host/session revocation. A successful producer EOF
