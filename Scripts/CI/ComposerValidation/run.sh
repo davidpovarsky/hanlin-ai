@@ -13,39 +13,36 @@ selected_xcode="$(python3 -c 'import glob,re; paths=[p for p in glob.glob("/Appl
 [[ -n "$selected_xcode" ]] || { echo 'No stable installed Xcode found' >&2; exit 2; }
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 xcodebuild -version | tee "$evidence/xcode-version.txt"
-xcrun --sdk iphonesimulator --show-sdk-version | tee "$evidence/ios-simulator-sdk-version.txt"
+xcrun swift --version | tee "$evidence/swift-version.txt"
+sw_vers > "$evidence/host-version.txt"
+sdk_version="$(xcrun --sdk iphonesimulator --show-sdk-version)"
+printf '%s\n' "$sdk_version" | tee "$evidence/ios-simulator-sdk-version.txt"
+ios_major="${sdk_version%%.*}"
 
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/composer-proof.XXXXXXXX")"
 package_dir="$scratch/ComposerValidation"
-mkdir -p "$package_dir/Sources/AI_Hanlin" "$package_dir/Tests/AI_HanlinTests"
-cp Scripts/CI/ComposerValidation/Package.swift "$package_dir/Package.swift"
-cmp Scripts/CI/ComposerValidation/Package.swift "$package_dir/Package.swift"
-sources=(
-  AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift
-  AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift
-  AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift
-)
-test_source=AI_HLYTests/HanlinMorphComposerTests.swift
-for file in "${sources[@]}" "$test_source"; do
-  # The Git blob is compared against checkout bytes before copying, preventing
-  # a dirty or line-ending-transformed file from being silently tested.
-  git show "${actual_sha}:${file}" | cmp - "$file"
-  case "$file" in
-    AI_HLYTests/*) destination="$package_dir/Tests/AI_HanlinTests/$(basename "$file")" ;;
-    *) destination="$package_dir/Sources/AI_Hanlin/$(basename "$file")" ;;
-  esac
-  cp "$file" "$destination"
-  cmp "$file" "$destination"
-  printf '%s  %s\n' "$(shasum -a 256 "$file" | awk '{print $1}')" "$file" >> "$evidence/source-sha256.txt"
-done
+python3 Scripts/CI/ComposerValidation/prepare_capability_proof.py \
+  --repo "$root" --source-sha "$actual_sha" --output "$package_dir" --with-editor-tests \
+  | tee "$evidence/preparation.json"
+cp "$package_dir/proof-inputs.json" "$evidence/proof-inputs.json"
+cp "$package_dir/Package.swift" "$evidence/Harness-Package.swift"
+python3 - "$root" "$evidence/proof-inputs.json" <<'PY'
+import hashlib, json, pathlib, sys
+root = pathlib.Path(sys.argv[1])
+inputs = json.loads(pathlib.Path(sys.argv[2]).read_text())
+for path, digest in inputs['input_sha256'].items():
+    if hashlib.sha256((root / path).read_bytes()).hexdigest() != digest:
+        raise SystemExit(f'Git/checkout input mismatch: {path}')
+PY
+tar -C "$package_dir" -cf "$evidence/source-inputs.tar" Package.swift Sources Tests proof-inputs.json
 printf '%s\n' "$actual_sha" > "$evidence/source-commit.txt"
-shasum -a 256 Scripts/CI/ComposerValidation/Package.swift Scripts/CI/ComposerValidation/run.sh Scripts/CI/ComposerValidation/verify_results.py > "$evidence/harness-sha256.txt"
-printf '%s\n' 'Scope: Morph shell, popup coordinator and OrganizerDock state only.' \
-  'NOT covered: ChatViewBottom, popup live consumers, production app UI and reference parity.' > "$evidence/scope.txt"
+shasum -a 256 Scripts/CI/ComposerValidation/Package.swift Scripts/CI/ComposerValidation/run.sh Scripts/CI/ComposerValidation/verify_results.py Scripts/CI/ComposerValidation/prepare_capability_proof.py > "$evidence/harness-sha256.txt"
+printf '%s\n' 'Scope: eight whole production component files; six Morph cases and two whole-suite UIKit editor measurement cases.' \
+  'NOT covered: parity/session/manual dock resize, ChatViewBottom, popup live consumers, production app UI, physical device or reference parity.' > "$evidence/scope.txt"
 
 xcrun simctl list devices available -j > "$evidence/available-simulators.json"
-device="$(jq -r '[.devices | to_entries[] | select(.key | contains("iOS-26")) | .value[] | select(.isAvailable and (.name | startswith("iPhone"))) | .udid] | first // empty' "$evidence/available-simulators.json")"
-[[ -n "$device" ]] || { echo 'No available iOS 26 iPhone simulator in this isolated job' >&2; exit 2; }
+device="$(jq -r --arg runtime "iOS-$ios_major-" '[.devices | to_entries[] | select(.key | contains($runtime)) | .value[] | select(.isAvailable and (.name | startswith("iPhone"))) | .udid] | first // empty' "$evidence/available-simulators.json")"
+[[ -n "$device" ]] || { echo "No available iOS $ios_major iPhone simulator in this isolated job" >&2; exit 2; }
 printf '%s\n' "$device" > "$evidence/simulator-udid.txt"
 (
   cd "$package_dir"
@@ -73,10 +70,13 @@ set +e
     -destination "platform=iOS Simulator,id=$device" \
     -derivedDataPath "$scratch/DerivedData" \
     -resultBundlePath "$evidence/Composer.xcresult" \
-    -only-testing:AI_HanlinTests/HanlinMorphComposerTests
+    -only-testing:AI_HanlinTests/HanlinMorphComposerTests \
+    -only-testing:AI_HanlinTests/NativeComposerLineSizingTests
 ) 2>&1 | tee "$evidence/xcodebuild.log"
 build_status=${PIPESTATUS[0]}
 set -e
+printf '{"xcodebuild_exit_code":%s}\n' "$build_status" > "$evidence/process-status.json"
 [[ "$build_status" == 0 ]] || exit "$build_status"
 xcrun xcresulttool get test-results tests --path "$evidence/Composer.xcresult" --format json > "$evidence/tests.json"
-python3 Scripts/CI/ComposerValidation/verify_results.py "$evidence/tests.json" | tee "$evidence/verified-cases.txt"
+python3 Scripts/CI/ComposerValidation/verify_results.py "$evidence/tests.json" \
+  --inputs "$evidence/proof-inputs.json" | tee "$evidence/verified-cases.txt"

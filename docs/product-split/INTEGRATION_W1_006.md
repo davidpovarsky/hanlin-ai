@@ -252,6 +252,20 @@ Neither `fe5f2cd4` nor observer packet `a2060c2` is imported: the latter awaits
 the required selection scope/no-op correction and the UI its matching hook
 delta/source acceptance. No CI or 40-case full-app retry was dispatched.
 
+The focused runner is prepared for the eventual accepted packet: it requires
+the owner's separate whole editor test file and rejects a duplicate suite left
+in the parity file. The immutable input plan names all eight expected cases
+(six Morph plus two UIKit); the result verifier requires actual Test Case nodes,
+unique exact identities and Passed status, rejecting missing, skipped, duplicate,
+unexpected or suite-only results. Source archive, input/harness hashes, toolchain,
+available runtime inventory, process status and raw xcresult are retained by the
+runner. It chooses an available iPhone runtime matching the actual installed
+stable simulator SDK major, while the component package keeps its iOS 26 minimum.
+No iOS 27 application acceptance is inferred from that component deployment target.
+Python and shell syntax checks pass, as do seven synthetic result-validator
+checks; these are tooling checks, **not** native execution. Source import and
+native CI still await the coherent accepted service/UI packet.
+
 ## Assembled sources
 
 Frozen Runtime baseline `dd700c03e9fe9d22e95a031d4684275512ee6e6f` plus one
