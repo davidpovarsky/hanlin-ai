@@ -31,7 +31,8 @@ checking owned cancellation. Parsing itself is synchronous: post-parse deadline 
 input bounds are not a hard parse interrupt, process/RSS limit or proof of physical-device
 latency. Runtime05 owns host lifecycle/cancellation and aggregate bundle evidence. No parser
 tree/source is cached here. Runtime/package/compiler/Skill changes must invalidate any
-caller-owned cache. No analyzed-source side effect may be replayed on a fallback engine.
+caller-owned cache, including the trusted helper's own source/bundle digest. No analyzed-source
+side effect may be replayed on a fallback engine.
 
 Reproduce portable checks without installing another product runtime:
 
@@ -94,4 +95,6 @@ Portable manifest tranche: Python3.12.5/packaging26.3 five methods and Node22.17
 five source+JSON methods passed. Raw source/test/lock/wheel/log hashes are in
 `evidence/portable-manifests-2026-11-15.json`. Embedded engines/iOS remain NOT_RUN. A ninth native
 Swift test decodes actual manifest helper JSON and checks declaration/import distinction and
-source ranges; the changed enum/schema/fixture closure requires fresh native validation.
+source ranges. That changed enum/schema/fixture closure passed9/9 native methods plus unsigned
+generic iOS simulator/device compilation in43760175931 at229e9286; actual embedded Python/Node
+execution and original product/Runtime integration remain NOT_RUN.

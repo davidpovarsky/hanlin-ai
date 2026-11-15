@@ -138,6 +138,27 @@ method. All compiled component/fixture/test inputs from9882 to current1a4d6ed4 a
 allowing the fresh bound pass to aggregate under contractv1 if the remaining cases pass with
 the same runtime/toolchain/pins. This is targeted closure validation, not a new seven-case run.
 
+The six-case selection passed in [43758320410](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43758320410),
+job132947238915 at99c31bd750878cbbdf4fed459088ce35ce4b0553,936s job. All six actual unique Passed
+identities, exact compiled sources/fixtures/project, unchanged lock, finalized raw archive,
+original AX/pixels and downloaded ZIP digest authenticated. Artifact14179208855,3217489bytes,
+SHA256 `2d6afa97ee1b5f2c0de75b18db40976c1d0c8ed409858739da6e4773f40dad17`.
+Measured phases28/1/86/795/4/5s preflight/preparation/resolve/build-test/results/diagnostics.
+
+Under contractv1, `evidence/media-replay-ui-component-aggregate.json` aggregates this6 and the
+fresh bound-source1 from43756668201 at target229e9286. Full source ranges from each OWN evidence
+SHA prove byte-identical compiled component/test/fixture/project inputs; original pins,
+actual iPhone18Pro/iOS27.0, Xcode/Swift/host and XcodeGen match. All7 functional component
+assertions qualify as REUSED_VERIFIED_PASS at that target. This is two authenticated executions
+of6+1, not a new seven-case execution or full project CI/app acceptance.
+
+Visual review preserves an additional limit: some post-disposal/seal PNGs omit unchanged
+fixture header pixels although AX retains its controls. Actual component absence/disabled
+assertions passed; whole-host visual continuity after teardown is not accepted by these
+screenshots. Audio controls and the actual original video builder are visible after explicit
+Load, while the fake media URL is not a playback proof. Retain this observation for actual
+original-app teardown/visual acceptance, alongside physical/RTL/performance/network tests.
+
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release
 settings remain unchanged.

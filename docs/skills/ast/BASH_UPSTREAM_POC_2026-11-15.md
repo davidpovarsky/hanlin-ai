@@ -123,3 +123,15 @@ all three original pins and unchanged lock, downloaded ZIP digest and raw result
 Artifact14179426965, SHA256 `3541de0da1c2e38170338b04da8e24161da6d5ebdad91047aa4103ecb437e3b0`,163s job. Measured phases15/42/62/16/11s
 preflight/resolve/Mac/simulator/device. Durable `evidence/bash-native-43758559539.json`; iOS
 execution, embedded Python3.14/Node JITless and product/readiness acceptance remain NOT_RUN.
+
+The declaration-kind/manifest JSON tranche at229e928676aa1cc8a2798c2a91ffafc2682c4abe passed9/9
+native methods in [43760175931](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43760175931),
+job132953001555,194s. This includes20 original Bash fixtures, nonzero Data/hash/span checks,
+host Python/TS report decoding and actual manifest JSON declaration/import distinction. Both
+unsigned generic iOS simulator/device compilations passed. All source/archive/pin/lock/result
+identities and the downloaded ZIP digest authenticated: artifact14180057582,162457bytes,
+SHA256 `52bdc5f36ba9392d7b680bfcabadb80a6a5227bcfc87f328faeb4d45afb9c389`.
+Measured phases17/46/75/20/20s preflight/resolve/Mac/simulator/device. The record is
+`evidence/bash-native-43760175931.json`; this is native Swift/parser/schema proof, not execution
+of Python/Node helpers on iOS. Prior6/7/8 retain their original source scope. No additional
+native rerun is needed for evidence/documentation-only follow-up.
