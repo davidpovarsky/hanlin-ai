@@ -33,6 +33,7 @@ struct SkillDetailView: View {
         List {
             headerSection
             statusSection
+            SkillCompatibilityUnknownSection(identifierScope: "detail")
             summarySection
             instructionsSection
             preferredToolsSection
@@ -40,6 +41,7 @@ struct SkillDetailView: View {
             sourceMetadataSection
             actionsSection
         }
+        .accessibilityIdentifier("hanlin-skill-detail-list")
         .navigationTitle(descriptor?.title.preferredValue() ?? skillID.rawValue)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -140,6 +142,7 @@ struct SkillDetailView: View {
                     }
                 ))
                 .labelsHidden()
+                .accessibilityLabel(SkillL10n.string("Enabled"))
                 .accessibilityIdentifier("hanlin-skill-detail-enable-toggle")
             }
         }

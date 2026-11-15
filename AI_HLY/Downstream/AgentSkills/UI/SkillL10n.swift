@@ -33,6 +33,9 @@ enum SkillL10n {
         "Save": "保存",
         "Import Skill": "导入技能",
         "Import ZIP Archive": "导入 ZIP 压缩包",
+        "Import File": "导入文件",
+        "Select ZIP or SKILL.md": "选择 ZIP 或 SKILL.md",
+        "Select a ZIP package or a SKILL.md file. Previewing does not run scripts.": "选择 ZIP 包或 SKILL.md 文件。预览不会运行脚本。",
         "Select ZIP File": "选择 ZIP 文件",
         "Install from HTTPS URL": "从 HTTPS 地址安装",
         "Skill Archive URL": "技能压缩包链接",
@@ -48,10 +51,33 @@ enum SkillL10n {
         "Trigger Hints (comma-separated)": "触发提示（逗号分隔）",
         "Preferred Tool Aliases (comma-separated)": "优先工具别名（逗号分隔）",
         "Preview Resource": "预览资源",
-        "Close": "关闭"
+        "Close": "关闭",
+        "Compatibility": "兼容性",
+        "Compatibility unknown": "兼容性未知",
+        "Status": "状态",
+        "Unknown": "未知",
+        "Last tested": "上次测试",
+        "Not recorded": "未记录",
+        "Installing or enabling a skill does not verify that its actions can run.": "安装或启用技能并不表示其操作已经过运行验证。"
+    ]
+
+    private static let heTranslations: [String: String] = [
+        "Import File": "ייבוא קובץ",
+        "Select ZIP or SKILL.md": "בחירת ZIP או SKILL.md",
+        "Select a ZIP package or a SKILL.md file. Previewing does not run scripts.": "יש לבחור חבילת ZIP או קובץ SKILL.md. תצוגה מקדימה אינה מריצה סקריפטים.",
+        "Compatibility": "תאימות",
+        "Compatibility unknown": "תאימות לא ידועה",
+        "Status": "מצב",
+        "Unknown": "לא ידוע",
+        "Last tested": "בדיקה אחרונה",
+        "Not recorded": "לא תועד",
+        "Installing or enabling a skill does not verify that its actions can run.": "התקנה או הפעלה אינן מאמתות שניתן להריץ את פעולות ה־Skill."
     ]
 
     static func string(_ key: String) -> String {
+        if (Locale.preferredLanguages.first ?? "").hasPrefix("he"), let he = heTranslations[key] {
+            return he
+        }
         let isZh = (Locale.preferredLanguages.first ?? "").hasPrefix("zh")
         if isZh, let zh = zhTranslations[key] {
             return zh
