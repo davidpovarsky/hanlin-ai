@@ -1,5 +1,7 @@
 # Project Board
 
+- **2026-11-15 replay media interaction:** Canonical A2UI replay seals the original session, and `HanlinA2UIResultView` disables the entire official Surface when sealed. The media wrappers inherit `isEnabled`, so historical Video/Audio/YouTube Load controls and source links are disabled along with agent form actions. Before media replay acceptance, distinguish user-local playback/source access from revoked agent actions without re-enabling stale form/RPC authority or weakening cancellation cleanup. Verify both in the original app XCUITest; current component/compile passes do not cover this interaction.
+
 - **2026-11-14 metadata compiler diagnostics:** NativeScript9.1.0 ignores clang parse failure and resets diagnostics, so required class strings alone can accept a partial binary. Declaration-only parsing preserves31 real UIKit/Host YAML files and rejects invalid types; public framework entry roots avoid directly importing SDK implementation headers/duplicate FocusEngine declarations. Actual SDK probe43629307234 passes; app Swift/VM acceptance is separate. See docs/miniapp-sdk/NATIVESCRIPT_SDK_METADATA_2026-11-14.md.
 
 - **2026-11-12 Xcode resolved provenance:** The checked-in app Package.resolved predates its actual pinned SDK/Markdown references. Generate diagnostic build identity only after Xcode resolves dependencies, validate requested exact repository revisions against that resulting lock, and retain its hash. Reading the old lock before resolution falsely describes the binary even when the app builds successfully.

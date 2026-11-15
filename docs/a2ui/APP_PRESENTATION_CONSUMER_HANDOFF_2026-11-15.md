@@ -76,3 +76,31 @@ Link official root package `https://github.com/a2ui-project/a2ui` at exact revis
 Enable `HANLIN_A2UI_POC` for the actual app/unit validation configuration while preserving DEBUG
 and inherited conditions. A flag-disabled or canImport-disabled app build is not this path's
 compilation evidence. No automatic workflow trigger or distribution permission is broadened.
+
+## Original app acceptance preparation
+
+The existing `HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE` fixture seeds a synthetic classic model
+and routes through `HanlinChatEngine`; it cannot stand in for the supported native-schema
+Responses path. Its setup also deletes existing rows. An A2UI UI fixture must use a separate
+explicit simulator/debug flag and an isolated in-memory container or a dedicated disposable
+CI simulator, with no user database reset. Keep the selected supported model/Responses adapter,
+the actual APIManager/Session/Host/owner, original ChatView and canonical store. Stub only HTTP
+at the existing transport-injection seam and retain the actual outgoing structured-schema
+request and canonical action continuation for assertions. This is deterministic app integration
+evidence, separate from a live provider result.
+
+Required first focused XCUITest checks: an actual prompt yields interleaved text and native
+Surface in the original assistant row; a bound edit and submit produces exactly one original
+action continuation/new response row; closing expanded presentation retains the original row;
+cancellation/model/chat changes reject a queued stale action; reopening restores canonical
+rich content before any model request and never revives historical agent authority. Record
+actual screenshots/AX, exact executed identities and the enabled combined app graph. Include
+surface-only output and original row behavior around tool splits. History media currently
+inherits the sealed Surface's disabled state; local playback/source availability needs a
+separate policy and app proof before claiming media replay acceptance (see PROJECT_BOARD).
+
+SDK9c42 and later dispatch-association changes are outside the d1-backed15-case evidence.
+Assess the final stable Session/Host/engine/contract dependency closure before the next native
+consumer validation; rerun affected or uncertain controls, and reuse the four pure projection
+controls only after verifying their full transitive inputs unchanged. No intermediate run is
+needed solely for a newer SDK commit.
