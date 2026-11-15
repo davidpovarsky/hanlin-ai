@@ -108,7 +108,7 @@ def terminate_owned():
 with (out/'simulator-readiness.log').open('w') as log:
     if device['state']=='Shutdown':subprocess.run(['xcrun','simctl','boot',udid],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)
     subprocess.run(['xcrun','simctl','bootstatus',udid,'-b'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=150)
-call(['xcrun','simctl','install',udid,str(app)],timeout=60)
+call(['xcrun','simctl','install',udid,str(app)],timeout=180)
 container=Path(call(['xcrun','simctl','get_app_container',udid,identifier,'data'],timeout=5).strip())
 (out/'actual-destination.json').write_text(json.dumps({'device':device,'runtime':runtimes[runtime],'container':str(container)},indent=2))
 call(['xcrun','simctl','launch',udid,identifier,'--copy-path-for-testing'])
