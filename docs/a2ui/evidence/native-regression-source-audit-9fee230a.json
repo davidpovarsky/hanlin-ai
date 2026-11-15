@@ -1,0 +1,76 @@
+{
+  "status": "SOURCE_CLOSURE_UNCHANGED",
+  "evidence_run": 43747509478,
+  "evidence_sha": "516ca9e1794c7fe8f6ad214a9b0ab3fcc18db58a",
+  "target_sha": "9fee230a5e7e38eb25f848df4f3411b83abbe754",
+  "evidence_record_sha256": "b9fbd73908ee50a4b142797a26de3bbcfc0583333cfeb1eec1a70562b401078b",
+  "full_range_changed_paths": [
+    ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "AI_HLY/ChatView.swift",
+    "AI_HLY/Downstream/ChatPresentation/HanlinChatContentView.swift",
+    "AI_HLY/Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+    "AI_HLY/ListView.swift",
+    "AI_HLY/MainTabView.swift",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+    "PROJECT_BOARD.md",
+    "docs/a2ui/MEDIA_REPLAY_UI_2026-11-15.md",
+    "docs/a2ui/MediaReplayUI/MediaReplayUITests.swift",
+    "docs/a2ui/ORIGINAL_RETURN_AND_NATIVE_APP_UI_2026-11-15.md",
+    "docs/a2ui/evidence/media-replay-ui-43747506272.json",
+    "docs/a2ui/evidence/media-replay-ui-43750257931.json",
+    "docs/a2ui/evidence/native-regression-43747509478.json",
+    "docs/a2ui/run_media_replay_ui.sh"
+  ],
+  "source_inputs_checked": 18,
+  "test_identities_checked": 36,
+  "inputs_and_manifest_exactly_equal": true,
+  "runner_and_generator_byte_unchanged": true,
+  "original_resolved_lock_sha256": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae",
+  "original_resolved_pins": [
+    {
+      "identity": "a2ui",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/a2ui-project/a2ui",
+      "state": {
+        "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+      }
+    },
+    {
+      "identity": "swift-collections",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-collections.git",
+      "state": {
+        "revision": "88754449ab766a739610b660e117762115fabc9c",
+        "version": "1.7.6"
+      }
+    },
+    {
+      "identity": "swift-json-schema",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/ajevans99/swift-json-schema",
+      "state": {
+        "revision": "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+        "version": "0.13.2"
+      }
+    },
+    {
+      "identity": "swift-syntax",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-syntax.git",
+      "state": {
+        "revision": "050f1a346fbbac0ca2cfb15a95274f7bd1cf0ccf",
+        "version": "604.0.0"
+      }
+    }
+  ],
+  "original_native_status": "EXECUTED_PASS",
+  "original_executed_cases": 36,
+  "new_execution": false,
+  "scope": "Official A2UI/native owner Mac36 component source closure only",
+  "limits": [
+    "Not an iOS media UI pass",
+    "Not a canonical Hanlin SDK consumer/app proof",
+    "Any reuse must preserve original locked dependency graph and exact original toolchain/environment/platform/freshness; this audit does not execute a new environment check"
+  ],
+  "full_ci_pass": false
+}
