@@ -909,7 +909,8 @@
     "hanlin_organizer_dock_parity_unit_tests": {
       "description": "InteriorOrganizer V3.3 OrganizerDock source parity, compact workspace, and zoom unit tests",
       "patterns": [
-        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+        "AI_HLYTests/NativeComposerLineSizingTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
@@ -923,6 +924,7 @@
         "AI_HLYTests/PendingFirstTurnTests",
         "AI_HLYTests/ModelPopoverZoomOrderTests",
         "AI_HLYTests/ComposerActionsParityTests",
+        "AI_HLYTests/NativeComposerLineSizingTests",
         "AI_HLYTests/OriginalSourceNonRegressionTests"
       ],
       "consumers": []
