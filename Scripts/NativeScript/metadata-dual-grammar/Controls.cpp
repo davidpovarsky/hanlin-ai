@@ -116,7 +116,8 @@ int main(int argc, const char** argv) {
         receipt["peakRSSAfterSerialization"] = HanlinDual::peakResidentBytes();
         receipt["status"] = "EXECUTED_PASS";
     } catch (const std::exception& error) {
-        receipt["reason"] = error.what();
+        receipt["reason"] = std::string(error.what());
+        llvm::errs() << "Dual grammar control rejected at " << stage << ": " << error.what() << "\n";
         receipt["stage"] = stage;
         const auto expectedStage = expectation == "parse-failure" ? "parse" : "merge";
         if (expectation != "pass" && !expectedReason.empty() && std::string(error.what()).find(expectedReason) == 0 &&
