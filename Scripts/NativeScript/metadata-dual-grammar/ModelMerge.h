@@ -70,21 +70,29 @@ class ModelMerge {
                 ++repeatedAuthoritativeReferences;
             }
         }
+        std::vector<T*> additions;
         for (auto* member : cpp) {
             auto found = index.find(entityKey(*member));
             if (found == index.end()) {
-                objc.push_back(member);
+                additions.push_back(member);
                 index.emplace(entityKey(*member), member);
             } else {
                 duplicate(member, found->second);
             }
         }
-        std::stable_sort(objc.begin(), objc.end(), [](const T* left, const T* right) {
+        std::stable_sort(additions.begin(), additions.end(), [](const T* left, const T* right) {
             return entityKey(*left) < entityKey(*right);
         });
+        // Preserve every original C member and its order/multiplicity. Only
+        // new CPP contributions are sorted and appended deterministically.
+        objc.insert(objc.end(), additions.begin(), additions.end());
     }
 
     void duplicate(Meta::Meta* cpp, Meta::Meta* objc) {
+        // A prior CPP-only addition can already be in the authoritative list.
+        // Identity is not a two-context proof or a replacement route: adding
+        // a self-route here would block its later proven CPP -> C mapping.
+        if (cpp == objc) return;
         if (!compared.emplace(cpp, objc).second) return;
         if (entityKey(*cpp) != entityKey(*objc) || !sameSourceOwner(*cpp, *objc))
             throw std::runtime_error("Dual-grammar canonical declaration/owner conflict: " + cpp->identificationString());

@@ -267,6 +267,8 @@ def main() -> int:
     parser.add_argument("--preprocessing-provenance", action="store_true",
                         help="Opt-in diagnostic-only wrapper; requires future explicitly authorized native execution")
     options = parser.parse_args()
+    if options.dual_grammar:
+        from metadata_dual_grammar import validate_receipt
     if options.language != "objective-c" and (options.generator is None or (options.runtime_wrapper and not options.modern_semantic_parity)):
         parser.error("Candidate ObjC++ dialect requires explicit modern generator/model proof")
     if options.parity_only and (not options.dual_grammar or options.runtime_wrapper or options.emit_types):
@@ -442,7 +444,6 @@ def main() -> int:
             "status": "EXECUTED_PASS" if completed.returncode == 0 and control.returncode == 0
                       and all(symbols.values()) and not errors else "FAILED"}
         if options.dual_grammar:
-            from metadata_dual_grammar import validate_receipt
             try:
                 if completed.returncode:
                     raise RuntimeError("Actual dual SDK producer failed")
