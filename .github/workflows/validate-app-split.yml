@@ -13,7 +13,7 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 35
     env:
-      SPLIT_EVIDENCE: ${{ runner.temp }}/app-split-evidence
+      SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v7.0.1
@@ -97,6 +97,6 @@ jobs:
         uses: actions/upload-artifact@v7.0.2
         with:
           name: app-split-${{ github.run_id }}
-          path: ${{ runner.temp }}/app-split-evidence
+          path: build/app-split-evidence
           if-no-files-found: error
           retention-days: 14
