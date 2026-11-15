@@ -2,6 +2,8 @@
 
 Status: DOCUMENTATION_RESEARCH / implementation and installed-SDK validation NOT_RUN.
 
+Historical narrow seam research. The subsequent text-only source adapter, approved native preflight and remaining unsupported/native test gates are recorded in `PUBLIC_API.md` and `IMPLEMENTATION_HANDOFF.md`; this research does not imply full Apple tool parity.
+
 Owner addendum scope is one manually selectable `Apple Intelligence — On-Device` row in the existing model list, available only when the device's default system model reports ready. It uses the same Chat/Agent/Composer/tool authority as other providers. No separate picker, routing manager, automatic cloud fallback, PCC, AppGroup, API key or companion app.
 
 ## Inspected existing path

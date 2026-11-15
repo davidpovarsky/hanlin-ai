@@ -15,7 +15,7 @@
   },
   "swiftAISDKRevision": "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6",
   "hostSnapshots": {
-    "Anytype": "NOT_INSPECTED; separate SDK-06 owner",
+    "Anytype": "SDK-06 frozen external source audit consumed at 389f12320d89975ebb58d2aaf13b051693194d59; no direct host runtime/checkout inspection",
     "Otzaria": "NOT_INSPECTED; production APIs prohibited"
   },
   "evidence": {
@@ -257,6 +257,20 @@
       "bytes": 8104,
       "sha256": "20176211c23d5af30cb2a8de086c221781f9023d0904a7f0bfad888bd389c2a1",
       "review": "targeted source audit; not full feature acceptance"
+    }
+  ],
+  "consumerEvidence": [
+    {
+      "host": "Anytype",
+      "sourceCommit": "389f12320d89975ebb58d2aaf13b051693194d59",
+      "ownerThread": "01a1dcb2-5101-74b1-b828-29590c46614d",
+      "directory": "C:/Users/DAVID/Code/Codex-Agent-HQ/docs/anytype/hanlin-sdk06-20261115",
+      "reportSHA256": "d14eabfe48088c43822432f858b2f5c5d35a5eabd6e1efa82bce64e2065b0713",
+      "sourceMapSHA256": "69f6bc7ec08bb52d2083b5a657bb22485260e62cf461ca6b370c4e55eb32f744",
+      "sourceBlobCount": 57,
+      "hashesVerified": true,
+      "review": "HOST_AUDIT read; source-map schema/count and relevant API anchors read; no duplicate host audit",
+      "runtime": "NOT_RUN"
     }
   ]
 }

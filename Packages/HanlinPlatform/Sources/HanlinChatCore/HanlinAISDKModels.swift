@@ -5,6 +5,7 @@ public enum HanlinAISDKProviderKind: String, Codable, Hashable, Sendable {
     case anthropic
     case google
     case openAICompatible
+    case appleOnDevice
 }
 
 public struct HanlinAISDKProviderDescriptor: Codable, Hashable, Sendable {
@@ -142,6 +143,8 @@ public enum HanlinAISDKStreamEvent: Sendable {
 }
 
 public enum HanlinAISDKError: LocalizedError, Sendable {
+    case nativeProviderInjectionRequired
+    case nativeUnsupportedContent
     case invalidToolSchema(name: String)
     case invalidConversation(String)
     case emptyProviderResponse(attempts: Int)
@@ -149,6 +152,10 @@ public enum HanlinAISDKError: LocalizedError, Sendable {
 
     public var errorDescription: String? {
         switch self {
+        case .nativeProviderInjectionRequired:
+            return "The on-device provider must be injected locally. No network provider was selected."
+        case .nativeUnsupportedContent:
+            return "This on-device provider accepts text messages only. No attachment was downloaded."
         case .invalidToolSchema(let name):
             return "Invalid JSON schema for tool '\(name)'."
         case .invalidConversation(let detail):

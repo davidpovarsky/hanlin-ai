@@ -1,0 +1,1024 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git from cache
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git from cache (1.84s)
+Fetching https://github.com/apple/swift-argument-parser from cache
+Fetching https://github.com/SwiftyJSON/SwiftyJSON.git from cache
+Fetching https://github.com/weichsel/ZIPFoundation.git from cache
+Fetched https://github.com/SwiftyJSON/SwiftyJSON.git from cache (1.43s)
+Fetched https://github.com/weichsel/ZIPFoundation.git from cache (1.44s)
+Fetched https://github.com/apple/swift-argument-parser from cache (1.44s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (5.27s)
+Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (5.55s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (3.54s)
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+Creating working copy for https://github.com/SwiftyJSON/SwiftyJSON.git
+Working copy of https://github.com/SwiftyJSON/SwiftyJSON.git resolved at 5.0.1
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6
+warning: failed to retrieve search paths with pkg-config; maybe pkg-config is not installed
+warning: couldn't find pc file for zlib
+warning: couldn't find pc file for zlib
+Building for debugging...
+[0/17] Write sources
+[3/17] Copying HanlinAppManifest.schema.json
+[4/17] Write sources
+[16/17] Write swift-version-2807070033DA82CF.txt
+[18/31] Emitting module EventSourceParser
+[19/31] Compiling HanlinPlatformContracts HanlinCatalogContracts.swift
+[20/31] Compiling HanlinPlatformContracts HanlinContractError.swift
+[21/32] Emitting module HanlinPlatformContracts
+[24/32] Compiling HanlinPlatformContracts HanlinDescriptors.swift
+[25/32] Compiling HanlinPlatformContracts HanlinExposureContracts.swift
+[26/32] Compiling HanlinPlatformContracts HanlinIdentifiers.swift
+[27/32] Compiling HanlinPlatformContracts HanlinJSONSchemaDocument.swift
+[28/32] Compiling HanlinPlatformContracts HanlinManifestSchema.swift
+[29/32] Compiling HanlinPlatformContracts HanlinMiniAppContracts.swift
+[30/32] Compiling HanlinPlatformContracts HanlinPermissionContracts.swift
+[31/32] Compiling HanlinPlatformContracts HanlinPreparedRuntimeVersion.swift
+[32/42] Compiling EventSourceParser Types.swift
+[34/67] Compiling AISDKProvider EmbeddingModelV2.swift
+[35/67] Compiling AISDKProvider EmbeddingModelV2Embedding.swift
+[36/67] Compiling AISDKProvider EmbeddingModelV3.swift
+[37/67] Compiling AISDKProvider EmbeddingModelV3Embedding.swift
+[38/67] Compiling AISDKProvider EmbeddingModelV4.swift
+[39/67] Compiling AISDKProvider EmbeddingModelV4Middleware.swift
+[40/67] Compiling AISDKProvider AISDKError.swift
+[41/67] Compiling AISDKProvider APICallError.swift
+[42/67] Compiling AISDKProvider EmptyResponseBodyError.swift
+[43/67] Compiling AISDKProvider GetErrorMessage.swift
+[44/67] Compiling AISDKProvider InvalidArgumentError.swift
+[45/67] Compiling AISDKProvider InvalidPromptError.swift
+[46/67] Compiling AISDKProvider InvalidResponseDataError.swift
+[47/67] Compiling AISDKProvider JSONParseError.swift
+[48/67] Compiling AISDKProvider LoadAPIKeyError.swift
+[49/67] Compiling AISDKProvider LoadSettingError.swift
+[50/67] Compiling AISDKProvider NoContentGeneratedError.swift
+[51/67] Compiling AISDKProvider NoSuchModelError.swift
+[52/67] Compiling AISDKProvider NoSuchProviderReferenceError.swift
+[53/67] Compiling AISDKProvider TooManyEmbeddingValuesForCallError.swift
+[54/67] Compiling AISDKProvider TypeValidationError.swift
+[55/67] Compiling AISDKProvider UnsupportedFunctionalityError.swift
+[56/67] Compiling AISDKProvider FilesV4.swift
+[57/67] Emitting module AISDKProvider
+[69/113] Compiling AISDKProvider FilesV4UploadFileCallOptions.swift
+[70/113] Compiling AISDKProvider FilesV4UploadFileResult.swift
+[71/113] Compiling AISDKProvider ImageModelV2.swift
+[72/113] Compiling AISDKProvider ImageModelV2CallOptions.swift
+[73/113] Compiling AISDKProvider ImageModelV2CallWarning.swift
+[74/113] Compiling AISDKProvider ImageModelV3.swift
+[75/113] Compiling AISDKProvider ImageModelV3CallOptions.swift
+[76/113] Compiling AISDKProvider ImageModelV3File.swift
+[77/113] Compiling AISDKProvider ImageModelV3Usage.swift
+[78/113] Compiling AISDKProvider ImageModelV4.swift
+[79/113] Compiling AISDKProvider ImageModelV4CallOptions.swift
+[80/113] Compiling AISDKProvider ImageModelV4File.swift
+[81/113] Compiling AISDKProvider ImageModelV4Usage.swift
+[82/113] Compiling AISDKProvider ImageModelV4Middleware.swift
+[83/113] Compiling AISDKProvider IsJSON.swift
+[84/113] Compiling AISDKProvider JSONValue.swift
+[85/113] Compiling AISDKProvider LanguageModelV2Middleware.swift
+[86/113] Compiling AISDKProvider LanguageModelV3Middleware.swift
+[87/113] Compiling AISDKProvider LanguageModelV4Middleware.swift
+[88/113] Compiling AISDKProvider LanguageModelV2.swift
+[89/113] Compiling AISDKProvider LanguageModelV2CallOptions.swift
+[90/113] Compiling AISDKProvider LanguageModelV2CallWarning.swift
+[91/113] Compiling AISDKProvider LanguageModelV2Content.swift
+[92/113] Compiling AISDKProvider LanguageModelV2DataContent.swift
+[93/113] Compiling AISDKProvider LanguageModelV2File.swift
+[94/113] Compiling AISDKProvider LanguageModelV2FunctionTool.swift
+[95/113] Compiling AISDKProvider LanguageModelV2Prompt.swift
+[96/113] Compiling AISDKProvider LanguageModelV2ProviderDefinedTool.swift
+[97/113] Compiling AISDKProvider LanguageModelV2Reasoning.swift
+[98/113] Compiling AISDKProvider LanguageModelV2ResponseMetadata.swift
+[99/113] Compiling AISDKProvider LanguageModelV2Source.swift
+[100/113] Compiling AISDKProvider LanguageModelV2StreamPart.swift
+[101/113] Compiling AISDKProvider LanguageModelV2Text.swift
+[102/113] Compiling AISDKProvider LanguageModelV2ToolCall.swift
+[103/113] Compiling AISDKProvider LanguageModelV2ToolChoice.swift
+[104/113] Compiling AISDKProvider LanguageModelV2ToolResult.swift
+[105/113] Compiling AISDKProvider LanguageModelV3.swift
+[106/113] Compiling AISDKProvider LanguageModelV3CallOptions.swift
+[107/113] Compiling AISDKProvider LanguageModelV3Content.swift
+[108/113] Compiling AISDKProvider LanguageModelV3CustomContent.swift
+[109/113] Compiling AISDKProvider LanguageModelV3DataContent.swift
+[110/113] Compiling AISDKProvider LanguageModelV3File.swift
+[111/113] Compiling AISDKProvider LanguageModelV3FinishReason.swift
+[112/113] Compiling AISDKProvider LanguageModelV3FunctionTool.swift
+[113/113] Compiling AISDKProvider LanguageModelV3Prompt.swift
+[114/160] Compiling HanlinHostContracts HanlinConversationStore.swift
+[115/160] Compiling HanlinHostContracts HanlinHostContext.swift
+[116/160] Emitting module HanlinHostContracts
+[117/161] Compiling AISDKProvider ProviderV4.swift
+[118/161] Compiling AISDKProvider RealtimeModelV4.swift
+[119/161] Compiling AISDKProvider RerankingModelV3.swift
+[120/161] Compiling AISDKProvider RerankingModelV4.swift
+[121/161] Compiling AISDKProvider SharedV2Headers.swift
+[122/161] Compiling AISDKProvider SharedV2ProviderMetadata.swift
+[123/161] Compiling AISDKProvider SharedV2ProviderOptions.swift
+[124/161] Compiling AISDKProvider SharedV3Headers.swift
+[125/161] Compiling AISDKProvider SharedV3ProviderMetadata.swift
+[126/161] Compiling AISDKProvider SharedV3ProviderOptions.swift
+[127/161] Compiling AISDKProvider SharedV3Warning.swift
+[128/161] Compiling AISDKProvider SharedV4DataContent.swift
+[129/161] Compiling AISDKProvider SharedV4FileData.swift
+[130/161] Compiling AISDKProvider SharedV4Headers.swift
+[131/161] Compiling AISDKProvider SharedV4ProviderMetadata.swift
+[132/161] Compiling AISDKProvider SharedV4ProviderOptions.swift
+[133/161] Compiling AISDKProvider SharedV4ProviderReference.swift
+[134/161] Compiling AISDKProvider SharedV4Warning.swift
+[135/161] Compiling AISDKProvider SkillsV4.swift
+[136/161] Compiling AISDKProvider SkillsV4UploadSkillCallOptions.swift
+[137/161] Compiling AISDKProvider SkillsV4UploadSkillResult.swift
+[138/161] Compiling AISDKProvider SpeechModelV2.swift
+[139/183] Compiling HanlinHostContracts HanlinHostIntegration.swift
+[141/184] Compiling AISDKProvider SpeechModelV2CallOptions.swift
+[142/184] Compiling AISDKProvider SpeechModelV2CallWarning.swift
+[143/184] Compiling AISDKProvider SpeechModelV3.swift
+[144/184] Compiling AISDKProvider SpeechModelV3CallOptions.swift
+[145/184] Compiling AISDKProvider SpeechModelV4.swift
+[146/184] Compiling AISDKProvider SpeechModelV4CallOptions.swift
+[147/184] Compiling AISDKProvider TranscriptionModelV2.swift
+[148/184] Compiling AISDKProvider TranscriptionModelV2CallOptions.swift
+[149/184] Compiling AISDKProvider TranscriptionModelV2CallWarning.swift
+[150/184] Compiling AISDKProvider TranscriptionModelV3.swift
+[151/184] Compiling AISDKProvider TranscriptionModelV3CallOptions.swift
+[152/184] Compiling AISDKProvider TranscriptionModelV4.swift
+[153/184] Compiling AISDKProvider TranscriptionModelV4CallOptions.swift
+[154/184] Compiling AISDKProvider TranscriptionModelV4StreamOptions.swift
+[155/184] Compiling AISDKProvider TranscriptionModelV4StreamPart.swift
+[156/184] Compiling AISDKProvider TranscriptionModelV4StreamResult.swift
+[157/184] Compiling AISDKProvider VideoModelV3.swift
+[158/184] Compiling AISDKProvider VideoModelV3CallOptions.swift
+[159/184] Compiling AISDKProvider VideoModelV3File.swift
+[160/184] Compiling AISDKProvider VideoModelV4.swift
+[161/184] Compiling AISDKProvider VideoModelV4CallOptions.swift
+[162/184] Compiling AISDKProvider VideoModelV4File.swift
+[163/184] Compiling AISDKProvider LanguageModelV3ProviderTool.swift
+[164/184] Compiling AISDKProvider LanguageModelV3Reasoning.swift
+[165/184] Compiling AISDKProvider LanguageModelV3ResponseMetadata.swift
+[166/184] Compiling AISDKProvider LanguageModelV3Source.swift
+[167/184] Compiling AISDKProvider LanguageModelV3StreamPart.swift
+[168/184] Compiling AISDKProvider LanguageModelV3Text.swift
+[169/184] Compiling AISDKProvider LanguageModelV3Tool.swift
+[170/184] Compiling AISDKProvider LanguageModelV3ToolApprovalRequest.swift
+[171/184] Compiling AISDKProvider LanguageModelV3ToolCall.swift
+[172/184] Compiling AISDKProvider LanguageModelV3ToolChoice.swift
+[173/184] Compiling AISDKProvider LanguageModelV3ToolResult.swift
+[174/184] Compiling AISDKProvider LanguageModelV4.swift
+[175/184] Compiling AISDKProvider LanguageModelV4CallOptions.swift
+[176/184] Compiling AISDKProvider LanguageModelV4Content.swift
+[177/184] Compiling AISDKProvider LanguageModelV4ContentParts.swift
+[178/184] Compiling AISDKProvider LanguageModelV4FinishReason.swift
+[179/184] Compiling AISDKProvider LanguageModelV4Prompt.swift
+[180/184] Compiling AISDKProvider LanguageModelV4StreamPart.swift
+[181/184] Compiling AISDKProvider LanguageModelV4Tool.swift
+[182/184] Compiling AISDKProvider LanguageModelV4ToolCall.swift
+[183/184] Compiling AISDKProvider ProviderV2.swift
+[184/184] Compiling AISDKProvider ProviderV3.swift
+[186/192] Emitting module AISDKZodAdapter
+[187/192] Compiling AISDKZodAdapter ArkTypeToJSONSchema.swift
+[188/192] Compiling AISDKZodAdapter EffectToJSONSchema.swift
+[189/192] Compiling AISDKZodAdapter JSONValueCompat.swift
+[190/192] Compiling AISDKZodAdapter PublicBuilders.swift
+[191/192] Compiling AISDKZodAdapter ValibotToJSONSchema.swift
+[192/192] Compiling AISDKZodAdapter ZLikeDSL.swift
+[193/197] Compiling AISDKZodAdapter Zod3Options.swift
+[194/197] Compiling AISDKZodAdapter Zod3ParseDef.swift
+[195/197] Compiling AISDKZodAdapter Zod3Parsers.swift
+[196/197] Compiling AISDKZodAdapter Zod3ToJSONSchema.swift
+[197/197] Compiling AISDKZodAdapter Zod3Types.swift
+[199/218] Emitting module AISDKProviderUtils
+[200/218] Compiling AISDKProviderUtils AsArray.swift
+[201/218] Compiling AISDKProviderUtils CancelResponseBody.swift
+[202/218] Compiling AISDKProviderUtils CombineHeaders.swift
+[203/218] Compiling AISDKProviderUtils ContentPart.swift
+[204/218] Compiling AISDKProviderUtils ConvertAsyncIteratorToReadableStream.swift
+[205/218] Compiling AISDKProviderUtils ConvertImageModelFileToDataURI.swift
+[206/218] Compiling AISDKProviderUtils ConvertInlineFileDataToData.swift
+[207/218] Compiling AISDKProviderUtils ConvertToFormData.swift
+[208/218] Compiling AISDKProviderUtils DataContent.swift
+[209/218] Compiling AISDKProviderUtils Delay.swift
+[210/218] Compiling AISDKProviderUtils DelayedPromise.swift
+[211/218] Compiling AISDKProviderUtils DetectMediaType.swift
+[212/218] Compiling AISDKProviderUtils DownloadBlob.swift
+[213/218] Compiling AISDKProviderUtils DownloadError.swift
+[214/218] Compiling AISDKProviderUtils ExecuteTool.swift
+[215/218] Compiling AISDKProviderUtils ExtractLines.swift
+[216/218] Compiling AISDKProviderUtils ExtractResponseHeaders.swift
+[217/218] Compiling AISDKProviderUtils FetchFunction.swift
+[218/218] Compiling AISDKProviderUtils FetchWithValidatedRedirects.swift
+[219/256] Compiling AISDKProviderUtils NormalizeHeaders.swift
+[220/256] Compiling AISDKProviderUtils ParseJSON.swift
+[221/256] Compiling AISDKProviderUtils ParseJsonEventStream.swift
+[222/256] Compiling AISDKProviderUtils ParseProviderOptions.swift
+[223/256] Compiling AISDKProviderUtils PostToAPI.swift
+[224/256] Compiling AISDKProviderUtils ProviderHTTPResponse.swift
+[225/256] Compiling AISDKProviderUtils ProviderReference.swift
+[226/256] Compiling AISDKProviderUtils ProviderToolFactory.swift
+[227/256] Compiling AISDKProviderUtils ReadResponseWithSizeLimit.swift
+[228/256] Compiling AISDKProviderUtils RemoveUndefinedEntries.swift
+[229/256] Compiling AISDKProviderUtils Resolve.swift
+[230/256] Compiling AISDKProviderUtils ResolveFullMediaType.swift
+[231/256] Compiling AISDKProviderUtils ResponseHandler.swift
+[232/256] Compiling AISDKProviderUtils AddAdditionalPropertiesToJsonSchema.swift
+[233/256] Compiling AISDKProviderUtils JSONSchemaValidator.swift
+[234/256] Compiling AISDKProviderUtils Schema.swift
+[235/256] Compiling AISDKProviderUtils ZodAdapters.swift
+[236/256] Compiling AISDKProviderUtils SecureJsonParse.swift
+[237/256] Compiling AISDKProviderUtils SerializeModelOptions.swift
+[238/256] Compiling AISDKProviderUtils FilterNullable.swift
+[239/256] Compiling AISDKProviderUtils GenerateID.swift
+[240/256] Compiling AISDKProviderUtils GetErrorMessage.swift
+[241/256] Compiling AISDKProviderUtils GetFromAPI.swift
+[242/256] Compiling AISDKProviderUtils GetRuntimeEnvironmentUserAgent.swift
+[243/256] Compiling AISDKProviderUtils HandleFetchError.swift
+[244/256] Compiling AISDKProviderUtils InjectJSONInstructionIntoMessages.swift
+[245/256] Compiling AISDKProviderUtils IsAbortError.swift
+[246/256] Compiling AISDKProviderUtils IsAsyncIterable.swift
+[247/256] Compiling AISDKProviderUtils IsSameOrigin.swift
+[248/256] Compiling AISDKProviderUtils IsUrlSupported.swift
+[249/256] Compiling AISDKProviderUtils JSONValueToFoundation.swift
+[250/256] Compiling AISDKProviderUtils LoadAPIKey.swift
+[251/256] Compiling AISDKProviderUtils LoadOptionalSetting.swift
+[252/256] Compiling AISDKProviderUtils LoadSetting.swift
+[253/256] Compiling AISDKProviderUtils MapReasoningToProvider.swift
+[254/256] Compiling AISDKProviderUtils MediaTypeToExtension.swift
+[255/256] Compiling AISDKProviderUtils ModelMessage.swift
+[256/256] Compiling AISDKProviderUtils MultipartFormDataBuilder.swift
+[257/275] Compiling AISDKProviderUtils SplitDataUrl.swift
+[258/275] Compiling AISDKProviderUtils StreamingToolCallTracker.swift
+[259/275] Compiling AISDKProviderUtils StripFileExtension.swift
+[260/275] Compiling AISDKProviderUtils ConvertArrayToAsyncIterable.swift
+[261/275] Compiling AISDKProviderUtils ConvertArrayToReadableStream.swift
+[262/275] Compiling AISDKProviderUtils ConvertAsyncIterableToArray.swift
+[263/275] Compiling AISDKProviderUtils ConvertReadableStreamToArray.swift
+[264/275] Compiling AISDKProviderUtils ConvertResponseStreamToArray.swift
+[265/275] Compiling AISDKProviderUtils TestSupportIndex.swift
+[266/275] Compiling AISDKProviderUtils Tool.swift
+[267/275] Compiling AISDKProviderUtils ToolNameMapping.swift
+[268/275] Compiling AISDKProviderUtils Uint8Utils.swift
+[269/275] Compiling AISDKProviderUtils ValidateBaseURL.swift
+[270/275] Compiling AISDKProviderUtils ValidateDownloadURL.swift
+[271/275] Compiling AISDKProviderUtils ValidateTypes.swift
+[272/275] Compiling AISDKProviderUtils Version.swift
+[273/275] Compiling AISDKProviderUtils SDKReleaseVersion.swift
+[274/275] Compiling AISDKProviderUtils WithUserAgentSuffix.swift
+[275/275] Compiling AISDKProviderUtils WithoutTrailingSlash.swift
+[277/309] Emitting module OpenAICompatibleProvider
+[278/309] Compiling OpenAIProvider OpenAIChatAPI.swift
+[279/309] Compiling OpenAIProvider OpenAIChatFinishReason.swift
+[280/309] Compiling OpenAIProvider OpenAIChatLanguageModel.swift
+[281/309] Compiling OpenAIProvider OpenAIChatOptions.swift
+[282/309] Compiling OpenAIProvider OpenAIChatPrepareTools.swift
+[283/309] Compiling OpenAIProvider OpenAIChatPrompt.swift
+[284/309] Compiling OpenAIProvider OpenAICompletionAPI.swift
+[285/309] Compiling OpenAIProvider OpenAICompletionFinishReason.swift
+[286/309] Compiling OpenAIProvider OpenAICompletionLanguageModel.swift
+[287/309] Compiling OpenAIProvider OpenAICompletionMetadata.swift
+[298/319] Compiling OpenAICompatibleProvider OpenAICompatibleEmbeddingModel.swift
+[299/319] Compiling OpenAICompatibleProvider OpenAICompatibleEmbeddingOptions.swift
+[300/319] Compiling OpenAICompatibleProvider OpenAICompatibleImageModel.swift
+[301/319] Compiling OpenAICompatibleProvider OpenAICompatibleConfig.swift
+[302/319] Compiling OpenAICompatibleProvider OpenAICompatibleError.swift
+[303/319] Compiling OpenAICompatibleProvider OpenAICompatibleModelIds.swift
+[304/319] Compiling OpenAICompatibleProvider OpenAICompatibleProvider.swift
+[305/319] Compiling OpenAICompatibleProvider OpenAICompatibleProviderOptionKeys.swift
+[306/319] Compiling OpenAICompatibleProvider OpenAICompatibleV4Adapters.swift
+[307/319] Compiling OpenAICompatibleProvider OpenAICompatibleVersion.swift
+[308/319] Compiling OpenAIProvider OpenAIError.swift
+[309/319] Emitting module OpenAIProvider
+[321/377] Emitting module GoogleProvider
+[322/377] Compiling GoogleProvider ConvertJSONSchemaToOpenAPISchema.swift
+[323/377] Compiling GoogleProvider ConvertToGoogleGenerativeAIMessages.swift
+[324/377] Compiling GoogleProvider GetModelPath.swift
+[325/377] Compiling GoogleProvider GoogleError.swift
+[326/377] Compiling GoogleProvider GoogleGenerativeAIEmbeddingModel.swift
+[327/377] Compiling GoogleProvider GoogleGenerativeAIEmbeddingProviderOptions.swift
+[328/377] Compiling GoogleProvider GoogleGenerativeAIImageModel.swift
+[329/377] Compiling GoogleProvider GoogleGenerativeAIImageProviderOptions.swift
+[330/377] Compiling GoogleProvider GoogleGenerativeAIImageSettings.swift
+[331/377] Compiling GoogleProvider GoogleGenerativeAILanguageModel.swift
+[332/377] Compiling GoogleProvider GoogleGenerativeAIPrompt.swift
+[333/377] Compiling GoogleProvider GoogleGenerativeAIVideoModel.swift
+[334/377] Compiling GoogleProvider GoogleModelIds.swift
+[335/377] Compiling GoogleProvider GooglePrepareTools.swift
+[336/390] Compiling GoogleProvider GoogleProvider.swift
+[337/390] Compiling GoogleProvider GoogleProviderOptions.swift
+[338/390] Compiling GoogleProvider GoogleSupportedFileURL.swift
+[339/390] Compiling GoogleProvider GoogleTools.swift
+[340/390] Compiling GoogleProvider GoogleVersion.swift
+[341/390] Compiling GoogleProvider MapGoogleGenerativeAIFinishReason.swift
+[342/390] Compiling GoogleProvider GoogleCodeExecutionTool.swift
+[343/390] Compiling GoogleProvider GoogleEnterpriseWebSearchTool.swift
+[344/390] Compiling GoogleProvider GoogleFileSearchTool.swift
+[345/390] Compiling GoogleProvider GoogleGoogleMapsTool.swift
+[346/390] Compiling GoogleProvider GoogleSearchTool.swift
+[347/390] Compiling GoogleProvider GoogleURLContextTool.swift
+[348/390] Compiling GoogleProvider GoogleVertexRAGStoreTool.swift
+[350/405] Compiling GatewayProvider AsGatewayError.swift
+[351/405] Compiling GatewayProvider ExtractApiCallResponse.swift
+[352/405] Compiling GatewayProvider GatewayAuthenticationError.swift
+[353/405] Compiling GatewayProvider GatewayConfig.swift
+[354/405] Compiling GatewayProvider GatewayEmbeddingModel.swift
+[355/405] Compiling GatewayProvider GatewayEnvironment.swift
+[356/405] Compiling GatewayProvider GatewayError.swift
+[357/405] Compiling GatewayProvider GatewayErrorHandling.swift
+[358/405] Compiling GatewayProvider GatewayFetchMetadata.swift
+[359/405] Compiling GatewayProvider GatewayImageModel.swift
+[360/405] Compiling GatewayProvider GatewayInternalServerError.swift
+[361/405] Compiling GatewayProvider GatewayInvalidRequestError.swift
+[362/405] Compiling GatewayProvider GatewayLanguageModel.swift
+[363/405] Emitting module GatewayProvider
+[364/417] Compiling OpenAIProvider OpenAIToolNameMapping.swift
+[365/417] Compiling OpenAIProvider OpenAITools.swift
+[366/417] Compiling OpenAIProvider OpenAIV4Adapters.swift
+[367/417] Compiling OpenAIProvider OpenAIVersion.swift
+[368/417] Compiling OpenAIProvider OpenAISpeechAPI.swift
+[369/417] Compiling OpenAIProvider OpenAISpeechModel.swift
+[370/417] Compiling OpenAIProvider OpenAISpeechOptions.swift
+[371/417] Compiling OpenAIProvider OpenAIApplyPatchTool.swift
+[372/417] Compiling OpenAIProvider OpenAICodeInterpreterTool.swift
+[373/417] Compiling OpenAIProvider OpenAICustomTool.swift
+[374/417] Compiling OpenAIProvider OpenAIFileSearchTool.swift
+[375/417] Compiling OpenAIProvider OpenAIImageGenerationTool.swift
+[376/417] Compiling OpenAIProvider OpenAILocalShellTool.swift
+[377/417] Compiling OpenAIProvider OpenAIMCPTool.swift
+[378/417] Compiling OpenAIProvider OpenAIShellTool.swift
+[379/417] Compiling OpenAIProvider OpenAIToolSearchTool.swift
+[380/417] Compiling OpenAIProvider OpenAIWebSearchPreviewTool.swift
+[381/417] Compiling OpenAIProvider OpenAIWebSearchTool.swift
+[382/417] Compiling OpenAIProvider OpenAITranscriptionAPI.swift
+[383/417] Compiling OpenAIProvider OpenAITranscriptionModel.swift
+[384/417] Compiling OpenAIProvider OpenAITranscriptionOptions.swift
+[385/417] Compiling GatewayProvider GatewayTools.swift
+[386/417] Compiling GatewayProvider GatewayVersion.swift
+[387/417] Compiling GatewayProvider GatewayVideoModel.swift
+[388/417] Compiling GatewayProvider ParseAuthMethod.swift
+[391/417] Compiling OpenAIProvider OpenAIProviderOptionsHelpers.swift
+[392/417] Compiling OpenAIProvider OpenAIProviderV4.swift
+[393/417] Compiling OpenAIProvider OpenAIRealtimeModel.swift
+[394/417] Compiling OpenAIProvider OpenAIResponsesAPI.swift
+[395/417] Compiling OpenAIProvider OpenAIResponsesFinishReason.swift
+[396/417] Compiling OpenAIProvider OpenAIResponsesInput.swift
+[397/417] Compiling OpenAIProvider OpenAIResponsesLanguageModelV4.swift
+[398/417] Compiling OpenAIProvider OpenAIResponsesModel.swift
+[399/417] Compiling OpenAIProvider OpenAIResponsesModelConfig.swift
+[400/417] Compiling OpenAIProvider OpenAIResponsesOptions.swift
+[401/417] Compiling OpenAIProvider OpenAIResponsesPrepareTools.swift
+[402/417] Compiling OpenAIProvider OpenAIResponsesPrompt.swift
+[403/417] Compiling OpenAIProvider OpenAIResponsesProviderMetadata.swift
+[404/417] Compiling OpenAIProvider OpenAIResponsesRequestBody.swift
+[405/417] Compiling OpenAIProvider OpenAISkills.swift
+[407/434] Compiling AnthropicProvider ConvertToAnthropicMessagesPrompt.swift
+[408/434] Compiling AnthropicProvider ForwardAnthropicContainerIdFromLastStep.swift
+[409/434] Compiling GatewayProvider GatewayModelNotFoundError.swift
+[410/434] Compiling GatewayProvider GatewayProvider.swift
+[411/434] Compiling GatewayProvider GatewayProviderOptions.swift
+[412/434] Compiling GatewayProvider GatewayRateLimitError.swift
+[413/434] Compiling GatewayProvider GatewayResponseError.swift
+[414/434] Compiling GatewayProvider GatewayTimeoutError.swift
+[420/438] Emitting module AISDKJSONSchema
+[421/438] Compiling AISDKJSONSchema DefaultValueFactory.swift
+[422/438] Compiling AISDKJSONSchema FlexibleSchema+Auto.swift
+[423/439] Compiling AISDKJSONSchema JSONSchemaGenerator.swift
+[425/465] Emitting module SwiftAISDK
+[426/489] Compiling SwiftAISDK Agent.swift
+[427/489] Compiling SwiftAISDK AgentInference.swift
+[428/489] Compiling SwiftAISDK AgentSettings.swift
+[429/489] Compiling SwiftAISDK Embed.swift
+[430/489] Compiling SwiftAISDK EmbedMany.swift
+[431/489] Compiling SwiftAISDK EmbedManyResult.swift
+[432/489] Compiling SwiftAISDK EmbedResult.swift
+[433/489] Compiling SwiftAISDK EmbedShared.swift
+[434/489] Compiling SwiftAISDK InvalidArgumentError.swift
+[435/489] Compiling SwiftAISDK InvalidStreamPartError.swift
+[436/489] Compiling SwiftAISDK InvalidToolInputError.swift
+[437/489] Compiling SwiftAISDK MCPClientError.swift
+[438/489] Compiling SwiftAISDK MCPClientOAuthError.swift
+[439/489] Compiling SwiftAISDK MessageConversionError.swift
+[440/489] Compiling SwiftAISDK NoImageGeneratedError.swift
+[441/489] Compiling SwiftAISDK NoObjectGeneratedError.swift
+[442/489] Compiling SwiftAISDK NoOutputGeneratedError.swift
+[443/489] Compiling SwiftAISDK NoOutputSpecifiedError.swift
+[444/489] Compiling SwiftAISDK NoSpeechGeneratedError.swift
+[445/489] Compiling SwiftAISDK NoSuchToolError.swift
+[446/489] Compiling SwiftAISDK NoTranscriptGeneratedError.swift
+[447/489] Compiling SwiftAISDK NoVideoGeneratedError.swift
+[448/489] Compiling SwiftAISDK ToolCallRepairError.swift
+[449/489] Compiling SwiftAISDK UIMessageStreamError.swift
+[450/513] Emitting module AnthropicProvider
+[466/528] Compiling AnthropicProvider AnthropicComputerTool.swift
+[467/528] Compiling AnthropicProvider AnthropicMemory20250818Tool.swift
+[468/528] Compiling AnthropicProvider AnthropicTextEditor20250728.swift
+[469/528] Compiling AnthropicProvider AnthropicTextEditorTools.swift
+[470/528] Compiling AnthropicProvider AnthropicToolSearchTools.swift
+[471/528] Compiling AnthropicProvider AnthropicWebTools.swift
+[472/528] Compiling SwiftAISDK GenerateObjectInternalOptions.swift
+[473/528] Compiling SwiftAISDK GenerateObjectOutputKind.swift
+[474/528] Compiling SwiftAISDK GenerateObjectOutputSpec.swift
+[475/528] Compiling SwiftAISDK GenerateObjectResult+Encodable.swift
+[476/528] Compiling SwiftAISDK GenerateObjectResult.swift
+[477/528] Compiling SwiftAISDK GenerateObjectShared.swift
+[478/528] Compiling SwiftAISDK GenerateObjectTelemetry.swift
+[479/528] Compiling SwiftAISDK InjectJSONInstruction.swift
+[480/528] Compiling SwiftAISDK OutputStrategy.swift
+[481/528] Compiling SwiftAISDK ParseAndValidate.swift
+[482/528] Compiling SwiftAISDK RepairText.swift
+[483/528] Compiling SwiftAISDK StreamObject.swift
+[484/528] Compiling SwiftAISDK StreamObjectResult.swift
+[485/528] Compiling SwiftAISDK ValidateObjectGenerationInput.swift
+[486/528] Compiling SwiftAISDK GenerateSpeech.swift
+[487/528] Compiling SwiftAISDK GenerateSpeechResult.swift
+[488/528] Compiling SwiftAISDK GeneratedAudioFile.swift
+[489/528] Compiling SwiftAISDK Index.swift
+[490/552] Compiling SwiftAISDK ApprovalAction.swift
+[491/552] Compiling SwiftAISDK CollectToolApprovals.swift
+[492/552] Compiling SwiftAISDK ExecuteToolCall.swift
+[493/552] Compiling SwiftAISDK ExecuteTools.swift
+[494/552] Compiling SwiftAISDK ExtractReasoningContent.swift
+[495/552] Compiling SwiftAISDK ExtractTextContent.swift
+[496/552] Compiling SwiftAISDK GenerateText.swift
+[497/552] Compiling SwiftAISDK GenerateTextContent.swift
+[498/552] Compiling SwiftAISDK GenerateTextRequest.swift
+[499/552] Compiling SwiftAISDK GenerateTextResult+Encodable.swift
+[500/552] Compiling SwiftAISDK GenerateTextResult.swift
+[501/552] Compiling SwiftAISDK GeneratedFile.swift
+[502/552] Compiling SwiftAISDK GeneratedFileV4.swift
+[503/552] Compiling SwiftAISDK IsApprovalNeeded.swift
+[504/552] Compiling SwiftAISDK Output.swift
+[505/552] Compiling SwiftAISDK ParseToolCall.swift
+[506/552] Compiling SwiftAISDK PrepareStep.swift
+[507/552] Compiling SwiftAISDK Reasoning.swift
+[508/552] Compiling SwiftAISDK ReasoningOutput.swift
+[509/552] Compiling SwiftAISDK ResponseMessage.swift
+[510/552] Compiling SwiftAISDK RunToolsTransformation.swift
+[511/552] Compiling SwiftAISDK SingleRequestTextStreamPart.swift
+[512/552] Compiling SwiftAISDK SmoothStream.swift
+[513/552] Compiling SwiftAISDK StepResult.swift
+[514/576] Compiling AnthropicProvider GetCacheControl.swift
+[515/576] Compiling AnthropicProvider MapAnthropicStopReason.swift
+[516/576] Compiling AnthropicProvider SanitizeJSONSchema.swift
+[517/576] Compiling AnthropicProvider AnthropicSkills.swift
+[518/576] Compiling AnthropicProvider AnthropicSkillsAPI.swift
+[519/576] Compiling AnthropicProvider AnthropicAdvisor20260301Tool.swift
+[520/576] Compiling AnthropicProvider AnthropicBashTool.swift
+[521/576] Compiling AnthropicProvider AnthropicCodeExecution20250825Tool.swift
+[522/576] Compiling AnthropicProvider AnthropicCodeExecutionTool.swift
+[530/577] Compiling SwiftAISDK LanguageModelConvenience.swift
+[531/577] Compiling SwiftAISDK LanguageModelV4Convenience.swift
+[532/577] Compiling SwiftAISDK LogWarnings.swift
+[533/577] Compiling SwiftAISDK AddToolInputExamplesMiddleware.swift
+[534/577] Compiling SwiftAISDK DefaultSettingsMiddleware.swift
+[535/577] Compiling SwiftAISDK ExtractReasoningMiddleware.swift
+[536/577] Compiling SwiftAISDK SimulateStreamingMiddleware.swift
+[537/577] Compiling SwiftAISDK WrapLanguageModel.swift
+[538/577] Compiling SwiftAISDK ModelV4Adapters.swift
+[539/577] Compiling SwiftAISDK ResolveModel.swift
+[540/577] Compiling SwiftAISDK ModuleExports.swift
+[541/577] Compiling SwiftAISDK CallSettings.swift
+[542/577] Compiling SwiftAISDK ConvertToLanguageModelPrompt.swift
+[543/577] Compiling SwiftAISDK CreateToolModelOutput.swift
+[544/577] Compiling SwiftAISDK DataContentUtilities.swift
+[545/577] Compiling SwiftAISDK InvalidDataContentError.swift
+[546/577] Compiling SwiftAISDK InvalidMessageRoleError.swift
+[547/577] Compiling SwiftAISDK ModelMessageConvenience.swift
+[548/577] Compiling SwiftAISDK PrepareCallSettings.swift
+[549/577] Compiling SwiftAISDK PrepareToolsAndToolChoice.swift
+[550/577] Compiling SwiftAISDK Prompt.swift
+[551/577] Compiling SwiftAISDK ResponseMessageConversions.swift
+[552/577] Compiling SwiftAISDK StandardizePrompt.swift
+[553/577] Compiling SwiftAISDK WrapGatewayError.swift
+[554/601] Compiling SwiftAISDK StopCondition.swift
+[555/601] Compiling SwiftAISDK StreamText.swift
+[556/601] Compiling SwiftAISDK StreamTextActor.swift
+[557/601] Compiling SwiftAISDK StreamTextEventRecorder.swift
+[558/601] Compiling SwiftAISDK StreamTextEvents.swift
+[559/601] Compiling SwiftAISDK StreamTextLogging.swift
+[560/601] Compiling SwiftAISDK StreamTextRequest.swift
+[561/601] Compiling SwiftAISDK StreamTextResult.swift
+[562/601] Compiling SwiftAISDK StreamTextSSE.swift
+[563/601] Compiling SwiftAISDK TextStreamPart.swift
+[564/601] Compiling SwiftAISDK ToResponseMessages.swift
+[565/601] Compiling SwiftAISDK ToolApprovalRequestOutput.swift
+[566/601] Compiling SwiftAISDK ToolCall.swift
+[567/601] Compiling SwiftAISDK ToolCallRepairFunction.swift
+[568/601] Compiling SwiftAISDK ToolError.swift
+[569/601] Compiling SwiftAISDK ToolOutput.swift
+[570/601] Compiling SwiftAISDK ToolOutputDenied.swift
+[571/601] Compiling SwiftAISDK ToolOutputHelpers.swift
+[572/601] Compiling SwiftAISDK ToolResult.swift
+[573/601] Compiling SwiftAISDK ToolSet.swift
+[574/601] Compiling SwiftAISDK GenerateVideo.swift
+[575/601] Compiling SwiftAISDK GenerateVideoExports.swift
+[576/601] Compiling SwiftAISDK GenerateVideoResult.swift
+[577/601] Compiling SwiftAISDK JSONValue+Serialization.swift
+[578/625] Compiling SwiftAISDK CustomProvider.swift
+[579/625] Compiling SwiftAISDK NoSuchProviderError.swift
+[580/625] Compiling SwiftAISDK ProviderRegistry.swift
+[581/625] Compiling SwiftAISDK Rerank.swift
+[582/625] Compiling SwiftAISDK RerankResult.swift
+[583/625] Compiling SwiftAISDK AsyncIterableStream.swift
+[584/625] Compiling SwiftAISDK AsyncStreamBroadcaster.swift
+[585/625] Compiling SwiftAISDK CreateTextStreamResponse.swift
+[586/625] Compiling SwiftAISDK PipeTextStreamToResponse.swift
+[587/625] Compiling SwiftAISDK SimulateReadableStream.swift
+[588/625] Compiling SwiftAISDK StitchableStream.swift
+[589/625] Compiling SwiftAISDK TextStream.swift
+[590/625] Compiling SwiftAISDK SwiftAISDK.swift
+[591/625] Compiling SwiftAISDK AssembleOperationName.swift
+[592/625] Compiling SwiftAISDK GetBaseTelemetryAttributes.swift
+[593/625] Compiling SwiftAISDK GetTracer.swift
+[594/625] Compiling SwiftAISDK NoopTracer.swift
+[595/625] Compiling SwiftAISDK AttributeValue.swift
+[596/625] Compiling SwiftAISDK Span.swift
+[597/625] Compiling SwiftAISDK Tracer.swift
+[598/625] Compiling SwiftAISDK RecordSpan.swift
+[599/625] Compiling SwiftAISDK SelectTelemetryAttributes.swift
+[600/625] Compiling SwiftAISDK StringifyForTelemetry.swift
+[601/625] Compiling SwiftAISDK TelemetrySettings.swift
+[602/649] Compiling SwiftAISDK Transcribe.swift
+[603/649] Compiling SwiftAISDK TranscribeExports.swift
+[604/649] Compiling SwiftAISDK TranscribeResult.swift
+[605/649] Compiling SwiftAISDK EmbeddingModel.swift
+[606/649] Compiling SwiftAISDK ImageModel.swift
+[607/649] Compiling SwiftAISDK ImageModelResponseMetadata.swift
+[608/649] Compiling SwiftAISDK LanguageModel.swift
+[609/649] Compiling SwiftAISDK LanguageModelRequestMetadata.swift
+[610/649] Compiling SwiftAISDK LanguageModelResponseMetadata.swift
+[611/649] Compiling SwiftAISDK ProviderMetadata.swift
+[612/649] Compiling SwiftAISDK ProviderReference.swift
+[613/649] Compiling SwiftAISDK RerankingModel.swift
+[614/649] Compiling SwiftAISDK SpeechModel.swift
+[615/649] Compiling SwiftAISDK SpeechModelResponseMetadata.swift
+[616/649] Compiling SwiftAISDK TranscriptionModel.swift
+[617/649] Compiling SwiftAISDK TranscriptionModelResponseMetadata.swift
+[618/649] Compiling SwiftAISDK Usage.swift
+[619/649] Compiling SwiftAISDK VideoModel.swift
+[620/649] Compiling SwiftAISDK VideoModelResponseMetadata.swift
+[621/649] Compiling SwiftAISDK CreateUIMessageStream.swift
+[622/649] Compiling SwiftAISDK CreateUIMessageStreamResponse.swift
+[623/649] Compiling SwiftAISDK GetResponseUIMessageID.swift
+[624/649] Compiling SwiftAISDK HandleUIMessageStreamFinish.swift
+[625/649] Compiling SwiftAISDK JsonToSSETransformStream.swift
+[626/673] Compiling SwiftAISDK MockImageModelV3.swift
+[627/673] Compiling SwiftAISDK MockImageModelV4.swift
+[628/673] Compiling SwiftAISDK MockLanguageModelV2.swift
+[629/673] Compiling SwiftAISDK MockLanguageModelV3.swift
+[630/673] Compiling SwiftAISDK MockLanguageModelV4.swift
+[631/673] Compiling SwiftAISDK MockSpeechModelV4.swift
+[632/673] Compiling SwiftAISDK MockTranscriptionModelV4.swift
+[633/673] Compiling SwiftAISDK MockValues.swift
+[634/673] Compiling SwiftAISDK MockVideoModelV3.swift
+[635/673] Compiling SwiftAISDK MockVideoModelV4.swift
+[636/673] Compiling SwiftAISDK NotImplemented.swift
+[637/673] Compiling SwiftAISDK HttpMCPTransport.swift
+[638/673] Compiling SwiftAISDK JSONRPCMessage.swift
+[639/673] Compiling SwiftAISDK MCPClient.swift
+[640/673] Compiling SwiftAISDK MCPTransport.swift
+[641/673] Compiling SwiftAISDK MCPTypes.swift
+[642/673] Compiling SwiftAISDK MockMCPTransport.swift
+[643/673] Compiling SwiftAISDK OAuth.swift
+[644/673] Compiling SwiftAISDK OAuthTypes.swift
+[645/673] Compiling SwiftAISDK OAuthUtil.swift
+[646/673] Compiling SwiftAISDK SseMCPTransport.swift
+[647/673] Compiling SwiftAISDK TypedTool.swift
+[648/673] Compiling SwiftAISDK StreamTranscribe.swift
+[649/673] Compiling SwiftAISDK StreamTranscribeResult.swift
+[650/697] Compiling SwiftAISDK ReadUIMessageStream.swift
+[651/697] Compiling SwiftAISDK TeeAsyncThrowingStream.swift
+[652/697] Compiling SwiftAISDK UIMessageChunkEncoding.swift
+[653/697] Compiling SwiftAISDK UIMessageStreamOnFinishCallback.swift
+[654/697] Compiling SwiftAISDK UIMessageStreamOnStepFinishCallback.swift
+[655/697] Compiling SwiftAISDK UIMessageChunks.swift
+[656/697] Compiling SwiftAISDK UIMessageStreamHeaders.swift
+[657/697] Compiling SwiftAISDK UIMessageStreamWriter.swift
+[658/697] Compiling SwiftAISDK ConvertFileListToFileUIParts.swift
+[659/697] Compiling SwiftAISDK ConvertToModelMessages.swift
+[660/697] Compiling SwiftAISDK ProcessTextStream.swift
+[661/697] Compiling SwiftAISDK ProcessUIMessageStream.swift
+[662/697] Compiling SwiftAISDK TransformFullToUIMessageStream.swift
+[663/697] Compiling SwiftAISDK TransformTextToUIMessageStream.swift
+[664/697] Compiling SwiftAISDK UIMessage.swift
+[665/697] Compiling SwiftAISDK ValidateUIMessages.swift
+[666/697] Compiling SwiftAISDK UploadFile.swift
+[667/697] Compiling SwiftAISDK UploadFileResult.swift
+[668/697] Compiling SwiftAISDK UploadSkill.swift
+[669/697] Compiling SwiftAISDK UploadSkillResult.swift
+[670/697] Compiling SwiftAISDK ConsumeStream.swift
+[671/697] Compiling SwiftAISDK CosineSimilarity.swift
+[672/697] Compiling SwiftAISDK CreateResolvablePromise.swift
+[673/697] Compiling SwiftAISDK DelayedPromise.swift
+[674/697] Compiling SwiftAISDK DetectMediaType.swift
+[675/697] Compiling SwiftAISDK Download.swift
+[676/697] Compiling SwiftAISDK DownloadError.swift
+[677/697] Compiling SwiftAISDK DownloadFunction.swift
+[678/697] Compiling SwiftAISDK ErrorHandler.swift
+[679/697] Compiling SwiftAISDK FixJson.swift
+[680/697] Compiling SwiftAISDK GetPotentialStartIndex.swift
+[681/697] Compiling SwiftAISDK IsDeepEqualData.swift
+[682/697] Compiling SwiftAISDK IsNonEmptyObject.swift
+[683/697] Compiling SwiftAISDK Job.swift
+[684/697] Compiling SwiftAISDK MergeAbortSignals.swift
+[685/697] Compiling SwiftAISDK MergeObjects.swift
+[686/697] Compiling SwiftAISDK MergeProviderOptions.swift
+[687/697] Compiling SwiftAISDK Now.swift
+[688/697] Compiling SwiftAISDK ParsePartialJson.swift
+[689/697] Compiling SwiftAISDK PrepareHeaders.swift
+[690/697] Compiling SwiftAISDK PrepareRetries.swift
+[691/697] Compiling SwiftAISDK RetryError.swift
+[692/697] Compiling SwiftAISDK RetryFunction.swift
+[693/697] Compiling SwiftAISDK RetryWithExponentialBackoff.swift
+[694/697] Compiling SwiftAISDK SerialJobExecutor.swift
+[695/697] Compiling SwiftAISDK SplitArray.swift
+[696/697] Compiling SwiftAISDK TimeoutAbortSignalController.swift
+[697/697] Compiling SwiftAISDK Version.swift
+[699/705] Emitting module HanlinChatCore
+[700/705] Compiling HanlinChatCore HanlinAISDKAgentEngine.swift
+C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinPlatform\Sources\HanlinChatCore\HanlinAISDKModels.swift:163:20: error: no exact matches in call to initializer
+
+161 |             return "The provider returned an empty successful response after \(attempts) attempt(s)."
+
+162 |         case .incompleteProviderResponse:
+
+163 |             return String(localized: "The model returned no visible answer. Please retry.")
+
+    |                    `- error: no exact matches in call to initializer
+
+164 |         }
+
+165 |     }
+
+
+
+Swift.String.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | @inlinable public init<T>(_ value: T) where T : LosslessStringConvertible}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ other: S) where S : LosslessStringConvertible, S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ characters: S) where S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.RangeReplaceableCollection.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | protocol RangeReplaceableCollection {
+
+2 | @inlinable public init<S>(_ elements: S) where S : Sequence, Self.Element == S.Element}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+[701/705] Compiling HanlinChatCore HanlinAISDKModels.swift
+C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinPlatform\Sources\HanlinChatCore\HanlinAISDKModels.swift:163:20: error: no exact matches in call to initializer
+
+161 |             return "The provider returned an empty successful response after \(attempts) attempt(s)."
+
+162 |         case .incompleteProviderResponse:
+
+163 |             return String(localized: "The model returned no visible answer. Please retry.")
+
+    |                    `- error: no exact matches in call to initializer
+
+164 |         }
+
+165 |     }
+
+
+
+Swift.String.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | @inlinable public init<T>(_ value: T) where T : LosslessStringConvertible}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ other: S) where S : LosslessStringConvertible, S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ characters: S) where S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.RangeReplaceableCollection.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | protocol RangeReplaceableCollection {
+
+2 | @inlinable public init<S>(_ elements: S) where S : Sequence, Self.Element == S.Element}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+[702/705] Compiling HanlinChatCore HanlinAISDKProviderFactory.swift
+C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinPlatform\Sources\HanlinChatCore\HanlinAISDKModels.swift:163:20: error: no exact matches in call to initializer
+
+161 |             return "The provider returned an empty successful response after \(attempts) attempt(s)."
+
+162 |         case .incompleteProviderResponse:
+
+163 |             return String(localized: "The model returned no visible answer. Please retry.")
+
+    |                    `- error: no exact matches in call to initializer
+
+164 |         }
+
+165 |     }
+
+
+
+Swift.String.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | @inlinable public init<T>(_ value: T) where T : LosslessStringConvertible}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ other: S) where S : LosslessStringConvertible, S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ characters: S) where S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.RangeReplaceableCollection.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | protocol RangeReplaceableCollection {
+
+2 | @inlinable public init<S>(_ elements: S) where S : Sequence, Self.Element == S.Element}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+[703/705] Compiling HanlinChatCore HanlinCapturedStreamReplay.swift
+C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinPlatform\Sources\HanlinChatCore\HanlinAISDKModels.swift:163:20: error: no exact matches in call to initializer
+
+161 |             return "The provider returned an empty successful response after \(attempts) attempt(s)."
+
+162 |         case .incompleteProviderResponse:
+
+163 |             return String(localized: "The model returned no visible answer. Please retry.")
+
+    |                    `- error: no exact matches in call to initializer
+
+164 |         }
+
+165 |     }
+
+
+
+Swift.String.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | @inlinable public init<T>(_ value: T) where T : LosslessStringConvertible}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ other: S) where S : LosslessStringConvertible, S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ characters: S) where S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.RangeReplaceableCollection.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | protocol RangeReplaceableCollection {
+
+2 | @inlinable public init<S>(_ elements: S) where S : Sequence, Self.Element == S.Element}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+[704/705] Compiling HanlinChatCore HanlinChatEngine.swift
+C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinPlatform\Sources\HanlinChatCore\HanlinAISDKModels.swift:163:20: error: no exact matches in call to initializer
+
+161 |             return "The provider returned an empty successful response after \(attempts) attempt(s)."
+
+162 |         case .incompleteProviderResponse:
+
+163 |             return String(localized: "The model returned no visible answer. Please retry.")
+
+    |                    `- error: no exact matches in call to initializer
+
+164 |         }
+
+165 |     }
+
+
+
+Swift.String.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | @inlinable public init<T>(_ value: T) where T : LosslessStringConvertible}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ other: S) where S : LosslessStringConvertible, S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ characters: S) where S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.RangeReplaceableCollection.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | protocol RangeReplaceableCollection {
+
+2 | @inlinable public init<S>(_ elements: S) where S : Sequence, Self.Element == S.Element}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+[705/705] Compiling HanlinChatCore HanlinChatMessage.swift
+C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinPlatform\Sources\HanlinChatCore\HanlinAISDKModels.swift:163:20: error: no exact matches in call to initializer
+
+161 |             return "The provider returned an empty successful response after \(attempts) attempt(s)."
+
+162 |         case .incompleteProviderResponse:
+
+163 |             return String(localized: "The model returned no visible answer. Please retry.")
+
+    |                    `- error: no exact matches in call to initializer
+
+164 |         }
+
+165 |     }
+
+
+
+Swift.String.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | @inlinable public init<T>(_ value: T) where T : LosslessStringConvertible}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ other: S) where S : LosslessStringConvertible, S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.String.init:2:8: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | struct String {
+
+2 | public init<S>(_ characters: S) where S : Sequence, S.Element == Character}
+
+  |        `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+
+
+Swift.RangeReplaceableCollection.init:2:19: note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+1 | protocol RangeReplaceableCollection {
+
+2 | @inlinable public init<S>(_ elements: S) where S : Sequence, Self.Element == S.Element}
+
+  |                   `- note: incorrect labels for candidate (have: '(localized:)', expected: '(_:)')
+
+3 |
+
+[706/711] Compiling HanlinChatCore HanlinChatModelConfiguration.swift
+[707/711] Compiling HanlinChatCore HanlinChatRequestBuilder.swift
+[708/711] Compiling HanlinChatCore HanlinChatStreamEvent.swift
+[709/711] Compiling HanlinChatCore HanlinChatStreamParser.swift
+[710/711] Compiling HanlinChatCore HanlinChatTransportTrace.swift
+[711/711] Compiling HanlinChatCore HanlinNonEmptyLanguageModel.swift

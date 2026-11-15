@@ -1,0 +1,23 @@
+{
+  "result": "BLOCKED_WINDOWS_FOUNDATION_API",
+  "command": [
+    "swift",
+    "build",
+    "--package-path",
+    "Packages/HanlinAgentSDK",
+    "--target",
+    "HanlinAgentCore",
+    "--jobs",
+    "2"
+  ],
+  "toolchain": "Swift 6.3.3 (swift-6.3.3-RELEASE), x86_64-unknown-windows-msvc, language mode 6",
+  "sourceBaseline": "6a533ef4cc26c3c4e2ce90037bbe2e50f4862c36",
+  "snapshot": "In-progress owned source tranche; this attempt is not a final frozen source build proof",
+  "blockingSource": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+  "blockingExpression": "String(localized:) in existing incompleteProviderResponse error text",
+  "nativeSDK": "NOT_RUN",
+  "sessionTypecheck": "NOT_REACHED",
+  "dependencyPin": "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6",
+  "changesToBypassFailure": "NONE",
+  "rawTextLog": "windows-full-graph-attempt.log"
+}

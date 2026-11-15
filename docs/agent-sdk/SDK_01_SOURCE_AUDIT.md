@@ -2,6 +2,8 @@
 
 Status: SOURCE_AUDIT / implementation contracts proposed. No native acceptance claimed.
 
+This document preserves the initial pinned audit. The later implementation lease and current preview delivery are recorded in `PUBLIC_API.md` and `IMPLEMENTATION_HANDOFF.md`; the historical docs-only lease below is not the later source grant.
+
 - Parent: `1219613181643838`; audit: `1220542174541844`.
 - Planned owned delivery: SDK-02 `1220542419128390`, SDK-03 `1220542199992529`, SDK-05 `1220542199999956`, SDK-07 `1220542174542004`.
 - SDK-04 UI `1220542174541940`, SDK-06 Anytype `1220542414733348`, SDK-08 independent QA `1220542359756026` remain separate owners.
@@ -72,7 +74,7 @@ No new permission regime, always-allow service, business action registry or Mini
 | --- | --- | --- |
 | Existing HanlinPlatform / core | iOS 27.0, macOS 26; tools 6.2 / Swift mode 6 | Manifest inspected at pinned SHA. No compilation run. Preserve current minimum. |
 | Hanlin AI app | Project settings include iOS 27.0 / Swift 6.0 | App source is not independently portable. Frozen UI/app adoption needs owned seams. |
-| Anytype/Pinkha | Owner permits relevant app/product target raise to iOS 26/27; old iOS 17 is not a constraint | SDK-06 owned through Anytype lead and existing Noam chat. This audit did not pin or inspect their moving worktree. Typed host contract must be agreed, not invented independently. |
+| Anytype/Pinkha | Owner permits relevant app/product target raise to iOS 26/27; old iOS 17 is not a constraint | SDK-06 frozen audit consumed at `389f12320d89975ebb58d2aaf13b051693194d59`; two artifact hashes verified, 57-blob map read selectively. No direct host worktree inspection or runtime validation here. No native revision/CAS or cancellation rollback guarantee; proposed typed effects/unsupported conditional writes incorporated in HOST_CONTRACT_PROPOSAL. |
 | Otzaria | Owner permits scoped raise to iOS 26/27; old iOS 18.6 is not a constraint | Synthetic host boundary only. No API enumeration, Source/Otzaria/Actions reads or production adapters performed. Versioned unified port is a dependency. |
 | Apple local model | FoundationModels runtime availability required regardless of minimum target | Official docs researched, no installed SDK compile or eligible-device observation. No API key/PCC/AppGroup needed for this feature. |
 
