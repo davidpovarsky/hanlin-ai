@@ -14,7 +14,8 @@ struct HanlinChatContentView: View {
         ForEach(projection.parts) { part in
             switch part.content {
             case .markdown(let text):
-                ChatMarkdownView(text: text, savePersonal: savePersonal, saveKnowledge: saveKnowledge)
+                ChatMarkdownView(text: text, selectionPartID: part.id, messageText: projection.plainText,
+                    savePersonal: savePersonal, saveKnowledge: saveKnowledge)
             case .surface:
                 if let surface = projection.surface(for: part) {
                     ChatEmbeddedResultHost(

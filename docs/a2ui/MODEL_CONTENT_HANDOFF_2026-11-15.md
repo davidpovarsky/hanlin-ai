@@ -46,5 +46,21 @@ inputs, resolved lock, process status, logs and xcresult, and validates31 actual
 passed case identities. No automatic triggers or release publication were added.
 Local syntax parsing and synthetic verifier checks are component tooling only.
 
-Native SDK compilation/execution: pending. Actual app/host/XCUITest, RTL/AX,
-physical iPad, persisted model replay and media acceptance: NOT_RUN.
+Native SDK compilation/execution: **31 EXECUTED_PASS /0 FAILED**, source
+`1686b890eab0c9f2556757e8a7d013973dca0c94`, [run43722450726](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43722450726),
+job132837160857 (200seconds). Xcode27.2/27B52, Swift6.4.2, arm64 macOS27.0.1,
+macOSSDK27.2. Raw xcresult contains exactly31 unique passed identities; all
+retained source input hashes match the tested Git blobs. Official SDK pin remains
+`3ed9601862ecc78027e20ac80ad8b1b98a5d9079`; raw resolved lock remains
+`af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae`.
+Artifact14165036525,287304bytes, API SHA256
+`f55106cd4d29f1e505cb9ad83dccd374f01d2ead912445b6eb38a0affa5d1a14`.
+Provenance and case identities: `evidence/model-content-43722450726.json`.
+
+Follow-on source also namespaces saved Markdown block selections by stable part ID
+while preserving the complete original-message digest. This avoids highlighting a
+same-named block in another independently parsed part. That iOS view code remains
+native-compilation pending and does not enter the tested SDK harness closure.
+
+Actual app/host/XCUITest, RTL/AX, physical iPad, persisted model replay and media
+acceptance: NOT_RUN.31 component passes do not satisfy these gates.
