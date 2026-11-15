@@ -257,6 +257,7 @@ struct A2UIIngressTests {
 #if HANLIN_A2UI_POC
 import A2UICore
 import A2UISwiftUI
+import BasicCatalog
 import BasicCatalogSwiftUI
 import SwiftUI
 import Synchronization
