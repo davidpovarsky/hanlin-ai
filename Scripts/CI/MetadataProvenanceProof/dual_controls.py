@@ -71,9 +71,13 @@ __attribute__((objc_root_class))
 @interface HanlinDualObject { void *isa; int _token; }
 @property(nonatomic) int token;
 @end
+@interface HanlinDualGeneric<Element> : HanlinDualObject
+@end
+@interface HanlinDualDerived : HanlinDualGeneric<HanlinDualObject *>
+@end
 """
     baseline = core.replace("SHARED_FIELD", "int value;").replace("RETURN_TYPE", "int").replace("CONSTANT_VALUE", "42").replace("OBJC_INVALID", "").replace("CLASS_ATTRIBUTE", "")
-    provider = '#include "core.h"\nnamespace hanlin_cpp { template<class T> struct Token { T value; }; }\nextern "C" int HanlinDualProvider(struct HanlinDualShared *value);\n'
+    provider = '#include "core.h"\nnamespace hanlin_cpp { template<class T> struct Token { T value; }; }\nextern "C" int HanlinDualProvider(struct HanlinDualShared *value);\n@interface HanlinDualProviderObject : HanlinDualGeneric<HanlinDualObject *>\n@end\n'
     cases = [
         ("equivalent-c-only-and-lifetime", baseline, "pass", ""),
         ("conflicting-layout", core.replace("SHARED_FIELD", "\n#ifdef __cplusplus\nlong long value;\n#else\nint value;\n#endif\n").replace("RETURN_TYPE", "int").replace("CONSTANT_VALUE", "42").replace("OBJC_INVALID", "").replace("CLASS_ATTRIBUTE", ""), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
@@ -122,6 +126,12 @@ __attribute__((objc_root_class))
             if output.is_file():
                 body = output.read_bytes()
                 passed = passed and all(name.encode() + b"\0" in body for name in ["HanlinDualCOnlyRecord", "HanlinDualCOnlyFunction", "HanlinDualProvider"])
+            declarations = list(folder.glob("metadata.bin.types/*.d.ts"))
+            declaration_text = "\n".join(path.read_text() for path in declarations)
+            passed = passed and bool(declarations) and all(fragment in declaration_text for fragment in [
+                "HanlinDualDerived extends HanlinDualGeneric<HanlinDualObject>",
+                "HanlinDualProviderObject extends HanlinDualGeneric<HanlinDualObject>",
+                "HanlinDualCOnlyFunction", "HanlinDualProvider"])
         else:
             passed = passed and not output.exists() and actual.get("writerEntries") == 0 and actual.get("reason", "").startswith(expected_reason)
             if expectation == "parse-failure":

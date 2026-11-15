@@ -3,8 +3,7 @@
 #define main hanlin_original_metadata_entry
 #include "../main.cpp"
 #undef main
-#include "ActualUnits.h"
-#include "ModuleOwners.h"
+#include "Pipeline.h"
 
 static void writeControlReceipt(const std::string& path, const llvm::json::Object& receipt) {
     std::error_code error;
@@ -41,44 +40,22 @@ int main(int argc, const char** argv) {
         objcArguments.insert(objcArguments.end(), {"-x", "objective-c", "-std=gnu17"});
         std::string whitelistFile, blacklistFile;
         Meta::ModulesBlacklist blacklist(whitelistFile, blacklistFile);
-        HanlinDual::ActualUnit cpp(hanlinRead(root + "/full.h"), cppArguments, blacklist, llvm::vfs::getRealFileSystem());
-        receipt["cpp"] = llvm::json::Object(cpp.receipt);
-        HanlinDual::ActualUnit objc(hanlinRead(root + "/objc.h"), objcArguments, blacklist, llvm::vfs::getRealFileSystem());
-        receipt["objc"] = llvm::json::Object(objc.receipt);
-        cpp.producer().hanlinFactory().hanlinSetPeer(objc.producer().hanlinFactory());
-        objc.producer().hanlinFactory().hanlinSetPeer(cpp.producer().hanlinFactory());
-        if (HanlinDual::searchDirectories(cpp.unit()) != HanlinDual::searchDirectories(objc.unit()))
-            throw std::runtime_error("Actual include search priority/characteristics differ");
+        HanlinDual::Pipeline pipeline(hanlinRead(root + "/full.h"), cppArguments,
+            hanlinRead(root + "/objc.h"), objcArguments, blacklist, llvm::vfs::getRealFileSystem());
+        auto& cpp = pipeline.cpp;
         stage = "merge";
-        HanlinDual::ModelMerge merge;
-        auto models = merge.merge(cpp.models(), objc.models());
-        receipt["duplicateProofs"] = llvm::json::Value(llvm::json::Array(merge.duplicateProofs()));
-        HanlinDual::ModuleOwners owners(objc, cpp);
-        owners.apply(merge.retainedMetas());
-        receipt["moduleOwnerProofs"] = llvm::json::Value(llvm::json::Array(owners.ownerProofs()));
-        size_t cppModels = 0, objcModels = 0;
-        for (auto* meta : merge.retainedMetas()) {
-            if (!meta->declaration) throw std::runtime_error("Retained model has no real AST declaration");
-            auto* context = &meta->declaration->getASTContext();
-            if (context == &cpp.context()) ++cppModels;
-            else if (context == &objc.context()) ++objcModels;
-            else throw std::runtime_error("Model points outside the two retained actual AST contexts");
-        }
-        if (!cppModels || !objcModels) throw std::runtime_error("Both actual AST lifetimes were not exercised");
+        auto& models = pipeline.merge();
+        receipt["mergeProof"] = pipeline.proofReceipt();
+        const auto graphLifetime = pipeline.lifetime();
+        if (!graphLifetime.getInteger("cppOwnedModels").value_or(0) ||
+            !graphLifetime.getInteger("objcOwnedModels").value_or(0))
+            throw std::runtime_error("Both actual AST lifetimes were not exercised");
         if (expectation != "pass") throw std::runtime_error("Expected conflict was not rejected");
 
-        std::map<std::string, std::pair<clang::Module*, std::vector<Meta::Meta*>>> groups;
-        Meta::ResolveGlobalNamesCollisionsFilter::InterfacesByName interfaces;
         Meta::StructMeta* shared = nullptr;
         Meta::FunctionMeta* provider = nullptr;
         bool onlyCRecord = false, onlyCFunction = false;
         for (auto* meta : models) {
-            auto* owner = meta->module->getTopLevelModule();
-            auto& group = groups[owner->getFullModuleName()];
-            if (group.first && group.first != owner) throw std::runtime_error("Noncanonical serialized module owner");
-            group.first = owner; group.second.push_back(meta);
-            if (meta->is(Meta::MetaType::Interface) && !interfaces.emplace(meta->name, &meta->as<Meta::InterfaceMeta>()).second)
-                throw std::runtime_error("Duplicate native ObjC interface identity");
             if (meta->name == "HanlinDualShared") shared = &meta->as<Meta::StructMeta>();
             if (meta->name == "HanlinDualProvider") provider = &meta->as<Meta::FunctionMeta>();
             onlyCRecord |= meta->name == "HanlinDualCOnlyRecord";
@@ -93,25 +70,13 @@ int main(int argc, const char** argv) {
             throw std::runtime_error("Cross-context provider type did not reconnect to authoritative actual record");
         cpp.producer().hanlinFactory().validate(provider->signature.at(1));
         receipt["crossFactoryTypeValidation"] = true;
-        cpp.producer().hanlinFactory().getTypeFactory().resolveCachedBridgedInterfaceTypes(interfaces);
-        objc.producer().hanlinFactory().getTypeFactory().resolveCachedBridgedInterfaceTypes(interfaces);
-        Meta::ResolveGlobalNamesCollisionsFilter::MetasByModules modules;
-        for (auto& group : groups) modules.push_back(std::move(group.second));
         if (hanlinWriterEntries) throw std::runtime_error("An output writer ran before both parses and merge succeeded");
         stage = "serialization";
         cla_outputBinFile.setValue(output);
         cla_outputYamlFolder.setValue(output + ".yaml");
-        cpp.producer().hanlinEmitMetadata(models, modules);
-        // Touch both live SourceManagers after original serialization. This is
-        // actual declaration/context ownership execution, not a lifetime stub.
-        const auto cppRoot = cpp.unit().getSourceManager().getBufferData(cpp.unit().getSourceManager().getMainFileID());
-        const auto objcRoot = objc.unit().getSourceManager().getBufferData(objc.unit().getSourceManager().getMainFileID());
-        if (hanlinSHA(cppRoot) != hanlinSHA(hanlinRead(root + "/full.h")) ||
-            hanlinSHA(objcRoot) != hanlinSHA(hanlinRead(root + "/objc.h")))
-            throw std::runtime_error("Actual AST root lifetime/identity changed before serialization completed");
-        receipt["lifetime"] = llvm::json::Object{{"cppOwnedModels", static_cast<int64_t>(cppModels)},
-            {"objcOwnedModels", static_cast<int64_t>(objcModels)}, {"bothSourceManagersReadAfterSerialization", true},
-            {"retainedGraphTypes", static_cast<int64_t>(merge.graphTypes)}};
+        cla_outputDtsFolder.setValue(output + ".types");
+        pipeline.emit();
+        receipt["lifetime"] = pipeline.lifetime();
         receipt["metadataSHA256"] = hanlinSHA(hanlinRead(output));
         receipt["peakRSSAfterSerialization"] = HanlinDual::peakResidentBytes();
         receipt["status"] = "EXECUTED_PASS";
