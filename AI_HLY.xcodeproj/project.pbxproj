@@ -60,6 +60,18 @@
 		D7D5EE482DD58D7F00B89AAD /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE472DD58D7F00B89AAD /* ZIPFoundation */; };
 		D7D5EE4B2DD590A100B89AAD /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE4A2DD590A100B89AAD /* MarkdownUI */; };
 		D7D5EE4E2DD590C500B89AAD /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE4D2DD590C500B89AAD /* SwiftSoup */; };
+		F800000000000000000000B5 /* W1-006 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "F80000000000000000000051";
+		};
+		F800000000000000000000B6 /* W1-006 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "F80000000000000000000052";
+		};
+		F800000000000000000000B7 /* W1-006 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "F80000000000000000000053";
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +172,13 @@
 		E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = ChavrusaChatTranslationProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E60000000000000000000020 /* ChavrusaChatNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		F80000000000000000000002 /* W1-006 */ = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.application";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniApps.app";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -339,6 +358,11 @@
 			path = ChavrusaChatNotificationService;
 			sourceTree = "<group>";
 		};
+		F80000000000000000000003 /* W1-006 */ = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"path" = "HanlinMiniAppsApp";
+			"sourceTree" = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,6 +460,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F8000000000000000000000B /* W1-006 */ = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = ("F800000000000000000000B5", "F800000000000000000000B6", "F800000000000000000000B7", );
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -461,6 +491,7 @@
 		D7B6C3B82D50A55D004E3AD6 = {
 			isa = PBXGroup;
 			children = (
+				F80000000000000000000003,
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
 				B10000000000000000000003 /* AI_HLYTests */,
 				E30000000000000000000002 /* AI_HLYUITests */,
@@ -478,6 +509,7 @@
 		D7B6C3C22D50A55D004E3AD6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				F80000000000000000000002,
 				D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */,
 				B10000000000000000000002 /* AI_HLYTests.xctest */,
 				E30000000000000000000001 /* AI_HLYUITests.xctest */,
@@ -699,6 +731,19 @@
 			productReference = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		F80000000000000000000001 /* W1-006 */ = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "F80000000000000000000014";
+			"buildPhases" = ("F8000000000000000000000A", "F8000000000000000000000B", "F8000000000000000000000C", );
+			"buildRules" = ();
+			"dependencies" = ();
+			"fileSystemSynchronizedGroups" = ("F80000000000000000000003", );
+			"name" = "HanlinMiniApps";
+			"packageProductDependencies" = ("F80000000000000000000051", "F80000000000000000000052", "F80000000000000000000053", );
+			"productName" = "HanlinMiniApps";
+			"productReference" = "F80000000000000000000002";
+			"productType" = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -746,6 +791,7 @@
 			mainGroup = D7B6C3B82D50A55D004E3AD6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				F8000000000000000000005A,
 				F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */,
 				F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */,
 				F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */,
@@ -774,6 +820,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				F80000000000000000000001,
 				D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */,
 				B10000000000000000000007 /* AI_HLYTests */,
 				E30000000000000000000003 /* AI_HLYUITests */,
@@ -836,6 +883,12 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8000000000000000000000C /* W1-006 */ = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXResourcesBuildPhase section */
 
@@ -965,6 +1018,12 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8000000000000000000000A /* W1-006 */ = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -1582,6 +1641,52 @@
 			};
 			name = Release;
 		};
+		F80000000000000000000015 /* W1-006 */ = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CODE_SIGNING_ALLOWED" = "NO";
+				"CODE_SIGNING_REQUIRED" = "NO";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_KEY_CFBundleDisplayName" = "Hanlin MiniApps";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation" = "YES";
+				"INFOPLIST_KEY_UILaunchScreen_Generation" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.integration";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SDKROOT" = "iphoneos";
+				"SUPPORTED_PLATFORMS" = "iphonesimulator";
+				"SUPPORTS_MACCATALYST" = "NO";
+				"SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" = "NO";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+			};
+			"name" = "Debug";
+		};
+		F80000000000000000000016 /* W1-006 */ = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CODE_SIGNING_ALLOWED" = "NO";
+				"CODE_SIGNING_REQUIRED" = "NO";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_KEY_CFBundleDisplayName" = "Hanlin MiniApps";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation" = "YES";
+				"INFOPLIST_KEY_UILaunchScreen_Generation" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.integration";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SDKROOT" = "iphoneos";
+				"SUPPORTED_PLATFORMS" = "iphonesimulator";
+				"SUPPORTS_MACCATALYST" = "NO";
+				"SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" = "NO";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+			};
+			"name" = "Release";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1657,6 +1762,12 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		F80000000000000000000014 /* W1-006 */ = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("F80000000000000000000015", "F80000000000000000000016", );
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -1703,6 +1814,10 @@
 		A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/IOSSystemLite;
+		};
+		F8000000000000000000005A /* W1-006 */ = {
+			"isa" = "XCLocalSwiftPackageReference";
+			"relativePath" = "Packages/HanlinProductSplit";
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -1955,6 +2070,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D7D5EE4C2DD590C500B89AAD /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
+		};
+		F80000000000000000000051 /* W1-006 */ = {
+			"isa" = "XCSwiftPackageProductDependency";
+			"package" = "A10000000000000000000044";
+			"productName" = "HanlinPlatformContracts";
+		};
+		F80000000000000000000052 /* W1-006 */ = {
+			"isa" = "XCSwiftPackageProductDependency";
+			"package" = "A10000000000000000000044";
+			"productName" = "HanlinMiniAppCore";
+		};
+		F80000000000000000000053 /* W1-006 */ = {
+			"isa" = "XCSwiftPackageProductDependency";
+			"package" = "F8000000000000000000005A";
+			"productName" = "HanlinProductSplit";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

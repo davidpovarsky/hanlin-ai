@@ -9,6 +9,7 @@ struct MiniAppsLibrary: View {
     @State private var selection: HanlinAppID?
     @State private var search = ""
     @State private var loading = false
+    @State private var catalogError: String?
     @State private var error: String?
     @State private var presentation: PresentedContent?
 
@@ -49,7 +50,15 @@ struct MiniAppsLibrary: View {
             }
             .overlay {
                 if loading { ProgressView() }
-                else if items.isEmpty && error == nil {
+                else if let catalogError {
+                    ContentUnavailableView {
+                        Label("MiniApps unavailable", systemImage: "exclamationmark.triangle")
+                    } description: {
+                        Text(catalogError)
+                    } actions: {
+                        Button("Retry") { Task { await reload() } }
+                    }
+                } else if items.isEmpty {
                     ContentUnavailableView("No installed apps", systemImage: "square.grid.2x2",
                                            description: Text("Import an app using package management."))
                 }
@@ -91,7 +100,11 @@ struct MiniAppsLibrary: View {
     private func reload() async {
         loading = true
         defer { loading = false }
-        do { items = try await services.catalog() }
-        catch { self.error = error.localizedDescription }
+        do {
+            items = try await services.catalog()
+            catalogError = nil
+        } catch {
+            catalogError = error.localizedDescription
+        }
     }
 }
