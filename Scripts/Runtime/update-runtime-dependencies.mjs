@@ -3,6 +3,9 @@
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import process from 'node:process';
+import { createRequire } from 'node:module';
+import { resolve } from 'node:path';
+import { selectHostPackageVersion } from './select-host-package-version.mjs';
 
 const lockPath = process.argv[2] ?? 'RuntimeDependencies.lock.json';
 const packagePath = process.argv[3] ?? 'AI_HLY/Downstream/RuntimeCore/Node/Host/package.json';
@@ -14,6 +17,7 @@ const hostPackage = JSON.parse(await readFile(packagePath, 'utf8'));
 const originalDependencyHash = dependencyHash(lock);
 
 if (!syncOnly) {
+  const { satisfies } = createRequire(resolve(packagePath))('semver');
   const nodeTag = await latestTag('heylogin/nodejs-mobile', /^v24\.\d+\.\d+-mobile$/);
   const nodeVersion = nodeTag.replace(/^v/, '').replace(/-mobile$/, '');
   const nodeArchiveURL = `https://github.com/heylogin/nodejs-mobile/archive/refs/tags/${nodeTag}.tar.gz`;
@@ -44,8 +48,7 @@ if (!syncOnly) {
 
   for (const name of Object.keys(hostPackage.dependencies)) {
     const metadata = await npmMetadata(name);
-    const version = metadata['dist-tags']?.latest;
-    if (!version || !metadata.versions?.[version]) throw new Error(`npm did not return an exact latest version for ${name}.`);
+    const version = selectHostPackageVersion(name, metadata, nodeVersion, satisfies);
     hostPackage.dependencies[name] = version;
   }
   await writeJSON(packagePath, hostPackage);

@@ -615,25 +615,48 @@ def plan_affected_validation(
     selected_groups: Dict[str, List[str]] = collections.defaultdict(list)
     affected_components: Dict[str, List[str]] = collections.defaultdict(list)
 
+    if manual_modes.get("runtime_bundle_only"):
+        if full_validation or exact_test_selector or (target_group and target_group != "runtimecore_bundle"):
+            raise RoutingError("runtime_bundle_only cannot be combined with full validation, exact tests or another target")
+        if any(enabled for name, enabled in manual_modes.items() if name != "runtime_bundle_only"):
+            raise RoutingError("runtime_bundle_only cannot be combined with another manual validation mode")
+
     # EXACT TEST SELECTOR GUARD & ROUTING
     if exact_test_selector:
         exact_test_selector = exact_test_selector.strip()
-        if not re.match(r"^[A-Za-z0-9_]+/[A-Za-z0-9_]+(/[A-Za-z0-9_]+)?$", exact_test_selector):
+        selectors = list(dict.fromkeys(part.strip() for part in exact_test_selector.split(",")))
+        if any(not re.fullmatch(r"[A-Za-z0-9_]+/[A-Za-z0-9_]+(/[A-Za-z0-9_]+(?:\((?:[A-Za-z0-9_]+:)*\))?)?", part) for part in selectors):
             raise RoutingError(
                 f"Invalid exact-test-selector format: '{exact_test_selector}'. "
-                "Expected <Bundle>/<Suite>[/<Method>] with alphanumeric and underscore characters."
+                "Expected comma-separated <Bundle>/<Suite>[/<Method>] paths, with optional Swift Testing () or parameter-label signatures; argument values are not accepted."
             )
         if full_validation:
             raise RoutingError("Contradictory options: --exact-test-selector cannot be combined with --full-validation")
 
-        is_ui = exact_test_selector.startswith("AI_HLYUITests/")
-        is_unit = exact_test_selector.startswith("AI_HLYTests/")
-        if not is_ui and not is_unit:
+        ui_selectors = [part for part in selectors if part.startswith("AI_HLYUITests/")]
+        unit_selectors = [part for part in selectors if part.startswith("AI_HLYTests/")]
+        is_ui = bool(ui_selectors)
+        is_unit = bool(unit_selectors)
+        if len(ui_selectors) + len(unit_selectors) != len(selectors):
             raise RoutingError(
                 f"Unrecognized test bundle in selector: '{exact_test_selector}'. "
                 "Must start with 'AI_HLYTests/' or 'AI_HLYUITests/'."
             )
 
+        # These workflow modes gate execution after planning. Accepting an exact
+        # selector they suppress can produce a green run with zero requested cases.
+        for mode, skips_requested_cases in (
+            ("fast_validation_only", is_ui),
+            ("simulator_e2e_only", is_unit),
+            ("nativescript_poc_only", True),
+        ):
+            if manual_modes.get(mode) and skips_requested_cases:
+                raise RoutingError(
+                    f"Contradictory options: {mode}=true skips requested exact-test-selector cases. "
+                    f"Disable {mode} to execute every selected case."
+                )
+
+        exact_test_selector = ",".join(selectors)
         explicit_overrides.append(f"exact_test_selector={exact_test_selector}")
         selected_groups.clear()
 
@@ -652,10 +675,10 @@ def plan_affected_validation(
             "run_ipa_packaging": False,
             "run_simulator_job": True,
             "run_simulator_unit": is_unit,
-            "simulator_unit_filter": exact_test_selector if is_unit else "",
+            "simulator_unit_filter": ",".join(unit_selectors),
             "run_simulator_scripting_acceptance": False,
             "run_simulator_targeted_ui": is_ui,
-            "simulator_ui_filter": exact_test_selector if is_ui else "",
+            "simulator_ui_filter": ",".join(ui_selectors),
             "stage_scriptui_fixtures": ("ScriptUI" in exact_test_selector or "Expo" in exact_test_selector),
             "run_simulator_shell_acceptance": False,
             "run_simulator_mcp_acceptance": False,
@@ -676,14 +699,14 @@ def plan_affected_validation(
                 step_outputs["run_nativescript_dependencies"] = True
                 step_outputs["run_nativescript_runtime"] = True
                 step_outputs["run_phase1"] = True
-        else:
+        if is_unit:
             selected_groups["app_unit_tests"].append(f"exact selector: {exact_test_selector}")
 
         step_outputs["selected_groups"] = ",".join(sorted(selected_groups.keys()))
 
         sim_config = "Release" if "HanlinNativeScriptProductionE2ETests" in exact_test_selector else "Debug"
         step_outputs["simulator_configuration"] = sim_config
-        step_outputs["simulator_build_for_testing_args"] = f"-only-testing:{exact_test_selector}"
+        step_outputs["simulator_build_for_testing_args"] = " ".join(f"-only-testing:{part}" for part in selectors)
 
         skipped_expensive: Dict[str, str] = {
             item["name"]: f"suppressed by exact_test_selector '{exact_test_selector}'"
@@ -694,7 +717,8 @@ def plan_affected_validation(
         for comp in components.values():
             all_known_suites.update(comp.get("unit_suites", []))
             all_known_suites.update(comp.get("ui_suites", []))
-        not_required_tests = sorted(all_known_suites - {exact_test_selector})
+        not_required_tests = sorted(suite for suite in all_known_suites
+            if not any(part == suite or part.startswith(suite + "/") for part in selectors))
 
         est_mins = 15 if is_ui else 8
         cost_estimates = {
@@ -869,6 +893,13 @@ def plan_affected_validation(
             if tgt not in ("device_build", "ipa_packaging"):
                 selected_groups.pop("device_build", None)
                 selected_groups.pop("ipa_packaging", None)
+
+    # The bundle-only mode is exclusive: source consumers are reported above,
+    # but app/IPA/SDK jobs must not run before the new native artifact exists.
+    if manual_modes.get("runtime_bundle_only"):
+        selected_groups = collections.defaultdict(list, {
+            "runtimecore_bundle": ["operator override: runtime_bundle_only=true"]
+        })
 
     # 4. Resolve prerequisites of selected validation groups
     prereq_queue = list(selected_groups.keys())
@@ -1778,7 +1809,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--exact-test-selector",
-        help="Explicitly run a single exact XCTest method or suite selector (e.g. AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime)",
+        help="Comma-separated exact XCTest method or suite paths: Bundle/Suite[/Method]",
     )
     parser.add_argument(
         "--evaluate-reuse",

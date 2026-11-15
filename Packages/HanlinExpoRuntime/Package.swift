@@ -15,6 +15,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(name: "HanlinPlatform", path: "../HanlinPlatform"),
         .package(name: "HanlinExpoWidgetSubset", path: "../HanlinExpoWidgetSubset"),
         .package(name: "HanlinExpoNativeAPI", path: "../HanlinExpoNativeAPI")
     ],
@@ -30,6 +31,7 @@ let package = Package(
             name: "HanlinExpoRuntime",
             dependencies: [
                 "ReactNativeHeaders",
+                .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
                 "React",
                 "ReactNativeDependencies",
                 "hermesvm",

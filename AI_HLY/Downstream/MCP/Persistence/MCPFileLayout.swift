@@ -2,6 +2,12 @@ import Foundation
 
 struct MCPFileLayout: Sendable {
     let root: URL
+    private let legacyMigrationSource: URL?
+
+    init(root: URL, legacyMigrationSource: URL? = RuntimeFileLayout.legacyMCPRoot) {
+        self.root = root
+        self.legacyMigrationSource = legacyMigrationSource
+    }
 
     static let `default` = MCPFileLayout(root: RuntimeFileLayout.default.root)
 
@@ -38,7 +44,7 @@ struct MCPFileLayout: Sendable {
 
     private func migrateLegacyDataIfNeeded() throws {
         let manager = FileManager.default
-        let legacy = RuntimeFileLayout.legacyMCPRoot
+        guard let legacy = legacyMigrationSource else { return }
         guard manager.fileExists(atPath: legacy.path), legacy.standardizedFileURL != root.standardizedFileURL else { return }
         let mappings: [(URL, URL)] = [
             (legacy.appending(path: "registry", directoryHint: .isDirectory), registry),

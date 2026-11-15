@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "status": "INITIAL_PASSIVE_CONTRACTS_VALIDATED_INTEGRATION_PENDING",
+  "productionSourceCommit": "0670d8e87fed8d8ca99ab94bd63b8890f051a315",
+  "apple": {
+    "run": 43768185348,
+    "sourceSHA": "52bb7720c36d252fb4693270730e61914065806a",
+    "status": "EXECUTED_PASS",
+    "caseCount": 38,
+    "sourceFiles": {
+      "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeContract.swift": "5033acd295643727a62d6c749c8feb52e1b8b8d96ba2a3a989511ed49a124784",
+      "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimePlanner.swift": "ddd88a6c4ba517ae2ca483e1281c202ec9e1af3dd061cc4464e20a686fcddbc1",
+      "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeRegistry.swift": "0ca49985b62189726d19a8146c7a32534251250329d29a96eec4e76b170857de",
+      "Scripts/CI/SkillRuntimeContractChecks.swift": "be4a951a05eec423557348aa88f5a43ebac7d91779aa3b1811e751deedcadd55"
+    },
+    "compiler": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "commands": [
+      {
+        "label": "compile-macos",
+        "exitCode": 0
+      },
+      {
+        "label": "execute-macos",
+        "exitCode": 0
+      },
+      {
+        "label": "typecheck-ios26.0",
+        "exitCode": 0
+      },
+      {
+        "label": "typecheck-ios27.0",
+        "exitCode": 0
+      }
+    ],
+    "verifiedArtifactManifestFiles": 10,
+    "manifestMismatches": 0,
+    "resultSHA256": "4ff1259eff24574b75c87faae906e29b565d2b3482dd2e11c8ce1234ca153370"
+  },
+  "windows": {
+    "status": "EXECUTED_PASS",
+    "caseCount": 38,
+    "platform": "Windows",
+    "swiftVersion": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+    "sources": {
+      "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeContract.swift": "5033acd295643727a62d6c749c8feb52e1b8b8d96ba2a3a989511ed49a124784",
+      "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimePlanner.swift": "ddd88a6c4ba517ae2ca483e1281c202ec9e1af3dd061cc4464e20a686fcddbc1",
+      "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeRegistry.swift": "0ca49985b62189726d19a8146c7a32534251250329d29a96eec4e76b170857de",
+      "Scripts/CI/SkillRuntimeContractChecks.swift": "be4a951a05eec423557348aa88f5a43ebac7d91779aa3b1811e751deedcadd55"
+    },
+    "executableSHA256": "f2e2b0caee99cda8c587566b0ed5b8f028d41f22e9a380f0f3cdb12c833302d7",
+    "boundary": "Portable production contract/planner checks; synthetic inputs, no engine, real Skill, Apple framework, app or device execution."
+  },
+  "failedAppleAttempts": [
+    {
+      "run": 43767559359,
+      "sourceSHA": "0670d8e8",
+      "status": "FAILED_HOST_COMPILE",
+      "retention": "missing_artifact_path_corrected_in_1d82c675"
+    },
+    {
+      "run": 43767826807,
+      "sourceSHA": "1d82c675",
+      "status": "FAILED_HOST_COMPILE",
+      "reason": "Default macOS SDK not selected; standard library unavailable for inferred macOS27 target",
+      "correction": "Explicit installed macOS SDK and arm64-macos26 target in52bb7720"
+    }
+  ],
+  "realSkills": "NOT_RUN",
+  "actualNativeEngineFacts": "NOT_IMPLEMENTED",
+  "swiftNodeAdapter": "NOT_IMPLEMENTED",
+  "YamsOpenClawASTAdapters": "NOT_IMPLEMENTED",
+  "helperExecution": "NOT_IMPLEMENTED",
+  "executionToolJobStoreIntegration": "NOT_IMPLEMENTED",
+  "UIIntegration": "NOT_IMPLEMENTED",
+  "physicalDevice": "NOT_RUN",
+  "boundary": "Original passive contract/planner/registry sources only. Synthetic cases; no real Skill, engine, app, JobStore, UI or physical-device execution."
+}

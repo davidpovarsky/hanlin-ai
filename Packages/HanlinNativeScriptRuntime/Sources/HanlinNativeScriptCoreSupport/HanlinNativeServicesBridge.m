@@ -32,7 +32,23 @@ static NSLock *_sessionLock = nil;
 }
 
 - (void)invalidate {
-    @synchronized (self) { self.provider = nil; }
+    id<HanlinNativeServicesProvider> provider;
+    @synchronized (self) { provider = self.provider; self.provider = nil; }
+    [provider invalidateRuntimeRequests];
+}
+
+- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion {
+    id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
+    if (!provider) { if (completion) completion(nil, @"NativeScript Host Services session is no longer active."); return nil; }
+    // Never invoke a V8 callback retained by a terminated session or redirect it
+    // through another package's subsequently active global bridge.
+    return [provider executeRuntime:payloadJSON completion:^(NSString *result, NSString *error) {
+        if ([self providerSnapshot] == provider && completion) completion(result, error);
+    }];
+}
+
+- (BOOL)cancelRuntime:(NSString *)requestID {
+    return [[self providerSnapshot] cancelRuntime:requestID];
 }
 
 - (nullable NSString *)dataRootDirectory { return [[self providerSnapshot] dataRootDirectory]; }
@@ -180,6 +196,24 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
 }
 
 @implementation HanlinNativeServicesBridge
+
++ (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion {
+    HanlinNativeServicesSessionBridge *bridge = [self activeSessionBridge];
+    if (!bridge) { if (completion) completion(nil, @"Host service provider not registered."); return nil; }
+    return [bridge executeRuntime:payloadJSON completion:completion];
+}
+
++ (BOOL)cancelRuntime:(NSString *)requestID {
+    return [[self activeSessionBridge] cancelRuntime:requestID];
+}
+
+- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion {
+    return [self.class executeRuntime:payloadJSON completion:completion];
+}
+
+- (BOOL)cancelRuntime:(NSString *)requestID {
+    return [self.class cancelRuntime:requestID];
+}
 
 + (void)initialize {
     if (self == [HanlinNativeServicesBridge class]) {

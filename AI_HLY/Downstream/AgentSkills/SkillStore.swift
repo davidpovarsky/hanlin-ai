@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 import HanlinPlatformContracts
 
 /// Persistent store managing user-created, imported, and overridden Agent Skills.
@@ -13,6 +14,7 @@ import HanlinPlatformContracts
 ///   `overrides/<id>/hanlin.json`
 ///   `state.json` (enabled toggles and metadata)
 @MainActor
+@Observable
 public final class SkillStore {
     public static let shared = SkillStore()
 
@@ -35,9 +37,15 @@ public final class SkillStore {
         }
     }
 
+    public private(set) var revision: UInt64 = 0
+    private let onCatalogChange: @MainActor () -> Void
     private var cachedState: StoreState
 
-    public init(rootDirectoryURL: URL? = nil) {
+    public init(
+        rootDirectoryURL: URL? = nil,
+        onCatalogChange: @escaping @MainActor () -> Void = { HanlinSkillCatalog.shared.refreshFromStore() }
+    ) {
+        self.onCatalogChange = onCatalogChange
         let base: URL
         if let rootDirectoryURL {
             base = rootDirectoryURL
@@ -71,6 +79,11 @@ public final class SkillStore {
         }
     }
 
+    private func notifyCatalogChanged() {
+        revision &+= 1
+        onCatalogChange()
+    }
+
     // MARK: - Enable / Disable
 
     public func isSkillEnabled(id: HanlinSkillID) -> Bool {
@@ -84,12 +97,13 @@ public final class SkillStore {
             cachedState.disabledSkillIDs.insert(id.rawValue)
         }
         saveState()
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     // MARK: - Query
 
     public func hasOverride(for skillID: HanlinSkillID) -> Bool {
+        _ = revision
         let dir = overridesDirectoryURL.appendingPathComponent(skillID.rawValue, isDirectory: true)
         let skillFile = dir.appendingPathComponent("SKILL.md", isDirectory: false)
         return fileManager.fileExists(atPath: skillFile.path)
@@ -102,6 +116,7 @@ public final class SkillStore {
     }
 
     public func allCustomSkillDescriptors() -> [HanlinSkillDescriptor] {
+        _ = revision
         guard let subdirs = try? fileManager.contentsOfDirectory(at: skillsDirectoryURL, includingPropertiesForKeys: nil) else {
             return []
         }
@@ -116,6 +131,7 @@ public final class SkillStore {
     }
 
     public func allOverrideDescriptors() -> [(HanlinSkillID, HanlinSkillDescriptor)] {
+        _ = revision
         guard let subdirs = try? fileManager.contentsOfDirectory(at: overridesDirectoryURL, includingPropertiesForKeys: nil) else {
             return []
         }
@@ -168,6 +184,7 @@ public final class SkillStore {
     // MARK: - Resource Paths & Progress Loading
 
     public func directoryURL(for skillID: HanlinSkillID) -> URL? {
+        _ = revision
         let overrideDir = overridesDirectoryURL.appendingPathComponent(skillID.rawValue, isDirectory: true)
         if fileManager.fileExists(atPath: overrideDir.path) {
             return overrideDir
@@ -287,7 +304,7 @@ public final class SkillStore {
 
         cachedState.metadataBySkillID[id.rawValue] = meta
         saveState()
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     public func install(stagedPackage: StagedSkillPackage) throws -> StoredSkillRecord {
@@ -314,7 +331,7 @@ public final class SkillStore {
             meta.updatedAt = Date()
             cachedState.metadataBySkillID[id.rawValue] = meta
             saveState()
-            HanlinSkillCatalog.shared.refreshFromStore()
+            notifyCatalogChanged()
 
             if hadExisting {
                 try? fileManager.removeItem(at: backupDir)
@@ -342,7 +359,7 @@ public final class SkillStore {
             }
             cachedState.metadataBySkillID[id.rawValue] = previousMeta
             saveState()
-            HanlinSkillCatalog.shared.refreshFromStore()
+            notifyCatalogChanged()
             throw error
         }
     }
@@ -358,7 +375,7 @@ public final class SkillStore {
         let fileURL = base.appendingPathComponent(clean)
         try fileManager.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         try content.data(using: .utf8)?.write(to: fileURL, options: .atomic)
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     public func addResourceFile(for skillID: HanlinSkillID, relativePath: String, sourceFileURL: URL) throws {
@@ -375,7 +392,7 @@ public final class SkillStore {
             try fileManager.removeItem(at: fileURL)
         }
         try fileManager.copyItem(at: sourceFileURL, to: fileURL)
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     public func deleteResource(for skillID: HanlinSkillID, relativePath: String) throws {
@@ -383,7 +400,7 @@ public final class SkillStore {
             throw SkillImportError.stagingFailed("Resource '\(relativePath)' not found.")
         }
         try fileManager.removeItem(at: url)
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     public func createOrUpdateOverride(
@@ -426,7 +443,7 @@ public final class SkillStore {
 
         cachedState.metadataBySkillID[baseSkill.id.rawValue] = meta
         saveState()
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     public func resetOverride(skillID: HanlinSkillID) {
@@ -434,7 +451,7 @@ public final class SkillStore {
         try? fileManager.removeItem(at: dir)
         cachedState.metadataBySkillID.removeValue(forKey: skillID.rawValue)
         saveState()
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     public func deleteCustomSkill(skillID: HanlinSkillID) {
@@ -443,7 +460,7 @@ public final class SkillStore {
         cachedState.metadataBySkillID.removeValue(forKey: skillID.rawValue)
         cachedState.disabledSkillIDs.remove(skillID.rawValue)
         saveState()
-        HanlinSkillCatalog.shared.refreshFromStore()
+        notifyCatalogChanged()
     }
 
     // MARK: - Private Helpers

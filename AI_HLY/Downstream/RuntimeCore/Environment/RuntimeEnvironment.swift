@@ -114,6 +114,7 @@ actor RuntimeEnvironmentStore {
     @discardableResult
     func save(name: String, value: String, scope: RuntimeEnvironmentScope, isEnabled: Bool, isSecret: Bool, replacing id: UUID? = nil) async throws -> RuntimeEnvironmentItem {
         let validName = try RuntimePolicy.validateEnvironmentName(name.trimmingCharacters(in: .whitespacesAndNewlines))
+        _ = try RuntimePolicy.validatedEnvironment([validName: value])
         var all = try items()
         let existingIndex = id.flatMap { requested in all.firstIndex { $0.id == requested } }
         if let existingIndex, let reference = all[existingIndex].secretReference, !isSecret { await secrets.remove(reference: reference) }
@@ -146,14 +147,18 @@ actor RuntimeEnvironmentStore {
         try persist(all)
     }
 
-    func resolved(scopes: [RuntimeEnvironmentScope]) async throws -> [String: String] {
+    /// Requested scope order is precedence, independent of saved-item ordering.
+    func resolved(scopes: [RuntimeEnvironmentScope], overrides: [String: String] = [:]) async throws -> [String: String] {
         var result: [String: String] = [:]
-        let wanted = Set(scopes)
-        for item in try items() where item.isEnabled && wanted.contains(item.scope) {
-            if let value = item.value { result[item.name] = value }
-            else if let reference = item.secretReference { result[item.name] = try await secrets.value(reference: reference) }
+        let all = try items()
+        for scope in scopes {
+            for item in all where item.isEnabled && item.scope == scope {
+                if let value = item.value { result[item.name] = value }
+                else if let reference = item.secretReference { result[item.name] = try await secrets.value(reference: reference) }
+            }
         }
-        return result
+        result.merge(overrides) { _, explicit in explicit }
+        return try RuntimePolicy.validatedEnvironment(result)
     }
 
     private func persist(_ items: [RuntimeEnvironmentItem]) throws {

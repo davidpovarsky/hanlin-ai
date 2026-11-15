@@ -4,8 +4,11 @@
     "formatVersion": 1,
     "releaseRepository": "davidpovarsky/hanlin-ai",
     "releaseTagPrefix": "runtime-core-v1-",
-    "sha256": "f6bd84a659ec8fbb2d29724751b2c6e11bb0db44e2020a4e21b988da360e4503",
-    "verificationStatus": "verified"
+    "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "verificationStatus": "verified",
+    "artifactDependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "nativeInputSHA256": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+    "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997"
   },
   "node": {
     "sourceRepository": "https://github.com/heylogin/nodejs-mobile",
@@ -19,9 +22,38 @@
       "url": "https://github.com/heylogin/nodejs-mobile/archive/refs/tags/v24.5.0-mobile.tar.gz",
       "sha256": "614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c"
     },
-    "xcframeworkSha256": "6c4988cc9629c30e11ff31cf61cb58f7a17c193e4066da42b7aa1fff2d8b3635",
+    "xcframeworkSha256": "21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207",
     "verificationStatus": "verified",
-    "license": "MIT with bundled third-party notices"
+    "license": "MIT with bundled third-party notices",
+    "sourcePatches": [
+      {
+        "path": "Scripts/Runtime/Patches/v8-std-hash-65ce14d8.json",
+        "sha256": "d9cf8808f543f998d4f1a1c69047b67af41eec284be948826b82441e1a50fab6",
+        "upstreamCommit": "65ce14d8731e929584344a0d65d6efd2296fa797"
+      },
+      {
+        "path": "Scripts/Runtime/Patches/v8-drumbrake-5c595adf.json",
+        "sha256": "6259c5048010fb8438779ada0b979d5c84343b67a00fdcc96557fffa8063f682",
+        "upstreamCommit": "5c595adf56abcb89251882a2dbf800972500989a"
+      },
+      {
+        "path": "Scripts/Runtime/Patches/v8-drumbrake-hardening-2026.json",
+        "sha256": "4278e0bc6687a0e2119594d82b80fb054af4eaea2ad38d981ed0c22842f0a1a4",
+        "upstreamCommit": "e0c5b3bc0ba80528e6251dbf3ffa8c2f2781d08b"
+      }
+    ],
+    "buildConfiguration": {
+      "wasmInterpreter": "drumbrake",
+      "jitless": true,
+      "explicitBoundsChecks": true,
+      "adapter": {
+        "path": "Scripts/Runtime/configure-node-wasm.py",
+        "sha256": "d574019c1173030be7dabeb735667f272179882598c91f717a0d3d2a2c8e02b4"
+      },
+      "pointerCompression": true,
+      "pointerCompressionSharedCage": true,
+      "taggedHeapAddressSpaceBytes": 4294967296
+    }
   },
   "python": {
     "sourceRepository": "https://github.com/beeware/Python-Apple-support",
@@ -107,13 +139,23 @@
   },
   "nodeHostPackages": {
     "@npmcli/arborist": {
-      "version": "8.0.5",
-      "integrity": "sha512-dFby80JSC3e8825FRGRuhOMWFeKFHokz8j8osLOujmjOSKm6smGu/b1/gbgW0lP8d84iMZO+RxpqBbC5KgL6DQ==",
+      "version": "9.9.3",
+      "integrity": "sha512-OxRSMNRPzL2/x2zsVrzdMZItfNj3cVXZIYgGNlUaBRUyH16YKdwN1r9z+I13keR1mjVNKelMfi2a7A/0JJ4NCw==",
       "license": "ISC"
     },
+    "@types/node": {
+      "version": "24.5.2",
+      "integrity": "sha512-FYxk1I7wPv3K2XBaoyH2cTnocQEu8AOZ60hPbsyukMPLv5/5qr7V1i8PLHdl6Zf87I+xZXFvPCXYjiTFq+YSDQ==",
+      "license": "MIT"
+    },
+    "node-fetch": {
+      "version": "3.3.2",
+      "integrity": "sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==",
+      "license": "MIT"
+    },
     "pacote": {
-      "version": "20.0.1",
-      "integrity": "sha512-jTMLD/QK7JMUKg3g7K3M/DEqIbGm7sxclj12eQYIkL3viutSiefTs26IrqIqgGlFsviF/9dlDUZxnpGvkRXtjw==",
+      "version": "21.5.3",
+      "integrity": "sha512-XAHnxRzERPW/Y3sLaCgfUVdfP5Di1K0wiUWsDaK4reodu20Kl0pVZcw8Mdd2LaLsUpot6YLVOEgmIqMEL9Tjog==",
       "license": "ISC"
     },
     "semver": {
@@ -125,6 +167,26 @@
       "version": "12.0.0",
       "integrity": "sha512-S7iGNosepx9RadX82oimUkvr0Ct7IjJbEbs4mJcTxst8um95J3sDYU1RBEOvdu6oL1Wek2ODI5i4MAw+dZ6cAQ==",
       "license": "ISC"
+    },
+    "typescript": {
+      "version": "6.0.3",
+      "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+      "license": "Apache-2.0"
+    },
+    "@yarnpkg/fslib": {
+      "version": "3.1.5",
+      "integrity": "sha512-hXaPIWl5GZA+rXcx+yaKWUuePJruZuD+3A5A2X6paEBfFsyCD7oEp88lSMj1ym1ehBWUmhNH/YGOp+SrbmSBPg==",
+      "license": "BSD-2-Clause"
+    },
+    "@yarnpkg/parsers": {
+      "version": "3.1.0",
+      "integrity": "sha512-WoxUM/Be4hfsX06FxsvpGgfYqwgivMV7/Ol7aFuSfSmY6rRaiju4QxOEe9RUS0iYcSHWl5i9AhB1cMoE0p+XiA==",
+      "license": "BSD-2-Clause"
+    },
+    "@yarnpkg/shell": {
+      "version": "4.1.3",
+      "integrity": "sha512-5igwsHbPtSAlLdmMdKqU3atXjwhtLFQXsYAG0sn1XcPb3yF8WxxtWxN6fycBoUvFyIHFz1G0KeRefnAy8n6gdw==",
+      "license": "BSD-2-Clause"
     }
   }
 }

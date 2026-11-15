@@ -9,3 +9,9 @@ Packages/HanlinQuickJS/Sources/CQuickJS/** -text
 
 # Preserve the exact physical-iPad regression archive byte-for-byte.
 AI_HLYTests/Fixtures/ScriptingFixtures.bundle/PhysicalIPad/smart-eating-normalized.zip binary
+
+# Packaged SDK mirrors use the same raw, hash-verified bytes as GeneratedSDK.
+Packages/HanlinPlatform/Sources/HanlinScriptingSDK/Resources/** -text
+
+# Source-backport manifests and their original upstream evidence are hash pinned.
+Scripts/Runtime/Patches/** -text

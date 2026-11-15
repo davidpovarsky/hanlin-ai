@@ -972,7 +972,30 @@ struct HanlinDualWidgetEnginesTests {
         #expect(tamperedReport.failingStage == "checkedRevision")
     }
 
-    @Test func testPass7HistoricalV1StoreEnvelopeCompatibility() throws {
+    @Test(arguments: [true, false])
+    func consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision: Bool) throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        try store.save(Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 100)))
+        let commitURL = root.appending(path: "commit.json")
+        let marker = try #require(try JSONSerialization.jsonObject(with: Data(contentsOf: commitURL)) as? [String: Any])
+        if missingRevision {
+            let hash = try #require(marker["snapshotHash"] as? String)
+            try FileManager.default.removeItem(at: root.appending(path: "Revisions/\(hash).json"))
+        } else {
+            try Data("broken commit".utf8).write(to: commitURL)
+        }
+        let preservedCommit = try Data(contentsOf: commitURL)
+        let report = store.generateConsistencyReport()
+        #expect(report.commitPresent)
+        #expect(report.failingStage == (missingRevision ? "checkedRevision" : "commitDecode"))
+        #expect(report.summary.contains("validation failed"))
+        #expect(try Data(contentsOf: commitURL) == preservedCommit, "Diagnostics must not reset existing data")
+    }
+
+    @Test(arguments: [200.0, 1730826191.123456])
+    func testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp: Double) throws {
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }
         let old = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionStore(root: root)
@@ -983,41 +1006,80 @@ struct HanlinDualWidgetEnginesTests {
             entrypointID: "widget"
         )
         let legacy = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionSnapshot(
-            generatedAt: Date(timeIntervalSince1970: 200),
+            generatedAt: Date(timeIntervalSince1970: timestamp),
             widgets: [.init(
                 identity: identity,
                 displayName: "Legacy Widget",
-                validUntil: Date(timeIntervalSince1970: 500),
-                root: .init(kind: .text, properties: ["text": .string("Legacy Data")])
+                validUntil: Date(timeIntervalSince1970: timestamp + 300),
+                root: .init(kind: .text, properties: [
+                    "text": .string("Legacy Data"),
+                    "literal": .string("escaped \"snapshot\": { braces } and slash \\ אבג"),
+                    "offset": .number(-0.0),
+                    "ratio": .number(1e-7)
+                ])
             )]
         )
         try old.save(legacy)
+        let snapshotURL = root.appending(path: "snapshot-v1.json")
+        let originalBytes = try Data(contentsOf: snapshotURL)
 
         // Current store must accept genuine historical v1 envelope without integrity mismatch
         let store = Store(root: root)
         let loaded = try #require(try store.load())
         #expect(loaded.schemaVersion == 1)
         #expect(loaded.widgets.first?.displayName == "Legacy Widget")
+        #expect(loaded.widgets.first?.root.properties["ratio"] == .number(1e-7))
+        #expect(try Data(contentsOf: snapshotURL) == originalBytes)
+        let withDecoy = Data((#"{"decoy":{"snapshot":{"text":"}"}},"#
+            + String(decoding: originalBytes.dropFirst(), as: UTF8.self)).utf8)
+        try withDecoy.write(to: snapshotURL)
+        #expect(try store.load() == loaded)
+        #expect(try Data(contentsOf: snapshotURL) == withDecoy)
+        let changedBytes = Data(String(decoding: originalBytes, as: UTF8.self)
+            .replacingOccurrences(of: "Legacy Data", with: "Changed Data").utf8)
+        #expect(changedBytes != originalBytes)
+        try changedBytes.write(to: snapshotURL)
+        #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.integrityMismatch) {
+            try store.load()
+        }
+        #expect(try Data(contentsOf: snapshotURL) == changedBytes)
+        if timestamp != 200 {
+            let duplicateKey = Data((#"{"snap\u0073hot":{},"#
+                + String(decoding: originalBytes.dropFirst(), as: UTF8.self)).utf8)
+            try duplicateKey.write(to: snapshotURL)
+            #expect(throws: HanlinScriptExtensions.HanlinScriptExtensionStoreError.integrityMismatch) {
+                try store.load()
+            }
+            #expect(try Data(contentsOf: snapshotURL) == duplicateKey)
+        }
     }
 
-    @Test func testPass7InterruptedRevisionWriteOverwrittenAndClean() throws {
+    @Test(arguments: [Data(), Data("corrupt candidate revision".utf8)])
+    func testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes: Data) throws {
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }
         let store = Store(root: root)
 
         let snapshot = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 300))
-        // Calculate hash ahead of time
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .millisecondsSince1970
-        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        // Obtain authentic candidate bytes from an independent store. The old test
+        // created only a directory, so it never exercised the corrupted-file branch.
+        let referenceRoot = try temporary()
+        defer { try? FileManager.default.removeItem(at: referenceRoot) }
+        try Store(root: referenceRoot).save(snapshot)
+        let marker = try #require(try JSONSerialization.jsonObject(
+            with: Data(contentsOf: referenceRoot.appending(path: "commit.json"))) as? [String: Any])
+        let hash = try #require(marker["snapshotHash"] as? String)
+        let expectedBytes = try Data(contentsOf: referenceRoot.appending(path: "Revisions/\(hash).json"))
 
-        // Pre-create an empty Revisions directory and a 0-byte file simulating an interrupted write
         let revisionsDir = root.appending(path: "Revisions")
         try FileManager.default.createDirectory(at: revisionsDir, withIntermediateDirectories: true)
+        let candidateURL = revisionsDir.appending(path: "\(hash).json")
+        try corruptedBytes.write(to: candidateURL)
+        #expect(try Data(contentsOf: candidateURL) == corruptedBytes)
 
-        // Save should detect non-matching / 0-byte file and overwrite with valid data
         try store.save(snapshot)
 
+        #expect(try Data(contentsOf: candidateURL) == expectedBytes)
         let loaded = try #require(try store.load())
         #expect(loaded.schemaVersion == 2)
         #expect(loaded.generatedAt == Date(timeIntervalSince1970: 300))

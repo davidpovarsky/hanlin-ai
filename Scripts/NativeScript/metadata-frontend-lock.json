@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "status": "CANDIDATE_NOT_ACCEPTED",
+  "version": "20.1.8",
+  "sourceTag": "llvmorg-20.1.8",
+  "sourceArchiveSHA256": "6898f963c8e938981e6c4a302e83ec5beb4630147c7311183cf61069af16333d",
+  "installedPrefix": "/opt/homebrew/Cellar/llvm@20/20.1.8",
+  "inventoryRun": 43723704321,
+  "files": {
+    "include/clang/AST/ASTContext.h": "2d2e788e7b6bf79b3b9ba73b8492bc3ac13ada236adcde9a14f2e981077322ca",
+    "include/llvm/Config/llvm-config.h": "6c485b67a60897f558165bfa7a97808ae681a65abf272ee371b589614aa341c0",
+    "lib/libclang-cpp.dylib": "7bd75f635518a7aae3b0d74410e81aca4c2cf38922c886663db69ee0f88affdc",
+    "lib/libclang.dylib": "983c42da30bee025a41e78b9ec126a8128b26ec5b59cc961f37cc262305deefd"
+  },
+  "boundary": "Existing prebuilt tooling only. Runtime, serializers and metadata format unchanged. Exact LLVM/C++/resource-tree and bottle identities are retained by candidate build; promotion requires source/build equivalence and actual SDK/runtime acceptance."
+}

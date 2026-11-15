@@ -105,6 +105,14 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
 
         openPackageDetails(named: "ScriptWidget Actions")
 
+        let status = app.buttons["hanlin-widget-status"].firstMatch
+        XCTAssertTrue(status.waitForExistence(timeout: 5), "Widget status must be accessible even without an error banner")
+        status.tap()
+        let statusAlert = app.alerts["Widget status"].firstMatch
+        XCTAssertTrue(statusAlert.waitForExistence(timeout: 5))
+        XCTAssertTrue(statusAlert.staticTexts.matching(NSPredicate(format: "label CONTAINS 'commitPresent'" )).firstMatch.exists)
+        statusAlert.buttons["Done"].tap()
+
         let defaultInstance = app.staticTexts["Default"].firstMatch
         XCTAssertTrue(defaultInstance.waitForExistence(timeout: 10), "Expected Default widget instance in Package Information")
         XCTAssertFalse(app.staticTexts["invalidArtifactReference"].exists, "Raw invalidArtifactReference error must never appear")
@@ -230,6 +238,17 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         tree.name = "\(name)-accessibility.txt"
         tree.lifetime = .keepAlways
         add(tree)
+    }
+
+    func testProductionExpoHostFilesPreserveEmptyAndBinaryBytesThroughTheJSFacade() throws {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+        let result = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'HOST_FILES_PASS:131073'")
+        ).firstMatch
+        XCTAssertTrue(result.waitForExistence(timeout: 45),
+            "Actual Expo JS→HanlinHostServices→native file roundtrip did not preserve empty/all-byte/131073-byte input and missing-file status")
     }
 
     func testProductionExpoSwiftUIProbeEndToEnd() throws {

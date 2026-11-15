@@ -2,9 +2,13 @@ import { createHash } from 'node:crypto';
 import { access, chmod, cp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repositoryRoot = resolve(scriptRoot, '..', '..');
+// Verify the checked-in JS and declarations with the pinned compiler before
+// the shared-runtime replacement can discard or stage any facade bytes.
+execFileSync(process.execPath, [resolve(scriptRoot, 'build-host-services.mjs'), '--check'], {stdio: 'inherit'});
 const coreRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'core');
 const iosRuntimeRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'ios');
 const swiftUIRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'swift-ui');
@@ -56,6 +60,18 @@ if (sha256(upstreamNativeContractBytes) !== dependencyLock.swiftUI.upstreamNativ
 // downstream wrapper at the pinned NativeScript generator entry point so that
 // phase can expose the Swift interface to the upstream metadata generator while
 // retaining the full Xcode build-phase environment it requires.
+if (process.platform === 'darwin') {
+  const toolRoot = resolve(repositoryRoot, 'build/nativescript-metadata-tool');
+  let toolReady = false;
+  try {
+    const proof = await readJSON(resolve(toolRoot, 'provenance.json'));
+    toolReady = proof.patchSourceSHA256 === sha256(await readFile(resolve(scriptRoot, 'build-metadata-tool.py')))
+      && proof.generatorSHA256 === sha256(await readFile(resolve(toolRoot, 'bin/objc-metadata-generator')))
+      && proof.architecture === (process.arch === 'x64' ? 'x86_64' : process.arch)
+      && proof.xcode === execFileSync('xcodebuild', ['-version'], {encoding: 'utf8'}).trim();
+  } catch { /* A missing/stale build tool must be built from the pinned inputs. */ }
+  if (!toolReady) execFileSync('python3', [resolve(scriptRoot, 'build-metadata-tool.py')], {stdio: 'inherit'});
+}
 const metadataInternalRoot = resolve(iosRuntimeRoot, 'framework', 'internal');
 const metadataWrapper = await readFile(resolve(scriptRoot, 'build-step-metadata-generator-wrapper.py'), 'utf8');
 const metadataGeneratorDirectories = (await readdir(metadataInternalRoot, { withFileTypes: true }))
@@ -195,6 +211,8 @@ async function stageSharedCoreRuntime(destinationRoot) {
   const sharedStaging = `${destinationRoot}.staging-${process.pid}`;
   await rm(sharedStaging, { recursive: true, force: true });
   await mkdir(sharedStaging, { recursive: true });
+  await mkdir(resolve(sharedStaging, '@hanlin'), {recursive: true});
+  await cp(resolve(destinationRoot, '@hanlin', 'host-services'), resolve(sharedStaging, '@hanlin', 'host-services'), {recursive: true});
 
   const coreDest = resolve(sharedStaging, '@nativescript', 'core');
   await mkdir(coreDest, { recursive: true });

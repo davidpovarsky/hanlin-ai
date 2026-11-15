@@ -233,6 +233,7 @@ export async function prepareExpoNativeAPI() {
   const coreIncludeDir = resolve(coreTargetDir, 'include');
   await mkdir(coreIncludeDir, { recursive: true });
   await cp(resolve(bridgeDstDir, 'HanlinExpoNativeAPIGate.h'), resolve(coreIncludeDir, 'HanlinExpoNativeAPIGate.h'));
+  await cp(resolve(bridgeDstDir, 'HanlinExpoRuntimeScheduler.h'), resolve(coreIncludeDir, 'HanlinExpoRuntimeScheduler.h'));
   await cp(resolve(bridgeDstDir, 'HanlinExpoDependencyProvider.h'), resolve(coreIncludeDir, 'HanlinExpoDependencyProvider.h'));
   await cp(resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptUIKitHost.h'), resolve(coreIncludeDir, 'NativeScriptUIKitHost.h'));
   await cp(resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptUIView.h'), resolve(coreIncludeDir, 'NativeScriptUIView.h'));
@@ -241,6 +242,7 @@ export async function prepareExpoNativeAPI() {
   await writeFile(coreUmbrellaHeader, `#pragma once
 #import <Foundation/Foundation.h>
 #import "HanlinExpoNativeAPIGate.h"
+#import "HanlinExpoRuntimeScheduler.h"
 #import "HanlinExpoDependencyProvider.h"
 #import "NativeScriptUIKitHost.h"
 #import "NativeScriptUIView.h"
@@ -283,7 +285,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
     const createAnchor = 'NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {';
     const createReplacement = `NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: no active matching native runtime session.");
     return nil;
   }`;
     mmContent = applyStrictPatch(mmContent, createAnchor, createReplacement, 'NativeScriptCreateUIKitHost');
@@ -294,7 +296,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
     const lifecycleReplacement = `NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycle(NSString* hostId,
                                                                       NSString* phase) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: no active matching native runtime session.");
     return nil;
   }`;
     mmContent = applyStrictPatch(mmContent, lifecycleAnchor, lifecycleReplacement, 'NativeScriptRunUIKitHostLifecycle');
@@ -303,7 +305,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
     const installAnchor = 'bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {';
     const installReplacement = `bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: no active matching native runtime session.");
     return false;
   }`;
     mmContent = applyStrictPatch(mmContent, installAnchor, installReplacement, 'install');
@@ -316,7 +318,7 @@ void HanlinExpoNativeAPIClearWorkletRuntime(void) {
                                                         jsi::Object runtimeHolder,
                                                         std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: 'ios-native-api' capability is NOT granted.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: no active matching native runtime session.");
     return false;
   }`;
     mmContent = applyStrictPatch(mmContent, workletAnchor, workletReplacement, 'installWorkletRuntime');

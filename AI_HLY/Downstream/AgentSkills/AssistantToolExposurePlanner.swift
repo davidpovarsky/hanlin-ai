@@ -1,16 +1,16 @@
 import Foundation
 
 /// Deterministic policy planner for exposing tool schemas to the model.
-/// Evaluates serialized model-schema byte cost against a strict budget
+/// Evaluates serialized model-schema byte cost against an optional caller budget
 /// rather than blindly exposing all preferred tools.
 public struct AssistantToolExposurePlanner: Sendable {
     /// Maximum serialized schema byte budget for directly exposed tools upon loading a skill.
     /// Tools exceeding this budget remain deferred to `tool_search`.
-    public static let defaultSchemaByteBudget: Int = 24_000
+    public static let defaultSchemaByteBudget: Int? = nil
 
-    public let maxSchemaBytes: Int
+    public let maxSchemaBytes: Int?
 
-    public init(maxSchemaBytes: Int = defaultSchemaByteBudget) {
+    public init(maxSchemaBytes: Int? = defaultSchemaByteBudget) {
         self.maxSchemaBytes = maxSchemaBytes
     }
 
@@ -51,7 +51,7 @@ public struct AssistantToolExposurePlanner: Sendable {
             }
             let bytes = schemaSizes[alias] ?? 600
             // DISC-02 / DISC-03: No starvation for single tool exceeding budget, and default allows all preferred tools.
-            if maxSchemaBytes == Int.max || currentBytes + bytes <= maxSchemaBytes || (exposed.isEmpty && currentBytes == 0) {
+            if (maxSchemaBytes.map({ currentBytes + bytes <= $0 }) ?? true) || (exposed.isEmpty && currentBytes == 0) {
                 exposed.append(alias)
                 currentBytes += bytes
             } else {

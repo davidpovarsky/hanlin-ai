@@ -24,7 +24,7 @@ import sys
 import time
 from typing import Dict, List, Optional, Set, Tuple
 
-STAMP_SCHEMA_VERSION = 3
+STAMP_SCHEMA_VERSION = 4
 
 REQUIRED_DERIVED_DATA_HEADERS = [
     "React/React-umbrella.h",
@@ -244,6 +244,7 @@ def stage_modular_headers(
     configurations: Optional[List[str]] = None,
     force: bool = False,
     run_patch_hash_combine: bool = True,
+    sign_xcframeworks: bool = True,
 ) -> Dict[str, any]:
     """Execute fast, complete and idempotent modular header staging."""
     start_time = time.perf_counter()
@@ -293,6 +294,7 @@ def stage_modular_headers(
                     data.get("version") != STAMP_SCHEMA_VERSION
                     or data.get("inputs_hash") != expected_inputs_hash
                     or data.get("configurations") != configurations
+                    or data.get("sign_xcframeworks") is not sign_xcframeworks
                 ):
                     all_stamps_match = False
                     break
@@ -323,6 +325,11 @@ def stage_modular_headers(
 
     print(f"[stage_modular_headers] Performing staging (force={force}, inputs_hash={expected_inputs_hash[:16]}...)")
     updated_files = 0
+
+    # A failed/unsigned re-stage must not leave a prior signed cache hit behind.
+    for stamp_file in stamp_files:
+        if stamp_file.exists():
+            stamp_file.unlink()
 
     # 1. Stage into React.xcframework slices
     for slice_name in ("ios-arm64", "ios-arm64_x86_64-simulator"):
@@ -511,14 +518,15 @@ def stage_modular_headers(
                     print("[stage_modular_headers] patch-hash-combine.mjs executed successfully.")
 
     # 6. Resign xcframeworks on macOS
-    for xcf in expo_artifacts_dir.glob("*.xcframework"):
-        resign_xcframework(xcf)
-    if checkouts_dir.is_dir():
-        for checkout in checkouts_dir.iterdir():
-            for base in (checkout / "Packages" / "HanlinExpoRuntime" / "Artifacts", checkout / "Artifacts"):
-                if base.is_dir():
-                    for xcf in base.glob("*.xcframework"):
-                        resign_xcframework(xcf)
+    if sign_xcframeworks:
+        for xcf in expo_artifacts_dir.glob("*.xcframework"):
+            resign_xcframework(xcf)
+        if checkouts_dir.is_dir():
+            for checkout in checkouts_dir.iterdir():
+                for base in (checkout / "Packages" / "HanlinExpoRuntime" / "Artifacts", checkout / "Artifacts"):
+                    if base.is_dir():
+                        for xcf in base.glob("*.xcframework"):
+                            resign_xcframework(xcf)
 
     # 7. Write stamps to all stamp targets
     stamp_payload = json.dumps(
@@ -526,6 +534,7 @@ def stage_modular_headers(
             "version": STAMP_SCHEMA_VERSION,
             "inputs_hash": expected_inputs_hash,
             "configurations": configurations,
+            "sign_xcframeworks": sign_xcframeworks,
             "updated_files": updated_files,
             "timestamp": int(time.time()),
         },
@@ -556,6 +565,7 @@ def main() -> int:
     parser.add_argument("--configuration", action="append", help="Build configuration(s) to stage")
     parser.add_argument("--force", action="store_true", help="Force re-staging even if stamp matches")
     parser.add_argument("--no-patch-hash-combine", action="store_true", help="Skip patch-hash-combine.mjs")
+    parser.add_argument("--skip-signing", action="store_true", help="Skip signing only for isolated metadata/header validation")
 
     args = parser.parse_args()
     sp_path = Path(args.source_packages_path)
@@ -570,6 +580,7 @@ def main() -> int:
         configurations=cfgs,
         force=args.force,
         run_patch_hash_combine=not args.no_patch_hash_combine,
+        sign_xcframeworks=not args.skip_signing,
     )
     return 0 if res["status"] in ("SUCCESS", "SKIPPED_STAMP_MATCH") else 1
 

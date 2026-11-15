@@ -9,7 +9,7 @@
 **Agents & Roles:** נועם (Noam, Engineering) `[נועם | DEV] [MAIN_SESSION]`, רוני (Roni, QA) `[רוני | QA] [MAIN_SESSION]`, איתן (Eitan, Architecture) `[איתן | ARCH] [MAIN_SESSION]`  
 **Asana Status:** READ-ONLY (Preserved untouched per prompt instruction line 15)  
 **Distribution Gate:** `TESTFLIGHT_DELIVERED_VALID` (Build 89401 signed, validated, and uploaded to TestFlight; Run `42098595922`)  
-**Overall Verdict:** `TESTFLIGHT_UPLOADED_VALID_OWNER_DEVICE_PENDING` (Truthful status: build uploaded and validated; physical hardware verification pending owner device testing)  
+**Latest physical verdict (2026-11-09):** `OWNER_EXECUTED_FAIL_89401` — owner supplied microphone self-stop and Widget picker integrity-error screenshots. The signed delivery remains valid; functional device acceptance failed. Follow-up implementation and exact evidence: [Approved execution report](APPROVED_PLAN_2026-11-08.md). Historical implementation and delivery evidence below retain their original source/run provenance.
 
 ---
 
@@ -251,11 +251,7 @@ To be executed on owner hardware (`iPad15,3`, iPadOS `27.2`) upon delivery of a 
 6. **Critical Acceptance:** Error `HanlinScriptExtensions.HanlinScriptExtensionStoreError -4` **DOES NOT APPEAR**.
 
 ### Step 3: Package Center Diagnostic Verification
-1. Open ChavrusaChat → Settings / Developer → Scripting Package Center.
-2. Select any installed package detail view.
-3. Tap **Copy Diagnostic**.
-4. Paste into Notes or chat; verify string format:
-   `id=HWG-... commitPresent=true revisionPresent=true shadowPresent=true summary=Storage consistency verified.`
+The original instruction assumed **Copy Diagnostic** was always available. In 89401 it is conditional on an error card, and the owner could not access it. Do not ask the owner to find that button or repeat diagnostic collection in 89401. Follow-up code adds a permanent **Widget status** toolbar action to native-widget Package Information; this is not yet a delivered build. Use the supplied screenshots/crash logs and the reproduction evidence in the approved execution report.
 
 ---
 

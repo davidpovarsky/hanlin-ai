@@ -20,12 +20,14 @@ public actor HanlinChatEngine {
 
     public func makeAISDKFetch(
         onRequest: (@Sendable (URLRequest) async -> Void)? = nil,
-        onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil
+        onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil,
+        transportObserver: HanlinChatTransportObserver? = nil
     ) -> FetchFunction {
         HanlinAISDKProviderFactory.makeFetch(
             sessionConfiguration: sessionConfiguration,
             onRequest: onRequest,
-            onResponse: onResponse
+            onResponse: onResponse,
+            transportObserver: transportObserver
         )
     }
 
@@ -50,28 +52,38 @@ public actor HanlinChatEngine {
     /// can customize the shared request body before calling this entry point.
     public func stream(
         request: URLRequest,
-        configuration: HanlinChatModelConfiguration
+        configuration: HanlinChatModelConfiguration,
+        transportObserver: HanlinChatTransportObserver? = nil
     ) -> AsyncThrowingStream<HanlinChatStreamEvent, Error> {
         let (stream, continuation) = AsyncThrowingStream<HanlinChatStreamEvent, Error>.makeStream()
 
 #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS) || os(visionOS)
         let session = URLSession(configuration: sessionConfiguration)
+        let traceID = UUID()
         let task = Task.detached(priority: .userInitiated) {
             defer { session.finishTasksAndInvalidate() }
+            transportObserver?(.request(id: traceID, request: request))
+            var tracePending = Data()
 
             do {
                 let (bytes, response) = try await session.bytes(for: request)
                 guard let httpResponse = response as? HTTPURLResponse else {
+                    transportObserver?(.end(id: traceID, error: "invalid_response"))
                     continuation.finish(throwing: HanlinChatError.networkFailure("Invalid server response"))
                     return
                 }
+                transportObserver?(.response(id: traceID, response: httpResponse))
 
                 guard (200...299).contains(httpResponse.statusCode) else {
                     var errorDetail = ""
-                    for try await line in bytes.lines {
-                        errorDetail += line
-                        if errorDetail.count > 2048 { break }
+                    for try await byte in bytes {
+                        tracePending.append(byte)
+                        if tracePending.count >= 2048 { break }
                     }
+                    transportObserver?(.bytes(id: traceID, data: tracePending))
+                    errorDetail = String(decoding: tracePending, as: UTF8.self)
+                    tracePending.removeAll()
+                    transportObserver?(.end(id: traceID, error: "http_\(httpResponse.statusCode)_body_preview_capped_at_2048_bytes"))
                     continuation.finish(throwing: HanlinChatError.serverError(
                         statusCode: httpResponse.statusCode,
                         message: errorDetail.isEmpty ? "Request rejected" : errorDetail
@@ -89,19 +101,40 @@ public actor HanlinChatEngine {
 
                 let parser = HanlinChatStreamParser(apiType: configuration.apiType)
 
-                for try await line in bytes.lines {
+                // Frame UTF-8 only after a complete line. Capture the very same
+                // bytes once, before decoding, including a trailing fragment.
+                var pending = Data()
+                for try await byte in bytes {
                     try Task.checkCancellation()
+                    pending.append(byte)
+                    tracePending.append(byte)
+                    if byte == 0x0A || tracePending.count >= 1024 {
+                        transportObserver?(.bytes(id: traceID, data: tracePending))
+                        tracePending.removeAll(keepingCapacity: true)
+                    }
+                    guard byte == 0x0A else { continue }
+                    let line = String(decoding: pending, as: UTF8.self)
+                    pending.removeAll(keepingCapacity: true)
                     if let event = parser.parse(line: line) {
                         continuation.yield(event)
-                        if event.isDone {
-                            break
-                        }
+                        if event.isDone { break }
                     }
                 }
+                if !pending.isEmpty {
+                    if let event = parser.parse(line: String(decoding: pending, as: UTF8.self)) {
+                        continuation.yield(event)
+                    }
+                }
+                if !tracePending.isEmpty { transportObserver?(.bytes(id: traceID, data: tracePending)) }
+                transportObserver?(.end(id: traceID, error: nil))
                 continuation.finish()
             } catch is CancellationError {
+                if !tracePending.isEmpty { transportObserver?(.bytes(id: traceID, data: tracePending)) }
+                transportObserver?(.end(id: traceID, error: "cancelled"))
                 continuation.finish(throwing: HanlinChatError.cancelled)
             } catch {
+                if !tracePending.isEmpty { transportObserver?(.bytes(id: traceID, data: tracePending)) }
+                transportObserver?(.end(id: traceID, error: String(describing: error)))
                 continuation.finish(throwing: error)
             }
         }

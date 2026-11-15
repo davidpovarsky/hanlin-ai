@@ -261,7 +261,6 @@ struct ChatViewBottom: View {
     var availableWorkspaceSize: CGSize = .zero
 
     @Environment(\.modelContext) private var context
-    @Namespace private var modelPopoverZoom
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -463,7 +462,9 @@ struct ChatViewBottom: View {
                 showPhotoSourceOptions = isGeneral
             }
             isSourceOptionsVisible = isGeneral
-            if newPopup == .general || newPopup == .tools || newPopup == .model {
+            // Keep the model button anchored while its popover zooms. Resigning
+            // the editor here also animates the keyboard and moves that source.
+            if newPopup == .general || newPopup == .tools {
                 isInputActive.wrappedValue = false
             }
         }
@@ -1344,22 +1345,25 @@ struct ChatViewBottom: View {
             .disabled(isResponding)
             .sensoryFeedback(.impact, trigger: isFeedBack)
 
-            // Entrypoint 3: Compact Discoverable Model Picker Capsule (sole anchored `.popover` with internal matched zoom)
-            Button {
-                isFeedBack.toggle()
-                popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
-            } label: {
-                composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("hanlin-composer-model-picker")
-            .matchedTransitionSource(id: "model-popover", in: modelPopoverZoom)
-            .sensoryFeedback(.selection, trigger: isSelect)
-            .popover(
+            // Native source-item popover morph is isolated from the inner All Models morph.
+            HanlinModelZoomPopover(
                 isPresented: popupCoordinator.binding(for: .model),
-                attachmentAnchor: .rect(.bounds),
-                arrowEdge: .bottom
+                presentationID: popupCoordinator.modelPresentationGeneration,
+                contentSize: popupCoordinator.modelPopoverSize,
+                onResizeCompleted: { generation, size in
+                    popupCoordinator.modelFrameResizeDidComplete(presentationID: generation, size: size)
+                }
             ) {
+                Button {
+                    isFeedBack.toggle()
+                    popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
+                } label: {
+                    composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("hanlin-composer-model-picker")
+                .sensoryFeedback(.selection, trigger: isSelect)
+            } content: {
                 HanlinModelPickerPopover(
                     coordinator: popupCoordinator,
                     models: modelTemp,
@@ -1373,8 +1377,6 @@ struct ChatViewBottom: View {
                     ifThink: ifThink,
                     ifAudio: ifAudio
                 )
-                .presentationCompactAdaptation(.popover)
-                .navigationTransition(.zoom(sourceID: "model-popover", in: modelPopoverZoom))
             }
 
             Spacer(minLength: 4)

@@ -52,6 +52,14 @@ public struct HanlinArchiveLimits: Codable, Hashable, Sendable {
     }
 
     public static let packageImport = HanlinArchiveLimits()
+
+    /// Personal-runtime Skill imports use streamed storage and actual I/O
+    /// failures rather than fixed package-size/count/depth budgets. Path,
+    /// identity, link, collision and malformed-archive checks remain active.
+    public static let autonomousSkillImport = HanlinArchiveLimits(
+        maximumArchiveBytes: .max, maximumFiles: .max, maximumDirectories: .max,
+        maximumDepth: .max, maximumUncompressedBytes: .max, maximumCompressionRatio: .max
+    )
 }
 
 public struct HanlinArchivePolicy: Sendable {
@@ -77,6 +85,10 @@ public struct HanlinArchivePolicy: Sendable {
         var canonicalPaths: [String: String] = [:]
         var caseFoldedPaths: [String: String] = [:]
 
+        if archiveBytes < 0 || centralDirectoryEntryCount < 0 {
+            findings.append(.init(code: .malformedArchive, severity: .error,
+                message: "Archive byte and entry counts must not be negative."))
+        }
         if archiveBytes > limits.maximumArchiveBytes {
             findings.append(.init(
                 code: .compressedSizeLimit,
@@ -142,8 +154,14 @@ public struct HanlinArchivePolicy: Sendable {
             case .hardLink:
                 findings.append(finding(.hardLink, path, "Hard links are forbidden."))
             }
-            compressedBytes = Self.adding(entry.compressedBytes, to: compressedBytes)
-            uncompressedBytes = Self.adding(entry.uncompressedBytes, to: uncompressedBytes)
+            if let compressed = Self.adding(entry.compressedBytes, to: compressedBytes),
+               let uncompressed = Self.adding(entry.uncompressedBytes, to: uncompressedBytes) {
+                compressedBytes = compressed
+                uncompressedBytes = uncompressed
+            } else {
+                findings.append(finding(.malformedArchive, path,
+                    "Archive entry sizes are negative or their sum cannot be represented."))
+            }
             if entry.uncompressedBytes > 0 {
                 if entry.compressedBytes == 0
                     || entry.uncompressedBytes / max(1, entry.compressedBytes) > limits.maximumCompressionRatio
@@ -258,6 +276,10 @@ public struct HanlinArchivePolicy: Sendable {
         var canonicalPaths: [String: String] = [:]
         var caseFoldedPaths: [String: String] = [:]
 
+        if archiveBytes < 0 || centralDirectoryEntryCount < 0 {
+            findings.append(.init(code: .malformedArchive, severity: .error,
+                message: "Archive byte and entry counts must not be negative."))
+        }
         if archiveBytes > limits.maximumArchiveBytes {
             findings.append(.init(
                 code: .compressedSizeLimit,
@@ -314,8 +336,14 @@ public struct HanlinArchivePolicy: Sendable {
             case .hardLink:
                 findings.append(finding(.hardLink, path, "Hard links are forbidden."))
             }
-            compressedBytes = Self.adding(entry.compressedBytes, to: compressedBytes)
-            uncompressedBytes = Self.adding(entry.uncompressedBytes, to: uncompressedBytes)
+            if let compressed = Self.adding(entry.compressedBytes, to: compressedBytes),
+               let uncompressed = Self.adding(entry.uncompressedBytes, to: uncompressedBytes) {
+                compressedBytes = compressed
+                uncompressedBytes = uncompressed
+            } else {
+                findings.append(finding(.malformedArchive, path,
+                    "Archive entry sizes are negative or their sum cannot be represented."))
+            }
             if entry.uncompressedBytes > 0 {
                 if entry.compressedBytes == 0
                     || entry.uncompressedBytes / max(1, entry.compressedBytes) > limits.maximumCompressionRatio
@@ -490,8 +518,8 @@ public struct HanlinArchivePolicy: Sendable {
         return allowed.contains(name[name.index(after: dot)...].lowercased())
     }
 
-    private static func adding(_ value: Int64, to total: Int64) -> Int64 {
-        guard value >= 0, total <= Int64.max - value else { return Int64.max }
+    private static func adding(_ value: Int64, to total: Int64) -> Int64? {
+        guard value >= 0, total <= Int64.max - value else { return nil }
         return total + value
     }
 

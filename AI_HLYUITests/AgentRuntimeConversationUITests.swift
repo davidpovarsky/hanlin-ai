@@ -1,7 +1,122 @@
 import XCTest
+import UIKit
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
+    func testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        // This case verifies the screen/key/replay binding, with a known capture
+        // level supplied through the process argument domain. It is not the
+        // separate new-install/default-migration acceptance test.
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-agentDiagnosticsLevel", "fullLocalDebug"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launch()
+        openChat(in: app)
+        let marker = "DIAGNOSTIC_CAPTURE_" + UUID().uuidString
+        let expected = "CAPTURED_" + marker
+        sendPrompt(marker, in: app)
+        let answer = app.descendants(matching: .any).matching(NSPredicate(format: "value == %@ OR label == %@", expected, expected)).firstMatch
+        XCTAssertTrue(answer.waitForExistence(timeout: 60), "A fresh uniquely identified ordinary turn did not complete")
+        openSettings(in: app)
+        let diagnostics = app.descendants(matching: .any)["hanlin-agent-diagnostics-link"].firstMatch
+        for _ in 0..<8 where !diagnostics.isHittable { app.swipeUp() }
+        XCTAssertTrue(diagnostics.waitForExistence(timeout: 10))
+        tapElement(diagnostics)
+        let session = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-diagnostics-session-")
+        ).firstMatch
+        for _ in 0..<6 where !session.isHittable { app.swipeUp() }
+        XCTAssertTrue(session.waitForExistence(timeout: 10), "The completed ordinary turn did not automatically produce a session")
+        tapElement(session)
+        let reviewButton = app.descendants(matching: .any)["hanlin-diagnostics-review-encrypted"].firstMatch
+        for _ in 0..<6 where !reviewButton.isHittable { app.swipeUp() }
+        XCTAssertTrue(reviewButton.waitForExistence(timeout: 10))
+        tapElement(reviewButton)
+        let confirm = app.descendants(matching: .any)["hanlin-diagnostics-confirm-local-review"].firstMatch
+        XCTAssertTrue(confirm.waitForExistence(timeout: 10), "Encrypted capture must require a separate deliberate confirmation")
+        tapElement(confirm)
+        let report = app.descendants(matching: .any)["hanlin-diagnostics-local-review-text"].firstMatch
+        let reportExists = report.waitForExistence(timeout: 60)
+        if !reportExists {
+            let state = XCTAttachment(string: app.debugDescription)
+            state.name = "Local encrypted review binding state"
+            state.lifetime = .keepAlways
+            add(state)
+        }
+        XCTAssertTrue(reportExists, "Actual device-key lookup/decryption/offline replay did not produce a review")
+        let text = report.label + (report.value as? String ?? "")
+        if !text.contains(expected) || !text.contains("SDK content:") {
+            let state = XCTAttachment(string: text)
+            state.name = "Actual bounded encrypted review preview"
+            state.lifetime = .keepAlways
+            add(state)
+        }
+        XCTAssertTrue(text.contains("Authenticated records") && text.contains("not an exact raw export"))
+        XCTAssertTrue(text.contains(expected) && text.contains("SDK content:"), "The review did not replay the actual newly captured response")
+        XCTAssertFalse(text.contains("NOT_CAPTURED: no transport request or response records are available."))
+        XCTAssertFalse(text.contains("acceptance-only"), "The actual captured synthetic Authorization credential leaked into the preview")
+        let share = app.descendants(matching: .any)["hanlin-diagnostics-share-reviewed-report"].firstMatch
+        XCTAssertTrue(share.waitForExistence(timeout: 10) && share.isEnabled)
+        // Sharing stays a separate owner action; do not open an external app.
+        tapElement(app.navigationBars["Local capture review"].buttons["Done"].firstMatch)
+    }
+
+    func testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launch()
+        openChat(in: app)
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 20))
+        tapElement(input)
+        input.typeText("RENDER_CODE_FENCES")
+        tapElement(app.buttons["hanlin-chat-send"].firstMatch)
+
+        let diagram = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-mermaid-")
+        ).firstMatch
+        let comparison = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-diff-")
+        ).firstMatch
+        XCTAssertTrue(diagram.waitForExistence(timeout: 30), "The original parsed Markdown hook did not produce a diagram block")
+        XCTAssertTrue(comparison.waitForExistence(timeout: 30), "The original parsed Markdown hook did not produce a Diff block")
+        let diagramPreview = diagram.descendants(matching: .webView).firstMatch
+        XCTAssertTrue(diagramPreview.waitForExistence(timeout: 60), "Actual local Mermaid WebKit output did not reach the original bubble")
+        XCTAssertTrue(comparison.descendants(matching: .webView).firstMatch.waitForExistence(timeout: 30),
+                      "Actual local Diff WebKit output did not reach the original bubble")
+        // Toggle retains native accessibility semantics even with .button style;
+        // locate the actual control by its stable ID rather than assuming UIButton.
+        let sourceToggle = diagram.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-source-toggle-")
+        ).firstMatch
+        let sourceControlExists = sourceToggle.waitForExistence(timeout: 10)
+        if !sourceControlExists {
+            let state = XCTAttachment(string: app.debugDescription)
+            state.name = "Original code-fence source control hierarchy"
+            state.lifetime = .keepAlways
+            add(state)
+        }
+        XCTAssertTrue(sourceControlExists)
+        tapElement(sourceToggle)
+        let source = diagram.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-source-text-")
+        ).firstMatch
+        XCTAssertTrue(source.waitForExistence(timeout: 10), "Showing source must preserve the original Mermaid input")
+        let shownSource = source.label + (source.value as? String ?? "")
+        XCTAssertTrue(shownSource.contains("flowchart LR") && shownSource.contains("שלום🙂"),
+                      "The source toggle must expose the actual complete Unicode diagram input")
+        tapElement(diagram.buttons["Code block actions"].firstMatch)
+        tapElement(app.buttons["Expand"].firstMatch)
+        XCTAssertTrue(app.navigationBars["Diagram"].waitForExistence(timeout: 10))
+        tapElement(app.buttons["Done"].firstMatch)
+        XCTAssertTrue(diagram.waitForExistence(timeout: 10), "Closing the expanded view must retain the original bubble")
+    }
+
     func testRealChatUISendsPromptShowsToolActivityAndFinalAnswer() throws {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
@@ -36,17 +151,20 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(send.waitForExistence(timeout: 10), "The real chat send button did not appear.")
         tapElement(send)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "The deterministic provider's final answer was not rendered.")
 
-        let toolToggle = app.descendants(matching: .any)["hanlin-tool-content-toggle"].firstMatch
+        let toolToggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
         XCTAssertTrue(toolToggle.waitForExistence(timeout: 10), "The completed tool content toggle was not rendered.")
         tapElement(toolToggle)
 
+        let failedCall = app.descendants(matching: .any)["hanlin-agent-activity-ui-python-invalid-call"].firstMatch
+        XCTAssertTrue(failedCall.waitForExistence(timeout: 10), "The failed call must remain individually inspectable")
+        tapElement(failedCall)
         let expandedToolText = app.descendants(matching: .any)["hanlin-tool-content-expanded-text"].firstMatch
-        XCTAssertTrue(expandedToolText.waitForExistence(timeout: 10), "Expanded tool content text did not appear.")
+        XCTAssertTrue(expandedToolText.waitForExistence(timeout: 10), "Expanded tool content text did not appear: \(app.debugDescription)")
 
         let failedActivity = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier == 'hanlin-tool-content-expanded-text' OR label CONTAINS[c] 'invalid' OR label CONTAINS[c] 'unexpected' OR label CONTAINS[c] '⚠️'")
@@ -98,14 +216,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(send)
 
         // 3. Final answer renders in the same user turn without extra user nudge
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'LOCAL_PYTHON_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "Final answer LOCAL_PYTHON_COMPLETE was not rendered in the same user turn.")
         XCTAssertTrue(finalAnswer.label.contains("42"), "Calculated result 42 was not rendered.")
 
         // Verify tool activity is present and no remote python was invoked
-        let remoteActivity = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'execute_remote_python_code'")).firstMatch
+        let remoteActivity = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS 'execute_remote_python_code'")).firstMatch
         XCTAssertFalse(remoteActivity.exists, "Remote Python must not be invoked when local python is supported")
 
         // Verify that agent execution prepared Python without a manual switch.
@@ -145,22 +263,32 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         // 3. Run B finishes cleanly
         let assistantBubbles = app.otherElements.matching(identifier: "hanlin-assistant-bubble")
-        let runBAnswer = assistantBubbles.descendants(matching: .staticText).matching(
-            NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
+        // Native Markdown exposes a UITextView with value plus a nested text
+        // accessibility element. Match the owning value, not sidebar labels
+        // or StaticText-only descendants, and count that answer exactly once.
+        let runBAnswer = assistantBubbles.descendants(matching: .textView).matching(
+            NSPredicate(format: "value == %@", "RUN_B_COMPLETE")
         ).firstMatch
-        XCTAssertTrue(runBAnswer.waitForExistence(timeout: 30), "Run B did not complete with RUN_B_COMPLETE")
+        let runBCompleted = runBAnswer.waitForExistence(timeout: 30)
+        if !runBCompleted {
+            let state = XCTAttachment(string: app.debugDescription)
+            state.name = "Stop then new run UI state"
+            state.lifetime = .keepAlways
+            add(state)
+        }
+        XCTAssertTrue(runBCompleted, "Run B did not complete with RUN_B_COMPLETE")
 
         // 4. Wait beyond deterministic Run A delay interval (~1.5s)
         Thread.sleep(forTimeInterval: 2.0)
 
         // 5. Assert RUN_A_LATE_GHOST does not exist, RUN_B_COMPLETE exists exactly once in chat bubbles, no stale Stop, no stuck Thinking
-        let runAGhost = app.staticTexts.matching(
+        let runAGhost = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'RUN_A_LATE_GHOST'")
         ).firstMatch
         XCTAssertFalse(runAGhost.exists, "Run A late ghost answer RUN_A_LATE_GHOST must not appear after being cancelled")
 
-        let runBMatches = assistantBubbles.descendants(matching: .staticText).matching(
-            NSPredicate(format: "label CONTAINS 'RUN_B_COMPLETE'")
+        let runBMatches = assistantBubbles.descendants(matching: .textView).matching(
+            NSPredicate(format: "value == %@", "RUN_B_COMPLETE")
         )
         XCTAssertEqual(runBMatches.count, 1, "RUN_B_COMPLETE must exist exactly once")
 
@@ -213,7 +341,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         sendPrompt("PROMPT_UI02_CLASSIC_BUBBLES", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI02_CLASSIC_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 30), "UI02 classic bubble final answer did not render")
@@ -239,7 +367,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         sendPrompt("PROMPT_UI03_SEARCH_CITATIONS", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI03_SEARCH_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI03 search final answer did not render")
@@ -254,33 +382,75 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("UI-03_SearchMessageAndDeduplicatedCitations", in: app)
     }
 
+    func testNativePartialSelectionSaveAndOriginalLongPressPreview() throws {
+        let app = launchAcceptanceApp()
+        openChat(in: app)
+        sendPrompt("PROMPT_CHAT_PRESENTATION", in: app)
+        let paragraph = app.textViews.matching(NSPredicate(format: "label == 'alpha beta gamma'")).firstMatch
+        XCTAssertTrue(paragraph.waitForExistence(timeout: 45), "The actual native Markdown paragraph did not render")
+        paragraph.coordinate(withNormalizedOffset: CGVector(dx: 0.04, dy: 0.5)).doubleTap()
+        let save = app.descendants(matching: .any).matching(NSPredicate(format: "label == 'Save for myself'")).firstMatch
+        XCTAssertTrue(save.waitForExistence(timeout: 10), "Native selected-text Save action is missing: \(app.debugDescription)")
+        tapElement(save)
+
+        // The original whole-message context menu remains on the message's padding;
+        // a double tap inside its native paragraph selects text independently.
+        paragraph.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0))
+            .withOffset(CGVector(dx: 0, dy: -2)).press(forDuration: 1)
+        let wholeCopy = app.descendants(matching: .any)["hanlin-message-menu-copy"].firstMatch
+        XCTAssertTrue(wholeCopy.waitForExistence(timeout: 10), "Original whole-message preview/menu was lost: \(app.debugDescription)")
+        attachScreenshot("Chat_OriginalOpaquePreview", in: app)
+        tapElement(wholeCopy)
+
+        ensureChatListVisible(in: app)
+        let saved = app.buttons["hanlin-saved-messages-open"].firstMatch
+        XCTAssertTrue(saved.waitForExistence(timeout: 10), "Saved messages entry missing: \(app.debugDescription)")
+        tapElement(saved)
+        let excerpt = app.staticTexts["hanlin-saved-excerpt-text"].firstMatch
+        XCTAssertTrue(excerpt.waitForExistence(timeout: 10))
+        XCTAssertEqual(excerpt.label, "alpha", "The selected substring, not the whole paragraph, must reach personal storage")
+        tapElement(excerpt)
+        let openSource = app.buttons["hanlin-saved-open-source"].firstMatch
+        XCTAssertTrue(openSource.waitForExistence(timeout: 5))
+        tapElement(openSource)
+        XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "The saved excerpt did not return through the original conversation")
+        attachScreenshot("Chat_SelectedExcerptSource", in: app)
+    }
+
+    func testMarkdownLinkOpensAndClosesTheInternalSafariBrowser() throws {
+        let app = launchAcceptanceApp()
+        openChat(in: app)
+        sendPrompt("PROMPT_CHAT_PRESENTATION", in: app)
+        let link = app.links.matching(NSPredicate(format: "label == 'Example'")).firstMatch
+        XCTAssertTrue(link.waitForExistence(timeout: 45), "The actual Markdown link did not render")
+        tapElement(link)
+        let done = app.buttons["Close"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 15), "The original in-app Safari controller did not open: \(app.debugDescription)")
+        XCTAssertTrue(app.webViews.firstMatch.waitForExistence(timeout: 15), "The internal browser has no web content")
+        attachScreenshot("Chat_InternalSafariBrowser", in: app)
+        tapElement(done)
+        let paragraph = app.textViews.matching(NSPredicate(format: "label == 'alpha beta gamma'")).firstMatch
+        XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "Dismissing the browser did not restore the original chat")
+    }
+
     func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
         let app = launchAcceptanceApp()
         openChat(in: app)
 
         sendPrompt("PROMPT_UI04_REASONING_INSPECTOR", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI04_REASONING_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI04 reasoning final answer did not render")
 
-        let reasoningToggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
-        let toolToggle = app.descendants(matching: .any)["hanlin-tool-content-toggle"].firstMatch
-        XCTAssertTrue(
-            reasoningToggle.waitForExistence(timeout: 10) || toolToggle.waitForExistence(timeout: 10),
-            "Original foldable reasoningView() or toolContentView() toggle did not render"
-        )
+        let activityToggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
+        XCTAssertTrue(activityToggle.waitForExistence(timeout: 10), "Original chat must render one unified activity disclosure: \(app.debugDescription)")
+        XCTAssertEqual(app.descendants(matching: .any).matching(identifier: "hanlin-agent-activity-toggle").count, 1)
+        XCTAssertFalse(activityToggle.label.contains("<think>"))
+        tapElement(activityToggle)
 
-        if reasoningToggle.exists {
-            XCTAssertFalse(reasoningToggle.label.contains("<think>"), "Reasoning toggle must never expose <think> tags")
-            tapElement(reasoningToggle)
-        }
-        if toolToggle.exists {
-            tapElement(toolToggle)
-        }
-
-        let rawCoTText = app.staticTexts.matching(
+        let rawCoTText = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS[c] 'Let me think privately' OR label CONTAINS '<think>'")
         ).firstMatch
         XCTAssertFalse(rawCoTText.exists, "Expanded original reasoning/tool sections must never display raw chain-of-thought monologue")
@@ -314,7 +484,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         sendPrompt("PROMPT_UI05_RICH_CONTENT", in: app)
 
-        let finalAnswer = app.staticTexts.matching(
+        let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI05_RICH_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(finalAnswer.waitForExistence(timeout: 45), "UI05 rich content final answer did not render")
@@ -421,8 +591,6 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "All Models button must exist in model picker popover")
         tapElement(allModelsButton)
 
-        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
-        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models expanded page did not appear")
         let modelSearchField = app.textFields["hanlin-model-picker-search"].firstMatch
         XCTAssertTrue(modelSearchField.waitForExistence(timeout: 5), "Model search textfield did not appear")
         let modelBackBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
@@ -461,7 +629,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(errorBubble.exists, "Stale error bubble must be removed on retry")
         XCTAssertEqual(assistantBubbles.count, 1, "Assistant bubble must exist exactly once after retry")
         XCTAssertEqual(recoveredAnswers.count, 1, "Retry must produce exactly 1 assistant bubble without duplicates")
-        let userPrompts = app.staticTexts.matching(
+        let userPrompts = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'PROMPT_UI07_FAIL_ONCE'")
         )
         XCTAssertEqual(userPrompts.count, 1, "Retry must not duplicate the user prompt bubble")
@@ -476,7 +644,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // Turn 1: Install local .tgz MCP server via manage_mcp_servers and call mcp__hanlin_echo_mcp__echo_ping in the same turn
         sendPrompt("PROMPT_UI08_MCP_TURN_1", in: app)
 
-        let turn1Answer = app.staticTexts.matching(
+        let turn1Answer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI08_MCP_TURN_1_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(turn1Answer.waitForExistence(timeout: 90), "Turn 1 conversational MCP install + tool call did not complete")
@@ -485,7 +653,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // Turn 2: Reuse the installed MCP server tool in the next turn of the same conversation without reinstalling
         sendPrompt("PROMPT_UI08_MCP_TURN_2", in: app)
 
-        let turn2Answer = app.staticTexts.matching(
+        let turn2Answer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI08_MCP_TURN_2_COMPLETE'")
         ).firstMatch
         XCTAssertTrue(turn2Answer.waitForExistence(timeout: 60), "Turn 2 conversational MCP tool reuse did not complete")
@@ -579,9 +747,6 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let allModelsButton = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
         XCTAssertTrue(allModelsButton.waitForExistence(timeout: 5), "All Models button must exist")
         tapElement(allModelsButton)
-
-        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
-        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models expanded page must appear")
 
         let searchField = app.textFields["hanlin-model-picker-search"].firstMatch
         XCTAssertTrue(searchField.waitForExistence(timeout: 5), "Search field must exist")
@@ -893,25 +1058,128 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("7B-07_ClassicHanlinVisualParity", in: app)
     }
 
-    func testModelPopoverZoomExpandThenNavigate() throws {
-        let app = launchDockAcceptanceApp()
+    func testCompactToolsManagementDestinationsPreserveDraft() throws {
+        try verifyToolsManagementDestinations(simulatedWidth: "390")
+    }
+
+    func testWideToolsManagementDestinationsPreserveDraft() throws {
+        try verifyToolsManagementDestinations(simulatedWidth: "1024")
+    }
+
+    private func verifyToolsManagementDestinations(simulatedWidth: String) throws {
+        let app = launchDockAcceptanceApp(simulatedWidth: simulatedWidth)
+        defer { app.terminate() }
         openChat(in: app)
+        let draft = "Keep this draft while managing tools"
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        tapElement(input)
+        input.typeText(draft)
+
+        let tools = app.buttons["hanlin-composer-tools-direct"].firstMatch
+        XCTAssertTrue(tools.waitForExistence(timeout: 5))
+        tapElement(tools)
+        let routes = [
+            ("skills", "hanlin-tools-open-skills", "hanlin-tools-open-full-skill-center"),
+            ("mcp", "hanlin-tools-open-mcp", "hanlin-tools-open-full-mcp-settings"),
+            ("runtime", "hanlin-tools-open-runtime", "hanlin-tools-open-full-runtime-center")
+        ]
+        for (destination, routeID, linkID) in routes {
+            let route = app.buttons[routeID].firstMatch
+            XCTAssertTrue(route.waitForExistence(timeout: 5))
+            tapElement(route)
+            let fullLink = app.buttons[linkID].firstMatch
+            XCTAssertTrue(fullLink.waitForExistence(timeout: 5))
+            if !fullLink.isHittable {
+                app.descendants(matching: .any)["hanlin-composer-tools-popover"].firstMatch.swipeUp()
+            }
+            tapElement(fullLink)
+            let presented = app.descendants(matching: .any)["hanlin-tools-management-\(destination)"].firstMatch
+            XCTAssertTrue(presented.waitForExistence(timeout: 10), "Full management screen must be presented")
+            let done = app.buttons["hanlin-tools-management-done"].firstMatch
+            XCTAssertTrue(done.waitForExistence(timeout: 5))
+            attachScreenshot("Management_\(simulatedWidth)_\(destination)", in: app)
+            tapElement(done)
+            XCTAssertTrue(presented.waitForNonExistence(timeout: 5))
+            let back = app.buttons["hanlin-tools-subpage-back"].firstMatch
+            XCTAssertTrue(back.waitForExistence(timeout: 5))
+            tapElement(back)
+        }
+        tapElement(tools)
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+    }
+
+    func testModelPopoverZoomExpandThenNavigate() throws {
+        try verifyModelPopoverZoom(simulatedWidth: "1024")
+    }
+
+    func testModelPopoverZoomNarrowAndRepeatedPresentation() throws {
+        try verifyModelPopoverZoom(simulatedWidth: "500", repeatPresentation: true)
+    }
+
+    func testModelPopoverZoomWithKeyboardAndDraft() throws {
+        try verifyModelPopoverZoom(simulatedWidth: "500", keyboardOpen: true)
+    }
+
+    private func verifyModelPopoverZoom(
+        simulatedWidth: String, repeatPresentation: Bool = false, keyboardOpen: Bool = false
+    ) throws {
+        let app = launchDockAcceptanceApp(simulatedWidth: simulatedWidth)
+        openChat(in: app)
+        let draft = "Model picker keeps this draft"
+        if keyboardOpen {
+            let input = chatInputElement(in: app)
+            XCTAssertTrue(input.waitForExistence(timeout: 10))
+            tapElement(input)
+            input.typeText(draft)
+            XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        }
 
         let modelPicker = app.descendants(matching: .any)["hanlin-composer-model-picker"].firstMatch
         XCTAssertTrue(modelPicker.waitForExistence(timeout: 10))
+        let sourceFrame = modelPicker.frame
+        // Keep action times and source rectangles beside the uninterrupted simctl
+        // recording. Final-state AX assertions alone do not verify a zoom animation.
+        var motionEvents: [[String: Any]] = []
+        func mark(_ action: String, frame: CGRect) {
+            motionEvents.append(["action": action, "time": Date().timeIntervalSince1970,
+                "x": frame.minX, "y": frame.minY, "width": frame.width, "height": frame.height])
+        }
+        defer {
+            if let data = try? JSONSerialization.data(withJSONObject: motionEvents, options: [.prettyPrinted, .sortedKeys]) {
+                let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+                attachment.name = "ModelPopover_MotionEvents_\(simulatedWidth)"
+                attachment.lifetime = .keepAlways
+                add(attachment)
+            }
+        }
+        mark("open-from-model-button", frame: sourceFrame)
         tapElement(modelPicker)
 
         let modelPopover = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
         XCTAssertTrue(modelPopover.waitForExistence(timeout: 5), "Model picker popover must appear")
         let compactPopoverFrame = modelPopover.frame
         attachScreenshot("7B-08a_ModelPopover_CompactRoot", in: app)
+        assertModelPopoverIsRendered(in: app, frame: compactPopoverFrame, stage: "compact")
 
         let allModelsBtn = app.buttons["hanlin-model-picker-all-models-button"].firstMatch
         XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+        mark("zoom-from-all-models-button", frame: allModelsBtn.frame)
         tapElement(allModelsBtn)
 
-        let allModelsPage = app.descendants(matching: .any)["hanlin-model-picker-all-models-page"].firstMatch
-        XCTAssertTrue(allModelsPage.waitForExistence(timeout: 5), "All Models page must appear after expansion + zoom")
+        // SwiftUI can flatten an intermediate page group into its containing
+        // popover. Require the actual destination controls, then its pixels.
+        let search = app.textFields["hanlin-model-picker-search"].firstMatch
+        let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
+        guard search.waitForExistence(timeout: 5), backBtn.waitForExistence(timeout: 5) else {
+            attachScreenshot("ModelPopover_TransitionFailure", in: app)
+            XCTFail("All Models page must appear after expansion and navigation")
+            return
+        }
+        guard modelPopover.exists else {
+            XCTFail("The model popover must remain presented while navigating")
+            return
+        }
         let expandedPopoverFrame = modelPopover.frame
         XCTAssertGreaterThan(
             expandedPopoverFrame.height,
@@ -919,12 +1187,86 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             "Model popover must expand before/during All Models transition (compact: \(compactPopoverFrame.height), expanded: \(expandedPopoverFrame.height))"
         )
         attachScreenshot("7B-08b_ModelPopover_ExpandedAllModels", in: app)
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
+        XCTAssertTrue(search.isHittable, "Expanded search must be ready for interaction")
+        XCTAssertTrue(modelPopover.frame.contains(search.frame), "Search must not be clipped outside the popover")
+        assertModelPopoverIsRendered(in: app, frame: modelPopover.frame, stage: "all-models")
+        mark("expanded-rendered", frame: modelPopover.frame)
 
         // Back button collapses back to compact root
-        let backBtn = app.buttons["hanlin-model-picker-back-button"].firstMatch
         XCTAssertTrue(backBtn.waitForExistence(timeout: 5))
+        mark("zoom-back-to-all-models-button", frame: backBtn.frame)
         tapElement(backBtn)
         XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+        let collapsed = NSPredicate { _, _ in
+            abs(modelPopover.frame.height - compactPopoverFrame.height) < 8
+        }
+        let collapsedExpectation = expectation(for: collapsed, evaluatedWith: modelPopover)
+        XCTAssertEqual(XCTWaiter.wait(for: [collapsedExpectation], timeout: 5), .completed)
+        assertModelPopoverIsRendered(in: app, frame: modelPopover.frame, stage: "back")
+        mark("compact-after-back", frame: modelPopover.frame)
+        // Dismiss outside the popover, then reopen from the same stable source.
+        mark("dismiss-to-model-button", frame: sourceFrame)
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.3)).tap()
+        XCTAssertTrue(modelPopover.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(modelPicker.frame, sourceFrame, "The zoom source must not move when the presentation closes")
+        if keyboardOpen {
+            XCTAssertTrue(app.keyboards.firstMatch.exists, "Opening the picker must not hide the keyboard and move its source")
+            XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        }
+        if repeatPresentation {
+            mark("reopen-from-model-button", frame: modelPicker.frame)
+            tapElement(modelPicker)
+            XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5))
+            mark("double-tap-all-models", frame: allModelsBtn.frame)
+            allModelsBtn.doubleTap()
+            XCTAssertTrue(search.waitForExistence(timeout: 5))
+            XCTAssertTrue(backBtn.waitForExistence(timeout: 5))
+            tapElement(backBtn)
+            XCTAssertTrue(allModelsBtn.waitForExistence(timeout: 5), "Repeated taps must not push duplicate destinations")
+            attachScreenshot("ModelPopover_Reopened_Narrow", in: app)
+        }
+    }
+
+    /// In 42539502009 AX still reported hittable controls after the entire page
+    /// stopped drawing. The fixture has an empty chat behind this header, so its
+    /// natural blue title/back text must actually occur in the screenshot pixels.
+    private func assertModelPopoverIsRendered(in app: XCUIApplication, frame: CGRect, stage: String) {
+        let screenshot = app.screenshot()
+        guard let image = screenshot.image.cgImage else {
+            XCTFail("Missing model popover screenshot"); return
+        }
+        let scaleX = CGFloat(image.width) / app.frame.width
+        let scaleY = CGFloat(image.height) / app.frame.height
+        let header = CGRect(x: (frame.minX - app.frame.minX) * scaleX,
+                            y: (frame.minY - app.frame.minY) * scaleY,
+                            width: frame.width * scaleX, height: min(80, frame.height) * scaleY)
+            .integral.intersection(CGRect(x: 0, y: 0, width: CGFloat(image.width), height: CGFloat(image.height)))
+        guard let crop = image.cropping(to: header) else {
+            XCTFail("Model header is outside the screenshot"); return
+        }
+        var pixels = [UInt8](repeating: 0, count: crop.width * crop.height * 4)
+        var bluePixels = 0
+        pixels.withUnsafeMutableBytes { bytes in
+            guard let context = CGContext(data: bytes.baseAddress, width: crop.width, height: crop.height,
+                bitsPerComponent: 8, bytesPerRow: crop.width * 4, space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue) else { return }
+            context.draw(crop, in: CGRect(x: 0, y: 0, width: CGFloat(crop.width), height: CGFloat(crop.height)))
+            let data = bytes.bindMemory(to: UInt8.self)
+            for offset in stride(from: 0, to: data.count, by: 4) {
+                let red = Int(data[offset]), green = Int(data[offset + 1]), blue = Int(data[offset + 2])
+                // The decorative 22%-opacity blue border cannot reach this
+                // contrast against the neutral surface; require real glyphs.
+                if blue > red + 70, green > red + 30 { bluePixels += 1 }
+            }
+        }
+        if bluePixels <= 30 {
+            let attachment = XCTAttachment(screenshot: screenshot)
+            attachment.name = "ModelPopover_VisualFailure_\(stage)"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
+        XCTAssertGreaterThan(bluePixels, 30, "\(stage): AX presence is insufficient; the model header must actually render")
     }
 
     func testDraftAndAttachmentPersistenceAtoBAndFirstSend() throws {
@@ -1243,7 +1585,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
         var seededChat = app.buttons.matching(chatPredicate).firstMatch
         if !seededChat.exists {
-            seededChat = app.staticTexts.matching(chatPredicate).firstMatch
+            seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
         }
         if !seededChat.exists {
             seededChat = app.cells.matching(chatPredicate).firstMatch

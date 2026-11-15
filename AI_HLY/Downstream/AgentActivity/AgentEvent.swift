@@ -113,6 +113,7 @@ enum AgentAnswerDisposition: String, Codable, Hashable, Sendable {
 }
 enum AgentEvent: @unchecked Sendable {
   case runStarted(AgentRunMetadata)
+  case modelRoundStarted(id: String)
   case reasoningStarted(AgentItemMetadata)
   case reasoningDelta(id: String, text: String)
   case reasoningCompleted(id: String)

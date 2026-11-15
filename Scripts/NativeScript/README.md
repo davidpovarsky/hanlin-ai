@@ -11,6 +11,22 @@ Install with `npm ci --prefix Scripts/NativeScript`. Prepare the Core and SwiftU
 roots with `node Scripts/NativeScript/prepare-fixture.mjs`. Generated output and
 `node_modules` are intentionally not committed.
 
+The existing metadata Host Services bridge has a typed `@hanlin/host-services`
+facade. Inside a NativeScript session, import `createHostServices` and capture
+that session once; `executeRuntime` returns the complete canonical runtime
+receipt. `startRuntime` additionally returns its cooperative cancellation handle.
+Use the five exact names `node`, `typeScript`, `localPython`, `javaScriptCore`,
+`shell`. Shell source remains a complete approved command; separate argv is
+rejected. This does not provide arbitrary OS subprocesses or another NS isolate.
+
+Run `npm run check:host-services --prefix Scripts/NativeScript` after installation.
+The pinned TypeScript5.9.3 compiler strictly checks the facade/example, requires
+the four negative diagnostics TS2345/TS2353/TS2322/TS7006, and compares generated
+JS/declarations byte for byte. After an intentional source change, regenerate
+with `node Scripts/NativeScript/build-host-services.mjs --write`. Existing native
+preparation runs the check and preserves the exact module while replacing the
+shared runtime. Native metadata/VM and physical acceptance remain separate.
+
 Before resolving Swift packages, run
 `npm run prepare:ios-dependencies --prefix Scripts/NativeScript`. It derives the
 complete XCFramework set and native API usage input from the pinned Core package,

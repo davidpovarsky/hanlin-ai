@@ -225,6 +225,7 @@ let package = Package(
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",
+                "HanlinScriptStore",
                 "HanlinScriptUI",
                 "HanlinChatCore"
             ],

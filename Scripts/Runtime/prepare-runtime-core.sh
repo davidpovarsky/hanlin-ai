@@ -17,24 +17,38 @@ read_lock() {
 
 node "${SCRIPT_DIR}/validate-runtime-lock.mjs" "${LOCK_FILE}"
 
-readonly DEPENDENCY_HASH="$(node "${SCRIPT_DIR}/compute-runtime-dependency-hash.mjs" "${LOCK_FILE}")"
+readonly CURRENT_DEPENDENCY_HASH="$(node "${SCRIPT_DIR}/compute-runtime-dependency-hash.mjs" "${LOCK_FILE}")"
+readonly DEPENDENCY_HASH="$(read_lock 'lock.runtimeBundle.artifactDependencyHash || ""')"
+# Existing verified binaries can serve a changed JS Host only when all native
+# source/archive/patch/build-script inputs still match their recorded producer.
+if [[ -n "${DEPENDENCY_HASH}" ]]; then
+  python3 "${SCRIPT_DIR}/runtime_native_identity.py" --repository "${REPOSITORY_ROOT}" --verify-reuse
+else
+  echo "Runtime lock has no explicit artifact provenance; using its current dependency identity."
+fi
+readonly ARTIFACT_DEPENDENCY_HASH="${DEPENDENCY_HASH:-${CURRENT_DEPENDENCY_HASH}}"
 readonly RELEASE_REPOSITORY="$(read_lock 'lock.runtimeBundle.releaseRepository')"
 readonly RELEASE_TAG_PREFIX="$(read_lock 'lock.runtimeBundle.releaseTagPrefix')"
 readonly EXPECTED_BUNDLE_SHA256="$(read_lock 'lock.runtimeBundle.sha256')"
 readonly EXPECTED_NODE_SHA256="$(read_lock 'lock.node.xcframeworkSha256')"
 readonly NODE_VERSION="$(read_lock 'lock.node.version')"
 readonly PYTHON_VERSION="$(read_lock 'lock.python.version')"
-readonly RELEASE_TAG="${RELEASE_TAG_PREFIX}${DEPENDENCY_HASH}"
-readonly BUNDLE_NAME="hanlin-runtime-${DEPENDENCY_HASH}.zip"
+readonly RELEASE_TAG="${RELEASE_TAG_PREFIX}${ARTIFACT_DEPENDENCY_HASH}"
+readonly BUNDLE_NAME="hanlin-runtime-${ARTIFACT_DEPENDENCY_HASH}.zip"
 readonly BUNDLE_ARCHIVE="${WORK_ROOT}/${BUNDLE_NAME}"
 readonly PAYLOAD_ROOT="${WORK_ROOT}/payload"
 
 [[ "${RELEASE_REPOSITORY}" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]
 command -v gh >/dev/null
-gh release download "${RELEASE_TAG}" \
-  --repo "${RELEASE_REPOSITORY}" \
-  --pattern "${BUNDLE_NAME}" \
-  --dir "${WORK_ROOT}"
+if [[ -n "${RUNTIME_CORE_ARTIFACT_RUN_ID:-}" ]]; then
+  python3 "${SCRIPT_DIR}/runtime_bundle_source.py" "${RELEASE_REPOSITORY}" \
+    "${RUNTIME_CORE_ARTIFACT_RUN_ID}" "${ARTIFACT_DEPENDENCY_HASH}" "${EXPECTED_BUNDLE_SHA256}" "${WORK_ROOT}"
+else
+  gh release download "${RELEASE_TAG}" \
+    --repo "${RELEASE_REPOSITORY}" \
+    --pattern "${BUNDLE_NAME}" \
+    --dir "${WORK_ROOT}"
+fi
 
 actual_bundle_sha256="$(shasum -a 256 "${BUNDLE_ARCHIVE}" | awk '{print $1}')"
 if [[ "${actual_bundle_sha256}" != "${EXPECTED_BUNDLE_SHA256}" ]]; then
@@ -83,13 +97,19 @@ node -e '
   if (provenance.dependencyHash !== dependencyHash) throw new Error("Runtime provenance dependency hash mismatch");
   if (provenance.nodeXCFrameworkSha256 !== nodeHash) throw new Error("Runtime provenance Node hash mismatch");
   if (nodeRuntime?.bundleHash !== nodeHash) throw new Error("Runtime manifest Node hash mismatch");
+  if (JSON.stringify(provenance.nodeSourcePatches ?? []) !== JSON.stringify(lock.node.sourcePatches ?? [])) {
+    throw new Error("Runtime provenance Node source patches mismatch");
+  }
+  if ((lock.node.sourcePatches?.length ?? 0) > 0 && (!smoke.descriptorOwnership || smoke.fdWarningCount !== 0)) {
+    throw new Error("Patched embedded Node descriptor ownership smoke is incomplete");
+  }
   if (!smoke.ok || smoke.nodeVersion !== nodeVersion || !smoke.workerThreads || !smoke.hostStartup) {
     throw new Error("Embedded Node smoke evidence is incomplete");
   }
   if (lock.runtimeBundle.verificationStatus !== "verified" || lock.node.verificationStatus !== "verified") {
     throw new Error("Runtime lock verification is not finalized");
   }
-' "${PAYLOAD_ROOT}" "${LOCK_FILE}" "${DEPENDENCY_HASH}" "${EXPECTED_NODE_SHA256}" "${NODE_VERSION}"
+' "${PAYLOAD_ROOT}" "${LOCK_FILE}" "${ARTIFACT_DEPENDENCY_HASH}" "${EXPECTED_NODE_SHA256}" "${NODE_VERSION}"
 
 node_vendor="${REPOSITORY_ROOT}/Vendor/NodeMobile"
 python_vendor="${REPOSITORY_ROOT}/Vendor/Python"
@@ -102,10 +122,9 @@ ditto "${PAYLOAD_ROOT}/NodeMobile.xcframework" "${node_vendor}/NodeMobile.xcfram
 ditto "${PAYLOAD_ROOT}/Python.xcframework" "${python_vendor}/Python.xcframework"
 cp "${PAYLOAD_ROOT}/Python-VERSIONS" "${python_vendor}/Python-VERSIONS"
 cp "${PAYLOAD_ROOT}/RuntimeHostResources.zip" "${host_resource}"
-(
-  cd "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host"
-  zip -X -q "${host_resource}" ./*.mjs
-)
+# Source-only overlays are valid only while the dependency closure is identical.
+# Exact simulator selectors still need the current Host's required packages.
+python3 "${SCRIPT_DIR}/runtime_host_archive.py" sync "${host_resource}"
 if [[ -d "${REPOSITORY_ROOT}/build/SimulatorDerivedData" ]]; then
   find "${REPOSITORY_ROOT}/build/SimulatorDerivedData" -name "RuntimeHostResources.zip" -path "*/AI_Hanlin.app/*" -delete || true
 fi
@@ -139,4 +158,5 @@ test "$(plutil -extract CFBundlePackageType raw "${python_dylib_plist}")" = FMWK
 test -f "${host_resource}"
 test -f "${manifest_resource}"
 
-echo "Prepared verified RuntimeCore ${DEPENDENCY_HASH}: Node ${NODE_VERSION}, Python ${PYTHON_VERSION}."
+echo "Verified native artifact ${ARTIFACT_DEPENDENCY_HASH}; current Host dependency closure ${CURRENT_DEPENDENCY_HASH}."
+echo "Prepared verified RuntimeCore ${CURRENT_DEPENDENCY_HASH}: Node ${NODE_VERSION}, Python ${PYTHON_VERSION}."

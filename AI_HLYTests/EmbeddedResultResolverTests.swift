@@ -208,14 +208,21 @@ struct EmbeddedResultResolverTests {
     }
 
     @MainActor
-    @Test("ResultStore entries expire and clear upon session run finish")
+    @Test("ResultStore retains history on run finish and deletes only on explicit clear")
     func resultStoreSessionCleanup() throws {
         let session = AssistantCapabilitySession()
+        defer { session.resultStore.clear() }
         let ref = try #require(session.resultStore.store("temporary run artifact"))
         #expect(!ref.isEmpty)
         #expect(session.resultStore.read(reference: ref, offset: 0, limit: 10)?.text == "temporary ")
 
         session.finishRun()
+        #expect(session.resultStore.fullPayload(for: ref) == "temporary run artifact")
+        let unrelated = AssistantCapabilitySession()
+        defer { unrelated.resultStore.clear() }
+        #expect(unrelated.resultStore.fullPayload(for: ref) == nil)
+
+        session.resultStore.clear()
         #expect(session.resultStore.currentTotalBytes == 0)
         #expect(session.resultStore.read(reference: ref, offset: 0, limit: 10) == nil)
     }

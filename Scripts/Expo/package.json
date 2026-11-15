@@ -4,10 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test:host-services": "node --test Tests/host-services.test.mjs",
+    "test:native-api-globals": "node --test Tests/native-api-globals.test.mjs",
+    "check:ui-type-contract": "node check-ui-type-contract.mjs",
+    "check:nativeapi-type-contract": "node check-ui-type-contract.mjs --native-api",
     "prepare:ios-dependencies": "node prepare-ios-dependencies.mjs",
     "build:probe": "node build-probe.mjs",
-    "typecheck:probe": "tsc6 --noEmit -p ../../Fixtures/ExpoSwiftUIProbe/tsconfig.json",
-    "typecheck:nativeapi-probe": "tsc6 --noEmit -p ../../Fixtures/ExpoNativeAPIProbe/tsconfig.json"
+    "typecheck:probe": "node prepare-types.mjs && tsc6 --noEmit -p ../../Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+    "typecheck:nativeapi-probe": "node prepare-types.mjs && tsc6 --noEmit -p ../../Fixtures/ExpoNativeAPIProbe/tsconfig.json"
   },
   "dependencies": {
     "@expo/ui": "58.0.3",

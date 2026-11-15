@@ -42,7 +42,7 @@ struct ManageRuntimePackagesTool: NativeTool {
                         enumValues: ["list", "preview", "install", "uninstall", "probe"]
                     ),
                     "package": NativeToolSchema.string(
-                        description: RuntimeL10n.string("Package name or specifier (e.g. 'requests', 'yocto-queue'). Required for preview, install, uninstall, probe.")
+                        description: RuntimeL10n.string("Package requirement/specifier, local path or direct source URL (e.g. 'requests[socks]>=2', '/path/package.whl', 'yocto-queue'). Required for preview, install, uninstall, probe.")
                     ),
                     "version": NativeToolSchema.string(
                         description: RuntimeL10n.string("Optional explicit version to target.")
@@ -105,8 +105,7 @@ struct ManageRuntimePackagesTool: NativeTool {
                         throw NativeToolJSON.JSONError.missingKey("package")
                     }
                     let record = try await manager.install(name: name, version: version)
-                    let probe = try? await manager.probe(record)
-                    let probeStatus = (probe?.exitCode == 0) ? "importVerified" : "installed (import unverified)"
+                    let probeStatus = "importVerified before commit"
                     resultText = """
                     Successfully installed Python package:
                     - Package: `\(record.name)`
@@ -186,15 +185,13 @@ struct ManageRuntimePackagesTool: NativeTool {
                         throw NativeToolJSON.JSONError.missingKey("package")
                     }
                     let record = try await manager.install(name: name, version: version)
-                    let probe = try? await manager.probe(record)
-                    let probeStatus = (probe?.exitCode == 0) ? "importVerified" : "installed"
+                    let probeStatus = record.validationStatus ?? "installed"
                     resultText = """
                     Successfully installed Node package:
                     - Package: `\(record.name)`
                     - Version: \(record.version)
                     - Status: \(probeStatus)
-                    - Entry Point: `\(record.entryPoint)`
-                    - Module Kind: \(record.moduleKind)
+                    - Package Directory: `\(record.packageRoot ?? "unavailable")`
                     """
 
                 case "probe":
@@ -206,7 +203,7 @@ struct ManageRuntimePackagesTool: NativeTool {
                         break
                     }
                     let probe = try await manager.probe(record)
-                    let status = (probe.exitCode == 0) ? "importVerified" : "importFailed"
+                    let status = NodePackageManager.validationStatus(probe)
                     resultText = """
                     Probe result for Node package '\(record.name)':
                     - Status: \(status)

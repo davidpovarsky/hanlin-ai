@@ -22,6 +22,9 @@ struct SkillImportView: View {
     @State private var errorMessage: String? = nil
     @State private var successMessage: String? = nil
     @State private var showFileImporter: Bool = false
+    @State private var importTask: Task<Void, Never>?
+    @State private var downloadedBytes: Int64 = 0
+    @State private var expectedDownloadBytes: Int64?
 
     init(initialTab: Int = 0, onImported: @escaping () -> Void = {}) {
         self.initialTab = initialTab
@@ -44,6 +47,7 @@ struct SkillImportView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(SkillL10n.string("Cancel")) {
+                        importTask?.cancel()
                         switch step {
                         case .input:
                             dismiss()
@@ -62,6 +66,10 @@ struct SkillImportView: View {
             ) { result in
                 handleFileImportResult(result)
             }
+        }
+        .onDisappear {
+            importTask?.cancel()
+            if case .preview(let staged) = step { staged.cleanup() }
         }
     }
 
@@ -319,6 +327,10 @@ struct SkillImportView: View {
 
             if isProcessing {
                 ProgressView(SkillL10n.string("Downloading & Inspecting..."))
+                Text(downloadProgressDescription)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("hanlin-skill-download-progress")
             }
         }
     }
@@ -331,16 +343,13 @@ struct SkillImportView: View {
             errorMessage = nil
             successMessage = nil
 
-            let isSecured = fileURL.startAccessingSecurityScopedResource()
-            defer {
-                if isSecured { fileURL.stopAccessingSecurityScopedResource() }
-            }
-
-            Task {
+            importTask = Task {
                 do {
-                    let staged = try SkillImporter.shared.stageAndInspect(fileURL: fileURL)
+                    let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: fileURL)
                     isProcessing = false
                     step = .preview(staged)
+                } catch is CancellationError {
+                    isProcessing = false
                 } catch {
                     errorMessage = error.localizedDescription
                     isProcessing = false
@@ -362,12 +371,21 @@ struct SkillImportView: View {
         isProcessing = true
         errorMessage = nil
         successMessage = nil
+        downloadedBytes = 0
+        expectedDownloadBytes = nil
 
-        Task { @MainActor in
+        importTask = Task { @MainActor in
             do {
-                let staged = try await SkillImporter.shared.downloadAndStage(from: url)
+                let staged = try await SkillImporter.shared.downloadAndStage(from: url, downloadProgress: { received, expected in
+                    Task { @MainActor in
+                        downloadedBytes = received
+                        expectedDownloadBytes = expected
+                    }
+                })
                 isProcessing = false
                 step = .preview(staged)
+            } catch is CancellationError {
+                isProcessing = false
             } catch {
                 errorMessage = error.localizedDescription
                 isProcessing = false
@@ -375,13 +393,20 @@ struct SkillImportView: View {
         }
     }
 
+    private var downloadProgressDescription: String {
+        let received = ByteCountFormatter.string(fromByteCount: downloadedBytes, countStyle: .file)
+        guard let expected = expectedDownloadBytes else { return received }
+        return "\(received) / \(ByteCountFormatter.string(fromByteCount: expected, countStyle: .file))"
+    }
+
     private func loadTestFixtureZip() {
         isProcessing = true
         errorMessage = nil
-        Task { @MainActor in
+        importTask = Task { @MainActor in
             do {
                 let tempDir = FileManager.default.temporaryDirectory
                 let tempZip = tempDir.appendingPathComponent("ui-import-skill-\(UUID().uuidString).zip")
+                defer { try? FileManager.default.removeItem(at: tempZip) }
                 guard let archive = try? Archive(url: tempZip, accessMode: .create) else {
                     errorMessage = "Failed to create test fixture zip."
                     isProcessing = false
@@ -409,9 +434,11 @@ struct SkillImportView: View {
                     scriptData.subdata(in: position..<(position + size))
                 })
 
-                let staged = try SkillImporter.shared.stageAndInspect(fileURL: tempZip)
+                let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: tempZip)
                 isProcessing = false
                 step = .preview(staged)
+            } catch is CancellationError {
+                isProcessing = false
             } catch {
                 errorMessage = error.localizedDescription
                 isProcessing = false

@@ -80,6 +80,7 @@ final class HanlinComposerPopupCoordinator {
     /// and Stage 2 (`modelNavigationPath.append`) waits until `flushPendingAnimationCompletions()` is called.
     var deferAnimationCompletionsForTesting: Bool = false
     private var pendingAnimationCompletions: [@MainActor () -> Void] = []
+    private var pendingNativeModelExpansion: (@MainActor () -> Void)?
 
     /// Tracks whether the text input was focused before opening so focus can be restored cleanly if desired.
     var wasInputFocusedBeforePopup: Bool = false
@@ -98,6 +99,11 @@ final class HanlinComposerPopupCoordinator {
 
     var isModelExpanded: Bool {
         modelFrameExpanded
+    }
+
+    var modelPopoverSize: CGSize {
+        responsiveSize(target: modelFrameExpanded
+            ? CGSize(width: 344, height: 472) : CGSize(width: 286, height: 324))
     }
 
     init() {}
@@ -225,6 +231,7 @@ final class HanlinComposerPopupCoordinator {
         modelFrameExpanded = false
         modelDestinationDisappeared = true
         isModelAnimatingExpand = false
+        pendingNativeModelExpansion = nil
     }
 
     // MARK: - V3.3 Two-Phase Expand & Shrink (General Drawer Subroutes)
@@ -315,8 +322,9 @@ final class HanlinComposerPopupCoordinator {
 
     // MARK: - V3.3 Completion-Ordered Two-Phase Expand & Shrink (Model Picker Popover, §4.8)
 
-    /// Expands the model popover frame FIRST, and appends `route` ONLY after the expansion animation
-    /// completes (using `.removed` completion criteria), matching `ContentView.swift` lines 1018-1025.
+    /// UIKit owns the outer size. Append the inner route only after its native
+    /// size-transition callback; a separate SwiftUI frame animation can finish
+    /// before the native mask and clip the header/footer.
     func pushModelSubroute(_ route: ComposerModelSubroute = .allModels, reduceMotion: Bool = false) {
         guard !modelNavigationPath.contains(route), !isModelAnimatingExpand else { return }
         if activePopup != .model {
@@ -327,8 +335,10 @@ final class HanlinComposerPopupCoordinator {
 
         let completeRoutePush: @MainActor () -> Void = { [weak self] in
             guard let self else { return }
+            // A completion from a dismissed presentation must not clear the
+            // animation flag belonging to a newly opened popover.
+            guard self.modelPresentationGeneration == capturedGeneration else { return }
             guard self.activePopup == .model,
-                  self.modelPresentationGeneration == capturedGeneration,
                   self.modelFrameExpanded,
                   self.modelNavigationPath.isEmpty,
                   !self.modelNavigationPath.contains(route) else {
@@ -336,7 +346,15 @@ final class HanlinComposerPopupCoordinator {
                 return
             }
             self.isModelAnimatingExpand = false
-            self.modelNavigationPath.append(route)
+            // The native popover has reached its expanded size.
+            withAnimation(reduceMotion ? nil : .smooth(duration: 0.32)) {
+                self.modelNavigationPath.append(route)
+            }
+        }
+
+        if modelFrameExpanded {
+            completeRoutePush()
+            return
         }
 
         if deferAnimationCompletionsForTesting {
@@ -352,20 +370,53 @@ final class HanlinComposerPopupCoordinator {
             return
         }
 
+        pendingNativeModelExpansion = completeRoutePush
         isModelAnimatingExpand = true
-        withAnimation(.easeInOut(duration: 0.24), completionCriteria: .removed) {
-            modelFrameExpanded = true
-        } completion: {
-            Task { @MainActor in
-                completeRoutePush()
+        modelFrameExpanded = true
+    }
+
+    func modelFrameResizeDidComplete(presentationID: Int, size: CGSize) {
+        guard presentationID == modelPresentationGeneration,
+              activePopup == .model, modelFrameExpanded,
+              size == modelPopoverSize else { return }
+        let completion = pendingNativeModelExpansion
+        pendingNativeModelExpansion = nil
+        completion?()
+    }
+
+    /// Reverse the shared-surface zoom before shrinking the native popover.
+    /// View disappearance can begin before a removal transition has finished.
+    func popModelSubroute(reduceMotion: Bool = false) {
+        guard !modelNavigationPath.isEmpty else { return }
+        let capturedGeneration = modelPresentationGeneration
+        modelDestinationDisappeared = false
+        let finish: @MainActor () -> Void = { [weak self] in
+            guard let self,
+                  self.modelPresentationGeneration == capturedGeneration,
+                  self.activePopup == .model,
+                  self.modelNavigationPath.isEmpty else { return }
+            self.markModelDestinationDisappeared(reduceMotion: reduceMotion)
+        }
+        if deferAnimationCompletionsForTesting {
+            modelNavigationPath.removeAll()
+            pendingAnimationCompletions.append(finish)
+        } else if reduceMotion {
+            modelNavigationPath.removeAll()
+            finish()
+        } else {
+            withAnimation(.smooth(duration: 0.32), completionCriteria: .removed) {
+                modelNavigationPath.removeAll()
+            } completion: {
+                Task { @MainActor in finish() }
             }
         }
     }
 
     /// Executes any queued animation completions in deterministic unit tests (`ModelPopoverZoomOrderTests`).
-    func flushPendingAnimationCompletions() {
-        let completions = pendingAnimationCompletions
-        pendingAnimationCompletions.removeAll()
+    func flushPendingAnimationCompletions(firstOnly: Bool = false) {
+        let count = firstOnly ? min(1, pendingAnimationCompletions.count) : pendingAnimationCompletions.count
+        let completions = Array(pendingAnimationCompletions.prefix(count))
+        pendingAnimationCompletions.removeFirst(count)
         for completion in completions {
             completion()
         }
@@ -380,9 +431,10 @@ final class HanlinComposerPopupCoordinator {
         verticalMargin: CGFloat = 28
     ) -> CGSize {
         let candidateContainer = availableContainerSize ?? measuredContainerSize
-        if candidateContainer.width > 120 && candidateContainer.height > 120 {
-            let maxWidth = max(240, candidateContainer.width - horizontalMargin)
-            let maxHeight = max(260, candidateContainer.height - verticalMargin)
+        if candidateContainer.width.isFinite && candidateContainer.height.isFinite &&
+            candidateContainer.width > 0 && candidateContainer.height > 0 {
+            let maxWidth = max(1, candidateContainer.width - horizontalMargin)
+            let maxHeight = max(1, candidateContainer.height - verticalMargin)
             return CGSize(
                 width: min(target.width, maxWidth),
                 height: min(target.height, maxHeight)
@@ -400,8 +452,8 @@ final class HanlinComposerPopupCoordinator {
             let insets = window.safeAreaInsets
             let availableWidth = bounds.width - insets.left - insets.right
             let availableHeight = bounds.height - insets.top - insets.bottom
-            let maxWidth = max(240, availableWidth - horizontalMargin)
-            let maxHeight = max(260, availableHeight - verticalMargin)
+            let maxWidth = max(1, availableWidth - horizontalMargin)
+            let maxHeight = max(1, availableHeight - verticalMargin)
             return CGSize(
                 width: min(target.width, maxWidth),
                 height: min(target.height, maxHeight)
@@ -429,13 +481,8 @@ final class HanlinComposerPopupCoordinator {
 
     private func shrinkModelIfReady(reduceMotion: Bool) {
         guard modelNavigationPath.isEmpty, modelDestinationDisappeared, modelFrameExpanded else { return }
-        if reduceMotion {
-            modelFrameExpanded = false
-        } else {
-            withAnimation(.easeInOut(duration: 0.24)) {
-                modelFrameExpanded = false
-            }
-        }
+        // One size animation, owned by the native popover presentation.
+        modelFrameExpanded = false
     }
 
     // MARK: - Deterministic Synchronous Helpers for Tests & Direct State Transitions

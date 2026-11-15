@@ -69,6 +69,8 @@ public struct HanlinCanonicalMiniAppCatalog: Sendable {
     ) -> HanlinMiniAppEngine? {
         if let runtime = entryPoint.runtimeProfile {
             switch runtime {
+            case .scriptingJSC:
+                return .scriptingJSC
             case .hanlinNativeScript:
                 return .nativeScript
             case .hanlinExpo:

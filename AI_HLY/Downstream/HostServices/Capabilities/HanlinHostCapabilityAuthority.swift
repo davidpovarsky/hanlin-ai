@@ -14,9 +14,8 @@ public enum HanlinHostCapabilityResult: Equatable, Sendable {
 /// Unified capability authority for all host service operations across all
 /// execution clients (agent, Swift Mini Apps, ScriptUI, NativeScript, Expo).
 ///
-/// For compiled Swift apps: manages grants directly in `UserDefaults`.
-/// For scripting packages: delegates to the active `HanlinAtomicScriptStore`,
-/// which remains the single persisted source of truth for package grants.
+/// Retains legacy grant metadata for existing callers/registries.
+/// Runtime identity, package lifecycle and iOS system permissions remain separate.
 actor HanlinHostCapabilityAuthority {
     static let shared = HanlinHostCapabilityAuthority()
 
@@ -53,60 +52,16 @@ actor HanlinHostCapabilityAuthority {
 
     /// Check whether a capability is effectively allowed for the given context.
     ///
-    /// Evaluates live persisted grants dynamically at call time so that
-    /// permissions revoked by the user or system take immediate effect on the
-    /// very next privileged operation without requiring session recreation.
+    /// Internal grants do not restrict ordinary host operations. Disabling or
+    /// uninstalling a package still terminates its registered runtime session.
     func authorize(
         capability: String,
         context: HanlinHostCallContext
     ) async -> HanlinHostCapabilityResult {
-        let canonical = Self.canonicalCapabilityID(capability)
-
-        // Agent context retains its intended privileged wildcard policy
-        if context.origin == .assistantModel || context.storageScope == .agent {
-            return .allowed
-        }
-
-        // Package identity takes precedence because scripting callers also have
-        // an appID. Read the store on every operation so revocation is immediate.
-        if let packageID = context.installedPackageID {
-            if let packageGrantStore,
-               let persisted = try? await packageGrantStore.grantedCapabilities(for: packageID) {
-                let liveGrants = Set(persisted.map { Self.canonicalCapabilityID($0.rawValue) })
-                return liveGrants.contains(canonical) || liveGrants.contains("all")
-                    ? .allowed
-                    : .notGranted
-            }
-            // Fallback for callers where the package grant store is unconfigured or unavailable.
-            let canonicalSet = Set(context.effectiveCapabilities.map(Self.canonicalCapabilityID))
-            return canonicalSet.contains(canonical) || canonicalSet.contains("all")
-                ? .allowed
-                : .notGranted
-        }
-
-        // Check live grants for a compiled app caller.
-        if let appID = context.appID {
-            let key = appID.rawValue
-            // If live grants have not been registered yet, seed from context
-            if compiledAppGrants[key] == nil {
-                let canonicalSet = Set(context.effectiveCapabilities.map(Self.canonicalCapabilityID))
-                compiledAppGrants[key] = canonicalSet
-                save()
-            }
-            guard let liveGrants = compiledAppGrants[key],
-                  liveGrants.contains(canonical) || liveGrants.contains("all") else {
-                return .notGranted
-            }
-            return .allowed
-        }
-
-        // Fallback for trusted callers without persisted app/package identity.
-        let canonicalSet = Set(context.effectiveCapabilities.map(Self.canonicalCapabilityID))
-        guard canonicalSet.contains(canonical) || canonicalSet.contains("all") else {
-            return .notGranted
-        }
-
-        return .allowed
+        // Hanlin is a personal development host. Manifest/grant records are
+        // compatibility metadata, not an additional authorization system.
+        // iOS permission checks remain in the concrete device services.
+        .allowed
     }
 
     // MARK: - App Grant Management

@@ -84,38 +84,81 @@ enum MCPToolBridge {
         )
     }
 
-    private static func render(
+    static func render(
         _ output: MCPToolCallOutput,
         title: String
     ) -> NativeToolResult {
         var modelParts: [String] = []
+        var userParts: [String] = []
+        var publicContent: [[String: Any]] = []
+        var needsFullPayload = output.structuredContent != nil
         var blocks: [NativeUIBlock] = []
         for content in output.content {
+            // Protocol _meta is private to the client. Preserve model-visible
+            // media/structured data without copying UI metadata into the model.
+            guard var encoded = (try? JSONEncoder().encode(content))
+                .flatMap({ try? JSONSerialization.jsonObject(with: $0) as? [String: Any] }) else {
+                return NativeToolResult(modelText: "MCP result encoding failed; content was not silently truncated.", outcome: .failed)
+            }
+            let audience = (encoded["annotations"] as? [String: Any])?["audience"] as? [String]
+            let visible = audience.map { $0.contains("assistant") } ?? true
+            encoded.removeValue(forKey: "_meta")
+            if var resource = encoded["resource"] as? [String: Any] {
+                resource.removeValue(forKey: "_meta"); encoded["resource"] = resource
+            }
+            if visible { publicContent.append(encoded) }
             switch content {
             case .text(let text, _, _):
-                modelParts.append(text)
+                if visible { modelParts.append(text) }
+                userParts.append(text)
                 blocks.append(.init(type: output.isError ? .error : .markdown, title: title, body: text, systemImage: "server.rack"))
             case .image(let data, let mimeType, _, _):
-                modelParts.append("[Image returned by \(title), \(mimeType)]")
+                if visible { modelParts.append("[Image returned by \(title), \(mimeType)]"); needsFullPayload = true }
                 blocks.append(.init(type: .card, title: title, body: mimeType, systemImage: "photo", imageURL: "data:\(mimeType);base64,\(data)"))
             case .audio(_, let mimeType, _, _):
-                modelParts.append("[Audio returned by \(title), \(mimeType)]")
+                if visible { modelParts.append("[Audio returned by \(title), \(mimeType)]"); needsFullPayload = true }
                 blocks.append(.init(type: .card, title: title, body: mimeType, systemImage: "waveform"))
-            case .resource(let resource, _, _):
-                let text = (try? String(decoding: JSONEncoder().encode(resource), as: UTF8.self)) ?? String(describing: resource)
-                modelParts.append(text)
+            case .resource(_, _, _):
+                let text = (try? JSONSerialization.data(withJSONObject: encoded["resource"] ?? [:], options: [.sortedKeys]))
+                    .map { String(decoding: $0, as: UTF8.self) } ?? "MCP resource encoding failed."
+                if visible { modelParts.append(text); needsFullPayload = true }
+                userParts.append(text)
                 blocks.append(.init(type: .source, title: title, body: text, systemImage: "doc.text"))
             case .resourceLink(let uri, let name, let resourceTitle, let description, _, _):
-                modelParts.append("\(resourceTitle ?? name): \(uri)")
+                if visible { modelParts.append("\(resourceTitle ?? name): \(uri)"); needsFullPayload = true }
                 blocks.append(.init(type: .source, title: resourceTitle ?? name, body: description, systemImage: "link", url: uri))
             }
         }
+        var payload: [String: Any] = ["content": publicContent, "isError": output.isError]
+        if let structured = output.structuredContent {
+            guard let bytes = try? JSONEncoder().encode(structured),
+                  let object = try? JSONSerialization.jsonObject(with: bytes, options: [.fragmentsAllowed]) else {
+                return NativeToolResult(modelText: "MCP structured result encoding failed.", outcome: .failed)
+            }
+            // Arbitrary user data may legitimately contain a key named _meta.
+            // Only the protocol metadata above is private; do not rewrite data.
+            payload["structuredContent"] = object
+            let text = String(decoding: bytes, as: UTF8.self)
+            modelParts.append(text); userParts.append(text)
+            blocks.append(.init(type: output.isError ? .error : .markdown, title: title, body: "```json\n\(text)\n```", systemImage: "curlybraces"))
+        }
+        let fullPayload: String?
+        if needsFullPayload {
+            guard let bytes = try? JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]) else {
+                return NativeToolResult(modelText: "MCP complete result encoding failed.", outcome: .failed)
+            }
+            fullPayload = String(decoding: bytes, as: UTF8.self)
+        } else { fullPayload = nil }
         let modelText = modelParts.joined(separator: "\n")
+        let userText = userParts.joined(separator: "\n")
         return NativeToolResult(
-            modelText: modelText.isEmpty ? "MCP tool returned no content." : String(modelText.prefix(8 * 1_024 * 1_024)),
-            userText: modelText.isEmpty ? MCPL10n.string("No content returned") : modelText,
+            modelText: modelText.isEmpty ? "MCP tool returned no model-visible text." : modelText,
+            userText: userText.isEmpty ? MCPL10n.string("No content returned") : userText,
             uiBlocks: blocks,
-            outcome: output.isError ? .failed : .succeeded
+            outcome: output.isError ? .failed : .succeeded,
+            isStoreEligible: true,
+            fullResultPayload: fullPayload,
+            fullResultMIMEType: fullPayload == nil ? nil : "application/json"
         )
     }
 }

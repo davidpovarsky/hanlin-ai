@@ -12,6 +12,49 @@ final class HanlinRuntimeInstallationUITests: XCTestCase {
         app.launch()
     }
 
+    func testNodeHTTPSBeforeAndAfterBackgroundResume() throws {
+        openSettings()
+        openRuntimeCenter()
+        let firstID = try runNodeHTTPSDiagnostic(excluding: nil, name: "before-background")
+        XCUIDevice.shared.press(.home)
+        XCTAssertTrue(waitUntil(timeout: 10) {
+            self.app.state == .runningBackground || self.app.state == .runningBackgroundSuspended
+        }, "The app never entered the background")
+        app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
+        let secondID = try runNodeHTTPSDiagnostic(excluding: firstID, name: "after-resume")
+        XCTAssertNotEqual(firstID, secondID, "Resume must run actual new requests, not reuse an old report")
+    }
+
+    private func runNodeHTTPSDiagnostic(excluding oldID: String?, name: String) throws -> String {
+        let button = app.buttons["hanlin-runtime-node-https-diagnostic"].firstMatch
+        for _ in 0..<8 where !button.isHittable { app.swipeUp() }
+        XCTAssertTrue(button.waitForExistence(timeout: 10) && button.isHittable)
+        button.tap()
+        // The result is inserted above the runtime cards; realize that List row.
+        for _ in 0..<8 { app.swipeDown() }
+        let message = app.staticTexts["hanlin-runtime-last-message"].firstMatch
+        var report: [String: Any]?
+        XCTAssertTrue(waitUntil(timeout: 180) {
+            guard message.exists,
+                  let line = message.label.split(separator: "\n").first,
+                  let value = try? JSONSerialization.jsonObject(with: Data(line.utf8)) as? [String: Any],
+                  let runID = value["runID"] as? String, runID != oldID else { return false }
+            report = value
+            return true
+        }, "No fresh Node HTTPS report: \(message.exists ? message.label : self.app.debugDescription)")
+        let value = try XCTUnwrap(report)
+        let requests = try XCTUnwrap(value["requests"] as? [[String: Any]])
+        let attachment = XCTAttachment(string: message.label)
+        attachment.name = "node-https-\(name)"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        XCTAssertEqual(value["passed"] as? Bool, true, message.label)
+        XCTAssertEqual(requests.count, 8)
+        XCTAssertTrue(requests.allSatisfy { $0["nonceMatched"] as? Bool == true && $0["passed"] as? Bool == true }, message.label)
+        return try XCTUnwrap(value["runID"] as? String)
+    }
+
     // MARK: - Embedded Runtimes Smoke & Readiness Acceptance
 
     func testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness() throws {

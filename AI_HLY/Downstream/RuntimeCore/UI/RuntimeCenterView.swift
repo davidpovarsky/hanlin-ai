@@ -47,6 +47,16 @@ final class RuntimeCenterModel {
         await perform { try await self.core.clearReproducibleCaches() }
     }
 
+    func testNodeHTTPS() async {
+        await perform {
+            let result = try await self.core.node.networkDiagnostics()
+            self.lastMessage = [result.stdout, result.stderr].filter { !$0.isEmpty }.joined(separator: "\n")
+            if self.lastMessage?.isEmpty != false {
+                throw RuntimeCoreError.runtimeFailure("Node HTTPS diagnostic returned no report (exit \(String(describing: result.exitCode))).")
+            }
+        }
+    }
+
     private func perform(_ operation: @escaping @MainActor () async throws -> Void) async {
         isBusy = true
         lastMessage = nil
@@ -105,6 +115,9 @@ struct RuntimeCenterView: View {
             }
 
             Section(RuntimeL10n.string("Management")) {
+                Button(RuntimeL10n.string("Test Node HTTPS")) { Task { await model.testNodeHTTPS() } }
+                    .disabled(model.isBusy)
+                    .accessibilityIdentifier("hanlin-runtime-node-https-diagnostic")
                 NavigationLink(RuntimeL10n.string("Environment")) { RuntimeEnvironmentView() }
                 NavigationLink(RuntimeL10n.string("Runtime logs")) { RuntimeLogsView() }
                 Button(RuntimeL10n.string("Clear reproducible caches"), role: .destructive) { Task { await model.clearCaches() } }

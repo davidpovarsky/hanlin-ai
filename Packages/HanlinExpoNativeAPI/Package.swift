@@ -94,6 +94,7 @@ let package = Package(
                     "-DFOLLY_USE_LIBCPP=1",
                     "-DFOLLY_CFG_NO_COROUTINES=1",
                     "-DTARGET_ENGINE_HERMES=1",
+                    "-I\(packageRoot)/../HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/Headers",
                     "-DNS_GSD_BACKEND_HERMES=1",
                     "-DNATIVESCRIPT_REACT_NATIVE=1",
                     "-DREACT_NATIVE_PRODUCTION=1",

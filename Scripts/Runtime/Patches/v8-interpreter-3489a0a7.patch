@@ -1,0 +1,224 @@
+From 3489a0a7b242e2006e7e2aec7d99198dd26f1e0b Mon Sep 17 00:00:00 2001
+From: Paolo Severini <paolosev@microsoft.com>
+Date: Fri, 17 Jul 2026 19:46:13 +0200
+Subject: [PATCH] [wasm interpreter] Validate instance/trusted-data consistency
+
+The interpreter selects an instance's interpreter object, handle,
+runtime, module and signatures by loading the instance's trusted data.
+Make the helper accessors re-establish that the loaded trusted data
+still belongs to the instance before using it, so all interpreter entry
+paths agree on the same invariant as the direct JS-to-interpreter entry.
+
+Also tighten the per-instance indirect-call cache maintenance paths to
+bounds-check the cache vectors unconditionally.
+
+Add a mjsunit/sandbox regression test.
+
+Also fix a build error caused by a change to the WasmDecoder constructor
+signature.
+
+Bug: 535518222
+Change-Id: I11c52cdb365fd773fbc5e185f80dbcaad0231cf1
+Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/8117710
+Reviewed-by: Clemens Backes <clemensb@chromium.org>
+Commit-Queue: Paolo Severini <paolosev@microsoft.com>
+Cr-Commit-Position: refs/heads/main@{#108761}
+---
+ .../interpreter/wasm-interpreter-runtime.cc   | 16 +++-
+ src/wasm/interpreter/wasm-interpreter.cc      |  1 -
+ src/wasm/wasm-objects.cc                      | 18 ++++
+ test/mjsunit/mjsunit.status                   |  2 +
+ test/mjsunit/sandbox/regress-535518222.js     | 82 +++++++++++++++++++
+ 5 files changed, 114 insertions(+), 5 deletions(-)
+ create mode 100644 test/mjsunit/sandbox/regress-535518222.js
+
+diff --git a/src/wasm/interpreter/wasm-interpreter-runtime.cc b/src/wasm/interpreter/wasm-interpreter-runtime.cc
+index 49061aa856e5..b045c42c37e2 100644
+--- a/src/wasm/interpreter/wasm-interpreter-runtime.cc
++++ b/src/wasm/interpreter/wasm-interpreter-runtime.cc
+@@ -1865,7 +1865,12 @@ void WasmInterpreterRuntime::ExecuteFunction(const uint8_t*& code,
+ }
+ 
+ void WasmInterpreterRuntime::PurgeIndirectCallCache(uint32_t table_index) {
+-  DCHECK_LT(table_index, indirect_call_tables_.size());
++  // SANDBOX SAFETY: `indirect_call_tables_` is an out-of-cage std::vector sized
++  // to `module_->tables.size()` (see InitIndirectFunctionTables). Bounds-check
++  // unconditionally so that a {table_index} which does not match this runtime's
++  // module can never drive an out-of-cage OOB access here or into
++  // `module_->tables` below.
++  SBXCHECK_LT(table_index, indirect_call_tables_.size());
+   const WasmTable& table = module_->tables[table_index];
+   if (IsSubtypeOf(table.type, kWasmFuncRef, module_)) {
+     size_t length =
+@@ -1889,9 +1894,12 @@ void WasmInterpreterRuntime::ClearIndirectCallCacheEntry(
+       GetOrCreateInterpreterHandle(isolate, interpreter_object);
+   WasmInterpreterRuntime* wasm_runtime =
+       handle->ptr()->interpreter()->GetWasmRuntime();
+-  DCHECK_LT(table_index, wasm_runtime->indirect_call_tables_.size());
+-  DCHECK_LT(entry_index,
+-            wasm_runtime->indirect_call_tables_[table_index].size());
++  // SANDBOX SAFETY: `indirect_call_tables_` is an out-of-cage std::vector.
++  // Bounds-check unconditionally (see PurgeIndirectCallCache) so a mismatched
++  // {table_index}/{entry_index} can never drive an out-of-cage OOB write.
++  SBXCHECK_LT(table_index, wasm_runtime->indirect_call_tables_.size());
++  SBXCHECK_LT(entry_index,
++              wasm_runtime->indirect_call_tables_[table_index].size());
+   wasm_runtime->indirect_call_tables_[table_index][entry_index] = {};
+ }
+ 
+diff --git a/src/wasm/interpreter/wasm-interpreter.cc b/src/wasm/interpreter/wasm-interpreter.cc
+index fc4b335e4bd5..75143b5481f4 100644
+--- a/src/wasm/interpreter/wasm-interpreter.cc
++++ b/src/wasm/interpreter/wasm-interpreter.cc
+@@ -8003,7 +8003,6 @@ uint32_t WasmBytecodeGenerator::ScanConstInstructions() {
+   const FunctionSig* sig = wasm_code_->function->sig;
+   WasmDecoder<Decoder::NoValidationTag> decoder(
+       &zone, module_, WasmEnabledFeatures::All(), &detected, sig,
+-      SharedFlag{false},  // is_shared
+       wasm_code_->start, wasm_code_->end);
+ 
+   const uint8_t* pc = wasm_code_->start + wasm_code_->locals.encoded_size;
+diff --git a/src/wasm/wasm-objects.cc b/src/wasm/wasm-objects.cc
+index 42294a174f4a..f59ff5909ca4 100644
+--- a/src/wasm/wasm-objects.cc
++++ b/src/wasm/wasm-objects.cc
+@@ -1427,6 +1427,18 @@ DirectHandle<Tuple2> WasmTrustedInstanceData::GetOrCreateInterpreterObject(
+   Isolate* isolate = Isolate::Current();
+   DirectHandle<WasmTrustedInstanceData> trusted_data(
+       instance->trusted_data(isolate), isolate);
++  // SANDBOX SAFETY: `instance->trusted_data()` is an in-cage trusted-pointer
++  // handle that a sandbox attacker can same-tag swap to point at another
++  // instance's trusted data. Every path that selects the interpreter object
++  // (and thus the InterpreterHandle, runtime, module and signatures) for an
++  // instance must re-establish that the trusted data actually belongs to
++  // {instance} before trusting it. This mirrors the check performed on the
++  // direct JS-to-interpreter entry (see Runtime_WasmRunInterpreter). Without
++  // it, a swap redirects callers to a different instance's runtime on the
++  // nested Wasm-to-Wasm call path, and out-of-cage OOB writes to the runtime's
++  // indirect-call cache vectors on the dispatch-table maintenance paths.
++  SBXCHECK(trusted_data->has_instance_object() &&
++           trusted_data->instance_object() == *instance);
+   if (trusted_data->has_interpreter_object()) {
+     return direct_handle(trusted_data->interpreter_object(), isolate);
+   }
+@@ -1441,6 +1453,12 @@ DirectHandle<Tuple2> WasmTrustedInstanceData::GetInterpreterObject(
+   Isolate* isolate = Isolate::Current();
+   DirectHandle<WasmTrustedInstanceData> trusted_data(
+       instance->trusted_data(isolate), isolate);
++  // SANDBOX SAFETY: see the comment in GetOrCreateInterpreterObject. The
++  // in-cage `instance->trusted_data()` handle is attacker-swappable, so we must
++  // re-validate that it still belongs to {instance} before selecting its
++  // interpreter object.
++  SBXCHECK(trusted_data->has_instance_object() &&
++           trusted_data->instance_object() == *instance);
+   CHECK(trusted_data->has_interpreter_object());
+   return direct_handle(trusted_data->interpreter_object(), isolate);
+ }
+diff --git a/test/mjsunit/mjsunit.status b/test/mjsunit/mjsunit.status
+index 5eac47300b08..dcb16ba7fc02 100644
+--- a/test/mjsunit/mjsunit.status
++++ b/test/mjsunit/mjsunit.status
+@@ -695,6 +695,7 @@
+   # DrumBrake interpreter's InterpreterHandle handling.
+   'sandbox/regress-527689557-1': [SKIP],
+   'sandbox/regress-527689557-2': [SKIP],
++  'sandbox/regress-535518222': [SKIP],
+ }],  # not has_wasm_interpreter
+ 
+ ['has_wasm_interpreter and variant == jitless', {
+@@ -1056,6 +1057,7 @@
+   'wasm/regress-526041421': [SKIP],
+   'wasm/regress-529842414': [SKIP],
+   'wasm/regress-531123009': [SKIP],
++  'wasm/regress-532625494': [SKIP],
+   'wasm/simd-relaxed-lane-select': [SKIP],
+   'wasm/speculative-inlining': [SKIP],
+   'wasm/stringrefs-regressions': [SKIP],
+diff --git a/test/mjsunit/sandbox/regress-535518222.js b/test/mjsunit/sandbox/regress-535518222.js
+new file mode 100644
+index 000000000000..b8897a76ca4e
+--- /dev/null
++++ b/test/mjsunit/sandbox/regress-535518222.js
+@@ -0,0 +1,82 @@
++// Copyright 2026 the V8 project authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++// Flags: --wasm-jitless --sandbox-testing
++
++d8.file.execute('test/mjsunit/wasm/wasm-module-builder.js');
++
++// DrumBrake's nested interpreted Wasm-to-Wasm call path selects the callee's
++// interpreter object, runtime, module and signature by reloading the in-cage
++// WasmInstanceObject::trusted_data handle of the target instance. A sandbox
++// attacker can same-tag swap that handle to point at a different instance's
++// trusted data. Unlike the direct JS->interpreter entry
++// (Runtime_WasmRunInterpreter, see regress-522294322), the nested path went
++// through WasmTrustedInstanceData::Get{OrCreate,}InterpreterObject, which did
++// not re-validate that the reloaded trusted data still belongs to the target
++// instance. The swap therefore ran instance B's function under B's runtime
++// while the caller marshalled the shared result slots using instance A's
++// callsite signature, returning B's externref (a native DirectHandle word) to
++// JavaScript as an i64 and disclosing a native, out-of-cage address.
++
++// Callee instance A returns a single i64.
++const builderA = new WasmModuleBuilder();
++builderA.addFunction('f0', makeSig([], [kWasmI64]))
++    .addBody([...wasmI64Const(0)])
++    .exportFunc();
++const instanceA = builderA.instantiate();
++
++// Donor instance B returns an externref at the same function index.
++const builderB = new WasmModuleBuilder();
++builderB.addFunction('f0', makeSig([], [kWasmExternRef]))
++    .addBody([kExprRefNull, kExternRefCode])
++    .exportFunc();
++const instanceB = builderB.instantiate();
++
++// Caller instance imports A's f0 with an i64-returning callsite signature and
++// calls it, which drives the interpreter's cross-instance external-call path
++// (WasmInterpreterRuntime::CallExternalWasmFunction).
++const builderCaller = new WasmModuleBuilder();
++const sig = builderCaller.addType(makeSig([], [kWasmI64]));
++const imported = builderCaller.addImport('m', 'f', sig);
++builderCaller.addFunction('call', sig)
++    .addBody([kExprCallFunction, imported])
++    .exportFunc();
++const caller = builderCaller.instantiate({m: {f: instanceA.exports.f0}});
++
++// Warm up A's and B's interpreters so their interpreter objects/handles exist.
++instanceA.exports.f0();
++instanceB.exports.f0();
++
++// Sandbox memory-corruption helpers.
++const kHeapObjectTag = 1;
++const kWasmInstanceObjectType =
++    Sandbox.getInstanceTypeIdFor('WASM_INSTANCE_OBJECT_TYPE');
++const kTrustedDataOffset =
++    Sandbox.getFieldOffset(kWasmInstanceObjectType, 'trusted_data');
++
++const memory = new DataView(new Sandbox.MemoryView(0, 0x100000000));
++function getPtr(obj) {
++  return Sandbox.getAddressOf(obj) + kHeapObjectTag;
++}
++function getField(obj, offset) {
++  return memory.getUint32(obj + offset - kHeapObjectTag, true);
++}
++function setField(obj, offset, value) {
++  memory.setUint32(obj + offset - kHeapObjectTag, value, true);
++}
++
++// Same-tag swap: point instanceA's trusted_data indirect-pointer handle at
++// instanceB's trusted data. Both handles carry the same trusted-pointer tag,
++// so the trusted-pointer table tag check does not catch the swap.
++const instA = getPtr(instanceA);
++const instB = getPtr(instanceB);
++setField(instA, kTrustedDataOffset, getField(instB, kTrustedDataOffset));
++
++// The cross-instance external call now reloads A's swapped trusted_data (= B)
++// to pick the interpreter object/runtime. This must be detected as a sandbox
++// violation and kill the process rather than returning B's externref result to
++// JavaScript as an i64 native-address disclosure.
++caller.exports.call();
++
++assertUnreachable("Process should have been killed.");

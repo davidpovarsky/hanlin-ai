@@ -77,7 +77,7 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
       },
     );
     assert.equal(legacyNestedResult.status, 400);
-    assert.match(legacyNestedResult.text, /outside the installed server directory/);
+    assert.match(legacyNestedResult.text, /Invalid MCP generation identity/);
 
     const otherServerID = '33333333-3333-4333-8333-333333333333';
     const otherRoot = path.join(root, 'packages', 'mcp', otherServerID);
@@ -91,7 +91,7 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
       { ...configuration, packageRoot: otherRoot, entryPoint: otherEntry },
     );
     assert.equal(otherServerResult.status, 400);
-    assert.match(otherServerResult.text, /outside the installed server directory/);
+    assert.match(otherServerResult.text, /MCP generation escapes its installed server directory/);
 
     const stagingRoot = path.join(root, 'staging', 'invalid-server');
     await fs.mkdir(stagingRoot, { recursive: true });
@@ -104,7 +104,7 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
       { ...configuration, packageRoot: stagingRoot, entryPoint: stagingEntry },
     );
     assert.equal(stagingResult.status, 400);
-    assert.match(stagingResult.text, /outside the installed server directory/);
+    assert.match(stagingResult.text, /Invalid MCP generation identity/);
 
     const outsideEntry = path.join(root, 'outside-server.mjs');
     await fs.writeFile(outsideEntry, 'export {};');
@@ -307,8 +307,8 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
       timeoutEntry,
       'await new Promise(() => setInterval(() => {}, 1000));\n',
     );
-    const timeoutStarted = Date.now();
-    const timedOutStart = await postRaw(
+    let startupSettled = false;
+    const pendingStart = postRaw(
       ready.port,
       token,
       `/v1/servers/${timeoutID}/start`,
@@ -319,10 +319,15 @@ test('HTTP host serializes MCP lifecycle and survives stress', { timeout: 240_00
         arguments: [],
         environment: {},
       },
-    );
-    assert.equal(timedOutStart.status, 400);
-    assert.match(timedOutStart.text, /startup timed out/i);
-    assert.ok(Date.now() - timeoutStarted >= 17_900);
+    ).finally(() => { startupSettled = true; });
+    // Startup has no implicit fifteen-second workload deadline. Its owner
+    // explicitly stops a still-pending import; bounded shutdown stays intact.
+    await new Promise(resolve => setTimeout(resolve, 16_000));
+    assert.equal(startupSettled, false);
+    await post(ready.port, token, `/v1/servers/${timeoutID}/stop`, {});
+    const stoppedStart = await pendingStart;
+    assert.equal(stoppedStart.status, 400);
+    assert.match(stoppedStart.text, /startup was stopped by its owner/i);
 
     const stubbornID = '33333333-3333-4333-8333-333333333333';
     const stubbornRoot = path.join(root, 'packages', 'mcp', stubbornID);

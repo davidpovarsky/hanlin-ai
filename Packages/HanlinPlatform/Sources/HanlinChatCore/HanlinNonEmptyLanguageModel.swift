@@ -42,9 +42,18 @@ final class HanlinNonEmptyLanguageModel: LanguageModelV3, @unchecked Sendable {
                         attempt += 1
                         var buffer: [LanguageModelV3StreamPart] = []
                         var hasEmittedSemanticEvent = false
+                        var hasVisibleOutputOrToolActivity = false
+                        var heldFinish: LanguageModelV3StreamPart?
+                        var terminalReason: String?
 
                         for try await part in current {
                             try Task.checkCancellation()
+                            if case .finish(let reason, _, _) = part {
+                                heldFinish = part
+                                terminalReason = reason.unified.rawValue
+                                continue
+                            }
+                            hasVisibleOutputOrToolActivity = hasVisibleOutputOrToolActivity || Self.preventsReplay(part)
                             if hasEmittedSemanticEvent {
                                 continuation.yield(part)
                             } else if Self.isSemantic(part) {
@@ -67,9 +76,17 @@ final class HanlinNonEmptyLanguageModel: LanguageModelV3, @unchecked Sendable {
                             }
                         }
 
-                        if hasEmittedSemanticEvent {
+                        if hasVisibleOutputOrToolActivity {
+                            if let heldFinish { continuation.yield(heldFinish) }
                             continuation.finish()
                             return
+                        }
+
+                        // Reasoning is streamed live but is not a final answer.
+                        // A length/refusal boundary is actionable and must not
+                        // silently cause another request with the same limits.
+                        if let terminalReason, terminalReason == "length" || terminalReason == "content-filter" {
+                            throw HanlinAISDKError.incompleteProviderResponse(reason: terminalReason)
                         }
 
                         guard attempt < 2 else {
@@ -98,6 +115,19 @@ final class HanlinNonEmptyLanguageModel: LanguageModelV3, @unchecked Sendable {
             return true
         case .toolInputDelta(_, let delta, _):
             return !delta.isEmpty
+        default:
+            return false
+        }
+    }
+
+    private static func preventsReplay(_ part: LanguageModelV3StreamPart) -> Bool {
+        switch part {
+        case .textDelta(_, let text, _):
+            return !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        // Any tool-input activity can lead to a side effect above this layer;
+        // even an incomplete call must not be automatically replayed.
+        case .toolInputStart, .toolInputDelta, .toolCall, .toolResult, .toolApprovalRequest, .file:
+            return true
         default:
             return false
         }

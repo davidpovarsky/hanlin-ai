@@ -173,7 +173,7 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         closeImportSurfaces()
     }
 
-    func testExpoNativeAPIDeniedPersistedGrant() throws {
+    func testExpoNativeAPIWorksWithoutPersistedGrant() throws {
         openApps()
         importAndInstall(archive: "ExpoNativeAPIProbeMissingGrant")
         launchInstalledPackage(named: "Hanlin Expo Native API Probe (Missing Grant)")
@@ -183,10 +183,10 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         let titleText = app.descendants(matching: .any).matching(titlePredicate).firstMatch
         XCTAssertTrue(titleText.waitForExistence(timeout: 30), "Hybrid host failed to launch")
 
-        // Verify native Fabric label did NOT mount because ios-native-api is denied
+        // Native API is available without a second Hanlin grant.
         let nativeLabelPredicate = NSPredicate(format: "label CONTAINS 'Native UIKit Label: Probe Variant A'")
         let nativeLabel = app.descendants(matching: .any).matching(nativeLabelPredicate).firstMatch
-        XCTAssertFalse(nativeLabel.waitForExistence(timeout: 5), "Native UIKit UILabel was unexpectedly mounted despite missing grant")
+        XCTAssertTrue(nativeLabel.waitForExistence(timeout: 20), "Native UIKit UILabel must mount without an internal grant")
 
         closeExpoApp()
     }
@@ -413,30 +413,10 @@ final class HanlinExpoNativeAPIIntegrationUITests: XCTestCase {
         }
         XCTAssertTrue(install.waitForExistence(timeout: 30), "Install button did not appear for \(archive)")
 
-        let approveAllButton = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        let nativeApiToggle = app.switches["hanlin-capability-toggle-ios-native-api"].firstMatch
-
-        if approveAllButton.waitForExistence(timeout: 2) && approveAllButton.isHittable {
-            approveAllButton.tap()
-        } else {
-            app.swipeUp()
-            if approveAllButton.waitForExistence(timeout: 3) {
-                if approveAllButton.isHittable {
-                    approveAllButton.tap()
-                } else {
-                    approveAllButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-                }
-            } else if nativeApiToggle.waitForExistence(timeout: 3) {
-                if (nativeApiToggle.value as? String) != "1" {
-                    if nativeApiToggle.isHittable {
-                        nativeApiToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
-                    } else {
-                        nativeApiToggle.tap()
-                    }
-                }
-            }
-            app.swipeDown()
-        }
+        XCTAssertFalse(app.buttons["hanlin-approve-all-capabilities"].exists,
+                       "Import must not request a second Hanlin approval")
+        XCTAssertFalse(app.switches["hanlin-capability-toggle-ios-native-api"].exists,
+                       "Native API must not require a package grant toggle")
 
         for _ in 1...3 {
             if install.exists && install.isHittable { break }

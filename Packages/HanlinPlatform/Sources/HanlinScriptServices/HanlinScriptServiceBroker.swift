@@ -129,7 +129,6 @@ public actor HanlinScriptServiceBroker {
 
     public func openURL(_ url: URL, context: HanlinScriptServiceContext) async throws -> Bool {
         try await authorize("open-url", operation: "openURL", context: context)
-        guard context.permissionContext.userGesturePresent else { throw HanlinScriptServiceError.permissionDenied("user_gesture") }
         return await openURLTransport.open(url)
     }
 

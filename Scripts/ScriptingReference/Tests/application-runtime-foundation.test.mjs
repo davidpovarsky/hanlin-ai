@@ -16,6 +16,8 @@ const bootstrap = swift.slice(start, swift.indexOf(`${'"'.repeat(3)}#`, start));
 
 function runtime(entrypointKind = "application", widgetFamily = "systemMedium", intentInput = {}) {
   const storage = new Map();
+  const sharedStorage = new Map();
+  const sharedBinaryStorage = new Map();
   const binaryStorage = new Map();
   const files = new Map();
   const bookmarks = new Map();
@@ -79,19 +81,24 @@ function runtime(entrypointKind = "application", widgetFamily = "systemMedium", 
     console,
     queueMicrotask,
     __hanlinNativeRender(json) { rendered = JSON.parse(json); },
-    __hanlinNativeStorageGet(key, shared) {
-      if (shared) return JSON.stringify({ allowed: false });
-      return JSON.stringify(storage.has(key)
-        ? { allowed: true, found: true, json: storage.get(key) }
-        : { allowed: true, found: false });
+    __hanlinNativeSQLiteOwner() {}, // VM fixture has no native SQLite connections.
+    __hanlinNativeStorageSync(operation, json) {
+      const payload = JSON.parse(json);
+      const jsonValues = payload.shared ? sharedStorage : storage;
+      const dataValues = payload.shared ? sharedBinaryStorage : binaryStorage;
+      const key = payload.key;
+      switch (operation) {
+        case "get": return success(jsonValues.has(key) ? {found:true,json:jsonValues.get(key)} : {found:false});
+        case "set": dataValues.delete(key); jsonValues.set(key,payload.json); return success(true);
+        case "getData": return success(dataValues.has(key) ? {found:true,base64:dataValues.get(key)} : {found:false});
+        case "setData": jsonValues.delete(key); dataValues.set(key,payload.base64); return success(null);
+        case "clear": jsonValues.clear(); dataValues.clear(); return success(null);
+        case "remove": jsonValues.delete(key); dataValues.delete(key); return success(null);
+        case "contains": return success(jsonValues.has(key) || dataValues.has(key));
+        case "keys": return success([...new Set([...jsonValues.keys(),...dataValues.keys()])].sort());
+        default: return failure("invalid_storage_operation",operation);
+      }
     },
-    __hanlinNativeStorageSet(key, json, shared) { if (shared) return false; storage.set(key, json); return true; },
-    __hanlinNativeStorageClear() { storage.clear(); binaryStorage.clear(); return true; },
-    __hanlinNativeStorageRemove(key, shared) { if (shared) return false; return storage.delete(key) || binaryStorage.delete(key); },
-    __hanlinNativeStorageContains(key, shared) { return !shared && (storage.has(key) || binaryStorage.has(key)); },
-    __hanlinNativeStorageKeys(shared) { return JSON.stringify(shared ? { allowed: false } : { allowed: true, keys: [...new Set([...storage.keys(), ...binaryStorage.keys()])] }); },
-    __hanlinNativeStorageGetData(key, shared) { return JSON.stringify(shared || !binaryStorage.has(key) ? { allowed: !shared, found: false } : { allowed: true, found: true, base64: binaryStorage.get(key) }); },
-    __hanlinNativeStorageSetData(key, base64, shared) { if (shared) return false; binaryStorage.set(key, base64); return true; },
     __hanlinNativeFileInfo() { return success({ documentsDirectory: "/documents", appGroupDocumentsDirectory: "/app-group", temporaryDirectory: "/temporary", scriptsDirectory: "/scripts", isiCloudEnabled: false, isWebDAVAvailable: false }); },
     __hanlinNativeFileSync(operation, json) {
       try { return success(fileOperation(operation, JSON.parse(json))); }

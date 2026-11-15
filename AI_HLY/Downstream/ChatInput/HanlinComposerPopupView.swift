@@ -942,6 +942,11 @@ struct HanlinComposerGeneralActionsView: View {
 
 @MainActor
 struct HanlinComposerToolsRootView: View {
+    private enum ManagementDestination: String, Identifiable {
+        case skills, mcp, runtime
+        var id: String { rawValue }
+    }
+
     @Bindable var coordinator: HanlinComposerPopupCoordinator
     let chatID: UUID
     let temporaryRecord: Bool
@@ -960,6 +965,7 @@ struct HanlinComposerToolsRootView: View {
     @State private var disabledSkillIDs: Set<String> = []
     @State private var skillSearchText: String = ""
     @State private var runtimeSnapshots: [RuntimeSnapshot] = []
+    @State private var managementDestination: ManagementDestination?
 
     private let compactSize = CGSize(width: 326, height: 396)
     private let expandedSize = CGSize(width: 360, height: 496)
@@ -1010,6 +1016,20 @@ struct HanlinComposerToolsRootView: View {
             .background(Color.clear)
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-composer-tools-popover")
+            .sheet(item: $managementDestination) { destination in
+                NavigationStack {
+                    managementView(destination)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button(String(localized: "Done")) {
+                                    managementDestination = nil
+                                }
+                                .accessibilityIdentifier("hanlin-tools-management-done")
+                            }
+                        }
+                }
+                .accessibilityIdentifier("hanlin-tools-management-\(destination.rawValue)")
+            }
         } else {
             NavigationStack(path: $coordinator.toolsNavigationPath) {
                 toolsRootPage
@@ -1054,6 +1074,27 @@ struct HanlinComposerToolsRootView: View {
     }
 
     // MARK: - Root Page
+
+    @ViewBuilder
+    private func managementView(_ destination: ManagementDestination) -> some View {
+        switch destination {
+        case .skills: SkillCenterView()
+        case .mcp: MCPServersSettingsView()
+        case .runtime: RuntimeCenterView()
+        }
+    }
+
+    @ViewBuilder
+    private func managementLink<Label: View>(
+        _ destination: ManagementDestination,
+        @ViewBuilder label: () -> Label
+    ) -> some View {
+        if embeddedInDrawer {
+            Button { managementDestination = destination } label: { label() }
+        } else {
+            NavigationLink { managementView(destination) } label: { label() }
+        }
+    }
 
     private var toolsRootPage: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -1310,9 +1351,7 @@ struct HanlinComposerToolsRootView: View {
                         .accessibilityIdentifier("hanlin-skill-toggle-\(skill.id.rawValue)")
                     }
 
-                    NavigationLink {
-                        SkillCenterView()
-                    } label: {
+                    managementLink(.skills) {
                         HStack {
                             Label(String(localized: "Open Skills Center (Import / New / Edit)"), systemImage: "arrow.up.forward.app")
                                 .font(.caption.weight(.semibold))
@@ -1456,9 +1495,7 @@ struct HanlinComposerToolsRootView: View {
                         }
                     }
 
-                    NavigationLink {
-                        MCPServersSettingsView()
-                    } label: {
+                    managementLink(.mcp) {
                         HStack {
                             Label(String(localized: "Open MCP Server Settings & Installation"), systemImage: "plus.circle.fill")
                                 .font(.caption.weight(.semibold))
@@ -1531,9 +1568,7 @@ struct HanlinComposerToolsRootView: View {
                         .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                     }
 
-                    NavigationLink {
-                        RuntimeCenterView()
-                    } label: {
+                    managementLink(.runtime) {
                         HStack {
                             Label(String(localized: "Open Runtime & Package Manager"), systemImage: "terminal")
                                 .font(.caption.weight(.semibold))

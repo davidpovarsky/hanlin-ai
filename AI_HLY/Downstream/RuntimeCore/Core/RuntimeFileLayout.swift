@@ -71,6 +71,16 @@ struct RuntimeFileLayout: Sendable {
         return try validatedDescendant(workspace, of: clientRoot, allowRoot: false)
     }
 
+    /// Explicitly selected CLI inputs may live anywhere the app can actually
+    /// read. Internal registry/receipt paths still use validatedDescendant.
+    func validatedReadableFile(_ candidate: URL) throws -> URL {
+        guard candidate.isFileURL, !candidate.path.contains("\0") else { throw RuntimeCoreError.invalidPath }
+        let file = candidate.standardizedFileURL.resolvingSymlinksInPath()
+        guard try file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true,
+              FileManager.default.isReadableFile(atPath: file.path) else { throw RuntimeCoreError.invalidPath }
+        return file
+    }
+
     func validatedWorkspace(_ candidate: URL) throws -> URL {
         guard candidate.isFileURL else { throw RuntimeCoreError.invalidPath }
         let standardized = candidate.standardizedFileURL.resolvingSymlinksInPath()

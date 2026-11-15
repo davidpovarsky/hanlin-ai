@@ -314,6 +314,8 @@ struct ModelsView: View {
     }
     
     private func priceText(for price: Int16) -> String {
+        if price < 0 { return String(localized: "Price unknown") }
+        if price == 4 { return String(localized: "Paid") }
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         if currentLanguage.hasPrefix("zh") {
             switch price {
@@ -333,6 +335,7 @@ struct ModelsView: View {
     }
     
     private func priceColor(for price: Int16) -> Color {
+        if price < 0 { return .secondary }
         switch price {
         case 0: return .green
         case 1: return .yellow
@@ -423,7 +426,7 @@ struct ModelRowView: View {
                             .foregroundColor(.gray)
                     }
                     
-                    if model.supportsImageGen {
+                    if model.hasVerifiedImageOutput {
                         Text(String(localized: "生图"))
                             .font(.caption)
                             .foregroundColor(.hlGreen)
@@ -447,9 +450,9 @@ struct ModelRowView: View {
                             .foregroundColor(.hlOrange)
                     }
                     
-                    Text(priceText(model.price))
+                    Text(model.catalogPriceDescription ?? priceText(model.catalogPriceTier))
                         .font(.caption)
-                        .foregroundColor(priceColor(model.price))
+                        .foregroundColor(priceColor(model.catalogPriceTier))
                 }
             }
             Spacer()

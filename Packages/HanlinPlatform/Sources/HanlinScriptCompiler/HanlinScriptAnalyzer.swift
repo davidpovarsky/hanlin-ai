@@ -299,13 +299,16 @@ public struct HanlinScriptAnalyzer: Sendable {
             .relativePath
         guard let packageJSONData = files[packageJSONPath],
               let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
-              packageJSON["main"] as? String == URL(filePath: entrypoint.sourcePath).lastPathComponent,
+              URL(filePath: entrypoint.sourcePath).lastPathComponent == "bundle.mjs",
+              packageJSON["main"] as? String == "bundle.mjs",
               packageJSON["hanlinRuntime"] as? String == HanlinRuntimeProfile.hanlinNativeScript.rawValue else {
             findings.append(.init(
                 state: .unsupported,
                 severity: .error,
                 sourcePath: packageJSONPath,
-                message: "NativeScript requires a prepared app package.json with matching main and hanlinRuntime fields."
+                message: "NativeScript requires a prepared bundle.mjs entry and package.json with main: bundle.mjs and hanlinRuntime: hanlin-nativescript.",
+                rationale: "Use the canonical prepared entry for every session; alternate main names are not a supported Host contract.",
+                code: "MINIAPP_ENTRYPOINT_INVALID"
             ))
             return
         }
@@ -360,6 +363,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 }
             }
         }
+        guard validatePreparedDependencyTypes(packageJSON, sourcePath: packageJSONPath, findings: &findings) else { return }
         var declaredCoreVersion: String?
         if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@nativescript/core"] as? String {
             declaredCoreVersion = version
@@ -379,7 +383,9 @@ public struct HanlinScriptAnalyzer: Sendable {
                     state: .unsupported,
                     severity: .error,
                     sourcePath: packageJSONPath,
-                    message: "This Hanlin build supports @nativescript/core \(nativeScriptRuntimeVersion), but the package requires \(coreVersion)."
+                    message: "This Hanlin build supports @nativescript/core \(nativeScriptRuntimeVersion), but the package requires \(coreVersion).",
+                    rationale: "Declare a released semantic version no newer than the embedded Core in the same major version.",
+                    code: "MINIAPP_CORE_VERSION_MISMATCH"
                 ))
             }
         }
@@ -392,21 +398,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isCoreVersionCompatible(_ versionString: String) -> Bool {
-        let trimmed = versionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.isEmpty || trimmed == "*" || trimmed == "latest" {
-            return true
-        }
-        var cleaned = trimmed
-        if cleaned.hasPrefix("^") || cleaned.hasPrefix("~") || cleaned.hasPrefix("=") || cleaned.hasPrefix("v") {
-            cleaned = String(cleaned.dropFirst())
-        }
-        if cleaned.hasPrefix("9.1") {
-            return true
-        }
-        if trimmed.hasPrefix("^9.") {
-            return true
-        }
-        return false
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: nativeScriptRuntimeVersion)
     }
 
     private static func validatePreparedExpoApplication(
@@ -458,6 +450,20 @@ public struct HanlinScriptAnalyzer: Sendable {
             ))
             return
         }
+        if !appEntrypoints.isEmpty {
+            let main = packageJSON["main"] as? String ?? (packageJSON["main"] == nil ? "bundle.js" : "")
+            let parts = main.split(separator: "/", omittingEmptySubsequences: false)
+            let safe = !main.isEmpty && !main.contains("\\") && !main.contains(":") && !main.contains("\0") &&
+                parts.allSatisfy { !$0.isEmpty && $0 != "." && $0 != ".." }
+            let packageDirectory = packageJSONPath.split(separator: "/").dropLast().joined(separator: "/")
+            let resolvedMain = packageDirectory.isEmpty ? main : packageDirectory + "/" + main
+            if !safe || resolvedMain != entrypoint.sourcePath || files[resolvedMain] == nil {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                    message: "Expo package.json main must name the same prepared file as the declared foreground entrypoint.",
+                    rationale: "Use a relative file path within this prepared package, matching script.json entry; bundle.js remains the default when main is omitted.",
+                    code: "MINIAPP_ENTRYPOINT_INVALID"))
+            }
+        }
         if !widgetEntrypoints.isEmpty, packageJSON["hanlinExpo"] == nil {
             findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
                 message: "Expo widgets require an explicit hanlinExpo runtimeVersion/plugins contract."))
@@ -479,7 +485,9 @@ public struct HanlinScriptAnalyzer: Sendable {
                     state: .unsupported,
                     severity: .error,
                     sourcePath: packageJSONPath,
-                    message: "This Hanlin build supports Expo \(expoSDKVersion), but the package requires \(runtimeVersion)."
+                    message: "This Hanlin build supports Expo \(expoSDKVersion), but the package requires \(runtimeVersion).",
+                    rationale: "Declare a released semantic version no newer than the embedded Expo runtime contract in the same major version.",
+                    code: "MINIAPP_EXPO_VERSION_MISMATCH"
                 ))
                 return
             }
@@ -488,14 +496,21 @@ public struct HanlinScriptAnalyzer: Sendable {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
                     message: "Native Expo widgets require the exact embedded runtime 58.0.3 and @expo/ui plugin 58.0.3."))
             }
-            if let requiredBridgeVersion = contract["bridgeVersion"] as? String,
-               !isVersion(requiredBridgeVersion, atMost: expoUIBridgeVersion) {
-                findings.append(.init(
-                    state: .unsupported,
-                    severity: .error,
-                    sourcePath: packageJSONPath,
-                    message: "This Hanlin build provides @hanlin/expo-ui bridge \(expoUIBridgeVersion), but the package requires \(requiredBridgeVersion)."
-                ))
+            if let requiredBridge = contract["bridgeVersion"] {
+                guard let requiredBridgeVersion = requiredBridge as? String else {
+                    findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                        message: "Expo hanlinExpo.bridgeVersion must be a released semantic version string.",
+                        rationale: "Use the generated bridge contract version; do not substitute an integer or npm package version.",
+                        code: "MINIAPP_BRIDGE_VERSION_INVALID"))
+                    return
+                }
+                if !isVersion(requiredBridgeVersion, atMost: expoUIBridgeVersion) {
+                    findings.append(.init(
+                        state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                        message: "This Hanlin build provides @hanlin/expo-ui bridge \(expoUIBridgeVersion), but the package requires \(requiredBridgeVersion).",
+                        rationale: "Use a released semantic bridge version at most the installed version, without wildcard or malformed components.",
+                        code: "MINIAPP_BRIDGE_VERSION_MISMATCH"))
+                }
             }
             for (name, value) in plugins.sorted(by: { $0.key < $1.key }) {
                 guard let version = value as? String else {
@@ -514,13 +529,6 @@ public struct HanlinScriptAnalyzer: Sendable {
                             severity: .error,
                             sourcePath: packageJSONPath,
                             message: "This Hanlin build supports @nativescript/react-native 9.1.2, but the package requires \(version)."
-                        ))
-                    } else if !declaredCapabilities.contains(where: { $0.rawValue == "ios-native-api" }) {
-                        findings.append(.init(
-                            state: .unsupported,
-                            severity: .error,
-                            sourcePath: packageJSONPath,
-                            message: "Expo package declaring '@nativescript/react-native' must declare 'ios-native-api' in capabilities."
                         ))
                     } else {
                         findings.append(.init(
@@ -572,14 +580,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 }
             }
         }
-        if let deps = packageJSON["dependencies"] as? [String: Any], deps["@nativescript/react-native"] != nil, !declaredCapabilities.contains(where: { $0.rawValue == "ios-native-api" }) {
-            findings.append(.init(
-                state: .unsupported,
-                severity: .error,
-                sourcePath: packageJSONPath,
-                message: "Expo package declaring '@nativescript/react-native' must declare 'ios-native-api' in capabilities."
-            ))
-        }
+        guard validatePreparedDependencyTypes(packageJSON, sourcePath: packageJSONPath, findings: &findings) else { return }
         var declaredUIVersion: String?
         if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@expo/ui"] as? String {
             declaredUIVersion = version
@@ -612,38 +613,32 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isExpoVersionCompatible(_ versionString: String) -> Bool {
-        let trimmed = versionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.isEmpty || trimmed == "*" || trimmed == "latest" {
-            return true
-        }
-        var cleaned = trimmed
-        if cleaned.hasPrefix("^") || cleaned.hasPrefix("~") || cleaned.hasPrefix("=") || cleaned.hasPrefix("v") {
-            cleaned = String(cleaned.dropFirst())
-        }
-        if cleaned.hasPrefix("58.") || trimmed.hasPrefix("^58.") {
-            return true
-        }
-        return false
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: expoSDKVersion)
     }
 
     private static func isVersion(_ required: String, atMost installed: String) -> Bool {
-        func components(_ value: String) -> [Int]? {
-            var trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
-            if trimmed.hasPrefix("^") || trimmed.hasPrefix("~") || trimmed.hasPrefix("=") || trimmed.hasPrefix("v") {
-                trimmed.removeFirst()
+        HanlinPreparedRuntimeVersion.supportsMinimum(required, installed: installed, requireSameMajor: false)
+    }
+
+    private static func validatePreparedDependencyTypes(_ package: [String: Any], sourcePath: String,
+                                                        findings: inout [HanlinCompatibilityFinding]) -> Bool {
+        var valid = true
+        for key in ["dependencies", "devDependencies"] {
+            guard let raw = package[key] else { continue }
+            guard let dependencies = raw as? [String: Any] else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: sourcePath,
+                    message: "Prepared package \(key) must be an object of module names and version strings.",
+                    code: "MINIAPP_DEPENDENCY_VERSION_INVALID"))
+                valid = false; continue
             }
-            let pieces = trimmed.split(separator: ".").prefix(3)
-            guard !pieces.isEmpty, pieces.allSatisfy({ Int($0) != nil }) else { return nil }
-            let values = pieces.compactMap { Int($0) }
-            return values + Array(repeating: 0, count: max(0, 3 - values.count))
+            for name in dependencies.keys.sorted() where !(dependencies[name] is String) {
+                findings.append(.init(state: .unsupported, severity: .error, symbol: name, sourcePath: sourcePath,
+                    message: "Prepared package dependency \(name) must declare a version string.",
+                    code: "MINIAPP_DEPENDENCY_VERSION_INVALID"))
+                valid = false
+            }
         }
-        guard let requiredComponents = components(required), let installedComponents = components(installed) else {
-            return false
-        }
-        for (requiredPart, installedPart) in zip(requiredComponents, installedComponents) {
-            if requiredPart != installedPart { return requiredPart < installedPart }
-        }
-        return true
+        return valid
     }
 
     private func packageFiles(root: URL) throws -> [String: Data] {

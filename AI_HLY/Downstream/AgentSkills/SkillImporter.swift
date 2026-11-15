@@ -22,7 +22,7 @@ public enum SkillImportError: Error, LocalizedError, Hashable, Sendable {
         switch self {
         case .invalidURL(let u): return "Invalid URL: \(u)"
         case .nonHTTPSURLForbidden: return "Only secure HTTPS URLs are permitted for skill installation."
-        case .downloadExceedsLimit(let bytes): return "Skill download size (\(bytes) bytes) exceeds maximum 25 MB limit."
+        case .downloadExceedsLimit(let bytes): return "Skill download size (\(bytes) bytes) exceeds the configured download budget."
         case .downloadFailed(let msg): return "Download failed: \(msg)"
         case .unsupportedFileType(let ext): return "Unsupported file type: .\(ext). Expected .zip or .md"
         case .missingSkillMarkdown: return "Skill archive must contain exactly one SKILL.md entrypoint."
@@ -72,7 +72,6 @@ public struct StagedSkillPackage: Sendable {
 
 public final class SkillImporter: @unchecked Sendable {
     public static let shared = SkillImporter()
-    public static let maxDownloadBytes: Int64 = 25 * 1_048_576
 
     private let fileManager = FileManager.default
 
@@ -94,7 +93,8 @@ public final class SkillImporter: @unchecked Sendable {
 
     // MARK: - Staging from Local File / ZIP
 
-    public func stageAndInspect(fileURL: URL, originURL: String? = nil) throws -> StagedSkillPackage {
+    public func stageAndInspect(fileURL: URL, originURL: String? = nil,
+                                limits: HanlinArchiveLimits = .autonomousSkillImport) throws -> StagedSkillPackage {
         let accessed = fileURL.startAccessingSecurityScopedResource()
         defer { if accessed { fileURL.stopAccessingSecurityScopedResource() } }
 
@@ -109,8 +109,7 @@ public final class SkillImporter: @unchecked Sendable {
         do {
             let fileAttrs = try fileManager.attributesOfItem(atPath: fileURL.path)
             let fileSize = (fileAttrs[.size] as? NSNumber)?.int64Value ?? 0
-            let maxLimit: Int64 = (originURL != nil) ? Self.maxDownloadBytes : (256 * 1_048_576)
-            guard fileSize <= maxLimit else {
+            guard fileSize >= 0, fileSize <= limits.maximumArchiveBytes else {
                 throw SkillImportError.downloadExceedsLimit(fileSize)
             }
 
@@ -180,22 +179,20 @@ public final class SkillImporter: @unchecked Sendable {
                     throw SkillImportError.archiveInspectionFailed(["Unable to open zip archive."])
                 }
 
-                let policy = HanlinArchivePolicy(limits: HanlinArchiveLimits(
-                    maximumArchiveBytes: 256 * 1_048_576,
-                    maximumFiles: 10_000,
-                    maximumDirectories: 2_000,
-                    maximumDepth: 32,
-                    maximumUncompressedBytes: 512 * 1_048_576,
-                    maximumCompressionRatio: 500
-                ))
+                let policy = HanlinArchivePolicy(limits: limits)
 
                 let zipEntries = Array(archive)
-                let entryMetadatas = zipEntries.map { entry in
-                    HanlinArchiveEntryMetadata(
+                let entryMetadatas = try zipEntries.map { entry in
+                    try Task.checkCancellation()
+                    guard let compressed = Int64(exactly: entry.compressedSize),
+                          let expanded = Int64(exactly: entry.uncompressedSize) else {
+                        throw SkillImportError.archiveInspectionFailed(["Archive entry byte count cannot be represented: \(entry.path)"])
+                    }
+                    return HanlinArchiveEntryMetadata(
                         path: entry.path,
                         kind: Self.mapEntryKind(entry.type),
-                        compressedBytes: Int64(entry.compressedSize),
-                        uncompressedBytes: Int64(entry.uncompressedSize)
+                        compressedBytes: compressed,
+                        uncompressedBytes: expanded
                     )
                 }
 
@@ -229,6 +226,7 @@ public final class SkillImporter: @unchecked Sendable {
                 }
 
                 // Extract all non-ignored entries safely
+                var expandedBytes: Int64 = 0
                 for entry in zipEntries where !ignored.contains(entry.path) {
                     try Task.checkCancellation()
                     guard let normalized = HanlinArchivePolicy.normalizedRelativePath(entry.path) else {
@@ -240,9 +238,14 @@ public final class SkillImporter: @unchecked Sendable {
                     }
                     if entry.type == .directory {
                         try fileManager.createDirectory(at: dest, withIntermediateDirectories: true)
-                    } else {
+                    } else if entry.type == .symlink {
                         try fileManager.createDirectory(at: dest.deletingLastPathComponent(), withIntermediateDirectories: true)
-                        _ = try archive.extract(entry, to: dest, allowUncontainedSymlinks: false)
+                        let checksum = try archive.extract(entry, to: dest, allowUncontainedSymlinks: false)
+                        guard checksum == entry.checksum else {
+                            throw SkillImportError.archiveInspectionFailed(["Archive checksum mismatch: \(entry.path)"])
+                        }
+                    } else {
+                        try Self.extractFile(entry, archive: archive, to: dest, limits: limits, expandedBytes: &expandedBytes)
                     }
                 }
 
@@ -293,7 +296,7 @@ public final class SkillImporter: @unchecked Sendable {
                 }
 
                 // List resources
-                let resources = Self.scanResources(in: skillRoot)
+                let resources = try Self.scanResources(in: skillRoot)
 
                 return StagedSkillPackage(
                     stagingDirectoryURL: stagingDir,
@@ -312,9 +315,28 @@ public final class SkillImporter: @unchecked Sendable {
         }
     }
 
+    /// Hashing and extraction stay off the presentation actor. Cancellation owns
+    /// the staging directory until the completed preview is handed to the caller.
+    public func stageAndInspectInBackground(fileURL: URL, originURL: String? = nil,
+                                            limits: HanlinArchiveLimits = .autonomousSkillImport) async throws -> StagedSkillPackage {
+        let worker = Task.detached(priority: .userInitiated) {
+            try self.stageAndInspect(fileURL: fileURL, originURL: originURL, limits: limits)
+        }
+        let staged = try await withTaskCancellationHandler {
+            try await worker.value
+        } onCancel: {
+            worker.cancel()
+        }
+        do { try Task.checkCancellation() }
+        catch { staged.cleanup(); throw error }
+        return staged
+    }
+
     // MARK: - Download from HTTPS URL
 
-    public func downloadAndStage(from httpsURL: URL, sessionConfiguration: URLSessionConfiguration? = nil) async throws -> StagedSkillPackage {
+    public func downloadAndStage(from httpsURL: URL, sessionConfiguration: URLSessionConfiguration? = nil,
+                                 limits: HanlinArchiveLimits = .autonomousSkillImport,
+                                 downloadProgress: (@Sendable (Int64, Int64?) -> Void)? = nil) async throws -> StagedSkillPackage {
         guard let scheme = httpsURL.scheme?.lowercased(), scheme == "https" else {
             throw SkillImportError.nonHTTPSURLForbidden
         }
@@ -323,8 +345,10 @@ public final class SkillImporter: @unchecked Sendable {
         request.httpMethod = "GET"
 
         let config = sessionConfiguration ?? AgentRuntimeUIAcceptanceProvider.makeSessionConfiguration()
-        let downloader = BoundedStreamDownloader(maxBytes: Self.maxDownloadBytes, sessionConfiguration: config)
-        let (data, response) = try await downloader.download(request: request)
+        let downloader = BoundedStreamDownloader(maxBytes: limits.maximumArchiveBytes == .max ? nil : limits.maximumArchiveBytes,
+            sessionConfiguration: config, progress: { update in downloadProgress?(update.receivedBytes, update.expectedBytes) })
+        let (downloadedFile, response) = try await downloader.download(request: request)
+        defer { try? fileManager.removeItem(at: downloadedFile) }
 
         let ext: String
         if httpsURL.pathExtension.lowercased() == "md" {
@@ -337,10 +361,11 @@ public final class SkillImporter: @unchecked Sendable {
         }
 
         let tempFile = fileManager.temporaryDirectory.appendingPathComponent("download-\(UUID().uuidString).\(ext)")
-        try data.write(to: tempFile)
+        try fileManager.moveItem(at: downloadedFile, to: tempFile)
         defer { try? fileManager.removeItem(at: tempFile) }
 
-        return try stageAndInspect(fileURL: tempFile, originURL: httpsURL.absoluteString)
+        try Task.checkCancellation()
+        return try await stageAndInspectInBackground(fileURL: tempFile, originURL: httpsURL.absoluteString, limits: limits)
     }
 
     // MARK: - Final Installation into SkillStore
@@ -353,6 +378,34 @@ public final class SkillImporter: @unchecked Sendable {
     }
 
     // MARK: - Containment & Private Helpers
+
+    private static func extractFile(_ entry: Entry, archive: Archive, to destination: URL,
+                                    limits: HanlinArchiveLimits, expandedBytes: inout Int64) throws {
+        try FileManager.default.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try Data().write(to: destination, options: .withoutOverwriting)
+        let handle = try FileHandle(forWritingTo: destination)
+        var written: Int64 = 0
+        do {
+            let checksum = try archive.extract(entry, bufferSize: 65_536, skipCRC32: false) { chunk in
+                try Task.checkCancellation()
+                let (next, overflow) = expandedBytes.addingReportingOverflow(Int64(chunk.count))
+                guard !overflow, next <= limits.maximumUncompressedBytes else {
+                    throw SkillImportError.archiveInspectionFailed(["Extracted bytes exceed the configured storage budget."])
+                }
+                try handle.write(contentsOf: chunk)
+                expandedBytes = next
+                written += Int64(chunk.count)
+            }
+            try handle.close()
+            guard checksum == entry.checksum, UInt64(written) == entry.uncompressedSize else {
+                throw SkillImportError.archiveInspectionFailed(["Archive checksum or length mismatch: \(entry.path)"])
+            }
+            try FileManager.default.setAttributes(entry.fileAttributes, ofItemAtPath: destination.path)
+        } catch {
+            try? handle.close()
+            throw error
+        }
+    }
 
     public static func isContained(_ url: URL, in parent: URL) -> Bool {
         let canonParent = parent.resolvingSymlinksInPath().standardizedFileURL.path
@@ -371,10 +424,11 @@ public final class SkillImporter: @unchecked Sendable {
         }
     }
 
-    private static func scanResources(in root: URL) -> [SkillResourceFile] {
+    private static func scanResources(in root: URL) throws -> [SkillResourceFile] {
         var result: [SkillResourceFile] = []
         let enumerator = FileManager.default.enumerator(at: root, includingPropertiesForKeys: [.fileSizeKey, .isRegularFileKey], options: [.skipsHiddenFiles])
         while let fileURL = enumerator?.nextObject() as? URL {
+            try Task.checkCancellation()
             guard let values = try? fileURL.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey]),
                   values.isRegularFile == true else {
                 continue
@@ -419,152 +473,5 @@ public final class SkillImporter: @unchecked Sendable {
         case "pdf": return "application/pdf"
         default: return "application/octet-stream"
         }
-    }
-}
-
-final class BoundedStreamDownloader: NSObject, URLSessionDataDelegate, @unchecked Sendable {
-    public let maxBytes: Int64
-    private let sessionConfiguration: URLSessionConfiguration
-    private var receivedBytes: Int64 = 0
-    private var accumulatedData = Data()
-    private var continuation: CheckedContinuation<(Data, HTTPURLResponse), Error>?
-    private var response: HTTPURLResponse?
-    private var currentSession: URLSession?
-    private let lock = NSLock()
-    private var isResumed = false
-
-    init(maxBytes: Int64 = SkillImporter.maxDownloadBytes, sessionConfiguration: URLSessionConfiguration = .ephemeral) {
-        self.maxBytes = maxBytes
-        self.sessionConfiguration = sessionConfiguration
-    }
-
-    func download(from url: URL) async throws -> (Data, HTTPURLResponse) {
-        try await download(request: URLRequest(url: url))
-    }
-
-    func download(request: URLRequest) async throws -> (Data, HTTPURLResponse) {
-        guard let scheme = request.url?.scheme?.lowercased(), scheme == "https" else {
-            throw SkillImportError.nonHTTPSURLForbidden
-        }
-
-        return try await withCheckedThrowingContinuation { cont in
-            self.lock.lock()
-            self.continuation = cont
-            self.receivedBytes = 0
-            self.accumulatedData = Data()
-            self.response = nil
-            self.isResumed = false
-
-            let session = URLSession(configuration: self.sessionConfiguration, delegate: self, delegateQueue: nil)
-            self.currentSession = session
-            self.lock.unlock()
-
-            let task = session.dataTask(with: request)
-            task.resume()
-        }
-    }
-
-    func urlSession(
-        _ session: URLSession,
-        task: URLSessionTask,
-        willPerformHTTPRedirection response: HTTPURLResponse,
-        newRequest request: URLRequest,
-        completionHandler: @escaping @Sendable (URLRequest?) -> Void
-    ) {
-        guard let scheme = request.url?.scheme?.lowercased(), scheme == "https" else {
-            completionHandler(nil)
-            task.cancel()
-            resume(throwing: SkillImportError.nonHTTPSURLForbidden)
-            return
-        }
-        completionHandler(request)
-    }
-
-    func urlSession(
-        _ session: URLSession,
-        dataTask: URLSessionDataTask,
-        didReceive response: URLResponse,
-        completionHandler: @escaping @Sendable (URLSession.ResponseDisposition) -> Void
-    ) {
-        guard let http = response as? HTTPURLResponse else {
-            completionHandler(.cancel)
-            resume(throwing: SkillImportError.downloadFailed("Non-HTTP response"))
-            return
-        }
-        self.response = http
-
-        guard (200...299).contains(http.statusCode) else {
-            completionHandler(.cancel)
-            resume(throwing: SkillImportError.downloadFailed("HTTP Status \(http.statusCode)"))
-            return
-        }
-
-        if http.expectedContentLength > maxBytes {
-            completionHandler(.cancel)
-            resume(throwing: SkillImportError.downloadExceedsLimit(http.expectedContentLength))
-            return
-        }
-
-        completionHandler(.allow)
-    }
-
-    func urlSession(
-        _ session: URLSession,
-        dataTask: URLSessionDataTask,
-        didReceive data: Data
-    ) {
-        lock.lock()
-        receivedBytes += Int64(data.count)
-        if receivedBytes > maxBytes {
-            dataTask.cancel()
-            let bytes = receivedBytes
-            lock.unlock()
-            resume(throwing: SkillImportError.downloadExceedsLimit(bytes))
-            return
-        }
-        accumulatedData.append(data)
-        lock.unlock()
-    }
-
-    func urlSession(
-        _ session: URLSession,
-        task: URLSessionTask,
-        didCompleteWithError error: Error?
-    ) {
-        if let error {
-            resume(throwing: SkillImportError.downloadFailed(error.localizedDescription))
-        } else {
-            lock.lock()
-            let data = accumulatedData
-            let resp = response
-            lock.unlock()
-            if let resp {
-                resume(returning: (data, resp))
-            } else {
-                resume(throwing: SkillImportError.downloadFailed("Missing response"))
-            }
-        }
-    }
-
-    private func resume(returning value: (Data, HTTPURLResponse)) {
-        lock.lock()
-        defer { lock.unlock() }
-        guard !isResumed else { return }
-        isResumed = true
-        currentSession?.finishTasksAndInvalidate()
-        currentSession = nil
-        continuation?.resume(returning: value)
-        continuation = nil
-    }
-
-    private func resume(throwing error: Error) {
-        lock.lock()
-        defer { lock.unlock() }
-        guard !isResumed else { return }
-        isResumed = true
-        currentSession?.invalidateAndCancel()
-        currentSession = nil
-        continuation?.resume(throwing: error)
-        continuation = nil
     }
 }

@@ -1,3 +1,4 @@
+import {mcpGenerationDirectory, publishMCPGeneration, finishMCPGeneration} from './mcp-package-generations.mjs';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import Arborist from '@npmcli/arborist';
@@ -12,8 +13,9 @@ import {
   resolveEntryPoint,
 } from './package-compatibility.mjs';
 import { runMCPRuntimeProbe } from './runtime-probe.mjs';
+import {planLifecycleTree} from './lifecycle-planner.mjs';
 
-const NODE_VERSION = '24.5.0';
+const NODE_VERSION = process.versions.node;
 const runtimeDependencyOverrides = JSON.parse(await fs.readFile(
   new URL('./runtime-dependency-overrides.json', import.meta.url),
   'utf8',
@@ -51,6 +53,7 @@ export async function installPackage({
   arguments: serverArguments = [],
   signal,
   emit,
+  executeLifecycle,
 }) {
   validateID(operationID);
   validateID(serverID);
@@ -58,14 +61,17 @@ export async function installPackage({
   const serversRoot = path.join(root, 'packages', 'mcp');
   const operationRoot = path.join(stagingRoot, operationID);
   const packageRoot = path.join(operationRoot, 'package');
-  const finalRoot = path.join(serversRoot, serverID);
+  const finalRoot = mcpGenerationDirectory(root, serverID, operationID);
   const backupRoot = path.join(stagingRoot, `backup-${operationID}`);
   const cachePath = path.join(root, 'cache', 'npm');
   await fs.mkdir(stagingRoot, { recursive: true });
   await fs.mkdir(serversRoot, { recursive: true });
-  await fs.rm(operationRoot, { recursive: true, force: true });
-  await fs.rm(backupRoot, { recursive: true, force: true });
+  // Never erase a previous interrupted transaction or its sole old-version backup.
+  try {await fs.access(backupRoot);throw new Error('This installation backup already exists; recover its transaction before retrying.');}
+  catch(error){if(error.code!=='ENOENT')throw error;}
+  await fs.mkdir(operationRoot);
   await fs.mkdir(packageRoot, { recursive: true });
+  let publishedNew=false;
 
   try {
     checkCancelled(signal);
@@ -123,12 +129,23 @@ export async function installPackage({
       legacyPeerDeps: true,
     });
     const actualTree = await arborist.reify({
-      omit: ['dev', 'optional'],
+      omit: ['dev'],
       ignoreScripts: true,
       signal,
       legacyPeerDeps: true,
     });
     verifyRuntimeDependencyOverrides(actualTree);
+
+    const lifecycle=await planLifecycleTree(actualTree,{includeRoot:true,rootContext:'registry',
+      identity:{...extractedManifest,integrity:resolved.integrity}});
+    const lifecycleRoot=path.join(packageRoot,'.hanlin-runtime');
+    await fs.mkdir(lifecycleRoot,{recursive:true});
+    await fs.writeFile(path.join(lifecycleRoot,'lifecycle-plan.json'),JSON.stringify(lifecycle));
+    if(!lifecycle.executable)throw new Error('Package lifecycle contains invalid portable-shell syntax.');
+    if(lifecycle.actions.length){
+      if(!executeLifecycle)throw new Error('Package installation requires the shared runtime lifecycle executor.');
+      await executeLifecycle({plan:lifecycle,packageRoot,signal});
+    }
 
     checkCancelled(signal);
     const selected = resolveEntryPoint(extractedManifest, entryPointOverride);
@@ -140,6 +157,7 @@ export async function installPackage({
 
     emit('install', { operationID, phase: 'checkingCompatibility', fraction: 0.75 });
     const compatibility = await analyzePackage(packageRoot, extractedManifest, {
+      signal,
       entryPoint: absoluteEntry,
       moduleKind,
       onProgress(stage) {
@@ -156,8 +174,9 @@ export async function installPackage({
         moduleKind,
         arguments: validatedServerArguments,
         workspace: path.join(operationRoot, 'probe-workspace'),
-        timeoutMilliseconds: 30_000,
-        maximumOutputBytes: 1_048_576,
+        signal,
+        onOutput: (channel,bytes) => emit('install',{operationID,phase:'checkingCompatibility',fraction:0.8,
+          probeOutput:{channel,base64:bytes.toString('base64')}}),
       }),
     });
     rejectUnsupported(compatibility.findings);
@@ -220,46 +239,27 @@ export async function installPackage({
     await fs.writeFile(path.join(metadataRoot, 'compatibility-report.json'), JSON.stringify(compatibility, null, 2));
 
     emit('install', { operationID, phase: 'registering', fraction: 0.9 });
-    try { await fs.access(finalRoot); await fs.rename(finalRoot, backupRoot); } catch (error) {
-      if (error.code !== 'ENOENT') throw error;
-    }
-    await fs.rename(packageRoot, finalRoot);
+    checkCancelled(signal);
+    await publishMCPGeneration({root, serverID, operationID, packageRoot});
+    publishedNew=true;
+    checkCancelled(signal);
     await fs.rm(operationRoot, { recursive: true, force: true });
     return descriptor;
   } catch (error) {
     await fs.rm(operationRoot, { recursive: true, force: true });
     try {
-      await fs.access(backupRoot);
-      try {
-        await fs.access(finalRoot);
-      } catch (finalError) {
-        if (finalError.code !== 'ENOENT') throw finalError;
-        await fs.rename(backupRoot, finalRoot);
-      }
-    } catch (restoreError) {
-      if (restoreError.code !== 'ENOENT') throw new AggregateError([error, restoreError], 'Install failed and the prior package could not be restored.');
-    }
+      if(publishedNew)await finishMCPGeneration({root,serverID,operationID,state:'rolledBack'});
+    } catch(restoreError){throw new AggregateError([error,restoreError],'Install failed and its transaction could not be finalized; existing package generations were retained.');}
     throw error;
   }
 }
 
-export async function commitInstall({ root, operationID, serverID }) {
-  validateID(operationID);
-  validateID(serverID);
-  await fs.rm(path.join(root, 'staging', `backup-${operationID}`), { recursive: true, force: true });
+export async function commitInstall(options) {
+  await finishMCPGeneration({...options,state:'committed'});
 }
 
-export async function rollbackInstall({ root, operationID, serverID }) {
-  validateID(operationID);
-  validateID(serverID);
-  const finalRoot = path.join(root, 'packages', 'mcp', serverID);
-  const backupRoot = path.join(root, 'staging', `backup-${operationID}`);
-  await fs.rm(finalRoot, { recursive: true, force: true });
-  try {
-    await fs.rename(backupRoot, finalRoot);
-  } catch (error) {
-    if (error.code !== 'ENOENT') throw error;
-  }
+export async function rollbackInstall(options) {
+  await finishMCPGeneration({...options,state:'rolledBack'});
 }
 
 export function verifyIntegrity(data, integrity) {
@@ -340,10 +340,10 @@ function slug(value) {
 }
 
 function validateArguments(value) {
-  if (!Array.isArray(value) || value.length > 128) throw new Error('Invalid server arguments.');
+  if (!Array.isArray(value)) throw new Error('Invalid server arguments.');
   return value.map(item => {
     const argument = String(item);
-    if (/\0|\r|\n/.test(argument)) throw new Error('Invalid server argument.');
+    if (argument.includes('\0')) throw new Error('Invalid server argument.');
     return argument;
   });
 }

@@ -326,6 +326,36 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let bodyData = Self.extractBodyData(from: request)
         let bodyString = String(decoding: bodyData, as: UTF8.self)
 
+        // Match only the current user turn; old markers can remain in history.
+        let body = (try? JSONSerialization.jsonObject(with: bodyData)) as? [String: Any]
+        let messages = body?["messages"] as? [[String: Any]]
+        let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
+        let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
+        if let marker = currentText.range(of: "DIAGNOSTIC_CAPTURE_[0-9A-F-]{36}", options: .regularExpression) {
+            emitFinalAnswer("CAPTURED_" + String(currentText[marker]))
+            return
+        }
+
+        if bodyString.contains("RENDER_CODE_FENCES") {
+            emitFinalAnswer("""
+            Local renderer acceptance
+
+            ```mermaid
+            flowchart LR
+            A["שלום🙂"] --> B["OAuth"]
+            ```
+
+            ```diff
+            --- a/auth.ts
+            +++ b/auth.ts
+            @@ -1 +1 @@
+            -old("שלום")
+            +updated("שלום🙂")
+            ```
+            """)
+            return
+        }
+
         // 1. Run B immediately completes (must precede START_DELAYED_RUN_A since Run A remains in conversation history)
         if bodyString.contains("START_RUN_B") {
             emitFinalAnswer("RUN_B_COMPLETE")
@@ -375,6 +405,11 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             } else {
                 emitToolCall(id: "ui-next-turn-load", name: "load_skill", arguments: #"{"skill_id":"ui-next-turn-skill"}"#)
             }
+            return
+        }
+
+        if bodyString.contains("PROMPT_CHAT_PRESENTATION") {
+            emitFinalAnswer("alpha beta gamma\n\nשלום 👋🏽 **bold** and \\(E=mc^2\\).\n\n[Example](https://example.com)\n\nCHAT_PRESENTATION_READY")
             return
         }
 

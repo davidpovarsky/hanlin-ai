@@ -79,6 +79,32 @@ export default function App({ variant = 'A' }: AppProps) {
   const [searchProbeText, setSearchProbeText] = useState<string>('');
   const [searchProbeSubmits, setSearchProbeSubmits] = useState<number>(0);
   const [searchProbeActions, setSearchProbeActions] = useState<number>(0);
+  const [hostFileProbe, setHostFileProbe] = useState('HOST_FILES_NOT_RUN');
+
+  useEffect(() => {
+    let mounted = true;
+    const path = `sdk-file-probe-${Date.now()}-${Math.random().toString(36).slice(2)}.bin`;
+    const run = async () => {
+      try {
+        for (const bytes of [new Uint8Array(0), Uint8Array.from({length: 256}, (_, i) => i),
+          Uint8Array.from({length: 131_073}, (_, i) => i % 256)]) {
+          const written = await hostServices.writeFile(path, bytes, 'documents');
+          const actual = await hostServices.readFile(path, 'documents');
+          if (!written.ok || actual === null || actual.length !== bytes.length ||
+              actual.some((byte, index) => byte !== bytes[index])) throw new Error('File bytes changed');
+          await hostServices.deleteFile(path, 'documents');
+          if (await hostServices.readFile(path, 'documents') !== null) throw new Error('Deleted file was not missing');
+        }
+        if (mounted) setHostFileProbe('HOST_FILES_PASS:131073');
+      } catch {
+        if (mounted) setHostFileProbe('HOST_FILES_FAILED');
+      } finally {
+        try { await hostServices.deleteFile(path, 'documents'); } catch { /* Context may already have closed. */ }
+      }
+    };
+    void run();
+    return () => { mounted = false; };
+  }, []);
 
   const publishCurrentWidget = async (cnt: number) => {
     try {
@@ -260,6 +286,7 @@ export default function App({ variant = 'A' }: AppProps) {
                     >
                       {`Toolbar action count: ${toolbarActionCount}`}
                     </Text>
+                    <Text testID="HostFileProbeStatus">{hostFileProbe}</Text>
 
                     <VStack
                       modifiers={[

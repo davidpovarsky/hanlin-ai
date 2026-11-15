@@ -1,0 +1,126 @@
+# Durable delivery on the existing extension queue
+
+Unstarted admission follow-up: trusted Host code can now throw
+HanlinInvocationNotStarted only before package/user code or side effects run.
+The executor releases that same fenced lease back to queued without consuming
+an execution attempt. A concurrent cancellation/expiry stays terminal; an old
+lease cannot release a replacement owner's command. Interrupted/unknown actions
+retain their existing no-automatic-replay behavior. New actual queue tests cover
+this boundary; native execution is still pending for the follow-up. The queue
+also exposes read-only original command lookup for ingress target/receipt UI.
+
+Native follow-up43409794095/ed3b05ea executed all14 affected queue cases plus
+3 Share delivery cases PASS1.201s; a separate6-case owned ingress invocation
+passed0.171s. Both new unstarted-admission cases passed (busy/requeue0.232s,
+cancel/expiry/fencing0.168s). Xcode27.2/27B52 Swift6.4.2. Authenticated package
+artifact14029067721/4236B, GitHub SHA256
+8fb1972773c164ad7a2b1030c0aa565a52f0c4427ab853f03f4e35bdda01b411.
+The original interrupted/unknown action replay prohibition remains tested.
+Host dispatch integration and physical ingress acceptance are still open.
+
+[נועם | DEV] [MAIN_SESSION]. Branch `fix/hanlin-approved-plan-20261108`.
+INT-02 implementation checkpoint; full task acceptance remains open.
+
+The previous host acknowledged and deleted both successful and failed commands,
+discarding the returned value. The existing `HanlinScriptExtensionStore` now
+owns one per-invocation record under its original `ResumeQueue`. Active delivery
+and terminal receipt use the same record; completion atomically renames it into
+`ResumeQueue/Receipts`. A historical pending reader cannot replay completed
+outbox files. Existing snapshot, widget state/revision/nonces, lock identity and
+runtime engines are preserved.
+
+The existing command ID, package/install/generation/entrypoint/action and typed
+`HanlinValue` parameters remain authoritative. Optional versioned delivery
+metadata adds canonical app ID, source, expected result, expiry, presentation
+claims and retry metadata. Historical commands decode without inventing an
+app ID or provenance; their TTL is 24 hours from original creation. Incoming
+presentation claims grant no OS permission. New delivery envelopes validate
+their canonical action, finite timestamps, TTL up to24 hours and attempts1…16.
+The original active queue admission128 and ingress256KiB budgets remain explicit
+errors; protected result records allow4MiB plus the original command. There is
+no silent receipt eviction. Large attachments are not inlined into this queue.
+
+Enqueue is idempotent for exactly the same command bytes. Reusing an ID with
+different input fails; a duplicate cannot reset a completed receipt. The existing
+cross-process `.transaction.lock` serializes reads, claims and updates. Leases
+use fresh UUID tokens; an old owner cannot overwrite a replacement owner.
+Unknown completion after process loss yields `deferred/interruptedOutcomeUnknown`,
+never an automatic replay. Recovery requires both incoming idempotency metadata
+and an independently verified installed-action declaration; the host executor
+currently enables no such automatic retry. Running cancellation stays a request
+until the actual async handler drains. Heartbeats renew the lease and propagate
+cancellation/deadline to that handler; uncooperative work is not declared stopped
+early. Actual runtime interruption still depends on the underlying bridge.
+
+The existing host dispatcher now publishes actual compiled-provider, NativeScript
+broker and JSC action values, or typed failure/stale/cancel receipts. NativeScript
+still uses one isolate; another package owning it produces `needsForeground`,
+without starting a second VM. Expo AppIntent dispatch remains explicitly
+unsupported. No arbitrary Error text or runtime stderr is placed in receipts.
+The headless NativeScript provider explicitly carries `canPresentUI=false`;
+its existing share-sheet broker must reject before looking for a scene. This
+does not prove all OS permission services enforce the same presentation rule.
+Queue reads enforce UUID filename/record identity, supported schema, bounded
+regular single-link files, no-follow opening and the existing path checks.
+
+Validation plan: new `HanlinInvocationQueueTests` plus affected existing
+`HanlinScriptExtensionStoreTests`, using the existing widget-package manual
+workflow on actual Xcode. New cases cover legacy/binary interchange, outbox
+placement, duplicate identity/result preservation,32 concurrent claims across
+store instances, fenced idempotent recovery, unsafe recovery refusal, TTL,
+queued/running cancellation, malformed/symlink records and two-package durable
+outcomes. The async handler cancellation case uses the real queue/executor and
+cooperative task cancellation, not an embedded engine or physical extension.
+
+Portable Swift6.3.3 strict concurrency/warnings-as-errors accepted the actual
+Foundation contract declarations, including the existing widget-instance types;
+the store extension and resource-loading helper were outside that local check.
+Syntax parsing passed for new queue/executor/host/test source. Actual Xcode
+verification then exposed missing inner `try` in eight Swift Testing requirements:
+run43318267041 at60441284 failed test compilation in2m45s; zero cases executed.
+Fixed at a7f6811e. [Run43318804647](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43318804647)
+at that exact SHA **EXECUTED_PASS:17/17 actual cases in2 suites,1.201s**:
+ten new delivery cases and seven affected existing store cases. Xcode27.2/27B52,
+Swift6.4.2, arm64 macOS27.0. Compiler build141.94s; full job3m42s.
+Authenticated artifact13990051220 (`widget-package-evidence-43318804647`,4836B,
+GitHub SHA256 `8fe1988f25f6b470730a755f91703e52596eacf663ef4f145ed15cda26988c29`)
+contains full package case output and toolchain log. No xcresult artifact was
+generated by this SwiftPM workflow. Full app host binding, iOS/extension
+compilation, locked-device protection and physical execution remain **NOT_RUN**.
+
+Still open: dedicated typed owned attachment references/large-file transactions,
+complete canonical action registration across NS/Expo, caller/UI context
+propagation, system-ingress result readback, deliberate resumption of unstarted
+foreground-deferred work, per-install uninstall/rollback cleanup and retention
+UI, locked-device/physical proof. Parameters/results have App Group Data
+Protection and may contain private application data; this is not a credential
+vault and does not introduce a shared Keychain entitlement or encryption claim.
+Corrupt records currently fail the scan closed, with originals retained; isolating
+a poisoned item while exposing its error without starving healthy items remains
+required. Do not mark INT-02 or any extension/runtime matrix cell verified.
+
+## Per-record rejection without queue-wide failure
+
+A corrupt/unsupported/symlinked record previously made the strict pending read
+and all subsequent enqueues fail. The Host now uses scanPendingCommands: it
+returns healthy commands plus typed per-item invalidEnvelope rejections under
+the same transaction lock and original safe reader. Root/lock/list failures
+still throw. Invalid sources are neither executed nor deleted/rewritten; no
+target/action or terminal receipt is invented for unreadable metadata. Only
+validated UUIDs and counts enter the existing trace logger, never raw filenames
+or content. The existing package center shows a native queued-action warning.
+
+Unresolved unreadable entries still consume the explicit128 admission slots;
+they cannot bypass the queue budget. The strict pendingCommands API retains its
+previous fail-closed semantics for other callers. Two new tests combine malformed
+JSON, unknown filename and an outside symlink with actual executor completion/
+reopen, and verify admission capacity is only freed by completing a healthy
+record. Native queue-suite execution and Host compilation remain required.
+
+Native queue isolation evidence atf9d264af: run43394176076 executed12/12
+HanlinInvocationQueueTests methods in1.127s, including actual damaged-item
+continuation/reopen0.114s and capacity isolation0.151s. Workflow3m53s.
+Downloaded artifact14022550581 (3469B), GitHub SHA256
+34a07e4a3c1ffb228ccfc29de5788d744811a3beb9af523e10833a5a971dbf86.
+This Darwin package proof does not claim actual Host restore UI, locked AppGroup
+or physical iPad ingress acceptance. Those remain separate native/device gates.

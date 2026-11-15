@@ -1,25 +1,46 @@
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { execSync } from 'node:child_process';
+import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { resolve, relative, isAbsolute } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { deterministicZip } from '../Widgets/deterministic-zip.mjs';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repositoryRoot = resolve(scriptRoot, '..', '..');
 const probeSrcRoot = resolve(repositoryRoot, 'Fixtures', 'ExpoSwiftUIProbe');
 const uiTestFixturesRoot = resolve(repositoryRoot, 'AI_HLYUITests', 'Fixtures');
+const ownedBuildRoot = resolve(scriptRoot, '.build-probe');
+
+async function resetBuildDirectory(directory) {
+  const suffix = relative(ownedBuildRoot, directory);
+  if (!suffix || suffix.startsWith('..') || isAbsolute(suffix)) throw new Error('Unsafe Expo fixture build directory');
+  await rm(directory, {recursive: true, force: true});
+  await mkdir(directory, {recursive: true});
+}
+
+async function writeArchive(directory, destination) {
+  const files = {};
+  for (const item of await readdir(directory, {withFileTypes: true})) {
+    if (!item.isFile()) throw new Error('Expo fixture archives accept regular top-level files only');
+    // Source maps remain alongside build outputs; the runtime archive contains
+    // the executable/manifest/resources consumed by the existing importer.
+    if (!item.name.endsWith('.map')) files[item.name] = await readFile(resolve(directory, item.name));
+  }
+  await writeFile(destination, deterministicZip(files));
+}
 
 async function buildVariant(variant) {
   console.log(`[HanlinExpo] Building Expo SwiftUI Probe Variant ${variant} with Metro...`);
   const buildDir = resolve(scriptRoot, '.build-probe', `variant-${variant}`);
-  await rm(buildDir, { recursive: true, force: true });
-  await mkdir(buildDir, { recursive: true });
+  await resetBuildDirectory(buildDir);
 
   const entryFile = resolve(probeSrcRoot, variant === 'A' ? 'variant-a.ts' : 'variant-b.ts');
   const bundleOut = resolve(buildDir, 'bundle.js');
   const metroConfig = resolve(scriptRoot, 'metro.config.cjs');
 
   // Bundle with Metro into complete, self-contained CommonJS React Native bundle
-  const metroCmd = `npx react-native bundle --entry-file "${entryFile}" --platform ios --dev false --bundle-output "${bundleOut}" --config "${metroConfig}" --reset-cache`;
-  execSync(metroCmd, { cwd: scriptRoot, stdio: 'inherit' });
+  execFileSync(process.execPath, [resolve(scriptRoot, 'node_modules/@react-native-community/cli/build/bin.js'),
+    'bundle', '--entry-file', entryFile, '--platform', 'ios', '--dev', 'false', '--bundle-output', bundleOut,
+    '--sourcemap-output', bundleOut + '.map', '--config', metroConfig, '--max-workers', '2'],
+    {cwd: scriptRoot, stdio: 'inherit'});
 
   // Copy manifest and package.json
   const packageJSON = JSON.parse(await readFile(resolve(probeSrcRoot, 'package.json'), 'utf8'));
@@ -36,9 +57,7 @@ async function buildVariant(variant) {
   const targetZip = resolve(probeSrcRoot, `ExpoSwiftUIProbe${variant}.hanlinExpo`);
   await rm(targetZip, { force: true });
 
-  const pythonBin = process.platform === 'win32' ? 'python' : 'python3';
-  const pyCmd = `${pythonBin} -c "import zipfile, os, sys; zf = zipfile.ZipFile(sys.argv[1], 'w', zipfile.ZIP_DEFLATED); [zf.write(os.path.join(r, f), os.path.relpath(os.path.join(r, f), sys.argv[2]).replace('\\\\\\\\', '/')) for r, d, files in os.walk(sys.argv[2]) for f in files]; zf.close()" "${targetZip}" "${buildDir}"`;
-  execSync(pyCmd);
+  await writeArchive(buildDir, targetZip);
 
   console.log(`[HanlinExpo] Created probe package: ${targetZip}`);
   return targetZip;
@@ -47,8 +66,7 @@ async function buildVariant(variant) {
 async function buildMalformed() {
   console.log('[HanlinExpo] Building Malformed Expo Probe...');
   const buildDir = resolve(scriptRoot, '.build-probe', 'malformed');
-  await rm(buildDir, { recursive: true, force: true });
-  await mkdir(buildDir, { recursive: true });
+  await resetBuildDirectory(buildDir);
 
   // Malformed package: entry points to nonexistent file
   const scriptJSON = {
@@ -63,16 +81,14 @@ async function buildMalformed() {
 
   const targetZip = resolve(probeSrcRoot, 'ExpoSwiftUIMalformed.hanlinExpo');
   await rm(targetZip, { force: true });
-  const pythonBin = process.platform === 'win32' ? 'python' : 'python3';
-  const pyCmd = `${pythonBin} -c "import zipfile, os, sys; zf = zipfile.ZipFile(sys.argv[1], 'w', zipfile.ZIP_DEFLATED); [zf.write(os.path.join(r, f), os.path.relpath(os.path.join(r, f), sys.argv[2]).replace('\\\\\\\\', '/')) for r, d, files in os.walk(sys.argv[2]) for f in files]; zf.close()" "${targetZip}" "${buildDir}"`;
-  execSync(pyCmd);
+  await writeArchive(buildDir, targetZip);
   await cp(targetZip, resolve(uiTestFixturesRoot, 'ExpoSwiftUIMalformed.hanlinExpo'));
   console.log(`[HanlinExpo] Staged malformed probe package: ${targetZip}`);
 }
 
 async function main() {
   console.log('[HanlinExpo] Running semantic TypeScript project check before Metro...');
-  execSync('npm run typecheck:probe', { cwd: scriptRoot, stdio: 'inherit' });
+  execFileSync(process.execPath, [resolve(scriptRoot, 'check-ui-type-contract.mjs')], {cwd: scriptRoot, stdio: 'inherit'});
   const zipA = await buildVariant('A');
   const zipB = await buildVariant('B');
   await buildMalformed();

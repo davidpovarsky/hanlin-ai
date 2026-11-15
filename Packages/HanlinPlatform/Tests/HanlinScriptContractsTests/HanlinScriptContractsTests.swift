@@ -5,7 +5,7 @@ import Testing
 
 @Suite("Full Scripting contracts")
 struct HanlinScriptContractsTests {
-    @Test("Capability approval normalizes requests and retains explicit grants")
+    @Test("Legacy capability metadata normalizes without gating installation")
     func capabilityApprovalState() throws {
         let network = try HanlinCapabilityID(validating: "network")
         let storage = try HanlinCapabilityID(validating: "storage")
@@ -15,7 +15,8 @@ struct HanlinScriptContractsTests {
             .init(capabilityID: storage, required: true, purpose: "Required storage"),
         ])
         #expect(state.requiredCapabilities == [network, storage])
-        #expect(state.missingRequiredCapabilities == [network, storage])
+        #expect(state.missingRequiredCapabilities.isEmpty)
+        #expect(state.hasApprovedEveryRequiredCapability)
 
         state.setApproved(true, capability: network)
         state.setApproved(true, capability: storage)

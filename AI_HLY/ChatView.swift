@@ -97,12 +97,19 @@ struct ChatView: View {
     @State private var selectedURLs: [String] = []          // 解析出的 URL 列表
     @State private var isMultiSelectMode: Bool = false      // 是否开启多选模式
     @State private var selectedMessageIDs: Set<UUID> = []   // 选中的消息 ID 集合
+    @Environment(\.chatSourceDestination) private var sourceDestination
+    @State private var nativeSelectionIDs: Set<UUID> = []
+    @State private var pendingSourceScroll: UUID?
+    @State private var revealedSourceRequest: UUID?
+    private var effectiveMatchedMessageID: UUID? {
+        if let sourceDestination, sourceDestination.chatRecordID == chatRecord.id { return sourceDestination.messageID }
+        return matchedMessageID
+    }
     var matchedMessageID: UUID?                             // 匹配的消息 ID
     @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
     @State private var ifScroll = false                     // 控制滚动相关状态
     @State private var autoFollowController = ChatAutoFollowController()
-    @State private var pendingAutoFollowTask: Task<Void, Never>?
     @State private var measuredComposerHeight: CGFloat = 0
     @State private var chatContainerWidth: CGFloat = 0
 
@@ -177,7 +184,7 @@ struct ChatView: View {
         
         // 根据匹配消息决定加载数量
         let targetCount: Int
-        if let matchedID = matchedMessageID,
+        if let matchedID = effectiveMatchedMessageID,
            let matchedIndex = sortedMessages.firstIndex(where: { $0.id == matchedID }) {
             let matchedFromBottom = sortedMessages.count - matchedIndex
             targetCount = (matchedFromBottom <= 20) ? 20 : ((matchedFromBottom + 9) / 10) * 10
@@ -801,6 +808,27 @@ struct ChatView: View {
         var showImageSize: Bool
     }
     
+    /// Route saved excerpts through this existing chat, preserving its composer/run.
+    /// First reveal the lazy row, then correct its position after Markdown finishes layout.
+    @MainActor
+    private func revealMatchedSource(using proxy: ScrollViewProxy) {
+        guard let id = effectiveMatchedMessageID,
+              let index = allMessages.firstIndex(where: { $0.id == id }) else { return }
+        revealedSourceRequest = sourceDestination?.id
+        autoFollowController.cancelPendingScroll()
+        autoFollowController.pauseFollowing(reason: "savedSource")
+        let count = allMessages.count - index
+        if count > loadedMessageCount {
+            loadedMessageCount = min(allMessages.count, max(count + 5, loadedMessageCount))
+            chatTemps = Array(allMessages.suffix(loadedMessageCount))
+        }
+        pendingSourceScroll = id
+        Task { @MainActor in
+            await Task.yield()
+            proxy.scrollTo(id, anchor: .center)
+        }
+    }
+
     private var scrollTriggerState: ScrollTriggerState {
         ScrollTriggerState(
             lastID: chatTemps.last?.id,
@@ -857,39 +885,40 @@ struct ChatView: View {
             .refreshable {
                 loadMoreMessages()
             }
-            .onChange(of: scrollTriggerState) {
-                scheduleAutoFollow(using: scrollViewProxy, animated: true)
-            }
-            .onChange(of: activeAgentRun?.scrollFingerprint) { previous, current in
-                guard let current else { return }
-                scheduleAutoFollow(
-                    using: scrollViewProxy,
-                    animated: current.isStructuralChange(comparedTo: previous)
-                )
-            }
             .onChange(of: needScrollToBottomButton) {
                 autoFollowController.resumeFollowing()
                 scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
             }
-            .onChange(of: ifScroll) {
-                scheduleAutoFollow(using: scrollViewProxy, animated: true)
+            .task(id: sourceDestination?.id) {
+                revealMatchedSource(using: scrollViewProxy)
             }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    if let matchedID = matchedMessageID {
-                        if chatTemps.contains(where: { $0.id == matchedID }) {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                scrollViewProxy.scrollTo(matchedID, anchor: .center)
-                            }
-                        } else {
-                            print("⚠️ matchedMessageID 不在 chatTemps 中，无法滚动")
-                        }
-                    }
+            .onChange(of: allMessages.count) {
+                if let sourceDestination, revealedSourceRequest != sourceDestination.id {
+                    revealMatchedSource(using: scrollViewProxy)
                 }
             }
+            .task(id: effectiveMatchedMessageID) {
+                revealMatchedSource(using: scrollViewProxy)
+            }
+            .environment(\.chatMarkdownSelectionActivity, { id, active in
+                if active, !nativeSelectionIDs.contains(id) {
+                    nativeSelectionIDs.insert(id)
+                    autoFollowController.pauseFollowing(reason: "textSelection")
+                } else if !active, nativeSelectionIDs.contains(id) { nativeSelectionIDs.remove(id) }
+            })
+            .environment(\.chatMarkdownDidRender, { messageID in
+                guard pendingSourceScroll == messageID else { return }
+                pendingSourceScroll = nil
+                Task { @MainActor in
+                    await Task.yield()
+                    scrollViewProxy.scrollTo(messageID, anchor: .center)
+                }
+            })
             .onTapGesture {
                 isInputActive = false
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                if nativeSelectionIDs.isEmpty {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                 showTemperatureSlider = false
                 showTopPSlider = false
                 showMaxTokensSlider = false
@@ -898,7 +927,9 @@ struct ChatView: View {
             .simultaneousGesture(
                 DragGesture().onChanged { _ in
                     isInputActive = false
+                    if nativeSelectionIDs.isEmpty {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                     showTemperatureSlider = false
                     showTopPSlider = false
                     showMaxTokensSlider = false
@@ -923,6 +954,13 @@ struct ChatView: View {
                     showScrollToBottomButton = !isScrolledToBottom
                 }
             }
+            .onScrollGeometryChange(for: ChatAutoFollowLayout.self) { geometry in
+                ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
+                    viewportHeight: Double(geometry.containerSize.height).rounded(),
+                    bottomInset: Double(geometry.contentInsets.bottom).rounded())
+            } action: { _, _ in
+                scheduleAutoFollow(using: scrollViewProxy, animated: false)
+            }
             .onScrollPhaseChange { _, newPhase in
                 switch newPhase {
                 case .tracking, .interacting, .decelerating:
@@ -936,8 +974,7 @@ struct ChatView: View {
                 }
             }
             .onDisappear {
-                pendingAutoFollowTask?.cancel()
-                pendingAutoFollowTask = nil
+                autoFollowController.cancelPendingScroll()
             }
     }
     
@@ -957,17 +994,10 @@ struct ChatView: View {
         animated: Bool,
         force: Bool = false
     ) {
-        guard force || autoFollowController.shouldRequestScrollForVisualUpdate() else { return }
-        pendingAutoFollowTask?.cancel()
-        pendingAutoFollowTask = Task { @MainActor in
-            do {
-                try await Task.sleep(for: .milliseconds(80))
-            } catch {
-                return
-            }
-            guard !Task.isCancelled,
-                  force || autoFollowController.mode == .following else { return }
-            scrollToLastMessage(using: scrollViewProxy, animated: animated)
+        guard force || nativeSelectionIDs.isEmpty else { return }
+        autoFollowController.scheduleScroll(animated: animated, force: force) { animate in
+            guard force || nativeSelectionIDs.isEmpty else { return }
+            scrollToLastMessage(using: scrollViewProxy, animated: animate)
         }
     }
 
@@ -1063,7 +1093,7 @@ struct ChatView: View {
         let activityRun = storedActivityRun
             ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
         let rawMsgText = (msg.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        let fallbackFinalAnswer = splitMarker
+        let fallbackFinalAnswer = splitMarker && !groupMessages.contains(where: { !($0.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             ? (AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? [])?
                 .trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
             : ""
@@ -1097,7 +1127,7 @@ struct ChatView: View {
             knowledgeCard: msg.knowledgeCard,
             nativeUIBlocks: msg.nativeUIBlocks,
             agentRun: activityRun,
-            showsAgentActivitySummary: splitMarker,
+            showsAgentActivitySummary: groupIDs.first == msg.id,
             isAgentTranscriptOwner: false,
             isRenderedByAgentTranscript: false,
             searchEngine: msg.searchEngine,
@@ -1117,6 +1147,10 @@ struct ChatView: View {
             operationalState: operationalState,
             operationalDescription: operationalDescription,
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
+            onContinue: msg.role == "assistant" && msg.modelFinishReason == "length" ? {
+                guard !isResponding else { return }
+                handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Continue from where the answer stopped. Preserve the previous answer and do not repeat completed actions or tool calls."))
+            } : nil,
             onDelete: {
                 // 如果是助手组消息，删除整组，否则删除单条
                 if msg.role == "assistant" {
@@ -1136,6 +1170,10 @@ struct ChatView: View {
                 }
             }
         )
+        .environment(\.chatExcerptSource, ChatExcerptSource(
+            chatRecordID: chatRecord.id, messageID: msg.id, groupID: msg.groupID,
+            runID: activityRun?.id, title: chatRecord.name ?? String(localized: "Conversation")
+        ))
         
         // 2. 多选模式下，只在"用户消息"或"助手中点"显示勾选框
         return AnyView(Group {
@@ -1329,7 +1367,7 @@ struct ChatView: View {
     }
     
     // 处理消息发送
-    private func handleMessageSending(ifObservingMode: Bool) {
+    private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil) {
         
         isFeedBack.toggle()
         var userMessage: ChatMessages?
@@ -1344,16 +1382,16 @@ struct ChatView: View {
                 // 新消息建立
                 userMessage = ChatMessages(
                     role: "user",
-                    text: message,
-                    images: selectedImages,
+                    text: continuationText ?? message,
+                    images: continuationText == nil ? selectedImages : [],
                     reasoning: "",
-                    documents: selectedDocumentURLs.map { $0.absoluteString },
+                    documents: continuationText == nil ? selectedDocumentURLs.map { $0.absoluteString } : [],
                     modelName: modelTemp[selectedModelIndex].name,
                     modelDisplayName: modelTemp[selectedModelIndex].displayName,
                     timestamp: Date(),
                     record: chatRecord
                 )
-                if !selectedPrompts.isEmpty {
+                if continuationText == nil && !selectedPrompts.isEmpty {
                     let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无内容") }
                     userMessage?.promptUse = promptCards
                 }
@@ -1364,10 +1402,12 @@ struct ChatView: View {
                     // 异步自动命名（不阻塞主对话）
                     autoGenerateTitleIfNeeded()
                 }
-                message = ""
-                selectedImages.removeAll()
-                selectedDocumentURLs = []
-                isInputActive = false
+                if continuationText == nil {
+                    message = ""
+                    selectedImages.removeAll()
+                    selectedDocumentURLs = []
+                    isInputActive = false
+                }
             }
         } else {
             message = ""
@@ -1380,7 +1420,6 @@ struct ChatView: View {
         isObserving = ifObservingMode
         isResponding = true
         respondIndex = ifObservingMode ? 2 : 1
-        pendingAutoFollowTask?.cancel()
         autoFollowController.beginRun()
         
         // 传输数据准备
@@ -1434,7 +1473,8 @@ struct ChatView: View {
         activeAgentMessage = groupBeginMessage
         
         // 进行API请求
-        self.apiManager = APIManager(context: context)
+        let requestAPIManager = APIManager(context: context)
+        self.apiManager = requestAPIManager
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         
@@ -1449,7 +1489,8 @@ struct ChatView: View {
                     chatID: effectiveChatSessionID,
                     temporary: TemporaryRecord
                 )
-                let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await apiManager!.sendStreamRequest(
+                guard activeAgentCoordinator === agentCoordinator, !Task.isCancelled else { return }
+                let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await requestAPIManager.sendStreamRequest(
                     messages: messagesToSend,
                     modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
                     groupID: thisGroupID,
@@ -1475,6 +1516,7 @@ struct ChatView: View {
                 )
                 
                 // 接受流式数据
+                var warningKinds = Set<String>()
                 for try await data in stream {
                     let rawAgentEvents = eventAdapter.events(from: data)
                     await MainActor.run {
@@ -1720,10 +1762,11 @@ struct ChatView: View {
                         }
                         
                         // 异常提醒
-                        if let error = data.errorInfo, !error.isEmpty {
+                        if let error = data.errorInfo, !error.isEmpty, warningKinds.insert(error).inserted {
+                            if error == "length" { assistantMessage.modelFinishReason = "length" }
                             var errorMessage = ""
                             if error == "length" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
+                                errorMessage = String(localized: "The answer reached the configured output limit. The partial answer is saved. Choose Continue to keep going.")
                             } else if error == "sensitive" {
                                 errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
                             } else {
@@ -1790,7 +1833,7 @@ struct ChatView: View {
                             })
                         if textContent.isEmpty && reasoningContent.isEmpty && !hasRichContent {
                             agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
-                            Task { await apiManager?.completeAgentDiagnostics(status: "failed") }
+                            Task { await requestAPIManager.completeAgentDiagnostics(status: "failed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
                             operationalState = ""
                             operationalDescription = ""
@@ -1802,7 +1845,7 @@ struct ChatView: View {
                             try? context.save()
                         } else {
                             agentCoordinator.complete()
-                            Task { await apiManager?.completeAgentDiagnostics(status: "completed") }
+                            Task { await requestAPIManager.completeAgentDiagnostics(status: "completed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
                             
                             // 一切正常，进行数据库保存操作
@@ -1877,7 +1920,7 @@ struct ChatView: View {
                 await MainActor.run {
                     guard activeAgentCoordinator === agentCoordinator else { return }
                     agentCoordinator.fail(error)
-                    Task { await apiManager?.completeAgentDiagnostics(status: "failed", error: error) }
+                    Task { await requestAPIManager.completeAgentDiagnostics(status: "failed", error: error) }
                     groupBeginMessage.agentRun = agentCoordinator.run
                     context.insert(groupBeginMessage)
                     try? context.save()
@@ -1912,8 +1955,9 @@ struct ChatView: View {
         isFeedBack.toggle()
         isCancelled = true
         
-        apiManager?.cancelCurrentRequest()
-        Task { await apiManager?.completeAgentDiagnostics(status: "cancelled") }
+        let cancelledAPIManager = apiManager
+        cancelledAPIManager?.cancelCurrentRequest()
+        Task { await cancelledAPIManager?.completeAgentDiagnostics(status: "cancelled") }
         activeAgentCoordinator?.cancel()
         if let coordinator = activeAgentCoordinator {
             activeAgentRun = coordinator.run
@@ -1933,8 +1977,7 @@ struct ChatView: View {
         }
         activeAgentCoordinator = nil
         autoFollowController.runEnded()
-        pendingAutoFollowTask?.cancel()
-        pendingAutoFollowTask = nil
+        autoFollowController.cancelPendingScroll()
         activeAgentMessage = nil
         
         isObserving = false

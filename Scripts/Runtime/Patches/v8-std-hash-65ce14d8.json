@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
+  "upstreamCommit": "65ce14d8731e929584344a0d65d6efd2296fa797",
+  "upstreamURL": "https://github.com/v8/v8/commit/65ce14d8731e929584344a0d65d6efd2296fa797",
+  "description": "Backport upstream V8 std::hash ODR correction. The pinned profiler uses an integer-keyed line_ticks_ map, so the newer upstream pair-keyed profiler hunk does not apply.",
+  "files": [
+    {
+      "path": "deps/v8/src/base/hashing.h",
+      "beforeSHA256": "a7f4091358808a434e96b5c3302094ecc27e8662505a89d121f4ad8e59a5ddaf",
+      "afterSHA256": "e5cf03e8362603fec6aac3450bf7f08741916bacf299d41983e0d809c861ba0d",
+      "replacements": [
+        {
+          "before": "// Also define std::hash for all classes that can be hashed via v8::base::hash.\nnamespace std {\ntemplate <typename T>\n  requires requires { typename v8::base::hash<T>; }\nstruct hash<T> : v8::base::hash<T> {};\n\n}  // namespace std\n",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "path": "deps/v8/src/wasm/canonical-types.h",
+      "beforeSHA256": "85fa89f1d192c8355e39bdddf8b3cc6bd05fa9e6f42fd156136d4c3993bb055d",
+      "afterSHA256": "82b5f163c5cb3a5234d48282f30f187e60624a2d22f56ebd22f1154c2bd48cbf",
+      "replacements": [
+        {
+          "before": "std::unordered_set<CanonicalGroup> canonical_groups_;",
+          "after": "std::unordered_set<CanonicalGroup, base::hash<CanonicalGroup>>\n      canonical_groups_;"
+        },
+        {
+          "before": "std::unordered_set<CanonicalSingletonGroup> canonical_singleton_groups_;",
+          "after": "std::unordered_set<CanonicalSingletonGroup, base::hash<CanonicalSingletonGroup>>\n      canonical_singleton_groups_;"
+        }
+      ]
+    }
+  ]
+}

@@ -176,8 +176,10 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func generateConsistencyReport() -> HanlinStorageConsistencyReport {
+        var validationFailure: (any Error)?
+        do { _ = try load() } catch { validationFailure = error }
         let commit = try? optionalDecode(Commit.self, at: commitURL)
-        let commitPresent = (commit != nil)
+        let commitPresent = FileManager.default.fileExists(atPath: commitURL.path)
         let commitVersion = commit?.version
         let commitSnapPrefix = commit?.snapshotHash.prefix(12).description
         let commitShadowPrefix = commit?.shadowHash.prefix(12).description
@@ -219,6 +221,18 @@ public struct HanlinScriptExtensionStore: Sendable {
             }
         } else if !shadowPresent && !(FileManager.default.fileExists(atPath: snapshotV2URL.path)) {
             summary = "Fresh storage root (no committed snapshot)."
+        }
+
+        if let validationFailure {
+            if commitPresent && commit == nil {
+                failingStage = "commitDecode"
+            } else if commit != nil && !revPresent {
+                failingStage = "checkedRevision"
+            } else {
+                failingStage = failingStage ?? latestDurableQueryDiagnostic?.decisionPoint.rawValue ?? "storeLoad"
+            }
+            let error = validationFailure as NSError
+            summary = "Widget storage validation failed (\(error.domain), code \(error.code))."
         }
 
         let correlationID = lastDiagnostic?.correlationID ?? String(format: "HWG-%012llX", UInt64.random(in: 0...UInt64.max) & 0xFFFF_FFFF_FFFF)
@@ -423,6 +437,13 @@ public struct HanlinScriptExtensionStore: Sendable {
         let wireHash = Self.digest(wireData)
 
         var matches = (wireHash == expectedHash)
+        if !matches, let original = Self.originalSnapshotData(in: data) {
+            // Historical writers hashed JSONEncoder's exact snapshot bytes.
+            // JSONSerialization can normalize fractional numbers differently;
+            // decoding the model can also change Date precision/add v2 defaults.
+            // Accept only an exact digest match, without rewriting stored data.
+            matches = Self.digest(original) == expectedHash
+        }
         if !matches {
             // Check historical encoder compatibility: early stores computed expectedHash on JSONEncoder().encode(snapshot)
             if let envelopeModel = try? Self.decoded(Envelope.self, from: data) {
@@ -470,6 +491,64 @@ public struct HanlinScriptExtensionStore: Sendable {
             throw HanlinScriptExtensionStoreError.invalidEnvelope
         }
         return envelope.snapshot
+    }
+
+    /// Extracts the unique top-level snapshot value from already-validated JSON.
+    /// Preserve its exact bytes: re-encoding is not an integrity-preserving step.
+    private static func originalSnapshotData(in data: Data) -> Data? {
+        let bytes = Array(data)
+        var index = 0
+        var depth = 0
+        var snapshotKeys = 0
+        var snapshotStart: Int?
+        var snapshotRange: Range<Int>?
+
+        func skippingWhitespace(_ start: Int) -> Int {
+            var cursor = start
+            while cursor < bytes.count, [UInt8(32), 9, 10, 13].contains(bytes[cursor]) {
+                cursor += 1
+            }
+            return cursor
+        }
+
+        while index < bytes.count {
+            let byte = bytes[index]
+            if byte == 34 { // Skip whole strings, including escaped delimiters.
+                let start = index
+                index += 1
+                var escaped = false
+                while index < bytes.count {
+                    if escaped { escaped = false }
+                    else if bytes[index] == 92 { escaped = true }
+                    else if bytes[index] == 34 { break }
+                    index += 1
+                }
+                guard index < bytes.count else { return nil }
+                if depth == 1 {
+                    let colon = skippingWhitespace(index + 1)
+                    if colon < bytes.count, bytes[colon] == 58,
+                       let key = try? JSONDecoder().decode(String.self, from: Data(bytes[start...index])),
+                       key == "snapshot" {
+                        snapshotKeys += 1
+                        guard snapshotKeys == 1 else { return nil }
+                        let valueStart = skippingWhitespace(colon + 1)
+                        guard valueStart < bytes.count, bytes[valueStart] == 123 else { return nil }
+                        snapshotStart = valueStart
+                    }
+                }
+            } else if byte == 123 || byte == 91 {
+                depth += 1
+            } else if byte == 125 || byte == 93 {
+                depth -= 1
+                guard depth >= 0 else { return nil }
+                if depth == 1, let start = snapshotStart, index >= start, snapshotRange == nil {
+                    snapshotRange = start..<(index + 1)
+                }
+            }
+            index += 1
+        }
+        guard depth == 0, snapshotKeys == 1, let range = snapshotRange else { return nil }
+        return Data(bytes[range])
     }
 
     public func save(_ snapshot: HanlinScriptExtensionSnapshot) throws {
@@ -776,52 +855,6 @@ public struct HanlinScriptExtensionStore: Sendable {
         return result
     }
 
-    public func enqueue(_ command: HanlinScriptResumeCommand) throws {
-        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
-        try FileManager.default.createDirectory(at: commandRoot, withIntermediateDirectories: true)
-        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
-        let existing = try FileManager.default.contentsOfDirectory(
-            at: commandRoot,
-            includingPropertiesForKeys: nil,
-            options: [.skipsHiddenFiles]
-        ).filter { $0.pathExtension == "json" }
-        guard existing.count < 128 else {
-            throw HanlinScriptExtensionStoreError.snapshotTooLarge
-        }
-        let data = try Self.encoded(command)
-        guard data.count <= 256 * 1_024 else {
-            throw HanlinScriptExtensionStoreError.snapshotTooLarge
-        }
-        let targetURL = commandRoot.appending(path: "\(command.id.uuidString.lowercased()).json")
-        try rejectSymlinks(to: targetURL, phase: .actionPerform)
-        try data.write(
-            to: targetURL,
-            options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication]
-        )
-    }
-
-    public func pendingCommands(limit: Int = 64) throws -> [HanlinScriptResumeCommand] {
-        try rejectSymlinks(to: commandRoot, phase: .actionPerform)
-        guard FileManager.default.fileExists(atPath: commandRoot.path(percentEncoded: false)) else { return [] }
-        let urls = try FileManager.default.contentsOfDirectory(
-            at: commandRoot,
-            includingPropertiesForKeys: nil,
-            options: [.skipsHiddenFiles]
-        ).filter { $0.pathExtension == "json" }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-        return try urls.prefix(max(0, limit)).map {
-            try rejectSymlinks(to: $0, phase: .actionPerform)
-            return try Self.decoded(HanlinScriptResumeCommand.self, from: Data(contentsOf: $0))
-        }.sorted { $0.createdAt < $1.createdAt }
-    }
-
-    public func acknowledge(_ commandID: UUID) throws {
-        let url = commandRoot.appending(path: "\(commandID.uuidString.lowercased()).json")
-        try rejectSymlinks(to: url, phase: .actionPerform)
-        if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
-            try FileManager.default.removeItem(at: url)
-        }
-    }
-
     private var snapshotV1URL: URL {
         root.appending(path: "snapshot-v1.json", directoryHint: .notDirectory)
     }
@@ -830,7 +863,7 @@ public struct HanlinScriptExtensionStore: Sendable {
         root.appending(path: "snapshot-v2.json", directoryHint: .notDirectory)
     }
 
-    private var commandRoot: URL {
+    var commandRoot: URL {
         root.appending(path: "ResumeQueue", directoryHint: .isDirectory)
     }
 
@@ -958,7 +991,7 @@ public struct HanlinScriptExtensionStore: Sendable {
         return raw
     }
 
-    private func rejectSymlinks(
+    func rejectSymlinks(
         to url: URL,
         phase: HanlinWidgetStorageDiagnostic.Phase = .storeLoad
     ) throws {
@@ -1091,7 +1124,7 @@ public struct HanlinScriptExtensionStore: Sendable {
 #endif
     }
 
-    private func withLock<T>(_ operation: () throws -> T) throws -> T {
+    func withLock<T>(_ operation: () throws -> T) throws -> T {
         try rejectSymlinks(to: root, phase: .storeLoad)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         try rejectSymlinks(to: root, phase: .storeLoad)
@@ -1142,14 +1175,14 @@ public struct HanlinScriptExtensionStore: Sendable {
 #endif
     }
 
-    private static func encoded<T: Encodable>(_ value: T) throws -> Data {
+    static func encoded<T: Encodable>(_ value: T) throws -> Data {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .millisecondsSince1970
         encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         return try encoder.encode(value)
     }
 
-    private static func decoded<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
+    static func decoded<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .millisecondsSince1970
         return try decoder.decode(type, from: data)

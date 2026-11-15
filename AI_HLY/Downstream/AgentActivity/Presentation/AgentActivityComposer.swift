@@ -17,7 +17,6 @@ enum AgentActivityComposer {
     }
 
     var activities = groups.compactMap(makeActivity)
-    activities = mergeAdjacentSearches(activities)
     activities = removeNarrativeDuplicates(activities)
 
     let duration = run.completedAt.map { max(0, $0.timeIntervalSince(run.startedAt)) }
@@ -32,33 +31,17 @@ enum AgentActivityComposer {
   private static func matchingGroupIndex(
     for step: AgentActivityStep, in groups: [[AgentActivityStep]]
   ) -> Int? {
-    guard step.kind == .toolCall || step.kind == .toolExecution || step.kind == .webSearch else {
-      return nil
-    }
-    let key = lifecycleKey(step)
-    if let exact = groups.lastIndex(where: { group in group.contains { lifecycleKey($0) == key } })
-    {
+    if let callID = step.toolCallID,
+      let exact = groups.lastIndex(where: { group in group.contains { $0.toolCallID == callID } }) {
       return exact
     }
-
-    guard let tool = AgentActivityDeduplicator.normalized(step.subtitle),
-      let index = groups.lastIndex(where: { group in
-        guard let last = group.last,
-          abs(last.startedAt.timeIntervalSince(step.startedAt)) < 8
-        else { return false }
-        return AgentActivityDeduplicator.normalized(last.subtitle) == tool
-          && normalizedInput(last) == normalizedInput(step)
-      })
-    else { return nil }
-    return index
+    // Historical records without correlation remain separate. Equal names,
+    // arguments and nearby timestamps do not establish operation ownership.
+    return nil
   }
 
   private static func lifecycleKey(_ step: AgentActivityStep) -> String {
-    guard var id = step.externalID else { return step.id.uuidString }
-    id = id.replacingOccurrences(of: "call:", with: "")
-    id = id.replacingOccurrences(of: "execution:", with: "")
-    id = id.replacingOccurrences(of: ":execution", with: "")
-    return id
+    step.toolCallID ?? step.externalID ?? step.id.uuidString
   }
 
   private static func normalizedInput(_ step: AgentActivityStep) -> String? {
@@ -82,7 +65,7 @@ enum AgentActivityComposer {
     let sources = AgentActivityDeduplicator.uniqueSources(steps.flatMap(\.sourceItems))
     let input = friendlyInput(steps.compactMap(\.input).first(where: { !$0.isEmpty }))
     let output = friendlyOutput(steps.compactMap(\.output).last(where: { !$0.isEmpty }))
-    let error = steps.compactMap(\.errorDescription).last
+    let error = steps.compactMap(\.errorDescription).last.map(AgentDiagnosticsRedactor.sanitize)
     let title: String
     switch kind {
     case .narrative:
@@ -151,7 +134,7 @@ enum AgentActivityComposer {
       let key = $0.split(separator: ":", maxSplits: 1).first?.lowercased() ?? ""
       return !["query", "q", "search_query"].contains(String(key))
     }
-    let result = lines.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
+    let result = safePreview(lines.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines))
     return result.isEmpty ? nil : result
   }
 
@@ -161,57 +144,24 @@ enum AgentActivityComposer {
     guard !(trimmed.hasPrefix("{") && trimmed.hasSuffix("}")),
       !(trimmed.hasPrefix("[") && trimmed.hasSuffix("]"))
     else { return nil }
-    return trimmed.isEmpty ? nil : trimmed
+    guard !ProgressSummarySanitizer.looksLikeRawChainOfThought(trimmed), !trimmed.contains("### Instructions") else { return nil }
+    return trimmed.isEmpty ? nil : safePreview(trimmed)
+  }
+
+  private static func safePreview(_ text: String) -> String {
+    if let value = try? JSONSerialization.jsonObject(with: Data(text.utf8)) {
+      return AgentDiagnosticsRedactor.sanitizedJSONString(from: value, pretty: true)
+    }
+    return AgentDiagnosticsRedactor.sanitize(text)
   }
 
   private static func combinedStatus(_ steps: [AgentActivityStep]) -> AgentActivityStatus {
     if steps.contains(where: { $0.status == .failed }) { return .failed }
+    if let execution = steps.last(where: { $0.isExecutionLifecycleStep }),
+      [.completed, .cancelled].contains(execution.status) { return execution.status }
     if steps.contains(where: { $0.status == .running }) { return .running }
     if steps.contains(where: { $0.status == .pending }) { return .pending }
     if steps.allSatisfy({ $0.status == .cancelled }) { return .cancelled }
-    return .completed
-  }
-
-  private static func mergeAdjacentSearches(_ activities: [AgentDisplayActivity])
-    -> [AgentDisplayActivity]
-  {
-    var result: [AgentDisplayActivity] = []
-    for activity in activities {
-      guard activity.kind == .search,
-        var previous = result.last,
-        previous.kind == .search,
-        let previousStart = previous.startedAt,
-        let currentStart = activity.startedAt,
-        abs(currentStart.timeIntervalSince(previousStart)) < 20
-      else {
-        result.append(activity)
-        continue
-      }
-      result.removeLast()
-      previous.queries = AgentActivityDeduplicator.uniqueStrings(
-        previous.queries + activity.queries)
-      previous.searchProviderName = previous.searchProviderName ?? activity.searchProviderName
-      previous.sources = AgentActivityDeduplicator.uniqueSources(
-        previous.sources + activity.sources)
-      previous.sourceStepIDs += activity.sourceStepIDs
-      previous.completedAt = [previous.completedAt, activity.completedAt].compactMap { $0 }.max()
-      previous.status = combinedDisplayStatus(previous.status, activity.status)
-      previous.title = AgentActivityTitleBuilder.title(
-        for: [], kind: .search, queries: previous.queries, status: previous.status)
-      previous.isExpandable = AgentActivityDetailPolicy.isExpandable(
-        queries: previous.queries, sources: previous.sources, input: previous.inputPreview,
-        output: previous.outputPreview, error: previous.errorDescription
-      )
-      result.append(previous)
-    }
-    return result
-  }
-
-  private static func combinedDisplayStatus(_ lhs: AgentActivityStatus, _ rhs: AgentActivityStatus)
-    -> AgentActivityStatus
-  {
-    if lhs == .failed || rhs == .failed { return .failed }
-    if lhs == .running || rhs == .running { return .running }
     return .completed
   }
 

@@ -34,7 +34,7 @@ for (const fixture of packages) {
         signal: new AbortController().signal,
         emit: () => {},
       });
-      const canonicalRoot = path.join(root, 'packages', 'mcp', fixture.serverID);
+      const canonicalRoot = path.join(root, 'packages', 'mcp', fixture.serverID, '.hanlin-generations', fixture.operationID);
       assert.equal(descriptor.packageRoot, canonicalRoot);
       assert.equal(descriptor.entryPointRelativePath, 'dist/index.js');
       assert.equal(descriptor.entryPoint, path.join(canonicalRoot, 'dist', 'index.js'));

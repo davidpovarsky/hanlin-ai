@@ -162,7 +162,8 @@ public enum SystemSkillsProvider {
                    - Call `quick_calculate` for simple single-expression math.
                    - Call `execute_javascript_code` or `execute_typescript_code` for JS/TS scripts.
                    - Call `execute_shell_command` for terminal commands when permitted.
-                   - Call `manage_runtime_packages` to list, preview, install, probe, or uninstall Python (PyPI) and Node (npm) packages.
+                   - Call `manage_runtime_packages` to list, preview, install, probe, or uninstall Python and Node packages. Python supports standard requirements with extras/markers, compatible source backends and local sources.
+                   - Long Node/Python/TypeScript executions have durable job IDs and full output files. Call `get_runtime_job` to read status/output or explicitly cancel; never replay side effects merely because a client disconnected.
                    - Call `execute_skill_resource` to run bundled skill scripts.
                    - Call `create_web_view` to render HTML/JavaScript previews.
                    """),
@@ -175,6 +176,7 @@ public enum SystemSkillsProvider {
                        "execute_typescript_code",
                        "execute_shell_command",
                        "manage_runtime_packages",
+                       "get_runtime_job",
                        "execute_skill_resource",
                        "create_web_view"
                    ]

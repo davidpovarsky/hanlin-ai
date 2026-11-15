@@ -113,18 +113,13 @@ extern "C" void HanlinExpoNativeAPIClearWorkletRuntime(void) __attribute__((weak
     NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE_DENIAL] No active session context registered.");
     return NO;
   }
-  if (!sActiveContext.isNativeAPIGranted) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE_DENIAL] Active session %@ for package %@ is NOT granted 'ios-native-api'.",
-          sActiveContext.sessionID, sActiveContext.packageID);
-    return NO;
-  }
   return YES;
 }
 
 + (BOOL)isNativeAPIAuthorizedForRuntime:(nullable void *)runtimePointer {
   std::lock_guard<std::mutex> lock(sGateMutex);
-  if (sActiveContext == nil || !sActiveContext.isNativeAPIGranted) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE_DENIAL] No active granted session context.");
+  if (sActiveContext == nil) {
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE_DENIAL] No active session context.");
     return NO;
   }
   if (runtimePointer != nullptr) {

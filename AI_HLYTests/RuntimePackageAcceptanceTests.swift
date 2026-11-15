@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 @testable import AI_Hanlin
 
@@ -7,7 +8,6 @@ struct RuntimePackageAcceptanceTests {
     private let npmPackage = (name: "is-number", version: "7.0.0")
     private let npmESMPackage = (name: "yocto-queue", version: "1.2.2")
     private let pythonPackage = (name: "requests", version: "2.34.2")
-    private let unsupportedPythonPackage = (name: "numpy", version: "2.5.3")
 
     @Test("Real npm packages install, import through Node and TypeScript, persist, and uninstall")
     func npmInstallImportPersistenceAndUninstall() async throws {
@@ -142,18 +142,41 @@ struct RuntimePackageAcceptanceTests {
         }
     }
 
-    @Test("Python manager explains native wheels and rejects invalid releases")
+    @Test("Python manager rejects actual incompatible interpreter tags and invalid releases")
     func pythonUnsupportedAndInvalidInputs() async throws {
-        let manager = AppRuntimeCore.shared.pythonPackages
-        let unsupported = try await withRegistryRetry {
-            try await manager.preview(
-                name: unsupportedPythonPackage.name,
-                version: unsupportedPythonPackage.version
-            )
+        let root = FileManager.default.temporaryDirectory.appending(path: "package-tags-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let python = PythonRuntimeService(fileLayout: layout)
+        let manager = PythonPackageManager(fileLayout: layout, python: python)
+        let workspace = try layout.workspace(client: .tools, identifier: "wheel-tags")
+        let filename = "hanlin_incompatible_fixture-1.0-cp999-cp999-ios_99_0_arm64_iphoneos.whl"
+        // Real local wheel, rather than assuming that every future NumPy release
+        // must remain unsupported or that preview can fabricate a missing wheel.
+        let created = try await python.execute(RuntimeExecutionRequest(source: """
+        import zipfile
+        filename = "hanlin_incompatible_fixture-1.0-cp999-cp999-ios_99_0_arm64_iphoneos.whl"
+        info = "hanlin_incompatible_fixture-1.0.dist-info/"
+        entries = {
+            "hanlin_incompatible_fixture/__init__.py": "VALUE = 42\\n",
+            info + "METADATA": "Metadata-Version: 2.3\\nName: hanlin-incompatible-fixture\\nVersion: 1.0\\n\\n",
+            info + "WHEEL": "Wheel-Version: 1.0\\nRoot-Is-Purelib: false\\nTag: cp999-cp999-ios_99_0_arm64_iphoneos\\n",
         }
-        #expect(!unsupported.isPurePython)
-        #expect(unsupported.wheelFileName == nil)
-        #expect(unsupported.compatibilityExplanation.contains("native extensions"))
+        entries[info + "RECORD"] = "".join(path + ",,\\n" for path in [*entries, info + "RECORD"])
+        with zipfile.ZipFile(filename, "w") as wheel:
+            for path, value in entries.items():
+                wheel.writestr(path, value)
+        print("ACTUAL_INCOMPATIBLE_WHEEL_CREATED")
+        """, workspace: workspace))
+        try #require(created.exitCode == 0)
+        #expect(created.stdout.contains("ACTUAL_INCOMPATIBLE_WHEEL_CREATED"))
+        do {
+            _ = try await manager.preview(name: workspace.appending(path: filename).path)
+            Issue.record("The running interpreter accepted a CPython999/iOS99 wheel")
+        } catch {
+            #expect(error.localizedDescription.contains("Wheel tags do not match this interpreter"))
+        }
+        #expect(try await manager.installed().allSatisfy { $0.normalizedName != "hanlin-incompatible-fixture" })
 
         await #expect(throws: (any Error).self) {
             _ = try await manager.preview(name: "__hanlin_nonexistent_pypi_404__", version: "1.0.0")

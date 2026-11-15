@@ -50,7 +50,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up pinned RuntimeCore host Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24.5.0
           cache: npm
@@ -78,7 +78,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.12"
 
@@ -155,7 +155,7 @@ jobs:
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee "$LOG_DIR/02-prepare-runtime-core.log"
-          grep -Fq "Prepared verified RuntimeCore 93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269" "$LOG_DIR/02-prepare-runtime-core.log"
+          grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -182,7 +182,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Restore simulator cloned Swift package dependencies
         id: simulator-sourcepackages-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: build/SourcePackages
           key: ios-sourcepackages-v1-${{ runner.os }}-${{ steps.toolchain.outputs.runner-arch }}-${{ steps.toolchain.outputs.xcode-build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/HanlinPlatform/Package.swift', 'Packages/HanlinQuickJS/Package.swift', 'Packages/IOSSystemLite/Package.swift', 'Packages/HanlinNativeScriptRuntime/Package.swift') }}
@@ -199,7 +199,7 @@ jobs:
           github_token: ${{ github.token }}
       - name: Restore compatible simulator compiler state
         id: simulator-deriveddata-cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v6.1.0
         with:
           path: |
             build/SimulatorDerivedData/Build
@@ -258,7 +258,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Save validated simulator Swift package dependencies
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v6.1.0
         with:
           path: build/SourcePackages
           key: ${{ steps.simulator-sourcepackages-cache.outputs.cache-primary-key }}
@@ -461,7 +461,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Upload performance logs and test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: ipad-performance-regression-results

@@ -259,17 +259,20 @@ public struct HanlinScriptIntentInvocation: Codable, Hashable, Sendable {
     public let entityID: String?
     public let parameters: HanlinValue
     public let continueInForeground: Bool
+    public let delivery: HanlinInvocationDelivery?
 
     public init(
         identity: HanlinScriptExtensionIdentity,
         entityID: String? = nil,
         parameters: HanlinValue = .null,
-        continueInForeground: Bool = false
+        continueInForeground: Bool = false,
+        delivery: HanlinInvocationDelivery? = nil
     ) {
         self.identity = identity
         self.entityID = entityID
         self.parameters = parameters
         self.continueInForeground = continueInForeground
+        self.delivery = delivery
     }
 }
 

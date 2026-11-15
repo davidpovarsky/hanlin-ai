@@ -84,13 +84,13 @@ public actor HanlinMiniAppRequestBroker {
     public struct Limits: Hashable, Sendable {
         public let maximumPayloadBytes: Int
         public let maximumResponseBytes: Int
-        public let timeout: Duration
+        public let timeout: Duration?
         public let maximumAuditEvents: Int
 
         public init(
             maximumPayloadBytes: Int = 1_048_576,
             maximumResponseBytes: Int = 4_194_304,
-            timeout: Duration = .seconds(15),
+            timeout: Duration? = .seconds(15),
             maximumAuditEvents: Int = 1_000
         ) {
             self.maximumPayloadBytes = maximumPayloadBytes
@@ -98,6 +98,10 @@ public actor HanlinMiniAppRequestBroker {
             self.timeout = timeout
             self.maximumAuditEvents = maximumAuditEvents
         }
+
+        /// Runtime actions in the personal Host have no implicit15s lifetime.
+        /// Payload/response/audit budgets and explicit callers' deadlines remain.
+        public static let personalHost = Self(timeout: nil)
     }
 
     private struct RouteRegistration {
@@ -161,17 +165,22 @@ public actor HanlinMiniAppRequestBroker {
 
         let handler = registration.handler
         do {
-            let responseValue = try await withThrowingTaskGroup(of: HanlinValue.self) { group in
-                group.addTask {
-                    try await handler(request)
+            let responseValue: HanlinValue
+            if let timeout = limits.timeout {
+                responseValue = try await withThrowingTaskGroup(of: HanlinValue.self) { group in
+                    group.addTask { try await handler(request) }
+                    group.addTask {
+                        try await Task.sleep(for: timeout)
+                        throw HanlinMiniAppRequestError.timedOut
+                    }
+                    defer { group.cancelAll() }
+                    guard let result = try await group.next() else { throw HanlinMiniAppRequestError.cancelled }
+                    return result
                 }
-                group.addTask { [timeout = limits.timeout] in
-                    try await Task.sleep(for: timeout)
-                    throw HanlinMiniAppRequestError.timedOut
-                }
-                let result = try await group.next()!
-                group.cancelAll()
-                return result
+            } else {
+                try Task.checkCancellation()
+                responseValue = try await handler(request)
+                try Task.checkCancellation()
             }
             let responseBytes = try estimatedBytes(responseValue)
             guard responseBytes <= limits.maximumResponseBytes else {
@@ -180,6 +189,9 @@ public actor HanlinMiniAppRequestBroker {
             }
             recordAudit(request: request, allowed: true, outcome: "success", bytes: payloadBytes)
             return HanlinMiniAppResponse(requestID: request.id, value: responseValue)
+        } catch is CancellationError {
+            recordAudit(request: request, allowed: true, outcome: "cancelled", bytes: payloadBytes)
+            throw HanlinMiniAppRequestError.cancelled
         } catch let error as HanlinMiniAppRequestError {
             recordAudit(request: request, allowed: true, outcome: "\(error)", bytes: payloadBytes)
             throw error

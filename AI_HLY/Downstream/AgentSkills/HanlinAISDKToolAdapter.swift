@@ -42,7 +42,7 @@ final class HanlinAISDKToolAdapter {
     var currentRoundID: UUID?
     var currentStepIndex: Int = 0
     var completedCallIDs: Set<String> = []
-    var maxActiveStepSchemaBytes: Int = 28_000
+    var maxActiveStepSchemaBytes: Int? = nil
 
     static func buildUnknownToolErrorMessage(
         alias: String,
@@ -190,7 +190,7 @@ final class HanlinAISDKToolAdapter {
                 continue
             }
             let toolBytes = sizes[alias] ?? 400
-            if currentBytes + toolBytes > maxActiveStepSchemaBytes && aliases.count > 6 {
+            if let budget = maxActiveStepSchemaBytes, currentBytes + toolBytes > budget && aliases.count > 6 {
                 continue
             }
             aliases.append(alias)
@@ -222,6 +222,8 @@ final class HanlinAISDKToolAdapter {
                 modelVisibleSchemaBytes: prep.visibleSchemaBytes
             )
             currentRoundID = stepID
+        } else {
+            currentRoundID = UUID()
         }
         return prep
     }
@@ -742,11 +744,13 @@ final class HanlinAISDKToolAdapter {
             }
         )
 
-        let nativeResult = await preparedTools.execute(
-            alias: alias,
-            argumentsJSON: parsedCall.sanitizedArgumentsJSON,
-            context: nativeContext
-        )
+        let nativeResult = await RuntimeJobProgress.$reporter.withValue({ [weak self] job in
+            guard let self, !self.completedCallIDs.contains(callID) else { return }
+            let message = "Job \(job.executionID.uuidString.prefix(8)) · \(job.state.rawValue) · stdout \(job.stdoutBytes) B · stderr \(job.stderrBytes) B"
+            self.callbacks.onAgentEvent?(.toolExecutionProgress(id: "\(callID):execution", message: message))
+        }) {
+            await preparedTools.execute(alias: alias, argumentsJSON: parsedCall.sanitizedArgumentsJSON, context: nativeContext)
+        }
 
         if alias == "manage_mcp_servers" || alias == "list_tools" {
             await self.refreshPreparedTools()
@@ -813,8 +817,9 @@ final class HanlinAISDKToolAdapter {
                 Summary: \(String(result.modelText.prefix(200)))
                 To inspect or paginate this result, call `read_tool_result(reference: "\(ref)", offset: 0, limit: 4096)`.
                 """
-            } else if modelText.isEmpty, let full = result.fullResultPayload {
-                modelText = full
+            } else {
+                // A storage resource error must not silently replace the full result with a summary.
+                modelText = "[Full result could not be persisted: \(session.resultStore.lastStorageError ?? "explicit storage budget exceeded")]\n" + payloadToStore
             }
         }
 

@@ -1,0 +1,156 @@
+name: Validate production encrypted chat diagnostics
+
+on:
+  workflow_call:
+    inputs:
+      test_suite:
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  encrypted-capture:
+    runs-on: xcode-27
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Stage byte-identical production capture and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/stage_chat_diagnostics_proof.py
+          mkdir -p build/diagnostics-evidence
+          cp build/ChatDiagnosticsProof/production-inputs.json build/diagnostics-evidence/
+          git rev-parse HEAD > build/diagnostics-evidence/app-sha.txt
+      - name: Select stable Apple SDK and matching iPhone
+        id: toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode*.app' ! -name '*_beta*' -print | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          xcodebuild -version | tee build/diagnostics-evidence/toolchain.txt
+          echo "build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+          major="$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)"
+          xcrun simctl list devices available -j > build/diagnostics-evidence/devices.json
+          device="$(python3 - "$major" <<'PY'
+          import json, sys
+          data = json.load(open('build/diagnostics-evidence/devices.json'))
+          devices = [d for runtime, entries in data['devices'].items() if f'iOS-{sys.argv[1]}-' in runtime
+                     for d in entries if d.get('isAvailable') and d['name'].startswith('iPhone')]
+          if not devices:
+              raise SystemExit('No available iPhone matches the stable SDK')
+          print(devices[0]['udid'])
+          PY
+          )"
+          echo "device=$device" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@v6.1.0
+        id: packages
+        with:
+          path: build/DiagnosticsSourcePackages
+          key: chat-diagnostics-spm-v1-${{ runner.arch }}-${{ steps.toolchain.outputs.build }}-${{ hashFiles('Packages/HanlinPlatform/Package.swift', 'Packages/HanlinPlatform/Package.resolved', 'build/ChatDiagnosticsProof/Package.swift') }}
+      - name: Execute actual encrypted capture, replay, redaction and ZIP tests
+        working-directory: build/ChatDiagnosticsProof
+        shell: bash
+        env:
+          DIAGNOSTICS_TEST_SUITE: ${{ inputs.test_suite }}
+        run: |
+          set -euo pipefail
+          case "$DIAGNOSTICS_TEST_SUITE" in
+            '') test_args=(-only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsExportTests -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsJournalTests -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsRawReviewTests -only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsSessionPersistenceTests) ;;
+            AI_HLYTests/AgentDiagnosticsRawReviewTests) test_args=(-only-testing:HanlinChatDiagnosticsProofTests/AgentDiagnosticsRawReviewTests) ;;
+            *) echo 'Unsupported diagnostics suite filter' >&2; exit 2 ;;
+          esac
+          set +e
+          xcodebuild test -scheme HanlinChatDiagnosticsProof \
+            -destination 'platform=iOS Simulator,id=${{ steps.toolchain.outputs.device }}' \
+            -clonedSourcePackagesDirPath "$GITHUB_WORKSPACE/build/DiagnosticsSourcePackages" \
+            -derivedDataPath "$RUNNER_TEMP/DiagnosticsDerivedData" \
+            -resultBundlePath "$GITHUB_WORKSPACE/build/diagnostics-evidence/Capture.xcresult" \
+            "${test_args[@]}" \
+            -skipMacroValidation CODE_SIGNING_ALLOWED=NO 2>&1 | tee ../diagnostics-evidence/xcodebuild.log
+          test_status="${PIPESTATUS[0]}"
+          set -e
+          xcrun xcresulttool get test-results tests --path ../diagnostics-evidence/Capture.xcresult --format json > ../diagnostics-evidence/tests.json
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, shutil
+          locks = list(Path('.').rglob('Package.resolved'))
+          if not locks:
+              raise SystemExit('Resolved dependency evidence is missing')
+          for index, lock in enumerate(locks):
+              shutil.copy2(lock, Path('../diagnostics-evidence') / f'{index}-Package.resolved')
+              data = json.loads(lock.read_text())
+              pins = data.get('pins', data.get('object', {}).get('pins', []))
+              states = {p.get('identity', p.get('package', '')).lower(): p['state'] for p in pins}
+              if states.get('swift-ai-sdk', {}).get('revision') != '43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6':
+                  raise SystemExit('The resolved Swift AI SDK revision differs from the production package')
+              if states.get('zipfoundation', {}).get('version') != '0.9.19':
+                  raise SystemExit('The resolved ZIPFoundation version differs from production')
+          PY
+          python3 - <<'PY'
+          import json, os
+          expected = {
+              'archiveRedactsAgainExcludesRawAndAuthenticatesExportedBytes',
+              'symlinksAndOversizedAssetsFailInsteadOfEscapingOrTruncating',
+              'crashTailIsExplicitAndMalformedCompleteRecordsFail',
+              'upgradeStopsLegacyDeletionAndRespectsSubsequentExplicitChoice',
+              'legacyTraceKeepsTokenCountsButRedactsNestedAndCamelCaseCredentials',
+              'splitUTF8TransportRetainsExactEncryptedBytesAndReadableSSE',
+              'unavailableKeyNeverWritesRawPlaintextAndReportsTheLoss',
+              'redactionPreservesOrdinaryConversationAndMasksNestedSecrets',
+              'credentialsSplitAcrossSSEEventsRemainOnlyInTheEncryptedSource',
+              'actualJournalBytesReplayLocallyAndMaskCredentialsAfterCoalescing',
+              'responseComparisonPrecedesLargeRequestInTheBoundedReviewPreview',
+              'wrongKeyRunOrTamperedEnvelopeNeverProducesAReview',
+              'duplicatedAndReorderedAuthenticatedRecordsAreRejected',
+              'incompleteCrashTailIsExplicitAndCompleteMalformedRecordsFailClosed',
+              'unknownReplayFormatFailsInsteadOfGuessingAProvider',
+              'encodedURLKeysAndEchoedCookieValuesAreRedactedWithoutChangingOrdinaryUnicode',
+              'numericLatencyMetricsSurviveRedactionAndTypedSessionReopen',
+              'oldRedactedLatenciesRecoverWithoutRewritingTheSourceFile',
+              'legacyRepairDoesNotAcceptOtherCorruptFieldsOrGuessedNumericStrings',
+              'latencyNamesDoNotAllowCredentialStringsOrOrdinaryTokensThrough'}
+          if os.environ['DIAGNOSTICS_TEST_SUITE']:
+              expected &= {
+                  'actualJournalBytesReplayLocallyAndMaskCredentialsAfterCoalescing',
+                  'responseComparisonPrecedesLargeRequestInTheBoundedReviewPreview',
+                  'wrongKeyRunOrTamperedEnvelopeNeverProducesAReview',
+                  'duplicatedAndReorderedAuthenticatedRecordsAreRejected',
+                  'incompleteCrashTailIsExplicitAndCompleteMalformedRecordsFailClosed',
+                  'unknownReplayFormatFailsInsteadOfGuessingAProvider',
+                  'encodedURLKeysAndEchoedCookieValuesAreRedactedWithoutChangingOrdinaryUnicode'}
+          found = {}
+          def visit(node):
+              if isinstance(node, dict):
+                  if node.get('nodeType') == 'Test Case':
+                      name = node.get('name', '').split('(')[0]
+                      if name in expected:
+                          found.setdefault(name, []).append(node.get('result'))
+                  for value in node.values(): visit(value)
+              elif isinstance(node, list):
+                  for value in node: visit(value)
+          visit(json.load(open('../diagnostics-evidence/tests.json')))
+          if set(found) != expected or any(results != ['Passed'] for results in found.values()):
+              raise SystemExit(f'Missing, duplicate or nonpassing required case: {found}')
+          print(f'EXECUTED_PASS: {len(expected)} selected production diagnostics cases')
+          PY
+          exit "$test_status"
+      - uses: actions/cache/save@v6.1.0
+        if: ${{ success() && steps.packages.outputs.cache-hit != 'true' }}
+        with:
+          path: build/DiagnosticsSourcePackages
+          key: ${{ steps.packages.outputs.cache-primary-key }}
+      - uses: actions/upload-artifact@v7.0.0
+        if: always()
+        with:
+          name: chat-diagnostics-capture-evidence
+          path: build/diagnostics-evidence
+          retention-days: 30

