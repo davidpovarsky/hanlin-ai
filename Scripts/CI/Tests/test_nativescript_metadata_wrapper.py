@@ -289,7 +289,7 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
                 'framework module lower {\n header "Exported.h"\n export *\n}\n')
             alias = root / "products/Carrier.framework/Headers/lower/Exported.h"
             alias.parent.mkdir(parents=True)
-            shutil.copy2(header, alias)
+            shutil.copytree(owner / "Headers", alias.parent, dirs_exist_ok=True)
             records = HEADERS.write_public_umbrella(root, root / "input.h", [], [owner.parent])
             library = self.compiler_library()
             before = HEADERS.inspect_header_declarations([header, alias], [], library, "objective-c")
@@ -319,6 +319,17 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias bytes"):
                 HEADERS.write_verified_header_alias_overlay(records, overlay)
             self.assertFalse(overlay.exists())
+
+    def test_identical_entry_with_changed_alias_dependency_is_rejected(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            owner = self.framework(root / "products", "lower")
+            alias_root = root / "products/Carrier.framework/Headers/lower"
+            shutil.copytree(owner / "Headers", alias_root)
+            (alias_root / "Exported.h").write_text("// changed relative dependency of identical Entry.h")
+            records = HEADERS.write_public_umbrella(root, root / "input.h", [], [owner.parent])
+            with self.assertRaisesRegex(RuntimeError, "Conflicting public header alias dependency tree"):
+                HEADERS.write_verified_header_alias_overlay(records, root / "aliases.json")
 
     def test_real_clang_errors_reject_partial_metadata_even_when_required_classes_exist(self):
         with tempfile.TemporaryDirectory() as name:

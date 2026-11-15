@@ -43,6 +43,9 @@ def replace_once(text: str, before: str, after: str) -> str:
 
 
 def patch_main(text: str) -> str:
+    text = replace_once(text, "#include <llvm/Support/Path.h>",
+                        "#include <llvm/Support/Path.h>\n#include <llvm/Support/MemoryBuffer.h>\n"
+                        "#include <llvm/Support/VirtualFileSystem.h>\n#include <stdexcept>")
     text = replace_once(text, "        Context.getDiagnostics().Reset();",
                         "        // Preserve actual parser errors for runToolOnCodeWithArgs.")
     text = replace_once(text, "        Compiler.getPreprocessor().SetSuppressIncludeNotFoundError(!cla_strictIncludes);",
@@ -53,6 +56,33 @@ def patch_main(text: str) -> str:
     text = replace_once(text, before, "        bool parsed = clang::tooling::runToolOnCodeWithArgs(")
     text = replace_once(text, "        std::clock_t end = clock();",
                         "        if (!parsed) return 1;\n\n        std::clock_t end = clock();")
+    # Tooling's convenience overload constructs its own real FileManager and
+    # does not apply -ivfsoverlay. Pass the verified overlay through the public
+    # VFS overload instead. Keep the original path when no aliases are needed.
+    call = 'clang::tooling::runToolOnCodeWithArgs(std::unique_ptr<MetaGenerationFrontendAction>(new MetaGenerationFrontendAction(/*r*/modulesBlacklist)), umbrellaContent, clangArgs, "umbrella.h", "objc-metadata-generator")'
+    setup = '''        auto metadataFS = llvm::vfs::getRealFileSystem();
+        bool customFS = false;
+        for (size_t i = 0; i < clangArgs.size(); ++i) {
+            if (clangArgs[i] != "-ivfsoverlay") continue;
+            if (++i == clangArgs.size()) throw std::runtime_error("Missing metadata VFS overlay path");
+            auto buffer = llvm::MemoryBuffer::getFile(clangArgs[i]);
+            if (!buffer) throw std::runtime_error("Cannot read verified metadata VFS overlay");
+            auto overlay = llvm::vfs::getVFSFromYAML(std::move(*buffer), nullptr, clangArgs[i], nullptr, metadataFS);
+            if (!overlay) throw std::runtime_error("Invalid verified metadata VFS overlay");
+            metadataFS = llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>(overlay.release());
+            customFS = true;
+        }
+        bool parsed;
+        if (customFS) {
+            auto memoryFS = llvm::makeIntrusiveRefCnt<llvm::vfs::InMemoryFileSystem>();
+            memoryFS->addFile("umbrella.h", 0, llvm::MemoryBuffer::getMemBufferCopy(umbrellaContent));
+            auto layeredFS = llvm::makeIntrusiveRefCnt<llvm::vfs::OverlayFileSystem>(metadataFS);
+            layeredFS->pushOverlay(memoryFS);
+            parsed = ''' + call.replace('umbrellaContent, clangArgs', 'umbrellaContent, layeredFS, clangArgs') + ''';
+        } else {
+            parsed = ''' + call + ''';
+        }'''
+    text = replace_once(text, "        bool parsed = " + call + ";", setup)
     return text
 
 

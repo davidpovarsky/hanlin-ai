@@ -296,6 +296,7 @@ def write_verified_header_alias_overlay(inventory: list[dict], destination: Path
     """
     aliases = {}
     evidence = {}
+    verified_trees = {}
     for owner in inventory:
         if owner["status"] != "SELECTED":
             continue
@@ -310,12 +311,24 @@ def write_verified_header_alias_overlay(inventory: list[dict], destination: Path
                     alias = Path(carrier["path"]) / key
                     if carrier["inputSHA256"][key] != header["sha256"]:
                         raise RuntimeError("Conflicting public header alias bytes: " + str(alias) + " vs " + str(canonical))
+                    pair = (owner["path"], module, carrier["path"])
+                    if pair not in verified_trees:
+                        # Identical entry bytes are insufficient if a relative
+                        # include would pick up a changed sibling declaration.
+                        if any(k.startswith("PrivateHeaders/") for k in owner["inputSHA256"]):
+                            raise RuntimeError("Public header alias private dependency context is not proven: " + str(alias))
+                        tree = {k[len("Headers/"):]: v for k, v in owner["inputSHA256"].items() if k.startswith("Headers/")}
+                        prefix = "Headers/" + module + "/"
+                        if any(carrier["inputSHA256"].get(prefix + name) != digest for name, digest in tree.items()):
+                            raise RuntimeError("Conflicting public header alias dependency tree: " + str(alias))
+                        verified_trees[pair] = {"files": len(tree), "sha256": hashlib.sha256(json.dumps(tree, sort_keys=True).encode()).hexdigest()}
                     alias_name, target = alias.as_posix(), canonical.as_posix()
                     if alias_name in aliases and aliases[alias_name] != target:
                         raise RuntimeError("Conflicting public header alias owners: " + alias_name)
                     aliases[alias_name] = target
                     evidence[alias_name] = {"module": module, "alias": alias_name, "canonical": target,
-                                            "sha256": header["sha256"], "ownerSearchPriority": owner["searchPriority"]}
+                                            "sha256": header["sha256"], "ownerSearchPriority": owner["searchPriority"],
+                                            "matchingOwnerHeaderTree": verified_trees[pair]}
     if any(target in aliases and aliases[target] != target for target in aliases.values()):
         raise RuntimeError("Public header aliases would replace another selected module owner")
     destination.write_text(json.dumps({"version": 0, "use-external-names": True,
