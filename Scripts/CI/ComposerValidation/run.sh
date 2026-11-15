@@ -16,9 +16,10 @@ xcodebuild -version | tee "$evidence/xcode-version.txt"
 xcrun --sdk iphonesimulator --show-sdk-version | tee "$evidence/ios-simulator-sdk-version.txt"
 
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/composer-proof.XXXXXXXX")"
-mkdir -p "$scratch/Sources/AI_Hanlin" "$scratch/Tests/AI_HanlinTests"
-cp Scripts/CI/ComposerValidation/Package.swift "$scratch/Package.swift"
-cmp Scripts/CI/ComposerValidation/Package.swift "$scratch/Package.swift"
+package_dir="$scratch/ComposerValidation"
+mkdir -p "$package_dir/Sources/AI_Hanlin" "$package_dir/Tests/AI_HanlinTests"
+cp Scripts/CI/ComposerValidation/Package.swift "$package_dir/Package.swift"
+cmp Scripts/CI/ComposerValidation/Package.swift "$package_dir/Package.swift"
 sources=(
   AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift
   AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift
@@ -30,8 +31,8 @@ for file in "${sources[@]}" "$test_source"; do
   # a dirty or line-ending-transformed file from being silently tested.
   git show "${actual_sha}:${file}" | cmp - "$file"
   case "$file" in
-    AI_HLYTests/*) destination="$scratch/Tests/AI_HanlinTests/$(basename "$file")" ;;
-    *) destination="$scratch/Sources/AI_Hanlin/$(basename "$file")" ;;
+    AI_HLYTests/*) destination="$package_dir/Tests/AI_HanlinTests/$(basename "$file")" ;;
+    *) destination="$package_dir/Sources/AI_Hanlin/$(basename "$file")" ;;
   esac
   cp "$file" "$destination"
   cmp "$file" "$destination"
@@ -46,11 +47,29 @@ xcrun simctl list devices available -j > "$evidence/available-simulators.json"
 device="$(jq -r '[.devices | to_entries[] | select(.key | contains("iOS-26")) | .value[] | select(.isAvailable and (.name | startswith("iPhone"))) | .udid] | first // empty' "$evidence/available-simulators.json")"
 [[ -n "$device" ]] || { echo 'No available iOS 26 iPhone simulator in this isolated job' >&2; exit 2; }
 printf '%s\n' "$device" > "$evidence/simulator-udid.txt"
+(
+  cd "$package_dir"
+  xcodebuild -list -json > "$evidence/schemes.json"
+)
+scheme="$(python3 - "$evidence/schemes.json" <<'PY'
+import json, sys
+with open(sys.argv[1], encoding="utf-8") as stream:
+    data = json.load(stream)
+schemes = data.get("workspace", {}).get("schemes", []) + data.get("project", {}).get("schemes", [])
+for candidate in ("ComposerValidation-Package", "ComposerValidation", "AI_Hanlin"):
+    if candidate in schemes:
+        print(candidate)
+        break
+else:
+    raise SystemExit(f"No known Composer package test scheme; discovered {schemes}")
+PY
+)"
+printf '%s\n' "$scheme" > "$evidence/scheme.txt"
 
 set +e
 (
-  cd "$scratch"
-  xcodebuild test -scheme AI_Hanlin \
+  cd "$package_dir"
+  xcodebuild test -scheme "$scheme" \
     -destination "platform=iOS Simulator,id=$device" \
     -derivedDataPath "$scratch/DerivedData" \
     -resultBundlePath "$evidence/Composer.xcresult" \
