@@ -1248,26 +1248,51 @@
     }
   },
   "capabilityObservation": {
-    "commit": "bfe33506a771aae6bdc4b97dccd657a2facecc45",
-    "tests": 12,
-    "sourceQA": "Accepted as reported by lead exact-lease message; Apple12 NOT_RUN.",
+    "commit": "9249e0e0e3588b0bdf10fc0131c33884434e353f",
+    "tests": 17,
+    "sourceQA": "PENDING_SINGLE_SERVER_INTENT_CORRECTION_REVIEW; previous bfe33506 source was accepted.",
     "appleExecution": "NOT_RUN",
     "strictReadAPI": "readSelection(chatID:temporary:) async throws -> Set<UUID>",
     "scopeSignalAPI": "selectionRevision(chatID:temporary:) -> UInt64",
     "semantics": "Committed affected chat/mode scopes only; no-op does not notify; absent differs from explicit empty; request-specific read errors propagate. Live defaults/schema/authority preserved.",
-    "boundary": "Source syntax checks only; no actual UI delayed-completion execution."
+    "boundary": "17 Apple bodies NOT_RUN. Portable real actor/JSON execution does not establish provider/UI or native save-failure acceptance.",
+    "intentAPI": "applySelectionIntent(MCPChatServerSelectionIntent, chatID: UUID, temporary: Bool) async throws -> Set<UUID>",
+    "intentSemantics": "Atomic non-suspending canonical actor read/modify/save; actual configured defaults seed absent only; explicit empty persists; first materialization is a storage change, repeated explicit state no-op; committed readback/scopes and request-scoped thrown failures. Full-set legacy/clear API unchanged.",
+    "portableActorExecution": {
+      "status": "EXECUTED_PASS",
+      "platform": "Windows Swift6.3.3/Foundation actual actor/model/layout sources",
+      "compileLog": "build/mcp-selection-intent-portable-compile.log",
+      "runLog": "build/mcp-selection-intent-portable-run.log",
+      "harness": "build/mcp-selection-intent-portable.swift",
+      "coverage": [
+        "controlled delayed A-on/concurrent B-on",
+        "simultaneous actor intents",
+        "real JSON persisted reopen",
+        "nonempty default seed only absent",
+        "explicit empty/on/off/noop/scopes",
+        "temporary and persistent separation",
+        "real persistent read failure and independent temporary success"
+      ],
+      "boundary": "No provider, Apple test body, UI, physical-device or native save-permission execution."
+    },
+    "syntaxParsing": "EXECUTED_PASS",
+    "sourceSHA256": {
+      "AI_HLY/Downstream/MCP/Persistence/MCPChatSelectionStore.swift": "d374862bede768162e8126c3572d9560d0ff39af71bb031f37570bb6c4b3169d",
+      "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift": "1c14aa1c8bfc5175c9983336370257731df274f3b1acc2907ff601d6091dc421",
+      "AI_HLYTests/HanlinCapabilityObservationTests.swift": "421bb3dfef6bdd70afffdc09dfe2361d5efd3a1a6da14297bccc62ed5feae210"
+    }
   },
   "eventualApplePlan": {
-    "methods": 43,
+    "methods": 48,
     "status": "NOT_DISPATCHED",
     "groups": {
       "original": 16,
       "composition": 8,
       "hostDiscovery": 7,
-      "capabilityObservation": 12
+      "capabilityObservation": 17
     },
-    "inputs": "build/metadata-observer-final-inputs-NOT-DISPATCHED.json",
-    "plan": "build/metadata-observer-final-impact-plan.json"
+    "inputs": "build/mcp-intent-final-inputs-NOT-DISPATCHED.json",
+    "plan": "Previous43-case impact plan is historical; new48 selector input prepared only, NOT_DISPATCHED."
   },
   "producerInterfacePacket": {
     "commit": "7cb8689854d6dc2f378f975a3b024d6c6857a77c",

@@ -10,8 +10,8 @@ rejected its error-bearing C++ role evidence and target mismatch. Corrected
 source `7cb86898` retains fail-closed gates and adds an incomplete source contract.
 Latest native source was cc15459c: run43673578445 failed on differing
 CallInvoker alias bytes before combined generation; its SDK-only/context controls
-passed. All43 eventual Apple cases remain NOT_RUN (24 previously build-blocked,
-Host7 and observation12 not dispatched). See the latest checkpoint below.
+passed. All48 current eventual Apple cases remain NOT_RUN (24 previously build-blocked,
+Host7 and observation17 not dispatched). See the latest checkpoint below.
 The earlier checkpoints below remain historical evidence, not current acceptance.
 
 App run [43650510166](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43650510166)
@@ -500,3 +500,49 @@ Lead reports final bfe33506 observation source QA accepted; its12 Apple bodies
 remain NOT_RUN. That acceptance does not change the43-case eventual Apple plan
 or its NOT_DISPATCHED status. Optional stronger save-failure/default fixtures do
 not block UI work and were not bundled with this source-contract packet.
+## Atomic single-server MCP intent correction — 9249e0e0
+
+Source `9249e0e0e3588b0bdf10fc0131c33884434e353f` corrects the concurrent
+popup write contract. Two rows must not each replace the whole selection from
+the same asynchronously loaded UI snapshot. Revision guards protect publication;
+the actor now protects write intent against canonical current stored IDs.
+
+Typed input: `MCPChatServerSelectionIntent(serverID: UUID, isSelected: Bool)`.
+Composer API on the existing provider:
+`applySelectionIntent(_:chatID:temporary:) async throws -> Set<UUID>`.
+It retains the loaded-state admission guard, captures defaults from the actual
+configured globally-enabled/new-chat servers and invokes one non-suspending
+actor read/modify/save. Defaults seed only an absent record. Explicit[] stays
+explicit; the first intent materializes an absent record even when its effective
+IDs match defaults, consistent with the existing full-set storage semantics.
+Repeated intents on the same explicit state do not save or notify. The old
+full-set API remains for legitimate clear-all/legacy callers.
+
+The actor returns committed IDs plus exact affected scopes only after successful
+persistence (or actual temporary-memory mutation). The provider publishes those
+scopes and throws the request's own read/save/admission error directly; global
+lastError is not a success/failure channel. The returned IDs describe that commit,
+not a guarantee that no later concurrent commit exists. UI still owns current
+chat/mode/revision guards and canonical reload, and no copied selection authority
+or new runtime-control action was introduced.
+
+Five new Apple case bodies cover: a controlled delayed A-on plus concurrent
+B-on ending in real persisted{A,B}; simultaneous actor intents and exact scopes;
+nonempty actual registry defaults, on/off/noop/explicit-empty/full-clear semantics;
+request-scoped errors and independent temporary writes; and an atomic save
+failure under a read-only parent after a real successful JSON read, preserving
+bytes/revision. The suite now contains17 bodies; all17 remain Apple NOT_RUN.
+
+Actual portable verification passed: Swift6.3.3 typecheck of the unchanged-layout
+Foundation dependency set plus actual actor/model, and a compiled Windows
+Foundation executable using those real source files with actual JSON atomic IO.
+It executed controlled delayed and simultaneous intents, actual persisted reopen,
+nonempty defaults, explicit empty, on/off/noop/scopes in both modes, a genuine
+persistent read failure and an independent successful temporary intent.
+Logs: `build/mcp-selection-intent-portable-{compile,run}.log`, harness
+`build/mcp-selection-intent-portable.swift`. No layout/store mocks were used.
+This is not provider/SwiftUI/Apple app/physical-device execution; the provider and
+17-case file passed syntax parsing only. The native save-permission case remains
+NOT_RUN. Diff check passed. Prepared48 selectors (16 original+8 composition+7
+Host+17 observation) are at `build/mcp-intent-final-inputs-NOT-DISPATCHED.json`;
+no workflow was dispatched, and the earlier43-case plan is historical.
