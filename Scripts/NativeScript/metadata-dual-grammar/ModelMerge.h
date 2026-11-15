@@ -177,11 +177,34 @@ class ModelMerge {
             rawFunctionLinkage["cppLanguageLinkage"] = static_cast<int64_t>(function->getLanguageLinkage());
             rawFunctionLinkage["objcLanguageLinkage"] = static_cast<int64_t>(authoritative->getLanguageLinkage());
         }
+        auto cppPrototypes = rawCallablePrototypes(*cpp);
+        auto objcPrototypes = rawCallablePrototypes(*objc);
+        llvm::json::Value prototypeDifference(nullptr);
+        if (cppPrototypes != objcPrototypes) {
+            if (cppPrototypes.size() != objcPrototypes.size()) throw std::runtime_error("Unproven callable prototype graph difference");
+            for (size_t index = 0; index < cppPrototypes.size(); ++index) {
+                if (cppPrototypes[index] == objcPrototypes[index]) continue;
+                const auto* a = cppPrototypes[index].getAsObject();
+                const auto* b = objcPrototypes[index].getAsObject();
+                if (!a || !b || a->getString("path") != b->getString("path") ||
+                    a->getInteger("callingConvention") != b->getInteger("callingConvention") ||
+                    a->getBoolean("hasPrototype") != true || b->getBoolean("hasPrototype") != false ||
+                    a->getInteger("sourceDeclaredParameterCount") != 0 || !b->get("sourceDeclaredParameterCount") ||
+                    !b->get("sourceDeclaredParameterCount")->getAsNull() ||
+                    a->getInteger("originalFactorySignatureEntries") != 1 || b->getInteger("originalFactorySignatureEntries") != 1)
+                    throw std::runtime_error("Unproven actual callable prototype compatibility");
+            }
+            prototypeDifference = llvm::json::Object{
+                {"cpp", std::move(cppPrototypes)}, {"objc", std::move(objcPrototypes)},
+                {"sourcePrototypeTypesEquivalent", false},
+                {"encodingRule", "ORIGINAL_FACTORY_RETURN_ONLY_FOR_NO_PROTOTYPE_NO_EXTRA_ARGUMENT_PROMISE"}};
+        }
+        const bool originalNoPrototypeEncoding = prototypeDifference.getAsObject() != nullptr;
         proofs.push_back(llvm::json::Object{{"canonicalKey", entityKey(*objc)},
             {"source", objc->fileName}, {"actualSourceBytesEqual", true},
-            {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)}, {"rawFunctionLinkage", std::move(rawFunctionLinkage)},
+            {"actualASTABI", std::move(objcABI)}, {"rawCallablePrototypeDifference", std::move(prototypeDifference)}, {"rawVariableLinkage", std::move(rawLinkage)}, {"rawFunctionLinkage", std::move(rawFunctionLinkage)},
             {"cppRawParameterCVR", rawParameterCVR(*cpp)}, {"objcRawParameterCVR", rawParameterCVR(*objc)},
-            {"disposition", bindingResolution ? "RESOLVED_TO_EXPORTED_C_AUTHORITY" : "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
+            {"disposition", bindingResolution ? "RESOLVED_TO_EXPORTED_C_AUTHORITY" : originalNoPrototypeEncoding ? "PROVEN_ORIGINAL_NO_PROTOTYPE_ENCODING_OBJC_AUTHORITY" : "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
             {"exportAuthority", bindingResolution ? llvm::json::Value(std::move(*bindingResolution)) : llvm::json::Value(nullptr)},
             {"availability", !availabilityDifference ? "EXACT" : versionEquivalent(cpp->introducedIn, objc->introducedIn) ?
                 "ORIGINAL_UNKNOWN_VERSION_ENCODINGS_EQUIVALENT" : "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET"},

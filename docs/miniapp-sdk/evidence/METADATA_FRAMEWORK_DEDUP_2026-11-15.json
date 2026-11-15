@@ -2896,10 +2896,10 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "FULL_SDK_GENERATION_ONLY_CONTRACT3",
+        "scope": "AFFECTED_15_MODEL_CONTROLS_31_MODELS_AND_GENUINE_ACCELERATE_PLUS_AVFOUNDATION_SLICE",
         "status": "PENDING_DISPATCH",
-        "controlsAnd31Gate": "NOT_RUN in next focused scope; original passing evidence remains separately verified",
-        "combinedVM": "NOT_RUN"
+        "export9": "Only explicit verified unchanged reuse; source/assertions/fixtures unchanged",
+        "fullSDK": "Withheld until affected slice passes"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3227,6 +3227,19 @@
           "unmappedModels": 0,
           "resultSHA256": "db2f31f08505f229aa37469f75725b217a26691dc5de99b4033e0f28155bfe82",
           "runtimeAcceptance": "NOT_ESTABLISHED"
+        },
+        "fullSDKNextFailure": {
+          "run": 43759466180,
+          "sourceSHA": "a7931c6b",
+          "status": "FAILED",
+          "publication": "NONE",
+          "actualCPPTopLevelModels": 55819,
+          "actualObjCTopLevelModels": 55165,
+          "observedPeakAfterCollection": 1546616832,
+          "metadataProcessSeconds": 89.783073125,
+          "firstConflict": "BLASGetThreading / Accelerate.vecLib.thread_api",
+          "reason": "C FunctionNoProtoType callingConvention was omitted by the inspector, CPP FunctionProtoType recorded0",
+          "nextChange": "Read actual common FunctionType; preserve raw prototype distinction and original return-only invocation, reject CPP parameter loss"
         }
       }
     }

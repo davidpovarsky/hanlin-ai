@@ -49,8 +49,12 @@ extern "C" {
 #endif
 #ifdef __cplusplus
 #define HANLIN_PARAM_ALIAS
+#define HANLIN_NO_PROTO_PARAM
+#define HANLIN_NO_PROTO_CB_PARAM
 #else
 #define HANLIN_PARAM_ALIAS restrict
+#define HANLIN_NO_PROTO_PARAM
+#define HANLIN_NO_PROTO_CB_PARAM
 #endif
 struct HanlinDualShared {
   SHARED_FIELD
@@ -62,6 +66,9 @@ typedef struct HanlinDualInlineNamed { double amount; } HanlinDualInlineAlias;
 int HanlinDualRecordAliases(struct HanlinDualLateNamed *original, HanlinDualLaterAlias *later, HanlinDualInlineAlias *inlineAlias);
 RETURN_TYPE HanlinDualSharedFunction(struct HanlinDualShared *value);
 int HanlinDualTakeSigned(int value);
+int HanlinDualNoPrototype(HANLIN_NO_PROTO_PARAM);
+typedef int (*HanlinDualNoProtoCallback)(HANLIN_NO_PROTO_CB_PARAM);
+int HanlinDualUseNoProtoCallback(HanlinDualNoProtoCallback value);
 unsigned long HanlinDualTakeUnsigned(unsigned long value);
 double HanlinDualTakeDouble(double value);
 void HanlinDualTakePointer(void * HANLIN_PARAM_ALIAS value);
@@ -122,6 +129,8 @@ HANLIN_DECL_EXPORT
         ("equivalent-c-only-and-lifetime", baseline, "pass", ""),
         ("conflicting-layout", core.replace("SHARED_FIELD", "\n#ifdef __cplusplus\nlong long value;\n#else\nint value;\n#endif\n").replace("RETURN_TYPE", "int").replace("CONSTANT_VALUE", "42").replace("OBJC_INVALID", "").replace("CLASS_ATTRIBUTE", "").replace("EXTERNAL_BINDING", ""), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-signature", "#ifdef __cplusplus\ntypedef long long HanlinDualReturn;\n#else\ntypedef int HanlinDualReturn;\n#endif\n" + baseline.replace("int HanlinDualSharedFunction", "HanlinDualReturn HanlinDualSharedFunction"), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
+        ("no-prototype-parameter-loss-rejected", baseline.replace("#define HANLIN_NO_PROTO_PARAM\n", "#define HANLIN_NO_PROTO_PARAM int value\n", 1), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
+        ("no-prototype-callback-parameter-loss-rejected", baseline.replace("#define HANLIN_NO_PROTO_CB_PARAM\n", "#define HANLIN_NO_PROTO_CB_PARAM int value\n", 1), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-pointee-qualifier", "#ifdef __cplusplus\n#define HANLIN_POINTEE_CONST const\n#else\n#define HANLIN_POINTEE_CONST\n#endif\n" + baseline.replace("int HanlinDualTakeSigned(int value);", "int HanlinDualTakeSigned(HANLIN_POINTEE_CONST int *value);"), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-constant", "#ifdef __cplusplus\n#define HANLIN_REAL_FIXTURE_CONSTANT 43\n#else\n#define HANLIN_REAL_FIXTURE_CONSTANT 42\n#endif\n" + baseline.replace("HanlinDualConstant = 42", "HanlinDualConstant = HANLIN_REAL_FIXTURE_CONSTANT"), "merge-failure", "Dual-grammar actual API model conflict:"),
         ("conflicting-symbol-binding", "#ifdef __cplusplus\n#define HANLIN_ACTUAL_BINDING \"hanlin_cpp_symbol\"\n#else\n#define HANLIN_ACTUAL_BINDING \"hanlin_c_symbol\"\n#endif\n" + baseline + "\nextern int HanlinDualAlias __asm__(HANLIN_ACTUAL_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
@@ -175,6 +184,14 @@ HANLIN_DECL_EXPORT
                 passed = passed and all(name.encode() + b"\0" in body for name in ["HanlinDualCOnlyRecord", "HanlinDualCOnlyFunction", "HanlinDualProvider"])
             declarations = list(folder.glob("metadata.bin.types/*.d.ts"))
             declaration_text = "\n".join(path.read_text() for path in declarations)
+            for no_prototype_name in ["HanlinDualNoPrototype", "HanlinDualUseNoProtoCallback"]:
+                rows = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if item["canonicalKey"].split("\n")[2] == no_prototype_name]
+                passed = passed and len(rows) == 1 and rows[0].get("disposition") == "PROVEN_ORIGINAL_NO_PROTOTYPE_ENCODING_OBJC_AUTHORITY"
+                if len(rows) == 1:
+                    facts = rows[0].get("rawCallablePrototypeDifference", {})
+                    c_unknown = [entry for entry in facts.get("objc", []) if entry.get("hasPrototype") is False]
+                    cpp_empty = [entry for entry in facts.get("cpp", []) if entry.get("hasPrototype") is True and entry.get("sourceDeclaredParameterCount") == 0]
+                    passed = passed and facts.get("sourcePrototypeTypesEquivalent") is False and bool(c_unknown) and bool(cpp_empty) and all(entry.get("sourceDeclaredParameterCount") is None and entry.get("originalFactorySignatureEntries") == 1 and entry.get("callingConvention") == 0 for entry in c_unknown)
             sign_names = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualSignNames" in item["canonicalKey"]]
             passed = passed and len(sign_names) == 1 and sign_names[0].get("rawVariableLinkage") == {
                 "cppLanguageLinkage": 1, "objcLanguageLinkage": 0} and sign_names[0].get("actualASTABI", {}).get("externalBinding", {}).get("clangSymbolBeforeTargetPrefix") == "HanlinDualSignNames"

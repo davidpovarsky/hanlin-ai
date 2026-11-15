@@ -154,3 +154,24 @@ performed solely for acceptance. Model-merge observed peak1,949,958,144B versus
 new input scope, with the same source-identical tool image and static binding
 proofs reused only after complete input verification.
 Slice result SHA256: `db2f31f08505f229aa37469f75725b217a26691dc5de99b4033e0f28155bfe82`.
+
+Full SDK43759466180/a7931c6b remains FAILED, with no publication. Both actual
+collections completed (55,819 CPP/55,165 ObjC top-level models), observed peak
+1,546,616,832B after collection, metadata child89.783s. The next first conflict
+is public Accelerate.vecLib.thread_api BLASGetThreading. Actual binding, return
+ABI and original no-argument model match. The inspector omitted C calling
+convention because it queried FunctionProtoType only; Clang FunctionNoProtoType
+also inherits actual FunctionType::getCallConv.
+
+The affected candidate now reads that actual common FunctionType field for both
+direct functions and callbacks. The original pinned TypeFactory explicitly
+encodes FunctionNoProtoType with only its return type. Raw prototype versus
+no-prototype facts remain different, with an unknown C declared-parameter count.
+Only CPP known-empty versus C no-prototype return-only original subencodings can
+match, after complete original model and all other ABI/availability/binding
+proofs. Disposition is PROVEN_ORIGINAL_NO_PROTOTYPE_ENCODING_OBJC_AUTHORITY;
+sourcePrototypeTypesEquivalent=false, and no extra-argument promise is made.
+Actual CPP direct/callback argument additions remain fatal. New15-case native
+controls include both negative cases, and the genuine Accelerate header/root
+joins the affected SDK slice before any full SDK retry. Export exceptions remain
+exactly the3 pinned AVFoundation declarations; none is broadened.

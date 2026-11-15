@@ -13,6 +13,7 @@
 #include <llvm/Support/YAMLParser.h>
 #include <llvm/Support/raw_ostream.h>
 #include <set>
+#include <functional>
 
 namespace HanlinDual {
 
@@ -93,14 +94,20 @@ inline llvm::json::Object typeABI(clang::ASTContext& context, clang::QualType ty
         const auto pointee = type->getPointeeType();
         result["pointeeAddressSpace"] = static_cast<int64_t>(pointee.getAddressSpace());
         result["pointeeQualifiersCVR"] = static_cast<int64_t>(pointee.getCVRQualifiers());
-        if (const auto* function = pointee->getAs<clang::FunctionProtoType>()) {
+        if (const auto* function = pointee->getAs<clang::FunctionType>()) {
             llvm::json::Array signature;
             signature.push_back(typeABI(context, function->getReturnType(), depth + 1));
-            for (const auto& argument : function->param_types())
-                signature.push_back(typeABI(context, context.getCanonicalParamType(argument), depth + 1));
+            bool variadic = false;
+            if (const auto* prototype = llvm::dyn_cast<clang::FunctionProtoType>(function)) {
+                for (const auto& argument : prototype->param_types())
+                    signature.push_back(typeABI(context, context.getCanonicalParamType(argument), depth + 1));
+                variadic = prototype->isVariadic();
+            }
+            // Original TypeFactory::createFromFunctionNoProtoType explicitly
+            // encodes the return type only; do not invent extra parameters.
             result["callableSignature"] = std::move(signature);
             result["callableConvention"] = static_cast<int64_t>(function->getCallConv());
-            result["callableVariadic"] = function->isVariadic();
+            result["callableVariadic"] = variadic;
         }
     }
     if (const auto* recordType = type->getAs<clang::RecordType>()) {
@@ -161,8 +168,9 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
         result["variadic"] = function->isVariadic();
         if (function->hasExternalFormalLinkage()) result["externalBinding"] = externalBinding(*function);
         else result["languageLinkage"] = static_cast<int64_t>(function->getLanguageLinkage());
-        if (const auto* prototype = function->getType()->getAs<clang::FunctionProtoType>())
-            result["callingConvention"] = static_cast<int64_t>(prototype->getCallConv());
+        if (const auto* callable = function->getType()->getAs<clang::FunctionType>())
+            result["callingConvention"] = static_cast<int64_t>(callable->getCallConv());
+        else throw std::runtime_error("Actual declaration has no function type");
     } else if (const auto* method = clang::dyn_cast<clang::ObjCMethodDecl>(decl)) {
         llvm::json::Array signature;
         signature.push_back(llvm::json::Value(typeABI(context, method->getReturnType())));
@@ -251,6 +259,54 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
         throw std::runtime_error("Unsupported AST declaration in duplicate ABI proof");
     }
     return llvm::json::Value(std::move(result));
+}
+
+inline llvm::json::Array rawCallablePrototypes(const Meta::Meta& meta) {
+    llvm::json::Array facts;
+    std::function<void(clang::QualType, const std::string&, unsigned)> visit;
+    visit = [&](clang::QualType type, const std::string& path, unsigned depth) {
+        if (type.isNull()) return;
+        if (depth > 64) throw std::runtime_error("Raw callable prototype evidence depth exceeded");
+        if (const auto* function = type->getAs<clang::FunctionType>()) {
+            const auto* prototype = llvm::dyn_cast<clang::FunctionProtoType>(function);
+            llvm::json::Object fact{{"path", path}, {"hasPrototype", prototype != nullptr},
+                {"callingConvention", static_cast<int64_t>(function->getCallConv())},
+                {"originalFactorySignatureEntries", static_cast<int64_t>(prototype ? prototype->getNumParams() + 1 : 1)}};
+            fact["sourceDeclaredParameterCount"] = prototype ? llvm::json::Value(static_cast<int64_t>(prototype->getNumParams())) : llvm::json::Value(nullptr);
+            facts.push_back(std::move(fact));
+            visit(function->getReturnType(), path + ".return", depth + 1);
+            if (prototype) {
+                unsigned index = 0;
+                for (const auto& argument : prototype->param_types())
+                    visit(argument, path + ".parameter[" + std::to_string(index++) + "]", depth + 1);
+            }
+        } else if (type->isPointerType() || type->isBlockPointerType()) {
+            // Match ABI traversal: ordinary pointee records are not by-value.
+            if (type->getPointeeType()->isFunctionType()) visit(type->getPointeeType(), path + ".pointee", depth + 1);
+        } else if (const auto* array = type->getAsArrayTypeUnsafe()) {
+            visit(array->getElementType(), path + ".element", depth + 1);
+        } else if (const auto* record = type->getAs<clang::RecordType>()) {
+            if (const auto* definition = record->getDecl()->getDefinition()) {
+                unsigned index = 0;
+                for (const auto* field : definition->fields())
+                    visit(field->getType(), path + ".field[" + std::to_string(index++) + "]", depth + 1);
+            }
+        }
+    };
+    const auto* declaration = meta.declaration;
+    if (const auto* function = clang::dyn_cast<clang::FunctionDecl>(declaration)) visit(function->getType(), "function", 0);
+    else if (const auto* method = clang::dyn_cast<clang::ObjCMethodDecl>(declaration)) {
+        visit(method->getReturnType(), "method.return", 0);
+        unsigned index = 0;
+        for (const auto* parameter : method->parameters()) visit(parameter->getType(), "method.parameter[" + std::to_string(index++) + "]", 0);
+    } else if (const auto* property = clang::dyn_cast<clang::ObjCPropertyDecl>(declaration)) visit(property->getType(), "property", 0);
+    else if (const auto* variable = clang::dyn_cast<clang::VarDecl>(declaration)) visit(variable->getType(), "variable", 0);
+    else if (const auto* record = clang::dyn_cast<clang::RecordDecl>(declaration)) visit(record->getASTContext().getRecordType(record), "record", 0);
+    else if (const auto* interface = clang::dyn_cast<clang::ObjCInterfaceDecl>(declaration)) {
+        unsigned index = 0;
+        for (const auto* field : interface->ivars()) visit(field->getType(), "ivar[" + std::to_string(index++) + "]", 0);
+    }
+    return facts;
 }
 
 inline bool sameABIExceptExternalSymbol(const llvm::json::Value& left, const llvm::json::Value& right) {

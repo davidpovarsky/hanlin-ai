@@ -265,7 +265,7 @@ def main() -> int:
     parser.add_argument("--modern-semantic-parity", action="store_true",
                         help="Versioned modern candidate reference check; preserve raw YAML differences separately")
     parser.add_argument("--sdk-export-authority", action="store_true", help="Require actual four-compiler binding proofs and exact-target SDK export authority")
-    parser.add_argument("--export-authority-slice", action="store_true", help="Only actual UIKit/Host plus the defective AVFoundation header, not all SDK roots")
+    parser.add_argument("--export-authority-slice", action="store_true", help="Only actual UIKit/Host plus defective AVFoundation and actual Accelerate inputs, not all SDK roots")
     parser.add_argument("--generation-only", action="store_true", help="Execute full SDK generation without rerunning the separate31-module gate")
     parser.add_argument("--runtime-wrapper-only", action="store_true", help="Execute combined Swift/provider/Expo wrapper without rerunning SDK or31-module probes")
     parser.add_argument("--parity-only", action="store_true", help="Execute only the31 original module models and invalid-type control, no full SDK generation")
@@ -335,7 +335,8 @@ def main() -> int:
         sources = ["usr/include/objc/NSObject.h", "usr/include/mach/clock_types.h",
                    "usr/include/bsm/audit.h", "usr/include/arm/thread_status.h",
                    "usr/include/_inttypes.h", "usr/include/sys/_types/_sigaltstack.h",
-                   "usr/include/sys/_types/_ucontext.h"]
+                   "usr/include/sys/_types/_ucontext.h",
+                   "System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/thread_api.h"]
         retained = []
         for name in sources:
             path = sdk / name
@@ -360,7 +361,7 @@ def main() -> int:
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")
     if options.export_authority_slice:
-        umbrella.write_text(umbrella.read_text() + '#import <AVFoundation/AVCaptureTimecodeGenerator.h>\n', encoding="utf-8")
+        umbrella.write_text(umbrella.read_text() + '#import <AVFoundation/AVCaptureTimecodeGenerator.h>\n#import <Accelerate/Accelerate.h>\n', encoding="utf-8")
     if options.mode == "textual-public" and not options.parity_only and not options.export_authority_slice:
         from metadata_public_headers import write_public_umbrella
         write_public_umbrella(sdk, umbrella, [headers / "HanlinNativeServicesBridge.h",
