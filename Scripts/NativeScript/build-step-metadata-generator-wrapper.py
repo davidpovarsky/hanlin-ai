@@ -132,6 +132,8 @@ def explicit_input_adapter(source: str) -> str:
         '    generator_call.extend(["-input-umbrella", env("HANLIN_METADATA_INPUT_UMBRELLA")])\n'
         '    if os.environ.get("HANLIN_METADATA_EFFECTIVE_CONTEXT"):\n'
         '        generator_call.extend(["-hanlin-expected-clang-context", os.environ["HANLIN_METADATA_EFFECTIVE_CONTEXT"]])\n'
+        '    if os.environ.get("HANLIN_METADATA_DUAL_REQUEST"):\n'
+        '        generator_call.extend(["-hanlin-dual-grammar-request", os.environ["HANLIN_METADATA_DUAL_REQUEST"]])\n'
         '\n    # clang arguments\n')
     return source.replace(invocation,
         '    import json, hashlib\n'
@@ -517,9 +519,10 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         produce_role_inventory, ROLE_MANIFEST, verify_role_context)
     core_support_dir = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
     frontend_mode = environment.get("HANLIN_METADATA_FRONTEND", "legacy")
-    if frontend_mode not in {"legacy", "modern-candidate"}:
+    if frontend_mode not in {"legacy", "modern-candidate", "modern-dual-candidate"}:
         raise RuntimeError("Unknown metadata frontend selection")
-    modern = frontend_mode == "modern-candidate"
+    modern = frontend_mode != "legacy"
+    dual = frontend_mode == "modern-dual-candidate"
     tool_root = root / "build/nativescript-metadata-tool"
     modern_library = None
     if modern:
@@ -538,6 +541,10 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     adapter.write_text(explicit_input_adapter(upstream_generator.read_text()), encoding="utf-8")
     environment["HANLIN_METADATA_GENERATOR"] = str(tool)
     environment["HANLIN_METADATA_INPUT_UMBRELLA"] = str(umbrella)
+    dual_root = module_root / "HanlinObjCMetadataInput.h"
+    dual_request = module_root / "dual-grammar-request.json"
+    if dual:
+        environment["HANLIN_METADATA_DUAL_REQUEST"] = str(dual_request)
     environment["CLANG_ENABLE_MODULES"] = "NO"
     original_cflags = environment.get("OTHER_CFLAGS", "")
     if modern:
@@ -589,7 +596,8 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
             if metadata_compiler.get("compiler") != compiler_version(modern_library):
                 raise RuntimeError("Actual modern classifier and generator compiler identities differ")
             (module_root / "metadata-frontend.json").write_text(json.dumps({
-                "status": "CANDIDATE_NOT_ACCEPTED", "frontend": "modern-candidate",
+                "status": "CANDIDATE_NOT_ACCEPTED", "frontend": frontend_mode,
+                "mergePolicyVersion": 2 if dual else None,
                 "rootPolicy": "ALL_PUBLIC_INPUTS_RETAINED", "includeOnlyExemptions": 0,
                 "compiler": metadata_compiler["compiler"],
                 "generatorSHA256": hashlib.sha256(tool.read_bytes()).hexdigest(),
@@ -625,11 +633,23 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
                     receipt_path=receipts[str(directory)], metadata_compiler=metadata_compiler)
             inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
                 sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments, metadata_compiler)
+            if dual:
+                from metadata_dual_grammar import create_request
+                host_headers = sorted(core_support_dir.glob("*.h")) + swift_headers
+                canonical_inventory = write_public_umbrella(Path(required_env("SDKROOT")), dual_root, host_headers, [])
+                bound = [*host_headers, alias_overlay, alias_validation, umbrella.with_suffix(".inventory.json"),
+                    dual_root.with_suffix(".inventory.json"), tool_root / "provenance.json", *receipts.values(),
+                    *[root / "Scripts/NativeScript" / name for name in ["build-step-metadata-generator-wrapper.py",
+                        "metadata_dual_grammar.py", "build-metadata-tool.py", "build-modern-metadata-tool.py", "metadata-frontend-lock.json"]]]
+                for record in [*inventory, *canonical_inventory]:
+                    bound.extend(Path(record["path"]) / relative for relative in record.get("inputSHA256", {}))
+                create_request(dual_request, umbrella, dual_root, metadata_compiler, Path(required_env("SDKROOT")), bound)
     finally:
         for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay, alias_validation,
                      alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
                      module_root / "actual-compiler-arguments.json", module_root / "effective-compiler-context.bin",
                      *([module_root / "metadata-frontend.json"] if modern else []),
+                     *([dual_root, dual_root.with_suffix(".inventory.json"), dual_request] if dual else []),
                      module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log", *receipts.values()]:
             if path.is_file():
                 shutil.copy2(path, evidence / path.name)
@@ -657,8 +677,30 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     actual_context = module_root / "actual-generator-context.json"
     if actual_context.is_file():
         shutil.copy2(actual_context, evidence / actual_context.name)
+    dual_complete = not dual
+    if dual:
+        from metadata_dual_grammar import validate_receipt
+        plan = json.loads(context_path.read_text(encoding="utf-8"))["generatorCall"]
+        binary = Path(plan[plan.index("-output-bin") + 1])
+        if not binary.is_absolute():
+            binary = generator_root / binary
+        receipt_path = binary.with_name(binary.name + ".dual-grammar.json")
+        validation = {"status": "FAILED", "runtimeAcceptance": "NOT_ESTABLISHED"}
+        try:
+            if completed.returncode:
+                raise RuntimeError("Actual dual native generator failed: " + str(completed.returncode))
+            receipt = validate_receipt(binary, dual_request, metadata_compiler, tool)
+            dual_complete = True
+            validation.update({"status": "VERIFIED_COMPLETE", "receiptSHA256": hashlib.sha256(receipt_path.read_bytes()).hexdigest(),
+                "requestSHA256": receipt["requestSHA256"], "metadataSHA256": receipt["metadataSHA256"]})
+        except (OSError, ValueError, KeyError, RuntimeError) as error:
+            validation["reason"] = str(error)
+            print("Hanlin dual metadata verification failed: " + str(error), flush=True)
+        if receipt_path.is_file():
+            shutil.copy2(receipt_path, evidence / receipt_path.name)
+        (evidence / "dual-grammar-validation.json").write_text(json.dumps(validation, indent=2) + "\n", encoding="utf-8")
     complete = retain_and_check_metadata(arch, platform_name)
-    return completed.returncode if completed.returncode else (0 if complete else 1)
+    return completed.returncode if completed.returncode else (0 if complete and dual_complete else 1)
 
 if __name__ == "__main__":
     raise SystemExit(main())

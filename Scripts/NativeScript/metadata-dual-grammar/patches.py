@@ -26,7 +26,15 @@ def apply(text, replace_once):
         "        if (Context.getDiagnostics().hasErrorOccurred()) throw std::runtime_error(\"Actual AST parse has errors\");")
     consumer = replace_once(consumer, "private:\n    clang::HeaderSearch& _headerSearch;",
         "private:\n    bool _hanlinCollectOnly = false;\n    std::list<Meta::Meta*>* _hanlinMetas = nullptr;\n    clang::HeaderSearch& _headerSearch;")
-    return text[:first] + consumer + text[last:]
+    text = text[:first] + consumer + text[last:]
+    text = replace_once(text, '// Command line parameters',
+        '// Command line parameters\nllvm::cl::opt<string> cla_dualGrammarRequest("hanlin-dual-grammar-request", llvm::cl::desc("Bound retained dual-grammar transaction"));')
+    text = replace_once(text, 'std::string replaceString(', '#include "HanlinDual/Generator.h"\n\nstd::string replaceString(')
+    text = replace_once(text, '        if (!cla_outputUmbrellaHeaderFile.empty()) {',
+        '        if (cla_dualGrammarRequest.empty() && !cla_outputUmbrellaHeaderFile.empty()) {')
+    text = replace_once(text, '        bool parsed;\n        if (customFS) {',
+        '        if (!cla_dualGrammarRequest.empty()) return HanlinDual::generate(cla_dualGrammarRequest.getValue(), clangArgs, umbrellaContent, hanlinContext, modulesBlacklist, metadataFS);\n        bool parsed;\n        if (customFS) {')
+    return text
 
 
 def patch_factories(header, source, replace_once):

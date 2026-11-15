@@ -3,6 +3,7 @@
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import platform
 import subprocess
@@ -87,6 +88,7 @@ __attribute__((objc_root_class))
         ("conflicting-physical-owner", baseline, "merge-failure", "Dual-grammar canonical declaration/owner conflict:"),
         ("invalid-objc-pass", baseline.replace("_Static_assert", "HanlinOnlyBadType invalid;\n_Static_assert"), "parse-failure", "Actual dual-grammar AST parse failed"),
     ]
+    from metadata_dual_grammar import create_request, validate_receipt
     results = []
     for name, source, expectation, expected_reason in cases:
         folder = OUTPUT / name
@@ -136,7 +138,49 @@ __attribute__((objc_root_class))
             passed = passed and not output.exists() and actual.get("writerEntries") == 0 and actual.get("reason", "").startswith(expected_reason)
             if expectation == "parse-failure":
                 passed = passed and b"unknown type name 'HanlinOnlyBadType'" in run.stderr
-        results.append({"case": name, "status": "EXECUTED_PASS" if passed else "FAILED", "nativeStatus": actual.get("status"),
+        # Exercise the real producer entry and its publication boundary using
+        # the same actual fixture inputs, never merely the focused test main.
+        transaction = folder / "transaction"
+        transaction.mkdir()
+        target_binary = transaction / "metadata.bin"
+        request_path = transaction / "request.json"
+        producer = tool_root / "bin/objc-metadata-generator"
+        cpp_arguments = actual.get("cppArguments")
+        transaction_result = {"status": "NOT_RUN"}
+        if cpp_arguments:
+            producer_command = [str(producer), "-input-umbrella", str(folder / "full.h"),
+                "-output-bin", str(target_binary), "-output-yaml", str(transaction / "yaml"),
+                "-output-typescript", str(transaction / "types"), "-output-umbrella", str(transaction / "umbrella.h"),
+                "-hanlin-dual-grammar-request", str(request_path), "Xclang", *cpp_arguments]
+            context_file = transaction / "actual-context.bin"
+            context = wrapper.capture_native_compiler_context(producer, {"generatorCall": producer_command},
+                os.environ.copy(), tool_root / "bin", context_file)
+            create_request(request_path, folder / "full.h", folder / "objc.h", context, Path(sdk),
+                [*folder.glob("*.h"), folder / "provider.hpp", folder / "module.modulemap",
+                 tool_root / "provenance.json", ROOT / "Scripts/NativeScript/metadata_dual_grammar.py"])
+            position = producer_command.index("Xclang")
+            producer_command[position:position] = ["-hanlin-expected-clang-context", str(context_file)]
+            write(transaction / "command.json", producer_command)
+            executed = subprocess.run(producer_command, cwd=tool_root / "bin", capture_output=True, timeout=90)
+            (transaction / "stdout.log").write_bytes(executed.stdout)
+            (transaction / "stderr.log").write_bytes(executed.stderr)
+            receipt_file = target_binary.with_name(target_binary.name + ".dual-grammar.json")
+            try:
+                if expectation == "pass":
+                    if executed.returncode != 0:
+                        raise RuntimeError("Real transaction producer failed: " + executed.stderr.decode(errors="replace")[-1600:])
+                    actual_receipt = validate_receipt(target_binary, request_path, context, producer)
+                    transaction_result = {"status": "EXECUTED_PASS", "metadataSHA256": actual_receipt["metadataSHA256"],
+                        "actualReceiptSHA256": sha(receipt_file), "outputs": len(actual_receipt["outputs"])}
+                else:
+                    final_paths = [target_binary, receipt_file, transaction / "yaml", transaction / "types", transaction / "umbrella.h"]
+                    if executed.returncode <= 0 or any(path.exists() for path in final_paths) or expected_reason.encode() not in executed.stderr:
+                        raise RuntimeError("Real transaction did not reject before output publication")
+                    transaction_result = {"status": "EXECUTED_PASS", "exitCode": executed.returncode, "publishedOutputs": 0}
+            except (RuntimeError, OSError, ValueError, KeyError) as error:
+                transaction_result = {"status": "FAILED", "reason": str(error)}
+        passed = passed and transaction_result["status"] == "EXECUTED_PASS"
+        results.append({"case": name, "status": "EXECUTED_PASS" if passed else "FAILED", "transaction": transaction_result, "nativeStatus": actual.get("status"),
             "exitCode": run.returncode, "seconds": time.monotonic() - started, "expectation": expectation,
             "reason": actual.get("reason"), "nativeReceiptSHA256": sha(receipt) if receipt.is_file() else None})
         write(OUTPUT / "result.json", {"status": "RUNNING", "cases": results})

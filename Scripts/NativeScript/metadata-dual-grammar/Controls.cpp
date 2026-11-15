@@ -38,6 +38,9 @@ int main(int argc, const char** argv) {
         cppArguments.insert(cppArguments.end(), {"-x", "objective-c++", "-std=gnu++20", "-Xclang", "-fno-cxx-modules"});
         auto objcArguments = common;
         objcArguments.insert(objcArguments.end(), {"-x", "objective-c", "-std=gnu17"});
+        llvm::json::Array observedArguments;
+        for (const auto& argument : cppArguments) observedArguments.push_back(argument);
+        receipt["cppArguments"] = std::move(observedArguments);
         std::string whitelistFile, blacklistFile;
         Meta::ModulesBlacklist blacklist(whitelistFile, blacklistFile);
         HanlinDual::Pipeline pipeline(hanlinRead(root + "/full.h"), cppArguments,

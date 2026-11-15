@@ -78,6 +78,8 @@ public:
         consumer->hanlinSetCollectOnly();
         ++hanlinConsumerEntries;
         consumer->HandleTranslationUnit(ast->getASTContext());
+        if (ast->getDiagnostics().hasErrorOccurred()) throw std::runtime_error("Actual dual model collection has compiler errors");
+        receipt["diagnosticErrorCount"] = static_cast<int64_t>(ast->getDiagnostics().getNumErrors());
         receipt["collectedModels"] = static_cast<int64_t>(consumer->hanlinMetas().size());
         receipt["sourceDependencies"] = dependencies(*ast); // Includes ownership module maps read by the original collector.
         receipt["peakRSSAfterModels"] = peakResidentBytes();
