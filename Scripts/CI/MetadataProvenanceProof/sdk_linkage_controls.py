@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 REFERENCE = ROOT / "build/modern-compile-reference"
@@ -15,11 +16,11 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def main():
+def main(symbol=SYMBOL, framework="AVFoundation", header="AVCaptureTimecodeGenerator.h", original_run=43753113119):
     OUTPUT.mkdir(parents=True, exist_ok=False)
     source = OUTPUT / "reference.m"
-    source.write_text('#import <AVFoundation/AVCaptureTimecodeGenerator.h>\n'
-        + '__typeof__(&' + SYMBOL + ') volatile hanlinSDKLinkageReference = &' + SYMBOL + ';\n'
+    source.write_text('#import <' + framework + '/' + header + '>\n'
+        + '__typeof__(&' + symbol + ') volatile hanlinSDKLinkageReference = &' + symbol + ';\n'
         + 'int main(void) { return hanlinSDKLinkageReference == 0; }\n')
     baseline = REFERENCE / "acceptance/nativescript-sdk-probe-dual/textual-public"
     context_path = baseline / "native-compiler-context.json"
@@ -47,7 +48,8 @@ def main():
         else:
             normalized.append(item)
             index += 1
-    result = {"schemaVersion": 1, "status": "READ_ONLY_AUDIT", "originalRun": 43753113119,
+    result = {"schemaVersion": 1, "status": "READ_ONLY_AUDIT", "originalRun": original_run,
+        "symbol": symbol, "framework": framework,
         "originalContextSHA256": sha(context_path), "sourceSHA256": sha(source), "sdk": str(sdk), "target": target,
         "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(), "cases": [], "files": [],
         "boundary": "Actual compiler objects and focused SDK link only. No metadata merge, executable invocation, app, VM or device pass."}
@@ -77,17 +79,18 @@ def main():
                 "rootDifference": "Focused actual SDK header plus address reference; no rewritten declarations or macros",
                 "compilerDifference": "Installed Apple compiler/resources" if compiler_name == "installedApple" else "Original locked LLVM20 generator resource headers"}
             case["preprocess"] = run(label + "-preprocess", [compiler, *flags, "-E", "-dD", source])
-            case["declaration"] = run(label + "-ast", [compiler, *flags, "-fsyntax-only", "-Xclang", "-ast-dump=json", "-Xclang", "-ast-dump-filter", "-Xclang", SYMBOL, source])
+            case["declaration"] = run(label + "-ast", [compiler, *flags, "-fsyntax-only", "-Xclang", "-ast-dump=json", "-Xclang", "-ast-dump-filter", "-Xclang", symbol, source])
             obj = OUTPUT / (label + ".o")
             case["compile"] = run(label + "-compile", [compiler, *flags, "-c", source, "-o", obj])
             if case["compile"]["exitCode"] == 0:
                 case["undefinedSymbols"] = run(label + "-symbols", ["xcrun", "nm", "-u", obj])
                 case["link"] = run(label + "-link", [apple, "-isysroot", sdk, "-target", target, obj,
-                    "-framework", "AVFoundation", "-framework", "Foundation", "-framework", "CoreMedia", "-lobjc", "-o", OUTPUT / (label + ".exe")])
+                    "-framework", framework, "-framework", "Foundation", "-framework", "CoreMedia", "-lobjc", "-o", OUTPUT / (label + ".exe")])
             result["cases"].append(case)
-    for relative in ["System/Library/Frameworks/AVFoundation.framework/Headers/AVCaptureTimecodeGenerator.h",
-                     "System/Library/Frameworks/AVFoundation.framework/Headers/AVBase.h",
-                     "System/Library/Frameworks/AVFoundation.framework/AVFoundation.tbd"]:
+    framework_root = "System/Library/Frameworks/" + framework + ".framework/"
+    relatives = [framework_root + "Headers/" + header, framework_root + framework + ".tbd"]
+    if framework == "AVFoundation": relatives.append(framework_root + "Headers/AVBase.h")
+    for relative in relatives:
         path = sdk / relative
         output = OUTPUT / "sdk" / relative
         output.parent.mkdir(parents=True, exist_ok=True)
@@ -115,4 +118,6 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(symbol="ASAuthorizationAllSupportedPublicKeyCredentialDescriptorTransports",
+        framework="AuthenticationServices", header="ASAuthorizationSecurityKeyPublicKeyCredentialDescriptor.h",
+        original_run=43764936118) if "--authentication-services" in sys.argv else main())
