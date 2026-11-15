@@ -27,7 +27,7 @@ PY_DISK
 git archive HEAD Packages/HanlinAgentSDK Packages/HanlinPlatform > "$evidence/tested-source.tar"
 tar -xf "$evidence/tested-source.tar" -C "$scratch"
 python3 - "$scratch" "$evidence" <<'PY_SOURCE'
-import hashlib,json,re,subprocess,sys
+import hashlib,json,os,re,subprocess,sys
 from pathlib import Path
 scratch,evidence=map(Path,sys.argv[1:])
 paths=subprocess.check_output(['git','ls-files','Packages/HanlinAgentSDK','Packages/HanlinPlatform'],text=True).splitlines()
@@ -44,6 +44,8 @@ for rel,suite in [('HanlinAgentCoreTests/HostSchemaValidationTests.swift','HostS
         if pending and method:expected.append(suite+'/'+method[1]+'()');pending=False
 assert len([x for x in expected if x.startswith('HostSchemaValidationTests/')])==9
 assert len(expected)==len(set(expected)) and len(expected)>=33
+if os.environ.get('HANLIN_SDK_ASSOCIATION_ONLY')=='1':
+    expected=[x for x in expected if not x.startswith('HostSchemaValidationTests/') or x=='HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()']
 (evidence/'expected-tests.json').write_text(json.dumps(expected,indent=2))
 PY_SOURCE
 selected_xcode="$(python3 -c 'import glob,re; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]27(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")')"
@@ -77,11 +79,15 @@ d=json.load(open(sys.argv[1]));names=d.get('workspace',{}).get('schemes',[])+d.g
 print(next(x for x in ['HanlinAgentSDK-Package','HanlinAgentSDK'] if x in names))
 PY_SCHEME
 )"
+schema_tests=(-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests)
+if [[ "${HANLIN_SDK_ASSOCIATION_ONLY:-0}" == 1 ]]; then
+  schema_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()')
+fi
 set +e
 (cd "$sdk" && xcodebuild test -scheme "$scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$evidence/HostSchemaTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
-  -only-testing:HanlinAgentCoreTests/HostSchemaValidationTests \
+  "${schema_tests[@]}" \
   -only-testing:HanlinAgentCoreTests/AgentSessionTests \
   -only-testing:HanlinHostContractsTests/ContextTests) > "$evidence/host-schema-tests.log" 2>&1
 test_status=$?

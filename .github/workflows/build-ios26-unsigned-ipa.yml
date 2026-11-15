@@ -149,6 +149,7 @@ jobs:
       HANLIN_SDK_RUN_NATIVE_CATALOG: '1'
       HANLIN_SDK_CHECKPOINT_ONLY: ${{ inputs.exact_test_selector == 'HanlinPersistenceAdaptersTests/StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration' && '1' || '0' }}
       HANLIN_SDK_NATIVE_SCHEMA_ONLY: ${{ inputs.exact_test_selector == 'HanlinChatCoreTests/HanlinNativeStructuredResponseTests' && '1' || '0' }}
+      HANLIN_SDK_ASSOCIATION_ONLY: ${{ inputs.exact_test_selector == 'HanlinAgentCoreTests/HostAssociation' && '1' || '0' }}
       HANLIN_SDK_APP_HOST_ONLY: ${{ inputs.exact_test_selector == 'HanlinAppHostComposition' && '1' || '0' }}
     runs-on: xcode-27
     timeout-minutes: 60
@@ -157,7 +158,7 @@ jobs:
       - name: Compile real SDK graph and execute affected Apple tests
         env:
           NATIVE_CATALOG_ONLY: ${{ inputs.exact_test_selector == 'NativeModelCatalogTests' && '1' || '0' }}
-          HOST_SCHEMA_ONLY: ${{ inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaValidationTests' && '1' || '0' }}
+          HOST_SCHEMA_ONLY: ${{ (inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaValidationTests' || inputs.exact_test_selector == 'HanlinAgentCoreTests/HostAssociation') && '1' || '0' }}
           PRODUCER_SCHEMA_ONLY: ${{ inputs.exact_test_selector == 'AISDKProviderUtilsTests/JSONSchemaValidatorTests' && '1' || '0' }}
         run: |
           if [[ "$HOST_SCHEMA_ONLY" == 1 ]]; then
