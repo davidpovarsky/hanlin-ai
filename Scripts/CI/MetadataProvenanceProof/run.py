@@ -63,7 +63,7 @@ def main():
         HANLIN_PREPROCESS_PROVENANCE_TOOL_RECEIPT=str(receipt.resolve(strict=True)),
         HANLIN_PREPROCESS_PROVENANCE_CLANG_ARGS_JSON=json.dumps(flags))
     contract = json.loads((ROOT / "docs/miniapp-sdk/evidence/METADATA_FRAMEWORK_DEDUP_2026-11-15.json").read_text())
-    rows = contract["sourceOnlyPreprocessingProvenance"]["testHarnessPreparation"]["matrix"]
+    rows = contract.get("activeWave20261115", {}).get("matrixV2") or contract["sourceOnlyPreprocessingProvenance"]["testHarnessPreparation"]["matrix"]
     write("plan.json", {"obligations": rows, "sourceSHA": preflight["sourceSHA"], "flags": flags,
         "reuse": [], "reason": "All controls never executed; production tool has uncompiled C++ changes since prior native evidence."})
     spec = importlib.util.spec_from_file_location("metadata_controls", ROOT / "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py")

@@ -1032,7 +1032,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertEqual(provenance["patchSourceSHA256"], self.sha(self.patch_source))
         self.assertEqual(provenance["generatorSHA256"], self.sha(self.tool))
         frozen = {"build-metadata-tool.py": "0bcfd5e51ae29f3a6814aef7f642ea7800d6157dc5acd8b8f2ead22ea5058ee6",
-            "build-step-metadata-generator-wrapper.py": "c42783300284ddbd93c75041f5de4dcbc6d1c37b7a173177485744ab10132e23",
+            "build-step-metadata-generator-wrapper.py": "36f0b360c5cf08c41687749caac7743d09d7f22377687bffc4754d8f8164f765",
             "probe-sdk-metadata.py": "dd00967e2c63c28af37c3305700fd867ed994b30df0f6834c9fd47b6ac5c0458"}
         for filename, digest in frozen.items():
             self.assertEqual(self.sha(ROOT / "Scripts/NativeScript" / filename), digest, "Frozen production source drift")
@@ -1479,7 +1479,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
                     "sampleSHA256": hashlib.sha256(sample_bytes).hexdigest(), "pid": pid, "executable": executable}
         return failure("Active same-thread provenance/PP lex frames unproven; no unfinished-operation claim")
 
-    def test_normal_sdk31_binary_invalidtype_context_and_combined_alias_controls(self):
+    def test_normal_sdk31_binary_invalidtype_context_and_combined_public_api_controls(self):
         if os.environ.get("HANLIN_RUN_PROVENANCE_FULL_NATIVE_CONTROLS") != "1":
             self.skipTest("NOT_RUN: SDK/provider compilation requires its separate native authorization")
         environment = {**os.environ, "HANLIN_METADATA_PREPROCESS_PROVENANCE": "0"}
@@ -1488,7 +1488,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
                 "--generator", str(self.tool), "--runtime-wrapper"], cwd=ROOT, timeout=1200)
         result = json.loads((ROOT / "build/acceptance/nativescript-sdk-probe/result.json").read_text())
         self.record("normal-sdk-combined-probe.result.json", result)
-        self.assertEqual(run.returncode, 1)  # Known unequal combined JSI alias stays failed.
+        self.assertEqual(run.returncode, 0, "Combined metadata must genuinely generate after alias-contract v2")
         self.assertEqual(result["modes"]["textual-public"]["status"], "EXECUTED_PASS")
         self.assertGreater(result["modes"]["textual-public"]["metadataBytes"], 0)
         parity = result["unchangedUIKitAndHostDeclarationParity"]
@@ -1497,9 +1497,12 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertEqual(result["invalidDeclarationRejected"]["status"], "EXECUTED_PASS")
         self.assertEqual(result["nativeCompilerContext"]["status"], "EXECUTED_PASS")
         combined = result["runtimeWrapper"]
-        self.assertEqual(combined["headerAliasValidation"]["status"], "FAILED")
-        self.assertIn("Conflicting public header alias bytes", combined["headerAliasValidation"]["reason"])
-        self.assertEqual(combined["symbolChecksStatus"], "NOT_RUN_NO_METADATA_BINARY")
+        self.assertEqual(combined["headerAliasValidation"]["status"], "VERIFIED")
+        self.assertEqual(combined["headerAliasValidation"]["contractVersion"], 2)
+        self.assertGreater(combined["headerAliasValidation"]["notAliased"], 0)
+        self.assertEqual(combined["symbolChecksStatus"], "EXECUTED")
+        self.assertTrue(all(combined["publicObjCAndCMetadataNames"].values()))
+        self.assertEqual(combined["visibility"]["clangErrorCount"], 0)
 
 
 if __name__ == "__main__":
