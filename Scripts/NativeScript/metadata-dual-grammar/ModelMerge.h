@@ -21,8 +21,15 @@ class ModelMerge {
                 static_cast<int>(version.getSubminor().value_or(0))};
     }
 
+    static bool versionEquivalent(const Meta::Version& left, const Meta::Version& right) {
+        // Original Version::isUnknown accepts both the default -1 sentinel and
+        // the 0 returned by Clang for an empty VersionTuple. Original binary
+        // encoding also maps both to zero. Keep the raw values in the receipt.
+        return left == right || (left.isUnknown() && right.isUnknown());
+    }
+
     static bool introducedAvailabilityEquivalent(const Meta::Meta& cpp, const Meta::Meta& objc) {
-        if (cpp.introducedIn == objc.introducedIn) return true;
+        if (versionEquivalent(cpp.introducedIn, objc.introducedIn)) return true;
         // This comparison runs only after physical source/owner and full ABI
         // equality. ObjC++ can lose a prefix availability annotation before an
         // export linkage specification; ObjC interfaces themselves still have
@@ -80,9 +87,11 @@ class ModelMerge {
             throw std::runtime_error("Dual-grammar actual AST ABI conflict: " + cpp->identificationString() +
                 "\nActual CPP ABI=" + llvm::formatv("{0}", cppABI).str() +
                 "\nActual ObjC ABI=" + llvm::formatv("{0}", objcABI).str());
-        if (cpp->deprecatedIn != objc->deprecatedIn || cpp->obsoletedIn != objc->obsoletedIn ||
+        if (!versionEquivalent(cpp->deprecatedIn, objc->deprecatedIn) || !versionEquivalent(cpp->obsoletedIn, objc->obsoletedIn) ||
             !introducedAvailabilityEquivalent(*cpp, *objc))
-            throw std::runtime_error("Dual-grammar availability conflict: " + cpp->identificationString());
+            throw std::runtime_error("Dual-grammar availability conflict: " + cpp->identificationString() +
+                "\nCPP introduced/deprecated/obsoleted=" + cpp->introducedIn.toString() + "/" + cpp->deprecatedIn.toString() + "/" + cpp->obsoletedIn.toString() +
+                "\nObjC introduced/deprecated/obsoleted=" + objc->introducedIn.toString() + "/" + objc->deprecatedIn.toString() + "/" + objc->obsoletedIn.toString());
 
         auto cppModel = modelValue(cpp);
         auto objcModel = modelValue(objc);
@@ -141,7 +150,9 @@ class ModelMerge {
             {"cppRawParameterCVR", rawParameterCVR(*cpp)}, {"objcRawParameterCVR", rawParameterCVR(*objc)},
             {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
             {"availability", availabilityDifference ? "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET" : "EXACT"},
-            {"objcIntroducedIn", objc->introducedIn.toString()}, {"cppIntroducedIn", cpp->introducedIn.toString()}});
+            {"objcIntroducedIn", objc->introducedIn.toString()}, {"cppIntroducedIn", cpp->introducedIn.toString()},
+            {"rawAvailability", llvm::json::Object{{"cppDeprecated", cpp->deprecatedIn.toString()}, {"objcDeprecated", objc->deprecatedIn.toString()},
+                {"cppObsoleted", cpp->obsoletedIn.toString()}, {"objcObsoleted", objc->obsoletedIn.toString()}}}});
     }
 
 public:
