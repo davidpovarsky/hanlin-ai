@@ -37,6 +37,11 @@ enum ComposerModelSubroute: String, Hashable, Sendable {
     case allModels
 }
 
+enum ComposerMorphRoute: Hashable {
+    case general(ComposerGeneralSubroute)
+    case tools(ComposerToolsSubroute?)
+}
+
 @MainActor
 @Observable
 final class HanlinComposerPopupCoordinator {
@@ -47,6 +52,26 @@ final class HanlinComposerPopupCoordinator {
     /// Note: `.general` and `.tools` are rendered as modes of the integrated `HanlinOrganizerDock` drawer,
     /// NEVER as floating `.popover` sheets. Only `.model` is presented as a native `.popover`.
     var activePopup: ComposerPopup?
+
+    /// Projects the existing navigation state into the Morph shell without
+    /// introducing a second source of truth for the current page.
+    var morphRoute: ComposerMorphRoute? {
+        if activePopup == .tools { return .tools(toolsNavigationPath.last) }
+        if activePopup == .general, let route = generalNavigationPath.last { return .general(route) }
+        return nil
+    }
+
+    func returnFromMorphPage() {
+        if activePopup == .tools {
+            if toolsNavigationPath.isEmpty {
+                switchFromToolsToGeneral()
+            } else {
+                toolsNavigationPath.removeLast()
+            }
+        } else if activePopup == .general && !generalNavigationPath.isEmpty {
+            generalNavigationPath.removeLast()
+        }
+    }
 
     /// Internal navigation stacks for each surface.
     var generalNavigationPath: [ComposerGeneralSubroute] = []

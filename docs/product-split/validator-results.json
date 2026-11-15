@@ -1,0 +1,24 @@
+{
+  "status": "EXECUTED_PASS",
+  "tests_run": 9,
+  "passed": [
+    "test_parity_inventory.ParityValidatorTests.test_changed_historical_description_rejected",
+    "test_parity_inventory.ParityValidatorTests.test_complete_inventory",
+    "test_parity_inventory.ParityValidatorTests.test_duplicate_id_rejected",
+    "test_parity_inventory.ParityValidatorTests.test_missing_id_rejected",
+    "test_parity_inventory.ParityValidatorTests.test_missing_owner_or_evidence_rejected",
+    "test_parity_inventory.ParityValidatorTests.test_missing_required_status_fields_rejected",
+    "test_parity_inventory.ParityValidatorTests.test_unexpected_id_rejected",
+    "test_parity_inventory.ParityValidatorTests.test_unproven_pass_rejected",
+    "test_parity_inventory.ParityValidatorTests.test_wrong_source_digest_rejected"
+  ],
+  "failures": 0,
+  "errors": 0,
+  "legacy_decision_count": 26,
+  "legacy_choice_counts": {
+    "KEEP": 14,
+    "RESTORE_TRIAL": 11,
+    "OPEN": 1
+  },
+  "scope": "Inventory validation, not UI or feature behavior acceptance"
+}

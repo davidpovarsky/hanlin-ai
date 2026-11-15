@@ -1,0 +1,2 @@
+# Preserve only the byte-pinned historical evidence, including original Markdown breaks.
+historical-278.md -text -whitespace

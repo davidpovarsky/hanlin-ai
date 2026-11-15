@@ -1,0 +1,137 @@
+{
+  "baseline": "dd700c03e9fe9d22e95a031d4684275512ee6e6f",
+  "snapshots": [
+    {
+      "lane": "Runtime",
+      "worktree": "C:\\Users\\DAVID\\Code\\hanlin-agent-skills-embedded-results",
+      "head": "5ae5eb94036a0e6a0c01edc1daba940e959d41c6",
+      "branch": "fix/hanlin-approved-plan-20261108",
+      "dirty_paths": [
+        "M Scripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+        " M Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+        " M docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+        " M docs/miniapp-sdk/evidence/METADATA_FRAMEWORK_DEDUP_2026-11-15.json",
+        "?? Scripts/Expo/miniapps/modular-text-search-verified-20261110/"
+      ],
+      "committed_delta_from_split_baseline": [
+        "M\tScripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+        "M\tScripts/NativeScript/build-step-metadata-generator-wrapper.py"
+      ],
+      "observed_files": [
+        {
+          "path": "docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+          "bytes": 11689,
+          "sha256": "60e35d7e563685be98b83db8a19257bff008b53e00a1685d65c3a0484fa8391e"
+        }
+      ],
+      "claim": "Point-in-time source snapshot only; no merge, copied source or reused test PASS"
+    },
+    {
+      "lane": "A2UI",
+      "worktree": "C:\\Users\\DAVID\\Code\\hanlin-a2ui-wave1-20261115",
+      "head": "6aae92b7c3759f432a13cf221cc4d29b79dd4dea",
+      "branch": "codex/hanlin-a2ui-wave1-20261115",
+      "dirty_paths": [],
+      "committed_delta_from_split_baseline": [
+        "A\tAI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+        "A\tAI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+        "A\tAI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+        "A\tAI_HLYTests/A2UIFixtures/form.jsonl",
+        "A\tAI_HLYTests/A2UIFixtures/invalid-components.jsonl",
+        "A\tAI_HLYTests/A2UIFixtures/malformed.txt",
+        "A\tAI_HLYTests/A2UIFixtures/rtl.jsonl",
+        "A\tAI_HLYTests/A2UIFixtures/unknown-function.jsonl",
+        "A\tAI_HLYTests/A2UIFixtures/unknown.jsonl",
+        "A\tAI_HLYTests/A2UIFixtures/update.jsonl",
+        "A\tAI_HLYTests/A2UITests.swift",
+        "M\tAI_HLYTests/NativeScriptRuntimeWireTests.swift",
+        "M\tScripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+        "M\tScripts/NativeScript/build-metadata-tool.py",
+        "M\tScripts/NativeScript/build-step-metadata-generator-wrapper.py",
+        "M\tScripts/NativeScript/metadata_public_headers.py",
+        "A\tdocs/a2ui/README.md",
+        "A\tdocs/a2ui/TEST_EXECUTION_MANIFEST.md",
+        "A\tdocs/a2ui/evidence/fixture-identities.json",
+        "A\tdocs/a2ui/evidence/portable-results.txt",
+        "A\tdocs/a2ui/evidence/upstream-verification.json",
+        "D\tdocs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+        "D\tdocs/miniapp-sdk/evidence/METADATA_FRAMEWORK_DEDUP_2026-11-15.json"
+      ],
+      "observed_files": [
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+          "bytes": 3031,
+          "sha256": "6758017ec82577b38dc214b8a3d59d6f29e9a67ebce4a35172a6ab667e2855c9"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+          "bytes": 1545,
+          "sha256": "06d5761ae398a978483b96ceca313cf9542a5ce535bec55b8c1800a99e5ef587"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+          "bytes": 6138,
+          "sha256": "74984c35b88a4cf911dd769a7d314a71b5ba25e3343c931f3a32de2afac7f5a2"
+        },
+        {
+          "path": "docs/a2ui/README.md",
+          "bytes": 8581,
+          "sha256": "f57d0041d46b5392da1cd59b42d458c6eeb153787d867fd97bd928d1e387ba85"
+        },
+        {
+          "path": "docs/a2ui/TEST_EXECUTION_MANIFEST.md",
+          "bytes": 11557,
+          "sha256": "fdbbc74b8f6bfb4ab7bd3b9c5f83a18d736ba12b47d809263182929f7844d897"
+        }
+      ],
+      "claim": "Point-in-time source snapshot only; no merge, copied source or reused test PASS"
+    },
+    {
+      "lane": "Composer",
+      "worktree": "C:\\Users\\DAVID\\Code\\hanlin-composer-wave1-20261115",
+      "head": "b2253cc1a9aee45ec1248c4461fb41ff182f72fa",
+      "branch": "codex/hanlin-composer-wave1-20261115",
+      "dirty_paths": [],
+      "committed_delta_from_split_baseline": [
+        "M\tAI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+        "M\tAI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift",
+        "A\tAI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift",
+        "M\tAI_HLY/Views/Components/ChatViewBottom.swift",
+        "A\tAI_HLYTests/HanlinMorphComposerTests.swift",
+        "M\tAI_HLYTests/NativeScriptRuntimeWireTests.swift",
+        "A\tAI_HLYUITests/HanlinMorphComposerUITests.swift",
+        "M\tScripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+        "M\tScripts/NativeScript/build-metadata-tool.py",
+        "M\tScripts/NativeScript/build-step-metadata-generator-wrapper.py",
+        "M\tScripts/NativeScript/metadata_public_headers.py",
+        "A\tdocs/composer/MAPPING_WAVE1_2026-11-15.md",
+        "A\tdocs/composer/W1-002_IMPLEMENTATION_HANDOFF.md",
+        "D\tdocs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+        "D\tdocs/miniapp-sdk/evidence/METADATA_FRAMEWORK_DEDUP_2026-11-15.json"
+      ],
+      "observed_files": [
+        {
+          "path": "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift",
+          "bytes": 12362,
+          "sha256": "107e171c60ba816c19cdcf3dbfecc9f6ca19b0e0cbdb2bae28559a39d33e0718"
+        },
+        {
+          "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+          "bytes": 76442,
+          "sha256": "28601e790414b124d7c4c8cc3d383c8c75446d2d8a46515274e40318c7e2f1d6"
+        },
+        {
+          "path": "docs/composer/MAPPING_WAVE1_2026-11-15.md",
+          "bytes": 11841,
+          "sha256": "d7fe00e9b06cbc574abda1985e3b632d86f0d76351f984005edea4611ff17b9a"
+        },
+        {
+          "path": "docs/composer/W1-002_IMPLEMENTATION_HANDOFF.md",
+          "bytes": 5508,
+          "sha256": "438b6ca04133803bdaa472b8dcf60a68ecc167af87c3275a38e751cfb1fc1e30"
+        }
+      ],
+      "claim": "Point-in-time source snapshot only; no merge, copied source or reused test PASS"
+    }
+  ]
+}

@@ -16,6 +16,22 @@ import HanlinPlatformContracts
 import UIKit
 #endif
 
+// The Morph host supplies the single outer scroll view so its natural child
+// height can be measured. Existing standalone/drawer hosts retain scrolling.
+private struct HanlinComposerPageScroll<Content: View>: View {
+    let intrinsic: Bool
+    let showsIndicators: Bool
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        if intrinsic {
+            content()
+        } else {
+            ScrollView(.vertical, showsIndicators: showsIndicators, content: content)
+        }
+    }
+}
+
 // MARK: - 1. General `+` Popover
 
 @MainActor
@@ -63,6 +79,8 @@ struct HanlinComposerGeneralActionsView: View {
     let onExpandEditor: () -> Void
     let onSendObserve: () -> Void
     var embeddedInDrawer: Bool = true
+    var embeddedInMorph: Bool = false
+    var morphHomeOnly: Bool = false
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -82,7 +100,7 @@ struct HanlinComposerGeneralActionsView: View {
     var body: some View {
         if embeddedInDrawer {
             ZStack(alignment: .top) {
-                if let activeRoute = coordinator.generalNavigationPath.last {
+                if let activeRoute = morphHomeOnly ? nil : coordinator.generalNavigationPath.last {
                     Group {
                         switch activeRoute {
                         case .prompts:
@@ -106,7 +124,7 @@ struct HanlinComposerGeneralActionsView: View {
             .onChange(of: coordinator.generalNavigationPath) { _, _ in
                 coordinator.handleGeneralNavPathChange(reduceMotion: reduceMotion)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .frame(maxWidth: .infinity, maxHeight: embeddedInMorph ? nil : .infinity, alignment: .top)
             .scrollContentBackground(.hidden)
             .background(Color.clear)
             .accessibilityElement(children: .contain)
@@ -152,7 +170,7 @@ struct HanlinComposerGeneralActionsView: View {
     // MARK: - Root Page
 
     private var generalRootPage: some View {
-        ScrollView(.vertical, showsIndicators: false) {
+        HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
                 // Header
                 HStack {
@@ -587,9 +605,11 @@ struct HanlinComposerGeneralActionsView: View {
 
     private var promptsSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: String(localized: "Select Prompt Template")) {
-                if !coordinator.generalNavigationPath.isEmpty {
-                    coordinator.generalNavigationPath.removeLast()
+            if !embeddedInMorph {
+                subpageHeader(title: String(localized: "Select Prompt Template")) {
+                    if !coordinator.generalNavigationPath.isEmpty {
+                        coordinator.generalNavigationPath.removeLast()
+                    }
                 }
             }
 
@@ -599,9 +619,9 @@ struct HanlinComposerGeneralActionsView: View {
                     systemImage: "text.book.closed",
                     description: Text(String(localized: "All prompts have been added, or you can create new ones in Prompt Library."))
                 )
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: embeddedInMorph ? nil : .infinity)
             } else {
-                ScrollView(.vertical, showsIndicators: true) {
+                HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                     VStack(spacing: 6) {
                         ForEach(availablePrompts, id: \.id) { item in
                             Button {
@@ -645,13 +665,15 @@ struct HanlinComposerGeneralActionsView: View {
 
     private var parametersSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: String(localized: "Model Parameters")) {
-                if !coordinator.generalNavigationPath.isEmpty {
-                    coordinator.generalNavigationPath.removeLast()
+            if !embeddedInMorph {
+                subpageHeader(title: String(localized: "Model Parameters")) {
+                    if !coordinator.generalNavigationPath.isEmpty {
+                        coordinator.generalNavigationPath.removeLast()
+                    }
                 }
             }
 
-            ScrollView(.vertical, showsIndicators: true) {
+            HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 14) {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
@@ -745,9 +767,11 @@ struct HanlinComposerGeneralActionsView: View {
 
     private var imageSizeSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: String(localized: "Image Generation Settings")) {
-                if !coordinator.generalNavigationPath.isEmpty {
-                    coordinator.generalNavigationPath.removeLast()
+            if !embeddedInMorph {
+                subpageHeader(title: String(localized: "Image Generation Settings")) {
+                    if !coordinator.generalNavigationPath.isEmpty {
+                        coordinator.generalNavigationPath.removeLast()
+                    }
                 }
             }
 
@@ -954,6 +978,7 @@ struct HanlinComposerToolsRootView: View {
     @Binding var ifToolUse: Bool
     let onMCPSelectionChanged: (Int) -> Void
     var embeddedInDrawer: Bool = true
+    var embeddedInMorph: Bool = false
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -1011,7 +1036,7 @@ struct HanlinComposerToolsRootView: View {
             .task {
                 await refreshLiveState()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .frame(maxWidth: .infinity, maxHeight: embeddedInMorph ? nil : .infinity, alignment: .top)
             .scrollContentBackground(.hidden)
             .background(Color.clear)
             .accessibilityElement(children: .contain)
@@ -1097,7 +1122,7 @@ struct HanlinComposerToolsRootView: View {
     }
 
     private var toolsRootPage: some View {
-        ScrollView(.vertical, showsIndicators: false) {
+        HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Label(String(localized: "Tools, Skills & MCP"), systemImage: "hammer.circle.fill")
@@ -1228,9 +1253,9 @@ struct HanlinComposerToolsRootView: View {
 
     private var toolsCatalogSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: String(localized: "Built-in Tools & Permissions"))
+            if !embeddedInMorph { subpageHeader(title: String(localized: "Built-in Tools & Permissions")) }
 
-            ScrollView(.vertical, showsIndicators: true) {
+            HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(toolGroups) { group in
                         let groupOn = NativeToolCatalog.shared.isGroupEnabled(group)
@@ -1303,7 +1328,9 @@ struct HanlinComposerToolsRootView: View {
 
     private var skillsSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: String(format: String(localized: "Agent Skills (%lld/%lld)"), enabledSkillsCount, allSkills.count))
+            if !embeddedInMorph {
+                subpageHeader(title: String(format: String(localized: "Agent Skills (%lld/%lld)"), enabledSkillsCount, allSkills.count))
+            }
 
             HStack(spacing: 6) {
                 Image(systemName: "magnifyingglass")
@@ -1320,7 +1347,7 @@ struct HanlinComposerToolsRootView: View {
             .padding(.horizontal, 12)
             .padding(.bottom, 6)
 
-            ScrollView(.vertical, showsIndicators: true) {
+            HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 6) {
                     ForEach(filteredSkills) { skill in
                         let isEnabled = !disabledSkillIDs.contains(skill.id.rawValue)
@@ -1388,9 +1415,9 @@ struct HanlinComposerToolsRootView: View {
 
     private var mcpServersSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: String(localized: "MCP Servers"))
+            if !embeddedInMorph { subpageHeader(title: String(localized: "MCP Servers")) }
 
-            ScrollView(.vertical, showsIndicators: true) {
+            HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
                     // Master MCP switch
                     Toggle(isOn: Binding(
@@ -1531,9 +1558,9 @@ struct HanlinComposerToolsRootView: View {
 
     private var runtimeSubpage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            subpageHeader(title: String(localized: "Local Runtimes"))
+            if !embeddedInMorph { subpageHeader(title: String(localized: "Local Runtimes")) }
 
-            ScrollView(.vertical, showsIndicators: true) {
+            HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(runtimeSnapshots, id: \.kind) { snap in
                         let isReady = (snap.state == .ready || snap.state == .executing)
