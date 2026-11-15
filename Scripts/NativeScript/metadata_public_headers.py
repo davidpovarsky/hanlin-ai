@@ -76,12 +76,40 @@ def verify_role_context(arguments: list[str], expected: list[str] | None = None)
             raise RuntimeError("Framework input-role deployment/environment context changed")
 
 
+def compiler_version(library: Path) -> str:
+    class String(ctypes.Structure):
+        _fields_ = [("data", ctypes.c_void_p), ("flags", ctypes.c_uint)]
+    lib = ctypes.CDLL(str(library))
+    lib.clang_getClangVersion.restype = String
+    lib.clang_getCString.argtypes = [String]
+    lib.clang_getCString.restype = ctypes.c_char_p
+    lib.clang_disposeString.argtypes = [String]
+    version = lib.clang_getClangVersion()
+    try:
+        return lib.clang_getCString(version).decode("utf-8")
+    finally:
+        lib.clang_disposeString(version)
+
+
 def parser_arguments(language: str, arguments: list[str]) -> list[str]:
-    # Audit both grammars; retain every ordered target/define/include flag.
+    # The native tool supplies its own ObjC grammar. Audit both grammars with
+    # ALL actual generator defines/includes, changing only grammar/standard.
     standard = "gnu++20" if language == "objective-c++" else next((a[5:] for a in reversed(arguments) if a.startswith("-std=")), "gnu17")
-    if "-x" in arguments or any(a.startswith("-xobjective") for a in arguments):
-        raise RuntimeError("Framework input-role parser language override is unsupported")
-    return ["-x", language, "-std=" + standard, *[a for a in arguments if not a.startswith("-std=")]]
+    retained = []
+    index = 0
+    while index < len(arguments):
+        argument = arguments[index]
+        if argument == "-x":
+            if index + 1 == len(arguments) or arguments[index + 1] != "objective-c":
+                raise RuntimeError("Framework input-role metadata parser grammar is unsupported")
+            index += 2
+            continue
+        if argument.startswith("-xobjective"):
+            raise RuntimeError("Framework input-role parser language override is unsupported")
+        if not argument.startswith("-std="):
+            retained.append(argument)
+        index += 1
+    return ["-x", language, "-std=" + standard, *retained]
 
 
 def complete_language_proof(proof: dict, language: str, arguments: list[str]) -> bool:
@@ -253,7 +281,7 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
         bind("clang_disposeIndex", None, ptr)(index)
 
 
-def produce_role_inventory(directory: Path, arguments: list[str], library: Path, classify: bool = True, receipt_path: Path | None = None) -> dict:
+def produce_role_inventory(directory: Path, arguments: list[str], library: Path, classify: bool = True, receipt_path: Path | None = None, metadata_compiler: dict | None = None) -> dict:
     repository = Path(__file__).resolve().parents[2]
     build_tool = repository / "Scripts/NativeScript/build-metadata-tool.py"
     if f'SOURCE = "{INCOMPLETE_RECORD_POLICY_SOURCE}"' not in build_tool.read_text(encoding="utf-8"):
@@ -274,6 +302,11 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path,
                 # non-C++ branch. Inspect the actual ObjC translation as well.
                 objc = inspect_header_declarations(headers, arguments, library, "objective-c")
                 proof["objcCompatibility"] = objc
+                if not metadata_compiler or metadata_compiler.get("arguments") != arguments or metadata_compiler.get("compiler") != proof["compiler"] or metadata_compiler.get("compiler") != objc["compiler"]:
+                    # Compiler builtins/version conditionals can expose a C API
+                    # absent from another frontend's otherwise complete AST.
+                    proof["role"] = PUBLIC_ROLE
+                    proof["compilerIdentityLimit"] = "Actual metadata frontend identity is unproven or differs"
                 if not complete_language_proof(objc, "objective-c", arguments) or any(
                     d["category"] not in {"cpp", "inert"} for d in objc["declarations"]
                 ):
@@ -295,12 +328,13 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path,
                 "compilerLibrarySHA256": hashlib.sha256(library.read_bytes()).hexdigest(),
                 "originRoot": str(directory.resolve()), "compilerArguments": arguments,
                 "workingDirectory": str(Path.cwd().resolve()), "compilerEnvironmentSHA256": compiler_environment_sha256(),
+                "metadataCompiler": metadata_compiler,
                 "frameworks": records}
     (receipt_path or directory / ROLE_MANIFEST).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return manifest
 
 
-def verified_framework_roles(directory: Path, compiler_arguments: list[str] | None = None, receipt_path: Path | None = None) -> dict:
+def verified_framework_roles(directory: Path, compiler_arguments: list[str] | None = None, receipt_path: Path | None = None, metadata_compiler: dict | None = None) -> dict:
     path = receipt_path or directory / ROLE_MANIFEST
     if not path.is_file():
         return {}
@@ -329,6 +363,9 @@ def verified_framework_roles(directory: Path, compiler_arguments: list[str] | No
             raise RuntimeError("Framework input-role proof refers to an unowned header")
         if record["role"] == CPP_ROLE:
             arguments = manifest["compilerArguments"]
+            metadata = manifest.get("metadataCompiler")
+            if not metadata or metadata.get("arguments") != arguments or metadata.get("compiler") != proof.get("compiler") or metadata.get("compiler") != proof.get("objcCompatibility", {}).get("compiler") or (metadata_compiler is not None and metadata != metadata_compiler):
+                raise RuntimeError("Framework input-role actual metadata frontend/context is unproven or changed")
             verify_role_context(arguments, compiler_arguments)
             if manifest.get("workingDirectory") != str(Path.cwd().resolve()):
                 raise RuntimeError("Framework input-role working directory changed")
@@ -428,7 +465,7 @@ def write_verified_header_alias_overlay(inventory: list[dict], destination: Path
 
 def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path],
                           framework_search_paths: list[Path] | None = None, role_receipts: dict | None = None,
-                          compiler_arguments: list[str] | None = None) -> list[dict]:
+                          compiler_arguments: list[str] | None = None, metadata_compiler: dict | None = None) -> list[dict]:
     inventory = []
     public_headers = []
     # SubFrameworks is an include-search dependency, not another public root.
@@ -443,7 +480,7 @@ def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path
         if directory.resolve() == (sdk / "System/Library/SubFrameworks").resolve():
             continue
         receipt = (role_receipts or {}).get(str(directory.resolve()))
-        roles = verified_framework_roles(directory, compiler_arguments, receipt)
+        roles = verified_framework_roles(directory, compiler_arguments, receipt, metadata_compiler)
         for candidate in sorted(directory.glob("*.framework")):
             framework = candidate.resolve()
             if framework in seen_paths:

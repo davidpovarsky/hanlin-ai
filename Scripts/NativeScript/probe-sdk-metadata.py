@@ -165,6 +165,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     arguments_path = visibility.parent / "actual-compiler-arguments.json"
     actual_context = json.loads(arguments_path.read_text()) if arguments_path.is_file() else {}
     actual_arguments = actual_context.get("arguments", [])
+    effective_path = visibility.parent / "effective-compiler-context.json"
+    effective_context = json.loads(effective_path.read_text()) if effective_path.is_file() else {}
     for receipt in visibility.parent.glob("input-roles-*.json"):
         (folder / ("final-" + receipt.name)).write_bytes(receipt.read_bytes())
     # Names confirmed from current staged declarations, not synthetic APIs.
@@ -181,7 +183,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     return {"status": "EXECUTED_PASS" if passed else "FAILED", "exitCode": execution.returncode,
             "python": sys.version, "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
             "visibility": recorded, "publicObjCAndCMetadataNames": public_symbols,
-            "actualMetadataCompilerArguments": actual_arguments, "actualMetadataContext": actual_context, "actualSwiftProviderTarget": compilation["-target"],
+            "symbolChecksStatus": "EXECUTED" if binary else "NOT_RUN_NO_METADATA_BINARY",
+            "actualMetadataCompilerArguments": actual_arguments, "actualMetadataContext": actual_context, "effectiveMetadataCompilerContext": effective_context, "actualSwiftProviderTarget": compilation["-target"],
             "finalHeaderStaging": final_staging,
             "includeOnlyFrameworks": [{"framework": r["framework"], "inputManifestSHA256": r["inputManifestSHA256"],
                                        "declarations": len(r["inputRoleProof"]["declarations"])} for r in include_only],
@@ -276,6 +279,25 @@ def main() -> int:
                                   *command[command.index("Xclang") + 1:], str(umbrella)],
                                  capture_output=True, timeout=120)
         (destination / "xcode-clang-control.log").write_bytes(control.stdout + control.stderr)
+        if options.generator is not None:
+            # Exercise the new read-only context mode on the genuine SDK input;
+            # the existing SDK generation below verifies the identical vector.
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("actual_metadata_launcher", root / "Scripts/NativeScript/build-step-metadata-generator-wrapper.py")
+            launcher = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(launcher)
+            context_file = destination / "native-compiler-context.bin"
+            native_context = launcher.capture_native_compiler_context(generator,
+                {"generatorCall": command}, os.environ.copy(), generator.parent, context_file)
+            (destination / "native-compiler-context.json").write_text(json.dumps(native_context, indent=2) + "\n")
+            command[command.index("Xclang"):command.index("Xclang")] = ["-hanlin-expected-clang-context", str(context_file)]
+            # A changed relevant define must be rejected BEFORE the AST/emitter.
+            drift = subprocess.run([*command, "-D__HANLIN_CONTEXT_NEGATIVE=1"], cwd=generator.parent,
+                capture_output=True, timeout=120)
+            (destination / "context-drift-negative.log").write_bytes(drift.stdout + drift.stderr)
+            result["nativeCompilerContext"] = {**native_context, "driftExitCode": drift.returncode,
+                "status": "EXECUTED_PASS" if drift.returncode > 0 and b"Effective metadata compiler context drifted" in drift.stdout + drift.stderr else "FAILED",
+                "boundary": "Actual tool argument capture/verification; not a C++ absence or VM proof."}
         completed = subprocess.run(command, cwd=generator.parent, capture_output=True, timeout=180)
         (destination / "stdout.log").write_bytes(completed.stdout)
         (destination / "stderr.log").write_bytes(completed.stderr)
@@ -345,7 +367,8 @@ def main() -> int:
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     success = result["modes"][options.mode]["status"] == "EXECUTED_PASS"
     if options.generator is not None:
-        success = success and parity_ok and result["invalidDeclarationRejected"]["status"] == "EXECUTED_PASS"
+        success = success and parity_ok and result["invalidDeclarationRejected"]["status"] == "EXECUTED_PASS" \
+            and result.get("nativeCompilerContext", {}).get("status") == "EXECUTED_PASS"
     if options.runtime_wrapper:
         success = success and result["runtimeWrapper"]["status"] == "EXECUTED_PASS"
     return 0 if success else 1

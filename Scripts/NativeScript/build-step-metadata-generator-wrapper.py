@@ -93,7 +93,10 @@ def explicit_input_adapter(source: str) -> str:
     source = source.replace(target, '\"ios\" + deployment_target, llvm_target_triple_suffix)')
     source = source.replace(before, 'generator_call = [env("HANLIN_METADATA_GENERATOR"), "-verbose",').replace(
         "    # clang arguments\n",
-        '    generator_call.extend(["-input-umbrella", env("HANLIN_METADATA_INPUT_UMBRELLA")])\n\n    # clang arguments\n')
+        '    generator_call.extend(["-input-umbrella", env("HANLIN_METADATA_INPUT_UMBRELLA")])\n'
+        '    if os.environ.get("HANLIN_METADATA_EFFECTIVE_CONTEXT"):\n'
+        '        generator_call.extend(["-hanlin-expected-clang-context", os.environ["HANLIN_METADATA_EFFECTIVE_CONTEXT"]])\n'
+        '\n    # clang arguments\n')
     return source.replace(invocation,
         '    import json, hashlib\n'
         '    ignored = {"HANLIN_METADATA_CAPTURE_ARGUMENTS", "HANLIN_METADATA_EXPECTED_CONTEXT", "HANLIN_METADATA_ACTUAL_CONTEXT"}\n'
@@ -122,6 +125,29 @@ def capture_compiler_arguments(adapter: Path, environment: dict, arch: str, dest
     if Path(plan["workingDirectory"]).resolve() != working_directory:
         raise RuntimeError("Metadata capture working directory differs from generator")
     return plan["arguments"]
+
+
+def capture_native_compiler_context(tool: Path, invocation_plan: dict, environment: dict,
+                                    working_directory: Path, destination: Path) -> dict:
+    call = invocation_plan["generatorCall"]
+    if Path(call[0]).resolve() != tool.resolve():
+        raise RuntimeError("Captured metadata invocation selects a different tool")
+    position = call.index("Xclang")
+    command = [*call[:position], "-hanlin-dump-clang-context", str(destination), *call[position:]]
+    with destination.with_suffix(".log").open("w") as log:
+        completed = subprocess.run(command, cwd=working_directory, env=environment,
+            stdout=log, stderr=subprocess.STDOUT, check=False)
+    if completed.returncode or not destination.is_file():
+        raise RuntimeError("Actual metadata frontend context was not captured")
+    raw = destination.read_bytes()
+    if not raw.endswith(b"\0"):
+        raise RuntimeError("Actual metadata frontend context is not fully framed")
+    values = [value.decode("utf-8") for value in raw[:-1].split(b"\0")]
+    if len(values) < 2 or not values[0]:
+        raise RuntimeError("Actual metadata frontend context is incomplete")
+    return {"compiler": values[0], "arguments": values[1:],
+            "generatorSHA256": hashlib.sha256(tool.read_bytes()).hexdigest(),
+            "contextSHA256": hashlib.sha256(raw).hexdigest()}
 
 
 def retain_and_check_metadata(arch: str, platform: str) -> bool:
@@ -236,18 +262,26 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
         context_path = module_root / "actual-compiler-arguments.json"
         environment["HANLIN_METADATA_EXPECTED_CONTEXT"] = str(context_path)
         environment["HANLIN_METADATA_ACTUAL_CONTEXT"] = str(module_root / "actual-generator-context.json")
+        effective_path = module_root / "effective-compiler-context.bin"
+        environment["HANLIN_METADATA_EFFECTIVE_CONTEXT"] = str(effective_path)
         arguments = capture_compiler_arguments(adapter, environment, arch, context_path, generator_root)
+        verify_role_context(arguments)
+        metadata_compiler = capture_native_compiler_context(tool, json.loads(context_path.read_text()),
+            environment, generator_root, effective_path)
+        (module_root / "effective-compiler-context.json").write_text(json.dumps(metadata_compiler, indent=2) + "\n")
+        arguments = metadata_compiler["arguments"]
         verify_role_context(arguments)
         # Reclassify ALL final, post-staging bytes at the exact captured context.
         # Never promote a stale receipt by updating hashes alone.
         for directory in role_roots:
-            produce_role_inventory(directory, arguments, library, receipt_path=receipts[str(directory)])
+            produce_role_inventory(directory, arguments, library, receipt_path=receipts[str(directory)], metadata_compiler=metadata_compiler)
         inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
-            sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments)
+            sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments, metadata_compiler)
     finally:
         for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay,
                      alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
-                     module_root / "actual-compiler-arguments.json", *receipts.values()]:
+                     module_root / "actual-compiler-arguments.json", module_root / "effective-compiler-context.bin",
+                     module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log", *receipts.values()]:
             if path.is_file():
                 shutil.copy2(path, evidence / path.name)
     completed = subprocess.run(

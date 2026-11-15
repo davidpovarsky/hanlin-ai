@@ -46,6 +46,35 @@ def patch_main(text: str) -> str:
     text = replace_once(text, "#include <llvm/Support/Path.h>",
                         "#include <llvm/Support/Path.h>\n#include <llvm/Support/MemoryBuffer.h>\n"
                         "#include <llvm/Support/VirtualFileSystem.h>\n#include <stdexcept>")
+    text = replace_once(text, '#include <clang/Frontend/CompilerInstance.h>',
+                        '#include <clang/Frontend/CompilerInstance.h>\n#include <clang/Basic/Version.h>')
+    text = replace_once(text, '// Command line parameters',
+        '// Command line parameters\n'
+        'llvm::cl::opt<string> cla_dumpClangContext("hanlin-dump-clang-context", llvm::cl::desc("Dump actual compiler context without AST generation"));\n'
+        'llvm::cl::opt<string> cla_expectedClangContext("hanlin-expected-clang-context", llvm::cl::desc("Verify actual compiler context before AST generation"));')
+    context_hook = r'''
+        // NUL framing preserves every argument byte without shell/JSON quoting.
+        std::string hanlinContext = clang::getClangFullVersion();
+        hanlinContext.push_back('\0');
+        for (const auto& argument : clangArgs) {
+            hanlinContext.append(argument);
+            hanlinContext.push_back('\0');
+        }
+        if (!cla_dumpClangContext.empty()) {
+            std::ofstream output(cla_dumpClangContext.getValue(), std::ios::binary);
+            output.write(hanlinContext.data(), hanlinContext.size());
+            output.close();
+            if (!output) throw std::runtime_error("Cannot retain actual metadata compiler context");
+            return 0;
+        }
+        if (!cla_expectedClangContext.empty()) {
+            std::ifstream expected(cla_expectedClangContext.getValue(), std::ios::binary);
+            const std::string captured((std::istreambuf_iterator<char>(expected)), std::istreambuf_iterator<char>());
+            if (!expected || captured != hanlinContext) throw std::runtime_error("Effective metadata compiler context drifted");
+        }
+'''
+    text = replace_once(text, '        clangArgs.insert(clangArgs.end(), includePaths.begin(), includePaths.end());',
+        '        clangArgs.insert(clangArgs.end(), includePaths.begin(), includePaths.end());\n' + context_hook)
     text = replace_once(text, "        Context.getDiagnostics().Reset();",
                         "        // Preserve actual parser errors for runToolOnCodeWithArgs.")
     text = replace_once(text, "        Compiler.getPreprocessor().SetSuppressIncludeNotFoundError(!cla_strictIncludes);",
