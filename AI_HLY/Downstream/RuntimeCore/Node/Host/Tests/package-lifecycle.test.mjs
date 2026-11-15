@@ -81,6 +81,56 @@ test('immutable package generations preserve old files, reject conflicting commi
   assert.equal(await fs.readFile(path.join(first.directory,'built.txt'),'utf8'),'new-built-product');
 });
 
+test('root aliases expose the same physical legacy and published generation without mutating reads',async t=>{
+  const root=await fixture(t);
+  const alias=path.join(root,'host-alias');
+  await fs.symlink(root,alias,process.platform==='win32'?'junction':'dir');
+  const legacy=path.join(root,'packages','node-global');
+  await writePackage(legacy,{name:'legacy',version:'1.0.0'});
+  assert.deepEqual(await currentGlobalState(alias),await currentGlobalState(root));
+  assert.equal((await currentGlobalState(alias)).directory,await fs.realpath(legacy));
+  const transaction=await prepareGlobalTransaction(alias);
+  await saveGlobalTransaction(root,{...transaction,plan:planLifecycle({name:'legacy',version:'1.0.0'})});
+  await publishGlobalTransaction(alias,transaction.transactionID);
+  const before=await fs.readFile(path.join(root,'packages','node-global-current.json'),'utf8');
+  assert.equal((await currentGlobalState(alias)).directory,transaction.directory);
+  assert.deepEqual(await currentGlobalState(alias),await currentGlobalState(root));
+  assert.equal(await fs.readFile(path.join(root,'packages','node-global-current.json'),'utf8'),before);
+  const next=await prepareGlobalTransaction(root);
+  assert.equal(next.baseRevision,transaction.transactionID);
+  assert.equal(JSON.parse(await fs.readFile(path.join(next.directory,'package.json'),'utf8')).name,'legacy');
+  await discardGlobalTransaction(root,next.transactionID);
+  await assert.rejects(discardGlobalTransaction(alias,transaction.transactionID),/retained/);
+});
+
+test('competing commits through host root aliases preserve conflict rejection',async t=>{
+  const root=await fixture(t);
+  const alias=path.join(root,'host-alias');
+  await fs.symlink(root,alias,process.platform==='win32'?'junction':'dir');
+  const first=await prepareGlobalTransaction(root),second=await prepareGlobalTransaction(alias);
+  await saveGlobalTransaction(root,first);
+  await saveGlobalTransaction(alias,second);
+  const results=await Promise.allSettled([
+    publishGlobalTransaction(root,first.transactionID),publishGlobalTransaction(alias,second.transactionID)
+  ]);
+  assert.equal(results.filter(result=>result.status==='fulfilled').length,1);
+  const rejected=results.find(result=>result.status==='rejected');
+  assert.match(rejected.reason.message,/changed while/);
+  const current=await currentGlobalState(alias);
+  const winner=current.revision===first.transactionID?first:second;
+  assert.equal(current.directory,winner.directory);
+  assert.deepEqual(await currentGlobalState(root),current);
+});
+
+test('reading a missing legacy host does not create directories or introduce a missing-path error',async t=>{
+  const parent=await fixture(t);
+  const root=path.join(parent,'not-created');
+  assert.deepEqual(await currentGlobalState(root),{
+    revision:'legacy',directory:path.join(root,'packages','node-global')
+  });
+  await assert.rejects(fs.stat(root),{code:'ENOENT'});
+});
+
 test('npm lifecycle environment retains user values and flattens RFC183 package metadata',async t=>{
   const root=await fixture(t);
   await writePackage(root,{name:'fixture',version:'1.2.3',config:{nested:{flag:false},values:['a','שלום'],nil:null},engines:{node:'>=24'},bin:{fixture:'./bin.cjs'},description:'not exported'});
