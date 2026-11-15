@@ -27,6 +27,10 @@ def main():
     if evidence.get("status") != "BUILT_NOT_ACCEPTED" or any(evidence.get(key) != sha(ROOT / path) for key, path in expected.items()):
         print("NEEDS_BUILD: candidate build source/lock changed")
         return
+    support_sources = {p.relative_to(ROOT).as_posix(): sha(p) for p in sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h"))}
+    if not support_sources or evidence.get("supportSources") != support_sources:
+        print("NEEDS_BUILD: dual-grammar support source closure changed")
+        return
     if evidence["xcode"] != subprocess.check_output(["xcodebuild", "-version"], text=True).strip():
         print("NEEDS_BUILD: actual Xcode compiler changed")
         return

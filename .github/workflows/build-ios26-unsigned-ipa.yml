@@ -22,6 +22,7 @@ on:
           - modern-provenance
           - modern-validation
           - modern-combined
+          - modern-dual-compile
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false

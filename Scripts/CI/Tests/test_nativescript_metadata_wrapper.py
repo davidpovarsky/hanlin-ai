@@ -769,6 +769,9 @@ class ModernMetadataProvenanceControls(unittest.TestCase):
             scripts = root / "Scripts/NativeScript"
             scripts.mkdir(parents=True)
             frontend = root / "frontend"
+            support = scripts / "metadata-dual-grammar/Proof.h"
+            support.parent.mkdir()
+            support.write_bytes(b"candidate support source")
             (frontend / "lib").mkdir(parents=True)
             for name in ["libclang.dylib", "libclang-cpp.dylib", "libLLVM.dylib"]:
                 (frontend / "lib" / name).write_bytes(name.encode())
@@ -784,6 +787,7 @@ class ModernMetadataProvenanceControls(unittest.TestCase):
             binary = tool_root / "bin/objc-metadata-generator"
             binary.write_bytes(b"compiled binary")
             receipt = {"schemaVersion": 2, "status": "BUILT_NOT_ACCEPTED", "generatorSHA256": sha(binary),
+                       "supportSources": {support.relative_to(root).as_posix(): sha(support)},
                        "frontendRoot": str(frontend.resolve()), "classifierLibrary": str(frontend.resolve() / "lib/libclang.dylib"),
                        "frontendVersion": "20.1.8", "frontendInputs": {"header.h": sha(frontend / "header.h")},
                        "libraries": {p.name: sha(p) for p in (frontend / "lib").iterdir()}}
@@ -794,7 +798,7 @@ class ModernMetadataProvenanceControls(unittest.TestCase):
             path = tool_root / "provenance.json"
             path.write_text(json.dumps(receipt))
             self.assertEqual(WRAPPER.validate_modern_tool(root), (tool_root, frontend.resolve() / "lib/libclang.dylib"))
-            for target in [binary, scripts / "build-metadata-tool.py", scripts / "build-modern-metadata-tool.py",
+            for target in [binary, support, scripts / "build-metadata-tool.py", scripts / "build-modern-metadata-tool.py",
                            scripts / "metadata-frontend-lock.json", frontend / "header.h", frontend / "lib/libclang.dylib"]:
                 original = target.read_bytes()
                 target.write_bytes(original + b" drift")
@@ -1087,6 +1091,11 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
                 self.assertEqual(provenance[key], self.sha(ROOT / "Scripts/NativeScript" / filename))
                 frozen[filename] = provenance[key]
             frontend = Path(provenance["frontendRoot"])
+            support_sources = {p.relative_to(ROOT).as_posix(): self.sha(p)
+                               for p in sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h"))}
+            self.assertTrue(support_sources)
+            self.assertEqual(provenance["supportSources"], support_sources)
+            frozen.update(support_sources)
             for name, digest in provenance["libraries"].items():
                 self.assertEqual(self.sha(frontend / "lib" / name), digest)
         self.flags = json.loads(os.environ["HANLIN_PREPROCESS_PROVENANCE_CLANG_ARGS_JSON"])
@@ -1217,6 +1226,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
                  *[self.folder / name for _, name in occurrences]]
         if self.modern:
             files.extend(ROOT / "Scripts/NativeScript" / name for name in ["build-modern-metadata-tool.py", "metadata-frontend-lock.json"])
+            files.extend(sorted((ROOT / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h")))
         self.request = {"schemaVersion": 1,
             "bindings": {"contextSHA256": self.sha(self.context_path), "umbrellaSHA256": self.sha(umbrella),
                 "overlaySHA256": self.sha(overlay), "patchSourceSHA256": self.sha(self.patch_source),

@@ -258,6 +258,10 @@ def main() -> int:
         if provenance.get("status") != "BUILT_NOT_ACCEPTED" or provenance.get("generatorSHA256") != hashlib.sha256(expected.read_bytes()).hexdigest() or any(
             provenance.get(key) != hashlib.sha256((root / "Scripts/NativeScript" / path).read_bytes()).hexdigest() for key, path in sources.items()):
             raise RuntimeError("Modern candidate source/binary provenance drift")
+        support = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                   for p in sorted((root / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h"))}
+        if not support or provenance.get("supportSources") != support:
+            raise RuntimeError("Modern candidate support source closure drift")
     arch = "arm64" if platform.machine() == "arm64" else "x86_64"
     internal = root / "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal"
     candidates = sorted(p for p in internal.glob(f"metadata-generator-{arch}*/bin/objc-metadata-generator") if p.is_file())

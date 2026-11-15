@@ -44,6 +44,9 @@ def validate_modern_tool(root: Path) -> tuple[Path, Path]:
            receipt.get(key) != digest(root / "Scripts/NativeScript" / name) for key, name in sources.items()):
         raise RuntimeError("Modern metadata source/binary provenance mismatch")
     lock = json.loads((root / "Scripts/NativeScript/metadata-frontend-lock.json").read_text(encoding="utf-8"))
+    support = {p.relative_to(root).as_posix(): digest(p) for p in sorted((root / "Scripts/NativeScript/metadata-dual-grammar").glob("*.h"))}
+    if not support or receipt.get("supportSources") != support:
+        raise RuntimeError("Modern metadata support source closure mismatch")
     prefix = Path(lock["installedPrefix"]).resolve(strict=True)
     library = prefix / "lib/libclang.dylib"
     if receipt.get("frontendRoot") != str(prefix) or receipt.get("classifierLibrary") != str(library) or \

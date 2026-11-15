@@ -81,7 +81,14 @@ def main():
         archive.extractall(work, filter="data")
     generator = source / "metadata-generator"
     main_cpp = generator / "src/main.cpp"
+    support = ROOT / "Scripts/NativeScript/metadata-dual-grammar"
+    support_sources = {p.relative_to(ROOT).as_posix(): sha(p) for p in sorted(support.glob("*.h"))}
+    if not support_sources:
+        raise RuntimeError("Dual-grammar support source closure is missing")
+    shutil.copytree(support, generator / "src/HanlinDual")
     main_text = base.patch_main(main_cpp.read_text())
+    main_text = base.replace_once(main_text, '#include "Yaml/YamlSerializer.h"',
+        '#include "Yaml/YamlSerializer.h"\n#include "HanlinDual/ModelMerge.h"')
     main_text = base.replace_once(main_text, "    clang::SourceManager &sm;",
         "    clang::SourceManager &sm;\n    clang::Preprocessor &pp;")
     main_text = base.replace_once(main_text,
@@ -248,6 +255,7 @@ add_subdirectory(src)
         "sourceArchiveSHA256": base.SOURCE_SHA, "frontendLockSHA256": sha(lock_path),
         "basePatchSourceSHA256": sha(ROOT / "Scripts/NativeScript/build-metadata-tool.py"),
         "modernPatchSourceSHA256": sha(Path(__file__)), "frontendRoot": str(prefix),
+        "supportSources": support_sources,
         "classifierLibrary": str(prefix / "lib/libclang.dylib"), "frontendVersion": lock["version"],
         "commands": commands, "platform": platform.platform(),
         "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(),
