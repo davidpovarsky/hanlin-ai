@@ -33,6 +33,10 @@ struct HanlinChatContentView: View {
                         description: Text("This content could not be displayed."))
                         .accessibilityIdentifier("hanlin-a2ui-model-fallback")
                 }
+            case .unavailable:
+                ContentUnavailableView("Content unavailable", systemImage: "rectangle.slash",
+                    description: Text("This content could not be displayed."))
+                    .accessibilityIdentifier("hanlin-a2ui-model-fallback")
             }
         }
     }

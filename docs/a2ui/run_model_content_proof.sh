@@ -6,6 +6,7 @@ cd "$root"
 platform="${A2UI_PROOF_PLATFORM:-macos}"
 [[ "$platform" == ios || "$platform" == macos ]] || { echo 'Unsupported proof platform'; exit 2; }
 proof=(python3 docs/a2ui/prepare_exact_pin_proof.py --platform "$platform")
+if [[ "${A2UI_PROOF_SUITE:-ownership}" == consumer ]]; then proof+=(--sdk-consumer); fi
 evidence="$root/build/a2ui-model-content-evidence"
 mkdir -p "$evidence"
 proof_phase=preflight
@@ -103,6 +104,11 @@ assert int(subprocess.check_output(['xcrun','--sdk','macosx','--show-sdk-version
 assert shutil.disk_usage('.').free>=10*1024**3, 'INFRA_ERROR: less than10GiB free'
 PY
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/a2ui-model-content.XXXXXXXX")"
+if [[ "${A2UI_PROOF_SUITE:-ownership}" == consumer ]]; then
+  # Read an immutable SDK sibling snapshot; no checkout, copied engine implementation or product pin change.
+  git fetch --no-tags --depth=1 https://github.com/davidpovarsky/hanlin-ai.git \
+    18813519eada1db152bd206d5c7bd922ddc987ee 2>&1 | tee "$evidence/sdk-fetch.log"
+fi
 "${proof[@]}" --output "$scratch/harness" > "$evidence/preparation.json"
 cp "$scratch/harness/proof-inputs.json" "$scratch/harness/Package.swift" "$evidence/"
 finish_phase resolution
@@ -126,11 +132,13 @@ if [[ "$platform" == ios ]]; then
   grep -q "$(cat "$evidence/selected-device.txt")" "$evidence/destinations.txt" || { echo 'INFRA_ERROR: unsupported actual destination'; exit 2; }
 fi
 suite="${A2UI_PROOF_SUITE:-ownership}"
-[[ "$suite" == all || "$suite" == ownership || "$suite" == media ]] || { echo 'Unsupported focused proof suite'; exit 2; }
+[[ "$suite" == all || "$suite" == ownership || "$suite" == media || "$suite" == consumer ]] || { echo 'Unsupported focused proof suite'; exit 2; }
 python3 - "$scratch/harness/proof-inputs.json" "$suite" <<'PY' > "$evidence/selected-cases.txt"
 import json,sys
 p=json.load(open(sys.argv[1]))
-if sys.argv[2]=='all':
+if sys.argv[2]=='consumer':
+    names=['HanlinA2UIAgentPresentationTests/'+x+'()' for x in p['consumer_cases']]+['A2UISDKTests/'+x+'()' for x in p['projection_cases']]
+elif sys.argv[2]=='all':
     names=['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
 else:
     field='media_cases' if sys.argv[2]=='media' else 'ownership_cases'

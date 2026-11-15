@@ -12,6 +12,9 @@ import json
 from pathlib import Path
 import re
 import sys
+import subprocess
+import tarfile
+import io
 import xml.etree.ElementTree as ET
 
 REPOSITORY = Path(__file__).resolve().parents[2]
@@ -47,6 +50,19 @@ MEDIA_SOURCES = "AI_HLY/Downstream/ChatPresentation/Media"
 TEST = "AI_HLYTests/A2UITests.swift"
 MEDIA_POLICY_TEST = "AI_HLYTests/HanlinRemoteMediaURLTests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
+SDK_SHA = "18813519eada1db152bd206d5c7bd922ddc987ee"
+PRODUCER_SHA = "e7bf34111e603ca977becd007dd4e5bb109af857"
+CONSUMER_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift"
+CONSUMER_TEST = "AI_HLYTests/HanlinA2UIAgentPresentationTests.swift"
+CONSUMER_CASES = [
+    "bufferedEOFRetainsRealRendererActionAndSeparateRunIdentity",
+    "canonicalRecordReplayKeepsBytesAndCannotRestoreActions",
+    "invalidationRejectsQueuedOriginalEventsAndKeys",
+    "malformedCompletePartStaysUnavailableAndPreservesAdjacentText",
+]
+PROJECTION_CASES = ["modelPartUsesMessageIdentityWithoutToolCall",
+    "orderedModelProjectionPreservesTextAndRegisteredSurface",
+    "modelProjectionRejectsForeignIdentityAndAmbiguousParts", "modelProjectionNeverFollowsReplacedGeneration"]
 PACKAGE = f'''// swift-tools-version: 6.1
 import PackageDescription
 
@@ -78,11 +94,26 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def package_text(platform: str) -> str:
-    return PACKAGE.replace('.macOS("27.0")', '.iOS("27.0")') if platform == "ios" else PACKAGE
+def package_text(platform: str, consumer: bool = False) -> str:
+    text = PACKAGE.replace('.macOS("27.0")', '.iOS("27.0")') if platform == "ios" else PACKAGE
+    if consumer:
+        text = text.replace('swift-tools-version: 6.1', 'swift-tools-version: 6.2')
+        text = text.replace('let products: [Target.Dependency] = [', '''let products: [Target.Dependency] = [
+    .product(name: "HanlinAgentCore", package: "HanlinAgentSDK"),
+    .product(name: "HanlinHostContracts", package: "HanlinAgentSDK"),
+    .product(name: "HanlinPersistenceAdapters", package: "HanlinAgentSDK"),
+    .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
+    .product(name: "HanlinChatCore", package: "HanlinPlatform"),
+    .product(name: "AISDKProvider", package: "swift-ai-sdk"),''')
+        text = text.replace('dependencies: [.package(url:', f'''dependencies: [
+        .package(path: "../Packages/HanlinAgentSDK"),
+        .package(path: "../Packages/HanlinPlatform"),
+        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "{PRODUCER_SHA}"),
+        .package(url:''')
+    return text
 
 
-def plan(platform: str = "macos") -> dict:
+def plan(platform: str = "macos", consumer: bool = False) -> dict:
     source = (REPOSITORY / TEST).read_text(encoding="utf-8")
     if re.findall(r"^@testable import (\w+)$", source, re.MULTILINE) != [CONSUMER_MODULE]:
         raise ValueError("Test import must match the actual AI_Hanlin consumer; do not add a module alias")
@@ -104,14 +135,26 @@ def plan(platform: str = "macos") -> dict:
             raise ValueError("Expected six media source admission controls")
         media_cases += policy_cases
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
+    if consumer:
+        paths += [REPOSITORY / CONSUMER_SOURCE, REPOSITORY / CONSUMER_TEST]
+        suite_source = (REPOSITORY / CONSUMER_TEST).read_text(encoding="utf-8").split("struct HanlinA2UIAgentPresentationTests {", 1)[1]
+        actual = re.findall(r"^    func (\w+)\(", suite_source, re.MULTILINE)
+        if actual != CONSUMER_CASES:
+            raise ValueError("Unexpected consumer integration test identities")
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
-    return {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
+    result = {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
             "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
             "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES,
             "media_cases": media_cases, "files": files, "target_platform": platform,
-            "harness_manifest_sha256": sha(package_text(platform).encode()),
+            "harness_manifest_sha256": sha(package_text(platform, consumer).encode()),
             "native_execution": "NOT_RUN", "platform": platform + "27 / current stable Xcode"}
+    if consumer:
+        result.update(consumer_cases=CONSUMER_CASES, projection_cases=PROJECTION_CASES,
+                      sdk_source_sha=SDK_SHA, producer_revision=PRODUCER_SHA,
+                      sdk_tree_ids={name: subprocess.check_output(["git", "rev-parse", f"{SDK_SHA}:Packages/{name}"], cwd=REPOSITORY, text=True).strip()
+                                    for name in ["HanlinAgentSDK", "HanlinPlatform"]})
+    return result
 
 
 def prepare(destination: Path, inputs: dict) -> None:
@@ -126,15 +169,21 @@ def prepare(destination: Path, inputs: dict) -> None:
         data = (REPOSITORY / relative).read_bytes()
         if sha(data) != entry["sha256"]:
             raise ValueError(f"Input changed while preparing proof: {relative}")
-        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/"):
+        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/") or relative == CONSUMER_SOURCE:
             target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
-        elif relative in [TEST, MEDIA_POLICY_TEST]:
+        elif relative in [TEST, MEDIA_POLICY_TEST, CONSUMER_TEST]:
             target = destination / "Tests/AI_HLYTests" / Path(relative).name
         else:
             target = destination / "Tests/AI_HLYTests/A2UIFixtures" / Path(relative).name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-    (destination / "Package.swift").write_text(package_text(inputs["target_platform"]), encoding="utf-8")
+    consumer = "sdk_source_sha" in inputs
+    if consumer:
+        archive = subprocess.check_output(["git", "archive", "--format=tar", SDK_SHA,
+                                          "Packages/HanlinAgentSDK", "Packages/HanlinPlatform"], cwd=REPOSITORY)
+        with tarfile.open(fileobj=io.BytesIO(archive)) as content:
+            content.extractall(destination.parent, filter="data")
+    (destination / "Package.swift").write_text(package_text(inputs["target_platform"], consumer), encoding="utf-8")
     (destination / "proof-inputs.json").write_text(json.dumps(inputs, indent=2) + "\n", encoding="utf-8")
 
 
@@ -205,15 +254,23 @@ def main() -> None:
     parser.add_argument("--resolved", type=Path)
     parser.add_argument("--inputs", type=Path)
     parser.add_argument("--platform", choices=["macos", "ios"], default="macos")
-    parser.add_argument("--suite", choices=["all", "sdk", "ownership", "media"], default="all",
+    parser.add_argument("--sdk-consumer", action="store_true")
+    parser.add_argument("--suite", choices=["all", "sdk", "ownership", "media", "consumer"], default="all",
                         help="Verify only SDK identities when portable framing is unaffected")
     args = parser.parse_args()
-    inputs = plan(args.platform)
+    inputs = plan(args.platform, args.sdk_consumer)
+    def check_lock(path: Path) -> None:
+        lock = json.loads(path.read_text(encoding="utf-8"))
+        verify_pin(lock)
+        if args.sdk_consumer:
+            producer = [p for p in lock["pins"] if p.get("identity") == "swift-ai-sdk"]
+            if len(producer) != 1 or producer[0]["state"].get("revision") != PRODUCER_SHA:
+                raise ValueError("Canonical producer revision changed")
     if args.self_test:
         print(json.dumps({"local_validator_self_checks": self_test(inputs),
                           "data": "synthetic XML/lock; not native execution", "sdk": "NOT_RUN"}))
     elif args.verify_pin:
-        verify_pin(json.loads(args.verify_pin.read_text(encoding="utf-8")))
+        check_lock(args.verify_pin)
         print(json.dumps({"status": "RESOLVED_PIN_MATCHES", "native_execution": "NOT_ASSERTED",
                           "lock_sha256": sha(args.verify_pin.read_bytes())}))
     elif args.output:
@@ -225,8 +282,8 @@ def main() -> None:
         recorded = json.loads(args.inputs.read_text(encoding="utf-8"))
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
-        verify_pin(json.loads(args.resolved.read_text(encoding="utf-8")))
-        expected = (inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
+        check_lock(args.resolved)
+        expected = (inputs["consumer_cases"] + inputs["projection_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
                     if args.suite == "ownership" else inputs["sdk_cases"]
                     if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"])
         if args.verify_xcresult:

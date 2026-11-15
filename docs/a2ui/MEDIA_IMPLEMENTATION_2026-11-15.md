@@ -130,3 +130,19 @@ The source now enables the existing renderer's HTTPS-only remote image mode and
 built-in fullscreen viewer under the existing `HANLIN_A2UI_POC` prototype flag.
 Flag-off behavior remains disabled. This is not a production security acceptance;
 response/redirect/decoded-size and actual app XCUITest image/zoom checks remain open.
+
+## Focused iOS confirmation, 2026-11-15
+
+Run [43727280314](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43727280314),
+source `b68e0300904c1ac269e557f93f5d8861734b16e3`: **EXECUTED_PASS 8/8**
+(two corrected official-catalog/binding tests and six lexical media-URL controls).
+Actual A2UI and media sources compiled on iOS Simulator with Xcode 27.2/Swift 6.4.2.
+Authenticated input hashes, exact cases, raw artifact digest and toolchain are retained in
+`evidence/media-ios-43727280314.json`; xcresult/logs remain in artifact `14167208711`.
+The earlier iOS run `43725994662` remains TEST_FAILED (one pass/one failure on the old
+inline DynamicString schema), not relabeled as passing.
+
+Measured phases were 478s build/test, 70s package resolution, 44s scheme preflight,
+20s initial preflight and 19s result verification (657s job). No cache savings are claimed.
+The unaffected eight YouTube identity/document cases were not rerun. Playback, actual-app
+XCUITest, redirect/DNS/pixel limits and physical-device acceptance remain OPEN.

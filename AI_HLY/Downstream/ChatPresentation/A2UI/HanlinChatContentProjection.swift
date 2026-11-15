@@ -11,6 +11,7 @@ final class HanlinChatContentProjection {
         enum Content {
             case markdown(String)
             case surface(HanlinA2UIResultKey)
+            case unavailable
         }
         let id: UUID
         let content: Content
@@ -36,6 +37,7 @@ final class HanlinChatContentProjection {
                 guard key.runID == runID, key.resultID == part.id,
                       key.origin == .model(messageID: messageID),
                       let projection = store.projection(for: key), !projection.isClosed else { return nil }
+            case .unavailable: break
             }
         }
         self.runID = runID
@@ -60,15 +62,17 @@ final class HanlinChatContentProjection {
 /// discarded generation. The canonical session remains responsible for mutation/replay.
 @MainActor
 final class HanlinChatContentProjectionSource {
-    private let messages: [UUID: HanlinChatContentProjection]
+    private struct Identity: Hashable { let runID: UUID; let messageID: UUID }
+    private let messages: [Identity: HanlinChatContentProjection]
 
     init?(messages: [HanlinChatContentProjection]) {
-        guard messages.count <= 256, Set(messages.map(\.messageID)).count == messages.count else { return nil }
-        self.messages = Dictionary(uniqueKeysWithValues: messages.map { ($0.messageID, $0) })
+        let entries = messages.map { (Identity(runID: $0.runID, messageID: $0.messageID), $0) }
+        guard messages.count <= 256, Set(entries.map(\.0)).count == messages.count else { return nil }
+        self.messages = Dictionary(uniqueKeysWithValues: entries)
     }
 
     func projection(runID: UUID?, messageID: UUID, text: String) -> HanlinChatContentProjection? {
-        guard let runID, let message = messages[messageID], message.runID == runID,
+        guard let runID, let message = messages[Identity(runID: runID, messageID: messageID)],
               message.plainText == text else { return nil }
         return message
     }
