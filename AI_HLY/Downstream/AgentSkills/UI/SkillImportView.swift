@@ -145,6 +145,8 @@ struct SkillImportView: View {
                 .padding(.vertical, 4)
             }
 
+            SkillCompatibilityUnknownSection(identifierScope: "import")
+
             if !staged.metadata.preferredToolIDs.isEmpty {
                 Section(header: Text("Preferred Tools")) {
                     ForEach(staged.metadata.preferredToolIDs, id: \.self) { tool in
@@ -245,6 +247,7 @@ struct SkillImportView: View {
                 .padding(.vertical, 8)
             }
         }
+        .accessibilityIdentifier("hanlin-skill-import-preview-list")
     }
 
     private var zipImportSection: some View {

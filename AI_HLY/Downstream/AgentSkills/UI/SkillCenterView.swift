@@ -60,6 +60,7 @@ struct SkillCenterView: View {
                 }
             }
         }
+        .accessibilityIdentifier("hanlin-skill-center-list")
         .navigationTitle(SkillL10n.string("Skill Center"))
         .searchable(text: $searchQuery, prompt: SkillL10n.string("Search skills..."))
         .toolbar {
@@ -162,6 +163,10 @@ struct SkillCenterView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .lineLimit(2)
+                    Label(SkillL10n.string("Compatibility unknown"), systemImage: "questionmark.circle")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("hanlin-skill-center-compatibility-\(skillID.rawValue)")
                 }
             }
             .accessibilityIdentifier("hanlin-skill-center-skill-row-\(skillID.rawValue)")
@@ -174,6 +179,7 @@ struct SkillCenterView: View {
                 }
             ))
             .labelsHidden()
+            .accessibilityLabel(SkillL10n.string("Enabled"))
             .accessibilityIdentifier("hanlin-skill-center-toggle-\(skillID.rawValue)")
         }
         .padding(.vertical, 2)

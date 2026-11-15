@@ -204,10 +204,11 @@ struct SkillStoreAndImportTests {
 
     @Test("Direct markdown SKILL.md file installs successfully into store")
     func directMarkdownSkillInstallsSuccessfully() throws {
+        let skillName = "direct-md-\(UUID().uuidString.lowercased())"
         let tempMD = FileManager.default.temporaryDirectory.appendingPathComponent("test-direct-\(UUID().uuidString).md")
         let content = """
         ---
-        name: direct-md-skill
+        name: \(skillName)
         description: Installed from direct markdown
         ---
 
@@ -219,14 +220,20 @@ struct SkillStoreAndImportTests {
 
         let importer = SkillImporter.shared
         let staged = try importer.stageAndInspect(fileURL: tempMD)
-        #expect(staged.skillID.rawValue == "direct-md-skill")
+        defer { staged.cleanup() }
+        #expect(staged.skillID.rawValue == skillName)
         #expect(staged.parsedMarkdown.description == "Installed from direct markdown")
+        #expect(staged.resources.isEmpty, "Instruction-only skills must not need executable resources")
+        #expect(!SkillStore.shared.allCustomSkillDescriptors().contains { $0.id == staged.skillID },
+                "Passive import preview must not install the skill")
 
         let descriptor = try importer.install(staged: staged)
         defer { SkillStore.shared.deleteCustomSkill(skillID: descriptor.id) }
 
-        #expect(descriptor.id.rawValue == "direct-md-skill")
+        #expect(descriptor.id.rawValue == skillName)
         #expect(SkillStore.shared.allCustomSkillDescriptors().contains { $0.id == descriptor.id })
+        #expect(SkillStore.shared.listResources(for: descriptor.id).isEmpty)
+        #expect(SkillStore.shared.isSkillEnabled(id: descriptor.id))
     }
 
     @Test("Failed replacement preserves previously installed skill atomically")

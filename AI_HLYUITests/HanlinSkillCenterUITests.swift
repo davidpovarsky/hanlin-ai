@@ -45,16 +45,15 @@ final class HanlinSkillCenterUITests: XCTestCase {
         if !codeRow.waitForExistence(timeout: 5) {
             app.swipeUp()
         }
-        if codeRow.waitForExistence(timeout: 5) {
-            tapElement(codeRow)
-            let enableToggle = skillDetailToggle()
-            XCTAssertTrue(enableToggle.waitForExistence(timeout: 10), "Enable toggle not found in SkillDetailView")
+        XCTAssertTrue(codeRow.waitForExistence(timeout: 5), "System skill must be present; do not silently skip detail acceptance")
+        tapElement(codeRow)
+        assertUnknownCompatibility(scope: "detail")
+        let enableToggle = skillDetailToggle()
+        XCTAssertTrue(enableToggle.waitForExistence(timeout: 10), "Enable toggle not found in SkillDetailView")
 
-            let backButton = app.navigationBars.buttons.firstMatch
-            if backButton.exists && backButton.isHittable {
-                backButton.tap()
-            }
-        }
+        let backButton = app.navigationBars.buttons.firstMatch
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
+        tapElement(backButton)
     }
 
     private func replaceText(in element: XCUIElement, with newText: String) {
@@ -66,27 +65,21 @@ final class HanlinSkillCenterUITests: XCTestCase {
         element.typeText(newText)
     }
 
+    private func toggleState(_ element: XCUIElement) -> Bool? {
+        guard element.exists else { return nil }
+        if let value = element.value as? String {
+            switch value.lowercased() {
+            case "1", "on", "true": return true
+            case "0", "off", "false": return false
+            default: return nil
+            }
+        }
+        if let value = element.value as? Int, value == 0 || value == 1 { return value == 1 }
+        return nil
+    }
+
     private func isToggleOn(_ element: XCUIElement) -> Bool {
-        let target: XCUIElement
-        if element.elementType == .switch && element.exists {
-            target = element
-        } else if app.switches["hanlin-skill-detail-enable-toggle"].firstMatch.exists {
-            target = app.switches["hanlin-skill-detail-enable-toggle"].firstMatch
-        } else if app.switches.firstMatch.exists {
-            target = app.switches.firstMatch
-        } else if element.exists {
-            target = element
-        } else {
-            return false
-        }
-        guard target.exists else { return false }
-        if let valStr = target.value as? String {
-            return valStr == "1" || valStr.lowercased() == "on" || valStr.lowercased() == "true"
-        }
-        if let valInt = target.value as? Int {
-            return valInt == 1
-        }
-        return false
+        toggleState(element) == true
     }
 
     private func skillDetailToggle() -> XCUIElement {
@@ -94,40 +87,31 @@ final class HanlinSkillCenterUITests: XCTestCase {
         if sw.waitForExistence(timeout: 3) { return sw }
         let descendantSwitch = app.descendants(matching: .switch)["hanlin-skill-detail-enable-toggle"].firstMatch
         if descendantSwitch.waitForExistence(timeout: 2) { return descendantSwitch }
-        let anySw = app.switches.firstMatch
-        if anySw.waitForExistence(timeout: 2) { return anySw }
         return app.descendants(matching: .any)["hanlin-skill-detail-enable-toggle"].firstMatch
     }
 
     private func tapToggle(_ element: XCUIElement) {
-        let target: XCUIElement
-        if element.elementType == .switch && element.exists {
-            target = element
-        } else if app.switches["hanlin-skill-detail-enable-toggle"].firstMatch.exists {
-            target = app.switches["hanlin-skill-detail-enable-toggle"].firstMatch
-        } else if app.switches.firstMatch.exists {
-            target = app.switches.firstMatch
-        } else {
-            target = element
-        }
-
-        if target.isHittable {
-            target.tap()
-        } else if target.elementType == .switch {
-            target.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        } else {
-            target.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
-        }
+        tapElement(element)
     }
 
     @discardableResult
     private func waitForToggle(_ element: XCUIElement, toBe targetState: Bool, timeout: TimeInterval = 10) -> Bool {
         let predicate = NSPredicate { _, _ in
-            self.isToggleOn(element) == targetState
+            self.toggleState(element) == targetState
         }
         let exp = expectation(for: predicate, evaluatedWith: element)
         let result = XCTWaiter.wait(for: [exp], timeout: timeout)
         return result == .completed
+    }
+
+    private func assertUnknownCompatibility(scope: String, file: StaticString = #filePath, line: UInt = #line) {
+        let status = app.descendants(matching: .any)["hanlin-skill-\(scope)-compatibility-status"].firstMatch
+        XCTAssertTrue(status.waitForExistence(timeout: 5), file: file, line: line)
+        let unknown = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "Unknown"), object: status)
+        XCTAssertEqual(XCTWaiter.wait(for: [unknown], timeout: 5), .completed, file: file, line: line)
+        let lastTested = app.descendants(matching: .any)["hanlin-skill-\(scope)-compatibility-last-tested"].firstMatch
+        XCTAssertTrue(lastTested.waitForExistence(timeout: 5), file: file, line: line)
+        XCTAssertEqual(lastTested.value as? String, "Not recorded", file: file, line: line)
     }
 
     func testCreateEditDisableDeleteCustomSkill() throws {
@@ -174,11 +158,13 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(createdRow)
 
         // 3. Disable
+        assertUnknownCompatibility(scope: "detail")
         let enableToggle = skillDetailToggle()
         XCTAssertTrue(enableToggle.waitForExistence(timeout: 10), "Enable toggle not found in detail view")
         XCTAssertTrue(isToggleOn(enableToggle), "Skill should initially be enabled")
         tapToggle(enableToggle)
         XCTAssertTrue(waitForToggle(enableToggle, toBe: false, timeout: 10), "Skill should be toggled off")
+        assertUnknownCompatibility(scope: "detail")
 
         // 4. Leave and reopen to assert disabled persisted
         let backButton = app.navigationBars.buttons.firstMatch
@@ -195,6 +181,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         // 5. Re-enable
         tapToggle(reopenedToggle)
         XCTAssertTrue(waitForToggle(reopenedToggle, toBe: true, timeout: 10), "Skill should be re-enabled")
+        assertUnknownCompatibility(scope: "detail")
 
         // 6. Edit
         let editButton = app.buttons["hanlin-skill-detail-edit-button"].firstMatch
@@ -359,18 +346,22 @@ final class HanlinSkillCenterUITests: XCTestCase {
         // Verify preview shows title, ID, SHA-256
         let previewTitle = app.descendants(matching: .any)["hanlin-skill-import-preview-title"].firstMatch
         XCTAssertTrue(previewTitle.waitForExistence(timeout: 10), "Preview title not found")
+        assertUnknownCompatibility(scope: "import")
 
         let originSHA = app.descendants(matching: .any)["hanlin-skill-import-sha256"].firstMatch
         XCTAssertTrue(originSHA.waitForExistence(timeout: 5), "SHA-256 not found in preview")
 
         let installButton = app.buttons["hanlin-skill-import-install-button"].firstMatch
         XCTAssertTrue(installButton.waitForExistence(timeout: 5), "Install button not found in preview")
+        XCTAssertTrue(installButton.isEnabled, "Unknown compatibility must not block installing instructions/resources")
         tapElement(installButton)
 
         // Verify imported skill appears in skill center list
         let importedRow = app.descendants(matching: .any)["hanlin-skill-center-skill-row-ui-import-skill"].firstMatch
         if !importedRow.waitForExistence(timeout: 5) { app.swipeUp() }
         XCTAssertTrue(importedRow.waitForExistence(timeout: 10), "Imported skill row not found in catalog")
+        tapElement(importedRow)
+        assertUnknownCompatibility(scope: "detail")
     }
 
     func testInstallSkillFromURL() throws {
@@ -594,12 +585,20 @@ final class HanlinSkillCenterUITests: XCTestCase {
         }
     }
 
-    private func tapElement(_ element: XCUIElement) {
-        if element.isHittable {
-            element.tap()
-        } else if element.exists {
-            element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+    private func tapElement(_ element: XCUIElement, file: StaticString = #filePath, line: UInt = #line) {
+        for _ in 0..<6 where !element.isHittable {
+            let containers = ["hanlin-skill-detail-list", "hanlin-skill-center-list", "hanlin-skill-import-preview-list"]
+            guard let list = containers.map({ app.descendants(matching: .any)[$0].firstMatch })
+                .first(where: { $0.exists && $0.isHittable }) else { break }
+            list.swipeUp()
         }
+        let hittable = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            element.exists && element.isHittable
+        }, object: element)
+        let result = XCTWaiter.wait(for: [hittable], timeout: 5)
+        XCTAssertEqual(result, .completed, "Expected an accessible, hittable element", file: file, line: line)
+        guard result == .completed else { return }
+        element.tap()
     }
 
     private func selectTab(identifier: String, labels: [String] = []) -> Bool {
