@@ -23,6 +23,14 @@ struct MiniAppsServices {
         packageManagement: { throw IntegrationError.unavailable }
     )
 
+    /// Activated by the app composition root only after the existing services
+    /// dependency cut and target graph have been delivered and verified.
+    static func connected(to provider: HanlinMiniAppsProvider) -> Self {
+        Self(catalog: { try await provider.catalog() },
+             launch: { try await provider.launch($0) },
+             packageManagement: { try provider.packageManagement() })
+    }
+
     /// A real canonical discovery provider is injected by the existing host.
     init(discovery: any HanlinMiniAppDiscovery,
          launch: @escaping (HanlinMiniAppCatalogItem) async throws -> AnyView,

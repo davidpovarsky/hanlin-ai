@@ -2,6 +2,9 @@
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
+if [[ -f Scripts/CI/IntegrationValidation/miniapps_provider_sources.json ]]; then
+  exec bash Scripts/CI/IntegrationValidation/run_provider.sh
+fi
 evidence="$root/build/integration-validation-evidence"
 mkdir -p "$evidence"
 actual_sha="$(git rev-parse HEAD)"

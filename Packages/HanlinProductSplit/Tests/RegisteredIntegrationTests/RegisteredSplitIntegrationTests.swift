@@ -1,7 +1,7 @@
 import Foundation
 import HanlinMiniAppCore
 import HanlinPlatformContracts
-import HanlinProductSplit
+@testable import HanlinProductSplit
 import Testing
 
 /// Tests the exported leaf product against the real canonical broker. These
@@ -98,5 +98,25 @@ import Testing
         await #expect(throws: SplitBridgeFailure.transportUnavailable) {
             _ = try await receiver.receive(reference: request.id, context: context, now: request.issuedAt)
         }
+    }
+
+    @Test func recoveryDecisionSurvivesSerializationAndCannotReverse() throws {
+        let source = try SplitStoreSnapshot(storeID: "fixture.recovery.source", revision: 1,
+                                            files: ["state.json": Data("original".utf8)])
+        let destination = try SplitStoreSnapshot(storeID: "fixture.recovery.destination", revision: 0, files: [:])
+        let plan = try SplitMigrationPlan(id: HanlinMigrationID(validating: "fixture.recovery"),
+                                          source: source, destination: destination,
+                                          copies: ["state.json": "state.json"])
+        let before = try SplitMigrationJournal(plan: plan)
+        var after = before
+        _ = try after.apply(source: source, current: destination)
+        let legacy = SplitMigrationIntent(kind: .apply, before: before, after: after)
+        let decodedLegacy = try JSONDecoder().decode(SplitMigrationIntent.self, from: JSONEncoder().encode(legacy))
+        #expect(decodedLegacy.recoveryTarget == nil)
+        let decided = decodedLegacy.selecting(.before)
+        let restored = try JSONDecoder().decode(SplitMigrationIntent.self, from: JSONEncoder().encode(decided))
+        try restored.validate()
+        #expect(restored.recoveryTarget == .before)
+        #expect(restored.selecting(.after).recoveryTarget == .before)
     }
 }

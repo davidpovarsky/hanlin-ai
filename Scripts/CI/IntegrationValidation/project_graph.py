@@ -1,5 +1,6 @@
 """Read the checked-in OpenStep project without Xcode or third-party packages."""
 import re
+import hashlib
 
 
 def parse_project(text):
@@ -52,7 +53,7 @@ def parse_project(text):
     return project
 
 
-def validate_graph(project):
+def validate_graph(project, provider_manifest=None):
     objects = project["objects"]
     root = objects[project["rootObject"]]
     targets = [objects[key] for key in root["targets"]]
@@ -63,15 +64,40 @@ def validate_graph(project):
     groups = [objects[key]["path"] for key in mini["fileSystemSynchronizedGroups"]]
     assert groups == ["HanlinMiniAppsApp"], "MiniApps must not compile the AI source tree"
     assert "HanlinMiniAppsApp" not in [objects[key]["path"] for key in ai["fileSystemSynchronizedGroups"]]
-    assert {objects[key]["isa"] for key in mini["buildPhases"]} == {
-        "PBXSourcesBuildPhase", "PBXFrameworksBuildPhase", "PBXResourcesBuildPhase"
-    }, "No runtime generator/build shell phases belong to this independent target"
+    phases = {objects[key]["isa"] for key in mini["buildPhases"]}
+    expected_phases = {"PBXSourcesBuildPhase", "PBXFrameworksBuildPhase", "PBXResourcesBuildPhase"}
+    if provider_manifest:
+        expected_phases |= {"PBXShellScriptBuildPhase", "PBXCopyFilesBuildPhase"}
+        expected_clones = set()
+        for original_id in provider_manifest["inherited_build_phases"]:
+            clone_id = "F9" + hashlib.sha256(("phase:" + original_id).encode()).hexdigest()[:22].upper()
+            expected_clones.add(clone_id)
+            clone, original = objects[clone_id], objects[original_id]
+            assert {k: v for k, v in clone.items() if k != "files"} == {
+                k: v for k, v in original.items() if k != "files"
+            }, "Native preparation must reuse the existing build command"
+            if "files" in original:
+                assert [objects[key] for key in clone["files"]] == [objects[key] for key in original["files"]]
+        actual_clones = {key for key in mini["buildPhases"]
+                         if objects[key]["isa"] in {"PBXShellScriptBuildPhase", "PBXCopyFilesBuildPhase"}}
+        assert actual_clones == expected_clones, "Unreviewed native build phase"
+        source_phase = next(objects[key] for key in mini["buildPhases"] if objects[key]["isa"] == "PBXSourcesBuildPhase")
+        source_paths = {objects[objects[key]["fileRef"]]["path"] for key in source_phase["files"]}
+        assert source_paths == set(provider_manifest["swift_sources"] + provider_manifest["native_sources"])
+        assert not source_paths.intersection(provider_manifest["excluded_ai_sources"])
+        resource_phase = next(objects[key] for key in mini["buildPhases"] if objects[key]["isa"] == "PBXResourcesBuildPhase")
+        assert {objects[objects[key]["fileRef"]]["path"] for key in resource_phase["files"]} == set(provider_manifest["resources"])
+    assert phases == expected_phases, "Unexpected source/build phase"
     products = {objects[key]["productName"] for key in mini["packageProductDependencies"]}
-    assert products == {"HanlinPlatformContracts", "HanlinMiniAppCore", "HanlinProductSplit"}
+    assert products == (set(provider_manifest["products"]) if provider_manifest else {
+        "HanlinPlatformContracts", "HanlinMiniAppCore", "HanlinProductSplit"})
     frameworks = next(objects[key] for key in mini["buildPhases"]
                       if objects[key]["isa"] == "PBXFrameworksBuildPhase")
-    linked = {objects[objects[key]["productRef"]]["productName"] for key in frameworks["files"]}
+    linked = {objects[objects[key]["productRef"]]["productName"] for key in frameworks["files"]
+              if "productRef" in objects[key]}
     assert linked == products, "Every declared MiniApps product must actually be linked"
+    native_refs = {objects[key]["fileRef"] for key in frameworks["files"] if "fileRef" in objects[key]}
+    assert native_refs == (set(provider_manifest["native_framework_refs"]) if provider_manifest else set())
     for target in (mini, ai):
         configs = objects[target["buildConfigurationList"]]["buildConfigurations"]
         for key in configs:

@@ -72,6 +72,404 @@
 			"isa" = "PBXBuildFile";
 			"productRef" = "F80000000000000000000053";
 		};
+		F926BAA61CFBBF736F943D1C /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F941CCAECB1339E350064E9C";
+		};
+		F919A2D150582186EC03055E /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F99C028C1BEDFB7ED7A9413C";
+		};
+		F9A7168DD69AF06B26512861 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9B37F729D5A935EE38EB9DF";
+		};
+		F924378CF26D00CB7F7EEC23 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9191879C1C53D93BAB6B49E";
+		};
+		F9BAF3C36F75176BE813FFBA /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9F994EA627000C0D4E3437D";
+		};
+		F93B6615FF3AA28B4EE9FB52 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9061B29280C18C55699611D";
+		};
+		F91A2CD0E4C773FACD1057CC /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F906889EE8DD5D2169D6158F";
+		};
+		F93292CE6C9A8178EBCFF431 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F93D6670699B3C28444E241B";
+		};
+		F978CD6315961BA5F213AA17 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F917CA751184E20BD6524A38";
+		};
+		F937D1B81E0F6C9BDBC18F54 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F989DEF1DBD097C985F528CE";
+		};
+		F9549CA14D22D01A0091E9F0 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9243749B55B2307F654AFD9";
+		};
+		F9C58D54CA9B97BC2846CBFB /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F97162CC4DC3CEB4C48D931B";
+		};
+		F9E2E6A0B1E8E8B235B363D9 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9FEC42CECB9938EBB89CB1C";
+		};
+		F9797E6100CE6FFBBD6B8947 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9B2004098C1F18CA07FA1D0";
+		};
+		F9DD8F610DA246042014D33D /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9409C4DA063B95734F89A25";
+		};
+		F9568B82BD5983916B5309AB /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9F9F6EC4411E84815231210";
+		};
+		F94B5188BE52897CECBB7E56 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9EACA4E50B512A5F8B9A243";
+		};
+		F9014111B255B287E01020A9 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F97DAF836FAE515689F63530";
+		};
+		F930FE7EC9C8BD035663686F /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F93EE5CA287939E7B23D6ED4";
+		};
+		F99489AAEC2699DE5F73F639 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F925A7C73C9E573AFB0D51AD";
+		};
+		F96E1FCEED46248D2FB31892 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F957D85796EE9B5127EE705C";
+		};
+		F94D8701F8392350AD1F80BA /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F90E5CFC5FC9D7179D9EAF3D";
+		};
+		F9B572CF6993E3A12672F972 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F90353D47FC1553218C97065";
+		};
+		F9DAE7385ADBBC89CDE5E536 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9C2EBA8497E39AA76E2B493";
+		};
+		F9F9D30968EEEDA3F3800C18 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F996452DE60C13D09E600A9D";
+		};
+		F971AB5DAC663C5C5BABC3D0 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9EF6BC155457DD73D5F2DCE";
+		};
+		F9065951FE09690D10FD86BA /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9AE00EFBE479C82EA56DE45";
+		};
+		F9075F667C6F2B3907F93CF6 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9FE17629CC354C8FDD78705";
+		};
+		F9AC7BF5796F643240613A34 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F95D166440EF0D9E022E8DFC";
+		};
+		F9FEBF450F73E6A11708D706 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F96D73DA7E56C32BB3517D43";
+		};
+		F98FCF35F66BDB75D2BD2C26 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F95EBFEE57DB00428A43BA91";
+		};
+		F92AED25CA3A893A88D96539 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9B71480FB9E997714628617";
+		};
+		F9F93B75F14013482FAEC8D1 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F97189E5E14A556783C10802";
+		};
+		F95C461012941560A18E2A86 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F924DF99EBC22E09EA3A278A";
+		};
+		F91C97CAD705D02EB824679C /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F90B0E8A8295990D23159B2D";
+		};
+		F9AF9779156078049ADD9DA2 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F97522232A79E50E63C53A05";
+		};
+		F9F48510BE6A8237708F2D98 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F91130AF8F44CFF864A56CBA";
+		};
+		F9CC6BD0EA34622482CEC93F /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F901D12815CA2B59E918975E";
+		};
+		F91E2798A602F51E762BA695 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F96FC86557E62553EB630364";
+		};
+		F911B798265DB9D6AE886819 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F921C7FD2F551E31A04B411A";
+		};
+		F966B6F6468D8452FFBDB068 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9A7F8D015CC907B8FE211EC";
+		};
+		F9ABE08ECC49366EB7FC88ED /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9415FFFD1AC1AE5AE9952A5";
+		};
+		F9E89A53572165B5CB293AE3 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9595F7D8F26600EA36321D2";
+		};
+		F9EEC1079179DE7EFAAB8D69 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9116AE43189427BB7CBF225";
+		};
+		F99E1BAD79EEC034BC463E5E /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F920652523B64B0B76E91592";
+		};
+		F95271399D6B54662B8A092E /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9D3D40A095AF7CDCEF31280";
+		};
+		F9F64CADDE7E75DEDCB05CFB /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F941675901BB82DB8BF84659";
+		};
+		F9756D2C1FF0ECE8B74A8AB0 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F99900BD4709971816C29FD8";
+		};
+		F9177D0AF8E6DED4A308A0DB /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F99657AB9B8FB8BAE81DD275";
+		};
+		F922B22F23B0A6225B65497E /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9D282FD3FA832B7C20A6C34";
+		};
+		F92551E2D7B5EE512BC1A77D /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9BB20C2A2B42D250EE7C619";
+		};
+		F94C943A8C4DA36C05990D69 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9363FB7EB6D146290FAA257";
+		};
+		F9AB7BA0C54C9DBD568F7CD4 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F97BDC8C07A02A59DBAF7651";
+		};
+		F9BD2F0E145BA5C6B07BE658 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F953F2DE50D5B41F8FE782D1";
+		};
+		F943ACF1738E427FD8AB181D /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9B938C8C4343C19E0C725A2";
+		};
+		F9DFDDAC9FCE9C9E5446BA7D /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F98E21000F8A914656F4B896";
+		};
+		F933B01A1F03F60E0A178CDB /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F91FF405054C84F145BAB8A0";
+		};
+		F9FCC45A8C50D4F479FBE6D4 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F913125480E8702112576DCF";
+		};
+		F9DBD6D3816E8F1C48D231D1 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F993D52DBB145170376AC62D";
+		};
+		F93152CA8290D60376A9B40F /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F967D092C0B9BACC43F79BF1";
+		};
+		F9C46B1A91E2E1457C183213 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F90B0035CE48D56B62D876D0";
+		};
+		F9A28E238B623A30D27ABB2A /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F91A39054E62188FF23F5F4F";
+		};
+		F9B67C381C184CA75861D454 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9FD92492251A588A4622B02";
+		};
+		F9C3D4462172F4DB1DF60D68 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F934D5F5D981393869B07EA5";
+		};
+		F9D25962D2C3AD3EBF8BA23E /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9F13C94DEC6B2AE6C3F84D3";
+		};
+		F97D901B8D1F022C7307B5AF /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F90C6A351FCA59A4E0013A70";
+		};
+		F978CE1ED732017D707A34EC /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F97B211181351BED04A3723A";
+		};
+		F9ED8779AECBAFC9F475598C /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9FBF15EC4ECF2E3A54420CC";
+		};
+		F9CD865D0FD59DC731C24571 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F94ED49DF22908056F02FCDB";
+		};
+		F943BC9C1402B938E6F0D23B /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F96BB46318B6DEA4140F2013";
+		};
+		F991FE49F9098223972B6DF0 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9DBD852951B6228203FC716";
+		};
+		F9DF01B0CFA63784555EF624 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9DE05773B2A6CA032B53169";
+		};
+		F987671FAFD2F47C4B1CFA7D /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F96A6FD9A21D4AAA3A3597DF";
+		};
+		F97F2034C82C07A1C253F2D2 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F93DF06BAE1A515FE7381A2D";
+		};
+		F946FB32616C40A65485DF3D /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9EC1A38176104300FFEFEF2";
+		};
+		F974C6DF76408B8D4FA4E173 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000027";
+		};
+		F9E0F90E8E1333FCDF98B861 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000026";
+		};
+		F906995653CCC6211D86C5DD /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000025";
+		};
+		F937A4DFA40FA4AD3B3EBAD2 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "F70000000000000000000012";
+		};
+		F9FCD3BDA06CFA30E4AA730C /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000018";
+		};
+		F9ABE43F511370758F07C7E8 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000017";
+		};
+		F93EB89B0A963CC198D1BFC8 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000024";
+		};
+		F9DC0A1E7E850A29CDA11B12 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000021";
+		};
+		F9FCF937B1D033EEF88BC791 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000019";
+		};
+		F9608CD25321EC39B0BCAF25 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000022";
+		};
+		F9D0C9DC8117CA25356B50EE /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000023";
+		};
+		F924615C7CFBE9C736214744 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000020";
+		};
+		F9ECED70DC2E4A54C64B7B88 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "F70000000000000000000021";
+		};
+		F9858E7B262BF62A8990F179 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "F70000000000000000000041";
+		};
+		F92433DD2BCE9985EC02A861 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "F70000000000000000000031";
+		};
+		F9DAF64522DA27E9836174A8 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "A10000000000000000000014";
+		};
+		F9DC71D30D21C657388AE279 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "A10000000000000000000012";
+		};
+		F9489FCED2036A226176F456 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "D7D5EE472DD58D7F00B89AAD";
+		};
+		F940E259EEB6D25937BE92C4 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A10000000000000000000020";
+		};
+		F9C1C5A10B68BC2E49F340AC /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A10000000000000000000021";
+		};
+		F9F9C1AF59048DC600017718 /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A10000000000000000000020";
+			"settings" = {
+				"ATTRIBUTES" = ("CodeSignOnCopy", "RemoveHeadersOnCopy", );
+			};
+		};
+		F909E2BBB934C271506C7F1B /* W1-007 */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A10000000000000000000021";
+			"settings" = {
+				"ATTRIBUTES" = ("CodeSignOnCopy", "RemoveHeadersOnCopy", );
+			};
+		};
+		F927041F0B429D7A68AD6E86 /* W1-007 UI */ = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F9B7E7C84FC34223BA56BFA6";
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +515,13 @@
 			remoteGlobalIDString = E60000000000000000000050;
 			remoteInfo = ChavrusaChatNotificationService;
 		};
+		F9FA458A16A0B0F810CDD884 /* W1-007 UI */ = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "F80000000000000000000001";
+			"remoteInfo" = "HanlinMiniApps";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -156,6 +561,15 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F93D28AB8E5150AD3A29B2C9 /* W1-007 */ = {
+			"isa" = "PBXCopyFilesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"dstPath" = "";
+			"dstSubfolderSpec" = "10";
+			"files" = ("F9F9C1AF59048DC600017718", "F909E2BBB934C271506C7F1B", );
+			"name" = "Embed Frameworks";
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -177,6 +591,469 @@
 			"explicitFileType" = "wrapper.application";
 			"includeInIndex" = "0";
 			"path" = "HanlinMiniApps.app";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		F941CCAECB1339E350064E9C /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F99C028C1BEDFB7ED7A9413C /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9B37F729D5A935EE38EB9DF /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9191879C1C53D93BAB6B49E /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Capabilities/HanlinHostCapabilityAuthority.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9F994EA627000C0D4E3437D /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9061B29280C18C55699611D /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F906889EE8DD5D2169D6158F /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Core/HanlinHostServiceError.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F93D6670699B3C28444E241B /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Core/HanlinHostServicesBroker.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F917CA751184E20BD6524A38 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F989DEF1DBD097C985F528CE /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9243749B55B2307F654AFD9 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F97162CC4DC3CEB4C48D931B /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9FEC42CECB9938EBB89CB1C /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9B2004098C1F18CA07FA1D0 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/MCP/Core/MCPError.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9409C4DA063B95734F89A25 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/MiniApps/CompiledMiniAppExposureRegistry.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9F9F6EC4411E84815231210 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9EACA4E50B512A5F8B9A243 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F97DAF836FAE515689F63530 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F93EE5CA287939E7B23D6ED4 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F925A7C73C9E573AFB0D51AD /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F957D85796EE9B5127EE705C /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F90E5CFC5FC9D7179D9EAF3D /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeExecutionInputArtifact.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F90353D47FC1553218C97065 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeFileLayout.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9C2EBA8497E39AA76E2B493 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeJobStore.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F996452DE60C13D09E600A9D /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeModels.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9EF6BC155457DD73D5F2DCE /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimePolicy.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9AE00EFBE479C82EA56DE45 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeQueuedExecution.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9FE17629CC354C8FDD78705 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F95D166440EF0D9E022E8DFC /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F96D73DA7E56C32BB3517D43 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreOutputCapture.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F95EBFEE57DB00428A43BA91 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreRuntimeService.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9B71480FB9E997714628617 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Lifecycle/LifecycleExecutionBroker.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F97189E5E14A556783C10802 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRuntimeBridge.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F924DF99EBC22E09EA3A278A /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F90B0E8A8295990D23159B2D /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F97522232A79E50E63C53A05 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F91130AF8F44CFF864A56CBA /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F901D12815CA2B59E918975E /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F96FC86557E62553EB630364 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F921C7FD2F551E31A04B411A /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9A7F8D015CC907B8FE211EC /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/PythonQueuedExecution.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9415FFFD1AC1AE5AE9952A5 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9595F7D8F26600EA36321D2 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9116AE43189427BB7CBF225 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeDiagnostics.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F920652523B64B0B76E91592 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeService.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9D3D40A095AF7CDCEF31280 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F941675901BB82DB8BF84659 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F99900BD4709971816C29FD8 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F99657AB9B8FB8BAE81DD275 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9D282FD3FA832B7C20A6C34 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9BB20C2A2B42D250EE7C619 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9363FB7EB6D146290FAA257 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F97BDC8C07A02A59DBAF7651 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F953F2DE50D5B41F8FE782D1 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9B938C8C4343C19E0C725A2 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F98E21000F8A914656F4B896 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F91FF405054C84F145BAB8A0 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.cpp.objcpp";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRunner.mm";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F913125480E8702112576DCF /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.cpp.objcpp";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F993D52DBB145170376AC62D /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.cpp.objcpp";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Native/HanlinPythonNativeExtensions.mm";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F967D092C0B9BACC43F79BF1 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.LICENSE.txt";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F90B0035CE48D56B62D876D0 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.json";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.json";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F91A39054E62188FF23F5F4F /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.pem";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9FD92492251A588A4622B02 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonExecution.py";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F934D5F5D981393869B07EA5 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.json";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonNativeExtensions.json";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9F13C94DEC6B2AE6C3F84D3 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.json";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.lock.json";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F90C6A351FCA59A4E0013A70 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.py";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F97B211181351BED04A3723A /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/installer-1.1.0-py3-none-any.whl";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9FBF15EC4ECF2E3A54420CC /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/packaging-26.3-py3-none-any.whl";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F94ED49DF22908056F02FCDB /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/pyproject_hooks-1.3.3-py3-none-any.whl";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F96BB46318B6DEA4140F2013 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/resolvelib-1.2.1-py3-none-any.whl";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9DBD852951B6228203FC716 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Python/Resources/hanlin_native-1.0.0-py3-none-any.whl";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9DE05773B2A6CA032B53169 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F96A6FD9A21D4AAA3A3597DF /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.json.xcstrings";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F93DF06BAE1A515FE7381A2D /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.json";
+			"path" = "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9EC1A38176104300FFEFEF2 /* W1-007 */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "archive.zip";
+			"path" = "AI_HLY/RuntimeHostResources.zip";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F9B7E7C84FC34223BA56BFA6 /* W1-007 UI */ = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		F956B6CF50F924EFD80320F6 /* W1-007 UI */ = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.cfbundle";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsUITests.xctest";
 			"sourceTree" = "BUILT_PRODUCTS_DIR";
 		};
 /* End PBXFileReference section */
@@ -460,10 +1337,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8000000000000000000000B /* W1-006 */ = {
+		F8000000000000000000000B /* W1-007 */ = {
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("F800000000000000000000B5", "F800000000000000000000B6", "F800000000000000000000B7", );
+			"files" = ("F800000000000000000000B5", "F800000000000000000000B6", "F800000000000000000000B7", "F974C6DF76408B8D4FA4E173", "F9E0F90E8E1333FCDF98B861", "F906995653CCC6211D86C5DD", "F937A4DFA40FA4AD3B3EBAD2", "F9FCD3BDA06CFA30E4AA730C", "F9ABE43F511370758F07C7E8", "F93EB89B0A963CC198D1BFC8", "F9DC0A1E7E850A29CDA11B12", "F9FCF937B1D033EEF88BC791", "F9608CD25321EC39B0BCAF25", "F9D0C9DC8117CA25356B50EE", "F924615C7CFBE9C736214744", "F9ECED70DC2E4A54C64B7B88", "F9858E7B262BF62A8990F179", "F92433DD2BCE9985EC02A861", "F9DAF64522DA27E9836174A8", "F9DC71D30D21C657388AE279", "F9489FCED2036A226176F456", "F940E259EEB6D25937BE92C4", "F9C1C5A10B68BC2E49F340AC", );
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		F971AEEB7DD0AA1E3AAE7639 /* W1-007 UI */ = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = ();
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -488,38 +1371,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D7B6C3B82D50A55D004E3AD6 = {
-			isa = PBXGroup;
-			children = (
-				F80000000000000000000003,
-				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
-				B10000000000000000000003 /* AI_HLYTests */,
-				E30000000000000000000002 /* AI_HLYUITests */,
-				D20000000000000000000030 /* HanlinScriptingWidgets */,
-				E40000000000000000000030 /* ChavrusaChatShare */,
-				E50000000000000000000030 /* ChavrusaChatTranslationProvider */,
-				E60000000000000000000030 /* ChavrusaChatNotificationService */,
-				A10000000000000000000064 /* IOSSystemLite Resources */,
-				D73E23062D817B1300ACC644 /* Frameworks */,
-				D7B6C3C22D50A55D004E3AD6 /* Products */,
-				D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */,
-			);
-			sourceTree = "<group>";
+		D7B6C3B82D50A55D004E3AD6 /* W1-007 UI */ = {
+			"isa" = "PBXGroup";
+			"children" = ("F80000000000000000000003", "D7B6C3C32D50A55D004E3AD6", "B10000000000000000000003", "E30000000000000000000002", "D20000000000000000000030", "E40000000000000000000030", "E50000000000000000000030", "E60000000000000000000030", "A10000000000000000000064", "D73E23062D817B1300ACC644", "D7B6C3C22D50A55D004E3AD6", "D7C6558C2E6C731A0041F1C7", "F9F4C452EBF2FA6B1274B4D7", "F9B7E7C84FC34223BA56BFA6", );
+			"sourceTree" = "<group>";
 		};
-		D7B6C3C22D50A55D004E3AD6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F80000000000000000000002,
-				D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */,
-				B10000000000000000000002 /* AI_HLYTests.xctest */,
-				E30000000000000000000001 /* AI_HLYUITests.xctest */,
-				D20000000000000000000020 /* HanlinScriptingWidgets.appex */,
-				E40000000000000000000020 /* ChavrusaChatShare.appex */,
-				E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */,
-				E60000000000000000000020 /* ChavrusaChatNotificationService.appex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
+		D7B6C3C22D50A55D004E3AD6 /* W1-007 UI */ = {
+			"isa" = "PBXGroup";
+			"children" = ("F80000000000000000000002", "D7B6C3C12D50A55D004E3AD6", "B10000000000000000000002", "E30000000000000000000001", "D20000000000000000000020", "E40000000000000000000020", "E50000000000000000000020", "E60000000000000000000020", "F956B6CF50F924EFD80320F6", );
+			"name" = "Products";
+			"sourceTree" = "<group>";
+		};
+		F9F4C452EBF2FA6B1274B4D7 /* W1-007 */ = {
+			"isa" = "PBXGroup";
+			"children" = ("F941CCAECB1339E350064E9C", "F99C028C1BEDFB7ED7A9413C", "F9B37F729D5A935EE38EB9DF", "F9191879C1C53D93BAB6B49E", "F9F994EA627000C0D4E3437D", "F9061B29280C18C55699611D", "F906889EE8DD5D2169D6158F", "F93D6670699B3C28444E241B", "F917CA751184E20BD6524A38", "F989DEF1DBD097C985F528CE", "F9243749B55B2307F654AFD9", "F97162CC4DC3CEB4C48D931B", "F9FEC42CECB9938EBB89CB1C", "F9B2004098C1F18CA07FA1D0", "F9409C4DA063B95734F89A25", "F9F9F6EC4411E84815231210", "F9EACA4E50B512A5F8B9A243", "F97DAF836FAE515689F63530", "F93EE5CA287939E7B23D6ED4", "F925A7C73C9E573AFB0D51AD", "F957D85796EE9B5127EE705C", "F90E5CFC5FC9D7179D9EAF3D", "F90353D47FC1553218C97065", "F9C2EBA8497E39AA76E2B493", "F996452DE60C13D09E600A9D", "F9EF6BC155457DD73D5F2DCE", "F9AE00EFBE479C82EA56DE45", "F9FE17629CC354C8FDD78705", "F95D166440EF0D9E022E8DFC", "F96D73DA7E56C32BB3517D43", "F95EBFEE57DB00428A43BA91", "F9B71480FB9E997714628617", "F97189E5E14A556783C10802", "F924DF99EBC22E09EA3A278A", "F90B0E8A8295990D23159B2D", "F97522232A79E50E63C53A05", "F91130AF8F44CFF864A56CBA", "F901D12815CA2B59E918975E", "F96FC86557E62553EB630364", "F921C7FD2F551E31A04B411A", "F9A7F8D015CC907B8FE211EC", "F9415FFFD1AC1AE5AE9952A5", "F9595F7D8F26600EA36321D2", "F9116AE43189427BB7CBF225", "F920652523B64B0B76E91592", "F9D3D40A095AF7CDCEF31280", "F941675901BB82DB8BF84659", "F99900BD4709971816C29FD8", "F99657AB9B8FB8BAE81DD275", "F9D282FD3FA832B7C20A6C34", "F9BB20C2A2B42D250EE7C619", "F9363FB7EB6D146290FAA257", "F97BDC8C07A02A59DBAF7651", "F953F2DE50D5B41F8FE782D1", "F9B938C8C4343C19E0C725A2", "F98E21000F8A914656F4B896", "F91FF405054C84F145BAB8A0", "F913125480E8702112576DCF", "F993D52DBB145170376AC62D", "F967D092C0B9BACC43F79BF1", "F90B0035CE48D56B62D876D0", "F91A39054E62188FF23F5F4F", "F9FD92492251A588A4622B02", "F934D5F5D981393869B07EA5", "F9F13C94DEC6B2AE6C3F84D3", "F90C6A351FCA59A4E0013A70", "F97B211181351BED04A3723A", "F9FBF15EC4ECF2E3A54420CC", "F94ED49DF22908056F02FCDB", "F96BB46318B6DEA4140F2013", "F9DBD852951B6228203FC716", "F9DE05773B2A6CA032B53169", "F96A6FD9A21D4AAA3A3597DF", "F93DF06BAE1A515FE7381A2D", "F9EC1A38176104300FFEFEF2", );
+			"name" = "MiniApps Shared Implementation";
+			"sourceTree" = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -731,104 +1598,78 @@
 			productReference = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		F80000000000000000000001 /* W1-006 */ = {
+		F80000000000000000000001 /* W1-007 */ = {
 			"isa" = "PBXNativeTarget";
 			"buildConfigurationList" = "F80000000000000000000014";
-			"buildPhases" = ("F8000000000000000000000A", "F8000000000000000000000B", "F8000000000000000000000C", );
+			"buildPhases" = ("F989CF55282FA3F9E392899B", "F8000000000000000000000A", "F8000000000000000000000B", "F8000000000000000000000C", "F9071A6DEA050DF055F5A852", "F93D28AB8E5150AD3A29B2C9", );
 			"buildRules" = ();
 			"dependencies" = ();
 			"fileSystemSynchronizedGroups" = ("F80000000000000000000003", );
 			"name" = "HanlinMiniApps";
-			"packageProductDependencies" = ("F80000000000000000000051", "F80000000000000000000052", "F80000000000000000000053", );
+			"packageProductDependencies" = ("F80000000000000000000051", "F80000000000000000000052", "F80000000000000000000053", "C10000000000000000000027", "C10000000000000000000026", "C10000000000000000000025", "F70000000000000000000012", "C10000000000000000000018", "C10000000000000000000017", "C10000000000000000000024", "C10000000000000000000021", "C10000000000000000000019", "C10000000000000000000022", "C10000000000000000000023", "C10000000000000000000020", "F70000000000000000000021", "F70000000000000000000041", "F70000000000000000000031", "A10000000000000000000014", "A10000000000000000000012", "D7D5EE472DD58D7F00B89AAD", );
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
 			"productType" = "com.apple.product-type.application";
 		};
+		F9AB2938F7BF9D8F3F6C9844 /* W1-007 UI */ = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "F93E0A4F27E0E8A3EB607EE0";
+			"buildPhases" = ("F96EF6D85246FA36B39BE515", "F971AEEB7DD0AA1E3AAE7639", "F976DBE4F612C3D1CD89E778", );
+			"buildRules" = ();
+			"dependencies" = ("F9E5831AB1C275DD5941B1AB", );
+			"name" = "HanlinMiniAppsUITests";
+			"packageProductDependencies" = ();
+			"productName" = "HanlinMiniAppsUITests";
+			"productReference" = "F956B6CF50F924EFD80320F6";
+			"productType" = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D7B6C3B92D50A55D004E3AD6 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 2600;
-				TargetAttributes = {
-					D7B6C3C02D50A55D004E3AD6 = {
-						CreatedOnToolsVersion = 16.2;
+		D7B6C3B92D50A55D004E3AD6 /* W1-007 UI */ = {
+			"isa" = "PBXProject";
+			"attributes" = {
+				"BuildIndependentTargetsInParallel" = "1";
+				"LastSwiftUpdateCheck" = "1620";
+				"LastUpgradeCheck" = "2600";
+				"TargetAttributes" = {
+					"D7B6C3C02D50A55D004E3AD6" = {
+						"CreatedOnToolsVersion" = "16.2";
 					};
-					B10000000000000000000007 = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = D7B6C3C02D50A55D004E3AD6;
+					"B10000000000000000000007" = {
+						"CreatedOnToolsVersion" = "26.0";
+						"TestTargetID" = "D7B6C3C02D50A55D004E3AD6";
 					};
-					E30000000000000000000003 = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = D7B6C3C02D50A55D004E3AD6;
+					"E30000000000000000000003" = {
+						"CreatedOnToolsVersion" = "26.0";
+						"TestTargetID" = "D7B6C3C02D50A55D004E3AD6";
 					};
-					D20000000000000000000050 = {
-						CreatedOnToolsVersion = 26.0;
+					"D20000000000000000000050" = {
+						"CreatedOnToolsVersion" = "26.0";
 					};
-					E40000000000000000000050 = {
-						CreatedOnToolsVersion = 26.0;
+					"E40000000000000000000050" = {
+						"CreatedOnToolsVersion" = "26.0";
 					};
-					E50000000000000000000050 = {
-						CreatedOnToolsVersion = 26.0;
+					"E50000000000000000000050" = {
+						"CreatedOnToolsVersion" = "26.0";
 					};
-					E60000000000000000000050 = {
-						CreatedOnToolsVersion = 26.0;
+					"E60000000000000000000050" = {
+						"CreatedOnToolsVersion" = "26.0";
 					};
 				};
 			};
-			buildConfigurationList = D7B6C3BC2D50A55D004E3AD6 /* Build configuration list for PBXProject "AI_HLY" */;
-			developmentRegion = "zh-Hans";
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				"zh-Hans",
-				Base,
-				he,
-			);
-			mainGroup = D7B6C3B82D50A55D004E3AD6;
-			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				F8000000000000000000005A,
-				F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */,
-				F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */,
-				F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */,
-				F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */,
-				F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */,
-				A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */,
-				A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */,
-				A10000000000000000000048 /* XCLocalSwiftPackageReference "HanlinExpoNativeAPI" */,
-				A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */,
-				A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */,
-				A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */,
-				A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */,
-				A10000000000000000000041 /* XCRemoteSwiftPackageReference "SWCompression" */,
-				A10000000000000000000042 /* XCRemoteSwiftPackageReference "swift-log" */,
-				D7D5EE3A2DD58CF000B89AAD /* XCRemoteSwiftPackageReference "CoreXLSX" */,
-				D7D5EE3D2DD58D0600B89AAD /* XCRemoteSwiftPackageReference "RichTextKit" */,
-				D7D5EE402DD58D3800B89AAD /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
-				D7D5EE462DD58D7F00B89AAD /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
-				D7D5EE492DD590A100B89AAD /* XCRemoteSwiftPackageReference "MarkdownUI" */,
-                C60000000000000000000003 /* XCRemoteSwiftPackageReference "hanlin-streaming-markdown" */,
-				D7D5EE4C2DD590C500B89AAD /* XCRemoteSwiftPackageReference "SwiftSoup" */,
-				D786F6AE2E63DE70004DAC20 /* XCRemoteSwiftPackageReference "LLM" */,
-			);
-			preferredProjectObjectVersion = 77;
-			productRefGroup = D7B6C3C22D50A55D004E3AD6 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				F80000000000000000000001,
-				D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */,
-				B10000000000000000000007 /* AI_HLYTests */,
-				E30000000000000000000003 /* AI_HLYUITests */,
-				D20000000000000000000050 /* HanlinScriptingWidgets */,
-				E40000000000000000000050 /* ChavrusaChatShare */,
-				E50000000000000000000050 /* ChavrusaChatTranslationProvider */,
-				E60000000000000000000050 /* ChavrusaChatNotificationService */,
-			);
+			"buildConfigurationList" = "D7B6C3BC2D50A55D004E3AD6";
+			"developmentRegion" = "zh-Hans";
+			"hasScannedForEncodings" = "0";
+			"knownRegions" = ("en", "zh-Hans", "Base", "he", );
+			"mainGroup" = "D7B6C3B82D50A55D004E3AD6";
+			"minimizedProjectReferenceProxies" = "1";
+			"packageReferences" = ("F8000000000000000000005A", "F70000000000000000000010", "F70000000000000000000020", "F70000000000000000000050", "F70000000000000000000030", "F70000000000000000000040", "A10000000000000000000046", "A10000000000000000000047", "A10000000000000000000048", "A10000000000000000000045", "A10000000000000000000044", "A10000000000000000000043", "A10000000000000000000040", "A10000000000000000000041", "A10000000000000000000042", "D7D5EE3A2DD58CF000B89AAD", "D7D5EE3D2DD58D0600B89AAD", "D7D5EE402DD58D3800B89AAD", "D7D5EE462DD58D7F00B89AAD", "D7D5EE492DD590A100B89AAD", "C60000000000000000000003", "D7D5EE4C2DD590C500B89AAD", "D786F6AE2E63DE70004DAC20", );
+			"preferredProjectObjectVersion" = "77";
+			"productRefGroup" = "D7B6C3C22D50A55D004E3AD6";
+			"projectDirPath" = "";
+			"projectRoot" = "";
+			"targets" = ("F80000000000000000000001", "D7B6C3C02D50A55D004E3AD6", "B10000000000000000000007", "E30000000000000000000003", "D20000000000000000000050", "E40000000000000000000050", "E50000000000000000000050", "E60000000000000000000050", "F9AB2938F7BF9D8F3F6C9844", );
 		};
 /* End PBXProject section */
 
@@ -884,7 +1725,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8000000000000000000000C /* W1-006 */ = {
+		F8000000000000000000000C /* W1-007 */ = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = ("F93152CA8290D60376A9B40F", "F9C46B1A91E2E1457C183213", "F9A28E238B623A30D27ABB2A", "F9B67C381C184CA75861D454", "F9C3D4462172F4DB1DF60D68", "F9D25962D2C3AD3EBF8BA23E", "F97D901B8D1F022C7307B5AF", "F978CE1ED732017D707A34EC", "F9ED8779AECBAFC9F475598C", "F9CD865D0FD59DC731C24571", "F943BC9C1402B938E6F0D23B", "F991FE49F9098223972B6DF0", "F9DF01B0CFA63784555EF624", "F987671FAFD2F47C4B1CFA7D", "F97F2034C82C07A1C253F2D2", "F946FB32616C40A65485DF3D", );
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		F976DBE4F612C3D1CD89E778 /* W1-007 UI */ = {
 			"isa" = "PBXResourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = ();
@@ -934,6 +1781,36 @@
 			shellScript = "set -e\nsource \"$PROJECT_DIR/Vendor/Python/Python.xcframework/build/utils.sh\"\nif [ -z \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ]; then\n  export EXPANDED_CODE_SIGN_IDENTITY=\"-\"\n  export EXPANDED_CODE_SIGN_IDENTITY_NAME=\"Ad Hoc\"\nfi\ninstall_python Vendor/Python/Python.xcframework\n";
 			showEnvVarsInLog = 0;
 		};
+		F989CF55282FA3F9E392899B /* W1-007 */ = {
+			"isa" = "PBXShellScriptBuildPhase";
+			"alwaysOutOfDate" = "1";
+			"buildActionMask" = "2147483647";
+			"files" = ();
+			"inputFileListPaths" = ();
+			"inputPaths" = ();
+			"name" = "Generate NativeScript metadata";
+			"outputFileListPaths" = ();
+			"outputPaths" = ("$(CONFIGURATION_BUILD_DIR)/metadata-$(ARCHS).bin", );
+			"runOnlyForDeploymentPostprocessing" = "0";
+			"shellPath" = "/bin/bash";
+			"shellScript" = "set -euo pipefail\\nhost_arch=\"$(uname -m)\"\\ntarget_arch=\"${CURRENT_ARCH:-}\"\\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\\n  target_arch=\"${ARCHS%% *}\"\\nfi\\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\\nif [[ ! -x \"$generator\" ]]; then\\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\\n  exit 1\\nfi\\npushd \"$generator_root\" >/dev/null\\n\"$generator\" \"$target_arch\"\\npopd >/dev/null\\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\\n";
+			"showEnvVarsInLog" = "0";
+		};
+		F9071A6DEA050DF055F5A852 /* W1-007 */ = {
+			"isa" = "PBXShellScriptBuildPhase";
+			"alwaysOutOfDate" = "1";
+			"buildActionMask" = "2147483647";
+			"files" = ();
+			"inputFileListPaths" = ();
+			"inputPaths" = ();
+			"name" = "Process Python libraries";
+			"outputFileListPaths" = ();
+			"outputPaths" = ();
+			"runOnlyForDeploymentPostprocessing" = "0";
+			"shellPath" = "/bin/sh";
+			"shellScript" = "set -e\\nsource \"$PROJECT_DIR/Vendor/Python/Python.xcframework/build/utils.sh\"\\nif [ -z \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ]; then\\n  export EXPANDED_CODE_SIGN_IDENTITY=\"-\"\\n  export EXPANDED_CODE_SIGN_IDENTITY_NAME=\"Ad Hoc\"\\nfi\\ninstall_python Vendor/Python/Python.xcframework\\n";
+			"showEnvVarsInLog" = "0";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -966,6 +1843,11 @@
 			isa = PBXTargetDependency;
 			target = E60000000000000000000050 /* ChavrusaChatNotificationService */;
 			targetProxy = E60000000000000000000010 /* PBXContainerItemProxy */;
+		};
+		F9E5831AB1C275DD5941B1AB /* W1-007 UI */ = {
+			"isa" = "PBXTargetDependency";
+			"target" = "F80000000000000000000001";
+			"targetProxy" = "F9FA458A16A0B0F810CDD884";
 		};
 /* End PBXTargetDependency section */
 
@@ -1019,10 +1901,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8000000000000000000000A /* W1-006 */ = {
+		F8000000000000000000000A /* W1-007 */ = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ();
+			"files" = ("F926BAA61CFBBF736F943D1C", "F919A2D150582186EC03055E", "F9A7168DD69AF06B26512861", "F924378CF26D00CB7F7EEC23", "F9BAF3C36F75176BE813FFBA", "F93B6615FF3AA28B4EE9FB52", "F91A2CD0E4C773FACD1057CC", "F93292CE6C9A8178EBCFF431", "F978CD6315961BA5F213AA17", "F937D1B81E0F6C9BDBC18F54", "F9549CA14D22D01A0091E9F0", "F9C58D54CA9B97BC2846CBFB", "F9E2E6A0B1E8E8B235B363D9", "F9797E6100CE6FFBBD6B8947", "F9DD8F610DA246042014D33D", "F9568B82BD5983916B5309AB", "F94B5188BE52897CECBB7E56", "F9014111B255B287E01020A9", "F930FE7EC9C8BD035663686F", "F99489AAEC2699DE5F73F639", "F96E1FCEED46248D2FB31892", "F94D8701F8392350AD1F80BA", "F9B572CF6993E3A12672F972", "F9DAE7385ADBBC89CDE5E536", "F9F9D30968EEEDA3F3800C18", "F971AB5DAC663C5C5BABC3D0", "F9065951FE09690D10FD86BA", "F9075F667C6F2B3907F93CF6", "F9AC7BF5796F643240613A34", "F9FEBF450F73E6A11708D706", "F98FCF35F66BDB75D2BD2C26", "F92AED25CA3A893A88D96539", "F9F93B75F14013482FAEC8D1", "F95C461012941560A18E2A86", "F91C97CAD705D02EB824679C", "F9AF9779156078049ADD9DA2", "F9F48510BE6A8237708F2D98", "F9CC6BD0EA34622482CEC93F", "F91E2798A602F51E762BA695", "F911B798265DB9D6AE886819", "F966B6F6468D8452FFBDB068", "F9ABE08ECC49366EB7FC88ED", "F9E89A53572165B5CB293AE3", "F9EEC1079179DE7EFAAB8D69", "F99E1BAD79EEC034BC463E5E", "F95271399D6B54662B8A092E", "F9F64CADDE7E75DEDCB05CFB", "F9756D2C1FF0ECE8B74A8AB0", "F9177D0AF8E6DED4A308A0DB", "F922B22F23B0A6225B65497E", "F92551E2D7B5EE512BC1A77D", "F94C943A8C4DA36C05990D69", "F9AB7BA0C54C9DBD568F7CD4", "F9BD2F0E145BA5C6B07BE658", "F943ACF1738E427FD8AB181D", "F9DFDDAC9FCE9C9E5446BA7D", "F933B01A1F03F60E0A178CDB", "F9FCC45A8C50D4F479FBE6D4", "F9DBD6D3816E8F1C48D231D1", );
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		F96EF6D85246FA36B39BE515 /* W1-007 UI */ = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = ("F927041F0B429D7A68AD6E86", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXSourcesBuildPhase section */
@@ -1641,7 +2529,7 @@
 			};
 			name = Release;
 		};
-		F80000000000000000000015 /* W1-006 */ = {
+		F80000000000000000000015 /* W1-007 */ = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
 				"CODE_SIGNING_ALLOWED" = "NO";
@@ -1661,10 +2549,31 @@
 				"SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" = "NO";
 				"SWIFT_VERSION" = "6.0";
 				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"FRAMEWORK_SEARCH_PATHS" = ("$(inherited)", "$(CONFIGURATION_BUILD_DIR)", "\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"", );
+				"HEADER_SEARCH_PATHS" = ("$(inherited)", "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers", );
+				"LIBRARY_SEARCH_PATHS" = ("$(inherited)", "$(PROJECT_DIR)", );
+				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
+				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
+				"INFOPLIST_KEY_NSCameraUsageDescription" = "Hanlin MiniApps accesses the camera only when you ask it to take a photo.";
+				"INFOPLIST_KEY_NSContactsUsageDescription" = "Hanlin MiniApps accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
+				"INFOPLIST_KEY_NSFaceIDUsageDescription" = "Hanlin MiniApps uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
+				"INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription" = "Hanlin MiniApps reads clinical health records only when you request a health feature that needs them.";
+				"INFOPLIST_KEY_NSHealthShareUsageDescription" = "Hanlin MiniApps reads health data only when you request a health-related feature.";
+				"INFOPLIST_KEY_NSHealthUpdateUsageDescription" = "Hanlin MiniApps writes health data only when you ask it to record an activity.";
+				"INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription" = "Hanlin MiniApps uses your location only for location-based features you request.";
+				"INFOPLIST_KEY_NSLocationWhenInUseUsageDescription" = "Hanlin MiniApps uses your location only for nearby, maps, and weather features you request.";
+				"INFOPLIST_KEY_NSMicrophoneUsageDescription" = "Hanlin MiniApps uses the microphone only when you ask it to record audio.";
+				"INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription" = "Hanlin MiniApps saves media to your photo library only when you ask it to.";
+				"INFOPLIST_KEY_NSPhotoLibraryUsageDescription" = "Hanlin MiniApps reads selected photos only when you choose them.";
+				"INFOPLIST_KEY_NSRemindersFullAccessUsageDescription" = "Hanlin MiniApps accesses reminders only when you ask it to read or add a task.";
+				"INFOPLIST_KEY_NSSpeechRecognitionUsageDescription" = "Hanlin MiniApps uses speech recognition only when you ask it to transcribe speech.";
 			};
 			"name" = "Debug";
 		};
-		F80000000000000000000016 /* W1-006 */ = {
+		F80000000000000000000016 /* W1-007 */ = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
 				"CODE_SIGNING_ALLOWED" = "NO";
@@ -1684,6 +2593,61 @@
 				"SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" = "NO";
 				"SWIFT_VERSION" = "6.0";
 				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"FRAMEWORK_SEARCH_PATHS" = ("$(inherited)", "$(CONFIGURATION_BUILD_DIR)", "\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"", );
+				"HEADER_SEARCH_PATHS" = ("$(inherited)", "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers", );
+				"LIBRARY_SEARCH_PATHS" = ("$(inherited)", "$(PROJECT_DIR)", );
+				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
+				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
+				"INFOPLIST_KEY_NSCameraUsageDescription" = "Hanlin MiniApps accesses the camera only when you ask it to take a photo.";
+				"INFOPLIST_KEY_NSContactsUsageDescription" = "Hanlin MiniApps accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
+				"INFOPLIST_KEY_NSFaceIDUsageDescription" = "Hanlin MiniApps uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
+				"INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription" = "Hanlin MiniApps reads clinical health records only when you request a health feature that needs them.";
+				"INFOPLIST_KEY_NSHealthShareUsageDescription" = "Hanlin MiniApps reads health data only when you request a health-related feature.";
+				"INFOPLIST_KEY_NSHealthUpdateUsageDescription" = "Hanlin MiniApps writes health data only when you ask it to record an activity.";
+				"INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription" = "Hanlin MiniApps uses your location only for location-based features you request.";
+				"INFOPLIST_KEY_NSLocationWhenInUseUsageDescription" = "Hanlin MiniApps uses your location only for nearby, maps, and weather features you request.";
+				"INFOPLIST_KEY_NSMicrophoneUsageDescription" = "Hanlin MiniApps uses the microphone only when you ask it to record audio.";
+				"INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription" = "Hanlin MiniApps saves media to your photo library only when you ask it to.";
+				"INFOPLIST_KEY_NSPhotoLibraryUsageDescription" = "Hanlin MiniApps reads selected photos only when you choose them.";
+				"INFOPLIST_KEY_NSRemindersFullAccessUsageDescription" = "Hanlin MiniApps accesses reminders only when you ask it to read or add a task.";
+				"INFOPLIST_KEY_NSSpeechRecognitionUsageDescription" = "Hanlin MiniApps uses speech recognition only when you ask it to transcribe speech.";
+			};
+			"name" = "Release";
+		};
+		F9DC159D86C57223403639A0 /* W1-007 UI */ = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CODE_SIGNING_ALLOWED" = "NO";
+				"CODE_SIGNING_REQUIRED" = "NO";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.integration.uitests";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SDKROOT" = "iphoneos";
+				"SUPPORTED_PLATFORMS" = "iphonesimulator";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"TEST_TARGET_NAME" = "HanlinMiniApps";
+			};
+			"name" = "Debug";
+		};
+		F9F3C5379CC46F01E26F4EF4 /* W1-007 UI */ = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CODE_SIGNING_ALLOWED" = "NO";
+				"CODE_SIGNING_REQUIRED" = "NO";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.integration.uitests";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SDKROOT" = "iphoneos";
+				"SUPPORTED_PLATFORMS" = "iphonesimulator";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"TEST_TARGET_NAME" = "HanlinMiniApps";
 			};
 			"name" = "Release";
 		};
@@ -1765,6 +2729,12 @@
 		F80000000000000000000014 /* W1-006 */ = {
 			"isa" = "XCConfigurationList";
 			"buildConfigurations" = ("F80000000000000000000015", "F80000000000000000000016", );
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		F93E0A4F27E0E8A3EB607EE0 /* W1-007 UI */ = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("F9DC159D86C57223403639A0", "F9F3C5379CC46F01E26F4EF4", );
 			"defaultConfigurationIsVisible" = "0";
 			"defaultConfigurationName" = "Release";
 		};

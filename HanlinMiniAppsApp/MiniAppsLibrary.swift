@@ -16,6 +16,7 @@ struct MiniAppsLibrary: View {
     private struct PresentedContent: Identifiable {
         let id = UUID()
         let view: AnyView
+        var ownsNavigation = false
     }
 
     private var filtered: [HanlinMiniAppCatalogItem] {
@@ -37,6 +38,7 @@ struct MiniAppsLibrary: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .accessibilityIdentifier("hanlin-miniapp-\(item.id.rawValue)")
                 }
             }
             .navigationTitle("MiniApps")
@@ -47,6 +49,7 @@ struct MiniAppsLibrary: View {
                     do { presentation = PresentedContent(view: try services.packageManagement()) }
                     catch { self.error = error.localizedDescription }
                 }
+                .accessibilityIdentifier("hanlin-miniapps-management")
             }
             .overlay {
                 if loading { ProgressView() }
@@ -72,10 +75,14 @@ struct MiniAppsLibrary: View {
                         LabeledContent("App identity", value: item.id.rawValue)
                         Button("Open app", systemImage: "arrow.up.forward.app") {
                             Task {
-                                do { presentation = PresentedContent(view: try await services.launch(item)) }
+                                do {
+                                    presentation = PresentedContent(view: try await services.launch(item),
+                                                                    ownsNavigation: true)
+                                }
                                 catch { self.error = error.localizedDescription }
                             }
                         }
+                        .accessibilityIdentifier("hanlin-miniapps-open")
                     }
                 }
             } else {
@@ -84,10 +91,14 @@ struct MiniAppsLibrary: View {
         }
         .task { await reload() }
         .fullScreenCover(item: $presentation) { destination in
-            NavigationStack {
-                destination.view.toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Done") { presentation = nil }
+            if destination.ownsNavigation {
+                destination.view
+            } else {
+                NavigationStack {
+                    destination.view.toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { presentation = nil }
+                        }
                     }
                 }
             }

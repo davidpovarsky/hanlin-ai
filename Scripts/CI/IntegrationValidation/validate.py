@@ -14,7 +14,9 @@ PROJECT = "AI_HLY.xcodeproj/project.pbxproj"
 
 def validate():
     project = parse_project((ROOT / PROJECT).read_text(encoding="utf-8"))
-    result = validate_graph(project)
+    manifest_path = ROOT / "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json"
+    provider = json.loads(manifest_path.read_text()) if manifest_path.exists() else None
+    result = validate_graph(project, provider)
     original = parse_project(subprocess.check_output(
         ["git", "show", f"{BASE}:{PROJECT}"], cwd=ROOT, encoding="utf-8"))
     objects, old = project["objects"], original["objects"]
@@ -45,10 +47,23 @@ def validate():
     refs = scheme.findall(".//BuildableReference")
     mini_id = next(key for key, value in objects.items()
                    if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniApps")
-    assert refs and all(ref.get("BlueprintIdentifier") == mini_id for ref in refs)
-    assert not scheme.findall(".//TestableReference"), "Leaf tests run through their real package scheme"
+    allowed_ids = {mini_id}
+    if provider:
+        ui_id = provider["ui_test_target"]
+        allowed_ids.add(ui_id)
+        ui = objects[ui_id]
+        assert ui["productType"] == "com.apple.product-type.bundle.ui-testing"
+        assert [objects[key]["target"] for key in ui["dependencies"]] == [mini_id]
+        ui_sources = next(objects[key] for key in ui["buildPhases"] if objects[key]["isa"] == "PBXSourcesBuildPhase")
+        assert [objects[objects[key]["fileRef"]]["path"] for key in ui_sources["files"]] == [provider["ui_test_source"]]
+        testables = scheme.findall(".//TestableReference")
+        assert len(testables) == 1 and testables[0].get("skipped") == "NO"
+        assert testables[0].find("BuildableReference").get("BlueprintIdentifier") == ui_id
+    else:
+        assert not scheme.findall(".//TestableReference"), "Leaf tests run through their real package scheme"
+    assert refs and all(ref.get("BlueprintIdentifier") in allowed_ids for ref in refs)
     result.update(status="GRAPH_CHECKS_PASS", base=BASE, production_sources=production,
-                  registered_suite="RegisteredSplitIntegrationTests", registered_cases=5,
+                  registered_suite="RegisteredSplitIntegrationTests", registered_cases=6,
                   project_sha256=hashlib.sha256((ROOT / PROJECT).read_bytes()).hexdigest(),
                   native_build="NOT_RUN", feature_acceptance="NOT_RUN")
     return result

@@ -1,11 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Scheme LastUpgradeVersion="2700" version="1.7">
-  <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES"><BuildActionEntries>
-    <BuildActionEntry buildForTesting="NO" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F80000000000000000000001" BuildableName="HanlinMiniApps.app" BlueprintName="HanlinMiniApps" ReferencedContainer="container:AI_HLY.xcodeproj"/></BuildActionEntry>
-  </BuildActionEntries></BuildAction>
-  <TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES"><Testables/></TestAction>
+  <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
+    <BuildActionEntries>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F80000000000000000000001" BuildableName="HanlinMiniApps.app" BlueprintName="HanlinMiniApps" ReferencedContainer="container:AI_HLY.xcodeproj" />
+      </BuildActionEntry>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F9AB2938F7BF9D8F3F6C9844" BuildableName="HanlinMiniAppsUITests.xctest" BlueprintName="HanlinMiniAppsUITests" ReferencedContainer="container:AI_HLY.xcodeproj" />
+      </BuildActionEntry>
+    </BuildActionEntries>
+  </BuildAction>
+  <TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES">
+    <Testables>
+      <TestableReference skipped="NO" parallelizable="NO">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F9AB2938F7BF9D8F3F6C9844" BuildableName="HanlinMiniAppsUITests.xctest" BlueprintName="HanlinMiniAppsUITests" ReferencedContainer="container:AI_HLY.xcodeproj" />
+      </TestableReference>
+    </Testables>
+  </TestAction>
   <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="YES" allowLocationSimulation="YES">
-    <BuildableProductRunnable runnableDebuggingMode="0"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F80000000000000000000001" BuildableName="HanlinMiniApps.app" BlueprintName="HanlinMiniApps" ReferencedContainer="container:AI_HLY.xcodeproj"/></BuildableProductRunnable>
+    <BuildableProductRunnable runnableDebuggingMode="0">
+      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F80000000000000000000001" BuildableName="HanlinMiniApps.app" BlueprintName="HanlinMiniApps" ReferencedContainer="container:AI_HLY.xcodeproj" />
+    </BuildableProductRunnable>
   </LaunchAction>
-  <AnalyzeAction buildConfiguration="Debug"/>
+  <AnalyzeAction buildConfiguration="Debug" />
 </Scheme>

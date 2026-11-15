@@ -27,12 +27,25 @@ def render(value, level=0):
     return json.dumps(value, ensure_ascii=False)
 
 
+def simulator_ci_config(root):
+    workflow = (root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
+    simulator_route = workflow.split("  full-app-simulator-smoke:", 1)[1]
+    template = re.search(r"          cat > Config.xcconfig <<EOF\n([\s\S]*?)          EOF", simulator_route)
+    if template is None:
+        raise ValueError("Existing simulator CI configuration template missing")
+    return textwrap.dedent(template[1]).replace("\\$", "$").replace("$repo_root", str(root))
+
+
 def extract(root, output):
     project = parse_project((root / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8"))
-    validate_graph(project)
     original = project["objects"]
     target = next(key for key, value in original.items()
                   if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniApps")
+    sources = next(original[key] for key in original[target]["buildPhases"]
+                   if original[key]["isa"] == "PBXSourcesBuildPhase")
+    if sources["files"]:
+        raise ValueError("The wired provider needs the real project and prepared Runtime inputs; the shell-only extraction route is insufficient")
+    validate_graph(project)
     objects = {}
 
     def retain(key):
@@ -80,12 +93,7 @@ def extract(root, output):
     # Match the repository's existing deterministic simulator CI configuration.
     # It intentionally contains no credentials. Do not omit inherited config,
     # or invent different compiler flags to make the extracted target pass.
-    workflow = (root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
-    simulator_route = workflow.split("  full-app-simulator-smoke:", 1)[1]
-    template = re.search(r"          cat > Config.xcconfig <<EOF\n([\s\S]*?)          EOF", simulator_route)
-    if template is None:
-        raise ValueError("Existing simulator CI configuration template missing")
-    config = textwrap.dedent(template[1]).replace("\\$", "$").replace("$repo_root", str(root))
+    config = simulator_ci_config(root)
     (output.parent / "Config.xcconfig").write_text(config, encoding="utf-8")
     (output / "project.pbxproj").write_text("// !$*UTF8*$!\n" + render(project) + "\n", encoding="utf-8")
     schemes = output / "xcshareddata/xcschemes"

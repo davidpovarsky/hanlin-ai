@@ -5,6 +5,105 @@ Worktree `C:/Users/DAVID/Code/hanlin-wave1-integration-20261115`, branch
 `codex/hanlin-wave1-integration-20261115`. Source integration task
 K `1219656771637321`; HQ `1220539630159023`. Date: 2026-11-15, Asia/Hebron.
 
+## Current continuation: W1-007 provider candidate
+
+The W1-006 results below remain attached to their original tested source, not
+the expanded provider target. The current candidate registers 56 existing/shared
+Swift sources, three existing native bridge sources, 21 package products, two
+existing native frameworks and 16 resources by explicit paths in
+`Scripts/CI/IntegrationValidation/miniapps_provider_sources.json`. No AI source
+root is included in MiniApps. Metadata/Python preparation and framework embedding
+reuse the existing build phase bodies, with separate phase/build-file identities.
+Original AI target/project settings are preserved.
+
+`HanlinMiniAppsProvider` composes the existing Host/catalog/restore, canonical
+launch functions and existing package detail/import UI. It refreshes before
+launching retained rows, checks actual active package and engine presentation
+after the existing non-throwing platform launch, and throws on failure instead
+of returning an unavailable container as success. Compiled Swift roots and the
+existing script container keep their own navigation. The new app entry point
+uses production defaults; no Assistant service, AI ModelContext, credential
+adapter, test factory or second authority is configured in MiniApps.
+
+Noam's application-services cut was consumed as exact deltas `21a7394d` and
+`6837d0ae`, cherry-picked to this branch without their metadata ancestors. Its
+corrected publication is synchronous on MainActor, with generation/captured
+configuration checks for queued work; Assistant loading remains asynchronous.
+The new AI integration file is deliberately absent from MiniApps source membership.
+Roni's scoped source review accepts both prior P2 corrections; Noam owns the
+separate original 16 + eight composition Apple cases. Those results are not
+assumed or rerun here.
+
+The candidate adds a genuine MiniApps-only UI test target with two authored
+cases: real canonical Swift Parity launch, and the existing package import screen.
+Both capture screenshots and require actual controls. They are **NOT_RUN**.
+The old shell-only extraction route now rejects this expanded graph. The next
+provider proof uses the real project/target and existing pinned Runtime/SDK
+preparation routes, then those two UI cases and the six registered leaf cases.
+No full AI build is selected. Actual corrected metadata inputs must be delivered
+before running a known-blocked dependency closure; no metadata ancestor was
+silently promoted with the application-services cut.
+
+Fixture correction `6567a187` was integrated once, after the lead's scoped QA
+acceptance. It also changes **production** `DurableMigration.swift` (persisted
+recovery choice) and `DurableReceiver.swift` (new error case), so it is not
+classified as fixture-only. The focused Windows package rebuilt those sources
+and executed **six** actual Swift Testing cases successfully, including new
+serialization/irreversible-recovery-choice coverage. Raw output and actual lock
+are in ignored `build/integration-validation-evidence/windows-correction-*`.
+The old five-case iOS proof is historical evidence, not proof of these changed
+production bytes. Nine graph/evidence guards pass for the registered candidate;
+syntax parses do not establish Apple compilation or UI behavior. All three
+fixture adapters and all producer portable executable tests remain excluded.
+
+## Enabled A2UI proof and remaining privacy correction
+
+The separate existing workflow mode `a2ui_exact_pin_proof` tests exact A2UI source
+in scratch without product wiring or source edits by this integrator. Exact
+source-only verification refs publish immutable tested inputs so the runner can
+fetch them; no producer branch was synchronized. The owner's recipe copies
+byte-identical source/tests/fixtures, enables POC + DEBUG, and uses four official
+products at root revision `3ed9601862ecc78027e20ac80ad8b1b98a5d9079`.
+
+Actual environment: Xcode 27.2 (27B52), Apple Swift 6.4.2, macOS SDK 27.2, host
+macOS 27.0.1. Per-command plugin/macro flags match existing repository CI; the
+official schema generator and macros execute. Initial setup run `43662580025`
+stopped at the plugin consent step before compilation. Then:
+
+- [43662884686](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43662884686),
+  workflow `127092d9`, tested source `c40e617b`: enabled compilation succeeded;
+  25 actual cases executed, eight ingress PASS and all 17 SDK cases FAIL with
+  `sdkValidation` loading positive fixtures. Artifact `a2ui-exact-pin-43662884686`,
+  id `14141275174`, API-advertised digest
+  `sha256:ac5719290dd51265b2c333311ba17cbfe8c1c46f108fec5a833c9fced89c4d92`.
+  The failure and actionable logs were delivered to Eitan; this integrator did
+  not weaken validation, alter tests or replay the unchanged failing source.
+- [43664698104](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43664698104),
+  workflow `04c8837a1863303dd0a20304062481802a1fd437`, tested source
+  `2bae5a3e08138b5d346d9c7e8b609e0827407231`: **25 actual cases PASS** after
+  Eitan's coherent identifier correction. Exact-pin UAX31 validation rejected
+  `submit-label`; positive references became `submitLabel` while the invalid
+  spelling remains a negative case. Artifact `a2ui-exact-pin-43664698104`, id
+  `14142305401`, API-advertised digest
+  `sha256:90b9ad4e8f76ac93d417fc9734ff9ecbbb991be26a8fe8ea926f2a5516e7e0b7`.
+
+Both artifacts were downloaded and their exported actual test trees inspected.
+The passing artifact's 13 archived source/recipe/fixture hashes match exact tested
+Git blobs; nine workflow input hashes match its workflow SHA. The unchanged owner
+verifier reports `RESULT_CONTENTS_VALID`, 25 cases, with process exit 0. Both runs
+retain raw xcresults, exported JSON, logs, source archive and **raw** resolved
+locks. Raw lock hash is `8930d6c472f0e98f01831d0af3abdc573c3f85fa255091e45d45e2564c73f6ac`
+in both: official a2ui root above; swift-json-schema 0.13.2
+(`c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb`); swift-collections 1.7.6
+(`88754449ab766a739610b660e117762115fabc9c`); swift-syntax 604.0.0
+(`050f1a346fbbac0ca2cfb15a95274f7bd1cf0ccf`). Raw bytes/hash/parsed JSON agree.
+
+This is enabled **macOS SDK** proof for `2bae5a3e`, not iOS app/inline host/UI
+acceptance or A2UI02. A newer diagnostic privacy P2 remains assigned to Eitan:
+SDK paths may contain caller-derived identifiers despite length bounds. His
+coherent privacy correction will need one changed-source proof. No final source
+acceptance is inferred from the intermediate 25-case PASS.
+
 ## Assembled sources
 
 Frozen Runtime baseline `dd700c03e9fe9d22e95a031d4684275512ee6e6f` plus one
