@@ -68,7 +68,7 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
             cpp = self.framework(root / "products", "ArbitraryCppName")
-            (cpp / "Headers/Exported.h").write_text("#pragma once\nnamespace api { class Thing {}; }\n")
+            (cpp / "Headers/Exported.h").write_text("#pragma once\n#ifdef __cplusplus\nnamespace api { class Thing {}; }\n#endif\n")
             public = self.framework(root / "products", "PublicAPI")
             manifest = HEADERS.produce_role_inventory(cpp.parent, [], self.compiler_library())
             self.assertEqual([r["role"] for r in manifest["frameworks"]], [HEADERS.CPP_ROLE, HEADERS.PUBLIC_ROLE])
@@ -87,11 +87,11 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
 
     def test_role_receipt_rejects_unknown_role_tampering_future_headers_and_mixed_proof(self):
         library = self.compiler_library()
-        for change in ["unknown-role", "changed-header", "future-c-api", "mixed-proof", "wrong-producer", "missing-compiler", "missing-objc-audit"]:
+        for change in ["unknown-role", "changed-header", "future-c-api", "mixed-proof", "wrong-producer", "missing-compiler", "missing-objc-audit", "objc-errors", "objc-incomplete", "objc-wrong-mode", "objc-unknown", "objc-public", "objc-arguments"]:
             with self.subTest(change=change), tempfile.TemporaryDirectory() as name:
                 root = Path(name)
                 framework = self.framework(root / "products", "CppFixture")
-                (framework / "Headers/Exported.h").write_text("#pragma once\nnamespace api { class Thing {}; }\n")
+                (framework / "Headers/Exported.h").write_text("#pragma once\n#ifdef __cplusplus\nnamespace api { class Thing {}; }\n#endif\n")
                 manifest = HEADERS.produce_role_inventory(framework.parent, [], library)
                 record = manifest["frameworks"][0]
                 if change == "unknown-role":
@@ -106,8 +106,20 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
                     manifest["producerSHA256"] = "0" * 64
                 elif change == "missing-compiler":
                     del manifest["compilerLibrarySHA256"]
-                else:
+                elif change == "missing-objc-audit":
                     del record["proof"]["objcCompatibility"]
+                else:
+                    objc = record["proof"]["objcCompatibility"]
+                    if change == "objc-errors":
+                        objc["errors"] = ["fatal error: dependency missing"]
+                    elif change == "objc-incomplete":
+                        objc["complete"] = False
+                    elif change == "objc-wrong-mode":
+                        objc["language"] = "objective-c++"
+                    elif change == "objc-arguments":
+                        objc["arguments"].append("-DUNPROVEN=1")
+                    else:
+                        objc["declarations"].append({"header": "Headers/Exported.h", "category": "unknown" if change == "objc-unknown" else "public"})
                 (framework.parent / HEADERS.ROLE_MANIFEST).write_text(json.dumps(manifest))
                 with self.assertRaisesRegex(RuntimeError, "Framework input-role"):
                     HEADERS.write_public_umbrella(root, root / "input.h", [], [framework.parent])
@@ -128,7 +140,7 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
             framework = self.framework(root / "products", "CppThenMixed")
-            (framework / "Headers/Exported.h").write_text("#pragma once\nnamespace api { class Thing {}; }\n")
+            (framework / "Headers/Exported.h").write_text("#pragma once\n#ifdef __cplusplus\nnamespace api { class Thing {}; }\n#endif\n")
             library = self.compiler_library()
             first = HEADERS.produce_role_inventory(framework.parent, [], library)
             self.assertEqual(first["frameworks"][0]["role"], HEADERS.CPP_ROLE)
@@ -150,6 +162,111 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             self.assertEqual(manifest["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
             self.assertEqual(proof["objcCompatibility"]["errors"], [])
             self.assertTrue(any(d["name"] == "supported_c_api" for d in proof["objcCompatibility"]["declarations"]))
+
+    def test_objc_errors_cannot_hide_conditional_public_declarations(self):
+        with tempfile.TemporaryDirectory() as name:
+            framework = self.framework(Path(name) / "products", "IncompleteAudit")
+            (framework / "Headers/Exported.h").write_text(
+                '#pragma once\nnamespace api { class Thing {}; }\n'
+                '#ifndef __cplusplus\nextern int actual_objc_branch_api(void);\n#endif\n')
+            manifest = HEADERS.produce_role_inventory(framework.parent, [], self.compiler_library())
+            record = manifest["frameworks"][0]
+            self.assertTrue(record["proof"]["objcCompatibility"]["errors"])
+            self.assertFalse(record["proof"]["objcCompatibility"]["complete"])
+            self.assertEqual(record["role"], HEADERS.PUBLIC_ROLE)
+            # Even rewriting this newly issued public receipt into the old unsafe
+            # CPP form must not revive the error-bearing compatibility audit.
+            record["role"] = record["proof"]["role"] = HEADERS.CPP_ROLE
+            (framework.parent / HEADERS.ROLE_MANIFEST).write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(RuntimeError, "complete ObjC"):
+                HEADERS.verified_framework_roles(framework.parent)
+
+    def test_target_only_mismatch_and_actual_deployment_branch_are_bound(self):
+        with tempfile.TemporaryDirectory() as name:
+            framework = self.framework(Path(name) / "products", "DeploymentBranch")
+            (framework / "Headers/Exported.h").write_text(
+                '#pragma once\n#ifdef __cplusplus\nnamespace api { class Thing {}; }\n'
+                '#elif __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ >= 270100\n'
+                'extern int newer_public_api(void);\n#endif\n')
+            library = self.compiler_library()
+            arguments = ["-target", "arm64-apple-ios27.0-simulator"]
+            before = HEADERS.produce_role_inventory(framework.parent, arguments, library)
+            self.assertEqual(before["frameworks"][0]["role"], HEADERS.CPP_ROLE)
+            with self.assertRaisesRegex(RuntimeError, "parser arguments changed"):
+                HEADERS.verified_framework_roles(framework.parent, ["-target", "arm64-apple-ios27.2-simulator"])
+            after = HEADERS.produce_role_inventory(framework.parent, ["-target", "arm64-apple-ios27.2-simulator"], library)
+            self.assertEqual(after["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
+            self.assertTrue(any(d["name"] == "newer_public_api" for d in after["frameworks"][0]["proof"]["objcCompatibility"]["declarations"]))
+            sdk = str(Path(name) / "same-sdk")
+            with patch.dict(os.environ, {"SDKROOT": sdk, "ARCHS": "arm64", "PLATFORM_NAME": "iphonesimulator", "IPHONEOS_DEPLOYMENT_TARGET": "27.0"}):
+                with self.assertRaisesRegex(RuntimeError, "deployment/environment"):
+                    HEADERS.verify_role_context(["-isysroot", sdk, "-target", "arm64-apple-ios27.2-simulator"])
+                HEADERS.verify_role_context(["-isysroot", sdk, "-target", "arm64-apple-ios27.0.0-simulator"])
+
+    def test_postreceipt_staging_requires_full_reclassification(self):
+        with tempfile.TemporaryDirectory() as name:
+            framework = self.framework(Path(name) / "products", "StagedCpp")
+            header = framework / "Headers/Exported.h"
+            header.write_text('#pragma once\n#ifdef __cplusplus\nnamespace api { class Thing {}; }\n#endif\n')
+            library = self.compiler_library()
+            first = HEADERS.produce_role_inventory(framework.parent, [], library)
+            self.assertEqual(first["frameworks"][0]["role"], HEADERS.CPP_ROLE)
+            header.write_text(header.read_text() + '// legitimate later staging comment\n')
+            with self.assertRaisesRegex(RuntimeError, "identity/headers changed"):
+                HEADERS.verified_framework_roles(framework.parent)
+            HEADERS.produce_role_inventory(framework.parent, [], library)
+            with patch.dict(os.environ, {}, clear=True):
+                self.assertEqual(HEADERS.verified_framework_roles(framework.parent)[framework.name]["role"], HEADERS.CPP_ROLE)
+            header.write_text(header.read_text() + '#ifndef __cplusplus\nextern int staged_public_api(void);\n#endif\n')
+            updated = HEADERS.produce_role_inventory(framework.parent, [], library)
+            self.assertEqual(updated["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
+
+    def test_changed_transitive_parser_dependency_rejects_receipt(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            framework = self.framework(root / "products", "DependencyAudit")
+            dependency = root / "dependency.h"
+            dependency.write_text('// genuine dependency\n')
+            (framework / "Headers/Exported.h").write_text(
+                '#pragma once\n#include "' + str(dependency).replace('\\', '/') + '"\n'
+                '#ifdef __cplusplus\nnamespace api { class Thing {}; }\n#endif\n')
+            HEADERS.produce_role_inventory(framework.parent, [], self.compiler_library())
+            dependency.write_text('// changed dependency\n')
+            with self.assertRaisesRegex(RuntimeError, "parser dependency changed"):
+                HEADERS.verified_framework_roles(framework.parent)
+
+    def test_actual_adapter_capture_binds_deployment_and_order_without_running_generator(self):
+        source = '''
+import os, subprocess
+sdk_root = "/actual SDK"
+llvm_target_triple_vendor = "apple"
+llvm_target_triple_os_version = "ios27.2"
+llvm_target_triple_suffix = "-simulator"
+deployment_target = "27.0"
+def env(name): return os.environ[name]
+def generate_metadata(arch):
+    generator_call = ["./objc-metadata-generator", "-verbose",]
+    # clang arguments
+    generator_call.extend(["Xclang", "-isysroot", sdk_root, "-std=gnu17", "-target", "{}-{}-{}{}".format(arch, llvm_target_triple_vendor, llvm_target_triple_os_version, llvm_target_triple_suffix)])
+    generator_call.extend(["-I/first include", "-F/z-first", "-F/a-second", "-DCONDITIONAL_API=1"])
+    child_process = subprocess.Popen(generator_call, stderr=subprocess.PIPE, universal_newlines=True)
+generate_metadata("arm64")
+'''
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            adapter = root / "adapter.py"
+            adapter.write_text(WRAPPER.explicit_input_adapter(source))
+            env = {**os.environ, "HANLIN_METADATA_GENERATOR": "must-not-run", "HANLIN_METADATA_INPUT_UMBRELLA": "actual-input.h"}
+            arguments = WRAPPER.capture_compiler_arguments(adapter, env, "arm64", root / "arguments.json")
+            self.assertEqual(arguments, ["-isysroot", "/actual SDK", "-std=gnu17", "-target", "arm64-apple-ios27.0-simulator", "-I/first include", "-F/z-first", "-F/a-second", "-DCONDITIONAL_API=1"])
+
+    def test_staging_without_actual_target_grants_no_cpp_role(self):
+        with tempfile.TemporaryDirectory() as name:
+            framework = self.framework(Path(name) / "products", "TargetPending")
+            (framework / "Headers/Exported.h").write_text('namespace api { class Thing {}; }')
+            inventory = HEADERS.produce_role_inventory(framework.parent, [], self.compiler_library(), classify=False)
+            self.assertEqual(inventory["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
+            self.assertNotIn("objcCompatibility", inventory["frameworks"][0]["proof"])
 
     def framework(self, directory, name="ExpoModulesCore", module=None):
         framework = directory / (name + ".framework")
@@ -366,7 +483,9 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             generator = root / "generator"
             generator.mkdir()
             (generator / "build-step-metadata-generator-upstream.py").write_text(
-                'def generate_metadata():\n    generator_call = ["./objc-metadata-generator", "-verbose",]\n    # clang arguments\n')
+                'def generate_metadata():\n    generator_call = ["./objc-metadata-generator", "-verbose",]\n    # clang arguments\n'
+                '    # llvm_target_triple_os_version, llvm_target_triple_suffix)\n'
+                '    child_process = subprocess.Popen(generator_call, stderr=subprocess.PIPE, universal_newlines=True)\n')
             objroot = root / "intermediates"
             header = objroot / "GeneratedModuleMaps-iphonesimulator/HanlinNativeScriptRuntime-Swift.h"
             header.parent.mkdir(parents=True)
@@ -392,12 +511,18 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             (framework / "Headers/UIKit.h").write_text("// SDK fixture")
             (framework / "Modules/module.modulemap").write_text('framework module UIKit { umbrella header "UIKit.h" }')
             env = {"OBJROOT": str(objroot), "SRCROOT": str(root), "TARGET_TEMP_DIR": str(root / "target"),
-                   "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products), "SDKROOT": str(sdk)}
+                   "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products), "SDKROOT": str(sdk),
+                   "IPHONEOS_DEPLOYMENT_TARGET": "27.0", "ARCHS": "arm64"}
             with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
                  patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
                  patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
                  patch.object(WRAPPER.subprocess, "run") as run, contextlib.redirect_stdout(io.StringIO()):
-                run.return_value.returncode = 0
+                def capture(arguments, **kwargs):
+                    destination = kwargs.get("env", {}).get("HANLIN_METADATA_CAPTURE_ARGUMENTS")
+                    if destination:
+                        Path(destination).write_text(json.dumps(["-isysroot", str(sdk), "-target", "arm64-apple-ios27.0-simulator"]))
+                    return type("Completed", (), {"returncode": 0})()
+                run.side_effect = capture
                 self.assertEqual(WRAPPER.main(), 1)
             retained = root / "build/acceptance/nativescript-metadata/iphonesimulator-arm64"
             self.assertEqual((retained / diagnostic.name).read_bytes(), diagnostic.read_bytes())

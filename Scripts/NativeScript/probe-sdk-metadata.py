@@ -5,6 +5,7 @@ No app/engine build, simulator, Swift-header stand-in, SDK modification or VM
 acceptance claim. The probe includes actual UIKit and Host ObjC headers.
 """
 import hashlib
+import importlib.util
 import argparse
 import json
 import os
@@ -20,6 +21,41 @@ def capture(*args: str) -> str:
     return subprocess.check_output(args, text=True).strip()
 
 
+def replay_final_header_staging(root: Path, folder: Path) -> dict:
+    """Replay existing production header mutations, without its signing/build steps."""
+    sys.path.insert(0, str(root / "Scripts/NativeScript"))
+    from metadata_public_headers import framework_inputs
+    artifacts = root / "Packages/HanlinExpoRuntime/Artifacts"
+    modular = artifacts / "ModularFrameworks"
+    before = {p.name: framework_inputs(p) for p in modular.glob("*.framework")}
+    script = root / "Scripts/CI/stage_modular_headers.py"
+    spec = importlib.util.spec_from_file_location("hanlin_actual_header_staging", script)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    for header in artifacts.rglob("*"):
+        if header.is_file() and header.suffix in {".h", ".hpp"}:
+            original = header.read_text(encoding="utf-8")
+            patched = module.patch_header_content(original, header.name)
+            if original != patched:
+                header.write_text(patched, encoding="utf-8")
+    patcher = root / "Scripts/Expo/patch-hash-combine.mjs"
+    with (folder / "final-header-staging.log").open("w") as log:
+        subprocess.run(["node", str(patcher), str(artifacts)], cwd=root,
+            stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
+    after = {p.name: framework_inputs(p) for p in modular.glob("*.framework")}
+    changes = []
+    for framework in sorted(set(before) | set(after)):
+        for path in sorted(set(before.get(framework, {})) | set(after.get(framework, {}))):
+            old, new = before.get(framework, {}).get(path), after.get(framework, {}).get(path)
+            if old != new:
+                changes.append({"framework": framework, "path": path, "beforeSHA256": old, "afterSHA256": new})
+    evidence = {"stageSourceSHA256": hashlib.sha256(script.read_bytes()).hexdigest(),
+        "patcherSourceSHA256": hashlib.sha256(patcher.read_bytes()).hexdigest(), "changes": changes,
+        "boundary": "Actual existing pure header patches; no signing, engine build or substituted declarations."}
+    (folder / "final-header-staging.json").write_text(json.dumps(evidence, indent=2) + "\n")
+    return evidence
+
+
 def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, arch: str) -> dict:
     """Exercise the actual launcher with a genuinely compiled Swift interface."""
     folder = output / "runtime-wrapper"
@@ -33,6 +69,7 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     with (folder / "expo-prepare.log").open("w") as log:
         subprocess.run(["node", str(root / "Scripts/Expo/prepare-ios-dependencies.mjs"), "--metadata-inputs-only"],
                        cwd=root, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=300)
+    final_staging = replay_final_header_staging(root, folder)
     package = root / "Packages/HanlinNativeScriptRuntime"
     document = json.loads(subprocess.check_output(["xcodebuild", "-list", "-json"], cwd=package, text=True))
     schemes = (document.get("workspace") or document.get("project") or {}).get("schemes", [])
@@ -81,7 +118,7 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     role_receipt = modular / "metadata-input-roles.json"
     if not role_receipt.is_file():
         raise RuntimeError("Actual Expo producer did not retain its input-role receipt")
-    (folder / role_receipt.name).write_bytes(role_receipt.read_bytes())
+    (folder / ("staged-" + role_receipt.name)).write_bytes(role_receipt.read_bytes())
     triple = re.fullmatch(r"(arm64|x86_64)-(apple)-ios([0-9.]+)-simulator", compilation["-target"])
     if triple is None:
         raise RuntimeError("Actual provider was not compiled for the requested Apple simulator")
@@ -121,6 +158,10 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
                                    stderr=subprocess.STDOUT, timeout=180)
     visibility = root / "build/acceptance/nativescript-metadata" / f"iphonesimulator-{arch}" / "visibility.json"
     recorded = json.loads(visibility.read_text()) if visibility.is_file() else {}
+    arguments_path = visibility.parent / "actual-compiler-arguments.json"
+    actual_arguments = json.loads(arguments_path.read_text()) if arguments_path.is_file() else []
+    for receipt in visibility.parent.glob("input-roles-*.json"):
+        (folder / ("final-" + receipt.name)).write_bytes(receipt.read_bytes())
     # Names confirmed from current staged declarations, not synthetic APIs.
     public_names = ["EXExportedModule", "EXModuleRegistry", "RCTBridge", "RCTView", "RCTAppDelegate",
                     "RCTSwiftUIContainerViewWrapper", "YGNodeNew", "YGConfigNew", "YGNodeStyleSetWidth"]
@@ -135,6 +176,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     return {"status": "EXECUTED_PASS" if passed else "FAILED", "exitCode": execution.returncode,
             "python": sys.version, "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
             "visibility": recorded, "publicObjCAndCMetadataNames": public_symbols,
+            "actualMetadataCompilerArguments": actual_arguments, "actualSwiftProviderTarget": compilation["-target"],
+            "finalHeaderStaging": final_staging,
             "includeOnlyFrameworks": [{"framework": r["framework"], "inputManifestSHA256": r["inputManifestSHA256"],
                                        "declarations": len(r["inputRoleProof"]["declarations"])} for r in include_only],
             "boundary": "Actual Swift compilation+combined SDK/Expo production metadata launcher; no app/VM/device execution."}

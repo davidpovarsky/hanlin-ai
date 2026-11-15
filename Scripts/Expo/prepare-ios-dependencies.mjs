@@ -1128,9 +1128,9 @@ template <typename CharTransformT = fnv1a_identity>
 
       console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
 
-      // Publish content/compiler-backed roles after all existing header staging.
-      // The producer never edits a header/module map to obtain a role. The
-      // metadata collector validates this receipt and retains all search paths.
+      // Publish conservative staging inventory here. Actual target/flags and later
+      // production header patches are known only at metadata consumption. That
+      // phase fully reclassifies final bytes; this receipt grants no exemption.
       if (process.platform === 'darwin') {
         execFileSync('/usr/bin/python3', [
           resolve(repositoryRoot, 'Scripts/NativeScript/metadata_public_headers.py'),

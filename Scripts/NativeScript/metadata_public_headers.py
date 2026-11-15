@@ -28,6 +28,53 @@ def declaration_role(declarations: list[dict]) -> str:
     return CPP_ROLE if any(d["category"] == "cpp" for d in declarations) else PUBLIC_ROLE
 
 
+def canonical_target(target: str) -> tuple:
+    match = re.fullmatch(r"([^-]+)-apple-ios([0-9]+(?:\.[0-9]+)*)(-simulator|-macabi)?", target)
+    if not match:
+        raise RuntimeError("Framework input-role target is missing or unsupported: " + target)
+    version = [int(part) for part in match.group(2).split(".")]
+    while len(version) > 1 and version[-1] == 0:
+        version.pop()
+    return match.group(1), "apple", "ios", tuple(version), match.group(3) or ""
+
+
+def verify_role_context(arguments: list[str], expected: list[str] | None = None) -> None:
+    if expected is not None:
+        if arguments != expected:
+            raise RuntimeError("Framework input-role parser arguments changed")
+    if os.environ.get("SDKROOT"):
+        if "-isysroot" not in arguments or Path(arguments[arguments.index("-isysroot") + 1]).resolve() != Path(os.environ["SDKROOT"]).resolve():
+            raise RuntimeError("Framework input-role SDK context changed")
+        target = canonical_target(arguments[arguments.index("-target") + 1] if "-target" in arguments else "")
+        if os.environ.get("ARCHS") and target[0] not in os.environ["ARCHS"].split():
+            raise RuntimeError("Framework input-role architecture context changed")
+        deployment = os.environ.get("IPHONEOS_DEPLOYMENT_TARGET")
+        platform = os.environ.get("PLATFORM_NAME")
+        if not deployment or platform not in {"iphoneos", "iphonesimulator"}:
+            raise RuntimeError("Framework input-role effective deployment/environment is missing")
+        suffix = "-simulator" if platform == "iphonesimulator" else ""
+        if target != canonical_target(f"{target[0]}-apple-ios{deployment}{suffix}"):
+            raise RuntimeError("Framework input-role deployment/environment context changed")
+
+
+def parser_arguments(language: str, arguments: list[str]) -> list[str]:
+    # Audit both grammars; retain every ordered target/define/include flag.
+    standard = "gnu++20" if language == "objective-c++" else next((a[5:] for a in reversed(arguments) if a.startswith("-std=")), "gnu17")
+    if "-x" in arguments or any(a.startswith("-xobjective") for a in arguments):
+        raise RuntimeError("Framework input-role parser language override is unsupported")
+    return ["-x", language, "-std=" + standard, *[a for a in arguments if not a.startswith("-std=")]]
+
+
+def complete_language_proof(proof: dict, language: str, arguments: list[str]) -> bool:
+    return (proof.get("complete") is True and bool(proof.get("compiler")) and
+            proof.get("language") == language and
+            proof.get("arguments") == parser_arguments(language, arguments) and
+            proof.get("errors") == [] and isinstance(proof.get("diagnostics"), list) and
+            not any(d.get("severity", 4) >= 3 for d in proof["diagnostics"]) and
+            isinstance(proof.get("declarations"), list) and
+            isinstance(proof.get("dependencies"), dict) and bool(proof["dependencies"]))
+
+
 def inspect_header_declarations(headers: list[Path], arguments: list[str], library: Path,
                                 language: str = "objective-c++") -> dict:
     """Inspect actual owned declarations using the selected compiler's libclang."""
@@ -142,13 +189,24 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
         except Exception as error:
             callback_errors.append(str(error))
         return 2
+    inclusion_callback = ctypes.CFUNCTYPE(None, ptr, ctypes.POINTER(Location), integer, ptr)
+    inclusions = bind("clang_getInclusions", None, ptr, inclusion_callback, ptr)
+    dependencies = {}
+    @inclusion_callback
+    def inclusion(file, unused_stack, unused_length, unused_data):
+        try:
+            path = Path(string(filename(file)))
+            if path.is_file() and path.resolve() != driver.resolve():
+                dependencies[str(path.resolve())] = hashlib.sha256(path.read_bytes()).hexdigest()
+        except Exception as error:
+            callback_errors.append(str(error))
     index, unit = create(0, 0), ptr()
     try:
         with tempfile.TemporaryDirectory(prefix="hanlin-header-role-") as folder:
             driver = Path(folder) / "input.mm"
             driver.write_text("\n".join('#include "' + str(h.resolve()).replace("\\", "/") + '"' for h in headers) + "\n", encoding="utf-8")
-            standard = "gnu++20" if language == "objective-c++" else "gnu17"
-            args = [a.encode() for a in ["-x", language, "-std=" + standard, *arguments]]
+            actual_parser_arguments = parser_arguments(language, arguments)
+            args = [a.encode() for a in actual_parser_arguments]
             result = parse(index, os.fsencode(driver), (ctypes.c_char_p * len(args))(*args), len(args), None, 0, 0x40, ctypes.byref(unit))
             if result or not unit.value:
                 raise RuntimeError(f"Actual libclang header-role parse failed: {result}")
@@ -163,10 +221,12 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
                     dispose_diag(item)
             if not errors:
                 visit(root_cursor(unit), visitor, None)
+            inclusions(unit, inclusion, None)
             if callback_errors:
                 raise RuntimeError("Header-role cursor inspection failed: " + "; ".join(callback_errors))
             return {"compiler": string(version()), "errors": errors, "diagnostics": diagnostics, "declarations": declarations,
-                    "language": language,
+                    "language": language, "arguments": actual_parser_arguments, "complete": not errors,
+                    "dependencies": dependencies,
                     "role": PUBLIC_ROLE if errors else declaration_role(declarations)}
     finally:
         if unit.value:
@@ -174,7 +234,7 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
         bind("clang_disposeIndex", None, ptr)(index)
 
 
-def produce_role_inventory(directory: Path, arguments: list[str], library: Path) -> dict:
+def produce_role_inventory(directory: Path, arguments: list[str], library: Path, classify: bool = True, receipt_path: Path | None = None) -> dict:
     repository = Path(__file__).resolve().parents[2]
     build_tool = repository / "Scripts/NativeScript/build-metadata-tool.py"
     if f'SOURCE = "{INCOMPLETE_RECORD_POLICY_SOURCE}"' not in build_tool.read_text(encoding="utf-8"):
@@ -186,7 +246,7 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path)
         headers = sorted(p for sub in ["Headers", "PrivateHeaders"] for p in (framework / sub).rglob("*") if p.is_file())
         # A cheap conservative screen avoids parsing ObjC/C frameworks at all.
         texts = "\n".join(p.read_text(encoding="utf-8", errors="strict") for p in headers)
-        if not re.search(r'\b(namespace|class|template)\b', texts) or re.search(r'@(interface|protocol)\b', texts):
+        if not classify or not re.search(r'\b(namespace|class|template)\b', texts) or re.search(r'@(interface|protocol)\b', texts):
             proof = {"role": PUBLIC_ROLE, "errors": [], "declarations": [], "reason": "Conservative public root"}
         else:
             proof = inspect_header_declarations(headers, arguments, library)
@@ -195,7 +255,9 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path)
                 # non-C++ branch. Inspect the actual ObjC translation as well.
                 objc = inspect_header_declarations(headers, arguments, library, "objective-c")
                 proof["objcCompatibility"] = objc
-                if not objc["errors"] and any(d["category"] == "public" for d in objc["declarations"]):
+                if not complete_language_proof(objc, "objective-c", arguments) or any(
+                    d["category"] not in {"cpp", "inert"} for d in objc["declarations"]
+                ):
                     proof["role"] = PUBLIC_ROLE
             for declaration in proof["declarations"]:
                 declaration["header"] = Path(declaration["header"]).relative_to(framework.resolve()).as_posix()
@@ -205,7 +267,7 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path)
                         "modules": module_names((framework / "Modules/module.modulemap").read_text(encoding="utf-8"))
                             if (framework / "Modules/module.modulemap").is_file() else [],
                         "inputSHA256": framework_inputs(framework), "role": proof["role"], "proof": proof})
-    manifest = {"schemaVersion": 1, "producer": "Scripts/Expo/prepare-ios-dependencies.mjs",
+    manifest = {"schemaVersion": 2, "producer": "Scripts/Expo/prepare-ios-dependencies.mjs",
                 "producerSHA256": hashlib.sha256((repository / "Scripts/Expo/prepare-ios-dependencies.mjs").read_bytes()).hexdigest(),
                 "classifierSHA256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "metadataToolSourceSHA256": hashlib.sha256(build_tool.read_bytes()).hexdigest(),
@@ -213,17 +275,17 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path)
                 "dependencyLockSHA256": hashlib.sha256((repository / "Scripts/Expo/dependency-lock.json").read_bytes()).hexdigest(),
                 "compilerLibrarySHA256": hashlib.sha256(library.read_bytes()).hexdigest(),
                 "originRoot": str(directory.resolve()), "compilerArguments": arguments, "frameworks": records}
-    (directory / ROLE_MANIFEST).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    (receipt_path or directory / ROLE_MANIFEST).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return manifest
 
 
-def verified_framework_roles(directory: Path) -> dict:
-    path = directory / ROLE_MANIFEST
+def verified_framework_roles(directory: Path, compiler_arguments: list[str] | None = None, receipt_path: Path | None = None) -> dict:
+    path = receipt_path or directory / ROLE_MANIFEST
     if not path.is_file():
         return {}
     manifest = json.loads(path.read_text(encoding="utf-8"))
     repository = Path(__file__).resolve().parents[2]
-    if manifest.get("schemaVersion") != 1 or not re.fullmatch(r"[0-9a-f]{64}", manifest.get("compilerLibrarySHA256", "")) or \
+    if manifest.get("schemaVersion") != 2 or not re.fullmatch(r"[0-9a-f]{64}", manifest.get("compilerLibrarySHA256", "")) or \
        manifest.get("producer") != "Scripts/Expo/prepare-ios-dependencies.mjs" or \
        manifest.get("producerSHA256") != hashlib.sha256((repository / "Scripts/Expo/prepare-ios-dependencies.mjs").read_bytes()).hexdigest() or \
        manifest.get("classifierSHA256") != hashlib.sha256(Path(__file__).read_bytes()).hexdigest() or \
@@ -244,20 +306,21 @@ def verified_framework_roles(directory: Path) -> dict:
         proof = record["proof"]
         if any(d.get("header") not in record["inputSHA256"] for d in proof.get("declarations", [])):
             raise RuntimeError("Framework input-role proof refers to an unowned header")
-        if record["role"] == CPP_ROLE and (not proof.get("compiler") or proof.get("errors") or proof.get("role") != CPP_ROLE or
-                                           declaration_role(proof["declarations"]) != CPP_ROLE):
-            raise RuntimeError("Framework input-role contains supported/mixed or unknown declarations: " + framework.name)
         if record["role"] == CPP_ROLE:
-            objc = proof.get("objcCompatibility")
-            if not objc or (not objc["errors"] and any(d["category"] == "public" for d in objc["declarations"])):
-                raise RuntimeError("Framework input-role lacks a valid ObjC compatibility audit: " + framework.name)
-        if record["role"] == CPP_ROLE and os.environ.get("SDKROOT"):
             arguments = manifest["compilerArguments"]
-            if "-isysroot" not in arguments or Path(arguments[arguments.index("-isysroot") + 1]).resolve() != Path(os.environ["SDKROOT"]).resolve():
-                raise RuntimeError("Framework input-role SDK context changed: " + framework.name)
-            target = arguments[arguments.index("-target") + 1] if "-target" in arguments else ""
-            if os.environ.get("ARCHS") and target.split("-", 1)[0] not in os.environ["ARCHS"].split():
-                raise RuntimeError("Framework input-role architecture context changed: " + framework.name)
+            objc = proof.get("objcCompatibility", {})
+            if not complete_language_proof(proof, "objective-c++", arguments) or proof.get("role") != CPP_ROLE or declaration_role(proof["declarations"]) != CPP_ROLE:
+                raise RuntimeError("Framework input-role contains incomplete/supported/mixed or unknown declarations: " + framework.name)
+            if not complete_language_proof(objc, "objective-c", arguments) or any(d["category"] not in {"cpp", "inert"} for d in objc["declarations"]):
+                raise RuntimeError("Framework input-role lacks a complete ObjC compatibility audit: " + framework.name)
+            for audit in [proof, objc]:
+                if any(d.get("header") not in record["inputSHA256"] for d in audit["declarations"]):
+                    raise RuntimeError("Framework input-role audit refers to an unowned header")
+                for name, digest in audit["dependencies"].items():
+                    dependency = Path(name)
+                    if not dependency.is_file() or hashlib.sha256(dependency.read_bytes()).hexdigest() != digest:
+                        raise RuntimeError("Framework input-role parser dependency changed: " + name)
+            verify_role_context(arguments, compiler_arguments)
         roles[framework.name] = record
     return roles
 
@@ -339,7 +402,8 @@ def write_verified_header_alias_overlay(inventory: list[dict], destination: Path
 
 
 def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path],
-                          framework_search_paths: list[Path] | None = None) -> list[dict]:
+                          framework_search_paths: list[Path] | None = None, role_receipts: dict | None = None,
+                          compiler_arguments: list[str] | None = None) -> list[dict]:
     inventory = []
     public_headers = []
     # SubFrameworks is an include-search dependency, not another public root.
@@ -353,7 +417,8 @@ def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path
     for priority, directory in enumerate(framework_roots):
         if directory.resolve() == (sdk / "System/Library/SubFrameworks").resolve():
             continue
-        roles = verified_framework_roles(directory)
+        receipt = (role_receipts or {}).get(str(directory.resolve()))
+        roles = verified_framework_roles(directory, compiler_arguments, receipt)
         for candidate in sorted(directory.glob("*.framework")):
             framework = candidate.resolve()
             if framework in seen_paths:
@@ -392,7 +457,7 @@ def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path
             if role is not None:
                 record["inputRole"] = role["role"]
                 record["inputRoleProof"] = role["proof"]
-                record["roleManifestSHA256"] = hashlib.sha256((directory / ROLE_MANIFEST).read_bytes()).hexdigest()
+                record["roleManifestSHA256"] = hashlib.sha256((receipt or directory / ROLE_MANIFEST).read_bytes()).hexdigest()
                 if role["role"] == CPP_ROLE:
                     record["status"] = "INCLUDE_SEARCH_ONLY_CPP"
                     inventory.append(record)
@@ -433,14 +498,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--produce-roles", type=Path, required=True)
     parser.add_argument("--library", type=Path)
+    parser.add_argument("--target")
     args = parser.parse_args()
     if sys.platform != "darwin" and args.library is None:
         raise SystemExit("Actual installed compiler library is required for framework-role inspection")
     sdk = subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"], text=True).strip()
     clang = Path(subprocess.check_output(["xcrun", "--find", "clang"], text=True).strip()).resolve()
     library = args.library or clang.parent.parent / "lib/libclang.dylib"
-    version = subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"], text=True).strip()
-    compiler_args = ["-isysroot", sdk, "-target", f"arm64-apple-ios{version}-simulator",
+    target = args.target
+    if target:
+        canonical_target(target)
+    compiler_args = ["-isysroot", sdk, *(["-target", target] if target else []),
                      "-F" + str(args.produce_roles), "-I" + str(args.produce_roles / "react.framework/Headers")]
-    manifest = produce_role_inventory(args.produce_roles, compiler_args, library)
+    manifest = produce_role_inventory(args.produce_roles, compiler_args, library, classify=bool(target))
     print(json.dumps({"roles": {r["framework"]: r["role"] for r in manifest["frameworks"]}}))
