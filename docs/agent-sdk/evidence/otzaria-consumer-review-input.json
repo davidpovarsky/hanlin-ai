@@ -1,0 +1,62 @@
+{
+  "scope": "Read-only consumed Otzaria source contract review; no host API audit or execution",
+  "reviewedPin": "357d0042809c2c71bc6725466994b2adbaadf3da",
+  "reviewManifestSHA256": "080306e867282ecc8dc5ef980e4e32a3d1403d3f62ac35b0f58c6a7181cc5d0d",
+  "verifiedFiles": [
+    {
+      "path": "docs/agent-sdk/PUBLIC_API.md",
+      "sha256": "ae25badb783812658d2f0994823a4a312a1b36bd594682ff763d966c45df9df3",
+      "bytes": 12417,
+      "verified": true
+    },
+    {
+      "path": "docs/agent-sdk/IMPLEMENTATION_HANDOFF.md",
+      "sha256": "d0f9165f67d30f32e75f22bdefa2509e89c98f0e2e019c1bd4fca63fcb20f7bd",
+      "bytes": 10440,
+      "verified": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "sha256": "5bb584f5e1b0e26a4618c2c5135e83805f095369c81dbae7bd059e37bd17913b",
+      "bytes": 2149,
+      "verified": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostContext.swift",
+      "sha256": "9891cb9ca8aca591f1a5ff4be1393e0ce4db3467df5b750c75ddec00efb17f31",
+      "bytes": 8108,
+      "verified": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostIntegration.swift",
+      "sha256": "6ca77b8fe21c84328ce9cc40578ce832837676c04fae12b21c42950b3a4e509f",
+      "bytes": 8394,
+      "verified": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+      "bytes": 7298,
+      "verified": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+      "bytes": 5423,
+      "verified": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "sha256": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750",
+      "bytes": 56729,
+      "verified": true
+    }
+  ],
+  "pinnedNumericBoundary": {
+    "revision": "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6",
+    "source": "C:\\Users\\DAVID\\Code\\swift-ai-sdk\\Sources\\AISDKProvider\\JSONValue\\JSONValue.swift",
+    "gitBlobSHA256": "2787a30c76de3adb20aeba1d150f19711a949e637df705e91681147d0427696d",
+    "workingSourceSHA256": "a819718572fce73d6b186665f5cd3ea20abad0f525f2c4594339e9a6dbda300e",
+    "matchesPinnedSourceIgnoringLineEndings": true
+  }
+}

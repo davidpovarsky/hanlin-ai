@@ -51,3 +51,9 @@ Cases: exact Unicode namespace bytes; invalid decoded identity; scoped read; unk
 6. Roni: independently review the frozen source/security/ownership and actual proof manifests; then native/full-host/device gates as available. Full SDK-02/03/05/07 and parent acceptance remain open; source/portable tests do not satisfy those gates.
 
 No main merge, upstream sync, source moves/deletes, second worktree, production migration, release/signing change or global model setting was performed.
+
+## Later bounded Otzaria contract feedback
+
+The supplied eight-blob consumer review was verified against 357d and reconciled in PUBLIC_API.md without a host API audit or shared-contract/source changes. Scene UUIDs require explicit host native-lifetime bindings; complete normalized routes need scoped opaque backing references and actual native UI receipt validation; noncompleted statuses use non-success operationUnavailable/details plus a scoped receipt, with current model/history projection limitations stated.
+
+A NEW concrete limitation was reproduced in the actual pinned JSONValue boundary: SwiftAISDK's Double-only numeric type followed by the current core executor's JSON re-encoding can convert `1.0` to integer `1` and round `9007199254740993` to `9007199254740992` before the host validator. Direct canonical types preserve supported Int64/Double distinctions, but cannot restore data already lost upstream. The narrow raw validated executor-input proposal and fail-closed alternative require owner coordination before any shared core/pin changes. This is consumer/model-tool compatibility BLOCKED, not a new pass. The existing 32 portable behavior passes do not cover this full model path; the isolated numeric reproduction confirms the limitation, not a repair or native runtime result.

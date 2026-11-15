@@ -1,0 +1,48 @@
+{
+  "result": "CONFIRMED_REPRESENTATION_LOSS; NOT_FIXED",
+  "scope": "Isolated actual pinned JSONValue Codable and canonical value boundary; excludes full agent/Apple/Otzaria runtime",
+  "sourceReviewBase": "08b5d6f31153063c31be321fbd35c7301f302fc1",
+  "toolchain": "Swift 6.3.3, x86_64-unknown-windows-msvc, language mode 6",
+  "providerRevision": "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6",
+  "commands": [
+    [
+      "swiftc",
+      "-swift-version",
+      "6",
+      "-parse-as-library",
+      "-I",
+      "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\portable",
+      "-L",
+      "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\portable",
+      "-lHanlinPlatformContracts",
+      "C:\\Users\\DAVID\\Code\\swift-ai-sdk\\Sources\\AISDKProvider\\JSONValue\\JSONValue.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\docs\\agent-sdk\\evidence\\numeric-boundary-proof.swift",
+      "-o",
+      "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\portable\\NumericBoundaryProof.exe"
+    ],
+    [
+      "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\portable\\NumericBoundaryProof.exe"
+    ]
+  ],
+  "inputs": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\swift-ai-sdk\\Sources\\AISDKProvider\\JSONValue\\JSONValue.swift",
+      "sha256": "a819718572fce73d6b186665f5cd3ea20abad0f525f2c4594339e9a6dbda300e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinValue.swift",
+      "sha256": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\docs\\agent-sdk\\evidence\\numeric-boundary-proof.swift",
+      "sha256": "0afad425483da4f98c8d7ea79668be52a861d7ad691eb26b2f2dad8092326836"
+    }
+  ],
+  "output": {
+    "path": "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\docs\\agent-sdk\\evidence\\numeric-boundary-output.json",
+    "sha256": "d21497b85ea6a5c6f77946166901867bcf722942bd71eb0887d46d300df12b3c"
+  },
+  "sharedContractOrCoreChanges": "NONE",
+  "numericCapabilityAcceptance": "BLOCKED pending approved lossless raw executor input or explicit unsupported capability policy",
+  "nativeFullGraph": "NOT_RUN"
+}
