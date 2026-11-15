@@ -3952,8 +3952,8 @@ class APIManager {
                         usage: tokenUsage,
                         meaningfulEventCount: meaningfulCount
                     )
-                    if toolAdapter.currentRoundID == stepID {
-                        toolAdapter.currentRoundID = nil
+                    if toolAdapter?.currentRoundID == stepID {
+                        toolAdapter?.currentRoundID = nil
                     }
                 }
 
