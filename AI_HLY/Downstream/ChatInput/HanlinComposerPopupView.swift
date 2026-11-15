@@ -11,6 +11,7 @@
 
 import SwiftUI
 import SwiftData
+import Observation
 import HanlinPlatformContracts
 #if canImport(UIKit)
 import UIKit
@@ -1037,6 +1038,42 @@ struct HanlinComposerGeneralActionsView: View {
 // MARK: - 2. Direct 1-Tap Tools / Skills / MCP / Runtime Popover
 
 @MainActor
+@Observable
+final class HanlinMCPIntentFeedback {
+    private struct Entry {
+        let requestID: UUID
+        var error: String?
+    }
+    private var scope: MCPChatSelectionScope?
+    private var entries: [UUID: Entry] = [:]
+
+    func setScope(_ newScope: MCPChatSelectionScope?) {
+        guard scope != newScope else { return }
+        scope = newScope
+        entries.removeAll()
+    }
+
+    func begin(serverID: UUID, scope: MCPChatSelectionScope) -> UUID {
+        setScope(scope)
+        let requestID = UUID()
+        entries[serverID] = Entry(requestID: requestID, error: nil)
+        return requestID
+    }
+
+    func finish(serverID: UUID, scope: MCPChatSelectionScope, requestID: UUID, error: String?) {
+        guard self.scope == scope, entries[serverID]?.requestID == requestID else { return }
+        if let error { entries[serverID]?.error = error }
+        else { entries.removeValue(forKey: serverID) }
+    }
+
+    func message(for serverID: UUID) -> String? { entries[serverID]?.error }
+    func dismiss(serverID: UUID) { entries.removeValue(forKey: serverID) }
+    func isCurrent(serverID: UUID, scope: MCPChatSelectionScope, requestID: UUID) -> Bool {
+        self.scope == scope && entries[serverID]?.requestID == requestID
+    }
+}
+
+@MainActor
 struct HanlinComposerToolsRootView: View {
     static func applyServerSelection(
         provider: MCPRuntimeProvider,
@@ -1049,6 +1086,30 @@ struct HanlinComposerToolsRootView: View {
             .init(serverID: serverID, isSelected: isSelected), chatID: chatID, temporary: temporary
         )
         return provider.selectionRevision(chatID: chatID, temporary: temporary)
+    }
+
+    static func performServerSelection(
+        serverID: UUID, isSelected: Bool, scope: MCPChatSelectionScope, requestID: UUID,
+        feedback: HanlinMCPIntentFeedback, isCurrentScope: () -> Bool,
+        apply: () async throws -> UInt64, read: () async throws -> Set<UUID>,
+        revision: () -> UInt64, publish: (Set<UUID>) -> Void
+    ) async {
+        do {
+            let committedRevision = try await apply()
+            let actual = try await read()
+            guard !Task.isCancelled, isCurrentScope(), feedback.isCurrent(serverID: serverID, scope: scope, requestID: requestID) else { return }
+            if revision() == committedRevision {
+                publish(actual)
+                feedback.finish(serverID: serverID, scope: scope, requestID: requestID,
+                    error: actual.contains(serverID) == isSelected ? nil : String(localized: "MCP selection could not be updated."))
+            } else {
+                // A newer commit may belong to another server; this action still succeeded.
+                feedback.finish(serverID: serverID, scope: scope, requestID: requestID, error: nil)
+            }
+        } catch {
+            guard !Task.isCancelled, isCurrentScope(), feedback.isCurrent(serverID: serverID, scope: scope, requestID: requestID) else { return }
+            feedback.finish(serverID: serverID, scope: scope, requestID: requestID, error: error.localizedDescription)
+        }
     }
 
     private enum ManagementDestination: String, Identifiable {
@@ -1071,6 +1132,7 @@ struct HanlinComposerToolsRootView: View {
     @State private var selectedMCPServerIDs: Set<UUID> = []
     @State private var activeLiveContext: LiveContext?
     @State private var selectionError: String?
+    @State private var intentFeedback = HanlinMCPIntentFeedback()
     @State private var skillSearchText: String = ""
     @State private var runtimeSnapshots: [RuntimeSnapshot] = []
     @State private var managementDestination: ManagementDestination?
@@ -1138,6 +1200,7 @@ struct HanlinComposerToolsRootView: View {
             .task(id: liveContext) {
                 await refreshLiveState(for: liveContext)
             }
+            .onDisappear { intentFeedback.setScope(nil) }
             .frame(maxWidth: .infinity, maxHeight: embeddedInMorph ? nil : .infinity, alignment: .top)
             .scrollContentBackground(.hidden)
             .background(Color.clear)
@@ -1190,6 +1253,7 @@ struct HanlinComposerToolsRootView: View {
             .task(id: liveContext) {
                 await refreshLiveState(for: liveContext)
             }
+            .onDisappear { intentFeedback.setScope(nil) }
             .frame(width: currentSize.width, height: currentSize.height)
             .background(GlassView(style: .systemUltraThinMaterial))
             .clipShape(.rect(cornerRadius: 22, style: .continuous))
@@ -1578,30 +1642,18 @@ struct HanlinComposerToolsRootView: View {
                                     set: { enabled in
                                         let requestChatID = chatID
                                         let requestTemporary = temporaryRecord
+                                        let scope = MCPChatSelectionScope(chatID: requestChatID, temporary: requestTemporary)
+                                        let requestID = intentFeedback.begin(serverID: server.id, scope: scope)
                                         Task {
-                                            let startingRevision = mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary)
-                                            var committedRevision: UInt64?
-                                            do {
-                                                let revision = try await Self.applyServerSelection(
-                                                    provider: mcpProvider,
-                                                    serverID: server.id,
-                                                    isSelected: enabled,
-                                                    chatID: requestChatID,
-                                                    temporary: requestTemporary
-                                                )
-                                                committedRevision = revision
-                                                let actual = try await mcpProvider.readSelection(chatID: requestChatID, temporary: requestTemporary)
-                                                guard !Task.isCancelled, activeLiveContext?.chatID == requestChatID,
-                                                      activeLiveContext?.temporary == requestTemporary,
-                                                      mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) == revision else { return }
-                                                selectedMCPServerIDs = actual
-                                                selectionError = actual.contains(server.id) == enabled ? nil : String(localized: "MCP selection could not be updated.")
-                                            } catch {
-                                                guard !Task.isCancelled, activeLiveContext?.chatID == requestChatID,
-                                                      activeLiveContext?.temporary == requestTemporary,
-                                                      mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) == (committedRevision ?? startingRevision) else { return }
-                                                selectionError = error.localizedDescription
-                                            }
+                                            await Self.performServerSelection(
+                                                serverID: server.id, isSelected: enabled, scope: scope, requestID: requestID,
+                                                feedback: intentFeedback,
+                                                isCurrentScope: { activeLiveContext?.chatID == requestChatID && activeLiveContext?.temporary == requestTemporary },
+                                                apply: { try await Self.applyServerSelection(provider: mcpProvider, serverID: server.id, isSelected: enabled, chatID: requestChatID, temporary: requestTemporary) },
+                                                read: { try await mcpProvider.readSelection(chatID: requestChatID, temporary: requestTemporary) },
+                                                revision: { mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) },
+                                                publish: { selectedMCPServerIDs = $0 }
+                                            )
                                         }
                                     }
                                 )) {
@@ -1614,6 +1666,16 @@ struct HanlinComposerToolsRootView: View {
                                     }
                                 }
                                 .tint(.hlTeal)
+
+                                if let error = intentFeedback.message(for: server.id) {
+                                    HStack {
+                                        Text(error).font(.caption).foregroundStyle(.red)
+                                        Spacer()
+                                        Button(String(localized: "Dismiss")) { intentFeedback.dismiss(serverID: server.id) }
+                                            .font(.caption)
+                                    }
+                                    .accessibilityIdentifier("hanlin-mcp-intent-error-\(server.id.uuidString)")
+                                }
 
                                 HStack(spacing: 6) {
                                     statusPill(String(localized: "Installed"), active: true)
@@ -1785,6 +1847,7 @@ struct HanlinComposerToolsRootView: View {
     }
 
     private func refreshLiveState(for request: LiveContext) async {
+        intentFeedback.setScope(MCPChatSelectionScope(chatID: request.chatID, temporary: request.temporary))
         if activeLiveContext?.chatID != request.chatID || activeLiveContext?.temporary != request.temporary {
             selectedMCPServerIDs = []
             selectionError = nil

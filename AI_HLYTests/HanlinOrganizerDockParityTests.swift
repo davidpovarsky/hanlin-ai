@@ -80,6 +80,87 @@ struct ComposerSelectionRefreshTests {
         #expect(try await store.selection(chatID: chatID, temporary: true) == [firstID, secondID])
     }
 
+    @Test("A failed server intent remains visible after another server succeeds")
+    func delayedFailureSurvivesOtherServerCommit() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin-ui-errors-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let runtimeLayout = RuntimeFileLayout(root: root)
+        let environment = RuntimeEnvironmentStore(fileLayout: runtimeLayout)
+        let runtime = NodeRuntimeService(fileLayout: runtimeLayout, environment: environment)
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        let store = MCPChatSelectionStore(fileLayout: layout)
+        let provider = MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment, selectionStore: store)
+        await provider.loadIfNeeded(startHost: false)
+        let scope = MCPChatSelectionScope(chatID: UUID(), temporary: true)
+        let firstID = UUID(), secondID = UUID()
+        let feedback = HanlinMCPIntentFeedback()
+        var currentScope: MCPChatSelectionScope? = scope
+        var displayed: Set<UUID> = []
+        let delay = IntentDelay()
+        let firstRequest = feedback.begin(serverID: firstID, scope: scope)
+        let first = Task { @MainActor in
+            await HanlinComposerToolsRootView.performServerSelection(
+                serverID: firstID, isSelected: true, scope: scope, requestID: firstRequest,
+                feedback: feedback, isCurrentScope: { currentScope == scope },
+                apply: { await delay.wait(); throw ReadError.failed },
+                read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+                revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+                publish: { displayed = $0 })
+        }
+        while delay.continuation == nil { await Task.yield() }
+        let secondRequest = feedback.begin(serverID: secondID, scope: scope)
+        await HanlinComposerToolsRootView.performServerSelection(
+            serverID: secondID, isSelected: true, scope: scope, requestID: secondRequest,
+            feedback: feedback, isCurrentScope: { currentScope == scope },
+            apply: { try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: secondID, isSelected: true, chatID: scope.chatID, temporary: scope.temporary) },
+            read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+            revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+            publish: { displayed = $0 })
+        delay.continuation?.resume()
+        await first.value
+        #expect(try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) == [secondID])
+        #expect(displayed == [secondID])
+        #expect(feedback.message(for: firstID) != nil)
+        #expect(feedback.message(for: secondID) == nil)
+
+        let refreshed = HanlinComposerRefreshContext(chatID: scope.chatID, temporary: scope.temporary, selectionRevision: provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary), globallyEnabled: false, serverStates: [])
+        await HanlinComposerSelectionRefresh.perform(request: refreshed, current: { refreshed },
+            revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+            read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+            publish: { if case .success(let value) = $0 { displayed = value } })
+        #expect(feedback.message(for: firstID) != nil)
+
+        let supersededDelay = IntentDelay()
+        let older = feedback.begin(serverID: firstID, scope: scope)
+        let oldTask = Task { @MainActor in
+            await HanlinComposerToolsRootView.performServerSelection(
+                serverID: firstID, isSelected: true, scope: scope, requestID: older,
+                feedback: feedback, isCurrentScope: { currentScope == scope },
+                apply: { await supersededDelay.wait(); throw ReadError.failed },
+                read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+                revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+                publish: { displayed = $0 })
+        }
+        while supersededDelay.continuation == nil { await Task.yield() }
+        let newer = feedback.begin(serverID: firstID, scope: scope)
+        await HanlinComposerToolsRootView.performServerSelection(
+            serverID: firstID, isSelected: true, scope: scope, requestID: newer,
+            feedback: feedback, isCurrentScope: { currentScope == scope },
+            apply: { try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: firstID, isSelected: true, chatID: scope.chatID, temporary: scope.temporary) },
+            read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+            revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+            publish: { displayed = $0 })
+        supersededDelay.continuation?.resume()
+        await oldTask.value
+        #expect(feedback.message(for: firstID) == nil)
+        #expect(try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) == [firstID, secondID])
+        let switched = feedback.begin(serverID: firstID, scope: scope)
+        currentScope = MCPChatSelectionScope(chatID: UUID(), temporary: true)
+        feedback.setScope(currentScope)
+        feedback.finish(serverID: firstID, scope: scope, requestID: switched, error: "wrong chat")
+        #expect(feedback.message(for: firstID) == nil)
+    }
+
     @Test("A delayed old-chat result and error are discarded, while a current failure is published")
     func delayedChatSwitchAndReadFailure() async {
         let first = HanlinComposerRefreshContext(chatID: UUID(), temporary: false, selectionRevision: 1, globallyEnabled: true, serverStates: [])
