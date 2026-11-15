@@ -39,6 +39,51 @@ declare const HanlinNativeServicesBridge: {
   activeSessionBridge(): NativeRuntimeBridge | null;
 };
 
+function record(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+function nonnegativeInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
+}
+function jsonValue(value: unknown): value is RuntimeJSONValue {
+  const pending: unknown[] = [value];
+  while (pending.length) {
+    const item = pending.pop();
+    if (item === null || typeof item === 'boolean' || typeof item === 'string') continue;
+    if (typeof item === 'number' && Number.isFinite(item)) continue;
+    if (Array.isArray(item)) { for (const child of item) pending.push(child); continue; }
+    if (record(item)) { for (const child of Object.values(item)) pending.push(child); continue; }
+    return false;
+  }
+  return true;
+}
+
+/** Decode the existing Swift RuntimeExecutionResult wire contract. A native
+ * callback or syntactically valid JSON alone does not establish a receipt. */
+export function parseRuntimeExecutionResult(receipt: string): RuntimeExecutionResult {
+  let value: unknown;
+  try { value = JSON.parse(receipt); }
+  catch { throw new Error('Runtime returned invalid receipt JSON.'); }
+  if (!record(value) || typeof value.executionID !== 'string' ||
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value.executionID) ||
+      typeof value.stdout !== 'string' || typeof value.stderr !== 'string' ||
+      !nonnegativeInteger(value.durationMilliseconds) ||
+      typeof value.didTimeOut !== 'boolean' || typeof value.wasCancelled !== 'boolean' ||
+      typeof value.outputWasTruncated !== 'boolean' ||
+      ('exitCode' in value && (typeof value.exitCode !== 'number' || !Number.isSafeInteger(value.exitCode))) ||
+      ('value' in value && !jsonValue(value.value))) {
+    throw new Error('Runtime returned an invalid execution receipt.');
+  }
+  if ('outputFiles' in value) {
+    if (!record(value.outputFiles) || Object.values(value.outputFiles).some(artifact =>
+        !record(artifact) || typeof artifact.path !== 'string' || !nonnegativeInteger(artifact.bytes) ||
+        typeof artifact.sha256 !== 'string' || !/^[0-9a-f]{64}$/i.test(artifact.sha256))) {
+      throw new Error('Runtime returned invalid output artifact descriptors.');
+    }
+  }
+  return value as unknown as RuntimeExecutionResult;
+}
+
 /** Capture once inside this package's active session. A later global session
  * cannot redirect the returned facade's calls or cancellation handles. */
 export function createHostServices() {
@@ -52,8 +97,8 @@ export function createHostServices() {
       requestID = boundBridge.executeRuntimeCompletion(JSON.stringify({kind, source, ...options}), (receipt, error) => {
         if (error !== null) { reject(new Error(error)); return; }
         if (receipt === null) { reject(new Error('Runtime returned no execution receipt.')); return; }
-        try { resolve(JSON.parse(receipt) as RuntimeExecutionResult); }
-        catch { reject(new Error('Runtime returned invalid receipt JSON.')); }
+        try { resolve(parseRuntimeExecutionResult(receipt)); }
+        catch (error) { reject(error); }
       });
     });
     return {requestID, result, cancel: () => requestID !== null && boundBridge.cancelRuntime(requestID)};

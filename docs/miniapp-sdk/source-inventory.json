@@ -1,7 +1,13 @@
 {
-  "sourceCommit": "70079a927cc16e05c856d2e59695a35af7d682d2",
+  "sourceCommit": "3c67ac956e81fe54fafc2c0e2121202d6a7e2c9d",
   "uncommittedSourcePaths": [
-    "Scripts/NativeScript/metadata_public_headers.py"
+    "Packages/HanlinExpoUI/src/host-services.ts",
+    "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+    "Scripts/NativeScript/build-host-services.mjs",
+    "Scripts/NativeScript/host-services.ts",
+    "Scripts/NativeScript/package.json"
   ],
   "schemaVersion": 1,
   "auditParser": {
@@ -256,7 +262,14 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 44,
+        "line": 63,
+        "name": "parseRuntimeExecutionResult",
+        "kind": "FunctionDeclaration",
+        "type": "RuntimeExecutionResult"
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 89,
         "name": "createHostServices",
         "kind": "FunctionDeclaration"
       }
@@ -4848,135 +4861,14 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 10,
-        "name": "HanlinRuntimeKind",
-        "kind": "TypeAliasDeclaration",
-        "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
-      },
-      {
-        "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 11,
+        "line": 12,
         "name": "HanlinDataArea",
         "kind": "TypeAliasDeclaration",
         "type": "'data' | 'documents' | 'state' | 'cache'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 13,
-        "name": "RuntimeExecutionLimits",
-        "kind": "InterfaceDeclaration",
-        "members": [
-          {
-            "name": "timeoutMilliseconds",
-            "kind": "PropertySignature",
-            "optional": true,
-            "type": "number"
-          },
-          {
-            "name": "maximumOutputBytes",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "number"
-          }
-        ]
-      },
-      {
-        "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 20,
-        "name": "RuntimeOutputArtifact",
-        "kind": "InterfaceDeclaration",
-        "members": [
-          {
-            "name": "path",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "bytes",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "number"
-          },
-          {
-            "name": "sha256",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 26,
-        "name": "RuntimeExecutionResult",
-        "kind": "InterfaceDeclaration",
-        "members": [
-          {
-            "name": "executionID",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "stdout",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "stderr",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "string"
-          },
-          {
-            "name": "value",
-            "kind": "PropertySignature",
-            "optional": true,
-            "type": "unknown"
-          },
-          {
-            "name": "exitCode",
-            "kind": "PropertySignature",
-            "optional": true,
-            "type": "number"
-          },
-          {
-            "name": "durationMilliseconds",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "number"
-          },
-          {
-            "name": "didTimeOut",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "boolean"
-          },
-          {
-            "name": "wasCancelled",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "boolean"
-          },
-          {
-            "name": "outputWasTruncated",
-            "kind": "PropertySignature",
-            "optional": false,
-            "type": "boolean"
-          },
-          {
-            "name": "outputFiles",
-            "kind": "PropertySignature",
-            "optional": true,
-            "type": "Record<string, RuntimeOutputArtifact>"
-          }
-        ]
-      },
-      {
-        "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 44,
+        "line": 19,
         "name": "hostServices",
         "kind": "variable",
         "members": [
@@ -5541,6 +5433,167 @@
         "name": "getInstalledBridgeMetadata",
         "kind": "FunctionDeclaration",
         "type": "BridgeMetadata"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+        "line": 3,
+        "name": "HanlinRuntimeKind",
+        "kind": "TypeAliasDeclaration",
+        "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+        "line": 5,
+        "name": "RuntimeJSONValue",
+        "kind": "TypeAliasDeclaration",
+        "type": "null | boolean | number | string | RuntimeJSONValue[] | {\n    [key: string]: RuntimeJSONValue;\n}"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+        "line": 9,
+        "name": "RuntimeExecutionLimits",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "timeoutMilliseconds",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "maximumOutputBytes",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+        "line": 15,
+        "name": "RuntimeOutputArtifact",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "path",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "bytes",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          },
+          {
+            "name": "sha256",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+        "line": 21,
+        "name": "RuntimeExecutionResult",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "executionID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "stdout",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "stderr",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "RuntimeJSONValue"
+          },
+          {
+            "name": "exitCode",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "durationMilliseconds",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "number"
+          },
+          {
+            "name": "didTimeOut",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "wasCancelled",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "outputWasTruncated",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "outputFiles",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "Record<string, RuntimeOutputArtifact>"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+        "line": 34,
+        "name": "RuntimeExecutionOptions",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "arguments",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string[]"
+          },
+          {
+            "name": "environment",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "Record<string, string>"
+          },
+          {
+            "name": "limits",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "RuntimeExecutionLimits"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+        "line": 73,
+        "name": "parseRuntimeExecutionResult",
+        "kind": "FunctionDeclaration",
+        "type": "RuntimeExecutionResult"
       }
     ],
     "reexports": [
@@ -5612,6 +5665,18 @@
           "NativeDelegateOwner",
           "CreateDelegateOptions",
           "NativeProtocolReference"
+        ],
+        "typeOnly": true
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 4,
+        "module": "./runtime-receipt",
+        "names": [
+          "HanlinRuntimeKind",
+          "RuntimeExecutionLimits",
+          "RuntimeOutputArtifact",
+          "RuntimeExecutionResult"
         ],
         "typeOnly": true
       },
@@ -5829,7 +5894,7 @@
     },
     {
       "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-      "sha256": "c9440f793065d74e617d67fa5b0efaae81008618f4b9389ce8309632799ce899"
+      "sha256": "649671e40292cbcdfded8a34869e581f6d9ad51839f241c45b312510208ae0c8"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
@@ -5901,7 +5966,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/host-services.ts",
-      "sha256": "03576a9ce5a7c33739e28df5fd9a1306528c5959b011707ccc329fd6cf6daae4"
+      "sha256": "0f56cb37d4cb0c1bcb24356767d454b6f9708a9f5a7aff151c136f9990d960eb"
     },
     {
       "path": "Packages/HanlinExpoUI/src/index.ts",
@@ -5914,6 +5979,10 @@
     {
       "path": "Packages/HanlinExpoUI/src/modifiers.ts",
       "sha256": "77ed8a18a38510e4e94c191d49f0c3a4bb8beaf5512371ed4797f972a7f7fd45"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/runtime-receipt.ts",
+      "sha256": "83c20dcfef2171926b8948b9b9681c723005bb790c544f5c5b416521a2db0a06"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
@@ -5937,11 +6006,11 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
-      "sha256": "bdfbd9aaafdc2b9b8b37b0e33a268f8b6143bdc807fa741ae699fd89ff259564"
+      "sha256": "3f926190e595f692680a17b5dfda74c9043726e3830661c1495c49e782bea1f3"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
-      "sha256": "5c139e30f598ea2da90464bb840684dd3a302d157ffa4102195021944efbb85c"
+      "sha256": "583e1cda01e7794f34d4b6de1459fd830bbe1754464df801c668864146caf505"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
@@ -6009,15 +6078,15 @@
     },
     {
       "path": "Scripts/NativeScript/build-host-services.mjs",
-      "sha256": "f74356b5bebb6677548ceaf1cca971627da295ad0fb1b744787025fc665ad343"
+      "sha256": "448268ab0be22b3292883114338ca6ff03d7deb6191781dff1a7bd8b82d5b982"
     },
     {
       "path": "Scripts/NativeScript/build-metadata-tool.py",
-      "sha256": "c9928a68e4fda3e49c2aec8aa84f5e7ff0a42bf1bd03ab6ebaf7bd4642d06b52"
+      "sha256": "0bcfd5e51ae29f3a6814aef7f642ea7800d6157dc5acd8b8f2ead22ea5058ee6"
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "556c5187c4613f178ed602389bf1a9e1e7c8f46d4f5c00b9cb777c13309ee81f"
+      "sha256": "36f0b360c5cf08c41687749caac7743d09d7f22377687bffc4754d8f8164f765"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",
@@ -6025,15 +6094,15 @@
     },
     {
       "path": "Scripts/NativeScript/host-services.ts",
-      "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
+      "sha256": "d4f2099b4dfa131ca856b25e586ca3bf8df84545e74f0d6cf32d73e29bdccd29"
     },
     {
       "path": "Scripts/NativeScript/metadata_public_headers.py",
-      "sha256": "0ded5cfec90f7373f1ed0090b80b703b513aaf0b9f7564a0a7349d4e436027f8"
+      "sha256": "836d18e3a10ccbf33b405b1b37a2ae902d8b672f283a2c22f798c7b575dae49b"
     },
     {
       "path": "Scripts/NativeScript/package.json",
-      "sha256": "97c1400f8bce0072a89793e44d32006c4ad8f4cb166c878fe13677a78eadb6a5"
+      "sha256": "827419e2e2fc4bb90a2d3a3a0c20e065cfa3313b54e8261a7b64398acaa443f6"
     },
     {
       "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",

@@ -2,6 +2,22 @@
 
 [נועם | DEV] [MAIN_SESSION]. INT-03 / SDK-03 remain open.
 
+2026-11-15: the TypeScript callback now decodes the canonical receipt instead
+of casting any JSON object to RuntimeExecutionResult. Required UUID/string/
+integer/Boolean fields, optional finite JSON values/exit codes and complete
+output artifact descriptors are validated. Empty stdout/stderr, exit failures,
+zero durations/byte counts and explicit JSON null values are preserved. Error
+messages do not echo receipt contents. The decoder uses an iterative JSON walk.
+
+`Scripts/NativeScript/host-services.ts` remains the source authority. Its existing
+builder also generates the pure Expo runtime DTO/decoder module, so both facades
+apply identical validation without sharing session access or adding a runtime.
+Seven Node production-facade tests passed using explicit native-module fixtures;
+these are not Hermes/V8/iOS acceptance. TypeScript5.9.3 strict NS source and
+positive/exact-negative fixtures passed; TypeScript6.0.3 full Expo UI/native-api
+programs passed with skipLibCheck=false, zero positive and five/seven exact
+negative diagnostics. Metadata/actual native consumers/physical tests remain open.
+
 The existing NativeScript metadata bridge now exposes asynchronous
 executeRuntime(payloadJSON, completion), returning a host-issued cancellation
 handle. Its callback contains the entire canonical RuntimeExecutionResult JSON:

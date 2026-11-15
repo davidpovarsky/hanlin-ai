@@ -1,5 +1,7 @@
 import { requireNativeModule } from 'expo';
 import { fromByteArray, toByteArray } from 'base64-js';
+import { parseRuntimeExecutionResult, type HanlinRuntimeKind, type RuntimeExecutionLimits, type RuntimeExecutionResult } from './runtime-receipt';
+export type { HanlinRuntimeKind, RuntimeExecutionLimits, RuntimeOutputArtifact, RuntimeExecutionResult } from './runtime-receipt';
 
 interface NativeHostServicesModule {
   invoke(operation: string, payloadJSON: string): Promise<string>;
@@ -7,34 +9,7 @@ interface NativeHostServicesModule {
 }
 const NativeHostServices = requireNativeModule<NativeHostServicesModule>('HanlinHostServices');
 
-export type HanlinRuntimeKind = 'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell';
 export type HanlinDataArea = 'data' | 'documents' | 'state' | 'cache';
-
-export interface RuntimeExecutionLimits {
-  /** Omit for no explicit deadline; this is not a default timeout. */
-  timeoutMilliseconds?: number;
-  /** Preview budget; full output remains in the runtime job artifacts. */
-  maximumOutputBytes: number;
-}
-
-export interface RuntimeOutputArtifact {
-  path: string;
-  bytes: number;
-  sha256: string;
-}
-
-export interface RuntimeExecutionResult {
-  executionID: string;
-  stdout: string;
-  stderr: string;
-  value?: unknown;
-  exitCode?: number;
-  durationMilliseconds: number;
-  didTimeOut: boolean;
-  wasCancelled: boolean;
-  outputWasTruncated: boolean;
-  outputFiles?: Record<string, RuntimeOutputArtifact>;
-}
 
 async function invoke<T>(operation: string, payload: unknown): Promise<T> {
   const response = await NativeHostServices.invoke(operation, JSON.stringify(payload));
@@ -55,7 +30,8 @@ export const hostServices = {
       limits?: RuntimeExecutionLimits;
     } = {}
   ): Promise<RuntimeExecutionResult> {
-    return invoke('runtime.execute', { kind, source, ...options });
+    return NativeHostServices.invoke('runtime.execute', JSON.stringify({kind, source, ...options}))
+      .then(parseRuntimeExecutionResult);
   },
 
   async readFile(path: string, area: HanlinDataArea = 'data'): Promise<Uint8Array | null> {
