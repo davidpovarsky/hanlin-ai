@@ -58,7 +58,8 @@
     "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
     "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRunner.mm",
     "AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm",
-    "AI_HLY/Downstream/RuntimeCore/Python/Native/HanlinPythonNativeExtensions.mm"
+    "AI_HLY/Downstream/RuntimeCore/Python/Native/HanlinPythonNativeExtensions.mm",
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift"
   ],
   "excludes": [
     "AI_HLY/AI_HLY.swift",
@@ -81,6 +82,7 @@
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
-    "AI_HLY/RuntimeHostResources.zip"
+    "AI_HLY/RuntimeHostResources.zip",
+    "AI_HLY/Resource/Localizable.xcstrings"
   ]
 }

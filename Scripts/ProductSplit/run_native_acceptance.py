@@ -26,7 +26,7 @@ def command(argv, name, timeout=60):
 
 def main():
     EVIDENCE.mkdir(parents=True, exist_ok=True)
-    state = {'status': 'INFRA_ERROR', 'ui': 'NOT_RUN', 'xcresult': 'NOT_CREATED',
+    state = {'status': 'INFRA_ERROR', 'ui': 'NOT_RUN', 'storage_boundary': 'NOT_RUN', 'xcresult': 'NOT_CREATED',
              'scope': 'standalone MiniApps target only; two-app migration/transport/device acceptance OPEN',
              'reused_passes': [], 'started_at': time.time()}
     simulator = None
@@ -44,7 +44,8 @@ def main():
             inputs[name] = hashlib.sha256(p.read_bytes()).hexdigest()
         (EVIDENCE / 'source-inputs.json').write_text(json.dumps(inputs, indent=2)+'\n')
         state['impact'] = 'New app target, explicit shared host sources, authorization extraction and AI-only DI: no earlier app acceptance is reusable.'
-        command(['xcodebuild', '-list', '-json', '-project', 'AI_HLY.xcodeproj'], 'schemes.json', timeout=600)
+        package_arguments = ['-clonedSourcePackagesDirPath', str(ROOT/'build/SourcePackages')]
+        command(['xcodebuild', '-list', '-json', '-project', 'AI_HLY.xcodeproj', *package_arguments], 'schemes.json', timeout=600)
         resolved = ROOT/'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved'
         (EVIDENCE/'Package.resolved').write_bytes(resolved.read_bytes())
         runtimes = json.loads(command(['xcrun', 'simctl', 'list', 'runtimes', '-j'], 'runtimes.json'))['runtimes']
@@ -58,16 +59,16 @@ def main():
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
         state.update(simulator=simulator, runtime=runtime, device=device)
         destinations = command(['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
-                                '-showdestinations'], 'destinations.log', timeout=120)
+                                '-showdestinations', *package_arguments], 'destinations.log', timeout=120)
         destination = next(line for line in destinations.splitlines() if simulator.lower() in line.lower())
         state['architecture'] = re.search(r'arch:\s*(\w+)', destination).group(1)
         if state['architecture'] not in runtime['supportedArchitectures']:
             raise RuntimeError('Xcode destination architecture is unsupported by selected runtime')
         state['architecture_evidence'] = destination.strip()
-        derived = Path(os.environ['RUNNER_TEMP'])/'HanlinSplitDerivedData'
+        derived = Path(os.environ['SPLIT_DERIVED_DATA'])
         base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
                 '-destination', 'platform=iOS Simulator,id='+simulator, '-parallel-testing-enabled', 'NO',
-                '-derivedDataPath', str(derived), 'CODE_SIGNING_ALLOWED=NO']
+                '-derivedDataPath', str(derived), *package_arguments, 'CODE_SIGNING_ALLOWED=NO']
         build = base + ['build-for-testing', '-resultBundlePath', str(EVIDENCE/'Build.xcresult')]
         state['build_command'] = build
         state['status'] = 'BUILD_FAILED'
@@ -89,6 +90,24 @@ def main():
         if device_state != 'Booted':
             command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
         command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=180)
+        storage = base + ['test-without-building', '-resultBundlePath', str(EVIDENCE/'Storage.xcresult'),
+                          '-only-testing:HanlinMiniAppsTests/SplitAppStorageLayoutTests']
+        state['storage_command'] = storage
+        state['storage_boundary'] = 'INFRA_ERROR'
+        storage_result = subprocess.run(storage, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=900)
+        (EVIDENCE/'storage-tests.log').write_bytes(storage_result.stdout)
+        if (EVIDENCE/'Storage.xcresult').exists():
+            storage_summary = json.loads(command(['xcrun', 'xcresulttool', 'get', 'test-results', 'summary',
+                '--path', str(EVIDENCE/'Storage.xcresult')], 'storage-summary.json'))
+            state['storage_summary'] = storage_summary
+            if storage_result.returncode == 0 and storage_summary.get('passedTests') == 5 \
+                    and storage_summary.get('failedTests', 0) == 0 and storage_summary.get('skippedTests', 0) == 0:
+                state['storage_boundary'] = 'EXECUTED_PASS'
+            elif storage_summary.get('failedTests', 0):
+                state['storage_boundary'] = 'TEST_FAILED'
+        if state['storage_boundary'] != 'EXECUTED_PASS':
+            state['status'] = state['storage_boundary']
+            raise RuntimeError('Storage boundary acceptance did not pass; see original Storage.xcresult/log')
         command([sys.executable, 'Scripts/CI/stage_scriptui_fixtures.py',
                  '--simulator-udid', simulator,
                  '--app-path', str(app_product),

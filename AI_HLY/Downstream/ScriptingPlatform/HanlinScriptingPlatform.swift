@@ -14,6 +14,7 @@ import HanlinNativeScriptRuntime
 import HanlinExpoRuntime
 import HanlinExpoNativeAPI
 import HanlinMiniAppCore
+import HanlinProductSplit
 import Observation
 import OSLog
 import UIKit
@@ -76,7 +77,10 @@ final class HanlinScriptingPlatform {
     private let stagingRoot: URL?
     static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptPackageInstall")
 
-    init(rootOverride: URL? = nil) {
+    init(
+        rootOverride: URL? = nil,
+        extensionStoreResolver: @MainActor () throws -> HanlinScriptExtensionStore = HanlinScriptingPlatform.productExtensionStore
+    ) {
         HanlinExpoSession.ensureAppDefinesLoaded()
         do {
             let metadata = try HanlinScriptingSDK.metadata()
@@ -127,7 +131,7 @@ final class HanlinScriptingPlatform {
             let installed = platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
             store = try HanlinAtomicScriptStore(root: installed)
             do {
-                let sharedStore = try HanlinScriptExtensionStore()
+                let sharedStore = try extensionStoreResolver()
                 extensionStore = sharedStore
                 invocationExecutor = HanlinInvocationExecutor(store: sharedStore)
             } catch {
@@ -139,6 +143,19 @@ final class HanlinScriptingPlatform {
             stagingRoot = nil
             bootstrapError = Self.safeMessage(error)
         }
+    }
+
+    static func productExtensionStore() throws -> HanlinScriptExtensionStore {
+        guard Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier else {
+            return try HanlinScriptExtensionStore()
+        }
+        let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: HanlinScriptExtensionStore.appGroupIdentifier
+        )
+        let root = try SplitAppStorageLayout.extensionStoreRoot(
+            trustedBundleIdentifier: Bundle.main.bundleIdentifier, appGroupContainer: container
+        )
+        return HanlinScriptExtensionStore(root: root)
     }
 
     func restore() async {

@@ -8,12 +8,18 @@
       <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
         <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F9DE554ECEBFD69F269E9A81" BuildableName="HanlinMiniAppsUITests.xctest" BlueprintName="HanlinMiniAppsUITests" ReferencedContainer="container:AI_HLY.xcodeproj" />
       </BuildActionEntry>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="ACBD51096D0F560753B6520B" BuildableName="HanlinMiniAppsTests.xctest" BlueprintName="HanlinMiniAppsTests" ReferencedContainer="container:AI_HLY.xcodeproj" />
+      </BuildActionEntry>
     </BuildActionEntries>
   </BuildAction>
   <TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.PosixSpawn" shouldUseLaunchSchemeArgsEnv="YES">
     <Testables>
       <TestableReference skipped="NO" parallelizable="NO">
         <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F9DE554ECEBFD69F269E9A81" BuildableName="HanlinMiniAppsUITests.xctest" BlueprintName="HanlinMiniAppsUITests" ReferencedContainer="container:AI_HLY.xcodeproj" />
+      </TestableReference>
+      <TestableReference skipped="NO" parallelizable="NO">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="ACBD51096D0F560753B6520B" BuildableName="HanlinMiniAppsTests.xctest" BlueprintName="HanlinMiniAppsTests" ReferencedContainer="container:AI_HLY.xcodeproj" />
       </TestableReference>
     </Testables>
   </TestAction>

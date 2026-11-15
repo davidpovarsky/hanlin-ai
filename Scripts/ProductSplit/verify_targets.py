@@ -29,6 +29,8 @@ def main():
     assert 'name = AI_Hanlin;' in project
     scheme = ET.parse(ROOT / 'AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme')
     assert scheme.find('.//Testables//BuildableReference').attrib['BlueprintName'] == 'HanlinMiniAppsUITests'
+    assert {node.attrib['BlueprintName'] for node in scheme.findall('.//Testables//BuildableReference')} == {
+        'HanlinMiniAppsUITests', 'HanlinMiniAppsTests'}
     entitlements = plistlib.loads((ROOT / 'HanlinMiniAppsApp/HanlinMiniApps.entitlements').read_bytes())
     assert set(entitlements['com.apple.security.application-groups']) == {
         'group.com.itorah.chavrusachat', 'group.com.itorah.shared'}
