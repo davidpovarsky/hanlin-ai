@@ -2,6 +2,7 @@
 import { execFileSync,spawnSync } from 'node:child_process';
 import { readFile,writeFile,mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { dependencyImpact } from './dependency-update-policy.mjs';
 
 const [repository,branch,mode='extract',onlyPackage] = process.argv.slice(2);
 if (!/^[\w.-]+\/[\w.-]+$/.test(repository??'') || !/^[\w./-]+$/.test(branch??'') || !['extract','lookup','full','apply'].includes(mode)) {
@@ -36,3 +37,12 @@ await writeFile(resolve(output,'renovate-run.json'),JSON.stringify(summary,null,
 console.log(JSON.stringify(summary));
 if(result.error)throw new Error(redact(result.error.message));
 process.exitCode=result.status??1;
+if(result.status===0&&mode==='apply') {
+ const pulls=JSON.parse(execFileSync('gh',['pr','list','--repo',repository,'--base',branch,'--limit','100','--json','number,headRefName'],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));
+ for(const pr of pulls.filter(p=>p.headRefName.startsWith('codex/renovate/'))) {
+  const files=JSON.parse(execFileSync('gh',['api',`repos/${repository}/pulls/${pr.number}/files?per_page=100`],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));
+  if(files.length<100&&dependencyImpact(files.map(x=>x.filename))==='runtime-host') {
+   execFileSync(process.execPath,[resolve('Scripts/Runtime/sync-upstream-host-pr.mjs'),repository,String(pr.number)],{stdio:'inherit'});
+  }
+ }
+}

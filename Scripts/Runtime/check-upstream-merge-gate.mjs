@@ -19,13 +19,13 @@ let protection;
 try { protection = api(`branches/${encodeURIComponent(pr.base.ref)}/protection`); }
 catch (error) { if (!String(error.stderr).includes('404')) throw error; }
 const settings = api('');
-const checks = runs.map(check => ({ name:check.name, head:check.head_sha, app:check.app.slug,
+const checks = runs.map(check => ({ name:check.name.replace(/^upstream-validation \/ /,''), head:check.head_sha, app:check.app.slug,
   status:check.status, conclusion:check.conclusion }));
 let receipt;
 if (proofRun) {
   if (!/^\d+$/.test(proofRun)) throw new Error('Invalid proof run');
   const run = api(`actions/runs/${proofRun}`);
-  if (run.head_sha !== head || run.conclusion !== 'success' || run.path !== '.github/workflows/check-runtime-dependency-updates.yml') {
+  if (run.head_sha !== head || run.conclusion !== 'success' || !['.github/workflows/check-runtime-dependency-updates.yml','.github/workflows/validate-app-split.yml'].includes(run.path)) {
     throw new Error('Proof is not a successful current-head run of the canonical updater workflow.');
   }
   const artifacts = api(`actions/runs/${proofRun}/artifacts`).artifacts
