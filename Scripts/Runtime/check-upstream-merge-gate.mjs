@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 const [repository, number, output = 'build/upstream-updates/merge-gate.json', proofRun] = process.argv.slice(2);
 if (!/^[\w.-]+\/[\w.-]+$/.test(repository ?? '') || !/^\d+$/.test(number ?? '')) throw new Error('Expected repository PR-number [output].');
-const api = path => JSON.parse(execFileSync('gh', ['api', `repos/${repository}/${path}`], {encoding:'utf8', stdio:['ignore','pipe','pipe']}));
+const api = path => JSON.parse(execFileSync('gh', ['api', `repos/${repository}${path ? '/' + path : ''}`], {encoding:'utf8', stdio:['ignore','pipe','pipe']}));
 const pr = api(`pulls/${number}`);
 if (pr.head.repo.full_name !== repository) throw new Error('Fork candidates require manual review; never use this trusted maintenance lane.');
 const paths = api(`pulls/${number}/files?per_page=100`);
@@ -44,7 +44,7 @@ if (proofRun) {
 const decision = evaluateUpdate({ head, evidenceHead:receipt?.head, updateType:receipt?.updateType, impact:dependencyImpact(paths.map(row=>row.filename)),
   checks, required:['Hanlin upstream acceptance'], sourceIntegrity:receipt?.sourceIntegrity === true,
   licensesReviewed:receipt?.licensesReviewed === true, rollback:!!receipt?.rollback,
-  protectedBranch:!!protection?.required_status_checks, autoMergeEnabled:settings.allow_auto_merge === true });
+  protectedBranch:protection?.required_status_checks?.strict === true && (protection.required_status_checks.contexts ?? []).some(name => name === 'Hanlin upstream acceptance' || name === 'upstream-validation / Hanlin upstream acceptance'), autoMergeEnabled:settings.allow_auto_merge === true && pr.auto_merge != null });
 const report = { ...decision, repository, pullRequest:Number(number), head, baseSHA:pr.base.sha,
   requiredChecks:protection?.required_status_checks ?? null, actualChecks:checks,
   mergePerformed:false, evidence:'Authenticated GitHub API snapshot; no merge endpoint is called.' };

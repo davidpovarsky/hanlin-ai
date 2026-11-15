@@ -34,7 +34,7 @@ try {
  else {
   const parent=api(`git/commits/${pr.head.sha}`);
   const nextTree=api('git/trees',{base_tree:parent.tree.sha,tree});
-  const commit=api('git/commits',{message:'Synchronize canonical Runtime Host dependency pins',tree:nextTree.sha,parents:[pr.head.sha]});
+  const commit=api('git/commits',{message:'Synchronize canonical Runtime Host dependency pins',tree:nextTree.sha,parents:[pr.head.sha],author:{name:'Hanlin dependency maintenance',email:'41898282+github-actions[bot]@users.noreply.github.com'}});
   const latest=api(`pulls/${number}`);
   if(latest.head.sha!==pr.head.sha)throw new Error('Candidate moved; retry against current head');
   const result=JSON.parse(execFileSync('gh',['api','--method','PATCH',`repos/${repository}/git/refs/heads/${pr.head.ref}`,'--input','-'],
