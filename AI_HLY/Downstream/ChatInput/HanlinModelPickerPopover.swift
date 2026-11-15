@@ -149,6 +149,9 @@ struct HanlinModelPickerPopover: View {
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-popover")
         .onAppear { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
+        .onChange(of: coordinator.activePopup) { _, popup in
+            if popup == .model { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
+        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
         }
