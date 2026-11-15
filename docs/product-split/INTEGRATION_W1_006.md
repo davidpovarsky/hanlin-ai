@@ -801,3 +801,40 @@ planner includes12 identities:7 Morph+5 Native methods, with all original8 whole
 production files. Whole-document enumeration cost remains unmeasured; source
 acceptance is not runtime/performance/full mounted UI or device parity. A single
 changed-source12-case Composer-only run is authorized, separate from SDK/A2UI.
+
+
+## Actual Session result and truthful consumer recipe
+
+SDK-only run43688388938 at6e8dd11dc5c6be78f04d787890b8e09b799631a3 PASSED exactly
+10 unique cases:7 actual Session,2 context,1 store; zero skips/failures/missing.
+Its report claims0 reused cases, and producer/core/iOS steps are explicitly null /
+NOT_RUN in this run. Artifact14151860259:3895199 bytes, ZIP SHA256
+a7febfc7f1ca8f8603a84f6e9af451c65439ac7cd2eacddbb12144270f82e5db was checked in RAM;
+all251 current-source and4 workflow hashes independently matched6e8 Git.
+All THREE actual raw lock hashes exactly equal the original e233 proof (producer,
+SDK, Platform; hashes above). Actual Xcode27.2 build27B52 and swift-driver1.168.6
+match that original run; current AppleSwift6.4.2, macOS/iOSSDK27.2 are retained.
+The target-specific unchanged Git object bindings above justify separately reused
+48 producer/20 core/iOS evidence at ITS OWN e233 source, not78 newly executed here
+or a blanket250-file transfer. Numeric canonical-engine/Session/fixture-host
+positive/unsupported-zero-pending/revocation/receipt tests now actually passed;
+real host/native effects/UI/device/general numeric parity acceptance stays open.
+
+The concrete consumer recipe is
+Scripts/CI/IntegrationValidation/AGENT_SDK_CONSUMER_LAYOUT.md. It pins real6e8
+monorepo source with nested Packages/HanlinAgentSDK and sibling../HanlinPlatform,
+actual e7bf manifest/lock hashes, products/minima, commands and split proof scopes.
+There is no root Git Swift package, ChatUI product or installed host integration.
+Latest independent Anytype combined replay review18081a1a/full17manifest901883
+is SOURCE ONLY/uncommitted; read22/write10/combined17 remainNOT_RUN. Current
+catalog is read-only, lifetime/retention/UI barriers uninstalled, native write
+unfulfilled. Current host iOS17/18 minima remain below this SDK's iOS27 minimum.
+No other owner's source was imported and no additional host build was requested.
+
+Composer12-plan run43688699113 atf09216640b6313895219f623e4e33f281921e82e failed
+BEFOREtests: UIKit SDK27 NSLayoutManager has no defaultLineHeight member at
+NativeMultilineTextEditor.swift52:44. 0 executed/12 NOT_RUN, not12 failed cases.
+Artifact14150579611:70015 bytes, API ZIP digest
+bcf5f4d6d20398ab213524f3e20e7329b44f0d703d6c482762161f3f747e3ef0.
+Actual compiler output was relayed for owner correction/independent review;
+no unchanged retry, alternate framework/shim or hardcoded metric was added.
