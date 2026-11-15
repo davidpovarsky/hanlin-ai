@@ -925,3 +925,35 @@ unchanged decision; no extra UIKit measurement, retained callback or new math.
 The unchanged12 assertions record signed6/7/constrained trace context. One new
 12-case diagnostic run is authorized, expected-failure instrumentation, not a fix.
 No plateau threshold/test/viewport weakening or unrelated SDK/A2UI rerun.
+
+
+## Remaining iPad-he cases actually passed
+
+43690860829 SUCCESS at new harness4244e5c462a1e7833fb85e2c0e496cc4de60b8f2,
+with tested source STILL2427aac90154834eb5f31c746d47f6dcd3129e8e. Only two selected
+iPad-he cases ran; both original unchanged storage/relaunch and reload selectors
+PASS,0 reused/failed/skipped/missing. All234 frozen-source and5 executed-harness
+hashes independently matched their own Git commits. Actual fresh iPadPro13-inch
+M5 arm64/iOSSimulator27.0/24A434, BF6399F7-BA2F-460A-90A6-4CB207B2CDE9 exactly
+matches created UDID; localehe/context/process exit0. All4 retained PNG headers/
+ZIP CRCs and raw xcresult Info presence checked; binary xcresult not independently
+decoded. Actual project raw lock SHA256
+0a0194cadefb57c398bba5873649d72c47af3a28b1da88f992604cb76988cdd5 checked against raw
+bytes and parsed graph: SDK43eb full revision, argument-parser6a52/1.8.2,
+SwiftyJSONb3dc/5.0.1, ZIP02b6/0.9.19. These are THIS run's actual lock bytes.
+
+Artifact14152872960:34910210 bytes, API ZIP SHA256
+b4ec0d7969f0027a9e214d16655012eaefaf3990853ef6dbc6ca3b8cfae96bb8;
+922450 range bytes checked, zero full ZIP/disk download or full ZIP digest recompute.
+First partial run6 PASS plus this2 NEW PASS gives8 observed passing variant/method
+outcomes at the same UI source cut, NOT8 newly executed here. First raw lock is
+MISSING. Retained original build/three-cohort resolution text reports SDK43ebcfa,
+argument-parser1.8.2, ZIP0.9.19, SwiftyJSON5.0.1/local source roots; this supports
+those facts but cannot replace absent past raw bytes or unconditionally authenticate
+the full cross-run dependency matrix. No six-case repeat was performed to erase
+that limitation. Current e7 integration UI, full app, physical iPad, comprehensive
+UI tags, signing/TestFlight/release acceptance remain separate/open.
+
+Composer same-measurement diagnostic20980 is frozen at integratione8ccd81452843609285a0cd7e017a759bda6a6ef;
+single authorized12-case run43692594372 is active. It is expected-failure diagnostic
+scope until actual values/outcomes arrive, not a product-fix claim.
