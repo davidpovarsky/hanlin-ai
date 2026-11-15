@@ -296,6 +296,49 @@ private final class A2UIResultSinkRecorder: HanlinA2UIResultEventSink {
 @MainActor
 @Suite("A2UI official exact-pin SDK")
 struct A2UISDKTests {
+    @Test func customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding() throws {
+        let session = HanlinA2UISession(onEvent: { _ in })
+        defer { session.close() }
+        try session.receive("""
+        {"version":"1.0","createSurface":{"surfaceId":"youtube","catalogId":"https://hanlin.ai/a2ui/catalogs/media/v1"}}
+        """).get()
+        try session.receive("""
+        {"version":"1.0","updateDataModel":{"surfaceId":"youtube","path":"/","value":{"video":"https://youtu.be/M7lc1UVf-VE"}}}
+        """).get()
+        try session.receive("""
+        {"version":"1.0","updateComponents":{"surfaceId":"youtube","components":[{"id":"root","component":"YouTube","url":{"@path":"/video"}}]}}
+        """).get()
+        let root = try #require(session.surface("youtube")?.rootNode)
+        #expect(root.string(for: "url") == "https://youtu.be/M7lc1UVf-VE")
+        let identity = root.identity
+        try session.receive("""
+        {"version":"1.0","updateDataModel":{"surfaceId":"youtube","path":"/video","value":"https://www.youtube.com/shorts/M7lc1UVf-VE"}}
+        """).get()
+        #expect(root.identity == identity)
+        #expect(root.string(for: "url") == "https://www.youtube.com/shorts/M7lc1UVf-VE")
+        #expect(HanlinMediaCatalog.makeCatalog().components.count == 19)
+    }
+
+    @Test func customMediaCannotAlterOfficialCatalogOrAdmitScriptFields() throws {
+        let session = HanlinA2UISession(onEvent: { _ in })
+        defer { session.close() }
+        try session.receive("""
+        {"version":"1.0","createSurface":{"surfaceId":"official","catalogId":"https://a2ui.org/specification/v1_0/catalogs/basic/catalog.json"}}
+        """).get()
+        let wrongCatalog = session.receive("""
+        {"version":"1.0","updateComponents":{"surfaceId":"official","components":[{"id":"root","component":"YouTube","url":"https://youtu.be/M7lc1UVf-VE"}]}}
+        """)
+        if case .success = wrongCatalog { Issue.record("Official catalog admitted a Hanlin extension") }
+        try session.receive("""
+        {"version":"1.0","createSurface":{"surfaceId":"media","catalogId":"https://hanlin.ai/a2ui/catalogs/media/v1"}}
+        """).get()
+        let script = session.receive("""
+        {"version":"1.0","updateComponents":{"surfaceId":"media","components":[{"id":"root","component":"YouTube","url":"https://youtu.be/M7lc1UVf-VE","javascript":"model supplied script"}]}}
+        """)
+        if case .success = script { Issue.record("Unknown script property was accepted") }
+        #expect(BasicCatalog.makeCatalog(version: .v10).components["YouTube"] == nil)
+    }
+
     @Test func successfulProducerEOFKeepsOriginalModelActionAndClosesInput() async throws {
         let store = HanlinA2UIResultStore()
         defer { store.discardAll() }

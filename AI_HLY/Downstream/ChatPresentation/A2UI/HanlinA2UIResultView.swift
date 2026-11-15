@@ -43,10 +43,17 @@ private struct HanlinA2UISurfaceView: View {
     @Environment(\.locale) private var locale
 
     var body: some View {
+        #if os(iOS)
+        Surface(viewModel: model, catalogs: [
+            BasicCatalogImplementation.makeCatalog(version: .v10, locale: locale),
+            HanlinMediaCatalogImplementation.makeCatalog(locale: locale)
+        ])
+        #else
         Surface(
             viewModel: model,
             catalog: BasicCatalogImplementation.makeCatalog(version: .v10, locale: locale)
         )
+        #endif
     }
 }
 #endif

@@ -64,12 +64,17 @@ print(next(x for x in ['HanlinA2UIProof-Package','HanlinA2UIProof','AI_Hanlin'] 
 PY
 )"
 printf '%s\n' "$scheme" > "$evidence/selected-scheme.txt"
-python3 - "$scratch/harness/proof-inputs.json" <<'PY' > "$evidence/selected-cases.txt"
+suite="${A2UI_PROOF_SUITE:-ownership}"
+[[ "$suite" == all || "$suite" == ownership ]] || { echo 'Unsupported focused proof suite'; exit 2; }
+python3 - "$scratch/harness/proof-inputs.json" "$suite" <<'PY' > "$evidence/selected-cases.txt"
 import json,sys
-print('\n'.join(json.load(open(sys.argv[1]))['ownership_cases']))
+p=json.load(open(sys.argv[1]))
+names=(['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
+       if sys.argv[2]=='all' else ['A2UISDKTests/'+x+'()' for x in p['ownership_cases']])
+print('\n'.join(names))
 PY
 selectors=()
-while IFS= read -r method; do selectors+=("-only-testing:AI_HLYTests/A2UISDKTests/$method()"); done < "$evidence/selected-cases.txt"
+while IFS= read -r method; do selectors+=("-only-testing:AI_HLYTests/$method"); done < "$evidence/selected-cases.txt"
 set +e
 (
   cd "$scratch/harness"
@@ -85,6 +90,6 @@ if [[ -d "$evidence/A2UI.xcresult" ]]; then
 fi
 [[ "$test_status" == 0 ]] || exit "$test_status"
 cmp "$evidence/resolved-before.json" "$scratch/harness/Package.resolved"
-python3 docs/a2ui/prepare_exact_pin_proof.py --verify-xcresult "$evidence/tests.json" --suite ownership \
+python3 docs/a2ui/prepare_exact_pin_proof.py --verify-xcresult "$evidence/tests.json" --suite "$suite" \
   --resolved "$scratch/harness/Package.resolved" --inputs "$scratch/harness/proof-inputs.json" \
   > "$evidence/result-validation.json"

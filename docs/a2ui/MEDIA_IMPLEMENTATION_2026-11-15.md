@@ -42,6 +42,21 @@ without inferring executable UI from arbitrary Markdown. Custom A2UI media catal
 galleries, safe metadata/image pipeline and direct MP4/HLS/audio acceptance remain
 open, with no second A2UI renderer.
 
+The source now adds a separate versioned Hanlin media catalog at
+`https://hanlin.ai/a2ui/catalogs/media/v1`. It retains all18 official v1 component
+definitions and adds a schema-validated YouTube component whose url supports a
+literal or official @path binding. Unknown script fields are rejected. The official
+Basic Catalog URI does not gain custom components. MessageProcessor registers both
+catalogs, and iOS Surface receives the corresponding official catalog implementations.
+The custom builder delegates only to the sanctioned player above. Native compilation
+and actual original-app UI acceptance of this combined path are still pending.
+
+Impact before catalog verification: ingress catalog admission and the shared session
+processor constructor changed, so their full36 SDK+8 portable definition closure is
+affected/uncertain. The `a2ui_media_catalog` manual route therefore executes44 exact
+cases rather than reusing the prior31/17 historical proofs. It does not expand into
+unrelated Composer/runtime/provider suites or imply iOS app acceptance.
+
 ## Verified existing Markdown API
 
 The app's exact pinned renderer remains

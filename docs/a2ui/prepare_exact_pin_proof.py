@@ -19,7 +19,7 @@ UPSTREAM = "https://github.com/a2ui-project/a2ui"
 REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
 CONSUMER_MODULE = "AI_Hanlin"
 PORTABLE_CASE_COUNT = 8
-SDK_CASE_COUNT = 34
+SDK_CASE_COUNT = 36
 OWNERSHIP_CASES = [
     "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
     "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",

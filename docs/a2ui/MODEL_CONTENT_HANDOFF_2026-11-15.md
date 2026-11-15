@@ -83,3 +83,13 @@ receive-task cancellation, replacement rejection and independent-run isolation.
 The next native operation selects only17 affected/new ownership controls, not
 the17 unchanged direct SDK cases or8 portable framing cases. The complete defined
 suite is8+34; this focused execution cannot claim42 tests ran.
+
+The EOF operation passed17/17 at041572292c2aca702acf8697fd7afff5e2851c63 in
+[run43723994782](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43723994782),
+job132841817597 (208seconds), artifact14165413753,265424bytes, SHA256
+`e51082a611717e63940a6e62e2e04301a10f0231a8b04c17962fdc770e3d4258`.
+All original source input blobs and17 unique passed xcresult nodes were verified.
+The prior43723478540 attempt at13c20ebf was BUILD_FAILED/0 executed, with an
+xcresult and artifact14165537259 preserved. The failure was a throwing expression
+inside a compound test assertion;04157229 evaluates that expression beforehand.
+See `evidence/producer-eof-43723994782.json` for both distinct outcomes.

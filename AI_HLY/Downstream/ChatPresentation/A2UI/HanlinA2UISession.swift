@@ -28,7 +28,7 @@ final class HanlinA2UISession {
         let relay = HanlinA2UIEventRelay(onEvent: onEvent)
         eventRelay = relay
         processor = MessageProcessor(
-            catalog: BasicCatalog.makeCatalog(version: .v10),
+            catalogs: [BasicCatalog.makeCatalog(version: .v10), HanlinMediaCatalog.makeCatalog()],
             actionHandler: relay,
             validationConfig: ValidationConfig(
                 allowOrphanComponents: true,
