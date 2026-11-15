@@ -39,7 +39,7 @@ protocol HanlinA2UIResultEventSink: AnyObject, Sendable {
 }
 
 enum HanlinA2UIResultAdmissionError: Error, Equatable, Sendable {
-    case unregisteredResult, inputSealed, outOfOrder, retiredSurfaceID
+    case unregisteredResult, inputSealed, inputFinished, outOfOrder, retiredSurfaceID
     case rejected(HanlinA2UIIngress.Rejection)
 }
 
@@ -51,6 +51,7 @@ struct HanlinA2UIResultProjection {
     var key: HanlinA2UIResultKey { owner.key }
     var isReadOnly: Bool { owner.session.isInputSealed || owner.session.isClosed }
     var isClosed: Bool { owner.session.isClosed }
+    var isReceivingFinished: Bool { owner.isReceivingFinished }
     var surfaceIDs: [String] { owner.session.surfaceIDs }
     func surface(_ id: String) -> SurfaceViewModel? { owner.session.surface(id) }
 }
@@ -71,6 +72,7 @@ fileprivate final class HanlinA2UIResultOwner {
     private var nextSequence: UInt64 = 0
     private var retiredSurfaceIDs: Set<String> = []
     private var receiveTask: Task<Void, Never>?
+    private(set) var isReceivingFinished = false
 
     init(key: HanlinA2UIResultKey, sink: any HanlinA2UIResultEventSink, store: HanlinA2UIResultStore) {
         self.key = key
@@ -85,6 +87,7 @@ fileprivate final class HanlinA2UIResultOwner {
 
     func receive(_ json: String, sequence: UInt64) -> Result<Void, HanlinA2UIResultAdmissionError> {
         guard !session.isInputSealed, !session.isClosed else { return .failure(.inputSealed) }
+        guard !isReceivingFinished else { return .failure(.inputFinished) }
         guard sequence == nextSequence else { return .failure(.outOfOrder) }
         // A correctly ordered delivery consumes its ordinal even if SDK validation rejects it.
         // Replaying that frame cannot consume budget or mutate a surface a second time.
@@ -109,7 +112,7 @@ fileprivate final class HanlinA2UIResultOwner {
     }
 
     func attachReceiveTask(_ task: Task<Void, Never>) -> Bool {
-        guard receiveTask == nil, !session.isInputSealed, !session.isClosed else {
+        guard receiveTask == nil, !isReceivingFinished, !session.isInputSealed, !session.isClosed else {
             task.cancel()
             return false
         }
@@ -117,11 +120,18 @@ fileprivate final class HanlinA2UIResultOwner {
         return true
     }
 
-    func seal() {
-        relay.revoke()
-        session.seal()
+    /// Successful producer EOF closes only input. The original weak sink still owns
+    /// interaction authorization; completion cannot select another host or mint a key.
+    func finishReceiving() {
+        isReceivingFinished = true
         receiveTask?.cancel()
         receiveTask = nil
+    }
+
+    func seal() {
+        finishReceiving()
+        relay.revoke()
+        session.seal()
     }
 
     func discard() {
@@ -181,6 +191,7 @@ final class HanlinA2UIResultStore {
     }
     private var owners: [Slot: HanlinA2UIResultOwner] = [:]
     private var endedRuns: Set<UUID> = []
+    private var completedProducerRuns: Set<UUID> = []
     private var isDiscarded = false
 
     func register(runID: UUID, resultID: UUID, callID: String?,
@@ -198,7 +209,8 @@ final class HanlinA2UIResultStore {
     private func register(runID: UUID, resultID: UUID, origin: HanlinA2UIResultKey.Origin,
                           sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
         let slot = Slot(runID: runID, resultID: resultID)
-        guard !isDiscarded, !endedRuns.contains(runID), owners[slot] == nil else { return nil }
+        guard !isDiscarded, !endedRuns.contains(runID), !completedProducerRuns.contains(runID),
+              owners[slot] == nil else { return nil }
         let key = HanlinA2UIResultKey(runID: runID, resultID: resultID, origin: origin, generation: UUID())
         let owner = HanlinA2UIResultOwner(key: key, sink: sink, store: self)
         owners[slot] = owner
@@ -235,11 +247,20 @@ final class HanlinA2UIResultStore {
         for owner in owners.values where owner.key.runID == runID { owner.seal() }
     }
 
+    /// Successful EOF preserves live controls under their original owner and sink. The
+    /// canonical action broker must still validate originating host/session generation.
+    /// Cancellation, failure, invalidation and chat teardown use seal/discard instead.
+    func finishRun(_ runID: UUID) {
+        completedProducerRuns.insert(runID)
+        for owner in owners.values where owner.key.runID == runID { owner.finishReceiving() }
+    }
+
     /// Explicit replacement invalidates the old generation before registering its successor.
     func replace(_ key: HanlinA2UIResultKey, callID: String?,
                  sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
         guard case .tool = key.origin, let callID,
-              !isDiscarded, !endedRuns.contains(key.runID), let owner = owned(key),
+              !isDiscarded, !endedRuns.contains(key.runID), !completedProducerRuns.contains(key.runID),
+              let owner = owned(key), !owner.isReceivingFinished,
               !owner.session.isInputSealed, !owner.session.isClosed,
               !callID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
         discard(key)

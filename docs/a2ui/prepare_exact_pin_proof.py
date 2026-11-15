@@ -19,7 +19,26 @@ UPSTREAM = "https://github.com/a2ui-project/a2ui"
 REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
 CONSUMER_MODULE = "AI_Hanlin"
 PORTABLE_CASE_COUNT = 8
-SDK_CASE_COUNT = 31
+SDK_CASE_COUNT = 34
+OWNERSHIP_CASES = [
+    "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
+    "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
+    "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool",
+    "modelPartUsesMessageIdentityWithoutToolCall",
+    "orderedModelProjectionPreservesTextAndRegisteredSurface",
+    "modelProjectionRejectsForeignIdentityAndAmbiguousParts",
+    "modelProjectionNeverFollowsReplacedGeneration",
+    "transientOwnerLookupKeepsWireIDsIndependent",
+    "transientReceiveRejectsWrongIdentityAndSequence",
+    "sealedResultRetainsModelsAndRevokesActions",
+    "sealingRunDoesNotRevokeOtherRun",
+    "replacementRevokesOldGenerationBeforeNewDelivery",
+    "endingResultCancelsOwnedReceiveTask",
+    "presentationCopiesDoNotOwnDiscard",
+    "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+    "deletedSurfaceDropsQueuedOwnedEvents",
+    "retiredSurfaceCannotReanimateQueuedEventsInSameResult",
+]
 CASE_COUNT = PORTABLE_CASE_COUNT + SDK_CASE_COUNT
 SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
 TEST = "AI_HLYTests/A2UITests.swift"
@@ -65,13 +84,15 @@ def plan() -> dict:
     if (len(portable) != PORTABLE_CASE_COUNT or len(native) != SDK_CASE_COUNT
             or len(set(portable + native)) != CASE_COUNT):
         raise ValueError(f"Expected exactly {PORTABLE_CASE_COUNT} portable and {SDK_CASE_COUNT} enabled SDK cases; update the proof contract")
+    if not set(OWNERSHIP_CASES).issubset(native):
+        raise ValueError("Missing exact affected ownership case")
     paths = sorted((REPOSITORY / SOURCES).glob("*.swift"))
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
     return {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
             "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
-            "portable_cases": portable, "sdk_cases": native, "files": files,
+            "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES, "files": files,
             "harness_manifest_sha256": sha(PACKAGE.encode()),
             "native_execution": "NOT_RUN", "platform": "macOS27 / current stable Xcode"}
 
@@ -166,7 +187,7 @@ def main() -> None:
     modes.add_argument("--verify-xcresult", type=Path)
     parser.add_argument("--resolved", type=Path)
     parser.add_argument("--inputs", type=Path)
-    parser.add_argument("--suite", choices=["all", "sdk"], default="all",
+    parser.add_argument("--suite", choices=["all", "sdk", "ownership"], default="all",
                         help="Verify only SDK identities when portable framing is unaffected")
     args = parser.parse_args()
     inputs = plan()
@@ -187,7 +208,8 @@ def main() -> None:
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
         verify_pin(json.loads(args.resolved.read_text(encoding="utf-8")))
-        expected = inputs["sdk_cases"] if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"]
+        expected = (inputs["ownership_cases"] if args.suite == "ownership" else inputs["sdk_cases"]
+                    if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"])
         if args.verify_xcresult:
             root = ET.Element("testsuite")
             def visit(node):

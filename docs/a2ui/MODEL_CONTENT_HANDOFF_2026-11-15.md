@@ -64,3 +64,22 @@ native-compilation pending and does not enter the tested SDK harness closure.
 
 Actual app/host/XCUITest, RTL/AX, physical iPad, persisted model replay and media
 acceptance: NOT_RUN.31 component passes do not satisfy these gates.
+
+## Successful EOF and interaction lifetime
+
+The manager explicitly confirmed that successful producer EOF must close input
+without revoking a still-valid Surface interaction owner. `finishRun` stops only
+receive tasks, blocks late frames, new registrations and replacements for that run,
+and leaves local bindings and the original weak action sink active. `sealRun` and
+discard retain their terminal revocation behavior for failed/cancelled producers,
+host invalidation and chat teardown. Calling EOF after revocation cannot revive it.
+The SDK action broker still must validate the original host-generation context;
+EOF is neither a new producer frame nor a grant to target a currently selected host.
+Persisted replay never restores an event sink by itself.
+
+Three additional SDK controls test real Button submission with a post-EOF local
+edit, terminal revocation of queued/retained events, late registration/frame rejection,
+receive-task cancellation, replacement rejection and independent-run isolation.
+The next native operation selects only17 affected/new ownership controls, not
+the17 unchanged direct SDK cases or8 portable framing cases. The complete defined
+suite is8+34; this focused execution cannot claim42 tests ran.

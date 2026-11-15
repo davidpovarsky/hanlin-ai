@@ -64,13 +64,19 @@ print(next(x for x in ['HanlinA2UIProof-Package','HanlinA2UIProof','AI_Hanlin'] 
 PY
 )"
 printf '%s\n' "$scheme" > "$evidence/selected-scheme.txt"
+python3 - "$scratch/harness/proof-inputs.json" <<'PY' > "$evidence/selected-cases.txt"
+import json,sys
+print('\n'.join(json.load(open(sys.argv[1]))['ownership_cases']))
+PY
+selectors=()
+while IFS= read -r method; do selectors+=("-only-testing:AI_HLYTests/A2UISDKTests/$method()"); done < "$evidence/selected-cases.txt"
 set +e
 (
   cd "$scratch/harness"
   xcodebuild test -scheme "$scheme" -configuration Debug -destination 'platform=macOS' \
     -disableAutomaticPackageResolution -derivedDataPath "$scratch/DerivedData" \
     -resultBundlePath "$evidence/A2UI.xcresult" -skipPackagePluginValidation -skipMacroValidation \
-    -only-testing:AI_HLYTests/A2UISDKTests CODE_SIGNING_ALLOWED=NO
+    "${selectors[@]}" CODE_SIGNING_ALLOWED=NO
 ) 2>&1 | tee "$evidence/xcodebuild.log"
 test_status=${PIPESTATUS[0]}
 set -e
@@ -79,6 +85,6 @@ if [[ -d "$evidence/A2UI.xcresult" ]]; then
 fi
 [[ "$test_status" == 0 ]] || exit "$test_status"
 cmp "$evidence/resolved-before.json" "$scratch/harness/Package.resolved"
-python3 docs/a2ui/prepare_exact_pin_proof.py --verify-xcresult "$evidence/tests.json" --suite sdk \
+python3 docs/a2ui/prepare_exact_pin_proof.py --verify-xcresult "$evidence/tests.json" --suite ownership \
   --resolved "$scratch/harness/Package.resolved" --inputs "$scratch/harness/proof-inputs.json" \
   > "$evidence/result-validation.json"

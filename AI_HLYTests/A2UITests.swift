@@ -296,6 +296,76 @@ private final class A2UIResultSinkRecorder: HanlinA2UIResultEventSink {
 @MainActor
 @Suite("A2UI official exact-pin SDK")
 struct A2UISDKTests {
+    @Test func successfulProducerEOFKeepsOriginalModelActionAndClosesInput() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let run = UUID(), message = UUID(), part = UUID()
+        let p = try #require(store.registerModelPart(runID: run, messageID: message, partID: part, sink: sink))
+        try load(store, p)
+        let model = try #require(p.surface("form-a"))
+        let identity = try node(p, id: "name").identity
+        store.finishRun(run)
+        store.finishRun(run)
+        #expect(p.isReceivingFinished && !p.isReadOnly && !p.isClosed)
+        #expect(p.surface("form-a") === model && (try node(p, id: "name").identity) == identity)
+        #expect(admissionFailure(store.receive(try #require(A2UIFixture.lines("update").first), sequence: 3, for: p.key)) == .inputFinished)
+        #expect(store.registerModelPart(runID: run, messageID: message, partID: UUID(), sink: sink) == nil)
+        #expect(store.register(runID: run, resultID: UUID(), callID: "late", sink: sink) == nil)
+        A2UITextField(node: try node(p, id: "name")).valueBinding.wrappedValue = "After EOF"
+        let action = try #require(try node(p, id: "submit").action(for: "action", userActivation: true))
+        action()
+        let event = try await nextA2UIValue(sink.recorder.stream)
+        guard case .action(let resolved) = event else { Issue.record("Expected actual SDK action"); return }
+        #expect(resolved.context["name"]?.stringValue == "After EOF")
+        #expect(sink.keys == [p.key] && p.key.origin == .model(messageID: message) && p.key.callID == nil)
+    }
+
+    @Test func producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration() async throws {
+        for discard in [false, true] {
+            let store = HanlinA2UIResultStore()
+            defer { store.discardAll() }
+            let sink = A2UIResultSinkRecorder()
+            let p = try #require(store.registerModelPart(runID: UUID(), messageID: UUID(), partID: UUID(), sink: sink))
+            try load(store, p)
+            store.finishRun(p.key.runID)
+            let action = try #require(try node(p, id: "submit").action(for: "action", userActivation: true))
+            action()
+            if discard { store.discardAll() } else { store.sealRun(p.key.runID) }
+            store.finishRun(p.key.runID) // EOF never removes prior terminal revocation.
+            action()
+            try await sink.recorder.requireQuiet(expectedCount: 0, failureMessage: "Revoked completed owner delivered action")
+            #expect(p.isReadOnly && p.isClosed == discard)
+            #expect(store.registerModelPart(runID: p.key.runID, messageID: UUID(), partID: p.key.resultID, sink: sink) == nil)
+        }
+    }
+
+    @Test func producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let a = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "a", sink: sink))
+        let b = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "b", sink: sink))
+        try load(store, a)
+        let state = AsyncStream<String>.makeStream(bufferingPolicy: .bufferingNewest(4))
+        let receiver = Task { @MainActor in
+            defer { state.continuation.finish() }
+            state.continuation.yield("started")
+            do { try await Task.sleep(for: .seconds(30)); state.continuation.yield("unexpected timeout") }
+            catch { state.continuation.yield(Task.isCancelled ? "cancelled" : "unexpected error") }
+        }
+        #expect(store.attachReceiveTask(receiver, for: a.key))
+        #expect(try await nextA2UIValue(state.stream) == "started")
+        store.finishRun(a.key.runID)
+        #expect(try await nextA2UIValue(state.stream) == "cancelled")
+        #expect(store.replace(a.key, callID: "replaced", sink: sink) == nil)
+        let rejected = Task { @MainActor in }
+        #expect(!store.attachReceiveTask(rejected, for: a.key) && rejected.isCancelled)
+        try load(store, b)
+        #expect(!b.isReceivingFinished && !b.isReadOnly)
+        #expect(store.register(runID: b.key.runID, resultID: UUID(), callID: "still-active", sink: sink) != nil)
+    }
+
     @Test func modelPartUsesMessageIdentityWithoutToolCall() throws {
         let store = HanlinA2UIResultStore()
         defer { store.discardAll() }
