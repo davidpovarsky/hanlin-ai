@@ -268,3 +268,16 @@ def focused_observations(data, authored, selected, udid, log_lines=()):
     for case in result['cases']:
         case['selected_for_this_run'] = case['id'] == selected
     return result
+
+
+def classify_execution_status(test_commands, exit_code, actual_results, build_log):
+    """Do not turn setup/empty runner failures into authored product failures."""
+    if test_commands == 0:
+        return 'INFRA_ERROR'
+    if any(case.get('result') == 'FAIL' for case in actual_results.get('cases', [])):
+        return 'TEST_FAILED'
+    if any(marker in build_log for marker in ['** BUILD FAILED **', '** TEST BUILD FAILED **']):
+        return 'BUILD_FAILED'
+    if exit_code == 0 and actual_results.get('all_selected_unique_pass_on_owned_device') is True:
+        return 'PASS'
+    return 'INFRA_ERROR'

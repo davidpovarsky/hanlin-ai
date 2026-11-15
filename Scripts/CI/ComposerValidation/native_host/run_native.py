@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 sys.dont_write_bytecode = True
 import prepare_native as native
 from guards import (native_settings, environment, destination, require, require_pretest,
-                    focused_observations, ENVIRONMENT_CONTRACT_VERSION, RUNTIME_ID, RUNTIME_VERSION, RUNTIME_BUILD)
+                    focused_observations, classify_execution_status)
 from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
 
 
@@ -297,10 +297,9 @@ def execute():
                     state['failure_accessibility_tree'] = 'NOT_AVAILABLE: optional idb CLI absent; component test host has no production UI'
             except (ValueError, OSError) as error:
                 state['failure_capture_error'] = str(error)
-        state['execution_status'] = ('PASS' if state.get('apple_pass_claim') else
-            'INFRA_ERROR' if not state['test_commands'] else
-            'TEST_FAILED' if any(case['result'] == 'FAIL' for case in actual_results.get('cases', [])) else
-            'BUILD_FAILED' if (evidence / 'native-test.stdout').is_file() and '** BUILD FAILED **' in runner.text('native-test') else 'INFRA_ERROR')
+        build_log = ''.join((evidence / ('native-test.' + stream)).read_text(encoding='utf-8', errors='replace')
+                            for stream in ['stdout', 'stderr'] if (evidence / ('native-test.' + stream)).is_file())
+        state['execution_status'] = classify_execution_status(state['test_commands'], exit_code, actual_results, build_log)
         # Never erase/delete, reuse another phone, or mutate global Xcode selection.
         if device and re.fullmatch(r'[0-9A-Fa-f-]{36}', device) and (evidence / 'owned-device.json').is_file():
             try:

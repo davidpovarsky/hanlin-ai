@@ -70,6 +70,7 @@
     "test-action-settings-before-build-and-test",
     "concrete-destination-without-conflicting-architecture-flags",
     "actual-runner-pure-command-plan",
+    "synthetic-execution-statuses-distinguish-build-test-and-infra",
     "synthetic-precreated-run-instance-ownership-with-initial-state",
     "synthetic-image-UUID-reuse-does-not-reuse-VM-ownership",
     "synthetic-installed-help-usage-predicates-only"
@@ -350,15 +351,15 @@
     "Scripts/CI/ComposerValidation/native_host/ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e",
     "Scripts/CI/ComposerValidation/native_host/README.md": "81e34daa3a0dfcc20542d44af6c9cea3cd65bc5677e0ea757591826e73c43dce",
     "Scripts/CI/ComposerValidation/native_host/freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
-    "Scripts/CI/ComposerValidation/native_host/guards.py": "308aacd8d61bd47180639b09f5f35f62397e99fe86fea6fdfcc90631b5a69df6",
+    "Scripts/CI/ComposerValidation/native_host/guards.py": "92d358790f0622460c7c273b21308e1f38092d499c408db6643908c07966f732",
     "Scripts/CI/ComposerValidation/native_host/precreated_readiness.py": "eb5e0ef3f0d99a7d9a06f7e7902bba13aaf0f1847d3f7effec02ae6238f8e733",
     "Scripts/CI/ComposerValidation/native_host/prepare_native.py": "a09f0f7798def05eb96815958d7fe38f349d6268974c0715bd880a6a267eac58",
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/project.pbxproj": "9443466ee77dac5545cc112957379ccd1ccc116673571eeac4d767e29b2773a4",
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/xcshareddata/xcschemes/ComposerNativeHost.xcscheme": "5c834a5ae4e67261dbe71a9a1afc7fc4328555e6296a1df31d8ac1784de91a97",
     "Scripts/CI/ComposerValidation/native_host/review/native-inputs.json": "31415ab05620b322052c2712584297d717779d0d53460497db4a93bcd105d990",
     "Scripts/CI/ComposerValidation/native_host/review/source-controls.json": "980322c016d6c1e1b57fa376165d346e82e16895fb988c24df26fd5de43875dc",
-    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "e4522b92a32097618d00bf4ca0fdff63f99d495814b07d8483a0e7418ca9beb5",
-    "Scripts/CI/ComposerValidation/native_host/run_native.py": "45035f85065ebdc26f0422d8a9e02bb1a87554e72d815845311a0979175ef7a0",
+    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "65fb65eb3c502eb140745ce9179689e0bb9eafc96d3834dc5e3be7ca696def25",
+    "Scripts/CI/ComposerValidation/native_host/run_native.py": "1b6053db2e6bbc6bbe87b8fa5512b084676c31df82453ed0c01d56373e36a76f",
     "Scripts/CI/ComposerValidation/native_host/simctl-list-help-43711740465.txt": "4c7f0c98a485121183a1bc0b5ae8549958692117107664b4ee1c3fbf0f3c4693",
     "Scripts/CI/ComposerValidation/native_host/validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467"
   }

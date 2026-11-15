@@ -11,7 +11,7 @@ sys.dont_write_bytecode = True
 import prepare_native as native
 from guards import (native_settings, environment, owned_boot, destination, observations, require,
                     simctl_list_contract, owned_devices_command, require_pretest, owned_name,
-                    created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256)
+                    created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256, classify_execution_status)
 from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR
 from freeze_review import review_files
 from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
@@ -269,6 +269,16 @@ def source_controls():
     require([item for item in plan['test'] if item.startswith('-only-testing:')] == ['-only-testing:' + FOCUSED_SELECTOR] and
             FOCUSED_SELECTOR == 'AI_HanlinTests/' + FOCUSED_CASE and FOCUSED_CASE in expected,
             'one exact module/suite/frozen-function selector; no suite-wide or alternate selection')
+    for label, commands, exit_code, results, log, expected_status in [
+        ('preflight-no-cases', 0, 2, {}, '', 'INFRA_ERROR'),
+        ('actual-test-build-marker', 1, 65, {}, '** TEST BUILD FAILED **', 'BUILD_FAILED'),
+        ('actual-build-marker', 1, 65, {}, '** BUILD FAILED **', 'BUILD_FAILED'),
+        ('authored-case-failed', 1, 65, {'cases': [{'result': 'FAIL'}]}, '** TEST FAILED **', 'TEST_FAILED'),
+        ('empty-test-harness-failed', 1, 65, {}, '** TEST FAILED **', 'INFRA_ERROR'),
+        ('zero-case-exit-zero', 1, 0, {}, '** TEST SUCCEEDED **', 'INFRA_ERROR'),
+        ('verified-focused-case-pass', 1, 0, {'all_selected_unique_pass_on_owned_device': True}, '** TEST SUCCEEDED **', 'PASS')]:
+        require(classify_execution_status(commands, exit_code, results, log) == expected_status, 'execution classification: ' + label)
+    passed.append('synthetic-execution-statuses-distinguish-build-test-and-infra')
     extra_pass, extra_reject = precreated_controls()
     return passed + extra_pass, rejected + extra_reject, plan
 
