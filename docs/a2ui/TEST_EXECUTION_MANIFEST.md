@@ -1,16 +1,17 @@
 # A2UI test execution manifest
 
-**Latest real native result:** [run43664698104](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43664698104)
-compiled `2bae5a3e` against official pin3ed9601 with POC+DEBUG enabled and
-passed all25 actual cases. The earlier c40 run's8 PASS/17 FAIL remains retained.
-The current [privacy correction](DIAGNOSTIC_PRIVACY_FIX_2026-11-15.md) removes
-raw SDK paths/messages and adds canary assertions in the same25 cases. Its
-enabled compilation/17 SDK cases are pending, not covered by the2bae pass.
+**Latest real native result:** [run43667371439](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43667371439)
+compiled `a43f1563` against official pin3ed9601 with POC+DEBUG enabled and
+passed all25 actual cases, including the privacy canaries. The current
+[consumer-module correction](CONSUMER_MODULE_FIX_2026-11-15.md) matches the
+real AI_Hanlin target without changing those25 identities; its native proof
+is pending. The earlier c40 failure and2bae identifier pass remain retained.
 Read [identifier evidence](NATIVE_VALIDATION_FIX_2026-11-15.md),
 [failed c40 outcomes](evidence/native-run-43662884686.json) and
-[passing2bae outcomes](evidence/native-run-43664698104.json).
+[passing2bae outcomes](evidence/native-run-43664698104.json) and
+[passing a43 outcomes](evidence/native-run-43667371439.json).
 Earlier NOT_RUN statements below describe source-preparation history; they do
-not override either actual native result or imply the privacy correction passed.
+not override actual native results or imply the consumer-name correction passed.
 
 [איתן | ARCH] [MAIN_SESSION], 2026-11-15, Asia/Hebron. W1-001.
 
@@ -65,7 +66,8 @@ No upstream code or package dependency was installed into the app.
 | Exact-pin enabled SDK compilation at c40e617b | EXECUTED_PASS | Actual native run43662884686; isolated consumer, no app wiring |
 | Exact-pin SDK cases at c40e617b | FAILED, 17 cases | All executed; common valid-fixture load rejection |
 | Exact-pin enabled compilation/cases at2bae5a3e | EXECUTED_PASS, 25 cases | Run43664698104; identifier correction only, privacy P2 not accepted |
-| Privacy candidate enabled compilation/SDK cases | NOT_RUN | Same25-case verifier with new diagnostic/canary bytes |
+| Exact-pin enabled compilation/cases at a43f1563 | EXECUTED_PASS, 25 cases | Run43667371439; privacy canaries executed, old consumer module |
+| Actual AI_Hanlin consumer-name proof | NOT_RUN | Same25-case verifier with matching test import/recipe module |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |
 
 The8 local scenarios execute through the standalone runner, not XCTest or
@@ -73,7 +75,7 @@ Swift Testing discovery. Each uses the same check function as its project
 Swift Testing wrapper. Output is in
 [portable-results.txt](evidence/portable-results.txt). This does not assert
 that8 Swift Testing case nodes exist in a new corrected-source xcresult.
-Actual c40 and2bae results are recorded separately above. No privacy-candidate
+Actual c40,2bae and a43 results are recorded separately above. No consumer-name
 SDK pass, upstream conformance suite or iOS simulator result is claimed.
 
 The initial strict-concurrency compile caught a non-Sendable function-array
@@ -132,7 +134,7 @@ swiftc -frontend -parse -D HANLIN_A2UI_POC -D DEBUG `
   AI_HLYTests/A2UITests.swift
 ```
 
-## Exact-pin SDK cases: 17 PASS at2bae; privacy correction pending
+## Exact-pin SDK cases: 17 PASS at a43; consumer-name correction pending
 
 All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 `A2UISDKTests`. They compile only with `HANLIN_A2UI_POC`, in the app and test
@@ -144,23 +146,23 @@ rather than accepting a smaller discovered count.
 
 | Case | Obligation | Actual result |
 | --- | --- | --- |
-| parsesAndRendersTextCardInputButton() | Official parser/model and renderer-builder availability | PASS at2bae; privacy NOT_RUN |
-| nativeInputBindingWritesAndReadsOfficialModel() | Native TextField writes; agent updates read back | PASS at2bae; privacy NOT_RUN |
-| stableIDsAndNodeIdentityAcrossUpdates() | Upstream node identity through model/component updates | PASS at2bae; privacy NOT_RUN |
-| malformedAndUnknownContentFallsBackAndRecovers() | Fallback routing and subsequent valid recovery | PASS at2bae; privacy NOT_RUN |
-| officialSchemasRejectInvalidTextInputButton() | Keep4 negatives and invalid_identifier; canary component ID absent from local/callback diagnostic renderings | PASS at2bae; privacy NOT_RUN |
-| independentSurfacesKeepModelsSeparate() | Separate models and fallback per surface | PASS at2bae; privacy NOT_RUN |
-| independentOwnersCanReuseWireSurfaceID() | Separate processors for separate result owners | PASS at2bae; privacy NOT_RUN |
-| deleteDisposesAndRecreateStartsWithNewIdentity() | Surface deletion/recreation lifecycle | PASS at2bae; privacy NOT_RUN |
-| closeRejectsLateFramesAndDisposesSurfaces() | Owner disposal and late ingress | PASS at2bae; privacy NOT_RUN |
-| buttonEventUsesCurrentBoundValue() | Official action context after a user edit | PASS at2bae; privacy NOT_RUN |
-| hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | PASS at2bae; privacy NOT_RUN |
-| surfaceLimitDoesNotRemoveExistingContent() | Four-surface and exact byte-budget limits; update/delete correlated only to the owned target; preserve models/data | PASS at2bae; privacy NOT_RUN |
-| rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | PASS at2bae; privacy NOT_RUN |
-| unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Keep no-RPC checks; canary function/argument identifiers absent from local and roundtrip callback diagnostics | PASS at2bae; privacy NOT_RUN |
-| closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | PASS at2bae; privacy NOT_RUN |
-| closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | PASS at2bae; privacy NOT_RUN |
-| unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() | Missing, blank, whitespace, overlong/UTF-8/60KB IDs, other-owner and current IDs cannot route fallback or change live models | PASS at2bae; privacy NOT_RUN |
+| parsesAndRendersTextCardInputButton() | Official parser/model and renderer-builder availability | PASS at a43; naming NOT_RUN |
+| nativeInputBindingWritesAndReadsOfficialModel() | Native TextField writes; agent updates read back | PASS at a43; naming NOT_RUN |
+| stableIDsAndNodeIdentityAcrossUpdates() | Upstream node identity through model/component updates | PASS at a43; naming NOT_RUN |
+| malformedAndUnknownContentFallsBackAndRecovers() | Fallback routing and subsequent valid recovery | PASS at a43; naming NOT_RUN |
+| officialSchemasRejectInvalidTextInputButton() | Keep4 negatives and invalid_identifier; canary component ID absent from local/callback diagnostic renderings | PASS at a43; naming NOT_RUN |
+| independentSurfacesKeepModelsSeparate() | Separate models and fallback per surface | PASS at a43; naming NOT_RUN |
+| independentOwnersCanReuseWireSurfaceID() | Separate processors for separate result owners | PASS at a43; naming NOT_RUN |
+| deleteDisposesAndRecreateStartsWithNewIdentity() | Surface deletion/recreation lifecycle | PASS at a43; naming NOT_RUN |
+| closeRejectsLateFramesAndDisposesSurfaces() | Owner disposal and late ingress | PASS at a43; naming NOT_RUN |
+| buttonEventUsesCurrentBoundValue() | Official action context after a user edit | PASS at a43; naming NOT_RUN |
+| hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | PASS at a43; naming NOT_RUN |
+| surfaceLimitDoesNotRemoveExistingContent() | Four-surface and exact byte-budget limits; update/delete correlated only to the owned target; preserve models/data | PASS at a43; naming NOT_RUN |
+| rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | PASS at a43; naming NOT_RUN |
+| unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Keep no-RPC checks; canary function/argument identifiers absent from local and roundtrip callback diagnostics | PASS at a43; naming NOT_RUN |
+| closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | PASS at a43; naming NOT_RUN |
+| closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | PASS at a43; naming NOT_RUN |
+| unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() | Missing, blank, whitespace, overlong/UTF-8/60KB IDs, other-owner and current IDs cannot route fallback or change live models | PASS at a43; naming NOT_RUN |
 
 The three lifecycle/RPC cases address the2 P2 findings in the independent review of
 `e7141d55`; they exercise official SDK objects, not source-string matching.
@@ -195,7 +197,7 @@ and `prepare_exact_pin_proof.py`. The planner copies actual source/fixtures
 without rewriting them, enables both SDK/Debug gates, verifies the resolved pin
 and requires25 executed cases. Local planning and seven synthetic verifier
 self-checks do not run SDK code. Tomer's actual c40 proof failed17 cases and
-its2bae follow-up passed25. Only privacy-candidate verification is NOT_RUN.
+its2bae and a43 follow-ups passed25. Only consumer-name verification is NOT_RUN.
 The app command below remains a separate future integration route.
 
 Prerequisites: explicit serialized Apple-slot approval, stable Xcode with the

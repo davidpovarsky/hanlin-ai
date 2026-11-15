@@ -17,6 +17,7 @@ import xml.etree.ElementTree as ET
 REPOSITORY = Path(__file__).resolve().parents[2]
 UPSTREAM = "https://github.com/a2ui-project/a2ui"
 REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+CONSUMER_MODULE = "AI_Hanlin"
 SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
 TEST = "AI_HLYTests/A2UITests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
@@ -38,8 +39,8 @@ let package = Package(
     platforms: [.macOS("27.0")],
     dependencies: [.package(url: "{UPSTREAM}", revision: "{REVISION}")],
     targets: [
-        .target(name: "AI_HLY", dependencies: products, swiftSettings: enabled),
-        .testTarget(name: "AI_HLYTests", dependencies: ["AI_HLY"] + products,
+        .target(name: "{CONSUMER_MODULE}", dependencies: products, swiftSettings: enabled),
+        .testTarget(name: "AI_HLYTests", dependencies: ["{CONSUMER_MODULE}"] + products,
                     resources: [.copy("A2UIFixtures")], swiftSettings: enabled),
     ],
     swiftLanguageModes: [.v6]
@@ -53,6 +54,8 @@ def sha(data: bytes) -> str:
 
 def plan() -> dict:
     source = (REPOSITORY / TEST).read_text(encoding="utf-8")
+    if re.findall(r"^@testable import (\w+)$", source, re.MULTILINE) != [CONSUMER_MODULE]:
+        raise ValueError("Test import must match the actual AI_Hanlin consumer; do not add a module alias")
     ingress, sdk = source.split("struct A2UISDKTests", 1)
     cases = lambda text: re.findall(r"^\s+@Test func (\w+)\(", text, re.MULTILINE)
     portable, native = cases(ingress), cases(sdk)
@@ -63,6 +66,7 @@ def plan() -> dict:
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
     return {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
+            "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
             "portable_cases": portable, "sdk_cases": native, "files": files,
             "harness_manifest_sha256": sha(PACKAGE.encode()),
             "native_execution": "NOT_RUN", "platform": "macOS27 / current stable Xcode"}
@@ -81,7 +85,7 @@ def prepare(destination: Path, inputs: dict) -> None:
         if sha(data) != entry["sha256"]:
             raise ValueError(f"Input changed while preparing proof: {relative}")
         if relative.startswith(SOURCES + "/"):
-            target = destination / "Sources/AI_HLY" / Path(relative).name
+            target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
         elif relative == TEST:
             target = destination / "Tests/AI_HLYTests/A2UITests.swift"
         else:

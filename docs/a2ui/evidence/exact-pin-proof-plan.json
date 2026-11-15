@@ -2,6 +2,8 @@
   "status": "PREPARED_NOT_EXECUTED",
   "upstream": "https://github.com/a2ui-project/a2ui",
   "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "consumer_module": "AI_Hanlin",
+  "test_module": "AI_HLYTests",
   "portable_cases": [
     "acceptsOfficialV1FixtureFrames",
     "rejectsMalformedAndAmbiguousFrames",
@@ -46,7 +48,7 @@
     },
     {
       "path": "AI_HLYTests/A2UITests.swift",
-      "sha256": "367480e224946c6f5d08c034dfd3e16ef6ee9d0fcc7da5df5323389a86f3190f"
+      "sha256": "b670e979b014c0e4c26a816788bd5ec905a5c22ee4bc690c4732700b93bbe0bb"
     },
     {
       "path": "AI_HLYTests/A2UIFixtures/form.jsonl",
@@ -77,7 +79,7 @@
       "sha256": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5"
     }
   ],
-  "harness_manifest_sha256": "8ed06ed09af285546b41b1cda4226ae23dc7b1b059f4dec9dfa53cb6d7ac6de8",
+  "harness_manifest_sha256": "0cc415a4bf878f586252e68eafb951938979ddcb0f124a612be563668bc1f522",
   "native_execution": "NOT_RUN",
   "platform": "macOS27 / current stable Xcode"
 }

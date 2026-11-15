@@ -5,8 +5,9 @@ itself dispatched no native job. Tomer's actual run43662884686 later compiled
 c40e617b and executed all25 cases:8 PASS/17 SDK FAIL during fixture load. The
 fixture/diagnostic correction is documented in
 [NATIVE_VALIDATION_FIX_2026-11-15.md](NATIVE_VALIDATION_FIX_2026-11-15.md).
-The2bae5a3e follow-up actually passed25 in run43664698104. The current diagnostic
-privacy candidate is pending that same enabled proof, not covered by the2bae pass.
+The2bae5a3e follow-up passed25 in run43664698104, and a43 passed25 including
+privacy canaries in run43667371439. The actual AI_Hanlin consumer-name
+correction now awaits the same enabled proof; neither previous result covers it.
 
 `prepare_exact_pin_proof.py` prepares the same3 source files, the unchanged25
 Swift Testing selectors and all7 fixtures in an isolated SwiftPM consumer.
@@ -15,8 +16,11 @@ It does not dispatch jobs or invoke a compiler. Its default `--plan` and
 locks, project files, workflows, build flags or upstream source are edited.
 
 The generated temporary consumer uses the official exact root revision and
-four real products. It names its source module `AI_HLY` so the actual
-`@testable import AI_HLY` tests need no source rewrite. Both targets enable
+four real products. Its source module is the actual app module `AI_Hanlin`,
+copied under `Sources/AI_Hanlin`; the unchanged tests import that module.
+`AI_HLY` is the repository/source directory, not the app module. The test
+target remains `AI_HLYTests` so the25 case identities do not change. No
+PRODUCT_MODULE_NAME override, stub or module alias is used. Both targets enable
 `HANLIN_A2UI_POC` and `DEBUG` for the Debug build; the standalone portable
 runner flag is absent. Source/fixture bytes and the harness manifest are
 hashed. The compiler and all25 tests, including the byte-budget assertions,
