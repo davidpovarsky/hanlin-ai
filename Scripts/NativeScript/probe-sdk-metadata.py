@@ -27,6 +27,12 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     with (folder / "prepare.log").open("w") as log:
         subprocess.run(["node", str(root / "Scripts/NativeScript/prepare-ios-dependencies.mjs")],
                        cwd=root, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=180)
+    # Real pinned Expo headers/maps, including the C++ include-only shims that
+    # caused the full-app failure. This mode does not compile JSI/engines or
+    # invoke the Native API build/signing path.
+    with (folder / "expo-prepare.log").open("w") as log:
+        subprocess.run(["node", str(root / "Scripts/Expo/prepare-ios-dependencies.mjs"), "--metadata-inputs-only"],
+                       cwd=root, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=300)
     package = root / "Packages/HanlinNativeScriptRuntime"
     document = json.loads(subprocess.check_output(["xcodebuild", "-list", "-json"], cwd=package, text=True))
     schemes = (document.get("workspace") or document.get("project") or {}).get("schemes", [])
@@ -59,6 +65,23 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
         break
     if compilation is None:
         raise RuntimeError("Successful build did not retain its actual provider Swift compiler invocation")
+    # Keep the observed compiler's -F order, then append the genuine staged
+    # framework slices in the producer lock's order. Never sort these paths.
+    frameworks = list(dict.fromkeys(frameworks))
+    artifacts = root / "Packages/HanlinExpoRuntime/Artifacts"
+    lock = json.loads((root / "Scripts/Expo/dependency-lock.json").read_text())
+    expo_frameworks = []
+    for item in lock["artifacts"]:
+        target = root / item["target"]
+        for slice_path in sorted(target.glob("*simulator*")):
+            if any(slice_path.glob("*.framework")):
+                expo_frameworks.append(str(slice_path))
+    modular = artifacts / "ModularFrameworks"
+    frameworks = list(dict.fromkeys([*frameworks, *expo_frameworks, str(modular)]))
+    role_receipt = modular / "metadata-input-roles.json"
+    if not role_receipt.is_file():
+        raise RuntimeError("Actual Expo producer did not retain its input-role receipt")
+    (folder / role_receipt.name).write_bytes(role_receipt.read_bytes())
     triple = re.fullmatch(r"(arm64|x86_64)-(apple)-ios([0-9.]+)-simulator", compilation["-target"])
     if triple is None:
         raise RuntimeError("Actual provider was not compiled for the requested Apple simulator")
@@ -80,12 +103,16 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
         "IPHONEOS_DEPLOYMENT_TARGET": triple.group(3), "GCC_C_LANGUAGE_STANDARD": "gnu17", "ARCHS": triple.group(1),
         "TARGET_TEMP_DIR": str(folder / "temp"), "CONFIGURATION_BUILD_DIR": str(folder / "products"),
         "PER_VARIANT_OBJECT_FILE_DIR": "", "NS_TYPESCRIPT_DECLARATIONS_PATH": str(folder / "types"),
-        "FRAMEWORK_SEARCH_PATHS": shlex.join(sorted(set(frameworks))),
-        "HEADER_SEARCH_PATHS": shlex.quote(str(root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"))}
+        "FRAMEWORK_SEARCH_PATHS": shlex.join(frameworks),
+        "HEADER_SEARCH_PATHS": shlex.join([str(root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"),
+                                           str(modular / "react.framework/Headers"),
+                                           str(modular / "react.framework/Headers/react")])}
     for name in ["TARGET_TEMP_DIR", "CONFIGURATION_BUILD_DIR"]:
         Path(environment[name]).mkdir(exist_ok=True)
     (folder / "build-inputs.json").write_text(json.dumps({"compilerInputs": compilation,
-        "actualFrameworkSearchPaths": sorted(set(frameworks)),
+        "actualFrameworkSearchPaths": frameworks,
+        "frameworkOrderSource": "Observed Swift compiler order followed by actual Expo lock staging order",
+        "expoInputRoleReceiptSHA256": hashlib.sha256(role_receipt.read_bytes()).hexdigest(),
         "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
         "stagedSwiftHeaderSHA256": hashlib.sha256(staged_header.read_bytes()).hexdigest()}, indent=2) + "\n")
     with (folder / "wrapper.log").open("w") as log:
@@ -94,11 +121,23 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
                                    stderr=subprocess.STDOUT, timeout=180)
     visibility = root / "build/acceptance/nativescript-metadata" / f"iphonesimulator-{arch}" / "visibility.json"
     recorded = json.loads(visibility.read_text()) if visibility.is_file() else {}
+    # Names confirmed from current staged declarations, not synthetic APIs.
+    public_names = ["EXExportedModule", "EXModuleRegistry", "RCTBridge", "RCTView", "RCTAppDelegate",
+                    "RCTSwiftUIContainerViewWrapper", "YGNodeNew", "YGConfigNew", "YGNodeStyleSetWidth"]
+    binary_path = Path(environment["CONFIGURATION_BUILD_DIR"]) / f"metadata-{arch}.bin"
+    binary = binary_path.read_bytes() if binary_path.is_file() else b""
+    public_symbols = {name: name.encode() + b"\0" in binary for name in public_names}
+    inventory_path = visibility.parent / "HanlinMetadataInput.inventory.json"
+    inventory = json.loads(inventory_path.read_text()) if inventory_path.is_file() else []
+    include_only = [r for r in inventory if r.get("status") == "INCLUDE_SEARCH_ONLY_CPP"]
     passed = execution.returncode == 0 and bool(recorded) and all(recorded["requiredMetadataStringsPresent"].values()) \
-        and recorded.get("clangErrorCount") == 0
+        and recorded.get("clangErrorCount") == 0 and all(public_symbols.values()) and bool(include_only)
     return {"status": "EXECUTED_PASS" if passed else "FAILED", "exitCode": execution.returncode,
             "python": sys.version, "generatedSwiftHeaderSHA256": hashlib.sha256(header.read_bytes()).hexdigest(),
-            "visibility": recorded, "boundary": "Actual Swift compilation+production metadata launcher; no app/VM/device execution."}
+            "visibility": recorded, "publicObjCAndCMetadataNames": public_symbols,
+            "includeOnlyFrameworks": [{"framework": r["framework"], "inputManifestSHA256": r["inputManifestSHA256"],
+                                       "declarations": len(r["inputRoleProof"]["declarations"])} for r in include_only],
+            "boundary": "Actual Swift compilation+combined SDK/Expo production metadata launcher; no app/VM/device execution."}
 
 
 def main() -> int:

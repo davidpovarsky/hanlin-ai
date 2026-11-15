@@ -23,6 +23,91 @@ HEADER_SPEC.loader.exec_module(HEADERS)
 
 
 class NativeScriptMetadataWrapperTests(unittest.TestCase):
+    def compiler_library(self):
+        clang = shutil.which("clang")
+        if sys.platform == "darwin":
+            clang = WRAPPER.subprocess.check_output(["xcrun", "--find", "clang"], text=True).strip()
+            path = Path(clang).resolve().parent.parent / "lib/libclang.dylib"
+        else:
+            path = Path(clang).parent / "libclang.dll" if clang else Path("missing")
+        if not path.is_file():
+            self.skipTest("Actual installed libclang is required for header-role fixtures")
+        return path
+
+    def test_actual_compiler_distinguishes_cpp_only_from_c_objc_and_mixed_declarations(self):
+        cases = [
+            ("namespace api { class Thing {}; int work(); }", HEADERS.CPP_ROLE),
+            ("extern \"C\" int c_api();", HEADERS.PUBLIC_ROLE),
+            ("@interface NativeThing @end", HEADERS.PUBLIC_ROLE),
+            ("namespace api { class Thing {}; } extern \"C\" int c_api();", HEADERS.PUBLIC_ROLE),
+            ("namespace api { extern \"C\" int nested_c_api(); }", HEADERS.PUBLIC_ROLE),
+            ("namespace api { class Thing {}; } struct CRecord { int value; };", HEADERS.PUBLIC_ROLE),
+            ("namespace api { class Thing {}; } enum CEnum { SomeValue };", HEADERS.PUBLIC_ROLE),
+            ("namespace api { class Thing {}; } typedef int CValue; extern CValue global;", HEADERS.PUBLIC_ROLE),
+            ("#define C_API(name) extern \"C\" int name();\nnamespace api { class Thing {}; } C_API(expanded_api)", HEADERS.PUBLIC_ROLE),
+        ]
+        library = self.compiler_library()
+        with tempfile.TemporaryDirectory() as name:
+            header = Path(name) / "entry.h"
+            for source, expected in cases:
+                with self.subTest(source=source):
+                    header.write_text(source, encoding="utf-8")
+                    proof = HEADERS.inspect_header_declarations([header], [], library)
+                    self.assertEqual(proof["errors"], [])
+                    self.assertEqual(proof["role"], expected)
+
+    def test_verified_producer_roles_keep_search_dependencies_and_public_frameworks(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            cpp = self.framework(root / "products", "ArbitraryCppName")
+            (cpp / "Headers/Exported.h").write_text("#pragma once\nnamespace api { class Thing {}; }\n")
+            public = self.framework(root / "products", "PublicAPI")
+            manifest = HEADERS.produce_role_inventory(cpp.parent, [], self.compiler_library())
+            self.assertEqual([r["role"] for r in manifest["frameworks"]], [HEADERS.CPP_ROLE, HEADERS.PUBLIC_ROLE])
+            umbrella = root / "input.h"
+            records = HEADERS.write_public_umbrella(root, umbrella, [], [cpp.parent])
+            self.assertEqual(records[0]["status"], "INCLUDE_SEARCH_ONLY_CPP")
+            self.assertEqual(records[0]["modules"], ["ArbitraryCppName"])
+            self.assertNotIn(str(cpp / "Headers/Entry.h"), umbrella.read_text())
+            self.assertIn(str(public / "Headers/Entry.h"), umbrella.read_text())
+            self.assertTrue((cpp / "Headers/Exported.h").exists())
+            self.assertEqual(records[0]["inputSHA256"], HEADERS.framework_inputs(cpp))
+
+    def test_role_receipt_rejects_unknown_role_tampering_future_headers_and_mixed_proof(self):
+        library = self.compiler_library()
+        for change in ["unknown-role", "changed-header", "future-c-api", "mixed-proof", "wrong-producer"]:
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as name:
+                root = Path(name)
+                framework = self.framework(root / "products", "CppFixture")
+                (framework / "Headers/Exported.h").write_text("#pragma once\nnamespace api { class Thing {}; }\n")
+                manifest = HEADERS.produce_role_inventory(framework.parent, [], library)
+                record = manifest["frameworks"][0]
+                if change == "unknown-role":
+                    record["role"] = "skip-whatever"
+                elif change == "changed-header":
+                    (framework / "Headers/Exported.h").write_text("// changed header")
+                elif change == "future-c-api":
+                    (framework / "Headers/Future.h").write_text('extern "C" int new_public_api();')
+                elif change == "mixed-proof":
+                    record["proof"]["declarations"].append({"header": "Headers/Exported.h", "category": "public"})
+                else:
+                    manifest["producerSHA256"] = "0" * 64
+                (framework.parent / HEADERS.ROLE_MANIFEST).write_text(json.dumps(manifest))
+                with self.assertRaisesRegex(RuntimeError, "Framework input-role"):
+                    HEADERS.write_public_umbrella(root, root / "input.h", [], [framework.parent])
+                self.assertFalse((root / "input.h").exists())
+
+    def test_failed_actual_role_parse_stays_a_public_root(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            framework = self.framework(root / "products", "BrokenCpp")
+            (framework / "Headers/Exported.h").write_text("namespace api { class Broken : Missing {}; }\n")
+            manifest = HEADERS.produce_role_inventory(framework.parent, [], self.compiler_library())
+            self.assertTrue(manifest["frameworks"][0]["proof"]["errors"])
+            self.assertEqual(manifest["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
+            HEADERS.write_public_umbrella(root, root / "input.h", [], [framework.parent])
+            self.assertIn(str(framework / "Headers/Entry.h"), (root / "input.h").read_text())
+
     def framework(self, directory, name="ExpoModulesCore", module=None):
         framework = directory / (name + ".framework")
         (framework / "Modules").mkdir(parents=True)

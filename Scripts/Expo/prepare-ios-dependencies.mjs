@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { access, chmod, cp, lstat, mkdir, readFile, readdir, readlink, rm, stat, writeFile } from 'node:fs/promises';
 import { createWriteStream, existsSync } from 'node:fs';
 import { basename, dirname, resolve } from 'node:path';
-import { execSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import https from 'node:https';
 import http from 'node:http';
@@ -356,7 +356,7 @@ async function downloadFile(url, destPath) {
   }
 }
 
-async function prepare() {
+async function prepare({ metadataInputsOnly = false } = {}) {
   console.log('[HanlinExpo] Preparing iOS Expo and React Native dependencies...');
   await mkdir(artifactsRoot, { recursive: true });
   const lock = await readJSON(lockPath);
@@ -1128,6 +1128,16 @@ template <typename CharTransformT = fnv1a_identity>
 
       console.log(`[HanlinExpo] Created ${count} modular frameworks from ReactNativeHeaders modulemap.`);
 
+      // Publish content/compiler-backed roles after all existing header staging.
+      // The producer never edits a header/module map to obtain a role. The
+      // metadata collector validates this receipt and retains all search paths.
+      if (process.platform === 'darwin') {
+        execFileSync('/usr/bin/python3', [
+          resolve(repositoryRoot, 'Scripts/NativeScript/metadata_public_headers.py'),
+          '--produce-roles', modularFwsRoot,
+        ], { stdio: 'inherit' });
+      }
+
       // Ensure nested fallback directory exists for $(SRCROOT)/Packages/HanlinExpoRuntime evaluation
       const nestedFallbackDir = resolve(artifactsRoot, '..', 'Packages', 'HanlinExpoRuntime');
       await mkdir(nestedFallbackDir, { recursive: true });
@@ -1138,6 +1148,10 @@ template <typename CharTransformT = fnv1a_identity>
       console.log('[HanlinExpo] ModularFrameworks nested fallback staged successfully.');
     }
     await stageModularFrameworks();
+
+    // Focused metadata proof needs genuine pinned headers and maps, without
+    // building JSI/native runtimes, editing project config or signing outputs.
+    if (metadataInputsOnly) return;
 
     if (process.platform === 'darwin') {
       console.log('[HanlinExpo] Building ExpoModulesJSI.xcframework for iOS device and simulator on macOS...');
@@ -1314,8 +1328,10 @@ const isMainModule =
   process.argv[1] && resolve(fileURLToPath(import.meta.url)) === resolve(process.argv[1]);
 
 if (isMainModule) {
-  prepare()
+  const metadataInputsOnly = process.argv.includes('--metadata-inputs-only');
+  prepare({ metadataInputsOnly })
     .then(async () => {
+      if (metadataInputsOnly) return;
       const nativeApiPrep = resolve(repositoryRoot, 'Scripts', 'ExpoNativeAPI', 'prepare-ios-dependencies.mjs');
       if (existsSync(nativeApiPrep)) {
         const { default: prepNativeApi } = await import(pathToFileURL(nativeApiPrep).href);
