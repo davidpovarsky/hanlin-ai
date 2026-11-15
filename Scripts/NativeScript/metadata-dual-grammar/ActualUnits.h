@@ -60,13 +60,13 @@ public:
             clang::tooling::FileContentMappings(), nullptr, fs);
         if (!ast || ast->getDiagnostics().hasErrorOccurred()) throw std::runtime_error("Actual dual-grammar AST parse failed");
         if (ast->isMainFileAST() || ast->getSourceManager().loaded_sloc_entry_size() != 0 ||
-            !ast->getPreprocessorOpts().ImplicitPCHInclude.empty() || ast->getLangOpts().Modules)
+            !ast->getPreprocessor().getPreprocessorOpts().ImplicitPCHInclude.empty() || ast->getLangOpts().Modules)
             throw std::runtime_error("Serialized AST/module inputs are prohibited in dual grammar");
         if (peakResidentBytes() > 4LL * 1024 * 1024 * 1024) throw std::runtime_error("Dual metadata RSS budget exceeded after AST");
         receipt = llvm::json::Object{{"compiler", clang::getClangFullVersion()},
             {"language", ast->getLangOpts().CPlusPlus ? "objective-c++" : "objective-c"},
             {"target", ast->getASTContext().getTargetInfo().getTriple().str()},
-            {"resourceDirectory", ast->getHeaderSearchOpts().ResourceDir},
+            {"resourceDirectory", ast->getPreprocessor().getHeaderSearchInfo().getHeaderSearchOpts().ResourceDir},
             {"rootSHA256", hanlinSHA(code)}, {"peakRSSBeforeAST", beforeRSS},
             {"peakRSSAfterAST", peakResidentBytes()}, {"peakRSSBudget", 4LL * 1024 * 1024 * 1024},
             {"actualSearchDirectories", searchDirectories(*ast)}, {"sourceDependencies", dependencies(*ast)}};

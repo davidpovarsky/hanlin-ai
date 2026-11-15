@@ -26,6 +26,16 @@ a resource budget. New real cross-grammar controls cover C-only exports,
 equivalent duplicates, conflicting signatures/layouts/owners and retained AST
 lifetimes before combined SDK/Host/Expo and actual runtime consumption.
 
+Focused actual dual-grammar controls are still failing. Run43740009253 at
+`a546fe99` compiled both the candidate generator and the focused native control
+executable, but all7 fixtures exited with SIGSEGV before a native receipt.
+No fixture, merge, serializer or lifetime pass is established. Generator SHA256
+is `7ede2a79b304c76e1d5da673558796d140f7178248d729050ee25130baad6df5`;
+control image SHA256 is `d25eca4d89f5b2c2ad5482972c47b8461a4622d741ef1db61eb95a24f8689e59`.
+All67 retained fixture/command/log/receipt-result manifest files verify with0
+mismatches. A diagnostic rerun collects the first actual crash stack using the
+source-identical compiled image, without claiming metadata acceptance.
+
 This resolves a measured language boundary, not a permission to lose APIs.
 Run43731970518 generated ObjC++ metadata with0 Clang errors but failed13 model
 entries across3 modules. Read-only run43732790205 retained8 actual LLVM20
