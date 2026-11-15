@@ -2,9 +2,23 @@ import XCTest
 
 @MainActor
 final class ParityUITests: XCTestCase {
+    private var activeApp: XCUIApplication?
+
+    override func tearDownWithError() throws {
+        if let app = activeApp {
+            let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            attachment.name = "final-screen-including-failure"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            app.terminate()
+        }
+        activeApp = nil
+    }
+
     private func launch() -> XCUIApplication {
         continueAfterFailure = false
         let app = XCUIApplication()
+        activeApp = app
         let locale = ProcessInfo.processInfo.environment["HANLIN_SIM_ACCEPTANCE_LOCALE"] ?? "en"
         app.launchArguments += ["-AppleLanguages", "(\(locale))", "-AppleLocale", locale == "he" ? "he_IL" : "en_US"]
         app.launch()
@@ -42,7 +56,6 @@ final class ParityUITests: XCTestCase {
 
     func testActualPrivateStorageSurvivesProcessRelaunch() {
         let app = launch()
-        defer { app.terminate() }
         enter("Persisted UI27", app: app)
         save(app)
         app.terminate()
@@ -54,7 +67,6 @@ final class ParityUITests: XCTestCase {
 
     func testReloadReplacesOnlyUnsavedDraft() {
         let app = launch()
-        defer { app.terminate() }
         enter("Saved UI27", app: app)
         save(app)
         enter("Unsaved UI27", app: app)

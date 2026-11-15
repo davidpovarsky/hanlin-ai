@@ -163,6 +163,8 @@ public struct SwiftParityMiniAppView: View {
                     Button("Save") { Task { await model.save() } }
                     Button("Reload") { Task { await model.reload() } }
                 }
+                // Keep both buttons independent of Form's automatic row action.
+                .buttonStyle(.borderless)
                 Text(model.storageStatus).foregroundStyle(.secondary)
             }
 
