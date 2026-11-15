@@ -11,6 +11,9 @@ import HanlinPlatformContracts
 final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilitySource, HanlinHostInteractionSource {
     nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 1)
     let identity: HanlinHostSession
+    var splitCoordinator = HanlinAppSplitOriginCoordinator.shared
+    weak var splitSession: HanlinAgentSession?
+    var splitRowReference: (@MainActor @Sendable () -> HanlinAppAgentRowReference?)?
     var toolAdapter: HanlinAISDKToolAdapter?
     private let store: HanlinAppConversationStore
     private let isCurrent: @MainActor @Sendable () -> Bool
@@ -34,7 +37,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
         _ = try await self.context(for: identity)
         let available = try toolAdapter?.allToolDefinitions().sorted { $0.name < $1.name } ?? []
         guard Set(available.map(\.name)).count == available.count else { throw HanlinHostError.duplicateAlias }
-        let tools = try available.map { definition -> HanlinHostTool in
+        var tools = try available.map { definition -> HanlinHostTool in
             let source = toolAdapter?.preparedTools.authority.toolDescriptor(for: definition.name)
             let isMeta = [LoadSkillTool.toolName, ReadSkillResourceTool.toolName, ToolSearchTool.toolName,
                 ReadToolResultTool.toolName, ToolSchemaDecorator.reportProgressName].contains(definition.name)
@@ -57,6 +60,8 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                 descriptor: descriptor, writeGuarantee: isMeta ? .readOnly : .hostManagedMutation,
                 originalInputSchemaJSON: definition.inputSchemaData)
         }
+        guard !tools.contains(where: { $0.route.alias == Self.splitAlias }) else { throw HanlinHostError.duplicateAlias }
+        if toolAdapter != nil { tools.append(try Self.splitTool()) }
         // JSON dictionaries must be canonical before hashing or unchanged schemas spuriously
         // change the catalog generation. No process-random Hasher is used for public revision.
         let canonicalTools = try tools.map { tool in HanlinJSONValue.object([
@@ -79,7 +84,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
         guard let toolAdapter else { return .init(activeAliases: []) }
         let prepared = await toolAdapter.prepareStep(stepNumber: step)
         _ = try await context(for: session)
-        return .init(activeAliases: prepared.activeToolAliases, skillIDs: prepared.loadedSkillIDs,
+        return .init(activeAliases: prepared.activeToolAliases + (prepared.activeToolAliases.contains(Self.splitAlias) ? [] : [Self.splitAlias]), skillIDs: prepared.loadedSkillIDs,
             instructions: prepared.loadedSkillInstructions)
     }
 
@@ -92,6 +97,19 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
 
     func execute(_ invocation: HanlinHostInvocation,
                  progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult {
+        if invocation.request.aliasUsed == Self.splitAlias {
+            do {
+                _ = try await context(for: invocation.session)
+                let current = try await catalog(for: invocation.session.context)
+                guard invocation.expectedRevision == nil, current.revision == invocation.request.routingTableRevision,
+                      let entry = current.tools.first(where: { $0.route.alias == Self.splitAlias }),
+                      entry.route.logicalToolID == invocation.request.logicalToolID,
+                      entry.route.descriptorRevision == invocation.request.descriptorRevision,
+                      let splitSession, splitSession.identity == invocation.session,
+                      let row = splitRowReference?() else { throw HanlinHostError.staleContext }
+                return try await splitCoordinator.execute(invocation, host: self, session: splitSession, row: row)
+            } catch { return noDispatch(invocation, error: error) }
+        }
         let entry: HanlinHostTool
         let definition: HanlinAISDKToolDefinition
         let original: Data

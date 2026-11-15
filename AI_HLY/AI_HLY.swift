@@ -44,7 +44,8 @@ class AppDataManager: ObservableObject {
                 || ProcessInfo.processInfo.environment["HANLIN_EXPO_E2E"] != nil
                 || ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_E2E"] != nil
                 || ProcessInfo.processInfo.environment["HANLIN_SCRIPTUI_E2E"] != nil
-            let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: isTesting ? .none : .automatic)
+            let nativeAcceptance = HanlinNativeA2UIAcceptanceProvider.isEnabled
+            let config = ModelConfiguration(isStoredInMemoryOnly: nativeAcceptance, cloudKitDatabase: (isTesting || nativeAcceptance) ? .none : .automatic)
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
                 ChatSavedExcerpt.self,
@@ -69,6 +70,11 @@ class AppDataManager: ObservableObject {
     // 异步预加载所有数据
     @MainActor func preloadDataIfNeeded() {
         let context = modelContainer.mainContext
+        if HanlinNativeA2UIAcceptanceProvider.isEnabled {
+            do { try HanlinNativeA2UIAcceptanceProvider.configureIfRequested(context: context) }
+            catch { fatalError("Native A2UI isolated fixture bootstrap failed") }
+            return
+        }
         // 确保模型数据优先加载完成
         preloadModelDataIfNeeded(context: context)
         preloadAPIKeysIfNeeded(context: context)
@@ -102,6 +108,10 @@ struct MyApp: App {
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
                 .task {
+                    if HanlinNativeA2UIAcceptanceProvider.isEnabled {
+                        appDataManager.preloadDataIfNeeded()
+                        return
+                    }
                     HanlinExpoSession.ensureAppDefinesLoaded()
                     ChavrusaSystemIntegrationBootstrap.configure()
                     HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
@@ -112,6 +122,7 @@ struct MyApp: App {
                     await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
                 }
                 .onChange(of: scenePhase) { _, newPhase in
+                    guard !HanlinNativeA2UIAcceptanceProvider.isEnabled else { return }
                     Task {
                         await RuntimeLifecycleBridge.handleScenePhase(newPhase)
                         if newPhase == .active {
@@ -120,12 +131,18 @@ struct MyApp: App {
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
+                    guard !HanlinNativeA2UIAcceptanceProvider.isEnabled else { return }
                     Task {
                         await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
                     }
                 }
                 .onOpenURL { url in
-                    if url.host == "openVisionView" {
+                    if url.scheme?.lowercased() == "chavrusachat", url.host?.lowercased() == "split" {
+                        Task { @MainActor in
+                            await HanlinAppSplitOriginCoordinator.shared.receiveReturn(url,
+                                modelContext: appDataManager.modelContainer.mainContext)
+                        }
+                    } else if url.host == "openVisionView" {
                         deepLinkTarget = "vision"
                     } else if url.host == "study", let link = TorahStudyDeepLink.parse(url: url) {
                         TorahStudyNavigationRouter.shared.navigate(to: link)

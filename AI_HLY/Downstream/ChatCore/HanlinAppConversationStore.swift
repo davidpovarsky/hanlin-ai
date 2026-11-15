@@ -76,4 +76,49 @@ final class HanlinAppConversationStore: HanlinConversationStore {
         do { try context.save() }
         catch { row.agentSDKRecordData = original; throw error }
     }
+    /// Cold historical reconciliation only, when composition proves no live Session writer is
+    /// running. Uses this SAME adapter/CAS and metadata receipt; never creates a missing record.
+    func persistHistoricalReceipt(_ event: HanlinHostResultEvent, originReference: String,
+                                  receiptReference: String) async throws {
+        guard event.call.session.conversationID == conversationID,
+              event.call.session.context.namespace == namespace,
+              originReference.utf8.count <= 4096, receiptReference.utf8.count <= 4096,
+              let old = try await load(conversationID, namespace: namespace), old.revision < UInt64.max,
+              old.entries.contains(where: {
+                  if case .presentationReference(1, let value) = $0.payload { return value.utf8.elementsEqual(originReference.utf8) }
+                  return false
+              }) else { throw HanlinHostError.staleContext }
+        let hasOriginalIdentity = old.entries.contains {
+            if case .hostResultIdentity(let id, let call) = $0.payload { return id == event.resultID && call == event.call }
+            return false
+        }
+        if hasOriginalIdentity, old.entries.contains(where: {
+            guard case .toolResult(let providerID, let receipt) = $0.payload else { return false }
+            return providerID == event.call.providerCallID && receipt.result.invocationID == event.call.invocationID
+                && receipt.result.logicalToolID == event.call.logicalToolID
+                && receipt.context == event.call.session.context && receipt.effectState == event.result.effectState
+                && receipt.reconciliationReference == event.result.reconciliationReference
+                && receipt.result.outcome == event.result.metadataReceipt().result.outcome
+        }) { return }
+        let prefix = "hanlin.split.receipt.v1:" + event.resultID.uuidString.lowercased() + ":"
+        for entry in old.entries {
+            if case .presentationReference(1, let value) = entry.payload, value.hasPrefix(prefix) {
+                guard value.utf8.elementsEqual(receiptReference.utf8) else { throw HanlinHostError.resultMismatch }
+                return
+            }
+        }
+        guard old.entries.last?.sequence != UInt64.max else { throw HanlinHostError.storageLimitExceeded }
+        let next = old.entries.last.map { $0.sequence + 1 } ?? 0
+        guard next < UInt64.max - 3 else { throw HanlinHostError.storageLimitExceeded }
+        let additions: [HanlinTranscriptPayload] = [.hostResultIdentity(resultID: event.resultID, call: event.call),
+            .toolResult(providerCallID: event.call.providerCallID, result: event.result.metadataReceipt()),
+            .presentationReference(version: 1, opaqueReference: receiptReference)]
+        let entries = old.entries + additions.enumerated().map { offset, payload in
+            HanlinTranscriptEntry(runID: event.call.runID, step: event.call.step,
+                sequence: next + UInt64(offset), payload: payload)
+        }
+        try await save(.init(namespace: namespace, conversationID: conversationID, revision: old.revision + 1,
+            model: old.model, draft: old.draft, entries: entries), replacing: old.revision)
+    }
+
 }

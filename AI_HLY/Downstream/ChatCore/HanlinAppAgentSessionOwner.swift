@@ -30,6 +30,9 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var completion: HanlinAgentRunCompletion?
     @ObservationIgnored private var starting = false
     @ObservationIgnored private var historyGeneration: UUID?
+    @ObservationIgnored private let splitCoordinator: HanlinAppSplitOriginCoordinator
+
+    init(splitCoordinator: HanlinAppSplitOriginCoordinator = .shared) { self.splitCoordinator = splitCoordinator }
 
     /// Read-only history on conversation open. No engine, Host, Session or interaction admission
     /// is created. The caller supplies its original row/context, never a current-selection lookup.
@@ -144,6 +147,13 @@ final class HanlinAppAgentSessionOwner {
             let originalSession = HanlinAgentSession(identity: identity, host: originalHost, engine: originalEngine,
                 store: originalStore, capabilities: originalHost)
             store = originalStore; host = originalHost; session = originalSession; engine = originalEngine; modelConfiguration = configuration
+            splitCoordinator.register(session: originalSession, modelContext: modelContext)
+            originalHost.splitCoordinator = splitCoordinator
+            originalHost.splitSession = originalSession
+            originalHost.splitRowReference = { [weak self] in
+                guard self?.session?.identity == identity, self?.contextGeneration == generation else { return nil }
+                return self?.activeReference
+            }
             let priorCompletion = originalSession.onRunCompletion
             originalSession.onRunCompletion = { [weak self] value in
                 priorCompletion?(value)
@@ -157,7 +167,9 @@ final class HanlinAppAgentSessionOwner {
             }
             let priorResult = originalSession.onHostResult
             originalSession.onHostResult = { [weak self] value in
-                priorResult?(value); self?.presentation?.hostResult(value)
+                priorResult?(value)
+                self?.splitCoordinator.receiptCommitted(value)
+                self?.presentation?.hostResult(value)
             }
             let priorProgress = originalSession.onHostProgress
             originalSession.onHostProgress = { [weak self] value in
@@ -228,6 +240,7 @@ final class HanlinAppAgentSessionOwner {
     func revoke() {
         historyGeneration = nil
         contextGeneration = nil
+        if let session { splitCoordinator.invalidate(session: session.identity) }
         if let session { presentation?.invalidated(session.identity) }
         activeUIRunID = nil; activeReference = nil
     }
@@ -248,6 +261,11 @@ final class HanlinAppAgentSessionOwner {
         revoke()
         session = nil; host = nil; engine = nil; modelConfiguration = nil; completion = nil
         Task { await originalSession?.invalidate() }
+    }
+
+    /// Reuses the one original private decoder for cold read-only correlation, never admission.
+    static func historicalBindings(in record: HanlinConversationRecord) throws -> [HanlinAppAgentRowBinding] {
+        try restoredBindings(record)
     }
 
     private static func restoredBindings(_ record: HanlinConversationRecord) throws -> [HanlinAppAgentRowBinding] {

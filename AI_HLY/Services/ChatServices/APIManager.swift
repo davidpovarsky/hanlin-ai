@@ -126,7 +126,8 @@ class APIManager {
         self.context = context
         self.agentSessionOwner = agentSessionOwner ?? HanlinAppAgentSessionOwner()
         self.chatEngineFactory = chatEngineFactory ?? {
-            AgentRuntimeUIAcceptanceProvider.makeChatEngine()
+            if HanlinNativeA2UIAcceptanceProvider.isEnabled { return HanlinNativeA2UIAcceptanceProvider.makeChatEngine() }
+            return AgentRuntimeUIAcceptanceProvider.makeChatEngine()
         }
     }
 
