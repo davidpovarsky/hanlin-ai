@@ -10,8 +10,9 @@ import sys
 sys.dont_write_bytecode = True
 import prepare_native as native
 from guards import (native_settings, environment, owned_boot, destination, observations, require,
-                    simctl_list_contract, owned_devices_command, require_pretest)
-from run_native import command_plan, TEST_SECONDS, RUN_SECONDS
+                    simctl_list_contract, owned_devices_command, require_pretest, owned_name,
+                    created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256)
+from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR
 from freeze_review import review_files
 
 BASE = '67642faaa8f16c89eb0e2330db56291c35c61c06'
@@ -23,17 +24,13 @@ UNCHANGED_FUNCTION_SOURCE_SHA256 = {
                   'environment': '5dbee4131bf0ffb2ad0bb3185fc6fcf2df84bacf3fe1a2eb0293fc9c83ec41a9',
                   'destination': '1c7dcefcb6129250196822049c7543f7f49099dca01c96c58a054d54c68100ad',
                   'observations': 'a0b68d6c932d4e6075a1da391aea1c9af7f906b2a09a7f8852db687b6998e5a9'},
-    'run_native.py': {'command_plan': '96529ea97589568cf78353b4b08e062fdf18bc822982ba723e52d1db0ea4d8c9'},
 }
 WORKFLOW = '.github/workflows/build-ios26-unsigned-ipa.yml'
 MODE = 'composer_native_host_diagnostic'
 SDK = '/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk'
 UDI = '11111111-2222-3333-4444-555555555555'
-# Synthetic parser contract only: NOT a transcript or claim about installed Xcode.
-HELP_CONTRACT_FIXTURE = '''Usage: simctl list [-j | --json] [-v] [devices | devicetypes | runtimes | pairs] [<search term> | available]
--j Print as JSON
-If a search term is specified, the list is filtered by name or UDID.
-'''
+HELP_CAPTURE_TEXT = (native.HERE / 'simctl-list-help-43711740465.txt').read_text(encoding='utf-8')
+require(hashlib.sha256(HELP_CAPTURE_TEXT.encode()).hexdigest() == HELP_CAPTURE_SHA256, 'retained actual documentation bytes')
 
 
 def source_controls():
@@ -90,102 +87,87 @@ def source_controls():
         changed = copy.deepcopy(before)
         changed['runtimes'][0][key] = value
         reject('runtime-' + key, environment, changed)
-    actual = {'udid': UDI, 'state': 'Booted', 'isAvailable': True, 'deviceTypeIdentifier': model['identifier']}
-    after = {'devices': {runtime['identifier']: [actual]}}
-    boot_receipt = owned_boot(after, before, runtime, UDI)
-    require(boot_receipt['runtime_context_origin'].startswith('actual simulators-before.stdout') and
-            boot_receipt['post_state_origin'].startswith('raw installed-help-validated') and
-            'runtimes' not in after, 'initial runtime context is not fabricated post-state')
-    passed.append('synthetic-positive-new-owned-booted-device')
+    name = owned_name(before, '1234567890')
+    create_call = {'label': 'create-owned-device', 'exit_code': 0,
+                   'argv': ['xcrun', 'simctl', 'create', name, model['identifier'], runtime['identifier']]}
+    creation = created_identity(before, runtime, model, name, UDI, create_call)
+    passed.append('synthetic-positive-unique-name-and-UUID-creation-binding')
+    actual = {'udid': UDI, 'name': name, 'state': 'Booted', 'isAvailable': True, 'deviceTypeIdentifier': model['identifier']}
+    other_runtime = 'com.apple.CoreSimulator.SimRuntime.iOS-27-2'
+    after = {'devices': {runtime['identifier']: [actual], other_runtime: []}}
+    receipt = owned_boot(after, before, runtime, creation)
+    require(receipt['empty_other_runtime_buckets'] == [other_runtime] and
+            receipt['runtime_context_origin'].startswith('actual simulators-before.stdout') and 'runtimes' not in after,
+            'well-formed empty buckets are allowed; initial context is not post measurement')
+    passed.append('synthetic-positive-one-owned-device-with-empty-other-runtime')
+    reject('created-name-alias', owned_devices_command, simctl_list_contract(HELP_CAPTURE_TEXT, ''), 'booted')
+    reject('query-UUID-assumption', owned_devices_command, simctl_list_contract(HELP_CAPTURE_TEXT, ''), UDI)
     existing = copy.deepcopy(before)
     existing['devices'][runtime['identifier']] = [actual]
-    reject('device-already-existed', owned_boot, after, existing, runtime, UDI)
-    changed = copy.deepcopy(after)
-    changed['devices'][runtime['identifier']][0]['state'] = 'Shutdown'
-    reject('owned-device-not-booted', owned_boot, changed, before, runtime, UDI)
-    for name in ['missing-devices-key', 'empty-runtime-map', 'wrong-runtime', 'extra-runtime', 'extra-empty-runtime',
-                 'missing-device', 'wrong-UUID', 'extra-UUID', 'duplicate-UUID', 'missing-UUID',
-                 'missing-state', 'unavailable', 'string-availability', 'wrong-type', 'missing-type',
-                 'fabricated-post-runtimes', 'fabricated-post-types']:
+    reject('name-already-present', owned_name, existing, '1234567890')
+    existing['devices'][runtime['identifier']][0] = dict(actual, name='unrelated')
+    reject('UUID-already-present', created_identity, existing, runtime, model, name, UDI, create_call)
+    reject('create-command-name-mismatch', created_identity, before, runtime, model, name, UDI,
+           dict(create_call, argv=['xcrun', 'simctl', 'create', 'wrong-name', model['identifier'], runtime['identifier']]))
+    reject('create-command-failed', created_identity, before, runtime, model, name, UDI, dict(create_call, exit_code=1))
+    reject('create-command-missing', created_identity, before, runtime, model, name, UDI, None)
+    for label in ['missing-devices-key', 'missing-device', 'wrong-UUID', 'wrong-name', 'missing-name', 'missing-UUID',
+                  'wrong-runtime', 'extra-UUID', 'duplicate-owned-device', 'extra-other-runtime-device', 'missing-state',
+                  'Shutdown-state', 'unavailable', 'string-availability', 'wrong-type', 'missing-type',
+                  'malformed-empty-bucket', 'nonobject-other-bucket', 'nonobject-selected-device', 'malformed-runtime-key',
+                  'fabricated-post-runtimes', 'fabricated-post-types']:
         changed = copy.deepcopy(after)
         device = changed['devices'][runtime['identifier']][0]
-        if name == 'missing-devices-key':
-            changed = {}
-        elif name == 'empty-runtime-map':
-            changed['devices'] = {}
-        elif name == 'wrong-runtime':
-            changed['devices'] = {'com.apple.CoreSimulator.SimRuntime.iOS-27-2': [device]}
-        elif name in ['extra-runtime', 'extra-empty-runtime']:
-            changed['devices']['com.apple.CoreSimulator.SimRuntime.iOS-27-2'] = [device] if name == 'extra-runtime' else []
-        elif name == 'missing-device':
-            changed['devices'][runtime['identifier']] = []
-        elif name == 'wrong-UUID':
-            device['udid'] = 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'
-        elif name in ['extra-UUID', 'duplicate-UUID']:
-            extra = copy.deepcopy(device)
-            if name == 'extra-UUID':
-                extra['udid'] = 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'
-            changed['devices'][runtime['identifier']].append(extra)
-        elif name == 'missing-UUID':
-            del device['udid']
-        elif name == 'missing-state':
-            del device['state']
-        elif name == 'unavailable':
-            device['isAvailable'] = False
-        elif name == 'string-availability':
-            device['isAvailable'] = 'true'
-        elif name == 'wrong-type':
-            device['deviceTypeIdentifier'] = 'com.apple.CoreSimulator.SimDeviceType.iPhone-18'
-        elif name == 'missing-type':
-            del device['deviceTypeIdentifier']
-        elif name == 'fabricated-post-runtimes':
-            changed['runtimes'] = [runtime]
-        elif name == 'fabricated-post-types':
-            changed['devicetypes'] = [model]
-        reject('filtered-post-' + name, owned_boot, changed, before, runtime, UDI)
-    wrong_context = dict(runtime, buildversion='other')
-    reject('declared-runtime-not-initial-observed-context', owned_boot, after, before, wrong_context, UDI)
-    contract = simctl_list_contract(HELP_CONTRACT_FIXTURE, '')
-    query = owned_devices_command(contract, UDI)
-    require(query == ['xcrun', 'simctl', 'list', '--json', 'devices', UDI], 'only documented devices/owned-UUID query')
-    passed.append('synthetic-positive-help-contract-and-exact-owned-query')
-    require(simctl_list_contract('', HELP_CONTRACT_FIXTURE) == contract, 'captured help may be on either raw stream')
-    passed.append('synthetic-positive-help-on-stderr')
-    for name, help_text in [
-        ('missing-help', ''),
-        ('duplicate-usage', HELP_CONTRACT_FIXTURE + HELP_CONTRACT_FIXTURE.splitlines()[0]),
-        ('wrong-command', HELP_CONTRACT_FIXTURE.replace('simctl list', 'simctl boot')),
-        ('missing-JSON-flag', HELP_CONTRACT_FIXTURE.replace('[-j | --json]', '[-v]')),
-        ('missing-JSON-documentation', HELP_CONTRACT_FIXTURE.replace('-j Print as JSON\n', '')),
-        ('human-text-only', HELP_CONTRACT_FIXTURE.replace('Print as JSON', 'Print human-readable text')),
-        ('wrong-argument-order', HELP_CONTRACT_FIXTURE.replace('[-j | --json] [-v] [devices | devicetypes | runtimes | pairs]', '[devices | devicetypes | runtimes | pairs] [-j | --json] [-v]')),
-        ('missing-search-argument', HELP_CONTRACT_FIXTURE.replace('[<search term> | available]', '')),
-        ('missing-device-category', HELP_CONTRACT_FIXTURE.replace('devices | ', '')),
-        ('name-only-semantics', HELP_CONTRACT_FIXTURE.replace('name or UDID', 'name')),
-        ('generic-search-without-identity', HELP_CONTRACT_FIXTURE.replace('If a search term is specified, the list is filtered by name or UDID.', 'The search term filters the list.')),
-        ('UUID-only-other-command', HELP_CONTRACT_FIXTURE.replace('If a search term is specified, the list is filtered by name or UDID.', 'The boot command accepts a UDID; the search term matches names.')),
-        ('negated-identity-support', HELP_CONTRACT_FIXTURE.replace('name or UDID', 'name but not UDID')),
-        ('contradictory-identity-note', HELP_CONTRACT_FIXTURE + 'UDIDs are not matched.\n'),
-        ('ambiguous-identity-documents', HELP_CONTRACT_FIXTURE + 'The search term matches name or UUID.\n'),
-        ('invalid-decoding', HELP_CONTRACT_FIXTURE + '\ufffd'),
-    ]:
-        reject('installed-help-' + name, simctl_list_contract, help_text, '')
-    reject('query-without-help-contract', owned_devices_command, {}, UDI)
+        if label == 'missing-devices-key': changed = {}
+        elif label == 'missing-device': changed['devices'][runtime['identifier']] = []
+        elif label == 'wrong-UUID': device['udid'] = 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'
+        elif label == 'wrong-name': device['name'] = 'Hanlin-NativeComposer-999'
+        elif label == 'missing-name': del device['name']
+        elif label == 'missing-UUID': del device['udid']
+        elif label == 'wrong-runtime': changed['devices'] = {runtime['identifier']: [], other_runtime: [device]}
+        elif label in ['extra-UUID', 'duplicate-owned-device']:
+            changed['devices'][runtime['identifier']].append(dict(device, udid='AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE') if label == 'extra-UUID' else dict(device))
+        elif label == 'extra-other-runtime-device': changed['devices'][other_runtime] = [dict(device)]
+        elif label == 'missing-state': del device['state']
+        elif label == 'Shutdown-state': device['state'] = 'Shutdown'
+        elif label == 'unavailable': device['isAvailable'] = False
+        elif label == 'string-availability': device['isAvailable'] = 'true'
+        elif label == 'wrong-type': device['deviceTypeIdentifier'] = 'com.apple.CoreSimulator.SimDeviceType.iPhone-18'
+        elif label == 'missing-type': del device['deviceTypeIdentifier']
+        elif label == 'malformed-empty-bucket': changed['devices'][other_runtime] = {}
+        elif label == 'nonobject-other-bucket': changed['devices'][other_runtime] = [None]
+        elif label == 'nonobject-selected-device': changed['devices'][runtime['identifier']] = [None]
+        elif label == 'malformed-runtime-key': changed['devices']['not-a-runtime'] = []
+        elif label == 'fabricated-post-runtimes': changed['runtimes'] = [runtime]
+        elif label == 'fabricated-post-types': changed['devicetypes'] = [model]
+        reject('filtered-state-' + label, owned_boot, changed, before, runtime, creation)
+    reject('unbound-runtime-context', owned_boot, after, before, dict(runtime, buildversion='other'), creation)
+    reject('duplicate-JSON-runtime-key', owned_state_json, '{"devices":{"same":[],"same":[]}}')
+    reject('malformed-JSON', owned_state_json, '{')
+    contract = simctl_list_contract(HELP_CAPTURE_TEXT, '')
+    require(contract['identity_established_by_help'] is False, 'help cannot establish UUID/name identity')
+    query = owned_devices_command(contract, name)
+    require(query == ['xcrun', 'simctl', 'list', '--json', 'devices', name], 'exact single deterministic name-search command')
+    passed.append('captured-actual-help-syntax-only-and-unique-name-query')
+    require(simctl_list_contract('', HELP_CAPTURE_TEXT) == contract, 'captured actual help can be on stderr')
+    for label, text in [('missing', ''), ('changed-grammar', HELP_CAPTURE_TEXT.replace('--json-fd', '--unknown-fd')),
+                        ('synthetic-UUID-prose', HELP_CAPTURE_TEXT + 'Search terms match UUIDs.\n'),
+                        ('truncated', HELP_CAPTURE_TEXT[:-1]), ('invalid-decoding', HELP_CAPTURE_TEXT + '\ufffd')]:
+        reject('help-' + label, simctl_list_contract, text, '')
+    reject('ambiguous-help-streams', simctl_list_contract, HELP_CAPTURE_TEXT, HELP_CAPTURE_TEXT)
+    reject('query-without-reviewed-documentation', owned_devices_command, {}, name)
     altered = copy.deepcopy(contract)
     altered['query_template'] = ['xcrun', 'simctl', 'list', '-j']
-    reject('query-global-fallback-template', owned_devices_command, altered, UDI)
-    reject('query-booted-alias', owned_devices_command, contract, 'booted')
+    reject('query-global-fallback-template', owned_devices_command, altered, name)
     ready = {key: True for key in ['owned_query_help_confirmed', 'native_settings_confirmed', 'owned_boot_confirmed', 'owned_sdk_destination_confirmed']}
     ready['test_commands'] = 0
     require_pretest(ready)
-    passed.append('synthetic-positive-all-four-pretest-predicates')
+    passed.append('synthetic-positive-all-actual-pretest-predicates')
     for key in [k for k in ready if k != 'test_commands']:
         for value in [False, None, 'true']:
-            changed = dict(ready, **{key: value})
-            reject('pretest-' + key + '-' + str(value), require_pretest, changed)
+            reject('pretest-' + key + '-' + str(value), require_pretest, dict(ready, **{key: value}))
     reject('pretest-previous-test-command', require_pretest, dict(ready, test_commands=1))
-    reject('pretest-created-settings-not-readiness', require_pretest,
-           dict(ready, owned_boot_confirmed=False, owned_sdk_destination_confirmed=False))
+    reject('created-settings-are-not-boot-readiness', require_pretest, dict(ready, owned_boot_confirmed=False, owned_sdk_destination_confirmed=False))
     heading = 'Available destinations for the "ComposerNativeHost" scheme:\n'
     line = '{ platform:iOS Simulator, arch:arm64, id:' + UDI + ', OS:27.0, name:Hanlin-NativeComposer-fixture }'
     destination(heading + line, '', UDI)
@@ -239,16 +221,42 @@ def source_controls():
     trace = observations({}, expected, UDI, ['signedDelta=\\(height - sixLineHeight)', 'script=fixture signedDelta=-88.0'])
     require(len(trace['signed_trace_raw_evidence']) == 1 and not trace['signed_metrics_inferred'], 'actual numeric raw trace only')
     passed.append('synthetic-signed-trace-preserved-without-inference')
+    focused = {'devices': [device], 'testNodes': [{'nodeType': 'Test Case', 'nodeIdentifier': FOCUSED_CASE, 'result': 'Passed'}]}
+    classified = focused_observations(focused, expected, FOCUSED_CASE, UDI)
+    require(classified['all_selected_unique_pass_on_owned_device'] and classified['selected_expected_count'] == 1 and
+            sum(case['result'] == 'NOT_RUN' for case in classified['cases']) == 11 and len(classified['cases']) == 12,
+            'exact one selected PASS with eleven NOT_RUN; no reused source-suite passes')
+    passed.append('synthetic-positive-one-focused-case-eleven-not-run')
+    for label in ['zero-selected', 'failed-selected', 'duplicate-selected', 'skipped-selected', 'other-authored-only',
+                  'extra-authored', 'all-twelve', 'wrong-device', 'unexpected-infrastructure']:
+        changed = copy.deepcopy(focused)
+        if label == 'zero-selected': changed = {}
+        elif label == 'failed-selected': changed['testNodes'][0]['result'] = 'Failed'
+        elif label == 'duplicate-selected': changed['testNodes'].append(dict(changed['testNodes'][0]))
+        elif label == 'skipped-selected': changed['testNodes'][0]['result'] = 'Skipped'
+        elif label == 'other-authored-only': changed['testNodes'][0]['nodeIdentifier'] = expected[0]
+        elif label == 'extra-authored': changed['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': expected[0], 'result': 'Passed'})
+        elif label == 'all-twelve': changed = copy.deepcopy(result)
+        elif label == 'wrong-device': changed['devices'][0]['deviceId'] = 'other-device'
+        elif label == 'unexpected-infrastructure': changed['testNodes'].append({'nodeType': 'Test Case', 'nodeIdentifier': 'xctest(1234)', 'result': 'Failed'})
+        actual_focus = focused_observations(changed, expected, FOCUSED_CASE, UDI)
+        require(not actual_focus['all_selected_unique_pass_on_owned_device'], 'false focused pass: ' + label)
+        rejected.append('focused-' + label)
     plan = command_plan(PurePosixPath('/SOURCE_REVIEW_ONLY/NativeHost'), SDK, UDI, PurePosixPath('/SOURCE_REVIEW_ONLY'), PurePosixPath('/SOURCE_REVIEW_ONLY/evidence'))
     for command in plan.values():
         require(command[0] == 'xcodebuild' and command[command.index('-sdk') + 1] == SDK and
                 command[command.index('-project') + 1].endswith('/' + native.PROJECT) and
                 command[command.index('-scheme') + 1] == native.SCHEME and
                 command[command.index('-configuration') + 1] == 'Debug', 'explicit native project/scheme/SDK/Debug command')
+        require(command.count('-derivedDataPath') == 1 and command[command.index('-derivedDataPath') + 1] == '/SOURCE_REVIEW_ONLY/DerivedData',
+                'settings, listing and test must share the same fresh owned products directory')
         require(not any(token in ' '.join(command) for token in ['Package.swift', 'ComposerValidation-Package', '-workspace', '-resolvePackageDependencies']), 'no package/synthesized-scheme command')
     require(plan['test'].count('test') == 1 and plan['test'][plan['test'].index('-parallel-testing-enabled') + 1] == 'NO' and
             plan['test'][plan['test'].index('-destination') + 1] == 'platform=iOS Simulator,id=' + UDI and TEST_SECONDS == 900 and RUN_SECONDS == 2100, 'one finite owned serial native test command')
     passed.append('actual-runner-pure-command-plan')
+    require([item for item in plan['test'] if item.startswith('-only-testing:')] == ['-only-testing:' + FOCUSED_SELECTOR] and
+            FOCUSED_SELECTOR == 'AI_HanlinTests/' + FOCUSED_CASE and FOCUSED_CASE in expected,
+            'one exact module/suite/frozen-function selector; no suite-wide or alternate selection')
     return passed, rejected, plan
 
 
@@ -282,6 +290,8 @@ def runner_flow(source):
     require(isinstance(filtered_call.args[2], ast.Name) and filtered_call.args[2].id == 'owned_query', 'post-state must use installed-help-derived owned query')
     named_calls = lambda name: [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == name]
     for name, lower, upper in [('simctl_list_contract', help_call.lineno, labels['create-owned-device'][0].lineno),
+                               ('owned_name', labels['simulators-before'][0].lineno, labels['create-owned-device'][0].lineno),
+                               ('created_identity', labels['create-owned-device'][0].lineno, labels['native-target-build-settings'][0].lineno),
                                ('native_settings', labels['native-target-build-settings'][0].lineno, labels['boot-owned-device'][0].lineno),
                                ('owned_boot', filtered_call.lineno, labels['native-sdk-destinations'][0].lineno),
                                ('destination', labels['native-sdk-destinations'][0].lineno, test.lineno),
@@ -306,7 +316,7 @@ def flow_negative_controls(source):
     mutations = {
         'missing-all-predicates-gate': source.replace('require_pretest(state)', 'pass'),
         'premature-boot-ready': source.replace("'owned_boot_confirmed': False", "'owned_boot_confirmed': True"),
-        'missing-actual-post-state-proof': source.replace("actual = owned_boot(runner.json('owned-device-state-after-boot'), before, runtime, device)", 'actual = {}'),
+        'missing-actual-post-state-proof': source.replace("actual = owned_boot(owned_state_json(runner.text('owned-device-state-after-boot')), before, runtime, creation)", 'actual = {}'),
         'post-boot-global-fallback': source.replace("30, owned_query)", "30, ['xcrun', 'simctl', 'list', '-j'])"),
         'extended-post-query-cap': source.replace("'owned-device-state-after-boot', 30", "'owned-device-state-after-boot', 60"),
         'test-retry-loop': source.replace("        status = runner.call('native-test'", "        for _ in range(2):\n            status = runner.call('native-test'"),
@@ -394,18 +404,26 @@ def packet():
     files = [p for p in native.HERE.rglob('*') if p.is_file() and p.name != 'final-guard-review.json']
     files.append(native.REPO / WORKFLOW)
     return {'status': 'FILTERED_OWNED_PREFLIGHT_REPAIR_SOURCE_REVIEW_ONLY', 'dispatch_authorized_by_this_packet': False,
+            'standing_execution_quality_gate': 'independent Roni source acceptance, then ONE focused run under the current standing assignment; no separate activation round',
             'apple_build_test_or_device_action': 'NOT_RUN', 'full_app_acceptance': False,
             'accepted_generator_commit': BASE, 'source': native.SOURCE, 'owner': native.OWNER,
-            'prior_closed_attempt': {'run': '43707216442', 'head': 'e7789af1aa09145017ad3727f2434be790841737',
-                                     'artifact': '14159291565', 'artifact_bytes': 54744,
-                                     'verified_full_zip_sha256': '263a95f40e2cf3de77f1dd683b45d9cc5997cdcb39320dbbdcf72d179aabd824',
-                                     'block': 'global post-boot inventory timeout; no native settings/eligibility/test reached'},
-            'installed_help_syntax_and_owned_filtered_query': 'NOT_RUN; must be established within a separately accepted future attempt',
-            'synthetic_help_contract_is_not_an_apple_transcript': True,
-            'fixture_warning': 'All positive/negative guard data are synthetic Python source controls; no Apple PASS evidence.',
+            'prior_closed_attempt': {'run': '43711740465', 'head': '70a74580115982ed5810cf93aed9700a0e3537c9',
+                                     'artifact': '14160935813', 'artifact_bytes': 42397,
+                                     'verified_full_zip_sha256': '653531d1ce1da284d9eea93e8a9d0d3311189633b02056d21a2be6fd6250a174',
+                                     'block': 'actual help succeeded; reviewed parser rejected grammar before inventory/device/settings/test'},
+            'reviewed_documentation_capture': {'path': 'simctl-list-help-43711740465.txt', 'bytes': 750,
+                'sha256': HELP_CAPTURE_SHA256, 'raw_artifact_entry': 'installed-simctl-list-help.stderr',
+                'command': ['xcrun', 'simctl', 'help', 'list'], 'exit': 0,
+                'full_zip_audit_attribution': 'completed Tomer and Roni RAM audits; Root verified run metadata only, ZIP transfer cancelled',
+                'identity_established_by_help': False},
+            'new_attempt_installed_help_and_owned_name_output': 'NOT_RUN; actual returned identity/state required',
+            'focused_selection': {'selected_case_ids': [FOCUSED_CASE], 'xcodebuild_selector': FOCUSED_SELECTOR,
+                                 'required_executed_unique_count': 1, 'other_authored_count': 11,
+                                 'other_authored_expected': 'NOT_RUN; no reused passes', 'zero_selected': 'BLOCKED; no selector retry'},
+            'fixture_warning': 'Python identity/result controls are synthetic. Help text is retained actual documentation. Neither proves a new Apple execution.',
             'positive_source_controls': positive, 'negative_source_controls_rejected': negative,
             'workflow_controls': workflow, 'review_only_command_plan_not_executed': plan,
-            'review_only_owned_query_not_executed': owned_devices_command(simctl_list_contract(HELP_CONTRACT_FIXTURE, ''), UDI),
+            'review_only_owned_query_not_executed': owned_devices_command(simctl_list_contract(HELP_CAPTURE_TEXT, ''), 'Hanlin-NativeComposer-1234567890'),
             'budgets_seconds': {'runner': RUN_SECONDS, 'version_inventory_create_boot': 30, 'bootstatus': 180,
                                'each_native_metadata_query': 120, 'only_test': TEST_SECONDS, 'export': 120, 'owned_shutdown': 60},
             'raw_retention': ['commands.json and separate stdout/stderr per command', 'native-inputs.json and native-source-inputs.tar',

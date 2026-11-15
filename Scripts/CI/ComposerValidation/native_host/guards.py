@@ -1,6 +1,8 @@
 """Pure fail-closed predicates for actual native settings, devices and results."""
 from collections import Counter
 import posixpath
+import hashlib
+import json
 import re
 
 
@@ -66,77 +68,107 @@ def owned_uuid(udid):
     return udid
 
 
+HELP_CAPTURE_SHA256 = '4c7f0c98a485121183a1bc0b5ae8549958692117107664b4ee1c3fbf0f3c4693'
+
+
 def simctl_list_contract(stdout, stderr):
-    """Recognize a narrow documented contract; never assume installed support.
-
-    These accepted grammar/affirmation forms are parser contracts, not a captured
-    Apple help transcript. Actual installed help must satisfy them before a query.
-    """
-    text = stdout + '\n' + stderr
-    require('\ufffd' not in text, 'installed simctl list help must decode without replacements')
-    lines = [' '.join(line.split()) for line in text.splitlines() if line.strip()]
-    usage = [line for line in lines if line.startswith('Usage:')]
-    grammar = r'Usage: (?:simctl )?list \[-j\s*\|\s*--json\](?: \[-v\])? \[devices\s*\|\s*devicetypes\s*\|\s*runtimes\s*\|\s*pairs\] \[<search term>\s*\|\s*available\]'
-    require(len(usage) == 1 and re.fullmatch(grammar, usage[0]) is not None,
-            'installed simctl help list lacks recognized JSON/category/search-term ordering; no query/fallback')
-    json_lines = [line for line in lines if re.fullmatch(r'(?:-j|--json|-j\s*[,|]\s*--json)\s+(?:Print|Output|Emit)(?:s)?(?: the (?:list|output))? as JSON\.?', line, re.I)]
-    require(bool(json_lines), 'installed help does not document machine-readable JSON output')
-    # Accept only affirmative identity-field lists attached to the filter clause.
-    # A generic search-term argument or name-only filter does not establish UDID support.
-    field = r'(?:device\s+)?(?:names?|UDIDs?|UUIDs?|runtime identifiers?)'
-    fields = field + r'(?:\s*(?:,\s*(?:and\s+|or\s+)?|\s+and\s+|\s+or\s+)' + field + r')*'
-    forms = [
-        r'(?:The )?search term (?:matches|filters devices by|is matched against) (?P<fields>' + fields + r')\.?',
-        r'If a search term is (?:specified|provided), (?:the list is|devices are) filtered (?:by|based on) (?:their )?(?P<fields>' + fields + r')\.?',
-        r'If a search term is (?:specified|provided), it is used to filter (?:the list of )?devices (?:by|based on) (?:their )?(?P<fields>' + fields + r')\.?',
-    ]
-    identity_lines = []
-    for line in lines:
-        for form in forms:
-            match = re.fullmatch(form, line, re.I)
-            if match and re.search(r'\b(?:UDIDs?|UUIDs?)\b', match['fields'], re.I):
-                identity_lines.append(line)
-                break
-    require(len(identity_lines) == 1, 'installed help does not unambiguously document search-term matching of device UUID/UDID; no query/fallback')
-    require(not any(re.search(r'\b(?:not|unsupported|except|excluding|only)\b|n.t\b', line, re.I)
-                    and re.search(r'\b(?:UDIDs?|UUIDs?|search term)\b', line, re.I) for line in lines),
-            'installed help contains a contradictory/restricted identity-filter statement')
-    return {'status': 'INSTALLED_HELP_CONTRACT_RECOGNIZED', 'usage_line': usage[0],
-            'json_documentation': json_lines, 'identity_filter_documentation': identity_lines[0],
-            'query_template': ['xcrun', 'simctl', 'list', '--json', 'devices', '{owned_uuid}'],
-            'actual_installed_support_basis': 'captured help stdout/stderr; no remote help captured during source preparation'}
+    """Validate the reviewed actual transcript; it documents search, not identity."""
+    streams = [text for text in [stdout, stderr] if text]
+    require(len(streams) == 1 and '\ufffd' not in streams[0], 'one intact actual installed help stream required')
+    text = streams[0]
+    require(hashlib.sha256(text.encode('utf-8')).hexdigest() == HELP_CAPTURE_SHA256,
+            'installed simctl list help differs from reviewed actual transcript; no alternate grammar/query')
+    lines = text.splitlines()
+    usage = next(line for line in lines if line.startswith('Usage: simctl list '))
+    json_doc = next(line for line in lines if line.startswith('-j     Print as JSON'))
+    search_doc = next(line for line in lines if 'Search terms use a simple case-insensitive contains check' in line)
+    return {'status': 'INSTALLED_HELP_REVIEWED_SEARCH_SYNTAX', 'transcript_sha256': HELP_CAPTURE_SHA256,
+            'usage_line': usage, 'json_documentation': json_doc, 'search_documentation': search_doc,
+            'identity_established_by_help': False,
+            'identity_proof_basis': 'actual returned JSON matched to creation receipt, not help or declared name',
+            'query_template': ['xcrun', 'simctl', 'list', '--json', 'devices', '{owned_unique_name}']}
 
 
-def owned_devices_command(contract, udid):
+def device_rows(groups):
+    require(isinstance(groups, dict), 'actual devices must be runtime buckets')
+    rows = []
+    for runtime, devices in groups.items():
+        require(isinstance(runtime, str) and re.fullmatch(r'com\.apple\.CoreSimulator\.SimRuntime\.[A-Za-z0-9.-]+', runtime) is not None and
+                isinstance(devices, list), 'every runtime bucket must be a well-formed runtime key and real device list')
+        for device in devices:
+            require(isinstance(device, dict), 'every returned device must be an object')
+            rows.append((runtime, device))
+    return rows
+
+
+def owned_name(before, run_id):
+    require(isinstance(run_id, str) and re.fullmatch(r'[1-9][0-9]*', run_id) is not None, 'actual positive GitHub run ID required')
+    name = 'Hanlin-NativeComposer-' + run_id
+    for _, device in device_rows(before.get('devices')):
+        require(isinstance(device.get('name'), str) and bool(device['name']), 'initial device name must be observable for uniqueness')
+        owned_uuid(device.get('udid'))
+        require(name.casefold() not in device['name'].casefold(), 'owned unique search name is already present in initial actual inventory')
+    return name
+
+
+def owned_devices_command(contract, name):
+    require(isinstance(name, str) and re.fullmatch(r'Hanlin-NativeComposer-[1-9][0-9]*', name) is not None, 'one deterministic run-scoped owned name required')
+    template = ['xcrun', 'simctl', 'list', '--json', 'devices', '{owned_unique_name}']
+    require(contract.get('status') == 'INSTALLED_HELP_REVIEWED_SEARCH_SYNTAX' and contract.get('query_template') == template and
+            contract.get('transcript_sha256') == HELP_CAPTURE_SHA256, 'reviewed actual help syntax required; no query fallback')
+    return [*template[:-1], name]
+
+
+def created_identity(before, runtime, model, name, udid, create_command):
     owned_uuid(udid)
-    template = ['xcrun', 'simctl', 'list', '--json', 'devices', '{owned_uuid}']
-    require(contract.get('status') == 'INSTALLED_HELP_CONTRACT_RECOGNIZED' and contract.get('query_template') == template,
-            'recognized installed-help contract required for the one owned devices query')
-    return [*template[:-1], udid]
-
-
-def owned_boot(inventory, before, runtime, udid):
-    owned_uuid(udid)
+    require(isinstance(name, str) and re.fullmatch(r'Hanlin-NativeComposer-[1-9][0-9]*', name) is not None, 'created unique name required')
     selected_runtime, selected_type = environment(before)
+    require(runtime == selected_runtime and model == selected_type, 'creation must bind actual initially selected runtime/type')
+    require(owned_name(before, name.removeprefix('Hanlin-NativeComposer-')) == name, 'fresh actual unique name required')
+    require(udid.casefold() not in {d['udid'].casefold() for _, d in device_rows(before['devices'])}, 'created UUID was already present')
+    require(isinstance(create_command, dict) and create_command.get('label') == 'create-owned-device' and create_command.get('exit_code') == 0 and
+            create_command.get('argv') == ['xcrun', 'simctl', 'create', name, model['identifier'], runtime['identifier']],
+            'actual successful create command must bind unique name, type and runtime to returned UUID')
+    return {'udid': udid, 'name': name, 'actual_create_command': create_command,
+            'create_uuid_origin': 'raw create-owned-device.stdout', 'initial_identity_inventory': 'simulators-before.stdout',
+            'name_and_uuid_absent_from_initial_inventory': True,
+            'initial_runtime_identifier': runtime['identifier'], 'initial_device_type_identifier': model['identifier']}
+
+
+def owned_state_json(raw):
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, 'duplicate JSON key in actual filtered state')
+            result[key] = value
+        return result
+    return json.loads(raw, object_pairs_hook=unique_object)
+
+
+def owned_boot(inventory, before, runtime, creation):
+    require(isinstance(creation, dict), 'actual creation receipt required')
+    udid, name = creation.get('udid'), creation.get('name')
+    # Revalidate the actual creation binding rather than accepting caller flags.
+    selected_runtime, model = environment(before)
     require(runtime == selected_runtime, 'runtime context must be the actual selected initial inventory object')
-    require(udid not in {d['udid'] for devices in before['devices'].values() for d in devices}, 'device was not freshly created')
-    require(isinstance(inventory, dict) and set(inventory) == {'devices'}, 'filtered post-state must contain devices only; no fabricated runtime/type inventory')
-    groups = inventory['devices']
-    require(isinstance(groups, dict) and set(groups) == {runtime['identifier']}, 'exact selected runtime only in filtered post-state')
-    matches = groups[runtime['identifier']]
-    require(isinstance(matches, list) and len(matches) == 1 and isinstance(matches[0], dict) and matches[0].get('udid') == udid,
-            'exactly one actual owned UUID required; no missing/extra/wrong devices')
-    actual = matches[0]
+    created_identity(before, runtime, model, name, udid, creation.get('actual_create_command', {}))
+    require(isinstance(inventory, dict) and set(inventory) == {'devices'}, 'filtered response must contain devices only; no fabricated runtime/type arrays')
+    rows = device_rows(inventory['devices'])
+    require(len(rows) == 1, 'exactly one nonempty actual device globally required; missing/extra devices rejected')
+    runtime_key, actual = rows[0]
+    require(runtime_key == runtime['identifier'], 'actual owned device must be in exact selected runtime')
+    require(actual.get('udid') == udid and actual.get('name') == name, 'actual returned UUID AND unique name must match creation')
     require(actual.get('state') == 'Booted' and actual.get('isAvailable') is True and
-            actual.get('deviceTypeIdentifier') == selected_type['identifier'], 'actual owned phone must be Booted/available/iPhone18Pro')
+            actual.get('deviceTypeIdentifier') == model['identifier'], 'actual owned phone must be Booted/available/iPhone18Pro')
     return {'status': 'ACTUAL_FILTERED_OWNED_BOOT_CONFIRMED', 'actual_device': actual,
-            'post_state_origin': 'raw installed-help-validated owned devices JSON',
-            'post_runtime_identifier': runtime['identifier'],
+            'post_state_origin': 'raw one documented unique-name devices query; all buckets validated',
+            'empty_other_runtime_buckets': sorted(key for key, values in inventory['devices'].items() if key != runtime['identifier'] and not values),
+            'post_runtime_identifier': runtime_key,
             'runtime_context_origin': 'actual simulators-before.stdout, not a post-boot runtime measurement',
             'initial_runtime': {key: runtime[key] for key in ['identifier', 'version', 'buildversion', 'supportedArchitectures', 'isAvailable']},
             'device_type_context_origin': 'actual simulators-before.stdout; actual post deviceTypeIdentifier matched',
-            'initial_device_type_identifier': selected_type['identifier'],
-            'newness_basis': 'owned UUID absent from actual initial device inventory'}
+            'initial_device_type_identifier': model['identifier'], 'creation_receipt': 'owned-device.json',
+            'identity_basis': 'actual JSON globally contains only the created UUID + unique name in the selected runtime'}
 
 
 def require_pretest(state):
@@ -209,3 +241,20 @@ def observations(data, expected, udid, log_lines=()):
                 any('hung before establishing connection' in m for m in messages) else 'not_observed',
             'raw_failure_messages': messages, 'signed_trace_raw_evidence': trace,
             'signed_metrics_inferred': False, 'all_12_unique_pass_on_owned_device': complete}
+
+
+def focused_observations(data, authored, selected, udid, log_lines=()):
+    require(isinstance(selected, str) and selected in authored, 'one selected frozen authored identity required')
+    result = observations(data, authored, udid, log_lines)
+    result.pop('all_12_unique_pass_on_owned_device')
+    target = next(case for case in result['cases'] if case['id'] == selected)
+    extra_authored = [case for case in result['cases'] if case['id'] != selected and case['raw_results']]
+    matched = len(target['raw_results']) == 1 and result['authored_unique_observed'] == 1 and not extra_authored and not result['unexpected_infrastructure_case_nodes']
+    result.update(selected_case_ids=[selected], selected_expected_count=1, preserved_authored_inventory_count=12,
+                  selected_method_result=target['result'], unselected_authored_observations=extra_authored,
+                  focused_selection_matched=matched,
+                  all_selected_unique_pass_on_owned_device=matched and target['result'] == 'PASS' and result['execution_device_binding'] == 'VERIFIED',
+                  product_composer_acceptance='OPEN')
+    for case in result['cases']:
+        case['selected_for_this_run'] = case['id'] == selected
+    return result

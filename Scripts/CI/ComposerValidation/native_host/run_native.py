@@ -15,11 +15,14 @@ from datetime import datetime, timezone
 sys.dont_write_bytecode = True
 import prepare_native as native
 from guards import (native_settings, environment, owned_boot, destination, observations, require,
-                    simctl_list_contract, owned_devices_command, require_pretest)
+                    simctl_list_contract, owned_devices_command, require_pretest,
+                    owned_name, created_identity, owned_state_json, focused_observations)
 
 XCODE = '/Applications/Xcode_27.2.app/Contents/Developer'
 TEST_SECONDS = 900
 RUN_SECONDS = 2100
+FOCUSED_CASE = 'NativeComposerLineSizingTests/wrappedLinesAndScrolling()'
+FOCUSED_SELECTOR = 'AI_HanlinTests/' + FOCUSED_CASE
 
 
 def stamp():
@@ -28,17 +31,16 @@ def stamp():
 
 def command_plan(project_dir, sdk, device, scratch, evidence):
     base = ['xcodebuild', '-project', str(project_dir / native.PROJECT), '-scheme', native.SCHEME,
-            '-configuration', 'Debug', '-sdk', sdk]
+            '-configuration', 'Debug', '-sdk', sdk, '-derivedDataPath', str(scratch / 'DerivedData')]
     owned = ['-destination', 'platform=iOS Simulator,id=' + device, '-arch', 'arm64']
     return {
         'settings': [*base, '-showBuildSettings', '-json', *owned, 'ONLY_ACTIVE_ARCH=YES'],
         'destinations': [*base, '-showdestinations'],
         'test': [*base, 'test', *owned, '-destination-timeout', '30',
                  '-parallel-testing-enabled', 'NO', '-maximum-concurrent-test-simulator-destinations', '1',
-                 '-maximum-parallel-testing-workers', '1', '-derivedDataPath', str(scratch / 'DerivedData'),
+                 '-maximum-parallel-testing-workers', '1',
                  '-resultBundlePath', str(evidence / 'ComposerNative.xcresult'),
-                 '-only-testing:AI_HanlinTests/HanlinMorphComposerTests',
-                 '-only-testing:AI_HanlinTests/NativeComposerLineSizingTests', 'ONLY_ACTIVE_ARCH=YES', 'CODE_SIGNING_ALLOWED=NO'],
+                 '-only-testing:' + FOCUSED_SELECTOR, 'ONLY_ACTIVE_ARCH=YES', 'CODE_SIGNING_ALLOWED=NO'],
     }
 
 
@@ -103,7 +105,10 @@ def execute():
     evidence.mkdir(parents=True, exist_ok=False)
     runner = Runner(evidence)
     expected = json.loads((native.HERE / 'review/native-inputs.json').read_text(encoding='utf-8'))['expected_case_ids']
-    state = {'scope': 'native-hosted Composer component diagnostic', 'full_app_acceptance': False,
+    require(FOCUSED_CASE in expected and len(set(expected)) == 12, 'focused selector must bind one of the frozen 12 authored identities')
+    state = {'scope': 'native-hosted Composer single previously failing method diagnostic', 'full_app_acceptance': False,
+             'authored_inventory_count': 12, 'selected_case_ids': [FOCUSED_CASE], 'xcodebuild_only_testing_selector': FOCUSED_SELECTOR,
+             'product_composer_acceptance': 'OPEN',
              'started_at_utc': stamp(), 'status': 'PREPARING', 'test_commands': 0,
              'native_settings_confirmed': False, 'owned_sdk_destination_confirmed': False,
              'owned_query_help_confirmed': False, 'owned_boot_confirmed': False,
@@ -137,6 +142,10 @@ def execute():
         manifest = json.loads((project_dir / 'native-inputs.json').read_text(encoding='utf-8'))
         require(manifest['expected_case_ids'] == expected and manifest['full_app_acceptance'] is False, 'staged manifest mismatch')
         runner.save('native-inputs.json', manifest)
+        runner.save('focused-selection.json', {'authored_case_ids': expected, 'selected_case_ids': [FOCUSED_CASE],
+                    'xcodebuild_only_testing_selector': FOCUSED_SELECTOR, 'selected_expected_count': 1,
+                    'other_authored_cases_expected': 'NOT_RUN in this invocation; no reused passes',
+                    'selector_matching_basis': 'frozen method identity; actual matching must be confirmed by xcresult, zero => BLOCKED without retry'})
         # Retain whole original source and generated native inputs on the remote runner only.
         with tarfile.open(evidence / 'native-source-inputs.tar', 'w') as archive:
             archive.add(project_dir, arcname='NativeHost')
@@ -157,12 +166,15 @@ def execute():
         runtime, model = environment(before)
         runner.save('installed-environment.json', {'runtime': runtime, 'device_type': model, 'sdk_path': sdk,
                                                   'Xcode': '27.2/27B52', 'DEVELOPER_DIR': XCODE})
-        runner.call('create-owned-device', 30, ['xcrun', 'simctl', 'create', 'Hanlin-NativeComposer-' + os.environ['GITHUB_RUN_ID'], model['identifier'], runtime['identifier']])
+        name = owned_name(before, os.environ['GITHUB_RUN_ID'])
+        runner.call('create-owned-device', 30, ['xcrun', 'simctl', 'create', name, model['identifier'], runtime['identifier']])
         device = runner.text('create-owned-device').strip()
         require(re.fullmatch(r'[0-9A-Fa-f-]{36}', device) is not None and device not in
                 {d['udid'] for devices in before['devices'].values() for d in devices}, 'invalid/nonfresh owned device')
-        runner.save('owned-device.json', {'udid': device, 'created_at_utc': stamp(), 'runtime': runtime, 'device_type': model})
-        owned_query = owned_devices_command(help_contract, device)
+        creation = created_identity(before, runtime, model, name, device, runner.commands[-1])
+        creation.update(created_at_utc=stamp(), raw_create_stdout_sha256=hashlib.sha256((evidence / 'create-owned-device.stdout').read_bytes()).hexdigest())
+        runner.save('owned-device.json', creation)
+        owned_query = owned_devices_command(help_contract, name)
         runner.save('owned-device-state-query.json', {'argv': owned_query,
                     'help_receipt': 'installed-simctl-list-help-guard.json', 'timeout_seconds': 30,
                     'boot_state_confirmed': False})
@@ -177,7 +189,7 @@ def execute():
         runner.call('boot-owned-device', 30, ['xcrun', 'simctl', 'boot', device])
         runner.call('bootstatus-owned-device', 180, ['xcrun', 'simctl', 'bootstatus', device, '-b'])
         runner.call('owned-device-state-after-boot', 30, owned_query)
-        actual = owned_boot(runner.json('owned-device-state-after-boot'), before, runtime, device)
+        actual = owned_boot(owned_state_json(runner.text('owned-device-state-after-boot')), before, runtime, creation)
         runner.save('owned-device-boot-confirmed.json', actual)
         state['owned_boot_confirmed'] = True
         state['status'] = 'SETTINGS_AND_FILTERED_BOOT_CONFIRMED'
@@ -216,14 +228,14 @@ def execute():
                 if path.exists():
                     with path.open(encoding='utf-8', errors='replace') as stream:
                         trace_lines.extend(line for line in stream if 'signedDelta=' in line)
-            actual_results = observations(result, expected, device, trace_lines)
+            actual_results = focused_observations(result, expected, FOCUSED_CASE, device, trace_lines)
             actual_results['raw_result_availability'] = result_state
             runner.save('case-observations.json', actual_results)
-            state['apple_pass_claim'] = state['test_commands'] == 1 and exit_code == 0 and actual_results['all_12_unique_pass_on_owned_device']
+            state['apple_pass_claim'] = state['test_commands'] == 1 and exit_code == 0 and actual_results['all_selected_unique_pass_on_owned_device']
             if state['test_commands'] and not state['apple_pass_claim'] and exit_code == 0:
                 exit_code = 2
         except (ValueError, OSError, KeyError, json.JSONDecodeError) as error:
-            unavailable = observations({}, expected, device)
+            unavailable = focused_observations({}, expected, FOCUSED_CASE, device)
             unavailable['raw_result_availability'] = 'EXPORT_OR_CLASSIFICATION_FAILED'
             runner.save('case-observations.json', unavailable)
             state['result_export_or_classification_error'] = str(error)
