@@ -6,6 +6,7 @@ import hashlib
 import json
 import sys
 import os
+import re
 from pathlib import Path, PurePosixPath
 import shlex
 import shutil
@@ -962,21 +963,130 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
     def setUp(self):
         if os.environ.get("HANLIN_RUN_PROVENANCE_NATIVE_CONTROLS") != "1" or sys.platform != "darwin":
             self.skipTest("NOT_RUN: separately authorized native provenance controls required")
+        evidence = os.environ.get("HANLIN_PROVENANCE_CONTROL_EVIDENCE_DIR")
+        if not evidence:
+            self.skipTest("NOT_RUN: explicit runner-owned evidence directory required")
+        evidence_root = Path(evidence)
+        self.assertTrue(evidence_root.is_absolute())
+        self.assertFalse(evidence_root.is_symlink())
+        self.assertEqual(evidence_root.resolve(strict=True), evidence_root)
+        self.assertTrue(evidence_root.is_dir())
+        self.assertEqual(evidence_root.stat().st_uid, os.getuid())
+        self.variant = "default"
+        if self._testMethodName == "test_serialized_context_rejected_without_cache_or_emitter_work":
+            self.variant = os.environ.get("HANLIN_PROVENANCE_SERIALIZED_VARIANT", "modules")
+            self.assertIn(self.variant, {"modules", "pch", "module-file", "preamble"})
+        if self._testMethodName == "test_hash_drift_or_output_collision_cannot_write_a_complete_receipt":
+            self.variant = os.environ.get("HANLIN_PROVENANCE_NEGATIVE_VARIANT", "overlay")
+            self.assertIn(self.variant, {"overlay", "umbrella", "header", "context", "request", "collision"})
+        self.selector_name = type(self).__name__ + "." + self._testMethodName
+        self.evidence = evidence_root / (self.selector_name + "--" + self.variant)
+        self.evidence.mkdir(mode=0o700)  # Exclusive: no stale case or owner output replacement.
+        self.control_status, self.control_reason = "RUNNING", None
+        self.commands = []
+        self.cache_before = None
+        # Explicit retention opt-in replaces this native suite's temporary
+        # auto-cleanup. Keep the ORIGINAL fixture paths valid even if retention
+        # fails or the runner hits its cap; never delete the last raw evidence.
+        self.folder = self.evidence / "fixture"
+        self.folder.mkdir(mode=0o700)
+        self.addCleanup(self.retain_evidence)
         self.tool = Path(os.environ["HANLIN_PREPROCESS_PROVENANCE_NATIVE_TOOL"]).resolve(strict=True)
         self.provenance_path = Path(os.environ["HANLIN_PREPROCESS_PROVENANCE_TOOL_RECEIPT"]).resolve(strict=True)
         self.patch_source = ROOT / "Scripts/NativeScript/build-metadata-tool.py"
-        provenance = json.loads(self.provenance_path.read_text())
+        provenance = json.loads(self.provenance_path.read_text(encoding="utf-8"))
         self.assertEqual(provenance["patchSourceSHA256"], self.sha(self.patch_source))
         self.assertEqual(provenance["generatorSHA256"], self.sha(self.tool))
+        frozen = {"build-metadata-tool.py": "b553391db3c07ce1364dedf2334e7ce707173037d60d8c080df8c9b74611f83d",
+            "build-step-metadata-generator-wrapper.py": "c42783300284ddbd93c75041f5de4dcbc6d1c37b7a173177485744ab10132e23",
+            "probe-sdk-metadata.py": "dd00967e2c63c28af37c3305700fd867ed994b30df0f6834c9fd47b6ac5c0458"}
+        for filename, digest in frozen.items():
+            self.assertEqual(self.sha(ROOT / "Scripts/NativeScript" / filename), digest, "Frozen production source drift")
         self.flags = json.loads(os.environ["HANLIN_PREPROCESS_PROVENANCE_CLANG_ARGS_JSON"])
         self.assertIsInstance(self.flags, list)
-        self.temporary = tempfile.TemporaryDirectory(prefix="hanlin-provenance-controls-")
-        self.addCleanup(self.temporary.cleanup)
-        self.folder = Path(self.temporary.name).resolve()
+        self.record("control-meta.json", {"schemaVersion": 1, "selector": self.selector_name, "variant": self.variant,
+            "category": "NATIVE", "fixture": str(self.folder), "tool": str(self.tool),
+            "toolSHA256": self.sha(self.tool), "testSourceSHA256": self.sha(Path(__file__)), "productionSources": frozen,
+            "provenanceSHA256": self.sha(self.provenance_path), "flags": self.flags})
+        (self.evidence / "tool-provenance.json").write_bytes(self.provenance_path.read_bytes())
 
     @staticmethod
     def sha(path):
         return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def record(self, name, value):
+        (self.evidence / name).write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+
+    @staticmethod
+    def tree_snapshot(root):
+        """lstat-based tree identity, including absent roots/directories/symlinks."""
+        entries = []
+        def visit(path):
+            relative = "." if path == root else path.relative_to(root).as_posix()
+            if not path.exists() and not path.is_symlink():
+                entries.append({"path": relative, "kind": "absent"})
+                return
+            info = path.lstat()
+            row = {"path": relative, "mode": info.st_mode, "mtimeNS": info.st_mtime_ns}
+            if path.is_symlink():
+                row.update(kind="symlink", target=os.readlink(path))
+            elif path.is_dir():
+                row["kind"] = "directory"
+            elif path.is_file():
+                row.update(kind="file", bytes=info.st_size, sha256=NativePreprocessingProvenanceControls.sha(path))
+            else:
+                row["kind"] = "other"
+            entries.append(row)
+            if row["kind"] == "directory":
+                for child in sorted(path.iterdir()):
+                    visit(child)
+        visit(root)
+        return entries
+
+    def retain_evidence(self):
+        # Failure to retain is an actual harness error; it cannot publish PASS.
+        self.record("fixture.final-tree.json", self.tree_snapshot(self.folder))
+        if self.cache_before is not None:
+            self.record("cache.after.json", self.tree_snapshot(self.folder / "module-cache"))
+        outcome = self._outcome.result
+        failed = any(test is self or getattr(test, "test_case", None) is self
+                     for test, _ in [*outcome.failures, *outcome.errors])
+        skipped = any(test is self for test, _ in outcome.skipped)
+        status = self.control_status
+        if status == "RUNNING":
+            status = "FAIL" if failed else "NOT_RUN" if skipped else "PASS"
+        manifest = []
+        for path in sorted(self.evidence.rglob("*")):
+            if path.is_file() and not path.is_symlink():
+                manifest.append({"path": path.relative_to(self.evidence).as_posix(), "sha256": self.sha(path), "bytes": path.stat().st_size})
+        self.record("evidence-manifest.json", manifest)
+        self.record("control-result.json", {"schemaVersion": 1, "selector": self.selector_name, "variant": self.variant,
+            "status": status, "readiness": "RECORDED" if status == "PASS" else "BLOCKED",
+            "reason": self.control_reason, "metadataAcceptance": "NOT_ESTABLISHED", "commands": self.commands,
+            "manifestSHA256": self.sha(self.evidence / "evidence-manifest.json")})
+
+    def not_observed(self, reason):
+        self.control_status, self.control_reason = "NOT_OBSERVED", reason
+        self.skipTest("BLOCKED / NOT_OBSERVED: " + reason)
+
+    def run_recorded(self, label, command, *, cwd=None, timeout=60):
+        self.assertNotIn(label, self.commands)
+        self.commands.append(label)
+        directory = cwd or self.tool.parent
+        call = {"argv": [str(value) for value in command], "cwd": str(directory), "timeoutSeconds": timeout,
+            "environmentSHA256": hashlib.sha256(json.dumps(dict(os.environ), sort_keys=True).encode()).hexdigest()}
+        self.record(label + ".command.json", call)
+        try:
+            result = subprocess.run(command, cwd=directory, capture_output=True, timeout=timeout)
+        except (OSError, subprocess.SubprocessError) as error:
+            for suffix, body in [("stdout", getattr(error, "stdout", b"")), ("stderr", getattr(error, "stderr", b""))]:
+                (self.evidence / (label + "." + suffix)).write_bytes(body or b"")
+            self.record(label + ".exit.json", {"returncode": None, "error": type(error).__name__, "detail": str(error)})
+            raise
+        (self.evidence / (label + ".stdout")).write_bytes(result.stdout)
+        (self.evidence / (label + ".stderr")).write_bytes(result.stderr)
+        self.record(label + ".exit.json", {"returncode": result.returncode})
+        return result
 
     def prepare(self, text, occurrences, extra_flags=()):
         umbrella = self.folder / "input.h"
@@ -987,6 +1097,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         # blacklist is another canary: diagnostic mode must never open it.
         normal = []
         self.canaries = {}
+        self.normal_paths = []
         for option, name, directory in [("-output-bin", "metadata.bin", False),
                 ("-output-umbrella", "normal-umbrella.h", False), ("-output-yaml", "yaml", True),
                 ("-output-typescript", "types", True), ("-output-modulemaps", "maps", True)]:
@@ -996,16 +1107,22 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
             canary = path / "canary" if directory else path
             canary.write_bytes(b"UNCHANGED-NORMAL-OUTPUT\0")
             self.canaries[canary] = canary.read_bytes()
+            self.normal_paths.append(path)
             normal.extend([option, str(path)])
+        self.canary_before = {path.name: self.tree_snapshot(path) for path in self.normal_paths}
+        self.record("canaries.before.json", self.canary_before)
         self.call = [str(self.tool), "-input-umbrella", str(umbrella), *normal,
             "-blacklist-modules-file", str(self.folder / "must-never-open-blacklist"), "Xclang",
             *self.flags, "-I" + str(self.folder), "-ivfsoverlay", str(overlay), *extra_flags]
         self.context_path = self.folder / "context.bin"
         split = self.call.index("Xclang")
-        captured = subprocess.run([*self.call[:split], "-hanlin-dump-clang-context", str(self.context_path),
-            *self.call[split:]], cwd=self.tool.parent, capture_output=True, timeout=60)
+        captured = self.run_recorded("normal-context-capture", [*self.call[:split], "-hanlin-dump-clang-context", str(self.context_path),
+            *self.call[split:]])
         self.assertEqual(captured.returncode, 0, captured.stderr.decode(errors="replace"))
         self.assertTrue(self.context_path.read_bytes().endswith(b"\0"))
+        context_fields = self.context_path.read_bytes()[:-1].decode("utf-8").split("\0")
+        self.record("actual-context.json", {"compiler": context_fields[0], "arguments": context_fields[1:],
+            "contextSHA256": self.sha(self.context_path), "preparationMayUseAST": True})
         roots = [{"ordinal": index, "line": line, "path": str((self.folder / name).resolve()),
                   "owner": "fixture", "sha256": self.sha(self.folder / name)}
                  for index, (line, name) in enumerate(occurrences)]
@@ -1014,7 +1131,9 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.request = {"schemaVersion": 1,
             "bindings": {"contextSHA256": self.sha(self.context_path), "umbrellaSHA256": self.sha(umbrella),
                 "overlaySHA256": self.sha(overlay), "patchSourceSHA256": self.sha(self.patch_source),
-                "instrumentedBinarySHA256": self.sha(self.tool)}, "roots": roots,
+                "instrumentedBinarySHA256": self.sha(self.tool), "compiler": context_fields[0], "cwd": str(self.tool.parent),
+                "environmentSHA256": hashlib.sha256(json.dumps(dict(os.environ), sort_keys=True).encode()).hexdigest(),
+                "toolProvenanceSHA256": self.sha(self.provenance_path)}, "roots": roots,
             "owners": [{"root": str(self.folder), "id": "fixture"}], "filteredPrefixes": [str(self.folder)],
             "verifiedFiles": [{"path": str(path), "sha256": self.sha(path)} for path in dict.fromkeys(files)]}
         self.request_path = self.folder / "request.json"
@@ -1024,15 +1143,23 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
             "-hanlin-preprocess-provenance", str(self.receipt_path), "-hanlin-provenance-inputs", str(self.request_path),
             *self.call[split:]]
         self.assert_canaries()
+        self.cache_before = self.tree_snapshot(self.folder / "module-cache")
+        self.record("cache.before.json", self.cache_before)
+        self.record("fixture.before-tree.json", self.tree_snapshot(self.folder))
+        shutil.copytree(self.folder, self.evidence / "fixture-before", symlinks=True)
 
     def assert_canaries(self):
         for path, body in self.canaries.items():
             self.assertEqual(path.read_bytes(), body, str(path))
         for directory in ["yaml", "types", "maps"]:
             self.assertEqual([path.name for path in (self.folder / directory).iterdir()], ["canary"])
+        after = {path.name: self.tree_snapshot(path) for path in self.normal_paths}
+        self.record("canaries.after.json", after)
+        self.assertEqual(after, self.canary_before)
 
     def trace(self):
-        run = subprocess.run(self.trace_call, cwd=self.tool.parent, capture_output=True, timeout=60)
+        self.record("fixture.pre-trace-tree.json", self.tree_snapshot(self.folder))
+        run = self.run_recorded("diagnostic-trace", self.trace_call)
         self.assert_canaries()
         receipt = json.loads(self.receipt_path.read_text()) if self.receipt_path.is_file() else {}
         return run, receipt
@@ -1071,14 +1198,15 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         run, receipt = self.trace()
         self.assertEqual(run.returncode, 0, run.stderr.decode(errors="replace"))
         self.assertEqual(WRAPPER.validate_preprocessing_receipt(receipt, self.request), [])
-        # Same captured frontend in ObjC rejects C++ syntax. Preprocessing
-        # completion must therefore never be interpreted as semantic success.
-        fields = self.context_path.read_bytes()[:-1].split(b"\0")
-        flags = [field.decode() for field in fields[1:]]
-        semantic = subprocess.run(["xcrun", "clang", "-fsyntax-only", *flags, str(self.folder / "input.h")],
-            cwd=self.tool.parent, capture_output=True, timeout=60)
-        self.assertNotEqual(semantic.returncode, 0)
-        self.assertIn(b"error:", semantic.stderr)
+        # The SAME executable/context now takes its real normal AST/parser
+        # path. No output options, missing blacklist or invalid CLI stand-in.
+        split = self.call.index("Xclang")
+        semantic = self.run_recorded("same-generator-semantic-rejection", [str(self.tool),
+            "-input-umbrella", str(self.folder / "input.h"), "-hanlin-expected-clang-context", str(self.context_path),
+            "Xclang", *self.call[split + 1:]])
+        self.assertEqual(semantic.returncode, 1)
+        self.assertIn(b"unknown type name 'namespace'", semantic.stderr)
+        self.assert_canaries()
 
     def test_suppressed_missing_header_still_makes_trace_incomplete(self):
         (self.folder / "root.h").write_text('#include "does-not-exist.h"\n')
@@ -1118,16 +1246,24 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertIn(variant, choices)
         (self.folder / "root.h").write_text("int declaration;\n")
         self.prepare('#include "root.h"\n', [(1, "root.h")], choices[variant])
-        before = {str(path): self.sha(path) for path in cache.rglob("*") if path.is_file()}
+        self.cache_before = self.tree_snapshot(cache)
+        self.record("cache.before.json", self.cache_before)
         run, receipt = self.trace()
         self.assertNotEqual(run.returncode, 0)
         self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
-        self.assertEqual({str(path): self.sha(path) for path in cache.rglob("*") if path.is_file()}, before)
-        if receipt:
-            self.assertTrue(receipt["serializedContext"])
-            self.assertFalse(receipt["sawEOF"])
-            self.assertEqual(receipt["consumerEntries"], 0)
-            self.assertEqual(receipt["writerEntries"], 0)
+        after = self.tree_snapshot(cache)
+        self.record("cache.after.json", after)
+        self.assertEqual(after, self.cache_before)
+        if not receipt:
+            self.not_observed("No genuine serialized-context receipt; driver-only rejection is insufficient")
+        self.assertEqual(receipt["mode"], "preprocessing-provenance")
+        self.assertEqual(receipt["status"], "INCOMPLETE")
+        self.assertIn("unsupported-serialized-context", receipt["reasons"])
+        self.assertTrue(receipt["serializedContext"])
+        for field in ["sawEOF", "endOfMainFile", "hadASTContext", "hadSema"]:
+            self.assertIs(receipt[field], False)
+        self.assertEqual(receipt["consumerEntries"], 0)
+        self.assertEqual(receipt["writerEntries"], 0)
 
     def test_hash_drift_or_output_collision_cannot_write_a_complete_receipt(self):
         variant = os.environ.get("HANLIN_PROVENANCE_NEGATIVE_VARIANT", "overlay")
@@ -1150,41 +1286,175 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
 
     def test_cancelled_native_process_cannot_leave_a_complete_receipt(self):
-        # Cancel after observing actual tool startup. A child that completes
-        # before it can be stopped fails this control; it cannot yield a pass.
-        # This exercises cancellation after exec, not a claimed mid-lex seam.
+        # One attempt; observing a stopped PID alone does NOT establish an
+        # unfinished operation. A completed pre-cancel receipt is not a defect.
         import selectors
         import signal
         (self.folder / "root.h").write_text("int declaration;\n")
         self.prepare('#include "root.h"\n', [(1, "root.h")])
-        child = subprocess.Popen(self.trace_call, cwd=self.tool.parent, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        selector = selectors.DefaultSelector()
-        selector.register(child.stdout, selectors.EVENT_READ)
-        try:
-            self.assertTrue(selector.select(timeout=10), "Native tool startup not observed")
-            self.assertTrue(os.read(child.stdout.fileno(), 4096), "Native tool exited before startup evidence")
-            self.assertIsNone(child.poll(), "Native tool completed before cancellation control")
-            os.kill(child.pid, signal.SIGSTOP)
-            _, status = os.waitpid(child.pid, os.WUNTRACED)
-            self.assertTrue(os.WIFSTOPPED(status), "Native tool was not stopped")
-        finally:
-            selector.close()
-            if child.poll() is None:
-                child.kill()
-            child.communicate(timeout=10)
-        receipt = json.loads(self.receipt_path.read_text()) if self.receipt_path.is_file() else {}
+        label = "cancellation-native"
+        self.commands.append(label)
+        self.record(label + ".command.json", {"argv": self.trace_call, "cwd": str(self.tool.parent),
+            "environmentSHA256": hashlib.sha256(json.dumps(dict(os.environ), sort_keys=True).encode()).hexdigest(),
+            "timeoutSeconds": None, "phaseLimitsSeconds": {"startup": 10, "observer": 10, "reap": 10}})
+        facts = {"schemaVersion": 1, "expectedExecutable": str(self.tool), "expectedBinarySHA256": self.sha(self.tool),
+            "startupObserved": False, "wifStopped": False, "unfinishedEstablished": False, "killSent": False}
+        startup, remaining = b"", b""
+        with (self.evidence / (label + ".stderr")).open("wb") as stderr:
+            child = subprocess.Popen(self.trace_call, cwd=self.tool.parent, stdout=subprocess.PIPE, stderr=stderr)
+            facts["pid"] = child.pid
+            selector = selectors.DefaultSelector()
+            selector.register(child.stdout, selectors.EVENT_READ)
+            try:
+                if not selector.select(timeout=10):
+                    self.not_observed("Native startup was not observed on this single attempt")
+                startup = os.read(child.stdout.fileno(), 4096)
+                (self.evidence / "cancellation.startup.stdout").write_bytes(startup)
+                facts["startupObserved"] = bool(startup)
+                if not startup or child.poll() is not None:
+                    facts["beforeCancelReceipt"] = self.receipt_snapshot("cancellation.before-cancel")
+                    self.not_observed("Native process exited before a stopped unfinished boundary could be established")
+                try:
+                    os.kill(child.pid, signal.SIGSTOP)
+                except ProcessLookupError:
+                    facts["beforeCancelReceipt"] = self.receipt_snapshot("cancellation.before-cancel")
+                    self.not_observed("Native process exited before SIGSTOP")
+                waited_pid, status = os.waitpid(child.pid, os.WUNTRACED)
+                facts.update(waitedPID=waited_pid, waitStatus=status, wifStopped=os.WIFSTOPPED(status))
+                if not facts["wifStopped"]:
+                    child.returncode = os.waitstatus_to_exitcode(status)
+                    facts["beforeCancelReceipt"] = self.receipt_snapshot("cancellation.before-cancel")
+                    self.not_observed("No WIFSTOPPED boundary; child exited before cancellation")
+                before = self.receipt_snapshot("cancellation.before-cancel")
+                facts["beforeCancelReceipt"] = before
+                if before["completedReceipt"]:
+                    self.not_observed("Receipt already completed BEFORE cancellation; this is not a cancellation defect")
+                if before["exists"]:
+                    self.not_observed("Receipt publication already began BEFORE cancellation; unfinished operation unproven")
+                try:
+                    ps_command = ["/bin/ps", "-ww", "-p", str(child.pid), "-o", "pid=", "-o", "stat=", "-o", "comm="]
+                    ps_before = self.run_recorded("cancellation.ps-before", ps_command, timeout=10)
+                    sample = self.run_recorded("cancellation.sample", ["/usr/bin/sample", str(child.pid), "1", "1"], timeout=10)
+                    ps_after = self.run_recorded("cancellation.ps-after", ps_command, timeout=10)
+                except (OSError, subprocess.SubprocessError) as error:
+                    self.not_observed("Stopped-process observer unavailable: " + type(error).__name__)
+                facts["afterObserverReceipt"] = self.receipt_snapshot("cancellation.after-observer")
+                if facts["afterObserverReceipt"]["completedReceipt"]:
+                    self.not_observed("Completed receipt observed BEFORE kill; cancellation operation was not proven unfinished")
+                if facts["afterObserverReceipt"]["exists"]:
+                    self.not_observed("Receipt publication observed BEFORE kill; unfinished operation unproven")
+                if any(result.returncode != 0 for result in [ps_before, sample, ps_after]):
+                    self.not_observed("Observer failed; executable/unfinished stopped boundary unproven")
+                proof = self.unfinished_lex_boundary(sample.stdout, ps_before.stdout, ps_after.stdout, child.pid, str(self.tool))
+                facts["boundaryProof"] = proof
+                if not proof["established"]:
+                    self.not_observed(proof["reason"])
+                facts["unfinishedEstablished"] = True
+            finally:
+                # Snapshot while still stopped, BEFORE any intentional kill.
+                try:
+                    facts["immediatelyBeforeKillReceipt"] = self.receipt_snapshot("cancellation.immediately-before-kill")
+                except Exception as error:
+                    facts["beforeKillSnapshotError"] = type(error).__name__ + ": " + str(error)
+                facts["eligibleForCancellationAssertion"] = facts["unfinishedEstablished"] \
+                    and "immediatelyBeforeKillReceipt" in facts and not facts["immediatelyBeforeKillReceipt"]["exists"]
+                selector.close()
+                if child.poll() is None:
+                    child.kill()
+                    facts["killSent"] = True
+                try:
+                    remaining, _ = child.communicate(timeout=10)
+                except subprocess.TimeoutExpired as error:
+                    remaining = error.stdout or b""
+                    raise
+                finally:
+                    (self.evidence / (label + ".stdout")).write_bytes(startup + (remaining or b""))
+                    facts.update(returncode=child.returncode, reaped=child.returncode is not None)
+                    try:
+                        facts["afterReapReceipt"] = self.receipt_snapshot("cancellation.after-reap")
+                    except Exception as error:
+                        facts["afterReapSnapshotError"] = type(error).__name__ + ": " + str(error)
+                    self.record("cancellation.boundary.json", facts)
+                    self.record(label + ".exit.json", {"returncode": child.returncode})
+        if "immediatelyBeforeKillReceipt" not in facts:
+            self.not_observed("Immediately-before-kill completion snapshot unavailable")
+        if facts["immediatelyBeforeKillReceipt"]["completedReceipt"]:
+            self.not_observed("Completion occurred BEFORE cancellation; not a cancellation defect")
+        if facts["immediatelyBeforeKillReceipt"]["exists"]:
+            self.not_observed("Receipt publication began BEFORE cancellation; unfinished boundary unproven")
+        if "afterReapReceipt" not in facts:
+            self.not_observed("Post-reap receipt snapshot unavailable; cancellation outcome unproven")
+        self.assertTrue(facts["eligibleForCancellationAssertion"])
+        self.assertTrue(facts["unfinishedEstablished"])
+        self.assertTrue(facts["killSent"])
+        self.assertTrue(facts["reaped"])
+        self.assertEqual(child.returncode, -signal.SIGKILL)
+        # Only the proven unfinished stopped executable is eligible for this
+        # post-kill assertion. Missing symbols/permission/races never PASS.
+        receipt = facts["afterReapReceipt"].get("receipt", {})
         self.assertTrue(WRAPPER.validate_preprocessing_receipt(receipt, self.request))
         self.assert_canaries()
+
+    def receipt_snapshot(self, label):
+        exists = self.receipt_path.exists()
+        body = self.receipt_path.read_bytes() if exists else b""
+        (self.evidence / (label + ".receipt.raw")).write_bytes(body)
+        result = self.receipt_state_from_bytes(body, exists)
+        self.record(label + ".receipt-state.json", result)
+        return result
+
+    @staticmethod
+    def receipt_state_from_bytes(body, exists):
+        result = {"exists": exists, "bytes": len(body), "sha256": hashlib.sha256(body).hexdigest(), "completedReceipt": False,
+            "completionState": "PRESENT_UNPARSEABLE" if exists else "ABSENT"}
+        try:
+            receipt = json.loads(body)
+            result["receipt"] = receipt
+            result["completedReceipt"] = isinstance(receipt, dict) and receipt.get("mode") == "preprocessing-provenance" \
+                and isinstance(receipt.get("status"), str) and receipt["status"] in {"COMPLETE", "INCOMPLETE"}
+            result["completionState"] = "FINAL_RECEIPT" if result["completedReceipt"] else "UNRECOGNIZED_JSON"
+        except (ValueError, UnicodeError) as error:
+            result["parseError"] = type(error).__name__
+        return result
+
+    @staticmethod
+    def unfinished_lex_boundary(sample_bytes, ps_before, ps_after, pid, executable):
+        """Conservative classification of REAL observer output, not attestation.
+
+        Unsupported output/symbols produce NOT_OBSERVED. Both active provenance
+        action and PP lex frames must be in the SAME sampled thread block.
+        """
+        failure = lambda reason: {"established": False, "reason": reason}
+        for snapshot in [ps_before, ps_after]:
+            fields = snapshot.decode("utf-8", errors="replace").strip().split(None, 2)
+            if len(fields) != 3 or fields[0] != str(pid) or "T" not in fields[1]:
+                return failure("PID/stopped state not established before and after sampling")
+            if fields[2] not in {executable, Path(executable).name}:
+                return failure("Observed command does not identify the expected native executable")
+        text = sample_bytes.decode("utf-8", errors="replace")
+        path = re.search(r"(?m)^Path:\s*(.+?)\s*$", text)
+        process = re.search(r"(?m)^Process:.*\[(\d+)\]\s*$", text)
+        if not path or path[1] != executable or not process or process[1] != str(pid):
+            return failure("Sample does not establish exact executable path and PID")
+        # Do not mix unrelated threads or Binary Images text into proof.
+        stack = text.split("Binary Images:", 1)[0]
+        blocks = re.split(r"(?m)^.*\bThread_[^\n]*\n", stack)[1:]
+        for block in blocks:
+            if "HanlinProvenanceAction::ExecuteAction" in block and "clang::Preprocessor::Lex" in block:
+                return {"established": True, "reason": "Observed same-thread active provenance PP lex stack while stopped",
+                    "sampleSHA256": hashlib.sha256(sample_bytes).hexdigest(), "pid": pid, "executable": executable}
+        return failure("Active same-thread provenance/PP lex frames unproven; no unfinished-operation claim")
 
     def test_normal_sdk31_binary_invalidtype_context_and_combined_alias_controls(self):
         if os.environ.get("HANLIN_RUN_PROVENANCE_FULL_NATIVE_CONTROLS") != "1":
             self.skipTest("NOT_RUN: SDK/provider compilation requires its separate native authorization")
         environment = {**os.environ, "HANLIN_METADATA_PREPROCESS_PROVENANCE": "0"}
-        run = subprocess.run([sys.executable, str(ROOT / "Scripts/NativeScript/probe-sdk-metadata.py"),
-            "--generator", str(self.tool), "--runtime-wrapper"], cwd=ROOT, env=environment,
-            capture_output=True, timeout=1200)
+        with patch.dict(os.environ, environment, clear=True):
+            run = self.run_recorded("normal-sdk-combined-probe", [sys.executable, str(ROOT / "Scripts/NativeScript/probe-sdk-metadata.py"),
+                "--generator", str(self.tool), "--runtime-wrapper"], cwd=ROOT, timeout=1200)
         result = json.loads((ROOT / "build/acceptance/nativescript-sdk-probe/result.json").read_text())
-        self.assertNotEqual(run.returncode, 0)  # Existing unequal combined JSI alias remains a failure.
+        self.record("normal-sdk-combined-probe.result.json", result)
+        self.assertEqual(run.returncode, 1)  # Known unequal combined JSI alias stays failed.
         self.assertEqual(result["modes"]["textual-public"]["status"], "EXECUTED_PASS")
         self.assertGreater(result["modes"]["textual-public"]["metadataBytes"], 0)
         parity = result["unchangedUIKitAndHostDeclarationParity"]

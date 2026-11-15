@@ -2087,7 +2087,7 @@
       "Scripts/NativeScript/build-metadata-tool.py": "b553391db3c07ce1364dedf2334e7ce707173037d60d8c080df8c9b74611f83d",
       "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "c42783300284ddbd93c75041f5de4dcbc6d1c37b7a173177485744ab10132e23",
       "Scripts/NativeScript/probe-sdk-metadata.py": "dd00967e2c63c28af37c3305700fd867ed994b30df0f6834c9fd47b6ac5c0458",
-      "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "553e4e648c8f4aebdeaba94574c6c3e28714ed71bce9517649a80d8834d4b0e9"
+      "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "900e3863871736675301cd54ea758d5170d686153849d7e5a9f1fbb645a6d0a1"
     },
     "schemaIdentity": {
       "schemaVersion": 1,
@@ -2218,7 +2218,7 @@
       "archiveEvidence": "43680891375 / 14148745560: 7216 central-directory entries inspected; zero direct ExpoModulesCore_umbrella.h basename entries. No selected body recovered.",
       "futureCapture": "Bounded selected-header bytes retained only when actual selected path body matches that run inventory hash. No local/upstream substitute or retrospective recovery."
     },
-    "handoffGate": "One source/schema/test identity packet to lead for independent Roni + root review BEFORE any native execution; C reserve gate stays active. No dispatch, signing, merge, integration or Asana mutation.",
+    "handoffGate": "One frozen TEST packet and Tomer-owned CI packet for consolidated Roni AND root source review. No native activation, integration or Asana write. Production52ade source + native schema remain frozen.",
     "supersedesSourcePacketCommit": "2dc0e05f91d29153c0f41e2f79a44c1720685a55",
     "cppSourceUnchangedFromSupersededPacket": true,
     "authoredMethodCount": 18,
@@ -2229,6 +2229,359 @@
       "probeInterpretation": "Only --preprocessing-provenance probe may report diagnosticStatus=COMPLETE for exit3 plus COMPLETE receipt/NOT_GENERATED/VERIFIED aliases. Exit0, exit4, failures or stale COMPLETE receipts cannot satisfy it. No normal build success or retry/transient semantics.",
       "normalMode": "No new diagnostic helper, selected-header body read, selected receipt write, diagnostic file probes/copies or diagnostic path creation. Existing generation plus retention return contract retained; actual generation not run.",
       "failurePreservation": "All new diagnostic evidence work is gated to mode1. Selected-source/write/copy/helper failures record INCOMPLETE through receipt/stderr where writable. Exit4 if no primary exception; original alias/source exception propagates otherwise."
+    },
+    "productionBaselineCommit": "52ade6dc6d76e52715d058fbcd21791bfd5d590a",
+    "productionSourceQA": {
+      "status": "SOURCE_PASS_TWO_P2_BOUNDARIES_ONLY",
+      "commit": "52ade6dc6d76e52715d058fbcd21791bfd5d590a",
+      "newTestHarnessReview": "PENDING_RONI_AND_ROOT",
+      "nativeActivation": "NOT_AUTHORIZED"
+    },
+    "testHarnessPreparation": {
+      "status": "SOURCE_ONLY_FROZEN_PENDING_CONSOLIDATED_RONI_ROOT_REVIEW",
+      "productionFrozen": true,
+      "testSourceSHA256": "900e3863871736675301cd54ea758d5170d686153849d7e5a9f1fbb645a6d0a1",
+      "retainedSchemaSHA256": "e48f7da757ae25d289f3136316d6de3070d2799bbbff3b13c420d9a3dfec0569",
+      "retainedSchema": {
+        "schemaVersion": 1,
+        "rootEnv": "HANLIN_PROVENANCE_CONTROL_EVIDENCE_DIR",
+        "rootRequirements": "Explicit precreated canonical absolute nonsymlink directory owned by runner uid. Every case mkdir is exclusive; existing case is error, never reused/deleted.",
+        "casePath": "<root>/<Class.method>--<variant>",
+        "fixtureRetention": "Original case/fixture paths persist. Explicit retention opt-in replaces native TemporaryDirectory auto-cleanup to prevent loss on failed copying/cap; no native cleanup deletion. Existing unrelated test fixtures unchanged.",
+        "resultFile": "control-result.json",
+        "resultFields": [
+          "schemaVersion",
+          "selector",
+          "variant",
+          "status",
+          "readiness",
+          "reason",
+          "metadataAcceptance",
+          "commands",
+          "manifestSHA256"
+        ],
+        "statusEnum": [
+          "PASS",
+          "FAIL",
+          "NOT_RUN",
+          "NOT_OBSERVED"
+        ],
+        "readinessRule": "RECORDED only for PASS; BLOCKED otherwise. PASS is control assertion success, never metadata/API/ABI acceptance. Missing control result, skipped unittest or retention error blocks proof.",
+        "metadataAcceptance": "NOT_ESTABLISHED",
+        "caseFiles": [
+          "control-meta.json",
+          "tool-provenance.json",
+          "fixture",
+          "fixture-before",
+          "fixture.before-tree.json",
+          "fixture.pre-trace-tree.json",
+          "fixture.final-tree.json",
+          "actual-context.json",
+          "canaries.before.json",
+          "canaries.after.json",
+          "cache.before.json",
+          "cache.after.json",
+          "evidence-manifest.json",
+          "control-result.json"
+        ],
+        "applicability": "prepare/trace files apply to low-level fixture methods; final full SDK selector instead retains normal-sdk-combined-probe command/raw outputs/result JSON and requires external real SDK/combined output directories retained by CI. Nine NON_NATIVE methods are runner-log/RAM checks with no native case receipt requirement.",
+        "commandFiles": "<label>.command.json(argv,cwd,timeoutSeconds,environmentSHA256; managed cancellation also phaseLimitsSeconds), <label>.stdout, <label>.stderr, <label>.exit.json(raw returncode or transport error). No raw secret environment dump.",
+        "treeFields": "path + kind(absent,directory,file,symlink,other); lstat mode,mtimeNS where present; file bytes/SHA256; symlink literal target; no symlink recursion.",
+        "manifestRule": "SHA256/bytes of every regular nonsymlink case file present before final publication; manifest excludes itself and final control-result. control-result binds manifestSHA256; CI artifact-level manifest/digest must cover both.",
+        "cancellationFile": "cancellation.boundary.json",
+        "cancellationFields": [
+          "schemaVersion",
+          "expectedExecutable",
+          "expectedBinarySHA256",
+          "pid",
+          "startupObserved",
+          "waitedPID",
+          "waitStatus",
+          "wifStopped",
+          "beforeCancelReceipt",
+          "afterObserverReceipt",
+          "boundaryProof",
+          "unfinishedEstablished",
+          "immediatelyBeforeKillReceipt",
+          "eligibleForCancellationAssertion",
+          "killSent",
+          "returncode",
+          "reaped",
+          "afterReapReceipt"
+        ],
+        "cancellationOptionalErrors": [
+          "beforeKillSnapshotError",
+          "afterReapSnapshotError"
+        ],
+        "receiptSnapshots": "cancellation.before-cancel / after-observer / immediately-before-kill / after-reap each retain .receipt.raw and .receipt-state.json(exists,bytes,SHA256,completedReceipt,completionState,receipt or parseError).",
+        "completionStateEnum": [
+          "ABSENT",
+          "PRESENT_UNPARSEABLE",
+          "FINAL_RECEIPT",
+          "UNRECOGNIZED_JSON"
+        ],
+        "cancellationEligibility": "One attempt; actual startup + WIFSTOPPED; exact native PID/path and stopped ps before/after one sample; SAME sampled thread includes HanlinProvenanceAction::ExecuteAction and clang::Preprocessor::Lex. Receipt must be ABSENT before observer, after observer and immediately before kill. Any existing receipt/publication, including COMPLETE or INCOMPLETE, makes unfinished operation unproven. No pre-cancel COMPLETE is a product defect.",
+        "observerCommands": [
+          "/bin/ps -ww -p <pid> -o pid= -o stat= -o comm=",
+          "/usr/bin/sample <pid> 1 1",
+          "/bin/ps -ww -p <pid> -o pid= -o stat= -o comm="
+        ],
+        "unobservedRule": "Absent startup, process completion, missing stopped state, unavailable symbols/permissions/observer, unproven same-thread active lex or missing completion snapshot => NOT_OBSERVED/BLOCKED via unittest skip; never native PASS/product failure. No retry/sleep/relaunch/enlarged fixture/timeout/production knob.",
+        "postCancelRule": "Only genuinely unfinished stopped executable with absent before-kill receipt is eligible. Require actual SIGKILL exit, reap and no valid COMPLETE receipt after cancellation. Raw after-reap snapshot always retained where writable.",
+        "serializationRule": "Nonempty actual mode/status/reasons receipt with unsupported-serialized-context, serializedContext=true, EOF/end/AST/Sema=false, consumer/writer=0 and equal full controlled-cache before/after. Empty receipt is NOT_OBSERVED, not sufficient driver rejection proof.",
+        "semanticRule": "Same new generator + explicit fixture input + expected context + unchanged Xclang suffix; no outputs/blacklist/diagnostic flags. Require exit1 and actual unknown type name namespace parser diagnostic; no xcrun compiler stand-in.",
+        "productionNegativeRule": "Normal full probe raw1 plus known combined alias failure preserved. Separate actual combined wrapper1 / explicit diagnostic probe2 / metadata NOT_GENERATED remain authoritative even if low-level PP COMPLETE. New harness does not activate combined diagnostic or waive alias guard.",
+        "helperSourceSHA256": {
+          "setUp": "114d46e02ea807252a358188d001b7c14be8fd9567fabcb63461fb7a17f66000",
+          "retain_evidence": "cb3722fb4cda7de42fa8d534b4f73f3fb6792a13ffa1e0c5f4bb834d67406f7f",
+          "tree_snapshot": "0655dbba95d6ebfc9a47777652f00b831261fd22e76a034a8febb45498e545c2",
+          "run_recorded": "a1b1c694a558bb3f7076ae04d2e179e30561cfa4abf64585c399e6d1e4ca9f0c",
+          "receipt_state_from_bytes": "640ece4f236199ca66b8e235ba9c4827b6080749da892186b32c66e7211607cd",
+          "unfinished_lex_boundary": "b76df6ae25428a0bf92b1a8ca9127e98dd4b05d3420309d57df1ce9592993ef2",
+          "test_cancelled_native_process_cannot_leave_a_complete_receipt": "2d46d9f56e816f8b270d0ea6ce0c3c37f7579965fe5f1c4940b431ad3bf81825"
+        }
+      },
+      "methodCount": 18,
+      "invocationCount": 26,
+      "nonNativeInvocations": 9,
+      "nativeInvocations": 17,
+      "matrix": [
+        {
+          "selector": "PreprocessingReceiptControls.test_partial_cancelled_truncated_or_parser_receipt_cannot_be_complete",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "PreprocessingReceiptControls.test_inactive_occurrence_has_no_observed_resolution_or_owner",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "DiagnosticProductionBoundaryControls.test_complete_diagnostic_never_succeeds_production_or_consumes_stale_binary",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "DiagnosticProductionBoundaryControls.test_disabled_mode_never_calls_diagnostic_helper_or_new_evidence_io",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "DiagnosticProductionBoundaryControls.test_normal_generator_failure_keeps_original_exit_contract",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "DiagnosticProductionBoundaryControls.test_diagnostic_write_failure_has_distinct_non_success_even_with_stale_complete",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "DiagnosticProductionBoundaryControls.test_selected_read_failure_never_masks_original_alias_exception",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "DiagnosticProductionBoundaryControls.test_unexpected_helper_failure_never_masks_original_source_exception",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "DiagnosticProductionBoundaryControls.test_probe_accepts_sentinel_only_in_explicit_diagnostic_outcome",
+          "variant": "default",
+          "category": "NON_NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_338_occurrences_quote_angle_macro_import_guard_pragma_and_inactive",
+          "variant": "default",
+          "category": "NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_semantically_invalid_cpp_tokens_are_not_an_ast_or_metadata_pass",
+          "variant": "default",
+          "category": "NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_suppressed_missing_header_still_makes_trace_incomplete",
+          "variant": "default",
+          "category": "NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_unknown_owner_and_semantic_pragma_cannot_be_complete",
+          "variant": "default",
+          "category": "NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_source_import_cannot_claim_serialization_absence_without_parser",
+          "variant": "default",
+          "category": "NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_serialized_context_rejected_without_cache_or_emitter_work",
+          "variant": "modules",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_SERIALIZED_VARIANT": "modules"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_serialized_context_rejected_without_cache_or_emitter_work",
+          "variant": "pch",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_SERIALIZED_VARIANT": "pch"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_serialized_context_rejected_without_cache_or_emitter_work",
+          "variant": "module-file",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_SERIALIZED_VARIANT": "module-file"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_serialized_context_rejected_without_cache_or_emitter_work",
+          "variant": "preamble",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_SERIALIZED_VARIANT": "preamble"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_hash_drift_or_output_collision_cannot_write_a_complete_receipt",
+          "variant": "overlay",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_NEGATIVE_VARIANT": "overlay"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_hash_drift_or_output_collision_cannot_write_a_complete_receipt",
+          "variant": "umbrella",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_NEGATIVE_VARIANT": "umbrella"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_hash_drift_or_output_collision_cannot_write_a_complete_receipt",
+          "variant": "header",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_NEGATIVE_VARIANT": "header"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_hash_drift_or_output_collision_cannot_write_a_complete_receipt",
+          "variant": "context",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_NEGATIVE_VARIANT": "context"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_hash_drift_or_output_collision_cannot_write_a_complete_receipt",
+          "variant": "request",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_NEGATIVE_VARIANT": "request"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_hash_drift_or_output_collision_cannot_write_a_complete_receipt",
+          "variant": "collision",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_PROVENANCE_NEGATIVE_VARIANT": "collision"
+          },
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_cancelled_native_process_cannot_leave_a_complete_receipt",
+          "variant": "default",
+          "category": "NATIVE",
+          "envOverrides": {},
+          "status": "NOT_RUN"
+        },
+        {
+          "selector": "NativePreprocessingProvenanceControls.test_normal_sdk31_binary_invalidtype_context_and_combined_alias_controls",
+          "variant": "default",
+          "category": "NATIVE",
+          "envOverrides": {
+            "HANLIN_RUN_PROVENANCE_FULL_NATIVE_CONTROLS": "1"
+          },
+          "status": "NOT_RUN"
+        }
+      ],
+      "nativeRequiredEnvironment": {
+        "HANLIN_RUN_PROVENANCE_NATIVE_CONTROLS": "1",
+        "HANLIN_PROVENANCE_CONTROL_EVIDENCE_DIR": "<canonical absolute precreated runner-owned root>",
+        "HANLIN_PREPROCESS_PROVENANCE_NATIVE_TOOL": "<exact built absolute executable>",
+        "HANLIN_PREPROCESS_PROVENANCE_TOOL_RECEIPT": "<matching absolute provenance.json>",
+        "HANLIN_PREPROCESS_PROVENANCE_CLANG_ARGS_JSON": "<root-approved actual fixture frontend flags JSON>"
+      },
+      "currentChecks": {
+        "pythonAST": "PASS",
+        "pureStackClassifierLogicCases": 11,
+        "pureCompletionClassifierLogicCases": 8,
+        "classifierBoundary": "Synthetic byte-string logic only; no actual process/native evidence or Clang/AST substitute. All native observations NOT_RUN.",
+        "sourceScopeProductionHashes": "UNCHANGED",
+        "automaticNativeFixtureDeletion": "NONE",
+        "diffCheck": "PASS"
+      },
+      "execution": {
+        "all18UnittestMethods": "NOT_RUN",
+        "fixtures": "NOT_RUN",
+        "observerSamplePS": "NOT_RUN",
+        "CxxParseCompile": "NOT_RUN",
+        "newBinarySHA256": null,
+        "CI": "NOT_RUN",
+        "activation": "NOT_AUTHORIZED"
+      },
+      "coordination": {
+        "Noam": "exclusive existing test file + existing owned notes",
+        "TomerThread": "01a1dc9e-91cb-7d12-9102-acd3500aee90",
+        "Tomer": "exclusive proof runner/workflow; evidence root/status contract confirmed; sample/ps proposal accepted for source review only",
+        "handoff": "Use exact frozen commit/tree bytes, never mutable local older test/source. No source integration implied. Later root activation required."
+      }
     }
   }
 }
