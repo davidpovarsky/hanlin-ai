@@ -4,6 +4,54 @@
 
 ### Modern frontend candidate contract version 1
 
+#### Authorized dual-grammar contract version 2 (candidate)
+
+The single manager approved two real ASTs in the same locked modern frontend.
+Pass A parses EVERY final combined public root in ObjC++; pass B parses the
+canonical original SDK/Host roots and actual compatible generated Host headers
+in ObjC. Both use the same SDK, resource directory, target/ABI, include search
+priority and alias-v2 safeguards. Only the recorded grammar/standard and root
+differences are permitted. Feature-macro changes, handcrafted declarations,
+serialized AST/model imports and removing inputs from pass A are prohibited.
+
+Merge actual in-memory models while both ASTs and factories remain alive.
+Canonical module/symbol/owner keys, declaration source identity, signatures,
+types, record size/alignment/offsets, constants, linkage and availability must
+be proven compatible before choosing the SDK/Host C/ObjC authority. Add actual
+Expo/provider APIs; unresolved conflicts are fatal. The original serializer,
+binary format and runtime pin remain unchanged. Both parses and the complete
+merge must succeed before publishing metadata. Receipts/cache identity bind
+both configurations and merge-policy version; measure memory/time and enforce
+a resource budget. New real cross-grammar controls cover C-only exports,
+equivalent duplicates, conflicting signatures/layouts/owners and retained AST
+lifetimes before combined SDK/Host/Expo and actual runtime consumption.
+
+This resolves a measured language boundary, not a permission to lose APIs.
+Run43731970518 generated ObjC++ metadata with0 Clang errors but failed13 model
+entries across3 modules. Read-only run43732790205 retained8 actual LLVM20
+ObjC/ObjC++ AST dumps (all exit0) and exact SDK sources. Its math.h explicitly
+guards `struct exception` with `#if !defined __cplusplus`; a single C++ AST
+cannot supply that real C-only declaration. The NSObject availability and
+inttypes/stdlib differences remain individually explained/proven obligations.
+
+Actual ObjC run43733279102 at a3599965 reuses the verified26b51439 tool build,
+passes all31 existing module models, invalid-type rejection and context drift,
+and retains181 generated declaration files. SDK binary SHA is unchanged from
+the earlier modern ObjC candidate:27bf81e05ad118d14eea3e04d9fac15624bd2a0fc44348338e60cf05cc11196f.
+This proves a viable actual pass B, not a dual-grammar merge or runtime pass.
+
+Modern provenance run43732408824 executes24 controls successfully; cancellation
+was NOT_OBSERVED due to an unavailable observer API and combined remains
+NOT_RUN. The corrected, explicitly filtered cancellation run43732964792
+executes its1 affected control successfully: LLDB observes the owned binary
+80e106d7… in the same thread's provenance action and PP Lex, snapshots no
+receipt before kill, records exit9/killed, and observes no receipt afterward.
+The other25 controls are NOT_RUN in that filtered run. All717 prior and72
+filtered artifact-manifest files verify with0 mismatches. Do not report either
+aggregate as a full pass or claim unaffected controls executed again.
+
+#### Earlier single-grammar candidate evidence (contract 1)
+
 The single manager authorized a tooling-only modern frontend migration after
 the real combined run 43722735261 rejected 30 parser errors despite all required
 names. Existing production remains pinned17 until actual modern combined/runtime

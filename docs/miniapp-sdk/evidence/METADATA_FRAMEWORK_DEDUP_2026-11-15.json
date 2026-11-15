@@ -2860,7 +2860,7 @@
       "nativeRuntimeOrSerializerMigration": false
     },
     "modernFrontendCandidate": {
-      "contractVersion": 1,
+      "contractVersion": 2,
       "status": "IN_PROGRESS_NOT_ACCEPTED",
       "frontend": "Homebrew LLVM20.1.8",
       "inventoryRun": 43723704321,
@@ -2896,15 +2896,93 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "run": 43730367651,
-        "sourceSHA": "16e86901",
-        "status": "RUNNING"
+        "status": "NONE_RUNNING_DUAL_GRAMMAR_SOURCE_IMPLEMENTATION"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
       "UI": "NOT_RUN",
       "physicalDevice": "NOT_RUN",
-      "completion": false
+      "completion": false,
+      "dualGrammar": {
+        "status": "SOURCE_PREPARATION_NOT_ACCEPTED",
+        "authorizedByManagerThread": "01a1df7a-f6e6-7ff0-9e6f-781f57c2456a",
+        "fullCombined": "ALL_PUBLIC_ROOTS_OBJC_PLUS_PLUS",
+        "SDKHostAuthority": "REAL_OBJC_AST_SAME_LOCKED_FRONTEND",
+        "merge": "ACTUAL_IN_MEMORY_MODELS_BOTH_AST_AND_FACTORY_LIFETIMES_RETAINED",
+        "conflicts": "FATAL_UNLESS_SEMANTIC_ABI_OWNER_AVAILABILITY_EQUIVALENCE_PROVEN",
+        "featureMacroChanges": false,
+        "oldMetadataImport": false,
+        "serializerAndRuntimePinChanges": false,
+        "crossGrammarControls": "NOT_RUN",
+        "combined": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "UI": "NOT_RUN",
+        "physicalDevice": "NOT_RUN"
+      },
+      "latestCPP31": {
+        "run": 43731970518,
+        "sourceSHA": "26b514398b39cbb5e5f10a7503b4d985fb3a63e4",
+        "generation": "EXECUTED_PASS",
+        "clangErrors": 0,
+        "existingAPIModelPreservation": "FAILED",
+        "differences": 13,
+        "affectedModules": 3,
+        "metadataSHA256": "7a8c122434ca9680543bc2e1f28aeee6898ee1bea4f45593b668c5b9f119279a"
+      },
+      "sdkGrammarFacts": {
+        "run": 43732790205,
+        "sourceSHA": "43c0d6e4",
+        "status": "READ_ONLY_EVIDENCE",
+        "actualASTParses": 8,
+        "parseErrors": 0,
+        "fact": "Actual SDK math.h guards C struct exception with #if !defined __cplusplus",
+        "notMetadataAcceptance": true
+      },
+      "latestObjC31": {
+        "run": 43733279102,
+        "sourceSHA": "a3599965",
+        "aggregate": "EXECUTED_PASS",
+        "compile": "REUSED_VERIFIED_COMPILE_PASS_FROM_43731970518",
+        "generation": "EXECUTED_PASS",
+        "clangErrors": 0,
+        "existingAPIModelPreservation": "EXECUTED_PASS",
+        "referenceModules": 31,
+        "invalidDeclarationRejected": "EXECUTED_PASS",
+        "generatedDeclarationFiles": 181,
+        "metadataSHA256": "27bf81e05ad118d14eea3e04d9fac15624bd2a0fc44348338e60cf05cc11196f",
+        "boundary": "Actual same-frontend SDK ObjC pass only; no merge or runtime acceptance"
+      },
+      "latestModernControls": {
+        "run": 43732408824,
+        "sourceSHA": "d175bf0f",
+        "executedPass": 24,
+        "notObserved": 1,
+        "notRun": 1,
+        "aggregate": "INCOMPLETE",
+        "manifestFilesVerified": 717,
+        "mismatches": 0,
+        "resultSHA256": "f075225e383d772157a5b185d202fad25e95e24580fb494d65c52e28b6a0bc6b"
+      },
+      "cancellation": {
+        "run": 43732964792,
+        "sourceSHA": "a3599965",
+        "selector": "NativePreprocessingProvenanceControls.test_debugger_cancellation_during_observed_preprocessor_lex",
+        "status": "EXECUTED_PASS",
+        "otherControls": "NOT_RUN_25_OUTSIDE_AFFECTED_SELECTOR",
+        "aggregate": "INCOMPLETE",
+        "generatorSHA256": "80e106d79da9ae1799b488626570c9373d6aacc7cc87f68344db197b14c59785",
+        "actualPID": 11239,
+        "observedThread": 33767,
+        "sameThreadProvenanceAndLex": true,
+        "beforeKillReceiptExists": false,
+        "killSucceeded": true,
+        "exitStatus": 9,
+        "exitDescription": "killed",
+        "afterKillReceiptExists": false,
+        "manifestFilesVerified": 72,
+        "mismatches": 0,
+        "resultSHA256": "133e35e1eb0a049198eec71cebddda4c4339b4d4707344b1ba923758316a8db7"
+      }
     }
   }
 }
