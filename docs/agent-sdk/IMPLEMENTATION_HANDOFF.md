@@ -1,6 +1,16 @@
 # CHAT-SDK W1 — frozen source handoff
 
-**Current review entry:** [combined producer/consumer/session packet](RAW_INPUT_AND_SESSION_HANDOFF.md).
+**P1 corrected packet (current):** producer `e7bf34111e603ca977becd007dd4e5bb109af857`
+rejects multiple approval requests per call before either resume execution path.
+Only CollectToolApprovals and its raw-input regression source changed. Three new
+real-entry-point test bodies / 56 matrix rows are NOT_RUN, not typechecked or
+syntax-parsed. Prior45/39 evidence below remains historical at its exact old
+closure. Consumer source is unchanged; shipping pins remain unchanged. See the
+[combined packet](RAW_INPUT_AND_SESSION_HANDOFF.md) and
+`evidence/approval-correlation-source-manifest.json` for the corrected source hashes.
+
+
+**Earlier review entry (historical):** [combined producer/consumer/session packet](RAW_INPUT_AND_SESSION_HANDOFF.md).
 Producer is frozen at `788a591aa0981443ec9a8e747393f07fcdcae4cf`; the consumer is this
 containing commit. 45 selected actual producer tests and 39 portable Hanlin cases
 passed with distinct scopes. Actual Hanlin Session/full Apple graph remains

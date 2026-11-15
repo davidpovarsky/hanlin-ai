@@ -5,16 +5,48 @@ This packet is source-frozen for independent Roni review and Tomer integration.
 Hanlin engine/session/host chain compiles and passes on Apple. Neither proof below
 substitutes for that chain or for a real host/device test. All SDK tasks remain open.
 
+
+## Current P1 approval-correlation correction (source only)
+
+Independent QA requested changes to producer788a / consumer58de: distinct approval
+request IDs could reference the same toolCallId, permitting two approvals or a
+mixed approval/denial to reach the approved path. This was a source-derived
+finding, not an executed reproduction or proof of duplicated Hanlin native effects.
+
+Corrected producer **e7bf34111e603ca977becd007dd4e5bb109af857** requires exactly one
+request per toolCallId before collecting either decision. It counts every request,
+even if only one has a response. The changed lease is exactly CollectToolApprovals
+and RawToolInputPropagationTests; no engine, side cache, retry or consumer source
+change. Existing duplicate/unknown/cancel/schema/raw provenance checks remain.
+
+Three new regression bodies contain 56 matrix rows through REAL generateText and
+streamText message-approval resume, after response/Codable roundtrip: distinct
+same-call requests with two approvals, mixed decisions in either order, or one
+unanswered request execute zero times; one matching approval executes exactly
+once; independent calls retain individual eligibility beside an ambiguous call.
+Static/dynamic and accepted/repaired original JSON are checked in both entry
+points. These are **test SOURCE, NOT_RUN / NOT_TYPECHECKED / NOT_SYNTAX_PARSED**.
+No compiler/build/test execution, cache growth, download, worktree expansion or
+rejected-cleanup retry occurred under the resource gate.
+
+`evidence/approval-correlation-source-manifest.json` freezes the corrected complete
+497-input producer closure, its exact two-file delta and unchanged 24-input consumer
+source closure. The earlier 45-producer/39-portable passes and their logs/manifests
+remain historical evidence for their exact OLD closures; they do not pass the
+changed producer. Tomer must run the affected real Mac proofs before QA acceptance.
+Shipping pins/locks remain unchanged, and numeric/full Hanlin Apple acceptance
+remains blocked. Roni must review this corrected packet independently.
+
 ## Exact inputs and dependency window
 
 - Producer: `C:/Users/DAVID/Code/swift-ai-sdk-hanlin-raw-tool-input-20261115`, branch
   `codex/hanlin-raw-tool-input-20261115`, frozen commit
-  `788a591aa0981443ec9a8e747393f07fcdcae4cf`, based on
+  `e7bf34111e603ca977becd007dd4e5bb109af857` (P1 delta from producer788a), based on
   `43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6`.
 - Consumer: the commit containing this packet in
   `C:/Users/DAVID/Code/hanlin-agent-sdk-wave1-20261115`, branch
   `codex/hanlin-agent-sdk-wave1-20261115`, review delta from
-  `4d153f5a4995920ba6c7d6ffb68d7c8ab92633d3`.
+  `58de69a1e481de7ff63abbc599906f64955cbdce`; consumer source is unchanged by this P1 correction.
 - Shipping manifests and locks still name the old producer `43ebcf`. The new core
   source references its additive API and **requires the new producer**; the current
   shipping dependency graph is not advertised as buildable with that source. Tomer
@@ -22,8 +54,9 @@ substitutes for that chain or for a real host/device test. All SDK tasks remain 
   No temporary manifest, local dependency override, pin/lock change, copied module,
   provider shim or root-package distribution claim was used for these proofs.
 - `evidence/final-source-manifest.json` records consumer source bytes.
-  `evidence/producer-chain-proof.json` records the complete actual producer source
-  closure, selected tests, compiler/link arguments and frozen Git identity. Windows
+  `evidence/approval-correlation-source-manifest.json` records the corrected producer source
+  closure and NOT_RUN status. Historical `evidence/producer-chain-proof.json` records
+  the OLD producer788a closure, tests, compiler/link arguments and frozen Git identity. Windows
   working-tree SHA256 values include their actual line endings; Git blob IDs and
   normalized LF hashes permit comparison to the committed source on Apple.
 
@@ -94,7 +127,10 @@ a still-valid session subject to the same record/authority checks. Existing UI
 controller/view/result-port types remain proposals owned by Maya/Eitan; this
 packet adds no UI/Composer/renderer or app singleton.
 
-## Actual verification
+## Historical verification before the P1 correction
+
+The following results belong to the prior producer788a / consumer58de exact
+closures. The changed producer and new tests have NO runtime/compiler pass.
 
 | Evidence | Actual result and scope |
 | --- | --- |

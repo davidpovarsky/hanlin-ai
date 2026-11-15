@@ -120,3 +120,16 @@ cancel-current-turn seam is promised. A later send requires a new host-authorize
 session identity/new Session; pending/uncertain effects still require original-host
 reconciliation. Normal completed runs may reuse a still-valid session. See the
 packet's exact lifecycle and reentrancy contract before implementing SDK04 UI.
+
+
+## P1 consent-correlation source correction
+
+The current [combined packet](RAW_INPUT_AND_SESSION_HANDOFF.md) now requires
+producer `e7bf34111e603ca977becd007dd4e5bb109af857`. Multiple approval requests for
+one call fail closed even when their distinct IDs have matching or conflicting
+decisions. Other calls with one matching request retain eligibility. New actual
+generateText/streamText resume regression bodies preserve static/dynamic and
+accepted/repaired input, but are **NOT_RUN / not typechecked** under the resource
+gate. Prior 45-producer/39-portable results remain historical old-closure evidence.
+No consumer source or shipping dependency pin/lock changed for this correction;
+Roni review and Tomer's real Mac proof/final dependency window remain required.

@@ -11,16 +11,18 @@
     "macOS": "26.0"
   },
   "verification": {
-    "portable": "PASS; exact subset in portable-source-proof.json",
+    "portable": "HISTORICAL_PASS_39_AT_PRIOR_EXACT_CLOSURE; NOT_RERUN",
     "portableCases": 39,
     "UI": "NOT_RUN",
     "fullGraph": "BLOCKED_WINDOWS_FOUNDATION_API",
     "nativeSDK": "NOT_RUN",
     "device": "NOT_RUN",
-    "producerSelectedTests": "PASS:45 tests/4 suites against actual full production modules",
+    "producerSelectedTests": "HISTORICAL_PASS_45_AT_788a591; CORRECTED_PRODUCER_NOT_RUN",
     "producerRootSwiftTest": "BLOCKED_UNCHANGED_WINDOWS_REVAI_URLSESSION_SHARED",
     "hanlinSession": "NOT_RUN; syntax only",
-    "numericModelAcceptance": "BLOCKED_PENDING_APPLE_HANLIN_WHOLE_CHAIN"
+    "numericModelAcceptance": "BLOCKED_PENDING_APPLE_HANLIN_WHOLE_CHAIN",
+    "producerCurrentBuild": "NOT_RUN_RESOURCE_GATE",
+    "approvalCorrelationCorrection": "SOURCE_ONLY; new regression bodies/typecheck/parse NOT_RUN"
   },
   "files": [
     {
@@ -144,6 +146,7 @@
       "normalizedLFsha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c"
     }
   ],
-  "reviewBase": "4d153f5a4995920ba6c7d6ffb68d7c8ab92633d3",
-  "producerFrozenCommit": "788a591aa0981443ec9a8e747393f07fcdcae4cf"
+  "reviewBase": "58de69a1e481de7ff63abbc599906f64955cbdce",
+  "producerFrozenCommit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "historicalProducerFrozenCommit": "788a591aa0981443ec9a8e747393f07fcdcae4cf"
 }
