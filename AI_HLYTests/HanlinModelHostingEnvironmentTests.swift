@@ -19,7 +19,7 @@ struct HanlinModelHostingEnvironmentTests {
         }
     }
 
-    @Test("Native hosting preserves the actual catalog context and updates user motion choices")
+    @Test("Native hosting preserves the actual catalog context and system motion setting")
     func nativeHostRetainsCatalogContextAcrossRootUpdates() throws {
         let firstStore = try ModelContainer(for: AllModels.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true))
@@ -29,18 +29,16 @@ struct HanlinModelHostingEnvironmentTests {
         let probe = ContextProbe { context, motion in observations.append((context, motion)) }
         var environment = EnvironmentValues()
         environment.modelContext = firstStore.mainContext
-        environment.accessibilityReduceMotion = true
         let host = HanlinModelSizingHost(content: HanlinModelHostedView(content: probe, environment: environment))
         _ = host.sizeThatFits(in: CGSize(width: 286, height: 324))
         #expect(!observations.isEmpty, "The actual hosted SwiftUI body must render")
-        #expect(observations.allSatisfy { $0.0 === firstStore.mainContext && $0.1 })
+        #expect(observations.allSatisfy { $0.0 === firstStore.mainContext && $0.1 == UIAccessibility.isReduceMotionEnabled })
 
         observations.removeAll()
         environment.modelContext = nextStore.mainContext
-        environment.accessibilityReduceMotion = false
         host.rootView = HanlinModelHostedView(content: probe, environment: environment)
         _ = host.sizeThatFits(in: CGSize(width: 286, height: 324))
         #expect(!observations.isEmpty, "The updated hosted SwiftUI body must render")
-        #expect(observations.allSatisfy { $0.0 === nextStore.mainContext && !$0.1 })
+        #expect(observations.allSatisfy { $0.0 === nextStore.mainContext && $0.1 == UIAccessibility.isReduceMotionEnabled })
     }
 }

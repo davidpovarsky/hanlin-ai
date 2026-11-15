@@ -65,7 +65,6 @@ struct HanlinModelHostedView<Content: View>: View {
             .environment(\.layoutDirection, environment.layoutDirection)
             .environment(\.dynamicTypeSize, environment.dynamicTypeSize)
             .environment(\.colorScheme, environment.colorScheme)
-            .environment(\.accessibilityReduceMotion, environment.accessibilityReduceMotion)
     }
 }
 
