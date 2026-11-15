@@ -159,7 +159,11 @@ jobs:
           NATIVE_CATALOG_ONLY: ${{ inputs.exact_test_selector == 'NativeModelCatalogTests' && '1' || '0' }}
         run: |
           if [[ "$NATIVE_CATALOG_ONLY" == 1 ]]; then
-            bash Scripts/CI/IntegrationValidation/run_native_model_catalog.sh
+            # Exercise the same shared-source branch that follows package validation,
+            # without reexecuting already-authenticated unaffected package cases.
+            validation_scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-native-shared.XXXXXXXX")"
+            git archive HEAD Packages/HanlinAgentSDK Packages/HanlinPlatform | tar -xf - -C "$validation_scratch"
+            HANLIN_SDK_VALIDATION_SCRATCH="$validation_scratch" bash Scripts/CI/IntegrationValidation/run_native_model_catalog.sh
           else
             bash Scripts/CI/IntegrationValidation/run_agent_sdk.sh
           fi

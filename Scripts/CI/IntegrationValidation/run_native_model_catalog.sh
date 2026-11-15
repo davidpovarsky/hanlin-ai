@@ -6,17 +6,30 @@ evidence="${HANLIN_SDK_EVIDENCE_DIRECTORY:-$root/build/agent-sdk-validation-evid
 mkdir -p "$evidence"
 git rev-parse HEAD > "$evidence/tested-source-commit.txt"
 started=$SECONDS
-trap 'rc=$?; printf "{\"exit\":%s,\"total_seconds\":%s}\n" "$rc" "$((SECONDS-started))" > "$evidence/process-exit.json"' EXIT
+finish_native_catalog() {
+  local rc="$?"
+  # Bash3.2 fatal expansion errors can reach EXIT with status0. Actual result artifacts
+  # are mandatory; a preflight-only directory can never satisfy this operation.
+  if [[ ! -s "$evidence/summary.json" || ! -d "$evidence/NativeCatalogTests.xcresult" || ! -d "$evidence/NativeCatalogIOSBuild.xcresult" ]]; then
+    if [[ "$rc" == 0 ]]; then rc=1; fi
+  fi
+  printf '{"exit":%s,"total_seconds":%s}\n' "$rc" "$((SECONDS-started))" > "$evidence/process-exit.json"
+  trap - EXIT
+  exit "$rc"
+}
+trap finish_native_catalog EXIT
+archive_paths=(Scripts/CI/NativeModelValidation AI_HLY/Model/AllModels.swift
+  AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift
+  AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift)
 if [[ -n "${HANLIN_SDK_VALIDATION_SCRATCH:-}" ]]; then
   scratch="$HANLIN_SDK_VALIDATION_SCRATCH"
   test -f "$scratch/Packages/HanlinAgentSDK/Package.swift"
   # Same job, exact same Git-bound dependency sources. Preserve their mtimes/build graph.
-  archive_packages=()
   mac_derived="$scratch/SDKDerivedData"
   ios_derived="$scratch/IOSDerivedData"
 else
   scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-native-catalog.XXXXXXXX")"
-  archive_packages=(Packages/HanlinAgentSDK Packages/HanlinPlatform)
+  archive_paths=(Packages/HanlinAgentSDK Packages/HanlinPlatform "${archive_paths[@]}")
   mac_derived="$scratch/DerivedData"
   ios_derived="$scratch/IOSDerivedData"
 fi
@@ -29,10 +42,7 @@ test -n "$selected_xcode"
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 { xcodebuild -version; xcrun swift --version; xcrun --sdk macosx --show-sdk-version; xcrun --sdk iphonesimulator --show-sdk-version; uname -m; sw_vers; } > "$evidence/toolchain.txt"
 xcrun simctl list runtimes -j > "$evidence/simulator-runtimes.json"
-git archive HEAD "${archive_packages[@]}" Scripts/CI/NativeModelValidation \
-  AI_HLY/Model/AllModels.swift AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift \
-  AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift \
-  AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift > "$evidence/tested-source.tar"
+git archive HEAD "${archive_paths[@]}" > "$evidence/tested-source.tar"
 tar -xf "$evidence/tested-source.tar" -C "$scratch"
 package="$scratch/NativeCatalog"
 mkdir -p "$package/Sources/HanlinNativeModelCatalog" "$package/Tests/HanlinNativeModelCatalogTests"

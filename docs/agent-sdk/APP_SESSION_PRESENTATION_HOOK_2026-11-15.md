@@ -92,6 +92,17 @@ or repository secret is a product requirement.
 
 ## Evidence limits and next validation
 
+Later exact source `8b6106ef`, run `43735446863`, has **45 newly executed passes**: all18 Session,
+the Host minor control, the checkpoint recovery, and all25 Core (including five real Responses
+adapter fixtures). iOS SDK compilation passed. Authenticated278 source hashes and all45 original
+unique xcresult identities are retained in `evidence/contracts-43735446863.json`. This proves
+the bounded checkpoint recovery including symbolic-link rejection. It does not compile app files.
+The required catalog phase was **INFRA_ERROR / three NOT_RUN**: macOS Bash3.2 rejected an empty
+archive array under nounset and an inadequate EXIT trap left the workflow green. The missing
+actual results override its green status. The corrected helper requires real summary/xcresult/
+iOS-build artifacts and the native-only recovery exercises the original shared-source branch.
+Those45 package passes will not be reexecuted solely to repair this independent child phase.
+
 SDK source `3885b01c`, run `43732861666`, executed **15 Session passes** and iOS SDK compilation.
 Core test compilation failed on three new fixture source errors; **25 Core cases NOT_RUN** and
 catalog phase NOT_RUN. The production Core compiled in that operation; this is not a Core test

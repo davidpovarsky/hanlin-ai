@@ -1,0 +1,252 @@
+{
+  "source_sha": "8b6106ef247f12c8bc6abf1ceaed63d8373223e4",
+  "run": 43735446863,
+  "job": 132876917968,
+  "workflow_reported_status": "SUCCESS",
+  "classification": "PACKAGE_EXECUTED_PASS_REQUIRED_NATIVE_GATE_INFRA_ERROR",
+  "executed_pass": 45,
+  "reused_verified_pass": 0,
+  "failed_cases": 0,
+  "native_catalog": "INFRA_ERROR / 3 NOT_RUN; Bash3.2 empty-array fatal expansion, preflight-only artifact, no pass",
+  "ios_agentcore_compile": "PASS",
+  "source_hashes_verified": 278,
+  "artifact": {
+    "id": 14170641291,
+    "digest": "sha256:cdcc7b0010f71fa6048afa6a0cd487bfd69f016a555776f89d829ff89a916794"
+  },
+  "cases": [
+    {
+      "id": "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "ContextTests/hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testGeminiDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testCustomOpenAICompatibleDescriptor()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenRouterDescriptor()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testAnthropicDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKProviderFactoryTests/testOpenAIDescriptorAndOptions()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/realResponsesAdapterRequestsStrictSchemaAndPublishesOnlyCanonicalParts()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/officialValidationFailureIsAtomic()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/malformedRepairedAndTruncatedResponsesPublishNoParts()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/unsupportedModelsFailBeforeAnyHTTPRequest()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinNativeStructuredResponseTests/nativeSchemaKeepsTheExistingToolContinuationAndExactlyOneEffect()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeDescriptorNeverSelectsNetworkProvider()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/nativeNonTextRejectedBeforeProviderCapabilityOrDownloadPath()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinInjectedProviderTests/duplicateDefinitionsThrowBeforeDictionaryConstruction()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testParallelToolExecution()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testNonPositiveMaxStepsClampedToAtLeastOne()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testMultimodalUserMessagePartsPreserved()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/cancellationAfterFortyStopsTheActualTool()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testRealProviderTransportErrorAbortsStream()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testToolContinuationRegression()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testInvalidArgumentsReachExecutorWithoutAborting()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/defaultRunContinuesPastFortyWithDiscovery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testAdvertisedSchemaPreservesOriginalConstraints()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testDynamicToolExposure()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testUnknownToolProducesNonFatalErrorAndAllowsRecovery()",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "HanlinAISDKAgentEngineTests/testSourceAndFileStreamEventMapping()",
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "raw_hashes": {
+    "all-expected-tests.json": "420f9c1a0f3b98d0317efc1dea96011444e6a60c48accc7af44087da983d4dfb",
+    "architecture.txt": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01",
+    "core-resolve.log": "4fddd04804c4597e775ed1c37daaeaa40665ce8ed69fc489adbe2fb339c44110",
+    "core-schemes.json": "f0da7107785ccf7de484d1509a6e3c967cd41c9856a51e84829b0e8b7737ff0a",
+    "core-tests.log": "7542e8cdf450e7d25fa71b4e200ad553ea76663448bb33110ab87572ecf22a1e",
+    "CoreTests.json": "2ccfcc9bf2df2fb6dceb2b75107ee3f620c6864f5d9846431ae98aed403a2bd3",
+    "diagnostic-cli.txt": "2a3190eb0c48a767985e30ff703b7b1e5c3674d0c52b1557f0a1fd06da4ccf84",
+    "disk.txt": "0b1659e04c856d12ecab6f3a22a2e07c322eba87850e5202ccbd6371831c343e",
+    "duration.json": "94ab8285d843551ae571ea5fa896f3c256845df278d5d3e313d718e4330bec1c",
+    "expected-tests.json": "644da30b23b5fc8677b5ccede5c0cb561d792c3e69c5c7eb0bb926c83dca5136",
+    "ios-build.log": "1040ac13a602a339094b6a3a4f05235fb51b7e1964f8aac11da28d889d347273",
+    "ios-sdk.txt": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "macos-sdk.txt": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "os.txt": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+    "process-status.json": "52ee0fa485ab176baec3f51510f464f2a949128662af935cd2fcb62c644cac46",
+    "producer-clone.log": "e224fb606fc6f59f5f8997a5968869bfd31bdc39ecbfca8b7040b060ba11c991",
+    "producer-commit.txt": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+    "producer-schemes.json": "c664174e99f497fc6ebc3fcdeffed8daa885fa5f5119abe26598a83d85b14dab",
+    "producer-source-sha256.json": "677bef41e01445e17dc67a4d23c1f15337eedffc44807186716eee462d0b231f",
+    "producer-source.tar": "4e14e36d28f267f28956a9ac6751b3565808ce37809885a2988f4a2b396669cf",
+    "resolution.json": "e7cc7e1cca1a6e567181f14ef708361aa153e385a18c521269d41f195f9324fc",
+    "sdk-resolve.log": "af96313d5e720719c4a953c89a99f6cf02c6299309888ac07143ec9cae324f87",
+    "sdk-schemes.json": "cbf09fd020fdcb28960abbb0b2e6c86893770d1cbbce25599d5d4a8128f24955",
+    "sdk-tests.log": "7b6eb593cf258cfb16199bed977be2f4328de4e486a99d9c9895636bd92a48a4",
+    "SDKTests.json": "0fdd0db0b204f12627a0cad10f4a7e2a7386f659929dc3e69f88798325ed9c92",
+    "selected-results.json": "48d43f26ec57f6bbad17294b020f70feed24a576403ffc93bd769f971a09e4bb",
+    "selected-suites.json": "a9260767bea91ed2b2aa69ce9bbea7994ed2c9e3d934d9af5469e575e7c92d54",
+    "simulator-devices.json": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "simulator-runtimes.json": "bc6b790f04b8aff34bc2000724d06129a845215833730b9e1595a5acd06f3a4e",
+    "skill-health.txt": "cb3a48f14bcd4d0e67d60fe12c77d18d3de6f657d7d630b5647a6dd663a76c5a",
+    "summary.json": "0097701279a1ae2ff90130c9c7cc2978c9c4285c2736f2017d262344e7d14961",
+    "swift.txt": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "tested-source-commit.txt": "687f103e1a9022f26cb2592f232411392f9b9c68c9aee14118ffbdbc3e5d41ff",
+    "tested-source-sha256.json": "cda5b594a91faa0bc733d5716b1a91cf58f60b4849ebe8d8d176397f663e1e50",
+    "tested-source.tar": "217b3c57e8b9ee19291c82cd46ed501236edb07af4b4a8a5d24f9cc675500a7c",
+    "workflow-commit.txt": "687f103e1a9022f26cb2592f232411392f9b9c68c9aee14118ffbdbc3e5d41ff",
+    "workflow-sha256.json": "ff1f6b398f222f0eb07b96900c3ee03c6ebf2cc9f131d799a79e9dade8a916fe",
+    "xcode.txt": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+  },
+  "process_status": {
+    "producer_test_exit": null,
+    "sdk_test_exit": 0,
+    "core_test_exit": 0,
+    "ios_build_exit": 0
+  },
+  "checkpoint": "Exact original assertions completed through restore/load and symbolic-link rejection, with bounded lexical ancestry in production store. Prior failures/cancelled run retained.",
+  "not_asserted": [
+    "full CI / missing required native catalog gate",
+    "actual app compilation/SwiftData migration/Host effect/row collision",
+    "live provider generation and official renderer app integration",
+    "UI/device/release"
+  ]
+}

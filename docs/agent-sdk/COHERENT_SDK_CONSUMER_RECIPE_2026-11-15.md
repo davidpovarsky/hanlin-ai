@@ -1,10 +1,15 @@
 # Coherent SDK consumer recipe
 
 Consume this branch as one monorepo/local-package source, not a root Git package:
-`codex/hanlin-agent-sdk-wave1-20261115`. Public production package bytes are frozen at
-`9a864b3c21eaad374c93730d7877addb6726e09d`; subsequent recovery changes only the failed
-checkpoint fixture/harness plus an app-only optional-tool lifecycle correction and documentation.
-The final delivery commit is recorded in the handoff/evidence, with separate exact tested SHAs.
+`codex/hanlin-agent-sdk-wave1-20261115`. The immutable **foundation** is
+`80e755e131684337f68091b718e93b18c1162128`; its public package Sources/fixtures and four manifests/
+locks are byte-identical to the A2UI-tested18813519 product closure. Production Sources are also
+the9a864b3c package snapshot. Its checkpoint failures are separate, never a full-CI pass.
+Moving HEAD contains later native-schema/app-Host work:8b6106ef has45 actual affected package
+passes and iOS SDK compile; its catalog child was INFRA_ERROR/NOT_RUN despite a green workflow.
+d1eedf9e extracts existing app presentation declarations without changing package Sources/locks.
+Consume exact frozen tranches, not an unreviewed moving branch. See
+`APP_SESSION_PRESENTATION_HOOK_2026-11-15.md` for the later callable app seam and pending app proof.
 
 Keep `Packages/HanlinAgentSDK` and its literal `../HanlinPlatform` sibling. Link the three SDK products
 `HanlinHostContracts`, `HanlinAgentCore`, `HanlinPersistenceAdapters` into **AI_Hanlin only**.
