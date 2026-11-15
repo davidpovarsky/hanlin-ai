@@ -1,0 +1,32 @@
+{
+  "run": "43754712044",
+  "artifacts": [
+    {
+      "id": 14177409001,
+      "name": "upstream-proof-43754712044",
+      "size_in_bytes": 327229,
+      "digest": "sha256:52b6dbf3988de43ac149077772d11e5b0b314bcade80230a1d3bc353f6047df7",
+      "workflow_run": {
+        "id": 43754712044,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/renovate/semver-7.x",
+        "head_sha": "77a225a5af05de82335f387680c3e5d0b355aaeb"
+      }
+    },
+    {
+      "id": 14177109938,
+      "name": "upstream-host-43754712044",
+      "size_in_bytes": 12675877,
+      "digest": "sha256:132509366eef94b89c10bce92bd85bc514cc3962acec344cd7611b2133cbd6a5",
+      "workflow_run": {
+        "id": 43754712044,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/renovate/semver-7.x",
+        "head_sha": "77a225a5af05de82335f387680c3e5d0b355aaeb"
+      }
+    }
+  ],
+  "proofDigestVerified": "EXECUTED_PASS"
+}

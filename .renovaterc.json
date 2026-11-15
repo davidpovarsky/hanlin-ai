@@ -36,7 +36,8 @@
         "Packages/HanlinExpo*/**",
         "Fixtures/**",
         "DemoMiniApps/**",
-        "Scripts/ScriptingCompiler/**"
+        "Scripts/ScriptingCompiler/**",
+        "Packages/HanlinNativeScript*/**"
       ],
       "enabled": false
     },

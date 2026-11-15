@@ -20,7 +20,7 @@ on:
       operation:
         description: Scoped upstream operation; no merge or distribution
         type: choice
-        options: [audit, renovate, candidate, failure-demo, native-candidate]
+        options: [audit, renovate, candidate, failure-demo, swiftpm-candidate, native-candidate]
         default: audit
       candidate_pr:
         description: Same-repository isolated Host update PR (candidate/failure-demo)
@@ -302,7 +302,7 @@ jobs:
 
   upstream:
     name: Hanlin upstream acceptance
-    if: inputs.operation != 'native-candidate'
+    if: inputs.operation != 'native-candidate' && inputs.operation != 'swiftpm-candidate'
     runs-on: xcode-27
     timeout-minutes: 30
     env:
@@ -408,6 +408,32 @@ jobs:
         uses: actions/upload-artifact@v7.0.2
         with:
           name: upstream-proof-${{ github.run_id }}
+          path: build/upstream-updates
+          if-no-files-found: error
+          retention-days: 14
+
+  swiftpm:
+    name: Hanlin SwiftPM upstream acceptance
+    if: inputs.operation == 'swiftpm-candidate'
+    runs-on: xcode-27
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Execute actual pinned SwiftPM baseline and candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 Scripts/Runtime/Tests/test_swiftpm_pin.py
+          python3 Scripts/Runtime/verify-swiftpm-update.py "${{ github.repository }}" "${{ inputs.candidate_pr }}"
+      - name: Retain original SwiftPM evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: upstream-swiftpm-proof-${{ github.run_id }}
           path: build/upstream-updates
           if-no-files-found: error
           retention-days: 14

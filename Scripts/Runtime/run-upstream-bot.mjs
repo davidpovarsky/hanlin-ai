@@ -4,7 +4,7 @@ import { readFile,writeFile,mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { dependencyImpact } from './dependency-update-policy.mjs';
 
-const [repository,branch,mode='extract',onlyPackage] = process.argv.slice(2);
+const [repository,branch,mode='extract',onlyPackage,onlyFile='AI_HLY/Downstream/RuntimeCore/Node/Host/package.json'] = process.argv.slice(2);
 if (!/^[\w.-]+\/[\w.-]+$/.test(repository??'') || !/^[\w./-]+$/.test(branch??'') || !['extract','lookup','full','apply'].includes(mode)) {
   throw new Error('Expected repository branch extract|lookup|full|apply [single Host package]');
 }
@@ -17,9 +17,10 @@ Object.assign(config,{platform:'github',repositories:[repository],baseBranchPatt
   force:{automerge:false,platformAutomerge:false}});
 if(mode!=='apply')config.dryRun=mode;
 if(onlyPackage) {
-  if(!/^(?:@[\w.-]+\/)?[\w.-]+$/.test(onlyPackage))throw new Error('Invalid package name');
+  if(!/^(?:@?[\w.-]+\/)?[\w.-]+$/.test(onlyPackage))throw new Error('Invalid package name');
+  if(!['AI_HLY/Downstream/RuntimeCore/Node/Host/package.json','Packages/HanlinSkillFormat/Package.swift'].includes(onlyFile))throw new Error('Unsupported scoped consumer');
   config.force.packageRules=[{matchPackageNames:['*'],enabled:false},
-    {matchPackageNames:[onlyPackage],matchFileNames:['AI_HLY/Downstream/RuntimeCore/Node/Host/package.json'],enabled:true,automerge:false}];
+    {matchPackageNames:[onlyPackage],matchFileNames:[onlyFile],enabled:true,automerge:false}];
 }
 const file=resolve(output,'renovate-admin.json');await writeFile(file,JSON.stringify(config,null,2)+'\n');
 const token=process.env.RENOVATE_TOKEN||execFileSync('gh',['auth','token'],{encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();

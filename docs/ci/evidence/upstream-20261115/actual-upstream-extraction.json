@@ -1,0 +1,156 @@
+{
+  "run": {
+    "repository": "davidpovarsky/hanlin-ai",
+    "branch": "codex/hanlin-app-split-wave1-20261115",
+    "mode": "extract",
+    "onlyPackage": null,
+    "exitCode": 0,
+    "tool": "44.239.1",
+    "node": "v24.22.1",
+    "mergeEnabled": false,
+    "log": "build/upstream-updates/renovate.log"
+  },
+  "logSHA256": "d785906858f93e3a7d809f154c2e40430cc6b674803fe0126f58bbda8ea9eb59",
+  "selectedSourceManagers": [
+    {
+      "manager": "swift",
+      "file": "Packages/HanlinNativeScriptRuntime/Package.swift",
+      "deps": [
+        {
+          "depName": "NativeScript/ios-spm",
+          "currentValue": "9.1.0",
+          "currentDigest": null,
+          "skipReason": null,
+          "updates": [
+            {
+              "bucket": "non-major",
+              "newVersion": "9.1.1",
+              "newValue": "9.1.1",
+              "releaseTimestamp": "2026-11-12T00:18:09.000Z",
+              "newVersionAgeInDays": 3,
+              "newMajor": 9,
+              "newMinor": 1,
+              "newPatch": 1,
+              "updateType": "patch",
+              "isBreaking": false,
+              "libYears": 0.20890788305428717,
+              "branchName": "codex/renovate/nativescript-ios-spm-9.x"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "manager": "swift",
+      "file": "Packages/HanlinPlatform/Package.swift",
+      "deps": [
+        {
+          "depName": "SwiftyJSON/SwiftyJSON",
+          "currentValue": "5.0.1",
+          "currentDigest": null,
+          "skipReason": null,
+          "updates": [
+            {
+              "bucket": "non-major",
+              "newVersion": "5.0.2",
+              "newValue": "5.0.2",
+              "releaseTimestamp": "2024-03-27T14:20:23.000Z",
+              "newVersionAgeInDays": 963,
+              "newMajor": 5,
+              "newMinor": 0,
+              "newPatch": 2,
+              "updateType": "patch",
+              "isBreaking": false,
+              "libYears": 2.9988124557275855,
+              "branchName": "codex/renovate/swiftyjson-swiftyjson-5.x"
+            }
+          ]
+        },
+        {
+          "depName": "davidpovarsky/swift-ai-sdk",
+          "currentValue": "\"43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6\"\r\n        \r\n        ",
+          "currentDigest": null,
+          "skipReason": "disabled",
+          "updates": []
+        },
+        {
+          "depName": "weichsel/ZIPFoundation",
+          "currentValue": "0.9.19",
+          "currentDigest": null,
+          "skipReason": null,
+          "updates": [
+            {
+              "bucket": "non-major",
+              "newVersion": "0.9.20",
+              "newValue": "0.9.20",
+              "releaseTimestamp": "2025-09-24T18:28:59.000Z",
+              "newVersionAgeInDays": 417,
+              "newMajor": 0,
+              "newMinor": 9,
+              "newPatch": 20,
+              "updateType": "patch",
+              "isBreaking": false,
+              "libYears": 1.4770725349164668,
+              "branchName": "codex/renovate/weichsel-zipfoundation-0.x"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "manager": "swift",
+      "file": "Packages/HanlinSwiftUIBridgeGenerator/Package.swift",
+      "deps": [
+        {
+          "depName": "swiftlang/swift-syntax",
+          "currentValue": "603.0.2",
+          "currentDigest": null,
+          "skipReason": "disabled",
+          "updates": []
+        }
+      ]
+    },
+    {
+      "manager": "custom.regex",
+      "file": "Scripts/Runtime/upstream-sources.json",
+      "deps": [
+        {
+          "depName": "https://github.com/openclaw/openclaw",
+          "currentValue": "main",
+          "currentDigest": "6341f93c9c565364ea86b417f21ffde4519b51b7",
+          "skipReason": null,
+          "updates": [
+            {
+              "updateType": "digest",
+              "newValue": "main",
+              "newDigest": "aaee9202455e7af006778710cf166e953c054aa7",
+              "branchName": "codex/renovate/https-github.com-openclaw-openclaw-digest"
+            }
+          ]
+        },
+        {
+          "depName": "https://github.com/tree-sitter/tree-sitter-bash",
+          "currentValue": "master",
+          "currentDigest": "a06c2e4415e9bc0346c6b86d401879ffb44058f7",
+          "skipReason": null,
+          "updates": []
+        },
+        {
+          "depName": "https://github.com/tree-sitter/swift-tree-sitter",
+          "currentValue": "main",
+          "currentDigest": "cbe31cb3601aa29c1f64b6e4328733511126d6d5",
+          "skipReason": null,
+          "updates": []
+        },
+        {
+          "depName": "https://github.com/jpsim/Yams",
+          "currentValue": "6.2.2",
+          "currentDigest": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+          "skipReason": null,
+          "updates": []
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}
