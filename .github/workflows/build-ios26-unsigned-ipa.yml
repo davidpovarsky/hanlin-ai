@@ -214,7 +214,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Compile real SDK graph and execute affected Apple tests
-        run: bash Scripts/CI/IntegrationValidation/run_agent_sdk.sh
+        env:
+          HOST_SCHEMA_ONLY: ${{ inputs.exact_test_selector == 'HanlinAgentCoreTests/HostSchemaValidationTests' && '1' || '0' }}
+        run: |
+          if [[ "$HOST_SCHEMA_ONLY" == 1 ]]; then
+            bash Scripts/CI/IntegrationValidation/run_host_schema.sh
+          else
+            bash Scripts/CI/IntegrationValidation/run_agent_sdk.sh
+          fi
       - name: Retain complete SDK proof including failure
         if: always()
         uses: actions/upload-artifact@v7.0.2

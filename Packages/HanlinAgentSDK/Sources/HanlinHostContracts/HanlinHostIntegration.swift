@@ -8,9 +8,13 @@ public struct HanlinHostInvocation: Sendable {
     public let step: Int
     public let providerCallID: String
     public let writeGuarantee: HanlinHostWriteGuarantee
+    /// Original accepted input before the portable numeric projection. Never reconstruct it from request.arguments.
+    public let originalArgumentsJSON: Data?
     public let expectedRevision: String?
     public init(request: HanlinToolInvocationRequest, session: HanlinHostSession, runID: UUID,
-                step: Int, providerCallID: String, writeGuarantee: HanlinHostWriteGuarantee, expectedRevision: String? = nil) {
+                step: Int, providerCallID: String, writeGuarantee: HanlinHostWriteGuarantee, expectedRevision: String? = nil,
+                originalArgumentsJSON: Data? = nil) {
+        self.originalArgumentsJSON = originalArgumentsJSON
         self.request = request; self.session = session; self.runID = runID; self.step = step
         self.providerCallID = providerCallID; self.writeGuarantee = writeGuarantee; self.expectedRevision = expectedRevision
     }

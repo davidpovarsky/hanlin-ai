@@ -71,6 +71,7 @@ public actor HanlinAISDKAgentEngine {
         tools definitions: [HanlinAISDKToolDefinition],
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
+        structuredResponse: HanlinNativeStructuredResponse? = nil,
         prepareStep: @escaping @MainActor @Sendable () -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -79,6 +80,7 @@ public actor HanlinAISDKAgentEngine {
             tools: definitions,
             maxSteps: maxSteps,
             dynamicTools: dynamicTools,
+            structuredResponse: structuredResponse,
             prepareStep: { (_: Int) in prepareStep() }
         )
     }
@@ -89,6 +91,7 @@ public actor HanlinAISDKAgentEngine {
         tools definitions: [HanlinAISDKToolDefinition],
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
+        structuredResponse: HanlinNativeStructuredResponse? = nil,
         prepareStep: @escaping @MainActor @Sendable () async -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -97,6 +100,7 @@ public actor HanlinAISDKAgentEngine {
             tools: definitions,
             maxSteps: maxSteps,
             dynamicTools: dynamicTools,
+            structuredResponse: structuredResponse,
             prepareStep: { (_: Int) async in await prepareStep() }
         )
     }
@@ -107,8 +111,12 @@ public actor HanlinAISDKAgentEngine {
         tools definitions: [HanlinAISDKToolDefinition],
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
+        structuredResponse: HanlinNativeStructuredResponse? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
+        if structuredResponse != nil, !HanlinNativeStructuredResponse.supports(resolvedProvider.descriptor) {
+            throw HanlinNativeStructuredResponseError.unsupportedProviderOrModel
+        }
         // Native unsupported content must fail before SwiftAISDK prompt conversion can download
         // an image URL. This guard never selects a cloud provider or includes private payloads.
         if resolvedProvider.descriptor.kind == .appleOnDevice {
@@ -138,6 +146,10 @@ public actor HanlinAISDKAgentEngine {
             let task = Task {
                 do {
                     continuation.yield(.runStarted)
+                    if let structuredResponse {
+                        continuation.yield(.structuredResponseStarted(messageID: structuredResponse.messageID,
+                            channel: HanlinChatStructuredPart.channel))
+                    }
                     var currentMessages = modelMessages
                     var currentDefinitions = definitions
                     var currentTools = initialTools
@@ -169,6 +181,7 @@ public actor HanlinAISDKAgentEngine {
                             messages: currentMessages,
                             tools: currentTools,
                             providerOptions: resolvedProvider.providerOptions,
+                            experimentalOutput: structuredResponse?.specification(),
                             prepareStep: { options in
                                 let globalStep = offsetSnapshot + options.stepNumber
                                 let preparation = await prepareStep(globalStep)
@@ -192,6 +205,7 @@ public actor HanlinAISDKAgentEngine {
                         var localStepIndex = -1
                         var meaningfulEventCount = 0
                         var shouldReloadToolsAndContinue = false
+                        var completeResponseText = ""
 
                         for try await part in result.fullStream {
                             try Task.checkCancellation()
@@ -202,13 +216,26 @@ public actor HanlinAISDKAgentEngine {
                                 localStepIndex += 1
                                 meaningfulEventCount = 0
                                 finalVisibleCharacters = 0
+                                completeResponseText = ""
                             case .textDelta(_, let text, _):
+                                if structuredResponse != nil {
+                                    guard text.utf8.count <= 1_048_576 - completeResponseText.utf8.count else {
+                                        throw HanlinNativeStructuredResponseError.outputLimitExceeded
+                                    }
+                                    completeResponseText += text
+                                    break
+                                }
                                 finalVisibleCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                                 if !text.isEmpty {
                                     meaningfulEventCount += 1
                                     continuation.yield(.textDelta(text))
                                 }
                             case .custom(let kind, let metadata):
+                                // Native schema mode has one authoritative output path, not an
+                                // additional injected custom stream that can bypass final validation.
+                                if structuredResponse != nil, kind == HanlinChatStructuredPart.channel {
+                                    throw HanlinChatStructuredPartError.unadvertisedChannel
+                                }
                                 if kind == HanlinChatStructuredPart.channel,
                                    self.resolvedProvider.descriptor.structuredPartChannel != HanlinChatStructuredPart.channel {
                                     throw HanlinChatStructuredPartError.unadvertisedChannel
@@ -275,6 +302,16 @@ public actor HanlinAISDKAgentEngine {
                                         stepOffset = nextOffset
                                         shouldReloadToolsAndContinue = true
                                         break
+                                    }
+                                }
+                                if let structuredResponse {
+                                    guard reason == .stop else { throw HanlinNativeStructuredResponseError.incompleteResponse }
+                                    let completeParts = try await structuredResponse.decodeComplete(completeResponseText)
+                                    for part in completeParts {
+                                        try Task.checkCancellation()
+                                        guard try structuredParts.admit(part) else { continue }
+                                        hasStructuredContent = true
+                                        continuation.yield(.structuredPart(part))
                                     }
                                 }
                                 guard finalVisibleCharacters > 0 || hasSuccessfulToolAction || hasStructuredContent else {

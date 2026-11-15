@@ -1,25 +1,49 @@
 # Coherent SDK consumer recipe
 
-Consume this branch as one monorepo/local-package source, not a root Git package:
-`codex/hanlin-agent-sdk-wave1-20261115`. Public production package bytes are frozen at
-`9a864b3c21eaad374c93730d7877addb6726e09d`; subsequent recovery changes only the failed
-checkpoint fixture/harness plus an app-only optional-tool lifecycle correction and documentation.
-The final delivery commit is recorded in the handoff/evidence, with separate exact tested SHAs.
+Current integration consumes the package source from SDK handoff
+`62db3a1cff9884b363d4c457c3c3a88c803363b9`: source matches the Apple-qualified
+`9c42cddd14f76741ce0af7045381c7a9a7db0f79`, with the actual resolved SDK lock copied from that
+run. This supersedes the older frozen80 package input; its historical evidence remains separate.
+Use this monorepo's literal local packages, not its root as a Git package. Later app-owner,
+Host-executor, history UI and Split changes are not included in this package-only update.
 
 Keep `Packages/HanlinAgentSDK` and its literal `../HanlinPlatform` sibling. Link the three SDK products
 `HanlinHostContracts`, `HanlinAgentCore`, `HanlinPersistenceAdapters` into **AI_Hanlin only**.
-MiniApps does not acquire an agent/model engine. No project.pbxproj edits were made in this lane.
-Existing app code also retains its existing HanlinChatCore/PlatformContracts dependencies.
+MiniApps does not acquire an agent/model engine. Integration already links these products and
+links Core into the direct unit target; this package-only update makes no further project edit.
+Existing app code retains its HanlinChatCore/PlatformContracts dependencies.
 
-Platforms: iOS27/macOS26, Swift tools6.2/language6. Both package manifests and raw locks are EXACT
-6e8dd11 integration inputs, pinning the unchanged producer `e7bf34111e603ca977becd007dd4e5bb109af857`:
+Platforms remain iOS27/macOS26. The SDK manifest uses tools6.2/language6; the exact new validation
+dependency requires Swift6.4, qualified here with Apple Swift6.4.2/Xcode27.2. JSON/JSONSchema are
+private AgentCore dependencies at `f2a0d12da7028edfbcb0cb307f19a921a3a12d03`. The producer remains
+`e7bf34111e603ca977becd007dd4e5bb109af857`; neither Platform nor producer pins advance:
 
 | Input | SHA256 |
 | --- | --- |
-| SDK Package.swift | 8a0846341234f25127f1625547cf7c2a0ca23047e32f9ae2d7d9e1c91070029e |
-| SDK Package.resolved | 0b190b1d589a67422f7c7847c3a9c70533d89dd82e4ee7589b73836d277ce2f6 |
+| SDK Package.swift | 22f30a52c2b08e3a255c30c0887c35e8d2cdc1b0ca6b84648fbacd7f678b8d2c |
+| SDK Package.resolved | f1d3bc296d9140741423eac850a1426eb8cf2e6a9aea9db21079746f7c573474 |
 | Platform Package.swift | 3f8cbcbad6b07b509a7976fe0577315481f25358ce34a01e505f2d1b04821066 |
 | Platform Package.resolved | 7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17 |
+
+## Qualified package schema/raw boundary
+
+[Run43742612086](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43742612086) executed
+18 Session,6 Context and9 schema/raw controls: **33 EXECUTED_PASS**, with actual iOS AgentCore
+compilation PASS. This is the original run, not a new execution at the integration SHA.
+Artifact14172853768 SHA-256 `23f962a56890524d03e6cde65eadf360428197c067aa0c7ed69c2cb86c98cd20`
+was independently downloaded and all ZIP CRCs checked. All245 archived source hashes match both
+their source tar and original Git; the two raw Mac locks match the handed-off package graph.
+The actual33 unique xcresult case IDs, process exits, dependency source/revision and retained
+Apache-2.0 license were checked. Source closure is exact after importing the15 changed package
+paths; all other archived package inputs remain unchanged. See
+`evidence/host-schema-43742612086.json` and `HOST_SCHEMA_VALIDATOR_DECISION_2026-11-15.md`.
+
+The existing manual SDK proof job accepts exact selector
+`HanlinAgentCoreTests/HostSchemaValidationTests` to run that same affected package contract;
+automatic triggers and other job routes are unchanged. No proof run was dispatched here.
+This does not qualify the actual app Host, broad MCP, live provider, A2UI renderer, SwiftData,
+XCUITest, device or release. The new optional model-response implementation below is documented
+in `NATIVE_SCHEMA_MODEL_PATH_2026-11-15.md`; its older package fixtures remain separate evidence.
 
 ## Live model/Host binding
 
@@ -86,10 +110,10 @@ installed selection/send, XCUITest, eligible native generation and physical devi
 Provider adapters must advertise `structuredPartChannel: HanlinChatStructuredPart.channel` before
 the canonical engine accepts the declared custom channel. `providerContent()` uses the existing
 SwiftAISDK custom event, not prose/fenced JSON. Ordinary cloud/native descriptors currently advertise
-nil: **real production structured-model output is UNSUPPORTED/NOT_RUN**, not claimed from fixtures.
-The rich custom-channel cases prove an injected provider path through the real core/Session/store.
-Connecting an actual production response path requires an explicit adapter/negotiated backend channel
-or a schema-backed presentation-output tool in the same canonical tool loop, plus provider-wire/model proof.
+nil. The current packages additionally implement the explicit opt-in MODEL Responses contract in
+`NATIVE_SCHEMA_MODEL_PATH_2026-11-15.md`; ordinary prose does not acquire Surface authority.
+Actual installed app/live-model output remains **NOT_RUN**. Injected/custom-channel and HTTP fixture
+proofs do not substitute for the combined enabled application/provider/official-renderer path.
 
 Public contracts and recovery acceptance rules:
 `CONTRACTS_WAVE_RESTART_2026-11-15.md`, `VALIDATION_CONTRACT_V2.md`.

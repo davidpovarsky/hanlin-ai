@@ -4,6 +4,25 @@ import HanlinPlatformContracts
 import Testing
 
 @Suite struct ContextTests {
+    @Test func hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade() throws {
+        let value = HanlinHostWriteGuarantee.hostManagedMutation
+        let encoded = try JSONEncoder().encode(value)
+        #expect(String(decoding: encoded, as: UTF8.self) == "\"hostManagedMutation\"")
+        #expect(try JSONDecoder().decode(HanlinHostWriteGuarantee.self, from: encoded) == value)
+        let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let logical = HanlinLogicalToolID(providerInstanceID: try .init(validating: "fixture"), localToolID: try .init(validating: "mutate"))
+        let revision = try HanlinDescriptorRevision(1)
+        let schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(Data(#"{"type":"object"}"#.utf8), defaultDialect: .draft2020_12)
+        let descriptor = HanlinToolDescriptor(logicalID: logical, descriptorRevision: revision, owner: .system,
+            title: try .init(["en": "Mutation"]), summary: try .init(["en": "Host-managed mutation"]),
+            inputSchema: schema, risk: .write, presentation: .init())
+        let tool = HanlinHostTool(route: .init(alias: "mutate", logicalToolID: logical, descriptorRevision: revision),
+            descriptor: descriptor, writeGuarantee: value)
+        let old = HanlinHostCatalog(revision: .init(1), context: context, tools: [tool])
+        #expect(throws: HanlinHostError.unsupportedVersion) { try old.validate() }
+        try HanlinHostCatalog(apiVersion: .init(major: 1, minor: 1), revision: .init(1), context: context, tools: [tool]).validate()
+    }
     @Test func decodedNamespacesCannotBypassValidation() throws {
         #expect(throws: HanlinHostError.invalidContext) {
             try JSONDecoder().decode(HanlinConversationNamespace.self, from: Data(#"{"app":"","account":"a","workspace":"w","space":"s"}"#.utf8))

@@ -12,7 +12,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../HanlinPlatform"),
-        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "e7bf34111e603ca977becd007dd4e5bb109af857")
+        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "e7bf34111e603ca977becd007dd4e5bb109af857"),
+        .package(url: "https://github.com/ThorFuchs/Swift-JSON.git", revision: "f2a0d12da7028edfbcb0cb307f19a921a3a12d03")
     ],
     targets: [
         .target(name: "HanlinHostContracts", dependencies: [.product(name: "HanlinPlatformContracts", package: "HanlinPlatform")]),
@@ -20,7 +21,9 @@ let package = Package(
             "HanlinHostContracts",
             .product(name: "HanlinChatCore", package: "HanlinPlatform"),
             .product(name: "AISDKProvider", package: "swift-ai-sdk"),
-            .product(name: "SwiftAISDK", package: "swift-ai-sdk")
+            .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
+            .product(name: "JSON", package: "Swift-JSON"),
+            .product(name: "JSONSchema", package: "Swift-JSON")
         ]),
         .target(name: "HanlinPersistenceAdapters", dependencies: ["HanlinHostContracts"]),
         .target(name: "HanlinSDKTestFixtures", dependencies: ["HanlinHostContracts"], path: "Tests/Fixtures"),

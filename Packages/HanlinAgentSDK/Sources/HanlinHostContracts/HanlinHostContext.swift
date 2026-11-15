@@ -101,13 +101,21 @@ public struct HanlinHostSession: Codable, Hashable, Sendable {
 
 public enum HanlinHostWriteGuarantee: String, Codable, Sendable {
     case readOnly, independentObjectCreation, atomicRevisionMutation
+    /// General/external mutation delegated to the original host. No CAS, remote
+    /// idempotency or rollback is promised; ambiguous post-dispatch outcomes are uncertain.
+    case hostManagedMutation
 }
 
 public struct HanlinHostTool: Sendable {
     public let route: HanlinToolRoute
     public let descriptor: HanlinToolDescriptor
     public let writeGuarantee: HanlinHostWriteGuarantee
-    public init(route: HanlinToolRoute, descriptor: HanlinToolDescriptor, writeGuarantee: HanlinHostWriteGuarantee) {
+    /// Optional original host schema before the portable descriptor projection. This is not
+    /// evidence of an external provider's source fidelity; the Host owns that provenance check.
+    public let originalInputSchemaJSON: Data?
+    public init(route: HanlinToolRoute, descriptor: HanlinToolDescriptor, writeGuarantee: HanlinHostWriteGuarantee,
+                originalInputSchemaJSON: Data? = nil) {
+        self.originalInputSchemaJSON = originalInputSchemaJSON
         self.route = route; self.descriptor = descriptor; self.writeGuarantee = writeGuarantee
     }
 }
@@ -125,6 +133,9 @@ public struct HanlinHostCatalog: Sendable {
 
     public func validate() throws {
         guard apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
+        guard apiVersion.minor >= 1 || !tools.contains(where: { $0.writeGuarantee == .hostManagedMutation }) else {
+            throw HanlinHostError.unsupportedVersion
+        }
         var aliases = Set<String>()
         var identities = Set<HanlinLogicalToolID>()
         for tool in tools {
