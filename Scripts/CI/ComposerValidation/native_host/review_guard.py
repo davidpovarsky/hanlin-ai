@@ -14,6 +14,7 @@ from guards import (native_settings, environment, owned_boot, destination, obser
                     created_identity, owned_state_json, focused_observations, HELP_CAPTURE_SHA256)
 from run_native import command_plan, TEST_SECONDS, RUN_SECONDS, FOCUSED_CASE, FOCUSED_SELECTOR
 from freeze_review import review_files
+from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
 
 BASE = '67642faaa8f16c89eb0e2330db56291c35c61c06'
 BASE_WORKFLOW_SHA256 = '9276edf7542e6bf2e530dccc3e7f3f0819d1251db6d7e40f47d71630c4e5415d'
@@ -163,7 +164,7 @@ def source_controls():
     altered = copy.deepcopy(contract)
     altered['query_template'] = ['xcrun', 'simctl', 'list', '-j']
     reject('query-global-fallback-template', owned_devices_command, altered, name)
-    ready = {key: True for key in ['owned_query_help_confirmed', 'native_settings_confirmed', 'owned_boot_confirmed', 'owned_sdk_destination_confirmed']}
+    ready = {key: True for key in ['owned_readiness_help_confirmed', 'native_settings_confirmed', 'owned_boot_confirmed', 'owned_sdk_destination_confirmed', 'precreated_instance_ownership_confirmed', 'owned_display_confirmed']}
     ready['test_commands'] = 0
     require_pretest(ready)
     passed.append('synthetic-positive-all-actual-pretest-predicates')
@@ -268,89 +269,111 @@ def source_controls():
     require([item for item in plan['test'] if item.startswith('-only-testing:')] == ['-only-testing:' + FOCUSED_SELECTOR] and
             FOCUSED_SELECTOR == 'AI_HanlinTests/' + FOCUSED_CASE and FOCUSED_CASE in expected,
             'one exact module/suite/frozen-function selector; no suite-wide or alternate selection')
-    return passed, rejected, plan
+    extra_pass, extra_reject = precreated_controls()
+    return passed + extra_pass, rejected + extra_reject, plan
+
+
+def precreated_controls():
+    passed, rejected = [], []
+    def rejects(label, fn, *args):
+        try: fn(*args)
+        except ValueError: rejected.append(label)
+        else: raise ValueError('precreated negative accepted: ' + label)
+    context = {'RUNNER_ENVIRONMENT': 'github-hosted', 'RUNNER_OS': 'macOS', 'RUNNER_ARCH': 'ARM64',
+               'GITHUB_RUN_ID': '1234567890', 'GITHUB_RUN_ATTEMPT': '1', 'GITHUB_JOB': 'focused-composer-tests',
+               'RUNNER_NAME': 'image-runner', 'ImageVersion': 'fixture-only'}
+    instance = runner_instance(context, UDI, '25A123', 'synthetic-host')
+    runtime = {'isAvailable': True, 'version': '27.2', 'buildversion': '24B8117',
+               'identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-2', 'supportedArchitectures': ['arm64'],
+               'platform': 'iOS', 'isInternal': False,
+               'supportedDeviceTypes': [{'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro'}]}
+    model = {'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro', 'name': 'iPhone 18 Pro'}
+    device = {'udid': UDI, 'name': model['name'], 'state': 'Shutdown', 'isAvailable': True, 'deviceTypeIdentifier': model['identifier']}
+    before = {'runtimes': [runtime], 'devicetypes': [model], 'devices': {runtime['identifier']: [device]}}
+    claim = claim_precreated(before, instance)
+    require(claim['udid'] == UDI and claim['initial_state'] == 'Shutdown' and
+            not claim['UUID_globally_unique_between_VMs'] and not claim['created_erased_reset_or_renamed'], 'precreated ownership, no readiness inference')
+    passed.append('synthetic-precreated-run-instance-ownership-with-initial-state')
+    second = runner_instance(context, 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE', '25A123', 'synthetic-host')
+    require(claim_precreated(before, second)['runner_instance']['instance_fingerprint'] != instance['instance_fingerprint'],
+            'same image UUID on different VMs must have different ownership')
+    passed.append('synthetic-image-UUID-reuse-does-not-reuse-VM-ownership')
+    for key, value in [('RUNNER_ENVIRONMENT', 'self-hosted'), ('RUNNER_OS', 'Windows'), ('RUNNER_ARCH', 'X64'),
+                       ('GITHUB_RUN_ATTEMPT', '2'), ('GITHUB_RUN_ID', ''), ('GITHUB_JOB', ''), ('RUNNER_NAME', '')]:
+        rejects('instance-' + key, runner_instance, dict(context, **{key: value}), UDI, '25A123', 'synthetic-host')
+    changed = dict(instance, hostname='another-vm')
+    rejects('mutated-instance-fingerprint', claim_precreated, before, changed)
+    for key, value in [('state', 'Creating'), ('isAvailable', False), ('name', 'iPhone 18 Pro Max'),
+                       ('deviceTypeIdentifier', 'other')]:
+        changed = copy.deepcopy(before)
+        changed['devices'][runtime['identifier']][0][key] = value
+        rejects('precreated-' + key, claim_precreated, changed, instance)
+    changed = copy.deepcopy(before)
+    changed['devices'][runtime['identifier']].append(dict(device))
+    rejects('duplicate-precreated-UUID', claim_precreated, changed, instance)
+    changed = copy.deepcopy(before)
+    changed['devices'] = {}
+    rejects('no-precreated-device-no-create-fallback', claim_precreated, changed, instance)
+    boot_help, io_help = 'Usage: simctl bootstatus <device> [-b]', 'Usage: simctl io <device> screenshot'
+    require(readiness_help(boot_help, io_help)['readiness_budget_seconds'] == 600 and READINESS_SECONDS == 600,
+            'one shared ten-minute event readiness budget')
+    rejects('undocumented-blocking-flag', readiness_help, boot_help.replace('-b', ''), io_help)
+    rejects('undocumented-display-command', readiness_help, boot_help, io_help.replace('screenshot', ''))
+    passed.append('synthetic-installed-help-usage-predicates-only')
+    return passed, rejected
 
 
 def runner_flow(source):
     tree = ast.parse(source)
-    calls = [node for node in ast.walk(tree) if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
-             and node.func.attr == 'call' and node.args and isinstance(node.args[0], ast.Constant)]
-    labels = {label: [n for n in calls if n.args[0].value == label] for label in [
-        'installed-simctl-list-help', 'simulators-before', 'create-owned-device', 'native-target-build-settings',
-        'boot-owned-device', 'bootstatus-owned-device', 'owned-device-state-after-boot', 'native-sdk-destinations', 'native-test']}
-    require(all(len(nodes) == 1 for nodes in labels.values()), 'one call site per preflight phase/test, no alternate query')
-    ordered = [nodes[0].lineno for nodes in labels.values()]
-    require(ordered == sorted(ordered), 'required help/create/settings-before-boot/filtered-state/eligibility/test ordering')
-    cap_map = {'installed-simctl-list-help': 30, 'simulators-before': 30, 'create-owned-device': 30,
-               'native-target-build-settings': 120, 'boot-owned-device': 30, 'bootstatus-owned-device': 180,
-               'owned-device-state-after-boot': 30, 'native-sdk-destinations': 120,
-               'actual-tests-export': 120, 'shutdown-owned-device': 60}
-    for label, cap in cap_map.items():
-        matching = [n for n in calls if n.args[0].value == label]
-        require(len(matching) == 1 and isinstance(matching[0].args[1], ast.Constant) and matching[0].args[1].value == cap,
-                'unchanged bounded command: ' + label)
-    test = labels['native-test'][0]
+    calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+             and n.func.attr == 'call' and n.args and isinstance(n.args[0], ast.Constant)]
+    phases = ['installed-bootstatus-help', 'installed-io-help', 'host-boot-session', 'host-os-image-build',
+              'simulators-before', 'native-target-build-settings', 'boot-owned-device', 'bootstatus-owned-device',
+              'owned-boot-screenshot', 'native-sdk-destinations', 'native-test']
+    by_label = {label: [n for n in calls if n.args[0].value == label] for label in phases}
+    require(all(len(nodes) == 1 for nodes in by_label.values()), 'one command site per phase, no alternate device/test')
+    require([by_label[x][0].lineno for x in phases] == sorted(by_label[x][0].lineno for x in phases), 'help/instance/ownership/settings/readiness/test order')
+    named = lambda name: [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == name]
+    test = by_label['native-test'][0]
+    require(len(named('claim_precreated')) == 1 and named('claim_precreated')[0].lineno < by_label['native-target-build-settings'][0].lineno,
+            'claim actual inventory in actual runner instance before device operations')
+    require(len(named('require_pretest')) == 1 and by_label['native-sdk-destinations'][0].lineno < named('require_pretest')[0].lineno < test.lineno,
+            'all actual ownership/readiness predicates before test')
+    require("device = ownership['udid']" in source and 'owned-device-state-after-boot' not in source and 'create-owned-device' not in source,
+            'selected exact precreated identity; no cold create/name-enumeration route')
+    require("if ownership['initial_state'] != 'Booted':" in source, 'preserve initial booted state')
+    require("readiness_deadline = readiness_start + READINESS_SECONDS" in source and 'time.sleep' not in source,
+            'one shared bounded event-based readiness budget, no arbitrary sleeps')
+    require("state['owned_display_confirmed'] = True" in source and ".startswith(b'\\x89PNG\\r\\n\\x1a\\n')" in source,
+            'actual display response required, not available/bootstatus alone')
+    require("'precreated_instance_ownership_confirmed': False" in source and "'owned_display_confirmed': False" in source,
+            'initial ownership/display readiness must be false')
     require(isinstance(test.args[1], ast.Name) and test.args[1].id == 'TEST_SECONDS' and TEST_SECONDS == 900 and RUN_SECONDS == 2100,
-            'unchanged single test/runner caps')
-    global_lists = [n for n in calls if isinstance(n.args[2], ast.List) and all(isinstance(x, ast.Constant) for x in n.args[2].elts) and
-                    ast.literal_eval(n.args[2]) == ['xcrun', 'simctl', 'list', '-j']]
-    require(len(global_lists) == 1 and global_lists[0].args[0].value == 'simulators-before', 'only initial global inventory; no post-boot/global fallback')
-    help_call = labels['installed-simctl-list-help'][0]
-    require(ast.literal_eval(help_call.args[2]) == ['xcrun', 'simctl', 'help', 'list'], 'actual installed help must be captured')
-    filtered_call = labels['owned-device-state-after-boot'][0]
-    require(isinstance(filtered_call.args[2], ast.Name) and filtered_call.args[2].id == 'owned_query', 'post-state must use installed-help-derived owned query')
-    named_calls = lambda name: [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == name]
-    for name, lower, upper in [('simctl_list_contract', help_call.lineno, labels['create-owned-device'][0].lineno),
-                               ('owned_name', labels['simulators-before'][0].lineno, labels['create-owned-device'][0].lineno),
-                               ('created_identity', labels['create-owned-device'][0].lineno, labels['native-target-build-settings'][0].lineno),
-                               ('native_settings', labels['native-target-build-settings'][0].lineno, labels['boot-owned-device'][0].lineno),
-                               ('owned_boot', filtered_call.lineno, labels['native-sdk-destinations'][0].lineno),
-                               ('destination', labels['native-sdk-destinations'][0].lineno, test.lineno),
-                               ('require_pretest', labels['native-sdk-destinations'][0].lineno, test.lineno)]:
-        matches = named_calls(name)
-        require(len(matches) == 1 and lower < matches[0].lineno < upper, 'actual predicate ordering: ' + name)
-    initial = [n for n in ast.walk(tree) if isinstance(n, ast.Dict) and any(isinstance(k, ast.Constant) and k.value == 'owned_boot_confirmed' for k in n.keys)]
-    require(len(initial) == 1, 'initial preflight state')
-    flags = {k.value: v.value for k, v in zip(initial[0].keys, initial[0].values) if isinstance(k, ast.Constant) and isinstance(v, ast.Constant)}
-    require(flags['owned_boot_confirmed'] is False and flags['owned_sdk_destination_confirmed'] is False, 'created/settings phase cannot declare readiness')
-    boot_assignments = [n for n in ast.walk(tree) if isinstance(n, ast.Assign) and any(isinstance(t, ast.Subscript) and isinstance(t.slice, ast.Constant)
-                        and t.slice.value == 'owned_boot_confirmed' for t in n.targets)]
-    require(len(boot_assignments) == 1 and named_calls('owned_boot')[0].lineno < boot_assignments[0].lineno < named_calls('destination')[0].lineno,
-            'boot-positive state only after actual filtered proof')
-    require(not any(isinstance(n, (ast.For, ast.While)) and any(n.lineno < call.lineno <= n.end_lineno for nodes in labels.values() for call in nodes)
-                    for n in ast.walk(tree)), 'no retry/query/device/test loops')
-    return {'phase_order': list(labels), 'settings_before_boot': True, 'global_post_boot_queries': 0,
-            'owned_post_boot_query_calls': 1, 'test_call_sites': 1, 'readiness_requires_actual_filtered_state': True}
+            'same single finite focused test and runner cap')
+    require(not any(isinstance(n, (ast.For, ast.While)) and any(n.lineno < c.lineno <= n.end_lineno for c in calls) for n in ast.walk(tree)),
+            'no device/readiness/test retry loops')
+    for label, cap in [('actual-tests-export', 120), ('shutdown-owned-device', 60)]:
+        nodes = [n for n in calls if n.args[0].value == label]
+        require(len(nodes) == 1 and isinstance(nodes[0].args[1], ast.Constant) and nodes[0].args[1].value == cap, 'retained export/teardown cap')
+    return {'phase_order': phases, 'ownership': CONTRACT, 'readiness_seconds': 600,
+            'post_boot_name_queries': 0, 'cold_device_creations': 0, 'test_call_sites': 1, 'no_retry_loops': True}
 
 
 def flow_negative_controls(source):
     mutations = {
         'missing-all-predicates-gate': source.replace('require_pretest(state)', 'pass'),
-        'premature-boot-ready': source.replace("'owned_boot_confirmed': False", "'owned_boot_confirmed': True"),
-        'missing-actual-post-state-proof': source.replace("actual = owned_boot(owned_state_json(runner.text('owned-device-state-after-boot')), before, runtime, creation)", 'actual = {}'),
-        'post-boot-global-fallback': source.replace("30, owned_query)", "30, ['xcrun', 'simctl', 'list', '-j'])"),
-        'extended-post-query-cap': source.replace("'owned-device-state-after-boot', 30", "'owned-device-state-after-boot', 60"),
+        'missing-actual-instance-ownership': source.replace('ownership = claim_precreated(before, instance)', 'ownership = {}'),
+        'premature-display-ready': source.replace("'owned_display_confirmed': False", "'owned_display_confirmed': True"),
+        'unbounded-readiness': source.replace('readiness_deadline = readiness_start + READINESS_SECONDS', 'readiness_deadline = float("inf")'),
+        'wrong-device-at-test': source.replace("device = ownership['udid']", 'device = "another-device"'),
         'test-retry-loop': source.replace("        status = runner.call('native-test'", "        for _ in range(2):\n            status = runner.call('native-test'"),
     }
-    tree = ast.parse(source)
-    execute = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'execute')
-    block = next(n for n in execute.body if isinstance(n, ast.Try))
-    def is_call(node, label):
-        return isinstance(node, ast.Expr) and isinstance(node.value, ast.Call) and node.value.args and isinstance(node.value.args[0], ast.Constant) and node.value.args[0].value == label
-    settings = next(n for n in block.body if is_call(n, 'native-target-build-settings'))
-    block.body.remove(settings)
-    boot_index = next(i for i, n in enumerate(block.body) if is_call(n, 'boot-owned-device'))
-    block.body.insert(boot_index + 1, settings)
-    mutations['settings-after-boot'] = ast.unparse(tree)
     rejected = []
     for name, mutated in mutations.items():
-        require(mutated != source, 'source-flow mutation did not apply: ' + name)
-        try:
-            runner_flow(mutated)
-        except ValueError:
-            rejected.append(name)
-        else:
-            raise ValueError('incorrectly accepted source control flow: ' + name)
+        require(mutated != source, 'source mutation did not apply: ' + name)
+        try: runner_flow(mutated)
+        except ValueError: rejected.append(name)
+        else: raise ValueError('incorrectly accepted source flow: ' + name)
     return rejected
 
 
@@ -404,6 +427,7 @@ def packet():
             'apple_build_test_or_device_action': 'NOT_RUN', 'full_app_acceptance': False,
             'accepted_generator_commit': BASE, 'source': native.SOURCE, 'owner': native.OWNER,
             'execution_environment_contract': {'version': 'composer-runtime-27.2-v1-20261115',
+                'ownership_readiness_contract': CONTRACT, 'readiness_seconds': READINESS_SECONDS,
                 'runtime_identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-2', 'version_number': '27.2', 'build': '24B8117',
                 'Xcode': '27.2/27B52', 'architecture': 'arm64', 'device': 'iPhone 18 Pro',
                 'reason': 'explicit manager decision after actual27.0 simulator hang run43722542700',
@@ -425,12 +449,12 @@ def packet():
             'positive_source_controls': positive, 'negative_source_controls_rejected': negative,
             'workflow_controls': workflow, 'review_only_command_plan_not_executed': plan,
             'review_only_owned_query_not_executed': owned_devices_command(simctl_list_contract(HELP_CAPTURE_TEXT, ''), 'Hanlin-NativeComposer-1234567890'),
-            'budgets_seconds': {'runner': RUN_SECONDS, 'version_inventory_create_boot': 30, 'bootstatus': 180,
+            'budgets_seconds': {'precreated_readiness_shared': READINESS_SECONDS, 'runner': RUN_SECONDS, 'version_inventory_create_boot': 30, 'bootstatus': 180,
                                'each_native_metadata_query': 120, 'only_test': TEST_SECONDS, 'export': 120, 'owned_shutdown': 60},
             'raw_retention': ['commands.json and separate stdout/stderr per command', 'native-inputs.json and native-source-inputs.tar',
-                              'actual installed simctl help list stdout/stderr + raw hashes + recognized contract',
-                              'one exact owned-UUID filtered devices query + raw post-state; initial runtime/type origins explicit',
-                              'native settings JSON + exact SDK destinations + predicates', 'owned device provenance before/after boot',
+                              'actual installed bootstatus/io help stdout/stderr + recognized readiness commands',
+                              'run-instance/image boot UUID + deterministic precreated claim; initial state/runtime/type origins explicit',
+                              'native settings JSON + exact SDK destinations + predicates', 'exact-device blocking bootstatus/display PNG + SDK destination eligibility; no post-boot name enumeration',
                               'ComposerNative.xcresult when actually produced', 'actual tests export and per-method observations',
                               'unexpected framework nodes separate from authored 12', 'numeric signedDelta raw lines only, no inferred metrics'],
             'source_file_sha256': {p.relative_to(native.REPO).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()

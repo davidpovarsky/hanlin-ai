@@ -181,10 +181,11 @@ def owned_boot(inventory, before, runtime, creation):
 
 
 def require_pretest(state):
-    required = ['owned_query_help_confirmed', 'native_settings_confirmed',
+    required = ['owned_readiness_help_confirmed', 'native_settings_confirmed',
+                'precreated_instance_ownership_confirmed', 'owned_display_confirmed',
                 'owned_boot_confirmed', 'owned_sdk_destination_confirmed']
     require(all(state.get(key) is True for key in required) and type(state.get('test_commands')) is int and state['test_commands'] == 0,
-            'actual installed-help support, both native settings, filtered owned boot and SDK eligibility required before the only test')
+            'actual installed readiness help, run-instance ownership, both native settings, boot/display and SDK eligibility required before the only test')
 
 
 def destination(stdout, stderr, udid):

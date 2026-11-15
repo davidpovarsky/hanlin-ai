@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import signal
 import shutil
+import socket
 import subprocess
 import sys
 import tarfile
@@ -15,9 +16,10 @@ from datetime import datetime, timezone
 
 sys.dont_write_bytecode = True
 import prepare_native as native
-from guards import (native_settings, environment, owned_boot, destination, observations, require,
-                    simctl_list_contract, owned_devices_command, require_pretest,
-                    owned_name, created_identity, owned_state_json, focused_observations, ENVIRONMENT_CONTRACT_VERSION, RUNTIME_ID, RUNTIME_VERSION, RUNTIME_BUILD)
+from guards import (native_settings, environment, destination, require, require_pretest,
+                    focused_observations, ENVIRONMENT_CONTRACT_VERSION, RUNTIME_ID, RUNTIME_VERSION, RUNTIME_BUILD)
+from precreated_readiness import runner_instance, claim_precreated, readiness_help, CONTRACT, READINESS_SECONDS
+
 
 XCODE = '/Applications/Xcode_27.2.app/Contents/Developer'
 TEST_SECONDS = 900
@@ -114,7 +116,8 @@ def execute():
              'product_composer_acceptance': 'OPEN',
              'started_at_utc': stamp(), 'status': 'PREPARING', 'test_commands': 0,
              'native_settings_confirmed': False, 'owned_sdk_destination_confirmed': False,
-             'owned_query_help_confirmed': False, 'owned_boot_confirmed': False,
+             'owned_readiness_help_confirmed': False, 'owned_boot_confirmed': False,
+             'precreated_instance_ownership_confirmed': False, 'owned_display_confirmed': False,
              'xcodebuild_test_exit_code': None, 'apple_pass_claim': False}
     runner.save('run-state.json', state)
     device, project_dir = None, None
@@ -162,34 +165,29 @@ def execute():
         workflow = native.REPO / '.github/workflows/build-ios26-unsigned-ipa.yml'
         harness = [*sorted(p for p in native.HERE.rglob('*') if p.is_file()), workflow]
         runner.save('harness-sha256.json', {p.relative_to(native.REPO).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in harness})
-        runner.call('installed-simctl-list-help', 30, ['xcrun', 'simctl', 'help', 'list'])
-        help_stdout = runner.text('installed-simctl-list-help')
-        help_stderr = (evidence / 'installed-simctl-list-help.stderr').read_text(encoding='utf-8', errors='replace')
-        help_contract = simctl_list_contract(help_stdout, help_stderr)
-        help_receipt = dict(help_contract, raw_stream_sha256={stream: hashlib.sha256(
-            (evidence / ('installed-simctl-list-help.' + stream)).read_bytes()).hexdigest() for stream in ['stdout', 'stderr']})
-        runner.save('installed-simctl-list-help-guard.json', help_receipt)
-        state['owned_query_help_confirmed'] = True
-        runner.save('run-state.json', state)
+        runner.call('installed-bootstatus-help', 30, ['xcrun', 'simctl', 'help', 'bootstatus'])
+        runner.call('installed-io-help', 30, ['xcrun', 'simctl', 'help', 'io'])
+        def help_text(label):
+            return runner.text(label) + (evidence / (label + '.stderr')).read_text(encoding='utf-8', errors='replace')
+        runner.save('installed-readiness-help-guard.json', readiness_help(help_text('installed-bootstatus-help'), help_text('installed-io-help')))
+        state['owned_readiness_help_confirmed'] = True
+        runner.call('host-boot-session', 15, ['sysctl', '-n', 'kern.bootsessionuuid'])
+        runner.call('host-os-image-build', 15, ['sw_vers', '-buildVersion'])
+        context = {key: os.environ.get(key) for key in ['GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT', 'GITHUB_JOB',
+                    'RUNNER_ENVIRONMENT', 'RUNNER_OS', 'RUNNER_ARCH', 'RUNNER_NAME', 'ImageOS', 'ImageVersion']}
+        instance = runner_instance(context, runner.text('host-boot-session').strip(),
+                                   runner.text('host-os-image-build').strip(), socket.gethostname())
+        runner.save('runner-instance.json', instance)
         runner.call('simulators-before', 30, ['xcrun', 'simctl', 'list', '-j'])
         before = runner.json('simulators-before')
         runtime, model = environment(before)
+        ownership = claim_precreated(before, instance)
+        device = ownership['udid']
+        runner.save('owned-device.json', ownership)
+        state['precreated_instance_ownership_confirmed'] = True
         runner.save('installed-environment.json', {'runtime': runtime, 'device_type': model, 'sdk_path': sdk,
-                                                  'Xcode': '27.2/27B52', 'DEVELOPER_DIR': XCODE,
-                'environment_contract': ENVIRONMENT_CONTRACT_VERSION, 'runtime27_0_acceptance': 'NOT_COVERED',
-                'prior_infra_run': '43722542700'})
-        name = owned_name(before, os.environ['GITHUB_RUN_ID'])
-        runner.call('create-owned-device', 30, ['xcrun', 'simctl', 'create', name, model['identifier'], runtime['identifier']])
-        device = runner.text('create-owned-device').strip()
-        require(re.fullmatch(r'[0-9A-Fa-f-]{36}', device) is not None and device not in
-                {d['udid'] for devices in before['devices'].values() for d in devices}, 'invalid/nonfresh owned device')
-        creation = created_identity(before, runtime, model, name, device, runner.commands[-1])
-        creation.update(created_at_utc=stamp(), raw_create_stdout_sha256=hashlib.sha256((evidence / 'create-owned-device.stdout').read_bytes()).hexdigest())
-        runner.save('owned-device.json', creation)
-        owned_query = owned_devices_command(help_contract, name)
-        runner.save('owned-device-state-query.json', {'argv': owned_query,
-                    'help_receipt': 'installed-simctl-list-help-guard.json', 'timeout_seconds': 30,
-                    'boot_state_confirmed': False})
+                'Xcode': '27.2/27B52', 'DEVELOPER_DIR': XCODE, 'environment_contract': CONTRACT,
+                'runtime27_0_acceptance': 'NOT_COVERED', 'prior_infra_run': '43723707247'})
         plan = command_plan(project_dir, sdk, device, scratch, evidence)
         runner.save('native-command-plan.json', plan)
         runner.call('installed-xcodebuild-help', 30, ['xcodebuild', '-help'], required=False)
@@ -199,25 +197,38 @@ def execute():
         settings_receipt = native_settings(runner.json('native-target-build-settings'), sdk)
         runner.save('native-settings-guard.json', settings_receipt)
         state['native_settings_confirmed'] = True
-        state['status'] = 'CREATED_SETTINGS_CONFIRMED_BOOT_NOT_VERIFIED'
+        state['status'] = 'PRECREATED_SETTINGS_CONFIRMED_NOT_READY'
         runner.save('run-state.json', state)
-        runner.call('boot-owned-device', 30, ['xcrun', 'simctl', 'boot', device])
-        runner.call('bootstatus-owned-device', 180, ['xcrun', 'simctl', 'bootstatus', device, '-b'])
-        runner.call('owned-device-state-after-boot', 30, owned_query)
-        actual = owned_boot(owned_state_json(runner.text('owned-device-state-after-boot')), before, runtime, creation)
-        runner.save('owned-device-boot-confirmed.json', actual)
+        readiness_start = time.monotonic()
+        readiness_deadline = readiness_start + READINESS_SECONDS
+        def ready_budget(reserve=0):
+            remaining = int(readiness_deadline - time.monotonic()) - reserve
+            require(remaining > 5, 'bounded precreated readiness budget exhausted; no test')
+            return remaining
+        runner.call('readiness-host-memory-before', 15, ['vm_stat'], required=False)
+        if ownership['initial_state'] != 'Booted':
+            runner.call('boot-owned-device', 30, ['xcrun', 'simctl', 'boot', device])
+        # One event-based blocking boot, one display request, one eligibility
+        # query share 600s. No sleeps, retry loop or repeated name enumeration.
+        runner.call('bootstatus-owned-device', min(480, ready_budget(90)), ['xcrun', 'simctl', 'bootstatus', device, '-b'])
         state['owned_boot_confirmed'] = True
-        state['status'] = 'SETTINGS_AND_FILTERED_BOOT_CONFIRMED'
-        runner.save('run-state.json', state)
-        runner.call('owned-boot-screenshot', 30, ['xcrun', 'simctl', 'io', device, 'screenshot', str(evidence / 'owned-boot.png')])
+        runner.call('readiness-host-memory-after-boot', 15, ['vm_stat'], required=False)
+        runner.call('owned-boot-screenshot', ready_budget(45), ['xcrun', 'simctl', 'io', device, 'screenshot', str(evidence / 'owned-boot.png')])
         require((evidence / 'owned-boot.png').read_bytes().startswith(b'\x89PNG\r\n\x1a\n'), 'actual owned display screenshot missing/invalid')
+        state['owned_display_confirmed'] = True
         if shutil.which('idb'):
-            runner.call('owned-accessibility-tree', 30, ['idb', 'ui', 'describe-all', '--udid', device, '--json'], required=False)
-        runner.call('native-sdk-destinations', 120, plan['destinations'])
+            runner.call('owned-accessibility-tree', min(30, ready_budget(30)), ['idb', 'ui', 'describe-all', '--udid', device, '--json'], required=False)
+        runner.call('native-sdk-destinations', ready_budget(), plan['destinations'])
         eligibility = destination(runner.text('native-sdk-destinations'),
                                   (evidence / 'native-sdk-destinations.stderr').read_text(encoding='utf-8', errors='replace'), device)
         runner.save('owned-sdk-destination-guard.json', eligibility)
         state['owned_sdk_destination_confirmed'] = True
+        runner.save('precreated-readiness.json', {'status': 'ACTUAL_OWNED_DISPLAY_AND_SDK_ELIGIBILITY_CONFIRMED',
+            'contract': CONTRACT, 'ownership_instance_fingerprint': instance['instance_fingerprint'], 'device': device,
+            'initial_state': ownership['initial_state'], 'elapsed_seconds': round(time.monotonic() - readiness_start, 3),
+            'budget_seconds': READINESS_SECONDS, 'screenshot': 'owned-boot.png', 'AX_available': bool(shutil.which('idb')),
+            'state_basis': 'actual exact-device blocking bootstatus + display PNG + native SDK destination',
+            'no_readiness_claim_from_initial_available_flag': True})
         require(runner.deadline - time.monotonic() >= TEST_SECONDS + 180, 'insufficient remaining test/export/owned-teardown budget; no test')
         require_pretest(state)
         state.update(test_commands=1, status='ONE_TEST_COMMAND_STARTED')
@@ -271,10 +282,14 @@ def execute():
         bootstatus_returned = any(command['label'] == 'bootstatus-owned-device' and command['exit_code'] == 0
                                   for command in runner.commands)
         # Even if the subsequent state query fails, try bounded diagnostics of
-        # our created UUID. This does not relax the pretest readiness predicate.
+        # our run-instance-owned precreated UUID. This does not relax the pretest readiness predicate.
         if exit_code and device and bootstatus_returned:
             try:
-                runner.call('failure-screenshot', 30, ['xcrun', 'simctl', 'io', device, 'screenshot', str(evidence / 'failure.png')], required=False)
+                display_already_failed = any(c['label'] == 'owned-boot-screenshot' and c['exit_code'] != 0 for c in runner.commands)
+                if not display_already_failed:
+                    runner.call('failure-screenshot', 30, ['xcrun', 'simctl', 'io', device, 'screenshot', str(evidence / 'failure.png')], required=False)
+                else:
+                    state['failure_screenshot'] = 'NOT_AVAILABLE: bounded display request already failed; no identical retry'
                 runner.call('failure-simulator-logs', 30, ['xcrun', 'simctl', 'spawn', device, 'log', 'show', '--last', '2m', '--style', 'compact', '--predicate', 'process == "AI_Hanlin"'], required=False)
                 if shutil.which('idb'):
                     runner.call('failure-accessibility-tree', 30, ['idb', 'ui', 'describe-all', '--udid', device, '--json'], required=False)

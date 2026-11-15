@@ -9,6 +9,8 @@
   "owner": "20980c9448f0a5d78eefcaec38da6e92364de37d",
   "execution_environment_contract": {
     "version": "composer-runtime-27.2-v1-20261115",
+    "ownership_readiness_contract": "composer-precreated-27.2-v2-20261115",
+    "readiness_seconds": 600,
     "runtime_identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
     "version_number": "27.2",
     "build": "24B8117",
@@ -67,7 +69,10 @@
     "synthetic-positive-one-focused-case-eleven-not-run",
     "test-action-settings-before-build-and-test",
     "concrete-destination-without-conflicting-architecture-flags",
-    "actual-runner-pure-command-plan"
+    "actual-runner-pure-command-plan",
+    "synthetic-precreated-run-instance-ownership-with-initial-state",
+    "synthetic-image-UUID-reuse-does-not-reuse-VM-ownership",
+    "synthetic-installed-help-usage-predicates-only"
   ],
   "negative_source_controls_rejected": [
     "empty-settings-array",
@@ -139,9 +144,9 @@
     "ambiguous-help-streams",
     "query-without-reviewed-documentation",
     "query-global-fallback-template",
-    "pretest-owned_query_help_confirmed-False",
-    "pretest-owned_query_help_confirmed-None",
-    "pretest-owned_query_help_confirmed-true",
+    "pretest-owned_readiness_help_confirmed-False",
+    "pretest-owned_readiness_help_confirmed-None",
+    "pretest-owned_readiness_help_confirmed-true",
     "pretest-native_settings_confirmed-False",
     "pretest-native_settings_confirmed-None",
     "pretest-native_settings_confirmed-true",
@@ -151,6 +156,12 @@
     "pretest-owned_sdk_destination_confirmed-False",
     "pretest-owned_sdk_destination_confirmed-None",
     "pretest-owned_sdk_destination_confirmed-true",
+    "pretest-precreated_instance_ownership_confirmed-False",
+    "pretest-precreated_instance_ownership_confirmed-None",
+    "pretest-precreated_instance_ownership_confirmed-true",
+    "pretest-owned_display_confirmed-False",
+    "pretest-owned_display_confirmed-None",
+    "pretest-owned_display_confirmed-true",
     "pretest-previous-test-command",
     "created-settings-are-not-boot-readiness",
     "generic-only-listing",
@@ -178,7 +189,23 @@
     "focused-extra-authored",
     "focused-all-twelve",
     "focused-wrong-device",
-    "focused-unexpected-infrastructure"
+    "focused-unexpected-infrastructure",
+    "instance-RUNNER_ENVIRONMENT",
+    "instance-RUNNER_OS",
+    "instance-RUNNER_ARCH",
+    "instance-GITHUB_RUN_ATTEMPT",
+    "instance-GITHUB_RUN_ID",
+    "instance-GITHUB_JOB",
+    "instance-RUNNER_NAME",
+    "mutated-instance-fingerprint",
+    "precreated-state",
+    "precreated-isAvailable",
+    "precreated-name",
+    "precreated-deviceTypeIdentifier",
+    "duplicate-precreated-UUID",
+    "no-precreated-device-no-create-fallback",
+    "undocumented-blocking-flag",
+    "undocumented-display-command"
   ],
   "workflow_controls": {
     "existing_focused_job_reused": true,
@@ -188,30 +215,32 @@
     "python_syntax": "PASS_SOURCE_ONLY",
     "repair_flow": {
       "phase_order": [
-        "installed-simctl-list-help",
+        "installed-bootstatus-help",
+        "installed-io-help",
+        "host-boot-session",
+        "host-os-image-build",
         "simulators-before",
-        "create-owned-device",
         "native-target-build-settings",
         "boot-owned-device",
         "bootstatus-owned-device",
-        "owned-device-state-after-boot",
+        "owned-boot-screenshot",
         "native-sdk-destinations",
         "native-test"
       ],
-      "settings_before_boot": true,
-      "global_post_boot_queries": 0,
-      "owned_post_boot_query_calls": 1,
+      "ownership": "composer-precreated-27.2-v2-20261115",
+      "readiness_seconds": 600,
+      "post_boot_name_queries": 0,
+      "cold_device_creations": 0,
       "test_call_sites": 1,
-      "readiness_requires_actual_filtered_state": true
+      "no_retry_loops": true
     },
     "rejected_flow_mutations": [
       "missing-all-predicates-gate",
-      "premature-boot-ready",
-      "missing-actual-post-state-proof",
-      "post-boot-global-fallback",
-      "extended-post-query-cap",
-      "test-retry-loop",
-      "settings-after-boot"
+      "missing-actual-instance-ownership",
+      "premature-display-ready",
+      "unbounded-readiness",
+      "wrong-device-at-test",
+      "test-retry-loop"
     ],
     "reviewed_function_source_sha256": {
       "guards.py": {
@@ -295,6 +324,7 @@
     "Hanlin-NativeComposer-1234567890"
   ],
   "budgets_seconds": {
+    "precreated_readiness_shared": 600,
     "runner": 2100,
     "version_inventory_create_boot": 30,
     "bootstatus": 180,
@@ -306,10 +336,10 @@
   "raw_retention": [
     "commands.json and separate stdout/stderr per command",
     "native-inputs.json and native-source-inputs.tar",
-    "actual installed simctl help list stdout/stderr + raw hashes + recognized contract",
-    "one exact owned-UUID filtered devices query + raw post-state; initial runtime/type origins explicit",
+    "actual installed bootstatus/io help stdout/stderr + recognized readiness commands",
+    "run-instance/image boot UUID + deterministic precreated claim; initial state/runtime/type origins explicit",
     "native settings JSON + exact SDK destinations + predicates",
-    "owned device provenance before/after boot",
+    "exact-device blocking bootstatus/display PNG + SDK destination eligibility; no post-boot name enumeration",
     "ComposerNative.xcresult when actually produced",
     "actual tests export and per-method observations",
     "unexpected framework nodes separate from authored 12",
@@ -318,16 +348,17 @@
   "source_file_sha256": {
     ".github/workflows/build-ios26-unsigned-ipa.yml": "2ce53bb63b1e8c350745f90f18f41ba5855603ec8baf6827446b3bc120e3bdb4",
     "Scripts/CI/ComposerValidation/native_host/ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e",
-    "Scripts/CI/ComposerValidation/native_host/README.md": "0d5d4d2839a913f79a92ca856e748e3e710c4a29bd377740a0f7c918a4159892",
+    "Scripts/CI/ComposerValidation/native_host/README.md": "81e34daa3a0dfcc20542d44af6c9cea3cd65bc5677e0ea757591826e73c43dce",
     "Scripts/CI/ComposerValidation/native_host/freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
-    "Scripts/CI/ComposerValidation/native_host/guards.py": "2d6fb3879b7858188826d8bfb151288b87fe6cdb97d239b5e5267981b1a9136d",
+    "Scripts/CI/ComposerValidation/native_host/guards.py": "308aacd8d61bd47180639b09f5f35f62397e99fe86fea6fdfcc90631b5a69df6",
+    "Scripts/CI/ComposerValidation/native_host/precreated_readiness.py": "eb5e0ef3f0d99a7d9a06f7e7902bba13aaf0f1847d3f7effec02ae6238f8e733",
     "Scripts/CI/ComposerValidation/native_host/prepare_native.py": "a09f0f7798def05eb96815958d7fe38f349d6268974c0715bd880a6a267eac58",
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/project.pbxproj": "9443466ee77dac5545cc112957379ccd1ccc116673571eeac4d767e29b2773a4",
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/xcshareddata/xcschemes/ComposerNativeHost.xcscheme": "5c834a5ae4e67261dbe71a9a1afc7fc4328555e6296a1df31d8ac1784de91a97",
     "Scripts/CI/ComposerValidation/native_host/review/native-inputs.json": "31415ab05620b322052c2712584297d717779d0d53460497db4a93bcd105d990",
     "Scripts/CI/ComposerValidation/native_host/review/source-controls.json": "980322c016d6c1e1b57fa376165d346e82e16895fb988c24df26fd5de43875dc",
-    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "b96c34100ea8bb8b60a4b0f72cae9e284df3987ec6fa45277907963d6417798d",
-    "Scripts/CI/ComposerValidation/native_host/run_native.py": "d01de50323d9aa0e37a0816dbbb71c9c5637b6ea2fa49d9c57a996bfbbe1a6ac",
+    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "e4522b92a32097618d00bf4ca0fdff63f99d495814b07d8483a0e7418ca9beb5",
+    "Scripts/CI/ComposerValidation/native_host/run_native.py": "45035f85065ebdc26f0422d8a9e02bb1a87554e72d815845311a0979175ef7a0",
     "Scripts/CI/ComposerValidation/native_host/simctl-list-help-43711740465.txt": "4c7f0c98a485121183a1bc0b5ae8549958692117107664b4ee1c3fbf0f3c4693",
     "Scripts/CI/ComposerValidation/native_host/validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467"
   }
