@@ -1,5 +1,13 @@
 # A2UI test execution manifest
 
+**Current source candidate:** transient result-owner/projection/weak event relay,
+session sealing and read-only completed rendering.8 portable +26 SDK =34 authored
+cases. The9 new SDK methods below use actual MessageProcessor/model/Node/actions;
+they are NOT_RUN on this Windows host. All current SDK-backed compilation/execution
+is NOT_RUN. Local8 framing scenarios and enabled syntax parsing pass;7 synthetic
+verifier checks pass, and the previous25-case result is correctly rejected against
+the new34-case contract. No CI, app wiring or native rerun was dispatched here.
+
 **Latest real native result:** [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483)
 compiled source `f654ac113447177df3838908c53ce9aa24dc47ff` with the actual
 `AI_Hanlin` consumer module, `AI_HLYTests` test module and POC+DEBUG enabled.
@@ -63,14 +71,15 @@ No upstream code or package dependency was installed into the app.
 | --- | --- | --- |
 | Windows Swift6.3.3 local typecheck via apple-devtools | EXECUTED_PASS | HanlinA2UIIngress.swift only |
 | Swift6 strict-concurrency standalone build and execution | EXECUTED_PASS, 8 scenarios | Actual ingress source plus portable cases in A2UITests.swift |
-| Enabled-flag Swift frontend syntax parse | EXECUTED_PASS | All3 source files and test file; no import/type/API checking |
-| Isolated proof plan and verifier self-checks | EXECUTED_PASS | Current source/fixture hashes,25 selectors;7 synthetic XML/lock checks, no SDK execution |
+| Enabled-flag Swift frontend syntax parse | EXECUTED_PASS | All4 current source files and test file; no import/type/API checking |
+| Isolated proof plan and verifier self-checks | EXECUTED_PASS | Current source/fixture hashes,34 selectors;7 synthetic XML/lock checks and rejection of prior25-case evidence, no SDK execution |
 | Generated SwiftPM manifest API typecheck | EXECUTED_PASS | Windows Swift6.3.3, PackageDescription6.1,24 template lines via stdin; no manifest file or dependency resolution |
 | Exact-pin enabled SDK compilation at c40e617b | EXECUTED_PASS | Actual native run43662884686; isolated consumer, no app wiring |
 | Exact-pin SDK cases at c40e617b | FAILED, 17 cases | All executed; common valid-fixture load rejection |
 | Exact-pin enabled compilation/cases at2bae5a3e | EXECUTED_PASS, 25 cases | Run43664698104; identifier correction only, privacy P2 not accepted |
 | Exact-pin enabled compilation/cases at a43f1563 | EXECUTED_PASS, 25 cases | Run43667371439; privacy canaries executed, old consumer module |
 | Actual AI_Hanlin consumer-name proof at f654ac11 | EXECUTED_PASS, 25 cases | Run43668852483; actual AI_Hanlin consumer and AI_HLYTests module |
+| Current result-owner SDK compilation/cases | NOT_RUN, 34 authored cases | Changed source; prior f65425-case proof does not cover it |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |
 
 The8 local scenarios execute through the standalone runner, not XCTest or
@@ -138,7 +147,7 @@ swiftc -frontend -parse -D HANLIN_A2UI_POC -D DEBUG `
   AI_HLYTests/A2UITests.swift
 ```
 
-## Exact-pin SDK cases: 17 PASS at f654 with AI_Hanlin consumer
+## Exact-pin SDK cases: 26 authored, current candidate NOT_RUN
 
 All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 `A2UISDKTests`. They compile only with `HANLIN_A2UI_POC`, in the app and test
@@ -150,23 +159,32 @@ rather than accepting a smaller discovered count.
 
 | Case | Obligation | Actual result |
 | --- | --- | --- |
-| parsesAndRendersTextCardInputButton() | Official parser/model and renderer-builder availability | EXECUTED_PASS at f654 |
-| nativeInputBindingWritesAndReadsOfficialModel() | Native TextField writes; agent updates read back | EXECUTED_PASS at f654 |
-| stableIDsAndNodeIdentityAcrossUpdates() | Upstream node identity through model/component updates | EXECUTED_PASS at f654 |
-| malformedAndUnknownContentFallsBackAndRecovers() | Fallback routing and subsequent valid recovery | EXECUTED_PASS at f654 |
-| officialSchemasRejectInvalidTextInputButton() | Keep4 negatives and invalid_identifier; canary component ID absent from local/callback diagnostic renderings | EXECUTED_PASS at f654 |
-| independentSurfacesKeepModelsSeparate() | Separate models and fallback per surface | EXECUTED_PASS at f654 |
-| independentOwnersCanReuseWireSurfaceID() | Separate processors for separate result owners | EXECUTED_PASS at f654 |
-| deleteDisposesAndRecreateStartsWithNewIdentity() | Surface deletion/recreation lifecycle | EXECUTED_PASS at f654 |
-| closeRejectsLateFramesAndDisposesSurfaces() | Owner disposal and late ingress | EXECUTED_PASS at f654 |
-| buttonEventUsesCurrentBoundValue() | Official action context after a user edit | EXECUTED_PASS at f654 |
-| hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | EXECUTED_PASS at f654 |
-| surfaceLimitDoesNotRemoveExistingContent() | Four-surface and exact byte-budget limits; update/delete correlated only to the owned target; preserve models/data | EXECUTED_PASS at f654 |
-| rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | EXECUTED_PASS at f654 |
-| unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Keep no-RPC checks; canary function/argument identifiers absent from local and roundtrip callback diagnostics | EXECUTED_PASS at f654 |
-| closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | EXECUTED_PASS at f654 |
-| closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | EXECUTED_PASS at f654 |
-| unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() | Missing, blank, whitespace, overlong/UTF-8/60KB IDs, other-owner and current IDs cannot route fallback or change live models | EXECUTED_PASS at f654 |
+| parsesAndRendersTextCardInputButton() | Official parser/model and renderer-builder availability | PASS at f654; current NOT_RUN |
+| nativeInputBindingWritesAndReadsOfficialModel() | Native TextField writes; agent updates read back | PASS at f654; current NOT_RUN |
+| stableIDsAndNodeIdentityAcrossUpdates() | Upstream node identity through model/component updates | PASS at f654; current NOT_RUN |
+| malformedAndUnknownContentFallsBackAndRecovers() | Fallback routing and subsequent valid recovery | PASS at f654; current NOT_RUN |
+| officialSchemasRejectInvalidTextInputButton() | Keep4 negatives and invalid_identifier; canary component ID absent from local/callback diagnostic renderings | PASS at f654; current NOT_RUN |
+| independentSurfacesKeepModelsSeparate() | Separate models and fallback per surface | PASS at f654; current NOT_RUN |
+| independentOwnersCanReuseWireSurfaceID() | Separate processors for separate result owners | PASS at f654; current NOT_RUN |
+| deleteDisposesAndRecreateStartsWithNewIdentity() | Surface deletion/recreation lifecycle | PASS at f654; current NOT_RUN |
+| closeRejectsLateFramesAndDisposesSurfaces() | Owner disposal and late ingress | PASS at f654; current NOT_RUN |
+| buttonEventUsesCurrentBoundValue() | Official action context after a user edit | PASS at f654; current NOT_RUN |
+| hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | PASS at f654; current NOT_RUN |
+| surfaceLimitDoesNotRemoveExistingContent() | Four-surface and exact byte-budget limits; update/delete correlated only to the owned target; preserve models/data | PASS at f654; current NOT_RUN |
+| rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | PASS at f654; current NOT_RUN |
+| unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Keep no-RPC checks; canary function/argument identifiers absent from local and roundtrip callback diagnostics | PASS at f654; current NOT_RUN |
+| closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | PASS at f654; current NOT_RUN |
+| closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | PASS at f654; current NOT_RUN |
+| unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() | Missing, blank, whitespace, overlong/UTF-8/60KB IDs, other-owner and current IDs cannot route fallback or change live models | PASS at f654; current NOT_RUN |
+| transientOwnerLookupKeepsWireIDsIndependent() | Exact identity, side-effect-free lookup, real SDK binding/node isolation and no replay | NOT_RUN |
+| transientReceiveRejectsWrongIdentityAndSequence() | Run/result/call/generation mismatch, duplicate/out-of-order/partial-frame rejection | NOT_RUN |
+| sealedResultRetainsModelsAndRevokesActions() | Queued/retained real SDK actions revoked; model/node identity retained; input sealed | NOT_RUN |
+| sealingRunDoesNotRevokeOtherRun() | Weak typed sink gets only the other live owner's real Button event | NOT_RUN |
+| replacementRevokesOldGenerationBeforeNewDelivery() | Old owner closed; stale key cannot lookup/receive/replace/discard successor | NOT_RUN |
+| endingResultCancelsOwnedReceiveTask() | Both seal and discard cancel a real receiver before30s and reject its late SDK frame | NOT_RUN |
+| presentationCopiesDoNotOwnDiscard() | Inline/expanded projection copies share models; releasing one copy does not close; explicit discard does | NOT_RUN |
+| eventSinkIsWeakAndCannotKeepAuthorityAlive() | Weak sink released before queued/retained SDK action delivery | NOT_RUN |
+| deletedSurfaceDropsQueuedOwnedEvents() | Real SDK delete removes membership and queued/retained callbacks cannot escape | NOT_RUN |
 
 The three lifecycle/RPC cases address the2 P2 findings in the independent review of
 `e7141d55`; they exercise official SDK objects, not source-string matching.

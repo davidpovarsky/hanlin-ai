@@ -268,6 +268,17 @@ private final class A2UIEventRecorder: Sendable {
 }
 
 @MainActor
+private final class A2UIResultSinkRecorder: HanlinA2UIResultEventSink {
+    let recorder: A2UIEventRecorder
+    private(set) var keys: [HanlinA2UIResultKey] = []
+    init(recorder: A2UIEventRecorder = A2UIEventRecorder()) { self.recorder = recorder }
+    func receive(_ event: RendererToAgentMessage, for key: HanlinA2UIResultKey) {
+        keys.append(key)
+        recorder.record(event)
+    }
+}
+
+@MainActor
 @Suite("A2UI official exact-pin SDK")
 struct A2UISDKTests {
     private func load(_ session: HanlinA2UISession, fixture: String = "form") throws {
@@ -281,6 +292,265 @@ struct A2UISDKTests {
             pending.append(contentsOf: candidate.allChildNodes)
         }
         throw A2UICheckFailure(description: "Missing SDK node \(id)")
+    }
+
+    private func load(_ store: HanlinA2UIResultStore, _ projection: HanlinA2UIResultProjection,
+                      fixture: String = "form", startingAt: UInt64 = 0) throws {
+        for (offset, line) in try A2UIFixture.lines(fixture).enumerated() {
+            try store.receive(line, sequence: startingAt + UInt64(offset), for: projection.key).get()
+        }
+    }
+
+    private func node(_ projection: HanlinA2UIResultProjection, id: String) throws -> Node {
+        var pending = [try #require(projection.surface("form-a")?.rootNode)]
+        while let candidate = pending.popLast() {
+            if candidate.id == id { return candidate }
+            pending.append(contentsOf: candidate.allChildNodes)
+        }
+        throw A2UICheckFailure(description: "Missing owned SDK node \(id)")
+    }
+
+    private func admissionFailure(_ result: Result<Void, HanlinA2UIResultAdmissionError>) -> HanlinA2UIResultAdmissionError? {
+        if case .failure(let error) = result { return error }
+        return nil
+    }
+
+    @Test func transientOwnerLookupKeepsWireIDsIndependent() throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let run = UUID(), result = UUID()
+        let a = try #require(store.register(runID: run, resultID: result, callID: "call-a", sink: sink))
+        let b = try #require(store.register(runID: UUID(), resultID: result, callID: "call-a", sink: sink))
+        #expect(a.key.generation != b.key.generation)
+        #expect(store.register(runID: run, resultID: result, callID: "call-b", sink: sink) == nil)
+        try load(store, a)
+        try load(store, b)
+        let model = try #require(a.surface("form-a"))
+        let identity = try node(a, id: "name").identity
+        for _ in 0..<20 {
+            let same = try #require(store.projection(for: a.key))
+            #expect(same.surface("form-a") === model)
+            #expect(try node(same, id: "name").identity == identity)
+        }
+        A2UITextField(node: try node(a, id: "name")).valueBinding.wrappedValue = "Private"
+        #expect(try node(b, id: "greeting").string(for: "text") == "Ada")
+        // Lookup did not replay input or consume its next ordinal.
+        try load(store, a, fixture: "update", startingAt: 3)
+        #expect(try node(a, id: "name").identity == identity)
+        #expect(try node(a, id: "greeting").string(for: "text") == "Grace")
+    }
+
+    @Test func transientReceiveRejectsWrongIdentityAndSequence() throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: sink))
+        let key = p.key
+        let wrong = [
+            HanlinA2UIResultKey(runID: UUID(), resultID: key.resultID, callID: key.callID, generation: key.generation),
+            HanlinA2UIResultKey(runID: key.runID, resultID: UUID(), callID: key.callID, generation: key.generation),
+            HanlinA2UIResultKey(runID: key.runID, resultID: key.resultID, callID: "foreign", generation: key.generation),
+            HanlinA2UIResultKey(runID: key.runID, resultID: key.resultID, callID: key.callID, generation: UUID())
+        ]
+        let lines = try A2UIFixture.lines("form")
+        for foreign in wrong {
+            #expect(store.projection(for: foreign) == nil)
+            #expect(admissionFailure(store.receive(lines[0], sequence: 0, for: foreign)) == .unregisteredResult)
+            #expect(!store.seal(foreign) && !store.discard(foreign))
+        }
+        #expect(admissionFailure(store.receive(lines[0], sequence: 1, for: key)) == .outOfOrder)
+        #expect(p.surfaceIDs.isEmpty)
+        try store.receive(lines[0], sequence: 0, for: key).get()
+        #expect(admissionFailure(store.receive(lines[0], sequence: 0, for: key)) == .outOfOrder)
+        // Invalid content is rejected by real ingress/SDK, but that delivery is consumed once.
+        #expect(admissionFailure(store.receive("{", sequence: 1, for: key)) == .rejected(.init(.malformedEnvelope)))
+        #expect(admissionFailure(store.receive(lines[1], sequence: 1, for: key)) == .outOfOrder)
+        try store.receive(lines[1], sequence: 2, for: key).get()
+        try store.receive(lines[2], sequence: 3, for: key).get()
+        #expect(try node(p, id: "greeting").string(for: "text") == "Ada")
+        // Half a frame is never buffered or joined with the next delivery.
+        #expect(admissionFailure(store.receive(String(lines[0].prefix(20)), sequence: 4, for: key)) == .rejected(.init(.malformedEnvelope)))
+    }
+
+    @Test func sealedResultRetainsModelsAndRevokesActions() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: sink))
+        try load(store, p)
+        let model = try #require(p.surface("form-a"))
+        let identity = try node(p, id: "name").identity
+        let action = try #require(try node(p, id: "submit").action(for: "action", userActivation: true))
+        action() // Queued in the real SDK relay, then revoked before actor delivery.
+        #expect(store.seal(p.key) && store.seal(p.key))
+        action() // Retained action cannot continue the expired run.
+        #expect(p.isReadOnly && !p.isClosed && p.surface("form-a") === model)
+        #expect(try node(p, id: "name").identity == identity)
+        #expect(try node(p, id: "greeting").string(for: "text") == "Ada")
+        #expect(admissionFailure(store.receive(try #require(A2UIFixture.lines("update").first), sequence: 3, for: p.key)) == .inputSealed)
+        do {
+            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
+            Issue.record("A sealed owner delivered an event")
+        } catch A2UIWaitError.deadline {}
+        #expect(sink.keys.isEmpty && sink.recorder.snapshot.isEmpty)
+    }
+
+    @Test func sealingRunDoesNotRevokeOtherRun() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let a = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: sink))
+        let b = try #require(store.register(runID: UUID(), resultID: a.key.resultID, callID: "call", sink: sink))
+        try load(store, a)
+        try load(store, b)
+        store.sealRun(a.key.runID)
+        #expect(store.register(runID: a.key.runID, resultID: UUID(), callID: "late", sink: sink) == nil)
+        #expect(store.replace(a.key, callID: "continuation", sink: sink) == nil)
+        let action = try #require(try node(b, id: "submit").action(for: "action", userActivation: true))
+        action()
+        let event = try await nextA2UIValue(sink.recorder.stream)
+        guard case .action(let resolved) = event else { Issue.record("Expected owned Button event"); return }
+        #expect(resolved.context["name"]?.stringValue == "Ada")
+        #expect(sink.keys == [b.key] && a.isReadOnly && !b.isReadOnly)
+        #expect(a.surface("form-a")?.agentFunctionCaller == nil && b.surface("form-a")?.agentFunctionCaller == nil)
+    }
+
+    @Test func replacementRevokesOldGenerationBeforeNewDelivery() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let old = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "old", sink: sink))
+        try load(store, old)
+        let action = try #require(try node(old, id: "submit").action(for: "action", userActivation: true))
+        action()
+        let next = try #require(store.replace(old.key, callID: "new", sink: sink))
+        #expect(old.isClosed && old.surfaceIDs.isEmpty && store.projection(for: old.key) == nil)
+        #expect(next.key.runID == old.key.runID && next.key.resultID == old.key.resultID)
+        #expect(next.key.callID == "new" && next.key.generation != old.key.generation)
+        #expect(store.replace(old.key, callID: "stale", sink: sink) == nil)
+        #expect(!store.discard(old.key))
+        try load(store, next)
+        action()
+        #expect(admissionFailure(store.receive(try #require(A2UIFixture.lines("form").first), sequence: 3, for: old.key)) == .unregisteredResult)
+        let nextAction = try #require(try node(next, id: "submit").action(for: "action", userActivation: true))
+        nextAction()
+        _ = try await nextA2UIValue(sink.recorder.stream)
+        do {
+            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
+            Issue.record("Replacement leaked an extra event")
+        } catch A2UIWaitError.deadline {}
+        #expect(sink.keys == [next.key])
+    }
+
+    @Test func endingResultCancelsOwnedReceiveTask() async throws {
+        for sealOnly in [true, false] {
+            let store = HanlinA2UIResultStore()
+            defer { store.discardAll() }
+            let sink = A2UIResultSinkRecorder()
+            let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: sink))
+            try load(store, p)
+            let state = AsyncStream<String>.makeStream(bufferingPolicy: .bufferingNewest(4))
+            let lateFrame = try #require(A2UIFixture.lines("update").first)
+            let receiver = Task { @MainActor in
+                defer { state.continuation.finish() }
+                state.continuation.yield("started")
+                do { try await Task.sleep(for: .seconds(30)); state.continuation.yield("unexpected timeout") }
+                catch is CancellationError {
+                    let result = store.receive(lateFrame, sequence: 3, for: p.key)
+                    let expected: HanlinA2UIResultAdmissionError = sealOnly ? .inputSealed : .unregisteredResult
+                    state.continuation.yield(admissionFailure(result) == expected ? "cancelled and rejected" : "late frame accepted")
+                } catch { state.continuation.yield("unexpected error") }
+            }
+            defer { receiver.cancel() }
+            #expect(store.attachReceiveTask(receiver, for: p.key))
+            #expect(try await nextA2UIValue(state.stream) == "started")
+            if sealOnly { store.sealRun(p.key.runID); store.sealRun(p.key.runID) }
+            else { store.discardRun(p.key.runID); store.discardRun(p.key.runID) }
+            #expect(try await nextA2UIValue(state.stream) == "cancelled and rejected")
+            #expect(p.isReadOnly && p.isClosed == !sealOnly)
+            #expect(store.register(runID: p.key.runID, resultID: UUID(), callID: "late", sink: sink) == nil)
+            let rejectedTask = Task { @MainActor in }
+            #expect(!store.attachReceiveTask(rejectedTask, for: p.key) && rejectedTask.isCancelled)
+        }
+    }
+
+    @Test func presentationCopiesDoNotOwnDiscard() throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: sink))
+        try load(store, p)
+        let model = try #require(p.surface("form-a"))
+        var inline = store.projection(for: p.key)
+        let expanded = try #require(store.projection(for: p.key))
+        _ = HanlinA2UIProjectedResultView(projection: try #require(inline)).body
+        _ = HanlinA2UIProjectedResultView(projection: expanded).body
+        inline = nil
+        #expect(!expanded.isClosed && expanded.surface("form-a") === model)
+        #expect(store.projection(for: p.key)?.surface("form-a") === model)
+        store.sealRun(p.key.runID)
+        #expect(expanded.isReadOnly && expanded.surface("form-a") === model)
+        #expect(store.discard(p.key) && !store.discard(p.key))
+        #expect(expanded.isClosed && p.isClosed && expanded.surfaceIDs.isEmpty)
+        store.discardAll()
+        #expect(store.register(runID: UUID(), resultID: UUID(), callID: "late chat", sink: sink) == nil)
+        // View construction/copy lifetime only; actual sheet/scroll behavior needs hosted UI.
+    }
+
+    @Test func eventSinkIsWeakAndCannotKeepAuthorityAlive() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let recorder = A2UIEventRecorder()
+        var sink: A2UIResultSinkRecorder? = A2UIResultSinkRecorder(recorder: recorder)
+        weak var weakSink = sink
+        let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: try #require(sink)))
+        try load(store, p)
+        let action = try #require(try node(p, id: "submit").action(for: "action", userActivation: true))
+        action()
+        sink = nil
+        #expect(weakSink == nil)
+        action()
+        do {
+            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
+            Issue.record("An event escaped after its weak sink was released")
+        } catch A2UIWaitError.deadline {}
+        #expect(recorder.snapshot.isEmpty && !p.isClosed)
+
+        // A presentation may outlive its registration store; it retains models, not authority.
+        let liveSink = A2UIResultSinkRecorder(recorder: recorder)
+        var registration: HanlinA2UIResultStore? = HanlinA2UIResultStore()
+        weak var weakRegistration = registration
+        let retained = try #require(registration?.register(runID: UUID(), resultID: UUID(), callID: "other", sink: liveSink))
+        try load(try #require(registration), retained)
+        let retainedAction = try #require(try node(retained, id: "submit").action(for: "action", userActivation: true))
+        retainedAction()
+        registration = nil
+        #expect(weakRegistration == nil)
+        retainedAction()
+        do {
+            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
+            Issue.record("A retained presentation acquired authority without its registration store")
+        } catch A2UIWaitError.deadline {}
+        #expect(recorder.snapshot.isEmpty)
+    }
+
+    @Test func deletedSurfaceDropsQueuedOwnedEvents() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: sink))
+        try load(store, p)
+        let action = try #require(try node(p, id: "submit").action(for: "action", userActivation: true))
+        action()
+        try store.receive(#"{"version":"1.0","deleteSurface":{"surfaceId":"form-a"}}"#, sequence: 3, for: p.key).get()
+        action()
+        #expect(p.surfaceIDs.isEmpty && !p.isReadOnly)
+        do {
+            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
+            Issue.record("An event escaped its removed SDK surface")
+        } catch A2UIWaitError.deadline {}
+        #expect(sink.keys.isEmpty)
     }
 
     private func requireNoCallbackCanary(_ event: RendererToAgentMessage) throws {

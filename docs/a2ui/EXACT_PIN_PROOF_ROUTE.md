@@ -1,5 +1,11 @@
 # Isolated exact-pin proof route
 
+The current result-owner candidate adds9 actual-SDK test methods and one source
+file. The updated contract requires34 cases (8 portable +26 SDK), all4 owned
+source files and unchanged official products/pin. Its SDK compilation/execution
+is NOT_RUN. The successful25-case f654 proof below is retained historical evidence
+and cannot satisfy this new source/case contract. This owner dispatched no CI.
+
 Initially prepared after source review of `3a24003e`; the preparation utility
 itself dispatched no native job. Tomer's actual run43662884686 later compiled
 c40e617b and executed all25 cases:8 PASS/17 SDK FAIL during fixture load. The
@@ -11,7 +17,7 @@ correction at f654ac11 then passed all25 in
 [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483).
 See [retained native evidence](evidence/native-run-43668852483.json).
 
-`prepare_exact_pin_proof.py` prepares the same3 source files, the unchanged25
+`prepare_exact_pin_proof.py` prepares the current4 source files, the exact34
 Swift Testing selectors and all7 fixtures in an isolated SwiftPM consumer.
 It does not dispatch jobs or invoke a compiler. Its default `--plan` and
 `--self-test` modes are portable, read-only checks. No product manifests,
@@ -21,7 +27,8 @@ The generated temporary consumer uses the official exact root revision and
 four real products. Its source module is the actual app module `AI_Hanlin`,
 copied under `Sources/AI_Hanlin`; the unchanged tests import that module.
 `AI_HLY` is the repository/source directory, not the app module. The test
-target remains `AI_HLYTests` so the25 case identities do not change. No
+target remains `AI_HLYTests`; the original25 case identities are retained and9
+owner lifecycle cases are added. No
 PRODUCT_MODULE_NAME override, stub or module alias is used. Both targets enable
 `HANLIN_A2UI_POC` and `DEBUG` for the Debug build; the standalone portable
 runner flag is absent. Source/fixture bytes and the harness manifest are
@@ -53,7 +60,7 @@ using stdin and the installed ManifestAPI module. No Package.swift file was
 created and no dependency was resolved. This checks the preparation template,
 not Apple SDK imports or the upstream package build.
 
-## Native recipe — executed at f654ac11
+## Native recipe — executed at f654ac11; current34-case candidate NOT_RUN
 
 Only after the authorized stable-Xcode host and serialized resource are
 available, run from an authenticated checkout of the handoff commit. Keep the
@@ -85,7 +92,7 @@ xcrun swift test --package-path "$A2UI_PROOF_ROOT/harness" -c debug \
 cmp "$A2UI_PROOF_ROOT/evidence/resolved-before.json" "$A2UI_PROOF_ROOT/harness/Package.resolved"
 
 # Swift Testing output may use results-swift-testing.xml. Pass all result XMLs;
-# empty XCTest output does not substitute for the25 actual Swift Testing cases.
+# empty XCTest output does not substitute for the34 actual Swift Testing cases.
 python3 docs/a2ui/prepare_exact_pin_proof.py \
   --verify-results "$A2UI_PROOF_ROOT/evidence/"*.xml \
   --resolved "$A2UI_PROOF_ROOT/harness/Package.resolved" \
@@ -97,7 +104,7 @@ SwiftPM's CLI offers forced resolved versions and Swift Testing selection;
 see its [official test command reference](https://github.com/swiftlang/swift-package-manager/blob/main/Sources/PackageManagerDocs/Documentation.docc/SwiftTest.md).
 The installed Windows6.3.3 `swift test --help` also exposes these flags.
 The exact Apple toolchain's acceptance remains unverified. If its XML format
-does not identify the25 methods, validation fails closed: retain the files
+does not identify all34 methods, validation fails closed: retain the files
 and correct the evidence adapter using actual output rather than treating
 zero discovery or a green heading as success.
 

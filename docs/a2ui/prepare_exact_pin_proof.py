@@ -18,6 +18,9 @@ REPOSITORY = Path(__file__).resolve().parents[2]
 UPSTREAM = "https://github.com/a2ui-project/a2ui"
 REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
 CONSUMER_MODULE = "AI_Hanlin"
+PORTABLE_CASE_COUNT = 8
+SDK_CASE_COUNT = 26
+CASE_COUNT = PORTABLE_CASE_COUNT + SDK_CASE_COUNT
 SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
 TEST = "AI_HLYTests/A2UITests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
@@ -59,8 +62,9 @@ def plan() -> dict:
     ingress, sdk = source.split("struct A2UISDKTests", 1)
     cases = lambda text: re.findall(r"^\s+@Test func (\w+)\(", text, re.MULTILINE)
     portable, native = cases(ingress), cases(sdk)
-    if len(portable) != 8 or len(native) != 17 or len(set(portable + native)) != 25:
-        raise ValueError("Expected exactly 8 portable and 17 enabled SDK cases; update the proof contract")
+    if (len(portable) != PORTABLE_CASE_COUNT or len(native) != SDK_CASE_COUNT
+            or len(set(portable + native)) != CASE_COUNT):
+        raise ValueError(f"Expected exactly {PORTABLE_CASE_COUNT} portable and {SDK_CASE_COUNT} enabled SDK cases; update the proof contract")
     paths = sorted((REPOSITORY / SOURCES).glob("*.swift"))
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
@@ -122,7 +126,7 @@ def verify_cases(roots: list[ET.Element], expected: list[str]) -> None:
                 raise ValueError(f"Unrecognized/ambiguous actual test identity: {identity}")
             seen.append(matches[0])
     if sorted(seen) != sorted(expected):
-        raise ValueError("Executed cases differ from the exact 25-case contract (missing/duplicate/zero cases)")
+        raise ValueError(f"Executed cases differ from the exact {CASE_COUNT}-case contract (missing/duplicate/zero cases)")
 
 
 def self_test(inputs: dict) -> int:
@@ -182,7 +186,7 @@ def main() -> None:
         verify_pin(json.loads(args.resolved.read_text(encoding="utf-8")))
         verify_cases([ET.parse(p).getroot() for p in args.verify_results],
                      inputs["portable_cases"] + inputs["sdk_cases"])
-        print(json.dumps({"status": "RESULT_CONTENTS_VALID", "cases": 25,
+        print(json.dumps({"status": "RESULT_CONTENTS_VALID", "cases": CASE_COUNT,
                           "provenance": "Authenticate process/toolchain/artifact separately",
                           "lock_sha256": sha(args.resolved.read_bytes())}))
     else:

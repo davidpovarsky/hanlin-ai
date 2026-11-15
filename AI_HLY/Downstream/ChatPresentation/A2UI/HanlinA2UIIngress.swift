@@ -19,7 +19,7 @@ enum HanlinA2UIIngress {
     enum Failure: String, Error, Sendable {
         case messageTooLarge, malformedEnvelope, unsupportedVersion, unsupportedOperation
         case invalidSurfaceID, unsupportedCatalog, tooManyComponents
-        case surfaceLimit, sessionBudget, sdkValidation, closed
+        case surfaceLimit, sessionBudget, sdkValidation, inputSealed, closed
     }
 
     /// Finite SDK codes only. Never store a raw path, message, identifier or unknown code.

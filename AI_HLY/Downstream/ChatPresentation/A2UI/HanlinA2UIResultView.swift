@@ -22,6 +22,7 @@ struct HanlinA2UIResultView: View {
                 }
             }
         }
+        .disabled(session.isInputSealed || session.isClosed)
         // Layout direction, locale, Dynamic Type and accessibility remain the host's environment.
         // No forced RTL, custom geometry, fixed heights, nested scrolling or automatic expansion.
     }

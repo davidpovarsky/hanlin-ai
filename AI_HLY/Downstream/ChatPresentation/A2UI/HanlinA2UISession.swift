@@ -13,6 +13,7 @@ final class HanlinA2UISession {
     private let processor: MessageProcessor
     private let eventRelay: HanlinA2UIEventRelay
     private var acceptedBytes = 0
+    private(set) var isInputSealed = false
     private(set) var isClosed = false
     private(set) var surfaceIDs: [String] = []
     private(set) var failures: [String: HanlinA2UIIngress.Failure] = [:]
@@ -51,6 +52,7 @@ final class HanlinA2UISession {
     @discardableResult
     func receive(_ json: String) -> Result<Void, HanlinA2UIIngress.Rejection> {
         guard !isClosed else { return .failure(.init(.closed)) }
+        guard !isInputSealed else { return .failure(.init(.inputSealed)) }
         let data = Data(json.utf8)
         var frame: HanlinA2UIIngress.Frame?
         do {
@@ -99,10 +101,19 @@ final class HanlinA2UISession {
         }
     }
 
+    /// Generation completion removes input/action authority without deleting visible models.
+    /// No continuation or RPC permission can be added back to a sealed session.
+    func seal() {
+        guard !isInputSealed, !isClosed else { return }
+        isInputSealed = true
+        eventRelay.close()
+    }
+
     /// Called by the owner when the result is discarded. Old model subscriptions are disposed.
     /// Closed sessions cannot be reanimated by late stream frames.
     func close() {
         guard !isClosed else { return }
+        seal()
         isClosed = true
         eventRelay.close()
         processor.outboundListener = nil

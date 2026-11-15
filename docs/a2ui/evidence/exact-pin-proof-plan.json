@@ -15,6 +15,15 @@
     "componentValidationRemainsWithSDK"
   ],
   "sdk_cases": [
+    "transientOwnerLookupKeepsWireIDsIndependent",
+    "transientReceiveRejectsWrongIdentityAndSequence",
+    "sealedResultRetainsModelsAndRevokesActions",
+    "sealingRunDoesNotRevokeOtherRun",
+    "replacementRevokesOldGenerationBeforeNewDelivery",
+    "endingResultCancelsOwnedReceiveTask",
+    "presentationCopiesDoNotOwnDiscard",
+    "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+    "deletedSurfaceDropsQueuedOwnedEvents",
     "parsesAndRendersTextCardInputButton",
     "nativeInputBindingWritesAndReadsOfficialModel",
     "stableIDsAndNodeIdentityAcrossUpdates",
@@ -36,19 +45,23 @@
   "files": [
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
-      "sha256": "a992fd554408786db74b36873b80bf61bb391e07e0e3f5a023d73738d89bdb67"
+      "sha256": "c3633f054e37456ac3d77548697cb0e36ccf1113d0a989791267f4657ca7df12"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+      "sha256": "d1cb1305751deb85cf598f69f4c41f0aea06de000f9313c7ceecc0b239b4156d"
     },
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
-      "sha256": "06d5761ae398a978483b96ceca313cf9542a5ce535bec55b8c1800a99e5ef587"
+      "sha256": "5ca5346bacc5a154650c73caa586ed524b4f4a9069e91f92b11498c989aad0a2"
     },
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
-      "sha256": "12905aa382be65d4b06da5a05c195e01c09d045150b05c01d54eff67525f65d6"
+      "sha256": "b1d6e28c09e91396240ab8b1667de197ab1f3bf33e343f1d00d91310d656643c"
     },
     {
       "path": "AI_HLYTests/A2UITests.swift",
-      "sha256": "b670e979b014c0e4c26a816788bd5ec905a5c22ee4bc690c4732700b93bbe0bb"
+      "sha256": "beab3966135f26a8929e29f75402239afe2a569c934a179d8a7da673df067846"
     },
     {
       "path": "AI_HLYTests/A2UIFixtures/form.jsonl",

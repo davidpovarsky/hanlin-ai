@@ -5,6 +5,29 @@ A2UI-01 `1220489258069695` and A2UI-03 `1220489258419968` remain **open**.
 A2UI-02 `1220489383643571` remains deferred. This is an unconnected prototype,
 not an inline-chat feature or a new persisted envelope.
 
+The current source adds transient result ownership and projection primitives in
+`HanlinA2UIResultOwner.swift`. Registration binds caller-supplied run/result/call
+identity to a fresh generation; exact-key lookup has no creation or replay side
+effects. The owner receives complete frames at consecutive ordinals starting at0;
+an ordered rejected delivery still consumes its ordinal. No stream framing,
+persisted payload, production transport or callback continuation is introduced.
+
+`seal` cancels the attached receiver and revokes the weak event sink while keeping
+the actual SDK model/node identities visible. The renderer disables controls.
+`discard`, replacement and explicit run/chat discard close the real session.
+Projection copies share the same owner and have no appearance-based teardown.
+The caller must retain the sink, explicitly seal finished runs and discard owners
+on cancellation, supersession, removal or chat teardown. This store is transient
+presentation state, not message or tool authority. A sealed result cannot resume.
+Ended runs reject late result registrations/replacements; discarding the chat
+permanently ends that store. Old generations cannot be reset into authority.
+
+**Current candidate native status: NOT_RUN.** Nine new real-SDK test methods bring
+the proof contract to8 portable +26 SDK =34. Local8 portable scenarios, enabled
+syntax parsing and synthetic proof-verifier checks pass; none typecheck or execute
+the new SDK-backed owner. The retained f65425-case native pass below applies to
+the earlier source only. Actual inline/expanded UI lifecycle remains unverified.
+
 ## Official source and revision
 
 Use [a2ui-project/a2ui](https://github.com/a2ui-project/a2ui), exact revision
@@ -101,7 +124,7 @@ integration concern, not an asserted capability.
 
 ## Deliberate activation gate
 
-The SDK-backed source and17 SDK tests are behind **HANLIN_A2UI_POC**. The manager
+The SDK-backed source and26 SDK tests are behind **HANLIN_A2UI_POC**. The manager
 authorized this temporary prototype gate without changing the lease. No build
 flag, manifest, dependency lock or project file was changed. This explicit flag
 protects the synchronized app source groups from unresolved optional imports.
@@ -122,7 +145,7 @@ flag, syntax-only parse or zero selected cases cannot satisfy either task.
 See [TEST_EXECUTION_MANIFEST.md](TEST_EXECUTION_MANIFEST.md) for exact cases,
 commands, fixture identities and evidence.
 
-The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) uses all25 actual
+The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) now requires all34 authored
 cases in a temporary consumer, exact root/transitive resolution evidence and
 unchanged source bytes. It does not require shared product wiring. Its planner
 and verifier have local checks. Tomer's existing verifier produced the actual
