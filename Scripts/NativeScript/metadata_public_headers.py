@@ -351,6 +351,13 @@ def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path
             names = re.findall(r'umbrella\s+header\s+"([^"]+)"', module_text)
             found = [header_root / name for name in names if (header_root / name).is_file()]
             if not found and module_map.is_file():
+                # Explicit module-map headers are the authoritative public
+                # roots. A same-named convenience header need not include them
+                # all, and a case-insensitive filesystem may accept "yoga.h"
+                # where the module owns "Yoga.h", losing module ownership.
+                names = re.findall(r'^\s*(?:textual\s+)?header\s+"([^"]+)"', module_text, re.MULTILINE)
+                found = [header_root / name for name in names if (header_root / name).is_file()]
+            if not found and module_map.is_file():
                 named = header_root / f"{framework.stem}.h"
                 if named.is_file():
                     found = [named]
@@ -358,9 +365,6 @@ def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path
                     private = re.findall(r'private\s+header\s+"([^"]+)"', module_text)
                     found = [p for p in sorted(header_root.glob("*.h"))
                              if not p.name.endswith("-Swift.h") and p.name not in private]
-                else:
-                    names = re.findall(r'^\s*(?:textual\s+)?header\s+"([^"]+)"', module_text, re.MULTILINE)
-                    found = [header_root / name for name in names if (header_root / name).is_file()]
             public_headers.extend(found)
             record["publicUmbrellaHeaders"] = [{"path": str(p), "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in found]
             inventory.append(record)

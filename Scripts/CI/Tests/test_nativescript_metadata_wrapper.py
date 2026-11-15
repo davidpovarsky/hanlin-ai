@@ -266,6 +266,19 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             self.assertNotIn("FocusEngine", umbrella.read_text())
             self.assertNotIn("Private.h", umbrella.read_text())
 
+    def test_explicit_public_module_headers_precede_same_named_convenience_header(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            framework = self.framework(root / "products", "Public")
+            (framework / "Headers/Public.h").write_text("// does not import Additional.h")
+            (framework / "Headers/Additional.h").write_text("extern int actual_public_c_api(void);")
+            (framework / "Modules/module.modulemap").write_text(
+                'framework module Public {\n header "Public.h"\n header "Additional.h"\n export *\n}\n')
+            umbrella = root / "input.h"
+            records = HEADERS.write_public_umbrella(root, umbrella, [], [framework.parent])
+            self.assertEqual([Path(h["path"]).name for h in records[0]["publicUmbrellaHeaders"]], ["Public.h", "Additional.h"])
+            self.assertIn(str(framework / "Headers/Additional.h"), umbrella.read_text())
+
     def test_real_clang_errors_reject_partial_metadata_even_when_required_classes_exist(self):
         with tempfile.TemporaryDirectory() as name:
             root = Path(name)
