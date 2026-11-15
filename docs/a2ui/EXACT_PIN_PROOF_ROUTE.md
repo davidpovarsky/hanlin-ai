@@ -1,10 +1,11 @@
 # Isolated exact-pin proof route
 
-The current result-owner candidate adds9 actual-SDK test methods and one source
-file. The updated contract requires34 cases (8 portable +26 SDK), all4 owned
-source files and unchanged official products/pin. Its SDK compilation/execution
-is NOT_RUN. The successful25-case f654 proof below is retained historical evidence
-and cannot satisfy this new source/case contract. This owner dispatched no CI.
+The frozen961 source remains the34-case benchmark. The current mount/retired-ID
+packet retains those identities and adds one SDK regression:35 cases (8 portable
++27 SDK) and all5 owned SDK-source files, with unchanged official products/pin.
+Its compilation/execution is NOT_RUN. Six separate iOS hosted cases and the two
+shared UI files are not part of this macOS harness. No961 result can accept the
+new lifetime-policy correction or host mounting. This owner dispatched no CI.
 
 Initially prepared after source review of `3a24003e`; the preparation utility
 itself dispatched no native job. Tomer's actual run43662884686 later compiled
@@ -17,7 +18,7 @@ correction at f654ac11 then passed all25 in
 [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483).
 See [retained native evidence](evidence/native-run-43668852483.json).
 
-`prepare_exact_pin_proof.py` prepares the current4 source files, the exact34
+`prepare_exact_pin_proof.py` prepares the current5 source files, the exact35
 Swift Testing selectors and all7 fixtures in an isolated SwiftPM consumer.
 It does not dispatch jobs or invoke a compiler. Its default `--plan` and
 `--self-test` modes are portable, read-only checks. No product manifests,
@@ -27,7 +28,7 @@ The generated temporary consumer uses the official exact root revision and
 four real products. Its source module is the actual app module `AI_Hanlin`,
 copied under `Sources/AI_Hanlin`; the unchanged tests import that module.
 `AI_HLY` is the repository/source directory, not the app module. The test
-target remains `AI_HLYTests`; the original25 case identities are retained and9
+target remains `AI_HLYTests`; the original25 case identities are retained and10
 owner lifecycle cases are added. No
 PRODUCT_MODULE_NAME override, stub or module alias is used. Both targets enable
 `HANLIN_A2UI_POC` and `DEBUG` for the Debug build; the standalone portable
@@ -60,7 +61,7 @@ using stdin and the installed ManifestAPI module. No Package.swift file was
 created and no dependency was resolved. This checks the preparation template,
 not Apple SDK imports or the upstream package build.
 
-## Native recipe — executed at f654ac11; current34-case candidate NOT_RUN
+## Native recipe — executed at f654ac11; current35-case candidate NOT_RUN
 
 Only after the authorized stable-Xcode host and serialized resource are
 available, run from an authenticated checkout of the handoff commit. Keep the
@@ -92,7 +93,7 @@ xcrun swift test --package-path "$A2UI_PROOF_ROOT/harness" -c debug \
 cmp "$A2UI_PROOF_ROOT/evidence/resolved-before.json" "$A2UI_PROOF_ROOT/harness/Package.resolved"
 
 # Swift Testing output may use results-swift-testing.xml. Pass all result XMLs;
-# empty XCTest output does not substitute for the34 actual Swift Testing cases.
+# empty XCTest output does not substitute for the35 actual Swift Testing cases.
 python3 docs/a2ui/prepare_exact_pin_proof.py \
   --verify-results "$A2UI_PROOF_ROOT/evidence/"*.xml \
   --resolved "$A2UI_PROOF_ROOT/harness/Package.resolved" \
@@ -104,7 +105,7 @@ SwiftPM's CLI offers forced resolved versions and Swift Testing selection;
 see its [official test command reference](https://github.com/swiftlang/swift-package-manager/blob/main/Sources/PackageManagerDocs/Documentation.docc/SwiftTest.md).
 The installed Windows6.3.3 `swift test --help` also exposes these flags.
 The exact Apple toolchain's acceptance remains unverified. If its XML format
-does not identify all34 methods, validation fails closed: retain the files
+does not identify all35 methods, validation fails closed: retain the files
 and correct the evidence adapter using actual output rather than treating
 zero discovery or a green heading as success.
 

@@ -2,8 +2,9 @@
 
 [איתן | ARCH] [MAIN_SESSION], 2026-11-15. Lease W1-001. Source tasks
 A2UI-01 `1220489258069695` and A2UI-03 `1220489258419968` remain **open**.
-A2UI-02 `1220489383643571` remains deferred. This is an unconnected prototype,
-not an inline-chat feature or a new persisted envelope.
+A2UI-02 `1220489383643571` remains deferred. Source includes optional mounting in
+the existing chat host. Production transport, app/inline/device acceptance and
+persisted-envelope work remain outside this packet.
 
 The current source adds transient result ownership and projection primitives in
 `HanlinA2UIResultOwner.swift`. Registration binds caller-supplied run/result/call
@@ -22,11 +23,27 @@ presentation state, not message or tool authority. A sealed result cannot resume
 Ended runs reject late result registrations/replacements; discarding the chat
 permanently ends that store. Old generations cannot be reset into authority.
 
-**Current candidate native status: NOT_RUN.** Nine new real-SDK test methods bring
-the proof contract to8 portable +26 SDK =34. Local8 portable scenarios, enabled
-syntax parsing and synthetic proof-verifier checks pass; none typecheck or execute
-the new SDK-backed owner. The retained f65425-case native pass below applies to
-the earlier source only. Actual inline/expanded UI lifecycle remains unverified.
+The optional mount source now supplies only explicitly registered projections to
+the actual ChatBubbleView.assistantTextSection -> AgentTranscriptToolResultView
+-> generic ChatEmbeddedResultHost path. Environment injection defaults to nil;
+there is no production frame source, event route or run continuation. Existing
+display gates and nil/flag-off resolver/modern/legacy branches are preserved.
+Inline and expanded content share one projection without appearance teardown.
+
+Result owners now refuse a deleted surface ID for that result's remaining lifetime.
+The SDK callback exposes no emitting model instance, so delayed membership cannot
+distinguish a same-ID reincarnation. Only observed removal of an actually owned
+SDK surface after its delete retires the ID, even if the SDK also reports an error.
+This is host admission policy, not SDK schema validation;
+other owners/fresh generations may reuse IDs. Standalone SDK session delete/recreate
+behavior is unchanged.
+
+**Current candidate native status: NOT_RUN.** The frozen961 benchmark's34 methods
+are retained, plus one same-ID race regression:8 portable +27 SDK =35. Six iOS-only
+A2UIHostedResultTests methods are authored for the actual chat/host/native-input
+path and excluded from the isolated macOS harness. Their compilation/execution is
+NOT_RUN. Windows syntax parsing is not Apple import/API/type checking. Historical
+f65425-case and96134-case outcomes cannot accept this later correction or UI mount.
 
 ## Official source and revision
 
@@ -66,7 +83,7 @@ renderer, copied renderer, NativeScript engine or alternate MiniApp engine is us
 
 ## Ownership and behavior
 
-The only source additions are in
+The core source lives in
 `AI_HLY/Downstream/ChatPresentation/A2UI/`:
 
 - `HanlinA2UIIngress.swift` checks a complete UTF-8 message's framing, version,
@@ -122,9 +139,14 @@ is **not verified**. Core catalog functions currently use upstream's default
 locale; locale-sensitive function parity beyond this text-only POC is a later
 integration concern, not an asserted capability.
 
+The mount packet changes only optional environment injection/filter/callsite in
+ChatViewComponents.swift and the projection branch in AgentTranscriptToolResultView.
+ChatEmbeddedResultHost, Runtime, project/lock/flags, APIManager and run lifecycle
+remain untouched. No persisted envelope, renderer kind or engine identity is added.
+
 ## Deliberate activation gate
 
-The SDK-backed source and26 SDK tests are behind **HANLIN_A2UI_POC**. The manager
+The SDK-backed source and27 SDK tests are behind **HANLIN_A2UI_POC**. The manager
 authorized this temporary prototype gate without changing the lease. No build
 flag, manifest, dependency lock or project file was changed. This explicit flag
 protects the synchronized app source groups from unresolved optional imports.
@@ -145,7 +167,7 @@ flag, syntax-only parse or zero selected cases cannot satisfy either task.
 See [TEST_EXECUTION_MANIFEST.md](TEST_EXECUTION_MANIFEST.md) for exact cases,
 commands, fixture identities and evidence.
 
-The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) now requires all34 authored
+The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) now requires all35 authored
 cases in a temporary consumer, exact root/transitive resolution evidence and
 unchanged source bytes. It does not require shared product wiring. Its planner
 and verifier have local checks. Tomer's existing verifier produced the actual

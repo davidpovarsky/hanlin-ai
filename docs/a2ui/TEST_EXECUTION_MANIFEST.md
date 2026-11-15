@@ -1,12 +1,13 @@
 # A2UI test execution manifest
 
-**Current source candidate:** transient result-owner/projection/weak event relay,
-session sealing and read-only completed rendering.8 portable +26 SDK =34 authored
-cases. The9 new SDK methods below use actual MessageProcessor/model/Node/actions;
-they are NOT_RUN on this Windows host. All current SDK-backed compilation/execution
-is NOT_RUN. Local8 framing scenarios and enabled syntax parsing pass;7 synthetic
-verifier checks pass, and the previous25-case result is correctly rejected against
-the new34-case contract. No CI, app wiring or native rerun was dispatched here.
+**Current source candidate:** optional actual-chat-host projection plus the
+per-result retired-ID policy for the delayed-action/reincarnation P2. The frozen
+961 benchmark's34 method identities/assertions are retained; one SDK race method
+brings the isolated contract to8 portable +27 SDK =35. All current SDK-backed
+compilation/execution is NOT_RUN. Six iOS-only actual-host methods below are
+separate and NOT_RUN. Local8 framing scenarios and Windows syntax parsing pass;
+7 synthetic verifier checks pass; prior25/benchmark34 case sets cannot satisfy35.
+No native job/CI, project wiring or production transport was added/dispatched.
 
 **Latest real native result:** [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483)
 compiled source `f654ac113447177df3838908c53ce9aa24dc47ff` with the actual
@@ -71,15 +72,16 @@ No upstream code or package dependency was installed into the app.
 | --- | --- | --- |
 | Windows Swift6.3.3 local typecheck via apple-devtools | EXECUTED_PASS | HanlinA2UIIngress.swift only |
 | Swift6 strict-concurrency standalone build and execution | EXECUTED_PASS, 8 scenarios | Actual ingress source plus portable cases in A2UITests.swift |
-| Enabled-flag Swift frontend syntax parse | EXECUTED_PASS | All4 current source files and test file; no import/type/API checking |
-| Isolated proof plan and verifier self-checks | EXECUTED_PASS | Current source/fixture hashes,34 selectors;7 synthetic XML/lock checks and rejection of prior25-case evidence, no SDK execution |
+| Windows Swift frontend syntax parse, enabled and feature-off | EXECUTED_PASS | iOS-target parse; Windows sysroot warnings; no Apple import/type/API checking |
+| Isolated proof plan and verifier self-checks | EXECUTED_PASS | Current source/fixture hashes,35 selectors;7 synthetic XML/lock checks and prior25/benchmark34 set rejection, no SDK execution |
 | Generated SwiftPM manifest API typecheck | EXECUTED_PASS | Windows Swift6.3.3, PackageDescription6.1,24 template lines via stdin; no manifest file or dependency resolution |
 | Exact-pin enabled SDK compilation at c40e617b | EXECUTED_PASS | Actual native run43662884686; isolated consumer, no app wiring |
 | Exact-pin SDK cases at c40e617b | FAILED, 17 cases | All executed; common valid-fixture load rejection |
 | Exact-pin enabled compilation/cases at2bae5a3e | EXECUTED_PASS, 25 cases | Run43664698104; identifier correction only, privacy P2 not accepted |
 | Exact-pin enabled compilation/cases at a43f1563 | EXECUTED_PASS, 25 cases | Run43667371439; privacy canaries executed, old consumer module |
 | Actual AI_Hanlin consumer-name proof at f654ac11 | EXECUTED_PASS, 25 cases | Run43668852483; actual AI_Hanlin consumer and AI_HLYTests module |
-| Current result-owner SDK compilation/cases | NOT_RUN, 34 authored cases | Changed source; prior f65425-case proof does not cover it |
+| Current SDK compilation/cases | NOT_RUN, 35 authored cases | Changed source; f65425-case and96134-case outcomes do not cover this correction |
+| Current iOS host compilation/cases | NOT_RUN, 6 authored cases | AI_HLYTests/A2UIHostedResultTests.swift; excluded from macOS harness |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |
 
 The8 local scenarios execute through the standalone runner, not XCTest or
@@ -147,7 +149,7 @@ swiftc -frontend -parse -D HANLIN_A2UI_POC -D DEBUG `
   AI_HLYTests/A2UITests.swift
 ```
 
-## Exact-pin SDK cases: 26 authored, current candidate NOT_RUN
+## Exact-pin SDK cases: 27 authored, current candidate NOT_RUN
 
 All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 `A2UISDKTests`. They compile only with `HANLIN_A2UI_POC`, in the app and test
@@ -185,6 +187,7 @@ rather than accepting a smaller discovered count.
 | presentationCopiesDoNotOwnDiscard() | Inline/expanded projection copies share models; releasing one copy does not close; explicit discard does | NOT_RUN |
 | eventSinkIsWeakAndCannotKeepAuthorityAlive() | Weak sink released before queued/retained SDK action delivery | NOT_RUN |
 | deletedSurfaceDropsQueuedOwnedEvents() | Real SDK delete removes membership and queued/retained callbacks cannot escape | NOT_RUN |
+| retiredSurfaceCannotReanimateQueuedEventsInSameResult() | Queue SDK action, delete/recreate before delivery; reject host reuse, permit unowned-ID/other-owner/fresh-generation actions | NOT_RUN |
 
 The three lifecycle/RPC cases address the2 P2 findings in the independent review of
 `e7141d55`; they exercise official SDK objects, not source-string matching.
@@ -211,6 +214,29 @@ screen assertion. The RTL case likewise constructs an RTL/accessibility-size
 composition and checks Hebrew bindings. It does not measure layout, focus,
 VoiceOver order, keyboard behavior or text clipping. Those hosted UI checks
 are separate open acceptance gates.
+
+## Actual iOS host cases: 6 authored, NOT_RUN
+
+AI_HLYTests/A2UIHostedResultTests.swift imports AI_Hanlin and is explicitly gated by
+HANLIN_A2UI_POC and os(iOS). The suite is A2UIHostedResultTests. It uses owned
+UIWindow/UIHostingController instances, actual ChatBubbleView and result host,
+real SDK fixtures/models/native input, with bounded waits and explicit cleanup.
+It is not copied into the isolated macOS harness. No iOS API typecheck, app/test
+bundle execution or physical-device result is claimed.
+
+| Case | Obligation | Actual result |
+| --- | --- | --- |
+| projectionSourceRequiresExactRegisteredIdentityAndGeneration() | Full identity, pure lookup, duplicate/stale source rejection; no automatic replacement following | NOT_RUN |
+| chatBubblePreservesDisplayGateAndDoesNotInferProjectionFromPayload() | Actual caller shows registered result without persisted payload; summary-off/nil-source/foreign-run/wrong-kind stay hidden | NOT_RUN |
+| actualHostInputBindsWithoutReplayAcrossBodyUpdates() | Hosted native text input updates real SDK model; redraw preserves identity and ordered update still works | NOT_RUN |
+| sealedHostRetainsVisibleModelAndDisablesNativeInput() | Completed model remains visible, native input disabled and old SDK actions revoked | NOT_RUN |
+| presentedProjectionDismissalAndHostRemovalDoNotDiscardOwner() | Actual UIKit presentation/dismissal and removal preserve shared owner until explicit discard | NOT_RUN |
+| nilAndMismatchedProjectionKeepExistingNativeFallbacks() | Existing modern/legacy native content remains nonempty and does not mount unrelated SDK controls | NOT_RUN |
+
+The presentation test does not activate ChatEmbeddedResultHost's expansion button;
+its actual sheet/full-screen controls, RTL, Dynamic Type and accessibility/device
+acceptance remain open. The mount's default environment source is nil and no
+production frame/event transport or run-continuation policy is supplied.
 
 ## App build/test command — proposed, NOT_RUN
 

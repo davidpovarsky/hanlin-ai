@@ -553,6 +553,62 @@ struct A2UISDKTests {
         #expect(sink.keys.isEmpty)
     }
 
+    @Test func retiredSurfaceCannotReanimateQueuedEventsInSameResult() async throws {
+        let store = HanlinA2UIResultStore()
+        defer { store.discardAll() }
+        let sink = A2UIResultSinkRecorder()
+        let old = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: sink))
+        try load(store, old)
+        let oldModel = try #require(old.surface("form-a"))
+        let oldAction = try #require(try node(old, id: "submit").action(for: "action", userActivation: true))
+        oldAction() // Emit before deletion; do not yield to either actor relay yet.
+        try store.receive(#"{"version":"1.0","deleteSurface":{"surfaceId":"form-a"}}"#,
+                          sequence: 3, for: old.key).get()
+        // Attempt complete same-ID recreation before queued delivery. The conservative
+        // result policy refuses it, rather than mistaking a new model for the old emitter.
+        for (offset, line) in try A2UIFixture.lines("form").enumerated() {
+            #expect(admissionFailure(store.receive(line, sequence: 4 + UInt64(offset), for: old.key)) == .retiredSurfaceID)
+        }
+        #expect(old.surface("form-a") == nil && old.surfaceIDs.isEmpty)
+        oldAction()
+        do {
+            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
+            Issue.record("An old action acquired a deleted surface ID's new lifetime")
+        } catch A2UIWaitError.deadline {}
+        #expect(sink.keys.isEmpty)
+
+        // A raw/unowned delete grants no retirement authority, even in another live owner
+        // using the same wire ID. This is a per-result policy, never a global ID blacklist.
+        let independentSink = A2UIResultSinkRecorder()
+        let independent = try #require(store.register(runID: old.key.runID, resultID: UUID(), callID: "other", sink: independentSink))
+        _ = store.receive(#"{"version":"1.0","deleteSurface":{"surfaceId":"form-a"}}"#,
+                          sequence: 0, for: independent.key)
+        do {
+            _ = try await nextA2UIValue(independentSink.recorder.stream, timeout: .milliseconds(100))
+            Issue.record("An unowned delete acquired callback correlation")
+        } catch A2UIWaitError.deadline {}
+        try load(store, independent, startingAt: 1)
+        let independentAction = try #require(try node(independent, id: "submit").action(for: "action", userActivation: true))
+        independentAction()
+        _ = try await nextA2UIValue(independentSink.recorder.stream)
+        #expect(independentSink.keys == [independent.key])
+
+        let fresh = try #require(store.replace(old.key, callID: old.key.callID, sink: sink))
+        try load(store, fresh)
+        #expect(fresh.surface("form-a") !== oldModel && fresh.key.generation != old.key.generation)
+        oldAction() // Still cannot acquire this fresh result generation's registration.
+        let freshAction = try #require(try node(fresh, id: "submit").action(for: "action", userActivation: true))
+        freshAction()
+        let event = try await nextA2UIValue(sink.recorder.stream)
+        guard case .action(let action) = event else { Issue.record("Expected fresh SDK action"); return }
+        #expect(action.surfaceID == "form-a" && action.context["name"]?.stringValue == "Ada")
+        do {
+            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
+            Issue.record("A retired action escaped after fresh registration")
+        } catch A2UIWaitError.deadline {}
+        #expect(sink.keys == [fresh.key])
+    }
+
     private func requireNoCallbackCanary(_ event: RendererToAgentMessage) throws {
         let encoded = try JSONEncoder().encode(event)
         let decoded = try JSONDecoder().decode(RendererToAgentMessage.self, from: encoded)

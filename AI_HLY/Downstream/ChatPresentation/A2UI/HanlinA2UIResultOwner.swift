@@ -19,7 +19,7 @@ protocol HanlinA2UIResultEventSink: AnyObject, Sendable {
 }
 
 enum HanlinA2UIResultAdmissionError: Error, Equatable, Sendable {
-    case unregisteredResult, inputSealed, outOfOrder
+    case unregisteredResult, inputSealed, outOfOrder, retiredSurfaceID
     case rejected(HanlinA2UIIngress.Rejection)
 }
 
@@ -49,6 +49,7 @@ fileprivate final class HanlinA2UIResultOwner {
     let session: HanlinA2UISession
     private let relay: HanlinA2UIResultRelay
     private var nextSequence: UInt64 = 0
+    private var retiredSurfaceIDs: Set<String> = []
     private var receiveTask: Task<Void, Never>?
 
     init(key: HanlinA2UIResultKey, sink: any HanlinA2UIResultEventSink, store: HanlinA2UIResultStore) {
@@ -67,7 +68,22 @@ fileprivate final class HanlinA2UIResultOwner {
         guard sequence == nextSequence else { return .failure(.outOfOrder) }
         // A correctly ordered delivery consumes its ordinal even if SDK validation rejects it.
         // Replaying that frame cannot consume budget or mutate a surface a second time.
-        let result = session.receive(json).mapError(HanlinA2UIResultAdmissionError.rejected)
+        let frame = try? HanlinA2UIIngress.inspect(Data(json.utf8))
+        let result: Result<Void, HanlinA2UIResultAdmissionError>
+        if let frame, retiredSurfaceIDs.contains(frame.surfaceID) {
+            // Host lifetime policy, not SDK schema validation. ActionHandling supplies only
+            // a wire ID, so a deleted ID cannot identify a new incarnation in this result.
+            result = .failure(.retiredSurfaceID)
+        } else {
+            let deletingOwnedSurface = frame.map {
+                $0.operation == .deleteSurface && session.surface($0.surfaceID) != nil
+            } ?? false
+            result = session.receive(json).mapError(HanlinA2UIResultAdmissionError.rejected)
+            if let frame, deletingOwnedSurface,
+               session.surface(frame.surfaceID) == nil {
+                retiredSurfaceIDs.insert(frame.surfaceID)
+            }
+        }
         if nextSequence == .max { seal() } else { nextSequence += 1 }
         return result
     }

@@ -5,8 +5,45 @@ struct AgentTranscriptToolResultView: View {
   let item: AgentTranscriptItem
   let temporaryRecord: Bool
   let onLaunchRequest: ((NativeAppLaunchRequest) -> Void)?
+  #if HANLIN_A2UI_POC
+  var a2uiProjection: HanlinA2UIResultProjection? = nil
+  #endif
 
   var body: some View {
+    #if HANLIN_A2UI_POC
+    if let projection = a2uiProjection, !projection.isClosed,
+       item.kind == .userVisibleToolResult,
+       projection.key.resultID == item.id, projection.key.callID == item.callID {
+      let title = item.embeddedResultPayload?.title ?? item.nativeUIBlocks.compactMap(\.title).first ?? item.toolName
+      let expansion = item.canonicalEmbeddedPresentation?.expansion
+      // A different handler/window is not authority to resolve another session for this owner.
+      let expansions = expansion?.expandedHandler == nil
+        ? ChatPresentationBridge.resolveExpansions(descriptor: expansion, title: title)
+            .filter { $0.mode == .sheet || $0.mode == .fullScreen }
+        : []
+      ChatEmbeddedResultHost(
+        title: title,
+        sizingPreference: item.canonicalEmbeddedPresentation?.sizing ?? HanlinEmbeddedSizingPreference(),
+        expansions: expansions,
+        contentActions: item.embeddedResultPayload?.actions ?? [],
+        containerStyle: .neutral,
+        onLaunchRequest: onLaunchRequest
+      ) {
+        HanlinA2UIProjectedResultView(projection: projection)
+      } expandedContent: {
+        HanlinA2UIProjectedResultView(projection: projection)
+      }
+      .accessibilityIdentifier("hanlin-a2ui-host")
+    } else {
+      existingResult
+    }
+    #else
+    existingResult
+    #endif
+  }
+
+  @ViewBuilder
+  private var existingResult: some View {
     // 1. If canonical embedded handler exists (or declared on payload) AND resolves -> render arbitrary Mini-App surface in ChatEmbeddedResultHost
     let effectiveEmbedded: HanlinEmbeddedPresentationDescriptor? = item.canonicalEmbeddedPresentation
       ?? item.embeddedResultPayload?.ownerID.map { ownerID in

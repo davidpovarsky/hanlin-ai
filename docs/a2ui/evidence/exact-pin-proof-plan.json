@@ -24,6 +24,7 @@
     "presentationCopiesDoNotOwnDiscard",
     "eventSinkIsWeakAndCannotKeepAuthorityAlive",
     "deletedSurfaceDropsQueuedOwnedEvents",
+    "retiredSurfaceCannotReanimateQueuedEventsInSameResult",
     "parsesAndRendersTextCardInputButton",
     "nativeInputBindingWritesAndReadsOfficialModel",
     "stableIDsAndNodeIdentityAcrossUpdates",
@@ -49,7 +50,11 @@
     },
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
-      "sha256": "d1cb1305751deb85cf598f69f4c41f0aea06de000f9313c7ceecc0b239b4156d"
+      "sha256": "0bc24e163d0c7ef2d5fff6bffb57a60861552778919abe99ec9ac8c5e72c9348"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+      "sha256": "8ede697eeb8524227f621e76866dfb36863b949ddc2fca84f753ba55fb3d131a"
     },
     {
       "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
@@ -61,7 +66,7 @@
     },
     {
       "path": "AI_HLYTests/A2UITests.swift",
-      "sha256": "beab3966135f26a8929e29f75402239afe2a569c934a179d8a7da673df067846"
+      "sha256": "1a3737054e4369e53b1c1f90970fba64f3e9cf804c7672aef9d6fd14ae8d333b"
     },
     {
       "path": "AI_HLYTests/A2UIFixtures/form.jsonl",

@@ -77,6 +77,9 @@ struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
     @Environment(\.chatExcerptSource) private var excerptSource
+    #if HANLIN_A2UI_POC
+    @Environment(\.hanlinA2UIResultProjectionSource) private var a2uiProjectionSource
+    #endif
     @State private var isPersonallySaved = false
     let temporaryRecord: Bool
     let id: UUID
@@ -585,10 +588,15 @@ struct ChatBubbleView: View {
     }
 
     private var embeddedInteractiveItems: [AgentTranscriptItem] {
-        guard showsAgentActivitySummary, let items = agentRun?.transcriptItems else { return [] }
-        return items.filter { item in
-            item.kind == .userVisibleToolResult
-                && (item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil)
+        guard showsAgentActivitySummary, let run = agentRun else { return [] }
+        return run.transcriptItems.filter { item in
+            guard item.kind == .userVisibleToolResult else { return false }
+            if item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil { return true }
+            #if HANLIN_A2UI_POC
+            return a2uiProjectionSource?.projection(runID: run.id, resultID: item.id, callID: item.callID) != nil
+            #else
+            return false
+            #endif
         }
     }
 
@@ -659,12 +667,24 @@ struct ChatBubbleView: View {
                 // 新型交互式小程序 / NativeScript / 脚本界面内嵌宿主
                 if !embeddedInteractiveItems.isEmpty {
                     ForEach(embeddedInteractiveItems) { item in
+                        #if HANLIN_A2UI_POC
+                        AgentTranscriptToolResultView(
+                            item: item,
+                            temporaryRecord: temporaryRecord,
+                            onLaunchRequest: launchNativeApp,
+                            a2uiProjection: a2uiProjectionSource?.projection(
+                                runID: agentRun?.id, resultID: item.id, callID: item.callID
+                            )
+                        )
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        #else
                         AgentTranscriptToolResultView(
                             item: item,
                             temporaryRecord: temporaryRecord,
                             onLaunchRequest: launchNativeApp
                         )
                         .transition(.move(edge: .top).combined(with: .opacity))
+                        #endif
                     }
                 }
                 if !nativeUIBlocks.isEmpty {
