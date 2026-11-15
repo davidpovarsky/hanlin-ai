@@ -53,8 +53,15 @@ def main():
     if arch not in {"arm64", "x86_64"} or preflight["freeBytes"] < 8 * 1024**3:
         raise RuntimeError("Insufficient disk or unsupported native architecture")
     flags = ["-x", "objective-c", "-target", f"{arch}-apple-ios27.0-simulator", "-isysroot", sdk, "-fno-modules"]
-    tool = ROOT / "build/nativescript-metadata-tool/bin/objc-metadata-generator"
-    receipt = ROOT / "build/nativescript-metadata-tool/provenance.json"
+    modern = os.environ.get("HANLIN_METADATA_PROOF_FRONTEND") == "modern"
+    if modern:
+        spec = importlib.util.spec_from_file_location("metadata_probe_context", ROOT / "Scripts/NativeScript/probe-sdk-metadata.py")
+        probe = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(probe)
+        flags.extend(probe.CANDIDATE_CPP_ARGUMENTS)
+    tool_root = ROOT / ("build/nativescript-modern-metadata-tool" if modern else "build/nativescript-metadata-tool")
+    tool = tool_root / "bin/objc-metadata-generator"
+    receipt = tool_root / "provenance.json"
     cases = OUTPUT / "cases"
     cases.mkdir(mode=0o700)
     os.environ.update(HANLIN_RUN_PROVENANCE_NATIVE_CONTROLS="1",
@@ -65,13 +72,17 @@ def main():
     contract = json.loads((ROOT / "docs/miniapp-sdk/evidence/METADATA_FRAMEWORK_DEDUP_2026-11-15.json").read_text())
     rows = contract.get("activeWave20261115", {}).get("matrixV2") or contract["sourceOnlyPreprocessingProvenance"]["testHarnessPreparation"]["matrix"]
     write("plan.json", {"obligations": rows, "sourceSHA": preflight["sourceSHA"], "flags": flags,
-        "reuse": [], "reason": "All controls never executed; production tool has uncompiled C++ changes since prior native evidence."})
+        "reuse": [], "reason": "Changed frontend/context/source: execute affected fixture controls. No legacy compiler pass confers a modern pass."})
     spec = importlib.util.spec_from_file_location("metadata_controls", ROOT / "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     results = []
     for row in rows:
         key = row["selector"] + "--" + row["variant"]
+        if modern and ("cancelled_native_process" in row["selector"] or "normal_sdk31_" in row["selector"]):
+            reason = "Existing one-attempt observer does not establish PP Lex; no unchanged infrastructure retry" if "cancelled_native_process" in row["selector"] else "Modern combined production wrapper is not adopted; separate SDK/combined/runtime obligations remain open"
+            results.append({**row, "status": "NOT_RUN", "testsRun": 0, "reason": reason})
+            continue
         if time.monotonic() - started > 24 * 60:
             results.append({**row, "status": "NOT_RUN", "reason": "Aggregate time reserve"})
             continue

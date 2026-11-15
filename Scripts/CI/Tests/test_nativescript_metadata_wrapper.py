@@ -1029,13 +1029,20 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
         self.provenance_path = Path(os.environ["HANLIN_PREPROCESS_PROVENANCE_TOOL_RECEIPT"]).resolve(strict=True)
         self.patch_source = ROOT / "Scripts/NativeScript/build-metadata-tool.py"
         provenance = json.loads(self.provenance_path.read_text(encoding="utf-8"))
-        self.assertEqual(provenance["patchSourceSHA256"], self.sha(self.patch_source))
+        self.modern = os.environ.get("HANLIN_METADATA_PROOF_FRONTEND") == "modern"
+        self.assertEqual(provenance["basePatchSourceSHA256" if self.modern else "patchSourceSHA256"], self.sha(self.patch_source))
         self.assertEqual(provenance["generatorSHA256"], self.sha(self.tool))
-        frozen = {"build-metadata-tool.py": "0bcfd5e51ae29f3a6814aef7f642ea7800d6157dc5acd8b8f2ead22ea5058ee6",
-            "build-step-metadata-generator-wrapper.py": "36f0b360c5cf08c41687749caac7743d09d7f22377687bffc4754d8f8164f765",
-            "probe-sdk-metadata.py": "dd00967e2c63c28af37c3305700fd867ed994b30df0f6834c9fd47b6ac5c0458"}
-        for filename, digest in frozen.items():
-            self.assertEqual(self.sha(ROOT / "Scripts/NativeScript" / filename), digest, "Frozen production source drift")
+        frozen = {filename: self.sha(ROOT / "Scripts/NativeScript" / filename) for filename in [
+            "build-metadata-tool.py", "build-step-metadata-generator-wrapper.py", "probe-sdk-metadata.py"]}
+        if self.modern:
+            self.assertEqual(provenance["schemaVersion"], 2)
+            for key, filename in [("modernPatchSourceSHA256", "build-modern-metadata-tool.py"),
+                                  ("frontendLockSHA256", "metadata-frontend-lock.json")]:
+                self.assertEqual(provenance[key], self.sha(ROOT / "Scripts/NativeScript" / filename))
+                frozen[filename] = provenance[key]
+            frontend = Path(provenance["frontendRoot"])
+            for name, digest in provenance["libraries"].items():
+                self.assertEqual(self.sha(frontend / "lib" / name), digest)
         self.flags = json.loads(os.environ["HANLIN_PREPROCESS_PROVENANCE_CLANG_ARGS_JSON"])
         self.assertIsInstance(self.flags, list)
         self.record("control-meta.json", {"schemaVersion": 1, "selector": self.selector_name, "variant": self.variant,
@@ -1162,6 +1169,8 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
                  for index, (line, name) in enumerate(occurrences)]
         files = [umbrella, overlay, self.context_path, self.tool, self.patch_source, self.provenance_path,
                  *[self.folder / name for _, name in occurrences]]
+        if self.modern:
+            files.extend(ROOT / "Scripts/NativeScript" / name for name in ["build-modern-metadata-tool.py", "metadata-frontend-lock.json"])
         self.request = {"schemaVersion": 1,
             "bindings": {"contextSHA256": self.sha(self.context_path), "umbrellaSHA256": self.sha(umbrella),
                 "overlaySHA256": self.sha(overlay), "patchSourceSHA256": self.sha(self.patch_source),
@@ -1227,7 +1236,8 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
 
     def test_semantically_invalid_cpp_tokens_are_not_an_ast_or_metadata_pass(self):
         header = self.folder / "cpp.h"
-        header.write_text("namespace cpp_only { template<class T> struct Type {}; }\n")
+        header.write_text("struct Broken { HanlinMissingPublicType field; };\n" if self.modern else
+                          "namespace cpp_only { template<class T> struct Type {}; }\n")
         self.prepare('#include "cpp.h"\n', [(1, "cpp.h")])
         run, receipt = self.trace()
         self.assertEqual(run.returncode, 0, run.stderr.decode(errors="replace"))
@@ -1239,7 +1249,7 @@ class NativePreprocessingProvenanceControls(unittest.TestCase):
             "-input-umbrella", str(self.folder / "input.h"), "-hanlin-expected-clang-context", str(self.context_path),
             "Xclang", *self.call[split + 1:]])
         self.assertEqual(semantic.returncode, 1)
-        self.assertIn(b"unknown type name 'namespace'", semantic.stderr)
+        self.assertIn(b"unknown type name 'HanlinMissingPublicType'" if self.modern else b"unknown type name 'namespace'", semantic.stderr)
         self.assert_canaries()
 
     def test_suppressed_missing_header_still_makes_trace_incomplete(self):

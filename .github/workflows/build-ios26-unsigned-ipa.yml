@@ -19,6 +19,7 @@ on:
           - inventory
           - modern-compile
           - modern-cpp
+          - modern-provenance
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false
@@ -146,7 +147,7 @@ jobs:
     if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
     name: Probe pinned NativeScript SDK metadata
     runs-on: xcode-27
-    timeout-minutes: ${{ inputs.nativescript_metadata_tooling_mode == 'provenance' && 30 || 12 }}
+    timeout-minutes: ${{ (inputs.nativescript_metadata_tooling_mode == 'provenance' || inputs.nativescript_metadata_tooling_mode == 'modern-provenance') && 30 || 12 }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
@@ -205,6 +206,11 @@ jobs:
         run: python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py
       - name: Execute retained native provenance controls
         if: ${{ inputs.nativescript_metadata_tooling_mode == 'provenance' && inputs.nativescript_metadata_tooling_mode != 'inventory' && inputs.nativescript_metadata_tooling_mode != 'modern-compile' }}
+        run: python3 Scripts/CI/MetadataProvenanceProof/run.py
+      - name: Execute changed modern frontend provenance controls
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-provenance'
+        env:
+          HANLIN_METADATA_PROOF_FRONTEND: modern
         run: python3 Scripts/CI/MetadataProvenanceProof/run.py
       - name: Compare real SDK metadata parser modes
         if: ${{ inputs.nativescript_metadata_tooling_mode != 'provenance' && inputs.nativescript_metadata_tooling_mode != 'inventory' && !startsWith(inputs.nativescript_metadata_tooling_mode, 'modern-') }}
