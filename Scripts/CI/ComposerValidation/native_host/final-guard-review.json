@@ -7,6 +7,18 @@
   "accepted_generator_commit": "67642faaa8f16c89eb0e2330db56291c35c61c06",
   "source": "e8ccd81452843609285a0cd7e017a759bda6a6ef",
   "owner": "20980c9448f0a5d78eefcaec38da6e92364de37d",
+  "execution_environment_contract": {
+    "version": "composer-runtime-27.2-v1-20261115",
+    "runtime_identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "version_number": "27.2",
+    "build": "24B8117",
+    "Xcode": "27.2/27B52",
+    "architecture": "arm64",
+    "device": "iPhone 18 Pro",
+    "reason": "explicit manager decision after actual27.0 simulator hang run43722542700",
+    "prior27_0_acceptance": "NOT_COVERED",
+    "full_app_or_UI_acceptance": false
+  },
   "prior_closed_attempt": {
     "run": "43711740465",
     "head": "70a74580115982ed5810cf93aed9700a0e3537c9",
@@ -81,8 +93,12 @@
     "missing-app-actual-SDKROOT",
     "runtime-version",
     "runtime-buildversion",
+    "runtime-identifier",
     "runtime-isAvailable",
     "runtime-supportedArchitectures",
+    "runtime-supportedDeviceTypes",
+    "runtime-platform",
+    "runtime-isInternal",
     "created-name-alias",
     "query-UUID-assumption",
     "name-already-present",
@@ -197,12 +213,12 @@
       "test-retry-loop",
       "settings-after-boot"
     ],
-    "unchanged_e778_function_source_sha256": {
+    "reviewed_function_source_sha256": {
       "guards.py": {
         "native_settings": "97b5edb2266010467b6335845604411cf663c95299d5610ca722f9e0e9a5df40",
-        "environment": "5dbee4131bf0ffb2ad0bb3185fc6fcf2df84bacf3fe1a2eb0293fc9c83ec41a9",
-        "destination": "1c7dcefcb6129250196822049c7543f7f49099dca01c96c58a054d54c68100ad",
-        "observations": "a0b68d6c932d4e6075a1da391aea1c9af7f906b2a09a7f8852db687b6998e5a9"
+        "environment": "7fc45c76767d915ca5b3c558a0fc8523070021c36e8051be48400960c8d8cc5d",
+        "destination": "96e93e3b4ed5da7a41adc9919bab1eba066f16cdc0fd9869082299461ad4362c",
+        "observations": "09aea2cc006d3808472d3f4ad37a7ba066e132d31a5479e3616998aaaea91f59"
       }
     }
   },
@@ -302,16 +318,16 @@
   "source_file_sha256": {
     ".github/workflows/build-ios26-unsigned-ipa.yml": "2ce53bb63b1e8c350745f90f18f41ba5855603ec8baf6827446b3bc120e3bdb4",
     "Scripts/CI/ComposerValidation/native_host/ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e",
-    "Scripts/CI/ComposerValidation/native_host/README.md": "c39c02e70093909e6dd54c7de604027735d3af50944a4817128e8cd93bceba1e",
+    "Scripts/CI/ComposerValidation/native_host/README.md": "0d5d4d2839a913f79a92ca856e748e3e710c4a29bd377740a0f7c918a4159892",
     "Scripts/CI/ComposerValidation/native_host/freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
-    "Scripts/CI/ComposerValidation/native_host/guards.py": "fec76ccd25ac370505c6d605770a2818b9fab1af28d9195b35c1fb7b3ebf1f7e",
+    "Scripts/CI/ComposerValidation/native_host/guards.py": "2d6fb3879b7858188826d8bfb151288b87fe6cdb97d239b5e5267981b1a9136d",
     "Scripts/CI/ComposerValidation/native_host/prepare_native.py": "a09f0f7798def05eb96815958d7fe38f349d6268974c0715bd880a6a267eac58",
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/project.pbxproj": "9443466ee77dac5545cc112957379ccd1ccc116673571eeac4d767e29b2773a4",
     "Scripts/CI/ComposerValidation/native_host/review/ComposerNativeHost.xcodeproj/xcshareddata/xcschemes/ComposerNativeHost.xcscheme": "5c834a5ae4e67261dbe71a9a1afc7fc4328555e6296a1df31d8ac1784de91a97",
     "Scripts/CI/ComposerValidation/native_host/review/native-inputs.json": "31415ab05620b322052c2712584297d717779d0d53460497db4a93bcd105d990",
     "Scripts/CI/ComposerValidation/native_host/review/source-controls.json": "980322c016d6c1e1b57fa376165d346e82e16895fb988c24df26fd5de43875dc",
-    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "b6dd5eef294e2bbb053f43abb9e80b627f8171146d23858898eee82981f62957",
-    "Scripts/CI/ComposerValidation/native_host/run_native.py": "f8c9b20fdc45b69e5bafcf91dbac3593958e9cdc2f5c0268f47245c2723a44fe",
+    "Scripts/CI/ComposerValidation/native_host/review_guard.py": "b96c34100ea8bb8b60a4b0f72cae9e284df3987ec6fa45277907963d6417798d",
+    "Scripts/CI/ComposerValidation/native_host/run_native.py": "d01de50323d9aa0e37a0816dbbb71c9c5637b6ea2fa49d9c57a996bfbbe1a6ac",
     "Scripts/CI/ComposerValidation/native_host/simctl-list-help-43711740465.txt": "4c7f0c98a485121183a1bc0b5ae8549958692117107664b4ee1c3fbf0f3c4693",
     "Scripts/CI/ComposerValidation/native_host/validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467"
   }

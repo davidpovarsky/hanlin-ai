@@ -52,13 +52,22 @@ def native_settings(data, sdk_path):
             'basis': 'raw -showBuildSettings JSON; not declarations or CLI headers'}
 
 
+ENVIRONMENT_CONTRACT_VERSION = 'composer-runtime-27.2-v1-20261115'
+RUNTIME_ID = 'com.apple.CoreSimulator.SimRuntime.iOS-27-2'
+RUNTIME_VERSION = '27.2'
+RUNTIME_BUILD = '24B8117'
+
+
 def environment(inventory):
-    runtimes = [r for r in inventory['runtimes'] if r.get('isAvailable') and r.get('version') == '27.0'
-                and r.get('buildversion') == '24A434' and 'iOS-' in r.get('identifier', '')
+    runtimes = [r for r in inventory['runtimes'] if r.get('isAvailable') and r.get('version') == RUNTIME_VERSION
+                and r.get('buildversion') == RUNTIME_BUILD and r.get('identifier') == RUNTIME_ID
+                and r.get('platform') == 'iOS' and r.get('isInternal') is False
                 and 'arm64' in r.get('supportedArchitectures', [])]
     types = [t for t in inventory['devicetypes'] if t.get('identifier') ==
              'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro' and t.get('name') == 'iPhone 18 Pro']
-    require(len(runtimes) == 1 and len(types) == 1, 'installed exact arm64 iOS27.0/24A434 + iPhone18Pro required; no substitution/install')
+    require(len(runtimes) == 1 and len(types) == 1, 'installed standard arm64 iOS27.2/24B8117 + iPhone18Pro required; no Duo/substitution/install')
+    require(any(t.get('identifier') == types[0]['identifier'] for t in runtimes[0].get('supportedDeviceTypes', [])
+                if isinstance(t, dict)), 'actual runtime must list iPhone18Pro as a supported device type')
     return runtimes[0], types[0]
 
 
@@ -189,7 +198,7 @@ def destination(stdout, stderr, udid):
             (found if eligible and not re.search(r'\berror:', line, re.I) else rejected).append(line)
     require(not rejected and len(found) == 1, 'exact owned UDID absent/ambiguous/ineligible in explicit SDK native-project listing')
     line = found[0]
-    for key, value in [('platform', 'iOS Simulator'), ('arch', 'arm64'), ('OS', '27.0'), ('name', None)]:
+    for key, value in [('platform', 'iOS Simulator'), ('arch', 'arm64'), ('OS', RUNTIME_VERSION), ('name', None)]:
         match = re.search(r'\b' + key + r':\s*([^,}]+)', line)
         require(match is not None and (value is None or match[1].strip() == value), 'owned destination ' + key)
     require(not any(udid in line and re.search(r'ineligible|error:', line, re.I) for line in stderr.splitlines()), 'owned UDID error in listing stderr')
@@ -225,7 +234,7 @@ def observations(data, expected, udid, log_lines=()):
         records.append({'id': identity, 'result': result, 'raw_results': values})
     devices = data.get('devices', []) if isinstance(data, dict) else []
     bound = isinstance(devices, list) and bool(devices) and bool(udid) and all(isinstance(d, dict) and d.get('deviceId') == udid and d.get('modelName') == 'iPhone 18 Pro'
-            and d.get('osVersion') == '27.0' and d.get('osBuildNumber') == '24A434' and d.get('architecture') == 'arm64'
+            and d.get('osVersion') == RUNTIME_VERSION and d.get('osBuildNumber') == RUNTIME_BUILD and d.get('architecture') == 'arm64'
             and d.get('platform') == 'iOS Simulator' for d in devices)
     messages = [str(n.get('name', '')) for n in dictionaries(data) if n.get('nodeType') == 'Failure Message']
     def actual_trace(line):

@@ -17,7 +17,7 @@ sys.dont_write_bytecode = True
 import prepare_native as native
 from guards import (native_settings, environment, owned_boot, destination, observations, require,
                     simctl_list_contract, owned_devices_command, require_pretest,
-                    owned_name, created_identity, owned_state_json, focused_observations)
+                    owned_name, created_identity, owned_state_json, focused_observations, ENVIRONMENT_CONTRACT_VERSION, RUNTIME_ID, RUNTIME_VERSION, RUNTIME_BUILD)
 
 XCODE = '/Applications/Xcode_27.2.app/Contents/Developer'
 TEST_SECONDS = 900
@@ -175,7 +175,9 @@ def execute():
         before = runner.json('simulators-before')
         runtime, model = environment(before)
         runner.save('installed-environment.json', {'runtime': runtime, 'device_type': model, 'sdk_path': sdk,
-                                                  'Xcode': '27.2/27B52', 'DEVELOPER_DIR': XCODE})
+                                                  'Xcode': '27.2/27B52', 'DEVELOPER_DIR': XCODE,
+                'environment_contract': ENVIRONMENT_CONTRACT_VERSION, 'runtime27_0_acceptance': 'NOT_COVERED',
+                'prior_infra_run': '43722542700'})
         name = owned_name(before, os.environ['GITHUB_RUN_ID'])
         runner.call('create-owned-device', 30, ['xcrun', 'simctl', 'create', name, model['identifier'], runtime['identifier']])
         device = runner.text('create-owned-device').strip()
@@ -207,6 +209,10 @@ def execute():
         state['owned_boot_confirmed'] = True
         state['status'] = 'SETTINGS_AND_FILTERED_BOOT_CONFIRMED'
         runner.save('run-state.json', state)
+        runner.call('owned-boot-screenshot', 30, ['xcrun', 'simctl', 'io', device, 'screenshot', str(evidence / 'owned-boot.png')])
+        require((evidence / 'owned-boot.png').read_bytes().startswith(b'\x89PNG\r\n\x1a\n'), 'actual owned display screenshot missing/invalid')
+        if shutil.which('idb'):
+            runner.call('owned-accessibility-tree', 30, ['idb', 'ui', 'describe-all', '--udid', device, '--json'], required=False)
         runner.call('native-sdk-destinations', 120, plan['destinations'])
         eligibility = destination(runner.text('native-sdk-destinations'),
                                   (evidence / 'native-sdk-destinations.stderr').read_text(encoding='utf-8', errors='replace'), device)
@@ -254,6 +260,14 @@ def execute():
             runner.save('case-observations.json', unavailable)
             state['result_export_or_classification_error'] = str(error)
             exit_code = 2
+        if exit_code:
+            try:
+                runner.call('failure-host-memory', 15, ['vm_stat'], required=False)
+                runner.call('failure-host-disk', 15, ['df', '-h'], required=False)
+                runner.call('failure-host-processes', 15, ['ps', '-axo', 'pid,ppid,pcpu,pmem,stat,comm'], required=False)
+                runner.call('failure-coresimulator-logs', 30, ['log', 'show', '--last', '2m', '--style', 'compact', '--predicate', 'process == "CoreSimulatorService" OR subsystem BEGINSWITH "com.apple.CoreSimulator"'], required=False)
+            except (ValueError, OSError) as error:
+                state['host_diagnostics_error'] = str(error)
         bootstatus_returned = any(command['label'] == 'bootstatus-owned-device' and command['exit_code'] == 0
                                   for command in runner.commands)
         # Even if the subsequent state query fails, try bounded diagnostics of

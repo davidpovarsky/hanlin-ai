@@ -19,11 +19,11 @@ BASE = '67642faaa8f16c89eb0e2330db56291c35c61c06'
 BASE_WORKFLOW_SHA256 = '9276edf7542e6bf2e530dccc3e7f3f0819d1251db6d7e40f47d71630c4e5415d'
 FROZEN_WORKFLOW_SHA256 = '2ce53bb63b1e8c350745f90f18f41ba5855603ec8baf6827446b3bc120e3bdb4'
 # Source-segment bytes avoid version-dependent ast.dump output (Windows3.12/Mac3.15).
-UNCHANGED_FUNCTION_SOURCE_SHA256 = {
+REVIEWED_FUNCTION_SOURCE_SHA256 = {
     'guards.py': {'native_settings': '97b5edb2266010467b6335845604411cf663c95299d5610ca722f9e0e9a5df40',
-                  'environment': '5dbee4131bf0ffb2ad0bb3185fc6fcf2df84bacf3fe1a2eb0293fc9c83ec41a9',
-                  'destination': '1c7dcefcb6129250196822049c7543f7f49099dca01c96c58a054d54c68100ad',
-                  'observations': 'a0b68d6c932d4e6075a1da391aea1c9af7f906b2a09a7f8852db687b6998e5a9'},
+                  'environment': '7fc45c76767d915ca5b3c558a0fc8523070021c36e8051be48400960c8d8cc5d',
+                  'destination': '96e93e3b4ed5da7a41adc9919bab1eba066f16cdc0fd9869082299461ad4362c',
+                  'observations': '09aea2cc006d3808472d3f4ad37a7ba066e132d31a5479e3616998aaaea91f59'},
 }
 WORKFLOW = '.github/workflows/build-ios26-unsigned-ipa.yml'
 MODE = 'composer_native_host_diagnostic'
@@ -77,13 +77,17 @@ def source_controls():
     changed = copy.deepcopy(data)
     del changed[0]['buildSettings']['SDKROOT']
     reject('missing-app-actual-SDKROOT', native_settings, changed, SDK)
-    runtime = {'isAvailable': True, 'version': '27.0', 'buildversion': '24A434',
-               'identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-0', 'supportedArchitectures': ['arm64']}
+    runtime = {'isAvailable': True, 'version': '27.2', 'buildversion': '24B8117',
+               'identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-2', 'supportedArchitectures': ['arm64'],
+               'platform': 'iOS', 'isInternal': False,
+               'supportedDeviceTypes': [{'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro'}]}
     model = {'identifier': 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro', 'name': 'iPhone 18 Pro'}
     before = {'runtimes': [runtime], 'devicetypes': [model], 'devices': {runtime['identifier']: []}}
     environment(before)
     passed.append('synthetic-positive-exact-installed-runtime-model')
-    for key, value in [('version', '27.2'), ('buildversion', 'other'), ('isAvailable', False), ('supportedArchitectures', ['x86_64'])]:
+    for key, value in [('version', '27.0'), ('buildversion', '24B91016s'), ('identifier', 'com.apple.CoreSimulator.SimRuntime.iOS-27-2-iPhone19-4'),
+                       ('isAvailable', False), ('supportedArchitectures', ['x86_64']), ('supportedDeviceTypes', []),
+                       ('platform', 'tvOS'), ('isInternal', True)]:
         changed = copy.deepcopy(before)
         changed['runtimes'][0][key] = value
         reject('runtime-' + key, environment, changed)
@@ -93,7 +97,7 @@ def source_controls():
     creation = created_identity(before, runtime, model, name, UDI, create_call)
     passed.append('synthetic-positive-unique-name-and-UUID-creation-binding')
     actual = {'udid': UDI, 'name': name, 'state': 'Booted', 'isAvailable': True, 'deviceTypeIdentifier': model['identifier']}
-    other_runtime = 'com.apple.CoreSimulator.SimRuntime.iOS-27-2'
+    other_runtime = 'com.apple.CoreSimulator.SimRuntime.iOS-27-0'
     after = {'devices': {runtime['identifier']: [actual], other_runtime: []}}
     receipt = owned_boot(after, before, runtime, creation)
     require(receipt['empty_other_runtime_buckets'] == [other_runtime] and
@@ -169,21 +173,21 @@ def source_controls():
     reject('pretest-previous-test-command', require_pretest, dict(ready, test_commands=1))
     reject('created-settings-are-not-boot-readiness', require_pretest, dict(ready, owned_boot_confirmed=False, owned_sdk_destination_confirmed=False))
     heading = 'Available destinations for the "ComposerNativeHost" scheme:\n'
-    line = '{ platform:iOS Simulator, arch:arm64, id:' + UDI + ', OS:27.0, name:Hanlin-NativeComposer-fixture }'
+    line = '{ platform:iOS Simulator, arch:arm64, id:' + UDI + ', OS:27.2, name:Hanlin-NativeComposer-fixture }'
     destination(heading + line, '', UDI)
     passed.append('synthetic-positive-owned-explicit-SDK-destination')
     for name, stdout, stderr in [
         ('generic-only-listing', heading + '{ platform:iOS Simulator, id:dvtdevice-DVTiOSDeviceSimulatorPlaceholder-iphonesimulator:placeholder, name:Any iOS Simulator Device }', ''),
         ('wrong-UDI', heading + line.replace(UDI, 'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE'), ''),
         ('wrong-architecture', heading + line.replace('arm64', 'x86_64'), ''),
-        ('wrong-OS', heading + line.replace('27.0', '27.2'), ''),
+        ('wrong-OS', heading + line.replace('27.2', '27.0'), ''),
         ('no-eligible-heading', line, ''),
         ('ineligible-section', heading + line + '\nIneligible destinations:\n' + line, ''),
         ('explicit-UDI-stderr-error', heading + line, 'error: ' + UDI),
         ('duplicate-owned-destinations', heading + line + '\n' + line, '')]:
         reject(name, destination, stdout, stderr, UDI)
     expected = json.loads((native.HERE / 'review/native-inputs.json').read_text())['expected_case_ids']
-    device = {'deviceId': UDI, 'modelName': 'iPhone 18 Pro', 'osVersion': '27.0', 'osBuildNumber': '24A434',
+    device = {'deviceId': UDI, 'modelName': 'iPhone 18 Pro', 'osVersion': '27.2', 'osBuildNumber': '24B8117',
               'architecture': 'arm64', 'platform': 'iOS Simulator'}
     result = {'devices': [device], 'testNodes': [{'nodeType': 'Test Case', 'nodeIdentifier': x, 'result': 'Passed'} for x in expected]}
     require(observations(result, expected, UDI)['all_12_unique_pass_on_owned_device'], 'synthetic all12 classification')
@@ -374,7 +378,7 @@ def workflow_controls():
     flow = runner_flow(source)
     rejected_flow = flow_negative_controls(source)
     require("os.environ.get('GITHUB_RUN_ATTEMPT') == '1'" in source, 'no-rerun guard unchanged')
-    for file, expected in UNCHANGED_FUNCTION_SOURCE_SHA256.items():
+    for file, expected in REVIEWED_FUNCTION_SOURCE_SHA256.items():
         value = (native.HERE / file).read_text(encoding='utf-8')
         functions = {n.name: n for n in ast.parse(value).body if isinstance(n, ast.FunctionDef)}
         require(all(hashlib.sha256(ast.get_source_segment(value, functions[name]).encode()).hexdigest() == sha
@@ -384,7 +388,7 @@ def workflow_controls():
     return {'existing_focused_job_reused': True, 'other_jobs_and_triggers': 'content-preserved; normalized LF',
             'manual_only': True, 'test_call_sites': 1, 'python_syntax': 'PASS_SOURCE_ONLY',
             'repair_flow': flow, 'rejected_flow_mutations': rejected_flow,
-            'unchanged_e778_function_source_sha256': UNCHANGED_FUNCTION_SOURCE_SHA256}
+            'reviewed_function_source_sha256': REVIEWED_FUNCTION_SOURCE_SHA256}
 
 
 def packet():
@@ -399,6 +403,11 @@ def packet():
             'standing_execution_quality_gate': 'single Composer owner validates and executes under explicit 2026-11-15 activation',
             'apple_build_test_or_device_action': 'NOT_RUN', 'full_app_acceptance': False,
             'accepted_generator_commit': BASE, 'source': native.SOURCE, 'owner': native.OWNER,
+            'execution_environment_contract': {'version': 'composer-runtime-27.2-v1-20261115',
+                'runtime_identifier': 'com.apple.CoreSimulator.SimRuntime.iOS-27-2', 'version_number': '27.2', 'build': '24B8117',
+                'Xcode': '27.2/27B52', 'architecture': 'arm64', 'device': 'iPhone 18 Pro',
+                'reason': 'explicit manager decision after actual27.0 simulator hang run43722542700',
+                'prior27_0_acceptance': 'NOT_COVERED', 'full_app_or_UI_acceptance': False},
             'prior_closed_attempt': {'run': '43711740465', 'head': '70a74580115982ed5810cf93aed9700a0e3537c9',
                                      'artifact': '14160935813', 'artifact_bytes': 42397,
                                      'verified_full_zip_sha256': '653531d1ce1da284d9eea93e8a9d0d3311189633b02056d21a2be6fd6250a174',
