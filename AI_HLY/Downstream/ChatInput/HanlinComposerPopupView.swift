@@ -1124,6 +1124,7 @@ struct HanlinComposerToolsRootView: View {
     @Binding var ifToolUse: Bool
     var embeddedInDrawer: Bool = true
     var embeddedInMorph: Bool = false
+    var enabledCapabilities: [HanlinDetachedCapability] = []
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -1359,7 +1360,8 @@ struct HanlinComposerToolsRootView: View {
                             title: String(localized: "Built-in Tools & Permissions (Tools)"),
                             subtitle: String(format: String(localized: "%lld tools enabled · %lld tool groups"), enabledToolsCount, toolGroups.count),
                             systemImage: "hammer.circle.fill",
-                            tint: .hlBrown
+                            tint: .hlBrown,
+                            enabled: enabledCapabilities.contains(.tools)
                         )
                     }
                     .buttonStyle(.plain)
@@ -1374,7 +1376,8 @@ struct HanlinComposerToolsRootView: View {
                             title: String(localized: "Agent Skills (Skills)"),
                             subtitle: String(format: String(localized: "%lld/%lld skills enabled · SKILL.md supported"), enabledSkillsCount, allSkills.count),
                             systemImage: "sparkles.rectangle.stack.fill",
-                            tint: accentColor
+                            tint: accentColor,
+                            enabled: enabledCapabilities.contains(.skills)
                         )
                     }
                     .buttonStyle(.plain)
@@ -1389,7 +1392,8 @@ struct HanlinComposerToolsRootView: View {
                             title: String(localized: "MCP Servers (MCP)"),
                             subtitle: mcpStatusSummaryText,
                             systemImage: "server.rack",
-                            tint: .hlTeal
+                            tint: .hlTeal,
+                            enabled: enabledCapabilities.contains(.mcp)
                         )
                     }
                     .buttonStyle(.plain)
@@ -1404,7 +1408,8 @@ struct HanlinComposerToolsRootView: View {
                             title: String(localized: "Local Runtimes (Runtimes)"),
                             subtitle: runtimeStatusSummaryText,
                             systemImage: "terminal.fill",
-                            tint: .hlIndigo
+                            tint: .hlIndigo,
+                            enabled: enabledCapabilities.contains(.runtimes)
                         )
                     }
                     .buttonStyle(.plain)
@@ -1880,7 +1885,8 @@ struct HanlinComposerToolsRootView: View {
         title: String,
         subtitle: String,
         systemImage: String,
-        tint: Color
+        tint: Color,
+        enabled: Bool = false
     ) -> some View {
         HStack(spacing: 10) {
             Image(systemName: systemImage)
@@ -1902,13 +1908,19 @@ struct HanlinComposerToolsRootView: View {
 
             Spacer(minLength: 4)
 
-            Image(systemName: "chevron.forward")
+            Image(systemName: enabled ? "checkmark.circle.fill" : "chevron.forward")
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(enabled ? accentColor : .secondary)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
-        .background(Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .background(enabled ? accentColor.opacity(0.13) : Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .strokeBorder(enabled ? accentColor.opacity(0.6) : Color.clear, lineWidth: 1)
+                .allowsHitTesting(false)
+        }
+        .accessibilityValue(enabled ? String(localized: "Enabled") : String(localized: "Open settings"))
         .contentShape(.rect(cornerRadius: 12))
     }
 

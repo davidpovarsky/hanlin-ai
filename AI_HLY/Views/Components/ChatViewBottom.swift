@@ -883,7 +883,8 @@ struct ChatViewBottom: View {
             capability: currentModelSnapshot,
             ifToolUse: $ifToolUse,
             embeddedInDrawer: true,
-            embeddedInMorph: true
+            embeddedInMorph: true,
+            enabledCapabilities: detachedCapabilities
         )
     }
 

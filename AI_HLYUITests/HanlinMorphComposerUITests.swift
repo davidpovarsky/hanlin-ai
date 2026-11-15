@@ -141,6 +141,12 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let toggle = app.descendants(matching: .any)["hanlin-tool-use-toggle"].firstMatch
         XCTAssertTrue(toggle.waitForExistence(timeout: 5), "Test requires a model that supports tool use")
         if (toggle.value as? String) != "1" { toggle.tap() }
+        let catalog = app.buttons["hanlin-tools-open-catalog"].firstMatch
+        XCTAssertTrue(catalog.waitForExistence(timeout: 5))
+        let enabled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "Enabled"), object: catalog)
+        XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 5), .completed,
+                       "Expanded tools must highlight the live enabled capability")
+        XCTAssertFalse(app.buttons["composer-chip-tools"].exists, "Expanded bubble must not duplicate the external chips")
         toolsButton.tap()
 
         let row = app.descendants(matching: .any)["active-tool-chips-above-composer"].firstMatch

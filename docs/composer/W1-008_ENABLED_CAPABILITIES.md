@@ -17,3 +17,9 @@ Search/knowledge and thinking/planning are grouped from the existing action brid
 Local `swiftc -frontend -parse` and tracked `git diff --check` are syntax/whitespace checks only. Focused additions cover projection of zero, one and multiple groups, disabled MCP and unsupported/mandatory model capabilities, the 510-point boundary, coordinator route retention, and a real UI flow for tool-chip tap/context-menu disable. These cases are **NOT RUN** until an app/SDK harness with the actual dependencies is available. Request the verification owner to include the real new source, action bridge/model dependencies, and actual test selectors; do not use a stand-in model or call the prior five-case Morph-only result a W1-008 pass.
 
 Outstanding acceptance includes live Skills/runtime/image contracts, compact/wide and RTL behavior, keyboard, six-line editor, accessibility/Reduce Motion, source-matched visuals and animation, and real iPad comparison. No UI, Apple SDK or device result is claimed for this tranche.
+
+## Active single-owner continuation — 2026-11-15
+
+The current source contains observable catalog/skill state, selection revisions, atomic per-server selection intent and scoped UI feedback. Historical separate-owner/lease waits above no longer govern this active wave. Actual UI/device acceptance remains open.
+
+The existing expanded Tools root now receives the same `detachedCapabilities` projection as the external row and home grid. Its Tools/Skills/MCP/Runtime cards show the blue enabled background, border, checkmark and accessible Enabled value while their real chat capability is enabled. No extra chip row is inserted. The existing XCUITest `testEnabledToolsChipOpensSettingsAndContextMenuDisables` now also waits for the enabled catalog value and asserts the external row is absent while expanded. This changed XCUITest is NOT_RUN pending a full-app target; local Swift frontend parsing is syntax-only.
