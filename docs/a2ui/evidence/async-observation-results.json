@@ -1,0 +1,12 @@
+{
+  "status": "EXECUTED_PASS",
+  "checks": [
+    "EXECUTED_PASS reproducesTimeoutCancellationThenEnded",
+    "EXECUTED_PASS quietObservationPreservesLaterPositiveDelivery",
+    "EXECUTED_PASS unexpectedEventFailsObservationAndRemainsDeliverable"
+  ],
+  "actual_helpers_sha256": "ad063905729767bdfbe4fd200f2723140bd09fd99c3ab4ea179c18c03ecb86b7",
+  "test_source_sha256": "8575df2ad4794208917e26a81fc39e958806dec84588a52bc6488d81e500d696",
+  "swift": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+  "scope": "Real Swift AsyncStream and actual generic test helpers; no A2UI SDK/Testing/Apple API proof"
+}

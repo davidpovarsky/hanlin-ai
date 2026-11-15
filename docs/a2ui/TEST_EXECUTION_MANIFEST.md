@@ -9,7 +9,30 @@ separate and NOT_RUN. Local8 framing scenarios and Windows syntax parsing pass;
 7 synthetic verifier checks pass; prior25/benchmark34 case sets cannot satisfy35.
 No native job/CI, project wiring or production transport was added/dispatched.
 
-**Latest actual native attempt:** source961 failed compilation in
+**Latest actual native attempt:** sourcefa810 compiled in
+[run43679728130](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43679728130),
+workflow `0022401253168b89147055e16fa02fe30831efa0`. Swift Testing executed35:
+33 PASS /2 FAIL, both throwing `.ended`: eventSinkIsWeakAndCannotKeepAuthorityAlive
+and retiredSurfaceCannotReanimateQueuedEventsInSameResult. XCTest0 is unrelated;
+the6 hosted iOS methods remain NOT_RUN. See
+[original-log outcomes](evidence/native-run-43679728130.json).
+
+The test's negative nextA2UIValue timeout cancels its pending consumer and ends
+the shared AsyncStream. The weak-sink case reuses that stream for a second
+negative wait; the retired-ID case later requires a positive event from the
+independent stream it just cancelled. The product only calls recorder.record;
+the private test continuation finishes on recorder deinit, while both tests
+retain the recorder. Actual generic-helper reproduction in Swift6.3.3 confirms
+timeout -> cancelled termination -> yield rejected -> next throws ended.
+
+The correction uses known monotonic event counts before/after100ms, without a
+stream iterator or cancellation. Unexpected events throw a test failure; strict
+positive waits still throw on ended and require the real fresh-generation action.
+The independent-owner positive also checks action kind/context/key. All35/6 method
+identities and product/retirement/weak/cancel/privacy obligations remain.
+Current corrected-source native execution is NOT_RUN;33/35 is not35PASS.
+
+**Earlier native compile failure:** source961 failed compilation in
 [run43674291306](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43674291306),
 workflow `b34ea9d90104a4787665aa2c3ae1869edcf76ecf`, xcodebuild exit65.
 Raw tests.json has0 actual Test Case nodes: all34 cases are NOT_RUN, not3 failed
@@ -19,7 +42,8 @@ uses sequential requires inside a returning helper, so no unwrapped strong sink
 survives into the caller's intentional sink=nil. Weak/cancel/privacy assertions
 and all35/6 current method identities remain. See
 [retained failed-build evidence](evidence/native-run-43674291306.json).
-Native compilation of the correction remains NOT_RUN. A local macro typecheck
+The returning-helper macro correction compiled in fa810's actual run above.
+A local macro typecheck
 could not proceed because the active Windows Swift invocation cannot import Testing; syntax
 parsing and portable scenarios cannot substitute for actual macro expansion.
 
@@ -95,6 +119,8 @@ No upstream code or package dependency was installed into the app.
 | Exact-pin enabled compilation/cases at a43f1563 | EXECUTED_PASS, 25 cases | Run43667371439; privacy canaries executed, old consumer module |
 | Actual AI_Hanlin consumer-name proof at f654ac11 | EXECUTED_PASS, 25 cases | Run43668852483; actual AI_Hanlin consumer and AI_HLYTests module |
 | Result-owner benchmark961 native build | FAILED, exit65 | Run43674291306; recursive require macro,0 actual case nodes, all34 NOT_RUN |
+| fa810 native package / Swift Testing | FAILED, 33 PASS /2 FAIL of35 | Run43679728130; both failures ended in shared test-stream observation;6 iOS hosted NOT_RUN |
+| Actual generic AsyncStream observer regressions | EXECUTED_PASS, 3 checks | Real Swift6.3.3 and extracted test helpers; cancellation reproduction, healthy later positives, unexpected-event failure; not SDK proof |
 | Local Swift Testing macro typecheck | UNAVAILABLE | Windows import Testing fails; no macro or SDK typecheck result |
 | Current SDK compilation/cases | NOT_RUN, 35 authored cases | Changed source; f65425-case and96134-case outcomes do not cover this correction |
 | Current iOS host compilation/cases | NOT_RUN, 6 authored cases | AI_HLYTests/A2UIHostedResultTests.swift; excluded from macOS harness |

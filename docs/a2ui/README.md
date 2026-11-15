@@ -55,6 +55,24 @@ and remain NOT_RUN. [Failure evidence](evidence/native-run-43674291306.json)
 records exact source/workflow/artifact provenance. Local Windows macro typecheck
 is unavailable because this Windows Swift invocation cannot import Testing; no native job was dispatched.
 
+The later actualfa810 run43679728130 compiled and executed35 Swift Testing cases:
+33 PASS /2 FAIL (`eventSinkIsWeakAndCannotKeepAuthorityAlive` and
+`retiredSurfaceCannotReanimateQueuedEventsInSameResult`, both `.ended`). The6
+hosted iOS cases were NOT_RUN. [Actual outcomes](evidence/native-run-43679728130.json)
+remain failed evidence, not35PASS.
+
+Root cause was destructive negative observation: timing out a pending shared
+AsyncStream iterator cancels that stream, preventing the later phase from reading
+it. The correction checks monotonic recorder counts before/after100ms and leaves
+positive reads strict. It does not catch ended as success, reset recorders, remove
+regressions or alter product authority. The independent positive explicitly
+requires the real action/context/key. Three real Swift AsyncStream checks using
+the actual generic test helpers passed locally; this is not an SDK substitute.
+Run `py -3 docs/a2ui/validate_async_observation.py` to reproduce. See
+[local observer results](evidence/async-observation-results.json) and Swift's
+[documented cancellation behavior](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0314-async-stream.md#cancellation-handlers).
+The corrected source still needs the authorized changed-source35-case native run.
+
 ## Official source and revision
 
 Use [a2ui-project/a2ui](https://github.com/a2ui-project/a2ui), exact revision

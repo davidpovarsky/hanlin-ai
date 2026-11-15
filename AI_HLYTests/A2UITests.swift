@@ -219,6 +219,17 @@ private func nextA2UIValue<Element: Sendable>(
     }
 }
 
+/// Negative observation must not await/cancel an iterator on a stream needed later.
+/// Recorder counts are monotonic; check before and after yielding to queued SDK callbacks.
+private func requireA2UIQuiet(
+    expectedCount: Int, duration: Duration = .milliseconds(100),
+    count: @Sendable () -> Int, failureMessage: String
+) async throws {
+    try requireA2UI(count() == expectedCount, failureMessage)
+    try await Task.sleep(for: duration)
+    try requireA2UI(count() == expectedCount, failureMessage)
+}
+
 #if HANLIN_A2UI_PORTABLE_RUNNER
 @main
 private enum A2UIPortableRunner {
@@ -264,6 +275,10 @@ private final class A2UIEventRecorder: Sendable {
         continuation.yield(event)
     }
     var snapshot: [RendererToAgentMessage] { events.withLock { $0 } }
+    func requireQuiet(expectedCount: Int, failureMessage: String) async throws {
+        try await requireA2UIQuiet(expectedCount: expectedCount,
+                                  count: { self.snapshot.count }, failureMessage: failureMessage)
+    }
     deinit { continuation.finish() }
 }
 
@@ -389,10 +404,8 @@ struct A2UISDKTests {
         #expect(try node(p, id: "name").identity == identity)
         #expect(try node(p, id: "greeting").string(for: "text") == "Ada")
         #expect(admissionFailure(store.receive(try #require(A2UIFixture.lines("update").first), sequence: 3, for: p.key)) == .inputSealed)
-        do {
-            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
-            Issue.record("A sealed owner delivered an event")
-        } catch A2UIWaitError.deadline {}
+        try await sink.recorder.requireQuiet(expectedCount: 0,
+                                        failureMessage: "A sealed owner delivered an event")
         #expect(sink.keys.isEmpty && sink.recorder.snapshot.isEmpty)
     }
 
@@ -436,10 +449,8 @@ struct A2UISDKTests {
         let nextAction = try #require(try node(next, id: "submit").action(for: "action", userActivation: true))
         nextAction()
         _ = try await nextA2UIValue(sink.recorder.stream)
-        do {
-            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
-            Issue.record("Replacement leaked an extra event")
-        } catch A2UIWaitError.deadline {}
+        try await sink.recorder.requireQuiet(expectedCount: 1,
+                                        failureMessage: "Replacement leaked an extra event")
         #expect(sink.keys == [next.key])
     }
 
@@ -518,10 +529,8 @@ struct A2UISDKTests {
         sink = nil
         #expect(weakSink == nil)
         action()
-        do {
-            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
-            Issue.record("An event escaped after its weak sink was released")
-        } catch A2UIWaitError.deadline {}
+        try await recorder.requireQuiet(expectedCount: 0,
+                                        failureMessage: "An event escaped after its weak sink was released")
         #expect(recorder.snapshot.isEmpty && !p.isClosed)
 
         // A presentation may outlive its registration store; it retains models, not authority.
@@ -535,10 +544,8 @@ struct A2UISDKTests {
         registration = nil
         #expect(weakRegistration == nil)
         retainedAction()
-        do {
-            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
-            Issue.record("A retained presentation acquired authority without its registration store")
-        } catch A2UIWaitError.deadline {}
+        try await recorder.requireQuiet(expectedCount: 0,
+                                        failureMessage: "A retained presentation acquired authority without its registration store")
         #expect(recorder.snapshot.isEmpty)
     }
 
@@ -553,10 +560,8 @@ struct A2UISDKTests {
         try store.receive(#"{"version":"1.0","deleteSurface":{"surfaceId":"form-a"}}"#, sequence: 3, for: p.key).get()
         action()
         #expect(p.surfaceIDs.isEmpty && !p.isReadOnly)
-        do {
-            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
-            Issue.record("An event escaped its removed SDK surface")
-        } catch A2UIWaitError.deadline {}
+        try await sink.recorder.requireQuiet(expectedCount: 0,
+                                        failureMessage: "An event escaped its removed SDK surface")
         #expect(sink.keys.isEmpty)
     }
 
@@ -578,10 +583,8 @@ struct A2UISDKTests {
         }
         #expect(old.surface("form-a") == nil && old.surfaceIDs.isEmpty)
         oldAction()
-        do {
-            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
-            Issue.record("An old action acquired a deleted surface ID's new lifetime")
-        } catch A2UIWaitError.deadline {}
+        try await sink.recorder.requireQuiet(expectedCount: 0,
+                                        failureMessage: "An old action acquired a deleted surface ID's new lifetime")
         #expect(sink.keys.isEmpty)
 
         // A raw/unowned delete grants no retirement authority, even in another live owner
@@ -590,14 +593,17 @@ struct A2UISDKTests {
         let independent = try #require(store.register(runID: old.key.runID, resultID: UUID(), callID: "other", sink: independentSink))
         _ = store.receive(#"{"version":"1.0","deleteSurface":{"surfaceId":"form-a"}}"#,
                           sequence: 0, for: independent.key)
-        do {
-            _ = try await nextA2UIValue(independentSink.recorder.stream, timeout: .milliseconds(100))
-            Issue.record("An unowned delete acquired callback correlation")
-        } catch A2UIWaitError.deadline {}
+        try await independentSink.recorder.requireQuiet(expectedCount: 0,
+                                        failureMessage: "An unowned delete acquired callback correlation")
         try load(store, independent, startingAt: 1)
         let independentAction = try #require(try node(independent, id: "submit").action(for: "action", userActivation: true))
         independentAction()
-        _ = try await nextA2UIValue(independentSink.recorder.stream)
+        let independentEvent = try await nextA2UIValue(independentSink.recorder.stream)
+        guard case .action(let independentResolved) = independentEvent else {
+            Issue.record("Expected the independent owner's real SDK action")
+            return
+        }
+        #expect(independentResolved.surfaceID == "form-a" && independentResolved.context["name"]?.stringValue == "Ada")
         #expect(independentSink.keys == [independent.key])
 
         let fresh = try #require(store.replace(old.key, callID: old.key.callID, sink: sink))
@@ -609,10 +615,8 @@ struct A2UISDKTests {
         let event = try await nextA2UIValue(sink.recorder.stream)
         guard case .action(let action) = event else { Issue.record("Expected fresh SDK action"); return }
         #expect(action.surfaceID == "form-a" && action.context["name"]?.stringValue == "Ada")
-        do {
-            _ = try await nextA2UIValue(sink.recorder.stream, timeout: .milliseconds(100))
-            Issue.record("A retired action escaped after fresh registration")
-        } catch A2UIWaitError.deadline {}
+        try await sink.recorder.requireQuiet(expectedCount: 1,
+                                        failureMessage: "A retired action escaped after fresh registration")
         #expect(sink.keys == [fresh.key])
     }
 
@@ -965,10 +969,8 @@ struct A2UISDKTests {
         session.close()
         session.close()
         action() // Retained SDK nodes/actions must not reach a closed owner's callback.
-        do {
-            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
-            Issue.record("An action reached the owner after close")
-        } catch A2UIWaitError.deadline {}
+        try await recorder.requireQuiet(expectedCount: 0,
+                                        failureMessage: "An action reached the owner after close")
         #expect(recorder.snapshot.isEmpty && session.isClosed)
     }
 
@@ -1014,10 +1016,8 @@ struct A2UISDKTests {
         } catch let error as FunctionError {
             #expect(error.rpcCode == "DISPOSED")
         }
-        do {
-            _ = try await nextA2UIValue(recorder.stream, timeout: .milliseconds(100))
-            Issue.record("An SDK callback escaped disposal")
-        } catch A2UIWaitError.deadline {}
+        try await recorder.requireQuiet(expectedCount: 1,
+                                        failureMessage: "An SDK callback escaped disposal")
         #expect(recorder.snapshot.count == 1) // Only the test-seeded request before close.
     }
     #endif

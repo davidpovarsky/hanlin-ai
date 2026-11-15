@@ -1,0 +1,212 @@
+{
+  "run_id": 43679728130,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43679728130",
+  "tested_source_sha": "fa810e87213ee45da76b465ef50e6b54edc74a86",
+  "workflow_sha": "0022401253168b89147055e16fa02fe30831efa0",
+  "result": "Native package compiled;35 Swift Testing cases executed,33 PASS /2 FAIL",
+  "actual_case_count": 35,
+  "passed_count": 33,
+  "failed_count": 2,
+  "hosted_ios_cases": "6 NOT_RUN; excluded from this macOS package",
+  "observations": [
+    "GitHub run completed/failure API metadata",
+    "Original GitHub log fetches exact tested source SHA",
+    "Per-method Swift Testing pass/fail lines cover all35 expected identities",
+    "Both failing methods report exactly1 Caught error: .ended issue; unrelated XCTest0 is not the Swift Testing result"
+  ],
+  "artifact": {
+    "id": 14147962603,
+    "name": "a2ui-exact-pin-43679728130",
+    "size_in_bytes": 111974182,
+    "advertised_digest": "sha256:0337ce415a75c87f85956225b1e8b1487f12aeef67ed9684242fc1e54d520400",
+    "provenance": "GitHub API advertised digest; owner read original GitHub logs, not independently downloaded/rehashed ZIP or xcresult tree"
+  },
+  "retained_log_excerpt_sha256": "16537325b326589d3b5aab56973629524a70d7a79060ac63bb31cbdfe1617606",
+  "original_gh_cli_log_sha256": "b5b2d0e0567dcf9ca54f5f93c9eab08b4ecf7c642f3cf279055d421c26f09047",
+  "cases": [
+    {
+      "name": "acceptsOfficialV1FixtureFrames",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "boundsUTF8MessageAndComponentBatch",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "buttonEventUsesCurrentBoundValue",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "closeRejectsLateFramesAndDisposesSurfaces",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "closeRevokesQueuedAndRetainedActionCallbacks",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "componentValidationRemainsWithSDK",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "deleteDisposesAndRecreateStartsWithNewIdentity",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "deletedSurfaceDropsQueuedOwnedEvents",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "endingResultCancelsOwnedReceiveTask",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+      "result": "FAIL",
+      "issue": "Caught error: .ended"
+    },
+    {
+      "name": "hebrewFixtureRetainsBindingsInRTLComposition",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "independentOwnersCanReuseWireSurfaceID",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "independentSurfacesKeepModelsSeparate",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "malformedAndUnknownContentFallsBackAndRecovers",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "nativeInputBindingWritesAndReadsOfficialModel",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "officialSchemasRejectInvalidTextInputButton",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "parsesAndRendersTextCardInputButton",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "presentationCopiesDoNotOwnDiscard",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "preservesUnicodeSurfaceIdentity",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "rejectedEnvelopesNeverExportSurfaceCorrelation",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "rejectsMalformedAndAmbiguousFrames",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "rejectsOtherProtocolVersions",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "rejectsRPCAndUnnegotiatedCatalogs",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "replacementRevokesOldGenerationBeforeNewDelivery",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "retiredSurfaceCannotReanimateQueuedEventsInSameResult",
+      "result": "FAIL",
+      "issue": "Caught error: .ended"
+    },
+    {
+      "name": "sealedResultRetainsModelsAndRevokesActions",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "sealingRunDoesNotRevokeOtherRun",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "stableIDsAndNodeIdentityAcrossUpdates",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "surfaceLimitDoesNotRemoveExistingContent",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "transientOwnerLookupKeepsWireIDsIndependent",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "transientReceiveRejectsWrongIdentityAndSequence",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC",
+      "result": "PASS",
+      "issue": null
+    },
+    {
+      "name": "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks",
+      "result": "PASS",
+      "issue": null
+    }
+  ],
+  "diagnosis": {
+    "cause": "Test negative nextA2UIValue wait times out and cancels a pending AsyncStream consumer, permanently terminating that shared test stream",
+    "weak_sink_case": "First negative wait cancels recorder.stream; second negative wait on that same stream throws ended",
+    "retired_id_case": "Negative waits cancel both recorders; independent positive read then throws ended before fresh-generation positive phase",
+    "why_test_observation": "Product has callback-only access to recorder; its private continuation finishes only when recorder deinitializes, while this test retains it. Actual generic helper reproduction confirms cancellation/termination",
+    "portable_reproduction": "async-observation-results.json;3 real Swift AsyncStream regressions PASS, not SDK proof",
+    "correction": "Use monotonic recorder-count checks before/after100ms without iterating/cancelling stream; strict positive nextA2UIValue still throws on ended. Unexpected positive events fail; independent positive requires actual action/context/key"
+  },
+  "current_corrected_source_native": "NOT_RUN; no35PASS claim and no unchanged-source retry"
+}

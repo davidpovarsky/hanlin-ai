@@ -15,6 +15,16 @@ the caller's sink=nil. This still needs one changed-source35-case native proof;
 local syntax parsing cannot expand/typecheck Swift Testing on this Windows host.
 See [actual failed-build evidence](evidence/native-run-43674291306.json).
 
+The subsequentfa810 run43679728130 compiled and executed35 Swift Testing methods,
+33 PASS /2 FAIL with ended from shared negative-observation streams. That is a
+failed suite. The current observer correction preserves strict positive delivery
+and uses monotonic count checks for absence;3 extracted-helper/real-AsyncStream
+checks pass locally. They do not execute the SDK. See
+[native outcomes/diagnosis](evidence/native-run-43679728130.json) and
+[portable observer results](evidence/async-observation-results.json).
+Current corrected-source35-case and6 separate hosted executions remain NOT_RUN;
+the source must change before the next authorized native proof, with no unchanged retry.
+
 Initially prepared after source review of `3a24003e`; the preparation utility
 itself dispatched no native job. Tomer's actual run43662884686 later compiled
 c40e617b and executed all25 cases:8 PASS/17 SDK FAIL during fixture load. The
