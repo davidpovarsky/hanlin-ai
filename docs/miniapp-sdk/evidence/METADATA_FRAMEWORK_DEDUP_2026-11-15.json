@@ -2896,10 +2896,9 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "FULL_SDK_GENERATION_ONLY_WITH_VERIFIED_IDENTICAL_COMPILED_IMAGE",
-        "status": "PENDING_DISPATCH",
-        "affectedControls": "EXECUTED_PASS_17_AND_31_43764390974",
-        "export9": "REUSED_VERIFIED_PASS_original43757087726_newExecutionNOT_RUN",
+        "scope": "SDK_AUTHORITY_DECISION_THEN_AFFECTED_SLICE",
+        "status": "PENDING_MANAGER_DECISION_1220548041266710",
+        "fullSDK": "FAILED_43764936118",
         "combined": "NOT_RUN",
         "runtime": "NOT_ESTABLISHED"
       },
@@ -3286,6 +3285,30 @@
         },
         "fullSDK": "NOT_RUN_FOR_THIS_CHANGE",
         "combined": "NOT_RUN",
+        "runtimeAcceptance": "NOT_ESTABLISHED"
+      },
+      "authenticationServicesBinding": {
+        "fullSDKRun": 43764936118,
+        "fullSDKSourceSHA": "d05487efc182ed4ad257e4ec9157dc1028ba224b",
+        "fullSDKStatus": "FAILED_BEFORE_PUBLICATION",
+        "CPPTopLevelModels": 55813,
+        "ObjCTopLevelModels": 55165,
+        "collectionPeakRSS": 1397866496,
+        "metadataProcessSeconds": 105.257908291,
+        "name": "ASAuthorizationAllSupportedPublicKeyCredentialDescriptorTransports",
+        "headerSHA256": "9c8d78bf8b4dd4dad491e838f0a9a31fd44de840f06f3a98aa3f7575ec999599",
+        "headerOffset": 1819,
+        "readOnlyCompilerLinkRun": 43765610336,
+        "readOnlySourceSHA": "4aee606f5ef55feb738cdcd282d17a2337f859bd",
+        "objectCompilesPassed": 4,
+        "CLinksPassed": 2,
+        "CPPLinksRejected": 2,
+        "verifiedManifestFiles": 52,
+        "mismatches": 0,
+        "resultSHA256": "49c1472115e8627f55cc3dd3aa707f58ea80855dd645a0a1a210cda69cbbb733",
+        "completeOriginalModelAvailabilityProof": "NOT_RUN",
+        "authorityExtension": "NOT_IMPLEMENTED_PENDING_DECISION",
+        "managerMailboxTask": "1220548041266710",
         "runtimeAcceptance": "NOT_ESTABLISHED"
       }
     }

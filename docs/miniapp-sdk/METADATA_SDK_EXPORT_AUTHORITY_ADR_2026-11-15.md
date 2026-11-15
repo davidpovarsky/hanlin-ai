@@ -214,3 +214,31 @@ maximum RSS through complete receipt rendering2,763,522,048B below4GiB.
 Slice result SHA2563e89ceabfcdaa4ed771276256f48c0e103dade7d9a8bcb5888760303041118b1.
 The exact compiled image becomes the verified input for the new full-SDK scope;
 this reuse does not inherit test or runtime acceptance.
+
+### Full SDK: AuthenticationServices remains rejected, authority unchanged
+
+Run43764936118/d05487ef reused the verified identical compiled image and ran
+only the new full-SDK input scope. Both actual collections succeeded (55,813
+CPP/55,165 ObjC models, observed1,397,866,496B after collection). The metadata
+child failed at105.257908291s before publication on
+ASAuthorizationAllSupportedPublicKeyCredentialDescriptorTransports. All recorded
+ABI fields except the actual symbol match; complete original model/availability
+proof remains unfulfilled because the binding guard rejected first.
+
+Read-only run43765610336/4aee606f retained the exact failed compiler context and
+executed four real Apple/locked LLVM20 C/CPP object compilations, all exit0.
+Both C links succeeded; both CPP links rejected the precise missing symbol with
+the linker's missing-extern-C note. All four AST declarations bind byte1819,
+line31 of public ASAuthorizationSecurityKeyPublicKeyCredentialDescriptor.h,
+SHA2569c8d78bf8b4dd4dad491e838f0a9a31fd44de840f06f3a98aa3f7575ec999599.
+AuthenticationServices.tbd SHA256
+6d28abfc4b59e4a82790a3f97a486512c4ebd7ad57a4c8b9b30a8af9d87a5189
+exports only the C symbol for arm64-ios-simulator. All52 manifest file hashes
+verified locally with0 mismatch; result SHA256
+49c1472115e8627f55cc3dd3aa707f58ea80855dd645a0a1a210cda69cbbb733.
+
+No fourth declaration has been admitted. A concrete request for just this
+name/header hash, under all existing contract3 guards and fresh four-way proof,
+is pending in manager mailbox task1220548041266710. Full SDK remains FAILED;
+combined/VM/physical remain NOT_RUN. Independent authorized Runtime05 contract
+work can continue while that nonurgent decision is pending.
