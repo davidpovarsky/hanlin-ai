@@ -1,0 +1,83 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "upstream": "https://github.com/a2ui-project/a2ui",
+  "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "portable_cases": [
+    "acceptsOfficialV1FixtureFrames",
+    "rejectsMalformedAndAmbiguousFrames",
+    "rejectsOtherProtocolVersions",
+    "preservesUnicodeSurfaceIdentity",
+    "boundsUTF8MessageAndComponentBatch",
+    "rejectsRPCAndUnnegotiatedCatalogs",
+    "rejectedEnvelopesNeverExportSurfaceCorrelation",
+    "componentValidationRemainsWithSDK"
+  ],
+  "sdk_cases": [
+    "parsesAndRendersTextCardInputButton",
+    "nativeInputBindingWritesAndReadsOfficialModel",
+    "stableIDsAndNodeIdentityAcrossUpdates",
+    "malformedAndUnknownContentFallsBackAndRecovers",
+    "officialSchemasRejectInvalidTextInputButton",
+    "independentSurfacesKeepModelsSeparate",
+    "independentOwnersCanReuseWireSurfaceID",
+    "deleteDisposesAndRecreateStartsWithNewIdentity",
+    "closeRejectsLateFramesAndDisposesSurfaces",
+    "buttonEventUsesCurrentBoundValue",
+    "hebrewFixtureRetainsBindingsInRTLComposition",
+    "surfaceLimitDoesNotRemoveExistingContent",
+    "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound",
+    "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks",
+    "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC",
+    "closeRevokesQueuedAndRetainedActionCallbacks",
+    "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce"
+  ],
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+      "sha256": "4d2cc1d473216502180fb44105999bd26ae732f931b14e49d311cd18fad7d6e6"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+      "sha256": "06d5761ae398a978483b96ceca313cf9542a5ce535bec55b8c1800a99e5ef587"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+      "sha256": "f6bb8bab001f95f64053d1b31f63ba21dd4107da674ddf02ffeedb25c457e4e5"
+    },
+    {
+      "path": "AI_HLYTests/A2UITests.swift",
+      "sha256": "3a8a694ea7e6d6959747cfa03c22650a1c7301d061d83ceb09d56a84d37af55b"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/form.jsonl",
+      "sha256": "93ef4750b1ec75c5b2f82327c87585115a711516e0b864fcfae41599838e89d2"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/invalid-components.jsonl",
+      "sha256": "8699e9d28385fdb6a52c8d557fd4873dbaca4ff2913d71e4f1d6a65dcd9daee8"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/malformed.txt",
+      "sha256": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/rtl.jsonl",
+      "sha256": "d425cec0a0c57e978198d73eaaf96f3fa7ff0f912b7e2e90f8a10d0edc7f212e"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/unknown-function.jsonl",
+      "sha256": "a985bb2c5589a9a9a57473a7457080237721dd572f9faf6e22b79a93432282c6"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/unknown.jsonl",
+      "sha256": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/update.jsonl",
+      "sha256": "9cb4a7d6cebb559462e6df0c7c1f4027f7afd134c1fa6c60a60cb90dc5dc9eb8"
+    }
+  ],
+  "harness_manifest_sha256": "8ed06ed09af285546b41b1cda4226ae23dc7b1b059f4dec9dfa53cb6d7ac6de8",
+  "native_execution": "NOT_RUN",
+  "platform": "macOS27 / current stable Xcode"
+}

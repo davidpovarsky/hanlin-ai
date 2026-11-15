@@ -404,6 +404,48 @@ struct A2UISDKTests {
         #expect(session.failures.isEmpty && session.unroutedFailure == nil)
         #expect(session.surfaceIDs.count == HanlinA2UISession.maximumSurfaces)
         #expect(session.surface("surface-0") != nil && session.surface("form-a") == nil)
+
+        // The byte-budget gate runs after Frame validation. A budget rejection for an existing
+        // owner's update/delete is correlated; an untrusted ID cannot choose another fallback.
+        let budgetSession = HanlinA2UISession(onEvent: { _ in })
+        var consumed = 0
+        for id in ["form-a", "form-b"] {
+            for line in try A2UIFixture.lines("form") {
+                let message = line.replacingOccurrences(of: "form-a", with: id)
+                try budgetSession.receive(message).get()
+                consumed += message.utf8.count
+            }
+        }
+        let first = try #require(budgetSession.surface("form-a"))
+        let second = try #require(budgetSession.surface("form-b"))
+        let prefix = #"{"version":"1.0","updateDataModel":{"surfaceId":"form-a","path":"/budgetProbe","value":""#
+        let suffix = #""}}"#
+        let overhead = prefix.utf8.count + suffix.utf8.count
+        while consumed < HanlinA2UISession.maximumSessionBytes {
+            let remaining = HanlinA2UISession.maximumSessionBytes - consumed
+            try requireA2UI(remaining >= overhead, "Budget fixture cannot fill the exact remaining bytes")
+            let bytes = min(remaining, HanlinA2UIIngress.maximumMessageBytes)
+            let message = prefix + String(repeating: "x", count: bytes - overhead) + suffix
+            try budgetSession.receive(message).get()
+            consumed += message.utf8.count
+        }
+        #expect(consumed == HanlinA2UISession.maximumSessionBytes && budgetSession.failures.isEmpty)
+        for message in [
+            #"{"version":"1.0","updateDataModel":{"surfaceId":"form-a","path":"/name","value":"Must not apply"}}"#,
+            #"{"version":"1.0","deleteSurface":{"surfaceId":"form-a"}}"#
+        ] {
+            guard case .failure(let rejection) = budgetSession.receive(message) else {
+                Issue.record("An exhausted session accepted a mutation")
+                return
+            }
+            #expect(rejection.failure == .sessionBudget && rejection.surfaceID == "form-a")
+            #expect(budgetSession.failures == ["form-a": .sessionBudget])
+            #expect(budgetSession.surface("form-a") === first && budgetSession.surface("form-b") === second)
+            #expect(budgetSession.surfaceIDs == ["form-a", "form-b"] && budgetSession.unroutedFailure == nil)
+            #expect(first.dataModel.get("/name")?.stringValue == "Ada")
+            #expect(second.dataModel.get("/name")?.stringValue == "Ada")
+        }
+        budgetSession.close()
     }
 
     @Test func rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() throws {

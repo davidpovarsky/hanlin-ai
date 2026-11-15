@@ -73,7 +73,13 @@ or execute actions itself. No cross-app or service authorization is implied.
 One session may hold four surfaces, each message is at most65,536 UTF-8 bytes
 and64 components, and a session accepts at most1,048,576 cumulative bytes. The
 budget resets only with a new owner/session. This intentionally bounded POC is
-not a long-running production streaming policy. Unknown component schemas in a
+not a long-running production streaming policy. The `sessionBudget` check runs
+**after** ingress has produced a validated Frame: a rejected update/delete to
+an SDK-owned surface therefore returns its correlated ID and a fallback for
+that same surface. It neither applies the mutation/deletion nor affects another
+surface. At an exhausted budget, owner `close()` still works outside the gate;
+continuing content needs a new owner/session. This is not an uncorrelated
+preflight rejection. Unknown component schemas in a
 validated update fall back only for a surface the current SDK processor owns.
 Raw IDs from rejected envelopes never route fallback. Unsupported operations,
 invalid IDs and foreign targets return errors without adding surfaces or hiding
@@ -108,6 +114,12 @@ integration and hardware verification remain **NOT_RUN**. A disabled flag,
 syntax-only parse or zero selected cases cannot satisfy either source task.
 See [TEST_EXECUTION_MANIFEST.md](TEST_EXECUTION_MANIFEST.md) for exact cases,
 commands, fixture identities and evidence.
+
+The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) uses all25 actual
+cases in a temporary consumer, exact root/transitive resolution evidence and
+unchanged source bytes. It does not require shared product wiring. Its planner
+and verifier have local checks; native harness generation/compile/execution
+remain NOT_RUN and require the approved Apple resource.
 
 ## Proposed integration, not applied
 

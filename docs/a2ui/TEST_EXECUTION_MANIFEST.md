@@ -25,6 +25,16 @@ an empty result placeholder. One portable case and one SDK case were added:
 earlier disposal/RPC fixes remain in place. This is a new source handoff, not
 independent QA acceptance or enabled SDK verification.
 
+Budget clarification after source review of `3a24003e`: ingress rejection and
+the session resource gate are distinct. `sessionBudget` is checked after a
+validated Frame; a valid update/delete for a current SDK-owned surface remains
+correlated and shows fallback for that same surface. No mutation/deletion is
+applied and other surfaces remain untouched. The existing
+`surfaceLimitDoesNotRemoveExistingContent()` now fills the real session's exact
+byte budget and asserts both update/delete rejection, correlated ID, unchanged
+models/data and unaffected second surface. The25 case identities are unchanged;
+these added SDK assertions remain NOT_RUN. No policy logic was changed.
+
 Official upstream pin: `https://github.com/a2ui-project/a2ui`, revision
 `3ed9601862ecc78027e20ac80ad8b1b98a5d9079`.
 Read-only source verification is retained in
@@ -38,6 +48,8 @@ No upstream code or package dependency was installed into the app.
 | Windows Swift6.3.3 local typecheck via apple-devtools | EXECUTED_PASS | HanlinA2UIIngress.swift only |
 | Swift6 strict-concurrency standalone build and execution | EXECUTED_PASS, 8 scenarios | Actual ingress source plus portable cases in A2UITests.swift |
 | Enabled-flag Swift frontend syntax parse | EXECUTED_PASS | All3 source files and test file; no import/type/API checking |
+| Isolated proof plan and verifier self-checks | EXECUTED_PASS | Current source/fixture hashes,25 selectors;7 synthetic XML/lock checks, no SDK execution |
+| Generated SwiftPM manifest API typecheck | EXECUTED_PASS | Windows Swift6.3.3, PackageDescription6.1,24 template lines via stdin; no manifest file or dependency resolution |
 | Official exact-pin enabled SDK compilation | NOT_RUN | No dependencies wired; remote slot reserved for Runtime |
 | Official SDK/SwiftUI cases | NOT_RUN, 17 cases | Flag-gated cases listed below |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |
@@ -128,7 +140,7 @@ rather than accepting a smaller discovered count.
 | closeRejectsLateFramesAndDisposesSurfaces() | Owner disposal and late ingress | NOT_RUN |
 | buttonEventUsesCurrentBoundValue() | Official action context after a user edit | NOT_RUN |
 | hebrewFixtureRetainsBindingsInRTLComposition() | Hebrew model and RTL environment composition | NOT_RUN |
-| surfaceLimitDoesNotRemoveExistingContent() | Four-surface capacity; preserve old model | NOT_RUN |
+| surfaceLimitDoesNotRemoveExistingContent() | Four-surface and exact byte-budget limits; update/delete correlated only to the owned target; preserve models/data | NOT_RUN |
 | rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() | Bound rejected surface bookkeeping | NOT_RUN |
 | unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Official validator and no-listener policy; reject unsolicited response | NOT_RUN |
 | closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | NOT_RUN |
@@ -162,6 +174,13 @@ VoiceOver order, keyboard behavior or text clipping. Those hosted UI checks
 are separate open acceptance gates.
 
 ## Enabled build/test command — proposed, NOT_RUN
+
+For a consumer without app wiring, use [EXACT_PIN_PROOF_ROUTE.md](EXACT_PIN_PROOF_ROUTE.md)
+and `prepare_exact_pin_proof.py`. The planner copies actual source/fixtures
+without rewriting them, enables both SDK/Debug gates, verifies the resolved pin
+and requires25 executed cases. Local planning and seven synthetic verifier
+self-checks do not run SDK code. Native preparation/compile/tests are NOT_RUN.
+The app command below remains a separate future integration route.
 
 Prerequisites: explicit serialized Apple-slot approval, stable Xcode with the
 project's iOS27 SDK, approved isolated dependency wiring at the exact revision,
@@ -199,8 +218,10 @@ xcodebuild -project AI_HLY.xcodeproj -scheme AI_HLY \
 The project/scheme already exist. This is a future integrator command, not an
 executed action or permission to edit shared files now. An isolated exact-pin
 SDK harness may avoid the full app's Runtime dependency closure, but creating
-that package/project is outside this lease. Prefer such a focused harness
-after the lead assigns its owner; retain these same17 SDK cases and fixtures.
+or wiring a shared product package/project is outside this lease. The prepared
+temporary-consumer recipe above creates no manifest in the product checkout
+and runs only later on an approved Apple host; retain these same17 SDK cases
+and fixtures.
 
 Retain resolved root/transitive revisions, compiler diagnostics and actual25
 executed case identities. A green process with zero/omitted tests or the flag
