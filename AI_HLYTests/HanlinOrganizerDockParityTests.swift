@@ -12,7 +12,79 @@ import Foundation
 import SwiftUI
 import SwiftData
 import Testing
+import UIKit
 @testable import AI_Hanlin
+
+@Suite("Composer live refresh identity")
+struct ComposerRefreshIdentityTests {
+    @Test("Old chats, temporary sessions, revisions, configuration and cancellations cannot publish")
+    func staleRequestsAreRejected() {
+        let chat = UUID()
+        let request = HanlinComposerRefreshContext(chatID: chat, temporary: false, selectionRevision: 7, globallyEnabled: true, serverStates: ["server:true"])
+        #expect(request.canPublish(current: request, currentSelectionRevision: 7, isCancelled: false))
+        #expect(!request.canPublish(current: request, currentSelectionRevision: 7, isCancelled: true))
+        #expect(!request.canPublish(current: request, currentSelectionRevision: 8, isCancelled: false))
+        #expect(!request.canPublish(current: nil, currentSelectionRevision: 7, isCancelled: false))
+        let otherChat = HanlinComposerRefreshContext(chatID: UUID(), temporary: false, selectionRevision: 7, globallyEnabled: true, serverStates: ["server:true"])
+        let temporary = HanlinComposerRefreshContext(chatID: chat, temporary: true, selectionRevision: 7, globallyEnabled: true, serverStates: ["server:true"])
+        let disabled = HanlinComposerRefreshContext(chatID: chat, temporary: false, selectionRevision: 7, globallyEnabled: false, serverStates: ["server:true"])
+        #expect(!request.canPublish(current: otherChat, currentSelectionRevision: 7, isCancelled: false))
+        #expect(!request.canPublish(current: temporary, currentSelectionRevision: 7, isCancelled: false))
+        #expect(!request.canPublish(current: disabled, currentSelectionRevision: 7, isCancelled: false))
+    }
+}
+
+@MainActor
+@Suite("Native composer automatic line sizing")
+struct NativeComposerLineSizingTests {
+    @Test("Wrapped text grows through six lines and scrolls at seven, including RTL")
+    func wrappedLinesAndScrolling() {
+        let editor = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: 1000, usesAutomaticLineLimits: true)
+        for sample in ["word ", "שלום "] {
+            let view = UITextView(frame: CGRect(x: 0, y: 0, width: 160, height: 100))
+            view.font = .preferredFont(forTextStyle: .body)
+            view.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
+            view.textContainer.lineFragmentPadding = 0
+            if sample != "word " { view.semanticContentAttribute = .forceRightToLeft }
+            view.text = "a"
+            let minimum = NativeMultilineTextEditor.automaticHeightBounds(for: view, isEmpty: false, availableHeight: 1000).min
+            #expect(editor.measuredHeight(for: view, isEmpty: false) >= minimum)
+            for target in [6, 7] {
+                var found = false
+                for count in 1...500 {
+                    view.text = String(repeating: sample, count: count)
+                    view.layoutManager.ensureLayout(for: view.textContainer)
+                    var lines = 0
+                    let range = view.layoutManager.glyphRange(for: view.textContainer)
+                    view.layoutManager.enumerateLineFragments(forGlyphRange: range) { _, _, _, _, _ in lines += 1 }
+                    if lines == target {
+                        _ = editor.measuredHeight(for: view, isEmpty: false)
+                        #expect(view.isScrollEnabled == (target == 7))
+                        found = true
+                        break
+                    }
+                }
+                #expect(found)
+            }
+        }
+    }
+
+    @Test("Empty, accessibility font, and constrained viewport use current font metrics")
+    func fontAndViewport() {
+        let view = UITextView()
+        view.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
+        view.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: UITraitCollection(preferredContentSizeCategory: .large))
+        let empty = NativeMultilineTextEditor.automaticHeightBounds(for: view, isEmpty: true, availableHeight: 1000)
+        let normal = NativeMultilineTextEditor.automaticHeightBounds(for: view, isEmpty: false, availableHeight: 1000)
+        #expect(empty.min == empty.max)
+        #expect(normal.min > empty.min)
+        view.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: UITraitCollection(preferredContentSizeCategory: .accessibilityExtraExtraExtraLarge))
+        let accessible = NativeMultilineTextEditor.automaticHeightBounds(for: view, isEmpty: false, availableHeight: 1000)
+        #expect(accessible.min > normal.min)
+        let constrained = NativeMultilineTextEditor.automaticHeightBounds(for: view, isEmpty: false, availableHeight: accessible.min + 10)
+        #expect(constrained.max == accessible.min + 10)
+    }
+}
 
 // MARK: - 7A.1 OrganizerDockStateTests
 
@@ -115,7 +187,7 @@ struct OrganizerDockStateTests {
         #expect(state.manualComposerHeight == nil)
     }
 
-    @Test("1.6 Input focus, empty draft, and context key change reset transient layout state")
+    @Test("1.6 Focus and draft changes preserve manual size; a context change resets it")
     func focusAndLifecycleResets() {
         let state = HanlinOrganizerDockState()
         state.openMode(.general)
@@ -126,9 +198,11 @@ struct OrganizerDockStateTests {
         #expect(state.mode == .collapsed)
         #expect(state.manualComposerHeight == 220)
 
-        // Clearing draft text resets manualComposerHeight
+        // Clearing the draft preserves the deliberate manual size.
         state.handleDraftTextChange("")
-        #expect(state.manualComposerHeight == nil)
+        #expect(state.manualComposerHeight == 220)
+        state.handleDraftTextChange("new draft")
+        #expect(state.manualComposerHeight == 220)
 
         // Switching context key collapses drawer and resets transient measurements
         state.openMode(.tools)
@@ -143,6 +217,7 @@ struct OrganizerDockStateTests {
     func manualResizeExpandsInnerEditorFrameHeight() {
         let state = HanlinOrganizerDockState()
         #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 38, minimumInteractiveHeight: 44) == 44)
+        #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 240, minimumInteractiveHeight: 44) == 240)
 
         // Drag up by 60pt (composerHeight = 186pt) -> inner editor frame expands to 98pt
         state.handleComposerResizeChanged(translationHeight: -60)
@@ -593,6 +668,19 @@ struct ChatComposerSessionBridgeTests {
         #expect(toolsB)
         #expect(bridge.perChatDrafts[chatA]?.ifToolUse == false)
         #expect(bridge.perChatDrafts[chatB]?.ifToolUse == true)
+    }
+
+    @Test("Clearing one temporary chat's MCP selection leaves the other chat intact")
+    func temporaryMCPSelectionClearDoesNotCrossChats() async throws {
+        let store = MCPChatSelectionStore()
+        let chatA = UUID(), chatB = UUID(), serverA = UUID(), serverB = UUID()
+        try await store.setSelection([serverA], chatID: chatA, temporary: true)
+        try await store.setSelection([serverB], chatID: chatB, temporary: true)
+        try await store.setSelection([], chatID: chatA, temporary: true)
+        let a = try await store.selection(chatID: chatA, temporary: true)
+        let b = try await store.selection(chatID: chatB, temporary: true)
+        #expect(a == [])
+        #expect(b == [serverB])
     }
 
     @Test("5.3 Out-of-order stale endpoint registration is rejected when expectedActiveSessionID does not match")
@@ -1142,6 +1230,32 @@ struct ComposerActionsParityTests {
         #expect(HanlinDetachedCapability.mcp.contextAction(imageGenerationActive: false) == .clearChatMCPSelection)
         #expect(HanlinDetachedCapabilityChips.usesCompactLayout(width: 509))
         #expect(!HanlinDetachedCapabilityChips.usesCompactLayout(width: 510))
+    }
+
+    @Test("Closing model presentation leaves projection unchanged until selected model changes")
+    func imageCapabilityFollowsActualModelAfterPickerCancellation() {
+        let image = AllModels(name: "image", displayName: "Image", position: 0, company: "OPENAI", supportsImageGen: true)
+        let text = AllModels(name: "text", displayName: "Text", position: 1, company: "OPENAI", supportsImageGen: false)
+        var selected = image
+        func visibleCapabilities() -> [HanlinDetachedCapability] {
+            let snapshot = HanlinComposerActionBridge.capabilitySnapshot(for: selected)
+            let chips = HanlinComposerActionBridge.activeModeChips(
+                capability: snapshot, ifSearch: false, ifKnowledge: false, ifThink: false,
+                thinkingLength: 0, ifPlanning: false, ifAudio: false, ifToolUse: false,
+                activeMCPServerCount: 0, selectedImageSize: "1:1"
+            )
+            return HanlinDetachedCapability.enabled(from: chips, mcpEnabled: false, hasModel: snapshot.hasModel,
+                                                     toolUseEnabled: false, toolsEligible: false,
+                                                     skillsEligible: false, runtimesEligible: false)
+        }
+        let coordinator = HanlinComposerPopupCoordinator()
+        #expect(visibleCapabilities() == [.creative])
+        #expect(HanlinDetachedCapability.creative.contextAction(imageGenerationActive: true) == .chooseModel)
+        coordinator.open(.model)
+        coordinator.closeAll() // Cancellation changes only presentation, not selected model.
+        #expect(visibleCapabilities() == [.creative])
+        selected = text // Changes the test's selected model; this is not a UI interaction test.
+        #expect(visibleCapabilities().isEmpty)
     }
 }
 

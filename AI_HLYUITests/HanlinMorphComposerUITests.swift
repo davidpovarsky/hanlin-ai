@@ -2,6 +2,49 @@ import XCTest
 
 @MainActor
 final class HanlinMorphComposerUITests: XCTestCase {
+    func testRTLToolChipKeepsLongDraftAndAccessibleLabel() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(he)", "-AppleLocale", "he_IL"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
+        app.launch()
+        defer { app.terminate() }
+
+        let input = app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
+        if !input.waitForExistence(timeout: 5) {
+            let chat = app.descendants(matching: .any).matching(
+                NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            ).firstMatch
+            XCTAssertTrue(chat.waitForExistence(timeout: 15))
+            chat.tap()
+        }
+        XCTAssertTrue(input.waitForExistence(timeout: 20))
+        let tools = app.buttons["hanlin-composer-tools-direct"].firstMatch
+        XCTAssertTrue(tools.waitForExistence(timeout: 5))
+        tools.tap()
+        let toggle = app.descendants(matching: .any)["hanlin-tool-use-toggle"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        if (toggle.value as? String) != "1" { toggle.tap() }
+        tools.tap()
+
+        let chip = app.buttons["composer-chip-tools"].firstMatch
+        let plus = app.buttons["hanlin-composer-general-menu"].firstMatch
+        XCTAssertTrue(chip.waitForExistence(timeout: 5))
+        XCTAssertFalse(chip.label.isEmpty, "Icon-only layout must retain an accessible capability label")
+        XCTAssertGreaterThan(plus.frame.midX, input.frame.midX, "Launcher must follow the RTL layout")
+        input.tap()
+        let draft = String(repeating: "Long accessible composer draft. ", count: 18)
+        input.typeText(draft)
+        XCTAssertEqual(input.value as? String, draft)
+        chip.tap()
+        XCTAssertFalse(chip.exists)
+        tools.tap()
+        XCTAssertTrue(chip.waitForExistence(timeout: 5))
+        XCTAssertEqual(input.value as? String, draft)
+    }
+
     func testEnabledToolsChipOpensSettingsAndContextMenuDisables() throws {
         continueAfterFailure = false
         let app = XCUIApplication()

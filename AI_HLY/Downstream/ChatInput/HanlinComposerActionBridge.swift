@@ -9,6 +9,19 @@
 import Foundation
 import SwiftUI
 
+/// Identifies the selection and configuration for one asynchronous UI refresh.
+struct HanlinComposerRefreshContext: Hashable {
+    let chatID: UUID
+    let temporary: Bool
+    let selectionRevision: UInt64
+    let globallyEnabled: Bool
+    let serverStates: [String]
+
+    func canPublish(current: Self?, currentSelectionRevision: UInt64, isCancelled: Bool) -> Bool {
+        !isCancelled && current == self && currentSelectionRevision == selectionRevision
+    }
+}
+
 /// Summarizes an active mode or capability chip displayed above the composer editor.
 struct HanlinComposerActiveChip: Identifiable, Equatable, Sendable {
     enum Kind: String, Equatable, Sendable {

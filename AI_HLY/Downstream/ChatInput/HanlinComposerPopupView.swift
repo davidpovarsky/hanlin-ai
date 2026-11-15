@@ -1048,7 +1048,6 @@ struct HanlinComposerToolsRootView: View {
     let temporaryRecord: Bool
     let capability: HanlinComposerActionBridge.ModelCapabilitySnapshot
     @Binding var ifToolUse: Bool
-    let onMCPSelectionChanged: (Int) -> Void
     var embeddedInDrawer: Bool = true
     var embeddedInMorph: Bool = false
 
@@ -1057,12 +1056,29 @@ struct HanlinComposerToolsRootView: View {
 
     @State private var mcpProvider = MCPRuntimeProvider.shared
     @State private var selectedMCPServerIDs: Set<UUID> = []
-    @State private var toolGroups: [NativeAssistantToolGroup] = []
-    @State private var allSkills: [HanlinSkillDescriptor] = []
-    @State private var disabledSkillIDs: Set<String> = []
+    @State private var activeLiveContext: LiveContext?
     @State private var skillSearchText: String = ""
     @State private var runtimeSnapshots: [RuntimeSnapshot] = []
     @State private var managementDestination: ManagementDestination?
+
+    private typealias LiveContext = HanlinComposerRefreshContext
+
+    private var liveContext: LiveContext {
+        LiveContext(chatID: chatID, temporary: temporaryRecord, selectionRevision: mcpProvider.selectionRevision,
+                    globallyEnabled: mcpProvider.configuration.isEnabled,
+                    serverStates: mcpProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled)" })
+    }
+
+    private var toolGroups: [NativeAssistantToolGroup] { NativeToolCatalog.shared.settingsGroups() }
+    private var disabledSkillIDs: Set<String> { Set(SkillStore.shared.disabledSkillIDs().map(\.rawValue)) }
+    private var allSkills: [HanlinSkillDescriptor] {
+        let active = HanlinSkillCatalog.shared.allSkills()
+        let stored = SkillStore.shared.allCustomSkillDescriptors()
+        var merged: [String: HanlinSkillDescriptor] = [:]
+        for skill in active { merged[skill.id.rawValue] = skill }
+        for skill in stored where merged[skill.id.rawValue] == nil { merged[skill.id.rawValue] = skill }
+        return merged.values.sorted { $0.id.rawValue < $1.id.rawValue }
+    }
 
     private let compactSize = CGSize(width: 326, height: 396)
     private let expandedSize = CGSize(width: 360, height: 496)
@@ -1105,15 +1121,18 @@ struct HanlinComposerToolsRootView: View {
             .onChange(of: coordinator.toolsNavigationPath) { _, _ in
                 coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
             }
-            .task {
-                await refreshLiveState()
+            .task(id: liveContext) {
+                await refreshLiveState(for: liveContext)
             }
             .frame(maxWidth: .infinity, maxHeight: embeddedInMorph ? nil : .infinity, alignment: .top)
             .scrollContentBackground(.hidden)
             .background(Color.clear)
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-composer-tools-popover")
-            .sheet(item: $managementDestination) { destination in
+            .sheet(item: $managementDestination, onDismiss: {
+                let request = liveContext
+                Task { await refreshRuntimeSnapshots(for: request) }
+            }) { destination in
                 NavigationStack {
                     managementView(destination)
                         .toolbar {
@@ -1154,8 +1173,8 @@ struct HanlinComposerToolsRootView: View {
             .onChange(of: coordinator.toolsNavigationPath) { _, _ in
                 coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
             }
-            .task {
-                await refreshLiveState()
+            .task(id: liveContext) {
+                await refreshLiveState(for: liveContext)
             }
             .frame(width: currentSize.width, height: currentSize.height)
             .background(GlassView(style: .systemUltraThinMaterial))
@@ -1336,7 +1355,6 @@ struct HanlinComposerToolsRootView: View {
                                 get: { groupOn },
                                 set: { enabled in
                                     NativeToolCatalog.shared.setGroupEnabled(enabled, for: group)
-                                    toolGroups = NativeToolCatalog.shared.settingsGroups()
                                 }
                             )) {
                                 HStack(spacing: 8) {
@@ -1360,7 +1378,6 @@ struct HanlinComposerToolsRootView: View {
                                         get: { NativeToolCatalog.shared.isEnabled(entry) },
                                         set: { enabled in
                                             NativeToolCatalog.shared.setEnabled(enabled, for: entry)
-                                            toolGroups = NativeToolCatalog.shared.settingsGroups()
                                         }
                                     )) {
                                         VStack(alignment: .leading, spacing: 1) {
@@ -1427,7 +1444,6 @@ struct HanlinComposerToolsRootView: View {
                             get: { isEnabled },
                             set: { newValue in
                                 SkillStore.shared.setSkillEnabled(id: skill.id, enabled: newValue)
-                                refreshSkillsState()
                             }
                         )) {
                             VStack(alignment: .leading, spacing: 2) {
@@ -1497,7 +1513,6 @@ struct HanlinComposerToolsRootView: View {
                         set: { value in
                             Task {
                                 await mcpProvider.setEnabled(value)
-                                await refreshLiveState()
                             }
                         }
                     )) {
@@ -1540,21 +1555,10 @@ struct HanlinComposerToolsRootView: View {
                                 Toggle(isOn: Binding(
                                     get: { isSelectedForChat },
                                     set: { enabled in
-                                        let previous = selectedMCPServerIDs
                                         var next = selectedMCPServerIDs
                                         if enabled { next.insert(server.id) } else { next.remove(server.id) }
                                         Task {
                                             await mcpProvider.setSelection(next, chatID: chatID, temporary: temporaryRecord)
-                                            let confirmed = await mcpProvider.selection(chatID: chatID, temporary: temporaryRecord)
-                                            await MainActor.run {
-                                                if confirmed.contains(server.id) == enabled {
-                                                    selectedMCPServerIDs = confirmed
-                                                    onMCPSelectionChanged(confirmed.count)
-                                                } else {
-                                                    selectedMCPServerIDs = previous
-                                                    onMCPSelectionChanged(previous.count)
-                                                }
-                                            }
                                         }
                                     }
                                 )) {
@@ -1575,13 +1579,14 @@ struct HanlinComposerToolsRootView: View {
                                     statusPill(String(localized: "Running"), active: isRunning)
                                     Spacer()
                                     Button(isRunning ? String(localized: "Restart") : String(localized: "Start")) {
+                                        let request = liveContext
                                         Task {
                                             if isRunning {
                                                 await mcpProvider.restart(server)
                                             } else {
                                                 await mcpProvider.start(server)
                                             }
-                                            await refreshLiveState()
+                                            await refreshRuntimeSnapshots(for: request)
                                         }
                                     }
                                     .font(.caption2.weight(.semibold))
@@ -1649,13 +1654,14 @@ struct HanlinComposerToolsRootView: View {
                             }
                             Spacer()
                             Button(isReady ? String(localized: "Stop") : String(localized: "Start")) {
+                                let request = liveContext
                                 Task {
                                     if isReady {
                                         _ = try? await AppRuntimeCore.shared.stop(snap.kind)
                                     } else {
                                         _ = try? await AppRuntimeCore.shared.start(snap.kind)
                                     }
-                                    runtimeSnapshots = await AppRuntimeCore.shared.snapshots()
+                                    await refreshRuntimeSnapshots(for: request)
                                 }
                             }
                             .font(.caption.weight(.semibold))
@@ -1735,27 +1741,24 @@ struct HanlinComposerToolsRootView: View {
         return String(format: String(localized: "Node / TS / Python / JSC / Shell · Ready %lld/%lld"), readyCount, max(runtimeSnapshots.count, 5))
     }
 
-    private func refreshLiveState() async {
+    private func refreshLiveState(for request: LiveContext) async {
+        if activeLiveContext?.chatID != request.chatID || activeLiveContext?.temporary != request.temporary {
+            selectedMCPServerIDs = []
+        }
+        activeLiveContext = request
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
-        toolGroups = NativeToolCatalog.shared.settingsGroups()
-        refreshSkillsState()
         await mcpProvider.loadIfNeeded(startHost: false)
-        selectedMCPServerIDs = await mcpProvider.selection(chatID: chatID, temporary: temporaryRecord)
-        onMCPSelectionChanged(selectedMCPServerIDs.count)
-        runtimeSnapshots = await AppRuntimeCore.shared.snapshots()
+        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
+        let selection = await mcpProvider.selection(chatID: request.chatID, temporary: request.temporary)
+        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
+        selectedMCPServerIDs = selection
+        await refreshRuntimeSnapshots(for: request)
     }
 
-    private func refreshSkillsState() {
-        let disabledSet = Set(SkillStore.shared.disabledSkillIDs().map(\.rawValue))
-        disabledSkillIDs = disabledSet
-        let activeCatalog = HanlinSkillCatalog.shared.allSkills()
-        let customStored = SkillStore.shared.allCustomSkillDescriptors()
-        var mergedByID: [String: HanlinSkillDescriptor] = [:]
-        for s in activeCatalog { mergedByID[s.id.rawValue] = s }
-        for s in customStored where mergedByID[s.id.rawValue] == nil {
-            mergedByID[s.id.rawValue] = s
-        }
-        allSkills = mergedByID.values.sorted { $0.id.rawValue < $1.id.rawValue }
+    private func refreshRuntimeSnapshots(for request: LiveContext) async {
+        let snapshots = await AppRuntimeCore.shared.snapshots()
+        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
+        runtimeSnapshots = snapshots
     }
 
     private func domainCard(

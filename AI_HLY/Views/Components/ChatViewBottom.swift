@@ -286,6 +286,7 @@ struct ChatViewBottom: View {
     @State private var popupCoordinator = HanlinComposerPopupCoordinator()
     @State private var selectedMCPCountForChat: Int = 0
     @State private var capabilityMCPProvider = MCPRuntimeProvider.shared
+    @State private var activeMCPCountContext: MCPCountContext?
     @State private var toolCatalogReady = false
     @State private var capabilityUpdateError: String?
     @State private var showEmbeddingSettingSheet: Bool = false
@@ -300,10 +301,13 @@ struct ChatViewBottom: View {
         chatRecord.id ?? sessionFallbackChatID
     }
 
-    private struct MCPCountContext: Hashable {
-        let chatID: UUID
-        let temporary: Bool
-        let serverStates: [String]
+    private typealias MCPCountContext = HanlinComposerRefreshContext
+
+    private var mcpCountContext: MCPCountContext {
+        MCPCountContext(chatID: effectiveMCPChatID, temporary: TemporaryRecord,
+            selectionRevision: capabilityMCPProvider.selectionRevision,
+            globallyEnabled: capabilityMCPProvider.configuration.isEnabled,
+            serverStates: capabilityMCPProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled)" })
     }
 
     static func shouldEnableSend(
@@ -480,15 +484,15 @@ struct ChatViewBottom: View {
                 isInputActive.wrappedValue = false
             }
         }
-        .task(id: MCPCountContext(
-            chatID: effectiveMCPChatID,
-            temporary: TemporaryRecord,
-            serverStates: capabilityMCPProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled)" }
-        )) {
+        .task(id: mcpCountContext) {
+            let request = mcpCountContext
+            if activeMCPCountContext?.chatID != request.chatID || activeMCPCountContext?.temporary != request.temporary {
+                selectedMCPCountForChat = 0
+            }
+            activeMCPCountContext = request
             NativeToolCatalog.shared.ensureBuiltinsRegistered()
             toolCatalogReady = true
-            selectedMCPCountForChat = 0
-            await refreshSelectedMCPCount()
+            await refreshSelectedMCPCount(request)
         }
         .background(
             GeometryReader { proxy in
@@ -843,9 +847,6 @@ struct ChatViewBottom: View {
             temporaryRecord: TemporaryRecord,
             capability: currentModelSnapshot,
             ifToolUse: $ifToolUse,
-            onMCPSelectionChanged: { _ in
-                Task { @MainActor in await refreshSelectedMCPCount() }
-            },
             embeddedInDrawer: true,
             embeddedInMorph: true
         )
@@ -902,18 +903,15 @@ struct ChatViewBottom: View {
         )
     }
 
-    private func refreshSelectedMCPCount() async {
-        let chatID = effectiveMCPChatID
-        let temporary = TemporaryRecord
+    private func refreshSelectedMCPCount(_ request: MCPCountContext) async {
         await capabilityMCPProvider.loadIfNeeded(startHost: false)
+        guard request.canPublish(current: activeMCPCountContext, currentSelectionRevision: capabilityMCPProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
         guard capabilityMCPProvider.persistentLoadState == .loaded else {
-            if !Task.isCancelled && chatID == effectiveMCPChatID && temporary == TemporaryRecord {
-                capabilityUpdateError = capabilityMCPProvider.lastError ?? String(localized: "MCP settings could not be loaded.")
-            }
+            capabilityUpdateError = capabilityMCPProvider.lastError ?? String(localized: "MCP settings could not be loaded.")
             return
         }
-        let selection = await capabilityMCPProvider.selection(chatID: chatID, temporary: temporary)
-        guard !Task.isCancelled, chatID == effectiveMCPChatID, temporary == TemporaryRecord else { return }
+        let selection = await capabilityMCPProvider.selection(chatID: request.chatID, temporary: request.temporary)
+        guard request.canPublish(current: activeMCPCountContext, currentSelectionRevision: capabilityMCPProvider.selectionRevision, isCancelled: Task.isCancelled) else { return }
         selectedMCPCountForChat = capabilityMCPProvider.servers.filter { selection.contains($0.id) && $0.isGloballyEnabled }.count
     }
 
@@ -1263,7 +1261,10 @@ struct ChatViewBottom: View {
                         textHeight: $textEditorHeight,
                         placeholderText: String(localized: "Message"),
                         minHeight: 38,
-                        maxHeight: popupCoordinator.dockState.editorMaxHeight,
+                        maxHeight: popupCoordinator.dockState.manualComposerHeight == nil
+                            ? max(size_44, popupCoordinator.dockState.maxComposerHeight - 88 - popupCoordinator.dockState.attachmentOverheadHeight)
+                            : max(size_44, popupCoordinator.dockState.composerHeight - 88 - popupCoordinator.dockState.attachmentOverheadHeight),
+                        usesAutomaticLineLimits: popupCoordinator.dockState.manualComposerHeight == nil,
                         onPasteImage: { pastedImage in
                             selectedImages.append(pastedImage)
                         },

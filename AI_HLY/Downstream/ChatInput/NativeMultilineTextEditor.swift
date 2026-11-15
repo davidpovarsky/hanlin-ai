@@ -23,6 +23,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
     var placeholderText: String = String(localized: "Message")
     var minHeight: CGFloat = 38
     var maxHeight: CGFloat = 140
+    var usesAutomaticLineLimits = false
     var onPasteImage: ((UIImage) -> Void)?
     var onPasteFile: ((URL) -> Void)?
     var onSendMessage: (() -> Void)?
@@ -46,6 +47,24 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         fittingHeight > maxHeight
     }
 
+    static func automaticHeightBounds(for textView: UITextView, isEmpty: Bool, availableHeight: CGFloat) -> (min: CGFloat, max: CGFloat) {
+        let lineHeight = (textView.font ?? UIFont.preferredFont(forTextStyle: .body)).lineHeight
+        let insets = textView.textContainerInset.top + textView.textContainerInset.bottom
+        let minimum = ceil(insets + lineHeight * (isEmpty ? 1 : 2))
+        let maximum = ceil(insets + lineHeight * (isEmpty ? 1 : 6))
+        return (minimum, min(maximum, max(minimum, availableHeight)))
+    }
+
+    func measuredHeight(for textView: UITextView, isEmpty: Bool) -> CGFloat {
+        let width = Self.effectiveMeasurementWidth(for: textView)
+        let fitting = textView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height
+        let bounds = usesAutomaticLineLimits
+            ? Self.automaticHeightBounds(for: textView, isEmpty: isEmpty, availableHeight: maxHeight)
+            : (min: minHeight, max: max(minHeight, maxHeight))
+        textView.isScrollEnabled = !isEmpty && Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max)
+        return Self.calculatedHeight(fittingHeight: fitting, minHeight: bounds.min, maxHeight: bounds.max)
+    }
+
     static func effectiveMeasurementWidth(for textView: UITextView, fallbackWidth: CGFloat = 240) -> CGFloat {
         let boundsWidth = textView.bounds.width
         if boundsWidth > 20 {
@@ -62,6 +81,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         let textView = MultilineInnerTextView()
         textView.delegate = context.coordinator
         textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.adjustsFontForContentSizeCategory = true
         textView.backgroundColor = .clear
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
         textView.textContainer.lineFragmentPadding = 0
@@ -106,19 +126,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
             uiView.text = text
         }
 
-        let targetWidth = Self.effectiveMeasurementWidth(for: uiView)
-        let fittingSize = uiView.sizeThatFits(
-            CGSize(width: targetWidth, height: .greatestFiniteMagnitude)
-        )
-        let clampedHeight = Self.calculatedHeight(
-            fittingHeight: fittingSize.height,
-            minHeight: minHeight,
-            maxHeight: maxHeight
-        )
-        uiView.isScrollEnabled = Self.shouldScrollInternally(
-            fittingHeight: fittingSize.height,
-            maxHeight: maxHeight
-        )
+        let clampedHeight = measuredHeight(for: uiView, isEmpty: text.isEmpty)
         if abs(textHeight - clampedHeight) > 1 {
             DispatchQueue.main.async {
                 self.textHeight = clampedHeight
@@ -150,7 +158,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         func textViewDidEndEditing(_ textView: UITextView) {
             isEditing = false
             parent.onFocusChange?(false)
-            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if parent.text.isEmpty {
                 textView.text = parent.placeholderText
                 textView.textColor = .placeholderText
             }
@@ -163,19 +171,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
                 if textView.text.hasSuffix("@") {
                     parent.onMentionTriggered?()
                 }
-                let targetWidth = NativeMultilineTextEditor.effectiveMeasurementWidth(for: textView)
-                let fittingSize = textView.sizeThatFits(
-                    CGSize(width: targetWidth, height: .greatestFiniteMagnitude)
-                )
-                let clampedHeight = NativeMultilineTextEditor.calculatedHeight(
-                    fittingHeight: fittingSize.height,
-                    minHeight: parent.minHeight,
-                    maxHeight: parent.maxHeight
-                )
-                textView.isScrollEnabled = NativeMultilineTextEditor.shouldScrollInternally(
-                    fittingHeight: fittingSize.height,
-                    maxHeight: parent.maxHeight
-                )
+                let clampedHeight = parent.measuredHeight(for: textView, isEmpty: textView.text.isEmpty)
                 if abs(parent.textHeight - clampedHeight) > 1 {
                     parent.textHeight = clampedHeight
                 }
