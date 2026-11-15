@@ -60,6 +60,29 @@ def main():
     text = base.replace_once(text, "module->Umbrella.get<DirectoryEntryRef>()", "std::get<DirectoryEntryRef>(module->Umbrella)")
     text = base.replace_once(text, "module->Headers[Module::HK_Normal]", "module->getHeaders(Module::HK_Normal)")
     parser.write_text(text)
+    # ObjC++ represents C-compatible records as CXXRecordDecl. Retain the
+    # original field/layout serializer; never advertise C++ methods or mangled
+    # functions/variables as C-callable globals.
+    factory = generator / "src/Meta/MetaFactory.cpp"
+    factory.write_text(base.replace_once(factory.read_text(), "    case clang::Decl::Kind::Record:",
+        "    case clang::Decl::Kind::CXXRecord:\n    case clang::Decl::Kind::Record:"))
+    visitor = generator / "src/Meta/DeclarationConverterVisitor.h"
+    text = visitor.read_text()
+    text = base.replace_once(text, "        try {\n            // Remove from cache", '''        if (decl->getASTContext().getLangOpts().CPlusPlus) {
+            if (auto function = clang::dyn_cast<clang::FunctionDecl>(decl)) {
+                if (!function->isExternC()) return true;
+            }
+            if (auto variable = clang::dyn_cast<clang::VarDecl>(decl)) {
+                if (!variable->isExternC()) return true;
+            }
+            if (auto record = clang::dyn_cast<clang::CXXRecordDecl>(decl)) {
+                if (!record->isCompleteDefinition() || !record->isStandardLayout() ||
+                    !record->isTriviallyCopyable() || record->getNumBases() != 0) return true;
+            }
+        }
+        try {
+            // Remove from cache''')
+    visitor.write_text(text)
     # LLVM20 renamed StringRef's spelling; this is an API migration only.
     for path in (generator / "src").rglob("*"):
         if path.suffix in {".h", ".cpp"}:

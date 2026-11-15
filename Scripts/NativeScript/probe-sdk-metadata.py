@@ -221,10 +221,14 @@ def main() -> int:
                         default="textual-public")
     parser.add_argument("--generator", type=Path, help="Explicit separately built metadata-tool candidate")
     parser.add_argument("--emit-types", action="store_true", help="Retain actual selected-SDK TypeScript declarations")
+    parser.add_argument("--language", choices=["objective-c", "objective-c++"], default="objective-c",
+                        help="Explicit standalone candidate dialect; not production adoption")
     parser.add_argument("--runtime-wrapper", action="store_true", help="Compile the real provider and exercise the production metadata launcher")
     parser.add_argument("--preprocessing-provenance", action="store_true",
                         help="Opt-in diagnostic-only wrapper; requires future explicitly authorized native execution")
     options = parser.parse_args()
+    if options.language != "objective-c" and (options.generator is None or options.runtime_wrapper):
+        parser.error("Candidate ObjC++ dialect requires an explicit standalone generator proof")
     if options.preprocessing_provenance and (not options.runtime_wrapper or options.generator is None or options.emit_types):
         parser.error("--preprocessing-provenance requires --runtime-wrapper and --generator, without --emit-types")
     if sys.platform != "darwin":
@@ -247,7 +251,7 @@ def main() -> int:
     version = capture("xcrun", "--sdk", "iphonesimulator", "--show-sdk-version")
     resources = Path(capture("xcrun", "clang", "-print-resource-dir"))
     headers = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
-    output = root / "build/acceptance/nativescript-sdk-probe"
+    output = root / ("build/acceptance/nativescript-sdk-probe-cpp" if options.language == "objective-c++" else "build/acceptance/nativescript-sdk-probe")
     output.mkdir(parents=True, exist_ok=True)
     if options.preprocessing_provenance:
         if generator != (root / "build/nativescript-metadata-tool/bin/objc-metadata-generator").resolve():
@@ -298,6 +302,8 @@ def main() -> int:
                    "-F" + str(sdk / "System/Library/SubFrameworks"),
                    "-fmodule-map-file=" + str(headers / "module.modulemap"),
                    "-fmodules" if mode == "modular" else "-fno-modules"]
+        if options.language == "objective-c++":
+            command.extend(["-x", "objective-c++", "-std=gnu++20"])
         if options.emit_types:
             command[1:1] = ["-output-typescript", str(destination / "types")]
         if mode in ["textual-direct", "textual-public"]:
@@ -376,8 +382,16 @@ def main() -> int:
         for name, executable in [("original", original_generator), ("candidate", generator)]:
             folder = parity_root / name
             folder.mkdir(exist_ok=True)
+            comparison_flags = flags
+            if name == "original" and options.language == "objective-c++":
+                # Compare with the accepted original ObjC reference. Its
+                # Clang17 cannot parse the current SDK's C++ standard library.
+                if flags[-3:] != ["-x", "objective-c++", "-std=gnu++20"]:
+                    raise RuntimeError("Candidate dialect argv changed")
+                comparison_flags = flags[:-3]
             invocation = [str(executable), "-input-umbrella", str(parity_input),
-                          "-output-yaml", str(folder / "yaml"), "Xclang", *flags]
+                          "-output-yaml", str(folder / "yaml"), "Xclang", *comparison_flags]
+            (folder / "command.json").write_text(json.dumps(invocation, indent=2) + "\n")
             execution = subprocess.run(invocation, cwd=executable.parent, capture_output=True, timeout=120)
             (folder / "stdout.log").write_bytes(execution.stdout)
             (folder / "stderr.log").write_bytes(execution.stderr)
