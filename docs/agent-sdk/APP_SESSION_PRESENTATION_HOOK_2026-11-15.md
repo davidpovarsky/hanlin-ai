@@ -136,3 +136,29 @@ or deletion suppress delivery; freshness and actual row existence are rechecked 
 
 Source syntax parsed on Windows. Actual SwiftData/App tests remain NOT_RUN pending the combined
 enabled application graph. Package-only tests do not establish this app hook's compilation.
+
+## Actual app Host follow-on, not yet accepted
+
+The original HanlinAISDKToolAdapter now exposes a transient pre-dispatch verification hook at
+its existing prepared business executor boundary, after diagnostics/round awaits. The app Host
+validates original input with the approved offline plan, proves exact portable and existing
+metadata-sanitized projections, and rechecks the original adapter/route/schema/context/deadline
+there. Definitions serialize existing trusted native declarations with sorted keys; catalog
+revision hashing binds exact original schema bytes as well as portable descriptors. The Host
+caches at most8 immutable schema plans. External MCP definitions are explicitly unsupported
+because their original pre-dictionary schema bytes are unavailable at this boundary.
+
+Only the five actual metadata/progress tools are treated read-only. Legacy shadow risk.read is
+not a no-write guarantee for general native/MCP/script operations. Known preflight/hook rejection
+returns a typed notDispatched receipt; post-executor exceptions remain uncertain for mutations.
+Successful native effect acknowledgement still comes from the original NativeToolResult, never
+from nonempty output. Original progress/result/large-result paths remain in the existing adapter.
+
+Six actual app component tests are authored in HanlinAppAgentSessionOwnerTests (real SwiftData
+ChatRecords/ModelContainer and actual original adapter/owner/Host): row/CAS/foreign/delete;
+row-run correlation/original-session replay before any new engine; same-owner temporary metadata;
+deleted/foreign/cancelled history opens; explicit outcome/cached receipt/executor-once; and exact
+native2^53 input vs decimal/Unicode-key loss/schema-invalid/context-change denials before effects.
+The injected original executor is a component fixture, not OS permission or business-effect proof.
+Windows source syntax and diff checks pass. All six Apple app tests remain NOT_RUN; the focused
+package proof does not include these app sources or establish actual app compilation/acceptance.

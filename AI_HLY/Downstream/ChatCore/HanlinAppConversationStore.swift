@@ -20,12 +20,13 @@ final class HanlinAppConversationStore: HanlinConversationStore {
     }
 
     func requireOriginalConversation() throws -> ChatRecords {
-        guard let conversation, conversation.id == conversationID else { throw HanlinHostError.staleContext }
+        guard let conversation else { throw HanlinHostError.staleContext }
         if !temporary {
             let id = conversationID
             let rows = try context.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
             guard rows.count == 1, rows.first === conversation else { throw HanlinHostError.staleContext }
         }
+        guard conversation.id == conversationID else { throw HanlinHostError.staleContext }
         return conversation
     }
 
