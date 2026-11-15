@@ -1,5 +1,7 @@
 # Composer app/SDK consumer handoff — 2026-11-15
 
+**Assembled source checkpoint:** integration `6faae18e8f8e1a2f6a882e048f762342d52793b1` now contains the frozen SDK foundation/adapter and actual AI package/product links, with Core also linked to the real unit target. The adapter's membership follows the existing synchronized AI_HLY folder; absence of a standalone PBX filename is not a membership defect. Earlier missing-graph observations below are historical. Actual app compilation/execution still awaits the canonical Runtime metadata/Expo phase correction. Use this assembled graph plus the narrow changes below, not Composer's older project snapshot or a whole-branch synchronization.
+
 The editor correction is integrated in `e9c07cbd8a77e990ea88a667556fa2574f83eebb`. Its original one-plus-four native executions remain separate authenticated evidence. The picker/routing tranche through965647e6 preserved all ten compiled inputs. The later chip accessibility followup below changes that view's body, while leaving both editor-fix source/test files unchanged; the original packet is not compilation evidence for the new view and those five cases are not rerun.
 
 ## Available source and missing app graph
@@ -50,3 +52,23 @@ An independent source audit against the reverified chips reference found an Engl
 The existing English UI case above now requires label Tools/value Enabled. Add the existing affected Hebrew/RTL selector `AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel` to the exact app run; it now requires label כלים/value מופעל instead of nonempty text. Current selection is five unit plus two UI methods. Both UI cases remain NOT_RUN, with all actual SDK/app/VoiceOver/visual/physical gates open. No extra UI launch case was introduced. A separate seven-path/seven-selector dry-plan receipt is retained at `build/evidence/composer-localized-chip-net-dry-plan.json`; it is routing metadata only.
 
 `protectedFilesAndReferenceMetadataRemainIntact()` is preserved verbatim. Authorized SDK/A2UI changes to its protected whole-file inputs still require the precise versioned integration contract amendment and protected-behavior proof already agreed with the manager. Do not replace hashes silently or omit that obligation. Compact/wide/RTL, keyboard/accessibility/Reduce Motion and authentic physical iPad/reference parity remain open. Both Asana tasks remain incomplete.
+
+## Existing native picker host: preserve the actual model context
+
+Source review of the assembled consumer found another boundary gap. `HanlinModelZoomPopover` constructs separate `UIHostingController` roots. Its `HanlinModelHostedView` forwarded locale/layout direction/Dynamic Type/color scheme but omitted the caller's `modelContext` and Reduce Motion override. The existing picker reads `@Environment(\.modelContext)` for `ModelRefreshService.refreshOpenRouterMetadata`, which fetches/saves the real catalog through that argument. Missing explicit propagation can therefore lose the intended store; this is a source finding, not an observed device failure.
+
+The same wrapper now imports SwiftData, applies the public `.modelContext(environment.modelContext)` modifier, and forwards `accessibilityReduceMotion`. It creates no context, container, store, refresh service, or presentation path. Native scene phase remains under the hosting scene rather than being frozen in a copied value. Size/transition/callback code is untouched.
+
+New whole file `AI_HLYTests/HanlinModelHostingEnvironmentTests.swift` renders the actual `HanlinModelSizingHost` with two real in-memory `AllModels` containers in sequence. A render-time recorder, with no view-state/catalog mutation, checks reference identity and Reduce Motion before and after the same host's root update. Empty/no render is an assertion failure; there is no sleep, polling, unbounded continuation, stand-in model or alternate renderer. This case is **NOT_RUN**. Windows Swift frontend parsing/whitespace passed only.
+
+Read-only `apple-devtools` SDK lookup [43738028410](https://github.com/davidpovarsky/apple-devtools/actions/runs/43738028410), toolkit76652c014888cc49aa76fb1c3354f9322e351aa0, succeeded for SwiftData/modelContext under the installed iphonesimulator SDK. Raw output contains `View.modelContext(_:)` and `EnvironmentValues.modelContext`; saved at ignored `build/evidence/apple-api-modelContext-43738028410.log`. This establishes SDK symbol presence, not compilation of this source, app build or test execution.
+
+The route map adds exact host/new-test paths to the real new unit suite. Its new portable routing regression passed. Since this changes the global map, the planner suite was freshly executed: **96 PASS / 1 FAILED of97** in2.441s. The one failure is the same preserved Runtime tooling expectation documented above, not a newly green suite. Raw log `build/evidence/composer-hosting-routing-tests.log`.
+
+Extend the current exact run with:
+
+- `AI_HLYTests/HanlinModelHostingEnvironmentTests/nativeHostRetainsCatalogContextAcrossRootUpdates()`
+- `AI_HLYTests/ModelPopoverZoomOrderTests/nativeCallbacksAreDeferredAndSuperseded()` (existing wrapper consumer using default environment)
+- `AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft` (existing real popover consumer)
+
+The resulting bounded run is seven unit plus three UI methods; all ten remain APPLE NOT_RUN. The full net source/test/resource transplant is now nine paths: previous seven plus `HanlinModelZoomPopover.swift` and the new whole test file. Apply only the additive route component/regression to the assembled map, preserving peer routes. Do not change project settings merely to add files already covered by synchronized folders. Both editor-fix blobs remain unchanged; no editor rerun is justified by this host-only change. Full app/reference/physical/protected-contract acceptance remains open.

@@ -884,6 +884,21 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         self.assertFalse(exact.step_outputs["run_device_build"])
         self.assertFalse(exact.step_outputs["run_ipa_packaging"])
 
+    def test_model_host_context_has_a_focused_real_unit_route(self) -> None:
+        suite = "AI_HLYTests/HanlinModelHostingEnvironmentTests"
+        standalone = self.plan_files(["AI_HLYTests/HanlinModelHostingEnvironmentTests.swift"])
+        self.assertEqual(standalone.step_outputs["simulator_unit_filter"], suite)
+        self.assertFalse(standalone.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(standalone.step_outputs["run_device_build"])
+        changed_host = self.plan_files(["AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift"])
+        self.assertIn(suite, changed_host.step_outputs["simulator_unit_filter"].split(","))
+        method = suite + "/nativeHostRetainsCatalogContextAcrossRootUpdates()"
+        exact = self.plan_files(["AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift"],
+                                exact_test_selector=method)
+        self.assertEqual(exact.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{method}")
+        self.assertFalse(exact.step_outputs["run_device_build"])
+        self.assertFalse(exact.step_outputs["run_ipa_packaging"])
+
     def test_exact_selectors_reject_invalid_members(self) -> None:
         valid = "AI_HLYTests/VoiceRecordingLifecycleTests"
         for suffix in [",", ",OtherBundle/Suite", ",AI_HLYUITests/Suite;echo"]:
