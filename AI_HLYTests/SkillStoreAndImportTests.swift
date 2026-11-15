@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import HanlinPlatformContracts
 import HanlinScriptCompiler
+import HanlinSkillFormat
 import ZIPFoundation
 @testable import AI_Hanlin
 
@@ -103,7 +104,7 @@ struct SkillStoreAndImportTests {
         #expect(parsed.description == "Analyze complex tabular data and generate summaries")
         #expect(parsed.body.contains("Data Analysis Workflow"))
 
-        let serialized = SkillMarkdownParser.serialize(
+        let serialized = try SkillMarkdownParser.serialize(
             name: parsed.name,
             description: parsed.description,
             body: parsed.body
@@ -112,6 +113,119 @@ struct SkillStoreAndImportTests {
         #expect(reparsed.name == parsed.name)
         #expect(reparsed.description == parsed.description)
         #expect(reparsed.body.contains("Data Analysis Workflow"))
+    }
+
+    @Test("Imported original bytes and nested metadata survive read, no-op save and override")
+    func nestedMetadataSurvivesStoreSaveAndOverride() throws {
+        let id = "metadata-\(UUID().uuidString.lowercased())"
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent("\(id).md")
+        let source = Data(("\u{FEFF}---\r\nname: \(id)\r\ndescription: \"Description: # original\"\r\nmetadata:\r\n  openclaw: {requires: {bins: [curl, jq]}, flags: [true, null, 9007199254740993]}\r\nunknown-header: !vendor [\"שלום 😀 e\u{301}\"] # keep\r\n---\r\n\r\n# Instructions\r\n").utf8)
+        try source.write(to: file)
+        defer { try? FileManager.default.removeItem(at: file) }
+        let staged = try SkillImporter.shared.stageAndInspect(fileURL: file)
+        defer { staged.cleanup() }
+        #expect(staged.parsedMarkdown.document?.originalSource == source)
+        let store = SkillStore.shared
+        let record = try store.install(stagedPackage: staged)
+        defer { store.resetOverride(skillID: record.id); store.deleteCustomSkill(skillID: record.id) }
+        let url = try #require(record.directoryURL).appendingPathComponent("SKILL.md")
+        #expect(try Data(contentsOf: url) == source)
+        let original = try #require(record.markdownDocument)
+        #expect(store.markdownDocument(for: record.id)?.root == original.root)
+        #expect(HanlinSkillCatalog.shared.markdownDocument(for: record.id)?.root == original.root)
+        // Migration is a fresh read, without a write or flattening into hanlin.json.
+        _ = store.allStoredRecords()
+        #expect(try Data(contentsOf: url) == source)
+        try store.saveCustomSkill(id: record.id, title: original.displayTitle, description: original.description,
+                                  instructions: original.instructionBody)
+        #expect(try Data(contentsOf: url) == source)
+        store.setSkillEnabled(id: record.id, enabled: false)
+        #expect(HanlinSkillCatalog.shared.markdownDocument(for: record.id) == nil)
+        try store.saveCustomSkill(id: record.id, title: "Edited: # Title", description: "Changed description",
+                                  instructions: "New instructions")
+        #expect(!store.isSkillEnabled(id: record.id))
+        let edited = try #require(store.markdownDocument(for: record.id))
+        #expect(edited.metadata == original.metadata)
+        #expect(edited.root["unknown-header"] == original.root["unknown-header"])
+        #expect(edited.originalSource.range(of: Data("unknown-header: !vendor [\"שלום 😀 e\u{301}\"] # keep\r\n".utf8)) != nil)
+        store.setSkillEnabled(id: record.id, enabled: true)
+        let base = try #require(store.allCustomSkillDescriptors().first { $0.id == record.id })
+        try store.createOrUpdateOverride(for: base, newTitle: "Override", newInstructions: "Override instructions")
+        let override = try #require(store.markdownDocument(for: record.id, isOverride: true))
+        #expect(override.metadata == original.metadata)
+        #expect(override.root["unknown-header"] == original.root["unknown-header"])
+        #expect(HanlinSkillCatalog.shared.markdownDocument(for: record.id)?.originalSource == override.originalSource)
+        try store.createOrUpdateOverride(for: base, newTitle: "Second override", newInstructions: "Second instructions")
+        #expect(store.markdownDocument(for: record.id, isOverride: true)?.metadata == original.metadata)
+        store.resetOverride(skillID: record.id)
+        #expect(HanlinSkillCatalog.shared.markdownDocument(for: record.id)?.originalSource == edited.originalSource)
+    }
+
+    @Test("Unsupported anchored edits leave the installed file unchanged")
+    func anchoredStoreEditDoesNotRewriteOriginal() throws {
+        let id = "anchor-\(UUID().uuidString.lowercased())"
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent("\(id).md")
+        let source = Data("---\nname: \(id)\ndescription: &desc Original\nmetadata: {copy: *desc}\n---\n\nInstructions".utf8)
+        try source.write(to: file)
+        defer { try? FileManager.default.removeItem(at: file) }
+        let staged = try SkillImporter.shared.stageAndInspect(fileURL: file)
+        defer { staged.cleanup() }
+        let store = SkillStore.shared, record = try store.install(stagedPackage: staged)
+        defer { store.deleteCustomSkill(skillID: record.id) }
+        #expect(throws: SkillMarkdownError.self) {
+            try store.saveCustomSkill(id: record.id, title: id, description: "Changed", instructions: "Instructions")
+        }
+        #expect(throws: SkillMarkdownError.self) {
+            try store.createOrUpdateOverride(for: record.descriptor, newDescription: "Changed", newInstructions: "Instructions")
+        }
+        #expect(!store.hasOverride(for: record.id))
+        #expect(store.directoryURL(for: record.id) == record.directoryURL,
+                "A failed edit must not leave an empty override directory shadowing original resources")
+        #expect(try Data(contentsOf: #require(record.directoryURL).appendingPathComponent("SKILL.md")) == source)
+    }
+
+    @Test("Real ZIP with no hanlin.json preserves nested frontmatter and resource bytes")
+    func zipNestedMetadataAndResourcesRemainLossless() throws {
+        let name = "yaml-zip-\(UUID().uuidString.lowercased())"
+        let zip = FileManager.default.temporaryDirectory.appendingPathComponent("\(name).zip")
+        defer { try? FileManager.default.removeItem(at: zip) }
+        let archive = try Archive(url: zip, accessMode: .create)
+        let source = Data("\u{FEFF}---\r\nname: \(name)\r\ndescription: \"Nested ZIP: # fixture\"\r\nmetadata: {openclaw: {requires: {bins: [curl]}, flags: [true, false]}}\r\nunknown: !vendor {retained: \"שלום 😀\"}\r\n---\r\n\r\nInstructions\r\n".utf8)
+        let resource = Data([0, 1, 255, 128, 10, 13])
+        for (path, bytes) in [("SKILL.md", source), ("resources/raw.bin", resource)] {
+            try archive.addEntry(with: path, type: .file, uncompressedSize: UInt32(bytes.count)) { position, size in
+                bytes.subdata(in: position..<(position + size))
+            }
+        }
+        let staged = try SkillImporter.shared.stageAndInspect(fileURL: zip)
+        defer { staged.cleanup() }
+        #expect(staged.parsedMarkdown.document?.originalSource == source)
+        #expect(staged.parsedMarkdown.document?.metadata?["openclaw"]?["requires"]?["bins"]?.sequence?.first?.stringValue == "curl")
+        let store = SkillStore.shared, record = try store.install(stagedPackage: staged)
+        defer { store.deleteCustomSkill(skillID: record.id) }
+        let dir = try #require(record.directoryURL)
+        #expect(try Data(contentsOf: dir.appendingPathComponent("SKILL.md")) == source)
+        #expect(try Data(contentsOf: #require(store.safeResourceURL(for: record.id, relativePath: "resources/raw.bin"))) == resource)
+        #expect(store.safeResourceURL(for: record.id, relativePath: "../escape") == nil)
+        #expect(store.listResources(for: record.id).contains { $0.relativePath == "resources/raw.bin" && $0.byteCount == 6 })
+    }
+
+    @Test("Catalog metadata follows the selected source without shadowed fallback")
+    func catalogMetadataFollowsSelectedSource() throws {
+        let id = try HanlinSkillID(validating: "metadata-precedence")
+        let descriptor = try HanlinSkillDescriptor(id: id, title: "Selected skill", summary: "Description", instructions: .inline("Instructions"))
+        let lower = try SkillDocumentParser.parse("---\nname: metadata-precedence\ndescription: Description\nmetadata: {source: lower}\n---\nInstructions")
+        let higher = try SkillDocumentParser.parse("---\nname: metadata-precedence\ndescription: Description\nmetadata: {source: higher}\n---\nInstructions")
+        let catalog = HanlinSkillCatalog()
+        catalog.register(skill: descriptor, tier: .userCustom, markdownDocument: lower)
+        #expect(catalog.markdownDocument(for: id)?.metadata?["source"]?.stringValue == "lower")
+        catalog.register(skill: descriptor, tier: .userOverride, isExplicitOverride: true)
+        #expect(catalog.resolve(id: id) != nil)
+        #expect(catalog.markdownDocument(for: id) == nil,
+                "A selected source without a document must not inherit shadowed requirements")
+        catalog.register(skill: descriptor, tier: .userOverride, isExplicitOverride: true, markdownDocument: higher)
+        catalog.register(skill: descriptor, tier: .system, markdownDocument: lower)
+        #expect(catalog.markdownDocument(for: id)?.metadata?["source"]?.stringValue == "higher")
     }
 
     @Test("SkillStore manages custom skill lifecycle and state")
