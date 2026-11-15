@@ -104,9 +104,17 @@ class ModelMerge {
             if (a.setter) duplicate(a.setter, b.setter);
         }
         replacements.emplace(cpp, objc);
+        llvm::json::Object rawLinkage;
+        if (const auto* variable = clang::dyn_cast<clang::VarDecl>(cpp->declaration)) {
+            const auto* authoritative = clang::dyn_cast<clang::VarDecl>(objc->declaration);
+            if (!authoritative) throw std::runtime_error("Actual variable declaration kind mismatch");
+            rawLinkage["cppLanguageLinkage"] = static_cast<int64_t>(variable->getLanguageLinkage());
+            rawLinkage["objcLanguageLinkage"] = static_cast<int64_t>(authoritative->getLanguageLinkage());
+        }
         proofs.push_back(llvm::json::Object{{"canonicalKey", entityKey(*objc)},
             {"source", objc->fileName}, {"actualSourceBytesEqual", true},
-            {"actualASTABI", std::move(objcABI)}, {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
+            {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)},
+            {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
             {"availability", availabilityDifference ? "INTRODUCED_ATTR_EXTERN_C_WRAPPER_EQUIVALENT_AT_BOUND_TARGET" : "EXACT"},
             {"objcIntroducedIn", objc->introducedIn.toString()}, {"cppIntroducedIn", cpp->introducedIn.toString()}});
     }

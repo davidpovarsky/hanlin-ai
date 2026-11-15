@@ -7,6 +7,7 @@
 #include <clang/AST/RecordLayout.h>
 #include <clang/AST/DeclCXX.h>
 #include <clang/AST/DeclObjC.h>
+#include <clang/AST/Mangle.h>
 #include <llvm/Support/JSON.h>
 #include <llvm/Support/SourceMgr.h>
 #include <llvm/Support/YAMLParser.h>
@@ -66,20 +67,72 @@ template<class T> inline llvm::json::Value actualValue(T* meta) {
 
 inline llvm::json::Value modelValue(Meta::Meta* meta) { return actualValue(meta); }
 
-inline llvm::json::Object typeABI(clang::ASTContext& context, clang::QualType type) {
+inline llvm::json::Object typeABI(clang::ASTContext& context, clang::QualType type, unsigned depth = 0) {
     if (type.isNull()) throw std::runtime_error("Missing ABI type");
+    if (depth > 64) throw std::runtime_error("Nested by-value ABI proof depth exceeded");
     if (type->isVoidType()) return llvm::json::Object{{"void", true}};
     if (const auto* array = context.getAsIncompleteArrayType(type))
-        return llvm::json::Object{{"incompleteArrayElement", llvm::json::Value(typeABI(context, array->getElementType()))}};
+        return llvm::json::Object{{"incompleteArrayElement", llvm::json::Value(typeABI(context, array->getElementType(), depth + 1))}};
     if (type->isIncompleteType() || type->isFunctionType() || type->isDependentType())
         throw std::runtime_error("Unproven incomplete/function/dependent ABI type");
     const auto info = context.getTypeInfo(type);
     llvm::json::Object result{{"widthBits", static_cast<int64_t>(info.Width)},
         {"alignmentBits", static_cast<int64_t>(info.Align)},
+        {"addressSpace", static_cast<int64_t>(type.getAddressSpace())},
+        {"qualifiersCVR", static_cast<int64_t>(type.getCVRQualifiers())},
         {"signedIntegerOrEnum", type->isSignedIntegerOrEnumerationType()},
         {"unsignedIntegerOrEnum", type->isUnsignedIntegerOrEnumerationType()},
         {"pointer", type->isPointerType() || type->isObjCObjectPointerType() || type->isBlockPointerType()}};
+    if (const auto* array = context.getAsConstantArrayType(type)) {
+        llvm::SmallString<32> count;
+        array->getSize().toString(count, 10, false);
+        result["arrayCount"] = count.str().str();
+        result["arrayElement"] = typeABI(context, array->getElementType(), depth + 1);
+    }
+    if (type->isPointerType() || type->isObjCObjectPointerType() || type->isBlockPointerType()) {
+        const auto pointee = type->getPointeeType();
+        result["pointeeAddressSpace"] = static_cast<int64_t>(pointee.getAddressSpace());
+        result["pointeeQualifiersCVR"] = static_cast<int64_t>(pointee.getCVRQualifiers());
+        if (const auto* function = pointee->getAs<clang::FunctionProtoType>()) {
+            llvm::json::Array signature;
+            signature.push_back(typeABI(context, function->getReturnType(), depth + 1));
+            for (const auto& argument : function->param_types())
+                signature.push_back(typeABI(context, argument, depth + 1));
+            result["callableSignature"] = std::move(signature);
+            result["callableConvention"] = static_cast<int64_t>(function->getCallConv());
+            result["callableVariadic"] = function->isVariadic();
+        }
+    }
+    if (const auto* recordType = type->getAs<clang::RecordType>()) {
+        const auto* record = recordType->getDecl()->getDefinition();
+        if (!record) throw std::runtime_error("Nested by-value record has no actual definition");
+        const auto& layout = context.getASTRecordLayout(record);
+        llvm::json::Array fields;
+        unsigned index = 0;
+        for (const auto* field : record->fields()) {
+            auto nested = typeABI(context, field->getType(), depth + 1);
+            nested["name"] = field->getNameAsString();
+            nested["offsetBits"] = static_cast<int64_t>(layout.getFieldOffset(index++));
+            nested["bitField"] = field->isBitField();
+            if (field->isBitField()) nested["bitWidth"] = static_cast<int64_t>(field->getBitWidthValue());
+            fields.push_back(llvm::json::Value(std::move(nested)));
+        }
+        result["recordFields"] = std::move(fields);
+    }
     return result;
+}
+
+inline llvm::json::Object externalVariableBinding(const clang::VarDecl& variable) {
+    std::unique_ptr<clang::MangleContext> mangler(variable.getASTContext().createMangleContext());
+    std::string symbol;
+    llvm::raw_string_ostream output(symbol);
+    if (mangler->shouldMangleDeclName(&variable)) mangler->mangleName(clang::GlobalDecl(&variable), output);
+    else output << variable.getName();
+    output.flush();
+    if (symbol.empty()) throw std::runtime_error("External variable has no actual Clang symbol name");
+    return llvm::json::Object{{"clangSymbolBeforeTargetPrefix", symbol},
+        {"formalLinkage", static_cast<int64_t>(variable.getFormalLinkage())},
+        {"visibility", static_cast<int64_t>(variable.getVisibility())}};
 }
 
 inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
@@ -125,7 +178,15 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
         result["fields"] = std::move(fields);
     } else if (const auto* variable = clang::dyn_cast<clang::VarDecl>(decl)) {
         result["type"] = llvm::json::Value(typeABI(context, variable->getType()));
-        result["languageLinkage"] = static_cast<int64_t>(variable->getLanguageLinkage());
+        if (variable->hasExternalFormalLinkage()) {
+            // Global C++ variables can have C++ language linkage while Clang
+            // gives them exactly the same external symbol as the C spelling.
+            // Prove the actual target-bound name, formal linkage and visibility;
+            // the raw language linkage remains in the duplicate proof receipt.
+            result["externalBinding"] = externalVariableBinding(*variable);
+        } else {
+            result["languageLinkage"] = static_cast<int64_t>(variable->getLanguageLinkage());
+        }
         result["threadLocal"] = static_cast<int64_t>(variable->getTLSKind());
     } else if (const auto* enumeration = clang::dyn_cast<clang::EnumDecl>(decl)) {
         result["underlyingType"] = llvm::json::Value(typeABI(context, enumeration->getIntegerType()));
