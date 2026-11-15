@@ -150,10 +150,12 @@ def main():
     text = base.replace_once(factory.read_text(), "    case clang::Decl::Kind::Record:",
         "    case clang::Decl::Kind::CXXRecord:\n    case clang::Decl::Kind::Record:")
     text = base.replace_once(text, "          if (tagType->getDecl() == tagDecl) {", '''          if (tagType->getDecl() == tagDecl) {
-            // C++ canonicalizes a later standalone struct typedef to the
-            // definition. That later alias must not rename the original tag.
+            // After a retained source AST completes, C and C++ can both
+            // canonicalize a later standalone typedef to the definition.
+            // Preserve its original tag; an inline typedef still keeps its
+            // original alias because its beginning precedes the record end.
             const auto& sm = tagDecl->getASTContext().getSourceManager();
-            if (tagDecl->getASTContext().getLangOpts().CPlusPlus && !tagDecl->getName().empty() &&
+            if (!tagDecl->getName().empty() &&
                 sm.isBeforeInTranslationUnit(tagDecl->getEndLoc(), nextDecl->getBeginLoc()))
               return tagDecl->getNameAsString();''')
     text = base.replace_once(text, "  if (var.getLexicalDeclContext() !=\n      var.getASTContext().getTranslationUnitDecl()) {",

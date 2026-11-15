@@ -25,6 +25,7 @@ on:
           - modern-dual-compile
           - modern-dual-controls
           - modern-dual-sdk
+          - modern-dual-parity
           - modern-dual-combined
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
@@ -213,8 +214,11 @@ jobs:
         if: inputs.nativescript_metadata_tooling_mode == 'modern-combined'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --runtime-wrapper
       - name: Execute actual cross-grammar model ABI ownership and lifetime controls
-        if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-controls' || inputs.nativescript_metadata_tooling_mode == 'modern-dual-sdk'
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-controls' || inputs.nativescript_metadata_tooling_mode == 'modern-dual-sdk' || inputs.nativescript_metadata_tooling_mode == 'modern-dual-parity'
         run: python3 Scripts/CI/MetadataProvenanceProof/dual_controls.py
+      - name: Verify only31 original models through retained dual grammar
+        if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-parity'
+        run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --dual-grammar --parity-only
       - name: Verify actual retained dual SDK and strict original model preservation
         if: inputs.nativescript_metadata_tooling_mode == 'modern-dual-sdk'
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity --emit-types --dual-grammar
@@ -245,6 +249,7 @@ jobs:
             build/acceptance/nativescript-sdk-probe
             build/acceptance/nativescript-sdk-probe-cpp
             build/acceptance/nativescript-sdk-probe-dual
+            build/acceptance/nativescript-sdk-probe-dual-parity
             build/acceptance/nativescript-metadata
             build/acceptance/metadata-provenance-proof
             build/acceptance/metadata-frontend-inventory

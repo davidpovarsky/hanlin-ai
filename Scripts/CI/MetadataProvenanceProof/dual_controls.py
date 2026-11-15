@@ -56,6 +56,10 @@ struct HanlinDualShared {
   SHARED_FIELD
   double ratio;
 };
+struct HanlinDualLateNamed { int value; };
+typedef struct HanlinDualLateNamed HanlinDualLaterAlias;
+typedef struct HanlinDualInlineNamed { double amount; } HanlinDualInlineAlias;
+int HanlinDualRecordAliases(struct HanlinDualLateNamed *original, HanlinDualLaterAlias *later, HanlinDualInlineAlias *inlineAlias);
 RETURN_TYPE HanlinDualSharedFunction(struct HanlinDualShared *value);
 int HanlinDualTakeSigned(int value);
 unsigned long HanlinDualTakeUnsigned(unsigned long value);
@@ -135,7 +139,7 @@ EXTERNAL_BINDING
         expected_status = "EXECUTED_PASS" if expectation == "pass" else "REJECTED_EXPECTED"
         passed = run.returncode == 0 and actual.get("status") == expected_status
         if expectation == "pass":
-            passed = passed and output.is_file() and actual.get("lifetime", {}).get("bothSourceManagersReadAfterSerialization") is True and actual.get("crossFactoryTypeValidation") is True
+            passed = passed and output.is_file() and actual.get("lifetime", {}).get("bothSourceManagersReadAfterSerialization") is True and actual.get("crossFactoryTypeValidation") is True and actual.get("actualRecordAliasIdentity") is True
             if output.is_file():
                 body = output.read_bytes()
                 passed = passed and all(name.encode() + b"\0" in body for name in ["HanlinDualCOnlyRecord", "HanlinDualCOnlyFunction", "HanlinDualProvider"])

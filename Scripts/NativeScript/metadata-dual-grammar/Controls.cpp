@@ -57,10 +57,16 @@ int main(int argc, const char** argv) {
 
         Meta::StructMeta* shared = nullptr;
         Meta::FunctionMeta* provider = nullptr;
+        Meta::FunctionMeta* recordAliases = nullptr;
+        bool lateNamed = false, inlineAlias = false, lateAliasExported = false;
         bool onlyCRecord = false, onlyCFunction = false;
         for (auto* meta : models) {
             if (meta->name == "HanlinDualShared") shared = &meta->as<Meta::StructMeta>();
             if (meta->name == "HanlinDualProvider") provider = &meta->as<Meta::FunctionMeta>();
+            if (meta->name == "HanlinDualRecordAliases") recordAliases = &meta->as<Meta::FunctionMeta>();
+            lateNamed |= meta->name == "HanlinDualLateNamed";
+            inlineAlias |= meta->name == "HanlinDualInlineAlias";
+            lateAliasExported |= meta->name == "HanlinDualLaterAlias";
             onlyCRecord |= meta->name == "HanlinDualCOnlyRecord";
             onlyCFunction |= meta->name == "HanlinDualCOnlyFunction";
         }
@@ -71,6 +77,17 @@ int main(int argc, const char** argv) {
             !argument->as<Meta::PointerType>().innerType->is(Meta::TypeType::TypeStruct) ||
             argument->as<Meta::PointerType>().innerType->as<Meta::StructType>().structMeta != shared)
             throw std::runtime_error("Cross-context provider type did not reconnect to authoritative actual record");
+        if (!recordAliases || !lateNamed || !inlineAlias || lateAliasExported)
+            throw std::runtime_error("Actual inline/standalone record identity was not preserved");
+        const std::vector<std::string> recordNames{"HanlinDualLateNamed", "HanlinDualLateNamed", "HanlinDualInlineAlias"};
+        for (size_t index = 0; index < recordNames.size(); ++index) {
+            auto* encoding = recordAliases->signature.at(index + 1)->stripNullability();
+            if (!encoding->is(Meta::TypeType::TypePointer)) throw std::runtime_error("Actual record alias parameter is not a pointer");
+            auto* pointed = encoding->as<Meta::PointerType>().innerType;
+            if (!pointed->is(Meta::TypeType::TypeStruct) || pointed->as<Meta::StructType>().structMeta->name != recordNames[index])
+                throw std::runtime_error("Actual record alias signature identity is inconsistent");
+        }
+        receipt["actualRecordAliasIdentity"] = true;
         cpp.producer().hanlinFactory().validate(provider->signature.at(1));
         receipt["crossFactoryTypeValidation"] = true;
         if (hanlinWriterEntries) throw std::runtime_error("An output writer ran before both parses and merge succeeded");

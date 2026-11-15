@@ -261,6 +261,7 @@ def main() -> int:
                         help="Explicit standalone candidate dialect; not production adoption")
     parser.add_argument("--modern-semantic-parity", action="store_true",
                         help="Versioned modern candidate reference check; preserve raw YAML differences separately")
+    parser.add_argument("--parity-only", action="store_true", help="Execute only the31 original module models and invalid-type control, no full SDK generation")
     parser.add_argument("--dual-grammar", action="store_true", help="Bind and execute both retained source ASTs and authenticate publication")
     parser.add_argument("--runtime-wrapper", action="store_true", help="Compile the real provider and exercise the production metadata launcher")
     parser.add_argument("--preprocessing-provenance", action="store_true",
@@ -268,6 +269,8 @@ def main() -> int:
     options = parser.parse_args()
     if options.language != "objective-c" and (options.generator is None or (options.runtime_wrapper and not options.modern_semantic_parity)):
         parser.error("Candidate ObjC++ dialect requires explicit modern generator/model proof")
+    if options.parity_only and (not options.dual_grammar or options.runtime_wrapper or options.emit_types):
+        parser.error("Focused parity requires dual grammar without full SDK types or runtime wrapper")
     if options.dual_grammar and (not options.modern_semantic_parity or options.language != "objective-c++" or options.mode != "textual-public"):
         parser.error("Dual grammar requires the locked modern ObjC++ public-root/model proof")
     if options.preprocessing_provenance and (not options.runtime_wrapper or options.generator is None or options.emit_types):
@@ -306,7 +309,7 @@ def main() -> int:
     version = capture("xcrun", "--sdk", "iphonesimulator", "--show-sdk-version")
     resources = Path(capture("xcrun", "clang", "-print-resource-dir"))
     headers = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
-    output = root / ("build/acceptance/nativescript-sdk-probe-dual" if options.dual_grammar else "build/acceptance/nativescript-sdk-probe-cpp" if options.language == "objective-c++" else "build/acceptance/nativescript-sdk-probe")
+    output = root / ("build/acceptance/nativescript-sdk-probe-dual-parity" if options.parity_only else "build/acceptance/nativescript-sdk-probe-dual" if options.dual_grammar else "build/acceptance/nativescript-sdk-probe-cpp" if options.language == "objective-c++" else "build/acceptance/nativescript-sdk-probe")
     output.mkdir(parents=True, exist_ok=True)
     if options.modern_semantic_parity and options.language == "objective-c++":
         # Retain the actual SDK source needed to diagnose model differences.
@@ -339,7 +342,7 @@ def main() -> int:
     umbrella = output / "probe.h"
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")
-    if options.mode == "textual-public":
+    if options.mode == "textual-public" and not options.parity_only:
         from metadata_public_headers import write_public_umbrella
         write_public_umbrella(sdk, umbrella, [headers / "HanlinNativeServicesBridge.h",
                                              headers / "HanlinNativeScriptCompatibility.h"])
@@ -394,6 +397,8 @@ def main() -> int:
                 del command[resource_index:resource_index + 2]
         elif mode != "textual-ambient":
             command.extend(["-include", str(umbrella)])
+        if options.parity_only:
+            break  # Keep the exact compiler vector for the31-module section below.
         if options.dual_grammar:
             command, dual_context = bind_dual_command(command, root, sdk, umbrella, umbrella, destination)
         control = subprocess.run(["xcrun", "clang", "-x", "objective-c", "-fsyntax-only",
@@ -522,6 +527,13 @@ def main() -> int:
             result["runtimeWrapper"] = {"status": "FAILED", "stage": "actual runtime-wrapper probe",
                                         "reason": type(error).__name__ + ": " + str(error)}
         print(json.dumps({"runtimeWrapper": result["runtimeWrapper"]}), flush=True)
+    if options.parity_only:
+        success = parity_ok and result["invalidDeclarationRejected"]["status"] == "EXECUTED_PASS"
+        result.update({"status": "EXECUTED_PASS" if success else "FAILED", "scope": "FOCUSED_31_MODULES_ONLY",
+            "fullSDKGeneration": "NOT_RUN", "combinedSDKHostExpo": "NOT_RUN", "runtimeAcceptance": "NOT_ESTABLISHED"})
+        (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({"scope": result["scope"], "status": result["status"]}), flush=True)
+        return 0 if success else 1
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     success = result["modes"][options.mode]["status"] == "EXECUTED_PASS"
     if options.generator is not None:
