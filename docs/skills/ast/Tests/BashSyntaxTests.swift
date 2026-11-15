@@ -124,4 +124,21 @@ final class BashSyntaxTests: XCTestCase {
         count = await scanner.cachedReportCount
         XCTAssertEqual(count, 0)
     }
+
+    func testActualPortableHelperJSONDecodesWithoutInventedBashProvenance() throws {
+        for name in ["python-report-host", "typescript-report-host"] {
+            let url = try XCTUnwrap(Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Fixtures"))
+            let report = try JSONDecoder().decode(SkillSyntaxReport.self, from: Data(contentsOf: url))
+            XCTAssertEqual(report.completion, .complete)
+            XCTAssertNotNil(report.sourceSHA256)
+            XCTAssertFalse(report.provenance.engineVersion?.isEmpty ?? true)
+            XCTAssertNil(report.provenance.wrapperRevision)
+            XCTAssertNil(report.provenance.coreRevision)
+            XCTAssertNil(report.provenance.grammarRevision)
+            XCTAssertNil(report.provenance.languageABI)
+            XCTAssertTrue(report.findings.contains { $0.kind == .moduleReference })
+            XCTAssertEqual(try JSONDecoder().decode(SkillSyntaxReport.self,
+                from: JSONEncoder().encode(report)), report)
+        }
+    }
 }

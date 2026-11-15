@@ -28,10 +28,18 @@ public struct SkillSyntaxFinding: Codable, Hashable, Sendable {
 
 public struct SkillSyntaxProvenance: Codable, Hashable, Sendable {
     public let scanner: String
-    public let wrapperRevision: String
-    public let coreRevision: String
-    public let grammarRevision: String
-    public let languageABI: Int
+    public let wrapperRevision: String?
+    public let coreRevision: String?
+    public let grammarRevision: String?
+    public let languageABI: Int?
+    public let engineVersion: String?
+
+    public init(scanner: String, wrapperRevision: String? = nil, coreRevision: String? = nil,
+                grammarRevision: String? = nil, languageABI: Int? = nil, engineVersion: String? = nil) {
+        self.scanner = scanner; self.wrapperRevision = wrapperRevision
+        self.coreRevision = coreRevision; self.grammarRevision = grammarRevision
+        self.languageABI = languageABI; self.engineVersion = engineVersion
+    }
 }
 
 public struct SkillSyntaxReport: Codable, Hashable, Sendable {

@@ -1,0 +1,60 @@
+{
+  "status": "EXECUTED_PASS_PORTABLE_ONLY",
+  "python_methods": 4,
+  "python_common_fixtures": 12,
+  "python314_template": "NOT_RUN",
+  "typescript_methods": 4,
+  "typescript_fixtures": 13,
+  "actual_python": "3.12.5",
+  "actual_node": "v22.17.0",
+  "typescript": {
+    "version": "6.0.3",
+    "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+    "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "license": "Apache-2.0",
+    "bin": {
+      "tsc": "bin/tsc",
+      "tsserver": "bin/tsserver"
+    },
+    "engines": {
+      "node": ">=14.17"
+    }
+  },
+  "installed_compiler_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+  "source_inputs": [
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_python_ast.py",
+      "sha256": "af77783f731e0393db14b24e029953daf36ec86a14e4771a67fd09a4d4ec5216"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_typescript_ast.mjs",
+      "sha256": "4679cf8f6162feb4257b84224708cfb29516b59fe338a346e64967b47fa20e9d"
+    },
+    {
+      "path": "docs/skills/ast/test_python_helper.py",
+      "sha256": "1be5b766fc631cbbc064b77c32d9d5c27400ee44d2b4ed898acbe095fbcc20fd"
+    },
+    {
+      "path": "docs/skills/ast/test_typescript_helper.mjs",
+      "sha256": "c2c02dc445e3b4658f79421d2bf304388fedba2e45b9e9e3228d1024701a9f43"
+    },
+    {
+      "path": "docs/skills/ast/prepare_host_compiler_proof.py",
+      "sha256": "67d01934f371508f9c376aec0d6124d36431ed380858af1f79ed11a9232694ab"
+    },
+    {
+      "path": "docs/skills/ast/Tests/Fixtures/mixed.json",
+      "sha256": "6707718c9dcc11d0274341fc1bc4f9923630b2e8f7a3885fd5a9ab8ea3914014"
+    }
+  ],
+  "test_logs_sha256": {
+    "build/ast-python-host-tests.log": "eb254b314c2b031b36a6c491461211cf524802b17207257f752cb6c93b256f1b",
+    "build/ast-typescript-host-tests.log": "f7279b4a31429e5ef3feb298229b964852e1900615b2f446118b7a9f4a6327a5"
+  },
+  "embedded_python314": "NOT_RUN",
+  "embedded_node_jitless": "NOT_RUN",
+  "iOS_runtime": "NOT_RUN",
+  "product_registration": "NOT_RUN",
+  "readiness_or_dependency_availability": "NOT_RUN",
+  "full_ci_pass": false
+}

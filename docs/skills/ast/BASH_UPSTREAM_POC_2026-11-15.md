@@ -70,7 +70,7 @@ there with exact tags and authenticated SHAs; no product PBX/project/lock is edi
 and device compilation with minimum deployment26.0, preserving original source hashes,
 manifest, resolved lock, upstream audit, toolchain, raw xcresult and phase durations.
 
-Six XCTest methods cover20 Bash fixtures, UTF-8 Hebrew/emoji locations, an importable `.sh`
+The original six XCTest methods cover20 Bash fixtures, UTF-8 Hebrew/emoji locations, an importable `.sh`
 that must neither be read nor executed, finite hostile-input budgets, invalid UTF-8 and
 cancellation, and SHA/file-sensitive bounded caching. Twenty Bash fixtures are not the task's
 full mixed Bash/Python/TS acceptance corpus. iOS runtime execution, embedded Python3.14 AST,
@@ -91,3 +91,10 @@ revisions/URLs and unchanged lock were authenticated from retained raw results. 
 152104bytes, SHA256 `d12bb3394e57cfd812c524dad4bf76c4add442e0566881a3211faf2c2a418e48`.
 Durable record: `evidence/bash-native-43755607608.json`. This proves the isolated native Bash
 slice, not product/readiness, embedded Python/TS or the full mixed-language acceptance contract.
+
+The next tranche makes Bash-specific provenance fields optional for Python/TS reports and
+adds a seventh native test decoding actual host-generated helper JSON. The changed shared
+Swift model/tests/fixture closure requires fresh native tests and simulator/device compilation;
+the original six-case pass above remains evidence only for its own7992 source. The Bash
+algorithm/upstream pins are unchanged. Passive helper details and portable-only execution
+limits are in `PASSIVE_PYTHON_TYPESCRIPT_HELPERS.md`.
