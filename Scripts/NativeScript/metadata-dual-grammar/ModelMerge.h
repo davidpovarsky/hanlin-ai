@@ -114,6 +114,7 @@ class ModelMerge {
         proofs.push_back(llvm::json::Object{{"canonicalKey", entityKey(*objc)},
             {"source", objc->fileName}, {"actualSourceBytesEqual", true},
             {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)},
+            {"cppRawParameterCVR", rawParameterCVR(*cpp)}, {"objcRawParameterCVR", rawParameterCVR(*objc)},
             {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
             {"availability", availabilityDifference ? "INTRODUCED_ATTR_EXTERN_C_WRAPPER_EQUIVALENT_AT_BOUND_TARGET" : "EXACT"},
             {"objcIntroducedIn", objc->introducedIn.toString()}, {"cppIntroducedIn", cpp->introducedIn.toString()}});

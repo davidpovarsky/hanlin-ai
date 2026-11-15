@@ -47,6 +47,11 @@ def main():
 #ifdef __cplusplus
 extern "C" {
 #endif
+#ifdef __cplusplus
+#define HANLIN_PARAM_ALIAS
+#else
+#define HANLIN_PARAM_ALIAS restrict
+#endif
 struct HanlinDualShared {
   SHARED_FIELD
   double ratio;
@@ -55,7 +60,9 @@ RETURN_TYPE HanlinDualSharedFunction(struct HanlinDualShared *value);
 int HanlinDualTakeSigned(int value);
 unsigned long HanlinDualTakeUnsigned(unsigned long value);
 double HanlinDualTakeDouble(double value);
-void HanlinDualTakePointer(void *value);
+void HanlinDualTakePointer(void * HANLIN_PARAM_ALIAS value);
+typedef int (*HanlinDualCallback)(int * HANLIN_PARAM_ALIAS value);
+int HanlinDualUseCallback(HanlinDualCallback value);
 struct HanlinDualShared *HanlinDualReturnShared(void);
 static const int HanlinDualConstant = CONSTANT_VALUE;
 #ifdef __cplusplus
@@ -85,6 +92,7 @@ EXTERNAL_BINDING
         ("equivalent-c-only-and-lifetime", baseline, "pass", ""),
         ("conflicting-layout", core.replace("SHARED_FIELD", "\n#ifdef __cplusplus\nlong long value;\n#else\nint value;\n#endif\n").replace("RETURN_TYPE", "int").replace("CONSTANT_VALUE", "42").replace("OBJC_INVALID", "").replace("CLASS_ATTRIBUTE", "").replace("EXTERNAL_BINDING", ""), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-signature", "#ifdef __cplusplus\ntypedef long long HanlinDualReturn;\n#else\ntypedef int HanlinDualReturn;\n#endif\n" + baseline.replace("int HanlinDualSharedFunction", "HanlinDualReturn HanlinDualSharedFunction"), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
+        ("conflicting-pointee-qualifier", "#ifdef __cplusplus\n#define HANLIN_POINTEE_CONST const\n#else\n#define HANLIN_POINTEE_CONST\n#endif\n" + baseline.replace("int HanlinDualTakeSigned(int value);", "int HanlinDualTakeSigned(HANLIN_POINTEE_CONST int *value);"), "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-constant", "#ifdef __cplusplus\n#define HANLIN_REAL_FIXTURE_CONSTANT 43\n#else\n#define HANLIN_REAL_FIXTURE_CONSTANT 42\n#endif\n" + baseline.replace("HanlinDualConstant = 42", "HanlinDualConstant = HANLIN_REAL_FIXTURE_CONSTANT"), "merge-failure", "Dual-grammar actual API model conflict:"),
         ("conflicting-symbol-binding", "#ifdef __cplusplus\n#define HANLIN_ACTUAL_BINDING \"hanlin_cpp_symbol\"\n#else\n#define HANLIN_ACTUAL_BINDING \"hanlin_c_symbol\"\n#endif\n" + baseline + "\nextern int HanlinDualAlias __asm__(HANLIN_ACTUAL_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-availability", baseline.replace("__attribute__((objc_root_class))", "#ifdef __cplusplus\n__attribute__((availability(ios,introduced=26.0)))\n#else\n__attribute__((availability(ios,introduced=25.0)))\n#endif\n__attribute__((objc_root_class))"), "merge-failure", "Dual-grammar availability conflict:"),
@@ -133,6 +141,11 @@ EXTERNAL_BINDING
                 passed = passed and all(name.encode() + b"\0" in body for name in ["HanlinDualCOnlyRecord", "HanlinDualCOnlyFunction", "HanlinDualProvider"])
             declarations = list(folder.glob("metadata.bin.types/*.d.ts"))
             declaration_text = "\n".join(path.read_text() for path in declarations)
+            sign_names = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualSignNames" in item["canonicalKey"]]
+            passed = passed and len(sign_names) == 1 and sign_names[0].get("rawVariableLinkage") == {
+                "cppLanguageLinkage": 1, "objcLanguageLinkage": 0} and sign_names[0].get("actualASTABI", {}).get("externalBinding", {}).get("clangSymbolBeforeTargetPrefix") == "HanlinDualSignNames"
+            canonical_parameters = [item for item in actual.get("mergeProof", {}).get("duplicateProofs", []) if "HanlinDualTakePointer" in item["canonicalKey"]]
+            passed = passed and len(canonical_parameters) == 1 and canonical_parameters[0].get("cppRawParameterCVR") == [0] and canonical_parameters[0].get("objcRawParameterCVR") == [2] and canonical_parameters[0]["actualASTABI"].get("parameterTypeRule") == "ASTContext.getCanonicalParamType"
             passed = passed and bool(declarations) and all(fragment in declaration_text for fragment in [
                 "HanlinDualDerived extends HanlinDualGeneric<HanlinDualObject>",
                 "HanlinDualProviderObject extends HanlinDualGeneric<HanlinDualObject>",

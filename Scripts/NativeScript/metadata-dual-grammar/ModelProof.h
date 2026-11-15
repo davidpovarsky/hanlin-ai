@@ -97,7 +97,7 @@ inline llvm::json::Object typeABI(clang::ASTContext& context, clang::QualType ty
             llvm::json::Array signature;
             signature.push_back(typeABI(context, function->getReturnType(), depth + 1));
             for (const auto& argument : function->param_types())
-                signature.push_back(typeABI(context, argument, depth + 1));
+                signature.push_back(typeABI(context, context.getCanonicalParamType(argument), depth + 1));
             result["callableSignature"] = std::move(signature);
             result["callableConvention"] = static_cast<int64_t>(function->getCallConv());
             result["callableVariadic"] = function->isVariadic();
@@ -122,6 +122,17 @@ inline llvm::json::Object typeABI(clang::ASTContext& context, clang::QualType ty
     return result;
 }
 
+inline llvm::json::Array rawParameterCVR(const Meta::Meta& meta) {
+    llvm::json::Array qualifiers;
+    const auto append = [&](const auto* declaration) {
+        for (const auto* parameter : declaration->parameters())
+            qualifiers.push_back(static_cast<int64_t>(parameter->getType().getCVRQualifiers()));
+    };
+    if (const auto* function = clang::dyn_cast<clang::FunctionDecl>(meta.declaration)) append(function);
+    else if (const auto* method = clang::dyn_cast<clang::ObjCMethodDecl>(meta.declaration)) append(method);
+    return qualifiers;
+}
+
 inline llvm::json::Object externalVariableBinding(const clang::VarDecl& variable) {
     std::unique_ptr<clang::MangleContext> mangler(variable.getASTContext().createMangleContext());
     std::string symbol;
@@ -144,8 +155,9 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
         llvm::json::Array signature;
         signature.push_back(llvm::json::Value(typeABI(context, function->getReturnType())));
         for (const auto* parameter : function->parameters())
-            signature.push_back(llvm::json::Value(typeABI(context, parameter->getType())));
+            signature.push_back(llvm::json::Value(typeABI(context, context.getCanonicalParamType(parameter->getType()))));
         result["signature"] = std::move(signature);
+        result["parameterTypeRule"] = "ASTContext.getCanonicalParamType";
         result["variadic"] = function->isVariadic();
         result["languageLinkage"] = static_cast<int64_t>(function->getLanguageLinkage());
         if (const auto* prototype = function->getType()->getAs<clang::FunctionProtoType>())
@@ -154,8 +166,9 @@ inline llvm::json::Value declarationABI(const Meta::Meta& meta) {
         llvm::json::Array signature;
         signature.push_back(llvm::json::Value(typeABI(context, method->getReturnType())));
         for (const auto* parameter : method->parameters())
-            signature.push_back(llvm::json::Value(typeABI(context, parameter->getType())));
+            signature.push_back(llvm::json::Value(typeABI(context, context.getCanonicalParamType(parameter->getType()))));
         result["signature"] = std::move(signature);
+        result["parameterTypeRule"] = "ASTContext.getCanonicalParamType";
         result["variadic"] = method->isVariadic();
         result["instance"] = method->isInstanceMethod();
         result["selector"] = method->getSelector().getAsString();

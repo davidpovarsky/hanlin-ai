@@ -2896,7 +2896,10 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "status": "PREPARED_MODERN_DUAL_SDK_NOT_YET_DISPATCHED"
+        "run": 43744051313,
+        "source": "1aa9497e",
+        "mode": "modern-dual-sdk",
+        "status": "RUNNING_NO_PASS_CLAIMED"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3059,7 +3062,31 @@
         },
         "genericDeclarations": "Actual C and CPP declaration owners selected and generated",
         "boundary": "Fixture/compiler/ABI/model/ownership/lifetime/real entry publication only; SDK/Host/Expo/VM/UI/device NOT_RUN"
-      }
+      },
+      "dualSDKAttempts": [
+        {
+          "run": 43742721702,
+          "source": "c2c3a386",
+          "status": "FAILED",
+          "publication": "NONE",
+          "reason": "Exact ordered search-path gate: versioned SDK versus canonical symlink spelling",
+          "xcodeFullSyntaxExit": 0,
+          "invalidTypeAndContextDrift": "EXECUTED_PASS"
+        },
+        {
+          "run": 43743198006,
+          "source": "8899619d",
+          "status": "FAILED",
+          "publication": "NONE",
+          "controls": {
+            "cases": 7,
+            "focusedAndRealTransaction": "EXECUTED_PASS"
+          },
+          "searchContext": "EXACT_MATCH",
+          "reason": "sys_signame raw language linkage CPP1 versus C0; actual size/alignment/type equal",
+          "xcodeFullSyntaxExit": 0
+        }
+      ]
     }
   }
 }
