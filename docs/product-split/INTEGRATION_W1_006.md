@@ -663,3 +663,12 @@ wrapped Latin/Hebrew six/seven-line and scrolling assertions. It is a controlled
 fixture correction, not proof of the production mounted TextKit path or root
 cause. Production editor bytes are unchanged. A separate Composer-only run will
 avoid repeating unchanged A2UI or SDK tests merely for this test-source change.
+
+
+Corrected-chain run 43686130156 stopped BEFORE builds/tests: the integration source
+inventory recursed into the separately cloned Producer folder and attempted to
+look up a producer-only path in the Hanlin Git tree. This is an owned verification
+setup failure, not a producer compiler failure. The inventory now enumerates only
+the frozen Hanlin packages/docs using git ls-tree; producer inputs keep their
+separate exact revision and source inventory. Source/pins/assertions are unchanged.
+Actual producer/core/Session tests and replacement locks remain NOT_RUN/pending.

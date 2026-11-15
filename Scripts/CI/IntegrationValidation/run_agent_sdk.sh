@@ -37,9 +37,9 @@ python3 - "$source_sha" "$scratch" <<'PY' > "$evidence/tested-source-sha256.json
 import hashlib,json,subprocess,sys
 from pathlib import Path
 root=Path(sys.argv[2]);records={}
-for p in sorted(root.rglob('*')):
-    if not p.is_file():continue
-    relative=p.relative_to(root).as_posix();raw=p.read_bytes()
+paths=subprocess.check_output(['git','ls-tree','-r','--name-only',sys.argv[1],'--','Packages/HanlinAgentSDK','Packages/HanlinPlatform','docs/agent-sdk'],text=True).splitlines()
+for relative in paths:
+    raw=(root/relative).read_bytes()
     assert raw==subprocess.check_output(['git','show',f'{sys.argv[1]}:{relative}']),relative
     records[relative]=hashlib.sha256(raw).hexdigest()
 print(json.dumps(records,indent=2))
