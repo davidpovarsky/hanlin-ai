@@ -261,6 +261,7 @@ struct ChatViewBottom: View {
     var availableWorkspaceSize: CGSize = .zero
 
     @Environment(\.modelContext) private var context
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -622,27 +623,7 @@ struct ChatViewBottom: View {
                 }
                 .transition(.move(edge: .top))
 
-                HanlinOrganizerDock(
-                    dockState: popupCoordinator.dockState,
-                    popupCoordinator: popupCoordinator,
-                    temporaryRecord: TemporaryRecord,
-                    isResponding: isResponding,
-                    onTapComposerBackground: {
-                        showTemperatureSlider = false
-                        showTopPSlider = false
-                        showMaxTokensSlider = false
-                        showMaxMessagesNumSlider = false
-                    },
-                    generalDrawerContent: {
-                        generalDrawerView
-                    },
-                    toolsDrawerContent: {
-                        toolsDrawerView
-                    },
-                    composerContent: {
-                        messageInput
-                    }
-                )
+                morphComposer
                 .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
                 .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewLoaded)
@@ -654,6 +635,75 @@ struct ChatViewBottom: View {
     }
 
     // MARK: 输入区域与抽屉视图
+    private var morphExpanded: Binding<Bool> {
+        Binding(
+            get: { popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools },
+            set: { expanded in
+                if expanded {
+                    if popupCoordinator.activePopup != .general && popupCoordinator.activePopup != .tools {
+                        popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
+                    }
+                } else if popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools {
+                    popupCoordinator.closeAll()
+                }
+            }
+        )
+    }
+
+    private var morphPage: Binding<ComposerMorphRoute?> {
+        Binding(
+            get: { popupCoordinator.morphRoute },
+            set: { page in
+                guard page == nil else { return }
+                popupCoordinator.returnFromMorphPage()
+            }
+        )
+    }
+
+    private var morphComposer: some View {
+        VStack(spacing: 6) {
+            composerInputAccessories
+            HanlinMorphComposer(
+                isExpanded: morphExpanded,
+                activePage: morphPage,
+                availableHeight: max(0, popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight),
+                title: { page in
+                    switch page {
+                    case nil: return String(localized: "Action Center")
+                    case .general(.prompts): return String(localized: "Prompt Templates")
+                    case .general(.parameters): return String(localized: "Model Parameters")
+                    case .general(.imageSize): return String(localized: "Image Settings")
+                    case .tools(.none): return String(localized: "Tools, Skills & MCP")
+                    case .tools(.some(.toolsCatalog)): return String(localized: "Tools")
+                    case .tools(.some(.skillsCenter)): return String(localized: "Skills")
+                    case .tools(.some(.mcpServers)): return String(localized: "MCP Servers")
+                    case .tools(.some(.runtimeCenter)): return String(localized: "Runtimes")
+                    }
+                },
+                subtitle: { _ in String(localized: "Choose a capability and continue this conversation") },
+                backIdentifier: { page in
+                    switch page {
+                    case .general: return "hanlin-general-subpage-back"
+                    case .tools: return "hanlin-tools-subpage-back"
+                    }
+                },
+                onOpen: { isInputActive.wrappedValue = false },
+                isEnabled: !isResponding,
+                home: { generalDrawerView(morphHomeOnly: true) },
+                detail: { route in
+                    switch route {
+                    case .general: generalDrawerView()
+                    case .tools: toolsDrawerView
+                    }
+                },
+                input: { inputFieldSection }
+            )
+        }
+        .onChange(of: popupCoordinator.dockState.mode) { _, mode in
+            popupCoordinator.syncFromDockModeChange(mode)
+        }
+    }
+
     private func syncDockGeometryAndContext() {
         popupCoordinator.dockState.handleContextKeyChange(effectiveDockContextKey)
         popupCoordinator.dockState.measuredInputHeight = textEditorHeight
@@ -677,7 +727,7 @@ struct ChatViewBottom: View {
         return overhead
     }
 
-    private var generalDrawerView: some View {
+    private func generalDrawerView(morphHomeOnly: Bool = false) -> some View {
         HanlinComposerGeneralActionsView(
             coordinator: popupCoordinator,
             capability: currentModelSnapshot,
@@ -719,7 +769,9 @@ struct ChatViewBottom: View {
             },
             onExpandEditor: { inputExpanded = true },
             onSendObserve: { onSendObserve() },
-            embeddedInDrawer: true
+            embeddedInDrawer: true,
+            embeddedInMorph: true,
+            morphHomeOnly: morphHomeOnly
         )
     }
 
@@ -733,27 +785,27 @@ struct ChatViewBottom: View {
             onMCPSelectionChanged: { count in
                 selectedMCPCountForChat = count
             },
-            embeddedInDrawer: true
+            embeddedInDrawer: true,
+            embeddedInMorph: true
         )
     }
 
-    private var messageInput: some View {
+    // Keep live attachment, prompt, suggestion and mode views together so a
+    // downstream composer host can position them without copying their state.
+    private var composerInputAccessories: some View {
         VStack(spacing: 6) {
-            VStack(spacing: 6) {
-                imagePreviewSection
-                documentPreviewSection
-                linkPreviewSection
-                promptSection
-                modelSuggestionSection
-                activeModeChipsSection
-            }
-            .onGeometryChange(for: CGFloat.self) { proxy in
-                proxy.size.height
-            } action: { newHeight in
-                measuredAttachmentPreviewHeight = newHeight
-                popupCoordinator.dockState.attachmentOverheadHeight = max(newHeight, attachmentOverheadHeightEstimate)
-            }
-            inputFieldSection
+            imagePreviewSection
+            documentPreviewSection
+            linkPreviewSection
+            promptSection
+            modelSuggestionSection
+            activeModeChipsSection
+        }
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.height
+        } action: { newHeight in
+            measuredAttachmentPreviewHeight = newHeight
+            popupCoordinator.dockState.attachmentOverheadHeight = max(newHeight, attachmentOverheadHeightEstimate)
         }
     }
 
@@ -1121,6 +1173,7 @@ struct ChatViewBottom: View {
     private var inputFieldSection: some View {
         HStack {
             VStack(spacing: 6) {
+                composerResizeHandle
                 HStack(alignment: .bottom, spacing: 6) {
                     NativeMultilineTextEditor(
                         text: $message,
@@ -1204,12 +1257,8 @@ struct ChatViewBottom: View {
 
                 composerBottomToolbar
             }
-            .background(.background.opacity(0.6))
-            .cornerRadius(20)
             .animation(.spring(response: 0.45, dampingFraction: 0.78), value: popupCoordinator.activePopup)
         }
-        .padding(.horizontal, 12)
-        .padding(.top, 10)
         .sheet(isPresented: $inputExpanded) {
             BottomSheetView(message: $message, isExpanded: $inputExpanded)
                 .presentationDetents([.medium, .large])
@@ -1267,10 +1316,35 @@ struct ChatViewBottom: View {
         }
     }
 
+    private var composerResizeHandle: some View {
+        Capsule()
+            .fill(Color.primary.opacity(0.16))
+            .frame(width: 32, height: 4)
+            .frame(width: 82, height: 20)
+            .contentShape(Rectangle())
+            .highPriorityGesture(
+                DragGesture(minimumDistance: 7, coordinateSpace: .global)
+                    .onChanged { popupCoordinator.dockState.handleComposerResizeChanged(translationHeight: $0.translation.height) }
+                    .onEnded { _ in
+                        withAnimation(reduceMotion ? nil : .spring(response: 0.38, dampingFraction: 0.88)) {
+                            popupCoordinator.dockState.handleComposerResizeEnded()
+                        }
+                    }
+            )
+            .accessibilityElement()
+            .accessibilityLabel(String(localized: "Text box size handle"))
+            .accessibilityHint(String(localized: "Swipe up or down to adjust the message input height."))
+            .accessibilityIdentifier("hanlin-composer-resize-handle")
+            .accessibilityAdjustableAction { direction in
+                withAnimation(reduceMotion ? nil : .spring(response: 0.38, dampingFraction: 0.88)) {
+                    popupCoordinator.dockState.adjustComposerHeightByAccessibility(increment: direction == .increment)
+                }
+            }
+    }
+
     // MARK: - 双入口底部控制栏（+ 通用菜单 / 工具直达 / 紧凑模型胶囊 / 麦克风 / 发送）
     private var composerBottomToolbar: some View {
         let accent: Color = TemporaryRecord ? .primary : .hlBluefont
-        let isGeneralOpen = popupCoordinator.dockState.mode == .general
         let isToolsOpen = popupCoordinator.dockState.mode == .tools
         let isModelOpen = popupCoordinator.activePopup == .model
         let isToolsActive = ifToolUse && currentModelSnapshot.supportsToolUse
@@ -1281,27 +1355,6 @@ struct ChatViewBottom: View {
         )
 
         return HStack(spacing: 8) {
-            // Entrypoint 1: General `+` button (restored classic `plus.circle`, drives integrated dock drawer)
-            Button {
-                isFeedBack.toggle()
-                popupCoordinator.toggle(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
-            } label: {
-                Image(systemName: "plus.circle")
-                    .font(.system(size: size_20 + 6, weight: .regular))
-                    .foregroundStyle(
-                        isResponding
-                        ? Color.gray
-                        : (isGeneralOpen ? Color.hlRed : accent)
-                    )
-                    .rotationEffect(.degrees(isGeneralOpen ? 45 : 0))
-                    .frame(width: size_32, height: size_32)
-                    .animation(.spring(response: 0.35, dampingFraction: 0.78), value: isGeneralOpen)
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("hanlin-composer-general-menu")
-            .disabled(isResponding)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
-
             // Entrypoint 2: Direct 1-Tap Tools / Skills / MCP button (restored classic `hammer.circle`, drives integrated dock drawer)
             Button {
                 isFeedBack.toggle()
