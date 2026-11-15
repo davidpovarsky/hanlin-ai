@@ -10,12 +10,12 @@ static void writeControlReceipt(const std::string& path, const llvm::json::Objec
     std::error_code error;
     llvm::raw_fd_ostream stream(path, error, llvm::sys::fs::CD_CreateNew);
     if (error) throw std::runtime_error("Control receipt path is not exclusively owned");
-    stream << llvm::formatv("{0:2}", llvm::json::Value(receipt)) << "\n";
+    stream << llvm::formatv("{0:2}", llvm::json::Value(llvm::json::Object(receipt))) << "\n";
 }
 
 int main(int argc, const char** argv) {
     if (argc != 2) return 2;
-    const auto parsed = llvm::json::parse(hanlinRead(argv[1]));
+    auto parsed = llvm::json::parse(hanlinRead(argv[1]));
     if (!parsed || !parsed->getAsObject()) return 2;
     const auto& config = *parsed->getAsObject();
     const std::string root = hanlinString(config, "root");
@@ -30,7 +30,7 @@ int main(int argc, const char** argv) {
     std::string stage = "parse";
     try {
         std::vector<std::string> common{"-target", hanlinString(config, "target"), "-isysroot", sdk,
-            "-resource-dir", resource, "-fno-objc-arc", "-fno-modules", "-fno-implicit-module-maps",
+            "-resource-dir", resource, "-fno-objc-arc", "-fno-modules", "-fmodule-maps", "-fno-implicit-module-maps",
             "-D__NATIVESCRIPT_METADATA_GENERATOR=1", "-I" + root,
             "-fmodule-map-file=" + root + "/module.modulemap",
             "-isystem", sdk + "/usr/include/c++/v1", "-isystem", resource + "/include",
@@ -39,20 +39,23 @@ int main(int argc, const char** argv) {
         cppArguments.insert(cppArguments.end(), {"-x", "objective-c++", "-std=gnu++20", "-Xclang", "-fno-cxx-modules"});
         auto objcArguments = common;
         objcArguments.insert(objcArguments.end(), {"-x", "objective-c", "-std=gnu17"});
-        Meta::ModulesBlacklist blacklist("", "");
+        std::string whitelistFile, blacklistFile;
+        Meta::ModulesBlacklist blacklist(whitelistFile, blacklistFile);
         HanlinDual::ActualUnit cpp(hanlinRead(root + "/full.h"), cppArguments, blacklist, llvm::vfs::getRealFileSystem());
-        receipt["cpp"] = cpp.receipt;
+        receipt["cpp"] = llvm::json::Object(cpp.receipt);
         HanlinDual::ActualUnit objc(hanlinRead(root + "/objc.h"), objcArguments, blacklist, llvm::vfs::getRealFileSystem());
-        receipt["objc"] = objc.receipt;
+        receipt["objc"] = llvm::json::Object(objc.receipt);
+        cpp.producer().hanlinFactory().hanlinSetPeer(objc.producer().hanlinFactory());
+        objc.producer().hanlinFactory().hanlinSetPeer(cpp.producer().hanlinFactory());
         if (HanlinDual::searchDirectories(cpp.unit()) != HanlinDual::searchDirectories(objc.unit()))
             throw std::runtime_error("Actual include search priority/characteristics differ");
         stage = "merge";
         HanlinDual::ModelMerge merge;
         auto models = merge.merge(cpp.models(), objc.models());
-        receipt["duplicateProofs"] = llvm::json::Value(merge.duplicateProofs());
+        receipt["duplicateProofs"] = llvm::json::Value(llvm::json::Array(merge.duplicateProofs()));
         HanlinDual::ModuleOwners owners(objc, cpp);
         owners.apply(merge.retainedMetas());
-        receipt["moduleOwnerProofs"] = llvm::json::Value(owners.ownerProofs());
+        receipt["moduleOwnerProofs"] = llvm::json::Value(llvm::json::Array(owners.ownerProofs()));
         size_t cppModels = 0, objcModels = 0;
         for (auto* meta : merge.retainedMetas()) {
             if (!meta->declaration) throw std::runtime_error("Retained model has no real AST declaration");
@@ -88,6 +91,8 @@ int main(int argc, const char** argv) {
             !argument->as<Meta::PointerType>().innerType->is(Meta::TypeType::TypeStruct) ||
             argument->as<Meta::PointerType>().innerType->as<Meta::StructType>().structMeta != shared)
             throw std::runtime_error("Cross-context provider type did not reconnect to authoritative actual record");
+        cpp.producer().hanlinFactory().validate(provider->signature.at(1));
+        receipt["crossFactoryTypeValidation"] = true;
         cpp.producer().hanlinFactory().getTypeFactory().resolveCachedBridgedInterfaceTypes(interfaces);
         objc.producer().hanlinFactory().getTypeFactory().resolveCachedBridgedInterfaceTypes(interfaces);
         Meta::ResolveGlobalNamesCollisionsFilter::MetasByModules modules;

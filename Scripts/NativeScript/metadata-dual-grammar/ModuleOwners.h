@@ -32,8 +32,7 @@ class ModuleOwners {
         if (found == canonical.end()) canonical.emplace(name, Owner{module, &source});
         else if (authority && found->second.module != module)
             throw std::runtime_error("Multiple actual module owners in the authoritative AST");
-        for (auto child = module->submodule_begin(); child != module->submodule_end(); ++child)
-            collect(*child, source, authority);
+        for (auto* child : module->submodules()) collect(child, source, authority);
     }
 
     void collect(ActualUnit& unit, bool authority) {

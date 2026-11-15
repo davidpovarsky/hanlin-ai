@@ -27,3 +27,19 @@ def apply(text, replace_once):
     consumer = replace_once(consumer, "private:\n    clang::HeaderSearch& _headerSearch;",
         "private:\n    bool _hanlinCollectOnly = false;\n    std::list<Meta::Meta*>* _hanlinMetas = nullptr;\n    clang::HeaderSearch& _headerSearch;")
     return text[:first] + consumer + text[last:]
+
+
+def patch_factories(header, source, replace_once):
+    header = replace_once(header, "    void validate(Meta* meta);", """    void validate(Meta* meta);
+    void hanlinSetPeer(MetaFactory& peer) { _hanlinPeer = &peer; }
+    bool hanlinOwns(const Meta* meta) const { return _metaToDecl.count(meta) != 0; }""")
+    header = replace_once(header, "    MetaToDeclMap _metaToDecl;",
+        "    MetaToDeclMap _metaToDecl;\n    MetaFactory* _hanlinPeer = nullptr;")
+    source = replace_once(source, "  if (declIt == this->_metaToDecl.end()) {", """  if (declIt == this->_metaToDecl.end()) {
+    // Delegate only to the retained factory that actually created this model.
+    // Never import a cache entry or synthesize a declaration in the other AST.
+    if (_hanlinPeer && _hanlinPeer->hanlinOwns(meta)) {
+      _hanlinPeer->validate(meta);
+      return;
+    }""")
+    return header, source

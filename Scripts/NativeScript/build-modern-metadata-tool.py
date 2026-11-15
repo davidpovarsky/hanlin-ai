@@ -175,6 +175,9 @@ def main():
       return previous->getNameAsString();
   }
   // The decl has no typedef name, so we return its name.''')
+    factory_header = generator / "src/Meta/MetaFactory.h"
+    header_text, text = support_patch.patch_factories(factory_header.read_text(), text, base.replace_once)
+    factory_header.write_text(header_text)
     factory.write_text(text)
     type_factory = generator / "src/Meta/TypeFactory.cpp"
     text = base.replace_once(type_factory.read_text(),
