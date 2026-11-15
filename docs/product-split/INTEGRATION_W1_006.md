@@ -2,6 +2,43 @@
 
 ## Current evidence checkpoint — 2026-11-15
 
+- **Latest native hosted diagnostic — terminal preflight block:**the separately
+  authorized ONE attempt [43707216442](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43707216442)
+  completed FAILURE at reviewed workflow/harness
+  `e7789af1aa09145017ad3727f2434be790841737`. Frozen component source is
+  `e8ccd81452843609285a0cd7e017a759bda6a6ef`, including owner instrumentation
+  `20980c9448f0a5d78eefcaec38da6e92364de37d`. The native project was staged and
+  both accepted source-packet checks passed on the Mac; these are Python source
+  checks, **not Apple compilation or test passes**. Installed Xcode27.2/27B52,
+  Swift6.4.2 and Simulator SDK27.2 were confirmed through per-process
+  `DEVELOPER_DIR`. Initial inventory confirmed available prior iOS27.0/24A434
+  arm64 and iPhone18Pro. Fresh owned UUID
+  `1913F17C-9126-446A-9C56-BFD0CE4E23F1` was absent from the initial device list;
+  create/boot/bootstatus returned0. However, the post-boot `xcrun simctl list -j`
+  timed out with124 at30.395s/30s cap, with0B stdout and0B stderr. No post-boot
+  inventory was obtained: BOTH native-target build-settings and explicit-SDK
+  owned-UUID eligibility queries were **NOT_REACHED**. Neither positive guard
+  was established. Build/test commands0; authored observations0/all12 NOT_RUN;
+  no xcresult, unexpected case observations, connection evidence or signed trace.
+  This does not establish native-project/SDK ineligibility, a resolver or geometry
+  cause, or twelve test failures. Only the owned phone was shut down, exit0.
+  All19 other jobs were SKIPPED; always-retention succeeded. Watcher86371 is
+  closed; this attempt's authorization is consumed. No retry, second phone,
+  timeout extension, bypass or new query is authorized.
+  The harness differs from prior SwiftPM validation: real `AI_Hanlin` app/module
+  plus hosted `AI_HanlinTests` unit bundle, zero Swift packages, new blank host
+  scene and explicit iOS27 minimum rather than the old package's iOS26 minimum.
+  The same eight whole production files/two whole owner tests, all12 reference-file
+  hashes and12 method identities remain frozen; no math/assertion/probe change or runtime-equivalence
+  claim is made. `full_app_acceptance` remains FALSE.
+  Retained [artifact14159291565](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43707216442/artifacts/14159291565),
+  `composer-native-host-43707216442`, is54,744B. Tomer's RAM audit independently
+  recomputed the **full ZIP SHA256**
+  `263a95f40e2cf3de77f1dd683b45d9cc5997cdcb39320dbbdcf72d179aabd824`
+  and verified all40 ZIP entry CRCs, all12 original reference hashes against e8,
+  all10 whole canonical source files in the retained tar, the blank host/PBX/scheme
+  hashes and14 harness/workflow hashes against e778. This is Tomer's artifact
+  audit, not a substitute for independent root QA or Apple/device acceptance.
 - **SDK fixture chain:**10 new SDK cases PASS at6e8dd11d/run43688388938, with
   target-specific authenticated reuse of48 producer+20 core and iOS compile at
   e233bffc/run43686294717. Both exact e7bf manifest pins and six actual Apple locks
@@ -31,7 +68,7 @@
   JSON is exactly an empty array. Target names and all four requested build-setting
   values remain missing; metadata status BLOCKED. No test/build/device action,
   default-query rerun or extension of the exhausted test authorization occurred.
-- **Latest eligibility-gated diagnostic:**43700529436/0256ceb2 created and booted
+- **Prior SwiftPM eligibility-gated diagnostic:**43700529436/0256ceb2 created and booted
   the exact owned iPhone18Pro/27.0/24A434, but its ONE SDK-explicit discovery query
   timed out at Resolve Package Graph (120s/status124). Eligibility was never
   confirmed; NO test command or xcresult. All12 authored obligations NOT_RUN,
