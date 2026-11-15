@@ -2896,9 +2896,9 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "FULL_SDK_GENERATION_ONLY",
+        "scope": "AFFECTED_13_CONTROLS_31_MODELS_EXPORT_COUNTEREXAMPLES_AND_ACTUAL_SDK_SLICE",
         "status": "PENDING_DISPATCH",
-        "controlsAnd31Gate": "NOT_RUN in focused next scope; prior evidence requires explicit unchanged-input verification"
+        "fullSDK": "NOT_RUN until affected slice passes"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3108,6 +3108,43 @@
         "fullSDKGeneration": "NOT_RUN",
         "combinedSDKHostExpo": "NOT_RUN",
         "strictGeneratedTypecheck": "NOT_RUN"
+      },
+      "sdkExportAuthorityContract3": {
+        "status": "IMPLEMENTED_CANDIDATE_NOT_ACCEPTED",
+        "fullSDKFailure": {
+          "run": 43753113119,
+          "sourceSHA": "8131a767",
+          "reason": "Actual C++ vs C external binding differs for same physical AVFoundation declaration",
+          "publication": "NO_METADATA"
+        },
+        "compilerLinkProof": {
+          "run": 43753808737,
+          "sourceSHA": "860e6678",
+          "status": "EXECUTED_PASS_WITH_EXPECTED_CPP_LINK_REJECTIONS",
+          "objectCompilesPassed": 4,
+          "CLinksPassed": 2,
+          "CPPLinksRejected": 2,
+          "verifiedManifestFiles": 53,
+          "mismatches": 0,
+          "resultSHA256": "57ffd6b707ccb6e682ea43452d4906dee43f49175ea1dceaae4b93108f8121bf"
+        },
+        "exportPrototype": {
+          "run": 43754812889,
+          "sourceSHA": "2cacebfa",
+          "status": "EXECUTED_PASS",
+          "cases": 6,
+          "completeTargetReexportLibraries": 5,
+          "physicalStubs": 3,
+          "verifiedManifestFiles": 6,
+          "mismatches": 0,
+          "resultSHA256": "54062c771ff42ab3729d04a5313f45f300d49b727e574a8f3754ac95cca908e5"
+        },
+        "candidateScope": "Exact pinned public SDK header and3 malformed C functions; actual full model/layout/availability equality +4 compiler/link proofs each + complete exact-target LLVM TextAPI export closure + original A route ledger",
+        "bindingEquivalent": false,
+        "disposition": "RESOLVED_TO_EXPORTED_C_AUTHORITY",
+        "publicModelOwner": "AVFoundation",
+        "integrated13Controls31ModelsSlice": "NOT_RUN",
+        "runtimeAcceptance": "NOT_ESTABLISHED"
       }
     }
   }

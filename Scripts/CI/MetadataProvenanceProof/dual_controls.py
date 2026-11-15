@@ -41,7 +41,7 @@ def main():
         "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(),
         "sdk": sdk, "resourceDirectory": str(resource), "binarySHA256": sha(binary),
         "generatorSHA256": provenance["generatorSHA256"], "classifierLibrarySHA256": sha(library),
-        "mergePolicyVersion": 2, "runtimeAcceptance": "NOT_ESTABLISHED"})
+        "mergePolicyVersion": 3, "runtimeAcceptance": "NOT_ESTABLISHED"})
 
     core = """#pragma once
 #ifdef __cplusplus
@@ -126,6 +126,7 @@ HANLIN_DECL_EXPORT
         ("conflicting-constant", "#ifdef __cplusplus\n#define HANLIN_REAL_FIXTURE_CONSTANT 43\n#else\n#define HANLIN_REAL_FIXTURE_CONSTANT 42\n#endif\n" + baseline.replace("HanlinDualConstant = 42", "HanlinDualConstant = HANLIN_REAL_FIXTURE_CONSTANT"), "merge-failure", "Dual-grammar actual API model conflict:"),
         ("conflicting-symbol-binding", "#ifdef __cplusplus\n#define HANLIN_ACTUAL_BINDING \"hanlin_cpp_symbol\"\n#else\n#define HANLIN_ACTUAL_BINDING \"hanlin_c_symbol\"\n#endif\n" + baseline + "\nextern int HanlinDualAlias __asm__(HANLIN_ACTUAL_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("conflicting-function-symbol", "#ifdef __cplusplus\n#define HANLIN_FUNCTION_BINDING \"hanlin_cpp_function\"\n#else\n#define HANLIN_FUNCTION_BINDING \"hanlin_c_function\"\n#endif\n" + baseline + "\nint HanlinDualFunctionAlias(int value) __asm__(HANLIN_FUNCTION_BINDING);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
+        ("nonSDK-unexported-mangling", baseline + "\nint HanlinDualNonSDKMangled(int value);\n", "merge-failure", "Dual-grammar actual AST ABI conflict:"),
         ("opaque-by-value-rejected", baseline + "\n#ifdef __cplusplus\nextern \"C\" {\n#endif\nvoid HanlinDualOpaqueByValue(struct HanlinDualOpaque value);\n#ifdef __cplusplus\n}\n#endif\n", "merge-failure", "Unproven actual CPP ABI:"),
         ("conflicting-availability", baseline.replace("__attribute__((objc_root_class))", "#ifdef __cplusplus\n__attribute__((availability(ios,introduced=26.0)))\n#else\n__attribute__((availability(ios,introduced=25.0)))\n#endif\n__attribute__((objc_root_class))", 1), "merge-failure", "Dual-grammar availability conflict:"),
         ("missing-cpp-availability-before-target", baseline.replace("availability(ios,introduced=2.0)", "availability(ios,introduced=28.0)"), "merge-failure", "Dual-grammar availability conflict:"),

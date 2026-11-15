@@ -49,6 +49,13 @@ int main(int argc, const char** argv) {
         stage = "merge";
         auto& models = pipeline.merge();
         receipt["mergeProof"] = pipeline.proofReceipt();
+        const auto* coverage = receipt.getObject("mergeProof")->getObject("originalAModelCoverage");
+        if (!coverage || coverage->getString("status") != "COMPLETE" ||
+            coverage->getInteger("unmappedModels") != 0 ||
+            coverage->getInteger("originalGraphModels") !=
+                coverage->getInteger("retainedOriginalModels").value_or(-1) + coverage->getInteger("mappedWithProof").value_or(-1) ||
+            !coverage->getInteger("retainedOriginalModels").value_or(0) || !coverage->getInteger("mappedWithProof").value_or(0))
+            throw std::runtime_error("Every actual original-A graph model was not explicitly preserved or proven mapped");
         const auto graphLifetime = pipeline.lifetime();
         if (!graphLifetime.getInteger("cppOwnedModels").value_or(0) ||
             !graphLifetime.getInteger("objcOwnedModels").value_or(0))

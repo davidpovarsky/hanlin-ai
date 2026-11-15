@@ -4,6 +4,20 @@
 
 ### Modern frontend candidate contract version 1
 
+#### Authorized SDK export authority contract version3 (candidate)
+
+See [the exact source/export/link ADR](METADATA_SDK_EXPORT_AUTHORITY_ADR_2026-11-15.md).
+Full SDK43753113119 failed on a real SDK header's missing C linkage annotation;
+Apple and locked compilers agree. Focused43753808737 proves two ObjC links pass
+and two ObjC++ links fail, with exact target public-framework reexport evidence.
+The manager authorized the narrow authority rule; native export prototype
+43754812889 passes6 positive/adversarial cases. The candidate now shares that
+LLVM TextAPI closure implementation, requires actual compiler/link evidence,
+preserves every original-A model through an explicit route ledger, and retains
+the raw differing bindings as RESOLVED_TO_EXPORTED_C_AUTHORITY (never binding
+ equivalence). Integrated13-case/31-model/actual SDK slice validation is pending.
+No new fullSDK/combined/VM acceptance or consumer activation is claimed.
+
 #### Authorized dual-grammar contract version 2 (candidate)
 
 The single manager approved two real ASTs in the same locked modern frontend.

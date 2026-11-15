@@ -597,7 +597,7 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
                 raise RuntimeError("Actual modern classifier and generator compiler identities differ")
             (module_root / "metadata-frontend.json").write_text(json.dumps({
                 "status": "CANDIDATE_NOT_ACCEPTED", "frontend": frontend_mode,
-                "mergePolicyVersion": 2 if dual else None,
+                "mergePolicyVersion": 3 if dual else None,
                 "rootPolicy": "ALL_PUBLIC_INPUTS_RETAINED", "includeOnlyExemptions": 0,
                 "compiler": metadata_compiler["compiler"],
                 "generatorSHA256": hashlib.sha256(tool.read_bytes()).hexdigest(),
@@ -643,7 +643,8 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
                         "metadata_dual_grammar.py", "build-metadata-tool.py", "build-modern-metadata-tool.py", "metadata-frontend-lock.json"]]]
                 for record in [*inventory, *canonical_inventory]:
                     bound.extend(Path(record["path"]) / relative for relative in record.get("inputSHA256", {}))
-                create_request(dual_request, umbrella, dual_root, metadata_compiler, Path(required_env("SDKROOT")), bound)
+                create_request(dual_request, umbrella, dual_root, metadata_compiler, Path(required_env("SDKROOT")), bound,
+                    sdk_export_authority=environment.get("HANLIN_METADATA_SDK_EXPORT_AUTHORITY") == "1", tool=tool)
     finally:
         for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay, alias_validation,
                      alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",

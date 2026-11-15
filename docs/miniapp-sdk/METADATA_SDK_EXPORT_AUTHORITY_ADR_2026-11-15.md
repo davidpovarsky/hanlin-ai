@@ -1,7 +1,7 @@
 # Candidate SDK export authority for a missing C linkage annotation
 
-Status: manager-authorized narrow contract3 candidate implementation; current
-producer still enforces fatal contract2. No runtime,
+Status: manager-authorized narrow contract3 candidate implementation; candidate
+producer implements contract3; integrated Apple validation is pending. No runtime,
 full SDK, combined SDK/Host/Expo or consumer acceptance is established.
 
 ## Observed failure and actual evidence
@@ -64,7 +64,7 @@ The original serialization format and production default remain unchanged.
 
 Native export prototype run43754381698 failed to compile because its isolated
 host invocation lacked the C++ SDK search path. No counterexample executed.
-A focused rerun corrects the host SDK/compiler invocation. The prototype It uses LLVM20's original
+A focused rerun corrects the host SDK/compiler invocation. The prototype uses LLVM20's original
 TextAPI parser against actual immutable SDK stubs and then derives in-memory
 counterexamples: both genuine symbols exported, two C export owners, missing C,
 wrong target and an unresolved reexport. No SDK file is mutated. This prototype
@@ -76,3 +76,23 @@ selection contract and bind the compiler/link/export evidence. Then rerun only
 affected actual controls/model gates and the failed full SDK operation. Strict
 DTS, all Host/Expo export/selector coverage and actual VM consumption remain
 separate obligations. Unknown dependency impact requires a rerun.
+
+Actual focused rerun43754812889/2cacebfa passes all6 native export cases. It
+resolves the complete target closure across5 reachable libraries and3 physical
+SDK stubs (AVFoundation, AVFAudio, AVRouting), selecting only the C export.
+All6 artifact-manifest files hash-verify with0 mismatches; result SHA256:
+`54062c771ff42ab3729d04a5313f45f300d49b727e574a8f3754ac95cca908e5`.
+This test used the original LLVM20 TextAPI reader. The same implementation is
+now shared with the candidate producer; the integrated affected slice must
+recheck it after that extraction.
+
+Contract3 candidate scope is explicitly pinned to the actual header SHA and its
+three malformed C function declarations. Each requested authority operation
+requires four real compiler/grammar AST/object/link controls per declaration,
+with immutable compiler/resource/source dependencies. Exact unchanged evidence
+may be REUSED_VERIFIED_STATIC_BINDING_PROOF only after full fixture/helper,
+argv, normalized target and dependency verification; execution is not claimed.
+Every raw C/CPP binding stays in the receipt. All model/ABI/availability checks
+run before choosing export authority. Unsupported declarations stay fatal.
+The public model/module remains AVFoundation. The reexport implementation name
+is evidence only; no private framework dependency, module or API is introduced.

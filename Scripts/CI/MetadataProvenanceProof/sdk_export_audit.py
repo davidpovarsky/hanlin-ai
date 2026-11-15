@@ -8,7 +8,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
 OUTPUT = ROOT / "build/acceptance/metadata-sdk-export-audit"
-REFERENCE = ROOT / "build/modern-compile-reference/acceptance/metadata-sdk-linkage-controls"
+REFERENCE = ROOT / "build/sdk-export-compile-reference/acceptance/metadata-sdk-linkage-controls"
 
 
 def sha(path):

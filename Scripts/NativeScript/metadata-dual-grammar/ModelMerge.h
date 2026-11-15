@@ -2,6 +2,7 @@
 
 #include "ModelGraph.h"
 #include "ModelProof.h"
+#include "SDKExportAuthority.h"
 #include <clang/Basic/TargetInfo.h>
 #include <clang/AST/Attr.h>
 #include <algorithm>
@@ -14,6 +15,9 @@ class ModelMerge {
     std::set<std::pair<Meta::Meta*, Meta::Meta*>> compared;
     llvm::json::Array proofs;
     std::set<Meta::Meta*> retained;
+    llvm::json::Object originalACoverage;
+    SDKExportAuthority* exportAuthority = nullptr;
+
 
     static Meta::Version targetVersion(const clang::ASTContext& context) {
         auto version = context.getTargetInfo().getTriple().getOSVersion();
@@ -101,10 +105,19 @@ class ModelMerge {
         catch (const std::exception& error) { throw std::runtime_error("Unproven actual CPP ABI: " + cpp->identificationString() + "\n" + error.what()); }
         try { objcABI = declarationABI(*objc); }
         catch (const std::exception& error) { throw std::runtime_error("Unproven actual ObjC ABI: " + objc->identificationString() + "\n" + error.what()); }
-        if (cppABI != objcABI)
+        const auto failABI = [&]() {
             throw std::runtime_error("Dual-grammar actual AST ABI conflict: " + cpp->identificationString() +
                 "\nActual CPP ABI=" + llvm::formatv("{0}", cppABI).str() +
                 "\nActual ObjC ABI=" + llvm::formatv("{0}", objcABI).str());
+        };
+        const bool differentBinding = cppABI != objcABI;
+        if (differentBinding) {
+            if (!cpp->is(Meta::MetaType::Function) || !objc->is(Meta::MetaType::Function)) failABI();
+            auto cppShape = llvm::json::Object(*cppABI.getAsObject());
+            auto objcShape = llvm::json::Object(*objcABI.getAsObject());
+            cppShape.erase("externalBinding"); objcShape.erase("externalBinding");
+            if (llvm::json::Value(std::move(cppShape)) != llvm::json::Value(std::move(objcShape))) failABI();
+        }
         if (!versionEquivalent(cpp->deprecatedIn, objc->deprecatedIn) || !versionEquivalent(cpp->obsoletedIn, objc->obsoletedIn) ||
             !introducedAvailabilityEquivalent(*cpp, *objc))
             throw std::runtime_error("Dual-grammar availability conflict: " + cpp->identificationString() +
@@ -132,6 +145,11 @@ class ModelMerge {
             throw std::runtime_error("Dual-grammar actual API model conflict: " + cpp->identificationString() +
                 "\nActual CPP model=" + llvm::formatv("{0}", cppModel).str() +
                 "\nActual ObjC model=" + llvm::formatv("{0}", objcModel).str());
+        std::optional<llvm::json::Object> bindingResolution;
+        if (differentBinding) {
+            if (exportAuthority) bindingResolution = exportAuthority->resolve(*cpp, *objc, cppABI, objcABI);
+            if (!bindingResolution) failABI();
+        }
         if (base) {
             auto& a = cpp->as<Meta::BaseClassMeta>();
             auto& b = objc->as<Meta::BaseClassMeta>();
@@ -166,7 +184,8 @@ class ModelMerge {
             {"source", objc->fileName}, {"actualSourceBytesEqual", true},
             {"actualASTABI", std::move(objcABI)}, {"rawVariableLinkage", std::move(rawLinkage)}, {"rawFunctionLinkage", std::move(rawFunctionLinkage)},
             {"cppRawParameterCVR", rawParameterCVR(*cpp)}, {"objcRawParameterCVR", rawParameterCVR(*objc)},
-            {"disposition", "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
+            {"disposition", bindingResolution ? "RESOLVED_TO_EXPORTED_C_AUTHORITY" : "PROVEN_EQUIVALENT_OBJC_AUTHORITY"},
+            {"exportAuthority", bindingResolution ? llvm::json::Value(std::move(*bindingResolution)) : llvm::json::Value(nullptr)},
             {"availability", !availabilityDifference ? "EXACT" : versionEquivalent(cpp->introducedIn, objc->introducedIn) ?
                 "ORIGINAL_UNKNOWN_VERSION_ENCODINGS_EQUIVALENT" : "ACTUAL_C_INTRODUCED_ATTR_MISSING_CPP_EQUIVALENT_AT_BOUND_TARGET"},
             {"objcIntroducedIn", objc->introducedIn.toString()}, {"cppIntroducedIn", cpp->introducedIn.toString()},
@@ -175,7 +194,16 @@ class ModelMerge {
     }
 
 public:
+    void setExportAuthority(SDKExportAuthority* authority) { exportAuthority = authority; }
     std::list<Meta::Meta*> merge(const std::list<Meta::Meta*>& cpp, const std::list<Meta::Meta*>& objc) {
+        // Snapshot every actual A graph node BEFORE C-authority merges alter
+        // member vectors/type routes. Collection is readonly with empty routes.
+        const std::map<Meta::Meta*, Meta::Meta*> noRoutes;
+        ModelGraph originalA(noRoutes);
+        for (auto* meta : cpp) originalA.visit(meta);
+        std::map<Meta::Meta*, std::pair<std::string, std::string>> originalIdentities;
+        for (auto* meta : originalA.retainedMetas())
+            originalIdentities.emplace(meta, std::make_pair(entityKey(*meta), meta->fileName));
         std::map<std::string, Meta::Meta*> canonical;
         for (auto* meta : objc) {
             auto insertion = canonical.emplace(entityKey(*meta), meta);
@@ -200,6 +228,30 @@ public:
         for (auto* meta : result) graph.visit(meta);
         retained = graph.retainedMetas();
         graphMetas = graph.retainedMetaCount(); graphTypes = graph.retainedTypeCount();
+        llvm::json::Array routes;
+        size_t mapped = 0, kept = 0;
+        for (const auto& original : originalIdentities) {
+            auto* destination = original.first;
+            std::set<Meta::Meta*> chain;
+            for (;;) {
+                auto route = replacements.find(destination);
+                if (route == replacements.end()) break;
+                if (!chain.insert(destination).second || !route->second || route->second->type != original.first->type)
+                    throw std::runtime_error("Invalid original-A canonical route");
+                destination = route->second;
+            }
+            if (!retained.count(destination))
+                throw std::runtime_error("Original-A model disappeared from retained metadata: " + original.second.first);
+            const bool canonicalized = destination != original.first;
+            canonicalized ? ++mapped : ++kept;
+            routes.push_back(llvm::json::Object{{"originalKey", original.second.first}, {"source", original.second.second},
+                {"canonicalKey", entityKey(*destination)},
+                {"disposition", canonicalized ? "EXPLICIT_PROVEN_CANONICAL_ROUTE" : "RETAINED_ACTUAL_A_MODEL"}});
+        }
+        originalACoverage = llvm::json::Object{{"status", "COMPLETE"},
+            {"originalGraphModels", static_cast<int64_t>(originalIdentities.size())},
+            {"retainedOriginalModels", static_cast<int64_t>(kept)}, {"mappedWithProof", static_cast<int64_t>(mapped)},
+            {"unmappedModels", 0}, {"routes", std::move(routes)}};
         return result;
     }
 
@@ -207,6 +259,7 @@ public:
     size_t graphMetas = 0;
     size_t graphTypes = 0;
     const llvm::json::Array& duplicateProofs() const { return proofs; }
+    const llvm::json::Object& originalAProof() const { return originalACoverage; }
     const std::set<Meta::Meta*>& retainedMetas() const { return retained; }
 };
 

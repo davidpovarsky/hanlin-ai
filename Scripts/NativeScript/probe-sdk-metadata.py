@@ -71,7 +71,7 @@ def diagnostic_probe_outcome(exit_code: int, diagnostic: dict, aliases: dict) ->
 
 
 def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, arch: str,
-                          preprocessing_provenance: bool = False, modern: bool = False, dual: bool = False) -> dict:
+                          preprocessing_provenance: bool = False, modern: bool = False, dual: bool = False, sdk_export_authority: bool = False) -> dict:
     """Exercise the actual launcher with a genuinely compiled Swift interface."""
     folder = output / "runtime-wrapper"
     folder.mkdir(exist_ok=True)
@@ -161,6 +161,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
                                            str(modular / "react.framework/Headers/react")])}
     if preprocessing_provenance:
         environment["HANLIN_METADATA_PREPROCESS_PROVENANCE"] = "1"
+    if sdk_export_authority:
+        environment["HANLIN_METADATA_SDK_EXPORT_AUTHORITY"] = "1"
     if modern:
         environment["HANLIN_METADATA_FRONTEND"] = "modern-dual-candidate" if dual else "modern-candidate"
     for name in ["TARGET_TEMP_DIR", "CONFIGURATION_BUILD_DIR"]:
@@ -227,7 +229,7 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
 
 
 def bind_dual_command(command: list[str], root: Path, sdk: Path, full_root: Path,
-                      objc_root: Path, folder: Path) -> tuple[list[str], dict]:
+                      objc_root: Path, folder: Path, sdk_export_authority: bool = False) -> tuple[list[str], dict]:
     """Capture the real producer context, then bind both actual root inputs."""
     from metadata_dual_grammar import create_request
     spec = importlib.util.spec_from_file_location("dual_probe_launcher", root / "Scripts/NativeScript/build-step-metadata-generator-wrapper.py")
@@ -247,7 +249,7 @@ def bind_dual_command(command: list[str], root: Path, sdk: Path, full_root: Path
         bound.append(inventory)
         for record in json.loads(inventory.read_text()):
             bound.extend(Path(record["path"]) / relative for relative in record.get("inputSHA256", {}))
-    create_request(request, full_root, objc_root, context, sdk, bound)
+    create_request(request, full_root, objc_root, context, sdk, bound, sdk_export_authority=sdk_export_authority, tool=Path(command[0]))
     return command, context
 
 
@@ -261,6 +263,8 @@ def main() -> int:
                         help="Explicit standalone candidate dialect; not production adoption")
     parser.add_argument("--modern-semantic-parity", action="store_true",
                         help="Versioned modern candidate reference check; preserve raw YAML differences separately")
+    parser.add_argument("--sdk-export-authority", action="store_true", help="Require actual four-compiler binding proofs and exact-target SDK export authority")
+    parser.add_argument("--export-authority-slice", action="store_true", help="Only actual UIKit/Host plus the defective AVFoundation header, not all SDK roots")
     parser.add_argument("--generation-only", action="store_true", help="Execute full SDK generation without rerunning the separate31-module gate")
     parser.add_argument("--runtime-wrapper-only", action="store_true", help="Execute combined Swift/provider/Expo wrapper without rerunning SDK or31-module probes")
     parser.add_argument("--parity-only", action="store_true", help="Execute only the31 original module models and invalid-type control, no full SDK generation")
@@ -273,6 +277,10 @@ def main() -> int:
         from metadata_dual_grammar import validate_receipt
     if options.language != "objective-c" and (options.generator is None or (options.runtime_wrapper and not options.modern_semantic_parity)):
         parser.error("Candidate ObjC++ dialect requires explicit modern generator/model proof")
+    if options.sdk_export_authority and not (options.dual_grammar and (options.generation_only or options.runtime_wrapper_only)):
+        parser.error("SDK export evidence requires a focused dual SDK or combined scope")
+    if options.export_authority_slice and not (options.sdk_export_authority and options.generation_only):
+        parser.error("SDK authority slice requires explicit SDK authority and generation-only")
     if options.generation_only and (not options.dual_grammar or options.parity_only or options.runtime_wrapper):
         parser.error("Generation-only requires dual grammar without parity-only or runtime wrapper")
     if options.runtime_wrapper_only and (not options.dual_grammar or not options.runtime_wrapper or options.parity_only or options.generation_only):
@@ -350,7 +358,9 @@ def main() -> int:
     umbrella = output / "probe.h"
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")
-    if options.mode == "textual-public" and not options.parity_only:
+    if options.export_authority_slice:
+        umbrella.write_text(umbrella.read_text() + '#import <AVFoundation/AVCaptureTimecodeGenerator.h>\n', encoding="utf-8")
+    if options.mode == "textual-public" and not options.parity_only and not options.export_authority_slice:
         from metadata_public_headers import write_public_umbrella
         write_public_umbrella(sdk, umbrella, [headers / "HanlinNativeServicesBridge.h",
                                              headers / "HanlinNativeScriptCompatibility.h"])
@@ -408,7 +418,7 @@ def main() -> int:
         if options.parity_only or options.runtime_wrapper_only:
             break  # Keep the exact compiler vector without executing the full SDK probe.
         if options.dual_grammar:
-            command, dual_context = bind_dual_command(command, root, sdk, umbrella, umbrella, destination)
+            command, dual_context = bind_dual_command(command, root, sdk, umbrella, umbrella, destination, options.sdk_export_authority)
         control = subprocess.run(["xcrun", "clang", "-x", "objective-c", "-fsyntax-only",
                                   *command[command.index("Xclang") + 1:], str(umbrella)],
                                  capture_output=True, timeout=120)
@@ -529,7 +539,7 @@ def main() -> int:
     if options.runtime_wrapper:
         try:
             result["runtimeWrapper"] = probe_runtime_wrapper(root, output, original_generator, arch,
-                modern=options.modern_semantic_parity and options.language == "objective-c++", dual=options.dual_grammar)
+                modern=options.modern_semantic_parity and options.language == "objective-c++", dual=options.dual_grammar, sdk_export_authority=options.sdk_export_authority)
         except (subprocess.SubprocessError, RuntimeError, KeyError, StopIteration) as error:
             result["runtimeWrapper"] = {"status": "FAILED", "stage": "actual runtime-wrapper probe",
                                         "reason": type(error).__name__ + ": " + str(error)}
@@ -539,7 +549,7 @@ def main() -> int:
             result["modes"][options.mode]["status"] == "EXECUTED_PASS" and
             result.get("nativeCompilerContext", {}).get("status") == "EXECUTED_PASS")
         result.update({"status": "EXECUTED_PASS" if success else "FAILED",
-            "scope": "COMBINED_WRAPPER_ONLY" if options.runtime_wrapper_only else "FULL_SDK_GENERATION_ONLY",
+            "scope": "COMBINED_WRAPPER_ONLY" if options.runtime_wrapper_only else "SDK_EXPORT_AUTHORITY_SLICE" if options.export_authority_slice else "FULL_SDK_GENERATION_ONLY",
             "separate31ModuleGate": "NOT_RUN", "fixtureControls": "NOT_RUN", "runtimeAcceptance": "NOT_ESTABLISHED"})
         (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"scope": result["scope"], "status": result["status"]}), flush=True)

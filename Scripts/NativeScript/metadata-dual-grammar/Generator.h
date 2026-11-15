@@ -63,7 +63,7 @@ inline int generate(const std::string& requestPath, const std::vector<std::strin
     auto parsed = llvm::json::parse(requestBytes);
     if (!parsed) { llvm::consumeError(parsed.takeError()); throw std::runtime_error("Invalid dual request JSON"); }
     const auto* request = parsed->getAsObject();
-    if (!request || request->getInteger("schemaVersion") != 2 || request->getInteger("mergePolicyVersion") != 2 ||
+    if (!request || request->getInteger("schemaVersion") != 2 || request->getInteger("mergePolicyVersion") != 3 ||
         request->getString("mode") != "retained-dual-grammar") throw std::runtime_error("Unsupported dual request contract");
     verifyBoundFiles(*request);
     if (hanlinString(*request, "contextSHA256") != hanlinSHA(context) ||
@@ -88,7 +88,7 @@ inline int generate(const std::string& requestPath, const std::vector<std::strin
             (fs::exists(directory) && (!fs::is_directory(directory) || !fs::is_empty(directory)))))
             throw std::runtime_error("Dual directory output is not exclusively writable");
     if (hanlinWriterEntries) throw std::runtime_error("A writer ran before dual parse/merge");
-    Pipeline pipeline(fullCode, fullArguments, objcCode, alternateArguments, blacklist, files);
+    Pipeline pipeline(fullCode, fullArguments, objcCode, alternateArguments, blacklist, files, request);
     pipeline.merge();
     const auto stageBinary = stage + "/metadata.bin";
     cla_outputBinFile.setValue(stageBinary);
@@ -101,7 +101,7 @@ inline int generate(const std::string& requestPath, const std::vector<std::strin
     if (!umbrella.empty()) writeExclusive(stage + "/umbrella.h", fullCode);
     verifyBoundFiles(*request);
     llvm::json::Object result{{"schemaVersion", 2}, {"status", "COMPLETE"}, {"mode", "retained-dual-grammar"},
-        {"mergePolicyVersion", 2}, {"requestSHA256", hanlinSHA(requestBytes)}, {"contextSHA256", hanlinSHA(context)},
+        {"mergePolicyVersion", 3}, {"requestSHA256", hanlinSHA(requestBytes)}, {"contextSHA256", hanlinSHA(context)},
         {"proof", pipeline.proofReceipt()}, {"lifetime", std::move(lifetime)},
         {"metadataSHA256", hanlinSHA(hanlinRead(stageBinary))}, {"outputs", outputManifest(stage)},
         {"destinations", llvm::json::Object{{"binary", binary}, {"yaml", yaml}, {"types", types}, {"umbrella", umbrella}}},

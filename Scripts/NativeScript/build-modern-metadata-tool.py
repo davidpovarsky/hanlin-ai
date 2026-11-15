@@ -87,8 +87,6 @@ def main():
         raise RuntimeError("Dual-grammar support source closure is missing")
     shutil.copytree(support, generator / "src/HanlinDual")
     main_text = base.patch_main(main_cpp.read_text())
-    main_text = base.replace_once(main_text, '#include "Yaml/YamlSerializer.h"',
-        '#include "Yaml/YamlSerializer.h"\n#include "HanlinDual/ModelMerge.h"')
     main_text = base.replace_once(main_text, "    clang::SourceManager &sm;",
         "    clang::SourceManager &sm;\n    clang::Preprocessor &pp;")
     main_text = base.replace_once(main_text,

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ModelMerge.h"
 #include "ActualUnits.h"
 #include "ModuleOwners.h"
 
@@ -10,6 +11,7 @@ namespace HanlinDual {
 // serializers, including the per-declaration TypeScript writer, have finished.
 class Pipeline {
     ModelMerge merger;
+    std::unique_ptr<SDKExportAuthority> sdkAuthority;
     std::unique_ptr<ModuleOwners> owners;
     std::list<Meta::Meta*> canonical;
     Meta::ResolveGlobalNamesCollisionsFilter::MetasByModules modules;
@@ -29,7 +31,8 @@ public:
 
     Pipeline(const std::string& cppCode, const std::vector<std::string>& cppArguments,
              const std::string& objcCode, const std::vector<std::string>& objcArguments,
-             Meta::ModulesBlacklist& blacklist, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem> fs)
+             Meta::ModulesBlacklist& blacklist, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem> fs,
+             const llvm::json::Object* request = nullptr)
         : cpp(cppCode, cppArguments, blacklist, fs), objc(objcCode, objcArguments, blacklist, fs) {
         if (!cpp.context().getLangOpts().CPlusPlus || objc.context().getLangOpts().CPlusPlus ||
             !cpp.context().getLangOpts().ObjC || !objc.context().getLangOpts().ObjC)
@@ -39,6 +42,10 @@ public:
                 throw std::runtime_error(std::string("Actual dual compiler context differs: ") + key);
         if (searchDirectories(cpp.unit()) != searchDirectories(objc.unit()))
             throw std::runtime_error("Actual include search priority/characteristics differ");
+        if (request && request->getString("sdkExportEvidence") && !request->getString("sdkExportEvidence")->empty()) {
+            sdkAuthority = std::make_unique<SDKExportAuthority>(*request, cpp.receipt);
+            merger.setExportAuthority(sdkAuthority.get());
+        }
         cpp.producer().hanlinFactory().hanlinSetPeer(objc.producer().hanlinFactory());
         objc.producer().hanlinFactory().hanlinSetPeer(cpp.producer().hanlinFactory());
     }
@@ -71,13 +78,15 @@ public:
     llvm::json::Object proofReceipt() const {
         if (!merged) throw std::runtime_error("No complete dual model merge");
         return llvm::json::Object{{"cpp", llvm::json::Object(cpp.receipt)},
-            {"objc", llvm::json::Object(objc.receipt)}, {"mergePolicyVersion", 2},
+            {"objc", llvm::json::Object(objc.receipt)}, {"mergePolicyVersion", 3},
             {"duplicateProofs", llvm::json::Array(merger.duplicateProofs())},
+            {"originalAModelCoverage", llvm::json::Object(merger.originalAProof())},
             {"sameObjectRepeatedMemberReferencesPreserved", static_cast<int64_t>(merger.repeatedAuthoritativeReferences)},
             {"moduleOwnerProofs", llvm::json::Array(owners->ownerProofs())}};
     }
 
     llvm::json::Object lifetime() {
+        if (sdkAuthority) sdkAuthority->verify();
         size_t cppModels = 0, objcModels = 0;
         for (auto* meta : merger.retainedMetas()) {
             auto& owner = factory(meta);
