@@ -1,21 +1,21 @@
 {
   "scope": "native-hosted-component-unit-test-infrastructure",
   "full_app_acceptance": false,
-  "source": "356f1180e6eb8281d89b854b412d87508f7bdc98",
-  "owner": "356f1180e6eb8281d89b854b412d87508f7bdc98",
+  "source": "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9",
+  "owner": "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9",
   "status": "SOURCE_ONLY_NOT_COMPILED",
   "original_reference_input_sha256": {
     "AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift": "0761732958f062ab48dd39954758eab9e528decbfbf76c3e7109216a42dfce67",
     "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift": "93db8f73981ba3d8bb0bfcb84c87d9fbf69d7c7abce8c17a0e2539f9fa548516",
     "AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift": "9cb0d043d13027aae0170f9a1920aa1496ad46648f1ad48912a99cb99a332dee",
     "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift": "1fdd7f2c7e367907b63a7e6d571be8f334705c51ce1a8dc8b0c2c099fb6feafe",
-    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift": "35d06701358a3fc5fc8d4a285ae5791d7fefffa7996873af45ed2e27c1dbea5b",
+    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift": "90549ea86ef23c2310aa6eb64fbff0cd3f226d13421becc0817fd101b0976c87",
     "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift": "06ce0518897c878f58a6da0d0135aab379fb26afce256e4b6e77f18ea5087711",
     "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift": "7cb8257ab1c051ca9678d90a3dae0723a34f82665773ee29e2c778f1c3dafb02",
     "AI_HLY/Model/AllModels.swift": "c0bd2a7b9d441876743c8ac4c25f179a07456b84ddd8828f22d5dc8c1b145ce5",
     "AI_HLYTests/HanlinMorphComposerTests.swift": "95699e6c93b6dd02603130d46f06b85c783695bef08f87b842a096e224d3db64",
     "AI_HLYTests/HanlinOrganizerDockParityTests.swift": "0f7fdaa54f1c9ce3ff0cda7a748d5cf2eca319cd9c3661d1bbf650c74e3ac4e3",
-    "AI_HLYTests/NativeComposerLineSizingTests.swift": "a02b04896482a43f7347293f0ac05575ba9d624d75aacb995643ff7153454d82",
+    "AI_HLYTests/NativeComposerLineSizingTests.swift": "382e3e3df77071357faba12840de9bb8961747d742f84cbdc32a8d31573dcbb5",
     "AI_HLYUITests/HanlinMorphComposerUITests.swift": "9dd119bce6b014120965b99433ca63fc0eb29a5a7c72e91f9506c4a7466c7c65"
   },
   "native_canonical_sources": [
@@ -64,7 +64,7 @@
     {
       "original": "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
       "native": "Canonical/AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
-      "sha256": "35d06701358a3fc5fc8d4a285ae5791d7fefffa7996873af45ed2e27c1dbea5b",
+      "sha256": "90549ea86ef23c2310aa6eb64fbff0cd3f226d13421becc0817fd101b0976c87",
       "target": "AI_Hanlin"
     },
     {
@@ -76,7 +76,7 @@
     {
       "original": "AI_HLYTests/NativeComposerLineSizingTests.swift",
       "native": "Canonical/AI_HLYTests/NativeComposerLineSizingTests.swift",
-      "sha256": "a02b04896482a43f7347293f0ac05575ba9d624d75aacb995643ff7153454d82",
+      "sha256": "382e3e3df77071357faba12840de9bb8961747d742f84cbdc32a8d31573dcbb5",
       "target": "AI_HanlinTests"
     }
   ],
@@ -189,7 +189,7 @@
   },
   "review_materialization": "PBX/scheme/metadata only; canonical Swift held in memory and not copied locally",
   "source_tool_sha256": {
-    "prepare_native.py": "3a1acf0c9cacdc3acb01cf9c3e3125dd82e7b0a1f626e22c0fd10204dc4aeec6",
+    "prepare_native.py": "b36f9f73d34c7b16cebea22862fc24b627de1c0a94d6736be2f31c07e207fa3d",
     "validate_packet.py": "fab6e06fa9f02a704c2674b76380cd256678dbe1f6987fe38840ea7030659467",
     "freeze_review.py": "ad150b2f90a676e7ad1a55e8bf7b261d91ffb491537e7dd7a1382b20272a7be2",
     "ComposerNativeUnitHost.swift": "5e927de5426a858fc6faebed0556a4b8ede949ef3eb689b1f6d7f6173bf1a20e"

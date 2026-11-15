@@ -83,3 +83,7 @@ GitHub runner-name reuse is documented in the official variables reference: http
 ## Guard diagnostic source version after actual failure
 
 Active whole-source version356f1180e6eb8281d89b854b412d87508f7bdc98 extends only the optional measurement observer with TextKit path/guard notes after actual frozen test failure43725364219. Geometry math, fallback safety, test bodies/assertions, native target settings and the selected method are unchanged. Original frozen e8ccd/20980 provenance remains historical above. This new owner/source pin is intentional; source-only graph receipts are regenerated from whole files, not patched copies. No geometry fix or Apple execution pass is claimed for this diagnostic source before its own focused run.
+
+## Viewport-clipping correction candidate
+
+Active source/owner9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9 (product fix d7b2a367) follows actual guard diagnosis43728022133: TextKit1 container152x84 exposed45/95 glyphs and3 lines after native fitting170. The candidate gives that same layout container sufficient measured fitting height temporarily, preserving width/manager and restoring size/height tracking with defer. All coverage guards, fallback safety, geometric limits and assertions are retained. The original selected method emits native measurements and signed delta on success too (logging only);12 identities remain. Current candidate needs its own focused Apple execution. TextKit2 and full-app/UI/device obligations are not inferred from this diagnostic.

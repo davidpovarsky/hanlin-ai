@@ -20,8 +20,8 @@ from prepare_capability_proof import SOURCES, TEST_SOURCE, EDITOR_TEST_SOURCE, A
 from extract_target import render
 from project_graph import parse_project
 
-SOURCE = "356f1180e6eb8281d89b854b412d87508f7bdc98"
-OWNER = "356f1180e6eb8281d89b854b412d87508f7bdc98"
+SOURCE = "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9"
+OWNER = "9088318f1a59af5f1f2280f0e97cc3d4ac7c6ad9"
 PATTERN_SOURCE = "e8ccd81452843609285a0cd7e017a759bda6a6ef"
 PROJECT = "ComposerNativeHost.xcodeproj"
 SCHEME = "ComposerNativeHost"
