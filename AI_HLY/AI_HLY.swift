@@ -105,6 +105,7 @@ struct MyApp: App {
 
     var body: some Scene {
         WindowGroup {
+            HanlinAIReceivingWindowRoot { receivingWindowID in
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
                 .task {
@@ -138,9 +139,12 @@ struct MyApp: App {
                 }
                 .onOpenURL { url in
                     if url.scheme?.lowercased() == "chavrusachat", url.host?.lowercased() == "split" {
-                        Task { @MainActor in
-                            await HanlinAppSplitOriginCoordinator.shared.receiveReturn(url,
-                                modelContext: appDataManager.modelContainer.mainContext)
+                        let receiver = HanlinAppSplitOriginCoordinator.shared
+                        if let claimID = receiver.claimReturn(url, receivingWindowID: receivingWindowID) {
+                            Task { @MainActor in
+                                await receiver.receiveReturn(url, modelContext: appDataManager.modelContainer.mainContext,
+                                    receivingWindowID: receivingWindowID, claimID: claimID)
+                            }
                         }
                     } else if url.host == "openVisionView" {
                         deepLinkTarget = "vision"
@@ -152,6 +156,7 @@ struct MyApp: App {
                         )
                     }
                 }
+            }
         }
 
         WindowGroup("Mini App", for: NativeAppLaunchRequest.self) { $request in

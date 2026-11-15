@@ -12,8 +12,11 @@ import SwiftData
 @MainActor @Observable
 final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     static let shared = HanlinAppSplitOriginCoordinator()
-    private(set) var acceptedOrigin: SplitBridgeRequest?
+    private var acceptedOrigin: SplitBridgeRequest?
+    private var acceptedReceivingWindowID: UUID?
     private(set) var lastFailure: SplitBridgeFailure?
+    private var lastFailureReceivingWindowID: UUID?
+    @ObservationIgnored private var returnClaim: (requestID: UUID, windowID: UUID, nonce: UUID)?
     @ObservationIgnored private var modelContext: ModelContext?
     @ObservationIgnored private var pending: [UUID: Pending] = [:]
     @ObservationIgnored private var sessions: [UUID: WeakSession] = [:]
@@ -189,6 +192,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     /// Release Host completion FIRST, then await its real persisted-receipt callback. Holding
     /// Host execution until this callback would deadlock the existing model tool loop.
     func persistVerifiedResult(_ response: SplitBridgeReturn) async throws {
+        guard returnClaim?.requestID == response.request.id else { throw SplitBridgeFailure.transportUnavailable }
         if let item = pending[response.request.id] {
             guard !item.invalidated, item.request == response.request,
                   item.origin.requestDigest == (try Self.digest(response.request)) else { throw SplitBridgeFailure.cancelled }
@@ -235,28 +239,87 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         guard let modelContext,
               let rows = try? modelContext.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id })),
               rows.count == 1 else { lastFailure = .correlationMismatch; return }
+        guard let claim = returnClaim, claim.requestID == request.id else {
+            lastFailure = .transportUnavailable
+            return
+        }
+        acceptedReceivingWindowID = claim.windowID
         acceptedOrigin = request
         pending[request.id]?.timer?.cancel()
         pending[request.id] = nil
     }
 
-    /// UI mount acknowledgement clears only that delivered request; an older asynchronous
-    /// mount cannot erase a newer accepted delivery. This never consumes mailbox state again.
-    func acknowledgeAcceptedOrigin(requestID: UUID) {
-        guard acceptedOrigin?.id == requestID else { return }
-        acceptedOrigin = nil
+    /// Only the window whose actual onOpenURL handler claimed reception may observe this value.
+    /// request.session remains the original SDK Session ID; it is never interpreted as a window.
+    func acceptedOrigin(forReceivingWindowID windowID: UUID?) -> SplitBridgeRequest? {
+        guard let windowID, acceptedReceivingWindowID == windowID,
+              let acceptedOrigin, let claim = returnClaim,
+              claim.windowID == windowID, claim.requestID == acceptedOrigin.id else { return nil }
+        return acceptedOrigin
     }
 
-    func receiveReturn(_ url: URL, modelContext: ModelContext) async {
-        self.modelContext = modelContext
+    func failure(forReceivingWindowID windowID: UUID?) -> SplitBridgeFailure? {
+        guard let windowID, lastFailureReceivingWindowID == windowID else { return nil }
+        return lastFailure
+    }
+
+    /// Synchronous routing claim from the actual per-window onOpenURL callback, BEFORE Task/await.
+    /// No window list, selected chat, URL-supplied owner or first-window fallback exists.
+    func claimReturn(_ url: URL, receivingWindowID windowID: UUID?) -> UUID? {
         do {
-            // Transport itself strictly parses the complete route and treats the URL as a hint only.
+            let reference = try SplitForegroundRoute.returnToAI.reference(in: url)
+            guard let windowID else { throw SplitBridgeFailure.transportUnavailable }
+            guard returnClaim == nil, acceptedOrigin == nil else { throw SplitBridgeFailure.transportUnavailable }
+            let nonce = UUID()
+            returnClaim = (reference, windowID, nonce)
+            lastFailure = nil; lastFailureReceivingWindowID = windowID
+            return nonce
+        } catch {
+            lastFailure = error as? SplitBridgeFailure ?? .transportUnavailable
+            lastFailureReceivingWindowID = windowID
+            return nil
+        }
+    }
+
+    /// A stale mount/ACK cannot consume another window's delivery or clear a newer request.
+    /// This clears only UI routing state; it never consumes mailbox state again.
+    func acknowledgeAcceptedOrigin(requestID: UUID, receivingWindowID windowID: UUID?) {
+        guard let windowID, acceptedOrigin?.id == requestID, acceptedReceivingWindowID == windowID,
+              returnClaim?.requestID == requestID, returnClaim?.windowID == windowID else { return }
+        acceptedOrigin = nil; acceptedReceivingWindowID = nil; returnClaim = nil
+    }
+
+    func receiveReturn(_ url: URL, modelContext: ModelContext, receivingWindowID windowID: UUID, claimID: UUID) async {
+        guard let reference = try? SplitForegroundRoute.returnToAI.reference(in: url),
+              let claim = returnClaim, claim.requestID == reference, claim.windowID == windowID,
+              claim.nonce == claimID else {
+            lastFailure = .transportUnavailable; lastFailureReceivingWindowID = windowID
+            return
+        }
+        self.modelContext = modelContext
+        defer {
+            // The original receive may resume after an ACK/new OS callback; never clear that claim.
+            if returnClaim?.nonce == claimID, acceptedOrigin?.id != reference { returnClaim = nil }
+        }
+        do {
             try await makeTransport().receiveReturn(url, origin: self)
-            lastFailure = nil
-        } catch { lastFailure = error as? SplitBridgeFailure ?? .transportUnavailable }
+            if returnClaim?.nonce == claimID {
+                if acceptedOrigin?.id == reference, acceptedReceivingWindowID == windowID { lastFailure = nil }
+                else if lastFailure == nil { lastFailure = .transportUnavailable }
+                lastFailureReceivingWindowID = windowID
+            }
+        } catch {
+            if returnClaim?.nonce == claimID {
+                lastFailure = error as? SplitBridgeFailure ?? .transportUnavailable
+                lastFailureReceivingWindowID = windowID
+            }
+        }
     }
 
     func invalidate(session: HanlinHostSession) {
+        if acceptedOrigin?.session.rawValue == session.id.uuidString.lowercased() {
+            acceptedOrigin = nil; acceptedReceivingWindowID = nil; returnClaim = nil
+        }
         let ids = pending.values.filter { $0.origin.call.session == session }.map { $0.request.id }
         for id in ids { invalidate(reference: id, reason: .cancelled) }
     }

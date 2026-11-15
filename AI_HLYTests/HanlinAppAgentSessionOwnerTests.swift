@@ -296,7 +296,7 @@ private struct AppPartModel: LanguageModelV3 {
         }
     }
 
-    @Test func acceptedOriginAcknowledgementCannotClearANewerDelivery() throws {
+    @Test func acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery() async throws {
         let container = try database(), context = container.mainContext
         let row = ChatRecords(name: "Existing origin", type: "chat")
         context.insert(row); try context.save()
@@ -308,18 +308,29 @@ private struct AppPartModel: LanguageModelV3 {
                 issuedAt: .now, expiresAt: .now.addingTimeInterval(30), payload: .null)
         }
         let coordinator = HanlinAppSplitOriginCoordinator(modelContext: context), first = try request(), next = try request()
+        let window = UUID(), otherWindow = UUID()
+        let firstURL = SplitForegroundRoute.returnToAI.url(reference: first.id)
+        let firstClaim = try #require(coordinator.claimReturn(firstURL, receivingWindowID: window))
         // Simulates the transport's trusted post-accept callback; not mailbox or UI mount proof.
         coordinator.navigateToOriginalConversation(first)
-        coordinator.acknowledgeAcceptedOrigin(requestID: first.id)
-        #expect(coordinator.acceptedOrigin == nil)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == first)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: otherWindow) == nil)
+        coordinator.acknowledgeAcceptedOrigin(requestID: first.id, receivingWindowID: otherWindow)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == first)
+        coordinator.acknowledgeAcceptedOrigin(requestID: first.id, receivingWindowID: window)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == nil)
+        let nextURL = SplitForegroundRoute.returnToAI.url(reference: next.id)
+        _ = try #require(coordinator.claimReturn(nextURL, receivingWindowID: otherWindow))
         coordinator.navigateToOriginalConversation(next)
-        coordinator.acknowledgeAcceptedOrigin(requestID: first.id)
-        #expect(coordinator.acceptedOrigin == next)
-        coordinator.acknowledgeAcceptedOrigin(requestID: next.id)
-        #expect(coordinator.acceptedOrigin == nil)
+        coordinator.acknowledgeAcceptedOrigin(requestID: first.id, receivingWindowID: window)
+        await coordinator.receiveReturn(firstURL, modelContext: context, receivingWindowID: window, claimID: firstClaim)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: otherWindow) == next)
+        coordinator.acknowledgeAcceptedOrigin(requestID: next.id, receivingWindowID: otherWindow)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: otherWindow) == nil)
+        _ = try #require(coordinator.claimReturn(firstURL, receivingWindowID: window))
         context.delete(row); try context.save()
         coordinator.navigateToOriginalConversation(first)
-        #expect(coordinator.acceptedOrigin == nil && coordinator.lastFailure == .correlationMismatch)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == nil && coordinator.lastFailure == .correlationMismatch)
     }
 
     @Test func actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects() async throws {

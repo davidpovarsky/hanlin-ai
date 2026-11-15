@@ -69,7 +69,7 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
     let probe: SplitOpenProbe
     let group: URL
     let model = SplitComponentModel()
-    let uiRun = UUID(), scene = UUID()
+    let uiRun = UUID(), scene = UUID(), receivingWindowID = UUID()
     var streamTask: Task<Bool, Never>?
     var engineConstructions = 0
     var failure: String?
@@ -145,6 +145,12 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         // This is the actual durable receiver with a fixture operation result, NOT a live broker effect.
         _ = try await receiver.complete(reference: request.id, attempt: attempt, outcome: .result(.integer(9_007_199_254_740_993)), context: context)
     }
+    func returnToAI(_ request: SplitBridgeRequest) async {
+        let url = SplitForegroundRoute.returnToAI.url(reference: request.id)
+        guard let claim = coordinator.claimReturn(url, receivingWindowID: receivingWindowID) else { return }
+        await coordinator.receiveReturn(url, modelContext: container.mainContext, receivingWindowID: receivingWindowID, claimID: claim)
+    }
+
     func stop() {
         owner.cancel(); streamTask?.cancel()
         // This is a uniquely created test-only directory under the resolved temporary root.
@@ -159,8 +165,8 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         let original = try await harness.opened()
         #expect(original.chat == harness.row.id && original.session.rawValue == harness.owner.session?.identity.id.uuidString.lowercased())
         try await harness.complete(original)
-        await harness.coordinator.receiveReturn(SplitForegroundRoute.returnToAI.url(reference: original.id), modelContext: harness.container.mainContext)
-        #expect(harness.coordinator.acceptedOrigin == original && harness.coordinator.lastFailure == nil)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == original && harness.coordinator.lastFailure == nil)
         let data = try #require(harness.row.agentSDKRecordData), record = try JSONDecoder().decode(HanlinConversationRecord.self, from: data)
         #expect(record.entries.contains { if case .toolResult(_, let receipt) = $0.payload { return receipt.effectState == .confirmedCommitted && receipt.reconciliationReference?.hasPrefix("hanlin.split.return.v1:" + original.id.uuidString.lowercased()) == true }; return false })
         let task = try #require(harness.streamTask)
@@ -168,9 +174,9 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         let modelCalls = await harness.model.counter.value
         #expect(completed && harness.failure == nil)
         #expect(harness.probe.count == 1 && modelCalls == 2 && harness.engineConstructions == 1)
-        harness.coordinator.acknowledgeAcceptedOrigin(requestID: original.id)
-        await harness.coordinator.receiveReturn(SplitForegroundRoute.returnToAI.url(reference: original.id), modelContext: harness.container.mainContext)
-        #expect(harness.coordinator.acceptedOrigin == nil && harness.coordinator.lastFailure != nil)
+        harness.coordinator.acknowledgeAcceptedOrigin(requestID: original.id, receivingWindowID: harness.receivingWindowID)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil && harness.coordinator.lastFailure != nil)
         #expect(try harness.container.mainContext.fetch(FetchDescriptor<ChatRecords>()).count == 1)
     }
 
@@ -181,7 +187,7 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         let task = try #require(harness.streamTask)
         let completed = try await splitBounded { await task.value }
         #expect(!completed)
-        #expect(harness.coordinator.acceptedOrigin == nil && harness.probe.count == 1)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil && harness.probe.count == 1)
     }
 
     @Test func cancellationAfterReceiverStartKeepsOutcomeUnknownAndNeverNavigates() async throws {
@@ -195,8 +201,8 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
             guard let record = state.records[original.id] else { throw SplitComponentError.missing }; return record
         }
         #expect(record.phase == .outcomeUnknown)
-        await harness.coordinator.receiveReturn(SplitForegroundRoute.returnToAI.url(reference: original.id), modelContext: harness.container.mainContext)
-        #expect(harness.coordinator.acceptedOrigin == nil)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil)
         let task = try #require(harness.streamTask)
         _ = try await splitBounded { await task.value }
         #expect(harness.probe.count == 1)
@@ -209,8 +215,8 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         try await harness.complete(original)
         let context = harness.container.mainContext
         context.delete(harness.row); try context.save()
-        await harness.coordinator.receiveReturn(SplitForegroundRoute.returnToAI.url(reference: original.id), modelContext: context)
-        #expect(harness.coordinator.acceptedOrigin == nil && harness.coordinator.lastFailure != nil)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil && harness.coordinator.lastFailure != nil)
         #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
         #expect(try harness.mailbox.original(original.id) == original) // No mailbox acceptance on failed save/context.
     }
@@ -222,8 +228,8 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         try await harness.complete(original)
         let context = harness.container.mainContext
         context.delete(harness.assistant); try context.save()
-        await harness.coordinator.receiveReturn(SplitForegroundRoute.returnToAI.url(reference: original.id), modelContext: context)
-        #expect(harness.coordinator.acceptedOrigin == nil && harness.coordinator.lastFailure != nil)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil && harness.coordinator.lastFailure != nil)
         #expect(try context.fetch(FetchDescriptor<ChatRecords>()).count == 1)
         #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
         #expect(try harness.mailbox.original(original.id) == original)
@@ -253,6 +259,19 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         #expect(harness.probe.count == 1)
     }
 
+    @Test func receptionClaimRequiresAnExplicitWindowAndRejectsDuplicatesBeforeAwait() throws {
+        let coordinator = HanlinAppSplitOriginCoordinator(), window = UUID(), other = UUID()
+        let url = SplitForegroundRoute.returnToAI.url(reference: UUID())
+        #expect(coordinator.claimReturn(url, receivingWindowID: nil) == nil)
+        #expect(coordinator.lastFailure == .transportUnavailable)
+        _ = try #require(coordinator.claimReturn(url, receivingWindowID: window))
+        #expect(coordinator.claimReturn(url, receivingWindowID: window) == nil)
+        #expect(coordinator.claimReturn(url, receivingWindowID: other) == nil)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == nil)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: other) == nil)
+        #expect(coordinator.acceptedOrigin(forReceivingWindowID: nil) == nil)
+    }
+
     @Test func expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup() async throws {
         var targetCalls = 0
         let group = FileManager.default.temporaryDirectory.appending(path: "sdk-split-expired-\(UUID().uuidString)", directoryHint: .isDirectory).resolvingSymlinksInPath()
@@ -266,6 +285,6 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
             issuedAt: .now.addingTimeInterval(-60), expiresAt: .now.addingTimeInterval(-1), payload: .null)
         do { _ = try await coordinator.currentContext(for: request); Issue.record("Expired original accepted") }
         catch { #expect(error as? SplitBridgeFailure == .expired) }
-        #expect(targetCalls == 0 && coordinator.acceptedOrigin == nil)
+        #expect(targetCalls == 0 && coordinator.acceptedOrigin(forReceivingWindowID: nil) == nil)
     }
 }

@@ -37,29 +37,45 @@ CAS while no registered Session is running; exact existing receipt/digest dedupl
 historical reconciliation, not model continuation or a second effect. Interrupted work and
 cancelled mailbox states retain original conservative transport semantics.
 
-## Exact UI seam (A2UI owner)
+## Exact receiving-window UI seam (A2UI owner)
 
-`@MainActor @Observable final class HanlinAppSplitOriginCoordinator` exposes:
+The root wraps actual WindowGroup content in HanlinAIReceivingWindowRoot. Its private State UUID
+belongs to that window's view hierarchy, NOT the App singleton or ChatView sessionScopeID. It is
+provided as `@Environment(\.hanlinAIReceivingWindowID) var receivingWindowID: UUID?` (default nil).
+Apple documents separate State storage for each WindowGroup window:
+https://developer.apple.com/documentation/swiftui/windowgroup.md (lines61-63).
 
-- `static let shared: HanlinAppSplitOriginCoordinator`
-- `private(set) var acceptedOrigin: SplitBridgeRequest?`
-- `private(set) var lastFailure: SplitBridgeFailure?`
-- `func acknowledgeAcceptedOrigin(requestID: UUID)` clears only a matching accepted ID, without
-  consuming mailbox again; an older asynchronous mount cannot erase a newer delivery.
+Root onOpenURL calls `claimReturn(_:receivingWindowID:) -> UUID?` synchronously BEFORE creating
+Task/await, then passes that exact nonce/window to receiveReturn. One process delivery slot is
+reserved through acceptance/mount ACK. Missing owner, duplicate/different-window reception or
+another in-flight delivery is unavailable; no window list/first-window/current-chat fallback is
+used. The existing durable mailbox/receipt is retained. First tranche guarantees only the actual
+OS-receiving AI window; original-window and multi-window acceptance remain OPEN.
 
-A2UI may retain shared and observe acceptedOrigin outside View.body navigation mutation. The
-value is the SAME SplitBridgeRequest from navigateToOriginalConversation after save/fresh check/
-one-time accept. Resolve request.chat to exactly one EXISTING row again at mount; no selected-chat
-fallback or recreation. request.session is explicitly the original SDK Session UUID, NOT sceneID.
-The SDK owns root .onOpenURL. Existing vision/study branches are preserved; other existing routes
-are untouched. UI navigation/mount acknowledgement remains A2UI-owned.
+`@MainActor @Observable HanlinAppSplitOriginCoordinator.shared` exposes to A2UI:
+
+- `func acceptedOrigin(forReceivingWindowID: UUID?) -> SplitBridgeRequest?`
+- `func acknowledgeAcceptedOrigin(requestID: UUID, receivingWindowID: UUID?)`
+- `func failure(forReceivingWindowID: UUID?) -> SplitBridgeFailure?`
+
+The unfiltered acceptedOrigin storage is PRIVATE. Only the matching window can read the SAME
+original SplitBridgeRequest or ACK it. Read the filtered value in the MainTab hierarchy; route
+outside View.body and repeat the filter after any mount await. ACK only after mounting the exact
+existing request.chat. A stale request/window/nonce or old ACK cannot erase a newer delivery.
+SDK Session IDs are never compared to receiving window IDs or existing ChatView scene IDs.
+No request DTO, conversation store, grants or new window is created by this routing state.
+
+UI navigation/mount acknowledgement remains A2UI-owned. Root preserves vision/study/other existing
+routes. Added component controls cover pre-await exclusive claim, missing/different owner,
+wrong-window/old ACK, old receive task and deleted origin. They remain authored NOT_RUN pending
+actual app compilation; this is not a physical multi-window or original-scene acceptance claim.
 
 ## Verification boundary
 
 Source syntax and diff checks pass. New actual Session association controls passed in separate
 Apple run43743854538 at exact364f10a6:27 EXECUTED_PASS (20 Session,6 Context,1 Dispatcher),
 iOS compile PASS. Authenticated ledger retains exact hashes/xcresult IDs/locks/toolchain. schema-only43742612086 does not cover this follow-on. The readonly isRunning accessor compiled in the later exact7df writer/iOS proof43745924452;
-its actual app consumer/composition still needs combined app compilation. Nine owner/store/Host controls and seven Split composition controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
+its actual app consumer/composition still needs combined app compilation. Nine owner/store/Host controls and eight Split composition controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
 duplicate/deleted/deadline controls, original XCUITest, two-app cold process, signed group and
 physical device acceptance remain OPEN; injected open/target seams are not device proof.
 
@@ -72,7 +88,7 @@ compilation; a separate exact writer case+iOS compile is the only new package pr
 
 ## Authored actual app component controls (NOT_RUN)
 
-HanlinAppSplitOriginTests adds seven bounded controls using the actual app Session owner, original
+HanlinAppSplitOriginTests adds eight bounded controls using the actual app Session owner, original
 ChatRecords+assistant ChatMessages, original SDK model loop/Host dispatch/ordered writer,
 coordinator, mailbox, transport and durable receiver. The OS open/target metadata and receiver
 operation result are explicit fixtures. They verify durable association before OS-open observation,
