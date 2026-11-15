@@ -101,6 +101,23 @@ The next focused retry retains failure-specific AX/pixels for bound-source repla
 Xcode a27-minute step inside a30-minute job, based on this measured startup/finalization cost.
 It does not change the actual UI assertions, source or per-case timeout limits.
 
+Focused run43754891839 atf2c8fb62 reached compilation, then the XCTest runner aborted in
+`XCTWaiter(StallHandling)` while preparing tests. Zero selected methods started. Its one raw
+"Test Case" is a synthetic System Failures node, not the bound-source method. The original
+process-status recorded TEST_FAILED/1 from that node; the durable record corrects this to
+INFRA_ERROR/0 while preserving the original status. New runner accounting filters selected
+method identities and records system failures separately. Artifact14178800140 SHA256
+`0350bff8b64250908b6d586e1c40c6a72298fc4bc44fe412536aa43ae319c334` contains the raw result
+and SIGABRT crash, with no app AX/pixels and no new binding diagnosis. See
+`evidence/media-replay-ui-43754891839.json`. The prior audio unload failure remains open.
+
+Subsequent runs keep a changing raw bundle outside the upload directory. After the owned
+Xcode operation exits, bounded readable-result verification precedes one finalized archive;
+small logs/source/selection survive independently. On a functional unload failure the real
+source Link is opened through the fixture's handled port before recording AX/pixels, retaining
+the URL actually resolved by the same node. No global process kill, renderer substitution,
+weakened explicit-load requirement or further timeout widening is introduced.
+
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release
 settings remain unchanged.

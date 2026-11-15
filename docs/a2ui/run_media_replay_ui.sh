@@ -27,9 +27,13 @@ def visit(n):
     elif isinstance(n,list):
         for v in n: visit(v)
 if (e/'tests.json').exists(): visit(json.loads((e/'tests.json').read_text()))
+raw_nodes=len(cases)
+expected=json.loads((e/'selection.json').read_text())['selected_cases'] if (e/'selection.json').exists() else []
+cases=[n for n in cases if n.get('name','').removesuffix('()') in expected]
 log=(e/'xcodebuild.log').read_text(errors='replace') if (e/'xcodebuild.log').exists() else ''
 status='EXECUTED_PASS' if code==0 else 'TEST_FAILED' if cases else 'BUILD_FAILED' if 'error:' in log else 'INFRA_ERROR'
 (e/'process-status.json').write_text(json.dumps({'status':status,'exit_code':code,'executed_cases':len(cases),
+    'system_failure_nodes':raw_nodes-len(cases),
     'xcresult_archive_exists':(e/'MediaReplay.xcresult.tar.gz').exists(),
     'scope':'actual SwiftUI component UI; full app/provider/playback/physical NOT_RUN'},indent=2))
 if (e/'selected-device.txt').exists():
