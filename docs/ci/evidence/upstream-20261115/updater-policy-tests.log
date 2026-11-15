@@ -1,0 +1,31 @@
+✔ real updater selects supported Host version without upgrading the embedded ABI (10.8041ms)
+✔ explicit incompatible target cannot bypass the original engine constraint (0.8183ms)
+✔ unknown package and missing upstream provenance fail before changing a manifest (0.9875ms)
+✔ major changes are proposals requiring review rather than a safe patch (0.4112ms)
+✔ canonical dependency hash preserves its existing output/provenance boundary (25.1074ms)
+✔ only complete, current, protected and explicitly enabled evidence can qualify (0.7105ms)
+✔ merge refuses missing checks (0.4695ms)
+✔ merge refuses failed CI (0.1961ms)
+✔ merge refuses skipped CI (0.2049ms)
+✔ merge refuses pending CI (0.2709ms)
+✔ merge refuses wrong check source (0.1726ms)
+✔ merge refuses stale check head (0.221ms)
+✔ merge refuses stale receipt (0.1835ms)
+✔ merge refuses unknown impact (0.1334ms)
+✔ merge refuses native ABI (0.1134ms)
+✔ merge refuses major (0.1009ms)
+✔ merge refuses missing license (0.0911ms)
+✔ merge refuses missing checksum (0.0896ms)
+✔ merge refuses no gates (0.0917ms)
+✔ merge refuses no rollback (0.0853ms)
+✔ merge refuses unprotected branch (0.094ms)
+✔ merge refuses merge not enabled (0.1196ms)
+✔ a familiar lock filename cannot hide unknown source/native changes (0.2962ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1069.7819
