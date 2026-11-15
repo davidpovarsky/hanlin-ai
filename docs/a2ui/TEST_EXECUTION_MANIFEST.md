@@ -16,6 +16,15 @@ helper also compiled under Swift6 strict concurrency. Enabled syntax parsing
 included both `HANLIN_A2UI_POC` and `DEBUG`. SDK execution is still pending,
 so this revision does not supersede the independent acceptance decision.
 
+After targeted QA of `6aae92b7`, rejection correlation was tightened: ingress
+rejections expose no target ID; only a validated update/delete frame and current
+SDK ownership permit a targeted fallback. Rejected creates, unsupported operations
+and foreign IDs cannot add presentation entries. Malformed input may replace only
+an empty result placeholder. One portable case and one SDK case were added:
+**8 portable EXECUTED_PASS, 17 SDK NOT_RUN, 25 authored cases total**. The two
+earlier disposal/RPC fixes remain in place. This is a new source handoff, not
+independent QA acceptance or enabled SDK verification.
+
 Official upstream pin: `https://github.com/a2ui-project/a2ui`, revision
 `3ed9601862ecc78027e20ac80ad8b1b98a5d9079`.
 Read-only source verification is retained in
@@ -27,24 +36,24 @@ No upstream code or package dependency was installed into the app.
 | Check | Result | Scope |
 | --- | --- | --- |
 | Windows Swift6.3.3 local typecheck via apple-devtools | EXECUTED_PASS | HanlinA2UIIngress.swift only |
-| Swift6 strict-concurrency standalone build and execution | EXECUTED_PASS, 7 scenarios | Actual ingress source plus portable cases in A2UITests.swift |
+| Swift6 strict-concurrency standalone build and execution | EXECUTED_PASS, 8 scenarios | Actual ingress source plus portable cases in A2UITests.swift |
 | Enabled-flag Swift frontend syntax parse | EXECUTED_PASS | All3 source files and test file; no import/type/API checking |
 | Official exact-pin enabled SDK compilation | NOT_RUN | No dependencies wired; remote slot reserved for Runtime |
-| Official SDK/SwiftUI cases | NOT_RUN, 16 cases | Flag-gated cases listed below |
+| Official SDK/SwiftUI cases | NOT_RUN, 17 cases | Flag-gated cases listed below |
 | Inline app integration / hosted RTL / device acceptance | NOT_RUN | No host seam edits or UI automation authorized |
 
-The7 local scenarios execute through the standalone runner, not XCTest or
+The8 local scenarios execute through the standalone runner, not XCTest or
 Swift Testing discovery. Each uses the same check function as its project
 Swift Testing wrapper. Output is in
 [portable-results.txt](evidence/portable-results.txt). This does not assert
-that7 Swift Testing case nodes exist in an xcresult. No Xcode run, CI run,
+that8 Swift Testing case nodes exist in an xcresult. No Xcode run, CI run,
 upstream conformance suite or simulator result is claimed.
 
 The initial strict-concurrency compile caught a non-Sendable function-array
 declaration in the portable harness. Its immutable scenario closures were
 corrected to `@Sendable`; the rebuilt harness exited0 and executed all7 cases.
 
-## Portable cases: 7 executed
+## Portable cases: 8 executed
 
 All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 `A2UIIngressTests`. Source under test:
@@ -58,6 +67,7 @@ All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 | preservesUnicodeSurfaceIdentity() | EXECUTED_PASS |
 | boundsUTF8MessageAndComponentBatch() | EXECUTED_PASS |
 | rejectsRPCAndUnnegotiatedCatalogs() | EXECUTED_PASS |
+| rejectedEnvelopesNeverExportSurfaceCorrelation() | EXECUTED_PASS |
 | componentValidationRemainsWithSDK() | EXECUTED_PASS |
 
 These checks deliberately accept the framing of malformed *components* so
@@ -95,7 +105,7 @@ swiftc -frontend -parse -D HANLIN_A2UI_POC -D DEBUG `
   AI_HLYTests/A2UITests.swift
 ```
 
-## Exact-pin SDK cases: 16 NOT_RUN
+## Exact-pin SDK cases: 17 NOT_RUN
 
 All case definitions are in `AI_HLYTests/A2UITests.swift`, suite
 `A2UISDKTests`. They compile only with `HANLIN_A2UI_POC`, in the app and test
@@ -123,8 +133,9 @@ rather than accepting a smaller discovered count.
 | unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() | Official validator and no-listener policy; reject unsolicited response | NOT_RUN |
 | closeRevokesQueuedAndRetainedActionCallbacks() | Revoke queued delivery and retained SDK actions; repeat close | NOT_RUN |
 | closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() | Real pending SDK RPC cancels before2s rather than30s timeout; later calls DISPOSED | NOT_RUN |
+| unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() | Missing, blank, whitespace, overlong/UTF-8/60KB IDs, other-owner and current IDs cannot route fallback or change live models | NOT_RUN |
 
-The last3 cases address the2 P2 findings in the independent review of
+The three lifecycle/RPC cases address the2 P2 findings in the independent review of
 `e7141d55`; they exercise official SDK objects, not source-string matching.
 The disposal test temporarily installs a listener through a Debug-only test
 hook to seed a real in-flight call, observes its request, closes the session,
@@ -134,6 +145,15 @@ no callbacks after revocation. This is authored regression coverage, **not
 executed SDK proof**. No normal session installs an outbound RPC listener.
 The Button regression now waits for the actual callback with a2s deadline;
 it no longer assumes `Task.yield()` completes asynchronous delivery.
+
+The correlation regression sends27 unsupported/RPC envelopes over two live
+surfaces and a separate result owner. It checks unchanged model/node identity,
+data, surface IDs and fallback state, including an existing correctly targeted
+SDK-validation fallback. The portable case executes the same generated inputs
+against real ingress and checks rejection classification and absent target IDs;
+it does not simulate SDK ownership. Existing missing-target and capacity tests
+now require no phantom fallback entries. Malformed-content coverage retains an
+empty-result fallback and verifies malformed input cannot hide live content.
 
 `Surface.render` constructs a native view builder result; it is not a hosted
 screen assertion. The RTL case likewise constructs an RTL/accessibility-size
@@ -180,9 +200,9 @@ The project/scheme already exist. This is a future integrator command, not an
 executed action or permission to edit shared files now. An isolated exact-pin
 SDK harness may avoid the full app's Runtime dependency closure, but creating
 that package/project is outside this lease. Prefer such a focused harness
-after the lead assigns its owner; retain these same16 SDK cases and fixtures.
+after the lead assigns its owner; retain these same17 SDK cases and fixtures.
 
-Retain resolved root/transitive revisions, compiler diagnostics and actual23
+Retain resolved root/transitive revisions, compiler diagnostics and actual25
 executed case identities. A green process with zero/omitted tests or the flag
 off is **not** a pass. Select the suites as above, or exact Swift Testing method
 signatures including `()`, and inspect xcresult case nodes. Never promote this

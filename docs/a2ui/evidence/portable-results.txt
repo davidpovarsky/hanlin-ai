@@ -4,5 +4,6 @@ EXECUTED_PASS rejectsOtherProtocolVersions
 EXECUTED_PASS preservesUnicodeSurfaceIdentity
 EXECUTED_PASS boundsUTF8MessageAndComponentBatch
 EXECUTED_PASS rejectsRPCAndUnnegotiatedCatalogs
+EXECUTED_PASS rejectedEnvelopesNeverExportSurfaceCorrelation
 EXECUTED_PASS componentValidationRemainsWithSDK
-Portable framing: 7 passed. SDK/SwiftUI cases: NOT_RUN.
+Portable framing: 8 passed. SDK/SwiftUI cases: NOT_RUN.

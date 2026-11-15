@@ -73,11 +73,13 @@ or execute actions itself. No cross-app or service authorization is implied.
 One session may hold four surfaces, each message is at most65,536 UTF-8 bytes
 and64 components, and a session accepts at most1,048,576 cumulative bytes. The
 budget resets only with a new owner/session. This intentionally bounded POC is
-not a long-running production streaming policy. Unknown component schemas and
-malformed messages fall back to a native unavailable-content presentation.
-Failures with a known ID hide only that surface's controls until a valid update;
-unroutable failures appear separately. Invalid surface IDs cannot grow fallback
-storage without bound. `close()` first revokes queued callbacks, then uses
+not a long-running production streaming policy. Unknown component schemas in a
+validated update fall back only for a surface the current SDK processor owns.
+Raw IDs from rejected envelopes never route fallback. Unsupported operations,
+invalid IDs and foreign targets return errors without adding surfaces or hiding
+existing content. A malformed envelope can replace an empty result placeholder;
+it cannot replace live surface content. Surface membership comes only from the
+SDK, never failure bookkeeping. `close()` first revokes queued callbacks, then uses
 the official `MessageProcessor.dispose()` to clear surfaces/graph bounds and
 cancel pending SDK calls. It is idempotent and rejects late input. The caller
 must dispose sessions when discarding results. A Debug-only test hook seeds a
@@ -93,14 +95,14 @@ integration concern, not an asserted capability.
 
 ## Deliberate activation gate
 
-The SDK-backed source and16 SDK tests are behind **HANLIN_A2UI_POC**. The manager
+The SDK-backed source and17 SDK tests are behind **HANLIN_A2UI_POC**. The manager
 authorized this temporary prototype gate without changing the lease. No build
 flag, manifest, dependency lock or project file was changed. This explicit flag
 protects the synchronized app source groups from unresolved optional imports.
 When enabled, missing imports fail compilation; there is no `canImport` fake
 implementation or success fallback.
 
-Seven portable framing scenarios passed on Windows Swift6.3.3. All16 SDK tests
+Eight portable framing scenarios passed on Windows Swift6.3.3. All17 SDK tests
 are **NOT_RUN**, and enabled SDK compilation, SwiftUI rendering, inline app
 integration and hardware verification remain **NOT_RUN**. A disabled flag,
 syntax-only parse or zero selected cases cannot satisfy either source task.
@@ -118,7 +120,7 @@ integrator the shared seams:
    and preserve the real Package.resolved provenance. Do not use a moving main
    branch or a similarly named community package.
 2. Enable `HANLIN_A2UI_POC` only for the focused exact-pin build and tests first.
-   Stage A2UIFixtures in the test bundle. Require all23 actual test cases and
+   Stage A2UIFixtures in the test bundle. Require all25 actual test cases and
    the resolved revision in retained evidence. No native Runtime rebuild is
    necessary for this isolated renderer proof.
 3. Agree how an existing transcript result owns the session, routes complete

@@ -34,6 +34,21 @@ private enum A2UIFixture {
     }
 }
 
+private enum A2UIUncorrelatedInputs {
+    static func messages() throws -> [String] {
+        let ids: [String?] = [nil, "", "  ", String(repeating: "x", count: 129), String(repeating: "x", count: 60_000),
+                             String(repeating: "א", count: 65), "form-foreign", "form-a", "form-b"]
+        return try ["unknownOperation", "callRendererFunction", "agentFunctionResponse"].flatMap { operation in
+            try ids.map { id in
+                var payload: [String: Any] = [:]
+                if let id { payload["surfaceId"] = id }
+                let data = try JSONSerialization.data(withJSONObject: ["version": "1.0", operation: payload])
+                return String(decoding: data, as: UTF8.self)
+            }
+        }
+    }
+}
+
 /// These checks intentionally stop at framing. They do not emulate SDK schema or renderer behavior.
 private enum A2UIPortableChecks {
     static let scenarios: [(String, @Sendable () throws -> Void)] = [
@@ -43,6 +58,7 @@ private enum A2UIPortableChecks {
         ("preservesUnicodeSurfaceIdentity", preservesUnicodeSurfaceIdentity),
         ("boundsUTF8MessageAndComponentBatch", boundsUTF8MessageAndComponentBatch),
         ("rejectsRPCAndUnnegotiatedCatalogs", rejectsRPCAndUnnegotiatedCatalogs),
+        ("rejectedEnvelopesNeverExportSurfaceCorrelation", rejectedEnvelopesNeverExportSurfaceCorrelation),
         ("componentValidationRemainsWithSDK", componentValidationRemainsWithSDK)
     ]
 
@@ -133,6 +149,29 @@ private enum A2UIPortableChecks {
             try requireA2UI(frame.operation == .updateComponents, "Invalid-component fixture route")
         }
     }
+
+    static func rejectedEnvelopesNeverExportSurfaceCorrelation() throws {
+        for message in try A2UIUncorrelatedInputs.messages() {
+            do {
+                _ = try inspect(message)
+                throw A2UICheckFailure(description: "Unsupported operation was accepted")
+            } catch let error as HanlinA2UIIngress.Rejection {
+                try requireA2UI(error.failure == .unsupportedOperation, "Unsupported classification changed")
+                try requireA2UI(error.surfaceID == nil, "Raw unsupported-operation ID escaped rejection")
+            }
+        }
+        for message in [
+            #"{"version":"0.8","deleteSurface":{"surfaceId":"form-a"}}"#,
+            #"{"version":"1.0","createSurface":{"surfaceId":"form-a","catalogId":"foreign"}}"#
+        ] {
+            do {
+                _ = try inspect(message)
+                throw A2UICheckFailure(description: "Invalid protocol/catalog was accepted")
+            } catch let error as HanlinA2UIIngress.Rejection {
+                try requireA2UI(error.surfaceID == nil, "Rejected envelope acquired target correlation")
+            }
+        }
+    }
 }
 
 private enum A2UIWaitError: Error { case deadline, ended }
@@ -176,6 +215,7 @@ struct A2UIIngressTests {
     @Test func preservesUnicodeSurfaceIdentity() throws { try A2UIPortableChecks.preservesUnicodeSurfaceIdentity() }
     @Test func boundsUTF8MessageAndComponentBatch() throws { try A2UIPortableChecks.boundsUTF8MessageAndComponentBatch() }
     @Test func rejectsRPCAndUnnegotiatedCatalogs() throws { try A2UIPortableChecks.rejectsRPCAndUnnegotiatedCatalogs() }
+    @Test func rejectedEnvelopesNeverExportSurfaceCorrelation() throws { try A2UIPortableChecks.rejectedEnvelopesNeverExportSurfaceCorrelation() }
     @Test func componentValidationRemainsWithSDK() throws { try A2UIPortableChecks.componentValidationRemainsWithSDK() }
 }
 
@@ -254,9 +294,13 @@ struct A2UISDKTests {
 
     @Test func malformedAndUnknownContentFallsBackAndRecovers() throws {
         let session = HanlinA2UISession(onEvent: { _ in })
+        let malformed = String(decoding: try A2UIFixture.data("malformed", extension: "txt"), as: UTF8.self)
+        _ = session.receive(malformed)
+        #expect(session.unroutedFailure == .malformedEnvelope && session.surfaceIDs.isEmpty)
         try load(session)
-        _ = session.receive(String(decoding: try A2UIFixture.data("malformed", extension: "txt"), as: UTF8.self))
-        #expect(session.unroutedFailure == .malformedEnvelope)
+        #expect(session.unroutedFailure == nil)
+        _ = session.receive(malformed)
+        #expect(session.unroutedFailure == nil && session.failures.isEmpty)
         for line in try A2UIFixture.lines("unknown") { #expect(throws: HanlinA2UIIngress.Rejection.self) { try session.receive(line).get() } }
         #expect(session.failures["form-a"] == .sdkValidation)
         try load(session, fixture: "update")
@@ -357,7 +401,8 @@ struct A2UISDKTests {
             try session.receive(create.replacingOccurrences(of: "form-a", with: "surface-\(index)")).get()
         }
         #expect(throws: HanlinA2UIIngress.Rejection.self) { try session.receive(create).get() }
-        #expect(session.failures["form-a"] == .surfaceLimit)
+        #expect(session.failures.isEmpty && session.unroutedFailure == nil)
+        #expect(session.surfaceIDs.count == HanlinA2UISession.maximumSurfaces)
         #expect(session.surface("surface-0") != nil && session.surface("form-a") == nil)
     }
 
@@ -368,8 +413,47 @@ struct A2UISDKTests {
         for index in 0..<20 {
             _ = session.receive(unknown.replacingOccurrences(of: "form-a", with: "missing-\(index)"))
         }
-        #expect(session.failures.count <= HanlinA2UISession.maximumSurfaces)
+        #expect(session.failures.isEmpty && session.unroutedFailure == nil)
+        #expect(session.surfaceIDs == ["form-a"])
         #expect(session.surface("form-a")?.dataModel.get("/name")?.stringValue == "Ada")
+    }
+
+    @Test func unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() throws {
+        let session = HanlinA2UISession(onEvent: { _ in })
+        let foreignOwner = HanlinA2UISession(onEvent: { _ in })
+        try load(session)
+        for line in try A2UIFixture.lines("form") {
+            try session.receive(line.replacingOccurrences(of: "form-a", with: "form-b")).get()
+            try foreignOwner.receive(line.replacingOccurrences(of: "form-a", with: "form-foreign")).get()
+        }
+        let first = try #require(session.surface("form-a"))
+        let second = try #require(session.surface("form-b"))
+        let foreign = try #require(foreignOwner.surface("form-foreign"))
+        let firstIdentity = try node(session, id: "name").identity
+        for message in try A2UIUncorrelatedInputs.messages() {
+            guard case .failure(let rejection) = session.receive(message) else {
+                Issue.record("Unsupported envelope was accepted")
+                return
+            }
+            #expect(rejection.failure == .unsupportedOperation && rejection.surfaceID == nil)
+            #expect(session.surfaceIDs == ["form-a", "form-b"])
+            #expect(session.failures.isEmpty && session.unroutedFailure == nil)
+            #expect(session.surface("form-a") === first && session.surface("form-b") === second)
+            #expect(session.surface("form-foreign") == nil)
+            #expect(try node(session, id: "name").identity == firstIdentity)
+            #expect(first.dataModel.get("/name")?.stringValue == "Ada")
+            #expect(second.dataModel.get("/name")?.stringValue == "Ada")
+            #expect(foreignOwner.surface("form-foreign") === foreign && foreignOwner.failures.isEmpty)
+        }
+        // A real, correlated SDK validation error still falls back for its own surface only.
+        _ = session.receive(try #require(A2UIFixture.lines("unknown").first))
+        #expect(session.failures == ["form-a": .sdkValidation])
+        for message in try A2UIUncorrelatedInputs.messages() { _ = session.receive(message) }
+        #expect(session.failures == ["form-a": .sdkValidation])
+        #expect(session.surfaceIDs == ["form-a", "form-b"] && session.unroutedFailure == nil)
+        #expect(second.dataModel.get("/name")?.stringValue == "Ada")
+        session.close()
+        foreignOwner.close()
     }
 
     @Test func unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() async throws {

@@ -46,21 +46,22 @@ enum HanlinA2UIIngress {
         else { throw Rejection(.malformedEnvelope) }
         let surfaceID = payload["surfaceId"] as? String
         guard let operation = Operation(rawValue: key) else {
-            throw Rejection(.unsupportedOperation, surfaceID: surfaceID)
+            // Unknown operation semantics cannot establish a target, even with a plausible ID.
+            throw Rejection(.unsupportedOperation)
         }
         guard let surfaceID, !surfaceID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               surfaceID.utf8.count <= 128
         else { throw Rejection(.invalidSurfaceID) }
         guard envelope["version"] as? String == "1.0" else {
-            throw Rejection(.unsupportedVersion, surfaceID: surfaceID)
+            throw Rejection(.unsupportedVersion)
         }
         // This POC deliberately does not negotiate custom/defaultless catalogs or RPC.
         if operation == .createSurface, payload["catalogId"] as? String != catalogID {
-            throw Rejection(.unsupportedCatalog, surfaceID: surfaceID)
+            throw Rejection(.unsupportedCatalog)
         }
         if let components = payload["components"] as? [Any],
            components.count > maximumComponentsPerMessage {
-            throw Rejection(.tooManyComponents, surfaceID: surfaceID)
+            throw Rejection(.tooManyComponents)
         }
         return Frame(operation: operation, surfaceID: surfaceID)
     }
