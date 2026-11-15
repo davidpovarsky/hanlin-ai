@@ -23,7 +23,7 @@ import WidgetKit
 /// Permission checks remain in the existing SDK and broker admission paths.
 @MainActor
 protocol HanlinScriptingApplicationServices: AnyObject {
-    func publishCompactAgentConfig() async throws
+    func publishCompactAgentConfig() throws
     func loadAssistant(
         _ request: HanlinScriptingAssistantRequest
     ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error>
@@ -32,6 +32,22 @@ protocol HanlinScriptingApplicationServices: AnyObject {
 @MainActor
 @Observable
 final class HanlinScriptingPlatform {
+    /// Production defaults preserve bootstrap behavior; unit fixtures own their store and queue.
+    @MainActor
+    struct Initialization {
+        var registerExpoDefines: () -> Void
+        var makeExtensionStore: () throws -> HanlinScriptExtensionStore
+        var enqueuePublication: (@escaping @MainActor () -> Void) -> Void
+
+        static var live: Self {
+            .init(
+                registerExpoDefines: { HanlinExpoSession.ensureAppDefinesLoaded() },
+                makeExtensionStore: { try HanlinScriptExtensionStore() },
+                enqueuePublication: { work in Task { @MainActor in work() } }
+            )
+        }
+    }
+
     enum Activity: Equatable {
         case idle
         case importing
@@ -77,6 +93,8 @@ final class HanlinScriptingPlatform {
     private var queuedNativeScriptAdmissions: Set<UUID> = []
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var applicationServices: (any HanlinScriptingApplicationServices)?
+    private var applicationServicesGeneration = UUID()
+    private let initialization: Initialization
     private let locationService = HanlinAppleLocationService()
     private let healthService = HanlinAppleHealthService()
     private let notificationService = HanlinAppleNotificationService()
@@ -85,8 +103,9 @@ final class HanlinScriptingPlatform {
     private let stagingRoot: URL?
     private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptPackageInstall")
 
-    init(rootOverride: URL? = nil) {
-        HanlinExpoSession.ensureAppDefinesLoaded()
+    init(rootOverride: URL? = nil, initialization: Initialization = .live) {
+        self.initialization = initialization
+        initialization.registerExpoDefines()
         do {
             let metadata = try HanlinScriptingSDK.metadata()
             analyzer = HanlinScriptAnalyzer(inventory: .init(
@@ -136,7 +155,7 @@ final class HanlinScriptingPlatform {
             let installed = platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
             store = try HanlinAtomicScriptStore(root: installed)
             do {
-                let sharedStore = try HanlinScriptExtensionStore()
+                let sharedStore = try initialization.makeExtensionStore()
                 extensionStore = sharedStore
                 invocationExecutor = HanlinInvocationExecutor(store: sharedStore)
             } catch {
@@ -206,8 +225,12 @@ final class HanlinScriptingPlatform {
 
     func configure(applicationServices: (any HanlinScriptingApplicationServices)?) {
         self.applicationServices = applicationServices
-        Task {
-            await publishCompactAgentConfig()
+        let generation = UUID()
+        applicationServicesGeneration = generation
+        guard let applicationServices else { return }
+        initialization.enqueuePublication { [weak self] in
+            guard let self, self.applicationServicesGeneration == generation else { return }
+            self.commitCompactAgentConfig(using: applicationServices)
         }
     }
 
@@ -1407,8 +1430,13 @@ final class HanlinScriptingPlatform {
 
     func publishCompactAgentConfig() async {
         guard let applicationServices else { return }
+        commitCompactAgentConfig(using: applicationServices)
+    }
+
+    /// A commit cannot suspend between checking the generation and writing its configuration.
+    private func commitCompactAgentConfig(using applicationServices: any HanlinScriptingApplicationServices) {
         do {
-            try await applicationServices.publishCompactAgentConfig()
+            try applicationServices.publishCompactAgentConfig()
         } catch {
             Self.logger.error("Failed to publish compact agent config: \(Self.safeMessage(error), privacy: .public)")
         }

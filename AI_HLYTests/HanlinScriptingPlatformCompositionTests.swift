@@ -1,4 +1,5 @@
 import Foundation
+import HanlinScriptExtensions
 import HanlinScriptingApplicationRuntime
 import Testing
 @testable import AI_Hanlin
@@ -7,14 +8,14 @@ import Testing
 @Suite("Scripting Platform application services", .serialized)
 struct HanlinScriptingPlatformCompositionTests {
     @Test func unconfiguredAssistantIsExplicitlyUnavailable() async throws {
-        let (root, platform) = makePlatform()
+        let (root, platform, _) = makePlatform()
         defer { try? FileManager.default.removeItem(at: root) }
         await platform.publishCompactAgentConfig()
         try await expectUnavailable(platform)
     }
 
     @Test func requestChunksAndStreamFailureAreForwardedUnchanged() async throws {
-        let (root, platform) = makePlatform()
+        let (root, platform, _) = makePlatform()
         defer { try? FileManager.default.removeItem(at: root) }
         let services = RecordingServices()
         services.streamFailure = .stream
@@ -50,7 +51,7 @@ struct HanlinScriptingPlatformCompositionTests {
     }
 
     @Test func loaderFailureIsNotTranslated() async throws {
-        let (root, platform) = makePlatform()
+        let (root, platform, _) = makePlatform()
         defer { try? FileManager.default.removeItem(at: root) }
         let services = RecordingServices()
         services.loadFailure = .loading
@@ -63,23 +64,22 @@ struct HanlinScriptingPlatformCompositionTests {
     }
 
     @Test func removingServicesDoesNotPublishOrClearTheirConfiguration() async throws {
-        let (root, platform) = makePlatform()
+        let (root, platform, _) = makePlatform()
         defer { try? FileManager.default.removeItem(at: root) }
         let services = RecordingServices()
         platform.configure(applicationServices: services)
         await platform.publishCompactAgentConfig()
         let publicationCount = services.publicationCount
-        #expect(publicationCount >= 1)
+        #expect(publicationCount == 1)
         platform.configure(applicationServices: nil)
         await platform.publishCompactAgentConfig()
-        await Task.yield()
         #expect(services.publicationCount == publicationCount)
         try await expectUnavailable(platform)
         #expect(services.requests.isEmpty)
     }
 
     @Test func publicationFailureDoesNotDiscardTheAssistantService() async throws {
-        let (root, platform) = makePlatform()
+        let (root, platform, _) = makePlatform()
         defer { try? FileManager.default.removeItem(at: root) }
         let services = RecordingServices()
         services.publicationFailure = .publishing
@@ -93,8 +93,8 @@ struct HanlinScriptingPlatformCompositionTests {
     }
 
     @Test func platformInstancesDoNotShareApplicationServices() async throws {
-        let (firstRoot, first) = makePlatform()
-        let (secondRoot, second) = makePlatform()
+        let (firstRoot, first, _) = makePlatform()
+        let (secondRoot, second, _) = makePlatform()
         defer {
             try? FileManager.default.removeItem(at: firstRoot)
             try? FileManager.default.removeItem(at: secondRoot)
@@ -107,11 +107,65 @@ struct HanlinScriptingPlatformCompositionTests {
         #expect(services.requests.count == 1)
     }
 
-    private func makePlatform() -> (URL, HanlinScriptingPlatform) {
+    @Test func queuedPublicationIsRevokedWhenServicesAreRemoved() async throws {
+        let (root, platform, queue) = makePlatform()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let services = RecordingServices()
+        platform.configure(applicationServices: services)
+        #expect(queue.pending.count == 1)
+        platform.configure(applicationServices: nil)
+        queue.drain()
+        #expect(services.publicationCount == 0)
+        try await expectUnavailable(platform)
+    }
+
+    @Test func replacingServicesPublishesOnlyTheCurrentConfigurationOnce() {
+        let (root, platform, queue) = makePlatform()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let first = RecordingServices()
+        let second = RecordingServices()
+        platform.configure(applicationServices: first)
+        platform.configure(applicationServices: second)
+        #expect(queue.pending.count == 2)
+        queue.drain()
+        #expect(first.publicationCount == 0)
+        #expect(second.publicationCount == 1)
+        #expect(queue.pending.isEmpty)
+    }
+
+    private func makePlatform() -> (URL, HanlinScriptingPlatform, PublicationQueue) {
         let root = FileManager.default.temporaryDirectory.appending(
             path: "platform-composition-\(UUID().uuidString)", directoryHint: .isDirectory
         )
-        return (root, HanlinScriptingPlatform(rootOverride: root))
+        let extensionRoot = root.appending(path: "UnitExtensions", directoryHint: .isDirectory)
+        let queue = PublicationQueue()
+        var expoRegistrationCount = 0
+        var storeConstructionCount = 0
+        let platform = HanlinScriptingPlatform(rootOverride: root, initialization: .init(
+            registerExpoDefines: { expoRegistrationCount += 1 },
+            makeExtensionStore: {
+                storeConstructionCount += 1
+                let store = HanlinScriptExtensionStore(root: extensionRoot)
+                #expect(store.root.deletingLastPathComponent().pathComponents == root.resolvingSymlinksInPath().pathComponents)
+                return store
+            },
+            enqueuePublication: { queue.pending.append($0) }
+        ))
+        #expect(expoRegistrationCount == 1)
+        #expect(storeConstructionCount == 1)
+        #expect(platform.bootstrapError == nil)
+        return (root, platform, queue)
+    }
+
+    @MainActor
+    private final class PublicationQueue {
+        var pending: [@MainActor () -> Void] = []
+
+        func drain() {
+            let work = pending
+            pending.removeAll()
+            for publication in work { publication() }
+        }
     }
 
     private func expectUnavailable(_ platform: HanlinScriptingPlatform) async throws {
@@ -137,7 +191,7 @@ struct HanlinScriptingPlatformCompositionTests {
         var publicationFailure: FixtureFailure?
         var streamFailure: FixtureFailure?
 
-        func publishCompactAgentConfig() async throws {
+        func publishCompactAgentConfig() throws {
             publicationCount += 1
             if let publicationFailure { throw publicationFailure }
         }

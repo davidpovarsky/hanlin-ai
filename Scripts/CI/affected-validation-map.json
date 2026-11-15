@@ -790,13 +790,15 @@
     "scripting_assistant_provider_adapter_unit_tests": {
       "description": "Scripting assistant provider adapter unit tests",
       "patterns": [
-        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift"
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
       ],
       "unit_suites": [
-        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests"
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests"
       ],
       "consumers": []
     },

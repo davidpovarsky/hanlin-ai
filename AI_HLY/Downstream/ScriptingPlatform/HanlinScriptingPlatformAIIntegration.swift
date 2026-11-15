@@ -19,7 +19,7 @@ final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServ
         try await HanlinScriptingAssistantProviderAdapter(context: modelContext).load(request)
     }
 
-    func publishCompactAgentConfig() async throws {
+    func publishCompactAgentConfig() throws {
         let keys = try modelContext.fetch(FetchDescriptor<APIKeys>())
         let models = try modelContext.fetch(FetchDescriptor<AllModels>())
 
