@@ -351,12 +351,12 @@ def workflow_controls():
     current = (native.REPO / WORKFLOW).read_bytes()
     require(hashlib.sha256(current).hexdigest() == FROZEN_WORKFLOW_SHA256,
             'scoped existing Composer job wiring drift')
-    import subprocess
-    baseline = subprocess.check_output(['git', '-C', str(native.REPO), 'show', native.OWNER + ':' + WORKFLOW]).decode().replace('\r\n', '\n')
     text = current.decode()
     start, end = '  focused-composer-tests:', '  focused-nativescript-metadata-tests:'
-    require(text[:text.index(start)] == baseline[:baseline.index(start)] and
-            text[text.index(end):] == baseline[baseline.index(end):],
+    # Baseline OWNER prefix/suffix fingerprints avoid an unfetched ancestor tree
+    # in shallow Actions checkouts; all triggers and other jobs remain guarded.
+    require(hashlib.sha256(text[:text.index(start)].encode()).hexdigest() == 'fb0632ded2c2cb3a06e5c14764931df883d2437df69faa69f95d7f49952d150b' and
+            hashlib.sha256(text[text.index(end):].encode()).hexdigest() == '77e4d0d975368532712d8a96c617de5cd76170c419585010c78748cf1eb1efef',
             'only existing focused Composer job may change; triggers and other jobs preserved')
     block = text[text.index(start):text.index(end)]
     require("inputs.composer_validation_only && !inputs.testflight_upload" in block and

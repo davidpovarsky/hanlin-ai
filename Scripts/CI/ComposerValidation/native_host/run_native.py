@@ -265,7 +265,7 @@ def execute():
                 state['failure_capture_error'] = str(error)
         state['execution_status'] = ('PASS' if state.get('apple_pass_claim') else
             'INFRA_ERROR' if not state['test_commands'] else
-            'TEST_FAILED' if any(case['result'] == 'Failed' for case in actual_results.get('cases', [])) else
+            'TEST_FAILED' if any(case['result'] == 'FAIL' for case in actual_results.get('cases', [])) else
             'BUILD_FAILED' if (evidence / 'native-test.stdout').is_file() and '** BUILD FAILED **' in runner.text('native-test') else 'INFRA_ERROR')
         # Never erase/delete, reuse another phone, or mutate global Xcode selection.
         if device and re.fullmatch(r'[0-9A-Fa-f-]{36}', device) and (evidence / 'owned-device.json').is_file():
