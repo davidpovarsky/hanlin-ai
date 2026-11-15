@@ -6,13 +6,14 @@ import hashlib
 import json
 import sys
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import shlex
 import shutil
 import subprocess
 import tempfile
+import types
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -765,6 +766,188 @@ class PreprocessingReceiptControls(unittest.TestCase):
         self.assertEqual(WRAPPER.validate_preprocessing_receipt(receipt, request), [])
         receipt["roots"][0]["observedOwner"] = "fixture"
         self.assertIn("inactive-is-not-resolved", WRAPPER.validate_preprocessing_receipt(receipt, request))
+
+
+class DiagnosticMemoryPath(PurePosixPath):
+    """RAM-only control filesystem; never touches a real path or executable."""
+    files = {}
+    operations = []
+    failures = {}
+
+    def read_bytes(self):
+        self.operations.append(("read", str(self)))
+        if str(self) in self.failures:
+            raise self.failures[str(self)]
+        return self.files[str(self)]
+
+    def read_text(self, **kwargs):
+        return self.read_bytes().decode("utf-8")
+
+    def write_bytes(self, body):
+        self.operations.append(("write", str(self)))
+        if str(self) in self.failures:
+            raise self.failures[str(self)]
+        self.files[str(self)] = body
+        return len(body)
+
+    def write_text(self, text, **kwargs):
+        return self.write_bytes(text.encode("utf-8"))
+
+    def open(self, mode):
+        assert mode == "rb"
+        return io.BytesIO(self.read_bytes())
+
+    def mkdir(self, **kwargs):
+        self.operations.append(("mkdir", str(self)))
+
+    def is_file(self):
+        self.operations.append(("is_file", str(self)))
+        return str(self) in self.files
+
+    def glob(self, pattern):
+        return []
+
+    def resolve(self):
+        return self
+
+
+@contextlib.contextmanager
+def diagnostic_memory_generation(mode, *, alias_error=None, source_error=None, evidence_failure=None,
+                                 selected_source_error=None, helper_error=None, generator_exit=0):
+    """Execute real wrapper control flow with RAM paths and mocked transports.
+
+    This proves control flow only; no actual generation/native/real-filesystem
+    success is established. The authored unittest methods remain separately run.
+    """
+    memory = DiagnosticMemoryPath
+    memory.files, memory.operations, memory.failures = {}, [], {}
+    root, module = memory("/repo"), memory("/module")
+    evidence = root / "build/acceptance/nativescript-metadata/iphonesimulator-arm64"
+    tool = root / "build/nativescript-metadata-tool"
+    patch_source = root / "Scripts/NativeScript/build-metadata-tool.py"
+    memory.files[str(tool / "bin/objc-metadata-generator")] = b"not-executable-memory-tool"
+    memory.files[str(patch_source)] = b"memory-source"
+    memory.files[str(tool / "provenance.json")] = json.dumps({
+        "generatorSHA256": hashlib.sha256(b"not-executable-memory-tool").hexdigest(),
+        "patchSourceSHA256": hashlib.sha256(b"memory-source").hexdigest()}).encode()
+    upstream = memory("/generator/upstream.py")
+    memory.files[str(upstream)] = b"memory-launcher"
+    stale = memory("/products/metadata-arm64.bin")
+    memory.files[str(stale)] = b"OLD-METADATA-MUST-NOT-BE-ACCEPTED"
+    selected = memory("/selected/ExpoModulesCore_umbrella.h")
+    memory.files[str(selected)] = b"// selected body\n"
+    inventory = [{"framework": "ExpoModulesCore.framework", "status": "SELECTED",
+        "publicUmbrellaHeaders": [{"path": str(selected), "sha256": hashlib.sha256(memory.files[str(selected)]).hexdigest()}]}]
+    if selected_source_error:
+        memory.failures[str(selected)] = selected_source_error
+    if evidence_failure:
+        memory.failures[str(evidence / evidence_failure)] = OSError("injected diagnostic evidence write failure")
+    # A stale COMPLETE receipt must not overcome an evidence-failure exit.
+    memory.files[str(evidence / "preprocessing-provenance.json")] = json.dumps({
+        "status": "COMPLETE", "metadataExecution": "NOT_GENERATED"}).encode()
+    headers = types.ModuleType("metadata_public_headers")
+    headers.ROLE_MANIFEST = "roles.json"
+    headers.produce_role_inventory = Mock()
+    headers.verify_role_context = Mock()
+    headers.write_public_umbrella = Mock(return_value=inventory, side_effect=source_error)
+    headers.write_verified_header_alias_overlay = Mock(return_value=[], side_effect=alias_error)
+    def capture(*args):
+        (module / "actual-compiler-arguments.json").write_text("{}")
+        return []
+    with contextlib.ExitStack() as stack:
+        stack.enter_context(patch.dict(os.environ, {"SDKROOT": "/sdk", "CONFIGURATION_BUILD_DIR": "/products",
+            "HANLIN_METADATA_PREPROCESS_PROVENANCE": mode}, clear=True))
+        stack.enter_context(patch.dict(sys.modules, {"metadata_public_headers": headers}))
+        stack.enter_context(patch.object(WRAPPER, "Path", memory))
+        for name, value in [("write_swift_module_map", []), ("explicit_input_adapter", "adapter"),
+                            ("metadata_flags", "-fno-modules"), ("capture_native_compiler_context", {"arguments": []})]:
+            stack.enter_context(patch.object(WRAPPER, name, return_value=value))
+        stack.enter_context(patch.object(WRAPPER, "capture_compiler_arguments", side_effect=capture))
+        trace = stack.enter_context(patch.object(WRAPPER, "capture_preprocessing_provenance", return_value={
+            "schemaVersion": 1, "status": "COMPLETE", "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY"}))
+        copied = stack.enter_context(patch.object(WRAPPER.shutil, "copy2"))
+        generated = stack.enter_context(patch.object(WRAPPER.subprocess, "run", return_value=types.SimpleNamespace(returncode=generator_exit)))
+        checked = stack.enter_context(patch.object(WRAPPER, "retain_and_check_metadata", return_value=True))
+        helper = stack.enter_context(patch.object(WRAPPER, "retain_diagnostic_evidence", wraps=WRAPPER.retain_diagnostic_evidence,
+                                                  side_effect=helper_error))
+        stderr = stack.enter_context(contextlib.redirect_stderr(io.StringIO()))
+        invoke = lambda: WRAPPER.generate_final_metadata(root, "arm64", "iphonesimulator", module,
+            module / "module.modulemap", memory("/runtime.h"), memory("/generator"), upstream)
+        yield types.SimpleNamespace(invoke=invoke, memory=memory, evidence=evidence, stale=stale,
+            trace=trace, helper=helper, generated=generated, checked=checked, copied=copied,
+            headers=headers, stderr=stderr)
+
+
+class DiagnosticProductionBoundaryControls(unittest.TestCase):
+    """Authored RAM control-flow tests, NOT_RUN in the frozen source packet."""
+
+    def test_complete_diagnostic_never_succeeds_production_or_consumes_stale_binary(self):
+        with diagnostic_memory_generation("1") as control:
+            self.assertEqual(control.invoke(), WRAPPER.DIAGNOSTIC_ONLY_EXIT)
+            self.assertNotEqual(WRAPPER.DIAGNOSTIC_ONLY_EXIT, 0)
+            control.generated.assert_not_called()
+            control.checked.assert_not_called()
+            self.assertNotIn(("read", str(control.stale)), control.memory.operations)
+            self.assertEqual(control.memory.files[str(control.stale)], b"OLD-METADATA-MUST-NOT-BE-ACCEPTED")
+            receipt = json.loads(control.memory.files[str(control.evidence / "preprocessing-provenance.json")])
+            self.assertEqual(receipt["status"], "COMPLETE")
+            self.assertEqual(receipt["metadataExecution"], "NOT_GENERATED")
+
+    def test_disabled_mode_never_calls_diagnostic_helper_or_new_evidence_io(self):
+        with diagnostic_memory_generation("0") as control:
+            self.assertEqual(control.invoke(), 0)  # RAM transport success only.
+            control.trace.assert_not_called()
+            control.helper.assert_not_called()
+            control.generated.assert_called_once()
+            control.checked.assert_called_once_with("arm64", "iphonesimulator")
+            self.assertEqual(control.headers.write_public_umbrella.call_count, 2)
+            self.assertFalse(any("preprocessing-provenance" in path or "selected-public-header" in path
+                or "ExpoModulesCore_umbrella.h" in path for _, path in control.memory.operations))
+
+    def test_normal_generator_failure_keeps_original_exit_contract(self):
+        with diagnostic_memory_generation("0", generator_exit=7) as control:
+            self.assertEqual(control.invoke(), 7)
+            control.checked.assert_called_once()
+            control.helper.assert_not_called()
+
+    def test_diagnostic_write_failure_has_distinct_non_success_even_with_stale_complete(self):
+        for filename in ["selected-public-header.json", "preprocessing-provenance.json"]:
+            with self.subTest(filename=filename), diagnostic_memory_generation("1", evidence_failure=filename) as control:
+                self.assertEqual(control.invoke(), WRAPPER.DIAGNOSTIC_EVIDENCE_FAILURE_EXIT)
+                control.generated.assert_not_called()
+                control.checked.assert_not_called()
+                self.assertIn("diagnostic evidence INCOMPLETE", control.stderr.getvalue())
+
+    def test_selected_read_failure_never_masks_original_alias_exception(self):
+        primary = RuntimeError("original unequal alias")
+        with diagnostic_memory_generation("1", alias_error=primary, selected_source_error=OSError("source read failed")) as control:
+            with self.assertRaises(RuntimeError) as caught:
+                control.invoke()
+            self.assertIs(caught.exception, primary)
+            self.assertIn("source read failed", control.stderr.getvalue())
+            control.generated.assert_not_called()
+
+    def test_unexpected_helper_failure_never_masks_original_source_exception(self):
+        primary = RuntimeError("original source inventory failure")
+        with diagnostic_memory_generation("1", source_error=primary, helper_error=RuntimeError("diagnostic helper failed")) as control:
+            with self.assertRaises(RuntimeError) as caught:
+                control.invoke()
+            self.assertIs(caught.exception, primary)
+            self.assertIn("diagnostic helper failed", control.stderr.getvalue())
+            control.headers.write_verified_header_alias_overlay.assert_not_called()
+
+    def test_probe_accepts_sentinel_only_in_explicit_diagnostic_outcome(self):
+        spec = importlib.util.spec_from_file_location("diagnostic_probe", ROOT / "Scripts/NativeScript/probe-sdk-metadata.py")
+        probe = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(probe)
+        receipt = {"status": "COMPLETE", "metadataExecution": "NOT_GENERATED"}
+        aliases = {"status": "VERIFIED"}
+        self.assertEqual(probe.diagnostic_probe_outcome(3, receipt, aliases), {
+            "diagnosticStatus": "COMPLETE", "metadataExecution": "NOT_GENERATED"})
+        for code in [0, 1, 2, 4, -9]:
+            self.assertEqual(probe.diagnostic_probe_outcome(code, receipt, aliases)["diagnosticStatus"], "INCOMPLETE")
+        self.assertEqual(probe.diagnostic_probe_outcome(3, receipt, {"status": "FAILED"})["diagnosticStatus"], "INCOMPLETE")
+        self.assertEqual(probe.diagnostic_probe_outcome(3, {"status": "INCOMPLETE"}, aliases)["diagnosticStatus"], "INCOMPLETE")
 
 
 class NativePreprocessingProvenanceControls(unittest.TestCase):

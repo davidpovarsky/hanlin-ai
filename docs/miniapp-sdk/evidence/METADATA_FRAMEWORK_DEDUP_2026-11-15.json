@@ -2085,9 +2085,9 @@
     "baseCommit": "fcce779678fb0010042e962882c2e5e1a77d08a6",
     "sourceSHA256": {
       "Scripts/NativeScript/build-metadata-tool.py": "b553391db3c07ce1364dedf2334e7ce707173037d60d8c080df8c9b74611f83d",
-      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "e0631695f4e7b94fa35fc386a1a0f1e3f0bb335a1b31abbf84a9dcbba3e589da",
-      "Scripts/NativeScript/probe-sdk-metadata.py": "490a2adce1b8d3c986f20c9e68f1ceb8ac49895b60a8caaec29577dc85758a77",
-      "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "83fecdcf36282629eb7375048e0bc8820bd1c1a70fb2dbd469608b39d82cf0da"
+      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "c42783300284ddbd93c75041f5de4dcbc6d1c37b7a173177485744ab10132e23",
+      "Scripts/NativeScript/probe-sdk-metadata.py": "dd00967e2c63c28af37c3305700fd867ed994b30df0f6834c9fd47b6ac5c0458",
+      "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "553e4e648c8f4aebdeaba94574c6c3e28714ed71bce9517649a80d8834d4b0e9"
     },
     "schemaIdentity": {
       "schemaVersion": 1,
@@ -2107,9 +2107,19 @@
         "unresolved",
         "pending"
       ],
-      "completeness": "EOF + EndOfMainFile + action-ended + no errors/AST/Sema/serialization/truncation/misses/unknown owners/uncorrelated/unproven pragmas/consumer entries/writer entries; all root occurrences covered; inactive is not resolved; bindings/files/request/observed-inputs/canaries checked."
+      "completeness": "EOF + EndOfMainFile + action-ended + no errors/AST/Sema/serialization/truncation/misses/unknown owners/uncorrelated/unproven pragmas/consumer entries/writer entries; all root occurrences covered; inactive is not resolved; bindings/files/request/observed-inputs/canaries checked.",
+      "diagnosticEnvelopeContract": {
+        "diagnosticOnlyExit": 3,
+        "diagnosticEvidenceFailureExit": 4,
+        "metadataExecution": "NOT_GENERATED",
+        "probeInterpretation": "Only --preprocessing-provenance probe may report diagnosticStatus=COMPLETE for exit3 plus COMPLETE receipt/NOT_GENERATED/VERIFIED aliases. Exit0, exit4, failures or stale COMPLETE receipts cannot satisfy it. No normal build success or retry/transient semantics.",
+        "normalMode": "No new diagnostic helper, selected-header body read, selected receipt write, diagnostic file probes/copies or diagnostic path creation. Existing generation plus retention return contract retained; actual generation not run.",
+        "failurePreservation": "All new diagnostic evidence work is gated to mode1. Selected-source/write/copy/helper failures record INCOMPLETE through receipt/stderr where writable. Exit4 if no primary exception; original alias/source exception propagates otherwise."
+      },
+      "evidenceRetentionSourceSHA256": "433c91704cd1d44616f1127835655b54ac223f1e504967346ccbd44a38ff8212",
+      "probeOutcomeSourceSHA256": "b1655125a61cb042882cdfcb533ba7afef7bfe29d18bbc298490e2ecc7b8b94b"
     },
-    "schemaContractSHA256": "81fa42a9fe3696aad9891a625fbaebffe790c037c388bfa197a26ddb05c3e501",
+    "schemaContractSHA256": "c030a754eb2c4797eddbf4a10f5c58aaaf268631c5d22a815422a9495f4e6df3",
     "pinnedOriginalMainSHA256": "88943e6a0a5fad5eb35300b18c09b3ce9a74a850a7f8473ba3fa6f05e2cd1b0a",
     "patchedMainSHA256": "9c968d7a15253f3613bd1888970ce1851597939222c05c78c5eb73763a3ef757",
     "sourceAnalysis": {
@@ -2120,7 +2130,9 @@
       "consumerFactoryIncrements": 1,
       "metadataWriterBranchIncrements": 5,
       "inMemoryReceiptNegativeCases": 28,
-      "diffCheck": "PASS"
+      "diffCheck": "PASS",
+      "ramWrapperProbeControlFlowCases": 14,
+      "ramControlFlowBoundary": "Production wrapper functions executed using RAM-only paths and mocked transports; no real filesystem or generator outcome proved. All authored unittest methods remain NOT_RUN."
     },
     "authoredControls": {
       "PreprocessingReceiptControls": {
@@ -2128,6 +2140,18 @@
         "methods": [
           "test_partial_cancelled_truncated_or_parser_receipt_cannot_be_complete",
           "test_inactive_occurrence_has_no_observed_resolution_or_owner"
+        ]
+      },
+      "DiagnosticProductionBoundaryControls": {
+        "status": "NOT_RUN",
+        "methods": [
+          "test_complete_diagnostic_never_succeeds_production_or_consumes_stale_binary",
+          "test_disabled_mode_never_calls_diagnostic_helper_or_new_evidence_io",
+          "test_normal_generator_failure_keeps_original_exit_contract",
+          "test_diagnostic_write_failure_has_distinct_non_success_even_with_stale_complete",
+          "test_selected_read_failure_never_masks_original_alias_exception",
+          "test_unexpected_helper_failure_never_masks_original_source_exception",
+          "test_probe_accepts_sentinel_only_in_explicit_diagnostic_outcome"
         ]
       },
       "NativePreprocessingProvenanceControls": {
@@ -2185,7 +2209,8 @@
       "FileSkipped is correlated to actual include source/root/owner. Guard versus pragma skip mechanism is not inferred from FileSkipped alone.",
       "Cancellation control observes actual tool startup before stopping/killing; a process that completes before it can be stopped fails the control. No mid-lex deterministic handshake or proof claimed.",
       "Production receipt binds all selected framework inventory inputs, module maps, VFS content, tool/source/provenance, actual environment/cwd/compiler/vector and observed file buffers. Zero consumer/writer claims come from instrumented actual entry points.",
-      "Default alias validator is unchanged and still runs after diagnostic failure or completion. Diagnostic return never reaches final metadata invocation. SDK03/INT03 remain OPEN; projection remains disabled."
+      "Default alias validator is unchanged and still runs after diagnostic failure or completion. Diagnostic return never reaches final metadata invocation. SDK03/INT03 remain OPEN; projection remains disabled.",
+      "P2 correction: diagnostic production entry always nonzero (3 or evidence-failure4); only explicit diagnostic probe distinguishes diagnosticStatus=COMPLETE from metadataExecution=NOT_GENERATED. All new selected-header/diagnostic retention IO is opt-in1 and cannot replace primary exceptions. No stale binary accepted. Normal-off IO behavior has RAM control-flow evidence only; real native/filesystem controls NOT_RUN."
     ],
     "selectedUmbrellaGap": {
       "status": "NO_RECOVERY",
@@ -2193,6 +2218,17 @@
       "archiveEvidence": "43680891375 / 14148745560: 7216 central-directory entries inspected; zero direct ExpoModulesCore_umbrella.h basename entries. No selected body recovered.",
       "futureCapture": "Bounded selected-header bytes retained only when actual selected path body matches that run inventory hash. No local/upstream substitute or retrospective recovery."
     },
-    "handoffGate": "One source/schema/test identity packet to lead for independent Roni + root review BEFORE any native execution; C reserve gate stays active. No dispatch, signing, merge, integration or Asana mutation."
+    "handoffGate": "One source/schema/test identity packet to lead for independent Roni + root review BEFORE any native execution; C reserve gate stays active. No dispatch, signing, merge, integration or Asana mutation.",
+    "supersedesSourcePacketCommit": "2dc0e05f91d29153c0f41e2f79a44c1720685a55",
+    "cppSourceUnchangedFromSupersededPacket": true,
+    "authoredMethodCount": 18,
+    "productionEntryContract": {
+      "diagnosticOnlyExit": 3,
+      "diagnosticEvidenceFailureExit": 4,
+      "metadataExecution": "NOT_GENERATED",
+      "probeInterpretation": "Only --preprocessing-provenance probe may report diagnosticStatus=COMPLETE for exit3 plus COMPLETE receipt/NOT_GENERATED/VERIFIED aliases. Exit0, exit4, failures or stale COMPLETE receipts cannot satisfy it. No normal build success or retry/transient semantics.",
+      "normalMode": "No new diagnostic helper, selected-header body read, selected receipt write, diagnostic file probes/copies or diagnostic path creation. Existing generation plus retention return contract retained; actual generation not run.",
+      "failurePreservation": "All new diagnostic evidence work is gated to mode1. Selected-source/write/copy/helper failures record INCOMPLETE through receipt/stderr where writable. Exit4 if no primary exception; original alias/source exception propagates otherwise."
+    }
   }
 }

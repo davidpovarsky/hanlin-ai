@@ -60,6 +60,13 @@ def replay_final_header_staging(root: Path, folder: Path) -> dict:
     return evidence
 
 
+def diagnostic_probe_outcome(exit_code: int, diagnostic: dict, aliases: dict) -> dict:
+    """Interpret exit3 ONLY for this explicit diagnostic probe, never metadata."""
+    complete = exit_code == 3 and diagnostic.get("status") == "COMPLETE" \
+        and diagnostic.get("metadataExecution") == "NOT_GENERATED" and aliases.get("status") == "VERIFIED"
+    return {"diagnosticStatus": "COMPLETE" if complete else "INCOMPLETE", "metadataExecution": "NOT_GENERATED"}
+
+
 def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, arch: str,
                           preprocessing_provenance: bool = False) -> dict:
     """Exercise the actual launcher with a genuinely compiled Swift interface."""
@@ -172,10 +179,12 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
     effective_context = json.loads(effective_path.read_text()) if effective_path.is_file() else {}
     aliases_path = visibility.parent / "header-alias-validation.json"
     alias_validation = json.loads(aliases_path.read_text()) if aliases_path.is_file() else {}
-    diagnostic_path = visibility.parent / "preprocessing-provenance.json"
-    diagnostic = json.loads(diagnostic_path.read_text()) if preprocessing_provenance and diagnostic_path.is_file() else {}
-    selected_path = visibility.parent / "selected-public-header.json"
-    selected_body = json.loads(selected_path.read_text()) if selected_path.is_file() else {}
+    diagnostic, selected_body = {}, {}
+    if preprocessing_provenance:
+        diagnostic_path = visibility.parent / "preprocessing-provenance.json"
+        diagnostic = json.loads(diagnostic_path.read_text()) if diagnostic_path.is_file() else {}
+        selected_path = visibility.parent / "selected-public-header.json"
+        selected_body = json.loads(selected_path.read_text()) if selected_path.is_file() else {}
     if preprocessing_provenance:
         recorded = {}  # A previous binary/visibility file is never diagnostic evidence.
     for receipt in visibility.parent.glob("input-roles-*.json"):
@@ -198,7 +207,8 @@ def probe_runtime_wrapper(root: Path, output: Path, original_generator: Path, ar
             "actualMetadataCompilerArguments": actual_arguments, "actualMetadataContext": actual_context, "effectiveMetadataCompilerContext": effective_context, "actualSwiftProviderTarget": compilation["-target"],
             "headerAliasValidation": alias_validation,
             "preprocessingProvenance": diagnostic, "selectedPublicHeader": selected_body,
-            "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY" if preprocessing_provenance else "NORMAL_MODE",
+            **(diagnostic_probe_outcome(execution.returncode, diagnostic, alias_validation) if preprocessing_provenance
+               else {"metadataExecution": "NORMAL_MODE"}),
             "finalHeaderStaging": final_staging,
             "includeOnlyFrameworks": [{"framework": r["framework"], "inputManifestSHA256": r["inputManifestSHA256"],
                                        "declarations": len(r["inputRoleProof"]["declarations"])} for r in include_only],
@@ -243,11 +253,12 @@ def main() -> int:
         if generator != (root / "build/nativescript-metadata-tool/bin/objc-metadata-generator").resolve():
             raise RuntimeError("Diagnostic candidate must match the production wrapper's instrumented tool")
         diagnostic = probe_runtime_wrapper(root, output, original_generator, arch, preprocessing_provenance=True)
-        result = {"schemaVersion": 1, "status": "DIAGNOSTIC_ONLY", "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY",
+        result = {"schemaVersion": 1, "status": "DIAGNOSTIC_ONLY", "metadataExecution": "NOT_GENERATED",
+                  "diagnosticStatus": diagnostic.get("diagnosticStatus", "INCOMPLETE"),
                   "runtimeWrapper": diagnostic, "boundary": "Reachability only; no metadata/API/ABI/VM pass."}
         (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(result), flush=True)
-        return 0 if diagnostic.get("preprocessingProvenance", {}).get("status") == "COMPLETE" and diagnostic.get("headerAliasValidation", {}).get("status") == "VERIFIED" else 2
+        return 0 if diagnostic.get("diagnosticStatus") == "COMPLETE" else 2
     umbrella = output / "probe.h"
     umbrella.write_text('#import <UIKit/UIKit.h>\n#import "HanlinNativeServicesBridge.h"\n'
                         '#import "HanlinNativeScriptCompatibility.h"\n', encoding="utf-8")

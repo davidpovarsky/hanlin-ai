@@ -17,6 +17,11 @@ REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSe
     "HanlinNativeScriptCompatibility", "UIView", "NSObject", "NativeScriptEmbedder",
     "SwiftUIProvider", "HanlinNativeScriptSwiftUIFixtureProvider"]
 
+# Permanent non-success for production entry: tracing never generated metadata.
+# Only the explicitly selected diagnostic probe interprets this sentinel.
+DIAGNOSTIC_ONLY_EXIT = 3
+DIAGNOSTIC_EVIDENCE_FAILURE_EXIT = 4
+
 
 def required_env(name: str) -> str:
     value = os.environ.get(name)
@@ -428,6 +433,52 @@ def main() -> int:
         shutil.rmtree(module_root, ignore_errors=True)
 
 
+def retain_diagnostic_evidence(inventory, module_root, evidence, diagnostic_result):
+    """Called ONLY in explicit diagnostic mode; never mask a primary failure."""
+    failures = []
+    selected = {"status": "NOT_RETAINED", "reason": "selected umbrella not discovered"}
+    try:
+        for row in inventory:
+            if row["framework"] != "ExpoModulesCore.framework" or row["status"] != "SELECTED":
+                continue
+            for header in row["publicUmbrellaHeaders"]:
+                path = Path(header["path"])
+                if path.name != "ExpoModulesCore_umbrella.h":
+                    continue
+                selected = {"status": "INCOMPLETE", "path": str(path), "expectedSHA256": header["sha256"]}
+                with path.open("rb") as source:
+                    body = source.read(128 * 1024 + 1)
+                selected["actualSHA256"] = hashlib.sha256(body).hexdigest()
+                if len(body) > 128 * 1024 or selected["actualSHA256"] != header["sha256"]:
+                    raise RuntimeError("Selected diagnostic header size/hash mismatch")
+                (evidence / "selected-ExpoModulesCore_umbrella.h").write_bytes(body)
+                selected.update(status="RETAINED_EXACT", bytes=len(body))
+        (evidence / "selected-public-header.json").write_text(json.dumps(selected, indent=2) + "\n", encoding="utf-8")
+    except Exception as error:
+        failures.append("selected-header: " + type(error).__name__ + ": " + str(error))
+    for name in ["preprocessing-provenance-inputs.json", "preprocessing-provenance.native.json", "preprocessing-provenance.log"]:
+        try:
+            source = module_root / name
+            if source.is_file():
+                shutil.copy2(source, evidence / name)
+        except Exception as error:
+            failures.append(name + ": " + type(error).__name__ + ": " + str(error))
+    diagnostic_result = dict(diagnostic_result or {"schemaVersion": 1, "status": "INCOMPLETE"})
+    diagnostic_result["metadataExecution"] = "NOT_GENERATED"
+    if failures:
+        diagnostic_result.update(status="INCOMPLETE", diagnosticEvidenceFailures=failures)
+    try:
+        (evidence / "preprocessing-provenance.json").write_text(json.dumps(diagnostic_result, indent=2) + "\n", encoding="utf-8")
+    except Exception as error:
+        failures.append("diagnostic-receipt: " + type(error).__name__ + ": " + str(error))
+    if failures:
+        # stderr survives even if the evidence destination is unwritable. The
+        # caller also returns a different non-success code when no primary
+        # exception is already propagating; stale COMPLETE files cannot pass.
+        print("Hanlin diagnostic evidence INCOMPLETE: " + "; ".join(failures), file=sys.stderr)
+    return not failures
+
+
 def generate_final_metadata(root, arch, platform_name, module_root, module_map, runtime_header, generator_root, upstream_generator):
     swift_headers = write_swift_module_map(module_map, runtime_header, arch)
     environment = os.environ.copy()
@@ -459,6 +510,7 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     if diagnostic_mode not in {"0", "1"}:
         raise RuntimeError("Invalid preprocessing provenance opt-in")
     diagnostic_result = None
+    diagnostic_evidence_ok = False
     inventory = []
     try:
         library = None
@@ -498,51 +550,41 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
             except (RuntimeError, OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
                 diagnostic_result = {"schemaVersion": 1, "status": "INCOMPLETE",
                     "metadataExecution": "NOT_RUN_DIAGNOSTIC_ONLY", "reason": type(error).__name__ + ": " + str(error)}
-                (module_root / "preprocessing-provenance.json").write_text(json.dumps(diagnostic_result, indent=2) + "\n", encoding="utf-8")
         try:
             aliases = write_verified_header_alias_overlay(inventory, alias_overlay)
         except RuntimeError as error:
             alias_validation.write_text(json.dumps({"status": "FAILED", "reason": str(error)}) + "\n", encoding="utf-8")
             raise
         alias_validation.write_text(json.dumps({"status": "VERIFIED", "aliases": len(aliases)}) + "\n", encoding="utf-8")
-        if diagnostic_mode == "1":
-            # Diagnostic completion is never a final metadata invocation. The
-            # unchanged alias guard above still raises on conflicting bytes.
-            return 0 if diagnostic_result.get("status") == "COMPLETE" else 2
-        # Reclassify ALL final, post-staging bytes at the exact captured context.
-        # Never promote a stale receipt by updating hashes alone.
-        for directory in role_roots:
-            produce_role_inventory(directory, arguments, library, receipt_path=receipts[str(directory)], metadata_compiler=metadata_compiler)
-        inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
-            sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments, metadata_compiler)
+        if diagnostic_mode == "0":
+            # Reclassify ALL final, post-staging bytes at the exact captured context.
+            # Never promote a stale receipt by updating hashes alone.
+            for directory in role_roots:
+                produce_role_inventory(directory, arguments, library, receipt_path=receipts[str(directory)], metadata_compiler=metadata_compiler)
+            inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
+                sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments, metadata_compiler)
     finally:
-        selected = {"status": "NOT_RETAINED", "reason": "selected umbrella not discovered"}
-        for row in inventory:
-            if row["framework"] != "ExpoModulesCore.framework" or row["status"] != "SELECTED":
-                continue
-            for header in row["publicUmbrellaHeaders"]:
-                path = Path(header["path"])
-                if path.name != "ExpoModulesCore_umbrella.h":
-                    continue
-                selected = {"status": "INCOMPLETE", "path": str(path), "expectedSHA256": header["sha256"]}
-                try:
-                    with path.open("rb") as source:
-                        body = source.read(128 * 1024 + 1)
-                    selected["actualSHA256"] = hashlib.sha256(body).hexdigest()
-                    if len(body) <= 128 * 1024 and selected["actualSHA256"] == header["sha256"]:
-                        (evidence / "selected-ExpoModulesCore_umbrella.h").write_bytes(body)
-                        selected.update(status="RETAINED_EXACT", bytes=len(body))
-                except OSError as error:
-                    selected["reason"] = str(error)
-        (evidence / "selected-public-header.json").write_text(json.dumps(selected, indent=2) + "\n", encoding="utf-8")
         for path in [umbrella, umbrella.with_suffix(".inventory.json"), alias_overlay, alias_validation,
                      alias_overlay.with_suffix(".evidence.json"), tool_root / "provenance.json",
                      module_root / "actual-compiler-arguments.json", module_root / "effective-compiler-context.bin",
-                     module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log",
-                     *[module_root / name for name in ["preprocessing-provenance-inputs.json", "preprocessing-provenance.native.json",
-                         "preprocessing-provenance.json", "preprocessing-provenance.log"]], *receipts.values()]:
+                     module_root / "effective-compiler-context.json", module_root / "effective-compiler-context.log", *receipts.values()]:
             if path.is_file():
                 shutil.copy2(path, evidence / path.name)
+        if diagnostic_mode == "1":
+            try:
+                diagnostic_evidence_ok = retain_diagnostic_evidence(inventory, module_root, evidence, diagnostic_result)
+            except Exception as error:
+                # A diagnostic-only evidence failure must not replace the
+                # alias/source exception that is already unwinding this try.
+                diagnostic_evidence_ok = False
+                try:
+                    print("Hanlin diagnostic evidence INCOMPLETE: " + type(error).__name__ + ": " + str(error), file=sys.stderr)
+                except Exception:
+                    pass  # Neither writable receipt nor stderr; exit4 stays non-success.
+    if diagnostic_mode == "1":
+        # Even a complete trace with verified aliases is a failed production
+        # generation invocation. Never inspect/accept a prior metadata binary.
+        return DIAGNOSTIC_ONLY_EXIT if diagnostic_evidence_ok else DIAGNOSTIC_EVIDENCE_FAILURE_EXIT
     completed = subprocess.run(
         [sys.executable, str(adapter), *sys.argv[1:]],
         cwd=generator_root,
