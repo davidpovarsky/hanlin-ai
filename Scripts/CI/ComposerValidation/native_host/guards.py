@@ -60,13 +60,90 @@ def environment(inventory):
     return runtimes[0], types[0]
 
 
+def owned_uuid(udid):
+    require(isinstance(udid, str) and re.fullmatch(r'[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}', udid) is not None,
+            'invalid concrete owned simulator UUID')
+    return udid
+
+
+def simctl_list_contract(stdout, stderr):
+    """Recognize a narrow documented contract; never assume installed support.
+
+    These accepted grammar/affirmation forms are parser contracts, not a captured
+    Apple help transcript. Actual installed help must satisfy them before a query.
+    """
+    text = stdout + '\n' + stderr
+    require('\ufffd' not in text, 'installed simctl list help must decode without replacements')
+    lines = [' '.join(line.split()) for line in text.splitlines() if line.strip()]
+    usage = [line for line in lines if line.startswith('Usage:')]
+    grammar = r'Usage: (?:simctl )?list \[-j\s*\|\s*--json\](?: \[-v\])? \[devices\s*\|\s*devicetypes\s*\|\s*runtimes\s*\|\s*pairs\] \[<search term>\s*\|\s*available\]'
+    require(len(usage) == 1 and re.fullmatch(grammar, usage[0]) is not None,
+            'installed simctl help list lacks recognized JSON/category/search-term ordering; no query/fallback')
+    json_lines = [line for line in lines if re.fullmatch(r'(?:-j|--json|-j\s*[,|]\s*--json)\s+(?:Print|Output|Emit)(?:s)?(?: the (?:list|output))? as JSON\.?', line, re.I)]
+    require(bool(json_lines), 'installed help does not document machine-readable JSON output')
+    # Accept only affirmative identity-field lists attached to the filter clause.
+    # A generic search-term argument or name-only filter does not establish UDID support.
+    field = r'(?:device\s+)?(?:names?|UDIDs?|UUIDs?|runtime identifiers?)'
+    fields = field + r'(?:\s*(?:,\s*(?:and\s+|or\s+)?|\s+and\s+|\s+or\s+)' + field + r')*'
+    forms = [
+        r'(?:The )?search term (?:matches|filters devices by|is matched against) (?P<fields>' + fields + r')\.?',
+        r'If a search term is (?:specified|provided), (?:the list is|devices are) filtered (?:by|based on) (?:their )?(?P<fields>' + fields + r')\.?',
+        r'If a search term is (?:specified|provided), it is used to filter (?:the list of )?devices (?:by|based on) (?:their )?(?P<fields>' + fields + r')\.?',
+    ]
+    identity_lines = []
+    for line in lines:
+        for form in forms:
+            match = re.fullmatch(form, line, re.I)
+            if match and re.search(r'\b(?:UDIDs?|UUIDs?)\b', match['fields'], re.I):
+                identity_lines.append(line)
+                break
+    require(len(identity_lines) == 1, 'installed help does not unambiguously document search-term matching of device UUID/UDID; no query/fallback')
+    require(not any(re.search(r'\b(?:not|unsupported|except|excluding|only)\b|n.t\b', line, re.I)
+                    and re.search(r'\b(?:UDIDs?|UUIDs?|search term)\b', line, re.I) for line in lines),
+            'installed help contains a contradictory/restricted identity-filter statement')
+    return {'status': 'INSTALLED_HELP_CONTRACT_RECOGNIZED', 'usage_line': usage[0],
+            'json_documentation': json_lines, 'identity_filter_documentation': identity_lines[0],
+            'query_template': ['xcrun', 'simctl', 'list', '--json', 'devices', '{owned_uuid}'],
+            'actual_installed_support_basis': 'captured help stdout/stderr; no remote help captured during source preparation'}
+
+
+def owned_devices_command(contract, udid):
+    owned_uuid(udid)
+    template = ['xcrun', 'simctl', 'list', '--json', 'devices', '{owned_uuid}']
+    require(contract.get('status') == 'INSTALLED_HELP_CONTRACT_RECOGNIZED' and contract.get('query_template') == template,
+            'recognized installed-help contract required for the one owned devices query')
+    return [*template[:-1], udid]
+
+
 def owned_boot(inventory, before, runtime, udid):
-    require(re.fullmatch(r'[0-9A-Fa-f-]{36}', udid) is not None, 'invalid owned simulator UUID')
+    owned_uuid(udid)
+    selected_runtime, selected_type = environment(before)
+    require(runtime == selected_runtime, 'runtime context must be the actual selected initial inventory object')
     require(udid not in {d['udid'] for devices in before['devices'].values() for d in devices}, 'device was not freshly created')
-    matches = [d for d in inventory['devices'].get(runtime['identifier'], []) if d.get('udid') == udid]
-    require(len(matches) == 1 and matches[0].get('state') == 'Booted' and matches[0].get('isAvailable') and
-            matches[0].get('deviceTypeIdentifier') == 'com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro', 'exact fresh owned phone must be booted/available')
-    return matches[0]
+    require(isinstance(inventory, dict) and set(inventory) == {'devices'}, 'filtered post-state must contain devices only; no fabricated runtime/type inventory')
+    groups = inventory['devices']
+    require(isinstance(groups, dict) and set(groups) == {runtime['identifier']}, 'exact selected runtime only in filtered post-state')
+    matches = groups[runtime['identifier']]
+    require(isinstance(matches, list) and len(matches) == 1 and isinstance(matches[0], dict) and matches[0].get('udid') == udid,
+            'exactly one actual owned UUID required; no missing/extra/wrong devices')
+    actual = matches[0]
+    require(actual.get('state') == 'Booted' and actual.get('isAvailable') is True and
+            actual.get('deviceTypeIdentifier') == selected_type['identifier'], 'actual owned phone must be Booted/available/iPhone18Pro')
+    return {'status': 'ACTUAL_FILTERED_OWNED_BOOT_CONFIRMED', 'actual_device': actual,
+            'post_state_origin': 'raw installed-help-validated owned devices JSON',
+            'post_runtime_identifier': runtime['identifier'],
+            'runtime_context_origin': 'actual simulators-before.stdout, not a post-boot runtime measurement',
+            'initial_runtime': {key: runtime[key] for key in ['identifier', 'version', 'buildversion', 'supportedArchitectures', 'isAvailable']},
+            'device_type_context_origin': 'actual simulators-before.stdout; actual post deviceTypeIdentifier matched',
+            'initial_device_type_identifier': selected_type['identifier'],
+            'newness_basis': 'owned UUID absent from actual initial device inventory'}
+
+
+def require_pretest(state):
+    required = ['owned_query_help_confirmed', 'native_settings_confirmed',
+                'owned_boot_confirmed', 'owned_sdk_destination_confirmed']
+    require(all(state.get(key) is True for key in required) and type(state.get('test_commands')) is int and state['test_commands'] == 0,
+            'actual installed-help support, both native settings, filtered owned boot and SDK eligibility required before the only test')
 
 
 def destination(stdout, stderr, udid):

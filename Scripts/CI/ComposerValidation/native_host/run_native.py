@@ -14,7 +14,8 @@ from datetime import datetime, timezone
 
 sys.dont_write_bytecode = True
 import prepare_native as native
-from guards import native_settings, environment, owned_boot, destination, observations, require
+from guards import (native_settings, environment, owned_boot, destination, observations, require,
+                    simctl_list_contract, owned_devices_command, require_pretest)
 
 XCODE = '/Applications/Xcode_27.2.app/Contents/Developer'
 TEST_SECONDS = 900
@@ -105,6 +106,7 @@ def execute():
     state = {'scope': 'native-hosted Composer component diagnostic', 'full_app_acceptance': False,
              'started_at_utc': stamp(), 'status': 'PREPARING', 'test_commands': 0,
              'native_settings_confirmed': False, 'owned_sdk_destination_confirmed': False,
+             'owned_query_help_confirmed': False, 'owned_boot_confirmed': False,
              'xcodebuild_test_exit_code': None, 'apple_pass_claim': False}
     runner.save('run-state.json', state)
     device, project_dir = None, None
@@ -141,6 +143,15 @@ def execute():
         workflow = native.REPO / '.github/workflows/build-ios26-unsigned-ipa.yml'
         harness = [*sorted(p for p in native.HERE.rglob('*') if p.is_file()), workflow]
         runner.save('harness-sha256.json', {p.relative_to(native.REPO).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in harness})
+        runner.call('installed-simctl-list-help', 30, ['xcrun', 'simctl', 'help', 'list'])
+        help_stdout = runner.text('installed-simctl-list-help')
+        help_stderr = (evidence / 'installed-simctl-list-help.stderr').read_text(encoding='utf-8', errors='replace')
+        help_contract = simctl_list_contract(help_stdout, help_stderr)
+        help_receipt = dict(help_contract, raw_stream_sha256={stream: hashlib.sha256(
+            (evidence / ('installed-simctl-list-help.' + stream)).read_bytes()).hexdigest() for stream in ['stdout', 'stderr']})
+        runner.save('installed-simctl-list-help-guard.json', help_receipt)
+        state['owned_query_help_confirmed'] = True
+        runner.save('run-state.json', state)
         runner.call('simulators-before', 30, ['xcrun', 'simctl', 'list', '-j'])
         before = runner.json('simulators-before')
         runtime, model = environment(before)
@@ -151,17 +162,25 @@ def execute():
         require(re.fullmatch(r'[0-9A-Fa-f-]{36}', device) is not None and device not in
                 {d['udid'] for devices in before['devices'].values() for d in devices}, 'invalid/nonfresh owned device')
         runner.save('owned-device.json', {'udid': device, 'created_at_utc': stamp(), 'runtime': runtime, 'device_type': model})
-        runner.call('boot-owned-device', 30, ['xcrun', 'simctl', 'boot', device])
-        runner.call('bootstatus-owned-device', 180, ['xcrun', 'simctl', 'bootstatus', device, '-b'])
-        runner.call('simulators-after-boot', 30, ['xcrun', 'simctl', 'list', '-j'])
-        actual = owned_boot(runner.json('simulators-after-boot'), before, runtime, device)
-        runner.save('owned-device-boot-confirmed.json', actual)
+        owned_query = owned_devices_command(help_contract, device)
+        runner.save('owned-device-state-query.json', {'argv': owned_query,
+                    'help_receipt': 'installed-simctl-list-help-guard.json', 'timeout_seconds': 30,
+                    'boot_state_confirmed': False})
         plan = command_plan(project_dir, sdk, device, scratch, evidence)
         runner.save('native-command-plan.json', plan)
         runner.call('native-target-build-settings', 120, plan['settings'])
         settings_receipt = native_settings(runner.json('native-target-build-settings'), sdk)
         runner.save('native-settings-guard.json', settings_receipt)
         state['native_settings_confirmed'] = True
+        state['status'] = 'CREATED_SETTINGS_CONFIRMED_BOOT_NOT_VERIFIED'
+        runner.save('run-state.json', state)
+        runner.call('boot-owned-device', 30, ['xcrun', 'simctl', 'boot', device])
+        runner.call('bootstatus-owned-device', 180, ['xcrun', 'simctl', 'bootstatus', device, '-b'])
+        runner.call('owned-device-state-after-boot', 30, owned_query)
+        actual = owned_boot(runner.json('owned-device-state-after-boot'), before, runtime, device)
+        runner.save('owned-device-boot-confirmed.json', actual)
+        state['owned_boot_confirmed'] = True
+        state['status'] = 'SETTINGS_AND_FILTERED_BOOT_CONFIRMED'
         runner.save('run-state.json', state)
         runner.call('native-sdk-destinations', 120, plan['destinations'])
         eligibility = destination(runner.text('native-sdk-destinations'),
@@ -169,7 +188,7 @@ def execute():
         runner.save('owned-sdk-destination-guard.json', eligibility)
         state['owned_sdk_destination_confirmed'] = True
         require(runner.deadline - time.monotonic() >= TEST_SECONDS + 180, 'insufficient remaining test/export/owned-teardown budget; no test')
-        require(state['native_settings_confirmed'] and state['owned_sdk_destination_confirmed'] and state['test_commands'] == 0, 'both positive guards required before the only test')
+        require_pretest(state)
         state.update(test_commands=1, status='ONE_TEST_COMMAND_STARTED')
         runner.save('run-state.json', state)
         status = runner.call('native-test', TEST_SECONDS, plan['test'], required=False)
