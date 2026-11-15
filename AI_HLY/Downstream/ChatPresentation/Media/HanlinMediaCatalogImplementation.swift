@@ -11,7 +11,7 @@ enum HanlinMediaCatalogImplementation {
         catalog.id = HanlinA2UIIngress.mediaCatalogID
         catalog.components["YouTube"] = ComponentImplementation(api: HanlinMediaCatalog.youTube) { node in
             Group {
-                if let value = node.string(for: "url"), let url = URL(string: value),
+                if let value = node.string(for: "url"), value.utf8.count <= 2048, let url = URL(string: value),
                    let video = HanlinYouTubeVideo(url: url) {
                     HanlinYouTubePlayerView(video: video)
                 } else {

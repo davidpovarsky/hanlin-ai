@@ -73,6 +73,22 @@ iOS27 destination and preserves failure xcresult/screenshot/logs where available
 It does not repeat the8 unaffected identity/document controls as a timestamp refresh.
 Actual original-app/provider/XCUITest and network playback gates remain open.
 
+The first catalog attempt43725139315 at0a960cb9 was BUILD_FAILED/0 executed:
+the test consumer needed an explicit BasicCatalog import (fixed8ddc7e47).
+The next macOS execution43725588162 at8ddc7e47 executed44:43 passed and one
+failed. The custom YouTube URL stayed nil before/after data-model updates.
+Artifact14166540923 contains the failing xcresult (SHA256
+`80b25ade829def266183867c3caf4c0a8819fed6fbbe89b9b46805d06a09bed2`).
+
+Root cause: the pinned official
+[NodeResolver classifier](https://github.com/a2ui-project/a2ui/blob/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Resolution/NodeResolver.swift)
+recognizes dynamic strings from their named DynamicString schema reference. An
+equivalent inline anyOf schema validates the wire object but is a standard property,
+so @path does not become an official DataBinding. The correction uses a named local
+DynamicString reference with the same bounded definition. No manual binding resolver
+or weaker assertion is introduced. The two affected catalog controls must rerun on
+macOS and iOS; the43 prior passes are not a new full-suite pass of the correction.
+
 ## Verified existing Markdown API
 
 The app's exact pinned renderer remains

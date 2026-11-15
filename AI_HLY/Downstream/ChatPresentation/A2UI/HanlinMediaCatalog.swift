@@ -11,12 +11,13 @@ enum HanlinMediaCatalog {
       "properties":{
         "id":{"type":"string","maxLength":128},
         "component":{"const":"YouTube"},
-        "url":{"anyOf":[
-          {"type":"string","maxLength":2048},
-          {"type":"object","properties":{"@path":{"type":"string","maxLength":512}},
-           "required":["@path"],"additionalProperties":false}
-        ]}
+        "url":{"$ref":"#/$defs/DynamicString"}
       },
+      "$defs":{"DynamicString":{"anyOf":[
+        {"type":"string","maxLength":2048},
+        {"type":"object","properties":{"@path":{"type":"string","maxLength":512}},
+         "required":["@path"],"additionalProperties":false}
+      ]}},
       "required":["component","url"],
       "additionalProperties":false
     }
