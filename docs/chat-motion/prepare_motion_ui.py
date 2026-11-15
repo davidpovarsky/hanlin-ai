@@ -21,12 +21,12 @@ def snippets():
 
 def spec():
     common={'GENERATE_INFOPLIST_FILE':'YES','SWIFT_VERSION':'6.0','CODE_SIGNING_ALLOWED':'NO',
-        'ASSETCATALOG_COMPILER_APPICON_NAME':'',
         'TARGETED_DEVICE_FAMILY':'1,2','ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS':'YES'}
     return {'name':'ChatMotionProof','options':{'deploymentTarget':{'iOS':'26.0'}},'settings':{'base':common},
         'targets':{
             'ChatMotionProof':{'type':'application','platform':'iOS','sources':['Production','App'],
                 'settings':{'base':{'PRODUCT_BUNDLE_IDENTIFIER':'ai.hanlin.motion-proof',
+                    'ASSETCATALOG_COMPILER_APPICON_NAME':'',
                     'INFOPLIST_KEY_UIApplicationSceneManifest_Generation':'YES',
                     'INFOPLIST_KEY_UILaunchScreen_Generation':'YES',
                     'INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad':'UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight'}}},

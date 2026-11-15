@@ -95,3 +95,10 @@ does not contain (exit65, job47s). Zero UI methods executed. The fixture now exp
 its app-icon build setting empty; the product asset catalog is unchanged. Rapid reversal uses
 one native three-tap gesture, avoiding serial tap calls that may wait for animation idle.
 Both shimmer paths explicitly stop their TimelineView when scenePhase is inactive.
+
+Third attempt43769467020 atbeca83e6 remained BUILD_FAILED, zero UI cases (job45s):
+the project-level empty icon setting was overridden by XcodeGen's target preset. Its
+[original SettingsBuilder](https://github.com/yonaskolb/XcodeGen/blob/master/Sources/XcodeGenKit/SettingsBuilder.swift)
+was inspected. The override is now on the disposable app target itself; generated target
+configurations are checked with native plutil before building, and generated PBX evidence
+is archived. No product PBX or asset file was edited.

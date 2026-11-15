@@ -32,6 +32,17 @@ python3 docs/chat-motion/prepare_motion_ui.py --output "$scratch/proof" > "$evid
 cp "$scratch/proof/project.json" "$scratch/proof/proof-inputs.json" "$evidence/"
 tar -czf "$evidence/owned-sources.tar.gz" -C "$scratch/proof" Production App UITests project.json
 cd "$scratch/proof";xcodegen generate --spec project.json > "$evidence/xcodegen.log"
+cp ChatMotionProof.xcodeproj/project.pbxproj "$evidence/generated-project.pbxproj"
+python3 - "$evidence" <<'PY'
+import json,subprocess,sys
+from pathlib import Path
+e=Path(sys.argv[1]);result=subprocess.run(['plutil','-convert','json','-o','-',str(e/'generated-project.pbxproj')],capture_output=True,text=True,timeout=5,check=True)
+objects=json.loads(result.stdout)['objects']
+target=next(x for x in objects.values() if x.get('isa')=='PBXNativeTarget' and x.get('name')=='ChatMotionProof')
+configs=[objects[key] for key in objects[target['buildConfigurationList']]['buildConfigurations']]
+assert all(x['buildSettings'].get('ASSETCATALOG_COMPILER_APPICON_NAME')=='' for x in configs),'Target app icon preset must be overridden, project-only override is insufficient'
+(e/'generated-target-settings.json').write_text(json.dumps(configs,indent=2))
+PY
 finish_phase build
 xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 90 \

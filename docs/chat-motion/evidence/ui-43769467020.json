@@ -1,0 +1,19 @@
+{
+  "run_id": 43769467020,
+  "job_id": 132981923632,
+  "source_sha": "beca83e6599888f358d35d13fdb5ccd0a184cdb3",
+  "status": "BUILD_FAILED",
+  "executed_test_methods": 0,
+  "reason": "XcodeGen target AppIcon preset overrode project-level empty setting, actool exit65",
+  "job_duration_seconds": 45,
+  "artifact": {
+    "id": 14183487219,
+    "size_bytes": 72747,
+    "zip_sha256": "705b7d6bae8fd042f5c3440eae28edbd0f8aec1792bd1b19fa4027225aac2ede",
+    "verification": "DOWNLOADED_ZIP_MATCHES_API"
+  },
+  "raw_xcresult": "NOT_CREATED",
+  "fix_scope": "Override app-icon name on disposable app target, verify generated target configurations before building and retain generated PBX",
+  "product_asset_or_PBX_changes": false,
+  "production_root_cause_claim": false
+}
