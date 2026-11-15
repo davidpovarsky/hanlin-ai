@@ -39,25 +39,45 @@ struct NativeComposerLineSizingTests {
     func wrappedLinesAndScrolling() {
         let editor = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: 1000, usesAutomaticLineLimits: true)
         for sample in ["word ", "שלום "] {
-            let view = UITextView(frame: CGRect(x: 0, y: 0, width: 160, height: 100))
+            let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 160, height: 100))
             view.font = .preferredFont(forTextStyle: .body)
             view.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
             view.textContainer.lineFragmentPadding = 0
+            view.isScrollEnabled = false
+            // Enumerating glyphs opts this test view into its TextKit 1 layout
+            // manager; establish that manager before configuring its container.
+            let layoutManager = view.layoutManager
+            view.layoutIfNeeded()
+            // Count the full laid-out text, not only glyphs fitting in the
+            // 100-point view. Keep the content width equal to the real editor's
+            // bounds minus its horizontal text-container insets.
+            view.textContainer.widthTracksTextView = false
+            view.textContainer.heightTracksTextView = false
+            let contentWidth = view.bounds.width - view.textContainerInset.left - view.textContainerInset.right
             if sample != "word " { view.semanticContentAttribute = .forceRightToLeft }
             view.text = "a"
             let minimum = NativeMultilineTextEditor.automaticHeightBounds(for: view, isEmpty: false, availableHeight: 1000).min
             #expect(editor.measuredHeight(for: view, isEmpty: false) >= minimum)
+            var sixLineHeight: CGFloat?
             for target in [6, 7] {
                 var found = false
                 for count in 1...500 {
                     view.text = String(repeating: sample, count: count)
-                    view.layoutManager.ensureLayout(for: view.textContainer)
+                    view.textContainer.size = CGSize(width: contentWidth, height: 10_000)
+                    layoutManager.ensureLayout(for: view.textContainer)
                     var lines = 0
-                    let range = view.layoutManager.glyphRange(for: view.textContainer)
-                    view.layoutManager.enumerateLineFragments(forGlyphRange: range) { _, _, _, _, _ in lines += 1 }
+                    let range = layoutManager.glyphRange(for: view.textContainer)
+                    layoutManager.enumerateLineFragments(forGlyphRange: range) { _, _, _, _, _ in lines += 1 }
                     if lines == target {
-                        _ = editor.measuredHeight(for: view, isEmpty: false)
+                        #expect(range.location == 0 && range.length == layoutManager.numberOfGlyphs)
+                        let height = editor.measuredHeight(for: view, isEmpty: false)
                         #expect(view.isScrollEnabled == (target == 7))
+                        if target == 6 {
+                            #expect(height > minimum)
+                            sixLineHeight = height
+                        } else if let sixLineHeight {
+                            #expect(abs(height - sixLineHeight) <= 2)
+                        }
                         found = true
                         break
                     }

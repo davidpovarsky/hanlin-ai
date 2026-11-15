@@ -650,3 +650,16 @@ Raw results, source inventories, exact revisions, processes and actual locks
 remain required. Numeric execution acceptance is BLOCKED until that actual chain
 passes; even a passing synthetic fixture host would not prove a real host/API,
 FoundationModels generation, native UI, physical iPad or release/TestFlight.
+
+
+Raw dependency candidate is frozen at 362caf42fc0896fbf4afa92e426994075c6e4cf8;
+actual chain run [43686130156](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43686130156)
+is pending. This is the only corrected producer-chain run; old 25 cases do not
+transfer to it. Composer test-only owner correction
+240a4f993250361d144b8adc0df1eb0c74caf599 was independently source accepted and
+imported whole. It uses the actual inner editor subclass and production metrics,
+explicit whole-content TextKit1 layout and full glyph coverage, retaining the
+wrapped Latin/Hebrew six/seven-line and scrolling assertions. It is a controlled
+fixture correction, not proof of the production mounted TextKit path or root
+cause. Production editor bytes are unchanged. A separate Composer-only run will
+avoid repeating unchanged A2UI or SDK tests merely for this test-source change.
