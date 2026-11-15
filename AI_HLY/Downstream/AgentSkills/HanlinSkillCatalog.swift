@@ -1,6 +1,7 @@
 import Foundation
 import HanlinMiniAppCore
 import HanlinPlatformContracts
+import HanlinSkillFormat
 
 @MainActor
 public final class HanlinSkillCatalog {
@@ -74,6 +75,7 @@ public final class HanlinSkillCatalog {
         let tier: SkillPrecedenceTier
         let isExplicitOverride: Bool
         let sourceIdentity: SkillSourceIdentity?
+        let markdownDocument: SkillMarkdownDocument?
         let loader: (@MainActor @Sendable () async -> String)?
         let resourceResolver: (@MainActor @Sendable (String) -> URL?)?
     }
@@ -93,6 +95,7 @@ public final class HanlinSkillCatalog {
         tier: SkillPrecedenceTier = .userCustom,
         isExplicitOverride: Bool = false,
         sourceIdentity: SkillSourceIdentity? = nil,
+        markdownDocument: SkillMarkdownDocument? = nil,
         instructionLoader: (@MainActor @Sendable () async -> String)? = nil,
         resourceResolver: (@MainActor @Sendable (String) -> URL?)? = nil
     ) {
@@ -118,6 +121,7 @@ public final class HanlinSkillCatalog {
             tier: tier,
             isExplicitOverride: isExplicitOverride,
             sourceIdentity: sourceIdentity,
+            markdownDocument: markdownDocument,
             loader: instructionLoader,
             resourceResolver: resourceResolver
         )
@@ -129,6 +133,7 @@ public final class HanlinSkillCatalog {
         tier: SkillPrecedenceTier = .userCustom,
         isExplicitOverride: Bool = false,
         sourceIdentity: SkillSourceIdentity? = nil,
+        markdownDocument: SkillMarkdownDocument? = nil,
         instructionLoader: (@MainActor @Sendable () async -> String)? = nil,
         resourceResolver: (@MainActor @Sendable (String) -> URL?)? = nil
     ) {
@@ -137,6 +142,7 @@ public final class HanlinSkillCatalog {
             tier: tier,
             isExplicitOverride: isExplicitOverride,
             sourceIdentity: sourceIdentity,
+            markdownDocument: markdownDocument,
             instructionLoader: instructionLoader,
             resourceResolver: resourceResolver
         )
@@ -272,7 +278,8 @@ public final class HanlinSkillCatalog {
                 skill: skill,
                 tier: .userCustom,
                 isExplicitOverride: false,
-                sourceIdentity: SkillSourceIdentity(kind: .userCustom, identifier: skill.id.rawValue)
+                sourceIdentity: SkillSourceIdentity(kind: .userCustom, identifier: skill.id.rawValue),
+                markdownDocument: store.markdownDocument(for: skill.id, isOverride: false)
             ) {
                 if case .inline(let text) = skill.instructions { return text }
                 return "# \(skill.title.preferredValue())\n\n\(skill.summary.preferredValue())"
@@ -284,7 +291,8 @@ public final class HanlinSkillCatalog {
                 skill: overrideDesc,
                 tier: .userOverride,
                 isExplicitOverride: true,
-                sourceIdentity: SkillSourceIdentity(kind: .userOverride, identifier: baseID.rawValue)
+                sourceIdentity: SkillSourceIdentity(kind: .userOverride, identifier: baseID.rawValue),
+                markdownDocument: store.markdownDocument(for: baseID, isOverride: true)
             ) {
                 if case .inline(let text) = overrideDesc.instructions { return text }
                 return "# \(overrideDesc.title.preferredValue())\n\n\(overrideDesc.summary.preferredValue())"
@@ -404,6 +412,12 @@ public final class HanlinSkillCatalog {
     /// Resolves a skill descriptor by ID.
     public func resolve(id: HanlinSkillID) -> HanlinSkillDescriptor? {
         skillEntries[id]?.descriptor
+    }
+
+    /// Metadata belongs to the selected source, sharing the same precedence/disabled filtering.
+    /// No fallback to a shadowed same-ID document and no derived execution/readiness policy.
+    public func markdownDocument(for id: HanlinSkillID) -> SkillMarkdownDocument? {
+        skillEntries[id]?.markdownDocument
     }
 
     /// Resolves a skill descriptor by raw string ID.

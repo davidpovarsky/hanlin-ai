@@ -125,12 +125,9 @@ public final class SkillImporter: @unchecked Sendable {
 
             if ext == "md" {
                 let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-                guard let content = String(data: data, encoding: .utf8) else {
-                    throw SkillImportError.invalidFrontmatter("File is not valid UTF-8 text.")
-                }
                 let parsed: SkillMarkdownParser.ParsedSkillMarkdown
                 do {
-                    parsed = try SkillMarkdownParser.parse(content)
+                    parsed = try SkillMarkdownParser.parse(data)
                 } catch {
                     throw SkillImportError.invalidFrontmatter(error.localizedDescription)
                 }
@@ -256,13 +253,13 @@ public final class SkillImporter: @unchecked Sendable {
                 let skillMDDest = extractedRoot.appendingPathComponent(normSkillMDPath)
                 let skillRoot = skillMDDest.deletingLastPathComponent()
 
-                guard let content = try? String(contentsOf: skillMDDest, encoding: .utf8) else {
+                guard let data = try? Data(contentsOf: skillMDDest) else {
                     throw SkillImportError.invalidFrontmatter("SKILL.md is not readable or not valid UTF-8.")
                 }
 
                 let parsed: SkillMarkdownParser.ParsedSkillMarkdown
                 do {
-                    parsed = try SkillMarkdownParser.parse(content)
+                    parsed = try SkillMarkdownParser.parse(data)
                 } catch {
                     throw SkillImportError.invalidFrontmatter(error.localizedDescription)
                 }
