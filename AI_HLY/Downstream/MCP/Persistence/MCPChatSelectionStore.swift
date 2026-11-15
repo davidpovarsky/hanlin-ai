@@ -10,6 +10,16 @@ struct MCPChatSelectionMutation: Sendable {
     static let unchanged = Self(affectedScopes: [])
 }
 
+struct MCPChatServerSelectionIntent: Sendable {
+    let serverID: UUID
+    let isSelected: Bool
+}
+
+struct MCPChatSelectionIntentResult: Sendable {
+    let serverIDs: Set<UUID>
+    let mutation: MCPChatSelectionMutation
+}
+
 actor MCPChatSelectionStore {
     private let fileLayout: MCPFileLayout
     private var temporarySelections: [UUID: Set<UUID>] = [:]
@@ -37,6 +47,30 @@ actor MCPChatSelectionStore {
         selections[chatID] = MCPChatSelection(chatID: chatID, serverIDs: serverIDs)
         try save(selections)
         return .init(affectedScopes: [scope])
+    }
+
+    /// Read/modify/commit is one non-suspending actor operation. Defaults seed
+    /// only an absent record; an explicitly stored empty selection stays empty.
+    func applySelectionIntent(
+        _ intent: MCPChatServerSelectionIntent,
+        chatID: UUID,
+        temporary: Bool = false,
+        defaultServerIDs: Set<UUID>
+    ) throws -> MCPChatSelectionIntentResult {
+        var selections = temporary ? [:] : try load()
+        let stored = temporary ? temporarySelections[chatID] : selections[chatID]?.serverIDs
+        var ids = stored ?? defaultServerIDs
+        if intent.isSelected { ids.insert(intent.serverID) } else { ids.remove(intent.serverID) }
+        // Absent -> explicit (even []) is a real storage transition, matching
+        // setSelection. Repeating the same intent on that record is a no-op.
+        guard stored != ids else { return .init(serverIDs: ids, mutation: .unchanged) }
+        if temporary {
+            temporarySelections[chatID] = ids
+        } else {
+            selections[chatID] = MCPChatSelection(chatID: chatID, serverIDs: ids)
+            try save(selections)
+        }
+        return .init(serverIDs: ids, mutation: .init(affectedScopes: [.init(chatID: chatID, temporary: temporary)]))
     }
 
     @discardableResult
