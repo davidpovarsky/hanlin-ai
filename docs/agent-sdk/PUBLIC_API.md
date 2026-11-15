@@ -76,3 +76,60 @@ Apple SDK compilation, real model generation, runtime availability changes, canc
 Anytype SDK-06 input is the frozen 57-blob source audit at 389f12320d89975ebb58d2aaf13b051693194d59; no host source was modified here. Anytype lead owns upstream reconciliation, native services, authenticated scope, dependency/minimum and actual UI callsites. Generic SDK reads must not enter Torah provisioning/bootstrap storage or Heart/CRDT directly.
 
 Otzaria owns its in-process thin adapter, ActionCore/UIRegistry/SceneOrchestrator and scene/routing ports. Reported portable contract/code pins are mock/compile readiness, not approved semantic integration. SDK-07 here is exclusively the headless synthetic fixture. No Otzaria API enumeration/import/reader/search/backend mapping occurred. Real integration requires both this frozen typed SDK contract and the host's accepted versioned semantic and scene/routing ports. Native/real-data/UI/device acceptance remains separate for every host.
+
+## Otzaria consumer representation review — 2026-11-15
+
+Consumed the host-owned `HANLIN_CONTRACT_REVIEW_357D_20261115.md` and its eight-blob manifest from HQ `docs/otzaria/ui-routing`. All eight hashes were independently verified against the referenced 357d commit; `evidence/otzaria-consumer-review-input.json` records the receipt. This is a bounded review of the supplied contract feedback, not a production Otzaria API audit, accepted adapter or native test. The later 08b5 revocation correction remains subject to independent source re-review.
+
+| Consumer requirement | Existing representation and limitation |
+| --- | --- |
+| Native String scene, UInt64 backend generation and RPC epoch | The host explicitly binds an SDK scene UUID to an actual native scene lifetime and separately issues a presentation-generation UUID. Preserve native scene identity/backend generation/RPC epoch/scene revision as distinct trusted host snapshots behind that binding. Never parse a native scene String as UUID, derive a UUID from a counter, narrow UInt64 to Int64, or accept authority epochs from model arguments. Invalidate the binding on relevant auth/profile/workspace/backend/scene/document/selection/permission changes. No new public contract type is needed for this host-owned lifetime mapping. |
+| Complete normalized UI route, not just object/block | Use a host-issued opaque scoped reference in the destination's objectReference for an agreed non-content route handle. Its backing immutable native route includes presentation/tab/panel/focus/selection and exact scene/revision. Host checks the COMPLETE native UI receipt before emitting presented, retaining exact reference/request/context identity. SDK validates reference/context equality; it cannot inspect a route hidden behind the reference. No approved backing route port means unsupported, not an invented work/line or embedded private route payload. Queue remains queued; no success from backend completion alone. |
+| Noncompleted semantic status/continuation | Canonical `HanlinToolOutcome.failed(HanlinPlatformError(code: .operationUnavailable, ... details: ...))` can carry a safe exact status and opaque continuation reference using existing HanlinValue. Keep it non-success; never encode pending/waiting/queued as completed text/metadata. The live onHostResult callback receives those structured details. Current model text projection is a generic error, and metadataReceipt deliberately strips error details. Therefore an exact historical status needs a top-level opaque reconciliationReference to the original authorized host receipt; inline historical/model-visible status is NOT promised by this preview. If no approved scoped receipt/continuation port exists, that continuation remains unsupported. A reference is not a grant, permission to retry or replay authority. |
+| Effect certainty | Preserve notDispatched/confirmedNoEffect/confirmedCommitted/uncertain from actual evidence. Task cancellation/revoke/backend acceptance cannot prove native no-effect or rollback. Keep writes unavailable until their real guarantees are known; never retarget/retry an uncertain effect in another context. |
+| Exact model argument numbers | **BLOCKED in the existing model-tool path; see below.** Direct canonical DTOs preserve Int64 vs finite Double, but the pinned SwiftAISDK conversion can erase that distinction/value before the host sees arguments. Host-side post-conversion validation alone cannot reconstruct lost information. |
+
+Opaque route/status handles must be bounded, scoped to the original namespace/scene/generation/request, invalidated/revoked by the host and rejected after restart or loss of backing authority. They contain no private selection/query/note body and introduce no permanent shadow business-ID system. Actual host adapter/registry/cancellation-ID mapping and native readiness remain host-owned.
+
+### Concrete numeric incompatibility and narrow proposal
+
+Canonical `HanlinJSONValue` has integer(Int64) and number(Double). Its direct parser rejects plain integer overflow instead of falling back to Double, and canonicalJSONData preserves the integer/number category. Existing tagged Codable HanlinValue/HanlinJSONValue forms also preserve the category. Full UInt64 integer arguments and arbitrary exact decimal numbers are outside this public JSON value range; they must be rejected or represented only by an explicitly agreed versioned string/opaque-reference schema, never silently coerced.
+
+However, **AISDKProvider.JSONValue** at exact revision `43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6` has only number(Double). The existing HanlinAISDKAgentEngine.makeTools execute closure receives that value and calls jsonString(input), which uses JSONEncoder, before invoking the host executor. ToolCallOptions has toolCallId/messages/abortSignal/experimentalContext, no original argument JSON field. By this boundary the original numeric lexeme/type may already be lost. Re-parsing that normalized JSON in HanlinHostDispatcher does not recover it.
+
+The isolated **actual pinned source** reproduction in `evidence/numeric-boundary-proof.swift`/`numeric-boundary-output.json` ran on Windows Swift6.3.3 and the actual canonical value module. It is not full engine/native/Otzaria execution. Observed: `1.0` and `1e0` become JSON `1` and arrive as integer(1); exact integer `9007199254740993` becomes `9007199254740992`; Int64.max becomes a rounded Double. Direct canonical parsing preserves those original supported values, and rejects UInt64.max outside Int64. This confirms a representational limitation before the host adapter, not an Otzaria validator defect.
+
+Narrow requested seam, **not implemented or approved by this document**: preserve the original validated argument JSON/typed integer category at the point where the pinned SDK still owns raw toolCall.input, and carry it to the single existing core executor; alternatively, explicitly withhold/refuse affected numeric capabilities until such a path exists. This needs a reviewed core/pinned-SDK seam and real end-to-end regression cases, not a change to shared PlatformContracts or a second dispatcher/agent. Do not reconstruct integer intent from an already rounded Double, silently change host action schemas, or collect asynchronous stream deltas in a race-prone side cache as a substitute for an authoritative executor input.
+
+No shared contracts, provider pin, core/host source, adapter or native API were changed during this consumer review. Exact numeric model-tool compatibility and any model/history projection needing inline continuation status remain unaccepted; native/full-graph/real host/UI/device gates remain open.
+
+
+## Current producer/consumer and UI lifecycle packet
+
+The later [combined packet](RAW_INPUT_AND_SESSION_HANDOFF.md) supersedes the
+proposal-only status above. Producer commit `788a591aa0981443ec9a8e747393f07fcdcae4cf`
+implements additive checked original input, including actual approval resume.
+Its complete production module built on Windows and 45 selected real tests passed;
+39 portable Hanlin cases passed. Actual Hanlin engine/session numeric execution
+and Apple/device acceptance remain **BLOCKED / NOT_RUN**, not inferred from those
+separate proofs. Tomer alone updates shipping dependency pins/locks after QA; the
+new consumer source requires that producer while current manifests still pin43ebcf.
+
+Stream cancellation/invalidate is terminal for a presentation Session. No reusable
+cancel-current-turn seam is promised. A later send requires a new host-authorized
+session identity/new Session; pending/uncertain effects still require original-host
+reconciliation. Normal completed runs may reuse a still-valid session. See the
+packet's exact lifecycle and reentrancy contract before implementing SDK04 UI.
+
+
+## P1 consent-correlation source correction
+
+The current [combined packet](RAW_INPUT_AND_SESSION_HANDOFF.md) now requires
+producer `e7bf34111e603ca977becd007dd4e5bb109af857`. Multiple approval requests for
+one call fail closed even when their distinct IDs have matching or conflicting
+decisions. Other calls with one matching request retain eligibility. New actual
+generateText/streamText resume regression bodies preserve static/dynamic and
+accepted/repaired input, but are **NOT_RUN / not typechecked** under the resource
+gate. Prior 45-producer/39-portable results remain historical old-closure evidence.
+No consumer source or shipping dependency pin/lock changed for this correction;
+Roni review and Tomer's real Mac proof/final dependency window remain required.

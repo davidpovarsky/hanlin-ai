@@ -77,7 +77,7 @@ set +e
 build_status=${PIPESTATUS[0]}
 set -e
 printf '{"xcodebuild_exit_code":%s}\n' "$build_status" > "$evidence/process-status.json"
-[[ "$build_status" == 0 ]] || exit "$build_status"
 xcrun xcresulttool get test-results tests --path "$evidence/Composer.xcresult" --format json > "$evidence/tests.json"
+[[ "$build_status" == 0 ]] || exit "$build_status"
 python3 Scripts/CI/ComposerValidation/verify_results.py "$evidence/tests.json" \
   --inputs "$evidence/proof-inputs.json" | tee "$evidence/verified-cases.txt"

@@ -583,3 +583,70 @@ edited by this integrator. A2UI remains the gated prototype with SDK/inline
 acceptance unproven. Live migration, credentials, AppGroups/Keychain/CloudKit,
 production App ID/signing, main merge and TestFlight remain separately gated.
 All 278 historical behavior rows retain their producer NOT_RUN/BLOCKED status.
+
+
+## 2026-11-15 expanded Apple evidence and raw-input dependency window
+
+Combined run [43683448355](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43683448355)
+at workflow `0bcf0f3539631574ee0be4a930045f2fc861df57` is overall FAILURE:
+
+- Agent SDK exact `08b5d6f31153063c31be321fbd35c7301f302fc1`: 25 actual
+  passing cases, SDK/core tests and iOS Simulator compilation exit 0, Xcode/SDK
+  27.2. This is the original 43eb producer, not corrected numeric-chain acceptance.
+  Artifact 14149747095 (2456397 bytes), ZIP SHA256
+  `0841748dfc304410649725dd74fe6abff33d2f7289d67039037acbd2a497d78b`.
+  All 247 source and 3 workflow hashes match their exact Git blobs; both raw
+  Apple lock hashes and decoded contents were independently checked.
+- A2UI exact `c777b65ecc5b5d82b922fc21a402b6d658469ad6`: 35 actual PASS,
+  2 suites, no failures/skips, actual enabled official pinned macOS consumer.
+  Artifact 14149701971 (323393 bytes), ZIP SHA256
+  `6e52bddbec7bd2fad82c693e9878b4bb399d4fa370508937001f90972b13c3d0`.
+  All 15 source and 17 workflow hashes match Git; raw lock SHA256 remains
+  `af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae`.
+  This does not prove six hosted iOS cases or wire the production chat host.
+- Composer: actual log records 10 executed cases in 2 suites, with four issues
+  in ONE wrapped-text line-sizing method at NativeComposerLineSizingTests.swift:65.
+  The other nine method outcome lines pass. A raw xcresult is retained, but the
+  former runner exited before JSON export on failure; binary xcresult was not
+  decoded on Windows. Raw unique-node verification remains pending a Mac export.
+  Artifact 14149077754 (30158299 bytes), ZIP SHA256
+  `f11db3dbd5dd7ca017550e3e042fe105607840c5bd086ff03ac806089ba5e8b5`.
+  Source correction is Maya-owned; the runner now exports raw JSON before returning
+  the nonzero test status. No unchanged-source retry or assertion weakening.
+
+ZIP bytes above were checked in RAM, with bounded text inspection; no full
+artifact copies were added under the C: reserve gate. Original raw artifacts
+remain on GitHub. Runner-export inspection is distinct from independent binary
+xcresult decoding.
+
+Parity UI historical run 43679144275 at 3ad361ae actually executed eight cases:
+8 FAILED, 0 PASS, 0 skipped, 0 NOT_RUN. Every failure was after Save, before the
+persistence/reload assertions; all four cohorts displayed Reloaded persisted value.
+The old reporter's 8 NOT_RUN was incorrect and was corrected without relabeling
+failures as passes. Exact two-line owner fix acbd95992b33216f95d5668daa98f00ed001a6df
+was source reviewed and imported at 2427aac90154834eb5f31c746d47f6dcd3129e8e.
+It applies borderless button style to the existing Form row; actions/storage and
+all original assertions are unchanged. Owned teardown now captures the screen on
+failure. ONE changed-source 8-case run is
+[43685785954](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43685785954).
+Its outcome is pending; plausible source correction is not UI acceptance.
+
+Roni accepted corrected raw producer e7bf34111e603ca977becd007dd4e5bb109af857
+and consumer b82b851a6a728c88dcd39315ae96048bca3d4112 source packet. Actual canonical
+remote feature ref was independently read and equals that producer SHA. The seven
+changed consumer package paths and five source/evidence documents are imported
+byte-for-byte from that packet; old historical portable logs are not copied as
+new proof. Both existing manifests now request the same new exact revision.
+Committed input locks remain historical until the actual Mac solver returns
+corresponding verified locks; this is a candidate verification checkpoint, not a
+finished dependency handoff. No other dependency or platform constraint changes.
+
+Expanded faithful Apple proof selects 48 producer methods across four real root
+package suites, plus 30 SDK/core methods including seven actual Session tests.
+The three new producer approval-correlation methods contain 56 rows; rows are
+not counted as separate Swift Testing cases. Actual original root package and
+whole Hanlin packages are compiled without alternate manifests/provider shims.
+Raw results, source inventories, exact revisions, processes and actual locks
+remain required. Numeric execution acceptance is BLOCKED until that actual chain
+passes; even a passing synthetic fixture host would not prove a real host/API,
+FoundationModels generation, native UI, physical iPad or release/TestFlight.

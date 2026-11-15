@@ -6,6 +6,12 @@ import sys
 from xcresult_to_xunit import nodes
 
 EXPECTED = {
+    'ProducerTests': {
+        'RawToolInputPropagationTests': set(),
+        'ToResponseMessagesTests': set(),
+        'ExecuteToolCallProviderMetadataTests': set(),
+        'ModelMessageCodableTests': set(),
+    },
     'SDKTests': {
         'AgentSessionTests': {'nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision','existingEngineRunsHostToolOnceAndPersistsCorrelation'},
         'ContextTests': {'decodedNamespacesCannotBypassValidation','persistedPresentationCarriesNoExecutionAuthority'},
@@ -39,7 +45,7 @@ def summarize(root):
         for n in actual:cases.append({'id':n.get('nodeIdentifier'),'status':{'Passed':'EXECUTED_PASS','Failed':'FAILED','Skipped':'SKIPPED'}.get(n.get('result'),'NOT_RUN')})
     counts={s:sum(c['status']==s for c in cases) for s in ['EXECUTED_PASS','REUSED_VERIFIED_PASS','FAILED','SKIPPED','NOT_RUN','BLOCKED']}
     passed=bool(cases) and not errors and all(v==0 for v in statuses.values()) and counts['EXECUTED_PASS']==len(cases)
-    return {'scope':'exact-source-Apple-package-and-core-regression','status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['numeric model-tool argument safety/parity on existing43ebc producer','real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight']}
+    return {'scope':'exact-source-Apple-producer-core-session-fixture-host-regression','status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight']}
 
 
 if __name__=='__main__':
