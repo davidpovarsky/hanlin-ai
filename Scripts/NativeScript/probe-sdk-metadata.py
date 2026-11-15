@@ -16,7 +16,8 @@ import shlex
 import subprocess
 import sys
 
-CANDIDATE_CPP_ARGUMENTS = ["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules", "-Xclang", "-fno-cxx-modules", "-fno-implicit-module-maps"]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from metadata_public_headers import MODERN_CPP_ARGUMENTS as CANDIDATE_CPP_ARGUMENTS
 
 
 def capture(*args: str) -> str:

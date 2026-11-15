@@ -762,6 +762,52 @@ generate_metadata("arm64")
             self.assertEqual(inventory[0]["path"], str(duplicate.resolve()))
 
 
+class ModernMetadataProvenanceControls(unittest.TestCase):
+    def test_candidate_rejects_source_binary_library_and_frontend_identity_drift(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            scripts = root / "Scripts/NativeScript"
+            scripts.mkdir(parents=True)
+            frontend = root / "frontend"
+            (frontend / "lib").mkdir(parents=True)
+            for name in ["libclang.dylib", "libclang-cpp.dylib", "libLLVM.dylib"]:
+                (frontend / "lib" / name).write_bytes(name.encode())
+            (frontend / "header.h").write_bytes(b"actual header")
+            sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+            lock = {"installedPrefix": str(frontend.resolve()), "version": "20.1.8",
+                    "files": {"header.h": sha(frontend / "header.h")}}
+            (scripts / "metadata-frontend-lock.json").write_text(json.dumps(lock))
+            for name in ["build-metadata-tool.py", "build-modern-metadata-tool.py"]:
+                (scripts / name).write_bytes(name.encode())
+            tool_root = root / "build/nativescript-modern-metadata-tool"
+            (tool_root / "bin").mkdir(parents=True)
+            binary = tool_root / "bin/objc-metadata-generator"
+            binary.write_bytes(b"compiled binary")
+            receipt = {"schemaVersion": 2, "status": "BUILT_NOT_ACCEPTED", "generatorSHA256": sha(binary),
+                       "frontendRoot": str(frontend.resolve()), "classifierLibrary": str(frontend.resolve() / "lib/libclang.dylib"),
+                       "frontendVersion": "20.1.8", "frontendInputs": {"header.h": sha(frontend / "header.h")},
+                       "libraries": {p.name: sha(p) for p in (frontend / "lib").iterdir()}}
+            for key, name in [("basePatchSourceSHA256", "build-metadata-tool.py"),
+                              ("modernPatchSourceSHA256", "build-modern-metadata-tool.py"),
+                              ("frontendLockSHA256", "metadata-frontend-lock.json")]:
+                receipt[key] = sha(scripts / name)
+            path = tool_root / "provenance.json"
+            path.write_text(json.dumps(receipt))
+            self.assertEqual(WRAPPER.validate_modern_tool(root), (tool_root, frontend.resolve() / "lib/libclang.dylib"))
+            for target in [binary, scripts / "build-metadata-tool.py", scripts / "build-modern-metadata-tool.py",
+                           scripts / "metadata-frontend-lock.json", frontend / "header.h", frontend / "lib/libclang.dylib"]:
+                original = target.read_bytes()
+                target.write_bytes(original + b" drift")
+                with self.subTest(target=target.name), self.assertRaises(RuntimeError):
+                    WRAPPER.validate_modern_tool(root)
+                target.write_bytes(original)
+            for key in ["classifierLibrary", "frontendRoot", "frontendVersion", "status"]:
+                changed = {**receipt, key: "unproven"}
+                path.write_text(json.dumps(changed))
+                with self.subTest(field=key), self.assertRaises(RuntimeError):
+                    WRAPPER.validate_modern_tool(root)
+
+
 class PreprocessingReceiptControls(unittest.TestCase):
     """Pure receipt rejection controls. Authored source; execution is separate."""
 

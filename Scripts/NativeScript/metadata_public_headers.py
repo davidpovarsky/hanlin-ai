@@ -16,6 +16,7 @@ import tempfile
 ROLE_MANIFEST = "metadata-input-roles.json"
 PUBLIC_ROLE = "public-objc-c-root"
 CPP_ROLE = "cpp-include-dependency"
+MODERN_CPP_ARGUMENTS = ["-x", "objective-c++", "-std=gnu++20", "-fno-cxx-modules", "-Xclang", "-fno-cxx-modules", "-fno-implicit-module-maps"]
 INCOMPLETE_RECORD_POLICY_SOURCE = "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0"
 
 

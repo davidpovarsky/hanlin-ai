@@ -178,17 +178,17 @@ def main():
     visitor = generator / "src/Meta/DeclarationConverterVisitor.h"
     text = visitor.read_text()
     text = base.replace_once(text, "#include <clang/AST/RecursiveASTVisitor.h>",
-        "#include <clang/AST/RecursiveASTVisitor.h>\n#include <clang/AST/DeclTemplate.h>\n#include <clang/AST/Mangle.h>")
+        "#include <clang/AST/RecursiveASTVisitor.h>\n#include <clang/AST/DeclTemplate.h>")
     text = base.replace_once(text, "        try {\n            // Remove from cache", '''        if (decl->getASTContext().getLangOpts().CPlusPlus) {
             if (auto function = clang::dyn_cast<clang::FunctionDecl>(decl)) {
-                if (!function->isExternC()) return true;
+                if (function->getDescribedFunctionTemplate() || function->isFunctionTemplateSpecialization()) return true;
+                if (!function->isExternC() && !function->getDeclContext()->getRedeclContext()->isTranslationUnit()) return true;
             }
             if (auto variable = clang::dyn_cast<clang::VarDecl>(decl)) {
-                std::unique_ptr<clang::MangleContext> mangler(variable->getASTContext().createMangleContext());
-                if (mangler->shouldMangleDeclName(variable)) return true;
+                if (!variable->isExternC() && !variable->getDeclContext()->getRedeclContext()->isTranslationUnit()) return true;
             }
             if (auto record = clang::dyn_cast<clang::CXXRecordDecl>(decl)) {
-                if (record->getDescribedClassTemplate() || clang::isa<clang::ClassTemplateSpecializationDecl>(record) ||
+                if (record->isInjectedClassName() || record->getDescribedClassTemplate() || clang::isa<clang::ClassTemplateSpecializationDecl>(record) ||
                     !record->isCompleteDefinition() || !record->isStandardLayout() ||
                     !record->isTriviallyCopyable() || record->getNumBases() != 0) return true;
             }

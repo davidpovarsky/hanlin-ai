@@ -30,6 +30,34 @@ def required_env(name: str) -> str:
     return value
 
 
+def validate_modern_tool(root: Path) -> tuple[Path, Path]:
+    """Bind the opt-in candidate to its actual source and complete frontend inputs."""
+    tool_root = root / "build/nativescript-modern-metadata-tool"
+    tool = tool_root / "bin/objc-metadata-generator"
+    receipt = json.loads((tool_root / "provenance.json").read_text(encoding="utf-8"))
+    sources = {"basePatchSourceSHA256": "build-metadata-tool.py",
+               "modernPatchSourceSHA256": "build-modern-metadata-tool.py",
+               "frontendLockSHA256": "metadata-frontend-lock.json"}
+    digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+    if receipt.get("schemaVersion") != 2 or receipt.get("status") != "BUILT_NOT_ACCEPTED" or \
+       receipt.get("generatorSHA256") != digest(tool) or any(
+           receipt.get(key) != digest(root / "Scripts/NativeScript" / name) for key, name in sources.items()):
+        raise RuntimeError("Modern metadata source/binary provenance mismatch")
+    lock = json.loads((root / "Scripts/NativeScript/metadata-frontend-lock.json").read_text(encoding="utf-8"))
+    prefix = Path(lock["installedPrefix"]).resolve(strict=True)
+    library = prefix / "lib/libclang.dylib"
+    if receipt.get("frontendRoot") != str(prefix) or receipt.get("classifierLibrary") != str(library) or \
+       receipt.get("frontendVersion") != lock["version"]:
+        raise RuntimeError("Modern metadata classifier/generator frontend identity mismatch")
+    inputs = {**receipt.get("frontendInputs", {}), **lock["files"],
+              **{"lib/" + name: value for name, value in receipt.get("libraries", {}).items()}}
+    if not receipt.get("frontendInputs") or not receipt.get("libraries") or any(
+        Path(name).is_absolute() or ".." in Path(name).parts or digest(prefix / name) != value
+        for name, value in inputs.items()):
+        raise RuntimeError("Modern metadata frontend headers/resources/libraries changed")
+    return tool_root, library
+
+
 def build_intermediates_root() -> Path:
     obj_root = os.environ.get("OBJROOT")
     if obj_root:
@@ -485,11 +513,18 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     from metadata_public_headers import (write_public_umbrella, write_verified_header_alias_overlay,
         produce_role_inventory, ROLE_MANIFEST, verify_role_context)
     core_support_dir = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
+    frontend_mode = environment.get("HANLIN_METADATA_FRONTEND", "legacy")
+    if frontend_mode not in {"legacy", "modern-candidate"}:
+        raise RuntimeError("Unknown metadata frontend selection")
+    modern = frontend_mode == "modern-candidate"
     tool_root = root / "build/nativescript-metadata-tool"
+    modern_library = None
+    if modern:
+        tool_root, modern_library = validate_modern_tool(root)
     tool = tool_root / "bin/objc-metadata-generator"
     provenance = json.loads((tool_root / "provenance.json").read_text())
-    if hashlib.sha256(tool.read_bytes()).hexdigest() != provenance["generatorSHA256"] or \
-       provenance["patchSourceSHA256"] != hashlib.sha256((root / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest():
+    if not modern and (hashlib.sha256(tool.read_bytes()).hexdigest() != provenance["generatorSHA256"] or \
+       provenance["patchSourceSHA256"] != hashlib.sha256((root / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest()):
         raise RuntimeError("Metadata build-tool provenance does not match actual inputs")
     umbrella = module_root / "HanlinMetadataInput.h"
     evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
@@ -502,6 +537,9 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     environment["HANLIN_METADATA_INPUT_UMBRELLA"] = str(umbrella)
     environment["CLANG_ENABLE_MODULES"] = "NO"
     original_cflags = environment.get("OTHER_CFLAGS", "")
+    if modern:
+        from metadata_public_headers import MODERN_CPP_ARGUMENTS
+        original_cflags = shlex.join([*shlex.split(original_cflags), *MODERN_CPP_ARGUMENTS])
     environment["OTHER_CFLAGS"] = f'{original_cflags} {metadata_flags(module_root, module_map, core_support_dir)}'.strip()
     directories = [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))]
     role_roots = list(dict.fromkeys(p.resolve() for p in directories if (p / ROLE_MANIFEST).is_file()))
@@ -509,14 +547,19 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
     diagnostic_mode = environment.get("HANLIN_METADATA_PREPROCESS_PROVENANCE", "0")
     if diagnostic_mode not in {"0", "1"}:
         raise RuntimeError("Invalid preprocessing provenance opt-in")
+    if modern and diagnostic_mode == "1":
+        raise RuntimeError("Modern diagnostic wrapper is not accepted; use retained standalone controls")
     diagnostic_result = None
     diagnostic_evidence_ok = False
     inventory = []
     try:
         library = None
         if role_roots:
-            clang = Path(subprocess.check_output(["xcrun", "--find", "clang"], text=True).strip()).resolve()
-            library = clang.parent.parent / "lib/libclang.dylib"
+            if modern:
+                library = modern_library
+            else:
+                clang = Path(subprocess.check_output(["xcrun", "--find", "clang"], text=True).strip()).resolve()
+                library = clang.parent.parent / "lib/libclang.dylib"
             # First inventory only discovers ownership/aliases; it grants no include-only role.
             for directory in role_roots:
                 produce_role_inventory(directory, [], library, classify=False, receipt_path=receipts[str(directory)])
@@ -562,7 +605,10 @@ def generate_final_metadata(root, arch, platform_name, module_root, module_map, 
             # Reclassify ALL final, post-staging bytes at the exact captured context.
             # Never promote a stale receipt by updating hashes alone.
             for directory in role_roots:
-                produce_role_inventory(directory, arguments, library, receipt_path=receipts[str(directory)], metadata_compiler=metadata_compiler)
+                # The modern candidate parses every root in ObjC++; grant no
+                # include-only exemption and retain all actual public inputs.
+                produce_role_inventory(directory, arguments, library, classify=not modern,
+                    receipt_path=receipts[str(directory)], metadata_compiler=metadata_compiler)
             inventory = write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
                 sorted(core_support_dir.glob("*.h")) + swift_headers, directories, receipts, arguments, metadata_compiler)
     finally:
