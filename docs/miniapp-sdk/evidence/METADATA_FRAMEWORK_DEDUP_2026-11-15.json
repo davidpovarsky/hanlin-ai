@@ -29,15 +29,18 @@
     "executedMethods": 0
   },
   "taskCompletion": false,
-  "implementationCommit": "cc15459cf6e5ee77f8afc989b81c6e8d20171038",
+  "implementationCommit": "7cb8689854d6dc2f378f975a3b024d6c6857a77c",
   "sourceSHA256": {
     "Scripts/NativeScript/metadata_public_headers.py": "d9c845becc828bb06237bdbe6d5735a904a9ba295235229adbe17087cfa275f3",
     "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "70a4479461f8d23937413da80a7aea0da5308d400b53e7d55151c8fd410dac17",
     "Scripts/NativeScript/build-metadata-tool.py": "35b3abbfd65f888e9b3525fc030189b57c5fee6d8efb88ed534a2b7f583777a7",
-    "Scripts/Expo/prepare-ios-dependencies.mjs": "39b243fb01ed7c270c2be7ccd3f156cf0a2641c741e269a267e3716b111d7435",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "a99e97ad8e0d677b940058f0fbe29c1c881e1a201ca68bf16c79cb3755183b47",
     "Scripts/NativeScript/probe-sdk-metadata.py": "e029456ec33ae7f90cd1229027ef29bab9867315a7962b205ba60631acff50d9",
     "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "6d3d8513417375e1b1b66cbf2251ca7bcd0f64301eb76c9d8d572b75e95bc573",
-    "Scripts/CI/stage_modular_headers.py": "bd1724cfe38fffe0e1dc29b2d9f0d5a3bfd18423f82a8138b86d36de8ca0d4c8"
+    "Scripts/CI/stage_modular_headers.py": "bd1724cfe38fffe0e1dc29b2d9f0d5a3bfd18423f82a8138b86d36de8ca0d4c8",
+    "Scripts/Expo/metadata-interface-partition.mjs": "317fd05a01c8e74b3ceee9b510cfcc824e540eb8db4d8a91c7699b83b123da6d",
+    "Scripts/Expo/metadata-interface-contract.json": "026861a8860dfb9c3c02e035220e40c9ab6eb9d7d67e87ce3fe1d9723b651f67",
+    "Scripts/CI/Tests/test_expo_metadata_interface_partition.py": "72d816badba457a906e61dcff8858e77fa2f6f248921a239573ba2fd580ef8ec"
   },
   "status": "BLOCKED_COMPLETE_OBJC_ROLE_PROOF",
   "appFrameworkDedup": {
@@ -1120,7 +1123,7 @@
     }
   ],
   "producerPartitionProposal": {
-    "status": "NOT_IMPLEMENTED_EXACT_LEASE_AND_INDEPENDENT_API_CONTRACT_REQUIRED",
+    "status": "LEASE_GRANTED_INCOMPLETE_CONTRACT_INVENTORY_DELIVERED",
     "sourceBoundary": "Scripts/Expo/prepare-ios-dependencies.mjs stageModularFrameworks and existing top-level cxxstableapi include stripping; downstream additive projection helper/contract and focused tests need exact lead lease.",
     "aliasConflicts": [
       {
@@ -1247,7 +1250,7 @@
   "capabilityObservation": {
     "commit": "bfe33506a771aae6bdc4b97dccd657a2facecc45",
     "tests": 12,
-    "sourceQA": "PENDING_FINAL_REVIEW",
+    "sourceQA": "Accepted as reported by lead exact-lease message; Apple12 NOT_RUN.",
     "appleExecution": "NOT_RUN",
     "strictReadAPI": "readSelection(chatID:temporary:) async throws -> Set<UUID>",
     "scopeSignalAPI": "selectionRevision(chatID:temporary:) -> UInt64",
@@ -1265,5 +1268,65 @@
     },
     "inputs": "build/metadata-observer-final-inputs-NOT-DISPATCHED.json",
     "plan": "build/metadata-observer-final-impact-plan.json"
+  },
+  "producerInterfacePacket": {
+    "commit": "7cb8689854d6dc2f378f975a3b024d6c6857a77c",
+    "status": "INCOMPLETE_NO_PROJECTION",
+    "newFiles": [
+      "Scripts/Expo/metadata-interface-partition.mjs",
+      "Scripts/Expo/metadata-interface-contract.json",
+      "Scripts/CI/Tests/test_expo_metadata_interface_partition.py"
+    ],
+    "existingFileHook": "Scripts/Expo/prepare-ios-dependencies.mjs: import plus skip legacy guard stripping for exact19 scoped headers",
+    "generatedTransforms": "NONE; no approved schema1 projection representation",
+    "guardCorrection": "Fresh producer staging preserves actual RN strict UmbrellaGuard includes for exact19 inputs; complete producer/native verification NOT_RUN at this source.",
+    "sourceFilesInRNClosure": 22,
+    "externalIncludeEdges": 35,
+    "uniqueExternalIncludeSpellings": 19,
+    "headers": 19,
+    "moduleMaps": 3,
+    "bothSourceSlicesEqual": true,
+    "contractSHA256": "026861a8860dfb9c3c02e035220e40c9ab6eb9d7d67e87ce3fe1d9723b651f67",
+    "missingFacts": [
+      "WITH_PERFETTO branches invoke PERFETTO_DECLARE_DATA_SOURCE_STATIC_MEMBERS and PERFETTO_DEFINE_CATEGORIES_IN_NAMESPACE; perfetto.h is absent from staged RN artifacts, so expansion/linkage/type effects are unknown.",
+      "Folly json/dynamic.h belongs to the separate ReactNativeDependencies artifact; its selected include tree, macros and transitive C exports are not proven by the RN source tree.",
+      "react/timing/primitives.h reaches mach/mach_time.h under __APPLE__; SDK C declarations/constants/types and availability must be inventoried in the actual native context.",
+      "16 C++ standard-library includes and their transitive C headers need actual SDK/libc++ preprocessing and API comparison; a namespace-only source scan is insufficient.",
+      "NativeScript.framework carries a separate differing six-file JSI variant; actual include/module ownership must be established before aliasing or changing its C++ ABI inputs.",
+      "No native preprocessed-token/AST/layout equivalence receipt exists for either Apple slice or relevant macro/deployment contexts, and no valid Clang17 projected ObjC root receipt exists."
+    ],
+    "requiredProofs": {
+      "publicCObjCDeclarationsTypesLayoutsConstantsAvailabilityLinkage": "MISSING",
+      "allConditionalAndMacroBranches": "MISSING",
+      "transitiveIncludeAndModuleOwnership": "MISSING",
+      "nativeCppPreprocessedTokensASTAndLayouts": "NOT_RUN",
+      "pinnedClang17ObjCRootsWithEffectiveContext": "NOT_RUN"
+    },
+    "localExecution": {
+      "status": "EXECUTED_PASS",
+      "command": "py -3 -B -m unittest Scripts.CI.Tests.test_expo_metadata_interface_partition Scripts.CI.Tests.test_nativescript_metadata_wrapper -v",
+      "methods": 43,
+      "newMethods": 13,
+      "existingMethods": 30,
+      "seconds": 49.462,
+      "log": "build/metadata-interface-partition-local-tests.log",
+      "nodeSyntax": "EXECUTED_PASS",
+      "diffCheck": "EXECUTED_PASS",
+      "boundary": "Portable local inputs/Clang C preprocessor and fail-closed checks only; no Apple framework/typecheck/VM/projection/native parity execution."
+    },
+    "localReadOnlyAudit": {
+      "status": "INCOMPLETE",
+      "exitCode": 2,
+      "sourceReceipts": 22,
+      "generatedInputs": 22,
+      "differingGenerated": [
+        "ReactCommon.framework/Headers/CallInvoker.h",
+        "ReactCommon.framework/Headers/SchedulerPriority.h"
+      ],
+      "boundary": "Existing frozen local artifacts audited without writes; not a newly staged producer output or complete public-API inventory."
+    },
+    "nativeValidation": "NOT_RUN_AT_THIS_SOURCE",
+    "stageModularHeadersChanged": false,
+    "nativeScriptJSIChanged": false
   }
 }
