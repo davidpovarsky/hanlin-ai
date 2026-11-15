@@ -139,7 +139,9 @@ p=json.load(open(sys.argv[1]))
 if sys.argv[2]=='compile':
     names=[]
 elif sys.argv[2]=='consumer':
-    names=['HanlinA2UIAgentPresentationTests/'+x+'()' for x in p['consumer_cases']]+['A2UISDKTests/'+x+'()' for x in p['ownership_cases']]
+    names=(['HanlinA2UIAgentPresentationTests/'+x+'()' for x in p['consumer_cases']]
+           +['A2UISDKTests/'+x+'()' for x in p['ownership_cases']]
+           +['HanlinA2UICompleteBatchValidatorTests/'+x+'()' for x in p['validator_cases']])
 elif sys.argv[2]=='all':
     names=['A2UIIngressTests/'+x+'()' for x in p['portable_cases']]+['A2UISDKTests/'+x+'()' for x in p['sdk_cases']]
 else:
@@ -147,7 +149,7 @@ else:
     names=[('A2UISDKTests/' if x in p['sdk_cases'] else 'HanlinRemoteMediaURLTests/')+x+'()' for x in p[field]]
 print('\n'.join(names))
 PY
-selectors=()
+selectors=(CODE_SIGNING_ALLOWED=NO) # Bash3.2 treats expansion of an empty array as unbound under set -u.
 while IFS= read -r method; do [[ -z "$method" ]] || selectors+=("-only-testing:AI_HLYTests/$method"); done < "$evidence/selected-cases.txt"
 action=test
 if [[ "$suite" == compile ]]; then action=build; fi
@@ -161,7 +163,7 @@ set +e
     -parallel-testing-enabled NO -destination-timeout 60 \
     -disableAutomaticPackageResolution -derivedDataPath "$scratch/DerivedData" \
     -resultBundlePath "$evidence/A2UI.xcresult" -skipPackagePluginValidation -skipMacroValidation \
-    "${selectors[@]}" CODE_SIGNING_ALLOWED=NO
+    "${selectors[@]}"
 ) 2>&1 | tee "$evidence/xcodebuild.log"
 test_status=${PIPESTATUS[0]}
 set -e

@@ -54,6 +54,16 @@ SDK_SHA = "18813519eada1db152bd206d5c7bd922ddc987ee"
 PRODUCER_SHA = "e7bf34111e603ca977becd007dd4e5bb109af857"
 CONSUMER_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift"
 CONSUMER_TEST = "AI_HLYTests/HanlinA2UIAgentPresentationTests.swift"
+VALIDATOR_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UICompleteBatchValidator.swift"
+VALIDATOR_TEST = "AI_HLYTests/HanlinA2UICompleteBatchValidatorTests.swift"
+VALIDATOR_CASES = [
+    "completeBatchUsesOfficialSchemasAndResolvesForwardReferences",
+    "finalGraphRejectsMissingRootDanglingReferencesAndSchemaErrors",
+    "independentOwnersReuseWireAndPartIDsWithoutSharingGraphs",
+    "wholeBatchFramingRejectsBeforeAnyScratchConstruction",
+    "canonicalOrderKindsProtocolAndResourceBoundsArePreserved",
+    "scratchProcessorsDisposeOnSuccessAndFailureWithoutRPCAuthority",
+]
 CONSUMER_CASES = [
     "bufferedEOFRetainsRealRendererActionAndSeparateRunIdentity",
     "canonicalRecordReplayKeepsBytesAndCannotRestoreActions",
@@ -138,11 +148,15 @@ def plan(platform: str = "macos", consumer: bool = False) -> dict:
         media_cases += policy_cases
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
     if consumer:
-        paths += [REPOSITORY / CONSUMER_SOURCE, REPOSITORY / CONSUMER_TEST]
+        paths += [REPOSITORY / CONSUMER_SOURCE, REPOSITORY / CONSUMER_TEST,
+                  REPOSITORY / VALIDATOR_SOURCE, REPOSITORY / VALIDATOR_TEST]
         suite_source = (REPOSITORY / CONSUMER_TEST).read_text(encoding="utf-8").split("struct HanlinA2UIAgentPresentationTests {", 1)[1]
         actual = re.findall(r"^    func (\w+)\(", suite_source, re.MULTILINE)
         if actual != CONSUMER_CASES:
             raise ValueError("Unexpected consumer integration test identities")
+        actual = re.findall(r"@Test func (\w+)\(", (REPOSITORY / VALIDATOR_TEST).read_text(encoding="utf-8"))
+        if actual != VALIDATOR_CASES:
+            raise ValueError("Unexpected pure validator test identities")
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
     result = {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
@@ -152,7 +166,7 @@ def plan(platform: str = "macos", consumer: bool = False) -> dict:
             "harness_manifest_sha256": sha(package_text(platform, consumer).encode()),
             "native_execution": "NOT_RUN", "platform": platform + "27 / current stable Xcode"}
     if consumer:
-        result.update(consumer_cases=CONSUMER_CASES, projection_cases=PROJECTION_CASES,
+        result.update(consumer_cases=CONSUMER_CASES, projection_cases=PROJECTION_CASES, validator_cases=VALIDATOR_CASES,
                       sdk_source_sha=SDK_SHA, producer_revision=PRODUCER_SHA,
                       sdk_tree_ids={name: subprocess.check_output(["git", "rev-parse", f"{SDK_SHA}:Packages/{name}"], cwd=REPOSITORY, text=True).strip()
                                     for name in ["HanlinAgentSDK", "HanlinPlatform"]})
@@ -171,9 +185,9 @@ def prepare(destination: Path, inputs: dict) -> None:
         data = (REPOSITORY / relative).read_bytes()
         if sha(data) != entry["sha256"]:
             raise ValueError(f"Input changed while preparing proof: {relative}")
-        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/") or relative == CONSUMER_SOURCE:
+        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/") or relative in [CONSUMER_SOURCE, VALIDATOR_SOURCE]:
             target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
-        elif relative in [TEST, MEDIA_POLICY_TEST, CONSUMER_TEST]:
+        elif relative in [TEST, MEDIA_POLICY_TEST, CONSUMER_TEST, VALIDATOR_TEST]:
             target = destination / "Tests/AI_HLYTests" / Path(relative).name
         else:
             target = destination / "Tests/AI_HLYTests/A2UIFixtures" / Path(relative).name
@@ -285,7 +299,7 @@ def main() -> None:
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
         check_lock(args.resolved)
-        expected = (inputs["consumer_cases"] + inputs["ownership_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
+        expected = (inputs["consumer_cases"] + inputs["ownership_cases"] + inputs["validator_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
                     if args.suite == "ownership" else inputs["sdk_cases"]
                     if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"])
         if args.verify_xcresult:

@@ -1,4 +1,4 @@
-// Enable only in the isolated exact-pin SDK harness. App wiring is a separate lease.
+// Official SDK state shared by presentation and temporary complete-batch validation.
 #if HANLIN_A2UI_POC
 import A2UICore
 import BasicCatalog
@@ -44,6 +44,25 @@ final class HanlinA2UISession {
 
     func surface(_ id: String) -> SurfaceViewModel? {
         processor.surfaceGroupModel[id]
+    }
+
+    /// Final completeness is stricter than incremental input: use the official topology
+    /// validator on the final public SDK models, including their resolved catalog identities.
+    func validateCompleteGraphs() throws {
+        guard !isClosed else { throw HanlinA2UIIngress.Rejection(.closed) }
+        for id in surfaceIDs {
+            guard let surface = surface(id) else { continue }
+            let components: [[String: JSONValue]] = surface.componentsModel.components.values.map { model in
+                var value = model.properties
+                value["id"] = .string(model.id)
+                value["component"] = .string(model.type)
+                if let catalogID = model.catalogID { value["@catalogId"] = .string(catalogID) }
+                return value
+            }
+            try GraphTopologyValidator.validate(components: components, rootID: "root",
+                config: ValidationConfig(protocolVersion: .v10), catalogs: surface.catalogs,
+                defaultCatalogID: surface.defaultCatalogID)
+        }
     }
 
     /// Consumes a complete message without changing any persisted chat schema or replay order.

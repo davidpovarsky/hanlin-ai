@@ -160,3 +160,11 @@ The manual `a2ui_media_ios_compile` route builds the real enabled iOS sources an
 COMPILE_PASS/zero executed tests on success. It does not rerun the unchanged URL/parser/binding
 tests or infer gesture, networking, native playback or lifecycle XCUITest behavior from a build.
 That build is pending at this source commit; original-app XCUITest remains required.
+
+The first compile-only attempt43732237400 at9b21c3e9 ended **INFRA_ERROR/zero executed,
+no compiler started and no xcresult**: runner Bash3.2 rejects an empty array expansion under
+`set -u`. The corrected selector array always includes the real CODE_SIGNING_ALLOWED setting.
+Artifact14169003246 (17,139 bytes), SHA256
+`9ca79ee8557cbc662050f12d93d7fbba2367d03e6d27ec78d1483c122df1573f` preserves preflight,
+original input hashes, lock and failure status. This attempt is not a source-compilation failure
+or a test pass. A focused compile retry is required; unchanged media tests remain unrepeated.

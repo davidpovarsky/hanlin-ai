@@ -70,7 +70,7 @@ fileprivate final class HanlinA2UIResultOwner {
     let session: HanlinA2UISession
     private let relay: HanlinA2UIResultRelay
     private var nextSequence: UInt64 = 0
-    private var retiredSurfaceIDs: Set<String> = []
+    private var lifetime = HanlinA2UIFrameLifetime()
     private var receiveTask: Task<Void, Never>?
     private(set) var isReceivingFinished = false
 
@@ -91,22 +91,7 @@ fileprivate final class HanlinA2UIResultOwner {
         guard sequence == nextSequence else { return .failure(.outOfOrder) }
         // A correctly ordered delivery consumes its ordinal even if SDK validation rejects it.
         // Replaying that frame cannot consume budget or mutate a surface a second time.
-        let frame = try? HanlinA2UIIngress.inspect(Data(json.utf8))
-        let result: Result<Void, HanlinA2UIResultAdmissionError>
-        if let frame, retiredSurfaceIDs.contains(frame.surfaceID) {
-            // Host lifetime policy, not SDK schema validation. ActionHandling supplies only
-            // a wire ID, so a deleted ID cannot identify a new incarnation in this result.
-            result = .failure(.retiredSurfaceID)
-        } else {
-            let deletingOwnedSurface = frame.map {
-                $0.operation == .deleteSurface && session.surface($0.surfaceID) != nil
-            } ?? false
-            result = session.receive(json).mapError(HanlinA2UIResultAdmissionError.rejected)
-            if let frame, deletingOwnedSurface,
-               session.surface(frame.surfaceID) == nil {
-                retiredSurfaceIDs.insert(frame.surfaceID)
-            }
-        }
+        let result = lifetime.receive(json, in: session)
         if nextSequence == .max { seal() } else { nextSequence += 1 }
         return result
     }
@@ -214,7 +199,11 @@ final class HanlinA2UIResultStore {
                           sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
         let slot = Slot(runID: runID, resultID: resultID, origin: origin)
         guard !isDiscarded, !endedRuns.contains(runID), !completedProducerRuns.contains(runID),
-              owners[slot] == nil else { return nil }
+              owners[slot] == nil,
+              !owners.keys.contains(where: { existing in
+                  existing.runID == runID && existing.resultID == resultID
+                      && (existing.modelMessageID == nil) != (slot.modelMessageID == nil)
+              }) else { return nil }
         let key = HanlinA2UIResultKey(runID: runID, resultID: resultID, origin: origin, generation: UUID())
         let owner = HanlinA2UIResultOwner(key: key, sink: sink, store: self)
         owners[slot] = owner

@@ -48,6 +48,20 @@ The shared owner slot change affects all17; unaffected direct SDK/producer/media
 rerun. This23-case native operation is pending at this source commit. It does not refresh the
 separate media passes or claim an aggregate full-app acceptance.
 
+That23-case run43731951842 at8e47bca2 finished TEST_FAILED:22 passed, one failed.
+`modelPartUsesMessageIdentityWithoutToolCall` caught cross-origin registration on an existing
+model result ID. The follow-up keeps tool/model collision rejection while allowing separate
+model-message owners. The failed assertion now records its boolean result without reflecting
+the cyclic owner graph. Original23 xcresult outcomes and118,488,177-byte artifact14168878174
+(SHA256c2d57870fdfe240815b39f622703520cef2e2b8df0ee2c3ac4f3b87bf463bbee)
+remain in `evidence/sdk-consumer-43731951842.json`; this run is not relabeled as passing.
+
+The SDK's newly required complete-batch callback is documented in
+`COMPLETE_BATCH_VALIDATOR_CONTRACT_2026-11-15.md`. Its extraction of the existing owner frame
+lifetime policy affects the17 ownership and6 consumer cases, so the next native operation
+executes those23 plus6 new pure-validator controls. The validator creates no real store/host
+admission. Native execution of that29-case slice is pending at this source commit.
+
 Main-app session ownership/environment wiring, a supported live schema-response provider path,
 native host effects, XCUITest, saved local form state, physical-device/RTL/AX acceptance remain OPEN.
 The SDK-injected fixture stream in this proof is explicitly not real-model acceptance.

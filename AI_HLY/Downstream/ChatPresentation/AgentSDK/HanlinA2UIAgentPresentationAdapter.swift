@@ -146,25 +146,25 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
     }
 
     private func consume(_ part: HanlinChatStructuredPart, runID: UUID, live: Bool) throws -> Bool {
-        guard frameCount < 4096 else { throw AdmissionError.resourceLimit }
+        guard frameCount < HanlinA2UIContentLimits.maximumFrames else { throw AdmissionError.resourceLimit }
         var nextOrdering = ordering[runID] ?? HanlinChatStructuredPartSequence()
         guard try nextOrdering.admit(part) else { return false }
         let address = Address(runID: runID, messageID: part.messageID)
-        guard messages[address] != nil || messages.count < 64 else { throw AdmissionError.resourceLimit }
+        guard messages[address] != nil || messages.count < HanlinA2UIContentLimits.maximumMessages else { throw AdmissionError.resourceLimit }
         var message = messages[address] ?? Message()
-        guard message.parts[part.partID] != nil || message.order.count < 128 else { throw AdmissionError.resourceLimit }
+        guard message.parts[part.partID] != nil || message.order.count < HanlinA2UIContentLimits.maximumPartsPerMessage else { throw AdmissionError.resourceLimit }
         let bytes: Int
         switch part.payload {
         case .textDelta(let text): bytes = text.utf8.count
         case .a2uiMessage(_, let data): bytes = data.count
         }
-        guard bytes <= 8_388_608 - wireBytes else { throw AdmissionError.resourceLimit }
+        guard bytes <= HanlinA2UIContentLimits.maximumWireBytes - wireBytes else { throw AdmissionError.resourceLimit }
         frameCount += 1
         wireBytes += bytes
         if message.parts[part.partID] == nil { message.order.append(part.partID) }
         switch part.payload {
         case .textDelta(let text):
-            guard message.textBytes <= 1_048_576 - bytes else { throw AdmissionError.resourceLimit }
+            guard message.textBytes <= HanlinA2UIContentLimits.maximumTextBytesPerMessage - bytes else { throw AdmissionError.resourceLimit }
             let previous: String
             if let existing = message.parts[part.partID] {
                 guard case .text(let value) = existing else { throw AdmissionError.changedPartKind }
@@ -241,7 +241,7 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
     /// could grow EOF/tombstone/mode sets even after the content budget has been exhausted.
     private func reserveRun(_ runID: UUID) throws {
         guard !runIDs.contains(runID) else { return }
-        guard runIDs.count < 64 else {
+        guard runIDs.count < HanlinA2UIContentLimits.maximumRuns else {
             resourceExhausted = true
             invalidate(identity)
             throw AdmissionError.resourceLimit

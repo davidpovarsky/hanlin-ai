@@ -419,7 +419,8 @@ struct A2UISDKTests {
         let p = try #require(store.registerModelPart(runID: run, messageID: message, partID: part, sink: sink))
         #expect(p.key.callID == nil)
         #expect(p.key.origin == .model(messageID: message))
-        #expect(store.register(runID: run, resultID: part, callID: "invented-tool", sink: sink) == nil)
+        let fabricatedToolWasRejected = store.register(runID: run, resultID: part, callID: "invented-tool", sink: sink) == nil
+        #expect(fabricatedToolWasRejected) // Keep a failing diagnostic out of the cyclic owner graph.
         #expect(store.replace(p.key, callID: "invented-tool", sink: sink) == nil)
         #expect(HanlinA2UIResultProjectionSource(store: store, keys: [p.key]) == nil)
         try load(store, p)
