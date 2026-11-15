@@ -33,9 +33,11 @@ def summarize(root):
     planned=json.loads((root/'expected-tests.json').read_text()) if (root/'expected-tests.json').exists() else {}
     selection=json.loads((root/'selected-suites.json').read_text()) if (root/'selected-suites.json').exists() else {}
     native_selection={'SDKTests':['AgentSessionTests'],'CoreTests':['HanlinInjectedProviderTests','HanlinAISDKProviderFactoryTests','HanlinAISDKAgentEngineTests','HanlinNativeStructuredResponseTests']}
+    app_selection={**native_selection,'SDKTests':['AgentSessionTests','ContextTests','StoreTests']}
     checkpoint=selection=={'SDKTests':['StoreTests']}
     if selection:
-        if not ((checkpoint and selected==['SDKTests'] and planned=={'StoreTests':['versionOneCheckpointCanBeRestoredWithoutDestructiveMigration']}) or (selection==native_selection and selected==['SDKTests','CoreTests'])):
+        app_allowed=selection==app_selection and selected==['SDKTests','CoreTests'] and planned.get('ContextTests')==['hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade'] and planned.get('StoreTests')==['versionOneCheckpointCanBeRestoredWithoutDestructiveMigration']
+        if not ((checkpoint and selected==['SDKTests'] and planned=={'StoreTests':['versionOneCheckpointCanBeRestoredWithoutDestructiveMigration']}) or (selection==native_selection and selected==['SDKTests','CoreTests']) or app_allowed):
             raise ValueError('Unsupported focused validation contract')
     for name,suites in EXPECTED.items():
         if name not in selected:continue
@@ -58,7 +60,7 @@ def summarize(root):
     relevant={'SDKTests':'sdk_test_exit','CoreTests':'core_test_exit','ProducerTests':'producer_test_exit'}
     required=[relevant[name] for name in selected]+([] if selected==['SDKTests'] else ['ios_build_exit'])
     passed=bool(cases) and not errors and all(statuses.get(key)==0 for key in required) and counts['EXECUTED_PASS']==len(cases)
-    return {'scope':'exact-source-Apple-checkpoint-recovery' if checkpoint else 'exact-source-Apple-native-schema-affected-dependencies' if selection==native_selection else 'exact-source-Apple-session-package-regression' if selected==['SDKTests'] else 'exact-source-Apple-producer-core-session-fixture-host-regression','selected_results':selected,'selected_suites':selection,'status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight','live OpenAI model/official A2UI renderer integration']}
+    return {'scope':'exact-source-Apple-general-host-schema-and-store-package-dependencies' if selection==app_selection else 'exact-source-Apple-checkpoint-recovery' if checkpoint else 'exact-source-Apple-native-schema-affected-dependencies' if selection==native_selection else 'exact-source-Apple-session-package-regression' if selected==['SDKTests'] else 'exact-source-Apple-producer-core-session-fixture-host-regression','selected_results':selected,'selected_suites':selection,'status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight','live OpenAI model/official A2UI renderer integration']}
 
 
 if __name__=='__main__':

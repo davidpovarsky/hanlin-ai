@@ -41,6 +41,31 @@ private struct ToolScriptModel: LanguageModelV3 {
 
 private enum SessionFixtureError: Error { case unsupportedNavigation }
 
+private actor GeneralMutationFixtureHost: HanlinHostIntegration {
+    nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 1)
+    let base: SyntheticFixtureHost
+    init(context: HanlinHostContext) { base = SyntheticFixtureHost(context: context) }
+    func context(for session: HanlinHostSession) async -> HanlinHostContext { await base.context(for: session) }
+    func catalog(for context: HanlinHostContext) async throws -> HanlinHostCatalog {
+        let original = try await base.catalog(for: context)
+        return .init(apiVersion: apiVersion, revision: original.revision, context: context, tools: original.tools.map {
+            .init(route: $0.route, descriptor: $0.descriptor,
+                writeGuarantee: $0.writeGuarantee == .readOnly ? .readOnly : .hostManagedMutation)
+        })
+    }
+    func execute(_ invocation: HanlinHostInvocation, progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult {
+        guard invocation.writeGuarantee == .hostManagedMutation else { throw HanlinHostError.invalidArguments }
+        return try await base.execute(invocation, progress: progress)
+    }
+    func cancel(_ id: HanlinToolInvocationID) async { await base.cancel(id) }
+    func open(_ destination: HanlinHostDestination) async throws -> HanlinHostNavigationResult { try await base.open(destination) }
+}
+
+private actor MutationProgress {
+    var values: [HanlinToolProgressEvent] = []
+    func receive(_ event: HanlinToolProgressEvent) { values.append(event) }
+}
+
 private struct StructuredScriptModel: LanguageModelV3 {
     let provider = "fixture"
     let modelId = "structured"
@@ -209,6 +234,70 @@ private struct ControlledTextModel: LanguageModelV3 {
 }
 
 @Suite struct AgentSessionTests {
+    @Test func generalMutationDuplicateAndChangedArgumentsCannotRedispatch() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let session = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = GeneralMutationFixtureHost(context: context)
+        let dispatcher = HanlinHostDispatcher(host: host), run = UUID()
+        let catalog = try await host.catalog(for: context)
+        let first = try await dispatcher.dispatchEvent(alias: "fixture_create", argumentsJSON: #"{"text":"one"}"#,
+            providerCallID: "original-provider-id", runID: run, step: 3, session: session, catalog: catalog, limits: .init())
+        let replay = try await dispatcher.dispatchEvent(alias: "fixture_create", argumentsJSON: #"{"text":"one"}"#,
+            providerCallID: "original-provider-id", runID: run, step: 3, session: session, catalog: catalog, limits: .init())
+        #expect(first.call == replay.call && first.resultID == replay.resultID)
+        #expect(first.result.effectState == .confirmedCommitted)
+        do {
+            _ = try await dispatcher.dispatch(alias: "fixture_create", argumentsJSON: #"{"text":"changed"}"#,
+                providerCallID: "original-provider-id", runID: run, step: 3, session: session, catalog: catalog, limits: .init())
+            Issue.record("Changed input was redispatched")
+        } catch { #expect(error as? HanlinHostError == .idempotencyConflict) }
+        do {
+            _ = try await dispatcher.dispatch(alias: "fixture_create", argumentsJSON: #"{"text":"one"}"#,
+                providerCallID: "conditional", runID: run, step: 3, session: session, catalog: catalog,
+                expectedRevision: "invented-cas", limits: .init())
+            Issue.record("Host-managed mutation pretended to offer CAS")
+        } catch { #expect(error as? HanlinHostError == .unsupportedConditionalWrite) }
+        #expect(await host.base.executions == 1)
+        #expect(await host.base.nativeWrites == 1)
+    }
+
+    @Test func generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct() async throws {
+        for mode in [SyntheticFixtureHost.Mode.deny, .uncertainAfterDispatch] {
+            let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+            let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+            let session = HanlinHostSession(conversationID: UUID(), context: context)
+            let host = GeneralMutationFixtureHost(context: context)
+            await host.base.setMode(mode)
+            let dispatcher = HanlinHostDispatcher(host: host), run = UUID()
+            let catalog = try await host.catalog(for: context)
+            let result = try await dispatcher.dispatch(alias: "fixture_create", argumentsJSON: #"{"text":"one"}"#,
+                providerCallID: "same", runID: run, step: 0, session: session, catalog: catalog, limits: .init())
+            _ = try await dispatcher.dispatch(alias: "fixture_create", argumentsJSON: #"{"text":"one"}"#,
+                providerCallID: "same", runID: run, step: 0, session: session, catalog: catalog, limits: .init())
+            #expect(await host.base.executions == 1)
+            if mode == .deny { #expect(result.effectState == .notDispatched); #expect(await host.base.nativeWrites == 0) }
+            else { #expect(result.effectState == .uncertain); #expect(await host.base.nativeWrites == 1); #expect(result.reconciliationReference != nil) }
+        }
+    }
+
+    @Test func generalMutationProgressAndReceiptKeepOriginalContextAndStep() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let session = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = GeneralMutationFixtureHost(context: context)
+        let dispatcher = HanlinHostDispatcher(host: host), run = UUID(), events = MutationProgress()
+        let catalog = try await host.catalog(for: context)
+        let result = try await dispatcher.dispatchEvent(alias: "fixture_create", argumentsJSON: #"{"text":"one"}"#,
+            providerCallID: "original", runID: run, step: 7, session: session,
+            catalog: catalog, limits: .init(), progress: { await events.receive($0) })
+        #expect(result.call.session == session && result.call.runID == run && result.call.step == 7)
+        #expect(result.call.providerCallID == "original")
+        let progress = await events.values
+        #expect(progress.count == 1 && progress.first?.invocationID == result.call.invocationID)
+        #expect(progress.first?.sequence == 2)
+    }
+
     @Test(.timeLimit(.minutes(1))) @MainActor
     func nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity() async throws {
         let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
@@ -228,7 +317,8 @@ private struct ControlledTextModel: LanguageModelV3 {
         let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
         let source = try await session.stream(messages: [.init(role: .user, text: "Fixture")],
             modelReference: .init(provider: "openai-responses", modelID: config.modelID),
-            structuredResponse: .init(messageID: messageID, validateCompleteParts: { _ in }))
+            structuredResponse: .init(messageID: messageID, validateCompleteParts: { _ in }),
+            presentationReference: "fixture-original-row-binding")
         var observed = 0
         for try await event in source {
             #expect(event.session == identity)
@@ -237,6 +327,10 @@ private struct ControlledTextModel: LanguageModelV3 {
                 observed += 1
                 let saved = try #require(await store.load(identity.conversationID, namespace: ns))
                 let replay = try saved.structuredEntries(runID: event.runID, messageID: messageID)
+                #expect(saved.entries.contains {
+                    if case .presentationReference(1, "fixture-original-row-binding") = $0.payload { return $0.runID == event.runID }
+                    return false
+                })
                 #expect(replay.contains {
                     if case .structuredPart(let savedPart, let savedContext) = $0.payload {
                         return savedPart == part && savedContext == context

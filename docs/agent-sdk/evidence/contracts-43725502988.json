@@ -20,7 +20,7 @@
     "sdk-tests.log": "0022cf78db9120444ffcf1ba73799ca4990613c335e87d56e3d339bd96df684f",
     "process-status.json": "9a6c6737c5528613012db902eb1200b613649ab8c14aa36242394e9b8707d1aa"
   },
-  "failure": "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration: caught invalidRecord; fixture passed an aliased temporary root to the symlink-rejecting private store",
+  "failure": "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration: caught invalidRecord. Aliased temporary root was the initial hypothesis, not an established cause; later roots still failed and source80 hung at save_v1. Original failure remains unresolved until the bounded traversal recovery executes.",
   "cases": [
     {
       "id": "StoreTests/sameConversationIDIsIsolatedBySpace()",

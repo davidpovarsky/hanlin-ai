@@ -13,6 +13,7 @@ import MapKit
 import Accelerate
 import HanlinChatCore
 import HanlinAgentCore
+import HanlinHostContracts
 import HanlinPlatformContracts
 
 // MARK: - 数据结构定义
@@ -72,6 +73,8 @@ struct RequestMessage {
 // MARK: - APIManager
 @MainActor
 class APIManager {
+    let agentSessionOwner: HanlinAppAgentSessionOwner
+    private var agentSDKRequest: HanlinAppAgentSessionOwner.Request?
     
     // MARK: 属性声明
     var searchResources: [Resource]?
@@ -117,9 +120,11 @@ class APIManager {
     
     init(
         context: ModelContext,
-        chatEngineFactory: (() -> HanlinChatEngine)? = nil
+        chatEngineFactory: (() -> HanlinChatEngine)? = nil,
+        agentSessionOwner: HanlinAppAgentSessionOwner? = nil
     ) {
         self.context = context
+        self.agentSessionOwner = agentSessionOwner ?? HanlinAppAgentSessionOwner()
         self.chatEngineFactory = chatEngineFactory ?? {
             AgentRuntimeUIAcceptanceProvider.makeChatEngine()
         }
@@ -1365,6 +1370,7 @@ class APIManager {
     func cancelCurrentRequest() {
         let cancelledRunID = initializingRunID ?? activeAgentRunID
         isCancelled = true
+        agentSessionOwner.cancel()
         activeLocalLLMDriver?.stop()
         activeLocalLLMDriver = nil
         currentTask?.cancel()
@@ -2650,8 +2656,8 @@ class APIManager {
                         supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse
                     )
 
-                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
-                       let prepared = preparedAssistantTools {
+                    if (modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse && preparedAssistantTools != nil)
+                        || self.agentSessionOwner.canRequestNativeStructured(chatConfig) {
                         if depth == 0, let userOperation { RuntimeBackgroundContinuation.shared.begin(userOperation) }
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
                         try await self.processSDKAgentEngine(
@@ -2659,7 +2665,7 @@ class APIManager {
                             formattedMessages: finalFormattedMessages,
                             modelInfo: modelInfo,
                             chatConfig: chatConfig,
-                            preparedAssistantTools: prepared,
+                            preparedAssistantTools: ifToolUse ? preparedAssistantTools : nil,
                             session: session,
                             currentLanguage: currentLanguage,
                             currentLanguagePrefix: currentLanguagePrefix,
@@ -3514,10 +3520,13 @@ class APIManager {
                            selectedPromptsContent: [String]?,
                            systemMessage: String,
                            selectedImageSize: String,
-                           imageReversePrompt: String
+                           imageReversePrompt: String,
+                           agentSDKRequest: HanlinAppAgentSessionOwner.Request? = nil
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
         initializingRunID = runID
+        if let agentSDKRequest, agentSDKRequest.uiRunID != runID { throw HanlinHostError.resultMismatch }
+        self.agentSDKRequest = agentSDKRequest
         await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
         try Task.checkCancellation()
         guard AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) else { throw HanlinChatError.cancelled }
@@ -3733,11 +3742,16 @@ class APIManager {
             diagnosticsRecorder: self.agentDiagnosticsRecorder
         ) }
 
-        let toolDefinitions = try toolAdapter?.allToolDefinitions() ?? []
+        guard let originalRequest = agentSDKRequest, originalRequest.uiRunID == runID else {
+            throw HanlinAISDKError.invalidConversation("The original response row and conversation must be bound before starting the SDK session.")
+        }
+        let sessionConfiguration = agentSessionOwner.configurationForPresentation(chatConfig)
+        let sdkStream = try await agentSessionOwner.stream(request: originalRequest, modelContext: context,
+            configuration: sessionConfiguration, engineFactory: {
         let agentEngine: HanlinAISDKAgentEngine
         if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
             guard toolAdapter == nil else { throw HanlinAppleProviderError.unsupportedTools }
-            agentEngine = try HanlinAppleOnDeviceProvider.makeEngine(configuration: chatConfig)
+            agentEngine = try HanlinAppleOnDeviceProvider.makeEngine(configuration: sessionConfiguration)
         } else {
         let chatEngine = self.chatEngineFactory()
         let fetch = await chatEngine.makeAISDKFetch(
@@ -3762,31 +3776,25 @@ class APIManager {
             },
             transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver
         )
-        agentEngine = try HanlinAISDKAgentEngine(configuration: chatConfig, fetch: fetch)
+        agentEngine = try HanlinAISDKAgentEngine(configuration: sessionConfiguration, fetch: fetch)
         }
-
-        let sdkStream = try await agentEngine.stream(
-            messages: sdkMessages,
-            baseSystemPrompt: baseSystemPrompt,
-            tools: toolDefinitions,
-            dynamicTools: { [weak toolAdapter] in
-                guard let toolAdapter else { return toolDefinitions }
-                return (try? toolAdapter.allToolDefinitions()) ?? toolDefinitions
-            },
-            prepareStep: { stepNumber in
-                guard let toolAdapter else { return .init(activeToolAliases: []) }
-                return await toolAdapter.prepareStep(stepNumber: stepNumber)
-            }
-        )
+        return agentEngine
+        }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt)
 
         var currentStepID: UUID?
         var visibleFinalCharacters = 0
         var hasCompletedToolAction = false
+        var hasStructuredContent = false
+        var terminalReason: String?
 
-        for try await event in sdkStream {
+        do {
+        for try await agentEvent in sdkStream {
+            try agentSessionOwner.receive(agentEvent, uiRunID: runID)
+            let event = agentEvent.event
             self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.event", round: currentStepID, text: String(describing: event))
             try RuntimeUserOperation.current?.checkInterruption()
             if Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
+                await agentSessionOwner.invalidate(uiRunID: runID)
                 RuntimeUserOperation.finishStream(continuation)
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
                 return
@@ -3820,10 +3828,17 @@ class APIManager {
                 }
                 continuation.yield(StreamData(content: text))
 
-            case .structuredPart:
-                // The canonical A2UI consumer installs its admission/presentation bridge here.
-                // Never reinterpret structured provider bytes as ordinary chat prose.
-                throw HanlinAISDKError.invalidConversation("Structured presentation is unavailable in this host adapter.")
+            case .structuredPart(let part):
+                hasStructuredContent = true
+                if case .textDelta(let text) = part.payload {
+                    visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
+                    RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
+                    if self.toolMessage == nil { self.toolMessage = "" }
+                    self.toolMessage?.append(text)
+                    // Existing text is a history/search/fallback projection. Ordered presentation
+                    // replaces its visible body, so it is not displayed twice.
+                    continuation.yield(StreamData(content: text))
+                }
 
             case .reasoningDelta(let text):
                 self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.reasoning", round: currentStepID, text: text)
@@ -3961,7 +3976,7 @@ class APIManager {
                 }
 
             case .finished(let reason, let usage):
-                guard visibleFinalCharacters > 0 || hasCompletedToolAction else {
+                guard visibleFinalCharacters > 0 || hasCompletedToolAction || hasStructuredContent else {
                     let error = HanlinAISDKError.incompleteProviderResponse(reason: reason)
                     await self.agentDiagnosticsRecorder?.complete(status: "failed", error: error.localizedDescription)
                     throw error
@@ -3971,22 +3986,31 @@ class APIManager {
                     let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
                     throw error
                 }
-                try RuntimeUserOperation.current?.markSucceeded()
-                await self.agentDiagnosticsRecorder?.complete(status: "completed")
-                if reason == "length" { continuation.yield(StreamData(errorInfo: "length")) }
-                RuntimeUserOperation.finishStream(continuation)
-                return
+                terminalReason = reason
 
             case .cancelled:
+                await agentSessionOwner.invalidate(uiRunID: runID)
                 await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
                 RuntimeUserOperation.finishStream(continuation)
                 return
             }
         }
 
+        if let terminalReason {
+            try agentSessionOwner.producerStreamDrained(uiRunID: runID)
+            try RuntimeUserOperation.current?.markSucceeded()
+            await self.agentDiagnosticsRecorder?.complete(status: "completed")
+            if terminalReason == "length" { continuation.yield(StreamData(errorInfo: "length")) }
+            RuntimeUserOperation.finishStream(continuation)
+            return
+        }
         await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event")
         let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
         throw error
+        } catch {
+            await agentSessionOwner.invalidate(uiRunID: runID)
+            throw error
+        }
     }
 }
 

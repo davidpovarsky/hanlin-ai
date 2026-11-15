@@ -1,0 +1,53 @@
+{
+  "source_sha": "80e755e131684337f68091b718e93b18c1162128",
+  "run": 43730362902,
+  "job": 132861240335,
+  "artifact": {
+    "id": 14169028360,
+    "digest": "sha256:1bde15286a42f59bf9c589cbedbe5a2a6b7e8eeb41aa4730c91ad918045ad734"
+  },
+  "source_hashes_verified": 272,
+  "raw_hashes": {
+    "all-expected-tests.json": "081fc2e1a9b30572a4a7edc39a7574bc81720b7b99acf302940fc2eb8504a193",
+    "architecture.txt": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01",
+    "core-schemes.json": "f0da7107785ccf7de484d1509a6e3c967cd41c9856a51e84829b0e8b7737ff0a",
+    "diagnostic-cli.txt": "2a3190eb0c48a767985e30ff703b7b1e5c3674d0c52b1557f0a1fd06da4ccf84",
+    "disk.txt": "11a5f74797356f17d6bffeeaedb0a2917d52667f39a5533db8d6fe6f305d52ae",
+    "enumerated-tests.json": "dadbb0a074678b79b14d6bf94790b7492617de38eb57ab0f8fa47ffaa30cab13",
+    "expected-tests.json": "822c8f12d4825842e4477d5e6884efd3928719d3f956a9d3dc82b624be8bbc63",
+    "ios-sdk.txt": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "macos-sdk.txt": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "os.txt": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+    "producer-commit.txt": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+    "producer-schemes.json": "c664174e99f497fc6ebc3fcdeffed8daa885fa5f5119abe26598a83d85b14dab",
+    "producer-source-sha256.json": "677bef41e01445e17dc67a4d23c1f15337eedffc44807186716eee462d0b231f",
+    "sdk-schemes.json": "cbf09fd020fdcb28960abbb0b2e6c86893770d1cbbce25599d5d4a8128f24955",
+    "sdk-tests.log": "49457529ce1d974e2592196726d22193e49f2912e1d500893c7e2c13f94fdf60",
+    "selected-results.json": "7fb3dc208f302de28e913aa33e4ba9f02d1caea054f6e8ee85c07aeb6d7d7a00",
+    "selected-suites.json": "8c4473eb3c9c5bd83f4cea28e47b50e176c5c8cc4ee42cdbe16c4c38f3517dd4",
+    "simulator-devices.json": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "simulator-runtimes.json": "6ee4aa7640940cf4d5acb67e7f2c09a85ee705f371117cf420462cad412ab3a3",
+    "skill-health.txt": "cb3a48f14bcd4d0e67d60fe12c77d18d3de6f657d7d630b5647a6dd663a76c5a",
+    "swift.txt": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "tested-source-commit.txt": "1ea5209ac0f34cdb82c6ac7de07139bf63b981319d1380007ce7be46028ceb55",
+    "tested-source-sha256.json": "8dd72643323417637ff22536649765b848a14ae6b2fe97c6daf772ef25bf057b",
+    "workflow-commit.txt": "1ea5209ac0f34cdb82c6ac7de07139bf63b981319d1380007ce7be46028ceb55",
+    "workflow-sha256.json": "1a69dd541d24830c1c99ddc1e30b62eb0fbcea8e6987f00d4d9e05133b3da980",
+    "xcode.txt": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+    "xcodebuild-help.txt": "064a5601e8bcf52832de994a2e0e7764208f6bb5ecb03b4139724d8a505366da"
+  },
+  "reused_verified_pass": 0,
+  "workflow_status": "CANCELLED",
+  "classification": "STARTED_TEST_BLOCKED_WITHOUT_COMPLETED_RESULT",
+  "executed_pass": 0,
+  "completed_cases": 0,
+  "blocked": 1,
+  "diagnostic": "Exact Swift test started at15:35:32Z and remained at save_v1 until the newer same-ref/same-validation-group native run cancelled it. No final test result exists; truncated xcresult retained. SDK source at this frozen SHA compiled. Do not count as pass or reinterpret earlier invalidRecord failures.",
+  "not_asserted": [
+    "whole app compilation",
+    "live model",
+    "official renderer/application integration",
+    "native business effects",
+    "UI/device/release"
+  ]
+}

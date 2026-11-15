@@ -35,7 +35,7 @@ import Testing
                     "content": [["type": "output_text", "text": text, "annotations": []]]]]))
             chunks.append(try event(["type": truncated ? "response.incomplete" : "response.completed", "response": [
                 "id": "resp_fixture", "status": truncated ? "incomplete" : "completed",
-                "incomplete_details": truncated ? ["reason": "max_output_tokens"] : NSNull(),
+                "incomplete_details": truncated ? (["reason": "max_output_tokens"] as Any) : (NSNull() as Any),
                 "usage": ["input_tokens": 4, "output_tokens": 8]]]))
         }
         return sse(chunks, url: url)
@@ -61,7 +61,9 @@ import Testing
         let wire = try Self.wire([Self.text])
         let fetch: FetchFunction = { request in
             let index = await calls.request()
-            let body = try #require(JSONSerialization.jsonObject(with: #require(request.httpBody)) as? [String: Any])
+            let requestData = try #require(request.httpBody)
+            let body = try #require(JSONSerialization.jsonObject(with: requestData) as? [String: Any])
+            let url = try #require(request.url)
             #expect((body["text"] as? [String: Any])?["format"] != nil)
             if index == 1 {
                 return Self.sse([
@@ -73,7 +75,7 @@ import Testing
                             "call_id": "call1", "arguments": "{}"]]),
                     try Self.event(["type": "response.completed", "response": ["id": "r1", "status": "completed",
                         "usage": ["input_tokens": 2, "output_tokens": 2]]])
-                ], url: #require(request.url))
+                ], url: url)
             }
             #expect(index == 2)
             let input = try #require(body["input"] as? [[String: Any]])

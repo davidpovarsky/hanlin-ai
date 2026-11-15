@@ -95,9 +95,11 @@ PY
 }
 finish() {
   local code="$?"
-  if [[ -f "$evidence/sdk-tests.log" ]]; then
-    grep -E 'CHECKPOINT_|recorded an issue|error:' "$evidence/sdk-tests.log" | head -n 20 >&2 || true
-  fi
+  for phase in sdk-tests core-tests ios-build; do
+    if [[ -f "$evidence/$phase.log" ]]; then
+      grep -E 'CHECKPOINT_|recorded an issue|error:' "$evidence/$phase.log" | head -n 20 >&2 || true
+    fi
+  done
   if [[ ! -f "$evidence/process-status.json" ]]; then
     printf '{"preparation_exit":%s,"producer_test_exit":null,"sdk_test_exit":null,"core_test_exit":null,"ios_build_exit":null}\n' "$code" > "$evidence/process-status.json"
   fi
@@ -130,6 +132,22 @@ if [[ "${HANLIN_SDK_NATIVE_SCHEMA_ONLY:-0}" == 1 ]]; then
   # have no dependency on those sources; the independent checkpoint recovery owns its case.
   sdk_testing=(-only-testing:HanlinAgentCoreTests/AgentSessionTests)
   printf '{"SDKTests":["AgentSessionTests"],"CoreTests":["HanlinInjectedProviderTests","HanlinAISDKProviderFactoryTests","HanlinAISDKAgentEngineTests","HanlinNativeStructuredResponseTests"]}\n' > "$evidence/selected-suites.json"
+fi
+if [[ "${HANLIN_SDK_APP_HOST_ONLY:-0}" == 1 ]]; then
+  sdk_testing=(-only-testing:HanlinAgentCoreTests/AgentSessionTests
+    '-only-testing:HanlinHostContractsTests/ContextTests/hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()'
+    '-only-testing:HanlinPersistenceAdaptersTests/StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()')
+  cp "$evidence/expected-tests.json" "$evidence/all-expected-tests.json"
+  python3 - "$evidence" <<'PY_APP'
+import json,sys
+from pathlib import Path
+root=Path(sys.argv[1]);planned=json.loads((root/'expected-tests.json').read_text())
+for suite,method in [('ContextTests','hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade'),('StoreTests','versionOneCheckpointCanBeRestoredWithoutDestructiveMigration')]:
+    assert method in planned[suite]
+    planned[suite]=[method]
+(root/'expected-tests.json').write_text(json.dumps(planned))
+(root/'selected-suites.json').write_text(json.dumps({'SDKTests':['AgentSessionTests','ContextTests','StoreTests'],'CoreTests':['HanlinInjectedProviderTests','HanlinAISDKProviderFactoryTests','HanlinAISDKAgentEngineTests','HanlinNativeStructuredResponseTests']}))
+PY_APP
 fi
 if [[ "${HANLIN_SDK_CHECKPOINT_ONLY:-0}" == 1 ]]; then
   cp "$evidence/expected-tests.json" "$evidence/all-expected-tests.json"

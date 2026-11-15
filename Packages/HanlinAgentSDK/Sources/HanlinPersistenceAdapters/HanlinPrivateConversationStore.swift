@@ -82,13 +82,19 @@ public actor HanlinPrivateConversationStore: HanlinConversationStore {
     }
 
     private func rejectSymbolicLinks(_ url: URL) throws {
-        var cursor = url
+        var cursor = url.path
         // Check all existing ancestors, including the host-supplied root. This is a private
         // single-writer store, not an adversarial shared-filesystem race/locking guarantee.
-        while cursor.path != cursor.deletingLastPathComponent().path {
-            if let attributes = try? FileManager.default.attributesOfItem(atPath: cursor.path),
+        // Use a strictly shortening lexical path, not repeated mutating Foundation URL
+        // navigation. A malformed/non-progressing ancestor must fail closed, never hang save.
+        for _ in 0..<1024 {
+            if let attributes = try? FileManager.default.attributesOfItem(atPath: cursor),
                attributes[.type] as? FileAttributeType == .typeSymbolicLink { throw HanlinHostError.invalidRecord }
-            cursor.deleteLastPathComponent()
+            let parent = (cursor as NSString).deletingLastPathComponent
+            if parent == cursor { return }
+            guard parent.utf8.count < cursor.utf8.count else { throw HanlinHostError.invalidRecord }
+            cursor = parent
         }
+        throw HanlinHostError.invalidRecord
     }
 }

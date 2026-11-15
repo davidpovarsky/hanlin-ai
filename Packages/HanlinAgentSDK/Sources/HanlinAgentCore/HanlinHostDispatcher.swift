@@ -31,6 +31,9 @@ public actor HanlinHostDispatcher {
         guard catalog.context == session.context else { throw HanlinHostError.staleContext }
         try await requireCurrent(session)
         guard let tool = catalog.tools.first(where: { $0.route.alias == alias }) else { throw HanlinHostError.unknownTool }
+        guard tool.writeGuarantee != .hostManagedMutation || host.apiVersion.minor >= 1 else {
+            throw HanlinHostError.unsupportedVersion
+        }
         if expectedRevision != nil && tool.writeGuarantee != .atomicRevisionMutation {
             throw HanlinHostError.unsupportedConditionalWrite
         }

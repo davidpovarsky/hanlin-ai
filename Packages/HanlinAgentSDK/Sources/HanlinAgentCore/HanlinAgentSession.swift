@@ -57,17 +57,21 @@ public final class HanlinAgentSession {
 
     public func stream(messages: [HanlinAISDKMessage], systemPrompt: String? = nil,
                        modelReference: HanlinModelReference, maxSteps: Int? = nil,
-                       structuredResponse: HanlinNativeStructuredResponse? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                       structuredResponse: HanlinNativeStructuredResponse? = nil,
+                       presentationReference: String? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         try await startStream(messages: messages, systemPrompt: systemPrompt, modelReference: modelReference,
-                              maxSteps: maxSteps, interactionOrigin: nil, structuredResponse: structuredResponse)
+                              maxSteps: maxSteps, interactionOrigin: nil, structuredResponse: structuredResponse,
+                              presentationReference: presentationReference)
     }
 
     private func startStream(messages: [HanlinAISDKMessage], systemPrompt: String?, modelReference: HanlinModelReference,
                              maxSteps: Int?, interactionOrigin: HanlinHostInteractionOrigin?,
-                             structuredResponse: HanlinNativeStructuredResponse?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                             structuredResponse: HanlinNativeStructuredResponse?,
+                             presentationReference: String?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !invalidated else { throw HanlinHostError.staleContext }
         guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
         guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
+        guard presentationReference.map({ !$0.isEmpty && $0.utf8.count <= 4096 }) ?? true else { throw HanlinHostError.invalidArguments }
         // Reserve before ANY store/host await. Concurrent starts cannot share a producer.
         let run = UUID()
         activeRun = run
@@ -97,6 +101,9 @@ public final class HanlinAgentSession {
             try catalog.validate()
             guard !invalidated, catalog.context == identity.context, activeRun == run else { throw HanlinHostError.staleContext }
             currentCatalog = catalog
+            if let presentationReference {
+                try append(.presentationReference(version: 1, opaqueReference: presentationReference), run: run)
+            }
             try await persist(model: modelReference)
             try requireActive(run: run)
             let definitions = try makeDefinitions(catalog: catalog, run: run, model: modelReference)
@@ -245,7 +252,9 @@ public final class HanlinAgentSession {
     /// admission and starts a NEW turn through the same stream/engine, retaining original provenance.
     public func continueInteraction(_ request: HanlinHostInteractionRequest, messages: [HanlinAISDKMessage],
                                     modelReference: HanlinModelReference, maxSteps: Int? = nil,
-                                    structuredResponse: HanlinNativeStructuredResponse? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                                    systemPrompt: String? = nil,
+                                    structuredResponse: HanlinNativeStructuredResponse? = nil,
+                                    presentationReference: String? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard let source = host as? any HanlinHostInteractionSource else { throw HanlinHostError.unsupportedProviderCapability }
         guard interactionRequests.insert(request.requestID).inserted else { throw HanlinHostError.duplicateInvocation }
         try await requireInteraction(request.origin)
@@ -254,9 +263,9 @@ public final class HanlinAgentSession {
         let prepared = try await source.prepareInteraction(request)
         try await requireInteraction(request.origin)
         guard !prepared.userMessage.isEmpty, prepared.userMessage.utf8.count <= 1_048_576 else { throw HanlinHostError.invalidArguments }
-        return try await startStream(messages: messages + [.init(role: .user, text: prepared.userMessage)], systemPrompt: nil,
+        return try await startStream(messages: messages + [.init(role: .user, text: prepared.userMessage)], systemPrompt: systemPrompt,
             modelReference: modelReference, maxSteps: maxSteps, interactionOrigin: request.origin,
-            structuredResponse: structuredResponse)
+            structuredResponse: structuredResponse, presentationReference: presentationReference)
     }
 
     private func requireInteraction(_ origin: HanlinHostInteractionOrigin) async throws {
@@ -319,6 +328,10 @@ public final class HanlinAgentSession {
                             }
                         }.joined(separator: "\n")
                         return .init(modelText: text, resultReference: result.reconciliationReference)
+                    case .failed(let failure):
+                        // The host explicitly sanctions this transient model feedback. The
+                        // persisted metadataReceipt still redacts it and the business payload.
+                        return .init(modelText: failure.userMessage, resultReference: result.reconciliationReference, isError: true)
                     default:
                         return .init(modelText: "The host did not authorize or complete this operation.", resultReference: result.reconciliationReference, isError: true)
                     }

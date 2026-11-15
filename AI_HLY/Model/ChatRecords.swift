@@ -41,6 +41,8 @@ class ChatRecords {
     var systemMessage: String? = ""   // 系统消息
     var useSystemMessage: Bool = true
     var canvas: CanvasData? = nil     // 画布信息
+    /// Canonical SDK metadata/parts in this existing conversation row. Nil preserves legacy rows.
+    var agentSDKRecordData: Data? = nil
     @Relationship(deleteRule: .cascade)
     var messages: [ChatMessages]?
     
