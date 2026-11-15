@@ -20,6 +20,7 @@ SOURCES = (
     "AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift",
     "AI_HLY/Model/AllModels.swift",
     "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
 )
 TEST_SOURCE = "AI_HLYTests/HanlinMorphComposerTests.swift"
 COMPONENT_CASES = (
@@ -38,6 +39,10 @@ APP_SELECTORS = (
     "AI_HLYTests/ComposerActionsParityTests/detachedCapabilitiesProjectRealModeState",
     "AI_HLYTests/ChatComposerSessionBridgeTests/toolUseBindingRemainsScopedToItsChat",
     "AI_HLYUITests/HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables",
+)
+EDITOR_SELECTORS = (
+    "AI_HLYTests/NativeComposerLineSizingTests/wrappedLinesAndScrolling",
+    "AI_HLYTests/NativeComposerLineSizingTests/fontAndViewport",
 )
 
 
@@ -62,7 +67,7 @@ def prepare(repo: Path, source_sha: str, destination: Path) -> dict:
     for case in COMPONENT_CASES:
         if len(re.findall(r"\bfunc\s+" + re.escape(case) + r"\s*\(", test_text)) != 1:
             raise ValueError(f"Missing or duplicate component case: {case}")
-    for selector in APP_SELECTORS:
+    for selector in (*APP_SELECTORS, *EDITOR_SELECTORS):
         case = selector.rsplit("/", 1)[-1]
         if not any(re.search(r"\bfunc\s+" + re.escape(case) + r"\s*\(",
                              contents[path].decode("utf-8-sig")) for path in APP_INPUTS):
@@ -83,14 +88,23 @@ def prepare(repo: Path, source_sha: str, destination: Path) -> dict:
         "component_sources": list(SOURCES),
         "component_cases": list(COMPONENT_CASES),
         "actual_app_selectors_not_executed": list(APP_SELECTORS),
+        "editor_selectors_not_executed": list(EDITOR_SELECTORS),
         "input_sha256": hashes,
         "harness_manifest_sha256": hashlib.sha256(manifest).hexdigest(),
-        "scope": "Complete production component sources, including real SwiftData AllModels and metadata dependency; Morph route tests only. No parity/session/UI or physical-device acceptance.",
+        "scope": "Complete production component sources, including real SwiftData AllModels, metadata dependency and the whole UIKit editor; Morph route tests only. Editor measurement cases are not staged or executed while they remain inside the full parity file. No parity/session/UI or physical-device acceptance.",
         "app_closure": [
             "HanlinOrganizerDockParityTests.swift -> HanlinCompactChatWorkspace -> ChatViewWrapper / ChatViewBottom",
             "ChatComposerSessionBridgeTests -> HanlinComposerSessionBridge -> ChatViewBottom.shouldEnableSend",
             "Actual app target and its metadata prerequisites are required; no sliced tests or replacement consumer types.",
         ],
+        "focused_editor_test_boundary": {
+            "required_owner_file": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+            "owner_action": "Relocate the complete NativeComposerLineSizingTests suite from the parity file, preserving both case bodies and assertions, before staging that whole new file.",
+            "production_closure": ["AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift"],
+            "frameworks": ["SwiftUI", "UIKit", "UniformTypeIdentifiers", "Testing"],
+            "project_registration": "AI_HLYTests uses a synchronized root group; no project file membership change is needed for the new owner test file.",
+            "not_covered": "Mounted ChatViewBottom, observer refresh, manual dock resize and app UI still require their real tests; UIKit measurement cases cannot establish those results.",
+        },
     }
     (destination / "proof-inputs.json").write_text(
         json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n"

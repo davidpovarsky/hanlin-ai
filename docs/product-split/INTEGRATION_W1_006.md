@@ -222,6 +222,36 @@ also requires the actual app UI. All three are recorded as NOT_RUN app selectors
 in the preparation manifest. The earlier five-case SDK 26.5 component result
 does not cover these new sources, the app at iOS 27, UI or a physical iPad.
 
+The later frozen UI/editor checkpoint `fe5f2cd4d5866e92dbc95e7ce8cdef9b2a9e5516`
+was inspected and prepared without importing it or its observer ancestor. The
+preparation tool now includes the complete `NativeMultilineTextEditor.swift` as
+an eighth production file. It imports SwiftUI, UIKit and UniformTypeIdentifiers
+and declares its own preference key, representable and inner UITextView; there
+is no additional application-source dependency. Its actual font/traits/layout
+measurement can therefore be tested in a genuine UIKit component target.
+
+The two existing cases `NativeComposerLineSizingTests/wrappedLinesAndScrolling`
+and `fontAndViewport` currently live inside the complete parity file. Their
+minimal independent test boundary requires the source owner to relocate the
+**whole** `NativeComposerLineSizingTests` suite into
+`AI_HLYTests/NativeComposerLineSizingTests.swift`, retaining both case bodies,
+assertions and test identities. The focused package can then copy that whole
+new file unchanged alongside the complete editor. UIKit, SwiftUI and Testing
+are its test imports; no model, runtime, scripting or fake editor is required.
+The real app's synchronized `AI_HLYTests` group already includes new Swift files,
+so no project membership edit is needed. Integrator owns later package/runner
+registration; the source owner owns the relocation. Manual dock resize, refresh,
+parity/session and mounted app UI still need their actual tests.
+
+Preparation at `fe5f2cd4` succeeded, including exact Git-byte copies and checks
+that all six Morph and two editor case declarations exist. The editor cases are
+explicitly **not** staged or executed while they remain in the parity file.
+Evidence is under ignored
+`build/integration-validation-evidence/composer-fe5f2cd4-editor-prepared`.
+Neither `fe5f2cd4` nor observer packet `a2060c2` is imported: the latter awaits
+the required selection scope/no-op correction and the UI its matching hook
+delta/source acceptance. No CI or 40-case full-app retry was dispatched.
+
 ## Assembled sources
 
 Frozen Runtime baseline `dd700c03e9fe9d22e95a031d4684275512ee6e6f` plus one
