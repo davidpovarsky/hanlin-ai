@@ -2896,10 +2896,9 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "run": 43744051313,
-        "source": "1aa9497e",
-        "mode": "modern-dual-sdk",
-        "status": "RUNNING_NO_PASS_CLAIMED"
+        "scope": "FULL_SDK_GENERATION_ONLY",
+        "status": "PENDING_DISPATCH",
+        "controlsAnd31Gate": "NOT_RUN in focused next scope; prior evidence requires explicit unchanged-input verification"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3086,7 +3085,30 @@
           "reason": "sys_signame raw language linkage CPP1 versus C0; actual size/alignment/type equal",
           "xcodeFullSyntaxExit": 0
         }
-      ]
+      ],
+      "latestDualGrammarMilestone": {
+        "run": 43752505365,
+        "sourceSHA": "c68e4643aedeb258c0e296fcecbe6bcdc851b67c",
+        "status": "EXECUTED_PASS",
+        "focusedAndTransactionCases": 12,
+        "verifiedControlManifestFiles": 204,
+        "manifestMismatches": 0,
+        "controlResultSHA256": "bb20a512b1e9fbc1593893998de0954e46a53f9b8404221ca81dcc84538a5d7d",
+        "referenceModules": 31,
+        "existingModelDifferences": 0,
+        "methodAdditions": 3,
+        "additionalModules": [
+          "ptrauth.yaml",
+          "std_core.yaml"
+        ],
+        "parityResultSHA256": "c6f52eef4448c4b439ea1083fcddeb00c1c6fe00647897e1cc69203346bb2791",
+        "peakRSSBytes": 1835827200,
+        "metadataSHA256": "e40181139939916fc49a2f287434ca8721443af6e2f41a4b1d65537406ea494c",
+        "runtimeAcceptance": "NOT_ESTABLISHED",
+        "fullSDKGeneration": "NOT_RUN",
+        "combinedSDKHostExpo": "NOT_RUN",
+        "strictGeneratedTypecheck": "NOT_RUN"
+      }
     }
   }
 }

@@ -26,7 +26,29 @@ a resource budget. New real cross-grammar controls cover C-only exports,
 equivalent duplicates, conflicting signatures/layouts/owners and retained AST
 lifetimes before combined SDK/Host/Expo and actual runtime consumption.
 
-Actual run43742363711 at `aade8dc2` passes all7 cases through both the focused
+Latest actual run43752505365 at `c68e4643` passes all12 focused native AND
+real producer transaction controls, including C/CPP signature, pointee CVR,
+linker symbol, layout, constant, availability, opaque-by-value and owner conflicts.
+All204 control manifest files verify with0 mismatches. Control result SHA256:
+`bb20a512b1e9fbc1593893998de0954e46a53f9b8404221ca81dcc84538a5d7d`.
+The real retained dual producer also preserves all31 original module models
+with0 existing-model differences. Three actual Foundation methods and the
+ptrauth/std_core modules are retained as additions for review. The receipt is
+COMPLETE with2 consumers,0 diagnostics, both ASTs alive after serialization,
+2,200,198 metadata bytes,1,835,827,200B peak RSS and runtime acceptance NOT_ESTABLISHED.
+Parity result SHA256: `c6f52eef4448c4b439ea1083fcddeb00c1c6fe00647897e1cc69203346bb2791`.
+Full SDK generation, strict generated TypeScript, combined inputs and VM remain
+NOT_RUN at this milestone. Legacy production default remains unchanged.
+
+Contract2 evidence aggregation: subsequent focused SDK and combined modes may
+aggregate authentic prior controls/model gates only after verifying the full
+range from EACH evidence SHA, unchanged assertions/fixtures/transitive source,
+compiler/environment/platform and consumed input hashes. Such results must be
+REUSED_VERIFIED_PASS, separate from fresh EXECUTED_PASS. Unknown/affected gates
+must rerun. Focused generation-only and wrapper-only scopes explicitly report
+the separate31-module and fixture gates NOT_RUN; they do not inherit passes.
+
+Historical Actual run43742363711 at `aade8dc2` passes all7 cases through both the focused
 native main and the actual generator transaction entry. The positive operation
 publishes4 authenticated binary/YAML/TypeScript/root outputs and a bound final
 receipt. All6 negative operations publish0 outputs. The real wrapper gate

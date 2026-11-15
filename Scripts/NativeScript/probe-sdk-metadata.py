@@ -261,6 +261,8 @@ def main() -> int:
                         help="Explicit standalone candidate dialect; not production adoption")
     parser.add_argument("--modern-semantic-parity", action="store_true",
                         help="Versioned modern candidate reference check; preserve raw YAML differences separately")
+    parser.add_argument("--generation-only", action="store_true", help="Execute full SDK generation without rerunning the separate31-module gate")
+    parser.add_argument("--runtime-wrapper-only", action="store_true", help="Execute combined Swift/provider/Expo wrapper without rerunning SDK or31-module probes")
     parser.add_argument("--parity-only", action="store_true", help="Execute only the31 original module models and invalid-type control, no full SDK generation")
     parser.add_argument("--dual-grammar", action="store_true", help="Bind and execute both retained source ASTs and authenticate publication")
     parser.add_argument("--runtime-wrapper", action="store_true", help="Compile the real provider and exercise the production metadata launcher")
@@ -271,6 +273,10 @@ def main() -> int:
         from metadata_dual_grammar import validate_receipt
     if options.language != "objective-c" and (options.generator is None or (options.runtime_wrapper and not options.modern_semantic_parity)):
         parser.error("Candidate ObjC++ dialect requires explicit modern generator/model proof")
+    if options.generation_only and (not options.dual_grammar or options.parity_only or options.runtime_wrapper):
+        parser.error("Generation-only requires dual grammar without parity-only or runtime wrapper")
+    if options.runtime_wrapper_only and (not options.dual_grammar or not options.runtime_wrapper or options.parity_only or options.generation_only):
+        parser.error("Wrapper-only requires dual grammar and runtime wrapper without another focused scope")
     if options.parity_only and (not options.dual_grammar or options.runtime_wrapper or options.emit_types):
         parser.error("Focused parity requires dual grammar without full SDK types or runtime wrapper")
     if options.dual_grammar and (not options.modern_semantic_parity or options.language != "objective-c++" or options.mode != "textual-public"):
@@ -399,8 +405,8 @@ def main() -> int:
                 del command[resource_index:resource_index + 2]
         elif mode != "textual-ambient":
             command.extend(["-include", str(umbrella)])
-        if options.parity_only:
-            break  # Keep the exact compiler vector for the31-module section below.
+        if options.parity_only or options.runtime_wrapper_only:
+            break  # Keep the exact compiler vector without executing the full SDK probe.
         if options.dual_grammar:
             command, dual_context = bind_dual_command(command, root, sdk, umbrella, umbrella, destination)
         control = subprocess.run(["xcrun", "clang", "-x", "objective-c", "-fsyntax-only",
@@ -463,7 +469,7 @@ def main() -> int:
         # Keep the actual first SDK failure bounded in the job log. Full stderr
         # stays in the existing evidence artifact, not another logging system.
         print("\n".join(errors[:8]), flush=True)
-    if options.generator is not None:
+    if options.generator is not None and not (options.generation_only or options.runtime_wrapper_only):
         parity_root = output / "declaration-parity"
         parity_root.mkdir(exist_ok=True)
         parity_input = parity_root / "input.h"
@@ -528,6 +534,16 @@ def main() -> int:
             result["runtimeWrapper"] = {"status": "FAILED", "stage": "actual runtime-wrapper probe",
                                         "reason": type(error).__name__ + ": " + str(error)}
         print(json.dumps({"runtimeWrapper": result["runtimeWrapper"]}), flush=True)
+    if options.generation_only or options.runtime_wrapper_only:
+        success = result.get("runtimeWrapper", {}).get("status") == "EXECUTED_PASS" if options.runtime_wrapper_only else (
+            result["modes"][options.mode]["status"] == "EXECUTED_PASS" and
+            result.get("nativeCompilerContext", {}).get("status") == "EXECUTED_PASS")
+        result.update({"status": "EXECUTED_PASS" if success else "FAILED",
+            "scope": "COMBINED_WRAPPER_ONLY" if options.runtime_wrapper_only else "FULL_SDK_GENERATION_ONLY",
+            "separate31ModuleGate": "NOT_RUN", "fixtureControls": "NOT_RUN", "runtimeAcceptance": "NOT_ESTABLISHED"})
+        (output / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({"scope": result["scope"], "status": result["status"]}), flush=True)
+        return 0 if success else 1
     if options.parity_only:
         success = parity_ok and result["invalidDeclarationRejected"]["status"] == "EXECUTED_PASS"
         result.update({"status": "EXECUTED_PASS" if success else "FAILED", "scope": "FOCUSED_31_MODULES_ONLY",
