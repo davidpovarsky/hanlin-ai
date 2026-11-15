@@ -37,6 +37,7 @@ def main():
         (OUTPUT / (label + ".stderr")).write_bytes(completed.stderr)
         result["commands"].append({"label": label, "arguments": [str(v) for v in argv], "exitCode": completed.returncode})
         if completed.returncode:
+            print(completed.stderr.decode("utf-8", errors="replace")[-16000:], file=sys.stderr, flush=True)
             raise RuntimeError("Focused actual Swift check failed: " + label)
         return completed.stdout
 

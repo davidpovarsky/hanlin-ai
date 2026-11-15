@@ -320,6 +320,7 @@ jobs:
             build/acceptance/metadata-sdk-linkage-controls
             build/acceptance/metadata-frontend-inventory
             build/acceptance/metadata-dual-grammar-controls
+            build/acceptance/skill-runtime-contracts
             build/nativescript-metadata-tool/provenance.json
             build/nativescript-metadata-tool/bin
             build/nativescript-modern-metadata-tool/provenance.json
