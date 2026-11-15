@@ -1,0 +1,3039 @@
+{
+  "producerRoot": "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115",
+  "hanlinSession": "NOT_RUN",
+  "apple": "NOT_RUN",
+  "sourceInputs": [
+    {
+      "sha256": "8e2087b39ccc065c42ed45531089a0346b8d45d068da25632411e38ccdfd3892",
+      "path": "Sources/AISDKJSONSchema/DefaultValueFactory.swift",
+      "normalizedLFsha256": "4ba206bb2f5795be1365d07b63c3f8a5dc628e0ff334f8f7e7694918476cd396",
+      "gitBlob": "ad9401dc9853b932fc09936a3ccd062b235b36d8"
+    },
+    {
+      "sha256": "364d96e72d87c9ca92539acb0bed940e70198bfea4eed1ec9296b51c327671c8",
+      "path": "Sources/AISDKJSONSchema/FlexibleSchema+Auto.swift",
+      "normalizedLFsha256": "ebe3e54f79a43b89bbe6b1df423f6e1e201dff06331bc5abc3b5889123299728",
+      "gitBlob": "a35341c18b4c9090b158eb2109b044b09078eaf1"
+    },
+    {
+      "sha256": "9d00290050e215b8b6af78623029cf6f88624863545c86e5b3f78d3c604f6b8c",
+      "path": "Sources/AISDKJSONSchema/JSONSchemaGenerator.swift",
+      "normalizedLFsha256": "174e41261608a1d92872d6191b668a6234b05db905c21fe737f2ec0def4f73f0",
+      "gitBlob": "7db43a619437a1ba93b148df8f80d69696be9598"
+    },
+    {
+      "sha256": "2cd7a2bbd9b4afa78fcf9d2f4f48aab6719bb1f0c0b99daafafef98114f6a8d2",
+      "path": "Sources/AISDKProvider/EmbeddingModel/EmbeddingModelV2.swift",
+      "normalizedLFsha256": "3f0c5511f3eca3e790543811374f5839b3c248ef43b16ae36cfc585fe04a35f4",
+      "gitBlob": "f9dfa9b024aad50fd6146fc69650c82c866850e8"
+    },
+    {
+      "sha256": "e0905cc393fa9fb50c24b0a7d70d58cf907a202771b79609efbbfac7c3b875e2",
+      "path": "Sources/AISDKProvider/EmbeddingModel/EmbeddingModelV2Embedding.swift",
+      "normalizedLFsha256": "8326824897694f34de69702a8840b5baf2fb3bf211f525dcda638fcf39544afe",
+      "gitBlob": "07fa499d3d842d548d2f0c4ceb96ebf0864e4a6c"
+    },
+    {
+      "sha256": "4d810ee81d5ec341bc7174148925f19b74e369c0cc6f0d87f95f5f3e96b14516",
+      "path": "Sources/AISDKProvider/EmbeddingModel/EmbeddingModelV3.swift",
+      "normalizedLFsha256": "2023b355b60b0154f12ab11ea13b5ff2c3f9347686e434471c34fd904eff4bf6",
+      "gitBlob": "f69ea6614240cb8668a54d015b2ee6b8fea18c66"
+    },
+    {
+      "sha256": "b3065889ba8215aa915b92f2c62d514f397c589c7eb7bf72d29b3c8af2ab6640",
+      "path": "Sources/AISDKProvider/EmbeddingModel/EmbeddingModelV3Embedding.swift",
+      "normalizedLFsha256": "59024a8e5465365cf660c9a30ad635cb669db3537f24b3d7b3a0d154387d9d3d",
+      "gitBlob": "8b27bff6b95c87708992233641605bf91d28c099"
+    },
+    {
+      "sha256": "38f3e6c27a45bdad277c48a3ebe3b99a6e64ce63913b1906971b05d7f40255e5",
+      "path": "Sources/AISDKProvider/EmbeddingModel/EmbeddingModelV4.swift",
+      "normalizedLFsha256": "d9b35b068d7281c300e13b2560038dded60e1ddaa37365408272cd6a063a9fb4",
+      "gitBlob": "f89f2a76bb9d831ad30fcdd071b6e9b88ec6f39f"
+    },
+    {
+      "sha256": "4cd6917f7cfca2d3c9b44e4f9b640db8560c6400a3d9b4133f0be7ba29a91d42",
+      "path": "Sources/AISDKProvider/EmbeddingModel/Middleware/EmbeddingModelV4Middleware.swift",
+      "normalizedLFsha256": "7174b4c9abb71eb547757e8755c80258d18790a4c9e34cdd5d3228669179af26",
+      "gitBlob": "c302703a5f5f999d3ab9e73375e8265fca6f09bd"
+    },
+    {
+      "sha256": "6fd5ab4f59a107b0dd36be3e54b3b225cd66392cd46b3b5951450498a4f02433",
+      "path": "Sources/AISDKProvider/Errors/AISDKError.swift",
+      "normalizedLFsha256": "fdd02dd7c20b60aea140b1a5fe994c27f487c51b5e69d19484934a8fca92e4fd",
+      "gitBlob": "5ba6f88430b3397e0f976b70ac26d3b1d82b3f90"
+    },
+    {
+      "sha256": "1e721ff6dbb358cb2f72d53b0ad20ed8d352e8efe783458b677e2a75f1ea1029",
+      "path": "Sources/AISDKProvider/Errors/APICallError.swift",
+      "normalizedLFsha256": "b70d19819a903b505084c988147332153a72f1c71b72de570f9d4e5d71c35799",
+      "gitBlob": "48d527dd2d47fb258b2440842fccd81552619ad7"
+    },
+    {
+      "sha256": "209ba971c357a886a4b7a05fbc4d4439af912919f02360bf8b2437e586c347e7",
+      "path": "Sources/AISDKProvider/Errors/EmptyResponseBodyError.swift",
+      "normalizedLFsha256": "37f0e8e0d7953b01d7ed02208f8d5d37ee02adafb821998b5c92df7dc338099d",
+      "gitBlob": "25b5d1d9b315608d971f1044bed67c12ca702b47"
+    },
+    {
+      "sha256": "16fcda0b63d63e711be6019fff365394c12c3baffc6c0e9b26d0d8a804a9c2ea",
+      "path": "Sources/AISDKProvider/Errors/GetErrorMessage.swift",
+      "normalizedLFsha256": "f5d7424620c6fa93c4f5c5d7d66353c6d56cf0682b7dbb9bfdbd6cf8ae4a5a22",
+      "gitBlob": "26b008f577be8e2bdd9dea1792d3fdf40600742d"
+    },
+    {
+      "sha256": "7a86a21621685a4c0c133d2f316253bb8830cf775da6faa67c8d572c0bc6e8db",
+      "path": "Sources/AISDKProvider/Errors/InvalidArgumentError.swift",
+      "normalizedLFsha256": "defe3fbbc284401aad7cc95480bd2b1b4f03e91767dc47153d8fc76bc9a6663c",
+      "gitBlob": "db609d3b1c3e0bb265ddd3f86170f1a6e6d5d592"
+    },
+    {
+      "sha256": "69cfe57cb89fadd7dc4b7bd80d77c18029280ed59654ff4b313d935e232ad256",
+      "path": "Sources/AISDKProvider/Errors/InvalidPromptError.swift",
+      "normalizedLFsha256": "d02c215cebd197df5ca3d1c4856f3c7574e069bf35cb0bd41242a4f7f8520496",
+      "gitBlob": "2fa53fbb1dacf90e17d31dbc30fbc3e74b1c4072"
+    },
+    {
+      "sha256": "cf54e3c7a9cd9047273be0d52668b9119e3d4274d6a5e5161e6c98dec8d9ad24",
+      "path": "Sources/AISDKProvider/Errors/InvalidResponseDataError.swift",
+      "normalizedLFsha256": "3257df333c317a2ec65594efbfb87782897a76f773cdd6eb12157358a5e67b59",
+      "gitBlob": "c6290842fa381aacf1cc2dbb1bbe6fc1f0b292cf"
+    },
+    {
+      "sha256": "ab88e3a5040915766ec75a6dca6140be40a2c0a9b645d25548d267d84cf6350e",
+      "path": "Sources/AISDKProvider/Errors/JSONParseError.swift",
+      "normalizedLFsha256": "b3be6afe8de875469ec5d9647429d3670b932a7848f24e63f59a7cfd7e8d3ee2",
+      "gitBlob": "62920d2a0b1cd932840dd4532097d7fa5235f3f4"
+    },
+    {
+      "sha256": "9b4570976b82e195b32f3de1934291f37f6922169991d3a6e397c96e55bcc5aa",
+      "path": "Sources/AISDKProvider/Errors/LoadAPIKeyError.swift",
+      "normalizedLFsha256": "0957dccdab7a98ecb1050efb0b9dc7d09f944f8fd0d65e2a3a60d956b254ac2f",
+      "gitBlob": "0e9877f6da177ffbb67370ce555092d421071a94"
+    },
+    {
+      "sha256": "747ebe850b0a34396a991f38f8548e2caf3c2ff520e02cf7f5377de67cb3307d",
+      "path": "Sources/AISDKProvider/Errors/LoadSettingError.swift",
+      "normalizedLFsha256": "388b1d32ba9ff1edba25af21038b62642838329f956b1cb2cce1ccdb37f57147",
+      "gitBlob": "240771fa46679f0131185a5611b72cc0ead256c8"
+    },
+    {
+      "sha256": "d2558d32ee0a8b178ff528c53552c7db8755d654ea5a8c30d46c6f791dde3988",
+      "path": "Sources/AISDKProvider/Errors/NoContentGeneratedError.swift",
+      "normalizedLFsha256": "2f98ec0adc3a7f05f8b8e078590e80a1bab7d86850407a9a5e5b029787dfaf28",
+      "gitBlob": "1e300336977b2b166a4a14ef9de9013acf0cb4df"
+    },
+    {
+      "sha256": "70de229ab285db1f4f57ca53207a3b0bca918a78f35b88a524e871923696035a",
+      "path": "Sources/AISDKProvider/Errors/NoSuchModelError.swift",
+      "normalizedLFsha256": "0df245f7d5eda3ffe54f41dca0544cc75033af48da43ce91e87bc1f275806b7d",
+      "gitBlob": "73c3b37abf0a0776ad78babb64232fc85f2c4568"
+    },
+    {
+      "sha256": "202801cfa303c486d4e0857a75228a9e5d0ba2dba3b1da786ce82fbc325750e3",
+      "path": "Sources/AISDKProvider/Errors/NoSuchProviderReferenceError.swift",
+      "normalizedLFsha256": "a8eef2d525ad8845cc172234a331d6fc1cd747f7bc79408f60a85ef12a8c5f65",
+      "gitBlob": "671c596ecf7383727ebdd8ccaa00ecc96758647e"
+    },
+    {
+      "sha256": "3ee1e5f6d434f459e172e44d9704454cdf277b707beabdcbfe26c7c29b6c95f8",
+      "path": "Sources/AISDKProvider/Errors/TooManyEmbeddingValuesForCallError.swift",
+      "normalizedLFsha256": "c576b6d258f6f2d4275672a8d3fe6d1e82c1ae6b4e8b77468d398b16667e59da",
+      "gitBlob": "4a3b4c5d65f737970c29319f359fc504947596de"
+    },
+    {
+      "sha256": "8d13f7c995ba3329cb794a1b7b1a1cfc152f1998a03578b93ec7f7d8057d9841",
+      "path": "Sources/AISDKProvider/Errors/TypeValidationError.swift",
+      "normalizedLFsha256": "34eed9f855c105431a7fe4684fe28a8de1e2db17bea68450fccf5eddeb4a6178",
+      "gitBlob": "46405c6bdd71f1a3bb88398952d2d3dad96ea160"
+    },
+    {
+      "sha256": "3ff1b154aae4291a9512612c1f24b94db845b0e6da64634491a71de375fdf7fe",
+      "path": "Sources/AISDKProvider/Errors/UnsupportedFunctionalityError.swift",
+      "normalizedLFsha256": "de9f779707fef276a536f31fd4e5ec96afb3152de68a82f4ed8a381479904f48",
+      "gitBlob": "0d35dae9d0433e2194cb5fc70976a0c6d7e519ca"
+    },
+    {
+      "sha256": "a0d8616426d71fa53b92d8760cdc7ef752b7e16a91d9e0b71649ebfea7d50fc5",
+      "path": "Sources/AISDKProvider/Files/V4/FilesV4.swift",
+      "normalizedLFsha256": "2aabdd6875c5c7a2412408aa3684037844a302f7fd2ad139e2f3c2379776d53e",
+      "gitBlob": "165d7a82f7d72fc2e5dc09fe7adc945f6bdc00b2"
+    },
+    {
+      "sha256": "9eabe548e0489bb09a7f5e394b43ad6dccf4a96d340055c5a7d5c15c9ec80f7a",
+      "path": "Sources/AISDKProvider/Files/V4/FilesV4UploadFileCallOptions.swift",
+      "normalizedLFsha256": "9039f1538b7e8266a5fa46751dde901f09728406a140b83bd93bf328dc733e29",
+      "gitBlob": "b43d336e57d1bee9d620c8028e607582672bf871"
+    },
+    {
+      "sha256": "024187dfc52774fa38de6bd8241def5e83644878337ea2dba10a3c4d88f1bf4b",
+      "path": "Sources/AISDKProvider/Files/V4/FilesV4UploadFileResult.swift",
+      "normalizedLFsha256": "eb9f95d863901c493584dc43001631be76cee3a19900cf802e1e9c86b950af5e",
+      "gitBlob": "c71f46ca20e0627935845d6afbc0f7e36e2e1ddb"
+    },
+    {
+      "sha256": "0d12fb5e670d4753c3a002a3909c0de7aad4e6ca41c023ba75aa924417af8d75",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV2.swift",
+      "normalizedLFsha256": "4f2fced541c9d3ed766321d68b7b076c312a895a07d0672633199de494cd1b5f",
+      "gitBlob": "3811dca7fd4f59aa0889e1b7033367c4146fbf3b"
+    },
+    {
+      "sha256": "1371efc9a4fb72f80e7310847f5d942154ef5a40bc2e50e69e25247b8b1c584a",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV2CallOptions.swift",
+      "normalizedLFsha256": "e0b258163f859df4670d42f126ae3595bd3082cb732984d763c66266d27068c4",
+      "gitBlob": "3a5c6be7592c09c4ba958741ba4870704187489d"
+    },
+    {
+      "sha256": "2253b346b43551ed1d3d4382cd79d535620ebea7648b4fa5663697dfefe5f34b",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV2CallWarning.swift",
+      "normalizedLFsha256": "df11e446d84ef4e1befc2a72d1da0a6ebd9ae20180ffedc300292fe39a0c17d7",
+      "gitBlob": "fa19259ec509d128e26cfbd335d192b668bec071"
+    },
+    {
+      "sha256": "c10ce1b31d4212f3859dee4f75c07ad92a538b28ef3cd509249ab281306e81e2",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV3.swift",
+      "normalizedLFsha256": "9f6230975fc81f3158f95cd7d1ad5e29ac3f2e3a1c2dad6b66df547ec3b0876e",
+      "gitBlob": "1d4a137fd99935d46af4c1b756a36316de06a50e"
+    },
+    {
+      "sha256": "6087d6881ce1b230c1f15a09459353038137760a0facc6f8f8e53d5dd6f95242",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV3CallOptions.swift",
+      "normalizedLFsha256": "0a4977a7d7dfbc2ac05353071f2ba21adb6b3ee960acef4def852564ef928402",
+      "gitBlob": "e70f43ca3935995c1b640987ca18d52cd964f274"
+    },
+    {
+      "sha256": "b9aeb271af00e3ae37f5d570511d01fab46581a25bc8a3c0e394c8e661daf47e",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV3File.swift",
+      "normalizedLFsha256": "17ca959b7e0208c08a6f8620d40f2041cf7e29f0454f284409282dea92b7ba56",
+      "gitBlob": "ac00d6448fd9bb26ad803addfd611d91b37f001d"
+    },
+    {
+      "sha256": "f3482721de05fcd90c1044a3c9ae62240a252cf6936b1aa53089789855dddd7a",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV3Usage.swift",
+      "normalizedLFsha256": "a4b9e33fe9edb454f551e487a951926d1b346afc62650e99b75c13820aa998c8",
+      "gitBlob": "bdf9f7a54dbe86cf3790168ef94855756547950d"
+    },
+    {
+      "sha256": "22342abf6c14361b4069813e275a9f4ff25d769af8865097045ac831bd25946f",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV4.swift",
+      "normalizedLFsha256": "53a681814496a0cb44f3d08bf1d141613c8295a49ba019842da3c5a228aec3e0",
+      "gitBlob": "a7e2603696733770cfb7da61bdb90e488010adb9"
+    },
+    {
+      "sha256": "3407f96e248357f6c94a5b791c5be380c32de20bdd0f7dbaf2ee8244a5730146",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV4CallOptions.swift",
+      "normalizedLFsha256": "21ad1cdc8d8fbeac958c40760db2c48eff7c6de841e9c138709f82656ee1c28f",
+      "gitBlob": "2a831c5e3d428d171e0da9404711f78e271e7f7e"
+    },
+    {
+      "sha256": "2be7d2ba540c59edd9182eee6b597a1ef3a2904364e6771a0cb1e4448ecf5b83",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV4File.swift",
+      "normalizedLFsha256": "18f9258782aa7803dc58fa404f33a1c1304542870aef5a7fed08da0fa00fbcf4",
+      "gitBlob": "860b9dd293f9b816242f0c9aafb05b0c13143342"
+    },
+    {
+      "sha256": "bd02405872b9dd149ece5108c6fcaf70b2a199f9817e7c316dbf33c1fa979cef",
+      "path": "Sources/AISDKProvider/ImageModel/ImageModelV4Usage.swift",
+      "normalizedLFsha256": "1dfb4e65907aacf03446ce3e0f79a35aebb55c593614b11825d8c167000ca86d",
+      "gitBlob": "b27edeae336139e7bb5925fe3f027b1d7c079cf4"
+    },
+    {
+      "sha256": "416b46c992b6a13dc676d79b4a1ad5395c585fc02479652292165b59ac241d7b",
+      "path": "Sources/AISDKProvider/ImageModel/Middleware/ImageModelV4Middleware.swift",
+      "normalizedLFsha256": "ed243f29e1903ef628a3954bca888102529913d18d572a96100e13656a48dcca",
+      "gitBlob": "6f489f73e930b1d5b478a7c52cd10e8417c516c8"
+    },
+    {
+      "sha256": "fc99eecc6851599bf83e0e259510ce5418951d96ec9ceed9ae1cd75a21bd3721",
+      "path": "Sources/AISDKProvider/JSONValue/IsJSON.swift",
+      "normalizedLFsha256": "b7acf7ade75e5f495c07fca4bc49c3d8a0dcc72d87e4d16bfd9eb0445ddb5771",
+      "gitBlob": "b4bbb9ca45918a5f327ca735272c23649a411f7d"
+    },
+    {
+      "sha256": "a819718572fce73d6b186665f5cd3ea20abad0f525f2c4594339e9a6dbda300e",
+      "path": "Sources/AISDKProvider/JSONValue/JSONValue.swift",
+      "normalizedLFsha256": "2787a30c76de3adb20aeba1d150f19711a949e637df705e91681147d0427696d",
+      "gitBlob": "a68534e45b33a76a55e91247395656b82904a647"
+    },
+    {
+      "sha256": "f1ec31578789aafb8b7a6c91fd221e526bfe6715d6423c0281ee473d04157586",
+      "path": "Sources/AISDKProvider/LanguageModel/Middleware/LanguageModelV2Middleware.swift",
+      "normalizedLFsha256": "a0be68db6d5de9f1db2035b015012a99bc41ee80b03ea4980f92ac168d13de3d",
+      "gitBlob": "4c4f3f1b4cca5f2a9e6c32ff77994662c626db1d"
+    },
+    {
+      "sha256": "09c5a833c45860fcabd5ed63b45c10ee4f853ab4b969582bd43d78ed68c35e89",
+      "path": "Sources/AISDKProvider/LanguageModel/Middleware/LanguageModelV3Middleware.swift",
+      "normalizedLFsha256": "704a01abc5bd66f27a5e90431ceeffd88ff2353e1b339686c080a19ddd4f3585",
+      "gitBlob": "5e9adcb5e38dbcfdb84e549a04ea80376c007039"
+    },
+    {
+      "sha256": "d9b5b1e22745d3e210f39a7ca21a2b302e8d81638a2b27b7d0c017e047e5dcd5",
+      "path": "Sources/AISDKProvider/LanguageModel/Middleware/LanguageModelV4Middleware.swift",
+      "normalizedLFsha256": "08a13b3857ae66e6f746621a35672210800a90ea06ac9e3ea34bb41549050035",
+      "gitBlob": "6e99ddc598f0911168c91d528dbd3105e2d7af76"
+    },
+    {
+      "sha256": "64d45991f55bed01b8c0988e8d49ecfc58f1b4fa4f6cc3ab65d7917887df1d60",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2.swift",
+      "normalizedLFsha256": "45d7d56d81fb697fe344615e2e34d9613ae15ed23e1f850f2f61344c768248b3",
+      "gitBlob": "c40d4078e83c4d9985e1ad4573104460f8d1a602"
+    },
+    {
+      "sha256": "e6c1eac9a799117be39b06bdf4f6b8ac27380944f6459a913dda379e8ece2bb4",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2CallOptions.swift",
+      "normalizedLFsha256": "232ec15b43e70e47e1ecf305b1360125face9c204246ec66fc579430bf722508",
+      "gitBlob": "17d81c160511551cf6d4e9efeb3336c646d19027"
+    },
+    {
+      "sha256": "94f62ab6ecf742416232be30c9e2cf51e1c004907cae229365e6f0cbcfb675f9",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2CallWarning.swift",
+      "normalizedLFsha256": "96ab035dd38f02a28298a5c3ea6752ca47942931730142926eeb1e8bb701db70",
+      "gitBlob": "78ef4da861a860ef8e5c7a90dcd0ea4712142c25"
+    },
+    {
+      "sha256": "164aab1e6347ed16c406d16cb53a7d0c2cc36a6f759458590c81b279f5d15130",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2Content.swift",
+      "normalizedLFsha256": "ad6b4ef77a79176a45b3e58aec47b6c4307fcc58e339634885393112a655fe06",
+      "gitBlob": "a3d8c7d4d4782298146dd6639ff7913b1b081cdf"
+    },
+    {
+      "sha256": "4aefb83e1fe0d52c635792e5ab5609db92b93d343c62efdab8446dbe21fbd49e",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2DataContent.swift",
+      "normalizedLFsha256": "a87eac6153bf771510d4aef9c5eabf5e52988897f22d5b0c1f1041f83eeb2134",
+      "gitBlob": "772d377720f6d519095d5cf9ac09b47aababebd5"
+    },
+    {
+      "sha256": "8d9ccaf69bae3ad8206eb385051d1bdc0067c5a1ab29814dabfa054b84497514",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2File.swift",
+      "normalizedLFsha256": "f773cb1c0ccb9f48284257dbf206902df6d2d137ce4805faf3e54fe2aecd12c5",
+      "gitBlob": "7aaa82152b0fc0fc405d1d83b31c81705d205ff4"
+    },
+    {
+      "sha256": "bf090a71a82caf9449f1727e515cfe28842e9ae467087b743b1b60fcb55c82c3",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2FunctionTool.swift",
+      "normalizedLFsha256": "17ad31999ec66670ae84f1deb9d987cf50669be4d5e893adeb5b70510a982787",
+      "gitBlob": "db11572cfb11453fb9022c4900d837aff2c0be66"
+    },
+    {
+      "sha256": "317b722b28ac2777076b79b089d6591268b1e67769db4d8951825b6dd4d7814a",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2Prompt.swift",
+      "normalizedLFsha256": "59afdd8894f6f5fda634384a936f87a9d57a10912d2e4454309aafeb65c46910",
+      "gitBlob": "87213fb9ed9316826070bd0b20ca83710951d242"
+    },
+    {
+      "sha256": "ceb3cd3ab6f81290831c63db552280eb25f9d70dfb6aa8939a1b420561926ace",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2ProviderDefinedTool.swift",
+      "normalizedLFsha256": "fa53335d330f83233c0ef913bf0020353655d00eebc69b97b4ac3ecca684b429",
+      "gitBlob": "b0ab5a5443b08573a38a95c750b64212c281c623"
+    },
+    {
+      "sha256": "d086a7a7064493614c3ecfbdd9013eb1baf72d13849b86063e3d87808230b9f9",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2Reasoning.swift",
+      "normalizedLFsha256": "f974aa174341d27a1c666ce5bfbd26c687ce3c637c37c47265d16457bb8a3ffc",
+      "gitBlob": "556632df2f9b24b331f795b4a06dbcfdf6232190"
+    },
+    {
+      "sha256": "750808b22e80d6bfd856db1f5c120268ed30ba1c8d1ac79ad723bc626c424813",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2ResponseMetadata.swift",
+      "normalizedLFsha256": "6dc4d47a3b4e368a7b8293f132cf0c0234b6c81fd60bc9bbc3c31722c275f6fb",
+      "gitBlob": "3ddfb9b4e436d150828643f0a16021e7abcead9e"
+    },
+    {
+      "sha256": "4f8123234d52134758ed8aae64c81db405e53f5911f9f12abb86a229995fd495",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2Source.swift",
+      "normalizedLFsha256": "1d05ed5d918f1ae2d0fefa5230d2bd87508ee28e65c6005ea916a022e102d7f5",
+      "gitBlob": "ec76206e77a029758dca0c828c98b2feb2d29f00"
+    },
+    {
+      "sha256": "7b2d71039311bef07c62acf5fddd2e2cc465bdc399cb1994d2972a9dd14e7566",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2StreamPart.swift",
+      "normalizedLFsha256": "d14c532ce710787f61554d987d7d330189e7aa3b6d6ff38429a65a99e0d538c6",
+      "gitBlob": "7843ff62d76f8bc55fbeed26e1ef3683fe2fbe04"
+    },
+    {
+      "sha256": "d91cc3937aa737d6388c6054115d70f73225b874ff44dc7084d51d8c12311f32",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2Text.swift",
+      "normalizedLFsha256": "46f6abd4c3338c0bbd24a3780a5505ceb5a3985ebc0224060cc28b80e02db2f1",
+      "gitBlob": "ff6db1e371d2f85d91a127208f4bf433036f22e3"
+    },
+    {
+      "sha256": "1b9d38f970f31953d760639a4c1203a3da7d1a9105ecc24fe349172ea78d1d6b",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2ToolCall.swift",
+      "normalizedLFsha256": "90d3a9a697a98fe1a5f1b32d5e18ff9187628ab8b408181cf982b4d03ac9335b",
+      "gitBlob": "1645f7527ad2773068e9dff723389817383d0a8d"
+    },
+    {
+      "sha256": "39012b0a8c69d095fb576e6a67a885b6366ce39c06a7610d080493e0b7bce402",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2ToolChoice.swift",
+      "normalizedLFsha256": "c93f791fad72a5dd165a3761e83a57d9614e93a6ac1ebef07ce25b2e711cc808",
+      "gitBlob": "aac04882f148effc78a6878890939196480b55d9"
+    },
+    {
+      "sha256": "7d63936a7a2cac662b9e7d488144b2820a52054bd8a9aba374e9513ffa5ffe6e",
+      "path": "Sources/AISDKProvider/LanguageModel/V2/LanguageModelV2ToolResult.swift",
+      "normalizedLFsha256": "1634bbfc1646ec5d794e866e08b2e6540a688d88df8ae84271e1d2880bf66632",
+      "gitBlob": "df96a0dabcfcab585a636cc96d7b4787cf966307"
+    },
+    {
+      "sha256": "6b9360f828aeeee46a44cd19d1800ad0cdbe8fcc1c1204317b63fe0d13033849",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3.swift",
+      "normalizedLFsha256": "b7dae4d35557294948bd32e999804541997bcf38a69f8f4d7e086c0f75cc2e06",
+      "gitBlob": "6a061f0c94d5a277b38d81e0b326a3967025a2aa"
+    },
+    {
+      "sha256": "b8e719551ad5107ad7a8354570c596f432d2a55c2b3dd37c76ebd991973053c1",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3CallOptions.swift",
+      "normalizedLFsha256": "8f9b8ff0124a72d9eed72d027f5a6e350189f3b642d9296d41c70079e7125807",
+      "gitBlob": "0b1374723b78fbbb5e53c8852bbd96f3b539d760"
+    },
+    {
+      "sha256": "b5324aab659fe30d0fdc18c189223fc95ba26fed66943a918d7c3cd8e8c1295a",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3Content.swift",
+      "normalizedLFsha256": "095fc3cc93299891c2f946e0ba75c04863dbf1d7b31491cc1cbb17181415d834",
+      "gitBlob": "c6f51259317374f94172f2f53a920d43a77915d8"
+    },
+    {
+      "sha256": "bdb70d4bf176c0982e4e334d1959aed97b9a7917260e8142fc760327a0df1a0b",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3CustomContent.swift",
+      "normalizedLFsha256": "0b0982250777fc0db0a0191d948b20829e5f205cd0982c382928791e995005df",
+      "gitBlob": "7a33eca245718b33ef26473f5909acfe099ebbe8"
+    },
+    {
+      "sha256": "9e8a0dcafc1228ddeb612780bb3170bf7a094d03124dcc64fd89147ba60c5f3a",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3DataContent.swift",
+      "normalizedLFsha256": "005c2977747018021ebb536b72932c89a77e8d8f612d942d7fa9e646159f99e9",
+      "gitBlob": "81ced403630d771d32ca92d06404a6ff3ed226b7"
+    },
+    {
+      "sha256": "54233e5cd2218cf6b21ce8112244a3439b06e3c3db783f39357f77f1c354e744",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3File.swift",
+      "normalizedLFsha256": "ef180e5dbe16f03f549c5e6723085abaac3eeb5b0347fdb1c09af81e9c1828d4",
+      "gitBlob": "16c910bfb639120fc2b633c0cf56534a776bb3e9"
+    },
+    {
+      "sha256": "518edd4d4c9bef833dab7300ac0e656ad07feb443de4cbfa143a49ac4b0c968b",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3FinishReason.swift",
+      "normalizedLFsha256": "323fe2b15d892dde0d570534a4c26e74d230621710c6294c80db8367a5b5bf7e",
+      "gitBlob": "4db8907bfc95e6286afdc8e26b4c656dcc2fb6b0"
+    },
+    {
+      "sha256": "9b47651a15f98128db69db99c6716a964c6bad06f908153c7217831d6a4fe384",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3FunctionTool.swift",
+      "normalizedLFsha256": "52843d22544be02a3c8da25b847688e1e341672a10a9d2f8de26d0e80ccb0fd0",
+      "gitBlob": "06b6e07abf1d323c8dee52ee6cc73eccd3091d5b"
+    },
+    {
+      "sha256": "f7da21371119423197e05eb88109dccb93be31de2272dd8c61f419729c278360",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3Prompt.swift",
+      "normalizedLFsha256": "448b4f2a9e1358f91f03b70af6a8697492cae80bd4d22f46225617b3480d47c7",
+      "gitBlob": "667eb7eb17e9925664184e2eecf05f51ac4c97e9"
+    },
+    {
+      "sha256": "f39f6ade1a2d231a1109f323cf6f9f91436445ac0a455d681e34f98489b51f59",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3ProviderTool.swift",
+      "normalizedLFsha256": "613586c4ec94b73d4e08ac4753e5b050cd260d78839cd6ae67e9908fca9fbc8f",
+      "gitBlob": "6442ce9de1a61fb0ff8a09561cf2ce15f6319272"
+    },
+    {
+      "sha256": "76ec0a0472a02edb531c2be86c9377e71b0bf5073423f401ec0e70489eff1c06",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3Reasoning.swift",
+      "normalizedLFsha256": "868a727c0d44f8e9fbf4d282dcf0df264797c5eea4e062f93c4f7a038c155ccc",
+      "gitBlob": "3e35a9e9ddff923f1614eb6b0f6b1f4a11d79443"
+    },
+    {
+      "sha256": "6ee83e18739b51ace791f1459f795e283007a598d8e58094cd73e50136984915",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3ResponseMetadata.swift",
+      "normalizedLFsha256": "cdc8b0c6422ff75edf9ee3963373f733e6a211d2cb3c9e2a9e9cb61d17c0d47d",
+      "gitBlob": "43632efbde96316cc894ceee0da0b666ada5cbdf"
+    },
+    {
+      "sha256": "3fe054d88629db2e1505ef54f391d84fee4aa953c216f29459a02a5aed372fc4",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3Source.swift",
+      "normalizedLFsha256": "043587b8693142f512f8dd59d2e8d333526fdd21a8b72cd221c872b658a456c5",
+      "gitBlob": "1ea87b417d437c64ad53c1bd93ac15b52a64ce05"
+    },
+    {
+      "sha256": "5d3c52b29618f667cddcaf09afc133b88a6622cf2ccac5f2e81b7b1b90fb9c6c",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3StreamPart.swift",
+      "normalizedLFsha256": "0fce3c4d845dd682596df96fb0aabd5e9eceaa80d14b8075f42c7f1a3c2e8749",
+      "gitBlob": "38b22fdd758f8b305bde9ca4a18a313ded868db7"
+    },
+    {
+      "sha256": "f761bc592466152bec2d3fe6bb5b3264f49134d326f26509d02acba1dde497a8",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3Text.swift",
+      "normalizedLFsha256": "16e9dbe28993257f4e5c981165894bdfcac652e10c59bd34302acf9816443d52",
+      "gitBlob": "218cc3de01ce2a79813f8dfc4173ad0004815994"
+    },
+    {
+      "sha256": "4e5651851ca9a44c039a54a5b7a53baa92db77447b1edce332402138682c42c1",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3Tool.swift",
+      "normalizedLFsha256": "d6828aba2db9f027a44884cff93cff44e48651ff6e47c3e5ab9c3aa1b89691e6",
+      "gitBlob": "eb15f7ac864a76b2ff64a928999800c7d1a8313e"
+    },
+    {
+      "sha256": "9641419fe1456e0493f8adf3a0a3e23e1367627d7011a4583b4cbbfc67b1362b",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3ToolApprovalRequest.swift",
+      "normalizedLFsha256": "1dff09fab2686e13bd16b7369bb3c0fae3d11e5c1c890303ed50d2589d2cd9a2",
+      "gitBlob": "aad6049e6e30b9a95583bb4ba8c55de973e96bd7"
+    },
+    {
+      "sha256": "5dcb7534d237c265954db15bd29bd118359cf779738b574e52d506dbf2405e49",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3ToolCall.swift",
+      "normalizedLFsha256": "625ec63d34655a7bc880448053ce553ad45c93e5bf75dc9f4a0a736d0f54cdf4",
+      "gitBlob": "4ecdc43fa0ab8f26d2950f44a99c2e1131fddc4c"
+    },
+    {
+      "sha256": "7cc4eb31d556bb04249ff9a1ee4cd4b3dfdaf0ca79fd06408dc3738b0b62a8bc",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3ToolChoice.swift",
+      "normalizedLFsha256": "30f91f58a860da115b4169556945d96f1dba4d079f8faa390142a8df12de6809",
+      "gitBlob": "80c81c24f7f2dd5c9f2cfdde728a833c0a222dfd"
+    },
+    {
+      "sha256": "bf048705711de61dd08747333640b30154b909a4b35cb793c63e619054f48db3",
+      "path": "Sources/AISDKProvider/LanguageModel/V3/LanguageModelV3ToolResult.swift",
+      "normalizedLFsha256": "000066836f7f34087430884241650acd53f1e91dcc1d24af7c3677a0b575be84",
+      "gitBlob": "16670d69ca0cdbe14f703b52d3dcd9d052a769af"
+    },
+    {
+      "sha256": "6d2df61d949ed4a08a128751b4d3533b56f3063cb34ba04f14a58d09073dbed1",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4.swift",
+      "normalizedLFsha256": "b5693cad2cf1d235ee93aefb8f7f8fefac83a5b6ea560cada8a820211951e472",
+      "gitBlob": "7d2e8aa273c9b10c7e1eee35397f22aa3bce4f75"
+    },
+    {
+      "sha256": "f3fc6822b094ee0b17548e391b0f1845311d3a243821f8eafaccc20c2ba944ec",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4CallOptions.swift",
+      "normalizedLFsha256": "e61c348f9007f264efd2077cc2bf5a7fcc76eaed4a9cfbba82a6d1d7c1ef2540",
+      "gitBlob": "5a8f955c88e2af79c69ecdf1ed5b434eb56b82e7"
+    },
+    {
+      "sha256": "68bc6bd4a31186434446e12cb64bf0b3365fdff3b6b3c4595ebbfa97dedb8633",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4Content.swift",
+      "normalizedLFsha256": "9d8a8407c087b7cfd407e05c866d8a2d8dfe15e244f012775404793dc951bc32",
+      "gitBlob": "b3028d9593f158660731aeca156ea7a67da0e721"
+    },
+    {
+      "sha256": "f1f770a778d8723848e9418724cd4ade4c5f6057e7aa4bfa69f9eea410559f26",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4ContentParts.swift",
+      "normalizedLFsha256": "8e3d09dd261c1cd0608f3e447c484d8378bb90c8a0f0ab7d184156fab193928c",
+      "gitBlob": "96ab9001f3711cea16e5a2aaac7d3e7b3c856b8e"
+    },
+    {
+      "sha256": "7c80be0292243a621069011e69e208cdacfa7d923dd4dadb97c3c14dd0695a40",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4FinishReason.swift",
+      "normalizedLFsha256": "d07cbcea2e393701db826ceaf35003d7ee8499eb144f332094a9dca49a506e41",
+      "gitBlob": "97f6536eb9b1f339dae994871742959ad3063272"
+    },
+    {
+      "sha256": "9ae268969e4fffe4d8ce597b0ce2016191cdd3eacb8d90a01ad77f88bf0ba618",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4Prompt.swift",
+      "normalizedLFsha256": "cc8520752ea45f7928009735da99e5992cf3bb479c0d9852ded0fc73f433a149",
+      "gitBlob": "120a7505369d74d5fa61e73ac9dccdd077da4106"
+    },
+    {
+      "sha256": "9c072161b19bc2af0c9fbaf20840780a4470df482177e8bf89110c21b691689e",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4StreamPart.swift",
+      "normalizedLFsha256": "0ef4503d03312fd0ff132075b4347e7098c0087d93900f4b70887c5ae172e3b4",
+      "gitBlob": "069ebcd7eb43a7a90f059779e4adadf46d19f1a8"
+    },
+    {
+      "sha256": "0a92575cc0e8a4a0a6e6d3190fd18351b07d2f211eaf39b6cfaaf253cfbd7d98",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4Tool.swift",
+      "normalizedLFsha256": "302dfbbe642d5b8cc085ed45ed5ad98ad31dbe0b803719209b16298d18099b0d",
+      "gitBlob": "4aebc766f030b629dd49ea30a26f2cf871e4dbf1"
+    },
+    {
+      "sha256": "05044cab441582961bb1d8607de3c9f909a7ed6368ddff6762dd83275db25cca",
+      "path": "Sources/AISDKProvider/LanguageModel/V4/LanguageModelV4ToolCall.swift",
+      "normalizedLFsha256": "98cb4452a6ccf6b37b12a9724e18568b475fcd3ab95d262f4e231639d702e60f",
+      "gitBlob": "9e80e63b43e59db465f25679a9e5ef9abb7e3ee1"
+    },
+    {
+      "sha256": "2d6c55b77581c47f3183482f7dabb36d896e91fc410dfd390113b8adec6a4890",
+      "path": "Sources/AISDKProvider/ProviderV2.swift",
+      "normalizedLFsha256": "002654500a247bacdbad503733d5c6ec084c38b300f2d1a897eb54fab28f8d87",
+      "gitBlob": "7beb2644681b0aba9cc99d1581ffc9519e2e705b"
+    },
+    {
+      "sha256": "f3c7648b23ebd8052c6d107e98abe743e3db2c381bea74c3bee36d7e464c7379",
+      "path": "Sources/AISDKProvider/ProviderV3.swift",
+      "normalizedLFsha256": "234ad7fc864a56e2680a58360e40beb944eae2f79c1d1474c2755c17ebd14911",
+      "gitBlob": "569fbe2741e3c3bfc95f8ec437bb7e879fffe1fe"
+    },
+    {
+      "sha256": "63c424efd7df0a595ed19d147eb5c63168fd9fee435dd015113b3e334d6efb88",
+      "path": "Sources/AISDKProvider/ProviderV4.swift",
+      "normalizedLFsha256": "83ab24be462bcd85aabf44ee1341cb006498a8a8147b311f33779ce22cb9ddfc",
+      "gitBlob": "7971ab2d5ff3c33065da68756a21eab8b3760f9c"
+    },
+    {
+      "sha256": "6540e7e08f385cec76ddd3dc7ad669647ab2fa952d498c09afb25b9fb3b30f32",
+      "path": "Sources/AISDKProvider/RealtimeModel/RealtimeModelV4.swift",
+      "normalizedLFsha256": "a27ff26a1848ba8c28a8a949c95c2d657616576164876310bb47102e2ecb44d5",
+      "gitBlob": "2b1dc1e8c9154b754731f49d0221daefaa3c3e4c"
+    },
+    {
+      "sha256": "8c4c7bb7f4b28dbde499f3c87cfec056b36ca1861b2f81ef203382d1e11f7910",
+      "path": "Sources/AISDKProvider/RerankingModel/RerankingModelV3.swift",
+      "normalizedLFsha256": "bb798afba491f4f55decb9fd74444eb97d64dd4c25b9b0214e3a39bc9368e395",
+      "gitBlob": "e965a0f9ce97face1731e6a86d7818744407c02c"
+    },
+    {
+      "sha256": "f1cd243325c4b34ebc322c76926df240921780698afa7f0ca6ec9449b71ff1ca",
+      "path": "Sources/AISDKProvider/RerankingModel/RerankingModelV4.swift",
+      "normalizedLFsha256": "ccb8c847ecf3b0d1cafd23b17fbb07aa3c233381e9a1f83760fcdda7707e21df",
+      "gitBlob": "0fdd5401ebc4568815ac4cad5907fbf81a6a2b25"
+    },
+    {
+      "sha256": "ea7defa1010b57658aa37c913e02a33e3dcc5d0ed566017c0c7893faf03763a3",
+      "path": "Sources/AISDKProvider/Shared/V2/SharedV2Headers.swift",
+      "normalizedLFsha256": "df8cf721bd36bb0a4f018b069b892a39d0535185304f87d575a8456ffa352dad",
+      "gitBlob": "b6c283a58319459e0082c2b5c00770ac60441651"
+    },
+    {
+      "sha256": "225752637f4c7387c63ccc2f8db671e768c3ab969ef9317cede182f9983f2c2c",
+      "path": "Sources/AISDKProvider/Shared/V2/SharedV2ProviderMetadata.swift",
+      "normalizedLFsha256": "338a1b43b87390e98edb01c3c505fadea62d1124581db173f20b9f9f4b47211b",
+      "gitBlob": "9f4df09e50fe407fba550e60f5f21e55cac95910"
+    },
+    {
+      "sha256": "3d842a513a7cb04dc48872a5f476b49a31ec87871b746b09c7f38263bad00b8e",
+      "path": "Sources/AISDKProvider/Shared/V2/SharedV2ProviderOptions.swift",
+      "normalizedLFsha256": "43d3be2861ddd2aed7064b11afa512dee07c3946b948089278dabe32d4b6fe54",
+      "gitBlob": "8b0d7c5fea7e4589f4f5bec5810e187ed57ec63e"
+    },
+    {
+      "sha256": "1d0e2215cf12a0a01aabde9fa102658ab05a2c3b7a7b63c502c90363dc79963f",
+      "path": "Sources/AISDKProvider/Shared/V3/SharedV3Headers.swift",
+      "normalizedLFsha256": "f591a7faa62ec851b0292917d3aebb67894eac59b3737eac5302b01837d81ef9",
+      "gitBlob": "a95fa4572779808dc194aa4776059f8da8453c3e"
+    },
+    {
+      "sha256": "c660396fdd603426db91354ccdcbc4258880dce959a6770664d3121763af307e",
+      "path": "Sources/AISDKProvider/Shared/V3/SharedV3ProviderMetadata.swift",
+      "normalizedLFsha256": "5c2b734ca36687ce60fa18e7040755ad5e1f22342adca1e2194cbe972b6b4e19",
+      "gitBlob": "3ee78812ba77060aba920784d90dd628f09474bd"
+    },
+    {
+      "sha256": "eebea02ec1faa01dd5218bac93c9b4258874ffcb4407d5d6dbb1b864e2dfa22f",
+      "path": "Sources/AISDKProvider/Shared/V3/SharedV3ProviderOptions.swift",
+      "normalizedLFsha256": "67162c42b659d785fc2cd967efb22ddcdb48384be5d179f3c3110569ae483f52",
+      "gitBlob": "723569d83f2c9546b5f80cd6359b1ee5cb8d4264"
+    },
+    {
+      "sha256": "dfe50e116731f8889abdf072211a8af92b609e8c89933ec8a3e66cfef4e6e05e",
+      "path": "Sources/AISDKProvider/Shared/V3/SharedV3Warning.swift",
+      "normalizedLFsha256": "6dd9eebbe29e65779a6699807e4f9e4828d43a4051485cf24c98af51824a352e",
+      "gitBlob": "4ee1cb02bb463275a7e516b48d9b89aacecb9447"
+    },
+    {
+      "sha256": "04deb8e87d7434c7d95f73d4611d08bde21f8f4c14d668e7c8df281e33dce076",
+      "path": "Sources/AISDKProvider/Shared/V4/SharedV4DataContent.swift",
+      "normalizedLFsha256": "46d668cf090034428a97c6a6a9ba0dc130851153b31776527579d62a2b97a443",
+      "gitBlob": "e442d83c67880e60b89ff411d7f5c5fda56722ff"
+    },
+    {
+      "sha256": "d7d9089a7f9d6bcb1409eeec8381e5f7b755a26c39c9f4c516a475558a5a93d2",
+      "path": "Sources/AISDKProvider/Shared/V4/SharedV4FileData.swift",
+      "normalizedLFsha256": "fb6507beff4a5b73281df1ef77bd4b8781ddb83bd6542a517a58f27476f214f6",
+      "gitBlob": "d85143afa838b31af06e7ce0291f40b44c01c134"
+    },
+    {
+      "sha256": "556c765d330c21ddcbfe3ac99ad7399dbbcbcb9c866d203db0ae8cdf1b47e08f",
+      "path": "Sources/AISDKProvider/Shared/V4/SharedV4Headers.swift",
+      "normalizedLFsha256": "c1487954dc3c15709ca72eee88c12269f0b3a0b519ca42766d6a38f018ea51b0",
+      "gitBlob": "c983285bcf458d166424795a3cbb2b729b44ee4f"
+    },
+    {
+      "sha256": "8200cd7e74912e31012519d10e95e4117e22bb444910a8669c093af2a3c3b51f",
+      "path": "Sources/AISDKProvider/Shared/V4/SharedV4ProviderMetadata.swift",
+      "normalizedLFsha256": "0f7fc56cddad67bcdc8a410c11511753e2b2a1b0d05d8a558e1741d0b311e5a7",
+      "gitBlob": "cfb7f1ceed733fb8fda442f7f028c1139c7de6fc"
+    },
+    {
+      "sha256": "0c28b00afbfc4f11e9a6bfe99e7dd8279ac0067919b63630450507b9e9f3fc2c",
+      "path": "Sources/AISDKProvider/Shared/V4/SharedV4ProviderOptions.swift",
+      "normalizedLFsha256": "aee8ad8cdad38dee0ddab78e0103babca87f37fbe424a558e26daae1f6ed0b49",
+      "gitBlob": "32a050f9039adf561b1f5c6cf16b2773463af486"
+    },
+    {
+      "sha256": "e8791c1f265786e534a65b8ac0d85e30c9a839b0a1e8f588415848adfeda7d8a",
+      "path": "Sources/AISDKProvider/Shared/V4/SharedV4ProviderReference.swift",
+      "normalizedLFsha256": "814b0f3e6087148edeb2cc9cbd3f7087e9e6de75fe724ed6c0d3f2e7112b3314",
+      "gitBlob": "d5a675f130f78f03f59967bc87de245b0fa98d1e"
+    },
+    {
+      "sha256": "104df55abab3d1be46d3b62e3e829c0a30b406ff73db0908e824150654045f18",
+      "path": "Sources/AISDKProvider/Shared/V4/SharedV4Warning.swift",
+      "normalizedLFsha256": "4b45c2d1d73aeeed8534905c1f42a66c783c166390b68609c987d0b09cefc81b",
+      "gitBlob": "63625b2560ba7b53d13090067061ed11f41f7939"
+    },
+    {
+      "sha256": "a55ba523bf55f25bf1f0ea76b1fcae65a1cf6cef7f31881f4b68a5dbb71c3964",
+      "path": "Sources/AISDKProvider/Skills/V4/SkillsV4.swift",
+      "normalizedLFsha256": "717598c55018ff8c4b8ac70b5b1f52468411b5aca99ef2fbfcd5aa1d632875d3",
+      "gitBlob": "968f80ec73794c15674dd600455b015d978a5591"
+    },
+    {
+      "sha256": "1f16763db842708d525baf626a7f1aa597fa610e1297d48d1f4206231fdec243",
+      "path": "Sources/AISDKProvider/Skills/V4/SkillsV4UploadSkillCallOptions.swift",
+      "normalizedLFsha256": "517e03ec67d422b64261adf0caa9c84a3660588b7dcd2563b13869e6a1fb797a",
+      "gitBlob": "5dcf16a21794cca35b452d778afe6557eda7746b"
+    },
+    {
+      "sha256": "eb94af157e439d628b0ebc2e5fff0cc4aa7f647b63332687504a537dcce60263",
+      "path": "Sources/AISDKProvider/Skills/V4/SkillsV4UploadSkillResult.swift",
+      "normalizedLFsha256": "45f0a1cb94593214df63a2222e3c861f13911787226a60d6109e2300908c43f8",
+      "gitBlob": "6faf80bbfe55982bc5d2fad3334003f30c5094b6"
+    },
+    {
+      "sha256": "79bee05632f08e05acb1cdb12f61116f854edbdb9a00fb8a0e7168850b8cb387",
+      "path": "Sources/AISDKProvider/SpeechModel/SpeechModelV2.swift",
+      "normalizedLFsha256": "049e14f96df2edfd096914d768cea91d96b3465ecf358bdd7b357c7b455f6492",
+      "gitBlob": "3ee32ddce51ca376b7c285555a8be02beb7ca531"
+    },
+    {
+      "sha256": "53207b581d943e4c537b9638aea5d83abb1bfd8ba25d13c69cb1de54b579c197",
+      "path": "Sources/AISDKProvider/SpeechModel/SpeechModelV2CallOptions.swift",
+      "normalizedLFsha256": "5e645b4e9462ad1784ba31746f1e641dd1729beea2fd94a5a3fd17a9cdc210e4",
+      "gitBlob": "9cdb5fd3c31afd95107b1a85645991490a4889a5"
+    },
+    {
+      "sha256": "f6099e71d1bfb126a3d57f092a0255fc75dadd79c6629d89e7f33f019cf7869a",
+      "path": "Sources/AISDKProvider/SpeechModel/SpeechModelV2CallWarning.swift",
+      "normalizedLFsha256": "8f68075dc1c1008efbf9bcb775fca5098f1bae8fd58bd99ce027260dbbff31a7",
+      "gitBlob": "3a1950b1abd6ea92337520c5bbe8c3104615d798"
+    },
+    {
+      "sha256": "136370fd3a47b0296bf6cc135514e3a65bfa89316e75e2356d099e7ba8fe5fca",
+      "path": "Sources/AISDKProvider/SpeechModel/SpeechModelV3.swift",
+      "normalizedLFsha256": "fe4e26d930fb7ff079ab53fe7d1413c7ed7ed2b6fed415d62ee0648c6fbf19e8",
+      "gitBlob": "adf2480581e50b852edba7a3e67ff6d04f8cb9e4"
+    },
+    {
+      "sha256": "4d0e080c4f49dc2a184e879a1e5e7f9a0a064f173db409041bac5408a3e57163",
+      "path": "Sources/AISDKProvider/SpeechModel/SpeechModelV3CallOptions.swift",
+      "normalizedLFsha256": "0448740e31daf29dd8983685564a7ffd3edf71c33939584394e5f3bef1c38989",
+      "gitBlob": "e5768f951afa6295dde6dab89b691d4ca0d1b2ee"
+    },
+    {
+      "sha256": "ddb8de861bc325d644af1cd5212e7110093c64854cbc017e120d108bb4726d0a",
+      "path": "Sources/AISDKProvider/SpeechModel/SpeechModelV4.swift",
+      "normalizedLFsha256": "2feb6f1059f7159cf44dce7f1b042eb541ed6c30cb541efdc8b216069232f0ae",
+      "gitBlob": "2ddec96bb96b8bf65a9154e7a3da5366f223aab8"
+    },
+    {
+      "sha256": "22169c55b1c8c1ae16b1495dc3220c065a9fb88b74846c3421623a47dad70b88",
+      "path": "Sources/AISDKProvider/SpeechModel/SpeechModelV4CallOptions.swift",
+      "normalizedLFsha256": "637115e852c0e54680f299a04b97a9779124bbf066362b08688cde680d9218f4",
+      "gitBlob": "9af00787f64f3caa0e549ea32c1ddcaab23326d4"
+    },
+    {
+      "sha256": "f8e9549c9682569ba2981fa064779fd7555a7fca729d379287b83b2eeba7a900",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV2.swift",
+      "normalizedLFsha256": "4bdb7009ab287970adba12e90c12489b706116fb15df5210e1f47f06a56fc587",
+      "gitBlob": "3ac50736c8474d9ff5fae6851030a7a689659a01"
+    },
+    {
+      "sha256": "7c02e84eccb2a25cba5677006cbf113cf0be70b9c03797062131ac4c7fb59dbe",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV2CallOptions.swift",
+      "normalizedLFsha256": "d98cee712f9f94a90076757e8373c738156d55ccbcad1ead2e6ee8937368db4b",
+      "gitBlob": "5c814089df5bf5f8aa5422f1d3735b7d0e67e46e"
+    },
+    {
+      "sha256": "c587b9fbe8380d48abd0cd5810ec7eef5aa6c6332278b69e66703c392ade8038",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV2CallWarning.swift",
+      "normalizedLFsha256": "251e66a15880c7848944da1cc1ef2730aced21ea411009f119afda90ed1c2132",
+      "gitBlob": "bee44e2a87686892cab8d7adbe01b3335877d5d9"
+    },
+    {
+      "sha256": "a88fb94ab0753d4c9a386b57daabc5dda1def8cba2cd6d117b37c64555e22c18",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV3.swift",
+      "normalizedLFsha256": "0c443d690faa201f5829fe492093b537839bea75db339b3db8780dd06fe7d44d",
+      "gitBlob": "aa8885a03225d0d363a2ed818b0d93c6d65b8821"
+    },
+    {
+      "sha256": "19d2d86c96cb9834a0147b8dc593eb4337896e34be9fb9ade0e56531c0d5e692",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV3CallOptions.swift",
+      "normalizedLFsha256": "4f3755f4ad086aec8b8c1410c6741f71d13e79cfc79ac6942ea53b0b521fe8a8",
+      "gitBlob": "a887f258750723b111fca192e4a233f54c6d0f97"
+    },
+    {
+      "sha256": "6124c374e89f5eada93ee6137d406f5451c28437f28c82904aa30a46bbe51d23",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV4.swift",
+      "normalizedLFsha256": "9c13d25ca7b4a2918bd6e74b04dc5eab2cf78cc6b1d7f6dae1c6df4659a51216",
+      "gitBlob": "02495b56817de542f8551c1c67794d6bb5b6c470"
+    },
+    {
+      "sha256": "79e1fb3709ae9c1ab10e04f01e94116995e170418b46eb3e5cfdbf00f6a8c8e6",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV4CallOptions.swift",
+      "normalizedLFsha256": "8a3052a877325196f4c8c91460c3a6a1a3dcf301b831fdc0ffaf0775a527606a",
+      "gitBlob": "0fe2a8d629fc9dd87e48aa9bc3d1978b77db01a2"
+    },
+    {
+      "sha256": "dad8c34ac1a6c3f6861f6b72416d9c4d68e1c47ed0dd63da55d165158d3db582",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV4StreamOptions.swift",
+      "normalizedLFsha256": "1f718f21004d8d08e8a5a834247fa8869532e7519490589101dbb643aa371c45",
+      "gitBlob": "8ef8df38f5279d310565b408209d42487328447d"
+    },
+    {
+      "sha256": "4615f67bf31735b12ce9aa328cc3ef52c0ad162fe1faca55ec48a7f8fbd2bdf5",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV4StreamPart.swift",
+      "normalizedLFsha256": "95e5096fd324aadac2bc9179f471e9c251328e8c71de2a2ba5268d57d33e1420",
+      "gitBlob": "64690f376991b43fb8561c639cbae6d4d6b672c4"
+    },
+    {
+      "sha256": "4c4213596133b41e8e7c522bdf3d3f0019d0362e14df277fa27abd6f85489d6b",
+      "path": "Sources/AISDKProvider/TranscriptionModel/TranscriptionModelV4StreamResult.swift",
+      "normalizedLFsha256": "2fbf706d24769112801fc68deb3a816e6eb3c306b8460a5db7124e188540feb5",
+      "gitBlob": "79ee45f78eea0a073c682825a531b859ee939c1d"
+    },
+    {
+      "sha256": "03e94d7313e804ba327c6d17e01b2240a498d88ecb458f4b6c509602698ecb1a",
+      "path": "Sources/AISDKProvider/VideoModel/VideoModelV3.swift",
+      "normalizedLFsha256": "aae7dd49edab4ff122d2470d93b7a3593115e3514042d07efeb78b81f05e50fe",
+      "gitBlob": "11aed3d9971fffaaf110edace226854c74d12bd4"
+    },
+    {
+      "sha256": "ae3ad91112aae5667cd942906b0b8830571801f742863497edd3ec50adfcaada",
+      "path": "Sources/AISDKProvider/VideoModel/VideoModelV3CallOptions.swift",
+      "normalizedLFsha256": "d50ddf0db1e03d67e77c50ebf92d0dc0a09abbd07fa3cea36597979a120288fa",
+      "gitBlob": "0a8ee5e7695a21c120d7631afb851261d7f90719"
+    },
+    {
+      "sha256": "bc81b77e05095f3ed1a78774777dbeb9ac6a73e400c3e903f559bde9e5668240",
+      "path": "Sources/AISDKProvider/VideoModel/VideoModelV3File.swift",
+      "normalizedLFsha256": "1e20bf7b46e03b6f53a585c1bf321e42aca536caada3878626a08023c0bf6ccc",
+      "gitBlob": "f62db40e4ab7204966d9b6fb1028bf39880d4d05"
+    },
+    {
+      "sha256": "0513de6eb75504899d0a164470b56b2f91f6c7c87d08c59b9e0735d8f949fe24",
+      "path": "Sources/AISDKProvider/VideoModel/VideoModelV4.swift",
+      "normalizedLFsha256": "0e4ab4d5a786eaa929a0c6683cd6b9d34b51f410639741cd9de8e4820528ec69",
+      "gitBlob": "3964493df61df285b8082acae48334f7a75797e7"
+    },
+    {
+      "sha256": "27a91d4804cf858128006717ffac13c4dc9e0b5aadbeaf5f9fad579625f04087",
+      "path": "Sources/AISDKProvider/VideoModel/VideoModelV4CallOptions.swift",
+      "normalizedLFsha256": "1b963e084bacb2d764bb453f34293372e722361e1c6ce6d5c3ef0b46e055e97a",
+      "gitBlob": "30d74704c1b519e1f6db579207f8175207d623d9"
+    },
+    {
+      "sha256": "243ed70f08e66c5eced1cee0c986f607f212c537f823d5ed70eb61068e16ceb1",
+      "path": "Sources/AISDKProvider/VideoModel/VideoModelV4File.swift",
+      "normalizedLFsha256": "4b7fb8596f07b542fdd305e5470940a836808c33246680944df43e6004966e4b",
+      "gitBlob": "24abc9783718828d3a0b894a13ba7850c52c09c6"
+    },
+    {
+      "sha256": "1a3b93bce8c597c6f7a03036c05e215b37c2d680d4d3e0b47a3a9701c754e918",
+      "path": "Sources/AISDKProviderUtils/AsArray.swift",
+      "normalizedLFsha256": "17c7fcbc87fcb4a82dd650dd7ee4f1c076d270dda698b0bbb84f08ddc54d59b5",
+      "gitBlob": "38fab59c80e3421ee38eee74bb9e7b535f4aaa7b"
+    },
+    {
+      "sha256": "0472d7a91746c20274cf64a1d60cd8e51fa17e50349f31b689511b27b4f895a2",
+      "path": "Sources/AISDKProviderUtils/CancelResponseBody.swift",
+      "normalizedLFsha256": "1c564a5d6b65ddd5a60a4b6ec1fb40ee86e82ee3ec8b5b2ea5445cf9e56ec436",
+      "gitBlob": "30b91da8ac610daab70127f0b7bad0d34383a6ab"
+    },
+    {
+      "sha256": "e9a9d68efa9d0c031cd05334e2c4e003d9ae6d20920ca799fd025fef784badde",
+      "path": "Sources/AISDKProviderUtils/CombineHeaders.swift",
+      "normalizedLFsha256": "d5246f13afce5a584549f7e8b9bc30202389a7652528f21aa6be8a4a247c68f3",
+      "gitBlob": "782ada64c4c7b7a6f2466736d1f4e2fec9721a1a"
+    },
+    {
+      "sha256": "8b99158e9e7fa7da018e9d16b0f58aced7c2b57ab4615f29cc34357ac8c2d173",
+      "path": "Sources/AISDKProviderUtils/ContentPart.swift",
+      "normalizedLFsha256": "8b99158e9e7fa7da018e9d16b0f58aced7c2b57ab4615f29cc34357ac8c2d173",
+      "gitBlob": "9b03944ed588fe63bb8e1f962465910146f2504f"
+    },
+    {
+      "sha256": "5450d9de283e3760884309927a56bccaaee631468b6c05c5ddd3d832520f045b",
+      "path": "Sources/AISDKProviderUtils/ConvertAsyncIteratorToReadableStream.swift",
+      "normalizedLFsha256": "b8b7e6b656a7967478b9b719e7d1c813a7a08e810db89baaf8ab225b10dd79fe",
+      "gitBlob": "120e6d5b777e51307c3598bb1891b1b2eb724cec"
+    },
+    {
+      "sha256": "301ac118c3d10ad3ffcac1527c82059be11e83d4e14eecde7511a7af8f91f57c",
+      "path": "Sources/AISDKProviderUtils/ConvertImageModelFileToDataURI.swift",
+      "normalizedLFsha256": "464945509276b5d59691703937f0e2ab06d13752ecebd4600fcd244d0061d9f8",
+      "gitBlob": "1b320ed295d8731a9e9977bc0a309e02e8f8a261"
+    },
+    {
+      "sha256": "8427ff88072c73b4c19129eb674e41a8bdaad3567b3ea93ccc4a049e75b3951a",
+      "path": "Sources/AISDKProviderUtils/ConvertInlineFileDataToData.swift",
+      "normalizedLFsha256": "52dd6f50c75e6a24644c759552f631638b5beb57abfadcbec38c91f312ba6d7a",
+      "gitBlob": "14246f44326a4d739ba5f8fda5b407b65de827a6"
+    },
+    {
+      "sha256": "07d43c34d9fb4462636aa971ce22b11cda8573ea5f1eaed2470607e92ec3cd2a",
+      "path": "Sources/AISDKProviderUtils/ConvertToFormData.swift",
+      "normalizedLFsha256": "11fb41ed0bb19625f04b1c49fe2e95e864b38844bef76fb54324a183e5ca7ad9",
+      "gitBlob": "aade3982079208b6226b69ef2bd5d8445bf6e6ba"
+    },
+    {
+      "sha256": "1cc628ec86802511a1bdae3b250b70af7bf592a9340a40f8fecfdb43ae13c103",
+      "path": "Sources/AISDKProviderUtils/DataContent.swift",
+      "normalizedLFsha256": "aeeb8df031ee7524b51b3d2b665c05995ae9c8e2d1709e85de57f7f8b52f9674",
+      "gitBlob": "c1ad993a890718c83000de700b9c1c11e086138f"
+    },
+    {
+      "sha256": "8140f2fa1185348bd62c455009dc6c077b7c1e1429388f8d3965f774dfe955fa",
+      "path": "Sources/AISDKProviderUtils/Delay.swift",
+      "normalizedLFsha256": "b9b322304a2bf392a06f4c8ccaf1f17b8ec72eff12a837d7957c9739b1b6f7db",
+      "gitBlob": "b7a35b03d1c4dbc4a8d067ed125b71a1d211a3f7"
+    },
+    {
+      "sha256": "c7dc6a212b4ed90322be99603ac73066f4c40514d42019984b793af3b283ad48",
+      "path": "Sources/AISDKProviderUtils/DelayedPromise.swift",
+      "normalizedLFsha256": "cb64d629b0d21095f766a08bda2017048a66354a06bc93d9d42094655cff89c0",
+      "gitBlob": "5262134019dcff77bcde58c79ee150ff22285913"
+    },
+    {
+      "sha256": "8cb1a143715f06db85fa9bb7a6ba3cf7c1720a99b0e83602e04b2079d4ba25fd",
+      "path": "Sources/AISDKProviderUtils/DetectMediaType.swift",
+      "normalizedLFsha256": "1819f2a1ce94ddaafc444ee5b98539c6736ba3e2f2d1c10bcff4575514a805e5",
+      "gitBlob": "ee311f88d2562fff315bbb7e6e3ae5796ab05e6f"
+    },
+    {
+      "sha256": "5c537fc7154c1d3919eb8881b6dbe2b7c2f1f76aa65d4cb3e4a8280a9b28e4dc",
+      "path": "Sources/AISDKProviderUtils/DownloadBlob.swift",
+      "normalizedLFsha256": "76eb55b7c9b8027543582eb577b18e40fc3b9085fd47515e83af209394a0ef79",
+      "gitBlob": "712913077274d8c6a20f487d894e9b5171d4e023"
+    },
+    {
+      "sha256": "ccaab978da3393bfa25d2796bd067397027a479a1ce0b2c83fe01f07eaa09ccf",
+      "path": "Sources/AISDKProviderUtils/DownloadError.swift",
+      "normalizedLFsha256": "3ccd19d1c0ec6f5c587fd11140b1b806896fea5365fb3f9ac9d9de81879abfbe",
+      "gitBlob": "4eef245b64d3063d31451179693c80e4f03d5803"
+    },
+    {
+      "sha256": "f5a8bb408492b69ae2b8f2032ee3a5d810e3e3cb35cdd6897c86cb9df88d76e2",
+      "path": "Sources/AISDKProviderUtils/ExecuteTool.swift",
+      "normalizedLFsha256": "ff4d1535261b95f86f76349c38fbe1035ea35e4ec199a5c147b95867b740cb6c",
+      "gitBlob": "3fa5c37c07ed5d3bfdf4cd62d5a88dae37589959"
+    },
+    {
+      "sha256": "5efe1e70908fa3e602f3001f21ec0fdf4e348ee8ea35c534e2beb54dae494062",
+      "path": "Sources/AISDKProviderUtils/ExtractLines.swift",
+      "normalizedLFsha256": "e103b5d0a384995a1b2c3a55e8ff138af4c32728734953162cbf6f6e973e3e5b",
+      "gitBlob": "ddbda53b21d0790692a1fc11dde322a175edab0a"
+    },
+    {
+      "sha256": "f7de2d6428a81e4f4fa8325b107964484c24ec3ac0621e429dc7d905364ac5ba",
+      "path": "Sources/AISDKProviderUtils/ExtractResponseHeaders.swift",
+      "normalizedLFsha256": "7c744788cf857552e0b11881ece69ddc495a92d3f7942e93329686c1cc7094c6",
+      "gitBlob": "f338c27ce290846cfc803d83f3c34297866de40a"
+    },
+    {
+      "sha256": "2fefb4381a69abec677fb762a6ae7971d6841cba99fd00e7782704cf0c71361a",
+      "path": "Sources/AISDKProviderUtils/FetchFunction.swift",
+      "normalizedLFsha256": "5d3e4c4bb2082fc86ae3c8c23b476d90b052b316a544d3fcd1f20af4ec02ad3c",
+      "gitBlob": "4b0d23d2ea08cc3ef215621f5b0cb8e1fcb0452a"
+    },
+    {
+      "sha256": "1183618c1108d2a427960875a1ea48c716d28657effd1b8511672a7740b709a6",
+      "path": "Sources/AISDKProviderUtils/FetchWithValidatedRedirects.swift",
+      "normalizedLFsha256": "f58fbe812e60e6620271aa58633674f9fe124c6979675b266c69b8b815184f28",
+      "gitBlob": "89096f74a3383f44667b0933b7cff23bed9b0a87"
+    },
+    {
+      "sha256": "173428105e3608e6fb37bc8f9f81837d1fbf85535cfce04a1a5474997de1ba39",
+      "path": "Sources/AISDKProviderUtils/FilterNullable.swift",
+      "normalizedLFsha256": "20bf16e6f98401816fb95ef8ffc1316c9b6037eddf77d0ccc3822a055fc874cf",
+      "gitBlob": "7b427d9d7d5e21909f92cf8043bd7fc1a5fdace3"
+    },
+    {
+      "sha256": "0fb9983a1422b24ebfd29d1d018a983fdd5b16188205401f57fdd14a43b65284",
+      "path": "Sources/AISDKProviderUtils/GenerateID.swift",
+      "normalizedLFsha256": "63e17d910f30f95f971df74139acfdcfd9e0b87400b75bb9f5d23bd55afb4538",
+      "gitBlob": "d45ed6141f0c578d842b4071f77156448bf0fa37"
+    },
+    {
+      "sha256": "4080b65bda3dea66758b7cf424533159cf239a46b8aa2a5ac591530e0c4a349f",
+      "path": "Sources/AISDKProviderUtils/GetErrorMessage.swift",
+      "normalizedLFsha256": "8af1a9767c0881b7faec071ccc07fe04faeda59e9cbaf51fd9acce1ed2b80ca7",
+      "gitBlob": "07d988091b8eccca944b1ba98bd3b759c604a673"
+    },
+    {
+      "sha256": "d0603446e1db01a70fd32190269eede71aff988fd49d6cac886076b44ba0fb3a",
+      "path": "Sources/AISDKProviderUtils/GetFromAPI.swift",
+      "normalizedLFsha256": "b56c3394278f1c1ff517674ea104a5b597466ad5ba5d8d98a7100da71ad71fb8",
+      "gitBlob": "aff45615c057f75993923b99060b6013bae139a8"
+    },
+    {
+      "sha256": "65c13b5601d932a12d4f9a4b399244cabb512fc60d5dd5017eea4f108d66fb22",
+      "path": "Sources/AISDKProviderUtils/GetRuntimeEnvironmentUserAgent.swift",
+      "normalizedLFsha256": "a58c12414df27289b8d6719229be53bd3ee75bd9b43d63e7cabe7d4aa8891ea4",
+      "gitBlob": "942dfdc29c8d93df2e6b1e0faf65a9ad65e8d760"
+    },
+    {
+      "sha256": "77af26481710f61a98b7bb329e66ea96ff176563df4d3bd73e3da8663a714cb6",
+      "path": "Sources/AISDKProviderUtils/HandleFetchError.swift",
+      "normalizedLFsha256": "12863765eec966d5d5676123127d07e4a603e4cfda08cf7ed2acefe19e32c40e",
+      "gitBlob": "07315bb865a5eaf6426053cf2684d3c3eebb7686"
+    },
+    {
+      "sha256": "8a8e15e02961a4c2af251a7bf7d7dc26c1595f3dc284a3aef3274901a1dda306",
+      "path": "Sources/AISDKProviderUtils/InjectJSONInstructionIntoMessages.swift",
+      "normalizedLFsha256": "2dc13bfa923287804718f6a520499f8aa62fd3003c84e5aa2341969891d3ed40",
+      "gitBlob": "fbbf53336245a4995c30b5dee24c947d2fc42936"
+    },
+    {
+      "sha256": "61de9ff9bfb6b8188d57d26295168651d3fd1a69bc47ccf38c22cc47d9d7dc00",
+      "path": "Sources/AISDKProviderUtils/IsAbortError.swift",
+      "normalizedLFsha256": "a68679192dc36196e482f90e7fa28007690b1dcf4df70e70622e26cebf3854f5",
+      "gitBlob": "a9aae8a9ee5301a0581641241cd63f17d8ec271d"
+    },
+    {
+      "sha256": "0c44910b9b032b7886c7bb0044f15d4b6c4e50095181d2f53e20927398d06b08",
+      "path": "Sources/AISDKProviderUtils/IsAsyncIterable.swift",
+      "normalizedLFsha256": "3b7199878cb94c35c3d48d47922ed85236307be6d4b94791e3fb2f0e13b3564a",
+      "gitBlob": "a777131bd31a76e36603f7800c79a5395435af3c"
+    },
+    {
+      "sha256": "914a79fd82b875ac63adfa583f5182bb6ea5a57618e1d81f4c2f8a71e758a8ab",
+      "path": "Sources/AISDKProviderUtils/IsSameOrigin.swift",
+      "normalizedLFsha256": "ca53250c539bd9551748c34561d911d59aaf76bfa05c93a499e5897f330046d3",
+      "gitBlob": "d658965961a731d3eb5a8f1556bb7a3b6591a255"
+    },
+    {
+      "sha256": "1326a33b720ea0ea53a2cb57faaf99e894c7d26b6b9645fd287d8f07cd260170",
+      "path": "Sources/AISDKProviderUtils/IsUrlSupported.swift",
+      "normalizedLFsha256": "0b38992b599c2fb6e77993528ace07c47d35a3f0ba27c9d2e20f14c9d3edfef0",
+      "gitBlob": "8d88b64e47a144eddc221d09ad354d04c87b595d"
+    },
+    {
+      "sha256": "ca62b5907800f6ad9a5e8df55f3c9f83b19cf78a46b9baad19c2e7c05a7b3114",
+      "path": "Sources/AISDKProviderUtils/JSONValue/JSONValueToFoundation.swift",
+      "normalizedLFsha256": "19a31df7cd1d456edaa09a6ad39fb80f5ed1c7236effcff18923640ff212dd11",
+      "gitBlob": "23a9bc6206e99eb552a460d6fbaae4fa31bf4e43"
+    },
+    {
+      "sha256": "7f83db935469474e45d451edc048339d6b9e01bf624aa4f7bbc2ca50297b8043",
+      "path": "Sources/AISDKProviderUtils/LoadAPIKey.swift",
+      "normalizedLFsha256": "45e4b01d6a078762ae4d35b317c0aaa1b703175abe26f65a850c8dd346ca218d",
+      "gitBlob": "aedee142250adf9eec8fa57c3898d28086ebf14c"
+    },
+    {
+      "sha256": "c72d9e6954b6b5f854bb75af90e29eedb2a4873c9658f283b675c86155bcb32e",
+      "path": "Sources/AISDKProviderUtils/LoadOptionalSetting.swift",
+      "normalizedLFsha256": "f89173ec123e566abdbc4999b554d0d939f3d5a2b6f23bb5f598ad825a8cc3e2",
+      "gitBlob": "368535fac0dd1035afc31eb6140334b30a82ad57"
+    },
+    {
+      "sha256": "6d414b674f3b27c6c753d58f4e97dbbae397f1c5f3eb7557f53bf9df4f64c901",
+      "path": "Sources/AISDKProviderUtils/LoadSetting.swift",
+      "normalizedLFsha256": "accee3b5e3e31beda23bb9702836118e91edfb96c266adf20d1cd8bac725e232",
+      "gitBlob": "f0b52e2489a8e3565e9263b21f49ae3f96168a1a"
+    },
+    {
+      "sha256": "93a43872c1c9df0a56cc2882c954290f612e8559212a9347765e10827d23248c",
+      "path": "Sources/AISDKProviderUtils/MapReasoningToProvider.swift",
+      "normalizedLFsha256": "bff10a5688faeb957fd8a7f8cd7a53f4dfb76406128b0def8c22ebddb5610272",
+      "gitBlob": "4b82c3d52469b096743a0520ebaca03341723149"
+    },
+    {
+      "sha256": "c891cd5b044d1fab03f62217c7e488764ba4aa17feb714b580ab3bddac455790",
+      "path": "Sources/AISDKProviderUtils/MediaTypeToExtension.swift",
+      "normalizedLFsha256": "afb1dfc9a10aadfb7530e080ed4c8fbc5eb400e3de3e03e41c9f6d62be83909a",
+      "gitBlob": "e84ad270eac815fbf5b3cce7fd7736726aad39be"
+    },
+    {
+      "sha256": "d8b076682e52e8e1115838d4b477dd351e178563ca34dc6289f2fdebc90ed54d",
+      "path": "Sources/AISDKProviderUtils/ModelMessage.swift",
+      "normalizedLFsha256": "fb7249a5e039a7a67439081704212d7f14b6fbefac3dfaf9bc720a44771aa13c",
+      "gitBlob": "0afaf4dff8fab66c628a43188f2e73f224eae0e9"
+    },
+    {
+      "sha256": "0c92e533cd5d5fa14cd286f9272292c7512220b54196fd09e6b692634804bb1b",
+      "path": "Sources/AISDKProviderUtils/MultipartFormDataBuilder.swift",
+      "normalizedLFsha256": "516a6dae00fe6fc73efa7eefe69069d1b4841b6231b60dd5ae2e8a95a329fd7a",
+      "gitBlob": "89a2201a524690eb45742cf2b2b31d252d9b64db"
+    },
+    {
+      "sha256": "d0f8f63d2a70334b87b843a7e7b2336631f1a4d50d882a35b073637e093b3d91",
+      "path": "Sources/AISDKProviderUtils/NormalizeHeaders.swift",
+      "normalizedLFsha256": "77c249365da305f9bebbe3f96f558aff544d06e82b981c2d1f0af5f6ce03e253",
+      "gitBlob": "6b1a5a4f65687f07456437bbe6142e3ae610eb50"
+    },
+    {
+      "sha256": "2e8282f1e532a46a09531f9cd2b7d12b013b010b66014ac006908acf982b3967",
+      "path": "Sources/AISDKProviderUtils/ParseJSON.swift",
+      "normalizedLFsha256": "a82dfc4a7f79b9e775a58f04b2edcad8aea548da8e937a496167021d48d15e59",
+      "gitBlob": "6f22b62d0758b15b53d0f795c4b490aad234970c"
+    },
+    {
+      "sha256": "9d1e5510e06364480dd17bb53b6bf6c468f7383f4d22d6baa9425b48635273e0",
+      "path": "Sources/AISDKProviderUtils/ParseJsonEventStream.swift",
+      "normalizedLFsha256": "c5f459b563fdb348c9a287afef249ad4e874a8c47f0424154ada0991f66f5ecb",
+      "gitBlob": "49f73f9f9b202a3080aa9a62ced4afb1eb1955b1"
+    },
+    {
+      "sha256": "8b8cef547831fc511c5fcaf59193acaa53d092683df18dfd1f294b19b0662ce5",
+      "path": "Sources/AISDKProviderUtils/ParseProviderOptions.swift",
+      "normalizedLFsha256": "4c49604c8428a2af4e37e0cc805eae7b286fb222cd75e5d8bafbbfc376c27cb5",
+      "gitBlob": "970d81434c345cd8fbb13154ff26a2679a027175"
+    },
+    {
+      "sha256": "38483d0f04c85a0cc8d414c95079033ddd4a9d5e20a483fb954e6f5ee1300c3f",
+      "path": "Sources/AISDKProviderUtils/PostToAPI.swift",
+      "normalizedLFsha256": "da748b1a30bbfa4f3e4d489315acabdf18a7ed5972b66e42106c0f02b51cd24d",
+      "gitBlob": "a18918057ff4ad8c247da51797418635def9d864"
+    },
+    {
+      "sha256": "608a7de7dedc24ac48c2f0c1a2270a0ae6c88c0af89628a4968fe5c595c23713",
+      "path": "Sources/AISDKProviderUtils/ProviderHTTPResponse.swift",
+      "normalizedLFsha256": "6c7bd91a1262bfc2a9a4639f8ca3bcd258d26250d8bef82b445fddef6a7584fa",
+      "gitBlob": "7a65d325869555db40bbfb60b4417b650dcac970"
+    },
+    {
+      "sha256": "c7319470be79adb40a2692ee5b721e2ddb235ffc05425f5a01d16acf335906af",
+      "path": "Sources/AISDKProviderUtils/ProviderReference.swift",
+      "normalizedLFsha256": "5c7dc8f017940efaa05bb8961b8c2c8cc324a086f5844cc548ac2fa29d3f02dd",
+      "gitBlob": "238c527c953ad377d77967cec9fb72b10af45043"
+    },
+    {
+      "sha256": "090c75f0a0971171c8c64c0a4897c8e062782d2a8530e4760723edcddbd282a0",
+      "path": "Sources/AISDKProviderUtils/ProviderToolFactory.swift",
+      "normalizedLFsha256": "63af28a688f99e227af5f78e28d014bcc37d5589f33208f39b32f4f42b10cc62",
+      "gitBlob": "e718b99793e8c8de454d6098e48a64874cf51963"
+    },
+    {
+      "sha256": "5239e1a1da6bcd557384ae321cbcbb8000fab19de712e08efffb326510fdb992",
+      "path": "Sources/AISDKProviderUtils/ReadResponseWithSizeLimit.swift",
+      "normalizedLFsha256": "09f6fe1707ec2a2ab290252590d27db70dfeee4b0e49b487d0df1da85e9e9a79",
+      "gitBlob": "e96a38a8c91953abad0aef2b2e329302892092eb"
+    },
+    {
+      "sha256": "b8ab9c3ece4e84d42fd2a72b71b0b9373c84a10984bbb7fd8b67f4ebbc374c31",
+      "path": "Sources/AISDKProviderUtils/RemoveUndefinedEntries.swift",
+      "normalizedLFsha256": "c1e9613f5a21211a3385c86a484306e8864a870d572c1644f6247e0269824302",
+      "gitBlob": "9a6c7d24edeab71e950b1fc12caa6fc408f4b576"
+    },
+    {
+      "sha256": "466f2ae5bea67cdffe48cc9bca5e89928161db31efce1ecd02f22afe3470bf29",
+      "path": "Sources/AISDKProviderUtils/Resolve.swift",
+      "normalizedLFsha256": "656c5ee54350d5fec1a12a12063eb779cc46051aa8f74daa914f5b72fec3e69b",
+      "gitBlob": "cf653cae3ef02c9f33e7707329bf09b0dbbad31c"
+    },
+    {
+      "sha256": "462e4da16b80c35e13e70bdabb62e6d5c5d6e921eeae5bb34226764a96943183",
+      "path": "Sources/AISDKProviderUtils/ResolveFullMediaType.swift",
+      "normalizedLFsha256": "a306f7fc6a70738085a67266a59092f4b9fa363470ab95a542b1790cb150317e",
+      "gitBlob": "645313b1021578bcfee6d8556a3d093a906368d0"
+    },
+    {
+      "sha256": "e086813ba3b77a4efcce8fe6a35baebfdabb2c6455dc0ea8b0b4825a17f7f9f1",
+      "path": "Sources/AISDKProviderUtils/ResponseHandler.swift",
+      "normalizedLFsha256": "a0c52584800d71cc9e3861590a3b6448fc71ab105b26e708fab4887f5b748cb3",
+      "gitBlob": "38761d903b74aeaa9c0d31730bbea85f28965aff"
+    },
+    {
+      "sha256": "e48d247583d75971a26a023e23ec56c9d8c1a5b50ed997af8869c8bac58727f7",
+      "path": "Sources/AISDKProviderUtils/Schema/AddAdditionalPropertiesToJsonSchema.swift",
+      "normalizedLFsha256": "8266e9732bee4073ff6bfe8c7ec3f1bedfdf77f678837959d0d49831bb8926bd",
+      "gitBlob": "49184ac62668f6f6898a352bf468b45bca27fde0"
+    },
+    {
+      "sha256": "b176453373abe4fcdeb4bd0dd3ceba515cb0ee09dd7041664d8407b99b969d60",
+      "path": "Sources/AISDKProviderUtils/Schema/JSONSchemaValidator.swift",
+      "normalizedLFsha256": "7e77451b5816ce722b3a87149b5149f072c3945f1aa895a9cc352877c6ac82f4",
+      "gitBlob": "d01d9a3b49b7e8521c78334dafd1f2a250bc2f1b"
+    },
+    {
+      "sha256": "80ec2b00274418f121acee83189595655dea5d80cd4234fcab6fcd08806b75ae",
+      "path": "Sources/AISDKProviderUtils/Schema/Schema.swift",
+      "normalizedLFsha256": "e6074ff0186d1fe6b8749a81eea1f924c2d6ecc0ce590937f0ee27146c5fb5a7",
+      "gitBlob": "5ab2a6cf764db7592d3278435ad885dba3ce6b5b"
+    },
+    {
+      "sha256": "b208df56659c46da3d49cf6dbb5135ae0afcc9bba325603aab043bfae4489ed3",
+      "path": "Sources/AISDKProviderUtils/Schema/ZodAdapters.swift",
+      "normalizedLFsha256": "fed62d7c76f2c1cc7a4d6c24440ecc1b42e81341d4c66398173a1350c9c97219",
+      "gitBlob": "b8d1b68707ce14499373c17076d6c7c988ed8928"
+    },
+    {
+      "sha256": "e82e1b2888ed75f29f2481a2ec217b9a1cef22b5e06dd36d71a690b6b4d2ae4f",
+      "path": "Sources/AISDKProviderUtils/SecureJsonParse.swift",
+      "normalizedLFsha256": "21175f272f7a8b483acd8c9fa788b448be775cf4f1cb4849e60ba7f0e4a58efd",
+      "gitBlob": "8e225358a987036f6f48317547fa94adb88d31d1"
+    },
+    {
+      "sha256": "85720e9af677f65d77708fe353de2cb6dd435eb42ff6d41a855f902eb9b1870a",
+      "path": "Sources/AISDKProviderUtils/SerializeModelOptions.swift",
+      "normalizedLFsha256": "c5571489c0a1dc3abb4aede647cc81212727ed4ec2ea340d8dac5de06cb3b3f6",
+      "gitBlob": "c2101001d9ade9e00dca8b148f59f70209e457ba"
+    },
+    {
+      "sha256": "974064c115501846339714510d941746ba27e59ccc7450b6221fa91ce58b1293",
+      "path": "Sources/AISDKProviderUtils/SplitDataUrl.swift",
+      "normalizedLFsha256": "7b8117a5585e2fb9ed09975f20dfef5c4539b96398d8176e1d498a043196df9a",
+      "gitBlob": "d072716358762afcd9ab7feb608e6f22dd30e927"
+    },
+    {
+      "sha256": "3252c2215d174c584e98b0526d41fd9baeb3d54c378954aa3e71790108461539",
+      "path": "Sources/AISDKProviderUtils/StreamingToolCallTracker.swift",
+      "normalizedLFsha256": "b39b71e883be0d462c26d5ba373741827d07fc8b4009cd5213573c9766391e7f",
+      "gitBlob": "d1f8bb6f40ef81d7fd76a4fe509db8e3c9254e2c"
+    },
+    {
+      "sha256": "28433ca7e411adc8b6c1133f0d607dc5f648c136d8d26f3f91b899c32ebc4676",
+      "path": "Sources/AISDKProviderUtils/StripFileExtension.swift",
+      "normalizedLFsha256": "f33afe38f757f8d22ad1b678fa93b384c5d2b40f8d8a9c366e6edb24f45b782c",
+      "gitBlob": "6ec4e41573d4544795ff7e261f880c8c251e26cb"
+    },
+    {
+      "sha256": "9287759a01f4675626cfd1898d19fd483c1904bd71d5c9cb9437cecda9881b55",
+      "path": "Sources/AISDKProviderUtils/TestSupport/ConvertArrayToAsyncIterable.swift",
+      "normalizedLFsha256": "7b261a017b7dc37ae3e63db9f7634a70d589e047251ec30d45a0310b6a7bcfc8",
+      "gitBlob": "e3daf8bc3f8e667b58e52b6a48dc6dbdf550f921"
+    },
+    {
+      "sha256": "86b344a514ea077fa5d1ae2dde5760a2bf5ec712d05220aa930b1ed0971f4d81",
+      "path": "Sources/AISDKProviderUtils/TestSupport/ConvertArrayToReadableStream.swift",
+      "normalizedLFsha256": "444af94e0f6424034fca2e0d8d56c8b9ceb7bd3ce49a6ade0a8d4451ea696899",
+      "gitBlob": "e9cef77ea8af899e8ae3e09c5812d7a3c27b5958"
+    },
+    {
+      "sha256": "ec902d03a1dd1096757c31b599fda8b526ec31bc82838b2a36c6bfb9ea0ea0c7",
+      "path": "Sources/AISDKProviderUtils/TestSupport/ConvertAsyncIterableToArray.swift",
+      "normalizedLFsha256": "2671a8e55f4fcfd2fa7a7a425b24646fa81e1e9906d1c11648eb71915cf5ae6c",
+      "gitBlob": "d674d27a4dea56d52ec7878926ccfdd43f0ad51c"
+    },
+    {
+      "sha256": "c4375eac6556ed2c354f286e2422cacf7c353451a54bcebbdadea5e711c7f0e1",
+      "path": "Sources/AISDKProviderUtils/TestSupport/ConvertReadableStreamToArray.swift",
+      "normalizedLFsha256": "4ea689347f9000acfb27365aa9f4ca8cc7f41a8a555df68ed6c66222e6e6d18a",
+      "gitBlob": "48f8f2ff7e248e47006538773968d134c750f9f8"
+    },
+    {
+      "sha256": "471b8d25e236133d11481fe0a59ba9ea850f2b873b1cb8b24b1327a894214e68",
+      "path": "Sources/AISDKProviderUtils/TestSupport/ConvertResponseStreamToArray.swift",
+      "normalizedLFsha256": "06afcaec5c174bee370e4daa144f5825de142e2344e0ac0d4dc33c6ed68eb13d",
+      "gitBlob": "e372c2f2380103392a4622ba3b298be0924fc54d"
+    },
+    {
+      "sha256": "ca1ad96381155bc7febfe966ea2f975d84d315f87deb0f7c65b75b33feef11fc",
+      "path": "Sources/AISDKProviderUtils/TestSupport/TestSupportIndex.swift",
+      "normalizedLFsha256": "9fe4a82854bbd3f8334a4ab68d9c28b37693984a6133822a4ff6d252ff358333",
+      "gitBlob": "32b5d16faedd39be3f68d3cdeb90a9696c7846e1"
+    },
+    {
+      "sha256": "f8505192470fd5ff1dc4ffe2c8063103b4b4360b03ec17b7a4a4955280c06b4b",
+      "path": "Sources/AISDKProviderUtils/Tool.swift",
+      "normalizedLFsha256": "07a44abbdc0f88a6fb910ca7ff51653aef221f40b0cb5919a0bebcfa1d7c9ee3",
+      "gitBlob": "e1916bc8184646fc5b0e144b34d14d278f76442a"
+    },
+    {
+      "sha256": "3c963f936a2bdf6776ebeb26b9ec865cbe330c1bb27ecc778699e7c1230a6d5e",
+      "path": "Sources/AISDKProviderUtils/ToolNameMapping.swift",
+      "normalizedLFsha256": "41e8c881e8c292406f7a8f0ed13287aa7076c99b8d231f0141c3ab4b89c4edcc",
+      "gitBlob": "a8c3df17d6ff6b6d38f0a5d37b78ecd04bd91b5e"
+    },
+    {
+      "sha256": "302efa9db02069a493fb2de6fd739e22160e91500c5e4afe026a398a64fbeee2",
+      "path": "Sources/AISDKProviderUtils/Uint8Utils.swift",
+      "normalizedLFsha256": "886ba6626562bf538fb69e948ae95876ff9ac0e391a63ec180dc0b9176654f1f",
+      "gitBlob": "16f51e7ba962ff630da1fecf9cd5888000357ff8"
+    },
+    {
+      "sha256": "4e169b910dfbf6f874aa4ab40613f238ecf3d66df644b74cfbeebef6caae527b",
+      "path": "Sources/AISDKProviderUtils/ValidateBaseURL.swift",
+      "normalizedLFsha256": "5e1dc4bfbe3ab1b40742a642ee92c7d04539df6d0d66f6361b5e7a6da1c164f1",
+      "gitBlob": "1e1c7796905093c63f6a35182db37bb5b1fdad95"
+    },
+    {
+      "sha256": "4fd6d18a8344804763cccd857b0b42c19ad815116c430ae7bb1e400bee2a0dc9",
+      "path": "Sources/AISDKProviderUtils/ValidateDownloadURL.swift",
+      "normalizedLFsha256": "071200bf7377b0e4e1be9c74ad117a6263a4700efab1bd908580d56e92e74ef0",
+      "gitBlob": "cf845c649271be324061031af59225cee0bd22bc"
+    },
+    {
+      "sha256": "3e72dd4abf50750fd65a0f3a366f3411cc301f7b4af9ebfe993dbb794cc7c107",
+      "path": "Sources/AISDKProviderUtils/ValidateTypes.swift",
+      "normalizedLFsha256": "2c0eaf2218ab59a51f373952b0ffe72a2f2127705243641daac1ab855217438b",
+      "gitBlob": "d9317d3ea5562e9775e1531266f295cbc3f1b903"
+    },
+    {
+      "sha256": "94174704d3aa3fb84c86845f2b7a44f07766acca1fe2c65d3d3ca9f96241f9c2",
+      "path": "Sources/AISDKProviderUtils/Version.swift",
+      "normalizedLFsha256": "718a445be6a196261a1c6f6a248b5f296164fb32536f245a68658320dc0842bd",
+      "gitBlob": "ce875ad4881f1eb6e997604752f7e052f9544701"
+    },
+    {
+      "sha256": "2a95f44f6247805f97c299407aa305f9e2bc6f0e7b49d467b881ac9c0234acce",
+      "path": "Sources/AISDKProviderUtils/Versioning/SDKReleaseVersion.swift",
+      "normalizedLFsha256": "d7737aa5fe0843b00b6ba9c4bc181a442af4281d53bef0b7c16d5e1ef9fefc30",
+      "gitBlob": "36cfdd00a900a97cb0877a4d1da593fa53d50867"
+    },
+    {
+      "sha256": "9e4d36f6fc1d7a512c2387fc5c4771029ffb7d883f156ad216076a04d168c202",
+      "path": "Sources/AISDKProviderUtils/WithoutTrailingSlash.swift",
+      "normalizedLFsha256": "41c678b975ebacad2007acba91f7e8688ca1c72c0964f20514f78df04f2d93d6",
+      "gitBlob": "d9eabe01f770693601ba817d6e6f5ade72df2eb0"
+    },
+    {
+      "sha256": "3a9360058590df84cc075566144c7d0c7a9660f787aff347489a279d1bf5f957",
+      "path": "Sources/AISDKProviderUtils/WithUserAgentSuffix.swift",
+      "normalizedLFsha256": "a3d267b9863da9eb0626b750ba3d3a42f01b6a9dccca9fb54f3905ce1d934e85",
+      "gitBlob": "63c0e613caebc7255694a68d78b032bdcc512689"
+    },
+    {
+      "sha256": "db163c331302029b58cfa9475b67f24a8b758f15540881d033a39e9ad60e0a14",
+      "path": "Sources/AISDKZodAdapter/ArkTypeToJSONSchema.swift",
+      "normalizedLFsha256": "5d12aa5c375a37b42e47364d0148d081613c24aed01ac65f3048332eaba01aca",
+      "gitBlob": "779d2c6488bf9d7df258ad8fb17c4a096d55b234"
+    },
+    {
+      "sha256": "3d39e12601b574b4f50d8aa6fc45da177b873f1430812f3d78ab3f0084933da6",
+      "path": "Sources/AISDKZodAdapter/EffectToJSONSchema.swift",
+      "normalizedLFsha256": "42426993f451ab0e6f6fa022ae95fe5cedab11a24f6b895a8340d5da55205353",
+      "gitBlob": "e0da1631bd523ac3071471011181d0735a33b713"
+    },
+    {
+      "sha256": "48dee9f5a6e7cd29910b9dbc8c52064e85b4cb322b3fefba0b10e56c56fb2917",
+      "path": "Sources/AISDKZodAdapter/JSONValueCompat.swift",
+      "normalizedLFsha256": "e3ba55d9d36924306a67c192c9cff79eb5affdbffbf4a5099d82fad8847c68c8",
+      "gitBlob": "b8aa7152c74ea32643ed0a46b8f9f96680a7c501"
+    },
+    {
+      "sha256": "476f6661e51846fc568d47bde979d359e06306716a0782967150c56704cefbe3",
+      "path": "Sources/AISDKZodAdapter/PublicBuilders.swift",
+      "normalizedLFsha256": "45084694307f27f9ba8cf21e18e4d524db8ba1d9075d0810b54569ae3819d9cf",
+      "gitBlob": "92a98bebb1721fa58d841f32ee821fcb83687046"
+    },
+    {
+      "sha256": "14890b0e8c4c3f64a46fd27761b3586a5886b29bb81952b7e8e5e3492ec4504a",
+      "path": "Sources/AISDKZodAdapter/ValibotToJSONSchema.swift",
+      "normalizedLFsha256": "819091a091b0d5f2ff9efa0df4bba3c4763dd2e6885ef2e36e079a6db8c1aa8a",
+      "gitBlob": "cc190608ddaaa9eb8cf64d4255b28338fb4d37d9"
+    },
+    {
+      "sha256": "2705b0977ce4981ae40484dccef2f63f7cc41908eb06098fb1b89332c16a2313",
+      "path": "Sources/AISDKZodAdapter/ZLikeDSL.swift",
+      "normalizedLFsha256": "3d42f784c963a67072051bba75123d562002b96b06a1658b9bf666249fda2f70",
+      "gitBlob": "45e2006d32fad66f27a1c5969a1451a3752289ae"
+    },
+    {
+      "sha256": "9ad73950dc8b270e2193c6ee70ac306ed8919f686770f2c404dfe71980f46771",
+      "path": "Sources/AISDKZodAdapter/Zod3/Zod3Options.swift",
+      "normalizedLFsha256": "8e6efd17dd98f9b80c77ae55b7a48ba258aba42b5e23da9ed8884c4389cb0bef",
+      "gitBlob": "0ad660cd8f7e7f688add0e7acb564a26985c2174"
+    },
+    {
+      "sha256": "bde4240512fd71ae8d5b5eb91cdeefc24c2906b7f695560db7d2d8931772112b",
+      "path": "Sources/AISDKZodAdapter/Zod3/Zod3ParseDef.swift",
+      "normalizedLFsha256": "d0b3056d5e8f6506af0085248b33976baf075685d0bb08a5f0ee07a77da74fb4",
+      "gitBlob": "9136e634737d9c05258af5a6ea3cb24afa86519e"
+    },
+    {
+      "sha256": "e195cbf6d5caa89ca1ca201bc734636396715d5f861fa991c70a998c8322aa16",
+      "path": "Sources/AISDKZodAdapter/Zod3/Zod3Parsers.swift",
+      "normalizedLFsha256": "8789980bc40770f208b2e403a63985ee8b05b20d202aaf655742ce1c0dd81acc",
+      "gitBlob": "126ef67bf426d2cf0e190fc0b94b63373c535340"
+    },
+    {
+      "sha256": "95a00195fe3cc0fbb5c6e12dc3e64e2fe47a935a4b34f4167c1c79e5c9656404",
+      "path": "Sources/AISDKZodAdapter/Zod3/Zod3ToJSONSchema.swift",
+      "normalizedLFsha256": "042971c017cf277765574754d3b273a1710f49a5caaf0db7c568d068ab4bd7ce",
+      "gitBlob": "5f20b4774791b4aa03fdb68142a2729457bca190"
+    },
+    {
+      "sha256": "0d6263fd9a0cd62cdcbbe54381ad6c46e50c9e82c46c25c3276d1eb602068821",
+      "path": "Sources/AISDKZodAdapter/Zod3/Zod3Types.swift",
+      "normalizedLFsha256": "c475bab9c239481cbac4344f4d1fb394889b78c93946a4b756ed5eb2c574b468",
+      "gitBlob": "3ef5279bcb69597afbfcdd03806c3e6c4805a091"
+    },
+    {
+      "sha256": "ebc23c615dec63a10ec9e27f72d61a351d4e43d705a594f9335bbd24cf05cc2f",
+      "path": "Sources/EventSourceParser/Parser.swift",
+      "normalizedLFsha256": "c24918a14fafd43836ce5525d490e4a0b436d075bb5b2224c81e4d6902d026da",
+      "gitBlob": "b824f139bb31b9bde4606d4378c03b4191a28cae"
+    },
+    {
+      "sha256": "a327d9d97475ec90ba67034d1eb661666af8685a186694b1809b4c6ac4344929",
+      "path": "Sources/EventSourceParser/Stream.swift",
+      "normalizedLFsha256": "4669a910d945bc2cda649a62da37c75e5a3f3de02518b8d9b131dfe378e47df8",
+      "gitBlob": "65053bcfb8350f02bcca1117db2136c8841f0549"
+    },
+    {
+      "sha256": "c157a7a725958d7b0c845c5b729b2731d8d9c598995a83c9fddc3ac0cb2f3036",
+      "path": "Sources/EventSourceParser/Types.swift",
+      "normalizedLFsha256": "4eff5b730f0dd7802dba8979d57e7330c4a82ce9b32b8f848fdd4c0dbe3514f7",
+      "gitBlob": "5f6c94524e0ff5d577e3f052d3a45ac1470d16cd"
+    },
+    {
+      "sha256": "6dc06c7848d47118c3a1ab54c1a885625e7862b9ac904b14ecad809a3e96d97a",
+      "path": "Sources/GatewayProvider/AsGatewayError.swift",
+      "normalizedLFsha256": "c7973f2503dd2fc4ad15db8c607bfe8fee7e6964fcb371a481e34cc3cd5d121f",
+      "gitBlob": "41dbb135801148e8dd90e5144ee7e14820d4d16c"
+    },
+    {
+      "sha256": "27c281e5735a1b4725224506584592f184eee19689817d2d854242d22438360d",
+      "path": "Sources/GatewayProvider/ExtractApiCallResponse.swift",
+      "normalizedLFsha256": "0736c824377f4d7ba5182e3fb014f97a5537396a973f467b9a3480e2ada0d36e",
+      "gitBlob": "fe891f217ba1d3bf57f244940c5e891b53d3b9d8"
+    },
+    {
+      "sha256": "602d36fe73769011ea319c3683eceeac0e3769b31805876bf943d04f99f5a9a0",
+      "path": "Sources/GatewayProvider/GatewayAuthenticationError.swift",
+      "normalizedLFsha256": "ef3d77e75c9b381871a1723818d4e87d8dd02f344211a45f7a694a66595d7515",
+      "gitBlob": "dbc1aedf70a8f3dd252dbc8a6f04125e00e69ab8"
+    },
+    {
+      "sha256": "c1c2f5329efe522a2ded6a01e8148bfcaaf3346ffffaeb100fbc993c38636a4b",
+      "path": "Sources/GatewayProvider/GatewayConfig.swift",
+      "normalizedLFsha256": "016cea6c0ec829f60229d77a95b60169b5d56ba4a2965233e507bde56af8e060",
+      "gitBlob": "06bf423b46fb0e2ea7fee4a781c8ee53810320b0"
+    },
+    {
+      "sha256": "17d1b7c3b4522a022f82ca6f5410b5280c21706d6da8c294aface169fd63d159",
+      "path": "Sources/GatewayProvider/GatewayEmbeddingModel.swift",
+      "normalizedLFsha256": "e897a8413bede1d4ae859525fcc5dcef9b0b3573514fdf81ca80f9d1a16130e5",
+      "gitBlob": "27a8451a7b969e65305a61750f61d062d1082138"
+    },
+    {
+      "sha256": "93574f8825fa0df86fd0a5f69dd4ea7f888568e2b54c6491bd7d828bb0329bae",
+      "path": "Sources/GatewayProvider/GatewayEnvironment.swift",
+      "normalizedLFsha256": "c7c356ddfd3cff793dbdb19683732d9007e54e4a29d2b58816996fe779a45268",
+      "gitBlob": "89bc06aa340d40d29565e948cb2de31a67cba127"
+    },
+    {
+      "sha256": "ae3bd6ae2b88b5f8e4bd0c3a0dfcdb0b88a27ce5d705b97e10931708f607e06a",
+      "path": "Sources/GatewayProvider/GatewayError.swift",
+      "normalizedLFsha256": "39fe2d651f26c4b895d9b9bca466453b262a7fb54a8f43b9f4ef984b4e335f98",
+      "gitBlob": "0e11809343ffd945617280f5d45b705246ad65ed"
+    },
+    {
+      "sha256": "612038eeccf51e7592e57a5c613f80703b38488b8a92824231622ce984221e4b",
+      "path": "Sources/GatewayProvider/GatewayErrorHandling.swift",
+      "normalizedLFsha256": "96e079564d0b64a97a546b8c37ec2d23492a24840a3a58471fbf59a70a81c220",
+      "gitBlob": "944d1983d55b11dd6cd0a650b7219ef35ac5cf94"
+    },
+    {
+      "sha256": "9a1bd59fb96cef4e6039ed833836c723387a378c466819ae2da83d86d136b880",
+      "path": "Sources/GatewayProvider/GatewayFetchMetadata.swift",
+      "normalizedLFsha256": "b0f3578912badf666c201a022200dfeeb10bbc78aa6498ffc13e3543b57c7280",
+      "gitBlob": "ec79ad51cc9edd3852b2b50f98d6497b6c28b54a"
+    },
+    {
+      "sha256": "b4caea51bbb7e5013aa15445959e73041f9d37e5bc5d250388398c22e865743b",
+      "path": "Sources/GatewayProvider/GatewayImageModel.swift",
+      "normalizedLFsha256": "55c18d4b9ed371dbdc28aaf60962056d14ef54d3478cb052ec8f658fa06bb148",
+      "gitBlob": "af9293cdbb71a67acb49d3fa0f15f170057e6c02"
+    },
+    {
+      "sha256": "f36252f77600fe7447237f50f182ba9c702021c34d07563f0025dd88944b9d17",
+      "path": "Sources/GatewayProvider/GatewayInternalServerError.swift",
+      "normalizedLFsha256": "abd175c8837722fe64834130f5144091ce39c6de3543c79a969f21e5414cc013",
+      "gitBlob": "4f1b9bde3dc811c1d6d26ef8656d4c1bbf43a168"
+    },
+    {
+      "sha256": "29a2508348f90cbca91726dfcaf925793b959bd06f344ea7d72b24ac3ee56337",
+      "path": "Sources/GatewayProvider/GatewayInvalidRequestError.swift",
+      "normalizedLFsha256": "20e5760f89563ffd4068280d62b8c16d76a748945e49d2bc8bf5e312688bdb8f",
+      "gitBlob": "796f6c0597d2d42172c419a13aaf18e9d148e90a"
+    },
+    {
+      "sha256": "804c54777c2110b08a896aa29e97a47d62880dc75c9a093ba7897968cb18012b",
+      "path": "Sources/GatewayProvider/GatewayLanguageModel.swift",
+      "normalizedLFsha256": "a8ad30ee87078d1f37688339df738b3b729e7541ce87f6fb15b05c041b9e73b2",
+      "gitBlob": "3916bfd0d1244116d2f387d525daaaa1b6c5e206"
+    },
+    {
+      "sha256": "a8d8d49ecf768631169b3335236aa6756d7f49619a9166a79ce9e71616799fdd",
+      "path": "Sources/GatewayProvider/GatewayModelEntry.swift",
+      "normalizedLFsha256": "03124851e785402013b283cec68733accf8f2e4fbe852a6df67e49aad76de3d3",
+      "gitBlob": "198c2078c0e90fe7c88d141636302fb49c68c1ff"
+    },
+    {
+      "sha256": "3c918148263d1ef9719c1f379c12bd0c912a0b82d649169fa01a78870a553f8b",
+      "path": "Sources/GatewayProvider/GatewayModelIds.swift",
+      "normalizedLFsha256": "5bf4588ffe18fec424808329ac3856e55cc100dabccbde268637af86fe141554",
+      "gitBlob": "21b3b91155f0acc278b6707f1998851ec4fe3ee6"
+    },
+    {
+      "sha256": "2a1a168378c28d53a6da000f6de7cb3a6fe48d86a962e84abcc160c603a3910d",
+      "path": "Sources/GatewayProvider/GatewayModelNotFoundError.swift",
+      "normalizedLFsha256": "1c6f85249174a4375882191d09e7e0ccbef6dab5f4bf7e203df75774da6cf826",
+      "gitBlob": "65fb68806a8d813b1b2e43456a19137cf0d1d693"
+    },
+    {
+      "sha256": "cd8120354c1e1ba53b034a7559d021b4ef67927df0437cbed34d4511261ab9dd",
+      "path": "Sources/GatewayProvider/GatewayProvider.swift",
+      "normalizedLFsha256": "61b2878029811af33fba2b6302823cc987bb6eaebe3f86b457e7d4e64e169e5e",
+      "gitBlob": "f0eadfd65c5d1cae82b865dcb68e166b58f232f5"
+    },
+    {
+      "sha256": "e7e3cedc3fb5b9eb0ebedaf2e117bd01ee3c73d6439936ed47241b2d3e5b4149",
+      "path": "Sources/GatewayProvider/GatewayProviderOptions.swift",
+      "normalizedLFsha256": "c78feea3fab2ab0730dcf0dd133621164f8adcd30a6d173828aac7bcea8fb3f0",
+      "gitBlob": "35d2f597be96ca918ede0ef35b97db9e4dbe0216"
+    },
+    {
+      "sha256": "d34616b9613c4c6b3e14b5a322efea926967905fd4733ade4ef2984e743a4ecf",
+      "path": "Sources/GatewayProvider/GatewayRateLimitError.swift",
+      "normalizedLFsha256": "43c38ff37127e445510c61798407c3d39353d22e1df63cf71aacc970add1c804",
+      "gitBlob": "bd5d4f240887a17d5587fe2a106011a73a8d84ca"
+    },
+    {
+      "sha256": "cea612ce8289847d451580fa5d3fdb34136a701291542dee0e9c7bf5870a7bc0",
+      "path": "Sources/GatewayProvider/GatewayResponseError.swift",
+      "normalizedLFsha256": "233dda74125f67af0e2a31c13b9f945a862a088ad747eed7c3f9d80386aef3ec",
+      "gitBlob": "3e1199e9937d3da487df2e3d9f12784d173ee70d"
+    },
+    {
+      "sha256": "e4ed08cf9b9687011176014ba23bcf9b76529487942b96cc6247d621ee138ebd",
+      "path": "Sources/GatewayProvider/GatewayTimeoutError.swift",
+      "normalizedLFsha256": "e1c254f70e4d6521c5b084f3b8f8d717242091b143db5f1d6223bde7402fb038",
+      "gitBlob": "cc1d687b43eaffffc8ee914c4927b685998ac604"
+    },
+    {
+      "sha256": "ff50ca462ac68eedfd7bedab75cde31dbffc589aa081d3f88f1ad329acb86136",
+      "path": "Sources/GatewayProvider/GatewayTools.swift",
+      "normalizedLFsha256": "c26d8f9473c4ace9cd7d46dec0d112619cbd1a9e2065b1df2641af74a5996055",
+      "gitBlob": "c002e1d6aac55b0887bc0474d25ef7da7be3d0fb"
+    },
+    {
+      "sha256": "88d0d2da7131580703433477fe2c03563f24fbdbab5ac04a6d98974c872eec94",
+      "path": "Sources/GatewayProvider/GatewayVersion.swift",
+      "normalizedLFsha256": "e5c6e48b6570b132f2fc695fbe065e938228f98296c0c231dbbb96be19d84e9a",
+      "gitBlob": "785aeb20326830f35219a23b15e76cf716edca95"
+    },
+    {
+      "sha256": "3312baa8a3789ae9aea0bbcc59feae2fa1bf2fcfc8f567e2d688f3d0494c64b1",
+      "path": "Sources/GatewayProvider/GatewayVideoModel.swift",
+      "normalizedLFsha256": "0d8e1c85e86a570794d26ca5a727d8ac46325071a3621717849c7d28a328d66e",
+      "gitBlob": "a6f33e6a4c0e534e984bcc42dd15a29f7e646dc3"
+    },
+    {
+      "sha256": "fa6b8ae5e4d8513c76547dc6cb56f7b2a7dc37c977ff6a8dac653d55ce1f5527",
+      "path": "Sources/GatewayProvider/ParseAuthMethod.swift",
+      "normalizedLFsha256": "e8e7e79981ac426773eb719d2a3ec7bb237b8db5333037038f873b42cdc83342",
+      "gitBlob": "58c3cb67f3844918025515ab926d3bb0d258817f"
+    },
+    {
+      "sha256": "15922d14c83bd0aee8baf07412cafebb0fddc075fcf8c4fac569c88b55e53899",
+      "path": "Sources/SwiftAISDK/Agent/Agent.swift",
+      "normalizedLFsha256": "61aba8454e1e050517039f6aa6c49e00675d126fdf3d6fb6300fbe69bf92c5b4",
+      "gitBlob": "09d7ff9eeb89bc413283123a5a75bbdacf51fe50"
+    },
+    {
+      "sha256": "901b8bb401ee5b666ea609e1582f7f251ba5eb79ff8150d58238b09a73582b45",
+      "path": "Sources/SwiftAISDK/Agent/AgentInference.swift",
+      "normalizedLFsha256": "cab7e0dbc0df3855124b9be40c5c2a3c4e81b98d573d236893923ea851ec3ac9",
+      "gitBlob": "6428a253e91eea00869994679bedf8ba4080bd78"
+    },
+    {
+      "sha256": "0de1f277258be0c312f2879c9b3659689ac57a92fabfa4cfd1918d385836f7cc",
+      "path": "Sources/SwiftAISDK/Agent/AgentSettings.swift",
+      "normalizedLFsha256": "f2bf5893c21332abe51ed27ba9263a22cd80dce4f4b06f6311f747f00503f305",
+      "gitBlob": "ef7e48e51d2df1c9ef0edb379117b5c0fd279ea4"
+    },
+    {
+      "sha256": "8b2fdde42b905593e0b770997b4dfd7788afd93cb79974ba76785af63d2d1d26",
+      "path": "Sources/SwiftAISDK/Embed/Embed.swift",
+      "normalizedLFsha256": "104606de479a18746d393535257157da1826cf059515a82867fcc23dbd5f9276",
+      "gitBlob": "05540ca92f6cf00bfc3c99587bcde13bd729c57c"
+    },
+    {
+      "sha256": "ec0dad2aceea798a13f4def24c61c9d58cf106817bbfa023b249002aba8be047",
+      "path": "Sources/SwiftAISDK/Embed/EmbedMany.swift",
+      "normalizedLFsha256": "57b623b168fddaf6f83789e2349e0e4414f06ed8abf4dfdd86f2514388279894",
+      "gitBlob": "a5e5d46fb1a1b862a30c8e581f459885937d1151"
+    },
+    {
+      "sha256": "1d2bfc3a6bec742dac237099f6fffdc396e7a95561960632517ad45ada7e7021",
+      "path": "Sources/SwiftAISDK/Embed/EmbedManyResult.swift",
+      "normalizedLFsha256": "8fcc867144964153d8ab3a6a9f20a19918a922316a6b9e7257df74c1415bc238",
+      "gitBlob": "2c66d7eda5abe3bda7a51d07f1b02e37c6ef33a4"
+    },
+    {
+      "sha256": "1592d2039da6e776bdf2fd81da5e38cc816224592b0dd5c8e4cd21095e3311c9",
+      "path": "Sources/SwiftAISDK/Embed/EmbedResult.swift",
+      "normalizedLFsha256": "1889447cf338b427a4872c6dc7a439b54a65bd43cdccfc6000ef72a451c33682",
+      "gitBlob": "1c56cf22c3d6ca798ebed1207f0165d21608cc4d"
+    },
+    {
+      "sha256": "ddfc3d15849eb98d376eddc0d63882a739cc697a94ea7545691abf9cd12ed95d",
+      "path": "Sources/SwiftAISDK/Embed/EmbedShared.swift",
+      "normalizedLFsha256": "efb0a4f9706edfae07311800a95cfc7683e822688dbbb57bc4e69298ca48269d",
+      "gitBlob": "66600d182591ce4ac6436bd31ab5c3c35f7ac421"
+    },
+    {
+      "sha256": "c38fa18ec273e7438afd2d683dbef9923b9bb2de6d18590ee1f92b4ca8dd3760",
+      "path": "Sources/SwiftAISDK/Error/InvalidArgumentError.swift",
+      "normalizedLFsha256": "deb931ec2aad3411fe314e00af0d2dc36d4fcfadb73ff1211f8b32d2300261d9",
+      "gitBlob": "ce481c7c611fd79de92c5525ea6401c7953f65df"
+    },
+    {
+      "sha256": "d072e318faa279110b647d986e574c296ab84e090b6be834f8edf0282db30a39",
+      "path": "Sources/SwiftAISDK/Error/InvalidStreamPartError.swift",
+      "normalizedLFsha256": "9e34d04d434a82a4523740f5129d58fb9f6c5beb4037008fcb29227fb377e6f4",
+      "gitBlob": "a5fd2c85919efc63d4dc017b390d180beef9a35b"
+    },
+    {
+      "sha256": "fbfacd370d45a72b007e8369d85201d0a1f89b3e0236e9073268b9fdae02cf7f",
+      "path": "Sources/SwiftAISDK/Error/InvalidToolInputError.swift",
+      "normalizedLFsha256": "e3d58120fd2becf80476dd14f26ef0023b64869068bc862092207ddc6857dbdd",
+      "gitBlob": "b9658ef1fc1424ff70daf87567e2c232cc1e04c2"
+    },
+    {
+      "sha256": "9f1e305bc083279a22e07626ac3c5079720391a4d10a8e1770bcce547546a6b0",
+      "path": "Sources/SwiftAISDK/Error/MCPClientError.swift",
+      "normalizedLFsha256": "ee8638a857d85f8f5e7dada855a7770ff72f49609551338f341ffeeea43b9e2c",
+      "gitBlob": "792328ade6a37070ff4a5b9f765cad452a2b791d"
+    },
+    {
+      "sha256": "2cdc4c0bae15276f1cf99ec3e662659df985262442ce16ae642c6cc767c39d58",
+      "path": "Sources/SwiftAISDK/Error/MCPClientOAuthError.swift",
+      "normalizedLFsha256": "47117170ab9b966c6b566873b44b5024e21701581c466826f3018799ef93fba0",
+      "gitBlob": "e77572cfc4ce3b0b68f388da206de1a9f7457d96"
+    },
+    {
+      "sha256": "dec868af547ea3d712b53f311dbe5b638dac3d614a972d3ea847e8dc8174e9df",
+      "path": "Sources/SwiftAISDK/Error/MessageConversionError.swift",
+      "normalizedLFsha256": "e97acc6e1e13858984de5c58222aefd4f4be2c2a79e3ec6723eae933629ee365",
+      "gitBlob": "da4698258d47be3a3e9094e0c7bdebb5ab6b19f3"
+    },
+    {
+      "sha256": "1413f82982acc062c9f80cdebae0efd4ccc80ebc7b3d782d64362bb95b73fc72",
+      "path": "Sources/SwiftAISDK/Error/NoImageGeneratedError.swift",
+      "normalizedLFsha256": "fde4309edaedda02f87f82efb36d78c926598f31c016e6aeaf9706cdc442cd04",
+      "gitBlob": "66f6bbc4e3262c402c354f75fa66f9c91598aa73"
+    },
+    {
+      "sha256": "56490a339444d3c256c28b0e7ef53d96202e8038ce99a82f6623350fc763a909",
+      "path": "Sources/SwiftAISDK/Error/NoObjectGeneratedError.swift",
+      "normalizedLFsha256": "92a002c0f21f37fca6cfa96b74417f06ab55329811934ab60d4ae262ec3b325b",
+      "gitBlob": "ea2fc112288c7badcda882da4a041a9226e0406d"
+    },
+    {
+      "sha256": "c36e1f65805e1a3fd1b03d8a24c114b413ed3cf4a71811ff6270c113e86e673c",
+      "path": "Sources/SwiftAISDK/Error/NoOutputGeneratedError.swift",
+      "normalizedLFsha256": "7e275c96d48b1a57756470ee29957c639a3f4ccb5e86db8c6488139e1a69a411",
+      "gitBlob": "46ca4089aba09665901a36798eb59dfd21927884"
+    },
+    {
+      "sha256": "5d547d25e063703357c8d08ccd27b9ad778bf1f56a98db3d7323317c951e2ab4",
+      "path": "Sources/SwiftAISDK/Error/NoOutputSpecifiedError.swift",
+      "normalizedLFsha256": "e6c4f4ee7d0f00024529ec3bc0e6ad58765397b9c1aab9aa03f0c857d0104d23",
+      "gitBlob": "2d516a003fe3cb30158da4c1087960b4311a331b"
+    },
+    {
+      "sha256": "0258464c22ee70a5ea98e36fafbe3b58b465cc4681cbc8a0745ea6f9689b93be",
+      "path": "Sources/SwiftAISDK/Error/NoSpeechGeneratedError.swift",
+      "normalizedLFsha256": "631aceb0804cc2cf34418821f80bc8162ee27a3c0c4707cbd9260cb34b75b013",
+      "gitBlob": "3406545daa94fe54768f280a0d96a68a379d1063"
+    },
+    {
+      "sha256": "907c16af3fa202cbf0ceb6d3e406d1ef45156d2c31f1fccbf9718e03bc2805f8",
+      "path": "Sources/SwiftAISDK/Error/NoSuchToolError.swift",
+      "normalizedLFsha256": "8c0a9c1d54c6018b8a6d8ddc74615a9fc445cf1b6ac6802969a1b6599e3c0294",
+      "gitBlob": "40315f9a185aa6b0e3812b81b634f2b54aea1524"
+    },
+    {
+      "sha256": "99404494a91853e83cfec7656ca99af875feea204060b8373f5804917597979d",
+      "path": "Sources/SwiftAISDK/Error/NoTranscriptGeneratedError.swift",
+      "normalizedLFsha256": "96c18baf6b145ee7407c7f091478f8b88989e9142bd30a32946b88c930f65109",
+      "gitBlob": "4d6b74f26774fb71b4f5077ef32f8c3463a7b44e"
+    },
+    {
+      "sha256": "c6f652cce750a85840773923a58bb712369de86f06e4195def952507a8fd405a",
+      "path": "Sources/SwiftAISDK/Error/NoVideoGeneratedError.swift",
+      "normalizedLFsha256": "0b5f00d0f8ac68abf915d00065a4104b33cfd0dffc997bce6fee009ab230f5f7",
+      "gitBlob": "1103f70cd0d4791efb4c04c418c4557fe3fe4d49"
+    },
+    {
+      "sha256": "48ba4a661ba14a92a3500652d20c1fdf7d808fa7d9178f2844442770eaec277c",
+      "path": "Sources/SwiftAISDK/Error/ToolCallRepairError.swift",
+      "normalizedLFsha256": "12eb355605e9a8e0d18c0e25d8e919df6d27e4eacf8be64621d3aac5e5362462",
+      "gitBlob": "9424d121d92ae28d2b8981871b30f5a17df5e6b4"
+    },
+    {
+      "sha256": "c273f29a1b391e0d5fdff4547a174f384ddf4af4b74be081d22244ff13c04f4a",
+      "path": "Sources/SwiftAISDK/Error/UIMessageStreamError.swift",
+      "normalizedLFsha256": "3027903d5caf17ac70acd22df0cd289cf26564028e81ff1f9707f4ee5d29875b",
+      "gitBlob": "9ab05931fcc692d3246d681b1abeed0a180f72f9"
+    },
+    {
+      "sha256": "8fd853e1f3341bd33329ce6b21a1761537b46cc9dd1e383e3e377d09ca91b8a4",
+      "path": "Sources/SwiftAISDK/Error/UnsupportedModelVersionError.swift",
+      "normalizedLFsha256": "14f2234d0689f5fc181d941596c1bb802ec7923fb1ff5f201663ee2cae81fd36",
+      "gitBlob": "91d961616655d38ce98ebf358ae73c8729a27f0f"
+    },
+    {
+      "sha256": "29385ce4694242dc872bda5bc20eaf8adae79f7313804710d6be193d536febb3",
+      "path": "Sources/SwiftAISDK/GenerateImage/Exports.swift",
+      "normalizedLFsha256": "c7f668aec6524024c5f60aab32bb5822ad4b209444a38eb260f80261f16a2373",
+      "gitBlob": "332f5e2f550b8e3317c1857adf97f56243d1db04"
+    },
+    {
+      "sha256": "26f5fcfd478acd9cac5d6ce61c8741c4377b5afb38a83e13c2e46ac82d67d1de",
+      "path": "Sources/SwiftAISDK/GenerateImage/GenerateImage.swift",
+      "normalizedLFsha256": "d7ab4b222cf9d5f194e759c2fb4399e3b8aa57dc75565e313e53b3e690fe3bc1",
+      "gitBlob": "1502e570eaf2905a2a811f73be7bd711e673e4b5"
+    },
+    {
+      "sha256": "a848f40810e56e7e0118e3d83d638ffe98192ab546d2755394b3b736a60e8bf5",
+      "path": "Sources/SwiftAISDK/GenerateImage/GenerateImagePrompt.swift",
+      "normalizedLFsha256": "279911a6f23f4be553d4cc94350f1ca802a0f5982ebac845047c5db1a0347124",
+      "gitBlob": "e82eeef888c53cd41f0f2da5c0618b7cc42475d0"
+    },
+    {
+      "sha256": "ab28d53531917c77692f66b2f943fdcd4f0cf01974b9fa7720b5ab12f189aa37",
+      "path": "Sources/SwiftAISDK/GenerateImage/GenerateImageResult.swift",
+      "normalizedLFsha256": "3ddb84ec8da9e9ff7af3e744d1ac61263a3bb7e748c82e772ec47f665b34a2f7",
+      "gitBlob": "4352202ac60c1df088f67b4324b59756c49d918b"
+    },
+    {
+      "sha256": "65e9411a5f5aafb9a4bae70ef100234afcf9e18a2b73885ab196ab60fa903042",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObject.swift",
+      "normalizedLFsha256": "cf6f9fcde342263e867480752abffef32d86bc178671494b2569d5c6c81681cd",
+      "gitBlob": "513ffdc803094a47a1fbc00b1f5a07a22d69d6fe"
+    },
+    {
+      "sha256": "ea76eeba672371487c86c2b81c368d9022e3677f3ff45d16b3b2c64af5ee7453",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObjectInternalOptions.swift",
+      "normalizedLFsha256": "f7d8e7dfdfa41e840b00bbb78bc0efae7857f3c0e5ef31bac1ca5449bde3358d",
+      "gitBlob": "bbe7113f380aa84284a6695748a7d5271c8a0357"
+    },
+    {
+      "sha256": "cd11afd24fcf4af5283d61631b22eac2d1e0fcb71f689dfe1c9b8bf6b339be4f",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObjectOutputKind.swift",
+      "normalizedLFsha256": "af355cdbb834c6e711b4b67fd4edb2494ed8afb41b02882c2aeaaf15054ccd45",
+      "gitBlob": "276bfe5fce4dc37d0fd16da7134abe7c0cf59a2b"
+    },
+    {
+      "sha256": "aeb4bf6b875f2d4e49aec2415aed6995cab1bd51db64019ea9d658e73713b00a",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObjectOutputSpec.swift",
+      "normalizedLFsha256": "6a8c5718605d71bfd58e96466beeb1f287f63dae8c34ebbd871ccdaf99c5c3d2",
+      "gitBlob": "e32b4013ad74cf35b375b6612e6a203b82facd48"
+    },
+    {
+      "sha256": "767d23637994039c15ea64ff7f1e22142ebba3868b2a30f53f65b6e94697ceaa",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObjectResult.swift",
+      "normalizedLFsha256": "861b87c19aa8499b3aec530082fab9806833971336e4f4ed8d36855ccdf8028c",
+      "gitBlob": "37180879ab9e99fd72205bc63f4d4deab78d560d"
+    },
+    {
+      "sha256": "f5ae70dcdd7cc6f54e390da6ce8c14e90091c92691e5629fb286000645b6d981",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObjectResult+Encodable.swift",
+      "normalizedLFsha256": "147ee98fc2c5ea6afe5450b14cb375cc7d2381f485e06cd600b5e4c44547a45d",
+      "gitBlob": "0cdb698e873d62ff8d2f2eed2680101c4e226f57"
+    },
+    {
+      "sha256": "551db19a9a80c137422a8bb94a9923d7b4604cae3ce75bc724afb98a8cd8f715",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObjectShared.swift",
+      "normalizedLFsha256": "7be1b2cd6e99ded9161b4156e98b660f4e8077849f6cc2d9cb885e625f45ff92",
+      "gitBlob": "1b77898e6fa6d2c1caf0013580206a7b05afa03f"
+    },
+    {
+      "sha256": "ec657745af78005b9b1d90b69f82e448a2e05cd9b790ee284b8fd57055952476",
+      "path": "Sources/SwiftAISDK/GenerateObject/GenerateObjectTelemetry.swift",
+      "normalizedLFsha256": "5855b76eecf71b9f3a9b022eec8d7a3a92c787a5dca3b948c86c8064db16488b",
+      "gitBlob": "10877ba32d08362b0e311f1a470a6f866ac0d964"
+    },
+    {
+      "sha256": "4a891e032c704459edcfb12d9d628c8ffaa54f3b03c1711d8f39b8a02e90cb38",
+      "path": "Sources/SwiftAISDK/GenerateObject/InjectJSONInstruction.swift",
+      "normalizedLFsha256": "b409721d446a62b6a938d6e817548f00d219538cac2301ec57f199967cbc965f",
+      "gitBlob": "3e3ef720b09b025d93e9c6ade255e98603db5c4f"
+    },
+    {
+      "sha256": "e8e4e6b8c2ca199e6fe7fc3c9ca531f675e56b03b81e2c4c247939ae3c720b7f",
+      "path": "Sources/SwiftAISDK/GenerateObject/OutputStrategy.swift",
+      "normalizedLFsha256": "2e9cc7133bf07fad0cf4b934f80da4ada9fa8c5cfe7c1530293c45ccf4d2f9b2",
+      "gitBlob": "db56230433d279012735c1ffd386149940f35afa"
+    },
+    {
+      "sha256": "a14c9df7a5cefba107e68989ff3609cc6591be4bb7795d5ecfbf7583ac73ca54",
+      "path": "Sources/SwiftAISDK/GenerateObject/ParseAndValidate.swift",
+      "normalizedLFsha256": "2fd07e1a0d2eb6e750d1f270af2e00a8e223065798d7ffd2c3d7dd25e2d1c96c",
+      "gitBlob": "089c6b64dd8f850d682c9b26e5f3d7569ccb1e2b"
+    },
+    {
+      "sha256": "b7e3c317bb43cbcc21727b7a5ab7ebe5d7718a2a478d9742e35659be9016bd81",
+      "path": "Sources/SwiftAISDK/GenerateObject/RepairText.swift",
+      "normalizedLFsha256": "aed85051a0b7cbe8e40c8b601f02d75380b02a05bf146e39705db1f253944123",
+      "gitBlob": "cf7d1353f3204d2377e4ea52eb6d1a3b574bf67d"
+    },
+    {
+      "sha256": "4d5c67398c0259229dcb3cc191ffc629c082bb19b78e7a083c2522a6309568a4",
+      "path": "Sources/SwiftAISDK/GenerateObject/StreamObject.swift",
+      "normalizedLFsha256": "a5526a1f3dad0a7549628210afb5334b2c816d31e4cdb8cbadbe001fc4bb3dfb",
+      "gitBlob": "2cafd507d98a85536b3dfbe6c7da3ad76e200d03"
+    },
+    {
+      "sha256": "29746a9ac9450458aabb4fd25fd7935ccb5cf23948b274e3472c1cd93a8006f8",
+      "path": "Sources/SwiftAISDK/GenerateObject/StreamObjectResult.swift",
+      "normalizedLFsha256": "164381f27940880153ae753b94391e87d1d0d9cbf4bee51da817444d3884030a",
+      "gitBlob": "91e0181fe0f8d5429982bc386fdf798cfd0d5b81"
+    },
+    {
+      "sha256": "d1e6b344a05e12d3bf2a776c3e528f7d6c7e86fc30858577b5a93c55ed19eed0",
+      "path": "Sources/SwiftAISDK/GenerateObject/ValidateObjectGenerationInput.swift",
+      "normalizedLFsha256": "8b2740cdd6d4f9077ab7c0eecae3943eba851c43d30e77c402cf0d6d5b1d4157",
+      "gitBlob": "2a39c317b7d039ded4b0d9e91badd1faee829345"
+    },
+    {
+      "sha256": "135cf5f29b3660d9d9981f1fed5c48a21047a18b9ea9bb579bb1f40605eb6ec0",
+      "path": "Sources/SwiftAISDK/GenerateSpeech/GeneratedAudioFile.swift",
+      "normalizedLFsha256": "c8a5f1a2f5c881841248a7c4d8f628a160b0361afe922110692ceb2b7bd3ab42",
+      "gitBlob": "7a23d6338d8390f91622e4be17cd4b6e7bb15bf6"
+    },
+    {
+      "sha256": "abe0aa0e04b22f5db487bbeaa8d650360ee1f3defbef077ed93dbb685b526bb6",
+      "path": "Sources/SwiftAISDK/GenerateSpeech/GenerateSpeech.swift",
+      "normalizedLFsha256": "a38e2c8a7f61e1a1a4e8f8c58adce65293aad07f858c1a51af40c6674dea95b3",
+      "gitBlob": "8000943ccbfaa7bc7299a27480683743d2dc4b42"
+    },
+    {
+      "sha256": "e9932b84b5af8930098c5fb7084d28107b4e4f3dec3f557c1ba5f577de9fd76a",
+      "path": "Sources/SwiftAISDK/GenerateSpeech/GenerateSpeechResult.swift",
+      "normalizedLFsha256": "951f8d050cd9b929060fc12fd896326016a08cebb08cfcfe60415a28cf137f80",
+      "gitBlob": "84cc5ce1a4b1fc1df29de15a4ccf409ffb10d50a"
+    },
+    {
+      "sha256": "8c7dd84c34618f62a9409d86a56e492395066550a1398bb13a70b5c51218f8f3",
+      "path": "Sources/SwiftAISDK/GenerateSpeech/Index.swift",
+      "normalizedLFsha256": "f754db8584ff9f99c9b6b36c34d8ddf91bc1f75f07cf4e59cc9f61753536cd0e",
+      "gitBlob": "22ae45cb650d0ba3f01561b4b9b448fe81d6df3b"
+    },
+    {
+      "sha256": "c5aa64c614a8c869e47911f1c6b17488d72db55ff6a6b205c1ffb2a9b6f87c26",
+      "path": "Sources/SwiftAISDK/GenerateText/ApprovalAction.swift",
+      "normalizedLFsha256": "a565f37b0c60cba58c445b7bd18c353f6aad9b30698f639c545bb484f456244a",
+      "gitBlob": "d4f8992b743ddfec74b6e305d45a483dbf0d2228"
+    },
+    {
+      "sha256": "e2169c8e16be50567d6e67042149f1b608e891da74237f8cf3afb2a55786f524",
+      "path": "Sources/SwiftAISDK/GenerateText/CollectToolApprovals.swift",
+      "normalizedLFsha256": "e2169c8e16be50567d6e67042149f1b608e891da74237f8cf3afb2a55786f524",
+      "gitBlob": "0bdd07fbad7e39a0ed2325cc3e2dda51e0a355aa"
+    },
+    {
+      "sha256": "be4d03f20ebc0178df545b2244b81a7e2caa45a4366738176a0909d4b257f719",
+      "path": "Sources/SwiftAISDK/GenerateText/ExecuteToolCall.swift",
+      "normalizedLFsha256": "be4d03f20ebc0178df545b2244b81a7e2caa45a4366738176a0909d4b257f719",
+      "gitBlob": "67d69db7d0e1e3de85e7c3346157566e9daf3b76"
+    },
+    {
+      "sha256": "3d5b412420aac915bd34b3b3fb5064b6e3c63fe18e0eb0b1692cfbfc0166ad2d",
+      "path": "Sources/SwiftAISDK/GenerateText/ExecuteTools.swift",
+      "normalizedLFsha256": "e32a7fc846079235df8958ce3f0a25f4ba2862c1180b2a084c0b9d816d62e69f",
+      "gitBlob": "0b0f7f5b80097dd6c81163d3c1bc86f31ec7f0d1"
+    },
+    {
+      "sha256": "a25911b13fea54e5627dfa1e7067701539c97f3233764e43bff4d30115b529c1",
+      "path": "Sources/SwiftAISDK/GenerateText/ExtractReasoningContent.swift",
+      "normalizedLFsha256": "9fae2d3e695926b79623aa82e2d0b68fcbc8b30d0724f7709c1203b0eba160b5",
+      "gitBlob": "597ead6ba5a0345a19688d6e2d02a39fa391f30f"
+    },
+    {
+      "sha256": "5194ffe3a575ac53f87920c8dc2f826039c886f60353aee3d0dbd126af5b12ad",
+      "path": "Sources/SwiftAISDK/GenerateText/ExtractTextContent.swift",
+      "normalizedLFsha256": "74123712778516d3d46a90bfb01022b7088df1b124235ec9dd76c4612152743e",
+      "gitBlob": "21102e77ac827eb27658286cee399418ab4ff2dd"
+    },
+    {
+      "sha256": "337e6c40715b7e19855e5f93d9184ee8a91bd991ef72e1279f2c90b55e74d470",
+      "path": "Sources/SwiftAISDK/GenerateText/GeneratedFile.swift",
+      "normalizedLFsha256": "dea39a127d3ad8938aee2512d03321d32172a4609e29cf8c6ecf2fe84e3515fe",
+      "gitBlob": "a812c7f7b27fd268cab66b28fba6a1be5e2ff8e6"
+    },
+    {
+      "sha256": "402e1a23b02958a94c6ec9b9044da202c03936e5236082690c6e5c2a7e0b4e32",
+      "path": "Sources/SwiftAISDK/GenerateText/GeneratedFileV4.swift",
+      "normalizedLFsha256": "7e004fd3ae8dc1b4d65a45470c45f58d9f186271f13f10735bc77e267699bff2",
+      "gitBlob": "60923536ef05f661985bdf26b1f155cf8fd4c335"
+    },
+    {
+      "sha256": "aaec7154ecebf5d99e7dfed384904b819584cc8926b2784b265c9ed9ae88da06",
+      "path": "Sources/SwiftAISDK/GenerateText/GenerateText.swift",
+      "normalizedLFsha256": "07e4dd4c7ed5465172a49a19db116e409a861f1052473e4ea282ae11c4661d3b",
+      "gitBlob": "87081e771c5acba19ab15d82d3e6b7a185e13b1b"
+    },
+    {
+      "sha256": "ad1a26e6d03d7f3096c7469e7269f77aa65df9d18e1cb040ef57bc3c5f784a53",
+      "path": "Sources/SwiftAISDK/GenerateText/GenerateTextContent.swift",
+      "normalizedLFsha256": "f18621cd7eeb0490f041c41dff22dc6357536d194252a3290538ae8d966269fc",
+      "gitBlob": "fd8d435d022e0d8fa0ab353193f16d8648759295"
+    },
+    {
+      "sha256": "6929dbef25500ab701b20dd6bd3677d71b6f35149388988fcd54d8ea10b55f09",
+      "path": "Sources/SwiftAISDK/GenerateText/GenerateTextRequest.swift",
+      "normalizedLFsha256": "80f5b2820d6725f8a6272b057d5f0dd545b466e7f6a82fd79867a41340e6cc4d",
+      "gitBlob": "2706f43a693f1e427ec4688b701eba2c229bb5c1"
+    },
+    {
+      "sha256": "fca88758c1a9b1993f6e710aafab548df5f7a5f34f36961a484043054bca0547",
+      "path": "Sources/SwiftAISDK/GenerateText/GenerateTextResult.swift",
+      "normalizedLFsha256": "30cb3859d7bc2a57e0a9edc082a72a7a9a78b2080da9ea785bf366b1ccf8e762",
+      "gitBlob": "11d601a23577ac8a154540b7c914caef4e371e6b"
+    },
+    {
+      "sha256": "21399220755b596cbd02cee47d81957c1398a66c67e4ed421a682aef0707d4b8",
+      "path": "Sources/SwiftAISDK/GenerateText/GenerateTextResult+Encodable.swift",
+      "normalizedLFsha256": "707ff724ab3e346dc6c56d508871f753dcce8400e25d5b8d0f1bbb36f5a06d88",
+      "gitBlob": "0c1f709b39671e57cbf988c70fd85001b65eead6"
+    },
+    {
+      "sha256": "c65708a7486f0208c15dff203bcc45d7c5a3266b4ec67eccd6c7ac5c713f5706",
+      "path": "Sources/SwiftAISDK/GenerateText/IsApprovalNeeded.swift",
+      "normalizedLFsha256": "f701c1975179ed0e3d759c9faf8ed958a73641c1e49bdaa29a79b478c958ed73",
+      "gitBlob": "9220f5d8084e6394a559e23ccd1f331b08ba646b"
+    },
+    {
+      "sha256": "3a22441a0dbed21fd52dc2b69dde55335bf4bf2ab15e0ba9a3e777e17245eb64",
+      "path": "Sources/SwiftAISDK/GenerateText/Output.swift",
+      "normalizedLFsha256": "8a023f5d1158302be09795efeb6b56a932c9d17855158350f78e1c2c57f45340",
+      "gitBlob": "891b063e50e798c88c081565b0c697ad382f19b0"
+    },
+    {
+      "sha256": "be857c67318eff25c1796fa92d5d15da9371644a0a7deaa2868d67916997bf9c",
+      "path": "Sources/SwiftAISDK/GenerateText/ParseToolCall.swift",
+      "normalizedLFsha256": "be857c67318eff25c1796fa92d5d15da9371644a0a7deaa2868d67916997bf9c",
+      "gitBlob": "e02a5e42d9443995f683a3d5502f2314b3c2e1dc"
+    },
+    {
+      "sha256": "b2bd763d90b4bff0db314fd2905d144b25a72ccb8171e0e31bd2abf2dd29e96a",
+      "path": "Sources/SwiftAISDK/GenerateText/PrepareStep.swift",
+      "normalizedLFsha256": "751b64aa988b82f2e613e29dddbba56af3ea99412d6ca98f2412a7f541febdf8",
+      "gitBlob": "65f38bb01cd8cb819eb28b4aa8b20f0c9b586361"
+    },
+    {
+      "sha256": "f79d10f4593da19326e0fc50ce189d965bb1a9c4a88bd757adaf426ffaae8139",
+      "path": "Sources/SwiftAISDK/GenerateText/Reasoning.swift",
+      "normalizedLFsha256": "e5f14c560b2d11c7064d624e3e9d41a4e472aaf899ae02472df6203ae0e877ee",
+      "gitBlob": "3f5c8aa6548a40ef071004528dcb74ba238da545"
+    },
+    {
+      "sha256": "c9d0eab692d7640eeed512e8286ce0f999a4bb58611ce71982b9021447fde504",
+      "path": "Sources/SwiftAISDK/GenerateText/ReasoningOutput.swift",
+      "normalizedLFsha256": "78a18ea633ea1bcf19d15b79f5593d3ea55a517757a3ce8bee577822bc86ab56",
+      "gitBlob": "80c79e5c053f7fc28b77d778dd9d9f2f8b25f55e"
+    },
+    {
+      "sha256": "263c7fd906dc6a40c746f861b94e064a5713ef63f9660e4aa3e15650aa1cf51c",
+      "path": "Sources/SwiftAISDK/GenerateText/ResponseMessage.swift",
+      "normalizedLFsha256": "3b7d17af2dccb590516805376ed250cda3ee22ae341d5e190c675717f072b755",
+      "gitBlob": "c73d34633d3a2e4326cdb3deca05347ee2746fd4"
+    },
+    {
+      "sha256": "344fbc9cfb4eaf28e607415cad4e5796ff6f90eace29fcce3ea4a5541d3e7620",
+      "path": "Sources/SwiftAISDK/GenerateText/RunToolsTransformation.swift",
+      "normalizedLFsha256": "9e07e5b3e49414810fbbad6456094b2f6f6b0cea536f3fb793c4e968dee6e763",
+      "gitBlob": "45ccb8a2c65dcd108c652ee2cf8392c25298ead7"
+    },
+    {
+      "sha256": "08759a51d3c9e1795f34f43a14c6a80aa806ab0b5435fc978b09a26f7fda6135",
+      "path": "Sources/SwiftAISDK/GenerateText/SingleRequestTextStreamPart.swift",
+      "normalizedLFsha256": "2bb51e6567aa69d8342492d2000c9f8c0dd6aab0f9bb4edec0bc015fb3db04a7",
+      "gitBlob": "4552b3b8aa738118587a4bb360dc397292a4b0c5"
+    },
+    {
+      "sha256": "8ea5feb021bb551d9100c0ba9e68c3a8b8e8791abce5600272c2bd1aa253bc49",
+      "path": "Sources/SwiftAISDK/GenerateText/SmoothStream.swift",
+      "normalizedLFsha256": "0a5b625560b004ac91eec7db5321765018e6be912798fa392608251b09a97036",
+      "gitBlob": "4621820c1f43e93662006417cba84e53b3e74a9c"
+    },
+    {
+      "sha256": "0fab562e4f98c9eea27d8ce7688270cdeb93d160a5c01f9514c500e562a35427",
+      "path": "Sources/SwiftAISDK/GenerateText/StepResult.swift",
+      "normalizedLFsha256": "0f62fa47bc3027db1ea61560cbdbe00ae7ee7e4028a1b8f518bfc95e9a38b391",
+      "gitBlob": "740d3f7e743179c66da9ef03f8668d33cd2def05"
+    },
+    {
+      "sha256": "e1d07f3dbdec212e70e748c24ffef19312de480aa540640d3186bb9d3b382dee",
+      "path": "Sources/SwiftAISDK/GenerateText/StopCondition.swift",
+      "normalizedLFsha256": "9132ba5e8fd4c4bde841b7e109c1656cc17c6f6da21a8389186721b54e571bf4",
+      "gitBlob": "7e19fe71f95161ece2fd06686eb259e0ef400316"
+    },
+    {
+      "sha256": "9ca2b096f7faa89142a12b7b600424ed7e443dce667339ce8966cc26f3b422f5",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamText.swift",
+      "normalizedLFsha256": "94449a5545198efcc142ccf2e6d0582538be744d849e9c04e313f988beb81eed",
+      "gitBlob": "80b14654e237e7dac5d575ce523dc7a75e5ce054"
+    },
+    {
+      "sha256": "b9f6de97279affdfea026c1c1a4e4ba2561446d2f852b96bdb787b7648f4debf",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift",
+      "normalizedLFsha256": "b9f6de97279affdfea026c1c1a4e4ba2561446d2f852b96bdb787b7648f4debf",
+      "gitBlob": "031efe22ccfaec2807567cfdd4f28c7f000a8cef"
+    },
+    {
+      "sha256": "2a89b3680707cc6a082747e9c40db4d47a1a33cb39ae293a4a0f7386bc1b192a",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamTextEventRecorder.swift",
+      "normalizedLFsha256": "e6ad1e7adb5caa328fdd78bc17cd22073b5e84c0e3d9d202905d5945e0426691",
+      "gitBlob": "3adcc9c377561159ddf9f287aeabb8283fefd779"
+    },
+    {
+      "sha256": "b49e51b5a1874fd51c7f64e0c5690b35b474a824fed8ca1d1bba6b0ee78b2a98",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamTextEvents.swift",
+      "normalizedLFsha256": "7b6071f8c9fbb586e30f01dc9419f57917743a91185f16f71c715f3fe37e3886",
+      "gitBlob": "84d36d76c13b5e78e77e7f87d042d3171578cda1"
+    },
+    {
+      "sha256": "b84d363577137620b6882839bff91912a2f17d5d6d744c39e7790969a35c7006",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamTextLogging.swift",
+      "normalizedLFsha256": "16f091003a183d52d16a32425a6a5559b782e4ee98ab9563ac240032dab49edb",
+      "gitBlob": "8e5198804174186f67c17df7764b858576f09297"
+    },
+    {
+      "sha256": "1d77508a2b525ce2f5a718801b4b790ec10a0c98eae99ad85d042c1a4fa20013",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamTextRequest.swift",
+      "normalizedLFsha256": "29ecc5dacd32ab17be3ed4a7c0c064b2b15c804c7337993b9eedefc033e78e90",
+      "gitBlob": "1f6e20065adab277f7ecda8d00f9dbadd9c526b4"
+    },
+    {
+      "sha256": "28ef5daee6787c0a657f52c8ffa334c27be1b8cd4c54c718902bd724d53f5a75",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamTextResult.swift",
+      "normalizedLFsha256": "5d08489e4fdf70aa25a872156b165fac325f884926cd621742a360b72ae2af87",
+      "gitBlob": "3cc5c74e08dd5d48322f9268a3669932f53b6dc7"
+    },
+    {
+      "sha256": "283ea6f6c7f9db81865b2fff3e8dab1d366adfeabd1a9c33a5745792243e1deb",
+      "path": "Sources/SwiftAISDK/GenerateText/StreamTextSSE.swift",
+      "normalizedLFsha256": "13bbdcbe0f29af0397672c823c6c8b56bc508c9d946ea40b0aaf8868805c4577",
+      "gitBlob": "be8ed4cc2aa2da892c8b0ce6fa9116041449fcc5"
+    },
+    {
+      "sha256": "bd36a147abb02a4315be775b7f6fdea1300617faa39ec103836e9661f3046ab5",
+      "path": "Sources/SwiftAISDK/GenerateText/TextStreamPart.swift",
+      "normalizedLFsha256": "3c0592c784a288637816a0cbffe3a8603af69ac394d6dc9df4181155caa1ce7f",
+      "gitBlob": "5dae0db9d5e0bc3941fd1a39ecc46b7a12761243"
+    },
+    {
+      "sha256": "683deb544e9e7d3f07c04c0d4faf3c0a0b84286258730b5b4b01b79f78bbf772",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolApprovalRequestOutput.swift",
+      "normalizedLFsha256": "b91bcf40972ef2640789ffde9f0fd9e783bed4559f84ee3b7928e9c5b1e1c32f",
+      "gitBlob": "e795baefbe62fc2ed0471589350322d355e1c9b6"
+    },
+    {
+      "sha256": "f17a50a7f1df70c9ab3e2d6d472f2ab5110adaefed91692bdaae9ee9ccc34d32",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolCall.swift",
+      "normalizedLFsha256": "f17a50a7f1df70c9ab3e2d6d472f2ab5110adaefed91692bdaae9ee9ccc34d32",
+      "gitBlob": "09d0c4082de31eb61a262f194628112d3b775920"
+    },
+    {
+      "sha256": "85c9dd1feb007afa0516cb5262032392997ecdf8c5819299ac81f97d5b0be61d",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolCallRepairFunction.swift",
+      "normalizedLFsha256": "427c9b95901583ca35f22bab0dfb8b68b49fbf680da33afcbd355d8bb59b811c",
+      "gitBlob": "b5316063f496a3dc459564cb938e653351e81d36"
+    },
+    {
+      "sha256": "017a7697498b72081945691bc773b117dfe3f89a04c0a74c90d51d610dc973ac",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolError.swift",
+      "normalizedLFsha256": "68dc32663a5e4d775553b82fd6e2f9a05b730de325e6f6a9793eecbb2fd8d4be",
+      "gitBlob": "cdb187ecc5bbda3630feb5f4b3fd095499b0470a"
+    },
+    {
+      "sha256": "1d429377f8dcebebc322b2e690a17d8b39ba5a12b1e991e0b4bbf0c27533a3aa",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolOutput.swift",
+      "normalizedLFsha256": "8853f6ef9ebf820c00e8e32db9bf9c3369ead1754e1b095db74071914ffd92ee",
+      "gitBlob": "6329917c919839ed2eb557424462c59ec6b4ac1e"
+    },
+    {
+      "sha256": "0ae2107cdea1b2fb11771b3047efbb73422548b92af5c51c434ce7b3c9421bb1",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolOutputDenied.swift",
+      "normalizedLFsha256": "73c7a085dd5735c3a8c156c3f4f9ef3f0c87be8e859949f939ce9489249e4cd2",
+      "gitBlob": "3c49f6c0b45a67fced14f594e27b5dd1c6b50b02"
+    },
+    {
+      "sha256": "72944679de1ef2f6f4ecb2a405454b72b3b5f219bce5b8741a7db1d248576ca4",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolOutputHelpers.swift",
+      "normalizedLFsha256": "e056f31904e4fbe086d9b264ca3f7fc9ba88b9ac2d27e4cfeb7ec8963ea61a13",
+      "gitBlob": "b22c6a7806cc15645d08921c128a424fa9d75f88"
+    },
+    {
+      "sha256": "fd05439d42f5b109b229497d15d216ee1f31f86625e85e19c081e9eb0d36866c",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolResult.swift",
+      "normalizedLFsha256": "08fc7f711e792948acdbacb1bc465f823c27f331c32e75fcf14bce9d3fb70408",
+      "gitBlob": "e92eeb034da79a94cbeddf2857ad60419442c9b6"
+    },
+    {
+      "sha256": "048915d26b40be877d0c68346a797f6568ff339826a9fcd09a0d72bc569e6678",
+      "path": "Sources/SwiftAISDK/GenerateText/ToolSet.swift",
+      "normalizedLFsha256": "9a3a58967d860f1f37bbbf7ebe8077679b1bab7549e68242d647577ff5684dc8",
+      "gitBlob": "6bf746263506a39c036dc68925c86de3d5191766"
+    },
+    {
+      "sha256": "3cf6e4e5732a6c2d15ed5f0b5a01d6070cc0cf4514429eafe9a9fb64f38487a5",
+      "path": "Sources/SwiftAISDK/GenerateText/ToResponseMessages.swift",
+      "normalizedLFsha256": "3cf6e4e5732a6c2d15ed5f0b5a01d6070cc0cf4514429eafe9a9fb64f38487a5",
+      "gitBlob": "4eb0d6c9234ef86dbfe410d2869e51a99374a3e6"
+    },
+    {
+      "sha256": "6b99534cdf7b5c7ac5de9fef27c5d9697c15a0d9d425f6c4d712c01de12cd19f",
+      "path": "Sources/SwiftAISDK/GenerateVideo/GenerateVideo.swift",
+      "normalizedLFsha256": "c3425fbeef8693cffb9b0f9c690b2947cbdf24c15b3759299bea80881b109d5c",
+      "gitBlob": "cdea7f76070459a43f6d864c7c8a6493bd28889c"
+    },
+    {
+      "sha256": "77ed858f5a40b2fae2a607fbadccc2f1d60c446acbc8c0e8e7b9fbaf6fb5e5ce",
+      "path": "Sources/SwiftAISDK/GenerateVideo/GenerateVideoExports.swift",
+      "normalizedLFsha256": "79bf3c81048030c1c9ea4f634086c816f031d539886b5277ee7ec102b26c4bff",
+      "gitBlob": "b150396b6130990aa238c945af9392d222c7faf6"
+    },
+    {
+      "sha256": "0f498d402a5f45bc3df670fad20c45532b9fc11dcf7e02ab3e1e024e6cfc5ee5",
+      "path": "Sources/SwiftAISDK/GenerateVideo/GenerateVideoResult.swift",
+      "normalizedLFsha256": "2646fd41c06a255c40f4e264f1bff6faf9f254c1ffed16dedd44c6f13b8d3cb9",
+      "gitBlob": "03a0a818c9d3451fd3b659e9e56d025990ec0737"
+    },
+    {
+      "sha256": "1ca3100cb37940c18c00fa376c4158bd545564de5de343f86e08e8b84c1fe311",
+      "path": "Sources/SwiftAISDK/JSON/JSONValue+Serialization.swift",
+      "normalizedLFsha256": "dc9286e84732c8e9b8df8e5523a3343eec3ac9f16c5e2ecebb397aa4ffeef7b9",
+      "gitBlob": "99f2f29c1e11b1d9df0a626d75ea2738acdda42c"
+    },
+    {
+      "sha256": "947620a5dc216ea7096804979df187ecd6e3b0c59cda00a774e497c505b56af4",
+      "path": "Sources/SwiftAISDK/LanguageModelConvenience.swift",
+      "normalizedLFsha256": "b993d5a41098749ccf87a8dd2777e63d12dcd8366f1bccea0924ea370bd429ce",
+      "gitBlob": "4cb8ba919d9bec23498ab1915ee9e599aba56ed6"
+    },
+    {
+      "sha256": "d5e78b0a7489290a0f092bed6e7ce19d15e08c3cd1423cb6f40d7b9350ea8b89",
+      "path": "Sources/SwiftAISDK/LanguageModelV4Convenience.swift",
+      "normalizedLFsha256": "12306cdb99115917d44f8e98a6c947ccfac689d23df094176bc0e463ad86fdad",
+      "gitBlob": "2a674b9b51113826f5dbb74c7db2c9af8f073114"
+    },
+    {
+      "sha256": "df8456b8f27a1dfe6e0071f4e456d4ed810b0280f315d5bcb3536ed794171fab",
+      "path": "Sources/SwiftAISDK/Logger/LogWarnings.swift",
+      "normalizedLFsha256": "f98113f989a7b38ace54cfefb674c1a79618c58ea6d01ee62f5b6b78f010bc59",
+      "gitBlob": "2864b2e6607b154b79bb8a9918e7ea998c7ac204"
+    },
+    {
+      "sha256": "60f6574db2ca6c4be93537e20ce054aeb664b1330fa8c3abedcc46e3cd9096bd",
+      "path": "Sources/SwiftAISDK/Middleware/AddToolInputExamplesMiddleware.swift",
+      "normalizedLFsha256": "58cb124ef600dd4fdddd3584908cf9ce503f032576592a0ec3f8293ee48a6abb",
+      "gitBlob": "61ac2a2c0a77d3ffa8381ff188990b1d38f7f1c5"
+    },
+    {
+      "sha256": "fdc255c38a72cc94ac7585a58bf38bb541585a60c9337262499b0ce0e05f602e",
+      "path": "Sources/SwiftAISDK/Middleware/DefaultSettingsMiddleware.swift",
+      "normalizedLFsha256": "5d178d82dfd7d8abcdfa03a62e78c7a1f81d29b64621a2a0d06a9e686255bbff",
+      "gitBlob": "90293da80901f6a17c786cab47e1cdde6caf75e6"
+    },
+    {
+      "sha256": "f46709ca1bd90bf158113928cf950e1ace9268622e3c48cd3c9cf16759d29f11",
+      "path": "Sources/SwiftAISDK/Middleware/ExtractReasoningMiddleware.swift",
+      "normalizedLFsha256": "8857c8879ac4a970c7618e1df046055aef8dc8083275d6dbda2bb5ebf8aabaf2",
+      "gitBlob": "6697904e467831ef73bd671510e10d6676e197bb"
+    },
+    {
+      "sha256": "d496db4eec079aa9669a6a39075b5482be3d34e26874924b8bd9c74e401f5c4b",
+      "path": "Sources/SwiftAISDK/Middleware/SimulateStreamingMiddleware.swift",
+      "normalizedLFsha256": "f42cec65fe81fa464d39997cbc54895b065cbc2448620f2b4b9744c9e90ff5b6",
+      "gitBlob": "d20fac4c005f3fd784feb2fc4fd1f1877f603124"
+    },
+    {
+      "sha256": "c2672c7600d1f825f5df78e6e978719f05f0bdc42f59d320918427cb0db6923f",
+      "path": "Sources/SwiftAISDK/Middleware/WrapLanguageModel.swift",
+      "normalizedLFsha256": "b299b6523ee57c7904495b9f704bbe688d4c0fbf9aec9d2a6ab44c2f8e4e5dea",
+      "gitBlob": "2502fb1702e1b4492eb93c1872898f3fa8da5505"
+    },
+    {
+      "sha256": "a8396319f5da425ce2cec1e5ce0b92bf4618aa984a07b4a6f7e40daf6ebfa340",
+      "path": "Sources/SwiftAISDK/Model/ModelV4Adapters.swift",
+      "normalizedLFsha256": "30df53d471371faa4e963304ef9fd82ace52c75fbc72f98fecb3198aec08c370",
+      "gitBlob": "23a75e7777bd04c47a31739cf89580e8f70fc340"
+    },
+    {
+      "sha256": "3104bf96d03664c6b0152b78155f66e6412b398c61788868b14bddb757f831c7",
+      "path": "Sources/SwiftAISDK/Model/ResolveModel.swift",
+      "normalizedLFsha256": "1714eabd9e67c9d6a4441593dd4365866578cf875d669d351d0625695f8f7a53",
+      "gitBlob": "b9a938d0eca7bcb3880f556bbb420f02b6c6d847"
+    },
+    {
+      "sha256": "62d5d49cdaa41add79c71471543e2ce22a42910192b9323fb10cc15db9a47a87",
+      "path": "Sources/SwiftAISDK/ModuleExports.swift",
+      "normalizedLFsha256": "9271e96df0a30d31a4dde4175b0e61c6bed511fc824f4742bddaf4d1e5d3b326",
+      "gitBlob": "1a48826992e4993aa2425f9c7f6a08661fe18584"
+    },
+    {
+      "sha256": "f884a9b2e1a86bbfda7fc6c3138722b1865a1899ce010774418ee693b5db568e",
+      "path": "Sources/SwiftAISDK/Prompt/CallSettings.swift",
+      "normalizedLFsha256": "49c97064294c497d0ddc2185932664426251b2809970467529701fcc1a771798",
+      "gitBlob": "af3b9fcd75d55bcfa20bb63722b9ec05c3dc0ebf"
+    },
+    {
+      "sha256": "530749682ea32f6de38b07f91f5cd3f2a3d302b64889d3f60c1af44e7480afb6",
+      "path": "Sources/SwiftAISDK/Prompt/ConvertToLanguageModelPrompt.swift",
+      "normalizedLFsha256": "65e5a83fd0c5ac8efa3fa74038d0584581e2708ce7ad29d11cfc14f243d35e70",
+      "gitBlob": "91e27b99dbc3ebfb62747099d3d53dbd1ee196d2"
+    },
+    {
+      "sha256": "e7f5295771477c0b509c7286d6890e88f6aac9ca588169a811c58f07e1844c04",
+      "path": "Sources/SwiftAISDK/Prompt/CreateToolModelOutput.swift",
+      "normalizedLFsha256": "0a2fe077b96b0fe35df008370c5f67cf80f4156b9b479ac3deeb0ec298a5e399",
+      "gitBlob": "0fda7b8bdbe088a8bf129c5b835665833d181c5a"
+    },
+    {
+      "sha256": "dec7b825a2ee28766dda17fdff41ba12a0a2a49119ff31b5280a96f4bd345f7b",
+      "path": "Sources/SwiftAISDK/Prompt/DataContentUtilities.swift",
+      "normalizedLFsha256": "666b3aeb141435d83e2d890b43f1284a1cb98551e1be899f377f7956aec7d65a",
+      "gitBlob": "a4be46f8c17946d68b72dba6320d2ff2abaa5a37"
+    },
+    {
+      "sha256": "34702beb79d3774d39fcd6532bbe18b5939116a66b650a863a84352ece92a645",
+      "path": "Sources/SwiftAISDK/Prompt/InvalidDataContentError.swift",
+      "normalizedLFsha256": "c2f358536c940dd7dc4a03472cfb4a39202ee6a5c8a2e76cabda3b6edd1a0ae7",
+      "gitBlob": "60bca3042109211c0ca71c7ea49134354627cef9"
+    },
+    {
+      "sha256": "8d03157e572085a59af61b13b15a4b08c7296bf99d4da78d7cd6641128281f7a",
+      "path": "Sources/SwiftAISDK/Prompt/InvalidMessageRoleError.swift",
+      "normalizedLFsha256": "443d72a1fe1a20cd7a407de1af341812d05348a2b3e92bdb1440ef09eefe22d9",
+      "gitBlob": "55f7722c2778fbd771bd6b32fe3a66422637ef7c"
+    },
+    {
+      "sha256": "f7f5caa66228dc35eb7634a6ccef2dc25a2de4dc68551e421c20264e13b90089",
+      "path": "Sources/SwiftAISDK/Prompt/ModelMessageConvenience.swift",
+      "normalizedLFsha256": "56f3b4f3ee5b150fdfe843be2f65a56af1f11726b74c5995d6df28c8c7876bac",
+      "gitBlob": "b869c75027b44fb53891698c82f05b721f8c5a89"
+    },
+    {
+      "sha256": "aa197cad5144050201dd40a422d70ee4b0e476ac9de15d051a6ddd9b483ba5e3",
+      "path": "Sources/SwiftAISDK/Prompt/PrepareCallSettings.swift",
+      "normalizedLFsha256": "32032e21d5638e0e841bdfb6e6824a050a9528ec906ff5e68e6cc1fce2d84a4c",
+      "gitBlob": "26935e34fbab622dc843d3a5f28237c00dcb0ac3"
+    },
+    {
+      "sha256": "f81696e482ece59a504408798a06b2da1c2423a8c00b0bd56c4394b86feb62c2",
+      "path": "Sources/SwiftAISDK/Prompt/PrepareToolsAndToolChoice.swift",
+      "normalizedLFsha256": "49e6140d574e35c3aebf630427a1ab0becfdd54a827c88ac81661c1031f4bba4",
+      "gitBlob": "406e54b6865b43063a96c8499d3b43382390610a"
+    },
+    {
+      "sha256": "c47ed75d7d2ed4290a66052f8fcbccffca723aab6618bf8677c78ecbbb894f68",
+      "path": "Sources/SwiftAISDK/Prompt/Prompt.swift",
+      "normalizedLFsha256": "31763b6ce7cdc2cabd70fb4294cbb1826d20dde4fced18d578948d7a126e36a8",
+      "gitBlob": "b42a6c9825992530b69f857453aebae4e9e7d8dd"
+    },
+    {
+      "sha256": "827a2d8342ac409de87d4540a2b67639bed55922d5948f8bc1889eaad0d454c0",
+      "path": "Sources/SwiftAISDK/Prompt/ResponseMessageConversions.swift",
+      "normalizedLFsha256": "0ec676e94045a4d820ac6ab097707fbee48f5fc1559ca25f062395fdf0f6ecaa",
+      "gitBlob": "b4c8927db868b383e2088dc8c268c5249e323276"
+    },
+    {
+      "sha256": "e03013b9107eb26f808e15f0e23c7689113a012f2e95a90536731dbc6c8b1dd0",
+      "path": "Sources/SwiftAISDK/Prompt/StandardizePrompt.swift",
+      "normalizedLFsha256": "cc5adc29f6120efea4b14098be3025072b25eddda5f1d6c01807f54c487f45f6",
+      "gitBlob": "66b83025172e306cb22a77261eff438209ba50ed"
+    },
+    {
+      "sha256": "a0a2328eb7d2c8fe34d90be3a60e16624e8122c48cb7e16d7c75c5c1606faca4",
+      "path": "Sources/SwiftAISDK/Prompt/WrapGatewayError.swift",
+      "normalizedLFsha256": "2039188fb0df9df0e24d9ee5b368f40cd9c0305b7d9b0744dcfe55051db8d266",
+      "gitBlob": "9579695d455616808d58c9dc7a076b9d130d0ada"
+    },
+    {
+      "sha256": "bd269ba0a66d56b175d6cc5db342acf9e399198c58dadea1d3ffa6c4076bf1f6",
+      "path": "Sources/SwiftAISDK/Registry/CustomProvider.swift",
+      "normalizedLFsha256": "85707f67fe562eabb34d755bf26473ab9b286edb0cc7596c30f16655f0c73bee",
+      "gitBlob": "6559cc4cb1e2b1b3fe5faeeb8b93a60434056769"
+    },
+    {
+      "sha256": "f0e82f92ac654c12e9db18669334b4649a866cc2842df4b4c8d02ac37098ac19",
+      "path": "Sources/SwiftAISDK/Registry/NoSuchProviderError.swift",
+      "normalizedLFsha256": "248c7c58800ec0dd2bd74a1c938542643f564b4d3907547810126c5d94f88c91",
+      "gitBlob": "f0589344e66f40bce95d831c7debe1b7db0e35a9"
+    },
+    {
+      "sha256": "17f554674c4284250f8d90d84409f14ccca705f5a77bb9780dadba8affc69deb",
+      "path": "Sources/SwiftAISDK/Registry/ProviderRegistry.swift",
+      "normalizedLFsha256": "b7ad9a82a2a4e89834331513730f64de08e97202c9b242b0f1d94c7f53e4ce03",
+      "gitBlob": "89a9c3244e583a757933841f7940e3ed2eaf1f78"
+    },
+    {
+      "sha256": "d4dd40bc0b3d78ecd2602e3aabfdc91f37207cb926b771f9d3f4805491f1359a",
+      "path": "Sources/SwiftAISDK/Rerank/Rerank.swift",
+      "normalizedLFsha256": "7fd1bf3794e82606ef5411ac5fec363cff13c6c7d75b225398edf3662b5b6841",
+      "gitBlob": "74c362a5b513d876b23f3a214509bf4d72449599"
+    },
+    {
+      "sha256": "dcdc198ddf0befb2ab504d9404cabbaaa581a74f0559197f77c8adcd097107cd",
+      "path": "Sources/SwiftAISDK/Rerank/RerankResult.swift",
+      "normalizedLFsha256": "dd83895ad682a12250374049fe0cd1e46e933bca54e3dc39c9974a1266eb9f49",
+      "gitBlob": "931d6a760be8ff1a3984957be1f1e7e5c0bc3284"
+    },
+    {
+      "sha256": "a667612e22eefe3e1cf31857708c183bba698989e3701ac2d87ad42de60f23f3",
+      "path": "Sources/SwiftAISDK/Streams/AsyncIterableStream.swift",
+      "normalizedLFsha256": "c748e8d5012a2a7a7b992e3d243211b753d6ffbb84e4a599ba3ed4a8cb91fa49",
+      "gitBlob": "5be64a1c8b3cbc4090b9a2f9ddf9ca3819ef5e0b"
+    },
+    {
+      "sha256": "e85535f5731ed222429d951fbcf00ceaa7084e59935d66db9939bb5c4c20c164",
+      "path": "Sources/SwiftAISDK/Streams/AsyncStreamBroadcaster.swift",
+      "normalizedLFsha256": "33a9081722ac2f5c6201c26fddefcd23ff8ca94663b8ef71859fbb7a6de09c1f",
+      "gitBlob": "f41fa5970154f77a1c3a2b2a499a7dfcb23ef673"
+    },
+    {
+      "sha256": "1931ea0ee867d5d295c7f2deb0266d1706c094aaa77e71c75566f337785d1fc9",
+      "path": "Sources/SwiftAISDK/Streams/CreateTextStreamResponse.swift",
+      "normalizedLFsha256": "cb8973900a981a01325db15761a2fe702732cdf9869b089dac3bdc3e84e3ab61",
+      "gitBlob": "b150da603af88bfb9f9450c6616215bce51743d3"
+    },
+    {
+      "sha256": "f6ea50bd0414d411b64e1d5fc726f4511d2388b6101ad08c94a5f8677e0ec5ff",
+      "path": "Sources/SwiftAISDK/Streams/PipeTextStreamToResponse.swift",
+      "normalizedLFsha256": "b100ec4ebe2f56914e96de6897f2c0367fc285a29115c483e7e88de8f8bdf71d",
+      "gitBlob": "ecfd8d725a905c8648e84b35c965e3e59e25a73a"
+    },
+    {
+      "sha256": "3433f9aaaf73770523b55c8c933abed555330d0de6504014ff64eea839d03c9f",
+      "path": "Sources/SwiftAISDK/Streams/SimulateReadableStream.swift",
+      "normalizedLFsha256": "65678c2ecadf957e784a4427a4b56ac4414eb196aa1b65dddb98523c32a8c88e",
+      "gitBlob": "85b2d3ed6196eb34f1e5f9ee243008aeb000c85a"
+    },
+    {
+      "sha256": "ecf18cb7417e07471969f45d022f6fa06d93860ef7de514879d58d8a6ab4fed9",
+      "path": "Sources/SwiftAISDK/Streams/StitchableStream.swift",
+      "normalizedLFsha256": "23aa630e26ad4ae28f59fdf9ae96ca7cc29b6937e3c0337458e528d9f976b017",
+      "gitBlob": "49e57f0060fa78033730445e476e796d4fe1377a"
+    },
+    {
+      "sha256": "cf4a7bfea9b8771834a21f6a7672e55bd223a32f6a8ae3f43fd3e3c2e5690bb2",
+      "path": "Sources/SwiftAISDK/Streams/TextStream.swift",
+      "normalizedLFsha256": "e50eb91287c5cf7a9aedc70a17fb9b4e0aaac0c586afda7317ede2f8aa2700ab",
+      "gitBlob": "f38a5110f7e38502ae32903df158a0550e6bcbda"
+    },
+    {
+      "sha256": "7ee1b0b8d51b37770042a568fb2f44108e302c0f722fbf9b5d140e98275e482d",
+      "path": "Sources/SwiftAISDK/SwiftAISDK.swift",
+      "normalizedLFsha256": "114d26d99d7b673fc221dbcc2501a8c8670407344c04ff33ca94fb76bafec4b0",
+      "gitBlob": "9d5e77029062dfa10451506e2eef10fc703a1549"
+    },
+    {
+      "sha256": "77a0c266deed6e75eb8d67d52e2ab87a1c9588351690930a41578c81b88a420c",
+      "path": "Sources/SwiftAISDK/Telemetry/AssembleOperationName.swift",
+      "normalizedLFsha256": "939c87fd51da6ec2512c2d2c776b9310f31515e7a400310e069b6676e542b729",
+      "gitBlob": "15b56a8a7dac2615e29a4f31b479abaf9b593029"
+    },
+    {
+      "sha256": "56a108e679222b13bed54d1af6dfe8065f2fd8785f6213ad51d75cec4c5a1262",
+      "path": "Sources/SwiftAISDK/Telemetry/GetBaseTelemetryAttributes.swift",
+      "normalizedLFsha256": "d9c49d7c51b36214f287966d56c8ef239da0084e4f7e80d36c041b97054434cb",
+      "gitBlob": "7df85dcb0517d75dc513b50c32f1e725a23ef40c"
+    },
+    {
+      "sha256": "69262db08c80ea6d43e176b740f3a329c2643371c0f8eafbba089277d8683da0",
+      "path": "Sources/SwiftAISDK/Telemetry/GetTracer.swift",
+      "normalizedLFsha256": "439ee8a95799cf553ff07b5b4364d5410abf6ccaa5b6a6a8d38642b1ba3fca0a",
+      "gitBlob": "cc652dba154cc5a0ca972d74794fdcdf3248b6eb"
+    },
+    {
+      "sha256": "328f4f6a0a57e43d9ad4c5c5a8e8f569cf71442a4ec494054f5f2154a8710d95",
+      "path": "Sources/SwiftAISDK/Telemetry/NoopTracer.swift",
+      "normalizedLFsha256": "8140996ee281666dd00fdc6c4c933e855aaf270e5647c19b354bbdeb59792b5f",
+      "gitBlob": "a12a4026b26871a944c1dfae09b915c8ee04770c"
+    },
+    {
+      "sha256": "9890e28fecaa16de4bce5b30c69bfe25f193b3698dd36fecdee8ac902671fee1",
+      "path": "Sources/SwiftAISDK/Telemetry/OpenTelemetry/AttributeValue.swift",
+      "normalizedLFsha256": "113e58fd48a3f6f5218c992f69badce7ae633d5f44d13990e6c1bea2f3c2adca",
+      "gitBlob": "3da3c164cb62b681e97c3d3d91da5433922cb6b4"
+    },
+    {
+      "sha256": "5c5065b05cac273b8c69d40b41e9f654417d8741637d72c5cb83ddbce2bd944b",
+      "path": "Sources/SwiftAISDK/Telemetry/OpenTelemetry/Span.swift",
+      "normalizedLFsha256": "ef015bc3a97f42eb6096db78387d1c2a341e4d6dfc17a44202de88a22dcb8e83",
+      "gitBlob": "2307478400f92686316b8b64b9e02423db766e00"
+    },
+    {
+      "sha256": "df5f694ed3b829cb9fb7ef1e12982168ff52370a87e408915a89a989b709d55b",
+      "path": "Sources/SwiftAISDK/Telemetry/OpenTelemetry/Tracer.swift",
+      "normalizedLFsha256": "90e6235a318188e8e8b5ea2fba3e922116638def1af63bec7e8550dbc325f043",
+      "gitBlob": "f3bdc781fe5bda2365334319c7b8dcde2fc17a32"
+    },
+    {
+      "sha256": "c61ad5a4781c5dcb4c724bdfc5c6af3cfe0dcd4f6a23338b93ab98b089542d0c",
+      "path": "Sources/SwiftAISDK/Telemetry/RecordSpan.swift",
+      "normalizedLFsha256": "977414c9d0ecb175b77cd2d78abf2bd59eec52eceb960b776905878ebc4392d4",
+      "gitBlob": "5db3c40f873a73aba24f0d8f1e36d8ae77774ead"
+    },
+    {
+      "sha256": "0df8793a80f38e2dcd127baa9f13ca1694d85b1f74ac3cd38aec0e2a0e2e877c",
+      "path": "Sources/SwiftAISDK/Telemetry/SelectTelemetryAttributes.swift",
+      "normalizedLFsha256": "eff4a2208e674a7f5341585ae9e23cd27c280def0290abc98ef8e49898c86a45",
+      "gitBlob": "6ae0f4456897f53305cce5967be66b36f99d2d71"
+    },
+    {
+      "sha256": "631d924b2b99f4f0ae851856af5ed5ba8514e866b6119ef97c9992886249f2c9",
+      "path": "Sources/SwiftAISDK/Telemetry/StringifyForTelemetry.swift",
+      "normalizedLFsha256": "7230faa64b0e43bf1745e5ce7f5eb450e3bd4285f63636b28dc1777f3cf118e9",
+      "gitBlob": "ecff721af753b22a906d173fc3b967d48b18fe12"
+    },
+    {
+      "sha256": "fca4203e947eb7c0f995cd6b07bf8edfe0dbe506da9bd7ab7653d8e5a379bd49",
+      "path": "Sources/SwiftAISDK/Telemetry/TelemetrySettings.swift",
+      "normalizedLFsha256": "88f012c7c57b5c479c6e4c14f81c3bac48d54c14519decafad44d915f15bf7b9",
+      "gitBlob": "f9d7ab4197f071d1eb3945eade1033886c9333ac"
+    },
+    {
+      "sha256": "0dfe8e39b2d47de5b8a3805f76dca6416757ffdfd4ea7e65dd65fc6beca05bfe",
+      "path": "Sources/SwiftAISDK/Test/MockImageModelV3.swift",
+      "normalizedLFsha256": "21fec1185c567cc562c576306d32b2eca5a1a836c7ee19c6e65ba97bc0ee6524",
+      "gitBlob": "264c1c87e6cfab58f6cf590742f42f3d43e07a6a"
+    },
+    {
+      "sha256": "0c1ef610fccf7ca2767445103f22a4ee19f5286caafacce0a3793a45ecb1483c",
+      "path": "Sources/SwiftAISDK/Test/MockImageModelV4.swift",
+      "normalizedLFsha256": "0226346b96485004eba8e838f37ece040f081a2f908ab6721e4b4b0058cf717f",
+      "gitBlob": "20dbe03a7cbb8336e5cde1c7470566249c7cc36c"
+    },
+    {
+      "sha256": "f458e26c1319abd584623ef748cb31b8dd13a3ab98dc7dc77e0e2d1538e6fe03",
+      "path": "Sources/SwiftAISDK/Test/MockLanguageModelV2.swift",
+      "normalizedLFsha256": "261a807e316a0bd3623242c837f998f2059de1438093470709298f8d3722fca7",
+      "gitBlob": "1e5ff621fd8ba14d3aa49ba7b98c19a4bc8990ee"
+    },
+    {
+      "sha256": "95589bb0b33c9e2a60435f403afcd23e87d27731110151ccaacf2f47687b410f",
+      "path": "Sources/SwiftAISDK/Test/MockLanguageModelV3.swift",
+      "normalizedLFsha256": "c1192f6648f99a8b23c1a70cc626bb72e7b4d03fd894d5b6be21c78deec77bfc",
+      "gitBlob": "716cd320a2d17678b5f6faaeb8c8066f97ab777e"
+    },
+    {
+      "sha256": "fded2319a7ff5f413f009a092f7091d6fa255435b118085cc3911c1d9cf1ee09",
+      "path": "Sources/SwiftAISDK/Test/MockLanguageModelV4.swift",
+      "normalizedLFsha256": "374c536d764edaa451e93876b5bba13fda303253be9671a24ed00fd38b039619",
+      "gitBlob": "3c66f2550a3c946bea0b5ee5d2a7887cc3d3a12e"
+    },
+    {
+      "sha256": "b9f4b664c01500f889cc265d3f884b93fb46b01f01820cc4fa6bc0840653f087",
+      "path": "Sources/SwiftAISDK/Test/MockSpeechModelV4.swift",
+      "normalizedLFsha256": "fc0810af86a1f1e9e23b05297fe9451523442c2d476b7d6c5e866974c9a72b09",
+      "gitBlob": "e3155118dbad8dcf2a7c1d4c5eff41d9f3772a0d"
+    },
+    {
+      "sha256": "5a4a444ee5f4c61482c6a9431a93beffef0fee5c1153354970c4ed1702075da0",
+      "path": "Sources/SwiftAISDK/Test/MockTranscriptionModelV4.swift",
+      "normalizedLFsha256": "59a418ab0c3e3cb37615f4910060ecd58daeb7e76c306f80eaec6c01365249b6",
+      "gitBlob": "a046e0f009a85e5858905b65090236d5d6c4113f"
+    },
+    {
+      "sha256": "85dcde4b3735e9fcd72d9afb3a66a03b08c6d356b617d95b8d89f02eedd2b2b8",
+      "path": "Sources/SwiftAISDK/Test/MockValues.swift",
+      "normalizedLFsha256": "bfa5d125b848e534d75035154f86b71894e963c221b1801cac96ff54c7bf111e",
+      "gitBlob": "5b664aebe24e0c236dbac184657a2d5e6530bd60"
+    },
+    {
+      "sha256": "eaeb9efba93c724781ee630be107fef0b4d43b3a5529f060e6dfc4fd121171af",
+      "path": "Sources/SwiftAISDK/Test/MockVideoModelV3.swift",
+      "normalizedLFsha256": "5f1b1cb5f8e6e5cd523d10e7173787613db320185413b583cc167852e7135966",
+      "gitBlob": "9b30e2de92c1eab1868ccec3b004b22b2b23e907"
+    },
+    {
+      "sha256": "9d8cbbc5d6e747de7c8fee70d275e290b0bee914f13744ef689b82351a685e8d",
+      "path": "Sources/SwiftAISDK/Test/MockVideoModelV4.swift",
+      "normalizedLFsha256": "49b8dd9b8e5fc3bb57e4e4bb8460494dcbd67c5f80c274e17e54bb3cbdfae410",
+      "gitBlob": "8c582994e48eea31d782054e7c1d139e439e7f92"
+    },
+    {
+      "sha256": "be8c26bd77ff91cf2caad6662f4b2d81792006a945266ab38716b73a55e2341d",
+      "path": "Sources/SwiftAISDK/Test/NotImplemented.swift",
+      "normalizedLFsha256": "a82da6d5b7702d88a79b6655c9b8cb7548427ef84f854e8a4d1aa3dfe35b482f",
+      "gitBlob": "414410d008d6daf97e5ab6313f02ecc87d4008f8"
+    },
+    {
+      "sha256": "7008b886fc3e0c22977ce11f438385dad9408035eff3b75a95c7bcabc9d7ebb9",
+      "path": "Sources/SwiftAISDK/Tool/MCP/HttpMCPTransport.swift",
+      "normalizedLFsha256": "55ae9891269db4d029a37786cc76f2c398924c02cbd34af8d04102ab94c0858f",
+      "gitBlob": "24e07107664f5bf91904b05e88bd1506b928aefa"
+    },
+    {
+      "sha256": "a98190d581a918efa2c71e3591cc8793873a54eeb1ee43f4c29891bafead70c9",
+      "path": "Sources/SwiftAISDK/Tool/MCP/JSONRPCMessage.swift",
+      "normalizedLFsha256": "40dbe4502c136f393b331f68077688e777bcb964c4c032e97e534d8ac610cfe1",
+      "gitBlob": "9578be7deec5a846359d5f94418beae0fa5a31ae"
+    },
+    {
+      "sha256": "c2c36523bf56a4bdbd22d9f1a53227c44286fb7bd5ba2fb8f6e0207ee4052bac",
+      "path": "Sources/SwiftAISDK/Tool/MCP/MCPClient.swift",
+      "normalizedLFsha256": "26e4152d3e7693ce92b17fd45ce75abe6fac42e60621bb9f85baf7ef9e1ed9a6",
+      "gitBlob": "f23100f52e8b49c19266e7d595c21ab4ccc57aff"
+    },
+    {
+      "sha256": "1f10457e252880d6e4b45f63c7ef3d621bfc279279ee99faffa33d633d0765be",
+      "path": "Sources/SwiftAISDK/Tool/MCP/MCPTransport.swift",
+      "normalizedLFsha256": "c117cbfba56ad953c3d288d7299a508c232aff1e88002dda85f46c75fa1282cf",
+      "gitBlob": "7c323ef129a93045e8fdfc66e1bbca324118fa82"
+    },
+    {
+      "sha256": "7c1cf02a067b9f1d5f1dd853c2148c45f86893d23f9578a4fad5f237b30cc9fe",
+      "path": "Sources/SwiftAISDK/Tool/MCP/MCPTypes.swift",
+      "normalizedLFsha256": "26fd93baf5b15817857b1565156952d6fa0cc0fdcb5215d2627461810a8233f8",
+      "gitBlob": "91ac3134b6d3cb3f1db19b4c4fb6d10b40bc4663"
+    },
+    {
+      "sha256": "b65e0313087b0db3132f3462724cc5631d5aadd8c69deece3ac5811ba43701e3",
+      "path": "Sources/SwiftAISDK/Tool/MCP/MockMCPTransport.swift",
+      "normalizedLFsha256": "946c62b0be3e607cddcfa17d85e35acdc9684c2611c2c767acda5ebb746ced14",
+      "gitBlob": "421c65bb676f0042f2be63b51fa4c2aff413a102"
+    },
+    {
+      "sha256": "7ec4e1e7e2cacedb8cd9955b9e463007444902a02303f2801fa70977146e92d7",
+      "path": "Sources/SwiftAISDK/Tool/MCP/OAuth.swift",
+      "normalizedLFsha256": "4edec5292547c9f2a9a8e66a6702e6db6b9d7e74bcff7331f3bf36544a709811",
+      "gitBlob": "f735819a84b23020ce03046d157ab9b13f0c955a"
+    },
+    {
+      "sha256": "816c060394ffc9ae291db142719b1d47c18bfb89263bb183ada9b7811e926241",
+      "path": "Sources/SwiftAISDK/Tool/MCP/OAuthTypes.swift",
+      "normalizedLFsha256": "b494cb018c20bbbc5f28b8d92681f07169fcdcb522baf89f339fcb6471c5c71f",
+      "gitBlob": "7b3a4c0bbad7d705a29be228bfe5a42ed6a9ae3d"
+    },
+    {
+      "sha256": "776d300bd17ed7a7140040e8747e04362aeaa13fa558b719e250244a436841be",
+      "path": "Sources/SwiftAISDK/Tool/MCP/OAuthUtil.swift",
+      "normalizedLFsha256": "baaef4aacabcc1baf90a0a28076d75b42f8fe9e68a20f45af7b2f8d7a657b636",
+      "gitBlob": "c5ea4de841e6d62a305279ce1f72c4aaa84b9132"
+    },
+    {
+      "sha256": "cce3573498148cf720316aed75b0c981a5826ba70ee5b77bf2a840be80eaf893",
+      "path": "Sources/SwiftAISDK/Tool/MCP/SseMCPTransport.swift",
+      "normalizedLFsha256": "872b18dc637f0ee687083cf9eb74295088bcdad08f5fb3bcc50ee29e186e6338",
+      "gitBlob": "48b00b09dca40f3b768b129eb8055a8c5a828236"
+    },
+    {
+      "sha256": "1451a76adbb38cea659450c8362874ff28080cc94858d125c685a9877f7ede84",
+      "path": "Sources/SwiftAISDK/Tool/TypedTool.swift",
+      "normalizedLFsha256": "51fdb1b58420ea7c54e1e822d784050bc0e6c99c44f16e63ff90268dd7f4e105",
+      "gitBlob": "4e30cd078f01d5972b2a20ef8058b342b7e9719d"
+    },
+    {
+      "sha256": "e8fab6a2250330ca19fb648e231921e06f18a5b581b1bf5707a0c748c630c710",
+      "path": "Sources/SwiftAISDK/Transcribe/StreamTranscribe.swift",
+      "normalizedLFsha256": "bad374e06ebf9b91229f74f2a7bea915beb8d9dabcbf292976280beb59243ada",
+      "gitBlob": "e15b9fcf74d8e61d4bd3e656c02affd7c9441bc9"
+    },
+    {
+      "sha256": "f5e6b6e9d2177eb3e239aaa189a2aad73e68ff52c09fb124a684077b0cd47f95",
+      "path": "Sources/SwiftAISDK/Transcribe/StreamTranscribeResult.swift",
+      "normalizedLFsha256": "f677bcc4eec4b41aa986653da620fb54084f653aba1ca7419eda5d829cebf85b",
+      "gitBlob": "fc154a545d395d77cc48d3c07b2d35bcd531f4b6"
+    },
+    {
+      "sha256": "2f33cccc9316de243819cfc6d628e5a3484073074f1a33ef1a2900cd5e66ca55",
+      "path": "Sources/SwiftAISDK/Transcribe/Transcribe.swift",
+      "normalizedLFsha256": "61f06866e0ec57624bea953e68b58ecbe6c19b6249f99d9042c3bcecc94f6acf",
+      "gitBlob": "af39e2837c7a27b22ae0bd5cf9eadd1316ad4870"
+    },
+    {
+      "sha256": "5ce3fa20f6554b590ba2df39b3b90981c2fb478685ff610a59e5da607a20d4d8",
+      "path": "Sources/SwiftAISDK/Transcribe/TranscribeExports.swift",
+      "normalizedLFsha256": "dbd20925faf2f75bb04e176388fa9278dfa9975a7b3a32f9c5cd4715512b825c",
+      "gitBlob": "7051681ce8c43fadbe4f7cc82be0323f72a8b4bb"
+    },
+    {
+      "sha256": "2cc700d981fc3f3ca7248fb92847a00c8ebfee2b954c041852a787cf6d1a904b",
+      "path": "Sources/SwiftAISDK/Transcribe/TranscribeResult.swift",
+      "normalizedLFsha256": "a59a652aaa842dabb9d4016bc6808a5c3c25b8b86d537aa4605bc1ed2e5ba246",
+      "gitBlob": "7800dc528a5ad85655c21a6e98479ad2aecf07c4"
+    },
+    {
+      "sha256": "ec3dbc237604443c6e3c40bd9bd0e5e62ec47c0fe26ca0f59ea6dbeddd16fcbc",
+      "path": "Sources/SwiftAISDK/Types/EmbeddingModel.swift",
+      "normalizedLFsha256": "b9dc5ddcdd651cb9540dfe9416fd7404a67b70231997f6e42d4dc8fe819d8261",
+      "gitBlob": "115e1a4aa657c11051e2efcbb7dee8c33ff12109"
+    },
+    {
+      "sha256": "162f328ea5a0169f0d4047290acea5ba3e044ed949b5662c0757f2b27e7deb94",
+      "path": "Sources/SwiftAISDK/Types/ImageModel.swift",
+      "normalizedLFsha256": "e4003f23e3b533dacae6a9792ab7a408755fd0d973b665c415c2834d4331209a",
+      "gitBlob": "fa5a44f7e69c15c3539af497975b94755d4caa04"
+    },
+    {
+      "sha256": "bdf7cb061f931bcab885877e573afeb9c7d8edf0783aecbbac7f3fe68625d6ec",
+      "path": "Sources/SwiftAISDK/Types/ImageModelResponseMetadata.swift",
+      "normalizedLFsha256": "98bf9858d99054ffcd3a61708bbd04007e460214094c945f6f5dca03c4779d83",
+      "gitBlob": "e5ee6e5f0100ed024457768b2f7605206cdfe505"
+    },
+    {
+      "sha256": "2ca6ca80eec515fa2387942cfc727d1b871f627821d099576ca3a945d01b9adf",
+      "path": "Sources/SwiftAISDK/Types/LanguageModel.swift",
+      "normalizedLFsha256": "2bc795d816bc50119bbc2cc76746429ff777c39c68de67eb8502a03ff0439a69",
+      "gitBlob": "f9a05f19bff0771677949a55474c23fe286b3521"
+    },
+    {
+      "sha256": "764580c6fb9e63a9b3761565ad6ff9e751b16a253cbcfc8d1fda07be7102662a",
+      "path": "Sources/SwiftAISDK/Types/LanguageModelRequestMetadata.swift",
+      "normalizedLFsha256": "589895d4ef8cdfeb7b0839117aa727f407e253d97da716ba7f05e251efb2d2ce",
+      "gitBlob": "fa71d59bc4b90bb3a3eac84e0449b10f7bc49b15"
+    },
+    {
+      "sha256": "527fbe22c18a4d6cf65dedc023d94cb5abc89eab48a13823912ae8e6ec38ca2b",
+      "path": "Sources/SwiftAISDK/Types/LanguageModelResponseMetadata.swift",
+      "normalizedLFsha256": "712555adcd5af6f575192752e628e0f2f8f2661f1cc073a4ed294bc0704e7c66",
+      "gitBlob": "19058d5a50e35f7a3d90147d0df29fec6baa339b"
+    },
+    {
+      "sha256": "30c025be6520061bd81f0cc888621d1f4bd0c25cbc2851cbd276e8e0105ab8e5",
+      "path": "Sources/SwiftAISDK/Types/ProviderMetadata.swift",
+      "normalizedLFsha256": "b23474310394ed84028a62d030b5333c7b7e4c8e917517af2b07cdd78a151b05",
+      "gitBlob": "7027a4d896c20254583fb170472f093d4a13c734"
+    },
+    {
+      "sha256": "01d9cac5e76b53c6dccea336b8e0c7da6f68322f5616502f448be42f6f70a60a",
+      "path": "Sources/SwiftAISDK/Types/ProviderReference.swift",
+      "normalizedLFsha256": "0d3bbd79873e4f0cb215e80f9f55c799c7320b36188ec84aa3baf2dd4a57bcd6",
+      "gitBlob": "92f80bba29f1872d41486deb1d7b1ccfb943f426"
+    },
+    {
+      "sha256": "f60f1ca6153ca4168808764bbb95778d7cd642a1f9f6fc8dd1cc408f725b52f4",
+      "path": "Sources/SwiftAISDK/Types/RerankingModel.swift",
+      "normalizedLFsha256": "2671d6734e5d76c844a3d1cb4f9f84b946df8f15a76c36efe5b6a3424a8eaf41",
+      "gitBlob": "14c8c491b41e03acb9a37c5c446ce255a2304482"
+    },
+    {
+      "sha256": "3691077f098b49d67cc5f581b119344b75c83b8556c8752a5e40e063265f38c3",
+      "path": "Sources/SwiftAISDK/Types/SpeechModel.swift",
+      "normalizedLFsha256": "92797d076cc8de97c27d2c0c58e0a7e028bf7c1be6e87f3a72399044884b1f31",
+      "gitBlob": "a60b02071713d7b2cbeec5cd59bc87622b8fb5cb"
+    },
+    {
+      "sha256": "5ab8deb4c94ce6b33a419c9889d17e635209f9e5fdfe5481dacf1456f0378662",
+      "path": "Sources/SwiftAISDK/Types/SpeechModelResponseMetadata.swift",
+      "normalizedLFsha256": "8fa9b463d8dcf1e7887fbcb84bd46fde80c28e08912783843a2dd7a552b3f884",
+      "gitBlob": "c0222942f26caf2a76b5e86bca321100a974086e"
+    },
+    {
+      "sha256": "3146526c680c2994959a12a8fb47d7dba0537ba26041167c08d8f46df1698fc8",
+      "path": "Sources/SwiftAISDK/Types/TranscriptionModel.swift",
+      "normalizedLFsha256": "205d14ada685b379c585d59fea4e1250a1ba5ed8c89981ff325b9fc261f09731",
+      "gitBlob": "ed0fa3635b417589a33bf44b5c0b69bc8ddcb7d2"
+    },
+    {
+      "sha256": "cc3cf9a88c63e4cc7b25aa6a5fc17967dd160b95b20b1fd83426382c20593b53",
+      "path": "Sources/SwiftAISDK/Types/TranscriptionModelResponseMetadata.swift",
+      "normalizedLFsha256": "a70e6461bd9aecf5ed87f0c018a9c101f4eab72ca8dc705f8a2402951d334e10",
+      "gitBlob": "62f5f7940bae899ab757b28a8572b03e2e947cd7"
+    },
+    {
+      "sha256": "b3ce706818446192992dfda173e242adc2405aa17caf745b50f555d3f569d3ca",
+      "path": "Sources/SwiftAISDK/Types/Usage.swift",
+      "normalizedLFsha256": "7173a46746aa384e46b956c7128a17735f3086caf6c52591e2757c24b89285cd",
+      "gitBlob": "b35122d48cfc412ca8a34df0f6d8429d7fcdbb00"
+    },
+    {
+      "sha256": "aee5e7a898fd2ce0f0364d7279fb3e554c078b5d939902bb2d16384574924ff9",
+      "path": "Sources/SwiftAISDK/Types/VideoModel.swift",
+      "normalizedLFsha256": "7108f9657750a3fb9ebcd6a35ba29125460e8f39271ce5cedd72b59b6a41d70e",
+      "gitBlob": "5338f2013f897ed73880c5da9bc1ac90a3537d20"
+    },
+    {
+      "sha256": "bfe720ed3ed405f84815515fb051965c45ed0c877547897aed5635ff94893c71",
+      "path": "Sources/SwiftAISDK/Types/VideoModelResponseMetadata.swift",
+      "normalizedLFsha256": "fea65a961b6d66e0ed1a6329c7fce286eb4ed3ac9e5010c3c657a21cad4f5951",
+      "gitBlob": "eb540534fda2d006a67aa3d1b9e8b9b16b8a028c"
+    },
+    {
+      "sha256": "aa668c289b31c6c6c02ec3eba8185641aa9be6766c4efdf025a4cf32d94c358e",
+      "path": "Sources/SwiftAISDK/UI/Processing/ConvertFileListToFileUIParts.swift",
+      "normalizedLFsha256": "7ecdd5c6b95732068179baa51bc8a4fcf1d564e19f27e6a730456dc3979afd23",
+      "gitBlob": "9254dc23fe2911c699df009e3415bced477b0484"
+    },
+    {
+      "sha256": "00a46b3f695459c3164c1ccd9c1dcff73c0094eb9a8cb7d0501ac11c94e20a3e",
+      "path": "Sources/SwiftAISDK/UI/Processing/ConvertToModelMessages.swift",
+      "normalizedLFsha256": "08b35ac66c063a6b2740ddba4dfda6d26ddb950e928b0d1cdd9c502ac6d0bd40",
+      "gitBlob": "8f179398f18d23888a5931483986b6cd8e92fe48"
+    },
+    {
+      "sha256": "85bd9c2bc75873d14da51239e660cf1da6cd021553f6c166ac3f80abc9692822",
+      "path": "Sources/SwiftAISDK/UI/Processing/ProcessTextStream.swift",
+      "normalizedLFsha256": "3c3c10d94a690cb12ec8396f4c86145b5b6dbe0a23822e24f13fb0d6ca5a8c23",
+      "gitBlob": "3f335cbf224aca5aa3ea6554794f6bda1e7d56c5"
+    },
+    {
+      "sha256": "dcd8df15c2256e2bdaf84bf3a77ba93c67fdfa24a6bdfe44ea30186f04af1e2f",
+      "path": "Sources/SwiftAISDK/UI/Processing/ProcessUIMessageStream.swift",
+      "normalizedLFsha256": "60e05b29076d72d692623316da7af7313da4d1f580f40f350e9642dfa2d5a51a",
+      "gitBlob": "ebca0de451cc00fd80d5e47257633aae8afa4c40"
+    },
+    {
+      "sha256": "0879b6dc773293154b7990e9a91ba062e3f4195dd8dc4c470052a6bcde691d02",
+      "path": "Sources/SwiftAISDK/UI/Transforms/TransformFullToUIMessageStream.swift",
+      "normalizedLFsha256": "01d6705d43e9ec0761e3939e3ce6d4147b64e275e55c02dd1e960286a6c00cd9",
+      "gitBlob": "31d341a2cad8062d8c7b643ef2ec674c718fb48c"
+    },
+    {
+      "sha256": "ffff9c050da60642e553f5205ebbb25dc4a3b74022579e38939d80cfd1d36518",
+      "path": "Sources/SwiftAISDK/UI/Transforms/TransformTextToUIMessageStream.swift",
+      "normalizedLFsha256": "4095a82df9fad1a274a507f4cbb1d84909b3c23258227f9b6428a5f0aa3c528e",
+      "gitBlob": "e69036e3523d8aa2b0a230bdefb26bf70a0d19ca"
+    },
+    {
+      "sha256": "910f56a30d7e6079fd3b6ab2a13032671b50551b57012d77caf54fd77a8b64b5",
+      "path": "Sources/SwiftAISDK/UI/Types/UIMessage.swift",
+      "normalizedLFsha256": "3ae76dea0fa37dfe3f21e9fa451aadb5d146746b6fc2eda1187e2eff94026286",
+      "gitBlob": "ff5057bd365e28198b3738d115a325fd296118db"
+    },
+    {
+      "sha256": "ae06380f7b5d197dac4ba65a24f668654ba5ad71338e9b78511d409cd5479a34",
+      "path": "Sources/SwiftAISDK/UI/Validation/ValidateUIMessages.swift",
+      "normalizedLFsha256": "dd9232c9dbcbfc0ceda5df6fa2aad1724f2bb70eb2f7a93131d7ed1fc2b1664b",
+      "gitBlob": "b0e8969d29cbfa5f5a5ea4c71fc291cae10dd61a"
+    },
+    {
+      "sha256": "9a0f24bab9a5f4415066008dbe3bfae6d5d34f765cf92c37f28c4545269970e6",
+      "path": "Sources/SwiftAISDK/UIMessageStream/CreateUIMessageStream.swift",
+      "normalizedLFsha256": "2e7e4c6239970518ade44e176b8d3153ef0deb3f6554fb0f893acbf7a28028b4",
+      "gitBlob": "90e81964578a44bd1da69487407da970fca9a308"
+    },
+    {
+      "sha256": "7eb070a466d85c0a416febdab824e6119487cbe945a7411a612fe22c7da0520c",
+      "path": "Sources/SwiftAISDK/UIMessageStream/CreateUIMessageStreamResponse.swift",
+      "normalizedLFsha256": "94810e3a6553102951ef9e9c84a8d62dab32cac80e385ac4d3a2564ab8e25585",
+      "gitBlob": "a4713f207ff53160eccae23215dabb4069485074"
+    },
+    {
+      "sha256": "d63b282bab5ca7c146f89c7a6851ec6b8cb752701ea5405a66c73b6399bf8322",
+      "path": "Sources/SwiftAISDK/UIMessageStream/GetResponseUIMessageID.swift",
+      "normalizedLFsha256": "d418947e3364b9855edb47bba706fd77074c40bf864a0e6af83dbe407fb028dd",
+      "gitBlob": "e565879b02b7c1dcf6f16c55cd8d1dfcbe6b37f1"
+    },
+    {
+      "sha256": "1c4d75372dc78e7ebf5b685bc0249bfed7e27d56a57a8f71dd93d87083fe0327",
+      "path": "Sources/SwiftAISDK/UIMessageStream/HandleUIMessageStreamFinish.swift",
+      "normalizedLFsha256": "d1f4292b86e0b9bd0e8420340e013688ea20f6d810cabe62d4125011ea11a980",
+      "gitBlob": "d9a0c83d55610341f040348bf9f31e5f2efb3862"
+    },
+    {
+      "sha256": "8c73eebb4047ca1a6ffd157df677fcea96d31e10e8a764e206d724a5af9164e9",
+      "path": "Sources/SwiftAISDK/UIMessageStream/JsonToSSETransformStream.swift",
+      "normalizedLFsha256": "c9c73929e9529ac2aea6759e7b19dd4df4100000e2b5e6fd1a58c143d82f2177",
+      "gitBlob": "099a7690c2b19c04b25e38c1a2422506196b88d1"
+    },
+    {
+      "sha256": "9ae84c4be40b10e3cde37b1788c0c4a45d8975dd04470dab6c1acecde8b4bc08",
+      "path": "Sources/SwiftAISDK/UIMessageStream/ReadUIMessageStream.swift",
+      "normalizedLFsha256": "8f6d529ef00a9fb4b2192c6fc8f992ae4a307212bea7caaeab62a118ec7b2941",
+      "gitBlob": "7611e2e121627de9823d99bb4ac1d7ddd06d63cb"
+    },
+    {
+      "sha256": "f85a3f34f0764ffdf752e33e5c57e510196801378ebc1c228ffdfece843bf7f8",
+      "path": "Sources/SwiftAISDK/UIMessageStream/TeeAsyncThrowingStream.swift",
+      "normalizedLFsha256": "12ff7eb2bbc38a7d967086eb8a831b9f19174364fc1737e7c31784028bd22b75",
+      "gitBlob": "604d17248313fa75bbd1b2dffd96802d70b1f35f"
+    },
+    {
+      "sha256": "513b7d932b5cba09d044ff6cb453b30dfb167a92c64b955b5c98e1080ceaf2a0",
+      "path": "Sources/SwiftAISDK/UIMessageStream/UIMessageChunkEncoding.swift",
+      "normalizedLFsha256": "42c2136e05ffb97757babe9af6baa8a5a8cb79a2ca307659355c73770f7a906d",
+      "gitBlob": "e2dfeaf489ca0f8a939db1daaf5308eef038238e"
+    },
+    {
+      "sha256": "7ec9db277a477c09d81c877e5d9ca66cae26749c13d55e3f13c34efa91fb0520",
+      "path": "Sources/SwiftAISDK/UIMessageStream/UIMessageStreamOnFinishCallback.swift",
+      "normalizedLFsha256": "aee5d4c07817b363c6f543f94717b318a5c692192fb13cb15a8112d08f80f630",
+      "gitBlob": "5f5dd1d40d7f04fd95a8ff6f3b412a12b364e57d"
+    },
+    {
+      "sha256": "4d57fc8b5442ecfdb60b871b50de66385fa23e4df0f0911f18bc625132a567e8",
+      "path": "Sources/SwiftAISDK/UIMessageStream/UIMessageStreamOnStepFinishCallback.swift",
+      "normalizedLFsha256": "023674474c9e565788c07d4fb38581d7d94168c6244ae5582783fc7aab668cfa",
+      "gitBlob": "716fe10f98002c7101e68605e77f7821525c0e4d"
+    },
+    {
+      "sha256": "f891321be27201c47695e87a6b5e23e06a26d176b2e9122c8c6e5a6043818028",
+      "path": "Sources/SwiftAISDK/UIMessageStream/Writer/UIMessageChunks.swift",
+      "normalizedLFsha256": "8d730c6f4bcc837085365159b9f2578170e5829885c3d3ef751972b44561fb4e",
+      "gitBlob": "b8062ccab053cd3ccaeeee1e09c25d7e259d7cec"
+    },
+    {
+      "sha256": "d455216ee572598f3c385d7816b9e070fae4a1e67b6ead1c9fbf55576b8fcabf",
+      "path": "Sources/SwiftAISDK/UIMessageStream/Writer/UIMessageStreamHeaders.swift",
+      "normalizedLFsha256": "696e8794abcd5afe8290005f2c69c43da4cb2581739b1ebd5c3cc9c4907c9fea",
+      "gitBlob": "f3853b0f31b0fec90390237631534400ff0efafe"
+    },
+    {
+      "sha256": "49655a251a5cb250cb9e63b42f502516ec49482a7ffca2e6edb2038e5c08067b",
+      "path": "Sources/SwiftAISDK/UIMessageStream/Writer/UIMessageStreamWriter.swift",
+      "normalizedLFsha256": "8a00d291997742edbd188270db2b5efadf9ef3059c57550d750d22a6499975a3",
+      "gitBlob": "b058f93b7823b92222333bd99b8496bf1be2f35c"
+    },
+    {
+      "sha256": "b6b4c123e61f81064c4bad10f4086bd2dcda1162133593ff76bb18b3ae0bb55c",
+      "path": "Sources/SwiftAISDK/UploadFile/UploadFile.swift",
+      "normalizedLFsha256": "6e3c2c451b3a564b825e8c2e8bec1a8881071102afab9a4558408f4feab6c333",
+      "gitBlob": "8c30a434c3c686053941571ee39c960443548180"
+    },
+    {
+      "sha256": "989bfb329c4020d7b61ad2ea1c1b9dbc8bd26a535d43365d032e125de0cd1160",
+      "path": "Sources/SwiftAISDK/UploadFile/UploadFileResult.swift",
+      "normalizedLFsha256": "9e67016d177417561ccb3409ded693fc3156495c65f565d4024082bd26469f81",
+      "gitBlob": "a895942aaf19fe5bb2000e1ec0b1c70937465d67"
+    },
+    {
+      "sha256": "b18138d61c5b69a26339d89c0b14908bde81eb8f04e2f814875387f725acf809",
+      "path": "Sources/SwiftAISDK/UploadSkill/UploadSkill.swift",
+      "normalizedLFsha256": "ee037a9b75608e2ad13a0878447178c9f8195a80f7124a297dc6b5cab16ecb14",
+      "gitBlob": "0f60c03d05ceb23a634b05ad628cfa4c6c294466"
+    },
+    {
+      "sha256": "bee99b541121842a29a5df1834b054f9fd54b258458efbcac2aeb2babe6ed05f",
+      "path": "Sources/SwiftAISDK/UploadSkill/UploadSkillResult.swift",
+      "normalizedLFsha256": "0900de0cc7cd8645276d94f4fd19a2191e4307f1903aba67c21bdbfd4f98b196",
+      "gitBlob": "ec87f707da117e73c6f7c31044253572084160e4"
+    },
+    {
+      "sha256": "cb79a3b032a377cb930263c0d5d482f4dda11fb861335ee934233457c2b63e4b",
+      "path": "Sources/SwiftAISDK/Util/ConsumeStream.swift",
+      "normalizedLFsha256": "4261a277913447b154305f7595b5a695bbd3dc4e5834f373b048bcec5eace99a",
+      "gitBlob": "9dda2ce1e4142e3291bf22be30fa944fd7bb1f59"
+    },
+    {
+      "sha256": "f292e13de80b6e16eadd358df59bbe74e8d1ae3db0977ed1996fd5e6d9e4f9ff",
+      "path": "Sources/SwiftAISDK/Util/CosineSimilarity.swift",
+      "normalizedLFsha256": "d3642658e801b4b9f9dcbe63c732d210878891d1cbb62ca3658dce96c81496b4",
+      "gitBlob": "408422a5ebb41b07ff9d1dc05dddf20f09cc6340"
+    },
+    {
+      "sha256": "2ea0beca58614906aac7ce1a41c48da79993590e33b5860b8b4626ab29b7ed1d",
+      "path": "Sources/SwiftAISDK/Util/CreateResolvablePromise.swift",
+      "normalizedLFsha256": "e180242a1dfa71d73a6eca889536fb5fcc56a05c68ff5dabe4c8ce74a5b743e2",
+      "gitBlob": "26ba8ee792a163cea6d15bff85144e05fd7a6d6d"
+    },
+    {
+      "sha256": "bb9b8c5f98ff7f088ccd018005f01d50e9a2ef6902923319b0aee64de40beb4e",
+      "path": "Sources/SwiftAISDK/Util/DelayedPromise.swift",
+      "normalizedLFsha256": "d2ae36eefa4d8328fe5276f1b06a684f1a4b1d83c00b89da3046f72949a18a43",
+      "gitBlob": "4a3acc1dfc0cf1a772232f9a5c44b713572d8773"
+    },
+    {
+      "sha256": "426fd8141198c1b1298e7818b1c9588f1c7a2d0d3f5c0bb0b188145bc80eec0b",
+      "path": "Sources/SwiftAISDK/Util/DetectMediaType.swift",
+      "normalizedLFsha256": "3eb85b6ab375b8fa18fbbde05e0509a047c14c82aadf37aa3281eb5b9cdf4c63",
+      "gitBlob": "e5299c38a85173fb783b592184cf6a5f27833792"
+    },
+    {
+      "sha256": "f0028f5f41cc7285c6b75b999493eb7866c5413bfd170b53355fc05cfcdbfe29",
+      "path": "Sources/SwiftAISDK/Util/Download/Download.swift",
+      "normalizedLFsha256": "dd8fce3d4b838f2fe894eec0674ba04a1cd673823e368d4309042dd7f0df47ed",
+      "gitBlob": "ca3dc81c1abbc2ef6677a0083842b4a43d82445c"
+    },
+    {
+      "sha256": "578fd3396f240923afad60782eff9be3455a483bd952dc594148ddca25dac980",
+      "path": "Sources/SwiftAISDK/Util/Download/DownloadError.swift",
+      "normalizedLFsha256": "b226ef32456c7c3dee31da671a22b347ba0cd52566afcd836867a1d104287b77",
+      "gitBlob": "709c86ba8cdea805935eaa443ba4fa09094bc5a0"
+    },
+    {
+      "sha256": "3e908e94b2eaa24d7ad618be2c81915e7cc8aa897996f6510bfee5dfb01d4fdf",
+      "path": "Sources/SwiftAISDK/Util/Download/DownloadFunction.swift",
+      "normalizedLFsha256": "1b6464494b2c24b0e5d56507ae4ba03b0493511312ae9707a7344a290ca57500",
+      "gitBlob": "1221a7aa67c7c8bdba5a0d50a095e33e8eccc1e6"
+    },
+    {
+      "sha256": "3f4337c17688b61c0807d86e956e6d24f42ed23537833a0ce89cca42e0a07043",
+      "path": "Sources/SwiftAISDK/Util/ErrorHandler.swift",
+      "normalizedLFsha256": "eb6c17e4cc0f3206c45a7b855e946fb39eceeb3dc43424a3010b09366069251a",
+      "gitBlob": "06dc8cf06b2b5228c499eea5a9891f5b453fd809"
+    },
+    {
+      "sha256": "c3da52ea7db8a6b2dcaf27c370889f2eed927a5e30ed0455aa2aed036738b063",
+      "path": "Sources/SwiftAISDK/Util/FixJson.swift",
+      "normalizedLFsha256": "5d8243a4fc90f280dffb8ede3d4e041ca3496c6f6acc69f8f2c92a8a36b17a92",
+      "gitBlob": "395059f07cfa064d332ac1e84849a43f6ab95c33"
+    },
+    {
+      "sha256": "51807be2246c56f67877b589567099588712873f75edc0d57e1396354bec1e97",
+      "path": "Sources/SwiftAISDK/Util/GetPotentialStartIndex.swift",
+      "normalizedLFsha256": "e478a271c63739920c09b73ec6cc0e8795615645bbb6c74b601910e41f3ea27f",
+      "gitBlob": "b19b01039d007f11bd3a21c4e0fbad9f586bbfb7"
+    },
+    {
+      "sha256": "3bb0578a6fbd6f698c934e4d3ce18fc03c7f7f723a2f1c5a9f77bf939abe767f",
+      "path": "Sources/SwiftAISDK/Util/IsDeepEqualData.swift",
+      "normalizedLFsha256": "898a74ab1fa1360d2eb807d23a715a6a40fee52d128ac18d0dd04f0df9704073",
+      "gitBlob": "689ecae311181c1270ba6ee75d76213187368109"
+    },
+    {
+      "sha256": "4658772bde557ca41193f9e4e5d53d68958d989051c3b2b8a03f3527b79df51d",
+      "path": "Sources/SwiftAISDK/Util/IsNonEmptyObject.swift",
+      "normalizedLFsha256": "4e798e3130ee227c7681f72c8f66727ee27d1f5cacb55e834fdd7c5713c05b0b",
+      "gitBlob": "e90d892affc5cb66cd0b3e7c652635a4c310e2ac"
+    },
+    {
+      "sha256": "90c8ef9da1d6e1cabd27e1bc260aee38b40ca4fe56af7a86953d3eb551c84337",
+      "path": "Sources/SwiftAISDK/Util/Job.swift",
+      "normalizedLFsha256": "f0ba6050b36a08e0ada718e1f1660d4c7d97544cc153ebabb48eaa4754641a80",
+      "gitBlob": "f6cefb8da9302b3e2f8c20bbf4c0249e40088a98"
+    },
+    {
+      "sha256": "98c48df320c553e5cd3aac2a0d4b6fc96d8e59e3d800ae47ad04f0b3d84d4df2",
+      "path": "Sources/SwiftAISDK/Util/MergeAbortSignals.swift",
+      "normalizedLFsha256": "f2529238eaf4c04e804fd11406a7a89c00c21d8fa1728adf687c975e0a1ff24c",
+      "gitBlob": "96b84db9ba65815cfa9a2385a43d98bf31d44dc4"
+    },
+    {
+      "sha256": "10cce9098ea0231c5ae063ec758a7c581ed9bf6fa2023199d08a171bacc41a10",
+      "path": "Sources/SwiftAISDK/Util/MergeObjects.swift",
+      "normalizedLFsha256": "d0b53acb3a4b45294c8d517996defc6c03c7b04f9df9d5d26ca29377ccb27e2c",
+      "gitBlob": "45d23c08baabda204007e9c6e77bc515b18af98d"
+    },
+    {
+      "sha256": "c4405253cf414c0c616eb05d515c2dea6db91f61b2804f5ee21cad42a1e49bff",
+      "path": "Sources/SwiftAISDK/Util/MergeProviderOptions.swift",
+      "normalizedLFsha256": "1f3c67701197209f2aa2f39271211a54e1419e01dc0d9f2d92b6a9a198cdc446",
+      "gitBlob": "93ea99e1b05fb2146a4cf92ceadc90065676b652"
+    },
+    {
+      "sha256": "f7e97d2e60ad7214924f360d5a6095afa0c6f32c21fadee48af3c488d85a8aff",
+      "path": "Sources/SwiftAISDK/Util/Now.swift",
+      "normalizedLFsha256": "62e14f54691d3aa35b39d77cf30677f4b278379fff22cf66e9425876c7a92bb4",
+      "gitBlob": "bfda9723db805a4853db121e05c75a214259b4d4"
+    },
+    {
+      "sha256": "d0e7306634096c52fbb9669bae2fbaa8f035a9d50925204799ac1af0affd14f9",
+      "path": "Sources/SwiftAISDK/Util/ParsePartialJson.swift",
+      "normalizedLFsha256": "0213def98b69d787e9e76a1a6624f50c607868dbf48276405ab95cff8e48d209",
+      "gitBlob": "bb5e0c6a498923dfb2e588f5354203017fb2d16d"
+    },
+    {
+      "sha256": "fce71e54c8e614929273d008b69fd73cca836c4f6be47be4530844c76a126d3f",
+      "path": "Sources/SwiftAISDK/Util/PrepareHeaders.swift",
+      "normalizedLFsha256": "1db3ba13cb485fd20817aff0fc6a7ee2663bba4841f0e119a825b7533cfedfef",
+      "gitBlob": "2c6dfdb831f3393d79779e0e91b598e7f4a66085"
+    },
+    {
+      "sha256": "3a8d255660463ceda2acb231639231ad3e388bde9b5fce90263d00270afbe89a",
+      "path": "Sources/SwiftAISDK/Util/PrepareRetries.swift",
+      "normalizedLFsha256": "1cd2e4523afccedcc5b446298b3892e276d78da069be370a7a308bae30836c7c",
+      "gitBlob": "32ae15290637399865601f18540dc29498cf2538"
+    },
+    {
+      "sha256": "aa84a43dedb171f162c9e8a2cd58332e0fcb48223f25fed59e7b65ada732094b",
+      "path": "Sources/SwiftAISDK/Util/RetryError.swift",
+      "normalizedLFsha256": "d944bd53a10a3967a0ebf9a4adc4d6d0a6d5525a630716a32a900df80f0f02eb",
+      "gitBlob": "2b814a479caaaa4fb17555feb0db4dd8a72d4a55"
+    },
+    {
+      "sha256": "93b0101b735fb9c54e09049c23d973929cdfb5c8ac34d97a735a75e3a377bfa8",
+      "path": "Sources/SwiftAISDK/Util/RetryFunction.swift",
+      "normalizedLFsha256": "4a55e89b41d1916d8976bd1b4a32424ee313cf1a8ca6d65e4844e0f0169f3d58",
+      "gitBlob": "5ec32f0dcd5de44ea0a9521e49144505686b0b04"
+    },
+    {
+      "sha256": "cd85bca6484494ed08bb36dfa228dc3d939977c1c400f00773c2f695f0da2c6f",
+      "path": "Sources/SwiftAISDK/Util/RetryWithExponentialBackoff.swift",
+      "normalizedLFsha256": "5a25246993a4d42e6a2e0b044e4cbbd745c24be5c020ed5b4ff52976cd8f4c4a",
+      "gitBlob": "f4e571658fcdc74af382a299ba50e3c982570a29"
+    },
+    {
+      "sha256": "8c38dd64be313368c9afdfcda504df28a1e23a244edd640d61ae810f7f6d5c34",
+      "path": "Sources/SwiftAISDK/Util/SerialJobExecutor.swift",
+      "normalizedLFsha256": "25f17b9fda01518f0a33105865b79a37cc7a4c41a35259c0a77a3698dd76446c",
+      "gitBlob": "cb409108abadf7b4166c8edd577447df63319a7c"
+    },
+    {
+      "sha256": "42cd591b748734f7638c1201efb4e7acb1c19a0a37b18dc083f57b22530fa740",
+      "path": "Sources/SwiftAISDK/Util/SplitArray.swift",
+      "normalizedLFsha256": "80e0572ded9f842d98e1cafbad2985772657c867128ce8d848352d0a47ae1ff6",
+      "gitBlob": "cef82f86078098aa03c41735e77c96aaf9aff829"
+    },
+    {
+      "sha256": "b0fdd62d683da3492cf3d2a6309bab28910cdec1311a41b9902292521c82f709",
+      "path": "Sources/SwiftAISDK/Util/TimeoutAbortSignalController.swift",
+      "normalizedLFsha256": "f64df10546c5bf0ce523732e273f3638fdae05a1df493ec7383ff201f718b189",
+      "gitBlob": "2f702753871750ceec18db7f86a556ab09fe3dfb"
+    },
+    {
+      "sha256": "b83b74e6d48d6724262037c71973933ec18fece7c5143fef0854d143025288d1",
+      "path": "Sources/SwiftAISDK/Version.swift",
+      "normalizedLFsha256": "9f372655ba71d279184b36703e8b71f84087de6a70b6a5f2ad88806bab05a035",
+      "gitBlob": "ee169591a0dea3df709040a4f39e8618ea4af52d"
+    },
+    {
+      "sha256": "6a061da1ebc5a00ff4c089ddeff1bfb891ecc2eec4c57b4b3628321fbe1d10ff",
+      "path": "Tests/AISDKProviderUtilsTests/ModelMessageCodableTests.swift",
+      "normalizedLFsha256": "a296c1be7dc264560f3e3527a1de91841434e343b326774d77eb7ccd6a73cc5a",
+      "gitBlob": "8d6e889f8d39f7eb291e55c1d6151f1ee5e5b0bf"
+    },
+    {
+      "sha256": "f0555c22720c5c5a15c60c9e92bdad43056a3321d9ee6707b4c60ce26e525c3c",
+      "path": "Tests/SwiftAISDKTests/GenerateText/ExecuteToolCallProviderMetadataTests.swift",
+      "normalizedLFsha256": "3a24d0fee00a5c18686d92144af0c0991dfa878561ea4945d4f299e2aa17456c",
+      "gitBlob": "7bdc2db44bd768e09dffce7c208822a554968c3d"
+    },
+    {
+      "sha256": "f19ebf55700e8d2e67be849f6e25e51ad78ed5b6531145598c249f90d59a0007",
+      "path": "Tests/SwiftAISDKTests/GenerateText/RawToolInputPropagationTests.swift",
+      "normalizedLFsha256": "f19ebf55700e8d2e67be849f6e25e51ad78ed5b6531145598c249f90d59a0007",
+      "gitBlob": "9ff7d689d54b9bd6761143520c34dd3f2e593b30"
+    },
+    {
+      "sha256": "0b71cca90833e4ef028477845a4e7f9e700643cd0c4ff985f452486e3c7a0696",
+      "path": "Tests/SwiftAISDKTests/GenerateText/ToResponseMessagesTests.swift",
+      "normalizedLFsha256": "fcc4c5ac175ad055eba746332808f56e2eb26f29fc1be276542f30974b6d9df6",
+      "gitBlob": "4e4e42858dcd60fdb472b589c2c02eb5f333dc4d"
+    },
+    {
+      "sha256": "61c5735d42ab9e1b1b226dcd3758b824f841114ee634183969e603170eec68e8",
+      "path": "Tests/SwiftAISDKTests/TestSupport/MockTracer.swift",
+      "normalizedLFsha256": "43a8a631eb25287b6aa4ce4b92068e5c5a75fefc9be189bcea75611a8d0eb506",
+      "gitBlob": "9e8baa1f1afbe221153a59c4519e96ee338752e3"
+    }
+  ],
+  "runner": "import Foundation\nimport Testing\n@main struct Runner { static func main() async { let result: CInt = await Testing.__swiftPMEntryPoint(); exit(result) } }\n",
+  "compileArguments": [
+    "-swift-version",
+    "6",
+    "-parse-as-library",
+    "-module-name",
+    "HanlinRawInputScopedTests",
+    "-I",
+    "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115\\.build\\x86_64-unknown-windows-msvc\\debug\\Modules",
+    "-I",
+    "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Platforms\\6.3.3\\Windows.platform\\Developer\\Library\\Testing-6.3.3\\usr\\lib\\swift\\windows",
+    "-L",
+    "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Platforms\\6.3.3\\Windows.platform\\Developer\\Library\\Testing-6.3.3\\usr\\lib\\swift\\windows\\x86_64",
+    "-lTesting",
+    "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115\\Tests\\SwiftAISDKTests\\GenerateText\\RawToolInputPropagationTests.swift",
+    "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115\\Tests\\SwiftAISDKTests\\GenerateText\\ToResponseMessagesTests.swift",
+    "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115\\Tests\\SwiftAISDKTests\\GenerateText\\ExecuteToolCallProviderMetadataTests.swift",
+    "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115\\Tests\\SwiftAISDKTests\\TestSupport\\MockTracer.swift",
+    "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115\\Tests\\AISDKProviderUtilsTests\\ModelMessageCodableTests.swift",
+    "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\producer-chain\\Runner.swift",
+    "@C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\producer-chain\\objects.rsp",
+    "-o",
+    "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\producer-chain\\ProducerChainTests.exe"
+  ],
+  "scope": "Actual complete SwiftAISDK production module graph built by root SwiftPM manifest, linked to selected real repository Swift Testing suites; NOT root swift test pass, Hanlin Session or Apple proof",
+  "producerBaseline": "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6",
+  "modules": [
+    "AISDKProvider",
+    "AISDKProviderUtils",
+    "AISDKZodAdapter",
+    "EventSourceParser",
+    "GatewayProvider",
+    "AISDKJSONSchema",
+    "SwiftAISDK"
+  ],
+  "rootSwiftTest": "BLOCKED_UNCHANGED_WINDOWS_REVAI_URLSESSION_SHARED",
+  "runExit": 0,
+  "testPaths": [
+    "Tests/SwiftAISDKTests/GenerateText/RawToolInputPropagationTests.swift",
+    "Tests/SwiftAISDKTests/GenerateText/ToResponseMessagesTests.swift",
+    "Tests/SwiftAISDKTests/GenerateText/ExecuteToolCallProviderMetadataTests.swift",
+    "Tests/SwiftAISDKTests/TestSupport/MockTracer.swift",
+    "Tests/AISDKProviderUtilsTests/ModelMessageCodableTests.swift"
+  ],
+  "producerFrozenCommit": "788a591aa0981443ec9a8e747393f07fcdcae4cf",
+  "testResult": {
+    "tests": 45,
+    "suites": 4,
+    "result": "PASS"
+  }
+}

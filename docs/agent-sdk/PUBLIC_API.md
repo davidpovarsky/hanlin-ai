@@ -102,3 +102,21 @@ The isolated **actual pinned source** reproduction in `evidence/numeric-boundary
 Narrow requested seam, **not implemented or approved by this document**: preserve the original validated argument JSON/typed integer category at the point where the pinned SDK still owns raw toolCall.input, and carry it to the single existing core executor; alternatively, explicitly withhold/refuse affected numeric capabilities until such a path exists. This needs a reviewed core/pinned-SDK seam and real end-to-end regression cases, not a change to shared PlatformContracts or a second dispatcher/agent. Do not reconstruct integer intent from an already rounded Double, silently change host action schemas, or collect asynchronous stream deltas in a race-prone side cache as a substitute for an authoritative executor input.
 
 No shared contracts, provider pin, core/host source, adapter or native API were changed during this consumer review. Exact numeric model-tool compatibility and any model/history projection needing inline continuation status remain unaccepted; native/full-graph/real host/UI/device gates remain open.
+
+
+## Current producer/consumer and UI lifecycle packet
+
+The later [combined packet](RAW_INPUT_AND_SESSION_HANDOFF.md) supersedes the
+proposal-only status above. Producer commit `788a591aa0981443ec9a8e747393f07fcdcae4cf`
+implements additive checked original input, including actual approval resume.
+Its complete production module built on Windows and 45 selected real tests passed;
+39 portable Hanlin cases passed. Actual Hanlin engine/session numeric execution
+and Apple/device acceptance remain **BLOCKED / NOT_RUN**, not inferred from those
+separate proofs. Tomer alone updates shipping dependency pins/locks after QA; the
+new consumer source requires that producer while current manifests still pin43ebcf.
+
+Stream cancellation/invalidate is terminal for a presentation Session. No reusable
+cancel-current-turn seam is promised. A later send requires a new host-authorized
+session identity/new Session; pending/uncertain effects still require original-host
+reconciliation. Normal completed runs may reuse a still-valid session. See the
+packet's exact lifecycle and reentrancy contract before implementing SDK04 UI.

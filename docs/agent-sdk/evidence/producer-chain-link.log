@@ -1,0 +1,16 @@
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Tests\AISDKProviderUtilsTests\ModelMessageCodableTests.swift:13:97: warning: '9223372036854775807' is not exactly representable as 'Double'; it becomes '9223372036854775808'
+
+ 11 |     @Test func originalToolInputRoundTripAndLegacyAbsence() throws {
+
+ 12 |         let raw = ToolCallRawInput(toolCallId: "c", toolName: "echo", json: "{\"n\":9223372036854775807}")
+
+ 13 |         let part = ToolCallPart(toolCallId: "c", toolName: "echo", input: .object(["n": .number(9_223_372_036_854_775_807)]), rawInput: raw, dynamic: true)
+
+    |                                                                                                 `- warning: '9223372036854775807' is not exactly representable as 'Double'; it becomes '9223372036854775808'
+
+ 14 |         let message = ModelMessage.assistant(AssistantModelMessage(content: .parts([.toolCall(part)])))
+
+ 15 |         #expect(try roundTrip(message) == message)
+
+   Creating library C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\producer-chain\\ProducerChainTests.lib and object C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\producer-chain\\ProducerChainTests.exp
+

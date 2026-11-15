@@ -1,0 +1,102 @@
+◊ Test run started.
+→ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+→ Target Platform: x86_64-unknown-windows-msvc
+◊ Suite "executeToolCall – providerMetadata" started.
+◊ Suite "To Response Messages" started.
+◊ Suite "Raw tool input propagation" started.
+◊ Suite "ModelMessage Codable" started.
+◊ Test "cancellation during live schema validation prevents executor entry" started.
+◊ Test "include tool calls in assistant message" started.
+◊ Test "skip empty text parts" started.
+◊ Test "include provider metadata in text parts" started.
+◊ Test "include images reasoning and tool calls in order" started.
+◊ Test "accepted raw input and dynamic identity remain local through provider prompt conversion" started.
+◊ Test "handle tool toModelOutput override" started.
+◊ Test "include tool call metadata in assistant message" started.
+◊ Test "tool-error copies providerMetadata from tool call" started.
+◊ Test "tool-result copies providerMetadata from tool call" started.
+◊ Test "denial, unknown approval and ambiguous correlation do not resume execution" started.
+◊ Test "include tool results as separate message" started.
+◊ Test "handle reasoning content" started.
+◊ Test "assistant message with text when no tool calls" started.
+◊ Test "return empty array without content" started.
+◊ Test "handle multiple images" started.
+◊ Test "include tool errors as separate message" started.
+◊ Test "handle reasoning array with redacted reasoning" started.
+◊ Test "legacy missing provenance remains nil; no normalized JSON is called raw" started.
+◊ Test "invalid, oversized, schema denied, and changed repair ID never execute" started.
+◊ Test "include images in assistant message" started.
+◊ Test "persisted raw input must match call, tool, value, dynamic type and current schema" started.
+◊ Test "stream immediate and resolver approval pass original final bytes" started.
+◊ Test "accepted repair bytes replace failed bytes and survive actual approval resume" started.
+◊ Test "provider-executed string tool results stay text in assistant message" started.
+◊ Test "include provider-executed tool calls and results" started.
+◊ Test approvalPartsPreserveProviderExecutedAndReason() started.
+◊ Test originalToolInputRoundTripAndLegacyAbsence() started.
+◊ Test assistantWithReasoningAndToolCall() started.
+◊ Test "real parse and execute preserve final JSON for static and dynamic tools" started.
+◊ Test toolResultWithJsonOutput() started.
+◊ Test userTextMessage() started.
+◊ Test fullConversationRoundTrip() started.
+◊ Test userTextMessageUsesTaggedStorageContentShape() started.
+◊ Test assistantWithProviderExecutedToolResult() started.
+◊ Test userPartsMessage() started.
+◊ Test assistantTextMessage() started.
+◊ Test imageAndFilePartsPreserveDistinctStringURLAndDataStorageCases() started.
+◊ Test toolResultMessage() started.
+◊ Test toolResultWithContentParts() started.
+◊ Test toolResultWithErrorOutput() started.
+◊ Test encodingIsByteStableAcrossMultipleCalls() started.
+◊ Test systemMessage() started.
+◊ Test assistantToolCallPreservesProviderExecutedAndProviderOptions() started.
+◊ Test dataContentOrURLUsesExplicitTaggedStorageCases() started.
+√ Test "skip empty text parts" passed after 0.004 seconds.
+√ Test "include provider metadata in text parts" passed after 0.003 seconds.
+√ Test "include images reasoning and tool calls in order" passed after 0.005 seconds.
+√ Test "include tool calls in assistant message" passed after 0.005 seconds.
+√ Test "handle tool toModelOutput override" passed after 0.005 seconds.
+√ Test "include tool call metadata in assistant message" passed after 0.005 seconds.
+√ Test "include tool results as separate message" passed after 0.005 seconds.
+√ Test "return empty array without content" passed after 0.005 seconds.
+√ Test "handle multiple images" passed after 0.005 seconds.
+√ Test "assistant message with text when no tool calls" passed after 0.005 seconds.
+√ Test "include images in assistant message" passed after 0.005 seconds.
+√ Test "handle reasoning content" passed after 0.005 seconds.
+√ Test "include tool errors as separate message" passed after 0.005 seconds.
+√ Test "handle reasoning array with redacted reasoning" passed after 0.005 seconds.
+√ Test "include provider-executed tool calls and results" passed after 0.005 seconds.
+√ Test "provider-executed string tool results stay text in assistant message" passed after 0.005 seconds.
+√ Test "accepted raw input and dynamic identity remain local through provider prompt conversion" passed after 0.006 seconds.
+√ Test userTextMessage() passed after 0.005 seconds.
+√ Test approvalPartsPreserveProviderExecutedAndReason() passed after 0.005 seconds.
+√ Test assistantWithReasoningAndToolCall() passed after 0.005 seconds.
+√ Test assistantTextMessage() passed after 0.005 seconds.
+√ Test userTextMessageUsesTaggedStorageContentShape() passed after 0.005 seconds.
+√ Test toolResultMessage() passed after 0.004 seconds.
+√ Test fullConversationRoundTrip() passed after 0.005 seconds.
+√ Test assistantWithProviderExecutedToolResult() passed after 0.005 seconds.
+√ Test toolResultWithContentParts() passed after 0.004 seconds.
+√ Test toolResultWithErrorOutput() passed after 0.004 seconds.
+√ Test systemMessage() passed after 0.004 seconds.
+√ Test userPartsMessage() passed after 0.005 seconds.
+√ Test assistantToolCallPreservesProviderExecutedAndProviderOptions() passed after 0.004 seconds.
+√ Test encodingIsByteStableAcrossMultipleCalls() passed after 0.004 seconds.
+√ Suite "To Response Messages" passed after 0.008 seconds.
+√ Test originalToolInputRoundTripAndLegacyAbsence() passed after 0.006 seconds.
+√ Test "tool-result copies providerMetadata from tool call" passed after 0.007 seconds.
+√ Test "legacy missing provenance remains nil; no normalized JSON is called raw" passed after 0.006 seconds.
+√ Test dataContentOrURLUsesExplicitTaggedStorageCases() passed after 0.004 seconds.
+√ Test imageAndFilePartsPreserveDistinctStringURLAndDataStorageCases() passed after 0.006 seconds.
+√ Test "cancellation during live schema validation prevents executor entry" passed after 0.008 seconds.
+√ Test toolResultWithJsonOutput() passed after 0.007 seconds.
+√ Suite "ModelMessage Codable" passed after 0.009 seconds.
+√ Test "real parse and execute preserve final JSON for static and dynamic tools" passed after 0.010 seconds.
+√ Test "stream immediate and resolver approval pass original final bytes" passed after 0.012 seconds.
+√ Test "denial, unknown approval and ambiguous correlation do not resume execution" passed after 0.015 seconds.
+√ Test "accepted repair bytes replace failed bytes and survive actual approval resume" passed after 0.033 seconds.
+√ Test "invalid, oversized, schema denied, and changed repair ID never execute" passed after 0.042 seconds.
+√ Test "tool-error copies providerMetadata from tool call" passed after 0.065 seconds.
+√ Suite "executeToolCall – providerMetadata" passed after 0.066 seconds.
+√ Test "persisted raw input must match call, tool, value, dynamic type and current schema" passed after 0.152 seconds.
+√ Suite "Raw tool input propagation" passed after 0.154 seconds.
+√ Test run with 45 tests in 4 suites passed after 0.155 seconds.

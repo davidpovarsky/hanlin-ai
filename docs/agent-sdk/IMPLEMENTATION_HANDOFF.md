@@ -1,5 +1,15 @@
 # CHAT-SDK W1 — frozen source handoff
 
+**Current review entry:** [combined producer/consumer/session packet](RAW_INPUT_AND_SESSION_HANDOFF.md).
+Producer is frozen at `788a591aa0981443ec9a8e747393f07fcdcae4cf`; the consumer is this
+containing commit. 45 selected actual producer tests and 39 portable Hanlin cases
+passed with distinct scopes. Actual Hanlin Session/full Apple graph remains
+NOT_RUN and numeric execution remains BLOCKED until that chain passes. Shipping
+pins/locks remain old43ebcf for Tomer's sole integration window; this source needs
+the new additive producer API. Stream cancellation is terminal; SDK04 must not
+promise reusable-turn cancellation. Earlier milestone text below is historical.
+
+
 Package/API preview: **HanlinAgentSDK 0.1.0-preview.1**, host API major **1**. Git SHA is pinned in the official single HANDOFF and canonical source Asana records; use that exact commit containing this document. This is a substantial source/portable-test milestone, not completed parent/host/native/UI acceptance.
 
 MAIN_SESSION, independently verified TOP_LEVEL_THREAD `01a1dd57-5fd2-78d2-98f1-95b0eecbe97c`; gpt-6.1-sol/high verified by controller. Branch `codex/hanlin-agent-sdk-wave1-20261115`, worktree `C:/Users/DAVID/Code/hanlin-agent-sdk-wave1-20261115`, baseline `6a533ef4cc26c3c4e2ce90037bbe2e50f4862c36` plus audit `f33e50f5a9e0e01c7397740da43e94fcc1347781`.

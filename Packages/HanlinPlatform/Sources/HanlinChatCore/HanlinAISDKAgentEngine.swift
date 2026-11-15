@@ -371,8 +371,27 @@ public actor HanlinAISDKAgentEngine {
                 description: definition.description,
                 inputSchema: FlexibleSchema(rawSchema),
                 execute: { input, options in
-                    let arguments = try jsonString(input)
-                    let output = try await definition.execute(arguments, options.toolCallId)
+                    try Task.checkCancellation()
+                    let arguments: String
+                    let provenance: HanlinAISDKToolInputProvenance
+                    if let raw = options.rawInput {
+                        guard raw.toolCallId == options.toolCallId, raw.toolName == definition.name,
+                              raw.json.utf8.count <= ToolCallRawInput.maximumUTF8Bytes,
+                              try JSONDecoder().decode(JSONValue.self, from: Data(raw.json.utf8)) == input else {
+                            throw HanlinAISDKError.invalidToolSchema(name: definition.name)
+                        }
+                        arguments = raw.json
+                        provenance = .acceptedOriginal
+                    } else {
+                        arguments = try jsonString(input)
+                        provenance = .normalized
+                    }
+                    let output: HanlinAISDKToolExecutionOutput
+                    if let execute = definition.executeWithInputProvenance {
+                        output = try await execute(arguments, options.toolCallId, provenance)
+                    } else {
+                        output = try await definition.execute(arguments, options.toolCallId)
+                    }
                     return .value(.object([
                         "modelText": .string(output.modelText),
                         "resultReference": output.resultReference.map(JSONValue.string) ?? .null,

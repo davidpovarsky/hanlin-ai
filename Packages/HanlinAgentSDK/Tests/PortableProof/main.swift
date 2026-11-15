@@ -1,4 +1,5 @@
 import Foundation
+import AISDKProvider
 import HanlinAgentCore
 import HanlinHostContracts
 import HanlinPersistenceAdapters
@@ -21,6 +22,11 @@ private func require(_ condition: Bool, _ detail: String) throws {
     do { try await body() }
     catch is CancellationError { return }
     throw ProofFailure(detail: "Expected task cancellation after captured-context await")
+}
+@MainActor private func rejectsNumericModelInput(_ body: @MainActor () async throws -> Void) async throws {
+    do { try await body() }
+    catch HanlinModelToolInputError.numericArgumentsUnsupported { return }
+    throw ProofFailure(detail: "Expected explicit numeric model-input rejection")
 }
 private actor ProgressLog {
     var values: [UInt64] = []
@@ -67,10 +73,122 @@ private struct GatedFixture: Sendable {
     var destination: HanlinHostDestination { .init(context: session.context, objectReference: "gated-object", blockReference: "gated-block") }
 }
 
+/// Isolated guard-body fixture, NOT an AgentSession replacement/pass. Actual production guard
+/// encloses real store/dispatcher side effects to prove the rejected body cannot create a pending call.
+@MainActor private func guardBoundaryCall(_ input: String, fixture: Fixture,
+                                         store: HanlinInMemoryConversationStore) async throws -> HanlinHostExecutionResult {
+    try await HanlinModelToolInputGuard.withValidatedArguments(input) { _ in
+        let pending = HanlinTranscriptEntry(runID: fixture.run, step: 0, sequence: 0,
+            payload: .toolCall(providerCallID: "guard-call", alias: "fixture_create", arguments: .null))
+        let context = fixture.session.context
+        try await store.save(.init(namespace: context.namespace, conversationID: fixture.session.conversationID,
+            revision: 0, entries: [pending]), replacing: nil)
+        let result = try await fixture.call("fixture_create", arguments: input, id: "guard-call")
+        let completed = HanlinTranscriptEntry(runID: fixture.run, step: 0, sequence: 1,
+            payload: .toolResult(providerCallID: "guard-call", result: result.metadataReceipt()))
+        try await store.save(.init(namespace: context.namespace, conversationID: fixture.session.conversationID,
+            revision: 1, entries: [pending, completed]), replacing: 0)
+        return result
+    }
+}
+
+/// Synthetic native caller with a real integer schema. Demonstrates that the DIRECT dispatcher
+/// still accepts original canonical integer bytes; it does not claim model-path numeric fidelity.
+private actor CanonicalIntegerHost: HanlinHostIntegration {
+    nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
+    let original: HanlinHostContext
+    private(set) var received: Int64?
+    init(context: HanlinHostContext) { original = context }
+    func context(for session: HanlinHostSession) -> HanlinHostContext { original }
+    func catalog(for context: HanlinHostContext) throws -> HanlinHostCatalog {
+        guard context == original else { throw HanlinHostError.staleContext }
+        let base = try SyntheticFixtureHost.tool("fixture_integer_read", risk: .read, guarantee: .readOnly)
+        let schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(Data(#"{"type":"object","properties":{"count":{"type":"integer"}},"required":["count"],"additionalProperties":false}"#.utf8), defaultDialect: .draft2020_12)
+        let descriptor = HanlinToolDescriptor(logicalID: base.descriptor.logicalID, descriptorRevision: base.descriptor.descriptorRevision,
+            owner: .system, title: base.descriptor.title, summary: base.descriptor.summary, inputSchema: schema, risk: .read, presentation: .init())
+        return .init(revision: .init(1), context: context, tools: [.init(route: base.route, descriptor: descriptor, writeGuarantee: .readOnly)])
+    }
+    func execute(_ invocation: HanlinHostInvocation, progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) throws -> HanlinHostExecutionResult {
+        guard invocation.session.context == original, invocation.request.aliasUsed == "fixture_integer_read",
+              case .object(let fields) = invocation.request.arguments, fields.count == 1,
+              case .integer(let value)? = fields["count"] else { throw HanlinHostError.invalidArguments }
+        received = value
+        return .init(result: .init(invocationID: invocation.request.id, logicalToolID: invocation.request.logicalToolID,
+            outcome: .completed([.text("Validated original canonical integer")]), completedAt: .now), effectState: .confirmedNoEffect, context: original)
+    }
+    func cancel(_ invocation: HanlinToolInvocationID) {}
+    func open(_ destination: HanlinHostDestination) throws -> HanlinHostNavigationResult { throw HanlinHostError.unsupportedProviderCapability }
+}
+
 @main struct PortableProof {
     static func main() async throws {
         var passed: [String] = []
         let cases: [(String, () async throws -> Void)] = [
+            ("model guard rejects actual pinned numeric roundtrips before pending or host effects", {
+                for token in ["1.0", "1e0", "9007199254740993", "9223372036854775807"] {
+                    let f = try await Fixture.make(); let store = HanlinInMemoryConversationStore()
+                    let original = Data(("{\"count\":" + token + "}").utf8)
+                    let normalized = try JSONEncoder().encode(JSONDecoder().decode(AISDKProvider.JSONValue.self, from: original))
+                    try await rejectsNumericModelInput { _ = try await guardBoundaryCall(String(decoding: normalized, as: UTF8.self), fixture: f, store: store) }
+                    try require(await f.host.executions == 0, "Numeric input reached host")
+                    try require(await f.host.nativeWrites == 0, "Numeric input wrote")
+                    try require(await store.load(f.session.conversationID, namespace: f.session.context.namespace) == nil, "Rejected input left pending record")
+                    try require(await f.dispatcher.receipts(for: f.session).isEmpty, "Rejected input reserved host invocation")
+                }
+            }),
+            ("model guard rejects every numeric leaf including nested small exact numbers", {
+                for input in ["0", "1", "-1", "0.0", "-0.0", "2.5", #"{"outer":[true,{"inner":0}]}"#, #"[null,{"items":["1",1.0]}]"#] {
+                    let f = try await Fixture.make(); let store = HanlinInMemoryConversationStore()
+                    let normalized = try JSONEncoder().encode(JSONDecoder().decode(AISDKProvider.JSONValue.self, from: Data(input.utf8)))
+                    try await rejectsNumericModelInput { _ = try await guardBoundaryCall(String(decoding: normalized, as: UTF8.self), fixture: f, store: store) }
+                    try require(await f.host.executions == 0, "Nested number reached host")
+                    try require(await store.load(f.session.conversationID, namespace: f.session.context.namespace) == nil, "Nested rejection left pending call")
+                }
+            }),
+            ("model guard preserves digits in strings booleans and null without coercion", {
+                let input = #"{"id":"9007199254740993","decimal":"1.0","exponent":"1e0","values":[true,false,null,{"json":"{\"n\":1}"}]}"#
+                let expected = try HanlinJSONValue.decodeCanonicalJSON(Data(input.utf8))
+                let actual = try await HanlinModelToolInputGuard.withValidatedArguments(input) { value in value }
+                try require(actual == expected, "Nonnumeric values were coerced")
+            }),
+            ("nonnumeric model guard body executes and resolves its fixture pending call", {
+                let f = try await Fixture.make(); let store = HanlinInMemoryConversationStore()
+                let result = try await guardBoundaryCall(#"{"text":"1.0 1e0 9007199254740993"}"#, fixture: f, store: store)
+                try require(result.effectState == .confirmedCommitted, "Nonnumeric tool failed")
+                try require(await f.host.nativeWrites == 1, "Nonnumeric host call did not run once")
+                let record = await store.load(f.session.conversationID, namespace: f.session.context.namespace)
+                try require(record?.entries.count == 2 && record?.revision == 1, "Nonnumeric call did not resolve pending metadata")
+            }),
+            ("isolated verified-original guard preserves Int64 and decimal categories", {
+                for input in [#"{"n":9007199254740993}"#, #"{"n":9223372036854775807}"#, #"{"n":-9223372036854775808}"#, #"{"n":1.0}"#, #"{"n":1e0}"#, #"{"a":[{"n":9007199254740993},0.5,1e0]}"#] {
+                    let actual = try HanlinModelToolInputGuard.validate(input, originalInputVerified: true)
+                    try require(actual == HanlinJSONValue.decodeCanonicalJSON(Data(input.utf8)), "Original guard changed canonical category")
+                }
+                guard case .object(let integer) = try HanlinModelToolInputGuard.validate(#"{"n":9007199254740993}"#, originalInputVerified: true),
+                      case .integer(9007199254740993)? = integer["n"],
+                      case .object(let decimal) = try HanlinModelToolInputGuard.validate(#"{"n":1.0}"#, originalInputVerified: true),
+                      case .number(1)? = decimal["n"] else { throw ProofFailure(detail: "Original categories lost") }
+            }),
+            ("isolated verified-original guard rejects unsupported numeric precision before body", {
+                for input in [#"{"n":18446744073709551615}"#, #"{"n":9223372036854775808}"#, #"{"n":9007199254740993.0}"#, #"{"n":0.10000000000000000001}"#, #"{"n":1e-400}"#, #"{"n":1e400}"#, #"{"n":1,"n":2}"#] {
+                    var entered = false
+                    do {
+                        _ = try await HanlinModelToolInputGuard.withValidatedArguments(input, originalInputVerified: true) { value in
+                            entered = true; return value
+                        }
+                        throw ProofFailure(detail: "Unsupported numeric input accepted")
+                    } catch is ProofFailure { throw ProofFailure(detail: "Unsupported numeric input accepted") }
+                    catch { try require(!entered, "Unsupported input entered persistence/dispatch body") }
+                }
+            }),
+            ("direct canonical dispatcher preserves original Int64 without model guard", {
+                let f = try await Fixture.make(); let host = CanonicalIntegerHost(context: f.session.context)
+                let dispatcher = HanlinHostDispatcher(host: host)
+                _ = try await dispatcher.dispatch(alias: "fixture_integer_read", argumentsJSON: #"{"count":9223372036854775807}"#,
+                    providerCallID: "native-original-bytes", runID: f.run, step: 0, session: f.session,
+                    catalog: host.catalog(for: f.session.context), limits: .init())
+                try require(await host.received == Int64.max, "Direct canonical integer was changed or rejected")
+            }),
             ("revoke during captured context rejects cached write receipt", {
                 let f = try await GatedFixture.make()
                 let original = try await f.call()

@@ -4,6 +4,7 @@ import HanlinAgentCore
 import HanlinChatCore
 import HanlinHostContracts
 import HanlinPersistenceAdapters
+import HanlinPlatformContracts
 import HanlinSDKTestFixtures
 import Testing
 
@@ -15,12 +16,17 @@ private struct ToolScriptModel: LanguageModelV3 {
     let provider = "fixture"
     let modelId = "scripted"
     let counter = StepCounter()
+    let toolName: String
+    let arguments: String
+    init(toolName: String = "fixture_create", arguments: String = #"{"text":"test"}"#) {
+        self.toolName = toolName; self.arguments = arguments
+    }
     func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult { throw HanlinHostError.unsupportedProviderCapability }
     func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {
         let index = await counter.next()
         return .init(stream: AsyncThrowingStream { c in
             if index == 1 {
-                c.yield(.toolCall(.init(toolCallId: "opaque/fixture-call", toolName: "fixture_create", input: #"{"text":"test"}"#)))
+                c.yield(.toolCall(.init(toolCallId: "opaque/fixture-call", toolName: toolName, input: arguments)))
                 c.yield(.finish(finishReason: .init(unified: .toolCalls), usage: .init(), providerMetadata: nil))
             } else {
                 c.yield(.textStart(id: "answer", providerMetadata: nil))
@@ -33,7 +39,252 @@ private struct ToolScriptModel: LanguageModelV3 {
     }
 }
 
+private actor ExactNumericHost: HanlinHostIntegration {
+    nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
+    let original: HanlinHostContext
+    private(set) var arguments: [HanlinJSONValue] = []
+    init(context: HanlinHostContext) { original = context }
+    func context(for session: HanlinHostSession) -> HanlinHostContext { original }
+    func catalog(for context: HanlinHostContext) throws -> HanlinHostCatalog {
+        guard context == original else { throw HanlinHostError.staleContext }
+        let base = try SyntheticFixtureHost.tool("fixture_numeric", risk: .read, guarantee: .readOnly)
+        let schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(Data(#"{"type":"object"}"#.utf8), defaultDialect: .draft2020_12)
+        let descriptor = HanlinToolDescriptor(logicalID: base.descriptor.logicalID, descriptorRevision: base.descriptor.descriptorRevision,
+            owner: .system, title: base.descriptor.title, summary: base.descriptor.summary, inputSchema: schema, risk: .read, presentation: .init())
+        return .init(revision: .init(1), context: context, tools: [.init(route: base.route, descriptor: descriptor, writeGuarantee: .readOnly)])
+    }
+    func execute(_ invocation: HanlinHostInvocation, progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) throws -> HanlinHostExecutionResult {
+        guard invocation.session.context == original, invocation.request.aliasUsed == "fixture_numeric",
+              case .object = invocation.request.arguments else { throw HanlinHostError.invalidArguments }
+        arguments.append(invocation.request.arguments)
+        return .init(result: .init(invocationID: invocation.request.id, logicalToolID: invocation.request.logicalToolID,
+            outcome: .completed([.text("Synthetic numeric read")]), completedAt: .now), effectState: .confirmedNoEffect, context: original)
+    }
+}
+
+private actor SessionEvents {
+    private(set) var texts = 0
+    private var sawStep = false
+    private var stepWaiter: CheckedContinuation<Void, Never>?
+    private var sawTool = false
+    private var toolWaiter: CheckedContinuation<Void, Never>?
+    func record(_ event: HanlinAISDKStreamEvent) {
+        if case .textDelta = event { texts += 1 }
+        if case .stepStarted = event { sawStep = true; stepWaiter?.resume(); stepWaiter = nil }
+        if case .toolCall = event { sawTool = true; toolWaiter?.resume(); toolWaiter = nil }
+    }
+    func waitForStep() async {
+        if sawStep { return }
+        await withCheckedContinuation { stepWaiter = $0 }
+    }
+    func waitForTool() async {
+        if sawTool { return }
+        await withCheckedContinuation { toolWaiter = $0 }
+    }
+}
+
+private actor ExecutionGateHost: HanlinHostIntegration {
+    nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
+    let contexts: GatedContextHost
+    private var held: CheckedContinuation<Void, Never>?
+    private var waiter: CheckedContinuation<Void, Never>?
+    init(context: HanlinHostContext) { contexts = GatedContextHost(context: context) }
+    func context(for session: HanlinHostSession) async throws -> HanlinHostContext { try await contexts.context(for: session) }
+    func catalog(for context: HanlinHostContext) async throws -> HanlinHostCatalog { try await contexts.catalog(for: context) }
+    func execute(_ invocation: HanlinHostInvocation, progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult {
+        await withCheckedContinuation { held = $0; waiter?.resume(); waiter = nil }
+        return try await contexts.execute(invocation, progress: progress)
+    }
+    func waitForExecution() async {
+        if held != nil { return }
+        await withCheckedContinuation { waiter = $0 }
+    }
+    func releaseExecution() { held?.resume(); held = nil }
+}
+
+private actor ReceiptGateStore: HanlinConversationStore {
+    let base = HanlinInMemoryConversationStore()
+    let contexts: GatedContextHost
+    private var armed = true
+    init(contexts: GatedContextHost) { self.contexts = contexts }
+    func load(_ id: UUID, namespace: HanlinConversationNamespace) async throws -> HanlinConversationRecord? { await base.load(id, namespace: namespace) }
+    func save(_ record: HanlinConversationRecord, replacing revision: UInt64?) async throws {
+        try await base.save(record, replacing: revision)
+        if armed, case .toolResult = record.entries.last?.payload {
+            armed = false
+            await contexts.gateContext()
+        }
+    }
+    func delete(_ id: UUID, namespace: HanlinConversationNamespace, replacing revision: UInt64) async throws { try await base.delete(id, namespace: namespace, replacing: revision) }
+}
+
+private actor ControlledTextSource {
+    private var continuation: AsyncThrowingStream<LanguageModelV3StreamPart, Error>.Continuation?
+    private var installedWaiter: CheckedContinuation<Void, Never>?
+    func install() -> LanguageModelV3StreamResult {
+        let pair = AsyncThrowingStream<LanguageModelV3StreamPart, Error>.makeStream()
+        continuation = pair.continuation
+        installedWaiter?.resume(); installedWaiter = nil
+        return .init(stream: pair.stream)
+    }
+    func waitUntilInstalled() async {
+        if continuation != nil { return }
+        await withCheckedContinuation { installedWaiter = $0 }
+    }
+    func emitText() {
+        continuation?.yield(.textStart(id: "held", providerMetadata: nil))
+        continuation?.yield(.textDelta(id: "held", delta: "must not be delivered", providerMetadata: nil))
+        continuation?.yield(.textEnd(id: "held", providerMetadata: nil))
+    }
+    func finish() {
+        continuation?.yield(.finish(finishReason: .init(unified: .stop), usage: .init(), providerMetadata: nil))
+        continuation?.finish()
+    }
+}
+
+private struct ControlledTextModel: LanguageModelV3 {
+    let provider = "fixture"
+    let modelId = "controlled"
+    let source: ControlledTextSource
+    func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult { throw HanlinHostError.unsupportedProviderCapability }
+    func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult { await source.install() }
+}
+
 @Suite struct AgentSessionTests {
+    /// Requires the separately frozen producer and Tomer's temporary/final pin window.
+    /// NOT_RUN on Windows: do not infer this chain from either isolated proof.
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt() async throws {
+        for json in [#"{"n":9007199254740991}"#, #"{"n":9007199254740992}"#, #"{"n":9007199254740993}"#,
+                     #"{"n":9223372036854775807}"#, #"{"n":-9223372036854775808}"#, #"{"n":1.0}"#,
+                     #"{"n":1e0}"#, #"{"a":[{"n":9007199254740993},0.5,1e0],"s":"123"}"#] {
+            let namespace = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+            let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+            let identity = HanlinHostSession(conversationID: UUID(), context: context)
+            let host = ExactNumericHost(context: context)
+            let store = HanlinInMemoryConversationStore()
+            let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+            let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel(toolName: "fixture_numeric", arguments: json)))
+            let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+            let stream = try await session.stream(messages: [.init(role: .user, text: "Synthetic read")], modelReference: .init(provider: "fixture", modelID: "scripted"))
+            for try await _ in stream {}
+            let expected = try HanlinJSONValue.decodeCanonicalJSON(Data(json.utf8))
+            #expect(await host.arguments == [expected])
+            let receipts = await session.dispatcher.receipts(for: identity)
+            #expect(receipts.count == 1 && receipts.first?.effectState == .confirmedNoEffect)
+            let saved = try #require(await store.load(identity.conversationID, namespace: namespace))
+            #expect(saved.entries.contains { if case .toolCall("opaque/fixture-call", "fixture_numeric", .null) = $0.payload { return true }; return false })
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect() async throws {
+        for json in [#"{"n":18446744073709551615}"#, #"{"n":0.10000000000000000001}"#, #"{"n":9007199254740993.0}"#] {
+            let namespace = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+            let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+            let identity = HanlinHostSession(conversationID: UUID(), context: context)
+            let host = ExactNumericHost(context: context)
+            let store = HanlinInMemoryConversationStore()
+            let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+            let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel(toolName: "fixture_numeric", arguments: json)))
+            let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+            let stream = try await session.stream(messages: [.init(role: .user, text: "Synthetic read")], modelReference: .init(provider: "fixture", modelID: "scripted"), maxSteps: 2)
+            do { for try await _ in stream {} } catch { /* Model/tool failure is acceptable; effects are not. */ }
+            #expect(await host.arguments.isEmpty)
+            #expect(await session.dispatcher.receipts(for: identity).isEmpty)
+            let saved = try #require(await store.load(identity.conversationID, namespace: namespace))
+            #expect(!saved.entries.contains { if case .toolCall = $0.payload { return true }; return false })
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt() async throws {
+        let namespace = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = ExecutionGateHost(context: context)
+        let contexts = await host.contexts
+        let store = ReceiptGateStore(contexts: contexts)
+        let events = SessionEvents()
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        var callbacks = 0
+        session.onHostResult = { _, _ in callbacks += 1 }
+        let stream = try await session.stream(messages: [.init(role: .user, text: "test")], modelReference: .init(provider: "fixture", modelID: "scripted"))
+        let consumer = Task { @MainActor in
+            do { for try await item in stream { await events.record(item.event) } }
+            catch { /* Revoked after native completion. */ }
+        }
+        await host.waitForExecution()
+        await events.waitForTool()
+        await host.releaseExecution()
+        await contexts.waitUntilContextIsSuspended()
+        await session.invalidate()
+        await contexts.releaseCapturedContext()
+        await consumer.value
+        #expect(callbacks == 0)
+        let receipts = await session.dispatcher.receipts(for: identity)
+        #expect(receipts.count == 1 && receipts.first?.effectState == .confirmedCommitted)
+        let saved = try #require(await store.load(identity.conversationID, namespace: namespace))
+        #expect(saved.entries.contains { if case .toolResult(_, let receipt) = $0.payload { return receipt.effectState == .confirmedCommitted }; return false })
+    }
+    /// Real Session + canonical engine test. Source-only on Windows until Apple
+    /// compilation runs; portable dispatcher/helper tests do not stand in for it.
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func invalidationDuringCapturedEventContextSuppressesDelivery() async throws {
+        let namespace = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = GatedContextHost(context: context)
+        let source = ControlledTextSource()
+        let events = SessionEvents()
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ControlledTextModel(source: source)))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
+        let stream = try await session.stream(messages: [.init(role: .user, text: "test")], modelReference: .init(provider: "fixture", modelID: "controlled"))
+        let consumer = Task { @MainActor in
+            do { for try await item in stream { await events.record(item.event) } }
+            catch { /* Revoked source terminates. */ }
+        }
+        await source.waitUntilInstalled()
+        await events.waitForStep()
+        await host.gateContext()
+        await source.emitText()
+        await host.waitUntilContextIsSuspended()
+        await session.invalidate()
+        await host.releaseCapturedContext()
+        await source.finish()
+        await consumer.value
+        #expect(await events.texts == 0)
+        #expect(await host.base.executions == 0)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func concurrentStartIsReservedBeforeInitialContextAwait() async throws {
+        let namespace = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = GatedContextHost(context: context)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
+        await host.gateContext()
+        let first = Task { @MainActor in
+            try await session.stream(messages: [.init(role: .user, text: "first")], modelReference: .init(provider: "fixture", modelID: "scripted"))
+        }
+        await host.waitUntilContextIsSuspended()
+        do {
+            _ = try await session.stream(messages: [.init(role: .user, text: "second")], modelReference: .init(provider: "fixture", modelID: "scripted"))
+            Issue.record("Concurrent start entered a reserved run")
+        } catch { #expect(error as? HanlinHostError == .duplicateInvocation) }
+        await session.invalidate()
+        await host.releaseCapturedContext()
+        do { _ = try await first.value; Issue.record("Revoked initial context was accepted") }
+        catch { /* Expected cancellation/stale context. */ }
+        #expect(await host.base.executions == 0)
+    }
+
     @Test func nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision() throws {
         var delta = HanlinAppleTextDelta()
         #expect(try delta.append(snapshot: "Hello") == "Hello")

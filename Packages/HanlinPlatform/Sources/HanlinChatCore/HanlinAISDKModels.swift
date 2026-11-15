@@ -69,27 +69,43 @@ public struct HanlinAISDKToolExecutionOutput: Hashable, Sendable {
     }
 }
 
+public enum HanlinAISDKToolInputProvenance: Equatable, Sendable {
+    /// Legacy/missing original JSON. Numeric leaves must fail closed in SDK consumers.
+    case normalized
+    /// Original accepted JSON, correlated and revalidated by the producer executor.
+    /// This grants neither host authority nor consent.
+    case acceptedOriginal
+}
+
 public struct HanlinAISDKToolDefinition: Sendable {
     public typealias Executor = @MainActor @Sendable (
         _ argumentsJSON: String,
         _ callID: String
+    ) async throws -> HanlinAISDKToolExecutionOutput
+    public typealias ProvenanceExecutor = @MainActor @Sendable (
+        _ argumentsJSON: String,
+        _ callID: String,
+        _ provenance: HanlinAISDKToolInputProvenance
     ) async throws -> HanlinAISDKToolExecutionOutput
 
     public let name: String
     public let description: String
     public let inputSchemaData: Data
     public let execute: Executor
+    public let executeWithInputProvenance: ProvenanceExecutor?
 
     public init(
         name: String,
         description: String,
         inputSchemaData: Data,
-        execute: @escaping Executor
+        execute: @escaping Executor,
+        executeWithInputProvenance: ProvenanceExecutor? = nil
     ) {
         self.name = name
         self.description = description
         self.inputSchemaData = inputSchemaData
         self.execute = execute
+        self.executeWithInputProvenance = executeWithInputProvenance
     }
 }
 

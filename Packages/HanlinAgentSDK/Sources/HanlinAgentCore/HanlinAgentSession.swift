@@ -45,14 +45,14 @@ public final class HanlinAgentSession {
                        modelReference: HanlinModelReference, maxSteps: Int? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !invalidated else { throw HanlinHostError.staleContext }
         guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
-        guard host.apiVersion.major == 1,
-              try await host.context(for: identity) == identity.context else { throw HanlinHostError.staleContext }
-        // Reserve before store/host awaits. Concurrent stream starts cannot share a producer.
-        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
+        // Reserve before ANY store/host await. Concurrent starts cannot share a producer.
         let run = UUID()
         activeRun = run
         do {
+            try await requireCurrent(run: run)
             record = try await store.load(identity.conversationID, namespace: identity.context.namespace)
+            try requireActive(run: run)
             if let record { try record.validate() }
             entries = record?.entries ?? []
             guard entries.last?.sequence != UInt64.max else { throw HanlinHostError.storageLimitExceeded }
@@ -71,10 +71,12 @@ public final class HanlinAgentSession {
             }
             guard pending.isEmpty else { throw HanlinHostError.unresolvedWrite }
             let catalog = try await host.catalog(for: identity.context)
+            try await requireCurrent(run: run)
             try catalog.validate()
             guard !invalidated, catalog.context == identity.context, activeRun == run else { throw HanlinHostError.staleContext }
             currentCatalog = catalog
             try await persist(model: modelReference)
+            try requireActive(run: run)
             let definitions = try makeDefinitions(catalog: catalog, run: run, model: modelReference)
             let source = try await engine.stream(messages: messages, baseSystemPrompt: systemPrompt, tools: definitions,
                 maxSteps: maxSteps,
@@ -82,6 +84,7 @@ public final class HanlinAgentSession {
                     guard let self, !self.invalidated, self.activeRun == run else { return [] }
                     do {
                         let refreshed = try await self.host.catalog(for: self.identity.context)
+                        try await self.requireCurrent(run: run)
                         try refreshed.validate()
                         guard refreshed.context == self.identity.context else { throw HanlinHostError.staleContext }
                         // Existing core reloads when names change. Same-name descriptor changes must
@@ -92,7 +95,7 @@ public final class HanlinAgentSession {
                         self.currentCatalog = refreshed
                         return try self.makeDefinitions(catalog: refreshed, run: run, model: modelReference)
                     } catch {
-                        self.preparationError = (error as? HanlinHostError) ?? .denied
+                        if self.activeRun == run { self.preparationError = (error as? HanlinHostError) ?? .denied }
                         return []
                     }
                 },
@@ -100,8 +103,9 @@ public final class HanlinAgentSession {
                     guard let self, !self.invalidated, self.activeRun == run else { return .init(activeToolAliases: []) }
                     self.step = index
                     do {
-                        guard try await self.host.context(for: self.identity) == self.identity.context else { throw HanlinHostError.staleContext }
+                        try await self.requireCurrent(run: run)
                         let prepared = try await self.capabilities?.prepareStep(index, session: self.identity)
+                        try await self.requireCurrent(run: run)
                         let scopedCatalog = self.currentCatalog ?? catalog
                         let known = Set(scopedCatalog.tools.map(\.route.alias))
                         let aliases = prepared?.activeAliases ?? scopedCatalog.tools.map(\.route.alias)
@@ -111,10 +115,11 @@ public final class HanlinAgentSession {
                                      visibleSchemaBytes: try scopedCatalog.tools.filter { aliases.contains($0.route.alias) }
                                         .reduce(0) { try $0 + $1.descriptor.inputSchema.canonicalJSONData().count })
                     } catch {
-                        self.preparationError = (error as? HanlinHostError) ?? .denied
+                        if self.activeRun == run { self.preparationError = (error as? HanlinHostError) ?? .denied }
                         return .init(activeToolAliases: [])
                     }
                 })
+            try requireActive(run: run)
 
             return AsyncThrowingStream { continuation in
                 let task = Task { @MainActor in
@@ -123,10 +128,8 @@ public final class HanlinAgentSession {
                     await self.diagnostics?.record(.init(kind: .runStarted, runID: run))
                     do {
                         for try await event in source {
-                            try Task.checkCancellation()
-                            guard !self.invalidated, self.activeRun == run else { throw HanlinHostError.cancelled }
+                            try await self.requireCurrent(run: run)
                             if let error = self.preparationError { throw error }
-                            guard try await self.host.context(for: self.identity) == self.identity.context else { throw HanlinHostError.staleContext }
                             switch event {
                             case .stepStarted(let index, _): streamStep = index
                             case .textDelta(let text): try self.append(.text(text), run: run, stepOverride: streamStep)
@@ -135,10 +138,12 @@ public final class HanlinAgentSession {
                             case .cancelled: try self.append(.cancelled, run: run, stepOverride: streamStep)
                             default: break
                             }
+                            try self.requireActive(run: run)
                             continuation.yield(.init(runID: run, step: streamStep, sequence: eventSequence, event: event))
                             eventSequence += 1
                         }
                         try await self.persist(model: modelReference)
+                        try self.requireActive(run: run)
                         self.activeRun = nil
                         self.producerTask = nil
                         await self.diagnostics?.record(.init(kind: .runFinished, runID: run))
@@ -176,19 +181,17 @@ public final class HanlinAgentSession {
 
     private func makeDefinitions(catalog: HanlinHostCatalog, run: UUID, model: HanlinModelReference) throws -> [HanlinAISDKToolDefinition] {
         try catalog.tools.map { tool in
-            HanlinAISDKToolDefinition(name: tool.route.alias,
-                description: tool.descriptor.summary.preferredValue(forLocale: identity.context.localeIdentifier),
-                inputSchemaData: try tool.descriptor.inputSchema.canonicalJSONData(),
-                execute: { [weak self] arguments, providerID in
-                    guard let self, !self.invalidated, self.activeRun == run else { throw HanlinHostError.cancelled }
-                    if let error = self.preparationError { throw error }
-                    // Validate before persistence, but never persist raw tool arguments (may contain
-                    // credentials or host business content). Full arguments remain transient events.
-                    _ = try HanlinJSONValue.decodeCanonicalJSON(Data(arguments.utf8))
+            let execution: HanlinAISDKToolDefinition.ProvenanceExecutor = { [weak self] arguments, providerID, provenance in
+                guard let self else { throw HanlinHostError.cancelled }
+                try self.requireActive(run: run)
+                if let error = self.preparationError { throw error }
+                return try await HanlinModelToolInputGuard.withValidatedArguments(arguments, originalInputVerified: provenance == .acceptedOriginal) { _ -> HanlinAISDKToolExecutionOutput in
+                    // Invalid/unsupported input is rejected before pending entry or host effect.
+                    // Never persist raw arguments; original input remains transient.
                     try self.append(.toolCall(providerCallID: providerID, alias: tool.route.alias, arguments: .null), run: run)
                     // Durable pending entry BEFORE dispatch; interruption must not silently replay.
                     try await self.persist(model: model)
-                    guard !self.invalidated, self.activeRun == run else { throw HanlinHostError.cancelled }
+                    try self.requireActive(run: run)
                     let result = try await self.dispatcher.dispatch(alias: tool.route.alias, argumentsJSON: arguments,
                         providerCallID: providerID, runID: run, step: self.step, session: self.identity, catalog: catalog,
                         expectedRevision: tool.writeGuarantee == .atomicRevisionMutation ? self.identity.context.sourceRevision : nil,
@@ -198,8 +201,7 @@ public final class HanlinAgentSession {
                     guard self.activeRun == run else { throw HanlinHostError.staleContext }
                     try self.append(.toolResult(providerCallID: providerID, result: result.metadataReceipt()), run: run)
                     try await self.persist(model: model)
-                    guard !self.invalidated, self.activeRun == run,
-                          try await self.host.context(for: self.identity) == self.identity.context else { throw HanlinHostError.staleContext }
+                    try await self.requireCurrent(run: run)
                     self.onHostResult?(providerID, result)
                     if result.effectState == .uncertain { throw HanlinHostError.unresolvedWrite }
                     let encoded = try JSONEncoder().encode(result)
@@ -219,15 +221,32 @@ public final class HanlinAgentSession {
                     default:
                         return .init(modelText: "The host did not authorize or complete this operation.", resultReference: result.reconciliationReference, isError: true)
                     }
-                })
+                }
+            }
+            return HanlinAISDKToolDefinition(name: tool.route.alias,
+                description: tool.descriptor.summary.preferredValue(forLocale: identity.context.localeIdentifier),
+                inputSchemaData: try tool.descriptor.inputSchema.canonicalJSONData(),
+                execute: { arguments, id in try await execution(arguments, id, .normalized) },
+                executeWithInputProvenance: execution)
         }
     }
 
     private func deliverProgress(_ event: HanlinToolProgressEvent, run: UUID) async {
-        guard !invalidated, activeRun == run,
-              let context = try? await host.context(for: identity), context == identity.context,
-              !invalidated, activeRun == run else { return }
+        do { try await requireCurrent(run: run) } catch { return }
         onHostProgress?(event)
+    }
+
+    private func requireActive(run: UUID) throws {
+        try Task.checkCancellation()
+        guard !invalidated, activeRun == run else { throw HanlinHostError.cancelled }
+    }
+
+    /// MainActor invalidation/run replacement may occur while the host returns an old context.
+    private func requireCurrent(run: UUID) async throws {
+        try requireActive(run: run)
+        let context = try await host.context(for: identity)
+        try requireActive(run: run)
+        guard context == identity.context else { throw HanlinHostError.staleContext }
     }
 
     private func append(_ payload: HanlinTranscriptPayload, run: UUID, stepOverride: Int? = nil) throws {

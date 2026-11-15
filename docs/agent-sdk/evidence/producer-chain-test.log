@@ -1,0 +1,622 @@
+Fetching https://github.com/apple/swift-argument-parser from cache
+Fetched https://github.com/apple/swift-argument-parser from cache (1.50s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.6.2 (3.15s)
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.6.2
+[1/1] Compiling plugin GenerateManual
+[2/2] Compiling plugin GenerateDoccReference
+Building for debugging...
+[2/195] Write sources
+[8/195] Write swift-version-2807070033DA82CF.txt
+[9/195] Copying Fixtures
+[10/195] Copying __fixtures__
+[11/195] Copying Fixtures
+[12/195] Write sources
+[61/195] Copying Fixtures
+[62/195] Write sources
+[97/200] Emitting module ArgumentParserToolInfo
+[98/200] Compiling ArgumentParserToolInfo ToolInfo.swift
+[100/225] Compiling AISDKProvider EmbeddingModelV2.swift
+[101/225] Compiling AISDKProvider EmbeddingModelV2Embedding.swift
+[102/225] Emitting module EventSourceParser
+[105/226] Compiling AISDKProvider EmbeddingModelV3.swift
+[106/226] Compiling AISDKProvider EmbeddingModelV3Embedding.swift
+[107/226] Compiling AISDKProvider EmbeddingModelV4.swift
+[108/226] Compiling AISDKProvider EmbeddingModelV4Middleware.swift
+[109/226] Compiling AISDKProvider AISDKError.swift
+[110/226] Compiling AISDKProvider APICallError.swift
+[111/226] Compiling AISDKProvider EmptyResponseBodyError.swift
+[112/226] Compiling AISDKProvider GetErrorMessage.swift
+[113/226] Compiling AISDKProvider InvalidArgumentError.swift
+[114/226] Compiling AISDKProvider InvalidPromptError.swift
+[115/226] Compiling AISDKProvider InvalidResponseDataError.swift
+[116/226] Compiling AISDKProvider JSONParseError.swift
+[117/226] Compiling AISDKProvider LoadAPIKeyError.swift
+[118/226] Compiling AISDKProvider LoadSettingError.swift
+[119/226] Compiling AISDKProvider NoContentGeneratedError.swift
+[120/226] Compiling AISDKProvider NoSuchModelError.swift
+[121/226] Compiling AISDKProvider NoSuchProviderReferenceError.swift
+[122/226] Compiling AISDKProvider TooManyEmbeddingValuesForCallError.swift
+[123/226] Compiling AISDKProvider TypeValidationError.swift
+[124/226] Compiling AISDKProvider UnsupportedFunctionalityError.swift
+[125/226] Compiling AISDKProvider FilesV4.swift
+[126/226] Emitting module AISDKProvider
+[127/271] Compiling EventSourceParser Types.swift
+[128/272] Wrapping AST for ArgumentParserToolInfo for debugging
+[129/272] Wrapping AST for EventSourceParser for debugging
+[131/274] Compiling AISDKProvider LanguageModelV2DataContent.swift
+[132/274] Compiling AISDKProvider LanguageModelV2File.swift
+[133/274] Compiling AISDKProvider LanguageModelV2FunctionTool.swift
+[134/274] Compiling AISDKProvider LanguageModelV2Prompt.swift
+[135/274] Compiling AISDKProvider LanguageModelV2ProviderDefinedTool.swift
+[136/274] Compiling AISDKProvider LanguageModelV2Reasoning.swift
+[137/274] Compiling AISDKProvider LanguageModelV2ResponseMetadata.swift
+[138/274] Compiling AISDKProvider LanguageModelV2Source.swift
+[139/274] Compiling AISDKProvider LanguageModelV2StreamPart.swift
+[140/274] Compiling AISDKProvider LanguageModelV2Text.swift
+[141/274] Compiling AISDKProvider LanguageModelV2ToolCall.swift
+[142/274] Compiling AISDKProvider LanguageModelV2ToolChoice.swift
+[143/274] Compiling AISDKProvider LanguageModelV2ToolResult.swift
+[144/274] Compiling AISDKProvider LanguageModelV3.swift
+[145/274] Compiling AISDKProvider LanguageModelV3CallOptions.swift
+[146/274] Compiling AISDKProvider LanguageModelV3Content.swift
+[147/274] Compiling AISDKProvider LanguageModelV3CustomContent.swift
+[148/274] Compiling AISDKProvider LanguageModelV3DataContent.swift
+[149/274] Compiling AISDKProvider LanguageModelV3File.swift
+[150/274] Compiling AISDKProvider LanguageModelV3FinishReason.swift
+[151/274] Compiling AISDKProvider LanguageModelV3FunctionTool.swift
+[152/274] Compiling AISDKProvider LanguageModelV3Prompt.swift
+[153/274] Compiling AISDKProvider FilesV4UploadFileCallOptions.swift
+[154/274] Compiling AISDKProvider FilesV4UploadFileResult.swift
+[155/274] Compiling AISDKProvider ImageModelV2.swift
+[156/274] Compiling AISDKProvider ImageModelV2CallOptions.swift
+[157/274] Compiling AISDKProvider ImageModelV2CallWarning.swift
+[158/274] Compiling AISDKProvider ImageModelV3.swift
+[159/274] Compiling AISDKProvider ImageModelV3CallOptions.swift
+[160/274] Compiling AISDKProvider ImageModelV3File.swift
+[161/274] Compiling AISDKProvider ImageModelV3Usage.swift
+[162/274] Compiling AISDKProvider ImageModelV4.swift
+[163/274] Compiling AISDKProvider ImageModelV4CallOptions.swift
+[164/274] Compiling AISDKProvider ImageModelV4File.swift
+[165/274] Compiling AISDKProvider ImageModelV4Usage.swift
+[166/274] Compiling AISDKProvider ImageModelV4Middleware.swift
+[167/274] Compiling AISDKProvider IsJSON.swift
+[168/274] Compiling AISDKProvider JSONValue.swift
+[169/274] Compiling AISDKProvider LanguageModelV2Middleware.swift
+[170/274] Compiling AISDKProvider LanguageModelV3Middleware.swift
+[171/274] Compiling AISDKProvider LanguageModelV4Middleware.swift
+[172/274] Compiling AISDKProvider LanguageModelV2.swift
+[173/274] Compiling AISDKProvider LanguageModelV2CallOptions.swift
+[174/274] Compiling AISDKProvider LanguageModelV2CallWarning.swift
+[175/274] Compiling AISDKProvider LanguageModelV2Content.swift
+[176/318] Compiling AISDKProvider LanguageModelV3ProviderTool.swift
+[177/318] Compiling AISDKProvider LanguageModelV3Reasoning.swift
+[178/318] Compiling AISDKProvider LanguageModelV3ResponseMetadata.swift
+[179/318] Compiling AISDKProvider LanguageModelV3Source.swift
+[180/318] Compiling AISDKProvider LanguageModelV3StreamPart.swift
+[181/318] Compiling AISDKProvider LanguageModelV3Text.swift
+[182/318] Compiling AISDKProvider LanguageModelV3Tool.swift
+[183/318] Compiling AISDKProvider LanguageModelV3ToolApprovalRequest.swift
+[184/318] Compiling AISDKProvider LanguageModelV3ToolCall.swift
+[185/318] Compiling AISDKProvider LanguageModelV3ToolChoice.swift
+[186/318] Compiling AISDKProvider LanguageModelV3ToolResult.swift
+[187/318] Compiling AISDKProvider LanguageModelV4.swift
+[188/318] Compiling AISDKProvider LanguageModelV4CallOptions.swift
+[189/318] Compiling AISDKProvider LanguageModelV4Content.swift
+[190/318] Compiling AISDKProvider LanguageModelV4ContentParts.swift
+[191/318] Compiling AISDKProvider LanguageModelV4FinishReason.swift
+[192/318] Compiling AISDKProvider LanguageModelV4Prompt.swift
+[193/318] Compiling AISDKProvider LanguageModelV4StreamPart.swift
+[194/318] Compiling AISDKProvider LanguageModelV4Tool.swift
+[195/318] Compiling AISDKProvider LanguageModelV4ToolCall.swift
+[196/318] Compiling AISDKProvider ProviderV2.swift
+[197/318] Compiling AISDKProvider ProviderV3.swift
+[198/318] Compiling AISDKProvider ProviderV4.swift
+[199/318] Compiling AISDKProvider RealtimeModelV4.swift
+[200/318] Compiling AISDKProvider RerankingModelV3.swift
+[201/318] Compiling AISDKProvider RerankingModelV4.swift
+[202/318] Compiling AISDKProvider SharedV2Headers.swift
+[203/318] Compiling AISDKProvider SharedV2ProviderMetadata.swift
+[204/318] Compiling AISDKProvider SharedV2ProviderOptions.swift
+[205/318] Compiling AISDKProvider SharedV3Headers.swift
+[206/318] Compiling AISDKProvider SharedV3ProviderMetadata.swift
+[207/318] Compiling AISDKProvider SharedV3ProviderOptions.swift
+[208/318] Compiling AISDKProvider SharedV3Warning.swift
+[209/318] Compiling AISDKProvider SharedV4DataContent.swift
+[210/318] Compiling AISDKProvider SharedV4FileData.swift
+[211/318] Compiling AISDKProvider SharedV4Headers.swift
+[212/318] Compiling AISDKProvider SharedV4ProviderMetadata.swift
+[213/318] Compiling AISDKProvider SharedV4ProviderOptions.swift
+[214/318] Compiling AISDKProvider SharedV4ProviderReference.swift
+[215/318] Compiling AISDKProvider SharedV4Warning.swift
+[216/318] Compiling AISDKProvider SkillsV4.swift
+[217/318] Compiling AISDKProvider SkillsV4UploadSkillCallOptions.swift
+[218/318] Compiling AISDKProvider SkillsV4UploadSkillResult.swift
+[219/318] Compiling AISDKProvider SpeechModelV2.swift
+[220/340] Emitting module EventSourceParserTests
+[221/340] Compiling EventSourceParserTests ParserTests.swift
+[222/341] Compiling EventSourceParserTests StreamTests.swift
+[224/342] Compiling AISDKProvider SpeechModelV2CallOptions.swift
+[225/342] Compiling AISDKProvider SpeechModelV2CallWarning.swift
+[226/342] Compiling AISDKProvider SpeechModelV3.swift
+[227/342] Compiling AISDKProvider SpeechModelV3CallOptions.swift
+[228/342] Compiling AISDKProvider SpeechModelV4.swift
+[229/342] Compiling AISDKProvider SpeechModelV4CallOptions.swift
+[230/342] Compiling AISDKProvider TranscriptionModelV2.swift
+[231/342] Compiling AISDKProvider TranscriptionModelV2CallOptions.swift
+[232/342] Compiling AISDKProvider TranscriptionModelV2CallWarning.swift
+[233/342] Compiling AISDKProvider TranscriptionModelV3.swift
+[234/342] Compiling AISDKProvider TranscriptionModelV3CallOptions.swift
+[235/342] Compiling AISDKProvider TranscriptionModelV4.swift
+[236/342] Compiling AISDKProvider TranscriptionModelV4CallOptions.swift
+[237/342] Compiling AISDKProvider TranscriptionModelV4StreamOptions.swift
+[238/342] Compiling AISDKProvider TranscriptionModelV4StreamPart.swift
+[239/342] Compiling AISDKProvider TranscriptionModelV4StreamResult.swift
+[240/342] Compiling AISDKProvider VideoModelV3.swift
+[241/342] Compiling AISDKProvider VideoModelV3CallOptions.swift
+[242/342] Compiling AISDKProvider VideoModelV3File.swift
+[243/342] Compiling AISDKProvider VideoModelV4.swift
+[244/342] Compiling AISDKProvider VideoModelV4CallOptions.swift
+[245/342] Compiling AISDKProvider VideoModelV4File.swift
+[246/367] Wrapping AST for EventSourceParserTests for debugging
+[247/369] Wrapping AST for AISDKProvider for debugging
+[249/376] Emitting module AISDKZodAdapter
+[250/376] Compiling AISDKZodAdapter ArkTypeToJSONSchema.swift
+[251/376] Compiling AISDKZodAdapter EffectToJSONSchema.swift
+[252/376] Compiling AISDKZodAdapter JSONValueCompat.swift
+[253/376] Compiling AISDKZodAdapter PublicBuilders.swift
+[254/376] Compiling AISDKZodAdapter ValibotToJSONSchema.swift
+[255/376] Compiling AISDKZodAdapter ZLikeDSL.swift
+[256/381] Compiling AISDKZodAdapter Zod3Options.swift
+[257/381] Compiling AISDKZodAdapter Zod3ParseDef.swift
+[258/381] Compiling AISDKZodAdapter Zod3Parsers.swift
+[259/381] Compiling AISDKZodAdapter Zod3ToJSONSchema.swift
+[260/381] Compiling AISDKZodAdapter Zod3Types.swift
+[262/396] Compiling AISDKProviderTests JSONValueTests.swift
+[263/396] Compiling AISDKProviderTests IsJSONTests.swift
+[264/396] Compiling AISDKProviderTests LanguageModelMiddlewareTests.swift
+[265/396] Compiling AISDKProviderTests LanguageModelV2CallOptionsTests.swift
+[266/396] Compiling AISDKProviderTests LanguageModelV2CallWarningTests.swift
+[267/396] Compiling AISDKProviderTests LanguageModelV2ContentTests.swift
+[268/396] Compiling AISDKProviderTests LanguageModelV2DataContentTests.swift
+[269/396] Compiling AISDKProviderTests LanguageModelV2PromptTests.swift
+[270/396] Compiling AISDKProviderTests LanguageModelV2ResponseInfoTests.swift
+[271/396] Compiling AISDKProviderTests LanguageModelV2ResponseMetadataTests.swift
+[272/396] Compiling AISDKProviderTests LanguageModelV2StreamPartTests.swift
+[273/396] Compiling AISDKProviderTests LanguageModelV2ToolTests.swift
+[274/396] Compiling AISDKProviderTests LanguageModelV3CallOptionsTests.swift
+[275/396] Compiling ArgumentParser OptionGroup.swift
+[276/396] Compiling ArgumentParser AsyncParsableCommand.swift
+[277/396] Compiling ArgumentParser CommandConfiguration.swift
+[278/396] Compiling ArgumentParser CommandGroup.swift
+[279/396] Compiling ArgumentParser EnumerableFlag.swift
+[280/396] Compiling ArgumentParser ExpressibleByArgument.swift
+[281/396] Compiling ArgumentParser ParsableArguments.swift
+[282/396] Compiling ArgumentParser ParsableCommand.swift
+[283/396] Compiling ArgumentParser ArgumentDecoder.swift
+[284/396] Compiling ArgumentParser ArgumentDefinition.swift
+[285/396] Compiling ArgumentParser ArgumentSet.swift
+[286/396] Compiling ArgumentParser CommandParser.swift
+[287/396] Emitting module ArgumentParser
+[301/420] Emitting module AISDKProviderTests
+[302/433] Compiling AISDKProviderTests SharedV4TypesTests.swift
+[303/433] Compiling ArgumentParser InputOrigin.swift
+[304/433] Compiling ArgumentParser Name.swift
+[305/433] Compiling ArgumentParser Parsed.swift
+[306/433] Compiling ArgumentParser ParsedValues.swift
+[307/433] Compiling ArgumentParser ParserError.swift
+[308/433] Compiling ArgumentParser SplitArguments.swift
+[309/433] Compiling ArgumentParser DumpHelpGenerator.swift
+[310/433] Compiling ArgumentParser HelpCommand.swift
+[311/433] Compiling ArgumentParser HelpGenerator.swift
+[312/433] Compiling ArgumentParser MessageInfo.swift
+[313/433] Compiling ArgumentParser UsageGenerator.swift
+[314/433] Compiling ArgumentParser CollectionExtensions.swift
+[315/433] Compiling ArgumentParser Mutex.swift
+[316/433] Compiling ArgumentParser Platform.swift
+[317/433] Compiling ArgumentParser SequenceExtensions.swift
+[318/433] Compiling ArgumentParser StringExtensions.swift
+[319/433] Compiling ArgumentParser SwiftExtensions.swift
+[320/433] Compiling ArgumentParser Tree.swift
+[321/433] Compiling ArgumentParser CodingKeyValidator.swift
+[322/433] Compiling ArgumentParser NonsenseFlagsValidator.swift
+[323/433] Compiling ArgumentParser ParsableArgumentsValidation.swift
+[324/433] Compiling ArgumentParser PositionalArgumentsValidator.swift
+[325/433] Compiling ArgumentParser UniqueNamesValidator.swift
+[326/434] Wrapping AST for AISDKZodAdapter for debugging
+[327/434] Wrapping AST for ArgumentParser for debugging
+[329/454] Compiling AISDKProviderUtils AsArray.swift
+[330/454] Compiling AISDKProviderUtils CancelResponseBody.swift
+[331/454] Compiling AISDKProviderUtils CombineHeaders.swift
+[332/454] Compiling AISDKProviderUtils ContentPart.swift
+[333/454] Compiling AISDKProviderUtils ConvertAsyncIteratorToReadableStream.swift
+[334/454] Compiling AISDKProviderUtils ConvertImageModelFileToDataURI.swift
+[335/454] Compiling AISDKProviderUtils ConvertInlineFileDataToData.swift
+[336/454] Compiling AISDKProviderUtils ConvertToFormData.swift
+[337/454] Compiling AISDKProviderUtils DataContent.swift
+[338/454] Compiling AISDKProviderUtils Delay.swift
+[339/454] Compiling AISDKProviderUtils DelayedPromise.swift
+[340/454] Compiling AISDKProviderUtils DetectMediaType.swift
+[341/454] Compiling AISDKProviderUtils DownloadBlob.swift
+[342/454] Compiling AISDKProviderUtils DownloadError.swift
+[343/454] Compiling AISDKProviderUtils ExecuteTool.swift
+[344/454] Compiling AISDKProviderUtils ExtractLines.swift
+[345/454] Compiling AISDKProviderUtils ExtractResponseHeaders.swift
+[346/454] Compiling AISDKProviderUtils FetchFunction.swift
+[347/454] Compiling AISDKProviderUtils FetchWithValidatedRedirects.swift
+[348/454] Emitting module AISDKProviderUtils
+[349/492] Compiling AISDKProviderUtils FilterNullable.swift
+[350/492] Compiling AISDKProviderUtils GenerateID.swift
+[351/492] Compiling AISDKProviderUtils GetErrorMessage.swift
+[352/492] Compiling AISDKProviderUtils GetFromAPI.swift
+[353/492] Compiling AISDKProviderUtils GetRuntimeEnvironmentUserAgent.swift
+[354/492] Compiling AISDKProviderUtils HandleFetchError.swift
+[355/492] Compiling AISDKProviderUtils InjectJSONInstructionIntoMessages.swift
+[356/492] Compiling AISDKProviderUtils IsAbortError.swift
+[357/492] Compiling AISDKProviderUtils IsAsyncIterable.swift
+[358/492] Compiling AISDKProviderUtils IsSameOrigin.swift
+[359/492] Compiling AISDKProviderUtils IsUrlSupported.swift
+[360/492] Compiling AISDKProviderUtils JSONValueToFoundation.swift
+[361/492] Compiling AISDKProviderUtils LoadAPIKey.swift
+[362/492] Compiling AISDKProviderUtils LoadOptionalSetting.swift
+[363/492] Compiling AISDKProviderUtils LoadSetting.swift
+[364/492] Compiling AISDKProviderUtils MapReasoningToProvider.swift
+[365/492] Compiling AISDKProviderUtils MediaTypeToExtension.swift
+[366/492] Compiling AISDKProviderUtils ModelMessage.swift
+[367/492] Compiling AISDKProviderUtils MultipartFormDataBuilder.swift
+[368/492] Compiling AISDKProviderUtils NormalizeHeaders.swift
+[369/492] Compiling AISDKProviderUtils ParseJSON.swift
+[370/492] Compiling AISDKProviderUtils ParseJsonEventStream.swift
+[371/492] Compiling AISDKProviderUtils ParseProviderOptions.swift
+[372/492] Compiling AISDKProviderUtils PostToAPI.swift
+[373/492] Compiling AISDKProviderUtils ProviderHTTPResponse.swift
+[374/492] Compiling AISDKProviderUtils ProviderReference.swift
+[375/492] Compiling AISDKProviderUtils ProviderToolFactory.swift
+[376/492] Compiling AISDKProviderUtils ReadResponseWithSizeLimit.swift
+[377/492] Compiling AISDKProviderUtils RemoveUndefinedEntries.swift
+[378/492] Compiling AISDKProviderUtils Resolve.swift
+[379/492] Compiling AISDKProviderUtils ResolveFullMediaType.swift
+[380/492] Compiling AISDKProviderUtils ResponseHandler.swift
+[381/492] Compiling AISDKProviderUtils AddAdditionalPropertiesToJsonSchema.swift
+[382/492] Compiling AISDKProviderUtils JSONSchemaValidator.swift
+[383/492] Compiling AISDKProviderUtils Schema.swift
+[384/492] Compiling AISDKProviderUtils ZodAdapters.swift
+[385/492] Compiling AISDKProviderUtils SecureJsonParse.swift
+[386/492] Compiling AISDKProviderUtils SerializeModelOptions.swift
+[387/511] Compiling AISDKProviderUtils SplitDataUrl.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[388/511] Compiling AISDKProviderUtils StreamingToolCallTracker.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[389/511] Compiling AISDKProviderUtils StripFileExtension.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[390/511] Compiling AISDKProviderUtils ConvertArrayToAsyncIterable.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[391/511] Compiling AISDKProviderUtils ConvertArrayToReadableStream.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[392/511] Compiling AISDKProviderUtils ConvertAsyncIterableToArray.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[393/511] Compiling AISDKProviderUtils ConvertReadableStreamToArray.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[394/511] Compiling AISDKProviderUtils ConvertResponseStreamToArray.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[395/511] Compiling AISDKProviderUtils TestSupportIndex.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[396/511] Compiling AISDKProviderUtils Tool.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[397/511] Compiling AISDKProviderUtils ToolNameMapping.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[398/511] Compiling AISDKProviderUtils Uint8Utils.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[399/511] Compiling AISDKProviderUtils ValidateBaseURL.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[400/511] Compiling AISDKProviderUtils ValidateDownloadURL.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[401/511] Compiling AISDKProviderUtils ValidateTypes.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[402/511] Compiling AISDKProviderUtils Version.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[403/511] Compiling AISDKProviderUtils SDKReleaseVersion.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[404/511] Compiling AISDKProviderUtils WithUserAgentSuffix.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[405/511] Compiling AISDKProviderUtils WithoutTrailingSlash.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\AISDKProviderUtils\SplitDataUrl.swift:43:7: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+41 |         let mediaType = String(dataParts[1])
+
+42 |         return (mediaType, base64Content)
+
+43 |     } catch {
+
+   |       `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+
+44 |         return (nil, nil)
+
+45 |     }
+
+[406/512] Wrapping AST for AISDKProviderUtils for debugging
+[408/516] Compiling RevAIProvider RevAIConfig.swift
+[409/516] Compiling RevAIProvider RevAIError.swift
+[410/516] Compiling RevAIProvider RevAIModelIds.swift
+[411/516] Emitting module RevAIProvider
+[412/519] Compiling RevAIProvider RevAIProvider.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\RevAIProvider\RevAIProvider.swift:91:34: error: type 'URLSession' (aka 'AnyObject') has no member 'shared'
+
+ 89 | private func defaultRevAIFetchFunction() -> FetchFunction {
+
+ 90 |     { request in
+
+ 91 |         let session = URLSession.shared
+
+    |                                  `- error: type 'URLSession' (aka 'AnyObject') has no member 'shared'
+
+ 92 |
+
+ 93 |         if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+
+[413/519] Compiling RevAIProvider RevAITranscriptionModel.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\RevAIProvider\RevAIProvider.swift:91:34: error: type 'URLSession' (aka 'AnyObject') has no member 'shared'
+
+ 89 | private func defaultRevAIFetchFunction() -> FetchFunction {
+
+ 90 |     { request in
+
+ 91 |         let session = URLSession.shared
+
+    |                                  `- error: type 'URLSession' (aka 'AnyObject') has no member 'shared'
+
+ 92 |
+
+ 93 |         if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+
+[414/519] Compiling RevAIProvider RevAIVersion.swift
+C:\Users\DAVID\Code\swift-ai-sdk-hanlin-raw-tool-input-20261115\Sources\RevAIProvider\RevAIProvider.swift:91:34: error: type 'URLSession' (aka 'AnyObject') has no member 'shared'
+
+ 89 | private func defaultRevAIFetchFunction() -> FetchFunction {
+
+ 90 |     { request in
+
+ 91 |         let session = URLSession.shared
+
+    |                                  `- error: type 'URLSession' (aka 'AnyObject') has no member 'shared'
+
+ 92 |
+
+ 93 |         if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+
+error: fatalError
