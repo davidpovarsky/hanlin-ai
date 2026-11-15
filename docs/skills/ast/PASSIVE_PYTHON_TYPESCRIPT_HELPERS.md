@@ -57,3 +57,41 @@ manifest interpretation, authoritative module/distribution/version mapping and f
 acceptance remain NOT_RUN. Shared SkillFormat root/ranges/format findings must be retained:
 nil convenience fields, tagged/merged/ambiguous metadata are unknown interpretation, not
 evidence of zero requirements. No parallel YAML/readiness parser is introduced here.
+
+## Dependency manifest tranche
+
+`hanlin_python_manifest.py` accepts immutable bytes and the trusted existing original
+`packaging26.3` Requirement parser supplied by Runtime, not imported from Skill paths. Tests
+use the already-vendored original wheel and record its SHA. Requirements retain original
+PEP508 constraints/extras/markers/URLs without resolving, fetching or installing anything;
+pip includes/directives/continuations and unsupported lines remain unknown and are not read.
+The original [Requirement API](https://packaging.pypa.io/en/stable/requirements.html) parses
+only declarations; it does not establish availability or module/distribution equivalence.
+
+Original stdlib [tomllib](https://docs.python.org/3.14/library/tomllib.html) reads bounded
+`pyproject.toml` bytes. It supplies values, not token spans: dependency findings deliberately
+use the whole original document range at line1, UNKNOWN confidence and an explicit span reason.
+No custom TOML lexer or invented exact token location is used. Project/optional/build
+requirements are retained; dynamic metadata/build backends, extra tool/dependency-group
+interpretation and Python version compatibility are unknown and never executed. Post-parse
+node/depth/pending/time limits complement the pre-parse byte bound; they do not promise a hard
+allocation/parse interrupt.
+
+The same TypeScript compiler helper accepts strict `package.json`. Builtin JSON syntax
+validation is followed by original compiler AST positions, preserving duplicate dependency
+keys and reporting unknown rather than using a flattened last-key-wins object. Runtime/dev/
+optional/peer constraints, engine ranges and bin paths remain declared syntax. Lifecycle,
+native-build/platform/export/peer metadata stays unresolved. TypeScript `ts.sys` IO hooks
+throw in both source and JSON tests; no lifecycle string or referenced binary is run.
+
+`dependencyDeclaration` is distinct from imported `moduleReference`. `Pillow>=10` is an actual
+distribution declaration; importing `PIL` does not create one. npm facts retain the literal
+`name@specifier` form, including scopes/aliases/paths, with separate optional/development/
+peer/engine reasons. Runtime05 owns authoritative version/platform/package-name resolution,
+installed native modules/binaries and readiness. These facts grant no permission or execution.
+
+Portable manifest tranche: Python3.12.5/packaging26.3 five methods and Node22.17.0/TypeScript6.0.3
+five source+JSON methods passed. Raw source/test/lock/wheel/log hashes are in
+`evidence/portable-manifests-2026-11-15.json`. Embedded engines/iOS remain NOT_RUN. A ninth native
+Swift test decodes actual manifest helper JSON and checks declaration/import distinction and
+source ranges; the changed enum/schema/fixture closure requires fresh native validation.

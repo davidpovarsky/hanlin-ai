@@ -53,12 +53,15 @@ export function analyzeTypeScriptSource(ts, {file, utf8, maximumBytes = 262144,
   if (ts?.version !== '6.0.3') return unavailable('unsupportedCompilerVersion');
   const source = bytes.toString('utf8');
   const extension = file.split('.').at(-1)?.toLowerCase();
+  const jsonManifest = file.split(/[\\/]/).at(-1) === 'package.json';
+  if (jsonManifest) report.provenance.scanner = `typescript.JSONCompilerAPI/${ts.version}`;
   const scriptKind = extension === 'tsx' ? ts.ScriptKind.TSX : extension === 'jsx' ? ts.ScriptKind.JSX
     : ['js', 'mjs', 'cjs'].includes(extension) ? ts.ScriptKind.JS
-    : ['ts', 'mts', 'cts'].includes(extension) ? ts.ScriptKind.TS : undefined;
+    : ['ts', 'mts', 'cts'].includes(extension) ? ts.ScriptKind.TS : jsonManifest ? ts.ScriptKind.JSON : undefined;
   if (scriptKind === undefined) return unavailable('unsupportedSourceKind');
   const deadline = performance.now() + parseSeconds * 1000;
   try {
+    if (jsonManifest) JSON.parse(source); // Strict JSON syntax; parsed object is never a last-key-wins authority.
     sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, scriptKind);
     // Public syntactic-diagnostic API with a memory-only host. No ts.sys/default
     // CompilerHost, libs, project/config discovery, plugins or import resolution.
@@ -69,7 +72,8 @@ export function analyzeTypeScriptSource(ts, {file, utf8, maximumBytes = 262144,
       fileExists: name => name === file, readFile: name => name === file ? source : undefined,
       getCanonicalFileName: name => name, useCaseSensitiveFileNames: () => true, getNewLine: () => '\n',
     };
-    const program = ts.createProgram([file], {noLib: true, noResolve: true, noEmit: true, allowJs: true}, host);
+    const program = ts.createProgram([file], {noLib: true, noResolve: true, noEmit: true,
+      allowJs: true, allowNonTsExtensions: true, resolveJsonModule: jsonManifest}, host);
     if (program.getSyntacticDiagnostics(sourceFile).length) return unavailable('syntaxError');
   } catch (error) {
     if (error instanceof RangeError || error instanceof SyntaxError) return unavailable('parserResourceOrSyntaxError');
@@ -101,6 +105,42 @@ export function analyzeTypeScriptSource(ts, {file, utf8, maximumBytes = 262144,
     ts.SyntaxKind.ArrowFunction, ts.SyntaxKind.MethodDeclaration, ts.SyntaxKind.Constructor,
     ts.SyntaxKind.ClassDeclaration, ts.SyntaxKind.BinaryExpression]);
   const pending = [[sourceFile, 0, false]];
+  const manifestRoot = jsonManifest ? sourceFile.statements[0]?.expression : undefined;
+  if (jsonManifest && (!manifestRoot || !ts.isObjectLiteralExpression(manifestRoot))) return unavailable('unsupportedManifestRoot');
+  const manifestObjects = new Map();
+  const seenKeys = new Map();
+  if (manifestRoot) manifestObjects.set(manifestRoot, 'root');
+  const manifestProperty = node => {
+    const mode = manifestObjects.get(node.parent);
+    if (!mode) return;
+    const key = literal(node.name);
+    if (key === undefined) { emit('unknown', null, node, 'unsupportedManifestKey'); return; }
+    const seen = seenKeys.get(node.parent) ?? new Set();
+    if (seen.has(key)) emit('unknown', null, node, 'duplicateManifestKey');
+    seen.add(key); seenKeys.set(node.parent, seen);
+    const value = literal(node.initializer);
+    if (mode === 'root') {
+      if (['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies', 'engines', 'bin'].includes(key)) {
+        if (key === 'bin' && value !== undefined) emit('scriptReference', value, node, 'declaredBinPathNotExecutableProof');
+        else if (ts.isObjectLiteralExpression(node.initializer)) manifestObjects.set(node.initializer, key);
+        else emit('unknown', null, node, 'unsupportedManifestDeclarationShape');
+      } else if (['scripts', 'gypfile', 'os', 'cpu', 'libc', 'exports', 'peerDependenciesMeta'].includes(key))
+        emit('unknown', null, node, 'lifecycleNativeOrPlatformMetadataNotResolved');
+      else if (key === 'packageManager') emit(value === undefined ? 'unknown' : 'dependencyDeclaration', value ?? null,
+        node, 'declaredPackageManagerNotAvailability');
+    } else if (value === undefined) emit('unknown', null, node, 'unsupportedManifestConstraint');
+    else if (mode === 'bin') emit('scriptReference', value, node, 'declaredBinPathNotExecutableProof');
+    else {
+      const constraint = key + '@' + value;
+      emit(Buffer.byteLength(constraint) <= 256 ? 'dependencyDeclaration' : 'unknown',
+        Buffer.byteLength(constraint) <= 256 ? constraint : null, node,
+        mode === 'engines' ? 'declaredEngineRangeNotCompatibility'
+          : mode === 'optionalDependencies' ? 'declaredNpmOptionalConstraintNotInstalled'
+          : mode === 'devDependencies' ? 'declaredNpmDevelopmentConstraintNotInstalled'
+          : mode === 'peerDependencies' ? 'declaredNpmPeerConstraintNotInstalled'
+          : 'declaredNpmConstraintNotInstalled');
+    }
+  };
   while (pending.length) {
     const [node, depth, inherited] = pending.pop();
     if (report.visitedNodes >= maximumNodes || depth > maximumDepth || cancelled() || performance.now() >= deadline) {
@@ -108,7 +148,8 @@ export function analyzeTypeScriptSource(ts, {file, utf8, maximumBytes = 262144,
     }
     report.visitedNodes++;
     const conditional = inherited || conditionalKinds.has(node.kind);
-    if (ts.isImportDeclaration(node)) {
+    if (jsonManifest && ts.isPropertyAssignment(node)) manifestProperty(node);
+    else if (ts.isImportDeclaration(node)) {
       const clause = node.importClause, bindings = clause?.namedBindings;
       const onlyTypes = clause?.isTypeOnly || (clause && !clause.name && bindings && ts.isNamedImports(bindings)
         && bindings.elements.length > 0 && bindings.elements.every(element => element.isTypeOnly));

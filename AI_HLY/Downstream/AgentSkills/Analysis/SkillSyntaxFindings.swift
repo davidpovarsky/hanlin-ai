@@ -13,7 +13,7 @@ public struct SkillSyntaxLocation: Codable, Hashable, Sendable {
 
 public struct SkillSyntaxFinding: Codable, Hashable, Sendable {
     public enum Kind: String, Codable, Sendable {
-        case interpreter, command, scriptReference, moduleReference, workingDirectory, redirection, unknown
+        case interpreter, command, scriptReference, moduleReference, dependencyDeclaration, workingDirectory, redirection, unknown
     }
     public enum Confidence: String, Codable, Sendable {
         case literalSyntax, conditionalSyntax, unknown

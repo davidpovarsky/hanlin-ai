@@ -159,4 +159,21 @@ final class BashSyntaxTests: XCTestCase {
         XCTAssertEqual(oversized.findings.first?.reason, "sourceBudget")
         XCTAssertNil(oversized.sourceSHA256)
     }
+
+    func testActualManifestReportsPreserveDeclaredVersusImportedFacts() throws {
+        for name in ["python-manifest-host", "typescript-manifest-host"] {
+            let url = try XCTUnwrap(Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Fixtures"))
+            let report = try JSONDecoder().decode(SkillSyntaxReport.self, from: Data(contentsOf: url))
+            XCTAssertEqual(report.completion, .complete)
+            XCTAssertTrue(report.findings.contains { $0.kind == .dependencyDeclaration })
+            XCTAssertFalse(report.findings.contains { $0.kind == .moduleReference })
+            for finding in report.findings {
+                XCTAssertEqual(finding.source.file, report.file)
+                XCTAssertGreaterThanOrEqual(finding.source.line, 1)
+                XCTAssertLessThanOrEqual(finding.source.byteOffset + finding.source.byteLength, report.inputBytes)
+            }
+            XCTAssertEqual(try JSONDecoder().decode(SkillSyntaxReport.self,
+                from: JSONEncoder().encode(report)), report)
+        }
+    }
 }
