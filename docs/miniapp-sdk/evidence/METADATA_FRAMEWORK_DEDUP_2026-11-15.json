@@ -2858,6 +2858,53 @@
       "installedXcode": "No C++ developer headers/libraries",
       "installedCandidate": "Homebrew llvm@20 20.1.8, includes+clang-cpp+libclang; compatibility NOT_RUN",
       "nativeRuntimeOrSerializerMigration": false
+    },
+    "modernFrontendCandidate": {
+      "contractVersion": 1,
+      "status": "IN_PROGRESS_NOT_ACCEPTED",
+      "frontend": "Homebrew LLVM20.1.8",
+      "inventoryRun": 43723704321,
+      "runtimePin": "NativeScript iOS9.1.0",
+      "productionDefault": "legacy17",
+      "provenanceRun": {
+        "run": 43729552849,
+        "sourceSHA": "18538343a021d5eb0a1b5d9ad2f35d949c9826fd",
+        "compile": "EXECUTED_PASS",
+        "enumPrefixControls": {
+          "status": "EXECUTED_PASS",
+          "cases": 5
+        },
+        "generatorSHA256": "528305f67791c9fb91f98a024bae9e1ccc8129d42c092ad7773f21850d3785bc",
+        "controls": {
+          "status": "INCOMPLETE",
+          "executedPass": 22,
+          "failed": 2,
+          "notRun": 2,
+          "manifestFilesVerified": 670,
+          "manifestMismatches": 0,
+          "resultSHA256": "b36cdac636c0352a95219c83a59ad3e74f68d92ecabab1ccb535cc353d8abc86"
+        }
+      },
+      "sdkRun": {
+        "run": 43729857636,
+        "sourceSHA": "bdd6fcf1",
+        "compile": "REUSED_VERIFIED_COMPILE_PASS",
+        "generation": "EXECUTED_PASS",
+        "clangErrors": 0,
+        "metadataSHA256": "f846cd4376a78cbae8451d235717de7f011cbbf2c0dac65a4d300a92ffe1df5e",
+        "existingAPIModelPreservation": "FAILED",
+        "referenceModules": 31
+      },
+      "nextRun": {
+        "run": 43730367651,
+        "sourceSHA": "16e86901",
+        "status": "RUNNING"
+      },
+      "combined": "NOT_RUN",
+      "VM": "NOT_RUN",
+      "UI": "NOT_RUN",
+      "physicalDevice": "NOT_RUN",
+      "completion": false
     }
   }
 }

@@ -40,6 +40,23 @@ implicitly enables named modules even with -fno-modules; the textual candidate
 must explicitly use -fno-cxx-modules, retaining module maps for ownership.
 Actual same-frontend role/provenance/negative and runtime gates remain open.
 
+Actual modern run 43729552849 at18538343 compiled the candidate and executed
+five C++ enum-prefix controls. Its changed-frontend matrix is INCOMPLETE:
+22 EXECUTED_PASS, two FAILED, two NOT_RUN. All670 retained manifest files were
+verified locally. The failures conservatively rejected LLVM20's two builtin
+`push_macro` directives; no parser/metadata pass was inferred from them.
+Cancellation remains unobserved and the combined modern wrapper is not adopted.
+
+SDK run43729857636 reused that exact compiled image after verifying its source,
+frontend headers/resources/libraries, actual host compiler/linker/SDK dependency
+closure and environment. SDK generation now exits0 with zero Clang errors and
+all required names, but the31-module existing-API model gate FAILED. This is
+not accepted metadata: global-variable filtering lost exports, C++ NS_OPTIONS
+expansion lost named enum models, and an empty-prefix regression added Swift
+enum names. The active correction retains the strict model gate. Its builtin
+pragma handling is restricted to the actual compiler predefines FileID and
+exact two directive texts, with source `#line` impersonation rejected.
+
 The owner's 2026-11-15 activation supersedes the historical pause/preparation
 limits below. Runtime remains the sole metadata/tooling writer in the existing
 worktree and branch. SDK-03/SDK-04/INT-03 remain open.

@@ -19,8 +19,8 @@ def sha(path):
 
 
 def enum_prefix_source():
-    # Preserve the original terminating results, and stop the observed
-    # underscore -> digit -> shorter-prefix cycle before stack exhaustion.
+    # Preserve original terminating results while bounding recursive prefix
+    # progression, including enums with no fields and repeated candidates.
     return r'''static std::string createValidPrefix(const std::vector<std::string>& fieldNames,
                                      const std::string& prefix) {
   std::set<std::string> visited;
@@ -156,6 +156,25 @@ def main():
   }
   // The decl has no typedef name, so we return its name.''')
     factory.write_text(text)
+    type_factory = generator / "src/Meta/TypeFactory.cpp"
+    text = base.replace_once(type_factory.read_text(),
+        '  vector<string> boolTypedefs{"BOOL", "Boolean", "bool"};', '''  // The C++ NS_OPTIONS integer typedef belongs to its immediately following
+  // anonymous enum at the same macro expansion. Preserve the existing Enum
+  // model in function/property signatures as well as in named exports.
+  const auto* alias = type->getDecl();
+  if (alias->getASTContext().getLangOpts().CPlusPlus &&
+      alias->getUnderlyingType()->isIntegerType() && alias->getLocation().isMacroID()) {
+    if (const auto* enumeration = clang::dyn_cast_or_null<clang::EnumDecl>(alias->getNextDeclInContext())) {
+      const auto& sm = alias->getASTContext().getSourceManager();
+      if (enumeration->getName().empty() && enumeration->getBeginLoc().isMacroID() &&
+          sm.getExpansionLoc(alias->getLocation()) == sm.getExpansionLoc(enumeration->getBeginLoc())) {
+        auto* model = &this->_metaFactory->create(*enumeration)->as<EnumMeta>();
+        return make_shared<EnumType>(this->create(alias->getUnderlyingType()).get(), model);
+      }
+    }
+  }
+  vector<string> boolTypedefs{"BOOL", "Boolean", "bool"};''')
+    type_factory.write_text(text)
     visitor = generator / "src/Meta/DeclarationConverterVisitor.h"
     text = visitor.read_text()
     text = base.replace_once(text, "#include <clang/AST/RecursiveASTVisitor.h>",
@@ -242,11 +261,12 @@ add_subdirectory(src)
         controls.write_text('#include <string>\n#include <vector>\n#include <set>\n#include <cctype>\n' + enum_prefix_source() + r'''
 int main() {
   if (createValidPrefix({"__1", "__2"}, "__") != "") return 1;
-  if (createValidPrefix({"__foo1", "__foo2"}, "__foo") != "__") return 2;
+  if (createValidPrefix({"__foo1", "__foo2"}, "__foo") != "") return 2;
   if (createValidPrefix({"MyEnumOne", "MyEnumTwo"}, "MyEnum") != "MyEnum") return 3;
   if (createValidPrefix({"Prefix_One", "Prefix_Two"}, "Prefix") != "Prefix_") return 4;
   if (createValidPrefix({"ABC1", "ABC2"}, "ABC") != "AB") return 5;
   if (createValidPrefix({"_CLOCK_REALTIME", "_CLOCK_MONOTONIC"}, "") != "") return 6;
+  if (createValidPrefix({}, "EmptyEnum") != "EmptyEnum") return 7;
   return 0;
 }
 ''')
@@ -255,7 +275,7 @@ int main() {
         with (work / "build-2-enum-prefix-controls.log").open("w") as log:
             subprocess.run(control_compile, check=True, stdout=log, stderr=subprocess.STDOUT, timeout=60)
             subprocess.run([str(control_binary)], check=True, stdout=log, stderr=subprocess.STDOUT, timeout=5)
-        result["enumPrefixControls"] = {"status": "EXECUTED_PASS", "cases": 6, "sourceSHA256": sha(controls), "compileCommand": control_compile,
+        result["enumPrefixControls"] = {"status": "EXECUTED_PASS", "cases": 7, "sourceSHA256": sha(controls), "compileCommand": control_compile,
             "boundary": "Actual portable C++ algorithm execution, not iOS/runtime acceptance."}
         result.update(status="BUILT_NOT_ACCEPTED", generatorSHA256=sha(build / "bin/objc-metadata-generator"))
         import shlex
