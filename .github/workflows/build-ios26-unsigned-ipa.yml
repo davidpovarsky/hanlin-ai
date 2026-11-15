@@ -18,6 +18,11 @@ on:
         required: false
         default: false
         type: boolean
+      nativescript_metadata_modern_compile:
+        description: Compile the candidate generator against exact installed modern frontend assets without adoption
+        required: false
+        default: false
+        type: boolean
       runtime_job_foundation_only:
         description: Only verify original Runtime job ownership and background-task SDK sources; no app/native engine build or upload
         required: false
@@ -175,16 +180,19 @@ jobs:
           python3 --version
           python3 -c 'import shutil; free = shutil.disk_usage(".").free; print("freeBytes", free); assert free >= 8 * 1024**3'
       - name: Prepare declaration-only metadata tool
-        if: ${{ !inputs.nativescript_metadata_frontend_inventory }}
+        if: ${{ !inputs.nativescript_metadata_frontend_inventory && !inputs.nativescript_metadata_modern_compile }}
         uses: ./.github/actions/prepare-nativescript-metadata-tool
+      - name: Compile candidate modern metadata frontend
+        if: inputs.nativescript_metadata_modern_compile
+        run: python3 Scripts/NativeScript/build-modern-metadata-tool.py
       - name: Inspect installed frontend development assets
         if: inputs.nativescript_metadata_frontend_inventory
         run: python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py
       - name: Execute retained native provenance controls
-        if: ${{ inputs.nativescript_metadata_provenance_controls && !inputs.nativescript_metadata_frontend_inventory }}
+        if: ${{ inputs.nativescript_metadata_provenance_controls && !inputs.nativescript_metadata_frontend_inventory && !inputs.nativescript_metadata_modern_compile }}
         run: python3 Scripts/CI/MetadataProvenanceProof/run.py
       - name: Compare real SDK metadata parser modes
-        if: ${{ !inputs.nativescript_metadata_provenance_controls && !inputs.nativescript_metadata_frontend_inventory }}
+        if: ${{ !inputs.nativescript_metadata_provenance_controls && !inputs.nativescript_metadata_frontend_inventory && !inputs.nativescript_metadata_modern_compile }}
         run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-metadata-tool/bin/objc-metadata-generator --emit-types --runtime-wrapper
       - name: Retain actual SDK probe evidence
         if: always()
@@ -198,6 +206,9 @@ jobs:
             build/acceptance/metadata-frontend-inventory
             build/nativescript-metadata-tool/provenance.json
             build/nativescript-metadata-tool/bin
+            build/nativescript-modern-metadata-tool/provenance.json
+            build/nativescript-modern-metadata-tool/build-*.log
+            build/nativescript-modern-metadata-tool/bin
           if-no-files-found: error
           retention-days: 14
 
