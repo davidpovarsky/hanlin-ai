@@ -29,6 +29,8 @@ Do not turn this into a duplicate issue tracker or a dump of temporary thoughts.
 
 Quick captures that still need classification.
 
+- **2026-11-15 existing Runtime planner regression:** `test_runtime_tooling_full_acceptance_deduplication_and_scoped_build` expects only `AgentSkillsExposureTests`, but the current map also selects `HanlinCapabilityObservationTests`. Composer's portable planner run was95/96; the same failure reproduced with committed97fe29a0 mapping before the scoped Composer UI route addition. Resolve the intended Runtime coverage contract before changing the assertion; preserve required observation coverage. See docs/composer/APP_SDK_CONSUMER_HANDOFF_2026-11-15.md.
+
 ## Ideas & Opportunities
 
 Potential improvements, features, optimizations, or architectural ideas.
