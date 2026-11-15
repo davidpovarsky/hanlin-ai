@@ -1,0 +1,26 @@
+{
+  "identity": "hanlin-swiftpm-9bj5606g",
+  "name": "HanlinSkillFormat",
+  "url": "/Users/runner/work/_temp/hanlin-swiftpm-9bj5606g",
+  "version": "unspecified",
+  "path": "/Users/runner/work/_temp/hanlin-swiftpm-9bj5606g",
+  "traits": [
+    "default"
+  ],
+  "dependencies": [
+    {
+      "identity": "yams",
+      "name": "Yams",
+      "url": "https://github.com/jpsim/Yams.git",
+      "version": "6.2.2",
+      "path": "/Users/runner/work/_temp/hanlin-swiftpm-9bj5606g/.build/checkouts/Yams",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
+      ]
+    }
+  ]
+}
+

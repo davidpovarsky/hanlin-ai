@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "repository": "davidpovarsky/hanlin-ai",
+  "pullRequest": 7,
+  "head": "9d5241766fea76830b5084f771ccdec98d57f6bb",
+  "base": "2b7f4a5490a7939c87f17939b883976146266bf0",
+  "changedPaths": [
+    "Packages/HanlinSkillFormat/Package.resolved",
+    "Packages/HanlinSkillFormat/Package.swift"
+  ],
+  "sourceOwnerCommit": "485933ba56952b4aef1363b88e5b4bc33bb2b94c",
+  "consumer": "HanlinSkillFormat original owner sources/tests",
+  "results": [
+    {
+      "label": "baseline",
+      "sourceSHA": "2b7f4a5490a7939c87f17939b883976146266bf0",
+      "version": "6.2.1",
+      "upstreamCommit": "deaf82e867fa2cbd3cd865978b079bfcf384ac28",
+      "manifestSHA256": "c925614a76bb28708f76cd356a05dabd46b359763bbed90f8b8a90ea466c86e1",
+      "resolvedSHA256": "347e22bf916da7793acd9dcd9f0c3478b7905ee6d69c5c6c012bc05fc4bb3f5f",
+      "license": "MIT",
+      "licenseSHA256": "0354b0ea403d2e78059c5ae0510a2cfae9f8eb306fcef094ac9fff5b47e20bed",
+      "status": "EXECUTED_PASS",
+      "testSummaries": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "label": "candidate",
+      "sourceSHA": "9d5241766fea76830b5084f771ccdec98d57f6bb",
+      "version": "6.2.2",
+      "upstreamCommit": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+      "manifestSHA256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "resolvedSHA256": "37b0700d9d821d899a0f63d2e4feee66721a9d25e500cac5587022e782e47399",
+      "license": "MIT",
+      "licenseSHA256": "0354b0ea403d2e78059c5ae0510a2cfae9f8eb306fcef094ac9fff5b47e20bed",
+      "status": "EXECUTED_PASS",
+      "testSummaries": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    }
+  ],
+  "toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "platform": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "scope": "Real macOS SwiftPM resolver, compile and package tests for both original Yams releases; no iOS simulator/app distribution claim",
+  "rollback": {
+    "parent": "2b7f4a5490a7939c87f17939b883976146266bf0",
+    "strategy": "Restore the isolated parent manifest and exact resolved Git SHA"
+  }
+}

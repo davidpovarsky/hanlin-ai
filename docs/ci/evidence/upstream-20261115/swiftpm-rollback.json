@@ -1,0 +1,22 @@
+{
+  "head": "9d5241766fea76830b5084f771ccdec98d57f6bb",
+  "base": "2b7f4a5490a7939c87f17939b883976146266bf0",
+  "pullRequest": 7,
+  "operation": "Actual git apply --reverse on isolated scratch data, no remote/source mutation",
+  "files": [
+    {
+      "path": "Packages/HanlinSkillFormat/Package.swift",
+      "candidateSHA256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "parentSHA256": "c925614a76bb28708f76cd356a05dabd46b359763bbed90f8b8a90ea466c86e1",
+      "restoredSHA256": "c925614a76bb28708f76cd356a05dabd46b359763bbed90f8b8a90ea466c86e1",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Package.resolved",
+      "candidateSHA256": "37b0700d9d821d899a0f63d2e4feee66721a9d25e500cac5587022e782e47399",
+      "parentSHA256": "347e22bf916da7793acd9dcd9f0c3478b7905ee6d69c5c6c012bc05fc4bb3f5f",
+      "restoredSHA256": "347e22bf916da7793acd9dcd9f0c3478b7905ee6d69c5c6c012bc05fc4bb3f5f",
+      "status": "EXECUTED_PASS"
+    }
+  ]
+}

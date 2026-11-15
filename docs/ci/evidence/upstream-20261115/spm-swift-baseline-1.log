@@ -1,0 +1,26 @@
+{
+  "identity": "hanlin-swiftpm-ag7s754q",
+  "name": "HanlinSkillFormat",
+  "url": "/Users/runner/work/_temp/hanlin-swiftpm-ag7s754q",
+  "version": "unspecified",
+  "path": "/Users/runner/work/_temp/hanlin-swiftpm-ag7s754q",
+  "traits": [
+    "default"
+  ],
+  "dependencies": [
+    {
+      "identity": "yams",
+      "name": "Yams",
+      "url": "https://github.com/jpsim/Yams.git",
+      "version": "6.2.1",
+      "path": "/Users/runner/work/_temp/hanlin-swiftpm-ag7s754q/.build/checkouts/Yams",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,40 @@
+{
+  "run": "43755952261",
+  "head": "9d5241766fea76830b5084f771ccdec98d57f6bb",
+  "base": "2b7f4a5490a7939c87f17939b883976146266bf0",
+  "workflow": {
+    "path": ".github/workflows/validate-app-split.yml",
+    "referenced_workflows": [
+      {
+        "path": "davidpovarsky/hanlin-ai/.github/workflows/check-runtime-dependency-updates.yml@9d5241766fea76830b5084f771ccdec98d57f6bb",
+        "sha": "9d5241766fea76830b5084f771ccdec98d57f6bb",
+        "ref": "refs/heads/codex/renovate/jpsim-yams-6.x"
+      }
+    ],
+    "event": "workflow_dispatch",
+    "created_at": "2026-11-15T20:04:24Z",
+    "updated_at": "2026-11-15T20:06:44Z"
+  },
+  "artifact": {
+    "id": 14178620163,
+    "name": "upstream-swiftpm-proof-43755952261",
+    "size_in_bytes": 6861,
+    "digest": "sha256:68d5d0bb2c853fac90b8f8dd77f2fe8d29ef762d8ca7616f840d4c49ffac33d1"
+  },
+  "actualCheck": {
+    "id": 132939967146,
+    "name": "upstream-validation / Hanlin SwiftPM upstream acceptance",
+    "head_sha": "9d5241766fea76830b5084f771ccdec98d57f6bb",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "proofDigestVerified": "EXECUTED_PASS",
+  "sameOriginalMITLicenseVerified": "EXECUTED_PASS",
+  "validationPassed": true,
+  "mergeEligible": false,
+  "manualGates": [
+    "Native CYaml/Swift consumer owner review",
+    "Branch protection missing; autoMerge disabled",
+    "No iOS app/simulator/distribution claim"
+  ]
+}
