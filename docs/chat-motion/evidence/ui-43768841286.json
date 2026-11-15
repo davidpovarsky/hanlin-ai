@@ -1,0 +1,19 @@
+{
+  "run_id": 43768841286,
+  "job_id": 132979959678,
+  "source_sha": "3b16b802b4bbe56d0319f4e0347641cc2a2ae4e9",
+  "status": "INFRA_ERROR",
+  "executed_test_methods": 0,
+  "compilation": "NOT_RUN",
+  "reason": "Fresh runner lacked XcodeGen; preflight xcodegen --version exited127",
+  "job_duration_seconds": 16,
+  "artifact": {
+    "id": 14183127431,
+    "size_bytes": 930,
+    "zip_sha256": "8c606dfa9dbdc0767c0822b6d0acdf0911fec04a5913962f6b675c2bde37f357",
+    "verification": "DOWNLOADED_ZIP_MATCHES_API"
+  },
+  "raw_xcresult": "NOT_CREATED",
+  "fix_scope": "Proof preflight installs XcodeGen only if absent, following existing repository proof scripts",
+  "production_root_cause_claim": false
+}

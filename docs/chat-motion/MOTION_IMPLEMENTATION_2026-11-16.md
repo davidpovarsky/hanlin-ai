@@ -83,3 +83,8 @@ The fixture's long text includes Markdown syntax as literal text and native mono
 it does not exercise the original Markdown renderer, real AgentRun/parallel results or actual
 ChatAutoFollowController behavior. Those original-app obligations remain NOT_RUN.
 Current Xcode27 runner inventory has iOS27.0/27.1/27.2 only; iPad26 runtime acceptance is NOT_RUN.
+
+First UI attempt43768841286 at3b16b802 was INFRA_ERROR before compilation/test preparation:
+the fresh runner lacked XcodeGen (exit127, job16s), zero XCTest methods executed. The existing
+repository convention of installing XcodeGen only when absent was added to this proof's
+preflight. No production renderer/disclosure change was inferred from this infrastructure failure.

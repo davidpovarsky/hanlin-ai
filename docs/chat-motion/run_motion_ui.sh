@@ -16,6 +16,7 @@ PY
 )"
 [[ -n "$selected_xcode" ]] || { echo 'INFRA_ERROR no stable Xcode27';exit 2; }
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+if ! command -v xcodegen >/dev/null; then brew install xcodegen > "$evidence/xcodegen-install.log" 2>&1; fi
 { xcodebuild -version;xcrun swift --version;xcodebuild -showsdks;sw_vers;uname -m;xcodegen --version; } > "$evidence/preflight.txt"
 xcrun simctl list devices available -j > "$evidence/devices.json"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
