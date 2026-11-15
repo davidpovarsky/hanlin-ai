@@ -5,26 +5,90 @@ import { readFile, writeFile } from 'node:fs/promises';
 import process from 'node:process';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { selectHostPackageVersion } from './select-host-package-version.mjs';
+import { runtimeDependencyHash } from './compute-runtime-dependency-hash.mjs';
 
-const lockPath = process.argv[2] ?? 'RuntimeDependencies.lock.json';
-const packagePath = process.argv[3] ?? 'AI_HLY/Downstream/RuntimeCore/Node/Host/package.json';
-const packageLockPath = process.argv[4] ?? 'AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json';
-const syncOnly = process.argv.includes('--sync-package-lock');
 const token = process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN;
+
+export async function planHostUpdates(hostPackage, nodeVersion, metadataFor, satisfies, options = {}) {
+  const names = options.only ? [options.only] : Object.keys(hostPackage.dependencies);
+  const updates = [];
+  for (const name of names) {
+    if (!Object.hasOwn(hostPackage.dependencies, name)) throw new Error(`Unknown direct Host package: ${name}`);
+    const metadata = await metadataFor(name);
+    const version = options.version ?? selectHostPackageVersion(name, metadata, nodeVersion, satisfies);
+    const entry = metadata.versions?.[version];
+    if (!/^\d+\.\d+\.\d+$/.test(version) || !entry?.dist?.integrity || typeof entry.license !== 'string') {
+      throw new Error(`Missing stable pin/integrity/license for ${name}@${version}.`);
+    }
+    if (entry.engines?.node && !satisfies(nodeVersion, entry.engines.node)) {
+      throw new Error(`${name}@${version} requires Node ${entry.engines.node}; embedded Node is ${nodeVersion}.`);
+    }
+    const previous = hostPackage.dependencies[name];
+    const major = previous.split('.')[0] !== version.split('.')[0];
+    updates.push({ name, previous, version, changed: previous !== version, major,
+      review: major ? 'MANUAL_MAJOR' : 'FOCUSED_VALIDATION_REQUIRED', integrity: entry.dist.integrity,
+      tarball: entry.dist.tarball, license: entry.license, upstreamCommit: entry.gitHead ?? null,
+      nodeEngine: entry.engines?.node ?? null });
+  }
+  return updates;
+}
+
+async function main() {
+const args = process.argv.slice(2);
+const positional = args.filter(arg => !arg.startsWith('--'));
+const known = /^(?:--sync-package-lock|--include-native|--allow-major|--plan|--host-package=.+|--target-version=.+|--report=.+)$/;
+for (const arg of args.filter(arg => arg.startsWith('--'))) if (!known.test(arg)) throw new Error(`Unknown updater option: ${arg}`);
+const option = name => args.find(arg => arg.startsWith(name + '='))?.slice(name.length + 1);
+const lockPath = positional[0] ?? 'RuntimeDependencies.lock.json';
+const packagePath = positional[1] ?? 'AI_HLY/Downstream/RuntimeCore/Node/Host/package.json';
+const packageLockPath = positional[2] ?? 'AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json';
+const syncOnly = args.includes('--sync-package-lock');
+const planOnly = args.includes('--plan');
+const includeNative = args.includes('--include-native');
+if (option('--target-version') && !option('--host-package')) throw new Error('--target-version requires one --host-package.');
+if (includeNative && option('--host-package')) throw new Error('Native and scoped Host updates must use separate candidates.');
 const lock = JSON.parse(await readFile(lockPath, 'utf8'));
 const hostPackage = JSON.parse(await readFile(packagePath, 'utf8'));
-const originalDependencyHash = dependencyHash(lock);
+const originalDependencyHash = runtimeDependencyHash(lock);
+const report = { schemaVersion: 1, operation: syncOnly ? 'sync' : planOnly ? 'plan' : 'apply',
+  embeddedNode: lock.node.version, includeNative, baselineHash: originalDependencyHash, updates: [] };
 
 if (!syncOnly) {
   const { satisfies } = createRequire(resolve(packagePath))('semver');
+  report.updates = await planHostUpdates(hostPackage, lock.node.version, npmMetadata, satisfies,
+    { only: option('--host-package'), version: option('--target-version') });
+  if (planOnly) {
+    if (includeNative) {
+      const nodeTag = await latestTag('heylogin/nodejs-mobile', /^v24\.\d+\.\d+-mobile$/);
+      const python = await latestRelease('beeware/Python-Apple-support', /^3\.14-b\d+$/);
+      const iosSystem = await latestRelease('holzschu/ios_system', /^v\d+\.\d+\.\d+$/);
+      report.nativeCandidates = await Promise.all([
+        ['heylogin/nodejs-mobile', lock.node.tag, nodeTag],
+        ['beeware/Python-Apple-support', lock.python.release, python.tag_name],
+        ['holzschu/ios_system', lock.iosSystem.release, iosSystem.tag_name]
+      ].map(async ([repository, previous, tag]) => ({repository, previous, tag,
+        commit: await tagCommit(repository, tag), changed: previous !== tag, review: 'MANUAL_ABI_SOURCE_PATCH_REVIEW'})));
+    }
+    if (option('--report')) await writeJSON(option('--report'), report);
+    process.stdout.write(JSON.stringify(report) + '\n');
+    return;
+  }
+  if (!args.includes('--allow-major') && report.updates.some(update => update.changed && update.major)) {
+    throw new Error('Major Host changes require explicit --allow-major and manual compatibility review.');
+  }
+  if (includeNative) {
   const nodeTag = await latestTag('heylogin/nodejs-mobile', /^v24\.\d+\.\d+-mobile$/);
   const nodeVersion = nodeTag.replace(/^v/, '').replace(/-mobile$/, '');
-  const nodeArchiveURL = `https://github.com/heylogin/nodejs-mobile/archive/refs/tags/${nodeTag}.tar.gz`;
   lock.node.tag = nodeTag;
-  lock.node.commit = await tagCommit('heylogin/nodejs-mobile', nodeTag);
+  const nodeCommit = await tagCommit('heylogin/nodejs-mobile', nodeTag);
+  if (lock.node.sourcePatches?.length && lock.node.commit !== nodeCommit) {
+    throw new Error('Native Node source changed: canonical patch rebase/ABI review is required before applying pins.');
+  }
+  lock.node.commit = nodeCommit;
   lock.node.version = nodeVersion;
-  lock.node.sourceArchive = await downloadable(nodeArchiveURL, false);
+  lock.node.sourceArchive = await downloadable(`https://github.com/heylogin/nodejs-mobile/archive/${nodeCommit}.tar.gz`, false);
   hostPackage.engines.node = nodeVersion;
 
   const pythonRelease = await latestRelease('beeware/Python-Apple-support', /^3\.14-b\d+$/);
@@ -45,18 +109,17 @@ if (!syncOnly) {
     if (!asset) throw new Error(`Release ${iosRelease.tag_name} is missing ${component.name}.xcframework.zip.`);
     Object.assign(component, await downloadable(asset.browser_download_url));
   }
-
-  for (const name of Object.keys(hostPackage.dependencies)) {
-    const metadata = await npmMetadata(name);
-    const version = selectHostPackageVersion(name, metadata, nodeVersion, satisfies);
-    hostPackage.dependencies[name] = version;
   }
+  for (const update of report.updates) hostPackage.dependencies[update.name] = update.version;
   await writeJSON(packagePath, hostPackage);
 } else {
   const npmLock = JSON.parse(await readFile(packageLockPath, 'utf8'));
   for (const name of Object.keys(lock.nodeHostPackages)) {
     const resolved = npmLock.packages?.[`node_modules/${name}`];
     if (!resolved?.version || !resolved?.integrity) throw new Error(`package-lock is missing ${name}.`);
+    if (resolved.version !== hostPackage.dependencies[name] || npmLock.packages?.['']?.dependencies?.[name] !== hostPackage.dependencies[name]) {
+      throw new Error(`Manifest/package-lock drift for ${name}; regenerate the exact lock first.`);
+    }
     lock.nodeHostPackages[name].version = resolved.version;
     lock.nodeHostPackages[name].integrity = resolved.integrity;
     if (resolved.license) lock.nodeHostPackages[name].license = resolved.license;
@@ -67,12 +130,21 @@ if (!syncOnly) {
   lock.typescript.integrity = typescript.integrity;
 }
 
-if (dependencyHash(lock) !== originalDependencyHash) {
+// The canonical native identity explicitly excludes Host JS/TypeScript packages.
+// Host-only updates rebuild/verify their own archive; they do not falsify an
+// unchanged, separately authenticated Node/CPython binary's provenance.
+if (includeNative && runtimeDependencyHash(lock) !== originalDependencyHash) {
   lock.runtimeBundle.verificationStatus = 'pending-runtime-build';
   lock.node.verificationStatus = 'pending-runtime-build';
 }
 
 await writeJSON(lockPath, lock);
+report.candidateHash = runtimeDependencyHash(lock);
+if (option('--report')) await writeJSON(option('--report'), report);
+process.stdout.write(JSON.stringify(report) + '\n');
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) await main();
 
 async function latestTag(repository, pattern) {
   const tags = await github(`/repos/${repository}/tags?per_page=100`);
@@ -98,7 +170,8 @@ async function tagCommit(repository, tag) {
 }
 
 async function downloadable(url, includeSize = true) {
-  const response = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {}, redirect: 'follow' });
+  // Upstream public asset downloads never receive the repository token.
+  const response = await fetch(url, { redirect: 'follow' });
   if (!response.ok) throw new Error(`Download failed (${response.status}): ${url}`);
   const bytes = Buffer.from(await response.arrayBuffer());
   const result = { url, sha256: createHash('sha256').update(bytes).digest('hex') };
@@ -128,15 +201,6 @@ function compareVersions(left, right) {
     if (difference) return difference;
   }
   return left.localeCompare(right);
-}
-
-function dependencyHash(value) {
-  const copy = structuredClone(value);
-  delete copy.runtimeBundle.sha256;
-  delete copy.runtimeBundle.verificationStatus;
-  delete copy.node.xcframeworkSha256;
-  delete copy.node.verificationStatus;
-  return createHash('sha256').update(JSON.stringify(copy)).digest('hex');
 }
 
 async function writeJSON(path, value) {

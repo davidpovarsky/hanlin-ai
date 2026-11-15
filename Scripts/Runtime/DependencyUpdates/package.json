@@ -1,0 +1,11 @@
+{
+  "name": "hanlin-upstream-maintenance",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned updater tooling; independent of the embedded Node ABI",
+  "engines": { "node": "24.22.1" },
+  "dependencies": {
+    "renovate": "44.239.1",
+    "semver": "7.8.6"
+  }
+}
