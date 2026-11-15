@@ -37,10 +37,17 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
     def test_actual_compiler_distinguishes_cpp_only_from_c_objc_and_mixed_declarations(self):
         cases = [
             ("namespace api { class Thing {}; int work(); }", HEADERS.CPP_ROLE),
+            ("namespace api { class Thing { public: int method(); }; inline int work() { return 1; } }", HEADERS.CPP_ROLE),
+            ("struct Opaque; using CppAlias = Opaque* (*)(); namespace api { class Thing {}; }", HEADERS.CPP_ROLE),
+            ("struct Opaque;", HEADERS.PUBLIC_ROLE),
             ("extern \"C\" int c_api();", HEADERS.PUBLIC_ROLE),
             ("@interface NativeThing @end", HEADERS.PUBLIC_ROLE),
             ("namespace api { class Thing {}; } extern \"C\" int c_api();", HEADERS.PUBLIC_ROLE),
+            ("namespace api { class Thing {}; } int c_compatible_api(void);", HEADERS.PUBLIC_ROLE),
             ("namespace api { extern \"C\" int nested_c_api(); }", HEADERS.PUBLIC_ROLE),
+            ('#define API extern "C"\nnamespace api { API int macro_api(); }', HEADERS.PUBLIC_ROLE),
+            ('namespace api { extern "C" int __attribute__((overloadable)) overloaded_c_api(int); }', HEADERS.PUBLIC_ROLE),
+            ("namespace api { extern \"C\" int c_global; class Thing {}; }", HEADERS.PUBLIC_ROLE),
             ("namespace api { class Thing {}; } struct CRecord { int value; };", HEADERS.PUBLIC_ROLE),
             ("namespace api { class Thing {}; } enum CEnum { SomeValue };", HEADERS.PUBLIC_ROLE),
             ("namespace api { class Thing {}; } typedef int CValue; extern CValue global;", HEADERS.PUBLIC_ROLE),
@@ -65,13 +72,17 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             manifest = HEADERS.produce_role_inventory(cpp.parent, [], self.compiler_library())
             self.assertEqual([r["role"] for r in manifest["frameworks"]], [HEADERS.CPP_ROLE, HEADERS.PUBLIC_ROLE])
             umbrella = root / "input.h"
-            records = HEADERS.write_public_umbrella(root, umbrella, [], [cpp.parent])
+            with patch.dict(os.environ, {}, clear=True):
+                records = HEADERS.write_public_umbrella(root, umbrella, [], [cpp.parent])
             self.assertEqual(records[0]["status"], "INCLUDE_SEARCH_ONLY_CPP")
             self.assertEqual(records[0]["modules"], ["ArbitraryCppName"])
             self.assertNotIn(str(cpp / "Headers/Entry.h"), umbrella.read_text())
             self.assertIn(str(public / "Headers/Entry.h"), umbrella.read_text())
             self.assertTrue((cpp / "Headers/Exported.h").exists())
             self.assertEqual(records[0]["inputSHA256"], HEADERS.framework_inputs(cpp))
+            with patch.dict(os.environ, {"SDKROOT": str(root / "different-sdk")}):
+                with self.assertRaisesRegex(RuntimeError, "SDK context changed"):
+                    HEADERS.write_public_umbrella(root, root / "wrong-context.h", [], [cpp.parent])
 
     def test_role_receipt_rejects_unknown_role_tampering_future_headers_and_mixed_proof(self):
         library = self.compiler_library()
@@ -107,6 +118,20 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             self.assertEqual(manifest["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
             HEADERS.write_public_umbrella(root, root / "input.h", [], [framework.parent])
             self.assertIn(str(framework / "Headers/Entry.h"), (root / "input.h").read_text())
+
+    def test_regenerated_role_preserves_future_c_api_in_unreferenced_hpp_header(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            framework = self.framework(root / "products", "CppThenMixed")
+            (framework / "Headers/Exported.h").write_text("#pragma once\nnamespace api { class Thing {}; }\n")
+            library = self.compiler_library()
+            first = HEADERS.produce_role_inventory(framework.parent, [], library)
+            self.assertEqual(first["frameworks"][0]["role"], HEADERS.CPP_ROLE)
+            (framework / "Headers/NewAPI.hpp").write_text('extern "C" int future_public_api();')
+            updated = HEADERS.produce_role_inventory(framework.parent, [], library)
+            self.assertEqual(updated["frameworks"][0]["role"], HEADERS.PUBLIC_ROLE)
+            self.assertTrue(any(d["name"] == "future_public_api" and d["category"] == "public"
+                                for d in updated["frameworks"][0]["proof"]["declarations"]))
 
     def framework(self, directory, name="ExpoModulesCore", module=None):
         framework = directory / (name + ".framework")

@@ -15,6 +15,7 @@ import tempfile
 ROLE_MANIFEST = "metadata-input-roles.json"
 PUBLIC_ROLE = "public-objc-c-root"
 CPP_ROLE = "cpp-include-dependency"
+INCOMPLETE_RECORD_POLICY_SOURCE = "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0"
 
 
 def declaration_role(declarations: list[dict]) -> str:
@@ -22,9 +23,9 @@ def declaration_role(declarations: list[dict]) -> str:
     # not header-name matching or an absence-of-binary heuristic.
     if any(d["category"] == "public" for d in declarations):
         return PUBLIC_ROLE
-    if any(d["category"] not in {"cpp", "public"} for d in declarations):
+    if any(d["category"] not in {"cpp", "public", "inert"} for d in declarations):
         return PUBLIC_ROLE
-    return CPP_ROLE if declarations else PUBLIC_ROLE
+    return CPP_ROLE if any(d["category"] == "cpp" for d in declarations) else PUBLIC_ROLE
 
 
 def inspect_header_declarations(headers: list[Path], arguments: list[str], library: Path) -> dict:
@@ -52,6 +53,11 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
     spelling = bind("clang_getCursorSpelling", String, Cursor)
     mangling = bind("clang_Cursor_getMangling", String, Cursor)
     parent = bind("clang_getCursorSemanticParent", Cursor, Cursor)
+    lexical_parent = bind("clang_getCursorLexicalParent", Cursor, Cursor)
+    definition = bind("clang_isCursorDefinition", integer, Cursor)
+    printing_policy = bind("clang_getCursorPrintingPolicy", ptr, Cursor)
+    printed = bind("clang_getCursorPrettyPrinted", String, Cursor, ptr)
+    dispose_policy = bind("clang_PrintingPolicy_dispose", None, ptr)
     cstr = bind("clang_getCString", ctypes.c_char_p, String)
     dispose_string = bind("clang_disposeString", None, String)
     count_diagnostics = bind("clang_getNumDiagnostics", integer, ptr)
@@ -70,6 +76,19 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
     owned = {str(h.resolve()): h for h in headers}
     declarations, errors, diagnostics, callback_errors = [], [], [], []
     file_paths = {}
+    def c_linkage(cursor):
+        current = lexical_parent(cursor)
+        for _ in range(64):
+            if current.kind in {0, 70, 350}:
+                return False
+            if current.kind == 23:
+                policy = printing_policy(current)
+                try:
+                    return string(printed(current, policy)).lstrip().startswith('extern "C"')
+                finally:
+                    dispose_policy(policy)
+            current = lexical_parent(current)
+        raise RuntimeError("Header-role lexical ancestry is unresolved")
     @callback_type
     def visitor(cursor, unused_parent, unused_data):
         try:
@@ -92,14 +111,24 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
                 ancestors.append(ancestor.kind)
                 ancestor = parent(ancestor)
             cpp_scope = any(k in {4, 21, 22, 24, 25, 26, 30, 31, 32} for k in ancestors)
-            if 11 <= kind <= 19 or kind in {37, 38, 39}:
+            if 11 <= kind <= 19 or kind in {37, 38}:
                 category = "public"
             elif kind == 8:  # C linkage remains public, even inside a C++ namespace.
                 symbol = string(mangling(cursor))
-                category = "cpp" if symbol.startswith(("_Z", "?")) else "public"
-            elif kind in {2, 3, 5, 7, 9, 20, 36} and not cpp_scope:
+                # A global C-compatible declaration acquires C++ mangling in
+                # this inspection TU even without an extern-C wrapper. Keep it.
+                category = "cpp" if cpp_scope and not c_linkage(cursor) and (not symbol or symbol.startswith(("_Z", "?"))) else "public"
+            elif kind == 9 and cpp_scope:
+                symbol = string(mangling(cursor))
+                category = "cpp" if not c_linkage(cursor) and (not symbol or symbol.startswith(("_Z", "?"))) else "public"
+            elif kind in {2, 3, 5} and not definition(cursor):
+                # The pinned MetaFactory rejects forward records/enums. They
+                # are not a supported entity by themselves; a public typedef,
+                # function, global or complete definition still keeps the root.
+                category = "inert"
+            elif kind in {2, 3, 5, 7, 9, 20} and (not cpp_scope or c_linkage(cursor)):
                 category = "public"  # C records/enums/globals/typedefs must survive.
-            elif cpp_scope or kind in {4, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35}:
+            elif cpp_scope or kind in {4, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 39}:
                 category = "cpp"
             elif kind in {6, 10, 23}:  # fields/parameters/linkage covered by their declarations
                 return 2
@@ -142,9 +171,14 @@ def inspect_header_declarations(headers: list[Path], arguments: list[str], libra
 
 def produce_role_inventory(directory: Path, arguments: list[str], library: Path) -> dict:
     repository = Path(__file__).resolve().parents[2]
+    build_tool = repository / "Scripts/NativeScript/build-metadata-tool.py"
+    if f'SOURCE = "{INCOMPLETE_RECORD_POLICY_SOURCE}"' not in build_tool.read_text(encoding="utf-8"):
+        raise RuntimeError("Metadata declaration policy needs review for the changed runtime source")
     records = []
     for framework in sorted(directory.glob("*.framework")):
-        headers = sorted(p for sub in ["Headers", "PrivateHeaders"] for p in (framework / sub).rglob("*.h"))
+        # Every file in the hashed header tree participates, including future
+        # .hpp/.inc files not yet imported by today's entry header.
+        headers = sorted(p for sub in ["Headers", "PrivateHeaders"] for p in (framework / sub).rglob("*") if p.is_file())
         # A cheap conservative screen avoids parsing ObjC/C frameworks at all.
         texts = "\n".join(p.read_text(encoding="utf-8", errors="strict") for p in headers)
         if not re.search(r'\b(namespace|class|template)\b', texts) or re.search(r'@(interface|protocol)\b', texts):
@@ -160,6 +194,8 @@ def produce_role_inventory(directory: Path, arguments: list[str], library: Path)
     manifest = {"schemaVersion": 1, "producer": "Scripts/Expo/prepare-ios-dependencies.mjs",
                 "producerSHA256": hashlib.sha256((repository / "Scripts/Expo/prepare-ios-dependencies.mjs").read_bytes()).hexdigest(),
                 "classifierSHA256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                "metadataToolSourceSHA256": hashlib.sha256(build_tool.read_bytes()).hexdigest(),
+                "metadataDeclarationPolicySource": INCOMPLETE_RECORD_POLICY_SOURCE,
                 "dependencyLockSHA256": hashlib.sha256((repository / "Scripts/Expo/dependency-lock.json").read_bytes()).hexdigest(),
                 "compilerLibrarySHA256": hashlib.sha256(library.read_bytes()).hexdigest(),
                 "originRoot": str(directory.resolve()), "compilerArguments": arguments, "frameworks": records}
@@ -176,6 +212,8 @@ def verified_framework_roles(directory: Path) -> dict:
     if manifest.get("schemaVersion") != 1 or manifest.get("producer") != "Scripts/Expo/prepare-ios-dependencies.mjs" or \
        manifest.get("producerSHA256") != hashlib.sha256((repository / "Scripts/Expo/prepare-ios-dependencies.mjs").read_bytes()).hexdigest() or \
        manifest.get("classifierSHA256") != hashlib.sha256(Path(__file__).read_bytes()).hexdigest() or \
+       manifest.get("metadataToolSourceSHA256") != hashlib.sha256((repository / "Scripts/NativeScript/build-metadata-tool.py").read_bytes()).hexdigest() or \
+       manifest.get("metadataDeclarationPolicySource") != INCOMPLETE_RECORD_POLICY_SOURCE or \
        manifest.get("dependencyLockSHA256") != hashlib.sha256((repository / "Scripts/Expo/dependency-lock.json").read_bytes()).hexdigest():
         raise RuntimeError("Framework input-role producer provenance mismatch")
     roles = {}
