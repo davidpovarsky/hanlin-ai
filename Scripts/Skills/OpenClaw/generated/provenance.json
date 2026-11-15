@@ -26,6 +26,9 @@
   ],
   "buildTool": "esbuild@0.28.2",
   "target": "node24.5",
+  "compilerOptions": {
+    "alwaysStrict": true
+  },
   "artifactSHA256": "e492e2d611bb42e15b26411ab055afce87add4eea317789521c6fe36cc28970c",
   "artifactBytes": 1520,
   "originalTestArtifactSHA256": "17dfb120ed410096ec5f3ea13bb256eaf5787aaaf2ff91098cbd13b39d0a205c",
