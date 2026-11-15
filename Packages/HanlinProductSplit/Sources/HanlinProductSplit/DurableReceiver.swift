@@ -28,7 +28,7 @@ public struct SplitReceiverContext: Sendable {
         self.authorized = authorized; self.routeAvailable = routeAvailable; self.online = online
     }
 
-    func validate(_ request: SplitBridgeRequest) throws {
+    public func validate(_ request: SplitBridgeRequest) throws {
         guard request.version == 1, request.entryPoint == .app else { throw SplitBridgeFailure.unsupportedRoute }
         guard request.caller == caller, request.target == target, request.installedPackage == package,
               request.session == session, request.chat == chat else { throw SplitBridgeFailure.correlationMismatch }

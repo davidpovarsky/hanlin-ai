@@ -105,6 +105,24 @@ public struct SplitBridgeLedger: Codable, Sendable {
     public init() {}
     public func record(_ id: UUID) -> Record? { records[id] }
 
+    /// Validate the complete decoded sender database before any live transaction.
+    public func validate() throws {
+        guard records.count <= 1024 else { throw SplitBridgeFailure.capacityExceeded }
+        for (id, record) in records {
+            let request = record.request
+            guard id == request.id, request.version == 1, request.entryPoint == .app,
+                  request.expiresAt > request.issuedAt,
+                  request.expiresAt.timeIntervalSince(request.issuedAt) <= 300 else {
+                throw SplitDurabilityError.corruptState
+            }
+            _ = try SplitBridgeCodec.encode(request)
+            if record.phase == .finished {
+                guard let outcome = record.outcome else { throw SplitDurabilityError.corruptState }
+                _ = try SplitBridgeCodec.encode(SplitBridgeReturn(request: request, outcome: outcome))
+            } else if record.outcome != nil { throw SplitDurabilityError.corruptState }
+        }
+    }
+
     public mutating func begin(_ request: SplitBridgeRequest, now: Date,
                                routeAvailable: Bool, authorized: Bool) throws {
         guard records[request.id] == nil else { throw SplitBridgeFailure.duplicate }

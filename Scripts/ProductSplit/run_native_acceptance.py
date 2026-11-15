@@ -91,7 +91,8 @@ def main():
             command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
         command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=180)
         storage = base + ['test-without-building', '-resultBundlePath', str(EVIDENCE/'Storage.xcresult'),
-                          '-only-testing:HanlinMiniAppsTests/SplitAppStorageLayoutTests']
+                          '-only-testing:HanlinMiniAppsTests/SplitAppStorageLayoutTests',
+                          '-only-testing:HanlinMiniAppsTests/SplitMailboxTests']
         state['storage_command'] = storage
         state['storage_boundary'] = 'INFRA_ERROR'
         storage_result = subprocess.run(storage, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=900)
@@ -100,7 +101,7 @@ def main():
             storage_summary = json.loads(command(['xcrun', 'xcresulttool', 'get', 'test-results', 'summary',
                 '--path', str(EVIDENCE/'Storage.xcresult')], 'storage-summary.json'))
             state['storage_summary'] = storage_summary
-            if storage_result.returncode == 0 and storage_summary.get('passedTests') == 5 \
+            if storage_result.returncode == 0 and storage_summary.get('passedTests') == 13 \
                     and storage_summary.get('failedTests', 0) == 0 and storage_summary.get('skippedTests', 0) == 0:
                 state['storage_boundary'] = 'EXECUTED_PASS'
             elif storage_summary.get('failedTests', 0):

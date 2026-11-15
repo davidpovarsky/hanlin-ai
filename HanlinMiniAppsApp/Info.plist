@@ -63,5 +63,22 @@
 			</dict>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>chavrusachat</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.itorah.hanlinminiapps.split.v1</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>hanlinminiapps</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

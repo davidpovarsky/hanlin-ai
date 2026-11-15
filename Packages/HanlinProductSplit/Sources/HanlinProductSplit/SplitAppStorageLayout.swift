@@ -27,10 +27,20 @@ public enum SplitAppStorageLayout {
         guard trustedBundleIdentifier == miniAppsBundleIdentifier else {
             return container.appending(path: "ScriptingExtensions", directoryHint: .isDirectory)
         }
+        return try checkedRoot(container: container, components: ["HanlinMiniApps", "v1", "ScriptingExtensions"])
+    }
+
+    public static func transportRoot(appGroupContainer: URL?) throws -> URL {
+        guard let appGroupContainer else { throw LayoutError.appGroupUnavailable }
+        return try checkedRoot(container: appGroupContainer.resolvingSymlinksInPath().standardizedFileURL,
+                               components: ["HanlinSplit", "v1"])
+    }
+
+    private static func checkedRoot(container: URL, components: [String]) throws -> URL {
         var candidate = container
         // Check every fixed ancestor before the existing store canonicalizes its parent.
         // A Finder alias is a regular file and is rejected along with symlinks/non-directories.
-        for component in ["HanlinMiniApps", "v1", "ScriptingExtensions"] {
+        for component in components {
             candidate.append(path: component, directoryHint: .isDirectory)
 #if canImport(Darwin)
             var info = stat()

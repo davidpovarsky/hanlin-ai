@@ -109,6 +109,24 @@ jobs:
         id: host-proof
         shell: bash
         run: python3 Scripts/ProductSplit/restore_host_proof.py
+      - name: Execute strict foreground route and ledger cases on the actual Mac
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/ProductSplit/run_portable.py --suite foreground | tee "$SPLIT_EVIDENCE/foreground.log"
+          python3 - <<'PY'
+          import json, os, pathlib, shutil
+          root = pathlib.Path.cwd()
+          report = root / 'docs/product-split/foreground-results.json'
+          data = json.loads(report.read_text())
+          assert data['status'] == 'EXECUTED_PASS' and data['count'] == 38
+          origin = pathlib.Path(data['raw_evidence_manifest']['path']).parent.resolve()
+          assert origin.is_relative_to((root / 'docs/product-split/evidence').resolve())
+          destination = pathlib.Path(os.environ['SPLIT_EVIDENCE']) / 'foreground'
+          destination.mkdir()
+          shutil.copy2(report, destination / report.name)
+          shutil.copytree(origin, destination / 'raw-origin')
+          PY
       - name: Reproduce and verify affected package lifecycle on the actual Mac first
         if: steps.host-proof.outputs.reused != 'true'
         shell: bash

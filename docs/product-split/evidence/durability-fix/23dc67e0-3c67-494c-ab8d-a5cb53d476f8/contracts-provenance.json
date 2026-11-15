@@ -1,0 +1,245 @@
+{
+  "inputs": {
+    "compiler": {
+      "path": "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+      "bytes": 41472,
+      "sha256": "e1d0a0b20d95a92b22f4906e7ca331a7c8b89be86b2d9a2d215ac24f753e945a"
+    },
+    "toolchain": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions\n",
+    "argv": [
+      "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+      "-v",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-warnings-as-errors",
+      "-parse-as-library",
+      "-emit-library",
+      "-emit-module",
+      "-module-name",
+      "HanlinPlatformContracts",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinCatalogContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinContractError.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinDescriptors.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinExposureContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinIdentifiers.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinJSONSchemaDocument.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinMiniAppContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPermissionContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPreparedRuntimeVersion.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPresentationContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinRuntimeProfiles.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinScriptContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinSessionContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinSkillContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinToolContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinValue.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinVersions.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinWireProtocol.swift",
+      "-emit-module-path",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftmodule",
+      "-o",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.dll"
+    ],
+    "cwd": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115",
+    "sources": [
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinCatalogContracts.swift",
+        "bytes": 9413,
+        "sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinContractError.swift",
+        "bytes": 5423,
+        "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinDescriptors.swift",
+        "bytes": 44005,
+        "sha256": "6b4076de7b2416d108431276b147796352aa232d39507dca2f7f0b5cd5efa0d1"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinExposureContracts.swift",
+        "bytes": 21524,
+        "sha256": "e7a39ee73d27678fd8a5405a6a176b31c68eab76c1828fbe02fa02f63c7decea"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinIdentifiers.swift",
+        "bytes": 15313,
+        "sha256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinJSONSchemaDocument.swift",
+        "bytes": 4842,
+        "sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinMiniAppContracts.swift",
+        "bytes": 6472,
+        "sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPermissionContracts.swift",
+        "bytes": 8912,
+        "sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPreparedRuntimeVersion.swift",
+        "bytes": 1109,
+        "sha256": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPresentationContracts.swift",
+        "bytes": 10661,
+        "sha256": "e05fb0509136f303f621f292147d98db140f3e0f028e7431cc7064fb935e7a9b"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinRuntimeProfiles.swift",
+        "bytes": 5825,
+        "sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinScriptContracts.swift",
+        "bytes": 24323,
+        "sha256": "d3af6a89f8e19dccdc17ff9f59f223875260a0b0d4d2b440e49170b599626180"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinSessionContracts.swift",
+        "bytes": 6805,
+        "sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinSkillContracts.swift",
+        "bytes": 3494,
+        "sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinToolContracts.swift",
+        "bytes": 7298,
+        "sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinValue.swift",
+        "bytes": 56729,
+        "sha256": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinVersions.swift",
+        "bytes": 15847,
+        "sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinWireProtocol.swift",
+        "bytes": 6725,
+        "sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7"
+      }
+    ],
+    "dependency_outputs": [
+      {
+        "path": "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+        "bytes": 41472,
+        "sha256": "e1d0a0b20d95a92b22f4906e7ca331a7c8b89be86b2d9a2d215ac24f753e945a"
+      },
+      {
+        "path": "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swift-frontend.exe",
+        "bytes": 160625664,
+        "sha256": "c9584d52e589cdbb089a9c028cb9fc79b6da5e549ac0d23f6ee067c0a48ba6e2"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.dll",
+      "bytes": 2735104,
+      "sha256": "48754ba1d3982a464204d0875362229d9a1dcf14ef2ac8cc3eba6b02b3c95434"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftmodule",
+      "bytes": 1904140,
+      "sha256": "22539c3582c20b30e0c023ab2f4bc941457537ee2b25c2a4d0e938b60aa52e1e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftdoc",
+      "bytes": 29452,
+      "sha256": "52ce9611c5937f107a5b535992b3a593a17aae928e045909659cb5b745a78d46"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftsourceinfo",
+      "bytes": 285144,
+      "sha256": "cef80ef8641e9ed17555e4d80f4297345ff1f7727fae47758b36fddcf7b8407f"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.lib",
+      "bytes": 1592382,
+      "sha256": "04de2552f280abfb6dfc05c8cb04e5734051a366ab712f276cd2c78ae078eb36"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.exp",
+      "bytes": 1099580,
+      "sha256": "91ffa52bc39bc9a2f313bbd8645641c0afc24ce4b37020c9638463778268b355"
+    }
+  ],
+  "origin_logs": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\870cf63f-8b2b-480f-a0a7-fe4bbc79e4f2\\raw-002-compile-contracts.stdout.log",
+      "bytes": 68253,
+      "sha256": "8a80c77dc17a12f9d73abd28b164230bee324c73def3c77bf5780edd160e0270"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\870cf63f-8b2b-480f-a0a7-fe4bbc79e4f2\\raw-002-compile-contracts.stderr.log",
+      "bytes": 3859,
+      "sha256": "8fb90691f6aa1b5a0255518e754a2782acd4e7ebc523af5389cdd0bdec2007c1"
+    }
+  ],
+  "compile_event": {
+    "kind": "completed",
+    "argv": [
+      "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+      "-v",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-warnings-as-errors",
+      "-parse-as-library",
+      "-emit-library",
+      "-emit-module",
+      "-module-name",
+      "HanlinPlatformContracts",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinCatalogContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinContractError.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinDescriptors.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinExposureContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinIdentifiers.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinJSONSchemaDocument.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinMiniAppContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPermissionContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPreparedRuntimeVersion.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinPresentationContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinRuntimeProfiles.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinScriptContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinSessionContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinSkillContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinToolContracts.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinValue.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinVersions.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinPlatform\\Sources\\HanlinPlatformContracts\\HanlinWireProtocol.swift",
+      "-emit-module-path",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftmodule",
+      "-o",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.dll"
+    ],
+    "cwd": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115",
+    "exit_code": 0,
+    "pid": null,
+    "stdout": {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\870cf63f-8b2b-480f-a0a7-fe4bbc79e4f2\\raw-002-compile-contracts.stdout.log",
+      "bytes": 68253,
+      "sha256": "8a80c77dc17a12f9d73abd28b164230bee324c73def3c77bf5780edd160e0270"
+    },
+    "stderr": {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\870cf63f-8b2b-480f-a0a7-fe4bbc79e4f2\\raw-002-compile-contracts.stderr.log",
+      "bytes": 3859,
+      "sha256": "8fb90691f6aa1b5a0255518e754a2782acd4e7ebc523af5389cdd0bdec2007c1"
+    }
+  }
+}

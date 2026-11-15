@@ -37,6 +37,12 @@ def main():
     assert 'com.apple.developer.icloud-container-identifiers' not in entitlements
     info = plistlib.loads((ROOT / 'HanlinMiniAppsApp/Info.plist').read_bytes())
     assert info['UTImportedTypeDeclarations']
+    assert info['CFBundleURLTypes'][0]['CFBundleURLSchemes'] == ['hanlinminiapps']
+    assert 'chavrusachat' in info['LSApplicationQueriesSchemes']
+    ai_info = plistlib.loads((ROOT / 'AI-HLY-Info.plist').read_bytes())
+    assert 'maktabah' in ai_info['LSApplicationQueriesSchemes']
+    assert 'hanlinminiapps' in ai_info['LSApplicationQueriesSchemes']
+    assert any('chavrusachat' in item['CFBundleURLSchemes'] for item in ai_info['CFBundleURLTypes'])
     assert info['CFBundleDocumentTypes'][0]['LSItemContentTypes'] == [
         'com.hanlin.scripting-package', 'public.zip-archive']
     manifest = (ROOT / 'Packages/HanlinProductSplit/Package.swift').read_text()

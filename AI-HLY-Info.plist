@@ -18,6 +18,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>maktabah</string>
+		<string>hanlinminiapps</string>
 	</array>
 	<key>HANLIN_API_KEY</key>
 	<string>$(HANLIN_API_KEY)</string>
