@@ -123,13 +123,25 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             _ = try await host.context(for: invocation.session)
             item.deliveryStarted = true
             try await makeTransport().dispatch(request, origin: self)
+            try Task.checkCancellation()
+            guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
             let response = try await withTaskCancellationHandler(operation: {
+                try Task.checkCancellation()
+                guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
                 if let response = item.response { return response }
                 return try await withCheckedThrowingContinuation { item.waiter = $0 }
             }, onCancel: { Task { @MainActor in self.invalidate(reference: request.id, reason: .cancelled) } })
             return try Self.result(response, origin: origin)
         } catch {
-            let effect: HanlinHostEffectState = item.deliveryStarted ? .uncertain : .notDispatched
+            // These failures are issued by original transport admission/OS-open rejection before
+            // any receiver attempt. Cancellation/IO after possible dispatch remains uncertain.
+            let knownAdmissionFailure: Bool
+            switch error as? SplitBridgeFailure {
+            case .denied?, .unsupportedRoute?, .staleGeneration?, .correlationMismatch?, .expired?,
+                 .companionMissing?, .oversized?, .capacityExceeded?, .outOfOrder?: knownAdmissionFailure = true
+            default: knownAdmissionFailure = false
+            }
+            let effect: HanlinHostEffectState = item.deliveryStarted && !knownAdmissionFailure ? .uncertain : .notDispatched
             invalidate(reference: request.id, reason: error as? SplitBridgeFailure ?? .transportUnavailable)
             return .init(result: .init(invocationID: call.invocationID, logicalToolID: call.logicalToolID,
                 outcome: .failed(.init(code: effect == .uncertain ? .nativeFailure : .operationUnavailable,

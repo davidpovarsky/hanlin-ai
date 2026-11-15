@@ -70,3 +70,22 @@ An actual row-store receipt-dedup control compares9007199254740992/9007199254740
 the same original invocation/result/request and requires typed conflict with unchanged stored bytes.
 This app control and the acknowledgement/remount-state control are authored NOT_RUN until app
 compilation; a separate exact writer case+iOS compile is the only new package proof obligation.
+
+## Authored actual app component controls (NOT_RUN)
+
+HanlinAppSplitOriginTests adds five bounded controls using the actual app Session owner, original
+ChatRecords+assistant ChatMessages, original SDK model loop/Host dispatch/ordered writer,
+coordinator, mailbox, transport and durable receiver. The OS open/target metadata and receiver
+operation result are explicit fixtures. They verify durable association before OS-open observation,
+actual original Session/run/row mapping, receipt committed before one-time acceptance, same-engine
+tool continuation and duplicate return; cancellation DURING the awaited OS open (no lost waiter),
+cancellation after executing receiver (outcomeUnknown); deleted original without recreation or
+mailbox accept; and expired context before target/store lookup. Async probe/stream waits are
+bounded8s. This is not a live broker effect, signed-group or two-process/device test. The test
+requires the actual Split a45 parity descriptor/action source and products, never a copied DTO.
+
+An actual source review caught a cancellation window while UIApplication.open was suspended:
+local revocation could occur before any Host waiter existed. The coordinator now rechecks task/
+local cancellation after dispatch and immediately before installing that continuation, so a
+cancelled origin cannot install a waiter after its timer/owner was already revoked. Known
+admission failures return notDispatched; possible post-dispatch cancellation/IO stays uncertain.
