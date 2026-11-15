@@ -5,7 +5,7 @@ cd "$root"
 evidence="$root/build/integration-validation-evidence"
 mkdir -p "$evidence"
 workflow_sha="$(git rev-parse HEAD)"
-source_sha=2bae5a3e08138b5d346d9c7e8b609e0827407231
+source_sha=a43f15639cdfb5c2edded52742bc62f1f7876b4e
 [[ "${INTEGRATION_EXPECTED_SHA:-}" =~ ^[0-9a-f]{40}$ && "$workflow_sha" == "$INTEGRATION_EXPECTED_SHA" ]] || {
   echo 'Exact workflow checkout SHA mismatch' >&2; exit 2;
 }
