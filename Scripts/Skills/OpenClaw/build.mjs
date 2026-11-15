@@ -12,6 +12,7 @@ for (const source of pin.sources) {
   if (createHash('sha256').update(bytes).digest('hex') !== source.sha256) throw Error(`Cached source drift: ${source.path}`);
 }
 const result = await esbuild.build({
+  absWorkingDir: root,
   entryPoints: [path.join(sourceRoot, 'src/shared/requirements.ts')],
   bundle: true, write: false, metafile: true, platform: 'neutral', format: 'iife',
   globalName: 'HanlinOpenClawOriginalRequirements', target: 'node24.5',
@@ -25,6 +26,7 @@ const generated = path.join(root, 'generated'); await mkdir(generated, { recursi
 await writeFile(path.join(generated, 'requirements.js'), body);
 await writeFile(path.join(generated, 'LICENSE.OpenClaw.txt'), await readFile(path.join(sourceRoot, 'LICENSE')));
 const tests = await esbuild.build({
+  absWorkingDir: root,
   entryPoints: [path.join(sourceRoot, 'src/shared/requirements.test.ts')],
   bundle: true, write: false, platform: 'neutral', format: 'iife', target: 'node24.5', minify: true,
   tsconfigRaw: { compilerOptions: { alwaysStrict: true } },
@@ -39,6 +41,7 @@ const tests = await esbuild.build({
 });
 await writeFile(path.join(generated, 'upstream-requirements-tests.js'), tests.outputFiles[0].contents);
 const nativeContract = await esbuild.build({
+  absWorkingDir: root,
   entryPoints: [path.join(root, 'Tests/requirements.test.mjs')], bundle: true, write: false,
   platform: 'node', format: 'esm', target: 'node24.5', minify: false,
   tsconfigRaw: { compilerOptions: { alwaysStrict: true } },
