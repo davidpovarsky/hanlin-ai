@@ -6,6 +6,33 @@ import Testing
 @MainActor
 @Suite("Native composer automatic line sizing")
 struct NativeComposerLineSizingTests {
+    private func independentTextKit2Layout(_ manager: NSTextLayoutManager) throws -> (bottoms: [CGFloat], ranges: [Range<Int>], documentLength: Int) {
+        let content = try #require(manager.textContentManager)
+        let document = content.documentRange
+        let length = content.offset(from: document.location, to: document.endLocation)
+        var bottoms: [CGFloat] = []
+        var ranges: [Range<Int>] = []
+        var validRanges = true
+        manager.enumerateTextLayoutFragments(from: nil, options: [.ensuresLayout, .ensuresExtraLineFragment]) { fragment in
+            let start = content.offset(from: document.location, to: fragment.rangeInElement.location)
+            let end = content.offset(from: document.location, to: fragment.rangeInElement.endLocation)
+            guard start >= 0, end >= start, end <= length else { validRanges = false; return false }
+            ranges.append(start..<end)
+            for line in fragment.textLineFragments {
+                bottoms.append(fragment.layoutFragmentFrame.minY + line.typographicBounds.maxY)
+            }
+            return true
+        }
+        #expect(validRanges)
+        var cursor = 0
+        for range in ranges {
+            #expect(range.lowerBound == cursor)
+            cursor = range.upperBound
+        }
+        #expect(cursor == length)
+        return (bottoms, ranges, length)
+    }
+
     @Test("Editing and focus loss preserve pasted text, selection and whitespace drafts")
     func editingKeepsDraftAndSelection() {
         var draft = ""
@@ -111,10 +138,15 @@ struct NativeComposerLineSizingTests {
                 for count in 1...500 {
                     view.text = String(repeating: sample, count: count)
                     view.textContainer.size = CGSize(width: 152, height: 10_000)
-                    let lines = NativeMultilineTextEditor.visualLineLimit(for: view)
-                    if lines.count == target {
-                        _ = editor.measuredHeight(for: view, isEmpty: false)
+                    let lines = try independentTextKit2Layout(manager)
+                    if lines.bottoms.count == target {
+                        #expect(lines.bottoms[5] > 0)
+                        let height = editor.measuredHeight(for: view, isEmpty: false)
                         #expect(view.isScrollEnabled == (target == 7))
+                        if target == 7 {
+                            let expected = ceil(lines.bottoms[5] + view.textContainerInset.top + view.textContainerInset.bottom)
+                            #expect(height == expected)
+                        }
                         #expect(view.textLayoutManager === manager)
                         found = true
                         break
@@ -123,6 +155,35 @@ struct NativeComposerLineSizingTests {
                 #expect(found)
             }
         }
+    }
+
+    @Test("TextKit 2 paragraph and trailing empty line coverage rejects an omitted fragment")
+    func textKit2ParagraphCoverageAndConservativeFallback() throws {
+        let view = UITextView(usingTextLayoutManager: true)
+        view.frame = CGRect(x: 0, y: 0, width: 160, height: 100)
+        view.font = .preferredFont(forTextStyle: .body)
+        view.isScrollEnabled = false
+        view.layoutIfNeeded()
+        view.textContainer.widthTracksTextView = false
+        view.textContainer.heightTracksTextView = false
+        view.textContainer.size = CGSize(width: 152, height: 10_000)
+        view.text = "one\ntwo\nthree\n"
+        let manager = try #require(view.textLayoutManager)
+        let native = try independentTextKit2Layout(manager)
+        #expect(native.bottoms.count == 4)
+        #expect(native.ranges.count >= 2)
+        #expect(NativeMultilineTextEditor.hasContiguousCoverage(native.ranges, documentLength: native.documentLength))
+        let actual = NativeMultilineTextEditor.visualLineLimit(for: view)
+        #expect(actual.complete)
+        #expect(actual.count == native.bottoms.count)
+        let omitted = Array(native.ranges.dropFirst())
+        let complete = NativeMultilineTextEditor.hasContiguousCoverage(omitted, documentLength: native.documentLength)
+        #expect(!complete)
+        let fallback = NativeMultilineTextEditor.automaticLimit(fittingHeight: 300, availableHeight: 500,
+            minimumHeight: 60, verticalInsets: 16, count: native.bottoms.count, sixthBottom: nil, complete: complete)
+        #expect(fallback.forceScroll)
+        #expect(fallback.maximum == 60)
+        #expect(view.textLayoutManager === manager)
     }
 
     @Test("Empty, accessibility font, and constrained viewport use current font metrics")

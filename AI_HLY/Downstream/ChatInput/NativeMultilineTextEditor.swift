@@ -56,46 +56,94 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         return (minimum, min(maximum, max(0, availableHeight)))
     }
 
+    /// Accept only ordered, contiguous document coverage. An empty final range
+    /// can represent the legitimate extra line after the document end.
+    static func hasContiguousCoverage(_ ranges: [Range<Int>], documentLength: Int) -> Bool {
+        guard documentLength >= 0, !ranges.isEmpty else { return false }
+        var expected = 0
+        var sawExtra = false
+        for range in ranges {
+            guard range.lowerBound == expected, range.upperBound <= documentLength, !sawExtra else { return false }
+            if range.isEmpty {
+                guard expected == documentLength else { return false }
+                sawExtra = true
+            } else {
+                expected = range.upperBound
+            }
+        }
+        return expected == documentLength
+    }
+
     /// Reads visual line fragments without switching a TextKit 2 editor to TextKit 1.
-    /// The seventh line is enough to determine whether the six-line limit applies.
-    static func visualLineLimit(for textView: UITextView) -> (count: Int, sixthBottom: CGFloat?) {
+    static func visualLineLimit(for textView: UITextView) -> (count: Int, sixthBottom: CGFloat?, complete: Bool) {
         var count = 0
         var sixthBottom: CGFloat?
         if let manager = textView.textLayoutManager {
-            let end = manager.enumerateTextLayoutFragments(from: nil, options: [.ensuresLayout, .ensuresExtraLineFragment]) { fragment in
+            guard let content = manager.textContentManager else { return (0, nil, false) }
+            let document = content.documentRange
+            let documentLength = content.offset(from: document.location, to: document.endLocation)
+            guard documentLength >= 0 else { return (0, nil, false) }
+            var ranges: [Range<Int>] = []
+            var validRanges = true
+            var lastBottom: CGFloat = 0
+            manager.enumerateTextLayoutFragments(from: nil, options: [.ensuresLayout, .ensuresExtraLineFragment]) { fragment in
+                let range = fragment.rangeInElement
+                let start = content.offset(from: document.location, to: range.location)
+                let end = content.offset(from: document.location, to: range.endLocation)
+                guard start >= 0, end >= start, end <= documentLength else {
+                    validRanges = false
+                    return false
+                }
+                ranges.append(start..<end)
+                guard start == end || !fragment.textLineFragments.isEmpty else {
+                    validRanges = false
+                    return false
+                }
                 for line in fragment.textLineFragments {
-                    count += 1
-                    if count == 6 {
-                        sixthBottom = fragment.layoutFragmentFrame.minY + line.typographicBounds.maxY
+                    let bottom = fragment.layoutFragmentFrame.minY + line.typographicBounds.maxY
+                    guard bottom.isFinite, bottom >= lastBottom else {
+                        validRanges = false
+                        return false
                     }
-                    if count >= 7 { return false }
+                    lastBottom = bottom
+                    if count < 7 { count += 1 }
+                    if count == 6 {
+                        sixthBottom = bottom
+                    }
                 }
                 return true
             }
-            if count < 7, let documentEnd = manager.textContentManager?.documentRange.endLocation,
-               end?.compare(documentEnd) != .orderedSame {
-                count = 0
-                sixthBottom = nil
-            }
+            guard validRanges, Self.hasContiguousCoverage(ranges, documentLength: documentLength) else { return (0, nil, false) }
         } else {
             // Access only when the view is already using TextKit 1.
             let manager = textView.layoutManager
             manager.ensureLayout(for: textView.textContainer)
             let glyphs = manager.glyphRange(for: textView.textContainer)
+            guard glyphs.location == 0 else { return (0, nil, false) }
             manager.enumerateLineFragments(forGlyphRange: glyphs) { rect, _, _, _, stop in
                 count += 1
                 if count == 6 { sixthBottom = rect.maxY }
                 if count >= 7 { stop.pointee = true }
             }
             if count < 7 && NSMaxRange(glyphs) < manager.numberOfGlyphs {
-                return (0, nil)
+                return (0, nil, false)
             }
             if count < 7 && manager.extraLineFragmentTextContainer === textView.textContainer {
                 count += 1
                 if count == 6 { sixthBottom = manager.extraLineFragmentRect.maxY }
             }
         }
-        return (count, sixthBottom)
+        return (count, sixthBottom, true)
+    }
+
+    static func automaticLimit(
+        fittingHeight: CGFloat, availableHeight: CGFloat, minimumHeight: CGFloat,
+        verticalInsets: CGFloat, count: Int, sixthBottom: CGFloat?, complete: Bool
+    ) -> (maximum: CGFloat, forceScroll: Bool) {
+        guard complete && count > 0 else { return (minimumHeight, true) }
+        if count <= 6 { return (min(max(0, availableHeight), max(minimumHeight, fittingHeight)), false) }
+        guard let bottom = sixthBottom else { return (minimumHeight, true) }
+        return (min(max(0, availableHeight), max(minimumHeight, ceil(bottom + verticalInsets))), false)
     }
 
     func measuredHeight(for textView: UITextView, isEmpty: Bool) -> CGFloat {
@@ -104,16 +152,16 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         var bounds = usesAutomaticLineLimits
             ? Self.automaticHeightBounds(for: textView, isEmpty: isEmpty, availableHeight: maxHeight)
             : (min: minHeight, max: max(minHeight, maxHeight))
+        var incompleteLayout = false
         if usesAutomaticLineLimits && !isEmpty {
             let lines = Self.visualLineLimit(for: textView)
-            if lines.count > 0 && lines.count <= 6 {
-                bounds.max = min(max(0, maxHeight), max(bounds.min, fitting))
-            } else if let bottom = lines.sixthBottom {
-                let insets = textView.textContainerInset.top + textView.textContainerInset.bottom
-                bounds.max = min(max(0, maxHeight), max(bounds.min, ceil(bottom + insets)))
-            }
+            let limit = Self.automaticLimit(fittingHeight: fitting, availableHeight: maxHeight, minimumHeight: bounds.min,
+                verticalInsets: textView.textContainerInset.top + textView.textContainerInset.bottom,
+                count: lines.count, sixthBottom: lines.sixthBottom, complete: lines.complete)
+            bounds.max = limit.maximum
+            incompleteLayout = limit.forceScroll
         }
-        textView.isScrollEnabled = !isEmpty && Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max)
+        textView.isScrollEnabled = !isEmpty && (incompleteLayout || Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max))
         return Self.calculatedHeight(fittingHeight: fitting, minHeight: bounds.min, maxHeight: bounds.max)
     }
 
