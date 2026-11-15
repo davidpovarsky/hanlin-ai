@@ -267,7 +267,9 @@ jobs:
         env:
           HANLIN_METADATA_INVENTORY_SELECTOR: ${{ inputs.exact_test_selector }}
         run: |
-          if [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKExportAudit" ]; then
+          if [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKEnumFacts" ]; then
+            python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py --sdk-enum-facts
+          elif [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKExportAudit" ]; then
             python3 Scripts/CI/MetadataProvenanceProof/sdk_export_audit.py
           elif [ "$HANLIN_METADATA_INVENTORY_SELECTOR" = "MetadataSDKLinkageControls" ]; then
             python3 Scripts/CI/MetadataProvenanceProof/reuse_modern_tool.py

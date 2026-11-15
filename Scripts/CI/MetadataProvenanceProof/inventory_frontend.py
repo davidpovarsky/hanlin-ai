@@ -124,5 +124,44 @@ def sdk_linkage_facts():
     return 0
 
 
+def sdk_enum_facts():
+    """Read exact Accelerate conditional enum declarations/values, not metadata."""
+    OUTPUT.mkdir(parents=True, exist_ok=False)
+    sdk = Path(subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"], text=True).strip())
+    version = subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"], text=True).strip()
+    lock = json.loads((ROOT / "Scripts/NativeScript/metadata-frontend-lock.json").read_text())
+    frontend = Path(lock["installedPrefix"])
+    for path, digest in lock["files"].items():
+        if hashlib.sha256((frontend / path).read_bytes()).hexdigest() != digest:
+            raise RuntimeError("Enum fact compiler drift")
+    source = OUTPUT / "accelerate.h"
+    source.write_text('#import <Accelerate/Accelerate.h>\n')
+    result = {"status": "READ_ONLY_SDK_ENUM_FACTS", "sdk": str(sdk), "target": "arm64-apple-ios" + version + "-simulator",
+        "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(), "commands": [], "files": []}
+    for language, standard in [("objective-c", "gnu17"), ("objective-c++", "gnu++20")]:
+        for symbol in ["vImage_Error", "vImage_Flags", "kvImage"]:
+            label = language + "-" + symbol
+            command = [str(frontend / "bin/clang"), "-x", language, "-std=" + standard, "-fno-objc-arc", "-fno-modules",
+                "-fno-implicit-module-maps", "-D__NATIVESCRIPT_METADATA_GENERATOR=1", "-isysroot", str(sdk), "-target", result["target"],
+                "-Xclang", "-fno-cxx-modules", "-fsyntax-only", "-Xclang", "-ast-dump=json", "-Xclang", "-ast-dump-filter", "-Xclang", symbol, str(source)]
+            call = subprocess.run(command, capture_output=True, timeout=60)
+            (OUTPUT / (label + ".stdout")).write_bytes(call.stdout)
+            (OUTPUT / (label + ".stderr")).write_bytes(call.stderr)
+            result["commands"].append({"argv": command, "exitCode": call.returncode, "stdout": label + ".stdout", "stderr": label + ".stderr"})
+    for relative in ["System/Library/Frameworks/Accelerate.framework/Frameworks/vImage.framework/Headers/vImage_Types.h",
+                     "System/Library/Frameworks/Accelerate.framework/Frameworks/vImage.framework/Headers/Alpha.h",
+                     "System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/thread_api.h"]:
+        path = sdk / relative
+        data = path.read_bytes()
+        output = OUTPUT / "sources" / relative
+        output.parent.mkdir(parents=True, exist_ok=True); output.write_bytes(data)
+        result["files"].append({"path": str(path), "retained": output.relative_to(OUTPUT).as_posix(), "sha256": hashlib.sha256(data).hexdigest()})
+    (OUTPUT / "enum-facts.json").write_text(json.dumps(result, indent=2) + "\n")
+    manifest = [{"path": p.relative_to(OUTPUT).as_posix(), "sha256": hashlib.sha256(p.read_bytes()).hexdigest(), "bytes": p.stat().st_size} for p in sorted(OUTPUT.rglob("*")) if p.is_file()]
+    (OUTPUT / "artifact-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    print(json.dumps({"status": result["status"], "exitCodes": [c["exitCode"] for c in result["commands"]]}))
+    return 0 if all(c["exitCode"] == 0 for c in result["commands"]) else 1
+
+
 if __name__ == "__main__":
-    sys.exit(sdk_linkage_facts() if "--sdk-linkage-facts" in sys.argv else main())
+    sys.exit(sdk_enum_facts() if "--sdk-enum-facts" in sys.argv else sdk_linkage_facts() if "--sdk-linkage-facts" in sys.argv else main())
