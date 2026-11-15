@@ -9,6 +9,12 @@ actual_sha="$(git rev-parse HEAD)"
   echo 'Exact integration checkout SHA mismatch' >&2; exit 2;
 }
 printf '%s\n' "$actual_sha" > "$evidence/source-commit.txt"
+# Actions checks out one commit. Fetch only the frozen comparison object;
+# the integration branch and every source byte remain at the dispatched SHA.
+baseline=dd700c03e9fe9d22e95a031d4684275512ee6e6f
+if ! git cat-file -e "$baseline^{commit}" 2>/dev/null; then
+  git fetch --no-tags --depth=1 origin "$baseline"
+fi
 python3 Scripts/CI/IntegrationValidation/validate.py > "$evidence/graph.json"
 python3 -m unittest discover -s Scripts/CI/IntegrationValidation -p 'test_*.py' -v 2>&1 | tee "$evidence/validator-tests.log"
 python3 - <<'PY' > "$evidence/source-sha256.json"
