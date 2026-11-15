@@ -2896,10 +2896,12 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "scope": "AFFECTED_15_MODEL_CONTROLS_31_MODELS_AND_GENUINE_ACCELERATE_PLUS_AVFOUNDATION_SLICE",
+        "scope": "FULL_SDK_GENERATION_ONLY_WITH_VERIFIED_IDENTICAL_COMPILED_IMAGE",
         "status": "PENDING_DISPATCH",
-        "export9": "Only explicit verified unchanged reuse; source/assertions/fixtures unchanged",
-        "fullSDK": "Withheld until affected slice passes"
+        "affectedControls": "EXECUTED_PASS_17_AND_31_43764390974",
+        "export9": "REUSED_VERIFIED_PASS_original43757087726_newExecutionNOT_RUN",
+        "combined": "NOT_RUN",
+        "runtime": "NOT_ESTABLISHED"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -3241,6 +3243,50 @@
           "reason": "C FunctionNoProtoType callingConvention was omitted by the inspector, CPP FunctionProtoType recorded0",
           "nextChange": "Read actual common FunctionType; preserve raw prototype distinction and original return-only invocation, reject CPP parameter loss"
         }
+      },
+      "optionsMacroCorrection": {
+        "sourceSHA": "745ac85cb71f527cc5f4bb29fe9d38ce1426e816",
+        "run": 43764390974,
+        "status": "EXECUTED_PASS_AFFECTED_SLICE",
+        "contract": 3,
+        "contract4Projection": "WITHDRAWN_NOT_IMPLEMENTED",
+        "cause": "Our broad NS_OPTIONS heuristic invented vendor Enum models; actual SDK AST typedefs are primitive in both languages",
+        "sourceFactsRun": 43763007185,
+        "sourceFactsManifestFilesVerified": 17,
+        "sourceFactsMismatches": 0,
+        "freshModelAndTransactionCases": 17,
+        "freshReferenceModules": 31,
+        "freshControlManifestFilesVerified": 284,
+        "reuseManifestFilesVerified": 1,
+        "mismatches": 0,
+        "controlResultSHA256": "1e1a7560455befd18d3df9f918d3ab9c1ec28d800528784fd15307022ca5bf1f",
+        "parityResultSHA256": "2fe60b2e8486e7d39937c7190b75d02e73d02a1870466d6b9571590d44bc6804",
+        "exportTargetControls": {
+          "status": "REUSED_VERIFIED_PASS",
+          "originalRun": 43757087726,
+          "cases": 9,
+          "verifiedCompileInputs": 935,
+          "newExecution": "NOT_RUN"
+        },
+        "slice": {
+          "metadataBytes": 2595406,
+          "metadataSHA256": "a84b053227870804659fd2304dff2a1afaa27d79282fdf6b5a32bb5a40b419cd",
+          "declarationFilesGenerated": 41,
+          "strictGeneratedTypecheck": "NOT_RUN",
+          "originalAGraphModels": 38844,
+          "retainedOriginalModels": 667,
+          "mappedWithProof": 38177,
+          "unmappedModels": 0,
+          "peakRSSBytes": 2763522048,
+          "peakRSSMeasurement": "maximum_through_complete_receipt_render",
+          "peakRSSBudget": 4294967296,
+          "metadataProcessSeconds": 28.376084375,
+          "secondsBeforeFinalReceiptRender": 24.6748475,
+          "resultSHA256": "3e89ceabfcdaa4ed771276256f48c0e103dade7d9a8bcb5888760303041118b1"
+        },
+        "fullSDK": "NOT_RUN_FOR_THIS_CHANGE",
+        "combined": "NOT_RUN",
+        "runtimeAcceptance": "NOT_ESTABLISHED"
       }
     }
   }

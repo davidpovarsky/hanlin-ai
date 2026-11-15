@@ -200,3 +200,17 @@ Two additional adversarial cases reject changed vendor width and constant value.
 The affected17-case controls, strict31 and Accelerate slice require fresh native
 execution. Unchanged export controls qualify only for authenticated reuse; full
 SDK, combined wrapper, strict generated declarations and VM remain unfulfilled.
+
+Run43764390974/745ac85c executed all17 focused/transaction cases and strict31
+successfully, then the actual UIKit/Host/AVFoundation/Accelerate slice passed.
+All284 fresh control and1 reuse manifest files verified locally with0 mismatch.
+The nine unchanged export/target tests are REUSED_VERIFIED_PASS from43757087726
+after935 compiler inputs and all original source/assertion/fixture checks; they
+were not reexecuted. The slice contains38,844 original A graph models,667 kept
+and38,177 proven mapped,0 missing. Original binary2,595,406B,
+SHA256a84b053227870804659fd2304dff2a1afaa27d79282fdf6b5a32bb5a40b419cd;
+41 declaration files generated, strict check NOT_RUN. Actual child28.376084375s,
+maximum RSS through complete receipt rendering2,763,522,048B below4GiB.
+Slice result SHA2563e89ceabfcdaa4ed771276256f48c0e103dade7d9a8bcb5888760303041118b1.
+The exact compiled image becomes the verified input for the new full-SDK scope;
+this reuse does not inherit test or runtime acceptance.
