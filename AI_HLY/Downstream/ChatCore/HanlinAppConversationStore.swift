@@ -79,7 +79,7 @@ final class HanlinAppConversationStore: HanlinConversationStore {
     /// Cold historical reconciliation only, when composition proves no live Session writer is
     /// running. Uses this SAME adapter/CAS and metadata receipt; never creates a missing record.
     func persistHistoricalReceipt(_ event: HanlinHostResultEvent, originReference: String,
-                                  receiptReference: String) async throws {
+                                  receiptReference: String, replacingUncertainReference: String? = nil) async throws {
         guard event.call.session.conversationID == conversationID,
               event.call.session.context.namespace == namespace,
               originReference.utf8.count <= 4096, receiptReference.utf8.count <= 4096,
@@ -92,20 +92,35 @@ final class HanlinAppConversationStore: HanlinConversationStore {
             if case .hostResultIdentity(let id, let call) = $0.payload { return id == event.resultID && call == event.call }
             return false
         }
-        if hasOriginalIdentity, old.entries.contains(where: {
-            guard case .toolResult(let providerID, let receipt) = $0.payload else { return false }
-            return providerID == event.call.providerCallID && receipt.result.invocationID == event.call.invocationID
-                && receipt.result.logicalToolID == event.call.logicalToolID
-                && receipt.context == event.call.session.context && receipt.effectState == event.result.effectState
-                && receipt.reconciliationReference == event.result.reconciliationReference
-                && receipt.result.outcome == event.result.metadataReceipt().result.outcome
-        }) { return }
-        let prefix = "hanlin.split.receipt.v1:" + event.resultID.uuidString.lowercased() + ":"
-        for entry in old.entries {
-            if case .presentationReference(1, let value) = entry.payload, value.hasPrefix(prefix) {
-                guard value.utf8.elementsEqual(receiptReference.utf8) else { throw HanlinHostError.resultMismatch }
-                return
+        let prior = old.entries.compactMap { entry -> HanlinHostExecutionResult? in
+            guard entry.runID == event.call.runID, entry.step == event.call.step,
+                  case .toolResult(let providerID, let receipt) = entry.payload,
+                  providerID == event.call.providerCallID, receipt.result.invocationID == event.call.invocationID,
+                  receipt.result.logicalToolID == event.call.logicalToolID, receipt.context == event.call.session.context else { return nil }
+            return receipt
+        }.last
+        if hasOriginalIdentity {
+            guard let prior else { throw HanlinHostError.invalidRecord }
+            if prior.effectState == event.result.effectState,
+               prior.reconciliationReference == event.result.reconciliationReference,
+               prior.result.outcome == event.result.metadataReceipt().result.outcome { return }
+            // Only an explicitly identified PROVISIONAL uncertain receipt may be reconciled.
+            // A settled live Session receipt may lack the later cold-reference entry; it must
+            // still reject changed outcomes instead of treating the first cold retry as new.
+            guard prior.effectState == .uncertain, let replacingUncertainReference,
+                  prior.reconciliationReference == replacingUncertainReference,
+                  event.result.reconciliationReference?.hasPrefix(replacingUncertainReference + ":") == true else {
+                throw HanlinHostError.resultMismatch
             }
+        } else if prior != nil { throw HanlinHostError.invalidRecord }
+        let prefix = "hanlin.split.receipt.v1:" + event.resultID.uuidString.lowercased() + ":"
+        if old.entries.contains(where: {
+            if case .presentationReference(1, let value) = $0.payload { return value.hasPrefix(prefix) }
+            return false
+        }) {
+            // Exact persisted receipts returned above. An orphan/conflicting marker cannot stand
+            // in for the actual canonical receipt, or permit another result for this identity.
+            throw HanlinHostError.resultMismatch
         }
         guard old.entries.last?.sequence != UInt64.max else { throw HanlinHostError.storageLimitExceeded }
         let next = old.entries.last.map { $0.sequence + 1 } ?? 0

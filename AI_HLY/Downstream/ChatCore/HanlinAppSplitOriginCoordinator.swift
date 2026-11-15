@@ -166,7 +166,8 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
               request.issuedAt <= Date(), request.expiresAt > Date(),
               request.expiresAt.timeIntervalSince(request.issuedAt) <= 120 else { throw SplitBridgeFailure.expired }
         if let item = pending[request.id] {
-            guard !item.invalidated, item.request == request, let host = item.host, let session = item.session,
+            guard !item.invalidated, item.request == request,
+                  item.origin.requestDigest == (try Self.digest(request)), let host = item.host, let session = item.session,
                   session.identity == item.origin.call.session else { throw SplitBridgeFailure.cancelled }
             _ = try await host.context(for: item.origin.call.session)
             try requireOriginalAssistant(item.origin)
@@ -189,8 +190,9 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     /// Host execution until this callback would deadlock the existing model tool loop.
     func persistVerifiedResult(_ response: SplitBridgeReturn) async throws {
         if let item = pending[response.request.id] {
-            guard !item.invalidated, item.request == response.request else { throw SplitBridgeFailure.cancelled }
-            if let old = item.response { guard old == response else { throw SplitBridgeFailure.correlationMismatch } }
+            guard !item.invalidated, item.request == response.request,
+                  item.origin.requestDigest == (try Self.digest(response.request)) else { throw SplitBridgeFailure.cancelled }
+            if let old = item.response { guard try Self.digest(old) == Self.digest(response) else { throw SplitBridgeFailure.correlationMismatch } }
             else {
                 item.response = response
                 item.waiter?.resume(returning: response); item.waiter = nil
@@ -208,7 +210,8 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             let event = try HanlinHostResultEvent(resultID: origin.resultID, call: origin.call,
                 result: Self.result(response, origin: origin))
             let receiptKey = try Self.historicalReceiptReference(response, resultID: origin.resultID)
-            try await store.persistHistoricalReceipt(event, originReference: reference, receiptReference: receiptKey)
+            try await store.persistHistoricalReceipt(event, originReference: reference, receiptReference: receiptKey,
+                replacingUncertainReference: Self.receiptReference(response.request.id))
             _ = try await coldOrigin(response.request)
         }
     }

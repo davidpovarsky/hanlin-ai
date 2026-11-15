@@ -241,6 +241,61 @@ private struct AppPartModel: LanguageModelV3 {
         #expect(loaded?.revision == 1)
     }
 
+    @Test func liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules() async throws {
+        let values: [(HanlinValue, HanlinValue)] = [(.integer(9_007_199_254_740_992), .integer(9_007_199_254_740_993)),
+            (.string("K"), .string("\u{212A}"))]
+        for (originalValue, conflictingValue) in values {
+            for provisional in [false, true] {
+                let container = try database(), context = container.mainContext
+                let row = ChatRecords(name: "Original live receipt", type: "chat")
+                context.insert(row); try context.save()
+                let id = try #require(row.id)
+                let ns = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library", workspace: "swiftdata", space: id.uuidString)
+                let session = HanlinHostSession(conversationID: id, context: .init(namespace: ns, sceneID: UUID(), generation: UUID()))
+                let logical = try HanlinLogicalToolID(providerInstanceID: .init(validating: "hanlin.host"), localToolID: .init(validating: "open_mini_app"))
+                let call = HanlinHostCallIdentity(session: session, runID: UUID(), step: 0, providerCallID: "original",
+                    invocationID: try .init(validating: UUID().uuidString.lowercased()), logicalToolID: logical)
+                let request = SplitBridgeRequest(caller: try .init(validating: "hanlin.host"), target: try .init(validating: "hanlin.demo.swift-parity"),
+                    installedPackage: try .init(validating: "compiled.hanlin.demo.swift-parity"), session: try .init(validating: session.id.uuidString.lowercased()),
+                    chat: id, generation: 0, action: try .init(validating: "share.value"), capability: try .init(validating: "inter-app.share"),
+                    issuedAt: .now, expiresAt: .now.addingTimeInterval(30), payload: .null)
+                let resultID = UUID(), provisionalReference = "hanlin.split.return.v1:" + request.id.uuidString.lowercased()
+                let originReference = "hanlin.split.origin.v1:" + request.id.uuidString.lowercased() + ":fixture-committed-origin"
+                func receipt(_ value: HanlinValue) throws -> (HanlinHostResultEvent, String) {
+                    let key = try HanlinAppSplitOriginCoordinator.historicalReceiptReference(.init(request: request, outcome: .result(value)), resultID: resultID)
+                    let digest = try #require(key.split(separator: ":").last)
+                    let result = HanlinHostExecutionResult(result: .init(invocationID: call.invocationID, logicalToolID: logical,
+                        outcome: .completed([.structured(value)]), completedAt: .now), effectState: .confirmedCommitted,
+                        context: session.context, reconciliationReference: provisionalReference + ":" + String(digest))
+                    return (try .init(resultID: resultID, call: call, result: result), key)
+                }
+                let (expected, expectedKey) = try receipt(originalValue)
+                let prior = provisional ? HanlinHostExecutionResult(result: .init(invocationID: call.invocationID, logicalToolID: logical,
+                    outcome: .failed(.init(code: .nativeFailure, userMessage: "Original process lost the result")), completedAt: .now),
+                    effectState: .uncertain, context: session.context, reconciliationReference: provisionalReference) : expected.result
+                let store = HanlinAppConversationStore(context: context, conversation: row, namespace: ns, conversationID: id, temporary: false)
+                // Exact shape the original Session commits: identity + metadata receipt, with NO
+                // additional cold marker. A settled live result must already be final here.
+                try await store.save(.init(namespace: ns, conversationID: id, revision: 0, entries: [
+                    .init(runID: call.runID, step: 0, sequence: 0, payload: .presentationReference(version: 1, opaqueReference: originReference)),
+                    .init(runID: call.runID, step: 0, sequence: 1, payload: .hostResultIdentity(resultID: resultID, call: call)),
+                    .init(runID: call.runID, step: 0, sequence: 2, payload: .toolResult(providerCallID: call.providerCallID, result: prior.metadataReceipt()))]), replacing: nil)
+                try await store.persistHistoricalReceipt(expected, originReference: originReference, receiptReference: expectedKey,
+                    replacingUncertainReference: provisionalReference)
+                let preserved = row.agentSDKRecordData
+                let loaded = try await store.load(id, namespace: ns)
+                #expect(loaded?.revision == (provisional ? 1 : 0))
+                let (changed, changedKey) = try receipt(conflictingValue)
+                do {
+                    try await store.persistHistoricalReceipt(changed, originReference: originReference, receiptReference: changedKey,
+                        replacingUncertainReference: provisionalReference)
+                    Issue.record("Conflicting outcome overwrote a settled original receipt without a cold marker")
+                } catch { #expect(error as? HanlinHostError == .resultMismatch) }
+                #expect(row.agentSDKRecordData == preserved)
+            }
+        }
+    }
+
     @Test func acceptedOriginAcknowledgementCannotClearANewerDelivery() throws {
         let container = try database(), context = container.mainContext
         let row = ChatRecords(name: "Existing origin", type: "chat")

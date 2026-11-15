@@ -59,7 +59,7 @@ are untouched. UI navigation/mount acknowledgement remains A2UI-owned.
 Source syntax and diff checks pass. New actual Session association controls passed in separate
 Apple run43743854538 at exact364f10a6:27 EXECUTED_PASS (20 Session,6 Context,1 Dispatcher),
 iOS compile PASS. Authenticated ledger retains exact hashes/xcresult IDs/locks/toolchain. schema-only43742612086 does not cover this follow-on. The readonly isRunning accessor compiled in the later exact7df writer/iOS proof43745924452;
-its actual app consumer/composition still needs combined app compilation. Eight owner/store/Host controls and seven Split composition controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
+its actual app consumer/composition still needs combined app compilation. Nine owner/store/Host controls and seven Split composition controls remain authored NOT_RUN. Actual Split dispatch/save-before-accept/race/cancel/
 duplicate/deleted/deadline controls, original XCUITest, two-app cold process, signed group and
 physical device acceptance remain OPEN; injected open/target seams are not device proof.
 
@@ -106,3 +106,12 @@ Exact writer run43745924452 at7dfd30b7 executed the one new writer case and iOS 
 both passed. Raw ZIP SHA256/all CRCs plus245 source hashes against Git+tar are authenticated in
 evidence/exact-writer-43745924452.json. It does not execute the conflicting-outcome row test or
 any app/UI control; no app acceptance is inferred from that pure case.
+
+Settled-live receipt reconciliation is also final even if no later cold-reference entry exists:
+the store deduplicates the latest original canonical identity/result first and rejects changed
+settled outcomes. Only an explicitly matching provisional uncertain reference may transition to a
+verified hashed result once. Live duplicate request/response comparison uses exact fingerprints
+as well as typed identity, avoiding Swift String canonical-equivalence shortcuts. The ninth actual
+store control covers live-without-cold-marker and provisional-to-final paths using conflicting
+large integers AND K/Kelvin outcomes, requiring unchanged bytes after the conflict. It is authored
+NOT_RUN, not represented by the pure exact-writer case.
