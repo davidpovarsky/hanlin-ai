@@ -847,3 +847,43 @@ string drawing metric only for minimum height. Native visual coverage still
 controls nonempty maximum/scrolling; all12 test identities/assertions are unchanged.
 A single changed-source12-case proof is authorized. No AppKit shim, constant+10,
 tolerance, forced TextKit mode or weakened test is introduced by the integrator.
+
+
+## Parity partial result and remaining two-case continuation
+
+43685785954 at2427aac90154834eb5f31c746d47f6dcd3129e8e was CANCELLED at45 minutes.
+Retained artifact14151238831 is35134792 bytes; API-reported ZIP SHA256
+0323ae0e03e5648d3dc4679af23254b3f494b113a8a0ba80617ae212782ae8d4 was NOT
+independently recomputed. Selected HTTP byte ranges, ZIP entry CRCs and exact Git
+hashes were checked:319290 bytes fetched, zero full ZIP/disk downloads. All234
+frozen source-inventory hashes match2427. Exported native nodes show two PASS
+in each iPhone-en,iPhone-he,iPad-en with process exit0 (six unique variant/method
+outcomes). iPad-he has no test-case start/end, raw tests JSON or completed context
+before cancellation; its two obligations are NOT_RUN, not failed. Overall run is
+not PASS. Final summary/process/raw-lock snapshots were not retained on SIGTERM;
+no equality to a nonexistent partial-run raw lock is claimed.
+
+The authorized completion runs ONLY those two unexecuted iPad-he obligations,
+using a disposable Mac Git worktree at the exact same2427 whole source, original
+43eb package graph, unchanged UI assertions/wrapper and a newly declared owned
+CI harness. The current integration branch's e7 producer is not substituted into
+that old UI cut. Workflow and five executed-harness hashes are separate from the
+frozen source inventory. Current source/working tree stays untouched.
+
+Build900s/boot600s/test900s budgets leave artifact-retention margin in a45-minute
+single-cohort job. Native case-end lines are flushed immediately as JSONL and
+context is written before boot/test. Actual raw locks are retained immediately
+after build, excluding committed input locks in the frozen worktree. SIGTERM is
+recorded as143 where the shell can finish. Raw xcresult/device/PNG proof remains
+required: an interrupted pass end-line is BLOCKED, while an actual failure remains
+FAILED. Four focused synthetic reporting/log-parser tests passed; Bash syntax,
+environment propagation and Git diff checks passed. These are not UI evidence.
+No six-case rerun, status/production/assertion change, manifest override, global
+simulator erase or full-app/physical/release acceptance follows.
+
+Composer43689862618/76148174 failed BEFORE its12 tests: ambiguous
+'greatestFiniteMagnitude' at the editor's UIKit drawing call57:34. All12 remain
+NOT_RUN,0 executed. Artifact14151544015:71510 bytes, API SHA256
+d901006a96775940b0611b5e20a3f59d4d3074a4b615e2806c523d7dd43b65c0.
+The source owner and reviewer received the actual compiler error; no unchanged
+retry or integrator edit of that leased production file occurred.
