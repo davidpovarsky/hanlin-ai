@@ -101,3 +101,13 @@ compilation. It does not rerun unchanged platform/model/native catalog tests or 
 persistence. Raw resolved locks and exact dependency source/license are retained by the proof.
 Actual SwiftData/app/native-boundary controls are separate and currently NOT_RUN. The new manual
 selector does not broaden automatic triggers. No app/whole-CI acceptance is claimed.
+
+## Executed Apple qualification
+
+Run43742612086, source9c42cddd14f76741ce0af7045381c7a9a7db0f79, actually executed all33
+selected cases (18 Session,6 Context,9 new schema/raw-boundary), all passed. Actual iOS AgentCore
+compilation passed. Exact real source/xcresult IDs, toolchain and dependency locks are authenticated
+in evidence/host-schema-43742612086.json; the raw SDK Package.resolved was copied byte-for-byte
+from that actual Mac resolution, not regenerated on Windows. The released validator source/license
+archive is retained in artifact14172853768. This qualifies the pure facade/provider projection/raw
+Dispatcher contract; actual App Host/native-boundary/SwiftData/UI and broad MCP gates remain OPEN.
