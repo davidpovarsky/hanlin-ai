@@ -1,0 +1,113 @@
+{
+  "run_id": 43754353738,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43754353738",
+  "workflow_conclusion": "failure",
+  "job_id": 132935064698,
+  "source_sha": "78c8880e512078bafaa21f4deab87163d410f887",
+  "artifact_id": 14178235394,
+  "artifact_sha256": "09349abf2003b9ccbac79d80b8eb5451517e0499bbf7509b3332be9243f51ca9",
+  "verification": {
+    "raw_zip_digest_and_all_crcs": "VERIFIED",
+    "source_archive_git_sha256_records": 9,
+    "source_hashes": {
+      "Packages/HanlinSkillFormat/Package.resolved": "9048ef8e6c3372f70711351935d7700bea9528274ab5c689e3c7dc9d879400d5",
+      "Packages/HanlinSkillFormat/Package.swift": "1f0cc6fa8a91e48ab85f0bfed30f90c5381f04ee5507ca2ef9d3de3c07c37422",
+      "Packages/HanlinSkillFormat/README.md": "60530dbd2ba8f6ac7a32badd56c64ddff1c642d0f919d43f82213fbbc3649a42",
+      "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentEditing.swift": "106a9e17059da2a42a8a2e3347a43859b1a138a6f7830c6c5322d4ad5487d6bc",
+      "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentParser.swift": "3057ec55743fd745d822617d375334bbd1cf0f74c538114aad398386ea75b019",
+      "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillMarkdownDocument.swift": "44af023aa465984253e184e11a1c09b94e39073cfeae87a1810557e4d80e0f03",
+      "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/YAMLSourceInspector.swift": "8b4ae12a1108b804c7641c290c06f614b8ef75785b20c57a7d0a1f6da7fe21f6",
+      "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/Fixtures/openclaw.md": "01887afef5beb260a45e4002ce4f39aee5acea2429a8acce229ca40cdd3227af",
+      "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/SkillDocumentTests.swift": "9654f4265fc183f35ed5efdeade281ca5a13705fa14e23a3e516dd2a040e8d24"
+    },
+    "raw_lock_sha256": "9048ef8e6c3372f70711351935d7700bea9528274ab5c689e3c7dc9d879400d5",
+    "upstream_source_archive_sha256": "dff911cd6ea0eb6266d636c32853a6b63e7e43084bdd0833a8a00128685930dc"
+  },
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\n27.2\n27.2\narm64\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "elapsed_seconds": 481,
+  "platforms": [
+    {
+      "platform": "macOS",
+      "classification": "EXECUTED_PASS",
+      "executed_test_identities": 20,
+      "parameter_expanded_invocations": 25,
+      "actual_identifiers": [
+        "SkillDocumentTests/noOpAndTypedCodableRetainOriginalData()",
+        "SkillDocumentTests/quotedKeysAndExplicitStringTagsUseOriginalScanner()",
+        "SkillDocumentTests/bomCRLFUnicodeMarksMapToExactUTF8Bytes()",
+        "SkillDocumentTests/newDocumentsUseUpstreamEmitterEscaping()",
+        "SkillDocumentTests/openClawNestedMetadataUsesOneTaggedContract()",
+        "SkillDocumentTests/complexUnknownKeysRemainOrderedTaggedData()",
+        "SkillDocumentTests/blockScalarUsesNativeSpanAndRetainsFollowingField(style:)",
+        "SkillDocumentTests/scalarAliasCanBeEditedWithoutChangingItsSource()",
+        "SkillDocumentTests/optionalTitleRemovalRetainsInlineComment()",
+        "SkillDocumentTests/bodyOnlyEditPreservesEntireFrontmatterAndNewlineStyle()",
+        "SkillDocumentTests/parsingHonorsCancellation()",
+        "SkillDocumentTests/compatibleMigrationReadsLegacyWithoutRewriting()",
+        "SkillDocumentTests/flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:)",
+        "SkillDocumentTests/aliasesCyclesAndTextExpansionHaveSeparateResourceErrors()",
+        "SkillDocumentTests/canonicalUnicodeEditDoesNotCollapseDistinctBytes()",
+        "SkillDocumentTests/sourceAndConfigurationBudgetsFailBeforeComposition()",
+        "SkillDocumentTests/malformedDuplicateAndInvalidRootsFailClosed()",
+        "SkillDocumentTests/allKnownEditsPreserveUnknownBytesAndBody()",
+        "SkillDocumentTests/physicalAndAliasExpandedDepthAreBounded()",
+        "SkillDocumentTests/anchoredKnownFieldFailsExplicitlyWithoutChangingSource()"
+      ],
+      "raw_test_export_sha256": "5eed3362094ff5c728a125765f52757a78a79ebc20ce7de1d9a9ea241d669d19"
+    },
+    {
+      "platform": "iOS26",
+      "classification": "BLOCKED",
+      "executed_test_identities": 0,
+      "reason": "Required installed simulator runtime/device unavailable"
+    },
+    {
+      "platform": "iOS27",
+      "classification": "EXECUTED_PASS",
+      "executed_test_identities": 20,
+      "parameter_expanded_invocations": 25,
+      "actual_identifiers": [
+        "SkillDocumentTests/blockScalarUsesNativeSpanAndRetainsFollowingField(style:)",
+        "SkillDocumentTests/allKnownEditsPreserveUnknownBytesAndBody()",
+        "SkillDocumentTests/flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:)",
+        "SkillDocumentTests/bodyOnlyEditPreservesEntireFrontmatterAndNewlineStyle()",
+        "SkillDocumentTests/complexUnknownKeysRemainOrderedTaggedData()",
+        "SkillDocumentTests/sourceAndConfigurationBudgetsFailBeforeComposition()",
+        "SkillDocumentTests/bomCRLFUnicodeMarksMapToExactUTF8Bytes()",
+        "SkillDocumentTests/malformedDuplicateAndInvalidRootsFailClosed()",
+        "SkillDocumentTests/physicalAndAliasExpandedDepthAreBounded()",
+        "SkillDocumentTests/quotedKeysAndExplicitStringTagsUseOriginalScanner()",
+        "SkillDocumentTests/anchoredKnownFieldFailsExplicitlyWithoutChangingSource()",
+        "SkillDocumentTests/parsingHonorsCancellation()",
+        "SkillDocumentTests/newDocumentsUseUpstreamEmitterEscaping()",
+        "SkillDocumentTests/openClawNestedMetadataUsesOneTaggedContract()",
+        "SkillDocumentTests/noOpAndTypedCodableRetainOriginalData()",
+        "SkillDocumentTests/optionalTitleRemovalRetainsInlineComment()",
+        "SkillDocumentTests/canonicalUnicodeEditDoesNotCollapseDistinctBytes()",
+        "SkillDocumentTests/compatibleMigrationReadsLegacyWithoutRewriting()",
+        "SkillDocumentTests/scalarAliasCanBeEditedWithoutChangingItsSource()",
+        "SkillDocumentTests/aliasesCyclesAndTextExpansionHaveSeparateResourceErrors()"
+      ],
+      "raw_test_export_sha256": "18df02b2e8ef4a96a6956c544e594f9af911dc56261a1f999efe1be436bcf5f1"
+    }
+  ],
+  "ios_compile": {
+    "swift_language_mode": "6",
+    "sdk": "iPhoneSimulator27.2",
+    "deployment_target": "arm64-apple-ios26.0-simulator",
+    "limitation": "Deployment26 compilation and iOS27 execution are distinct from actual iOS26 SDK/runtime verification."
+  },
+  "not_run": [
+    "actual app SkillStoreAndImportTests (four new controls + existing suite)",
+    "app Skills UI/regression",
+    "iOS26 runtime execution",
+    "physical devices"
+  ],
+  "failed_preparation": {
+    "run_id": 43754160901,
+    "source_sha": "485933ba56952b4aef1363b88e5b4bc33bb2b94c",
+    "executed_test_identities": 0,
+    "reason": "Evidence extractor missed inline @Test func declarations; corrected and real20 identities verified before replacement run."
+  },
+  "reuse_to_exact_version_manifest": "PENDING actual Mac resolved-only/source-closure audit; native executions belong to original revision-pin source SHA above."
+}

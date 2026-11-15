@@ -53,12 +53,65 @@ import hashlib,json,subprocess,sys
 from pathlib import Path
 sdk,evidence=map(Path,sys.argv[1:]);raw=(sdk/'Package.resolved').read_bytes();pins=json.loads(raw)['pins']
 assert len(pins)==1 and pins[0]['identity']=='yams' and pins[0]['state']['revision']=='a27b21e0c81c5bf42049b897a62aaf387e80f279'
+assert pins[0]['state']['version']=='6.2.2'
 checkout=next(p for p in (sdk/'.build/checkouts').iterdir() if p.name.lower()=='yams')
 revision=subprocess.check_output(['git','-C',str(checkout),'rev-parse','HEAD'],text=True).strip()
 assert revision==pins[0]['state']['revision']
 (evidence/'upstream-source.tar').write_bytes(subprocess.check_output(['git','-C',str(checkout),'archive','HEAD']))
 (evidence/'resolution.json').write_text(json.dumps({'sha256':hashlib.sha256(raw).hexdigest(),'resolved':json.loads(raw),'checkout_commit':revision},indent=2))
 PY_DEPS
+if [[ "${HANLIN_SKILL_RESOLVE_ONLY:-0}" == 1 ]]; then
+  xcrun swift package --package-path "$sdk" describe --type json > "$evidence/target-graph.json"
+  xcrun swift package --package-path "$sdk" show-dependencies --format json > "$evidence/dependency-graph.json"
+  git ls-remote --tags https://github.com/jpsim/Yams.git refs/tags/6.2.2 'refs/tags/6.2.2^{}' > "$evidence/upstream-tag-refs.txt"
+  previous="$scratch/Previous"
+  mkdir -p "$previous"
+  git fetch --no-tags --depth=1 origin 78c8880e512078bafaa21f4deab87163d410f887
+  git archive 78c8880e512078bafaa21f4deab87163d410f887 Packages/HanlinSkillFormat | tar -xf - -C "$previous"
+  xcrun swift package --package-path "$previous/Packages/HanlinSkillFormat" resolve > "$evidence/previous-resolve.log" 2>&1
+  cp "$previous/Packages/HanlinSkillFormat/Package.resolved" "$evidence/raw-previous-Package.resolved"
+  xcrun swift package --package-path "$previous/Packages/HanlinSkillFormat" describe --type json > "$evidence/previous-target-graph.json"
+  python3 - "$sdk" "$previous/Packages/HanlinSkillFormat" "$evidence" <<'PY_EQUIVALENCE' | tee "$evidence/summary.json"
+import hashlib,json,subprocess,sys
+from pathlib import Path
+sdk,previous,evidence=map(Path,sys.argv[1:])
+tagrefs={line.split()[1]:line.split()[0] for line in (evidence/'upstream-tag-refs.txt').read_text().splitlines()}
+ref='refs/tags/6.2.2';peeled=tagrefs.get(ref+'^{}',tagrefs.get(ref));assert peeled=='a27b21e0c81c5bf42049b897a62aaf387e80f279'
+old=json.loads((evidence/'raw-previous-Package.resolved').read_text())['pins']
+new=json.loads((evidence/'raw-Package.resolved').read_text())['pins']
+assert len(old)==len(new)==1 and old[0]['identity']==new[0]['identity']=='yams'
+assert old[0]['location']==new[0]['location'] and old[0]['state']['revision']==new[0]['state']['revision']==peeled
+assert new[0]['state']['version']=='6.2.2'
+before=(previous/'Package.swift').read_bytes();after=(sdk/'Package.swift').read_bytes()
+assert before.replace(b'revision: "a27b21e0c81c5bf42049b897a62aaf387e80f279"',b'exact: "6.2.2"')==after
+unchanged=[]
+for folder in ['Sources','Tests']:
+    oldfiles={p.relative_to(previous) for p in (previous/folder).rglob('*') if p.is_file()}
+    newfiles={p.relative_to(sdk) for p in (sdk/folder).rglob('*') if p.is_file()}
+    assert oldfiles==newfiles
+    for relative in sorted(oldfiles):
+        assert (previous/relative).read_bytes()==(sdk/relative).read_bytes(),str(relative)
+        unchanged.append({'path':str(relative),'sha256':hashlib.sha256((sdk/relative).read_bytes()).hexdigest()})
+# SwiftPM's root path differs between snapshots; target source/flags/products stay identical.
+def graph(path):
+    data=json.loads(path.read_text());prefix=data.pop('path');data.pop('dependencies',None)
+    def relative(value):
+        if isinstance(value,dict):return {k:relative(v) for k,v in value.items()}
+        if isinstance(value,list):return [relative(v) for v in value]
+        if isinstance(value,str) and value.startswith(prefix) and value[len(prefix):].startswith(('/', '\\')):
+            return '<PACKAGE_ROOT>'+value[len(prefix):].replace('\\','/')
+        return value
+    return relative(data)
+current=graph(evidence/'target-graph.json');prior=graph(evidence/'previous-target-graph.json')
+assert current==prior,'Target/product/platform/Swift-language graph changed'
+oldcheckout=next(p for p in (previous/'.build/checkouts').iterdir() if p.name.lower()=='yams')
+newcheckout=next(p for p in (sdk/'.build/checkouts').iterdir() if p.name.lower()=='yams')
+assert subprocess.check_output(['git','-C',str(oldcheckout),'rev-parse','HEAD'])==subprocess.check_output(['git','-C',str(newcheckout),'rev-parse','HEAD'])
+assert subprocess.check_output(['git','-C',str(oldcheckout),'archive','HEAD'])==subprocess.check_output(['git','-C',str(newcheckout),'archive','HEAD'])
+print(json.dumps({'status':'RESOLVED_ONLY_PASS','tests_executed':0,'scope':'Exact6.2.2 resolution/tag-to-commit and source/target graph equivalence only; no new runtime test execution','previous_evidence_sha':'78c8880e512078bafaa21f4deab87163d410f887','tag_commit':peeled,'unchanged_sources_tests_fixtures':unchanged,'raw_lock_sha256':hashlib.sha256((evidence/'raw-Package.resolved').read_bytes()).hexdigest()},indent=2))
+PY_EQUIVALENCE
+  exit 0
+fi
 (cd "$sdk" && xcodebuild -list -json) > "$evidence/schemes.json"
 scheme="$(python3 - "$evidence/schemes.json" <<'PY_SCHEME'
 import json,sys

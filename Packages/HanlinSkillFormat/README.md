@@ -1,8 +1,9 @@
 # Hanlin Skill format
 
 `HanlinSkillFormat` is a Foundation-only, Swift 6 document/metadata library. It uses
-the original [Yams 6.2.2](https://github.com/jpsim/Yams/releases/tag/6.2.2), pinned to
-`a27b21e0c81c5bf42049b897a62aaf387e80f279`. Yams and its original CYaml/libyaml
+the original [Yams 6.2.2](https://github.com/jpsim/Yams/releases/tag/6.2.2), required as
+SwiftPM `exact: "6.2.2"` and locked to `a27b21e0c81c5bf42049b897a62aaf387e80f279`.
+The exact version is visible to upstream dependency update tooling. Yams and its original CYaml/libyaml
 target retain their upstream MIT licenses. No upstream source is copied or forked.
 
 ```swift
@@ -24,6 +25,9 @@ The one shared contract is `SkillMarkdownDocument` plus `SkillMetadataNode`:
   nested values, complex keys and unknown tags. Scalar numbers retain their text;
   no Double conversion or untyped object constructor runs. Tags and scalar text
   use UTF-8 storage so Swift canonical Unicode equality does not merge values.
+  This is Yams' representation tree: YAML merge keys remain tagged merge entries,
+  not a flattened inherited dictionary. Consumers must validate/handle such tags
+  explicitly rather than treat an unsupported mapping as empty requirements.
 - `name`, optional `title`, `description`, `compatibility` and `allowedTools` are
   convenience views. `legacyStringFrontmatter` is an incomplete compatibility
   projection, never the metadata authority.
@@ -75,3 +79,12 @@ manual workflow. It retains the exact source archive, hashes, upstream source,
 actual raw resolution, toolchain, destinations and xcresults. It selects macOS,
 iOS 26 and iOS 27; unavailable installed runtimes remain explicitly blocked.
 Package evidence does not establish app Store/ZIP/UI or live Runtime acceptance.
+
+`HanlinSkillFormatResolveOnly` selects a real Mac resolution/graph/tag audit without
+reexecuting tests. It compares the full Sources/Tests/fixtures and target/product/
+platform graph against the original revision-pin evidence, and verifies both
+upstream checkouts/archives and the remote peeled tag commit. Reuse is permitted
+only for authenticated original passes with unchanged source/transitive closure,
+test semantics/fixtures, compiler flags, toolchain/environment and runtime inputs;
+the record must identify their original SHA/platform, never call them newly executed.
+Missing/failed/uncertain obligations remain separate and require their own evidence.
