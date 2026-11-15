@@ -2,6 +2,44 @@
 
 ## Active wave: alias optimization contract version 2
 
+### Modern frontend candidate contract version 1
+
+The single manager authorized a tooling-only modern frontend migration after
+the real combined run 43722735261 rejected 30 parser errors despite all required
+names. Existing production remains pinned17 until actual modern combined/runtime
+acceptance. Runtime pin, binary format and original serializers remain unchanged.
+
+Inventory 43723704321 verified that installed Xcode27.2 has no C++ developer
+headers/libraries. Its installed Homebrew LLVM20.1.8 keg supplies those assets.
+The isolated candidate pins exact libclang/clang-cpp and developer-header hashes;
+build provenance retains the complete frontend header/resource/library identity.
+The classifier must eventually use that same proven build/context; a version
+string alone cannot confer equivalence. Candidate compile 43724820707 passed
+and generated SDK metadata with zero Clang errors; its aggregate run failed the
+old byte-identity comparison. No modern consumer/runtime acceptance is claimed.
+
+The versioned modern reference gate requires all 31 accepted UIKit/Host module
+models and every existing named API/member, signature, record field, flag,
+constant and protocol bound to survive. The unchanged pinned binary serializer
+encodes TypeArgument through its underlying type. The comparison permits only
+that erasure while retaining outer protocol bounds; it never removes a selector
+or ignores an ABI field. Candidate additions are retained as full declarations
+for review. Raw YAML hashes/differences remain recorded separately and are not
+reported byte-identical. Runtime and added-API obligations remain independent.
+
+Local comparison of actual 43724820707 YAML preserves all31 reference models:
+three additional member declarations and one additional ptrauth module are
+retained. Four comparator controls passed, including protocol loss, missing or
+duplicate selector, argument order/width and record-offset rejection. These are
+model-preservation results, not execution of the generated binary in NativeScript.
+
+An isolated ObjC++ candidate also keeps every public root and original input.
+It recognizes C-compatible CXXRecordDecl layouts and avoids advertising C++
+methods/mangled globals as C-callable exports. It has not been adopted. C++20
+implicitly enables named modules even with -fno-modules; the textual candidate
+must explicitly use -fno-cxx-modules, retaining module maps for ownership.
+Actual same-frontend role/provenance/negative and runtime gates remain open.
+
 The owner's 2026-11-15 activation supersedes the historical pause/preparation
 limits below. Runtime remains the sole metadata/tooling writer in the existing
 worktree and branch. SDK-03/SDK-04/INT-03 remain open.

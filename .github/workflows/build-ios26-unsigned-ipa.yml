@@ -196,10 +196,10 @@ jobs:
           fi
       - name: Verify candidate SDK declarations and original serializer semantics
         if: inputs.nativescript_metadata_tooling_mode == 'modern-compile'
-        run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --emit-types
+        run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --emit-types --modern-semantic-parity
       - name: Verify candidate ObjC++ SDK and original C metadata semantics
         if: inputs.nativescript_metadata_tooling_mode == 'modern-cpp'
-        run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++
+        run: /usr/bin/python3 Scripts/NativeScript/probe-sdk-metadata.py --generator build/nativescript-modern-metadata-tool/bin/objc-metadata-generator --language objective-c++ --modern-semantic-parity
       - name: Inspect installed frontend development assets
         if: inputs.nativescript_metadata_tooling_mode == 'inventory'
         run: python3 Scripts/CI/MetadataProvenanceProof/inventory_frontend.py

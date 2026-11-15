@@ -223,6 +223,8 @@ def main() -> int:
     parser.add_argument("--emit-types", action="store_true", help="Retain actual selected-SDK TypeScript declarations")
     parser.add_argument("--language", choices=["objective-c", "objective-c++"], default="objective-c",
                         help="Explicit standalone candidate dialect; not production adoption")
+    parser.add_argument("--modern-semantic-parity", action="store_true",
+                        help="Versioned modern candidate reference check; preserve raw YAML differences separately")
     parser.add_argument("--runtime-wrapper", action="store_true", help="Compile the real provider and exercise the production metadata launcher")
     parser.add_argument("--preprocessing-provenance", action="store_true",
                         help="Opt-in diagnostic-only wrapper; requires future explicitly authorized native execution")
@@ -235,6 +237,16 @@ def main() -> int:
         print(json.dumps({"status": "BLOCKED", "reason": "Actual macOS/Xcode SDK required"}))
         return 2
     root = Path(__file__).resolve().parents[2]
+    if options.modern_semantic_parity:
+        expected = root / "build/nativescript-modern-metadata-tool/bin/objc-metadata-generator"
+        if options.generator is None or options.generator.resolve() != expected.resolve():
+            parser.error("Modern semantic reference requires the isolated modern candidate")
+        provenance = json.loads((expected.parent.parent / "provenance.json").read_text())
+        sources = {"basePatchSourceSHA256": "build-metadata-tool.py", "modernPatchSourceSHA256": "build-modern-metadata-tool.py",
+                   "frontendLockSHA256": "metadata-frontend-lock.json"}
+        if provenance.get("status") != "BUILT_NOT_ACCEPTED" or provenance.get("generatorSHA256") != hashlib.sha256(expected.read_bytes()).hexdigest() or any(
+            provenance.get(key) != hashlib.sha256((root / "Scripts/NativeScript" / path).read_bytes()).hexdigest() for key, path in sources.items()):
+            raise RuntimeError("Modern candidate source/binary provenance drift")
     arch = "arm64" if platform.machine() == "arm64" else "x86_64"
     internal = root / "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal"
     candidates = sorted(p for p in internal.glob(f"metadata-generator-{arch}*/bin/objc-metadata-generator") if p.is_file())
@@ -399,8 +411,15 @@ def main() -> int:
                                for p in sorted((folder / "yaml").glob("*.yaml"))}
             exits[name] = execution.returncode
         parity_ok = bool(manifests["original"]) and manifests["original"] == manifests["candidate"] and all(v == 0 for v in exits.values())
-        result["unchangedUIKitAndHostDeclarationParity"] = {"status": "EXECUTED_PASS" if parity_ok else "FAILED",
-            "exitCodes": exits, "yamlSHA256": manifests}
+        result["unchangedUIKitAndHostDeclarationParity"] = {"status": "EXECUTED_PASS" if parity_ok else "DIFFERENT" if options.modern_semantic_parity else "FAILED",
+            "requiredForAcceptance": not options.modern_semantic_parity, "exitCodes": exits, "yamlSHA256": manifests}
+        if options.modern_semantic_parity:
+            from metadata_semantic_parity import compare_directories
+            try:
+                result["modernExistingAPIModelPreservation"] = compare_directories(parity_root / "original/yaml", parity_root / "candidate/yaml")
+            except (OSError, ValueError, subprocess.SubprocessError) as error:
+                result["modernExistingAPIModelPreservation"] = {"status": "INFRA_ERROR", "reason": type(error).__name__ + ": " + str(error)}
+            parity_ok = all(value == 0 for value in exits.values()) and result["modernExistingAPIModelPreservation"]["status"] == "EXECUTED_PASS"
         negative_input = parity_root / "negative.h"
         negative_input.write_text('#import <Foundation/Foundation.h>\n@interface HanlinMetadataNegativeFixture : NSObject\n'
                                   '- (HanlinDefinitelyMissingSDKType)invalidAPI;\n@end\n')
