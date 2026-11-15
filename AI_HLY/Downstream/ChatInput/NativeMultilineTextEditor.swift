@@ -81,14 +81,21 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     /// Reads visual line fragments without switching a TextKit 2 editor to TextKit 1.
-    static func visualLineLimit(for textView: UITextView) -> (count: Int, sixthBottom: CGFloat?, complete: Bool) {
+    static func visualLineLimit(for textView: UITextView, observeDiagnostic: ((String) -> Void)? = nil) -> (count: Int, sixthBottom: CGFloat?, complete: Bool) {
         var count = 0
         var sixthBottom: CGFloat?
         if let manager = textView.textLayoutManager {
-            guard let content = manager.textContentManager else { return (0, nil, false) }
+            observeDiagnostic?("TextKit2")
+            guard let content = manager.textContentManager else {
+                observeDiagnostic?("missing textContentManager")
+                return (0, nil, false)
+            }
             let document = content.documentRange
             let documentLength = content.offset(from: document.location, to: document.endLocation)
-            guard documentLength >= 0 else { return (0, nil, false) }
+            guard documentLength >= 0 else {
+                observeDiagnostic?("negative document length \(documentLength)")
+                return (0, nil, false)
+            }
             var ranges: [Range<Int>] = []
             var validRanges = true
             var lastBottom: CGFloat = 0
@@ -119,19 +126,27 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
                 }
                 return true
             }
-            guard validRanges, Self.hasContiguousCoverage(ranges, documentLength: documentLength) else { return (0, nil, false) }
+            guard validRanges, Self.hasContiguousCoverage(ranges, documentLength: documentLength) else {
+                observeDiagnostic?("invalid/partial fragments valid=\(validRanges) ranges=\(ranges) documentLength=\(documentLength) counted=\(count)")
+                return (0, nil, false)
+            }
         } else {
             // Access only when the view is already using TextKit 1.
+            observeDiagnostic?("TextKit1")
             let manager = textView.layoutManager
             manager.ensureLayout(for: textView.textContainer)
             let glyphs = manager.glyphRange(for: textView.textContainer)
-            guard glyphs.location == 0 else { return (0, nil, false) }
+            guard glyphs.location == 0 else {
+                observeDiagnostic?("nonzero first glyph range=\(glyphs) containerSize=\(textView.textContainer.size)")
+                return (0, nil, false)
+            }
             manager.enumerateLineFragments(forGlyphRange: glyphs) { rect, _, _, _, stop in
                 count += 1
                 if count == 6 { sixthBottom = rect.maxY }
                 if count >= 7 { stop.pointee = true }
             }
             if count < 7 && NSMaxRange(glyphs) < manager.numberOfGlyphs {
+                observeDiagnostic?("partial container coverage range=\(glyphs) total=\(manager.numberOfGlyphs) counted=\(count) containerSize=\(textView.textContainer.size)")
                 return (0, nil, false)
             }
             if count < 7 && manager.extraLineFragmentTextContainer === textView.textContainer {
@@ -162,6 +177,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         let forcedScroll: Bool
         let height: CGFloat
         let scrolling: Bool
+        let layoutDiagnostics: [String]
     }
 
     func measuredHeight(for textView: UITextView, isEmpty: Bool,
@@ -172,9 +188,13 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
             ? Self.automaticHeightBounds(for: textView, isEmpty: isEmpty, availableHeight: maxHeight)
             : (min: minHeight, max: max(minHeight, maxHeight))
         var incompleteLayout = false
+        var layoutDiagnostics: [String] = []
+        let layoutObserver: ((String) -> Void)? = observeMeasurement.map { _ in
+            { detail in layoutDiagnostics.append(detail) }
+        }
         var measuredLines: (count: Int, sixthBottom: CGFloat?, complete: Bool)? = nil
         if usesAutomaticLineLimits && !isEmpty {
-            let lines = Self.visualLineLimit(for: textView)
+            let lines = Self.visualLineLimit(for: textView, observeDiagnostic: layoutObserver)
             measuredLines = lines
             let limit = Self.automaticLimit(fittingHeight: fitting, availableHeight: maxHeight, minimumHeight: bounds.min,
                 verticalInsets: textView.textContainerInset.top + textView.textContainerInset.bottom,
@@ -187,7 +207,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         observeMeasurement?(.init(fitting: fitting, minimum: bounds.min, maximum: bounds.max,
             lineCount: measuredLines?.count, sixthBottom: measuredLines?.sixthBottom,
             complete: measuredLines?.complete, forcedScroll: incompleteLayout, height: height,
-            scrolling: textView.isScrollEnabled))
+            scrolling: textView.isScrollEnabled, layoutDiagnostics: layoutDiagnostics))
         return height
     }
 
