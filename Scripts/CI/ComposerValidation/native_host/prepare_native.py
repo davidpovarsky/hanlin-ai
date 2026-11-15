@@ -20,8 +20,9 @@ from prepare_capability_proof import SOURCES, TEST_SOURCE, EDITOR_TEST_SOURCE, A
 from extract_target import render
 from project_graph import parse_project
 
-SOURCE = "e8ccd81452843609285a0cd7e017a759bda6a6ef"
-OWNER = "20980c9448f0a5d78eefcaec38da6e92364de37d"
+SOURCE = "356f1180e6eb8281d89b854b412d87508f7bdc98"
+OWNER = "356f1180e6eb8281d89b854b412d87508f7bdc98"
+PATTERN_SOURCE = "e8ccd81452843609285a0cd7e017a759bda6a6ef"
 PROJECT = "ComposerNativeHost.xcodeproj"
 SCHEME = "ComposerNativeHost"
 HOST_PATH = "Infrastructure/ComposerNativeUnitHost.swift"
@@ -43,7 +44,7 @@ def provenance(repo):
              'Scripts/CI/SimulatorAcceptance/prepare_parity_project.py',
              'Scripts/CI/IntegrationValidation/extract_target.py',
              'Scripts/CI/IntegrationValidation/project_graph.py']
-    blobs = {p: subprocess.check_output(['git', '-C', str(repo), 'show', SOURCE + ':' + p], timeout=30)
+    blobs = {p: subprocess.check_output(['git', '-C', str(repo), 'show', PATTERN_SOURCE + ':' + p], timeout=30)
              for p in paths}
     objects = parse_project(blobs[paths[0]].decode('utf-8-sig'))['objects']
     target = next(obj for obj in objects.values()
@@ -59,7 +60,7 @@ def provenance(repo):
     # The imported renderer/reader must be the reviewed shared bytes as well.
     for path in paths[2:]:
         assert (repo / path).read_bytes() == blobs[path], 'shared reader/renderer differs from frozen reference'
-    return {'reference_commit': SOURCE, 'read_only_reference_sha256': {p: digest(raw) for p, raw in blobs.items()},
+    return {'reference_commit': PATTERN_SOURCE, 'read_only_reference_sha256': {p: digest(raw) for p, raw in blobs.items()},
             'checked_in_native_unit_target': 'AI_HLYTests', 'host_loading_pattern': mapping,
             'prior_validation_package_sha256_reference_only': 'f529f2843080de42fccc5f0c5879b2674caaa976de0fadeaa4db606dde71cc8d'}
 

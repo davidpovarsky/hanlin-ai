@@ -41,7 +41,7 @@ def command_plan(project_dir, sdk, device, scratch, evidence):
     return {
         'settings': [*base, 'test', '-showBuildSettings', '-json', *owned, 'ONLY_ACTIVE_ARCH=YES'],
         'destinations': [*base, '-showdestinations'],
-        'test': [*base, 'test', *owned, '-destination-timeout', '30',
+        'test': [*base, 'test', *owned, '-showBuildTimingSummary', '-destination-timeout', '30',
                  '-parallel-testing-enabled', 'NO', '-maximum-concurrent-test-simulator-destinations', '1',
                  '-maximum-parallel-testing-workers', '1',
                  '-resultBundlePath', str(evidence / 'ComposerNative.xcresult'),
@@ -130,6 +130,8 @@ def execute():
         state['workflow_commit'] = expected_sha
         if runner.call('frozen-source-present', 30, ['git', 'cat-file', '-e', native.SOURCE + '^{commit}'], required=False):
             runner.call('fetch-frozen-source', 120, ['git', 'fetch', '--no-tags', '--depth=1', 'origin', native.SOURCE])
+        if runner.call('pattern-source-present', 30, ['git', 'cat-file', '-e', native.PATTERN_SOURCE + ':Scripts/CI/SimulatorAcceptance/prepare_parity_project.py'], required=False):
+            runner.call('fetch-pattern-source', 120, ['git', 'fetch', '--no-tags', '--depth=1', 'origin', native.PATTERN_SOURCE])
         runner.call('frozen-source-review-check', 120, [sys.executable, '-B', str(native.HERE / 'freeze_review.py'), '--check'])
         runner.call('final-guard-review-check', 120, [sys.executable, '-B', str(native.HERE / 'review_guard.py'), '--check'])
         require(Path(XCODE, 'usr/bin/xcodebuild').is_file(), 'exact installed Xcode missing; no selection/install fallback')
