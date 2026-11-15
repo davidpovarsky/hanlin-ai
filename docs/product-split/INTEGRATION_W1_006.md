@@ -195,6 +195,61 @@ native proof, not a new run or iOS acceptance. Patch SHA256 is
 The workflow, fallback, project manifests, feature flags and inline wiring are
 unchanged by this import. No unchanged proof rerun is needed.
 
+### Later A2UI owner candidate and native compile failure
+
+The lead authorized one distinct enabled proof of owner candidate
+`9611ab6e79d8f4177d44b7282b91dbfb9de4b744`, with four complete production A2UI
+files and 12 proof inputs. Its exact owner recipe retains all prior 25 cases and
+adds nine ownership/lifecycle SDK cases: 8 ingress + 26 SDK = 34. This candidate
+has not been imported into production source on the integration branch.
+
+Run [43674291306](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43674291306),
+workflow `b34ea9d90104a4787665aa2c3ae1869edcf76ecf`, **FAILED before test execution**
+with xcodebuild exit 65. Xcode 27.2 (27B52), Swift 6.4.2, macOS SDK 27.2 and
+macOS 27.0.1 compiled the actual enabled source closure. Compilation of
+`AI_HLYTests/A2UITests.swift:507:120` failed with recursive expansion of
+`#require`: the `eventSinkIsWeakAndCannotKeepAuthorityAlive` case nests
+`try #require(sink)` inside another `#require(store.register(...))`. The
+xcresult export has zero actual Test Case nodes. **All 34 cases are NOT_RUN**;
+three reported failed build commands are not three failed test cases. The
+previous f654 25-case result cannot establish this owner's behavior.
+
+Artifact `a2ui-exact-pin-43674291306`, id `14146360033`, advertised API digest
+`sha256:a4e95fe23467286caba8769dad1bd308c9e36ca9da9ead6f06eac46fc9d063f8`,
+retains raw xcresult/logs, exact source archive and raw lock. Local inspection
+verified all 14 archived source/recipe/route hashes and 15 workflow hashes against
+the recorded Git commits, the returned plan against the independently prepared
+34-case/12-input plan, and raw lock bytes/hash/full JSON. Lock SHA256 remains
+`af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae`, with unchanged
+official revision and graph. Evidence is under ignored
+`build/integration-validation-evidence/a2ui-43674291306`. No source correction,
+case removal, metadata build, full-app job or second native dispatch was made.
+
+### Generic iOS host feasibility boundary
+
+The existing whole `ChatEmbeddedResultHost.swift` cannot currently join a small
+A2UI-only iOS target without additional application source. It requires
+`BlurView`, declared in **whole** `AI_HLY/MainTabView.swift`; that file constructs
+ListView, VisionView, KnowledgeListView, ModelsView, SettingsView, Torah reader
+and NativeAppsHubView. The latter holds real HanlinScriptingPlatform and
+HanlinMiniAppHost singletons. Separately, host expansion/style types and canonical
+launch conversions live in **whole** `ChatPresentationBridge.swift`, whose other
+bodies compile BuiltinCanonicalRegistrations, AgentActivityStatus,
+AgentDisplayActivityKind and NativeUIBlock adapters. Launch types also require
+the whole NativeAppRoute file, including its actual app-index extensions. Host
+color members come from real HLBlue/HLBluefont assets.
+
+The host, bridge and MainTab files are byte-identical between candidate `9611ab6e`
+and the current integration branch. This is a source-closure boundary, not an
+observed iOS compiler failure. Eight initial host dependency/resource hashes and
+the exact references are retained in ignored
+`build/integration-validation-evidence/a2ui-host-closure-b34ea9d9.json`.
+No fake BlurView/bridge/model/renderer/backend, sliced production body or second
+host job was introduced. Independent leaf relocation would require an explicit
+shared-source owner packet; it is not assumed by a scenario harness. Generic
+iOS host/widgets, actual ChatBubble/app API transport and physical iPad remain
+NOT_RUN.
+
 ## W1-008 Composer verification preparation
 
 Lead released clean source checkpoint `ee534fae3b87fc087cb80828bca15236c8a752dd`
