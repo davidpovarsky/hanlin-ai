@@ -10,8 +10,8 @@ rejected its error-bearing C++ role evidence and target mismatch. Corrected
 source `7cb86898` retains fail-closed gates and adds an incomplete source contract.
 Latest native source was cc15459c: run43673578445 failed on differing
 CallInvoker alias bytes before combined generation; its SDK-only/context controls
-passed. All48 current eventual Apple cases remain NOT_RUN (24 previously build-blocked,
-Host7 and observation17 not dispatched). See the latest checkpoint below.
+passed. All49 current eventual Apple cases remain NOT_RUN (24 previously build-blocked,
+Host7 and observation18 not dispatched). See the latest checkpoint below.
 The earlier checkpoints below remain historical evidence, not current acceptance.
 
 App run [43650510166](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43650510166)
@@ -546,3 +546,35 @@ This is not provider/SwiftUI/Apple app/physical-device execution; the provider a
 NOT_RUN. Diff check passed. Prepared48 selectors (16 original+8 composition+7
 Host+17 observation) are at `build/mcp-intent-final-inputs-NOT-DISPATCHED.json`;
 no workflow was dispatched, and the earlier43-case plan is historical.
+## Request-entry default semantics — 43f94179
+
+Lead resolved the default-snapshot source-QA question explicitly. The first
+committed single-server intent seeds an absent record using the eligible-default
+snapshot captured synchronously at provider request entry. If another intent has
+already materialized that record, this request's default seed is ignored. Later
+configuration changes do not rewrite explicit selections, including[]. Selection
+is a preference; current runtime resolution and calls enforce live eligibility.
+The Maya-facing API and production behavior from9249e0e0 are unchanged.
+
+Source `43f9417917e96b15add401e6bf15151335380b9d` documents that contract and
+adds one deterministic provider-fixture method covering persistent/temporary and
+old-default globally-on/off variants. An internal optional initializer admission
+closure (nil in production, no extra suspension in the live path) gates the first
+intent after defaultsA capture and before the real actor call. The fixture uses
+actual registry upserts through provider.update to switch defaults toB, releases
+the gate, then asserts A+intent stays explicit while a still-absent chat usesB.
+No sleep, public blocking hook, config-generation protocol or cross-store
+transaction was added.
+
+The globally-off variant invokes the real controller descriptor resolution and
+call entry points, requiring no descriptors and serverNotFound before runtime
+activation; the real runtime must remain stopped. This is a **test-source
+obligation, Apple NOT_RUN**, not an executed authorization proof. Read-only source
+confirmation: MCPRuntimeController.swift's current live registry filters at
+resolveToolDescriptors and call independently enforce isGloballyEnabled.
+
+Provider/test syntax parse and diff check PASS. All18 observation Apple methods
+remain NOT_RUN; portable actor execution still refers to unchanged actor source
+from9249e0e0 and does not cover this provider gate/configuration test. Prepared49
+selectors (16+8+7+18) are at build/mcp-intent-defaults-final-inputs-NOT-DISPATCHED.json.
+The previous48/43 plans are historical. No workflow/full-app retry was dispatched.

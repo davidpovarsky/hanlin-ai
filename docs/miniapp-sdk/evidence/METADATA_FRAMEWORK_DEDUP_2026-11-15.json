@@ -1248,14 +1248,14 @@
     }
   },
   "capabilityObservation": {
-    "commit": "9249e0e0e3588b0bdf10fc0131c33884434e353f",
-    "tests": 17,
-    "sourceQA": "PENDING_SINGLE_SERVER_INTENT_CORRECTION_REVIEW; previous bfe33506 source was accepted.",
+    "commit": "43f9417917e96b15add401e6bf15151335380b9d",
+    "tests": 18,
+    "sourceQA": "PENDING_BOUNDED_REQUEST_SNAPSHOT_REGRESSION_REVIEW",
     "appleExecution": "NOT_RUN",
     "strictReadAPI": "readSelection(chatID:temporary:) async throws -> Set<UUID>",
     "scopeSignalAPI": "selectionRevision(chatID:temporary:) -> UInt64",
     "semantics": "Committed affected chat/mode scopes only; no-op does not notify; absent differs from explicit empty; request-specific read errors propagate. Live defaults/schema/authority preserved.",
-    "boundary": "17 Apple bodies NOT_RUN. Portable real actor/JSON execution does not establish provider/UI or native save-failure acceptance.",
+    "boundary": "18 Apple bodies NOT_RUN. Actual portable actor/JSON proof from unchanged9249 actor source does not execute provider/configuration/UI/native save-permission cases.",
     "intentAPI": "applySelectionIntent(MCPChatServerSelectionIntent, chatID: UUID, temporary: Bool) async throws -> Set<UUID>",
     "intentSemantics": "Atomic non-suspending canonical actor read/modify/save; actual configured defaults seed absent only; explicit empty persists; first materialization is a storage change, repeated explicit state no-op; committed readback/scopes and request-scoped thrown failures. Full-set legacy/clear API unchanged.",
     "portableActorExecution": {
@@ -1278,21 +1278,35 @@
     "syntaxParsing": "EXECUTED_PASS",
     "sourceSHA256": {
       "AI_HLY/Downstream/MCP/Persistence/MCPChatSelectionStore.swift": "d374862bede768162e8126c3572d9560d0ff39af71bb031f37570bb6c4b3169d",
-      "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift": "1c14aa1c8bfc5175c9983336370257731df274f3b1acc2907ff601d6091dc421",
-      "AI_HLYTests/HanlinCapabilityObservationTests.swift": "421bb3dfef6bdd70afffdc09dfe2361d5efd3a1a6da14297bccc62ed5feae210"
+      "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift": "eed65079d6f9d04ce47ce2649b7c33bd89261b2514b00def96ae388e0459bcea",
+      "AI_HLYTests/HanlinCapabilityObservationTests.swift": "207b4bb7e2821ff0b3e563dde4131922fceb25c2d6b4142084e1461586a95ac4"
+    },
+    "defaultSnapshotSemantics": "Eligible defaults captured synchronously at provider request entry. First committed intent seeds absent only; passed seed ignored if another request already materialized record. Existing explicit records including [] never rebase to later default config. Preference does not bypass live runtime eligibility.",
+    "defaultSnapshotRegression": {
+      "status": "APPLE_NOT_RUN",
+      "method": "firstIntentPinsRequestDefaultsAcrossGatedConfigurationChanges()",
+      "variants": [
+        "persistent/global-on",
+        "persistent/old-default-global-off",
+        "temporary/global-on",
+        "temporary/old-default-global-off"
+      ],
+      "fixture": "Real provider/registry/store, internal optional admission closure after capture/before actor call; nil in live production path without extra suspension.",
+      "eligibility": "Test source calls actual controller descriptor resolution and call guard; no executed native authorization claim.",
+      "syntaxParsing": "EXECUTED_PASS"
     }
   },
   "eventualApplePlan": {
-    "methods": 48,
+    "methods": 49,
     "status": "NOT_DISPATCHED",
     "groups": {
       "original": 16,
       "composition": 8,
       "hostDiscovery": 7,
-      "capabilityObservation": 17
+      "capabilityObservation": 18
     },
-    "inputs": "build/mcp-intent-final-inputs-NOT-DISPATCHED.json",
-    "plan": "Previous43-case impact plan is historical; new48 selector input prepared only, NOT_DISPATCHED."
+    "inputs": "build/mcp-intent-defaults-final-inputs-NOT-DISPATCHED.json",
+    "plan": "Earlier43/48 plans historical; latest49 exact selector input prepared only, NOT_DISPATCHED."
   },
   "producerInterfacePacket": {
     "commit": "7cb8689854d6dc2f378f975a3b024d6c6857a77c",
