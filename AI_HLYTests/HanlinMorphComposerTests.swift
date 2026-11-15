@@ -68,4 +68,25 @@ struct HanlinMorphComposerTests {
         #expect(coordinator.morphRoute == nil)
         #expect(coordinator.activePopup == .general)
     }
+
+    @MainActor
+    @Test("Each capability settings route stays in the same open bubble")
+    func capabilityRoutesReturnToOpenHome() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.open(.general)
+        for route in [ComposerGeneralSubroute.search, .thinking, .creative] {
+            coordinator.pushGeneralSubroute(route, reduceMotion: true)
+            #expect(coordinator.morphRoute == .general(route))
+            #expect(coordinator.activePopup == .general)
+            coordinator.returnFromMorphPage()
+            #expect(coordinator.morphRoute == nil)
+            #expect(coordinator.activePopup == .general)
+        }
+        coordinator.switchFromGeneralToTools()
+        coordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
+        #expect(coordinator.morphRoute == .tools(.mcpServers))
+        coordinator.returnFromMorphPage()
+        #expect(coordinator.morphRoute == .tools(nil))
+        #expect(coordinator.activePopup == .tools)
+    }
 }

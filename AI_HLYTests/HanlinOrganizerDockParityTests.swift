@@ -572,6 +572,29 @@ struct ChatComposerSessionBridgeTests {
         #expect(restoredSearchA == true)
     }
 
+    @Test("Turning off the current chat's tool-use binding preserves another chat's setting")
+    func toolUseBindingRemainsScopedToItsChat() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        let chatA = UUID(), chatB = UUID()
+        var textA = "A", textB = "B"
+        var toolsA = true, toolsB = true
+        let endpointA = Self.makeTestEndpoint(
+            sessionID: chatA, message: Binding(get: { textA }, set: { textA = $0 }),
+            ifToolUse: Binding(get: { toolsA }, set: { toolsA = $0 })
+        )
+        let endpointB = Self.makeTestEndpoint(
+            sessionID: chatB, message: Binding(get: { textB }, set: { textB = $0 }),
+            ifToolUse: Binding(get: { toolsB }, set: { toolsB = $0 })
+        )
+        bridge.snapshotDraft(from: endpointB)
+        endpointA.ifToolUse.wrappedValue = false
+        bridge.snapshotDraft(from: endpointA)
+        #expect(!toolsA)
+        #expect(toolsB)
+        #expect(bridge.perChatDrafts[chatA]?.ifToolUse == false)
+        #expect(bridge.perChatDrafts[chatB]?.ifToolUse == true)
+    }
+
     @Test("5.3 Out-of-order stale endpoint registration is rejected when expectedActiveSessionID does not match")
     func outOfOrderStaleRegistrationRejected() {
         let bridge = HanlinActiveComposerSessionBridge()
@@ -1059,6 +1082,66 @@ struct ComposerActionsParityTests {
             activeMCPServerCount: 2
         )
         #expect(shortcutCount == 3)
+    }
+
+    @Test("Detached groups reflect enabled model-supported modes and MCP configuration")
+    func detachedCapabilitiesProjectRealModeState() {
+        let model = AllModels(name: "test", displayName: "Test", position: 0, company: "OPENAI",
+                              supportsSearch: true, supportsTextGen: true, supportsMultimodal: true,
+                              supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true)
+        let cap = HanlinComposerActionBridge.capabilitySnapshot(for: model)
+        func project(search: Bool, knowledge: Bool, thinking: Bool, planning: Bool, tools: Bool, mcp: Int, mcpEnabled: Bool, skills: Bool = false, runtimes: Bool = false) -> [HanlinDetachedCapability] {
+            let chips = HanlinComposerActionBridge.activeModeChips(
+                capability: cap, ifSearch: search, ifKnowledge: knowledge, ifThink: thinking,
+                thinkingLength: 0, ifPlanning: planning, ifAudio: false, ifToolUse: tools,
+                activeMCPServerCount: mcp, selectedImageSize: "1:1"
+            )
+            return HanlinDetachedCapability.enabled(from: chips, mcpEnabled: mcpEnabled, hasModel: cap.hasModel,
+                                                     toolUseEnabled: tools && cap.supportsToolUse,
+                                                     toolsEligible: true, skillsEligible: skills, runtimesEligible: runtimes)
+        }
+        #expect(project(search: false, knowledge: false, thinking: false, planning: false, tools: false, mcp: 0, mcpEnabled: true).isEmpty)
+        #expect(project(search: false, knowledge: true, thinking: false, planning: false, tools: false, mcp: 0, mcpEnabled: true) == [.search])
+        #expect(project(search: true, knowledge: true, thinking: true, planning: true, tools: true, mcp: 2, mcpEnabled: true, skills: true, runtimes: true) == [.search, .thinking, .tools, .skills, .mcp, .runtimes])
+        #expect(project(search: false, knowledge: false, thinking: false, planning: false, tools: false, mcp: 2, mcpEnabled: false).isEmpty)
+        #expect(project(search: false, knowledge: false, thinking: false, planning: false, tools: false, mcp: 2, mcpEnabled: true, skills: true, runtimes: true).isEmpty)
+        #expect(!project(search: false, knowledge: false, thinking: false, planning: false, tools: true, mcp: 2, mcpEnabled: false).contains(.mcp))
+
+        let unsupported = HanlinComposerActionBridge.capabilitySnapshot(for: nil)
+        let unsupportedChips = HanlinComposerActionBridge.activeModeChips(
+            capability: unsupported, ifSearch: true, ifKnowledge: false, ifThink: true,
+            thinkingLength: 0, ifPlanning: false, ifAudio: true, ifToolUse: true,
+            activeMCPServerCount: 0, selectedImageSize: "1:1"
+        )
+        #expect(HanlinDetachedCapability.enabled(from: unsupportedChips, mcpEnabled: true, hasModel: false,
+                                                  toolUseEnabled: false, toolsEligible: true, skillsEligible: true, runtimesEligible: true).isEmpty)
+
+        let mandatory = AllModels(name: "fixed-reasoning", displayName: "Fixed", position: 1, company: "OPENAI",
+                                  supportsSearch: false, supportsTextGen: true, supportsMultimodal: false,
+                                  supportsReasoning: true, supportReasoningChange: false, supportsToolUse: false)
+        let fixedChips = HanlinComposerActionBridge.activeModeChips(
+            capability: HanlinComposerActionBridge.capabilitySnapshot(for: mandatory), ifSearch: false,
+            ifKnowledge: false, ifThink: true, thinkingLength: 0, ifPlanning: true,
+            ifAudio: false, ifToolUse: false, activeMCPServerCount: 0, selectedImageSize: "1:1"
+        )
+        #expect(HanlinDetachedCapability.enabled(from: fixedChips, mcpEnabled: true, hasModel: true,
+                                                  toolUseEnabled: false, toolsEligible: false, skillsEligible: false, runtimesEligible: false) == [.thinking])
+        #expect(!HanlinDetachedCapability.thinking.canDisable(from: fixedChips))
+        let imageModel = AllModels(name: "image", displayName: "Image", position: 2, company: "OPENAI", supportsImageGen: true)
+        let imageChips = HanlinComposerActionBridge.activeModeChips(
+            capability: HanlinComposerActionBridge.capabilitySnapshot(for: imageModel), ifSearch: false,
+            ifKnowledge: false, ifThink: false, thinkingLength: 0, ifPlanning: false,
+            ifAudio: false, ifToolUse: false, activeMCPServerCount: 0, selectedImageSize: "1:1"
+        )
+        #expect(HanlinDetachedCapability.enabled(from: imageChips, mcpEnabled: false, hasModel: true,
+                                                  toolUseEnabled: false, toolsEligible: false, skillsEligible: false, runtimesEligible: false) == [.creative])
+        #expect(HanlinDetachedCapability.creative.contextAction(imageGenerationActive: true) == .chooseModel)
+        #expect(HanlinDetachedCapability.creative.contextAction(imageGenerationActive: false) == .disableModes)
+        #expect(HanlinDetachedCapability.skills.contextAction(imageGenerationActive: false) == .disableChatToolUse)
+        #expect(HanlinDetachedCapability.runtimes.contextAction(imageGenerationActive: false) == .disableChatToolUse)
+        #expect(HanlinDetachedCapability.mcp.contextAction(imageGenerationActive: false) == .clearChatMCPSelection)
+        #expect(HanlinDetachedCapabilityChips.usesCompactLayout(width: 509))
+        #expect(!HanlinDetachedCapabilityChips.usesCompactLayout(width: 510))
     }
 }
 

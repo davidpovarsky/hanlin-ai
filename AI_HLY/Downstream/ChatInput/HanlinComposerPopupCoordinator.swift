@@ -21,6 +21,9 @@ enum ComposerPopup: String, Identifiable, Hashable, Sendable {
 }
 
 enum ComposerGeneralSubroute: String, Hashable, Sendable {
+    case search
+    case thinking
+    case creative
     case prompts
     case parameters
     case imageSize

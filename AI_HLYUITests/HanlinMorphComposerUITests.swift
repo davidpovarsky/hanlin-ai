@@ -2,6 +2,55 @@ import XCTest
 
 @MainActor
 final class HanlinMorphComposerUITests: XCTestCase {
+    func testEnabledToolsChipOpensSettingsAndContextMenuDisables() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
+        app.launch()
+        defer { app.terminate() }
+
+        let input = app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
+        if !input.waitForExistence(timeout: 5) {
+            let chat = app.descendants(matching: .any).matching(
+                NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
+            ).firstMatch
+            XCTAssertTrue(chat.waitForExistence(timeout: 15))
+            chat.tap()
+        }
+        XCTAssertTrue(input.waitForExistence(timeout: 20))
+        let toolsButton = app.buttons["hanlin-composer-tools-direct"].firstMatch
+        XCTAssertTrue(toolsButton.waitForExistence(timeout: 5))
+        toolsButton.tap()
+        let toggle = app.descendants(matching: .any)["hanlin-tool-use-toggle"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5), "Test requires a model that supports tool use")
+        if (toggle.value as? String) != "1" { toggle.tap() }
+        toolsButton.tap()
+
+        let row = app.descendants(matching: .any)["active-tool-chips-above-composer"].firstMatch
+        let chip = app.buttons["composer-chip-tools"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        XCTAssertTrue(chip.waitForExistence(timeout: 5))
+        chip.tap()
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        XCTAssertFalse(row.exists, "Detached chips must be hidden while the bubble is open")
+        toolsButton.tap()
+        XCTAssertTrue(chip.waitForExistence(timeout: 5))
+        chip.press(forDuration: 1)
+        let disable = app.buttons["Turn off tool use in this chat"].firstMatch
+        XCTAssertTrue(disable.waitForExistence(timeout: 5))
+        disable.tap()
+        XCTAssertTrue(chip.waitForNonExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["composer-chip-skills"].exists)
+        XCTAssertFalse(app.buttons["composer-chip-runtimes"].exists)
+        XCTAssertFalse(app.buttons["composer-chip-mcp"].exists)
+        toolsButton.tap()
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        XCTAssertEqual(toggle.value as? String, "0", "Context menu must update the real chat binding")
+    }
+
     func testCompactNavigationKeepsDraft() throws {
         try verifyNavigation(expectWide: false)
     }

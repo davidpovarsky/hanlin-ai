@@ -81,6 +81,7 @@ struct HanlinComposerGeneralActionsView: View {
     var embeddedInDrawer: Bool = true
     var embeddedInMorph: Bool = false
     var morphHomeOnly: Bool = false
+    var enabledCapabilities: [HanlinDetachedCapability] = []
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -103,6 +104,8 @@ struct HanlinComposerGeneralActionsView: View {
                 if let activeRoute = morphHomeOnly ? nil : coordinator.generalNavigationPath.last {
                     Group {
                         switch activeRoute {
+                        case .search, .thinking, .creative:
+                            conversationModes(filter: activeRoute)
                         case .prompts:
                             promptsSubpage
                         case .parameters:
@@ -135,6 +138,8 @@ struct HanlinComposerGeneralActionsView: View {
                     .navigationDestination(for: ComposerGeneralSubroute.self) { route in
                         Group {
                             switch route {
+                            case .search, .thinking, .creative:
+                                conversationModes(filter: route)
                             case .prompts:
                                 promptsSubpage
                             case .parameters:
@@ -290,135 +295,11 @@ struct HanlinComposerGeneralActionsView: View {
                     .fill(Color.primary.opacity(0.08))
                     .frame(height: 0.6)
 
-                // 2. Conversation Modes
-                VStack(spacing: 4) {
-                    if capability.supportsSearch {
-                        modeToggleRow(
-                            title: String(localized: "Online Search"),
-                            subtitle: String(localized: "Search the web and latest reference material in real time"),
-                            systemImage: "globe",
-                            tint: .hlAzure,
-                            isOn: Binding(
-                                get: { ifSearch },
-                                set: { newValue in
-                                    if !newValue {
-                                        ifSearch = false
-                                    } else if checkSearchAvailability() {
-                                        ifSearch = true
-                                    } else {
-                                        showSearchAlert = true
-                                    }
-                                }
-                            ),
-                            identifier: "hanlin-general-toggle-search"
-                        )
-
-                        HStack(spacing: 6) {
-                            modeToggleRow(
-                                title: String(localized: "Knowledge Bag"),
-                                subtitle: String(localized: "Search local vectorized knowledge base"),
-                                systemImage: "backpack.fill",
-                                tint: accentColor,
-                                isOn: Binding(
-                                    get: { ifKnowledge },
-                                    set: { newValue in
-                                        if !newValue {
-                                            ifKnowledge = false
-                                        } else if checkEmbeddingAvailability() {
-                                            ifKnowledge = true
-                                        } else {
-                                            showKnowledgeAlert = true
-                                        }
-                                    }
-                                ),
-                                identifier: "hanlin-general-toggle-knowledge"
-                            )
-
-                            Button {
-                                coordinator.closeAll()
-                                onOpenEmbeddingSettings()
-                            } label: {
-                                Image(systemName: "slider.horizontal.2.square")
-                                    .font(.footnote)
-                                    .foregroundStyle(accentColor)
-                                    .padding(7)
-                                    .background(accentColor.opacity(0.1), in: Circle())
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("hanlin-general-embedding-settings")
-                        }
-                    }
-
-                    if capability.supportsReasoning {
-                        VStack(alignment: .leading, spacing: 6) {
-                            modeToggleRow(
-                                title: String(localized: "Deep Thinking"),
-                                subtitle: capability.supportReasoningChange ? String(localized: "Reason through complex problems and show reasoning summary") : String(localized: "The current model enables reasoning by default"),
-                                systemImage: "sparkles",
-                                tint: .hlPurple,
-                                isOn: Binding(
-                                    get: { ifThink },
-                                    set: { newValue in
-                                        if capability.supportReasoningChange {
-                                            ifThink = newValue
-                                        }
-                                    }
-                                ),
-                                disabled: !capability.supportReasoningChange,
-                                identifier: "hanlin-general-toggle-thinking"
-                            )
-
-                            if ifThink {
-                                Picker(String(localized: "Thinking Depth"), selection: $thinkingLength) {
-                                    Text(String(localized: "Default")).tag(0)
-                                    Text(String(localized: "Brief")).tag(1)
-                                    Text(String(localized: "Medium")).tag(2)
-                                    Text(String(localized: "Deep")).tag(3)
-                                }
-                                .pickerStyle(.segmented)
-                                .padding(.horizontal, 8)
-                                .padding(.bottom, 4)
-                                .accessibilityIdentifier("hanlin-general-thinking-length-picker")
-                            }
-                        }
-                    } else if !capability.isLocal {
-                        modeToggleRow(
-                            title: String(localized: "Planning & Execution"),
-                            subtitle: String(localized: "Plan tasks step by step before generating answers"),
-                            systemImage: "list.bullet.clipboard.fill",
-                            tint: .hlIndigo,
-                            isOn: $ifPlanning,
-                            identifier: "hanlin-general-toggle-planning"
-                        )
-                    }
-
-                    if capability.supportsVoiceGen {
-                        modeToggleRow(
-                            title: String(localized: "Voice Generation"),
-                            subtitle: String(localized: "Synthesize natural speech for assistant responses"),
-                            systemImage: "waveform",
-                            tint: .hlPink,
-                            isOn: $ifAudio,
-                            identifier: "hanlin-general-toggle-audio"
-                        )
-                    }
-
-                    if capability.supportsImageGen {
-                        Button {
-                            coordinator.pushGeneralSubroute(.imageSize, reduceMotion: reduceMotion)
-                        } label: {
-                            navigationRowLabel(
-                                title: String(localized: "Image Aspect Ratio & Negative Prompts"),
-                                subtitle: String(format: String(localized: "Current aspect ratio: %@"), selectedImageSize),
-                                systemImage: "paintbrush.pointed.fill",
-                                tint: .hlGreen
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .matchedTransitionSource(id: "hanlin-general-imagesize-row", in: zoomNamespace)
-                        .accessibilityIdentifier("hanlin-general-imagesize-button")
-                    }
+                if embeddedInMorph {
+                    capabilityTiles
                 }
+                // Shared live controls used by the root and focused capability pages.
+                conversationModes(filter: nil)
 
                 Divider()
 
@@ -599,6 +480,197 @@ struct HanlinComposerGeneralActionsView: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-drawer-saved-prompts-slot")
+    }
+
+    private var capabilityTiles: some View {
+        let blue = Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255)
+        let azure = Color(red: 2 / 255, green: 136 / 255, blue: 209 / 255)
+        return LazyVGrid(columns: [GridItem(.adaptive(minimum: 128, maximum: 230), spacing: 10)], spacing: 10) {
+            ForEach(HanlinDetachedCapability.allCases) { item in
+                let enabled = enabledCapabilities.contains(item)
+                Button {
+                    switch item {
+                    case .search: coordinator.pushGeneralSubroute(.search, reduceMotion: true)
+                    case .thinking: coordinator.pushGeneralSubroute(.thinking, reduceMotion: true)
+                    case .creative: coordinator.pushGeneralSubroute(.creative, reduceMotion: true)
+                    case .tools: coordinator.switchFromGeneralToTools()
+                    case .skills:
+                        coordinator.switchFromGeneralToTools()
+                        coordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
+                    case .mcp:
+                        coordinator.switchFromGeneralToTools()
+                        coordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
+                    case .runtimes:
+                        coordinator.switchFromGeneralToTools()
+                        coordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: true)
+                    }
+                } label: {
+                    VStack(alignment: .leading, spacing: 7) {
+                        HStack(spacing: 4) {
+                            Image(systemName: item.symbol).font(.title3)
+                            Spacer(minLength: 0)
+                            if enabled {
+                                Image(systemName: "checkmark.circle.fill").font(.caption).accessibilityHidden(true)
+                            }
+                        }
+                        Text(item.title).font(.subheadline.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.8)
+                        Text(item.subtitle).font(.caption2).foregroundStyle(.white.opacity(0.88)).lineLimit(1)
+                    }
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, minHeight: 94, alignment: .leading)
+                    .padding(.horizontal, 13).padding(.vertical, 7)
+                }
+                .buttonStyle(.plain)
+                .disabled(isResponding)
+                .background(blue, in: RoundedRectangle(cornerRadius: 17, style: .continuous))
+                .glassEffect(.regular.tint(blue.opacity(0.55)).interactive(), in: RoundedRectangle(cornerRadius: 17, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 17, style: .continuous)
+                        .strokeBorder(azure.opacity(enabled ? 0.90 : 0.58), lineWidth: enabled ? 1.15 : 1)
+                        .allowsHitTesting(false)
+                }
+                .accessibilityIdentifier("tool-\(item.id)")
+                .accessibilityValue(enabled ? String(localized: "Enabled") : String(localized: "Open settings"))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func conversationModes(filter: ComposerGeneralSubroute?) -> some View {
+                VStack(spacing: 4) {
+                    if filter == nil || filter == .search {
+                        if capability.supportsSearch {
+                            modeToggleRow(
+                            title: String(localized: "Online Search"),
+                            subtitle: String(localized: "Search the web and latest reference material in real time"),
+                            systemImage: "globe",
+                            tint: .hlAzure,
+                            isOn: Binding(
+                                get: { ifSearch },
+                                set: { newValue in
+                                    if !newValue {
+                                        ifSearch = false
+                                    } else if checkSearchAvailability() {
+                                        ifSearch = true
+                                    } else {
+                                        showSearchAlert = true
+                                    }
+                                }
+                            ),
+                                identifier: "hanlin-general-toggle-search"
+                            )
+                        }
+
+                        if capability.supportsTextGen {
+                          HStack(spacing: 6) {
+                            modeToggleRow(
+                                title: String(localized: "Knowledge Bag"),
+                                subtitle: String(localized: "Search local vectorized knowledge base"),
+                                systemImage: "backpack.fill",
+                                tint: accentColor,
+                                isOn: Binding(
+                                    get: { ifKnowledge },
+                                    set: { newValue in
+                                        if !newValue {
+                                            ifKnowledge = false
+                                        } else if checkEmbeddingAvailability() {
+                                            ifKnowledge = true
+                                        } else {
+                                            showKnowledgeAlert = true
+                                        }
+                                    }
+                                ),
+                                identifier: "hanlin-general-toggle-knowledge"
+                            )
+
+                            Button {
+                                coordinator.closeAll()
+                                onOpenEmbeddingSettings()
+                            } label: {
+                                Image(systemName: "slider.horizontal.2.square")
+                                    .font(.footnote)
+                                    .foregroundStyle(accentColor)
+                                    .padding(7)
+                                    .background(accentColor.opacity(0.1), in: Circle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("hanlin-general-embedding-settings")
+                          }
+                        }
+                    }
+
+                    if (filter == nil || filter == .thinking) && capability.supportsReasoning {
+                        VStack(alignment: .leading, spacing: 6) {
+                            modeToggleRow(
+                                title: String(localized: "Deep Thinking"),
+                                subtitle: capability.supportReasoningChange ? String(localized: "Reason through complex problems and show reasoning summary") : String(localized: "The current model enables reasoning by default"),
+                                systemImage: "sparkles",
+                                tint: .hlPurple,
+                                isOn: Binding(
+                                    get: { ifThink },
+                                    set: { newValue in
+                                        if capability.supportReasoningChange {
+                                            ifThink = newValue
+                                        }
+                                    }
+                                ),
+                                disabled: !capability.supportReasoningChange,
+                                identifier: "hanlin-general-toggle-thinking"
+                            )
+
+                            if ifThink {
+                                Picker(String(localized: "Thinking Depth"), selection: $thinkingLength) {
+                                    Text(String(localized: "Default")).tag(0)
+                                    Text(String(localized: "Brief")).tag(1)
+                                    Text(String(localized: "Medium")).tag(2)
+                                    Text(String(localized: "Deep")).tag(3)
+                                }
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal, 8)
+                                .padding(.bottom, 4)
+                                .accessibilityIdentifier("hanlin-general-thinking-length-picker")
+                            }
+                        }
+                    }
+                    if (filter == nil || filter == .thinking) && capability.supportsTextGen {
+                        modeToggleRow(
+                            title: String(localized: "Planning & Execution"),
+                            subtitle: String(localized: "Plan tasks step by step before generating answers"),
+                            systemImage: "list.bullet.clipboard.fill",
+                            tint: .hlIndigo,
+                            isOn: $ifPlanning,
+                            identifier: "hanlin-general-toggle-planning"
+                        )
+                    }
+
+                    if (filter == nil || filter == .creative) && capability.supportsVoiceGen {
+                        modeToggleRow(
+                            title: String(localized: "Voice Generation"),
+                            subtitle: String(localized: "Synthesize natural speech for assistant responses"),
+                            systemImage: "waveform",
+                            tint: .hlPink,
+                            isOn: $ifAudio,
+                            identifier: "hanlin-general-toggle-audio"
+                        )
+                    }
+
+                    if (filter == nil || filter == .creative) && capability.supportsImageGen {
+                        Button {
+                            coordinator.pushGeneralSubroute(.imageSize, reduceMotion: reduceMotion)
+                        } label: {
+                            navigationRowLabel(
+                                title: String(localized: "Image Aspect Ratio & Negative Prompts"),
+                                subtitle: String(format: String(localized: "Current aspect ratio: %@"), selectedImageSize),
+                                systemImage: "paintbrush.pointed.fill",
+                                tint: .hlGreen
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .matchedTransitionSource(id: "hanlin-general-imagesize-row", in: zoomNamespace)
+                        .accessibilityIdentifier("hanlin-general-imagesize-button")
+                    }
+                }
+
     }
 
     // MARK: - Subpages
